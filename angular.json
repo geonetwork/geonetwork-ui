@@ -1,30 +1,30 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "projects",
+  "newProjectRoot": "apps",
   "projects": {
-    "gn-ui-angular": {
+    "search": {
       "projectType": "application",
       "schematics": {},
-      "root": "",
-      "sourceRoot": "src",
+      "root": "apps/search",
+      "sourceRoot": "apps/search/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/gn-ui-angular",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
+            "outputPath": "dist/search",
+            "index": "apps/search/src/index.html",
+            "main": "apps/search/src/main.ts",
+            "polyfills": "apps/search/src/polyfills.ts",
+            "tsConfig": "apps/search/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "apps/search/src/favicon.ico",
+              "apps/search/src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "apps/search/src/styles.css"
             ],
             "scripts": []
           },
@@ -32,8 +32,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "apps/search/src/environments/environment.ts",
+                  "with": "apps/search/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -62,33 +62,29 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "gn-ui-angular:build"
+            "browserTarget": "search:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "gn-ui-angular:build:production"
+              "browserTarget": "search:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "gn-ui-angular:build"
+            "browserTarget": "search:build"
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular-builders/jest:run",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "apps/search/src/favicon.ico",
+              "apps/search/src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "apps/search/src/styles.css"
             ],
             "scripts": []
           }
@@ -97,9 +93,9 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
+              "apps/search/tsconfig.app.json",
+              "apps/search/tsconfig.spec.json",
+              "apps/search/e2e/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -109,16 +105,16 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "gn-ui-angular:serve"
+            "protractorConfig": "apps/search/e2e/protractor.conf.js",
+            "devServerTarget": "search:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "gn-ui-angular:serve:production"
+              "devServerTarget": "search:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "gn-ui-angular"
+  "defaultProject": "search"
 }
