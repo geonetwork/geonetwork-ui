@@ -1,5 +1,6 @@
 import { Button } from '@storybook/angular/demo';
 import {ComponentsComponent} from '../src'
+import {MdListComponent} from '../src/lib/md-list/md-list.component'
 
 export default { title: 'My Button' }
 
@@ -19,4 +20,10 @@ export const withEmoji = () => ({
 
 export const geonetwork = () => ({
   component: ComponentsComponent
+});
+export const webComponent = () => ({
+  component: MdListComponent,
+  props: {
+    title: 'INPUT'
+  }
 });
