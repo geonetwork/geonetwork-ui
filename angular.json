@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "libs",
+  "newProjectRoot": "libs/ui",
   "projects": {
     "search": {
       "projectType": "application",
@@ -112,6 +112,44 @@
             "production": {
               "devServerTarget": "search:serve:production"
             }
+          }
+        }
+      }
+    },
+    "ui-components": {
+      "projectType": "library",
+      "root": "libs/ui/components",
+      "sourceRoot": "libs/ui/components/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/ui/components/tsconfig.lib.json",
+            "project": "libs/ui/components/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/ui/components/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "tsConfig": "tsconfig.spec.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/ui/components/tsconfig.lib.json",
+              "libs/ui/components/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
