@@ -12,7 +12,7 @@ export class SortByComponent implements OnInit {
   choices = [
     {
       label: 'last changed',
-      value: 'lastUpdated',
+      value: 'dateStamp',
     },
     {
       label: 'popularity',

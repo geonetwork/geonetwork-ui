@@ -1,4 +1,4 @@
-<ng-container *ngFor="let record of results$ | async">
+<div *ngFor="let record of results$ | async" class="mb-2">
   <ui-record-summary [record]="record"></ui-record-summary>
-</ng-container>
+</div>
 <div *ngIf="isLoading$ | async">Loading more results...</div>

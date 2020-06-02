@@ -38,24 +38,25 @@ export class SearchEffects {
         this.store$.pipe(select(getSearchParams))
       ),
       switchMap(([_, sortBy, params]) =>
-        this.http.post(
-          'https://apps.titellus.net/geonetwork/srv/api/search/records/_search',
-          {
-            from: 0,
-            size: RESULTS_PAGE_SIZE,
-            sort: [sortBy],
-            query: {
-              bool: { must: [{ query_string: { query: params.any || '*' } }] },
-            },
-          }
-        )
+        this.http.post('/geonetwork/srv/api/search/records/_search', {
+          from: 0,
+          size: RESULTS_PAGE_SIZE,
+          sort: sortBy ? [sortBy] : undefined,
+          query: {
+            bool: { must: [{ query_string: { query: params.any || '*' } }] },
+          },
+        })
       ),
       map<any, RecordSimple[]>((response: any) =>
         response.hits.hits.map((hit) => ({
-          title: hit._source.resourcetitleObject.default,
-          abstract: hit._source.resourceAbstractObject.default,
-          thumbnailUrl: '',
-          url: `https://apps.titellus.net/geonetwork/srv/eng/catalog.search#/metadata/${hit._source.uuid}`,
+          name: hit._source.resourceTitleObject
+            ? hit._source.resourceTitleObject.default
+            : 'no title',
+          abstract: hit._source.resourceAbstractObject
+            ? hit._source.resourceAbstractObject.default
+            : 'no abstract',
+          thumbnailUrl: hit._source.overview ? hit._source.overview.url : '',
+          url: `/geonetwork/srv/eng/catalog.search#/metadata/${hit._source.uuid}`,
         }))
       ),
       map((records: RecordSimple[]) => new AddResults(records))

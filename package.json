@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy-config.json",
     "build": "ng build",
     "test": "ng test",
     "package": "cat dist/search-wc/{runtime-es2015,polyfills-es2015,main-es2015}.js | gzip > elements.js.gz",
