@@ -1,5 +1,5 @@
 {
-  "extends": "tslint:recommended",
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
   "rules": {
     "align": {
       "options": [
@@ -82,7 +82,7 @@
     ],
     "semicolon": {
       "options": [
-        "always"
+        "never"
       ]
     },
     "space-before-function-paren": {
