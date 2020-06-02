@@ -5,8 +5,9 @@ import { SortByComponent } from './sort-by/sort-by.component'
 import { UiModule } from '@lib/ui'
 import { CommonModule } from '@angular/common'
 import { FuzzySearchComponent } from './fuzzy-search/fuzzy-search.component'
-import { SearchEffects } from '@lib/search'
+import { SearchEffects } from './state/effects'
 import { EffectsModule } from '@ngrx/effects'
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   declarations: [SortByComponent, FuzzySearchComponent],
@@ -16,6 +17,7 @@ import { EffectsModule } from '@ngrx/effects'
       initialState,
     }),
     EffectsModule.forFeature([SearchEffects]),
+    HttpClientModule,
     UiModule,
   ],
   exports: [SortByComponent, FuzzySearchComponent],

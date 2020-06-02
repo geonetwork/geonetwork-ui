@@ -7,6 +7,7 @@ import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { environment } from '../environments/environment'
 import { storeFreeze } from 'ngrx-store-freeze'
+import { EffectsModule } from '@ngrx/effects'
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
@@ -20,6 +21,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     LibSearchModule,
     StoreModule.forRoot({}, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EffectsModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],
