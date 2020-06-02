@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core'
-import { GnApiComponent } from './gn-api.component'
 
 @NgModule({
-  declarations: [GnApiComponent],
+  declarations: [],
   imports: [],
-  exports: [GnApiComponent],
+  exports: [],
 })
 export class GnApiModule {}
