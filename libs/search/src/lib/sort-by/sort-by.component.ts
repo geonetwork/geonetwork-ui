@@ -26,8 +26,9 @@ export class SortByComponent implements OnInit {
   ngOnInit(): void {}
 
   changeSortBy(criteria: any) {
-    if (typeof criteria === 'string') this.store.dispatch(new SortBy(criteria))
-    else {
+    if (typeof criteria === 'string') {
+      this.store.dispatch(new SortBy(criteria))
+    } else {
       throw new Error(`Unexpected value received: ${criteria}`)
     }
   }

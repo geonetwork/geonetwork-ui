@@ -4,7 +4,7 @@ import * as fromSelectors from './selectors'
 describe('Search Selectors', () => {
   describe('getSearchParams', () => {
     it('should return search params', () => {
-      let result = fromSelectors.getSearchParams.projector({
+      const result = fromSelectors.getSearchParams.projector({
         ...initialState,
         params: {
           any: 'abcd',
@@ -18,7 +18,7 @@ describe('Search Selectors', () => {
 
   describe('getSearchSortBy', () => {
     it('should return sort by criteria', () => {
-      let result = fromSelectors.getSearchSortBy.projector({
+      const result = fromSelectors.getSearchSortBy.projector({
         ...initialState,
         sortBy: 'title',
       })
@@ -29,7 +29,7 @@ describe('Search Selectors', () => {
   describe('getSearchResults', () => {
     it('should return search results', () => {
       const records = [{ title: 'record1' } as any]
-      let result = fromSelectors.getSearchResults.projector({
+      const result = fromSelectors.getSearchResults.projector({
         ...initialState,
         results: records,
       })
@@ -39,7 +39,7 @@ describe('Search Selectors', () => {
 
   describe('getSearchResultsLoading', () => {
     it('should return whether more results are loading', () => {
-      let result = fromSelectors.getSearchResultsLoading.projector({
+      const result = fromSelectors.getSearchResultsLoading.projector({
         ...initialState,
         loadingMore: true,
       })

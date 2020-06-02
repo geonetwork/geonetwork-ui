@@ -13,7 +13,7 @@ export class DropdownSelectorComponent implements OnInit {
     label: string
   }[]
   @Input() selected: any
-  @Output() select = new EventEmitter<any>()
+  @Output() selectValue = new EventEmitter<any>()
 
   constructor() {}
 

@@ -15,7 +15,7 @@ import {
 } from 'rxjs/operators'
 
 @Component({
-  selector: 'lib-autocomplete',
+  selector: 'ui-autocomplete',
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,7 +23,7 @@ import {
 export class AutocompleteComponent implements OnInit {
   @Input() placeholder: string
   @Input() action: () => Observable<string[]>
-  @Output() change = new EventEmitter<string>()
+  @Output() changed = new EventEmitter<string>()
 
   searching: boolean
 

@@ -18,7 +18,7 @@
       role="menuitem"
       *ngFor="let choice of choices"
       ngbDropdownItem
-      (click)="this.select.emit(choice.value)"
+      (click)="this.selectValue.emit(choice.value)"
       [ngClass]="{ active: choice.value === selected }"
     >
       {{ choice.label }}

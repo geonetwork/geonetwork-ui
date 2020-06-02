@@ -214,23 +214,10 @@
             "tsConfig": [
               "webcomponents/search-wc/tsconfig.app.json",
               "webcomponents/search-wc/tsconfig.spec.json",
-              "webcomponents/search-wc/e2e/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
             ]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "webcomponents/search-wc/e2e/protractor.conf.js",
-            "devServerTarget": "search-wc:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "search-wc:serve:production"
-            }
           }
         }
       }
@@ -275,7 +262,7 @@
       "projectType": "library",
       "root": "libs/ui",
       "sourceRoot": "libs/ui/src",
-      "prefix": "lib",
+      "prefix": "ui",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
