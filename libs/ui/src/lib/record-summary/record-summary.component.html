@@ -1,0 +1,22 @@
+<div class="card card-body container">
+  <div class="row">
+    <div
+      class="col-3"
+      [ngStyle]="{
+        background: 'url(' + record.thumbnailUrl + ')',
+        'background-repeat': 'no-repeat'
+      }"
+    ></div>
+    <div class="col-9">
+      <strong>{{ record.name }}</strong>
+      <p class="text-secondary" style="white-space: pre-line;">
+        {{ record.abstract }}
+      </p>
+      <div>
+        <a [href]="record.url" type="button" class="btn btn-sm btn-success">
+          Go to full page
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

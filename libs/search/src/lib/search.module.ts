@@ -8,9 +8,10 @@ import { FuzzySearchComponent } from './fuzzy-search/fuzzy-search.component'
 import { SearchEffects } from './state/effects'
 import { EffectsModule } from '@ngrx/effects'
 import { HttpClientModule } from '@angular/common/http'
+import { ResultsListComponent } from './results-list/results-list.component'
 
 @NgModule({
-  declarations: [SortByComponent, FuzzySearchComponent],
+  declarations: [SortByComponent, FuzzySearchComponent, ResultsListComponent],
   imports: [
     CommonModule,
     StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
@@ -20,6 +21,6 @@ import { HttpClientModule } from '@angular/common/http'
     HttpClientModule,
     UiModule,
   ],
-  exports: [SortByComponent, FuzzySearchComponent],
+  exports: [SortByComponent, FuzzySearchComponent, ResultsListComponent],
 })
 export class LibSearchModule {}
