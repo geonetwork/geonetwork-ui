@@ -41,7 +41,8 @@ storiesOf('UI', module)
     component: RecordSummaryComponent,
     props: {
       record: {
-        name: 'A very nice record',
+        uuid: 'uiiudiiddeaafdjsqmlkfdq',
+        title: 'A very nice record',
         thumbnailUrl:
           'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
         abstract: 'this is a great abstract',
