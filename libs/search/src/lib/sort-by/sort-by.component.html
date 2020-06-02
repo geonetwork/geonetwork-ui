@@ -1,0 +1,7 @@
+<ui-dropdown-selector
+  title="Sort by"
+  [choices]="choices"
+  (select)="changeSortBy($event)"
+  [selected]="currentSortBy$ | async"
+  ariaName="search-sort-by"
+></ui-dropdown-selector>

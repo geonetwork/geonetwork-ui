@@ -1,0 +1,27 @@
+<div class="btn-group" ngbDropdown>
+  <button
+    id="button-{{ ariaName }}"
+    ngbDropdownToggle
+    type="button"
+    class="btn btn-secondary dropdown-toggle"
+    [attr.aria-controls]="'dropdown-' + ariaName"
+  >
+    {{ title }} <span class="caret"></span>
+  </button>
+  <div
+    id="dropdown-{{ ariaName }}"
+    ngbDropdownMenu
+    role="menu"
+    [attr.aria-labelledby]="'button-' + ariaName"
+  >
+    <button
+      role="menuitem"
+      *ngFor="let choice of choices"
+      ngbDropdownItem
+      (click)="this.select.emit(choice.value)"
+      [ngClass]="{ active: choice.value === selected }"
+    >
+      {{ choice.label }}
+    </button>
+  </div>
+</div>
