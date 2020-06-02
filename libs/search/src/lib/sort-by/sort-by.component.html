@@ -1,5 +1,6 @@
 <ui-dropdown-selector
-  title="Sort by"
+  translate
+  title="{{'sortby' | translate}}"
   [choices]="choices"
   (select)="changeSortBy($event)"
   [selected]="currentSortBy$ | async"

@@ -3,6 +3,8 @@ import { select, Store } from '@ngrx/store'
 import { SortBy } from '../state/actions'
 import { SearchState } from '../model'
 import { getSearchSortBy } from '../state/selectors'
+import {TranslateService} from '@ngx-translate/core';
+
 
 @Component({
   selector: 'search-sort-by',
@@ -21,7 +23,14 @@ export class SortByComponent implements OnInit {
   ]
   currentSortBy$ = this.store.pipe(select(getSearchSortBy))
 
-  constructor(private store: Store<SearchState>) {}
+  constructor(private store: Store<SearchState>,
+              translate: TranslateService) {
+    // this language will be used as a fallback when a translation isn't found in the current language
+    translate.setDefaultLang('fr');
+
+    // the lang to use, if the lang isn't available, it will use the current loader to get them
+    translate.use('fr');
+  }
 
   ngOnInit(): void {}
 
