@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core'
+import { GnApiModule } from '@lib/gn-api'
 import { DropdownSelectorComponent } from './dropdown-selector/dropdown-selector.component'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { BrowserModule } from '@angular/platform-browser'
@@ -11,7 +12,7 @@ import { RecordSummaryComponent } from './record-summary/record-summary.componen
     AutocompleteComponent,
     RecordSummaryComponent,
   ],
-  imports: [NgbModule, BrowserModule],
+  imports: [NgbModule, BrowserModule, GnApiModule],
   exports: [
     DropdownSelectorComponent,
     AutocompleteComponent,

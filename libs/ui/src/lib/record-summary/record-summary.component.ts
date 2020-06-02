@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { RecordSimple } from '@lib/search'
+import { Metadata } from '@lib/gn-api'
 
 @Component({
   selector: 'ui-record-summary',
@@ -7,7 +7,7 @@ import { RecordSimple } from '@lib/search'
   styleUrls: ['./record-summary.component.css'],
 })
 export class RecordSummaryComponent implements OnInit {
-  @Input() record: RecordSimple
+  @Input() record: Metadata
 
   constructor() {}
 

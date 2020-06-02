@@ -24,7 +24,7 @@
         "libs/ui/src/index.ts"
       ],
       "@lib/gn-api": [
-        "libs/gn-api/index.ts"
+        "libs/gn-api/src/index.ts"
       ]
     }
   },
