@@ -16,12 +16,12 @@
       "dom"
     ],
     "paths": {
-      "components": [
-        "dist/components/components",
-        "dist/components"
+      "@lib/search": [
+        "libs/search/src/index.ts"
       ],
-      "@ui/components": [
-        "libs/ui/components/src/index.ts"
+      "search": [
+        "dist/search/search",
+        "dist/search"
       ]
     }
   },

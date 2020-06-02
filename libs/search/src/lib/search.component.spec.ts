@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { MdListComponent } from './md-list.component'
+import { SearchComponent } from './search.component'
 
-describe('MdListComponent', () => {
-  let component: MdListComponent
-  let fixture: ComponentFixture<MdListComponent>
+describe('SearchComponent', () => {
+  let component: SearchComponent
+  let fixture: ComponentFixture<SearchComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MdListComponent],
+      declarations: [SearchComponent],
     }).compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MdListComponent)
+    fixture = TestBed.createComponent(SearchComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

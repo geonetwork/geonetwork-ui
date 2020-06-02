@@ -1,17 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { Injector, NgModule } from '@angular/core'
-import { MdListComponent } from '../../../../libs/ui/components/src/lib/md-list/md-list.component'
 
 import { createCustomElement } from '@angular/elements'
+import { SearchComponent } from '@lib/search'
 
 @NgModule({
-  declarations: [MdListComponent],
-  entryComponents: [MdListComponent],
+  declarations: [SearchComponent],
+  entryComponents: [SearchComponent],
   imports: [BrowserModule],
 })
 export class AppModule {
   constructor(private injector: Injector) {
-    const customButton = createCustomElement(MdListComponent, { injector })
+    const customButton = createCustomElement(SearchComponent, { injector })
     customElements.define('custom-button', customButton)
   }
 
