@@ -2,17 +2,20 @@ import { BrowserModule } from '@angular/platform-browser'
 import { Injector, NgModule } from '@angular/core'
 
 import { createCustomElement } from '@angular/elements'
-import { SortByComponent } from '@lib/search'
+import { UiModule } from '@lib/ui'
+import { SearchSnapshotWcComponent } from './search-snapshot-wc/search-snapshot-wc.component'
 
 @NgModule({
-  declarations: [SearchComponent],
-  entryComponents: [SearchComponent],
-  imports: [BrowserModule],
+  declarations: [SearchSnapshotWcComponent],
+  entryComponents: [],
+  imports: [BrowserModule, UiModule],
 })
 export class AppModule {
   constructor(private injector: Injector) {
-    const customButton = createCustomElement(SearchComponent, { injector })
-    customElements.define('custom-button', customButton)
+    const customButton = createCustomElement(SearchSnapshotWcComponent, {
+      injector,
+    })
+    customElements.define('gn-search-snapshot', customButton)
   }
 
   ngDoBootstrap() {}
