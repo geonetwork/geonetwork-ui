@@ -15,6 +15,6 @@ import { FuzzySearchComponent } from './fuzzy-search/fuzzy-search.component'
     }),
     UiModule,
   ],
-  exports: [SortByComponent],
+  exports: [SortByComponent, FuzzySearchComponent],
 })
 export class LibSearchModule {}
