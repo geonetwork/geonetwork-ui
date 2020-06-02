@@ -1,7 +1,7 @@
 # GeoNetwork UI
 
 GeoNetwork UI is a client application to browse your GeoNetwork catalogue.
-GeoNetwork UI is based on [Node](https://nodejs.org/en/)/NPM and [Angular]().
+GeoNetwork UI is based on [Node](https://nodejs.org/en/)/NPM and [Angular](https://angular.io).
 
 Work on this project started as a UI pilot in the scope of a [UI codesprint](https://github.com/geonetwork/core-geonetwork/wiki/GeoNetwork-client-pp-building-blocks-codesprint-1st-and-2nd-June-2020).
 
@@ -28,6 +28,14 @@ cd geonetwork-ui
 - If GeoNetwork does not run on http://localhost:8080/geonetwork, then configure the proper url in ...
 
 - Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. 
+
+## Storybook
+
+[Storybook](https://storybook.js.org) is a technology to explore individual features in the application in an interactive way. Run the storybook experience with this command:
+
+```
+npm run storybook
+```
 
 
 
