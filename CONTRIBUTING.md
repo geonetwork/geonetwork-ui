@@ -75,3 +75,19 @@ cat dist/search-wc/{runtime-es2015,polyfills-es2015,main-es2015}.js | gzip > gn-
     <gn-search-snapshot></gn-search-snapshot>
 ```
 and run your html file in a web server
+
+You can for example 
+-Add a http-server library
+```
+npm install http-server
+```
+add a new scripts in your `package.json`
+
+```shell script
+ "serve-wc": "http-server --gzip",
+```
+And run it
+```
+npm run serve-wc
+```
+If you have your html file at the root of the repo, you can serve it to test your web component
