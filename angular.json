@@ -270,7 +270,7 @@
         }
       }
     },
-    "ui": {
+    "lib-ui": {
       "projectType": "library",
       "root": "libs/ui",
       "sourceRoot": "libs/ui/src",
