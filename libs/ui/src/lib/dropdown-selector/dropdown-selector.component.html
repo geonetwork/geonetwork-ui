@@ -21,7 +21,7 @@
       (click)="this.select.emit(choice.value)"
       [ngClass]="{ active: choice.value === selected }"
     >
-      {{ choice.label }}
+      {{ choice.label | translate }}
     </button>
   </div>
 </div>
