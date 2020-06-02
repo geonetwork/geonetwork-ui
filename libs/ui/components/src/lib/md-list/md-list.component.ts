@@ -10,13 +10,7 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core'
       <span class="custom-class">{{ title }}</span>
     </div>
   `,
-  styles: [
-    `
-      .custom-class {
-        font-weight: bold;
-      }
-    `,
-  ],
+  styleUrls: ['./md-list.component.css'],
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class MdListComponent implements OnInit {

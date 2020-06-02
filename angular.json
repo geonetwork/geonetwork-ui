@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "libs/ui",
+  "newProjectRoot": "webcomponents",
   "projects": {
     "search": {
       "projectType": "application",
@@ -151,6 +151,124 @@
             "exclude": [
               "**/node_modules/**"
             ]
+          }
+        }
+      }
+    },
+    "search-wc": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "webcomponents/search-wc",
+      "sourceRoot": "webcomponents/search-wc/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/search-wc",
+            "index": "webcomponents/search-wc/src/index.html",
+            "main": "webcomponents/search-wc/src/main.ts",
+            "polyfills": "webcomponents/search-wc/src/polyfills.ts",
+            "tsConfig": "webcomponents/search-wc/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "webcomponents/search-wc/src/favicon.ico",
+              "webcomponents/search-wc/src/assets"
+            ],
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "webcomponents/search-wc/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "webcomponents/search-wc/src/environments/environment.ts",
+                  "with": "webcomponents/search-wc/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1024kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "search-wc:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "search-wc:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "search-wc:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "webcomponents/search-wc/src/test.ts",
+            "polyfills": "webcomponents/search-wc/src/polyfills.ts",
+            "tsConfig": "webcomponents/search-wc/tsconfig.spec.json",
+            "karmaConfig": "webcomponents/search-wc/karma.conf.js",
+            "assets": [
+              "webcomponents/search-wc/src/favicon.ico",
+              "webcomponents/search-wc/src/assets"
+            ],
+            "styles": [
+              "webcomponents/search-wc/src/styles.css"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "webcomponents/search-wc/tsconfig.app.json",
+              "webcomponents/search-wc/tsconfig.spec.json",
+              "webcomponents/search-wc/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "webcomponents/search-wc/e2e/protractor.conf.js",
+            "devServerTarget": "search-wc:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "search-wc:serve:production"
+            }
           }
         }
       }
