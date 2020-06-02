@@ -3,10 +3,10 @@ export interface SearchParams {
 }
 
 export interface RecordSimple {
-  name: string;
-  abstract: string;
-  url: string;
-  thumbnailUrl: string;
+  name: string
+  abstract: string
+  url: string
+  thumbnailUrl: string
 }
 
 export interface SearchState {

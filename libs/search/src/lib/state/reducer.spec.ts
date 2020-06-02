@@ -46,21 +46,27 @@ describe('Search Reducer', () => {
 
   describe('AddResults action', () => {
     it('should add results to the list', () => {
-      const payload = [{title: 'record1'} as any, {title: 'record2'} as any]
+      const payload = [{ title: 'record1' } as any, { title: 'record2' } as any]
       const action = new fromActions.AddResults(payload)
-      const state = reducer({
-        ...initialState,
-        results: [{title: 'abcd'} as any]
-      }, action)
-      expect(state.results).toEqual([{title: 'abcd'} as any, ...payload])
+      const state = reducer(
+        {
+          ...initialState,
+          results: [{ title: 'abcd' } as any],
+        },
+        action
+      )
+      expect(state.results).toEqual([{ title: 'abcd' } as any, ...payload])
     })
     it('should remove the loadingMore flag', () => {
-      const payload = [{title: 'record1'} as any]
+      const payload = [{ title: 'record1' } as any]
       const action = new fromActions.AddResults(payload)
-      const state = reducer({
-        ...initialState,
-        loadingMore: true
-      }, action)
+      const state = reducer(
+        {
+          ...initialState,
+          loadingMore: true,
+        },
+        action
+      )
       expect(state.loadingMore).toEqual(false)
     })
   })
@@ -68,10 +74,13 @@ describe('Search Reducer', () => {
   describe('ClearResults action', () => {
     it('should add results to the list', () => {
       const action = new fromActions.ClearResults()
-      const state = reducer({
-        ...initialState,
-        results: [{title: 'abcd'} as any]
-      }, action)
+      const state = reducer(
+        {
+          ...initialState,
+          results: [{ title: 'abcd' } as any],
+        },
+        action
+      )
       expect(state.results).toEqual([])
     })
   })

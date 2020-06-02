@@ -37,4 +37,9 @@ export class RequestMoreResults implements Action {
   constructor() {}
 }
 
-export type SearchActions = UpdateParams | SortBy | AddResults | ClearResults | RequestMoreResults
+export type SearchActions =
+  | UpdateParams
+  | SortBy
+  | AddResults
+  | ClearResults
+  | RequestMoreResults

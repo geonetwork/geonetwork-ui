@@ -28,10 +28,10 @@ describe('Search Selectors', () => {
 
   describe('getSearchResults', () => {
     it('should return search results', () => {
-      const records = [{title:'record1'} as any]
+      const records = [{ title: 'record1' } as any]
       let result = fromSelectors.getSearchResults.projector({
         ...initialState,
-        results: records
+        results: records,
       })
       expect(result).toEqual(records)
     })
@@ -41,7 +41,7 @@ describe('Search Selectors', () => {
     it('should return whether more results are loading', () => {
       let result = fromSelectors.getSearchResultsLoading.projector({
         ...initialState,
-        loadingMore: true
+        loadingMore: true,
       })
       expect(result).toEqual(true)
     })

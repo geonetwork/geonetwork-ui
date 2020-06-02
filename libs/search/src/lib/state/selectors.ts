@@ -25,4 +25,3 @@ export const getSearchResultsLoading = createSelector(
   getSearchState,
   (state: SearchState) => state.loadingMore
 )
-
