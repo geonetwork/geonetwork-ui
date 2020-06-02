@@ -1,7 +1,7 @@
 import { initialState } from './reducer'
 import * as fromSelectors from './selectors'
 
-describe('Map Selectors', () => {
+describe('Search Selectors', () => {
   describe('getSearchParams', () => {
     it('should return search params', () => {
       let result = fromSelectors.getSearchParams.projector({
@@ -23,6 +23,27 @@ describe('Map Selectors', () => {
         sortBy: 'title',
       })
       expect(result).toEqual('title')
+    })
+  })
+
+  describe('getSearchResults', () => {
+    it('should return search results', () => {
+      const records = [{title:'record1'} as any]
+      let result = fromSelectors.getSearchResults.projector({
+        ...initialState,
+        results: records
+      })
+      expect(result).toEqual(records)
+    })
+  })
+
+  describe('getSearchResultsLoading', () => {
+    it('should return whether more results are loading', () => {
+      let result = fromSelectors.getSearchResultsLoading.projector({
+        ...initialState,
+        loadingMore: true
+      })
+      expect(result).toEqual(true)
     })
   })
 })

@@ -5,6 +5,8 @@ export const SEARCH_FEATURE_KEY = 'searchState'
 
 export const initialState: SearchState = {
   params: {},
+  results: [],
+  loadingMore: false
 }
 
 export function reducer(
@@ -24,6 +26,28 @@ export function reducer(
       return {
         ...state,
         sortBy: action.sortBy,
+      }
+    }
+    case fromActions.ADD_RESULTS: {
+      return {
+        ...state,
+        results: [
+          ...state.results,
+          ...action.payload
+        ],
+        loadingMore: false
+      }
+    }
+    case fromActions.CLEAR_RESULTS: {
+      return {
+        ...state,
+        results: []
+      }
+    }
+    case fromActions.REQUEST_MORE_RESULTS: {
+      return {
+        ...state,
+        loadingMore: true
       }
     }
   }

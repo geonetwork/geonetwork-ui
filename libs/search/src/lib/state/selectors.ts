@@ -15,3 +15,14 @@ export const getSearchSortBy = createSelector(
   getSearchState,
   (state: SearchState) => state.sortBy
 )
+
+export const getSearchResults = createSelector(
+  getSearchState,
+  (state: SearchState) => state.results
+)
+
+export const getSearchResultsLoading = createSelector(
+  getSearchState,
+  (state: SearchState) => state.loadingMore
+)
+
