@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { Injector, NgModule } from '@angular/core'
 
 import { createCustomElement } from '@angular/elements'
-import { SearchComponent } from '@lib/search'
+import { SortByComponent } from '@lib/search'
 
 @NgModule({
   declarations: [SearchComponent],

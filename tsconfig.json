@@ -11,18 +11,10 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "lib": ["es2018", "dom"],
     "paths": {
-      "@lib/search": [
-        "libs/search/src/index.ts"
-      ],
-      "search": [
-        "dist/search/search",
-        "dist/search"
-      ]
+      "@lib/search": ["libs/search/src/index.ts"],
+      "@lib/ui": ["libs/ui/src/index.ts"]
     }
   },
   "angularCompilerOptions": {
