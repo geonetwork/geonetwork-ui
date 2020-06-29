@@ -5,6 +5,9 @@ import { moduleMetadata, storiesOf } from '@storybook/angular'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { BrowserModule } from '@angular/platform-browser'
 import { RecordSummaryComponent } from '../src/lib/record-summary/record-summary.component'
+import {withKnobs, text, object} from '@storybook/addon-knobs'
+import { action } from '@storybook/addon-actions'
+
 
 const moduleMetadatas = {
   declarations: [DropdownSelectorComponent, AutocompleteComponent],
@@ -13,21 +16,23 @@ const moduleMetadatas = {
 
 storiesOf('UI', module)
   .addDecorator(moduleMetadata(moduleMetadatas))
+  .addDecorator(withKnobs)
   .add('DropdownSelectorComponent', () => ({
     component: DropdownSelectorComponent,
     props: {
-      title: 'my title',
-      ariaName: 'aria name',
-      choices: [
+      title: text('title', 'my title'),
+      ariaName: text('ariaName','aria name'),
+      choices: object('choices', [
         {
-          label: 'last changed',
-          value: 'lastUpdated',
+          "label": "last changed",
+          "value": "lastUpdated",
         },
         {
-          label: 'popularity',
-          value: 'popularity',
+          "label": "popularity",
+          "value": "popularity",
         },
-      ],
+      ]),
+      selectValue: action('output')
     },
   }))
   .add('AutocompleteComponent', () => ({
