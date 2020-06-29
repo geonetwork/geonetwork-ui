@@ -2,17 +2,20 @@ import { AutocompleteComponent } from '../src/lib/autocomplete/autocomplete.comp
 import { of } from 'rxjs'
 import { DropdownSelectorComponent } from '../src'
 import { moduleMetadata, storiesOf } from '@storybook/angular'
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { BrowserModule } from '@angular/platform-browser'
 import { RecordSummaryComponent } from '../src/lib/record-summary/record-summary.component'
-import {withKnobs, text, object} from '@storybook/addon-knobs'
+import { withKnobs, text, object, select } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import { withA11y } from '@storybook/addon-a11y';
-
+import { withA11y } from '@storybook/addon-a11y'
+import { ButtonComponent } from '../src/lib/button/button.component'
 
 const moduleMetadatas = {
-  declarations: [DropdownSelectorComponent, AutocompleteComponent],
-  imports: [NgbModule, BrowserModule],
+  declarations: [
+    DropdownSelectorComponent,
+    AutocompleteComponent,
+    ButtonComponent,
+  ],
+  imports: [BrowserModule],
 }
 
 storiesOf('UI', module)
@@ -23,18 +26,18 @@ storiesOf('UI', module)
     component: DropdownSelectorComponent,
     props: {
       title: text('title', 'my title'),
-      ariaName: text('ariaName','aria name'),
+      ariaName: text('ariaName', 'aria name'),
       choices: object('choices', [
         {
-          "label": "last changed",
-          "value": "lastUpdated",
+          label: 'last changed',
+          value: 'lastUpdated',
         },
         {
-          "label": "popularity",
-          "value": "popularity",
+          label: 'popularity',
+          value: 'popularity',
         },
       ]),
-      selectValue: action('output')
+      selectValue: action('output'),
     },
   }))
   .add('AutocompleteComponent', () => ({
@@ -57,4 +60,11 @@ storiesOf('UI', module)
       },
     },
     parameters: {},
+  }))
+  .add('ButtonComponent', () => ({
+    template: '<ui-button [type]="type">{{content}}</ui-button>',
+    props: {
+      type: select('buttonType', ['primary', 'secondary', 'default']),
+      content: text('buttonContent', 'My Button'),
+    },
   }))

@@ -1,23 +1,19 @@
-<div class="btn-group" ngbDropdown>
-  <button
+<div>
+  <ui-button
     id="button-{{ ariaName }}"
-    ngbDropdownToggle
-    type="button"
-    class="btn btn-secondary dropdown-toggle"
+    type="default"
     [attr.aria-controls]="'dropdown-' + ariaName"
   >
     {{ title }} <span class="caret"></span>
-  </button>
+  </ui-button>
   <div
     id="dropdown-{{ ariaName }}"
-    ngbDropdownMenu
     role="menu"
     [attr.aria-labelledby]="'button-' + ariaName"
   >
     <button
       role="menuitem"
       *ngFor="let choice of choices"
-      ngbDropdownItem
       (click)="this.selectValue.emit(choice.value)"
       [ngClass]="{ active: choice.value === selected }"
     >

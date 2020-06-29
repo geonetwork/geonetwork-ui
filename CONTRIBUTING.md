@@ -6,26 +6,40 @@
 
 ## Running GeoNetwork UI
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. 
+Run `npm run start` for a dev server. Navigate to `http://localhost:4200/`. 
 The app will automatically reload if you change any of the source files.
 
 
 ## Testing and Building
 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
 
-Run `ng test` to execute the unit tests via 
+Run `npn run test` to execute the unit tests via Jest.
 
 
 ## Contributing code
+
+### linting & formatting
+
+To run the lint step, use `npm run lint`.
+
+To check whether your code is formatted properly, use `npm run format:check`.
+
+If you want Prettier to run on all the code and make sure everything is formatted, run `npm run format:fix`.
+**This should be done before committint.**
 
 ### Angular CLI
 
 ### Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run `ng generate component component-name --project=<project name>` to generate a new component. You will have to specify a project, which can be:
+* `app-search`: main app
+* `lib-search`: search-related smart components
+* `lib-ui`: presentation components
+
+You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 Common command to generate a component in a lib
 ```shell script
