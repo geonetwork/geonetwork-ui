@@ -33,10 +33,11 @@ export class ButtonComponent implements OnInit {
   get textColor() {
     switch (this.type) {
       case 'default':
+        return 'button-text-default-hover'
       case 'secondary':
-        return 'black'
+        return 'button-text-secondary-hover'
       case 'primary':
-        return 'white'
+        return 'button-text-primary'
     }
   }
 

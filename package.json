@@ -14,7 +14,7 @@
     "e2e": "ng e2e",
     "storybook": "start-storybook",
     "prestart": "npm run generate-css",
-    "generate-css": "tailwindcss build libs/ui/src/styles.css -o libs/ui/src/styles-generated.css"
+    "generate-css": "tailwindcss build libs/ui/src/tailwind.css -o libs/ui/src/tailwind-generated.css"
   },
   "private": true,
   "dependencies": {

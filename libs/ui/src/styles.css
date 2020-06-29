@@ -1,21 +1,18 @@
-/* tailwind.css file */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import './tailwind-generated.css';
 
 :root {
   --color-button-primary: #6b6bf5;
   --color-button-primary-hover: #6464e4;
-  --color-button-text-primary: grey;
-  --color-button-text-primary-hover: grey;
+  --color-button-text-primary: #ffffff;
+  --color-button-text-primary-hover: #ffffff;
   --color-button-secondary: #d7a53d;
   --color-button-secondary-hover: #d7a53d;
-  --color-button-text-secondary: grey;
-  --color-button-text-secondary-hover: grey;
+  --color-button-text-secondary: #34280d;
+  --color-button-text-secondary-hover: #34280d;
   --color-button-default: #d7d7d7;
   --color-button-default-hover: #cecece;
-  --color-button-text-default: grey;
-  --color-button-text-default-hover: grey;
+  --color-button-text-default: #191919;
+  --color-button-text-default-hover: #191919;
   --color-border-primary: grey;
   --color-border-primary-hover: grey;
   --color-border-secondary: grey;
@@ -27,4 +24,8 @@
   --color-text-link: #6b6bf5;
   --color-text-link-hover: #6464e4;
   --color-background-default: #ffffff;
+}
+
+body {
+  background-color: var(--color-background-default);
 }
