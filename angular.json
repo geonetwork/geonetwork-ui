@@ -25,7 +25,7 @@
             ],
             "styles": [
               "apps/search/src/styles.css",
-              "libs/ui/src/styles.css"
+              "libs/ui/src/styles-generated.css"
             ],
             "scripts": []
           },
@@ -139,7 +139,8 @@
               "webcomponents/search-wc/src/assets"
             ],
             "styles": [
-              "webcomponents/search-wc/src/styles.css"
+              "webcomponents/search-wc/src/styles.css",
+              "libs/ui/src/styles-generated.css"
             ],
             "scripts": []
           },

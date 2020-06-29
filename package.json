@@ -13,7 +13,8 @@
     "format:fix": "prettier \"**/*.{ts,html}\" --write",
     "e2e": "ng e2e",
     "storybook": "start-storybook",
-    "prestart": "ngtw build"
+    "prestart": "npm run generate-css",
+    "generate-css": "tailwindcss build libs/ui/src/styles.css -o libs/ui/src/styles-generated.css"
   },
   "private": true,
   "dependencies": {
@@ -60,7 +61,6 @@
     "jasmine-spec-reporter": "~5.0.0",
     "jest": "^26.0.1",
     "ng-packagr": "^10.0.0",
-    "ng-tailwindcss": "^2.2.2",
     "ngrx-store-freeze": "^0.2.4",
     "protractor": "~7.0.0",
     "tailwindcss": "^1.4.6",
