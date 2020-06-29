@@ -213,7 +213,7 @@
           "options": {
             "tsConfig": [
               "webcomponents/search-wc/tsconfig.app.json",
-              "webcomponents/search-wc/tsconfig.spec.json",
+              "webcomponents/search-wc/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
