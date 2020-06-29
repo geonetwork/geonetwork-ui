@@ -18,6 +18,7 @@ import { ButtonComponent } from './button/button.component'
     DropdownSelectorComponent,
     AutocompleteComponent,
     RecordSummaryComponent,
+    ButtonComponent,
   ],
 })
 export class UiModule {}
