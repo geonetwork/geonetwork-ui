@@ -2,7 +2,6 @@ import { AutocompleteComponent } from '../src/lib/autocomplete/autocomplete.comp
 import { of } from 'rxjs'
 import { DropdownSelectorComponent } from '../src'
 import { moduleMetadata, storiesOf } from '@storybook/angular'
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { BrowserModule } from '@angular/platform-browser'
 import { RecordSummaryComponent } from '../src/lib/record-summary/record-summary.component'
 import {withKnobs, text, object} from '@storybook/addon-knobs'
@@ -12,7 +11,7 @@ import { withA11y } from '@storybook/addon-a11y';
 
 const moduleMetadatas = {
   declarations: [DropdownSelectorComponent, AutocompleteComponent],
-  imports: [NgbModule, BrowserModule],
+  imports: [BrowserModule],
 }
 
 storiesOf('UI', module)

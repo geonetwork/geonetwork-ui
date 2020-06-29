@@ -24,7 +24,6 @@
               "apps/search/src/assets"
             ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "apps/search/src/styles.css"
             ],
             "scripts": []
@@ -139,7 +138,6 @@
               "webcomponents/search-wc/src/assets"
             ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "webcomponents/search-wc/src/styles.css"
             ],
             "scripts": []
