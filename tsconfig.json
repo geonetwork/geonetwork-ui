@@ -1,35 +1,29 @@
+/*
+  This is a "Solution Style" tsconfig.json file, and is used by editors and TypeScript’s language server to improve development experience.
+  It is not intended to be used to perform a compilation.
+
+  To learn more about this file see: https://angular.io/config/solution-tsconfig.
+*/
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "target": "es2015",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
-    "paths": {
-      "@lib/search": [
-        "libs/search/src/index.ts"
-      ],
-      "@lib/ui": [
-        "libs/ui/src/index.ts"
-      ],
-      "@lib/gn-api": [
-        "libs/gn-api/src/index.ts"
-      ]
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/search/tsconfig.app.json"
+    },
+    {
+      "path": "./webcomponents/search-wc/tsconfig.app.json"
+    },
+    {
+      "path": "./webcomponents/search-wc/tsconfig.spec.json"
+    },
+    {
+      "path": "./libs/search/tsconfig.lib.json"
+    },
+    {
+      "path": "./libs/ui/tsconfig.lib.json"
+    },
+    {
+      "path": "./libs/gn-api/tsconfig.lib.json"
     }
-  },
-  "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
-  }
+  ]
 }
