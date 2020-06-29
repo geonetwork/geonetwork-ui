@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { RecordSummaryComponent } from '../src/lib/record-summary/record-summary.component'
 import {withKnobs, text, object} from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
+import { withA11y } from '@storybook/addon-a11y';
 
 
 const moduleMetadatas = {
@@ -17,6 +18,7 @@ const moduleMetadatas = {
 storiesOf('UI', module)
   .addDecorator(moduleMetadata(moduleMetadatas))
   .addDecorator(withKnobs)
+  .addDecorator(withA11y)
   .add('DropdownSelectorComponent', () => ({
     component: DropdownSelectorComponent,
     props: {
