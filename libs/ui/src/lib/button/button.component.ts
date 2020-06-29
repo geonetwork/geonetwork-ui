@@ -11,22 +11,22 @@ export class ButtonComponent implements OnInit {
   get color() {
     switch (this.type) {
       case 'default':
-        return 'orange-100'
+        return 'btn-default'
       case 'primary':
-        return 'blue-500'
+        return 'btn-primary'
       case 'secondary':
-        return 'indigo-200'
+        return 'btn-secondary'
     }
   }
 
   get hoverColor() {
     switch (this.type) {
       case 'default':
-        return 'orange-200'
+        return 'btn-default-hover'
       case 'primary':
-        return 'blue-600'
+        return 'btn-primary-hover'
       case 'secondary':
-        return 'indigo-300'
+        return 'btn-secondary-hover'
     }
   }
 
