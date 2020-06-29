@@ -12,7 +12,8 @@
     "format:check": "prettier \"**/*.{ts,html}\" --check",
     "format:fix": "prettier \"**/*.{ts,html}\" --write",
     "e2e": "ng e2e",
-    "storybook": "start-storybook"
+    "storybook": "start-storybook",
+    "prestart": "ngtw build"
   },
   "private": true,
   "dependencies": {
@@ -59,8 +60,10 @@
     "jasmine-spec-reporter": "~5.0.0",
     "jest": "^26.0.1",
     "ng-packagr": "^10.0.0",
+    "ng-tailwindcss": "^2.2.2",
     "ngrx-store-freeze": "^0.2.4",
     "protractor": "~7.0.0",
+    "tailwindcss": "^1.4.6",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "tslint-config-prettier": "^1.18.0",

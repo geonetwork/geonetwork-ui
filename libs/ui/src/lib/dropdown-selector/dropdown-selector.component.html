@@ -1,11 +1,11 @@
 <div>
-  <button
+  <ui-button
     id="button-{{ ariaName }}"
-    type="button"
+    type="default"
     [attr.aria-controls]="'dropdown-' + ariaName"
   >
     {{ title }} <span class="caret"></span>
-  </button>
+  </ui-button>
   <div
     id="dropdown-{{ ariaName }}"
     role="menu"

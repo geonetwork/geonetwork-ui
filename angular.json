@@ -24,7 +24,8 @@
               "apps/search/src/assets"
             ],
             "styles": [
-              "apps/search/src/styles.css"
+              "apps/search/src/styles.css",
+              "libs/ui/src/styles.css"
             ],
             "scripts": []
           },
