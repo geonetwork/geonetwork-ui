@@ -15,7 +15,8 @@
     "e2e": "ng e2e",
     "prestart": "npm run generate-css",
     "prebuild": "NODE_ENV=production npm run generate-css",
-    "generate-css": "tailwindcss build libs/ui/src/tailwind.css -o libs/ui/src/tailwind-generated.css"
+    "generate-css": "tailwindcss build libs/ui/src/tailwind.css -o libs/ui/src/tailwind-generated.css",
+    "generate-api": "tools/generate-api.sh"
   },
   "private": true,
   "dependencies": {
@@ -47,6 +48,7 @@
     "@ngrx/entity": "^9.2.0",
     "@ngrx/store": "^9.2.0",
     "@ngrx/store-devtools": "^9.2.0",
+    "@openapitools/openapi-generator-cli": "^1.0.15-5.0.0-beta",
     "@storybook/addon-a11y": "^5.3.19",
     "@storybook/addon-actions": "^5.3.19",
     "@storybook/addon-knobs": "^5.3.19",
