@@ -1,4 +1,4 @@
-name: Lint, Test, Build
+name: Run lint & test, publish storybook
 on:
   push:
     branches:
@@ -42,3 +42,36 @@ jobs:
 
       - name: Attempt production build
         run: npm run build
+
+  storybook:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Cache node modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install
+        run: npm ci
+
+      - name: Build webcomponents
+        run: npm run build -- --project=search-wc
+
+      - name: Build storybook
+        run: npx build-storybook -o .out --quiet
+
+      - name: deploy to gh pages
+        run: npx gh-pages -d .out -e ${GITHUB_REF##*/}
