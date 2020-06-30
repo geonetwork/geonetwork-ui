@@ -7,7 +7,6 @@
     "build": "ng build",
     "test": "ng test",
     "storybook": "start-storybook -p 4201",
-    "storybook-wc": "start-storybook -p 4201 --config-dir webcomponents/.storybook",
     "package": "cat dist/search-wc/{runtime-es2015,polyfills-es2015,main-es2015}.js | gzip > elements.js.gz",
     "serve-wc": "http-server --gzip",
     "lint": "ng lint",
