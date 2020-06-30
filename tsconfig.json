@@ -24,6 +24,12 @@
     },
     {
       "path": "./libs/gn-api/tsconfig.lib.json"
+    },
+    {
+      "path": "./apps/formatter/tsconfig.app.json"
+    },
+    {
+      "path": "./apps/formatter/tsconfig.spec.json"
     }
   ]
 }
