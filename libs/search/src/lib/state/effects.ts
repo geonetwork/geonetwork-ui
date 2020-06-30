@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core'
+import { SearchApiService } from '@lib/gn-api'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
+import { SearchResponse } from 'elasticsearch'
 import {
   AddResults,
   ClearResults,
@@ -20,6 +22,7 @@ export class SearchEffects {
   constructor(
     private actions$: Actions,
     private http: HttpClient,
+    private searchService: SearchApiService,
     private store$: Store<SearchState>
   ) {}
 
@@ -38,18 +41,22 @@ export class SearchEffects {
         this.store$.pipe(select(getSearchParams))
       ),
       switchMap(([_, sortBy, params]) =>
-        this.http.post('/geonetwork/srv/api/search/records/_search', {
-          from: 0,
-          size: RESULTS_PAGE_SIZE,
-          sort: sortBy ? [sortBy] : undefined,
-          query: {
-            bool: { must: [{ query_string: { query: params.any || '*' } }] },
-          },
-        })
+        this.searchService.call(
+          '_search',
+          'bucket',
+          JSON.stringify({
+            from: 0,
+            size: RESULTS_PAGE_SIZE,
+            sort: sortBy ? [sortBy] : undefined,
+            query: {
+              bool: { must: [{ query_string: { query: params.any || '*' } }] },
+            },
+          })
+        )
       ),
-      map<any, RecordSimple[]>((response: any) =>
+      map<any, RecordSimple[]>((response: SearchResponse<any>) =>
         response.hits.hits.map((hit) => ({
-          name: hit._source.resourceTitleObject
+          title: hit._source.resourceTitleObject
             ? hit._source.resourceTitleObject.default
             : 'no title',
           abstract: hit._source.resourceAbstractObject

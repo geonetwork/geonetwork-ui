@@ -3,7 +3,7 @@ export interface SearchParams {
 }
 
 export interface RecordSimple {
-  name: string
+  title: string
   abstract: string
   url: string
   thumbnailUrl: string
