@@ -49,8 +49,6 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          persist-credentials: false
 
       - name: Cache node modules
         uses: actions/cache@v1
@@ -73,5 +71,19 @@ jobs:
       - name: Build storybook
         run: npx build-storybook -o .out --quiet
 
+      - run: echo "::set-env name=BRANCH_NAME::${GITHUB_HEAD_REF#refs/heads/}"
+
       - name: deploy to gh pages
-        run: npx gh-pages -d .out -e ${GITHUB_REF##*/}
+        run: |
+          echo "Deploying to directory: ${{env.BRANCH_NAME}}"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          npx gh-pages --dist .out --dest ${{env.BRANCH_NAME}} --add --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
+
+      - name: add PR comment
+        uses: unsplash/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          msg: 'Link to the Storybook: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}'
+          check_for_duplicate_msg: true
