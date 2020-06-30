@@ -55,6 +55,7 @@
     "@storybook/addon-notes": "^5.3.19",
     "@storybook/angular": "^5.3.19",
     "@storybook/cli": "^5.3.19",
+    "@types/elasticsearch": "^5.0.36",
     "@types/jest": "^25.2.3",
     "@types/node": "^12.11.1",
     "babel-loader": "^8.1.0",
