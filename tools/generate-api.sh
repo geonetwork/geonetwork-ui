@@ -13,4 +13,4 @@ sed -i "s/' | }/' }/" libs/gn-api/src/lib/openapi/**/*.ts
 sed -i "s/SetApiModel/Set/" libs/gn-api/src/lib/openapi/**/*.ts
 sed -i "s/import { Set } from '.\/set.api.model'//" libs/gn-api/src/lib/openapi/**/*.ts
 
-#prettier --write 'libs/gn-api/src/lib/openapi/**/*.ts'
+prettier --write 'libs/gn-api/src/lib/openapi/**/*.ts'
