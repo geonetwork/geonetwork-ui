@@ -1,5 +1,16 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
-import { from, of } from 'rxjs'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core'
+import { Subscription } from 'rxjs'
+import { UpdateParams } from '../state/actions'
+import { select, Store } from '@ngrx/store'
+import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators'
+import { TextInputComponent } from '../../../../ui/src/lib/text-input/text-input.component'
+import { getSearchParams } from '../state/selectors'
+import { SearchState } from '../model'
 
 @Component({
   selector: 'search-fuzzy-search',
@@ -7,9 +18,26 @@ import { from, of } from 'rxjs'
   styleUrls: ['./fuzzy-search.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FuzzySearchComponent implements OnInit {
-  results$ = (term: string) => of(['Hello', 'World'])
-  constructor() {}
+export class FuzzySearchComponent implements OnDestroy {
+  @ViewChild('searchText') searchText: TextInputComponent
 
-  ngOnInit(): void {}
+  currentTextSearch$ = this.store.pipe(
+    select(getSearchParams),
+    map((params) => params.any || '')
+  )
+  subs = new Subscription()
+
+  constructor(private store: Store<SearchState>) {}
+
+  ngAfterViewInit(): void {
+    this.subs.add(
+      this.searchText.change.pipe(debounceTime(400)).subscribe((value) => {
+        this.store.dispatch(new UpdateParams({ any: value }))
+      })
+    )
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe()
+  }
 }
