@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
+import { BASE_PATH } from '@lib/gn-api'
 import { LibSearchModule } from '@lib/search'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -23,7 +24,12 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: BASE_PATH,
+      useValue: '/geonetwork/srv/api',
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
