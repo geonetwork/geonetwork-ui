@@ -105,3 +105,22 @@ And run it
 npm run serve-wc
 ```
 If you have your html file at the root of the repo, you can serve it to test your web component
+
+### Openapi client generation
+
+Geonetwork publish an `openapi` rest api, and expose an `openapi` specification document.
+This document is temporarily stored in `tools/spec.yml`, but in the end, should point on a geonetwork openapi documentation url.
+
+From this specification file, we are using [openapi-generator](https://openapi-generator.tech/) to generate a `typescript-angular` client for our application.
+The generated client is stored in the library `gn-api`. It contains the services and model definitions.
+
+The api `baseUrl` is stored in the api specification document, and overwritten via Angular injection
+```typescript
+    {
+      provide: BASE_PATH,
+      useValue: '/geonetwork/srv/api',
+    },
+```
+This might need to be changed for further deployment, it is used in dev mode environment only for the moment.
+
+To generate the client, run `npm run generate-api`
