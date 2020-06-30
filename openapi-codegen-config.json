@@ -1,0 +1,8 @@
+{
+  "supportES6": true,
+  "ngVersion": "10.0.0",
+  "modelFileSuffix": ".api.model",
+  "modelSuffix": "ApiModel",
+  "serviceSuffix": "ApiService",
+  "serviceFileSuffix": ".api.service"
+}
