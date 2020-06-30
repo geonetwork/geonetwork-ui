@@ -13,12 +13,12 @@
   --color-button-default-hover: #cecece;
   --color-button-text-default: #191919;
   --color-button-text-default-hover: #191919;
-  --color-border-primary: grey;
-  --color-border-primary-hover: grey;
-  --color-border-secondary: grey;
-  --color-border-secondary-hover: grey;
-  --color-border-default: grey;
-  --color-border-default-hover: grey;
+  --color-border-primary: #6b6bf5;
+  --color-border-primary-hover: #6b6bf5;
+  --color-border-secondary: #d7a53d;
+  --color-border-secondary-hover: #d7a53d;
+  --color-border-default: #f2f2f2;
+  --color-border-default-hover: #f2f2f2;
   --color-text-primary: #323232;
   --color-text-secondary: #787878;
   --color-text-link: #6b6bf5;
