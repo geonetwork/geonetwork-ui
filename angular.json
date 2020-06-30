@@ -128,7 +128,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/search-wc",
+            "outputPath": "webcomponents/search-wc/dist",
             "index": "webcomponents/search-wc/src/index.html",
             "main": "webcomponents/search-wc/src/main.ts",
             "polyfills": "webcomponents/search-wc/src/polyfills.ts",
@@ -139,7 +139,6 @@
               "webcomponents/search-wc/src/assets"
             ],
             "styles": [
-              "libs/ui/src/styles.css",
               "webcomponents/search-wc/src/styles.css"
             ],
             "scripts": []

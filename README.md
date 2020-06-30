@@ -41,6 +41,10 @@ meaning they can be changed at runtime. A custom configuration for TailwindCSS h
 
 To do: generate this using OpenAPI
 
+#### `webcomponents`: Embeddable webcomponents
+
+See [the specific README file](webcomponents/).
+
 ## To document
 
 - How to specify the GN url to use (currently hardcoded in the dev proxy: https://apps.titellus.net/geonetwork)
