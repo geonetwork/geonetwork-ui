@@ -369,7 +369,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/formatter",
+            "outputPath": "dist/formatter/browser",
             "index": "apps/formatter/src/index.html",
             "main": "apps/formatter/src/main.ts",
             "polyfills": "apps/formatter/src/polyfills.ts",
@@ -431,9 +431,56 @@
           "options": {
             "browserTarget": "formatter:build"
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/formatter/server",
+            "main": "apps/formatter/server.ts",
+            "tsConfig": "apps/formatter/tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "apps/formatter/src/environments/environment.ts",
+                  "with": "apps/formatter/src/environments/environment.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": true
+            }
+          }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "formatter:build",
+            "serverTarget": "formatter:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "formatter:build:production",
+              "serverTarget": "formatter:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "formatter:build:production",
+            "serverTarget": "formatter:server:production",
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {}
+          }
         }
       }
     }
   },
-  "defaultProject": "app-search"
+  "defaultProject": "formatter"
 }

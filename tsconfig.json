@@ -30,6 +30,9 @@
     },
     {
       "path": "./apps/formatter/tsconfig.spec.json"
+    },
+    {
+      "path": "./apps/formatter/tsconfig.server.json"
     }
   ]
 }
