@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
@@ -18,7 +19,7 @@ import { SearchState } from '../model'
   styleUrls: ['./fuzzy-search.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FuzzySearchComponent implements OnDestroy {
+export class FuzzySearchComponent implements OnDestroy, AfterViewInit {
   @ViewChild('searchText') searchText: TextInputComponent
 
   currentTextSearch$ = this.store.pipe(
@@ -31,7 +32,7 @@ export class FuzzySearchComponent implements OnDestroy {
 
   ngAfterViewInit(): void {
     this.subs.add(
-      this.searchText.change.pipe(debounceTime(400)).subscribe((value) => {
+      this.searchText.valueChange.pipe(debounceTime(400)).subscribe((value) => {
         this.store.dispatch(new UpdateParams({ any: value }))
       })
     )

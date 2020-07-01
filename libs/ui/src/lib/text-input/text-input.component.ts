@@ -8,14 +8,14 @@ import { Observable, Subject } from 'rxjs'
   styleUrls: ['./text-input.component.css'],
 })
 export class TextInputComponent implements OnInit {
-  @Input() value: string = ''
+  @Input() value = ''
   @Input() hint: string
-  @Output() change: Observable<string>
+  @Output() valueChange: Observable<string>
   rawChange = new Subject<string>()
 
   constructor() {}
 
   ngOnInit() {
-    this.change = this.rawChange.pipe(distinctUntilChanged())
+    this.valueChange = this.rawChange.pipe(distinctUntilChanged())
   }
 }

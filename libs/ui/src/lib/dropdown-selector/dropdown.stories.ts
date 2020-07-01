@@ -3,7 +3,7 @@ import { moduleMetadata, storiesOf } from '@storybook/angular'
 import { object, text, withKnobs } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import { withA11y } from '@storybook/addon-a11y'
-import { UiModule } from '@lib/ui'
+import { UiModule } from '../../../../ui/src'
 
 const moduleMetadatas = {
   imports: [UiModule],

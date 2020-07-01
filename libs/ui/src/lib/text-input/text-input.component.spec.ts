@@ -32,21 +32,21 @@ describe('TextInputComponent', () => {
     })
     it('emits the value on a change event', () => {
       let emitted
-      component.change.subscribe((v) => (emitted = v))
+      component.valueChange.subscribe((v) => (emitted = v))
       inputEl.value = 'Aaabcd'
       inputEl.dispatchEvent(new Event('change'))
       expect(emitted).toBe('Aaabcd')
     })
     it('emits the value on an input event', () => {
       let emitted
-      component.change.subscribe((v) => (emitted = v))
+      component.valueChange.subscribe((v) => (emitted = v))
       inputEl.value = 'Aaabcd'
       inputEl.dispatchEvent(new Event('input'))
       expect(emitted).toBe('Aaabcd')
     })
     it('emits only unique values', () => {
       let emittedCount = 0
-      component.change.subscribe(() => emittedCount++)
+      component.valueChange.subscribe(() => emittedCount++)
       inputEl.value = 'Aaabcd'
       inputEl.dispatchEvent(new Event('input'))
       inputEl.value = 'Aaabcd'

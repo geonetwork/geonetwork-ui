@@ -15,6 +15,12 @@ describe('RecordSummaryComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RecordSummaryComponent)
     component = fixture.componentInstance
+    component.record = {
+      title: 'abcd',
+      abstract: 'Abcd',
+      url: '/abcd.html',
+      thumbnailUrl: '/abcd.jpg',
+    }
     fixture.detectChanges()
   })
 

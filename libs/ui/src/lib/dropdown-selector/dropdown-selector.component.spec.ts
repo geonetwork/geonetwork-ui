@@ -30,7 +30,8 @@ describe('DropdownSelectorComponent', () => {
   })
 
   describe('items array', () => {
-    let choicesEl, selectEl
+    let choicesEl
+    let selectEl
     beforeEach(() => {
       component.selected = 'b'
       fixture.detectChanges()
