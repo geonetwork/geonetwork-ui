@@ -19,4 +19,5 @@ jobs:
           echo "Removing GH pages directory: ${{env.BRANCH_NAME}}"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          npx gh-pages --dist .empty --remove "${{env.BRANCH_NAME}}" --add --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
+          touch .empty
+          npx gh-pages --dist . --src .empty --remove "${{env.BRANCH_NAME}}" --add --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
