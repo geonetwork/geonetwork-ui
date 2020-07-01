@@ -5,11 +5,11 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 // import compiled webcomponents here
 // TODO: write a script to concatenate all these
-import '../search-wc/dist/runtime-es2015'
-import '../search-wc/dist/main-es2015'
-import '../search-wc/dist/polyfills-es2015'
-import '../search-wc/dist/vendor-es2015'
-import '../search-wc/dist/styles-es2015'
+import '../dist/runtime-es2015'
+import '../dist/main-es2015'
+import '../dist/polyfills-es2015'
+import '../dist/vendor-es2015'
+import '../dist/styles-es2015'
 
 const moduleMetadatas = {
   schemas: [NO_ERRORS_SCHEMA],
