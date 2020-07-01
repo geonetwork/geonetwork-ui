@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "libs",
+  "newProjectRoot": "apps",
   "projects": {
     "app-search": {
       "projectType": "application",
@@ -328,6 +328,155 @@
             "exclude": [
               "**/node_modules/**"
             ]
+          }
+        }
+      }
+    },
+    "ssr-formatter": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "inlineTemplate": true,
+          "inlineStyle": true,
+          "skipTests": true
+        },
+        "@schematics/angular:class": {
+          "skipTests": true
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true
+        },
+        "@schematics/angular:guard": {
+          "skipTests": true
+        },
+        "@schematics/angular:interceptor": {
+          "skipTests": true
+        },
+        "@schematics/angular:module": {
+          "skipTests": true
+        },
+        "@schematics/angular:pipe": {
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
+        }
+      },
+      "root": "ssr/formatter",
+      "sourceRoot": "ssr/formatter/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/formatter/browser",
+            "index": "ssr/formatter/src/index.html",
+            "main": "ssr/formatter/src/main.ts",
+            "polyfills": "ssr/formatter/src/polyfills.ts",
+            "tsConfig": "ssr/formatter/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "ssr/formatter/src/favicon.ico",
+              "ssr/formatter/src/assets"
+            ],
+            "styles": [
+              "ssr/formatter/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "ssr/formatter/src/environments/environment.ts",
+                  "with": "ssr/formatter/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ssr-formatter:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ssr-formatter:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ssr-formatter:build"
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/ssr-formatter/server",
+            "main": "ssr/formatter/server.ts",
+            "tsConfig": "ssr/formatter/tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "ssr/formatter/src/environments/environment.ts",
+                  "with": "ssr/formatter/src/environments/environment.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": true
+            }
+          }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "ssr-formatter:build",
+            "serverTarget": "ssr-formatter:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ssr-formatter:build:production",
+              "serverTarget": "ssr-formatter:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "ssr-formatter:build:production",
+            "serverTarget": "ssr-formatter:server:production",
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {}
           }
         }
       }
