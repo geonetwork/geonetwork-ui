@@ -11,7 +11,6 @@ import {
   UPDATE_PARAMS,
 } from './actions'
 import { map, switchMap, withLatestFrom } from 'rxjs/operators'
-import { HttpClient } from '@angular/common/http'
 import { getSearchParams, getSearchSortBy } from './selectors'
 import { SearchState, RESULTS_PAGE_SIZE, RecordSimple } from '../model'
 import { select, Store } from '@ngrx/store'
@@ -21,7 +20,6 @@ import { of } from 'rxjs'
 export class SearchEffects {
   constructor(
     private actions$: Actions,
-    private http: HttpClient,
     private searchService: SearchApiService,
     private store$: Store<SearchState>
   ) {}
