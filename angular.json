@@ -196,8 +196,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "webcomponents/search-wc/tsconfig.app.json",
-              "webcomponents/search-wc/tsconfig.spec.json"
+              "webcomponents/search-wc/tsconfig.app.json"
             ],
             "exclude": [
               "**/node_modules/**",
