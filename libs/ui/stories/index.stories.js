@@ -1,21 +1,14 @@
 import { AutocompleteComponent } from '../src/lib/autocomplete/autocomplete.component'
 import { of } from 'rxjs'
-import { DropdownSelectorComponent } from '../src'
 import { moduleMetadata, storiesOf } from '@storybook/angular'
-import { BrowserModule } from '@angular/platform-browser'
 import { RecordSummaryComponent } from '../src/lib/record-summary/record-summary.component'
-import { withKnobs, text, object, select } from '@storybook/addon-knobs'
-import { action } from '@storybook/addon-actions'
+import { select, text, withKnobs } from '@storybook/addon-knobs'
 import { withA11y } from '@storybook/addon-a11y'
 import { ButtonComponent } from '../src/lib/button/button.component'
+import { UiModule } from '../src'
 
 const moduleMetadatas = {
-  declarations: [
-    DropdownSelectorComponent,
-    AutocompleteComponent,
-    ButtonComponent,
-  ],
-  imports: [BrowserModule],
+  imports: [UiModule],
 }
 
 storiesOf('UI', module)
