@@ -1,4 +1,5 @@
-<ui-autocomplete
-  placeholder="Find your metadatas"
-  [action]="results$"
-></ui-autocomplete>
+<ui-text-input
+  #searchText
+  hint="Find your metadata"
+  [value]="currentTextSearch$ | async"
+></ui-text-input>

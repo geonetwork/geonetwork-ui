@@ -1,4 +1,8 @@
-<div *ngFor="let record of results$ | async" class="mb-2">
-  <ui-record-summary [record]="record"></ui-record-summary>
+<div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+  <ui-record-summary
+    style="height: 24rem;"
+    *ngFor="let record of results$ | async"
+    [record]="record"
+  ></ui-record-summary>
 </div>
 <div *ngIf="isLoading$ | async">Loading more results...</div>

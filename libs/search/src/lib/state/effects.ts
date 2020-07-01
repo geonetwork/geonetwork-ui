@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { SearchApiService } from '@lib/gn-api'
+import { SearchApiService } from '../../../../gn-api/src'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { SearchResponse } from 'elasticsearch'
 import {

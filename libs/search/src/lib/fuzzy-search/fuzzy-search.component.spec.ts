@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { FuzzySearchComponent } from './fuzzy-search.component'
+import { UiModule } from '../../../../ui/src'
+import { EffectsModule } from '@ngrx/effects'
+import { StoreModule } from '@ngrx/store'
 
 describe('FuzzySearchComponent', () => {
   let component: FuzzySearchComponent
@@ -9,6 +12,7 @@ describe('FuzzySearchComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FuzzySearchComponent],
+      imports: [UiModule, EffectsModule.forRoot(), StoreModule.forRoot({})],
     }).compileComponents()
   }))
 

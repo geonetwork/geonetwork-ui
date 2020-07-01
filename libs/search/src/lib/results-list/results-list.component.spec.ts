@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { ResultsListComponent } from './results-list.component'
+import { UiModule } from '../../../../ui/src'
+import { EffectsModule } from '@ngrx/effects'
+import { StoreModule } from '@ngrx/store'
 
 describe('ResultsListComponent', () => {
   let component: ResultsListComponent
@@ -9,6 +12,7 @@ describe('ResultsListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ResultsListComponent],
+      imports: [UiModule, EffectsModule.forRoot(), StoreModule.forRoot({})],
     }).compileComponents()
   }))
 

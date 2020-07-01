@@ -100,7 +100,8 @@
               "apps/search/e2e/tsconfig.json"
             ],
             "exclude": [
-              "**/node_modules/**"
+              "**/node_modules/**",
+              "libs/gn-api/**"
             ]
           }
         },
@@ -191,23 +192,6 @@
             "browserTarget": "search-wc:build"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "webcomponents/search-wc/src/test.ts",
-            "polyfills": "webcomponents/search-wc/src/polyfills.ts",
-            "tsConfig": "webcomponents/search-wc/tsconfig.spec.json",
-            "karmaConfig": "webcomponents/search-wc/karma.conf.js",
-            "assets": [
-              "webcomponents/search-wc/src/favicon.ico",
-              "webcomponents/search-wc/src/assets"
-            ],
-            "styles": [
-              "webcomponents/search-wc/src/styles.css"
-            ],
-            "scripts": []
-          }
-        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -216,7 +200,8 @@
               "webcomponents/search-wc/tsconfig.spec.json"
             ],
             "exclude": [
-              "**/node_modules/**"
+              "**/node_modules/**",
+              "libs/gn-api/**"
             ]
           }
         }
@@ -253,7 +238,10 @@
               "libs/search/tsconfig.lib.json",
               "libs/search/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "libs/gn-api/**"
+            ]
           }
         }
       }
@@ -289,7 +277,10 @@
               "libs/ui/tsconfig.lib.json",
               "libs/ui/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "libs/gn-api/**"
+            ]
           }
         }
       }
@@ -310,24 +301,6 @@
             "production": {
               "tsConfig": "libs/gn-api/tsconfig.lib.prod.json"
             }
-          }
-        },
-        "test": {
-          "builder": "@angular-builders/jest:run",
-          "options": {
-            "configPath": "jest.config.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/gn-api/tsconfig.lib.json",
-              "libs/gn-api/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }

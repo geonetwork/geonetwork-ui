@@ -22,24 +22,6 @@ storiesOf('UI', module)
   .addDecorator(moduleMetadata(moduleMetadatas))
   .addDecorator(withKnobs)
   .addDecorator(withA11y)
-  .add('DropdownSelectorComponent', () => ({
-    component: DropdownSelectorComponent,
-    props: {
-      title: text('title', 'my title'),
-      ariaName: text('ariaName', 'aria name'),
-      choices: object('choices', [
-        {
-          label: 'last changed',
-          value: 'lastUpdated',
-        },
-        {
-          label: 'popularity',
-          value: 'popularity',
-        },
-      ]),
-      selectValue: action('output'),
-    },
-  }))
   .add('AutocompleteComponent', () => ({
     component: AutocompleteComponent,
     props: {
