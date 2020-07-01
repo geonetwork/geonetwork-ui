@@ -4,6 +4,7 @@ on:
     branches:
       - master
   pull_request:
+    types: [opened, synchronize]
 
 jobs:
 
@@ -78,7 +79,7 @@ jobs:
           echo "Deploying to directory: ${{env.BRANCH_NAME}}"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          npx gh-pages --dist .out --dest ${{env.BRANCH_NAME}} --add --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
+          npx gh-pages --dist .out --dest ${{env.BRANCH_NAME}} --remove "${{env.BRANCH_NAME}}/**" --add --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
 
       - name: add PR comment
         uses: unsplash/comment-on-pr@master
