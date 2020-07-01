@@ -1,0 +1,22 @@
+name: Cleanup deployed storybook
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+
+  storybook-cleanup:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - run: echo "::set-env name=BRANCH_NAME::${GITHUB_HEAD_REF#refs/heads/}"
+
+      - name: remove directory in gh pages
+        run: |
+          echo "Removing GH pages directory: ${{env.BRANCH_NAME}}"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          npx gh-pages --dist .empty --remove "${{env.BRANCH_NAME}}" --add --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"

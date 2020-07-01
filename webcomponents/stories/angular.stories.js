@@ -3,7 +3,6 @@ import { color, withKnobs } from '@storybook/addon-knobs'
 import { withA11y } from '@storybook/addon-a11y'
 import { SearchSnapshotWcComponent } from '../search-wc/src/app/search-snapshot-wc/search-snapshot-wc.component'
 import { AppModule } from '../search-wc/src/app/app.module'
-import { UiModule } from '../../libs/ui/src'
 
 const moduleMetadatas = {
   imports: [AppModule],
