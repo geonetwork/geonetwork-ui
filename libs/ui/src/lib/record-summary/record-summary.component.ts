@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { RecordSimple } from '@lib/search'
+import type { RecordSimple } from '@lib/search'
 
 @Component({
   selector: 'ui-record-summary',
