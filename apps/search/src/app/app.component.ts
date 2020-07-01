@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'
+import { ColorService } from '../../../../libs/common/src/lib/color.service'
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,8 @@ import { Component } from '@angular/core'
 })
 export class AppComponent {
   title = 'search'
+
+  constructor() {
+    ColorService.applyCssVariables('#55c862', '#81bfb8', '#161429', '#fdfbff')
+  }
 }

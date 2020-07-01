@@ -39,6 +39,7 @@
     "@angular/router": "~10.0.1",
     "@ngrx/schematics": "^9.2.0",
     "@nguniversal/express-engine": "^10.0.0",
+    "chroma-js": "^2.1.0",
     "document-register-element": "^1.7.2",
     "express": "^4.15.2",
     "parse5": "^6.0.0",
