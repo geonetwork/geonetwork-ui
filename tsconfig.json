@@ -33,6 +33,12 @@
     },
     {
       "path": "./apps/formatter/tsconfig.server.json"
+    },
+    {
+      "path": "./libs/common/tsconfig.lib.json"
+    },
+    {
+      "path": "./libs/common/tsconfig.spec.json"
     }
   ]
 }
