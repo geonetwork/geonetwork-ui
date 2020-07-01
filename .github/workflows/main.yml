@@ -70,7 +70,7 @@ jobs:
         run: npm run build -- --project=search-wc
 
       - name: Build storybook
-        run: npx build-storybook -o .out --quiet
+        run: npm run build:storybook
 
       - run: echo "::set-env name=BRANCH_NAME::${GITHUB_HEAD_REF#refs/heads/}"
 
@@ -79,12 +79,14 @@ jobs:
           echo "Deploying to directory: ${{env.BRANCH_NAME}}"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          npx gh-pages --dist .out --dest ${{env.BRANCH_NAME}} --remove "${{env.BRANCH_NAME}}/**" --add --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
+          npx gh-pages --dist dist/ --src storybook*/**/* --dest ${{env.BRANCH_NAME}} --remove "${{env.BRANCH_NAME}}/**" --add --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
 
       - name: add PR comment
         uses: unsplash/comment-on-pr@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: 'Link to the Storybook: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}'
+          msg: 'Link to the Storybook
+                  https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/
+                  https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook-wc/'
           check_for_duplicate_msg: true
