@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { initialState, reducer, SEARCH_FEATURE_KEY } from '../state/reducer'
 
 import { ResultsListComponent } from './results-list.component'
 import { UiModule } from '../../../../ui/src'
@@ -12,7 +13,14 @@ describe('ResultsListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ResultsListComponent],
-      imports: [UiModule, EffectsModule.forRoot(), StoreModule.forRoot({})],
+      imports: [
+        UiModule,
+        EffectsModule.forRoot(),
+        StoreModule.forRoot({}),
+        StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
+          initialState,
+        }),
+      ],
     }).compileComponents()
   }))
 

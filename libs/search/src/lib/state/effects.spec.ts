@@ -1,3 +1,4 @@
+import { SearchApiService } from '@lib/gn-api'
 import { SearchEffects } from './effects'
 import { TestBed } from '@angular/core/testing'
 import { EffectsModule } from '@ngrx/effects'
@@ -12,15 +13,32 @@ import {
 } from './actions'
 import { hot } from 'jasmine-marbles'
 import { StoreModule } from '@ngrx/store'
+import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
 
+const searchServiceMock = {
+  call: jest.fn(),
+}
 describe('Effects', () => {
   let effects: SearchEffects
   let actions$: Observable<any>
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [EffectsModule.forRoot(), StoreModule.forRoot({})],
-      providers: [provideMockActions(() => actions$), SearchEffects],
+      imports: [
+        EffectsModule.forRoot(),
+        StoreModule.forRoot({}),
+        StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
+          initialState,
+        }),
+      ],
+      providers: [
+        provideMockActions(() => actions$),
+        SearchEffects,
+        {
+          provide: SearchApiService,
+          useValue: searchServiceMock,
+        },
+      ],
     })
     effects = TestBed.inject(SearchEffects)
   })

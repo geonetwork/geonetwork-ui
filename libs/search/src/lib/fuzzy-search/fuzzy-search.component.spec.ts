@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { initialState, reducer, SEARCH_FEATURE_KEY } from '../state/reducer'
 
 import { FuzzySearchComponent } from './fuzzy-search.component'
 import { UiModule } from '../../../../ui/src'
@@ -12,7 +13,14 @@ describe('FuzzySearchComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FuzzySearchComponent],
-      imports: [UiModule, EffectsModule.forRoot(), StoreModule.forRoot({})],
+      imports: [
+        UiModule,
+        StoreModule.forRoot({}),
+        EffectsModule.forRoot(),
+        StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
+          initialState,
+        }),
+      ],
     }).compileComponents()
   }))
 
