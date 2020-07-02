@@ -96,25 +96,12 @@
           "options": {
             "tsConfig": [
               "apps/search/tsconfig.app.json",
-              "apps/search/tsconfig.spec.json",
-              "apps/search/e2e/tsconfig.json"
+              "apps/search/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**",
               "libs/gn-api/**"
             ]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "apps/search/e2e/protractor.conf.js",
-            "devServerTarget": "app-search:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "app-search:serve:production"
-            }
           }
         }
       }

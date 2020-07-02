@@ -10,6 +10,6 @@ export class AppComponent {
   title = 'search'
 
   constructor() {
-    ColorService.applyCssVariables('#55c862', '#81bfb8', '#161429', '#fdfbff')
+    ColorService.applyCssVariables('#e73f51', '#c2e9dc', '#212029', '#fdfbff')
   }
 }
