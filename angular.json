@@ -81,14 +81,7 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "assets": [
-              "apps/search/src/favicon.ico",
-              "apps/search/src/assets"
-            ],
-            "styles": [
-              "apps/search/src/styles.css"
-            ],
-            "scripts": []
+            "detectOpenHandles": true
           }
         },
         "lint": {
@@ -96,25 +89,12 @@
           "options": {
             "tsConfig": [
               "apps/search/tsconfig.app.json",
-              "apps/search/tsconfig.spec.json",
-              "apps/search/e2e/tsconfig.json"
+              "apps/search/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**",
               "libs/gn-api/**"
             ]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "apps/search/e2e/protractor.conf.js",
-            "devServerTarget": "app-search:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "app-search:serve:production"
-            }
           }
         }
       }
@@ -227,6 +207,7 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
+            "detectOpenHandles": true
           }
         },
         "lint": {
@@ -265,7 +246,7 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "configPath": "jest.config.js"
+            "detectOpenHandles": true
           }
         },
         "lint": {
@@ -448,6 +429,44 @@
           },
           "configurations": {
             "production": {}
+          }
+        }
+      }
+    },
+    "lib-common": {
+      "projectType": "library",
+      "root": "libs/common",
+      "sourceRoot": "libs/common/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/common/tsconfig.lib.json",
+            "project": "libs/common/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/common/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "detectOpenHandles": true
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/common/tsconfig.lib.json",
+              "libs/common/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }

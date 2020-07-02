@@ -3,7 +3,7 @@ import { SearchEffects } from './effects'
 import { TestBed } from '@angular/core/testing'
 import { EffectsModule } from '@ngrx/effects'
 import { provideMockActions } from '@ngrx/effects/testing'
-import { Observable } from 'rxjs'
+import { Observable, of } from 'rxjs'
 import {
   AddResults,
   ClearResults,
@@ -16,7 +16,7 @@ import { StoreModule } from '@ngrx/store'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
 
 const searchServiceMock = {
-  call: jest.fn(),
+  call: () => of({ hits: { hits: [] } }), // TODO: use a fixture here
 }
 describe('Effects', () => {
   let effects: SearchEffects
@@ -49,14 +49,20 @@ describe('Effects', () => {
 
   describe('clearResults$', () => {
     it('clear results list on sortBy action', () => {
-      actions$ = hot('-a-', { a: new SortBy('fieldA') })
-      const expected = hot('-b-', { b: new ClearResults() })
+      actions$ = hot('-a---', { a: new SortBy('fieldA') })
+      const expected = hot('-(bc)', {
+        b: new ClearResults(),
+        c: new RequestMoreResults(),
+      })
 
       expect(effects.clearResults$).toBeObservable(expected)
     })
     it('clear results list on updateParams action', () => {
-      actions$ = hot('-a-', { a: new UpdateParams({ any: 'abcd' }) })
-      const expected = hot('-b-', { b: new ClearResults() })
+      actions$ = hot('-a---', { a: new UpdateParams({ any: 'abcd' }) })
+      const expected = hot('-(bc)', {
+        b: new ClearResults(),
+        c: new RequestMoreResults(),
+      })
 
       expect(effects.clearResults$).toBeObservable(expected)
     })

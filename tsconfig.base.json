@@ -27,6 +27,9 @@
       ],
       "@lib/gn-api": [
         "libs/gn-api/src/index.ts"
+      ],
+      "@lib/common": [
+        "libs/common/src/index.ts"
       ]
     }
   },

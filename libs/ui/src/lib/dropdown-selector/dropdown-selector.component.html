@@ -1,6 +1,6 @@
 <div class="flex flex-row items-center relative">
   <label
-    class="block uppercase tracking-wide text-text-primary text-xs font-bold mr-2 whitespace-no-wrap"
+    class="block uppercase tracking-wide text-gray-800 text-xs font-bold mr-2 whitespace-no-wrap"
     [attr.for]="id"
   >
     {{ title }}
@@ -8,7 +8,7 @@
   <select
     [id]="id"
     (change)="this.selectValue.emit($event.target.value)"
-    class="block w-full appearance-none bg-button-default border border-border-default text-button-text-default py-2 px-3 pr-6 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+    class="block w-full appearance-none bg-gray-200 border border-gray-800 text-gray-800 py-2 px-3 pr-6 rounded leading-tight focus:outline-none focus:bg-background focus:border-gray-900"
   >
     <option
       *ngFor="let choice of choices"
@@ -19,7 +19,7 @@
     </option>
   </select>
   <div
-    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-button-text-default"
+    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-800"
   >
     <svg
       class="fill-current h-4 w-4"

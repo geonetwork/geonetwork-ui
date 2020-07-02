@@ -37,13 +37,17 @@ presentation information.
 Presentation components are styled using [TailwindCSS](https://tailwindcss.com/) utilities. Many colors are using CSS variables,
 meaning they can be changed at runtime. A custom configuration for TailwindCSS has been created to provide this feature.
 
+#### `libs/common`: Shared library
+
+Holds shared models, fixtures and utility services.
+
 #### `libs/gn-api`: Geonetwork API Client
 
-To do: generate this using OpenAPI
+Library generated dynamically from the GeoNetwork 4 API description. Use `npm run generate-api` to re-generate.
 
 #### `webcomponents`: Embeddable webcomponents
 
-See [the specific README file](webcomponents/).
+See [the specific README file](webcomponents).
 
 ## To document
 
