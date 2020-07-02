@@ -5,7 +5,11 @@
   To learn more about this file see: https://angular.io/config/solution-tsconfig.
 */
 {
-  "files": [],
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "types": ["jest"]
+  },
   "references": [
     {
       "path": "./apps/search/tsconfig.app.json"

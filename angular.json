@@ -81,14 +81,6 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "assets": [
-              "apps/search/src/favicon.ico",
-              "apps/search/src/assets"
-            ],
-            "styles": [
-              "apps/search/src/styles.css"
-            ],
-            "scripts": []
           }
         },
         "lint": {
@@ -460,7 +452,6 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "configPath": "jest.config.js"
           }
         },
         "lint": {

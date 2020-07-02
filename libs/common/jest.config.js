@@ -1,7 +1,12 @@
 const { defaults } = require('jest-config')
 
 module.exports = {
-  verbose: true,
   collectCoverage: true,
-  collectCoverageFrom: ['src/**/*.ts'],
+  collectCoverageFrom: [
+    'libs/common/src/**/*.ts',
+    '!libs/common/src/public-api.ts',
+    '!libs/common/src/**/model.ts',
+    '!libs/common/src/**/*.module.ts',
+    '!libs/common/src/**/*.stories.ts',
+  ],
 }
