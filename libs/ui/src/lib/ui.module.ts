@@ -5,6 +5,7 @@ import { AutocompleteComponent } from './autocomplete/autocomplete.component'
 import { RecordSummaryComponent } from './record-summary/record-summary.component'
 import { ButtonComponent } from './button/button.component'
 import { TextInputComponent } from './text-input/text-input.component'
+import { ColorScaleComponent } from './color-scale/color-scale.component'
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { TextInputComponent } from './text-input/text-input.component'
     RecordSummaryComponent,
     ButtonComponent,
     TextInputComponent,
+    ColorScaleComponent,
   ],
   imports: [BrowserModule],
   exports: [

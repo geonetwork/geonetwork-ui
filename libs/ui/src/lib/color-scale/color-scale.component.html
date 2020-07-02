@@ -1,0 +1,65 @@
+<div class="flex flex-row items-center">
+  <div class="text-xs text-gray-700 font-bold m-2 w-32 text-right">
+    primary
+  </div>
+  <div
+    class="shadow-md rounded w-6 h-6 m-2 bg-primary-darkest"
+    title="primary-darkest"
+  ></div>
+  <div
+    class="shadow-md rounded w-6 h-6 m-2 bg-primary-darker"
+    title="primary-darker"
+  ></div>
+  <div
+    class="shadow-md rounded w-6 h-6 m-2 bg-primary border-2 border-primary-darkest"
+    title="primary"
+  ></div>
+  <div
+    class="shadow-md rounded w-6 h-6 m-2 bg-primary-lighter"
+    title="primary-lighter"
+  ></div>
+  <div
+    class="shadow-md rounded w-6 h-6 m-2 bg-primary-lightest"
+    title="primary-lightest"
+  ></div>
+</div>
+<div class="flex flex-row">
+  <div class="text-xs text-gray-700 font-bold m-2 w-32 text-right">
+    secondary
+  </div>
+  <div
+    class="shadow-md rounded w-6 h-6 m-2 bg-secondary-darkest"
+    title="secondary-darkest"
+  ></div>
+  <div
+    class="shadow-md rounded w-6 h-6 m-2 bg-secondary-darker"
+    title="secondary-darker"
+  ></div>
+  <div
+    class="shadow-md rounded w-6 h-6 m-2 bg-secondary border-2 border-secondary-darkest"
+    title="secondary"
+  ></div>
+  <div
+    class="shadow-md rounded w-6 h-6 m-2 bg-secondary-lighter"
+    title="secondary-lighter"
+  ></div>
+  <div
+    class="shadow-md rounded w-6 h-6 m-2 bg-secondary-lightest"
+    title="secondary-lightest"
+  ></div>
+</div>
+<div class="flex flex-row">
+  <div class="text-xs text-gray-700 font-bold m-2 w-32 text-right">
+    background to main
+  </div>
+  <div
+    class="shadow-md rounded w-6 h-6 m-2 bg-background"
+    title="background"
+  ></div>
+  <div
+    *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9]"
+    class="shadow-md rounded w-6 h-6 m-2 bg-gray-{{ i }}00"
+    title="bg-gray-{{ i }}00"
+  ></div>
+  <div class="shadow-md rounded w-6 h-6 m-2 bg-main" title="main"></div>
+</div>

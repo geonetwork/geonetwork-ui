@@ -17,16 +17,42 @@ export class ColorService {
       document.documentElement.style.setProperty(`--color-${name}`, color.css())
     }
 
+    const black = chroma('black')
+    const white = chroma('white')
     applyColor('primary', chroma(primary))
-    applyColor('primary-lighter', chroma(primary).brighten(1))
-    applyColor('primary-lightest', chroma(primary).brighten(2))
-    applyColor('primary-darker', chroma(primary).darken(1))
-    applyColor('primary-darkest', chroma(primary).darken(2))
+    applyColor(
+      'primary-lighter',
+      chroma.scale([primary, white]).mode('lab')(0.3)
+    )
+    applyColor(
+      'primary-lightest',
+      chroma.scale([primary, white]).mode('lab')(0.6)
+    )
+    applyColor(
+      'primary-darker',
+      chroma.scale([primary, black]).mode('lab')(0.3)
+    )
+    applyColor(
+      'primary-darkest',
+      chroma.scale([primary, black]).mode('lab')(0.6)
+    )
     applyColor('secondary', chroma(secondary))
-    applyColor('secondary-lighter', chroma(secondary).brighten(1))
-    applyColor('secondary-lightest', chroma(secondary).brighten(2))
-    applyColor('secondary-darker', chroma(secondary).darken(1))
-    applyColor('secondary-darkest', chroma(secondary).darken(2))
+    applyColor(
+      'secondary-lighter',
+      chroma.scale([secondary, white]).mode('lab')(0.3)
+    )
+    applyColor(
+      'secondary-lightest',
+      chroma.scale([secondary, white]).mode('lab')(0.6)
+    )
+    applyColor(
+      'secondary-darker',
+      chroma.scale([secondary, black]).mode('lab')(0.3)
+    )
+    applyColor(
+      'secondary-darkest',
+      chroma.scale([secondary, black]).mode('lab')(0.6)
+    )
     applyColor('main', chroma(main))
     applyColor('background', chroma(background))
 
