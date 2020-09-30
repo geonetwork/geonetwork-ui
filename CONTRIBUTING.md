@@ -16,7 +16,7 @@ The app will automatically reload if you change any of the source files.
 Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
 
-Run `npn run test` to execute the unit tests via Jest.
+Run `npm run test` to execute the unit tests via Jest.
 
 
 ## Contributing code
@@ -51,6 +51,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 The architecture is designed so you can export an Angular component to a custom element (eg Web Component), 
 that is encapsulated with its style in a shadow DOM element, and can be embedded in any web site.
 
+#### Export a Web Component
 To export something as a web component you have to
 - create a new angular application in `/webcomponents`
 - create a new component in this application, that will be exported, this component must have the following properties in the metadata decorator:
@@ -74,37 +75,34 @@ export class AppModule {
 }
 ```
 - if you are using `ng-bootstrap` as peer dependency, you have to add `import '@angular/localize/init'` in your `app/polyfill.ts`
-- build your application in prod mod with `ng build --prod --output-hashing=none search-wc` at the root of the project. 
 
-To use your webcomponent in a website, you can
-- merge all the build output javascript files into one and GZIP it
+#### Test your Web Component
+1. Storybook
+
+You can visualise your web component as it would be in a standalone web page with Storybook.
 ```shell script
-cat dist/search-wc/{runtime-es2015,polyfills-es2015,main-es2015}.js | gzip > gn-search-snapshot.js.gz
+npm run storybook-wc
 ```
-- include it in your HTML file
+2. Full deployment
+
+To test your web component in true a web page, run
+```shell script
+npm run serve-wc -- (application_name) (webcomponent_tag_name) [--build]
+```
+- `application_name` is the name you gave to your Angular application in `/webcomponents` root folder.
+- `webcomponent_tag_name` is the tag name you gave in your `AppModule` to your exported web component.
+- `--build` (optional) forces a rebuild of your webcomponent.
+
+You'll be able to test your web component on http://127.0.0.1:8001
+
+To use your component in a real web page, you have to
+- import the script exported by Angular
+- include your web component in the HTML content.
+
 ```angular2html
-...
     <script src="gn-search-snapshot.js"></script>
-...
     <gn-search-snapshot></gn-search-snapshot>
 ```
-and run your html file in a web server
-
-You can for example 
--Add a http-server library
-```
-npm install http-server
-```
-add a new scripts in your `package.json`
-
-```shell script
- "serve-wc": "http-server --gzip",
-```
-And run it
-```
-npm run serve-wc
-```
-If you have your html file at the root of the repo, you can serve it to test your web component
 
 ### Openapi client generation
 
