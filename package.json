@@ -22,7 +22,13 @@
     "dev:ssr": "ng run formatter:serve-ssr",
     "serve:ssr": "node dist/formatter/server/main.js",
     "build:ssr": "ng build --prod && ng run formatter:server:production",
-    "prerender": "ng run formatter:prerender"
+    "prerender": "ng run formatter:prerender",
+    "merge-translations": "xliffmerge --profile xliffmerge.json",
+    "extract-translations": "ng xi18n --format=xlf --output-path src/locale ",
+    "extract-i18n": "ng xi18n app-search --format xlf2 --output-path src/i18n && ng run app-search:xliffmerge",
+    "start-fr": "ng serve --configuration=fr",
+    "start-de": "ng serve --configuration=de",
+    "start-es": "ng serve --configuration=es"
   },
   "private": true,
   "dependencies": {
@@ -39,6 +45,7 @@
     "@angular/router": "~10.0.1",
     "@ngrx/schematics": "^9.2.0",
     "@nguniversal/express-engine": "^10.0.0",
+    "@ngx-i18nsupport/tooling": "^8.0.3",
     "chroma-js": "^2.1.0",
     "document-register-element": "^1.7.2",
     "express": "^4.15.2",
@@ -61,6 +68,7 @@
     "@ngrx/store": "^9.2.0",
     "@ngrx/store-devtools": "^9.2.0",
     "@nguniversal/builders": "^10.0.0",
+    "@ngx-i18nsupport/ngx-i18nsupport": "^1.1.6",
     "@openapitools/openapi-generator-cli": "^1.0.15-5.0.0-beta",
     "@storybook/addon-a11y": "^5.3.19",
     "@storybook/addon-actions": "^5.3.19",
