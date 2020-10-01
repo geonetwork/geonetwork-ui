@@ -116,7 +116,6 @@
             "tsConfig": "webcomponents/gn-search-input/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "webcomponents/gn-search-input/src/favicon.ico",
               "webcomponents/gn-search-input/src/assets"
             ],
             "styles": [

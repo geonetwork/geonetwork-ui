@@ -68,7 +68,7 @@ export class AppModule {
     const customButton = createCustomElement(SearchSnapshotWcComponent, {
       injector,
     })
-    customElements.define('gn-search-snapshot', customButton)
+    customElements.define('gn-search-input', customButton)
   }
 
   ngDoBootstrap() {}
@@ -100,8 +100,8 @@ To use your component in a real web page, you have to
 - include your web component in the HTML content.
 
 ```angular2html
-    <script src="gn-search-snapshot.js"></script>
-    <gn-search-snapshot></gn-search-snapshot>
+    <script src="gn-search-input.js"></script>
+    <gn-search-input></gn-search-input>
 ```
 
 ### Openapi client generation

@@ -5,9 +5,9 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 // import compiled webcomponents here
 // TODO: write a script to concatenate all these
-import '../dist/runtime-es2015'
-import '../dist/main-es2015'
-import '../dist/polyfills-es2015'
+import '../dist/runtime'
+import '../dist/main'
+import '../dist/polyfills'
 
 const moduleMetadatas = {
   schemas: [NO_ERRORS_SCHEMA],
@@ -19,10 +19,10 @@ storiesOf('Webcomponents', module)
   .addDecorator(withA11y)
   .add('Search Snapshot', () => ({
     template: `
-<gn-search-snapshot
+<gn-search-input
   primary-color="{{primaryColor}}"
   secondary-color="{{secondaryColor}}">
-</gn-search-snapshot>`,
+</gn-search-input>`,
     props: {
       primaryColor: color('Primary Color', 'blue'),
       secondaryColor: color('Secondary Color', 'grey'),
