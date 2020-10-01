@@ -57,6 +57,34 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "en": {
+              "aot": true,
+              "outputPath": "dist/app-search-en",
+              "i18nFile": "apps/search/src/i18n/messages.en.xlf",
+              "i18nFormat": "xlf2",
+              "i18nLocale": "en"
+            },
+            "fr": {
+              "aot": true,
+              "outputPath": "dist/app-search-fr",
+              "i18nFile": "apps/search/src/i18n/messages.fr.xlf",
+              "i18nFormat": "xlf2",
+              "i18nLocale": "fr"
+            },
+            "de": {
+              "aot": true,
+              "outputPath": "dist/app-search-de",
+              "i18nFile": "src/i18n/messages.de.xlf",
+              "i18nFormat": "xlf2",
+              "i18nLocale": "de"
+            },
+            "es": {
+              "aot": true,
+              "outputPath": "dist/app-search-es",
+              "i18nFile": "src/i18n/messages.es.xlf",
+              "i18nFormat": "xlf2",
+              "i18nLocale": "es"
             }
           }
         },
@@ -69,6 +97,18 @@
           "configurations": {
             "production": {
               "browserTarget": "app-search:build:production"
+            },
+            "en": {
+              "browserTarget": "app-search:build:en"
+            },
+            "fr": {
+              "browserTarget": "app-search:build:fr"
+            },
+            "de": {
+              "browserTarget": "app-search:build:de"
+            },
+            "es": {
+              "browserTarget": "app-search:build:es"
             }
           }
         },
@@ -95,6 +135,28 @@
               "**/node_modules/**",
               "libs/gn-api/**"
             ]
+          }
+        },
+        "xliffmerge": {
+          "builder": "@ngx-i18nsupport/tooling:xliffmerge",
+          "options": {
+            "xliffmergeOptions": {
+              "i18nFormat": "xlf2",
+              "srcDir": "apps/search/src/",
+              "genDir": "apps/search/src/i18n",
+              "defaultLanguage": "en",
+              "languages": [
+                "en",
+                "fr",
+                "de",
+                "es"
+              ],
+              "beautifyOutput": true,
+              "allowIdChange": false,
+              "autotranslate": false,
+              "verbose": false,
+              "quiet": false
+            }
           }
         }
       }

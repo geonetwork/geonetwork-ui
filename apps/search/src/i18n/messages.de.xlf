@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en" trgLang="de">
+  <file original="ng.template" id="ngi18n">
+    <unit id="3672592659127407507">
+      <notes>
+        <note category="location">../../libs/search/src/lib/fuzzy-search/fuzzy-search.component.html:4</note>
+      </notes>
+      <segment state="initial">
+        <source>Find your metadata</source>
+      <target>Find your metadata</target></segment>
+    </unit>
+    <unit id="1025154907763831215">
+      <notes>
+        <note category="location">../../libs/search/src/lib/results-list/results-list.component.html:8</note>
+      </notes>
+      <segment state="initial">
+        <source>Loading more results...</source>
+      <target>Loading more results...</target></segment>
+    </unit>
+  </file>
+</xliff>
