@@ -6,7 +6,7 @@ import {
 } from '@angular/core'
 
 @Component({
-  selector: 'component',
+  selector: 'wc-component',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
