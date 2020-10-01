@@ -15,10 +15,10 @@
       "path": "./apps/search/tsconfig.app.json"
     },
     {
-      "path": "./webcomponents/search-wc/tsconfig.app.json"
+      "path": "./webcomponents/gn-search-input/tsconfig.app.json"
     },
     {
-      "path": "./webcomponents/search-wc/tsconfig.spec.json"
+      "path": "./webcomponents/gn-search-input/tsconfig.spec.json"
     },
     {
       "path": "./libs/search/tsconfig.lib.json"

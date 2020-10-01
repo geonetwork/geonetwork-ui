@@ -4,7 +4,7 @@ This directory contains [webcomponents](https://developer.mozilla.org/en-US/docs
 
 They are Angular components as well, but with a slightly different build system.
 
-To build a specific webcomponent, run e.g. `npm run build -- --project=search-wc`.
+To build a specific webcomponent, run e.g. `npm run build -- --project=gn-search-input`.
 
 All web components are prefixed with `gn-`.
 

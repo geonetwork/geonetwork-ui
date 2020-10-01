@@ -67,7 +67,7 @@ jobs:
         run: npm ci
 
       - name: Build webcomponents
-        run: npm run build -- --project=search-wc
+        run: npm run build -- --project=gn-search-input
 
       - name: Build storybook
         run: npm run build:storybook

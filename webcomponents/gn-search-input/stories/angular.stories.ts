@@ -1,11 +1,11 @@
 import { moduleMetadata, storiesOf } from '@storybook/angular'
 import { color, withKnobs } from '@storybook/addon-knobs'
 import { withA11y } from '@storybook/addon-a11y'
-import { AppModule } from '../src/app/app.module'
-import { SearchSnapshotWcComponent } from '../src/app/search-snapshot-wc/search-snapshot-wc.component'
+import { GnSearchInputComponent } from '../src/app/gn-search-input.component'
+import { GnSearchInputModule } from '../src/app/gn-search-input.module'
 
 const moduleMetadatas = {
-  imports: [AppModule],
+  imports: [GnSearchInputModule],
 }
 
 storiesOf('Angular components', module)
@@ -13,7 +13,7 @@ storiesOf('Angular components', module)
   .addDecorator(withKnobs)
   .addDecorator(withA11y)
   .add('Search Snapshot', () => ({
-    component: SearchSnapshotWcComponent,
+    component: GnSearchInputComponent,
     props: {
       primaryColor: color('Primary Color', 'blue'),
       secondaryColor: color('Secondary Color', 'grey'),
