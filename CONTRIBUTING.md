@@ -47,63 +47,6 @@ ng g c smart/fuzzy-search --project=lib-search --style=css --changeDetection=OnP
 ```
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
-### Web components
-The architecture is designed so you can export an Angular component to a custom element (eg Web Component), 
-that is encapsulated with its style in a shadow DOM element, and can be embedded in any web site.
-
-#### Export a Web Component
-To export something as a web component you have to
-- create a new angular application in `/webcomponents`
-- create a new component in this application, that will be exported, this component must have the following properties in the metadata decorator:
-```typescript
-{
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.ShadowDom
-}
-```
-- export your component as a custom element in `app.module.ts`
-```typescript
-export class AppModule {
-  constructor(private injector: Injector) {
-    const customButton = createCustomElement(SearchSnapshotWcComponent, {
-      injector,
-    })
-    customElements.define('gn-search-input', customButton)
-  }
-
-  ngDoBootstrap() {}
-}
-```
-- if you are using `ng-bootstrap` as peer dependency, you have to add `import '@angular/localize/init'` in your `app/polyfill.ts`
-
-#### Test your Web Component
-1. Storybook
-
-You can visualise your web component as it would be in a standalone web page with Storybook.
-```shell script
-npm run storybook-wc
-```
-2. Full deployment
-
-To test your web component in true a web page, run
-```shell script
-npm run serve-wc -- (application_name) (webcomponent_tag_name) [--build]
-```
-- `application_name` is the name you gave to your Angular application in `/webcomponents` root folder.
-- `webcomponent_tag_name` is the tag name you gave in your `AppModule` to your exported web component.
-- `--build` (optional) forces a rebuild of your webcomponent.
-
-You'll be able to test your web component on http://127.0.0.1:8001
-
-To use your component in a real web page, you have to
-- import the script exported by Angular
-- include your web component in the HTML content.
-
-```angular2html
-    <script src="gn-search-input.js"></script>
-    <gn-search-input></gn-search-input>
-```
-
 ### Openapi client generation
 
 Geonetwork publish an `openapi` rest api, and expose an `openapi` specification document.
