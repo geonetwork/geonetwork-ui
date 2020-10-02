@@ -8,6 +8,8 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 import '../dist/runtime'
 import '../dist/main'
 import '../dist/polyfills'
+import '../dist/vendor'
+import '../dist/styles'
 
 const moduleMetadatas = {
   schemas: [NO_ERRORS_SCHEMA],

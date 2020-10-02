@@ -18,12 +18,19 @@ npm run build:wc
 
 ## Run
 ### Storybook
-```
+```shell script
 npm run storybook-wc
 ```
 This will build all component and start an instance of Storybook but with specific stories showcasing each individual webcomponent.
 
+To build the storybook application, run
+```shell script
+npm run build:wc
+```
+**Important:** Web components are built in `dev` mode to work with Storybook.
+
 Note that each webcomponent should appear in two stories: one where it is included as an Angular component, and another where it is included as a webcomponent.
+
 
 ### Web server
 To test a specific web component in a real web page, run
@@ -32,6 +39,8 @@ npm run serve-wc -- (webcomponent_name) [--build]
 ```
 - `webcomponent_name` is the name you gave to your Angular application in `/webcomponents` root folder. It must also be the tag name you gave in your `AppModule` to your exported web component.
 - `--build` (optional) forces a rebuild of your webcomponent.
+
+**Important:** The component is built in `production` mode.
 
 You'll be able to test your web component on http://127.0.0.1:8001
 This script show you how to deploy your web component in a real world, it builds it, then to use your component in a real web page, you have to

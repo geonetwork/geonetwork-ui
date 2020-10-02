@@ -7,6 +7,6 @@ for d in ${WC_FOLDER}*/ ; do
   if [[ $WC_NAME == gn-* ]]
   then
     echo "-- Build Web Component for:" $WC_NAME
-    ng build --prod --output-hashing=none $WC_NAME
+    ng build $WC_NAME
   fi
 done
