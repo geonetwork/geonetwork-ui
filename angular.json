@@ -164,24 +164,6 @@
               "browserTarget": "gn-search-input:build:production"
             }
           }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "gn-search-input:build"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "webcomponents/gn-search-input/tsconfig.app.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "libs/gn-api/**"
-            ]
-          }
         }
       }
     },
@@ -216,8 +198,7 @@
     "lib-gn-api": {
       "projectType": "library",
       "root": "libs/gn-api",
-      "sourceRoot": "libs/gn-api/src",
-      "prefix": "lib"
+      "sourceRoot": "libs/gn-api/src"
     },
     "ssr-formatter": {
       "projectType": "application",
