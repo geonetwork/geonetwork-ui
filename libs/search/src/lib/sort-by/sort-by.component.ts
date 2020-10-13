@@ -3,6 +3,10 @@ import { select, Store } from '@ngrx/store'
 import { SortBy } from '../state/actions'
 import { SearchState } from '../model'
 import { getSearchSortBy } from '../state/selectors'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('last changed')
+marker('popularity')
 
 @Component({
   selector: 'search-sort-by',

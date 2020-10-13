@@ -5,4 +5,6 @@
     [record]="record"
   ></ui-record-summary>
 </div>
-<div *ngIf="isLoading$ | async">Loading more results...</div>
+<div *ngIf="isLoading$ | async" class="p-4">
+  <span translate>loadResults</span>...
+</div>

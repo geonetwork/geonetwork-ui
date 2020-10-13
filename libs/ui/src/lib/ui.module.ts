@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core'
+import { TranslateModule } from '@ngx-translate/core'
 import { DropdownSelectorComponent } from './dropdown-selector/dropdown-selector.component'
 import { BrowserModule } from '@angular/platform-browser'
 import { AutocompleteComponent } from './autocomplete/autocomplete.component'
@@ -16,7 +17,7 @@ import { ColorScaleComponent } from './color-scale/color-scale.component'
     TextInputComponent,
     ColorScaleComponent,
   ],
-  imports: [BrowserModule],
+  imports: [BrowserModule, TranslateModule.forChild()],
   exports: [
     DropdownSelectorComponent,
     AutocompleteComponent,

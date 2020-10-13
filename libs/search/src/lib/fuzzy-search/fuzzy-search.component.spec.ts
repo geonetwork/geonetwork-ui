@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { TranslateModule } from '@ngx-translate/core'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from '../state/reducer'
 
 import { FuzzySearchComponent } from './fuzzy-search.component'
@@ -17,6 +18,7 @@ describe('FuzzySearchComponent', () => {
         UiModule,
         StoreModule.forRoot({}),
         EffectsModule.forRoot(),
+        TranslateModule.forRoot(),
         StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
           initialState,
         }),
