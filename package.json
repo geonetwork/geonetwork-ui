@@ -23,7 +23,9 @@
     "dev:ssr": "ng run formatter:serve-ssr",
     "serve:ssr": "node dist/formatter/server/main.js",
     "build:ssr": "ng build --prod && ng run formatter:server:production",
-    "prerender": "ng run formatter:prerender"
+    "prerender": "ng run formatter:prerender",
+    "i18n:init": "ngx-translate-extract --input ./src --output ./src/assets/i18n/template.json --key-as-default-value --replace --format json",
+    "i18n:extract": "ngx-translate-extract --input ./apps/search/src  ./libs --output ./apps/search/src/assets/i18n/{en,fr,da,de,fi,nb,nl,sv}.json --clean --format json"
   },
   "private": true,
   "dependencies": {
@@ -59,6 +61,7 @@
     "@angular/cli": "~10.0.0",
     "@angular/compiler-cli": "~10.0.1",
     "@babel/core": "^7.10.2",
+    "@biesbjerg/ngx-translate-extract": "^7.0.3",
     "@ngrx/effects": "^9.2.0",
     "@ngrx/entity": "^9.2.0",
     "@ngrx/store": "^9.2.0",

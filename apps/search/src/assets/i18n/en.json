@@ -1,6 +1,6 @@
 {
-  "sortby":"Sort By",
-  "last changed":"Last changed",
-  "popularity":"Popularity",
-  "loadResults":"Loading more results"
+	"My Geonetwork Catalog": "My Geonetwork Catalog",
+	"Find your metadata": "Find your metadata",
+	"loadResults": "Load results",
+	"Sort by": "Sort by"
 }
