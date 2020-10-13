@@ -40,6 +40,7 @@
     "@angular/platform-browser-dynamic": "~10.0.1",
     "@angular/platform-server": "~10.0.1",
     "@angular/router": "~10.0.1",
+    "@biesbjerg/ngx-translate-extract-marker": "^1.0.0",
     "@ngrx/schematics": "^9.2.0",
     "@nguniversal/express-engine": "^10.0.0",
     "@ngx-translate/core": "^13.0.0",
