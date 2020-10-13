@@ -65,3 +65,60 @@ The api `baseUrl` is stored in the api specification document, and overwritten v
 This might need to be changed for further deployment, it is used in dev mode environment only for the moment.
 
 To generate the client, run `npm run generate-api`
+
+### i18n
+
+Translations are managed by [ngx-translate](https://github.com/ngx-translate/core).
+
+To set up translate service, import the module in your application/lib root module:
+```typescript
+// Application module, root
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http)
+}
+...
+imports: [
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+      defaultLanguage: 'fr',
+    }),
+]
+
+// Library module, child
+imports: [
+    TranslateModule.forChild(),
+]
+```
+
+To declare a string to be translated, use following syntax
+```html
+<input
+  [title]="'Sort by' | translate"
+/>
+
+<div translate>search<div/>
+```
+``` typescript
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('last changed')
+marker('popularity')
+```
+
+All translated files are stored in applications assets `i18n` folder (eg: apps/search/src/assets/i18n).
+
+To extract automatically all translations use
+```shell script
+npm run i18n:extract
+```
+
+Check all target langage are defined in extraction script
+```shell script
+    "i18n:extract": "ngx-translate-extract --input ./apps/search/src  ./libs --output ./apps/search/src/assets/i18n/{en,fr,da,de,fi,nb,nl,sv}.json --clean --format json"
+```
+
+All translation files are merged, unused strings are removed. Don't forget to use `Marker` to add dynamic translations.
