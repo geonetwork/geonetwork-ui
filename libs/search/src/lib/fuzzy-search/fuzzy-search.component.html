@@ -1,5 +1,5 @@
 <ui-text-input
   #searchText
-  hint="Find your metadata"
+  [hint]="'Find your metadata' | translate"
   [value]="currentTextSearch$ | async"
 ></ui-text-input>

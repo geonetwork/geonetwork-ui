@@ -1,5 +1,5 @@
 <ui-dropdown-selector
-  title="Sort by"
+  [title]="'Sort by' | translate"
   [choices]="choices"
   (selectValue)="changeSortBy($event)"
   [selected]="currentSortBy$ | async"

@@ -10,11 +10,13 @@ import { EffectsModule } from '@ngrx/effects'
 import { HttpClientModule } from '@angular/common/http'
 import { ResultsListComponent } from './results-list/results-list.component'
 import { GnApiModule } from '../../../gn-api/src'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [SortByComponent, FuzzySearchComponent, ResultsListComponent],
   imports: [
     CommonModule,
+    TranslateModule.forChild(),
     StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
       initialState,
     }),
