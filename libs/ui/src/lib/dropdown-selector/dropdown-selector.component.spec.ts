@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { TranslateModule } from '@ngx-translate/core'
+import { ButtonComponent } from '../button/button.component'
 
 import { DropdownSelectorComponent } from './dropdown-selector.component'
-import { ButtonComponent } from '../button/button.component'
 
 describe('DropdownSelectorComponent', () => {
   let component: DropdownSelectorComponent
@@ -9,6 +10,7 @@ describe('DropdownSelectorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [TranslateModule.forRoot()],
       declarations: [DropdownSelectorComponent, ButtonComponent],
     }).compileComponents()
   }))
