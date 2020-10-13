@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { SearchApiService } from '../../../../gn-api/src'
+import { SearchApiService } from '@lib/gn-api'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { SearchResponse } from 'elasticsearch'
 import {
@@ -15,13 +15,15 @@ import { getSearchParams, getSearchSortBy } from './selectors'
 import { SearchState, RESULTS_PAGE_SIZE, RecordSimple } from '../model'
 import { select, Store } from '@ngrx/store'
 import { of } from 'rxjs'
+import { AuthService } from '@lib/auth'
 
 @Injectable()
 export class SearchEffects {
   constructor(
     private actions$: Actions,
     private searchService: SearchApiService,
-    private store$: Store<SearchState>
+    private store$: Store<SearchState>,
+    private authService: AuthService
   ) {}
 
   clearResults$ = createEffect(() =>
@@ -34,6 +36,7 @@ export class SearchEffects {
   loadResults$ = createEffect(() =>
     this.actions$.pipe(
       ofType(REQUEST_MORE_RESULTS),
+      switchMap(() => this.authService.authReady()), // wait for auth to be known
       withLatestFrom(
         this.store$.pipe(select(getSearchSortBy)),
         this.store$.pipe(select(getSearchParams))
