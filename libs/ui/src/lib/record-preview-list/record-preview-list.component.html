@@ -1,0 +1,17 @@
+<a
+  class="w-full h-full block rounded overflow-hidden shadow-md border-b-4 border-secondary hover:bg-button-default hover:shadow-lg hover:shadow-outline overflow-hidden transition duration-100"
+  [href]="record.url"
+>
+  <div
+    class="w-full h-32 bg-gray-300 bg-cover bg-center bg-no-repeat"
+    [ngStyle]="{
+      backgroundImage: 'url(' + record.thumbnailUrl + ')'
+    }"
+  ></div>
+  <div class="h-full px-6 py-4 flex flex-col">
+    <div class="font-bold text-lg mb-2 flex-shrink-0">{{ record.title }}</div>
+    <p class="text-gray-800 text-base">
+      {{ record.abstract }}
+    </p>
+  </div>
+</a>
