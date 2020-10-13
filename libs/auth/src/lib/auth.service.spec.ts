@@ -1,6 +1,4 @@
-import { TestBed } from '@angular/core/testing'
 import { AuthService } from './auth.service'
-import { MeApiService } from '@lib/gn-api'
 import { Subject } from 'rxjs'
 
 describe('AuthService', () => {
@@ -13,16 +11,7 @@ describe('AuthService', () => {
     meApiMock = {
       getMe: () => me$,
     }
-
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: MeApiService,
-          useValue: meApiMock,
-        },
-      ],
-    })
-    service = TestBed.inject(AuthService)
+    service = new AuthService(meApiMock)
   })
 
   it('should be created', () => {
