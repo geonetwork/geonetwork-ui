@@ -3,41 +3,35 @@ import { createCustomElement } from '@angular/elements'
 import { LibSearchModule } from '@lib/search'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
-import { BASE_PATH } from '@lib/gn-api'
-import { GnSearchInputComponent } from './gn-search-input.component'
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
-import { HttpClient } from '@angular/common/http'
-import { HttpLoaderFactory } from '../../../../apps/search/src/app/app.module'
+import {
+  apiConfiguration,
+  GnSearchInputComponent,
+} from './gn-search-input.component'
+import { CommonModule } from '../../../common.module'
+import { Configuration } from '@lib/gn-api'
 
 @NgModule({
   declarations: [GnSearchInputComponent],
   imports: [
+    CommonModule,
     LibSearchModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot(),
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
-      },
-      defaultLanguage: 'en',
-    }),
   ],
   providers: [
     {
-      provide: BASE_PATH,
-      useValue: 'https://apps.titellus.net/geonetwork/srv/api',
+      provide: Configuration,
+      useValue: apiConfiguration,
     },
   ],
 })
 export class GnSearchInputModule {
-  constructor(private injector: Injector) {
+  constructor(private injector: Injector) {}
+
+  ngDoBootstrap() {
     const customButton = createCustomElement(GnSearchInputComponent, {
-      injector,
+      injector: this.injector,
     })
     customElements.define('gn-search-input', customButton)
   }
-
-  ngDoBootstrap() {}
 }

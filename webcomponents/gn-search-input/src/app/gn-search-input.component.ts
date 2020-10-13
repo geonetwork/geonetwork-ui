@@ -1,9 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  Input,
   OnInit,
   ViewEncapsulation,
 } from '@angular/core'
+import { Configuration } from '@lib/gn-api'
+export const apiConfiguration = new Configuration()
 
 @Component({
   selector: 'wc-component',
@@ -13,7 +16,11 @@ import {
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class GnSearchInputComponent implements OnInit {
+  @Input() apiUrl = '/'
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    apiConfiguration.basePath = this.apiUrl
+  }
 }
