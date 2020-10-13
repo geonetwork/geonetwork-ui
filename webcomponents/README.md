@@ -35,7 +35,7 @@ Note that each webcomponent should appear in two stories: one where it is includ
 ### Web server
 To test a specific web component in a real web page, run
 ```shell script
-npm run serve-wc -- (webcomponent_name) [--build]
+npm run serve:wc -- (webcomponent_name) [--build]
 ```
 - `webcomponent_name` is the name you gave to your Angular application in `/webcomponents` root folder. It must also be the tag name you gave in your `AppModule` to your exported web component.
 - `--build` (optional) forces a rebuild of your webcomponent.
