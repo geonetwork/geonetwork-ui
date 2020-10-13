@@ -6,13 +6,13 @@ import {
 } from '@angular/core'
 
 @Component({
-  selector: 'app-search-snapshot-wc',
-  templateUrl: './search-snapshot-wc.component.html',
-  styleUrls: ['./search-snapshot-wc.component.css'],
+  selector: 'wc-component',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
 })
-export class SearchSnapshotWcComponent implements OnInit {
+export class GnSearchInputComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}

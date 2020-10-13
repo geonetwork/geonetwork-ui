@@ -1,13 +1,13 @@
 import { Injector, NgModule } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
-import { SearchSnapshotWcComponent } from './search-snapshot-wc/search-snapshot-wc.component'
 import { LibSearchModule } from '@lib/search'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { BASE_PATH } from '@lib/gn-api'
+import { GnSearchInputComponent } from './gn-search-input.component'
 
 @NgModule({
-  declarations: [SearchSnapshotWcComponent],
+  declarations: [GnSearchInputComponent],
   imports: [LibSearchModule, StoreModule.forRoot({}), EffectsModule.forRoot()],
   providers: [
     {
@@ -16,12 +16,12 @@ import { BASE_PATH } from '@lib/gn-api'
     },
   ],
 })
-export class AppModule {
+export class GnSearchInputModule {
   constructor(private injector: Injector) {
-    const customButton = createCustomElement(SearchSnapshotWcComponent, {
+    const customButton = createCustomElement(GnSearchInputComponent, {
       injector,
     })
-    customElements.define('gn-search-snapshot', customButton)
+    customElements.define('gn-search-input', customButton)
   }
 
   ngDoBootstrap() {}

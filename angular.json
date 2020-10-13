@@ -99,28 +99,27 @@
         }
       }
     },
-    "search-wc": {
+    "gn-search-input": {
       "projectType": "application",
       "schematics": {},
-      "root": "webcomponents/search-wc",
-      "sourceRoot": "webcomponents/search-wc/src",
+      "root": "webcomponents/gn-search-input",
+      "sourceRoot": "webcomponents/gn-search-input/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "webcomponents/search-wc/dist",
-            "index": "webcomponents/search-wc/src/index.html",
-            "main": "webcomponents/search-wc/src/main.ts",
-            "polyfills": "webcomponents/search-wc/src/polyfills.ts",
-            "tsConfig": "webcomponents/search-wc/tsconfig.app.json",
+            "outputPath": "webcomponents/gn-search-input/dist",
+            "index": "webcomponents/gn-search-input/src/index.html",
+            "main": "webcomponents/gn-search-input/src/main.ts",
+            "polyfills": "webcomponents/gn-search-input/src/polyfills.ts",
+            "tsConfig": "webcomponents/gn-search-input/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "webcomponents/search-wc/src/favicon.ico",
-              "webcomponents/search-wc/src/assets"
+              "webcomponents/gn-search-input/src/assets"
             ],
             "styles": [
-              "webcomponents/search-wc/src/styles.css"
+              "webcomponents/gn-search-input/src/styles.css"
             ],
             "scripts": []
           },
@@ -128,8 +127,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "webcomponents/search-wc/src/environments/environment.ts",
-                  "with": "webcomponents/search-wc/src/environments/environment.prod.ts"
+                  "replace": "webcomponents/gn-search-input/src/environments/environment.ts",
+                  "with": "webcomponents/gn-search-input/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -149,7 +148,7 @@
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "500kb",
-                  "maximumError": "1024kb"
+                  "maximumError": "2MB"
                 }
               ]
             }
@@ -158,25 +157,25 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "search-wc:build"
+            "browserTarget": "gn-search-input:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "search-wc:build:production"
+              "browserTarget": "gn-search-input:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "search-wc:build"
+            "browserTarget": "gn-search-input:build"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "webcomponents/search-wc/tsconfig.app.json"
+              "webcomponents/gn-search-input/tsconfig.app.json"
             ],
             "exclude": [
               "**/node_modules/**",
