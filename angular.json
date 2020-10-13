@@ -191,35 +191,10 @@
       "sourceRoot": "libs/search/src",
       "prefix": "search",
       "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "libs/search/tsconfig.lib.json",
-            "project": "libs/search/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/search/tsconfig.lib.prod.json"
-            }
-          }
-        },
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
             "detectOpenHandles": true
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/search/tsconfig.lib.json",
-              "libs/search/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "libs/gn-api/**"
-            ]
           }
         }
       }
@@ -230,35 +205,10 @@
       "sourceRoot": "libs/ui/src",
       "prefix": "ui",
       "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "libs/ui/tsconfig.lib.json",
-            "project": "libs/ui/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/ui/tsconfig.lib.prod.json"
-            }
-          }
-        },
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
             "detectOpenHandles": true
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/ui/tsconfig.lib.json",
-              "libs/ui/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "libs/gn-api/**"
-            ]
           }
         }
       }
@@ -267,21 +217,7 @@
       "projectType": "library",
       "root": "libs/gn-api",
       "sourceRoot": "libs/gn-api/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "libs/gn-api/tsconfig.lib.json",
-            "project": "libs/gn-api/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/gn-api/tsconfig.lib.prod.json"
-            }
-          }
-        }
-      }
+      "prefix": "lib"
     },
     "ssr-formatter": {
       "projectType": "application",
@@ -438,18 +374,6 @@
       "sourceRoot": "libs/common/src",
       "prefix": "lib",
       "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "libs/common/tsconfig.lib.json",
-            "project": "libs/common/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/common/tsconfig.lib.prod.json"
-            }
-          }
-        },
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
