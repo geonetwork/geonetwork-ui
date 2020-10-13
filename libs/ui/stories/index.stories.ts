@@ -1,10 +1,10 @@
-import {AutocompleteComponent} from '../src/lib/autocomplete/autocomplete.component'
-import {of} from 'rxjs'
-import {moduleMetadata, storiesOf} from '@storybook/angular'
-import {select, text, withKnobs} from '@storybook/addon-knobs'
-import {withA11y} from '@storybook/addon-a11y'
-import {ButtonComponent} from '../src/lib/button/button.component'
-import {UiModule} from '../src'
+import { AutocompleteComponent } from '../src/lib/autocomplete/autocomplete.component'
+import { of } from 'rxjs'
+import { moduleMetadata, storiesOf } from '@storybook/angular'
+import { select, text, withKnobs } from '@storybook/addon-knobs'
+import { withA11y } from '@storybook/addon-a11y'
+import { ButtonComponent } from '../src/lib/button/button.component'
+import { UiModule } from '../src'
 
 const moduleMetadatas = {
   imports: [UiModule],
