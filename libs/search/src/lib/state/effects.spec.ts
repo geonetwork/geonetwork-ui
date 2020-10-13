@@ -11,13 +11,18 @@ import {
   SortBy,
   UpdateParams,
 } from './actions'
-import { hot } from 'jasmine-marbles'
+import { cold, hot } from 'jasmine-marbles'
 import { StoreModule } from '@ngrx/store'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
+import { AuthService } from '@lib/auth'
 
 const searchServiceMock = {
   call: () => of({ hits: { hits: [] } }), // TODO: use a fixture here
 }
+const authServiceMock = {
+  authReady: () => of(true),
+}
+
 describe('Effects', () => {
   let effects: SearchEffects
   let actions$: Observable<any>
@@ -37,6 +42,10 @@ describe('Effects', () => {
         {
           provide: SearchApiService,
           useValue: searchServiceMock,
+        },
+        {
+          provide: AuthService,
+          useValue: authServiceMock,
         },
       ],
     })

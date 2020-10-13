@@ -2,7 +2,7 @@
 
 # compiled output
 /dist
-webcomponents/*/dist
+webcomponents/**/dist
 /tmp
 /out-tsc
 # Only exists if Bazel was run

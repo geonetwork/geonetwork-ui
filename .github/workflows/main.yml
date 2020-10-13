@@ -72,14 +72,14 @@ jobs:
       - name: Build storybook
         run: npm run build:storybook
 
-      - run: echo "::set-env name=BRANCH_NAME::${GITHUB_HEAD_REF#refs/heads/:-master}"
+      - run: echo "::set-env name=BRANCH_NAME::${GITHUB_HEAD_REF:-master}"
 
       - name: deploy to gh pages
         run: |
           echo "Deploying to directory: ${{env.BRANCH_NAME}}"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          npx gh-pages --dist dist/ --src storybook*/**/* --dest ${{env.BRANCH_NAME}} --remove "${{env.BRANCH_NAME}}/**" --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
+          npx gh-pages --dist dist/ --src storybook*/**/* --dest ${{env.BRANCH_NAME}} --remove "${{env.BRANCH_NAME}}/**" --no-history --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
 
 
       - name: add PR comment

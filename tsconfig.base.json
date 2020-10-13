@@ -30,6 +30,9 @@
       ],
       "@lib/common": [
         "libs/common/src/index.ts"
+      ],
+      "@lib/auth": [
+        "libs/auth/src/index.ts"
       ]
     }
   },

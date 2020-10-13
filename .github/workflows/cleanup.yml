@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - run: echo "::set-env name=BRANCH_NAME::${GITHUB_HEAD_REF#refs/heads/}"
+      - run: echo "::set-env name=BRANCH_NAME::${GITHUB_HEAD_REF}"
 
       - name: remove directory in gh pages
         run: |
@@ -20,4 +20,4 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           touch .empty
-          npx gh-pages --dist . --src .empty --remove "${{env.BRANCH_NAME}}" --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
+          npx gh-pages --dist . --src .empty --remove "${{env.BRANCH_NAME}}" --no-history --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
