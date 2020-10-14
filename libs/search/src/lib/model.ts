@@ -7,6 +7,9 @@ export interface RecordSimple {
   abstract: string
   url: string
   thumbnailUrl: string
+  category: string
+  read: string
+  open: string
 }
 
 export interface SearchState {
