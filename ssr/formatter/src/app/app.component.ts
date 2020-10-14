@@ -36,8 +36,8 @@ export class AppComponent implements OnInit {
             category: hit._source.resourceCategoryObject
               ? hit._source.resourceCategoryObject.default
               : 'no category',
-            read: hit._source.resourceReadObject
-              ? hit._source.resourceReadObject.default
+            more: hit._source.resourceMoreObject
+              ? hit._source.resourceMoreObject.default
               : 'no read more',
             open: hit._source.resourceOpenObject
               ? hit._source.resourceOpenObject.default

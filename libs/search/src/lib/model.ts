@@ -8,7 +8,7 @@ export interface RecordSimple {
   url: string
   thumbnailUrl: string
   category: string
-  read: string
+  more: string
   open: string
 }
 
