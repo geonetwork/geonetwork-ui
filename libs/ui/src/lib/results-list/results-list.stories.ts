@@ -2,12 +2,9 @@ import { withA11y } from '@storybook/addon-a11y'
 import { object, select, withKnobs } from '@storybook/addon-knobs'
 import { moduleMetadata } from '@storybook/angular'
 import { I18nModule } from '../../../../common/src'
-import { RecordSimple } from '../../../../search/src'
+import { RecordSimple, ResultsListLayout } from '../../../../search/src'
 import { UiModule } from '../ui.module'
-import {
-  ResultsListComponent,
-  ResultsListLayout,
-} from './results-list.component'
+import { ResultsListComponent } from './results-list.component'
 
 const moduleMetadatas = {
   declaration: [],

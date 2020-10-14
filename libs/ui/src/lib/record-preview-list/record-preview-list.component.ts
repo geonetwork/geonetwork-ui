@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy,
   Input,
 } from '@angular/core'
-import type { RecordSimple } from '@lib/search'
+import type { RecordSimple } from '@lib/common'
 
 @Component({
   selector: 'ui-record-preview-list',

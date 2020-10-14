@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import { SortBy } from '../state/actions'
-import { SearchState } from '../model'
+import { SearchState } from '../state/reducer'
 import { getSearchSortBy } from '../state/selectors'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 

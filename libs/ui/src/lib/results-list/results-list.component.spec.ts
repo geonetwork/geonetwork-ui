@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordPreviewListComponent } from '../record-preview-list/record-preview-list.component'
-import { UiModule } from '../ui.module'
 
 import { ResultsListComponent } from './results-list.component'
 

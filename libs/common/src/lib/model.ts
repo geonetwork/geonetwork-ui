@@ -9,13 +9,6 @@ export interface RecordSimple {
   thumbnailUrl: string
 }
 
-export interface SearchState {
-  params: SearchParams
-  sortBy?: string
-  results: RecordSimple[]
-  loadingMore: boolean
-}
-
 export interface RecordMetric {
   value: string
   recordCount: number

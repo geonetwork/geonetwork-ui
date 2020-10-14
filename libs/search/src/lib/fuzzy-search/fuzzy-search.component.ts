@@ -10,8 +10,8 @@ import { UpdateParams } from '../state/actions'
 import { select, Store } from '@ngrx/store'
 import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators'
 import { TextInputComponent } from '../../../../ui/src/lib/text-input/text-input.component'
+import { SearchState } from '../state/reducer'
 import { getSearchParams } from '../state/selectors'
-import { SearchState } from '../model'
 
 @Component({
   selector: 'search-fuzzy-search',

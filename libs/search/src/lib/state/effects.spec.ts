@@ -1,8 +1,10 @@
-import { SearchApiService } from '@lib/gn-api'
-import { SearchEffects } from './effects'
 import { TestBed } from '@angular/core/testing'
+import { AuthService } from '@lib/auth'
+import { SearchApiService } from '@lib/gn-api'
 import { EffectsModule } from '@ngrx/effects'
 import { provideMockActions } from '@ngrx/effects/testing'
+import { StoreModule } from '@ngrx/store'
+import { hot } from 'jasmine-marbles'
 import { Observable, of } from 'rxjs'
 import {
   AddResults,
@@ -11,10 +13,8 @@ import {
   SortBy,
   UpdateParams,
 } from './actions'
-import { cold, hot } from 'jasmine-marbles'
-import { StoreModule } from '@ngrx/store'
+import { SearchEffects } from './effects'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
-import { AuthService } from '@lib/auth'
 
 const searchServiceMock = {
   call: () => of({ hits: { hits: [] } }), // TODO: use a fixture here

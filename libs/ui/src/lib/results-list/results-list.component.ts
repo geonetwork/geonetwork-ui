@@ -4,13 +4,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core'
-import { RecordSimple } from '@lib/search'
-
-export enum ResultsListLayout {
-  'BLOCK' = 'BLOCK',
-  'LIST' = 'LIST',
-  'LIST-TEXT' = 'LIST-TEXT',
-}
+import { RecordSimple, ResultsListLayout } from '@lib/common'
 
 @Component({
   selector: 'ui-results-list',
