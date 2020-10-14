@@ -1,8 +1,11 @@
 import { withA11y } from '@storybook/addon-a11y'
 import { object, select, withKnobs } from '@storybook/addon-knobs'
 import { moduleMetadata } from '@storybook/angular'
-import { I18nModule } from '../../../../common/src'
-import { RecordSimple, ResultsListLayout } from '../../../../search/src'
+import {
+  I18nModule,
+  RecordSimple,
+  ResultsListLayout,
+} from '../../../../common/src'
 import { UiModule } from '../ui.module'
 import { ResultsListComponent } from './results-list.component'
 
