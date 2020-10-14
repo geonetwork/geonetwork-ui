@@ -3,12 +3,8 @@ import { createCustomElement } from '@angular/elements'
 import { LibSearchModule } from '@lib/search'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
-import {
-  apiConfiguration,
-  GnSearchInputComponent,
-} from './gn-search-input.component'
+import { GnSearchInputComponent } from './gn-search-input.component'
 import { CommonModule } from '../../../common.module'
-import { Configuration } from '@lib/gn-api'
 
 @NgModule({
   declarations: [GnSearchInputComponent],
@@ -17,12 +13,6 @@ import { Configuration } from '@lib/gn-api'
     LibSearchModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot(),
-  ],
-  providers: [
-    {
-      provide: Configuration,
-      useValue: apiConfiguration,
-    },
   ],
 })
 export class GnSearchInputModule {
