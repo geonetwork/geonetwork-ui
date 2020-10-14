@@ -21,4 +21,10 @@ export interface RecordMetric {
   recordCount: number
 }
 
+export enum ResultsListLayout {
+  'BLOCK' = 'BLOCK',
+  'LIST' = 'LIST',
+  'LIST-TEXT' = 'LIST-TEXT',
+}
+
 export const RESULTS_PAGE_SIZE = 10
