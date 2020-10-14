@@ -1,5 +1,5 @@
 import { withA11y } from '@storybook/addon-a11y'
-import { color, withKnobs } from '@storybook/addon-knobs'
+import { color, text, withKnobs } from '@storybook/addon-knobs'
 import { moduleMetadata, storiesOf } from '@storybook/angular'
 import { I18nModule } from '../../../libs/common/src'
 import { GnSearchInputComponent } from '../src/app/gn-search-input.component'
@@ -16,6 +16,7 @@ storiesOf('Angular components', module)
   .add('Search Snapshot', () => ({
     component: GnSearchInputComponent,
     props: {
+      apiUrl: text('api url', 'https://apps.titellus.net/geonetwork/srv/api'),
       primaryColor: color('Primary Color', 'blue'),
       secondaryColor: color('Secondary Color', 'grey'),
     },
