@@ -6,6 +6,20 @@ They are Angular components as well, but with a slightly different build system.
 
 All web components are prefixed with `gn-`.
 
+Web components are made to be easily included in any context, e.g.:
+
+```html
+<script src="gn-search-input.js"></script>
+...
+<gn-search-input
+  api-url="https://apps.titellus.net/geonetwork/srv/api"
+  primary-color="#e73f51"
+  secondary-color="#c2e9dc"
+  main-color="#212029"
+  background-color="#fdfbff"
+></gn-search-input>
+```
+
 ## Build
 To build a specific webcomponent, run e.g. 
 ```
@@ -46,11 +60,6 @@ You'll be able to test your web component on http://127.0.0.1:8001
 This script show you how to deploy your web component in a real world, it builds it, then to use your component in a real web page, you have to
 - import the script exported by Angular
 - include your web component in the HTML content.
-
-```angular2html
-    <script src="gn-search-input.js"></script>
-    <gn-search-input></gn-search-input>
-```
 
 ## Create a new Web Component
 
