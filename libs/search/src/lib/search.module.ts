@@ -11,9 +11,15 @@ import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http'
 import { ResultsListComponent } from './results-list/results-list.component'
 import { GnApiModule } from '@lib/gn-api'
 import { TranslateModule } from '@ngx-translate/core'
+import { RecordsMetricsComponent } from './records-metrics/records-metrics.component'
 
 @NgModule({
-  declarations: [SortByComponent, FuzzySearchComponent, ResultsListComponent],
+  declarations: [
+    SortByComponent,
+    FuzzySearchComponent,
+    ResultsListComponent,
+    RecordsMetricsComponent,
+  ],
   imports: [
     CommonModule,
     TranslateModule.forChild(),
@@ -26,6 +32,11 @@ import { TranslateModule } from '@ngx-translate/core'
     UiModule,
     GnApiModule,
   ],
-  exports: [SortByComponent, FuzzySearchComponent, ResultsListComponent],
+  exports: [
+    SortByComponent,
+    FuzzySearchComponent,
+    ResultsListComponent,
+    RecordsMetricsComponent,
+  ],
 })
 export class LibSearchModule {}

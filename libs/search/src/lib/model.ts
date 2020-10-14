@@ -16,4 +16,10 @@ export interface SearchState {
   loadingMore: boolean
 }
 
+export interface RecordMetric {
+  label: string
+  key: string
+  recordCount: number
+}
+
 export const RESULTS_PAGE_SIZE = 10

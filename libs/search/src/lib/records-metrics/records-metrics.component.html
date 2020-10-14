@@ -1,0 +1,5 @@
+<div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+  <div *ngFor="let category of results$ | async">
+    {{ category.key | translate }} ({{ category.recordCount }})
+  </div>
+</div>
