@@ -1,19 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
-import { initialState, reducer, SEARCH_FEATURE_KEY } from '../state/reducer'
+import { I18nModule } from '@lib/common'
+import { UiModule } from '@lib/ui'
 
-import { ResultsListComponent } from './results-list.component'
-import { UiModule } from '../../../../ui/src'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
+import { initialState, reducer, SEARCH_FEATURE_KEY } from '../state/reducer'
+import { ResultsListContainerComponent } from './results-list.container.component'
 
-describe('ResultsListComponent', () => {
-  let component: ResultsListComponent
-  let fixture: ComponentFixture<ResultsListComponent>
+describe('ResultsListContainerComponent', () => {
+  let component: ResultsListContainerComponent
+  let fixture: ComponentFixture<ResultsListContainerComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ResultsListComponent],
+      declarations: [ResultsListContainerComponent],
       imports: [
+        I18nModule,
         UiModule,
         EffectsModule.forRoot(),
         StoreModule.forRoot({}),
@@ -25,7 +27,7 @@ describe('ResultsListComponent', () => {
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ResultsListComponent)
+    fixture = TestBed.createComponent(ResultsListContainerComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

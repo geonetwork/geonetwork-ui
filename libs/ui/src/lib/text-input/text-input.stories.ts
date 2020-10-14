@@ -1,12 +1,7 @@
-import { UiModule } from '@lib/ui'
 import { withA11y } from '@storybook/addon-a11y'
 import { action } from '@storybook/addon-actions'
 import { text, withKnobs } from '@storybook/addon-knobs'
 import { TextInputComponent } from './text-input.component'
-
-const moduleMetadatas = {
-  imports: [UiModule],
-}
 
 export default {
   title: 'UI',

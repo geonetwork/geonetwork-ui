@@ -5,11 +5,11 @@ import { SearchState } from '../model'
 import { RequestMoreResults } from '../state/actions'
 
 @Component({
-  selector: 'search-results-list',
-  templateUrl: './results-list.component.html',
-  styleUrls: ['./results-list.component.css'],
+  selector: 'search-results-list-container',
+  templateUrl: './results-list.container.component.html',
+  styleUrls: ['./results-list.container.component.css'],
 })
-export class ResultsListComponent implements OnInit {
+export class ResultsListContainerComponent implements OnInit {
   results$ = this.store.pipe(select(getSearchResults))
   isLoading$ = this.store.pipe(select(getSearchResultsLoading))
 
