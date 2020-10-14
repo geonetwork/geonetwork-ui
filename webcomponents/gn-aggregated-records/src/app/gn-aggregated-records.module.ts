@@ -7,6 +7,7 @@ import { WcCommonModule } from '../../../wc-common.module'
 import { GnAggregatedRecordsComponent } from './gn-aggregated-records.component'
 import { UiModule } from '@lib/ui'
 import { CommonModule } from '@angular/common'
+import { I18nModule } from '@lib/common'
 
 @NgModule({
   declarations: [GnAggregatedRecordsComponent],
@@ -17,6 +18,7 @@ import { CommonModule } from '@angular/common'
     EffectsModule.forRoot(),
     UiModule,
     CommonModule,
+    I18nModule,
   ],
 })
 export class GnAggregatedRecordsModule {
