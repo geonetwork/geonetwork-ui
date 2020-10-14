@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core'
+import { RecordSimple, RESULTS_PAGE_SIZE } from '@lib/common'
 import { SearchApiService } from '@lib/gn-api'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { SearchResponse } from 'elasticsearch'
@@ -11,8 +12,8 @@ import {
   UPDATE_PARAMS,
 } from './actions'
 import { map, switchMap, withLatestFrom } from 'rxjs/operators'
+import { SearchState } from './reducer'
 import { getSearchParams, getSearchSortBy } from './selectors'
-import { SearchState, RESULTS_PAGE_SIZE, RecordSimple } from '../model'
 import { select, Store } from '@ngrx/store'
 import { of } from 'rxjs'
 import { AuthService } from '@lib/auth'

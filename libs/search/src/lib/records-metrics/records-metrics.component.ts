@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core'
+import { RecordMetric } from '@lib/common'
 import { SearchApiService } from '@lib/gn-api'
 import { Observable } from 'rxjs'
 import { map, share } from 'rxjs/operators'
-import { RecordMetric } from '@lib/search'
 import { SearchResponse } from 'elasticsearch'
 
 @Component({

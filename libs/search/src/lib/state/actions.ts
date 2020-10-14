@@ -1,4 +1,4 @@
-import { RecordSimple, SearchParams } from '../model'
+import { RecordSimple, SearchParams } from '@lib/common'
 import { Action } from '@ngrx/store'
 
 export const UPDATE_PARAMS = '[Search] Update Params'
