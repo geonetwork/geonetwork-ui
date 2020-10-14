@@ -17,7 +17,6 @@ import { RecordsMetricsComponent } from './records-metrics/records-metrics.compo
   declarations: [
     SortByComponent,
     FuzzySearchComponent,
-    ResultsListComponent,
     RecordsMetricsComponent,
     ResultsListContainerComponent,
   ],
@@ -36,7 +35,6 @@ import { RecordsMetricsComponent } from './records-metrics/records-metrics.compo
   exports: [
     SortByComponent,
     FuzzySearchComponent,
-    ResultsListComponent,
     RecordsMetricsComponent,
     ResultsListContainerComponent,
   ],
