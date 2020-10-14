@@ -9,11 +9,6 @@
       alt="thumbnail"
     />
     <div class="p-6">
-      <h2
-        class="tracking-widest text-xs title-font font-medium uppercase text-gray-500 mb-1"
-      >
-        {{ record.category }}
-      </h2>
       <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
         {{ record.title }}
       </h1>
@@ -24,7 +19,7 @@
           class="inline-flex items-center md:mb-2 lg:mb-0 hover:underline"
           [href]="record.url"
         >
-          {{ record.more }}
+          <span translate>readMore</span>
           <svg
             class="h-5 w-5"
             xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +39,7 @@
           class="inline-flex items-center md:mb-2 lg:mb-0 hover:underline"
           [href]="record.url"
         >
-          {{ record.open }}
+          <span translate>openRecord</span>
           <svg
             class="h-5 w-6"
             xmlns="http://www.w3.org/2000/svg"
@@ -76,11 +71,6 @@
       alt="thumbnail"
     />
     <div class="flex-grow sm:pl-8 sm:pr-8">
-      <h2
-        class="tracking-widest text-xs title-font font-medium text-gray-500 mb-1"
-      >
-        {{ record.category }}
-      </h2>
       <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
         {{ record.title }}
       </h1>
@@ -91,7 +81,7 @@
           class="inline-flex items-center md:mb-2 lg:mb-0 hover:underline"
           [href]="record.url"
         >
-          {{ record.more }}
+          <span translate>readMore</span>
           <svg
             class="h-5 w-5"
             xmlns="http://www.w3.org/2000/svg"
@@ -118,11 +108,6 @@
     class="h-full flex sm:flex-row flex-col p-5 items-center sm:justify-start justify-center text-center sm:text-left bg-white border-gray-200 border-2 rounded-md"
   >
     <div class="flex-grow">
-      <h2
-        class="tracking-widest text-xs title-font font-medium text-gray-500 mb-1"
-      >
-        {{ record.category }}
-      </h2>
       <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
         {{ record.title }}
       </h1>
@@ -133,7 +118,7 @@
           class="inline-flex items-center md:mb-2 lg:mb-0 hover:underline"
           [href]="record.url"
         >
-          {{ record.more }}
+          <span translate>readMore</span>
           <svg
             class="h-5 w-5"
             xmlns="http://www.w3.org/2000/svg"
