@@ -11,33 +11,33 @@ export class ButtonComponent implements OnInit {
   get color() {
     switch (this.type) {
       case 'default':
-        return 'bg-button-default'
+        return 'bg-gray-100 hover:bg-gray-200'
       case 'primary':
-        return 'bg-button-primary'
+        return 'bg-primary-lighter hover:bg-primary'
       case 'secondary':
-        return 'bg-button-secondary'
-    }
-  }
-
-  get hoverColor() {
-    switch (this.type) {
-      case 'default':
-        return 'hover:bg-button-default-hover'
-      case 'primary':
-        return 'hover:bg-button-primary-hover'
-      case 'secondary':
-        return 'hover:bg-button-secondary-hover'
+        return 'bg-secondary-lighter hover:bg-secondary'
     }
   }
 
   get textColor() {
     switch (this.type) {
       case 'default':
-        return 'text-button-text-default-hover'
+        return 'text-main'
       case 'secondary':
-        return 'text-button-text-secondary-hover'
+        return 'text-secondary-darkest'
       case 'primary':
-        return 'text-button-text-primary'
+        return 'text-primary-darkest'
+    }
+  }
+
+  get borderColor() {
+    switch (this.type) {
+      case 'default':
+        return 'border-gray-500 hover:border-gray-700'
+      case 'secondary':
+        return 'border-secondary-darker hover:border-secondary-darkest'
+      case 'primary':
+        return 'border-primary-darker hover:border-primary-darkest'
     }
   }
 
