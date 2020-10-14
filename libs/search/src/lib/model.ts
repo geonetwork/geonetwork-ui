@@ -17,8 +17,7 @@ export interface SearchState {
 }
 
 export interface RecordMetric {
-  label: string
-  key: string
+  value: string
   recordCount: number
 }
 

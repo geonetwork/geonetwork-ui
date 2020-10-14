@@ -41,7 +41,7 @@ export class RecordsMetricsComponent implements OnInit {
         map<any, RecordMetric[]>(
           (response: SearchResponse<any>) =>
             response.aggregations.results.buckets.map((category) => ({
-              key: category.key,
+              value: category.key,
               recordCount: category.doc_count,
             })) as RecordMetric[]
         ),
