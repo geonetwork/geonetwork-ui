@@ -1,9 +1,9 @@
 <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-  <ui-record-summary
+  <ui-record-preview-list
     style="height: 24rem;"
     *ngFor="let record of results$ | async"
     [record]="record"
-  ></ui-record-summary>
+  ></ui-record-preview-list>
 </div>
 <div *ngIf="isLoading$ | async" class="p-4">
   <span translate>loadResults</span>...

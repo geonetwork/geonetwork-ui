@@ -1,25 +1,20 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http'
-import { BrowserModule } from '@angular/platform-browser'
+import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
+import { I18nModule } from '@lib/common'
 import { BASE_PATH } from '@lib/gn-api'
 import { LibSearchModule } from '@lib/search'
-import { AppRoutingModule } from './app-routing.module'
-import { AppComponent } from './app.component'
+import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { environment } from '../environments/environment'
 import { storeFreeze } from 'ngrx-store-freeze'
-import { EffectsModule } from '@ngrx/effects'
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { environment } from '../environments/environment'
+import { AppRoutingModule } from './app-routing.module'
+import { AppComponent } from './app.component'
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
   : []
-
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http)
-}
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,14 +22,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
-      },
-      defaultLanguage: 'fr',
-    }),
+    I18nModule,
     LibSearchModule,
     StoreModule.forRoot({}, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],

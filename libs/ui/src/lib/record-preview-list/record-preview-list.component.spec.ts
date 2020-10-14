@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { RecordSummaryComponent } from './record-summary.component'
+import { RecordPreviewListComponent } from './record-preview-list.component'
 
-describe('RecordSummaryComponent', () => {
-  let component: RecordSummaryComponent
-  let fixture: ComponentFixture<RecordSummaryComponent>
+describe('RecordPreviewListComponent', () => {
+  let component: RecordPreviewListComponent
+  let fixture: ComponentFixture<RecordPreviewListComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RecordSummaryComponent],
+      declarations: [RecordPreviewListComponent],
     }).compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecordSummaryComponent)
+    fixture = TestBed.createComponent(RecordPreviewListComponent)
     component = fixture.componentInstance
     component.record = {
       title: 'abcd',

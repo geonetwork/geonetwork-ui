@@ -1,11 +1,12 @@
-import { moduleMetadata, storiesOf } from '@storybook/angular'
-import { color, withKnobs } from '@storybook/addon-knobs'
 import { withA11y } from '@storybook/addon-a11y'
+import { color, withKnobs } from '@storybook/addon-knobs'
+import { moduleMetadata, storiesOf } from '@storybook/angular'
+import { I18nModule } from '../../../libs/common/src'
 import { GnSearchInputComponent } from '../src/app/gn-search-input.component'
 import { GnSearchInputModule } from '../src/app/gn-search-input.module'
 
 const moduleMetadatas = {
-  imports: [GnSearchInputModule],
+  imports: [I18nModule, GnSearchInputModule],
 }
 
 storiesOf('Angular components', module)
