@@ -20,9 +20,6 @@ describe('RecordPreviewListComponent', () => {
       abstract: 'Abcd',
       url: '/abcd.html',
       thumbnailUrl: '/abcd.jpg',
-      category: 'abcd',
-      more: 'abcd',
-      open: 'open',
     }
     fixture.detectChanges()
   })
