@@ -18,7 +18,17 @@ export class GnAggregatedRecordsComponent extends BaseComponent {
   @Input() aggregationMaxCount = 20
   @Input() aggregationQueryString: string
 
+  activeFilter = null
+
   ngOnInit(): void {
     super.ngOnInit()
+  }
+
+  setFilter(value: string) {
+    this.activeFilter = `+${this.aggregationField}:${value}`
+  }
+
+  clearFilter() {
+    this.activeFilter = null
   }
 }
