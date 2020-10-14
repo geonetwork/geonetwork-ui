@@ -4,6 +4,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core'
+import { ColorService } from '@lib/common'
 
 @Component({
   selector: 'ui-record-metric',
@@ -16,7 +17,11 @@ export class RecordMetricComponent implements OnInit {
   @Input() label: string
   @Input() icon: string
 
+  color: string
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.color = ColorService.generateLabelColor(this.label, 0.6, 0.5)
+  }
 }
