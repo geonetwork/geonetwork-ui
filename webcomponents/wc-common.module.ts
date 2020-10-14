@@ -16,7 +16,7 @@ import { apiConfiguration } from './base.component'
     },
   ],
 })
-export class CommonModule {
+export class WcCommonModule {
   constructor() {}
 
   ngDoBootstrap() {}

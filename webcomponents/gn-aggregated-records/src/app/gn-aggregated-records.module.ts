@@ -3,16 +3,20 @@ import { createCustomElement } from '@angular/elements'
 import { LibSearchModule } from '@lib/search'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
-import { CommonModule } from '../../../common.module'
+import { WcCommonModule } from '../../../wc-common.module'
 import { GnAggregatedRecordsComponent } from './gn-aggregated-records.component'
+import { UiModule } from '@lib/ui'
+import { CommonModule } from '@angular/common'
 
 @NgModule({
   declarations: [GnAggregatedRecordsComponent],
   imports: [
-    CommonModule,
+    WcCommonModule,
     LibSearchModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot(),
+    UiModule,
+    CommonModule,
   ],
 })
 export class GnAggregatedRecordsModule {

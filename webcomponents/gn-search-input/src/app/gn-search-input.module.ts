@@ -4,12 +4,12 @@ import { LibSearchModule } from '@lib/search'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { GnSearchInputComponent } from './gn-search-input.component'
-import { CommonModule } from '../../../common.module'
+import { WcCommonModule } from '../../../wc-common.module'
 
 @NgModule({
   declarations: [GnSearchInputComponent],
   imports: [
-    CommonModule,
+    WcCommonModule,
     LibSearchModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot(),
