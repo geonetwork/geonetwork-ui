@@ -65,15 +65,6 @@ export class SearchEffects {
             : 'no abstract',
           thumbnailUrl: hit._source.overview ? hit._source.overview.url : '',
           url: `/geonetwork/srv/eng/catalog.search#/metadata/${hit._source.uuid}`,
-          category: hit._source.resourceCategoryObject
-            ? hit._source.resourceCategoryObject.default
-            : 'no category',
-          more: hit._source.resourceMoreObject
-            ? hit._source.resourceMoreObject.default
-            : 'no read more',
-          open: hit._source.resourceOpenObject
-            ? hit._source.resourceOpenObject.default
-            : 'no open record',
         }))
       ),
       map((records: RecordSimple[]) => new AddResults(records))
