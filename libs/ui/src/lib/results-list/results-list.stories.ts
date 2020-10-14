@@ -1,10 +1,13 @@
 import { withA11y } from '@storybook/addon-a11y'
-import { object, withKnobs } from '@storybook/addon-knobs'
+import { object, select, withKnobs } from '@storybook/addon-knobs'
 import { moduleMetadata } from '@storybook/angular'
 import { I18nModule } from '../../../../common/src'
 import { RecordSimple } from '../../../../search/src'
 import { UiModule } from '../ui.module'
-import { ResultsListComponent } from './results-list.component'
+import {
+  ResultsListComponent,
+  ResultsListLayout,
+} from './results-list.component'
 
 const moduleMetadatas = {
   declaration: [],
@@ -43,9 +46,11 @@ const records: RecordSimple[] = [
   },
 ]
 
+const layouts = Object.values(ResultsListLayout)
 export const ResultsListStory = () => ({
   component: ResultsListComponent,
   props: {
+    layout: select('layout', layouts, layouts[0]),
     records: object('records', records),
   },
 })

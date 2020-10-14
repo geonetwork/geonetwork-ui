@@ -1,8 +1,26 @@
-<div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-  <ui-record-preview-list
-    style="height: 24rem;"
-    *ngFor="let record of records"
-    [record]="record"
-  ></ui-record-preview-list>
-</div>
+<ng-container [ngSwitch]="layout">
+  <ng-container
+    *ngSwitchCase="layoutEnum.BLOCK"
+    [ngTemplateOutlet]="block"
+  ></ng-container>
+  <div *ngSwitchCase="layoutEnum.LIST" class="gap-4 p-4">
+    <ui-record-preview-list
+      style="height: 24rem;"
+      *ngFor="let record of records"
+      [record]="record"
+    ></ui-record-preview-list>
+  </div>
+  <ng-container *ngSwitchDefault [ngTemplateOutlet]="block"></ng-container>
+</ng-container>
+
+<ng-template #block>
+  <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+    <ui-record-preview-list
+      style="height: 24rem;"
+      *ngFor="let record of records"
+      [record]="record"
+    ></ui-record-preview-list>
+  </div>
+</ng-template>
+
 <div *ngIf="loading" class="p-4"><span translate>loadResults</span>...</div>
