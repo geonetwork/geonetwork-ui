@@ -7,6 +7,7 @@ import { ButtonComponent } from './button/button.component'
 import { TextInputComponent } from './text-input/text-input.component'
 import { ColorScaleComponent } from './color-scale/color-scale.component'
 import { RecordPreviewListComponent } from './record-preview-list/record-preview-list.component'
+import { RecordMetricComponent } from './record-metric/record-metric.component'
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { RecordPreviewListComponent } from './record-preview-list/record-preview
     TextInputComponent,
     ColorScaleComponent,
     RecordPreviewListComponent,
+    RecordMetricComponent,
   ],
   imports: [BrowserModule, TranslateModule.forChild()],
   exports: [
@@ -24,6 +26,7 @@ import { RecordPreviewListComponent } from './record-preview-list/record-preview
     ButtonComponent,
     TextInputComponent,
     RecordPreviewListComponent,
+    RecordMetricComponent,
   ],
 })
 export class UiModule {}
