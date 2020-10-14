@@ -1,0 +1,15 @@
+<div
+  class="rounded-full flex flex-row items-center relative cursor-pointer"
+  style="width: max-content; background: {{ color }}"
+>
+  <div class="h-10 w-10 rounded-full bg-opacity-50 bg-gray-900 flex-shrink-0">
+    {{ icon }}
+  </div>
+  <span class="ml-2 mr-4 truncate text-sm text-white label">{{ label }}</span>
+  <div
+    class="bg-gray-900 rounded-full px-2 text-white absolute top-0 right-0 mt-1 mr-1 transform -translate-y-1/2 translate-x-1/2 count"
+    style="font-size: 0.8rem;"
+  >
+    {{ count }}
+  </div>
+</div>

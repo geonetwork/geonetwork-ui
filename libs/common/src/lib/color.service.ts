@@ -14,7 +14,10 @@ export class ColorService {
     background: string
   ) {
     const applyColor = (name: string, color) => {
-      document.documentElement.style.setProperty(`--color-${name}`, color.css())
+      document.documentElement.style.setProperty(
+        `--color-${name}`,
+        `${color.rgb().join(',')}`
+      )
     }
 
     const black = chroma('black')
@@ -66,5 +69,17 @@ export class ColorService {
     applyColor('gray-700', scale(0.7))
     applyColor('gray-800', scale(0.8))
     applyColor('gray-900', scale(0.9))
+  }
+
+  static generateLabelColor(
+    label: string,
+    saturation: number,
+    lightness: number
+  ): string {
+    let hue = 0
+    for (let i = 0; i < label.length; i++) {
+      hue += label.charCodeAt(i)
+    }
+    return chroma.hsl(hue % 360, saturation, lightness)
   }
 }
