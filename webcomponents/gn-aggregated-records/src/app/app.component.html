@@ -10,7 +10,7 @@
     <search-records-metrics
       [field]="aggregationField"
       [count]="aggregationMaxCount"
-      [queryString]="aggregationQueryString"
+      [attr.queryString]="aggregationQueryString || undefined"
       (click)="setFilter($event.value)"
     ></search-records-metrics>
   </div>
