@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core'
 import { AuthService } from '@lib/auth'
-import { RecordSimple, RESULTS_PAGE_SIZE } from '@lib/common'
+import { RecordSummary } from '@lib/common'
 import { SearchApiService } from '@lib/gn-api'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
 import { SearchResponse } from 'elasticsearch'
 import { of } from 'rxjs'
 import { map, switchMap, withLatestFrom } from 'rxjs/operators'
+import { ElasticsearchMetadataModels } from '../elasticsearch/constant'
+import { ElasticsearchMapper } from '../elasticsearch/elasticsearch.mapper'
 import { ElasticsearchService } from '../elasticsearch/elasticsearch.service'
 import {
   AddResults,
@@ -45,22 +47,16 @@ export class SearchEffects {
         this.searchService.call(
           '_search',
           'bucket',
-          JSON.stringify(this.esService.buildPayload(state))
+          JSON.stringify(
+            this.esService.search(state, ElasticsearchMetadataModels.SUMMARY)
+          )
         )
       ),
-      map<any, RecordSimple[]>((response: SearchResponse<any>) =>
-        response.hits.hits.map((hit) => ({
-          title: hit._source.resourceTitleObject
-            ? hit._source.resourceTitleObject.default
-            : 'no title',
-          abstract: hit._source.resourceAbstractObject
-            ? hit._source.resourceAbstractObject.default
-            : 'no abstract',
-          thumbnailUrl: hit._source.overview ? hit._source.overview.url : '',
-          url: `/geonetwork/srv/eng/catalog.search#/metadata/${hit._source.uuid}`,
-        }))
-      ),
-      map((records: RecordSimple[]) => new AddResults(records))
+      map<any, RecordSummary[]>((response: SearchResponse<any>) => {
+        const mapper = new ElasticsearchMapper(response)
+        return mapper.toRecordSummary()
+      }),
+      map((records: RecordSummary[]) => new AddResults(records))
     )
   )
 }
