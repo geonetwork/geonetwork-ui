@@ -197,8 +197,7 @@
                 {
                   "replace": "webcomponents/gn-aggregated-records/src/environments/environment.ts",
                   "with": "webcomponents/gn-aggregated-records/src/environments/environment.prod.ts"
-                }
-              ],
+                }],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
