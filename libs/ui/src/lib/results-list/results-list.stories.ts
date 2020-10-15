@@ -24,25 +24,30 @@ const records: RecordSimple[] = [
     title: 'metadata 1',
     abstract: 'this is the abstract of metadata 1',
     url: '',
-    thumbnailUrl: '',
+    thumbnailUrl:
+      'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
   },
   {
     title: 'metadata 2',
-    abstract: 'this is the abstract of metadata 2',
+    abstract:
+      'this is the abstract of metadata 2. This abstract will contain some extra dummy text just to see how it displays on more than one line',
     url: '',
-    thumbnailUrl: '',
+    thumbnailUrl:
+      'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
   },
   {
     title: 'metadata 3',
     abstract: 'this is the abstract of metadata 3',
     url: '',
-    thumbnailUrl: '',
+    thumbnailUrl:
+      'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
   },
   {
     title: 'metadata 4',
     abstract: 'this is the abstract of metadata 4',
     url: '',
-    thumbnailUrl: '',
+    thumbnailUrl:
+      'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
   },
 ]
 

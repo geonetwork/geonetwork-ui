@@ -10,16 +10,22 @@
       [record]="record"
     ></ui-record-preview-list>
   </div>
+  <div *ngSwitchCase="layoutEnum.TEXT" class="gap-4 p-4">
+    <ui-record-preview-text
+      style="height: 24rem;"
+      *ngFor="let record of records"
+      [record]="record"
+    ></ui-record-preview-text>
+  </div>
   <ng-container *ngSwitchDefault [ngTemplateOutlet]="block"></ng-container>
 </ng-container>
 
 <ng-template #block>
-  <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-    <ui-record-preview-list
-      style="height: 24rem;"
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
+    <ui-record-preview-card
       *ngFor="let record of records"
       [record]="record"
-    ></ui-record-preview-list>
+    ></ui-record-preview-card>
   </div>
 </ng-template>
 

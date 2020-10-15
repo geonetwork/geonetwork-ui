@@ -8,6 +8,8 @@ import { ResultsListComponent } from './results-list/results-list.component'
 import { TextInputComponent } from './text-input/text-input.component'
 import { ColorScaleComponent } from './color-scale/color-scale.component'
 import { RecordPreviewListComponent } from './record-preview-list/record-preview-list.component'
+import { RecordPreviewCardComponent } from './record-preview-card/record-preview-card.component'
+import { RecordPreviewTextComponent } from './record-preview-text/record-preview-text.component'
 import { RecordMetricComponent } from './record-metric/record-metric.component'
 
 @NgModule({
@@ -18,6 +20,8 @@ import { RecordMetricComponent } from './record-metric/record-metric.component'
     TextInputComponent,
     ColorScaleComponent,
     RecordPreviewListComponent,
+    RecordPreviewCardComponent,
+    RecordPreviewTextComponent,
     RecordMetricComponent,
     ResultsListComponent,
   ],
@@ -28,6 +32,8 @@ import { RecordMetricComponent } from './record-metric/record-metric.component'
     ButtonComponent,
     TextInputComponent,
     RecordPreviewListComponent,
+    RecordPreviewCardComponent,
+    RecordPreviewTextComponent,
     RecordMetricComponent,
     ResultsListComponent,
   ],
