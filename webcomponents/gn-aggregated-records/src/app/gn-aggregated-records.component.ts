@@ -5,6 +5,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core'
 import { BaseComponent } from '../../../base.component'
+import { Store } from '@ngrx/store'
+import { SearchState, UpdateParams } from '@lib/search'
 
 @Component({
   selector: 'wc-component',
@@ -20,12 +22,17 @@ export class GnAggregatedRecordsComponent extends BaseComponent {
 
   activeFilter = null
 
+  constructor(private store: Store<SearchState>) {
+    super()
+  }
+
   ngOnInit(): void {
     super.ngOnInit()
   }
 
   setFilter(value: string) {
-    this.activeFilter = `+${this.aggregationField}:${value}`
+    this.activeFilter = `+${this.aggregationField}:"${value}"`
+    this.store.dispatch(new UpdateParams({ any: this.activeFilter }))
   }
 
   clearFilter() {
