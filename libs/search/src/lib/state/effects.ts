@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core'
+import { AuthService } from '@lib/auth'
 import { RecordSimple, RESULTS_PAGE_SIZE } from '@lib/common'
 import { SearchApiService } from '@lib/gn-api'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
+import { select, Store } from '@ngrx/store'
 import { SearchResponse } from 'elasticsearch'
+import { of } from 'rxjs'
+import { map, switchMap, withLatestFrom } from 'rxjs/operators'
+import { ElasticsearchService } from '../elasticsearch/elasticsearch.service'
 import {
   AddResults,
   ClearResults,
@@ -11,12 +16,8 @@ import {
   SORT_BY,
   UPDATE_PARAMS,
 } from './actions'
-import { map, switchMap, withLatestFrom } from 'rxjs/operators'
 import { SearchState } from './reducer'
-import { getSearchParams, getSearchSortBy } from './selectors'
-import { select, Store } from '@ngrx/store'
-import { of } from 'rxjs'
-import { AuthService } from '@lib/auth'
+import { getSearchState } from './selectors'
 
 @Injectable()
 export class SearchEffects {
@@ -24,7 +25,8 @@ export class SearchEffects {
     private actions$: Actions,
     private searchService: SearchApiService,
     private store$: Store<SearchState>,
-    private authService: AuthService
+    private authService: AuthService,
+    private esService: ElasticsearchService
   ) {}
 
   clearResults$ = createEffect(() =>
@@ -38,22 +40,12 @@ export class SearchEffects {
     this.actions$.pipe(
       ofType(REQUEST_MORE_RESULTS),
       switchMap(() => this.authService.authReady()), // wait for auth to be known
-      withLatestFrom(
-        this.store$.pipe(select(getSearchSortBy)),
-        this.store$.pipe(select(getSearchParams))
-      ),
-      switchMap(([_, sortBy, params]) =>
+      withLatestFrom(this.store$.pipe(select(getSearchState))),
+      switchMap(([_, state]) =>
         this.searchService.call(
           '_search',
           'bucket',
-          JSON.stringify({
-            from: 0,
-            size: RESULTS_PAGE_SIZE,
-            sort: sortBy ? [sortBy] : undefined,
-            query: {
-              bool: { must: [{ query_string: { query: params.any || '*' } }] },
-            },
-          })
+          JSON.stringify(this.esService.buildPayload(state))
         )
       ),
       map<any, RecordSimple[]>((response: SearchResponse<any>) =>
