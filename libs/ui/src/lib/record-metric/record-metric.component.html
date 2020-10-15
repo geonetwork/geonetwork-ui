@@ -1,15 +1,22 @@
 <div
-  class="rounded-full flex flex-row items-center relative cursor-pointer"
-  style="width: max-content; background: {{ color }}"
+  class="p-2 rounded flex flex-row items-center relative cursor-pointer hover:bg-background hover:border-gray-200 border border-gray-100 hover:shadow-sm"
 >
-  <div class="h-10 w-10 rounded-full bg-opacity-50 bg-gray-900 flex-shrink-0">
+  <div
+    class="h-8 w-8 rounded-full bg-opacity-50 bg-gray-900 flex-shrink-0 text-white text-lg text-center"
+    style="background-color: {{ color }};"
+  >
     {{ icon }}
   </div>
-  <span class="ml-2 mr-4 truncate text-sm text-white label">{{ label }}</span>
-  <div
-    class="bg-gray-900 rounded-full px-2 text-white absolute top-0 right-0 mt-1 mr-1 transform -translate-y-1/2 translate-x-1/2 count"
-    style="font-size: 0.8rem;"
+  <span
+    class="px-3 truncate text-sm text-main label flex-grow flex-shrink"
+    [title]="label"
+    >{{ label }}</span
   >
-    {{ count }}
+  <div
+    class="text-gray-600 text-sm border-gray-300 border-l px-3 flex-shrink-0"
+    style="min-width: 7rem;"
+  >
+    <strong class="count text-gray-600">{{ count }}</strong
+    >&nbsp;<span translate>records</span>.
   </div>
 </div>

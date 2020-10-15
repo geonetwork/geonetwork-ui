@@ -2,9 +2,11 @@
 	"My Geonetwork Catalog": "",
 	"Find your metadata": "Parcourez vos données",
 	"Sort by": "Trier par",
+	"records": "",
 	"readMore": "",
 	"openRecord": "",
 	"loadResults": "Chargement des résultats",
 	"last changed": "Date modification",
-	"popularity": "Popularité"
+	"popularity": "Popularité",
+	"Back": ""
 }

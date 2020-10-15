@@ -15,7 +15,7 @@ import { ColorService } from '@lib/common'
 export class RecordMetricComponent implements OnInit {
   @Input() count: number
   @Input() label: string
-  @Input() icon: string
+  @Input() icon = '◔'
 
   color: string
 

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { RecordMetric } from '@lib/common'
 import { SearchApiService } from '@lib/gn-api'
 import { Observable } from 'rxjs'
@@ -14,6 +14,7 @@ export class RecordsMetricsComponent implements OnInit {
   @Input() field: string
   @Input() count = 10
   @Input() queryString = '+isTemplate:n'
+  @Output() metricSelect = new EventEmitter<RecordMetric>()
   results$: Observable<RecordMetric[]>
 
   constructor(private searchService: SearchApiService) {}

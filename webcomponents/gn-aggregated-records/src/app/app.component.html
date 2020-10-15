@@ -1,0 +1,23 @@
+<div class="relative">
+  <div
+    class="absolute h-full left-0 right-0 transform bg-background duration-200 ease-in-out transition-all"
+    [ngStyle]="{
+      top: !!activeFilter ? '-100px' : '0',
+      opacity: !!activeFilter ? '0' : '1',
+      visibility: !!activeFilter ? 'hidden' : 'visible'
+    }"
+  >
+    <search-records-metrics
+      [field]="aggregationField"
+      [count]="aggregationMaxCount"
+      [attr.queryString]="aggregationQueryString || undefined"
+      (metricSelect)="setFilter($event.value)"
+    ></search-records-metrics>
+  </div>
+  <div>
+    <ui-button type="secondary" (click)="clearFilter()" translate
+      >Back</ui-button
+    >
+    <search-results-list-container></search-results-list-container>
+  </div>
+</div>

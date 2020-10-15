@@ -4,6 +4,7 @@
       [label]="category.value | translate"
       [count]="category.recordCount"
       [icon]="''"
+      (click)="metricSelect.emit(category)"
     ></ui-record-metric>
   </div>
 </div>
