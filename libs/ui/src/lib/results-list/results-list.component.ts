@@ -4,7 +4,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core'
-import { RecordSimple, ResultsListLayout } from '@lib/common'
+import { RecordSummary, ResultsListLayout } from '@lib/common'
 
 @Component({
   selector: 'ui-results-list',
@@ -13,7 +13,7 @@ import { RecordSimple, ResultsListLayout } from '@lib/common'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResultsListComponent implements OnInit {
-  @Input() records: RecordSimple[]
+  @Input() records: RecordSummary[]
   @Input() loading: boolean
   @Input() layout: ResultsListLayout = ResultsListLayout.BLOCK
   layoutEnum = ResultsListLayout

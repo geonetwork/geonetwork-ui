@@ -1,4 +1,4 @@
-import { RecordSimple, SearchParams } from '@lib/common'
+import { RecordSummary, SearchParams } from '@lib/common'
 import { Action } from '@ngrx/store'
 
 export const UPDATE_PARAMS = '[Search] Update Params'
@@ -22,7 +22,7 @@ export class SortBy implements Action {
 export class AddResults implements Action {
   readonly type = ADD_RESULTS
 
-  constructor(public payload: RecordSimple[]) {}
+  constructor(public payload: RecordSummary[]) {}
 }
 
 export class ClearResults implements Action {
