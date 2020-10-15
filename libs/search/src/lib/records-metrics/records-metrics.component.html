@@ -4,7 +4,7 @@
       [label]="category.value | translate"
       [count]="category.recordCount"
       [icon]="''"
-      (click)="click.emit(category); $event.stopPropagation()"
+      (click)="metricSelect.emit(category)"
     ></ui-record-metric>
   </div>
 </div>

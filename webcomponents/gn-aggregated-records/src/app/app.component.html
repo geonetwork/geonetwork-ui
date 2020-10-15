@@ -11,7 +11,7 @@
       [field]="aggregationField"
       [count]="aggregationMaxCount"
       [attr.queryString]="aggregationQueryString || undefined"
-      (click)="setFilter($event.value)"
+      (metricSelect)="setFilter($event.value)"
     ></search-records-metrics>
   </div>
   <div>

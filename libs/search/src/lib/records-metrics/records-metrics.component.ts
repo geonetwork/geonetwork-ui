@@ -14,7 +14,7 @@ export class RecordsMetricsComponent implements OnInit {
   @Input() field: string
   @Input() count = 10
   @Input() queryString = '+isTemplate:n'
-  @Output() click = new EventEmitter<RecordMetric>()
+  @Output() metricSelect = new EventEmitter<RecordMetric>()
   results$: Observable<RecordMetric[]>
 
   constructor(private searchService: SearchApiService) {}
