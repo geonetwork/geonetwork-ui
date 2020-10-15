@@ -1,9 +1,13 @@
-import { Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { ColorService } from '@lib/common'
 import { Configuration } from '@lib/gn-api'
 
 export const apiConfiguration = new Configuration()
 
+@Component({
+  selector: 'wc-base',
+  template: `<div></div>`,
+})
 export class BaseComponent implements OnInit {
   @Input() apiUrl = '/'
   @Input() primaryColor = '#9a9a9a'

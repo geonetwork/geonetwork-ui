@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core'
 import { I18nModule } from '@lib/common'
 import { Configuration } from '@lib/gn-api'
-import { apiConfiguration } from './base.component'
+import { apiConfiguration, BaseComponent } from './base.component'
 
 /**
  * this module should be imported by all WebComponent modules
  */
 @NgModule({
-  declarations: [],
+  declarations: [BaseComponent],
   imports: [I18nModule],
   providers: [
     {

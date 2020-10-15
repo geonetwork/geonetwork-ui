@@ -167,6 +167,74 @@
         }
       }
     },
+    "gn-aggregated-records": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "webcomponents/gn-aggregated-records",
+      "sourceRoot": "webcomponents/gn-aggregated-records/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "webcomponents/gn-aggregated-records/dist",
+            "index": "webcomponents/gn-aggregated-records/src/index.html",
+            "main": "webcomponents/gn-aggregated-records/src/main.ts",
+            "polyfills": "webcomponents/gn-aggregated-records/src/polyfills.ts",
+            "tsConfig": "webcomponents/gn-aggregated-records/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "webcomponents/gn-aggregated-records/src/assets"
+            ],
+            "styles": [
+              "webcomponents/gn-aggregated-records/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "webcomponents/gn-aggregated-records/src/environments/environment.ts",
+                  "with": "webcomponents/gn-aggregated-records/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "500kb",
+                  "maximumError": "2MB"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "gn-search-input:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "gn-search-input:build:production"
+            }
+          }
+        }
+      }
+    },
     "lib-search": {
       "projectType": "library",
       "root": "libs/search",
