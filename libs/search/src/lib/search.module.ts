@@ -12,9 +12,11 @@ import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http'
 import { GnApiModule } from '@lib/gn-api'
 import { TranslateModule } from '@ngx-translate/core'
 import { RecordsMetricsComponent } from './records-metrics/records-metrics.component'
+import {CatalogTitleComponent} from './catalog-title/catalog-title.component'
 
 @NgModule({
   declarations: [
+    CatalogTitleComponent,
     SortByComponent,
     FuzzySearchComponent,
     RecordsMetricsComponent,
@@ -33,6 +35,7 @@ import { RecordsMetricsComponent } from './records-metrics/records-metrics.compo
     GnApiModule,
   ],
   exports: [
+    CatalogTitleComponent,
     SortByComponent,
     FuzzySearchComponent,
     RecordsMetricsComponent,
