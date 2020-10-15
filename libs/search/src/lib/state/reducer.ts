@@ -1,4 +1,4 @@
-import { RecordSimple, SearchParams } from '@lib/common'
+import { RecordSummary, SearchParams } from '@lib/common'
 import * as fromActions from './actions'
 
 export const SEARCH_FEATURE_KEY = 'searchState'
@@ -6,7 +6,7 @@ export const SEARCH_FEATURE_KEY = 'searchState'
 export interface SearchState {
   params: SearchParams
   sortBy?: string
-  results: RecordSimple[]
+  results: RecordSummary[]
   loadingMore: boolean
 }
 

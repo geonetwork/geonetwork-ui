@@ -16,6 +16,8 @@ describe('RecordPreviewListComponent', () => {
     fixture = TestBed.createComponent(RecordPreviewListComponent)
     component = fixture.componentInstance
     component.record = {
+      id: '139',
+      uuid: 'd2f30aa4-867e-40b9-9c37-3cb21f541008',
       title: 'abcd',
       abstract: 'Abcd',
       url: '/abcd.html',

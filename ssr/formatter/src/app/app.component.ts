@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core'
-import { RecordSimple } from '@lib/search'
+import { RecordSummary } from '@lib/search'
 import { map } from 'rxjs/operators'
 
 @Component({
@@ -14,7 +14,7 @@ import { map } from 'rxjs/operators'
   styles: [],
 })
 export class AppComponent implements OnInit {
-  metadata: RecordSimple
+  metadata: RecordSummary
 
   constructor(private http: HttpClient) {}
   ngOnInit(): void {

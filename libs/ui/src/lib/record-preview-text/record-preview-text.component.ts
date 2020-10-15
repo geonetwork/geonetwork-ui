@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy,
   Input,
 } from '@angular/core'
-import type { RecordSimple } from '@lib/common'
+import type { RecordSummary } from '@lib/common'
 
 @Component({
   selector: 'ui-record-preview-text',
@@ -13,7 +13,7 @@ import type { RecordSimple } from '@lib/common'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecordPreviewTextComponent implements OnInit {
-  @Input() record: RecordSimple
+  @Input() record: RecordSummary
   constructor() {}
 
   ngOnInit(): void {}

@@ -3,7 +3,7 @@ import { object, select, withKnobs } from '@storybook/addon-knobs'
 import { moduleMetadata } from '@storybook/angular'
 import {
   I18nModule,
-  RecordSimple,
+  RecordSummary,
   ResultsListLayout,
 } from '../../../../common/src'
 import { UiModule } from '../ui.module'
@@ -19,8 +19,10 @@ export default {
   decorators: [moduleMetadata(moduleMetadatas), withKnobs, withA11y],
 }
 
-const records: RecordSimple[] = [
+const records: RecordSummary[] = [
   {
+    id: '139',
+    uuid: 'd2f30aa4-867e-40b9-9c37-3cb21f541008',
     title: 'metadata 1',
     abstract: 'this is the abstract of metadata 1',
     url: '',
@@ -28,6 +30,8 @@ const records: RecordSimple[] = [
       'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
   },
   {
+    id: '139',
+    uuid: 'd2f30aa4-867e-40b9-9c37-3cb21f541008',
     title: 'metadata 2',
     abstract:
       'this is the abstract of metadata 2. This abstract will contain some extra dummy text just to see how it displays on more than one line',
@@ -36,6 +40,8 @@ const records: RecordSimple[] = [
       'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
   },
   {
+    id: '139',
+    uuid: 'd2f30aa4-867e-40b9-9c37-3cb21f541008',
     title: 'metadata 3',
     abstract: 'this is the abstract of metadata 3',
     url: '',
@@ -43,6 +49,8 @@ const records: RecordSimple[] = [
       'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
   },
   {
+    id: '139',
+    uuid: 'd2f30aa4-867e-40b9-9c37-3cb21f541008',
     title: 'metadata 4',
     abstract: 'this is the abstract of metadata 4',
     url: '',
