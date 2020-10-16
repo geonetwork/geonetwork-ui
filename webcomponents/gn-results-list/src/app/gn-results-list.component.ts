@@ -2,11 +2,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
-  OnInit,
   ViewEncapsulation,
 } from '@angular/core'
 import { ResultsListLayout } from '@lib/common'
 import { Configuration } from '@lib/gn-api'
+import { BaseComponent } from '../../../base.component'
 
 export const apiConfiguration = new Configuration()
 
@@ -17,12 +17,16 @@ export const apiConfiguration = new Configuration()
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
 })
-export class GnResultsListComponent implements OnInit {
+export class GnResultsListComponent extends BaseComponent {
   @Input() layout: ResultsListLayout = ResultsListLayout.BLOCK
   @Input() lines = 10
   @Input() filter
 
-  constructor() {}
+  constructor() {
+    super()
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    super.ngOnInit()
+  }
 }

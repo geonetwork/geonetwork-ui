@@ -3,17 +3,17 @@ import { createCustomElement } from '@angular/elements'
 import { LibSearchModule } from '@lib/search'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
+import { WcCommonModule } from '../../../wc-common.module'
 import {
   apiConfiguration,
   GnResultsListComponent,
 } from './gn-results-list.component'
-import { CommonModule } from '../../../common.module'
 import { Configuration } from '@lib/gn-api'
 
 @NgModule({
   declarations: [GnResultsListComponent],
   imports: [
-    CommonModule,
+    WcCommonModule,
     LibSearchModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot(),
