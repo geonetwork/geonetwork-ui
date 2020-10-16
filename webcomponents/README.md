@@ -88,4 +88,8 @@ export class AppModule {
   ngDoBootstrap() {}
 }
 ```
+- Add a symbolic link for assets (for translations), from `(web_component)/src` run
+```shell script
+ln -s ../../../apps/search/src/assets/ assets
+```
 - Add stories for storybook to run it.
