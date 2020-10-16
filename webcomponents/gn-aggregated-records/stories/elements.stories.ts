@@ -16,7 +16,7 @@ const moduleMetadatas = {
 
 export default {
   title: 'Aggregated records',
-  decorators: [ moduleMetadata(moduleMetadatas), withKnobs, withA11y],
+  decorators: [moduleMetadata(moduleMetadatas), withKnobs, withA11y],
 }
 
 export const GnAggregatedRecordsStory = () => ({
@@ -33,5 +33,4 @@ export const GnAggregatedRecordsStory = () => ({
     secondaryColor: color('Secondary Color', 'grey'),
   },
 })
-GnAggregatedRecordsStory.storyName= 'Component'
-
+GnAggregatedRecordsStory.storyName = 'Component'

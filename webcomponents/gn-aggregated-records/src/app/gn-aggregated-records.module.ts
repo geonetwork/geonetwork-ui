@@ -8,6 +8,8 @@ import { GnAggregatedRecordsComponent } from './gn-aggregated-records.component'
 import { UiModule } from '@lib/ui'
 import { CommonModule } from '@angular/common'
 
+const WC_TAG_NAME = 'gn-aggregated-records'
+
 @NgModule({
   declarations: [GnAggregatedRecordsComponent],
   imports: [
@@ -26,6 +28,8 @@ export class GnAggregatedRecordsModule {
     const customButton = createCustomElement(GnAggregatedRecordsComponent, {
       injector: this.injector,
     })
-    customElements.define('gn-aggregated-records', customButton)
+    if (!customElements.get(WC_TAG_NAME)) {
+      customElements.define(WC_TAG_NAME, customButton)
+    }
   }
 }

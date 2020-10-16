@@ -9,7 +9,7 @@ const moduleMetadatas = {
   imports: [I18nModule, GnSearchInputModule],
 }
 
-storiesOf('Angular components', module)
+storiesOf('_Web Component', module)
   .addDecorator(moduleMetadata(moduleMetadatas))
   .addDecorator(withKnobs)
   .addDecorator(withA11y)

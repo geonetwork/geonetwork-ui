@@ -4,9 +4,9 @@ import { LibSearchModule } from '@lib/search'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { WcCommonModule } from '../../../wc-common.module'
-import {
-  GnResultsListComponent,
-} from './gn-results-list.component'
+import { GnResultsListComponent } from './gn-results-list.component'
+
+const WC_TAG_NAME = 'gn-results-list'
 
 @NgModule({
   declarations: [GnResultsListComponent],
@@ -24,6 +24,8 @@ export class GnResultsListModule {
     const customButton = createCustomElement(GnResultsListComponent, {
       injector: this.injector,
     })
-    customElements.define('gn-results-list', customButton)
+    if (!customElements.get(WC_TAG_NAME)) {
+      customElements.define(WC_TAG_NAME, customButton)
+    }
   }
 }

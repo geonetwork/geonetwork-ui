@@ -30,4 +30,4 @@ export const GnSearchInputStory = () => ({
     secondaryColor: color('Secondary Color', 'grey'),
   },
 })
-GnSearchInputStory.storyName= 'Search input'
+GnSearchInputStory.storyName = 'Search input'

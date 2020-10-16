@@ -1,7 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation, } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  ViewEncapsulation,
+} from '@angular/core'
 import { ResultsListLayout } from '@lib/common'
 import { BaseComponent } from '../../../base.component'
-
 
 @Component({
   selector: 'wc-component',

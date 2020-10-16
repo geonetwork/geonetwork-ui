@@ -6,6 +6,8 @@ import { EffectsModule } from '@ngrx/effects'
 import { GnSearchInputComponent } from './gn-search-input.component'
 import { WcCommonModule } from '../../../wc-common.module'
 
+const WC_TAG_NAME = 'gn-search-input'
+
 @NgModule({
   declarations: [GnSearchInputComponent],
   imports: [
@@ -22,6 +24,8 @@ export class GnSearchInputModule {
     const customButton = createCustomElement(GnSearchInputComponent, {
       injector: this.injector,
     })
-    customElements.define('gn-search-input', customButton)
+    if (!customElements.get(WC_TAG_NAME)) {
+      customElements.define(WC_TAG_NAME, customButton)
+    }
   }
 }

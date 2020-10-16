@@ -5,7 +5,6 @@ import { GnAggregatedRecordsModule } from './app/gn-aggregated-records.module'
 
 enableProdMode()
 
-
 platformBrowserDynamic()
   .bootstrapModule(GnAggregatedRecordsModule)
   .catch((err) => console.error(err))

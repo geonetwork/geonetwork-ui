@@ -16,7 +16,7 @@ const moduleMetadatas = {
 
 export default {
   title: 'Results list',
-  decorators: [ moduleMetadata(moduleMetadatas), withKnobs, withA11y],
+  decorators: [moduleMetadata(moduleMetadatas), withKnobs, withA11y],
 }
 
 export const GnResultsListListStory = () => ({
@@ -32,7 +32,7 @@ export const GnResultsListListStory = () => ({
     secondaryColor: color('Secondary Color', 'grey'),
   },
 })
-GnResultsListListStory.storyName= 'List'
+GnResultsListListStory.storyName = 'List'
 
 export const GnResultsListBlockStory = () => ({
   template: `
@@ -47,7 +47,7 @@ export const GnResultsListBlockStory = () => ({
     secondaryColor: color('Secondary Color', 'grey'),
   },
 })
-GnResultsListBlockStory.storyName= 'Block'
+GnResultsListBlockStory.storyName = 'Block'
 
 export const GnResultsListTextStory = () => ({
   template: `
@@ -62,5 +62,4 @@ export const GnResultsListTextStory = () => ({
     secondaryColor: color('Secondary Color', 'grey'),
   },
 })
-GnResultsListTextStory.storyName= 'Text'
-
+GnResultsListTextStory.storyName = 'Text'
