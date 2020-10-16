@@ -1,14 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  ViewEncapsulation,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation, } from '@angular/core'
 import { ResultsListLayout } from '@lib/common'
-import { Configuration } from '@lib/gn-api'
 import { BaseComponent } from '../../../base.component'
 
-export const apiConfiguration = new Configuration()
 
 @Component({
   selector: 'wc-component',

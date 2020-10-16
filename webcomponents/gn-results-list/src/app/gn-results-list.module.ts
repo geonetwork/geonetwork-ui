@@ -5,10 +5,8 @@ import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { WcCommonModule } from '../../../wc-common.module'
 import {
-  apiConfiguration,
   GnResultsListComponent,
 } from './gn-results-list.component'
-import { Configuration } from '@lib/gn-api'
 
 @NgModule({
   declarations: [GnResultsListComponent],
@@ -17,12 +15,6 @@ import { Configuration } from '@lib/gn-api'
     LibSearchModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot(),
-  ],
-  providers: [
-    {
-      provide: Configuration,
-      useValue: apiConfiguration,
-    },
   ],
 })
 export class GnResultsListModule {
