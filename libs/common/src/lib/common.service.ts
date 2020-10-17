@@ -10,7 +10,7 @@ export class CommonService {
 
   siteInfoReady() {
     return this.siteApiService.get4().pipe(
-      map(r => r),
+      map((r) => r),
       shareReplay()
     )
   }
