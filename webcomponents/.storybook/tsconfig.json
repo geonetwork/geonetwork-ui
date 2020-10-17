@@ -1,6 +1,6 @@
 {
   "extends": "../../.storybook/tsconfig.json",
   "include": [
-    "../**/*"
+    "../**/dist/*"
   ]
 }

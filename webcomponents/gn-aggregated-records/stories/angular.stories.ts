@@ -10,7 +10,7 @@ const moduleMetadatas = {
 }
 
 export default {
-  title: 'Angular Components',
+  title: '_Web Component',
   decorators: [moduleMetadata(moduleMetadatas), withKnobs, withA11y],
 } as Meta
 

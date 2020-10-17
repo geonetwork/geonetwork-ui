@@ -4,28 +4,24 @@ import { LibSearchModule } from '@lib/search'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { WcCommonModule } from '../../../wc-common.module'
-import { GnAggregatedRecordsComponent } from './gn-aggregated-records.component'
-import { UiModule } from '@lib/ui'
-import { CommonModule } from '@angular/common'
+import { GnResultsListComponent } from './gn-results-list.component'
 
-const WC_TAG_NAME = 'gn-aggregated-records'
+const WC_TAG_NAME = 'gn-results-list'
 
 @NgModule({
-  declarations: [GnAggregatedRecordsComponent],
+  declarations: [GnResultsListComponent],
   imports: [
-    CommonModule,
     WcCommonModule,
-    UiModule,
     LibSearchModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot(),
   ],
 })
-export class GnAggregatedRecordsModule {
+export class GnResultsListModule {
   constructor(private injector: Injector) {}
 
   ngDoBootstrap() {
-    const customButton = createCustomElement(GnAggregatedRecordsComponent, {
+    const customButton = createCustomElement(GnResultsListComponent, {
       injector: this.injector,
     })
     if (!customElements.get(WC_TAG_NAME)) {

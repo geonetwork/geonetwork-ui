@@ -125,12 +125,6 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "webcomponents/gn-search-input/src/environments/environment.ts",
-                  "with": "webcomponents/gn-search-input/src/environments/environment.prod.ts"
-                }
-              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -193,11 +187,6 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "webcomponents/gn-aggregated-records/src/environments/environment.ts",
-                  "with": "webcomponents/gn-aggregated-records/src/environments/environment.prod.ts"
-                }],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -229,6 +218,68 @@
           "configurations": {
             "production": {
               "browserTarget": "gn-search-input:build:production"
+            }
+          }
+        }
+      }
+    },
+    "gn-results-list": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "webcomponents/gn-results-list",
+      "sourceRoot": "webcomponents/gn-results-list/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "webcomponents/gn-results-list/dist",
+            "index": "webcomponents/gn-results-list/src/index.html",
+            "main": "webcomponents/gn-results-list/src/main.ts",
+            "polyfills": "webcomponents/gn-results-list/src/polyfills.ts",
+            "tsConfig": "webcomponents/gn-results-list/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "webcomponents/gn-results-list/src/assets"
+            ],
+            "styles": [
+              "webcomponents/gn-results-list/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "500kb",
+                  "maximumError": "2MB"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "gn-results-list:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "gn-results-list:build:production"
             }
           }
         }
