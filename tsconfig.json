@@ -24,6 +24,9 @@
       "path": "./libs/search/tsconfig.lib.json"
     },
     {
+      "path": "./libs/catalog/tsconfig.lib.json"
+    },
+    {
       "path": "./libs/ui/tsconfig.lib.json"
     },
     {
