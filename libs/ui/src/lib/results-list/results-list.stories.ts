@@ -28,6 +28,11 @@ const records: RecordSummary[] = [
     url: '',
     thumbnailUrl:
       'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
+    lastUpdated: new Date(),
+    logoUrl:
+      'https://www.geograndest.fr/geonetwork/images/logos/b1b10881-2a33-472f-b99b-7576a6f84025.png',
+    viewable: true,
+    downloadable: true,
   },
   {
     id: '139',
@@ -38,6 +43,11 @@ const records: RecordSummary[] = [
     url: '',
     thumbnailUrl:
       'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
+    lastUpdated: new Date(),
+    logoUrl:
+      'https://www.geograndest.fr/geonetwork/images/logos/b1b10881-2a33-472f-b99b-7576a6f84025.png',
+    viewable: true,
+    downloadable: true,
   },
   {
     id: '139',
@@ -47,6 +57,11 @@ const records: RecordSummary[] = [
     url: '',
     thumbnailUrl:
       'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
+    lastUpdated: new Date(),
+    logoUrl:
+      'https://www.geograndest.fr/geonetwork/images/logos/b1b10881-2a33-472f-b99b-7576a6f84025.png',
+    viewable: true,
+    downloadable: true,
   },
   {
     id: '139',
@@ -56,6 +71,11 @@ const records: RecordSummary[] = [
     url: '',
     thumbnailUrl:
       'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
+    lastUpdated: new Date(),
+    logoUrl:
+      'https://www.geograndest.fr/geonetwork/images/logos/b1b10881-2a33-472f-b99b-7576a6f84025.png',
+    viewable: true,
+    downloadable: true,
   },
 ]
 

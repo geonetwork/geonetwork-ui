@@ -12,6 +12,8 @@ export const ES_SOURCE_SUMMARY = [
   'resourceTitleObject',
   'resourceAbstractObject',
   'overview',
+  'changeDate',
+  'logo',
 ]
 
 export const ES_SOURCE_BRIEF = [
