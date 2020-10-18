@@ -14,10 +14,7 @@ export class ColorService {
     background: string
   ) {
     const applyColor = (name: string, color) => {
-      document.documentElement.style.setProperty(
-        `--color-${name}`,
-        `${color.rgb().join(',')}`
-      )
+      document.documentElement.style.setProperty(`--color-${name}`, color.css())
     }
 
     const black = chroma('black')
