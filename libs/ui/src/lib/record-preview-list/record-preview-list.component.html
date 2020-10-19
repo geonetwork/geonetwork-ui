@@ -1,6 +1,6 @@
 <div class="h-40">
   <div
-    class="h-full flex flex-row items-center justify-center text-center bg-white border border-gray-100 p-1 rounded-md shadow-sm"
+    class="h-full flex flex-row items-center bg-white border border-gray-200 p-1 rounded-md shadow-sm"
   >
     <div
       class="w-40 h-full relative flex-shrink-0 bg-gray-100 rounded overflow-hidden"
@@ -29,15 +29,27 @@
     </div>
     <div class="flex-grow h-full px-6 py-4 flex flex-col overflow-hidden">
       <div class="mb-3 flex flex-row items-center">
-        <h1 class="title-font font-bold text-gray-900 truncate">
-          {{ record.title }}
-        </h1>
-        <div
-          class="text-left text-gray-400 text-sm border-gray-300 border-l ml-4 px-4 flex-shrink-0 flex-grow"
+        <a
+          class="title-font text-primary hover:underline font-bold text-gray-900 truncate mr-6 flex flex-row items-center"
+          [href]="record.url"
         >
-          <span translate>lastUpdated</span>
-          {{ record.lastUpdated.toLocaleDateString() }}
-        </div>
+          <span class="truncate">{{ record.title }}</span>
+          <svg
+            class="h-5 w-5 flex-shrink-0"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </a>
+        <div class="flex-grow"></div>
         <img
           *ngIf="record.logoUrl"
           class="relative h-6 object-contain"
@@ -45,29 +57,23 @@
           alt="logo"
         />
       </div>
-      <p class="text-left leading-relaxed flex-grow mb-4 clamp-2 text-sm">
+      <p class="leading-relaxed flex-grow mb-4 clamp-2 text-sm">
         {{ record.abstract }}
       </p>
-      <a
-        class="text-sm hover:underline flex flex-row items-center"
-        [href]="record.url"
-      >
-        <span translate>readMore</span>
-        <svg
-          class="h-4 w-4"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+      <div class="flex flex-row items-center">
+        <div class="text-gray-500 text-sm truncate">
+          <span translate>lastUpdated</span>
+          {{ record.lastUpdated.toLocaleDateString() }}
+        </div>
+        <div
+          class="text-gray-500 text-sm border-gray-300 border-l ml-4 px-4 truncate viewable-downloadable"
+          *ngIf="isViewable || isDownloadable"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 5l7 7-7 7"
-          />
-        </svg>
-      </a>
+          <span *ngIf="isViewable" translate>recordViewable</span>
+          <span *ngIf="isViewable && isDownloadable">,&nbsp;</span>
+          <span *ngIf="isDownloadable" translate>recordDownloadable</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>

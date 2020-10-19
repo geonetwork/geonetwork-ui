@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy,
   Input,
 } from '@angular/core'
-import type { RecordSummary } from '@lib/common'
+import { RecordSummary } from '@lib/common'
 
 @Component({
   selector: 'ui-record-preview-list',
@@ -15,6 +15,13 @@ import type { RecordSummary } from '@lib/common'
 export class RecordPreviewListComponent implements OnInit {
   @Input() record: RecordSummary
   constructor() {}
+
+  get isViewable() {
+    return this.record.viewable
+  }
+  get isDownloadable() {
+    return this.record.downloadable
+  }
 
   ngOnInit(): void {}
 }
