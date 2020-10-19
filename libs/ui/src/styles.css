@@ -2,6 +2,7 @@
 
 body {
   background-color: var(--color-background);
+  color: var(--color-main);
 }
 a {
   color: var(--color-primary);
