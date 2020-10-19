@@ -56,7 +56,7 @@ export class ColorService {
     applyColor('main', chroma(main))
     applyColor('background', chroma(background))
 
-    const scale = chroma.scale([background, main]).mode('lab')
+    const scale = chroma.scale([background, main]).mode('lrgb')
     applyColor('gray-100', scale(0.1))
     applyColor('gray-200', scale(0.2))
     applyColor('gray-300', scale(0.3))
