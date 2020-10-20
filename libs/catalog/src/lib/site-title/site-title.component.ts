@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { SettingsListResponseApiModel } from '@lib/gn-api'
 import { CommonService } from '@lib/common'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, Observable } from 'rxjs'
 
 @Component({
   selector: 'catalog-site-title',
@@ -10,15 +10,11 @@ import { BehaviorSubject } from 'rxjs'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SiteTitleComponent implements OnInit {
-  info: SettingsListResponseApiModel
-  infoEmitter$ = new BehaviorSubject<SettingsListResponseApiModel>(this.info)
+  info$: Observable<SettingsListResponseApiModel>
 
-  constructor(private commonService: CommonService) {}
-
-  ngOnInit(): void {
-    this.commonService.siteInfoReady().subscribe((info) => {
-      this.info = info
-      this.infoEmitter$.next(this.info)
-    })
+  constructor(private commonService: CommonService) {
+    this.info$ = commonService.siteInfoReady()
   }
+
+  ngOnInit(): void {}
 }

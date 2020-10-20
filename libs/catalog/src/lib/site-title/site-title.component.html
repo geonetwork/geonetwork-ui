@@ -1,5 +1,5 @@
 <ui-catalog-title
-  *ngIf="infoEmitter$ | async as info"
+  *ngIf="info$ | async as info"
   [name]="info['system/site/name']"
   [tooltip]="info['system/site/organization']"
 ></ui-catalog-title>
