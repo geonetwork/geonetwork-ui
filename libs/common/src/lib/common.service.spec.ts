@@ -2,17 +2,10 @@ import { TestBed } from '@angular/core/testing'
 
 import { CommonService } from './common.service'
 import { of } from 'rxjs'
-import { SiteApiService } from '@lib/gn-api'
+import { SITE_FIXTURES, SiteApiService } from '@lib/gn-api'
 
 const siteInfoMock = {
-  get4: () =>
-    of({
-      'system/site/name': 'GeoNetwork 4',
-      'system/site/organization': 'titellus',
-      'system/site/siteId': '04fe602b-fc46-4e6b-ac5a-138c6153eceb',
-      'system/platform/version': '4.0.0',
-      'system/platform/subVersion': '0',
-    }),
+  get4: jest.fn(() => of(SITE_FIXTURES)),
 }
 
 describe('CommonService', () => {
@@ -21,13 +14,13 @@ describe('CommonService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        CommonService,
         {
           provide: SiteApiService,
           useValue: siteInfoMock,
         },
       ],
     })
+    service = TestBed.inject(CommonService)
   })
 
   it('should be created', () => {
