@@ -9,14 +9,25 @@
 Run `npm run start` for a dev server. Navigate to `http://localhost:4200/`. 
 The app will automatically reload if you change any of the source files.
 
-
-## Testing and Building
-
-
+## Build
 Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
+You can build a specific application with
+```shell script
+ng build (app_name) (--prod)
+```
 
-Run `npm run test` to execute the unit tests via Jest.
+## Tests
+Run `ng test` to execute the unit tests via Jest.
+
+You can test a specific lib or app with
+```shell script
+ng test (lib_name) (--prod)
+```
+
+To run the tests in Intellij, install the Jest plugin and run the test as usual.
+
+You may need to edit your configuration and set up the *Working Directory* to root of the project (e.g `~/dev/geonetwork-ui/`)
 
 
 ## Contributing code
