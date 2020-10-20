@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { UiModule } from '@lib/ui'
 import { TranslateModule } from '@ngx-translate/core'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from '../state/reducer'
 import { SortByComponent } from './sort-by.component'
-import { UiModule } from '../../../../ui/src'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 

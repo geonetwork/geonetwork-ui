@@ -5,11 +5,11 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core'
-import { Subscription } from 'rxjs'
-import { UpdateParams } from '../state/actions'
+import { TextInputComponent } from '@lib/ui'
 import { select, Store } from '@ngrx/store'
-import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators'
-import { TextInputComponent } from '../../../../ui/src/lib/text-input/text-input.component'
+import { Subscription } from 'rxjs'
+import { debounceTime, map } from 'rxjs/operators'
+import { UpdateParams } from '../state/actions'
 import { SearchState } from '../state/reducer'
 import { getSearchParams } from '../state/selectors'
 
