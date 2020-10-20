@@ -1,7 +1,14 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { CommonService } from '@lib/common'
+import { SITE_FIXTURES } from '@lib/gn-api'
+import { BehaviorSubject } from 'rxjs'
 
 import { SiteTitleComponent } from './site-title.component'
 
+const commonServiceMock = {
+  siteInfoReady: jest.fn(() => new BehaviorSubject(SITE_FIXTURES)),
+}
 describe('CatalogTitleComponent', () => {
   let component: SiteTitleComponent
   let fixture: ComponentFixture<SiteTitleComponent>
@@ -9,6 +16,13 @@ describe('CatalogTitleComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SiteTitleComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        {
+          provide: CommonService,
+          useValue: commonServiceMock,
+        },
+      ],
     }).compileComponents()
   }))
 
