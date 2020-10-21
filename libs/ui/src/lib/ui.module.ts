@@ -11,6 +11,7 @@ import { RecordPreviewListComponent } from './record-preview-list/record-preview
 import { RecordPreviewCardComponent } from './record-preview-card/record-preview-card.component'
 import { RecordPreviewTextComponent } from './record-preview-text/record-preview-text.component'
 import { RecordMetricComponent } from './record-metric/record-metric.component'
+import { CatalogTitleComponent } from './catalog-title/catalog-title.component'
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { RecordMetricComponent } from './record-metric/record-metric.component'
     RecordPreviewTextComponent,
     RecordMetricComponent,
     ResultsListComponent,
+    CatalogTitleComponent,
   ],
   imports: [BrowserModule, TranslateModule.forChild()],
   exports: [
@@ -36,6 +38,7 @@ import { RecordMetricComponent } from './record-metric/record-metric.component'
     RecordPreviewTextComponent,
     RecordMetricComponent,
     ResultsListComponent,
+    CatalogTitleComponent,
   ],
 })
 export class UiModule {}

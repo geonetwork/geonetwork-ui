@@ -22,6 +22,9 @@
       "@lib/search": [
         "libs/search/src/index.ts"
       ],
+      "@lib/catalog": [
+        "libs/catalog/src/index.ts"
+      ],
       "@lib/ui": [
         "libs/ui/src/index.ts"
       ],

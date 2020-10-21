@@ -299,6 +299,20 @@
         }
       }
     },
+    "lib-catalog": {
+      "projectType": "library",
+      "root": "libs/catalog",
+      "sourceRoot": "libs/catalog/src",
+      "prefix": "catalog",
+      "architect": {
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "detectOpenHandles": true
+          }
+        }
+      }
+    },
     "lib-ui": {
       "projectType": "library",
       "root": "libs/ui",
