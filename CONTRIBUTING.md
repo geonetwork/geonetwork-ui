@@ -23,6 +23,8 @@ Run `ng test` to execute the unit tests via Jest.
 You can test a specific lib or app with
 ```shell script
 ng test (lib_name) (--prod)
+eg. 
+ng test lib-search --testNamePattern=RecordsMetric*
 ```
 
 To run the tests in Intellij, install the Jest plugin and run the test as usual.

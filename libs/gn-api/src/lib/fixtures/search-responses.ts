@@ -4,7 +4,7 @@ export const aggsOnly = {
   _shards: { total: 1, successful: 1, skipped: 0, failed: 0 },
   hits: { total: { value: 6073, relation: 'eq' }, max_score: null, hits: [] },
   aggregations: {
-    results: {
+    metric: {
       doc_count_error_upper_bound: 0,
       sum_other_doc_count: 910,
       buckets: [
