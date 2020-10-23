@@ -117,7 +117,7 @@ export class RelatedApiService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getRelated1(
+  public getAssociatedResourcesForRecords(
     type?: Array<
       | 'children'
       | 'parent'
@@ -139,7 +139,7 @@ export class RelatedApiService {
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
   ): Observable<{ [key: string]: RelatedResponseApiModel }>
-  public getRelated1(
+  public getAssociatedResourcesForRecords(
     type?: Array<
       | 'children'
       | 'parent'
@@ -161,7 +161,7 @@ export class RelatedApiService {
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
   ): Observable<HttpResponse<{ [key: string]: RelatedResponseApiModel }>>
-  public getRelated1(
+  public getAssociatedResourcesForRecords(
     type?: Array<
       | 'children'
       | 'parent'
@@ -183,7 +183,7 @@ export class RelatedApiService {
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
   ): Observable<HttpEvent<{ [key: string]: RelatedResponseApiModel }>>
-  public getRelated1(
+  public getAssociatedResourcesForRecords(
     type?: Array<
       | 'children'
       | 'parent'

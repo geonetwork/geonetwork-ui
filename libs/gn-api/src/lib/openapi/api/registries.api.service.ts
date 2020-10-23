@@ -278,110 +278,6 @@ export class RegistriesApiService {
   }
 
   /**
-   * Search coordinate reference system (CRS)
-   * Based on GeoTools EPSG database. If phrase query, each words are searched separately.
-   * @param q Search value
-   * @param type Type of CRS
-   * @param rows Number of results. Default is: 100
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getCrs1(
-    q?: string,
-    type?:
-      | 'CoordinateReferenceSystem'
-      | 'VerticalCRS'
-      | 'GeographicCRS'
-      | 'ProjectedCRS',
-    rows?: number,
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<CrsApiModel>>
-  public getCrs1(
-    q?: string,
-    type?:
-      | 'CoordinateReferenceSystem'
-      | 'VerticalCRS'
-      | 'GeographicCRS'
-      | 'ProjectedCRS',
-    rows?: number,
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<CrsApiModel>>>
-  public getCrs1(
-    q?: string,
-    type?:
-      | 'CoordinateReferenceSystem'
-      | 'VerticalCRS'
-      | 'GeographicCRS'
-      | 'ProjectedCRS',
-    rows?: number,
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<CrsApiModel>>>
-  public getCrs1(
-    q?: string,
-    type?:
-      | 'CoordinateReferenceSystem'
-      | 'VerticalCRS'
-      | 'GeographicCRS'
-      | 'ProjectedCRS',
-    rows?: number,
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder })
-    if (q !== undefined && q !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>q, 'q')
-    }
-    if (type !== undefined && type !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>type, 'type')
-    }
-    if (rows !== undefined && rows !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>rows, 'rows')
-    }
-
-    let headers = this.defaultHeaders
-
-    let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept
-    if (httpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
-    }
-    if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected)
-    }
-
-    let responseType: 'text' | 'json' = 'json'
-    if (
-      httpHeaderAcceptSelected &&
-      httpHeaderAcceptSelected.startsWith('text')
-    ) {
-      responseType = 'text'
-    }
-
-    return this.httpClient.get<Array<CrsApiModel>>(
-      `${this.configuration.basePath}/registries/crs`,
-      {
-        params: queryParameters,
-        responseType: <any>responseType,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress,
-      }
-    )
-  }
-
-  /**
    * Get list of CRS type
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -581,6 +477,7 @@ export class RegistriesApiService {
    * @param lang Languages.
    * @param keywordOnly Only print the keyword, no thesaurus information.
    * @param transformation XSL template to use (ISO19139 keyword by default, see convert.xsl).
+   * @param langMap langMap, that converts the values in the \&#39;lang\&#39; parameter to how they will be actually represented in the record. {\&#39;fre\&#39;:\&#39;fra\&#39;} or {\&#39;fre\&#39;:\&#39;fr\&#39;}.  Missing/empty means to convert to iso 2 letter.
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
@@ -590,6 +487,7 @@ export class RegistriesApiService {
     lang?: Array<string>,
     keywordOnly?: boolean,
     transformation?: string,
+    langMap?: string,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
@@ -600,6 +498,7 @@ export class RegistriesApiService {
     lang?: Array<string>,
     keywordOnly?: boolean,
     transformation?: string,
+    langMap?: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
@@ -610,6 +509,7 @@ export class RegistriesApiService {
     lang?: Array<string>,
     keywordOnly?: boolean,
     transformation?: string,
+    langMap?: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
@@ -620,6 +520,7 @@ export class RegistriesApiService {
     lang?: Array<string>,
     keywordOnly?: boolean,
     transformation?: string,
+    langMap?: string,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
@@ -667,6 +568,13 @@ export class RegistriesApiService {
         queryParameters,
         <any>transformation,
         'transformation'
+      )
+    }
+    if (langMap !== undefined && langMap !== null) {
+      queryParameters = this.addToHttpParams(
+        queryParameters,
+        <any>langMap,
+        'langMap'
       )
     }
 
@@ -1140,6 +1048,110 @@ export class RegistriesApiService {
 
     return this.httpClient.get<object>(
       `${this.configuration.basePath}/registries/actions/entries/synchronize`,
+      {
+        params: queryParameters,
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
+   * Search coordinate reference system (CRS)
+   * Based on GeoTools EPSG database. If phrase query, each words are searched separately.
+   * @param q Search value
+   * @param type Type of CRS
+   * @param rows Number of results. Default is: 100
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public searchCrs(
+    q?: string,
+    type?:
+      | 'CoordinateReferenceSystem'
+      | 'VerticalCRS'
+      | 'GeographicCRS'
+      | 'ProjectedCRS',
+    rows?: number,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<Array<CrsApiModel>>
+  public searchCrs(
+    q?: string,
+    type?:
+      | 'CoordinateReferenceSystem'
+      | 'VerticalCRS'
+      | 'GeographicCRS'
+      | 'ProjectedCRS',
+    rows?: number,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpResponse<Array<CrsApiModel>>>
+  public searchCrs(
+    q?: string,
+    type?:
+      | 'CoordinateReferenceSystem'
+      | 'VerticalCRS'
+      | 'GeographicCRS'
+      | 'ProjectedCRS',
+    rows?: number,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpEvent<Array<CrsApiModel>>>
+  public searchCrs(
+    q?: string,
+    type?:
+      | 'CoordinateReferenceSystem'
+      | 'VerticalCRS'
+      | 'GeographicCRS'
+      | 'ProjectedCRS',
+    rows?: number,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any> {
+    let queryParameters = new HttpParams({ encoder: this.encoder })
+    if (q !== undefined && q !== null) {
+      queryParameters = this.addToHttpParams(queryParameters, <any>q, 'q')
+    }
+    if (type !== undefined && type !== null) {
+      queryParameters = this.addToHttpParams(queryParameters, <any>type, 'type')
+    }
+    if (rows !== undefined && rows !== null) {
+      queryParameters = this.addToHttpParams(queryParameters, <any>rows, 'rows')
+    }
+
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.get<Array<CrsApiModel>>(
+      `${this.configuration.basePath}/registries/crs`,
       {
         params: queryParameters,
         responseType: <any>responseType,

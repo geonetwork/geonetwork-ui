@@ -9,12 +9,17 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { DocumentApiModel } from './document.api.model'
+import { ElementApiModel } from './element.api.model'
+import { ParentApiModel } from './parent.api.model'
+import { DocTypeApiModel } from './docType.api.model'
 
-export interface ParentApiModel {
+export interface DocumentApiModel {
+  content?: Array<object>
+  baseURI?: string
+  rootElement?: ElementApiModel
+  docType?: DocTypeApiModel
   contentSize?: number
   document?: DocumentApiModel
   descendants?: object
   parent?: ParentApiModel
-  content?: Array<object>
 }

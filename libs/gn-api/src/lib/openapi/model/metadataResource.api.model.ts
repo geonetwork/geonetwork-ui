@@ -11,12 +11,12 @@
  */
 
 export interface MetadataResourceApiModel {
+  url?: string
+  filename?: string
+  visibility?: MetadataResourceApiModel.VisibilityEnum
   lastModification?: string
   id?: string
   size?: number
-  url?: string
-  visibility?: MetadataResourceApiModel.VisibilityEnum
-  filename?: string
 }
 export namespace MetadataResourceApiModel {
   export type VisibilityEnum = 'public' | 'private'

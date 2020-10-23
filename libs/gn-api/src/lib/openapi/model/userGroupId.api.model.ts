@@ -12,8 +12,8 @@
 
 export interface UserGroupIdApiModel {
   profile?: UserGroupIdApiModel.ProfileEnum
-  groupId?: number
   userId?: number
+  groupId?: number
 }
 export namespace UserGroupIdApiModel {
   export type ProfileEnum =

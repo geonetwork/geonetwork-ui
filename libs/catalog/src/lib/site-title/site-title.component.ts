@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { SettingsListResponseApiModel } from '@lib/gn-api'
 import { CommonService } from '@lib/common'
-import { BehaviorSubject, Observable } from 'rxjs'
+import { Observable } from 'rxjs'
 
 @Component({
   selector: 'catalog-site-title',

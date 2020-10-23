@@ -11,7 +11,7 @@
  */
 
 export interface MetadataCategoryApiModel {
-  name?: string
   id?: number
+  name?: string
   label?: { [key: string]: string }
 }

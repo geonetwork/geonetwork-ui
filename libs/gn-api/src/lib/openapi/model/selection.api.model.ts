@@ -11,8 +11,8 @@
  */
 
 export interface SelectionApiModel {
-  name?: string
   id?: number
+  name?: string
   watchable?: boolean
   label?: { [key: string]: string }
 }

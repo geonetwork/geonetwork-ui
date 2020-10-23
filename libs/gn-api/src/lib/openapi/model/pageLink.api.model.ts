@@ -9,16 +9,20 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { SortApiModel } from './sort.api.model'
+import { PageableApiModel } from './pageable.api.model'
 import { LinkApiModel } from './link.api.model'
 
 export interface PageLinkApiModel {
   totalPages?: number
   totalElements?: number
+  sort?: SortApiModel
+  last?: boolean
+  numberOfElements?: number
+  first?: boolean
+  pageable?: PageableApiModel
   size?: number
   content?: Array<LinkApiModel>
   number?: number
-  sort?: object
-  first?: boolean
-  numberOfElements?: number
-  last?: boolean
+  empty?: boolean
 }

@@ -9,13 +9,29 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ValuesApiModel } from './values.api.model'
+import { NamespaceApiModel } from './namespace.api.model'
+import { DocumentApiModel } from './document.api.model'
+import { ParentApiModel } from './parent.api.model'
 
 export interface ElementApiModel {
+  parent?: ParentApiModel
   name?: string
-  definition?: string
-  code?: string
-  link?: string
-  type?: string
-  values?: Array<ValuesApiModel>
+  namespace?: NamespaceApiModel
+  additionalNamespaces?: Array<object>
+  attributes?: Array<object>
+  content?: Array<object>
+  text?: string
+  attribute?: ElementApiModel
+  rootElement?: boolean
+  contentSize?: number
+  qualifiedName?: string
+  namespaceURI?: string
+  namespacePrefix?: string
+  textTrim?: string
+  children?: Array<object>
+  textNormalize?: string
+  descendants?: object
+  value?: string
+  document?: DocumentApiModel
+  parentElement?: ElementApiModel
 }

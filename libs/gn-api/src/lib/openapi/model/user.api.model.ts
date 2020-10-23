@@ -14,24 +14,24 @@ import { GrantedAuthorityApiModel } from './grantedAuthority.api.model'
 import { AddressApiModel } from './address.api.model'
 
 export interface UserApiModel {
-  credentialsNonExpired?: boolean
-  emailAddresses?: Set<string>
-  primaryAddress?: AddressApiModel
-  accountNonExpired?: boolean
-  accountNonLocked?: boolean
-  addresses?: Set<AddressApiModel>
-  lastLoginDate?: string
-  profile?: UserApiModel.ProfileEnum
   surname?: string
-  name?: string
-  id?: number
   enabled?: boolean
   username?: string
+  profile?: UserApiModel.ProfileEnum
+  id?: number
   email?: string
-  kind?: string
+  emailAddresses?: Set<string>
+  addresses?: Set<AddressApiModel>
+  primaryAddress?: AddressApiModel
   organisation?: string
-  authorities?: Array<GrantedAuthorityApiModel>
+  kind?: string
   security?: UserSecurityApiModel
+  lastLoginDate?: string
+  authorities?: Array<GrantedAuthorityApiModel>
+  accountNonExpired?: boolean
+  accountNonLocked?: boolean
+  credentialsNonExpired?: boolean
+  name?: string
 }
 export namespace UserApiModel {
   export type ProfileEnum =

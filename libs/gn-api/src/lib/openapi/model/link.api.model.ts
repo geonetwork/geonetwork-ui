@@ -18,10 +18,10 @@ export interface LinkApiModel {
   linkStatus?: Set<LinkStatusApiModel>
   lastState?: number
   lastCheck?: ISODateApiModel
-  linkType?: LinkApiModel.LinkTypeEnum
-  id?: number
   protocol?: string
   url?: string
+  id?: number
+  linkType?: LinkApiModel.LinkTypeEnum
 }
 export namespace LinkApiModel {
   export type LinkTypeEnum = 'HTTP' | 'METADATA'

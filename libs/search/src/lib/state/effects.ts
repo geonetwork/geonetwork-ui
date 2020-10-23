@@ -44,8 +44,7 @@ export class SearchEffects {
       switchMap(() => this.authService.authReady()), // wait for auth to be known
       withLatestFrom(this.store$.pipe(select(getSearchState))),
       switchMap(([_, state]) =>
-        this.searchService.call(
-          '_search',
+        this.searchService.search(
           'bucket',
           JSON.stringify(
             this.esService.search(state, ElasticsearchMetadataModels.SUMMARY)

@@ -25,9 +25,10 @@ import { Observable } from 'rxjs'
 
 import { BatchEditParameterApiModel } from '../model/models'
 import { ElementApiModel } from '../model/models'
+import { ExtentDtoApiModel } from '../model/models'
 import { FeatureResponseApiModel } from '../model/models'
 import { IProcessingReportApiModel } from '../model/models'
-import { InlineObjectApiModel } from '../model/models'
+import { InlineObject1ApiModel } from '../model/models'
 import { MetadataCategoryApiModel } from '../model/models'
 import { MetadataProcessingReportApiModel } from '../model/models'
 import { MetadataResourceApiModel } from '../model/models'
@@ -329,25 +330,25 @@ export class RecordsApiService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public addSamples1(
+  public addTemplates(
     schema: Array<string>,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
   ): Observable<SimpleMetadataProcessingReportApiModel>
-  public addSamples1(
+  public addTemplates(
     schema: Array<string>,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
   ): Observable<HttpResponse<SimpleMetadataProcessingReportApiModel>>
-  public addSamples1(
+  public addTemplates(
     schema: Array<string>,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
   ): Observable<HttpEvent<SimpleMetadataProcessingReportApiModel>>
-  public addSamples1(
+  public addTemplates(
     schema: Array<string>,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -355,7 +356,7 @@ export class RecordsApiService {
   ): Observable<any> {
     if (schema === null || schema === undefined) {
       throw new Error(
-        'Required parameter schema was null or undefined when calling addSamples1.'
+        'Required parameter schema was null or undefined when calling addTemplates.'
       )
     }
 
@@ -840,7 +841,7 @@ export class RecordsApiService {
 
   /**
    * Create a new record
-   * Create a record from a template or by copying an existing record.Return the UUID of the newly created record. Existing links in the source record are preserved, this means that the new record may contains link to the source attachements. They need to be manually updated after creation.
+   * Create a record from a template or by copying an existing record.Return the UUID of the newly created record. Existing links in the source record are preserved, this means that the new record may contains link to the source attachments. They need to be manually updated after creation.
    * @param sourceUuid UUID of the source record to copy.
    * @param group The group the record is attached to.
    * @param metadataType The type of record.
@@ -1433,6 +1434,115 @@ export class RecordsApiService {
   }
 
   /**
+   * Delete tags to one or more records
+   * @param id Tag identifier
+   * @param uuids Record UUIDs. If null current selection is used.
+   * @param bucket Selection bucket name
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public deleteTagForRecords(
+    id: Array<number>,
+    uuids?: Array<string>,
+    bucket?: string,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<MetadataProcessingReportApiModel>
+  public deleteTagForRecords(
+    id: Array<number>,
+    uuids?: Array<string>,
+    bucket?: string,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>
+  public deleteTagForRecords(
+    id: Array<number>,
+    uuids?: Array<string>,
+    bucket?: string,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>
+  public deleteTagForRecords(
+    id: Array<number>,
+    uuids?: Array<string>,
+    bucket?: string,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any> {
+    if (id === null || id === undefined) {
+      throw new Error(
+        'Required parameter id was null or undefined when calling deleteTagForRecords.'
+      )
+    }
+
+    let queryParameters = new HttpParams({ encoder: this.encoder })
+    if (uuids) {
+      uuids.forEach((element) => {
+        queryParameters = this.addToHttpParams(
+          queryParameters,
+          <any>element,
+          'uuids'
+        )
+      })
+    }
+    if (bucket !== undefined && bucket !== null) {
+      queryParameters = this.addToHttpParams(
+        queryParameters,
+        <any>bucket,
+        'bucket'
+      )
+    }
+    if (id) {
+      id.forEach((element) => {
+        queryParameters = this.addToHttpParams(
+          queryParameters,
+          <any>element,
+          'id'
+        )
+      })
+    }
+
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.delete<MetadataProcessingReportApiModel>(
+      `${this.configuration.basePath}/records/tags`,
+      {
+        params: queryParameters,
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
    * Delete tags of a record
    * @param metadataUuid Record UUID.
    * @param id Tag identifier. If none, all tags are removed.
@@ -1513,6 +1623,70 @@ export class RecordsApiService {
       )}/tags`,
       {
         params: queryParameters,
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
+   * Download MEF backup archive
+   * The backup contains all metadata not harvested including templates.
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public downloadBackup(
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' | 'application/zip' }
+  ): Observable<any>
+  public downloadBackup(
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' | 'application/zip' }
+  ): Observable<HttpResponse<any>>
+  public downloadBackup(
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' | 'application/zip' }
+  ): Observable<HttpEvent<any>>
+  public downloadBackup(
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' | 'application/zip' }
+  ): Observable<any> {
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = [
+        'application/json',
+        'application/zip',
+      ]
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.get<any>(
+      `${this.configuration.basePath}/records/backups/latest`,
+      {
         responseType: <any>responseType,
         withCredentials: this.configuration.withCredentials,
         headers: headers,
@@ -1677,70 +1851,6 @@ export class RecordsApiService {
       null,
       {
         params: queryParameters,
-        responseType: <any>responseType,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress,
-      }
-    )
-  }
-
-  /**
-   * Download MEF backup archive
-   * The backup contains all metadata not harvested including templates.
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public exec(
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' | 'application/zip' }
-  ): Observable<any>
-  public exec(
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' | 'application/zip' }
-  ): Observable<HttpResponse<any>>
-  public exec(
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' | 'application/zip' }
-  ): Observable<HttpEvent<any>>
-  public exec(
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json' | 'application/zip' }
-  ): Observable<any> {
-    let headers = this.defaultHeaders
-
-    let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept
-    if (httpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = [
-        'application/json',
-        'application/zip',
-      ]
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
-    }
-    if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected)
-    }
-
-    let responseType: 'text' | 'json' = 'json'
-    if (
-      httpHeaderAcceptSelected &&
-      httpHeaderAcceptSelected.startsWith('text')
-    ) {
-      responseType = 'text'
-    }
-
-    return this.httpClient.get<any>(
-      `${this.configuration.basePath}/records/backups/latest`,
-      {
         responseType: <any>responseType,
         withCredentials: this.configuration.withCredentials,
         headers: headers,
@@ -2213,6 +2323,80 @@ export class RecordsApiService {
   }
 
   /**
+   * Get list of record extents
+   * A rendering of the geometry as a png. If no background is specified the image will be transparent. In getMap the envelope of the geometry is calculated then it is expanded by a factor.  That factor is the size of the map.  This allows the map to be slightly bigger than the geometry allowing some context to be shown. This parameter allows different factors to be chosen per scale level. Proportion is the proportion of the world that the geometry covers (bounds of WGS84)/(bounds of geometry in WGS84)  Named backgrounds allow the background parameter to be a simple key and the complete URL will be looked up from this list of named backgrounds
+   * @param metadataUuid Record UUID.
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getAllRecordExtentAsJson(
+    metadataUuid: string,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<Array<ExtentDtoApiModel>>
+  public getAllRecordExtentAsJson(
+    metadataUuid: string,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpResponse<Array<ExtentDtoApiModel>>>
+  public getAllRecordExtentAsJson(
+    metadataUuid: string,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpEvent<Array<ExtentDtoApiModel>>>
+  public getAllRecordExtentAsJson(
+    metadataUuid: string,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any> {
+    if (metadataUuid === null || metadataUuid === undefined) {
+      throw new Error(
+        'Required parameter metadataUuid was null or undefined when calling getAllRecordExtentAsJson.'
+      )
+    }
+
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.get<Array<ExtentDtoApiModel>>(
+      `${this.configuration.basePath}/records/${encodeURIComponent(
+        String(metadataUuid)
+      )}/extents.json`,
+      {
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
    * List all metadata attachments
    * &lt;a href&#x3D;\&#39;http://geonetwork-opensource.org/manuals/trunk/eng/users/user-guide/associating-resources/using-filestore.html\&#39;&gt;More info&lt;/a&gt;
    * @param metadataUuid The metadata UUID
@@ -2380,6 +2564,180 @@ export class RecordsApiService {
   }
 
   /**
+   * Get record related resources
+   * Retrieve related services, datasets, onlines, thumbnails, sources, ... to this records.&lt;br/&gt;&lt;a href&#x3D;\&#39;http://geonetwork-opensource.org/manuals/trunk/eng/users/user-guide/associating-resources/index.html\&#39;&gt;More info&lt;/a&gt;
+   * @param metadataUuid Record UUID.
+   * @param type Type of related resource. If none, all resources are returned.
+   * @param start Start offset for paging. Default 1. Only applies to related metadata records (ie. not for thumbnails).
+   * @param rows Number of rows returned. Default 100.
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getAssociatedResources(
+    metadataUuid: string,
+    type?: Array<
+      | 'children'
+      | 'parent'
+      | 'brothersAndSisters'
+      | 'siblings'
+      | 'associated'
+      | 'services'
+      | 'datasets'
+      | 'fcats'
+      | 'hasfeaturecats'
+      | 'sources'
+      | 'hassources'
+      | 'related'
+      | 'onlines'
+      | 'thumbnails'
+    >,
+    start?: number,
+    rows?: number,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
+  ): Observable<RelatedResponseApiModel>
+  public getAssociatedResources(
+    metadataUuid: string,
+    type?: Array<
+      | 'children'
+      | 'parent'
+      | 'brothersAndSisters'
+      | 'siblings'
+      | 'associated'
+      | 'services'
+      | 'datasets'
+      | 'fcats'
+      | 'hasfeaturecats'
+      | 'sources'
+      | 'hassources'
+      | 'related'
+      | 'onlines'
+      | 'thumbnails'
+    >,
+    start?: number,
+    rows?: number,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
+  ): Observable<HttpResponse<RelatedResponseApiModel>>
+  public getAssociatedResources(
+    metadataUuid: string,
+    type?: Array<
+      | 'children'
+      | 'parent'
+      | 'brothersAndSisters'
+      | 'siblings'
+      | 'associated'
+      | 'services'
+      | 'datasets'
+      | 'fcats'
+      | 'hasfeaturecats'
+      | 'sources'
+      | 'hassources'
+      | 'related'
+      | 'onlines'
+      | 'thumbnails'
+    >,
+    start?: number,
+    rows?: number,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
+  ): Observable<HttpEvent<RelatedResponseApiModel>>
+  public getAssociatedResources(
+    metadataUuid: string,
+    type?: Array<
+      | 'children'
+      | 'parent'
+      | 'brothersAndSisters'
+      | 'siblings'
+      | 'associated'
+      | 'services'
+      | 'datasets'
+      | 'fcats'
+      | 'hasfeaturecats'
+      | 'sources'
+      | 'hassources'
+      | 'related'
+      | 'onlines'
+      | 'thumbnails'
+    >,
+    start?: number,
+    rows?: number,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
+  ): Observable<any> {
+    if (metadataUuid === null || metadataUuid === undefined) {
+      throw new Error(
+        'Required parameter metadataUuid was null or undefined when calling getAssociatedResources.'
+      )
+    }
+
+    let queryParameters = new HttpParams({ encoder: this.encoder })
+    if (type) {
+      type.forEach((element) => {
+        queryParameters = this.addToHttpParams(
+          queryParameters,
+          <any>element,
+          'type'
+        )
+      })
+    }
+    if (start !== undefined && start !== null) {
+      queryParameters = this.addToHttpParams(
+        queryParameters,
+        <any>start,
+        'start'
+      )
+    }
+    if (rows !== undefined && rows !== null) {
+      queryParameters = this.addToHttpParams(queryParameters, <any>rows, 'rows')
+    }
+
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = [
+        'application/json',
+        'application/xml',
+      ]
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.get<RelatedResponseApiModel>(
+      `${this.configuration.basePath}/records/${encodeURIComponent(
+        String(metadataUuid)
+      )}/related`,
+      {
+        params: queryParameters,
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
    * Returns a map to decode attributes in a dataset (from the associated feature catalog)
    * Retrieve related services, datasets, onlines, thumbnails, sources, ... to this records.&lt;br/&gt;&lt;a href&#x3D;\&#39;http://geonetwork-opensource.org/manuals/trunk/eng/users/user-guide/associating-resources/index.html\&#39;&gt;More info&lt;/a&gt;
    * @param metadataUuid Record UUID.
@@ -2468,7 +2826,7 @@ export class RecordsApiService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getRecord(
+  public getRecordAs(
     metadataUuid: string,
     addSchemaLocation?: boolean,
     increasePopularity?: boolean,
@@ -2480,7 +2838,7 @@ export class RecordsApiService {
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
   ): Observable<object>
-  public getRecord(
+  public getRecordAs(
     metadataUuid: string,
     addSchemaLocation?: boolean,
     increasePopularity?: boolean,
@@ -2492,7 +2850,7 @@ export class RecordsApiService {
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
   ): Observable<HttpResponse<object>>
-  public getRecord(
+  public getRecordAs(
     metadataUuid: string,
     addSchemaLocation?: boolean,
     increasePopularity?: boolean,
@@ -2504,7 +2862,7 @@ export class RecordsApiService {
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
   ): Observable<HttpEvent<object>>
-  public getRecord(
+  public getRecordAs(
     metadataUuid: string,
     addSchemaLocation?: boolean,
     increasePopularity?: boolean,
@@ -2518,7 +2876,7 @@ export class RecordsApiService {
   ): Observable<any> {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
-        'Required parameter metadataUuid was null or undefined when calling getRecord.'
+        'Required parameter metadataUuid was null or undefined when calling getRecordAs.'
       )
     }
 
@@ -2615,7 +2973,7 @@ export class RecordsApiService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getRecord1(
+  public getRecordAs1(
     metadataUuid: string,
     addSchemaLocation?: boolean,
     increasePopularity?: boolean,
@@ -2627,7 +2985,7 @@ export class RecordsApiService {
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
   ): Observable<object>
-  public getRecord1(
+  public getRecordAs1(
     metadataUuid: string,
     addSchemaLocation?: boolean,
     increasePopularity?: boolean,
@@ -2639,7 +2997,7 @@ export class RecordsApiService {
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
   ): Observable<HttpResponse<object>>
-  public getRecord1(
+  public getRecordAs1(
     metadataUuid: string,
     addSchemaLocation?: boolean,
     increasePopularity?: boolean,
@@ -2651,7 +3009,7 @@ export class RecordsApiService {
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
   ): Observable<HttpEvent<object>>
-  public getRecord1(
+  public getRecordAs1(
     metadataUuid: string,
     addSchemaLocation?: boolean,
     increasePopularity?: boolean,
@@ -2665,7 +3023,7 @@ export class RecordsApiService {
   ): Observable<any> {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
-        'Required parameter metadataUuid was null or undefined when calling getRecord1.'
+        'Required parameter metadataUuid was null or undefined when calling getRecordAs1.'
       )
     }
 
@@ -3346,136 +3704,40 @@ export class RecordsApiService {
   }
 
   /**
-   * Get record related resources
-   * Retrieve related services, datasets, onlines, thumbnails, sources, ... to this records.&lt;br/&gt;&lt;a href&#x3D;\&#39;http://geonetwork-opensource.org/manuals/trunk/eng/users/user-guide/associating-resources/index.html\&#39;&gt;More info&lt;/a&gt;
+   * Get record tags
+   * Tags are used to classify information.&lt;br/&gt;&lt;a href&#x3D;\&#39;http://geonetwork-opensource.org/manuals/trunk/eng/users/user-guide/tag-information/tagging-with-categories.html\&#39;&gt;More info&lt;/a&gt;
    * @param metadataUuid Record UUID.
-   * @param type Type of related resource. If none, all resources are returned.
-   * @param start Start offset for paging. Default 1. Only applies to related metadata records (ie. not for thumbnails).
-   * @param rows Number of rows returned. Default 100.
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getRelated(
+  public getRecordTags(
     metadataUuid: string,
-    type?: Array<
-      | 'children'
-      | 'parent'
-      | 'brothersAndSisters'
-      | 'siblings'
-      | 'associated'
-      | 'services'
-      | 'datasets'
-      | 'fcats'
-      | 'hasfeaturecats'
-      | 'sources'
-      | 'hassources'
-      | 'related'
-      | 'onlines'
-      | 'thumbnails'
-    >,
-    start?: number,
-    rows?: number,
     observe?: 'body',
     reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<RelatedResponseApiModel>
-  public getRelated(
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<Set<MetadataCategoryApiModel>>
+  public getRecordTags(
     metadataUuid: string,
-    type?: Array<
-      | 'children'
-      | 'parent'
-      | 'brothersAndSisters'
-      | 'siblings'
-      | 'associated'
-      | 'services'
-      | 'datasets'
-      | 'fcats'
-      | 'hasfeaturecats'
-      | 'sources'
-      | 'hassources'
-      | 'related'
-      | 'onlines'
-      | 'thumbnails'
-    >,
-    start?: number,
-    rows?: number,
     observe?: 'response',
     reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpResponse<RelatedResponseApiModel>>
-  public getRelated(
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpResponse<Set<MetadataCategoryApiModel>>>
+  public getRecordTags(
     metadataUuid: string,
-    type?: Array<
-      | 'children'
-      | 'parent'
-      | 'brothersAndSisters'
-      | 'siblings'
-      | 'associated'
-      | 'services'
-      | 'datasets'
-      | 'fcats'
-      | 'hasfeaturecats'
-      | 'sources'
-      | 'hassources'
-      | 'related'
-      | 'onlines'
-      | 'thumbnails'
-    >,
-    start?: number,
-    rows?: number,
     observe?: 'events',
     reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpEvent<RelatedResponseApiModel>>
-  public getRelated(
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpEvent<Set<MetadataCategoryApiModel>>>
+  public getRecordTags(
     metadataUuid: string,
-    type?: Array<
-      | 'children'
-      | 'parent'
-      | 'brothersAndSisters'
-      | 'siblings'
-      | 'associated'
-      | 'services'
-      | 'datasets'
-      | 'fcats'
-      | 'hasfeaturecats'
-      | 'sources'
-      | 'hassources'
-      | 'related'
-      | 'onlines'
-      | 'thumbnails'
-    >,
-    start?: number,
-    rows?: number,
     observe: any = 'body',
     reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
+    options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
-        'Required parameter metadataUuid was null or undefined when calling getRelated.'
+        'Required parameter metadataUuid was null or undefined when calling getRecordTags.'
       )
-    }
-
-    let queryParameters = new HttpParams({ encoder: this.encoder })
-    if (type) {
-      type.forEach((element) => {
-        queryParameters = this.addToHttpParams(
-          queryParameters,
-          <any>element,
-          'type'
-        )
-      })
-    }
-    if (start !== undefined && start !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>start,
-        'start'
-      )
-    }
-    if (rows !== undefined && rows !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>rows, 'rows')
     }
 
     let headers = this.defaultHeaders
@@ -3484,10 +3746,7 @@ export class RecordsApiService {
       options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = [
-        'application/json',
-        'application/xml',
-      ]
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
       )
@@ -3504,12 +3763,11 @@ export class RecordsApiService {
       responseType = 'text'
     }
 
-    return this.httpClient.get<RelatedResponseApiModel>(
+    return this.httpClient.get<Set<MetadataCategoryApiModel>>(
       `${this.configuration.basePath}/records/${encodeURIComponent(
         String(metadataUuid)
-      )}/related`,
+      )}/tags`,
       {
-        params: queryParameters,
         responseType: <any>responseType,
         withCredentials: this.configuration.withCredentials,
         headers: headers,
@@ -4280,6 +4538,154 @@ export class RecordsApiService {
   }
 
   /**
+   * Get suggestions
+   * Analyze the record an suggest processes to improve the quality of the record.&lt;br/&gt;&lt;a href&#x3D;\&#39;http://geonetwork-opensource.org/manuals/trunk/eng/users/user-guide/workflow/batchupdate-xsl.html\&#39;&gt;More info&lt;/a&gt;
+   * @param metadataUuid Record UUID.
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getSuggestions(
+    metadataUuid: string,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<Array<SuggestionTypeApiModel>>
+  public getSuggestions(
+    metadataUuid: string,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpResponse<Array<SuggestionTypeApiModel>>>
+  public getSuggestions(
+    metadataUuid: string,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpEvent<Array<SuggestionTypeApiModel>>>
+  public getSuggestions(
+    metadataUuid: string,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any> {
+    if (metadataUuid === null || metadataUuid === undefined) {
+      throw new Error(
+        'Required parameter metadataUuid was null or undefined when calling getSuggestions.'
+      )
+    }
+
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.get<Array<SuggestionTypeApiModel>>(
+      `${this.configuration.basePath}/records/${encodeURIComponent(
+        String(metadataUuid)
+      )}/processes`,
+      {
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
+   * Get test suites available.
+   * TG13, TG2, ...
+   * @param metadataUuid Record UUID.
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getTestSuites(
+    metadataUuid: string,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<{ [key: string]: Array<string> }>
+  public getTestSuites(
+    metadataUuid: string,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpResponse<{ [key: string]: Array<string> }>>
+  public getTestSuites(
+    metadataUuid: string,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpEvent<{ [key: string]: Array<string> }>>
+  public getTestSuites(
+    metadataUuid: string,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any> {
+    if (metadataUuid === null || metadataUuid === undefined) {
+      throw new Error(
+        'Required parameter metadataUuid was null or undefined when calling getTestSuites.'
+      )
+    }
+
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.get<{ [key: string]: Array<string> }>(
+      `${this.configuration.basePath}/records/${encodeURIComponent(
+        String(metadataUuid)
+      )}/validate/inspire/testsuites`,
+      {
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
    * Search status
    * @param type One or more types to retrieve (ie. worflow, event, task). Default is all.
    * @param details All event details including XML changes. Responses are bigger. Default is false
@@ -4293,7 +4699,7 @@ export class RecordsApiService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getStatusByType(
+  public getWorkflowStatusByType(
     type?: Array<'workflow' | 'task' | 'event'>,
     details?: boolean,
     author?: Array<number>,
@@ -4307,7 +4713,7 @@ export class RecordsApiService {
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<Array<MetadataStatusResponseApiModel>>
-  public getStatusByType(
+  public getWorkflowStatusByType(
     type?: Array<'workflow' | 'task' | 'event'>,
     details?: boolean,
     author?: Array<number>,
@@ -4321,7 +4727,7 @@ export class RecordsApiService {
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<HttpResponse<Array<MetadataStatusResponseApiModel>>>
-  public getStatusByType(
+  public getWorkflowStatusByType(
     type?: Array<'workflow' | 'task' | 'event'>,
     details?: boolean,
     author?: Array<number>,
@@ -4335,7 +4741,7 @@ export class RecordsApiService {
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<HttpEvent<Array<MetadataStatusResponseApiModel>>>
-  public getStatusByType(
+  public getWorkflowStatusByType(
     type?: Array<'workflow' | 'task' | 'event'>,
     details?: boolean,
     author?: Array<number>,
@@ -4451,228 +4857,6 @@ export class RecordsApiService {
   }
 
   /**
-   * Get suggestions
-   * Analyze the record an suggest processes to improve the quality of the record.&lt;br/&gt;&lt;a href&#x3D;\&#39;http://geonetwork-opensource.org/manuals/trunk/eng/users/user-guide/workflow/batchupdate-xsl.html\&#39;&gt;More info&lt;/a&gt;
-   * @param metadataUuid Record UUID.
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getSuggestions(
-    metadataUuid: string,
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<SuggestionTypeApiModel>>
-  public getSuggestions(
-    metadataUuid: string,
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<SuggestionTypeApiModel>>>
-  public getSuggestions(
-    metadataUuid: string,
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<SuggestionTypeApiModel>>>
-  public getSuggestions(
-    metadataUuid: string,
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any> {
-    if (metadataUuid === null || metadataUuid === undefined) {
-      throw new Error(
-        'Required parameter metadataUuid was null or undefined when calling getSuggestions.'
-      )
-    }
-
-    let headers = this.defaultHeaders
-
-    let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept
-    if (httpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
-    }
-    if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected)
-    }
-
-    let responseType: 'text' | 'json' = 'json'
-    if (
-      httpHeaderAcceptSelected &&
-      httpHeaderAcceptSelected.startsWith('text')
-    ) {
-      responseType = 'text'
-    }
-
-    return this.httpClient.get<Array<SuggestionTypeApiModel>>(
-      `${this.configuration.basePath}/records/${encodeURIComponent(
-        String(metadataUuid)
-      )}/processes`,
-      {
-        responseType: <any>responseType,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress,
-      }
-    )
-  }
-
-  /**
-   * Get record tags
-   * Tags are used to classify information.&lt;br/&gt;&lt;a href&#x3D;\&#39;http://geonetwork-opensource.org/manuals/trunk/eng/users/user-guide/tag-information/tagging-with-categories.html\&#39;&gt;More info&lt;/a&gt;
-   * @param metadataUuid Record UUID.
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getTags1(
-    metadataUuid: string,
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Set<MetadataCategoryApiModel>>
-  public getTags1(
-    metadataUuid: string,
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Set<MetadataCategoryApiModel>>>
-  public getTags1(
-    metadataUuid: string,
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Set<MetadataCategoryApiModel>>>
-  public getTags1(
-    metadataUuid: string,
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any> {
-    if (metadataUuid === null || metadataUuid === undefined) {
-      throw new Error(
-        'Required parameter metadataUuid was null or undefined when calling getTags1.'
-      )
-    }
-
-    let headers = this.defaultHeaders
-
-    let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept
-    if (httpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
-    }
-    if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected)
-    }
-
-    let responseType: 'text' | 'json' = 'json'
-    if (
-      httpHeaderAcceptSelected &&
-      httpHeaderAcceptSelected.startsWith('text')
-    ) {
-      responseType = 'text'
-    }
-
-    return this.httpClient.get<Set<MetadataCategoryApiModel>>(
-      `${this.configuration.basePath}/records/${encodeURIComponent(
-        String(metadataUuid)
-      )}/tags`,
-      {
-        responseType: <any>responseType,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress,
-      }
-    )
-  }
-
-  /**
-   * Get test suites available.
-   * TG13, TG2, ...
-   * @param metadataUuid Record UUID.
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getTestSuites(
-    metadataUuid: string,
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<{ [key: string]: Array<string> }>
-  public getTestSuites(
-    metadataUuid: string,
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<{ [key: string]: Array<string> }>>
-  public getTestSuites(
-    metadataUuid: string,
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<{ [key: string]: Array<string> }>>
-  public getTestSuites(
-    metadataUuid: string,
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any> {
-    if (metadataUuid === null || metadataUuid === undefined) {
-      throw new Error(
-        'Required parameter metadataUuid was null or undefined when calling getTestSuites.'
-      )
-    }
-
-    let headers = this.defaultHeaders
-
-    let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept
-    if (httpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
-    }
-    if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected)
-    }
-
-    let responseType: 'text' | 'json' = 'json'
-    if (
-      httpHeaderAcceptSelected &&
-      httpHeaderAcceptSelected.startsWith('text')
-    ) {
-      responseType = 'text'
-    }
-
-    return this.httpClient.get<{ [key: string]: Array<string> }>(
-      `${this.configuration.basePath}/records/${encodeURIComponent(
-        String(metadataUuid)
-      )}/validate/inspire/testsuites`,
-      {
-        responseType: <any>responseType,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress,
-      }
-    )
-  }
-
-  /**
    * Index a set of records
    * Index a set of records provided either by a bucket or a list of uuids
    * @param uuids Record UUIDs. If null current selection is used.
@@ -4680,28 +4864,28 @@ export class RecordsApiService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public index(
+  public index1(
     uuids?: Array<string>,
     bucket?: string,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<{ [key: string]: object }>
-  public index(
+  public index1(
     uuids?: Array<string>,
     bucket?: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<HttpResponse<{ [key: string]: object }>>
-  public index(
+  public index1(
     uuids?: Array<string>,
     bucket?: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<HttpEvent<{ [key: string]: object }>>
-  public index(
+  public index1(
     uuids?: Array<string>,
     bucket?: string,
     observe: any = 'body',
@@ -5832,7 +6016,7 @@ export class RecordsApiService {
    * @param metadataUuid The metadata UUID
    * @param visibility The sharing policy
    * @param approved Use approved version or not
-   * @param inlineObjectApiModel
+   * @param inlineObject1ApiModel
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
@@ -5840,7 +6024,7 @@ export class RecordsApiService {
     metadataUuid: string,
     visibility?: 'public' | 'private',
     approved?: boolean,
-    inlineObjectApiModel?: InlineObjectApiModel,
+    inlineObject1ApiModel?: InlineObject1ApiModel,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
@@ -5849,7 +6033,7 @@ export class RecordsApiService {
     metadataUuid: string,
     visibility?: 'public' | 'private',
     approved?: boolean,
-    inlineObjectApiModel?: InlineObjectApiModel,
+    inlineObject1ApiModel?: InlineObject1ApiModel,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
@@ -5858,7 +6042,7 @@ export class RecordsApiService {
     metadataUuid: string,
     visibility?: 'public' | 'private',
     approved?: boolean,
-    inlineObjectApiModel?: InlineObjectApiModel,
+    inlineObject1ApiModel?: InlineObject1ApiModel,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
@@ -5867,7 +6051,7 @@ export class RecordsApiService {
     metadataUuid: string,
     visibility?: 'public' | 'private',
     approved?: boolean,
-    inlineObjectApiModel?: InlineObjectApiModel,
+    inlineObject1ApiModel?: InlineObject1ApiModel,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
@@ -5930,7 +6114,7 @@ export class RecordsApiService {
       `${this.configuration.basePath}/records/${encodeURIComponent(
         String(metadataUuid)
       )}/attachments`,
-      inlineObjectApiModel,
+      inlineObject1ApiModel,
       {
         params: queryParameters,
         responseType: <any>responseType,
@@ -6892,6 +7076,236 @@ export class RecordsApiService {
   }
 
   /**
+   * Add tags to a record
+   * @param metadataUuid Record UUID.
+   * @param id Tag identifier
+   * @param clear Clear all before adding new ones
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public tagRecord(
+    metadataUuid: string,
+    id: Array<number>,
+    clear?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any>
+  public tagRecord(
+    metadataUuid: string,
+    id: Array<number>,
+    clear?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpResponse<any>>
+  public tagRecord(
+    metadataUuid: string,
+    id: Array<number>,
+    clear?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpEvent<any>>
+  public tagRecord(
+    metadataUuid: string,
+    id: Array<number>,
+    clear?: boolean,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any> {
+    if (metadataUuid === null || metadataUuid === undefined) {
+      throw new Error(
+        'Required parameter metadataUuid was null or undefined when calling tagRecord.'
+      )
+    }
+    if (id === null || id === undefined) {
+      throw new Error(
+        'Required parameter id was null or undefined when calling tagRecord.'
+      )
+    }
+
+    let queryParameters = new HttpParams({ encoder: this.encoder })
+    if (id) {
+      id.forEach((element) => {
+        queryParameters = this.addToHttpParams(
+          queryParameters,
+          <any>element,
+          'id'
+        )
+      })
+    }
+    if (clear !== undefined && clear !== null) {
+      queryParameters = this.addToHttpParams(
+        queryParameters,
+        <any>clear,
+        'clear'
+      )
+    }
+
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.put<any>(
+      `${this.configuration.basePath}/records/${encodeURIComponent(
+        String(metadataUuid)
+      )}/tags`,
+      null,
+      {
+        params: queryParameters,
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
+   * Add tags to one or more records
+   * @param id Tag identifier
+   * @param uuids Record UUIDs. If null current selection is used.
+   * @param bucket Selection bucket name
+   * @param clear Clear all before adding new ones
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public tagRecords(
+    id: Array<number>,
+    uuids?: Array<string>,
+    bucket?: string,
+    clear?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<MetadataProcessingReportApiModel>
+  public tagRecords(
+    id: Array<number>,
+    uuids?: Array<string>,
+    bucket?: string,
+    clear?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>
+  public tagRecords(
+    id: Array<number>,
+    uuids?: Array<string>,
+    bucket?: string,
+    clear?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>
+  public tagRecords(
+    id: Array<number>,
+    uuids?: Array<string>,
+    bucket?: string,
+    clear?: boolean,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any> {
+    if (id === null || id === undefined) {
+      throw new Error(
+        'Required parameter id was null or undefined when calling tagRecords.'
+      )
+    }
+
+    let queryParameters = new HttpParams({ encoder: this.encoder })
+    if (uuids) {
+      uuids.forEach((element) => {
+        queryParameters = this.addToHttpParams(
+          queryParameters,
+          <any>element,
+          'uuids'
+        )
+      })
+    }
+    if (bucket !== undefined && bucket !== null) {
+      queryParameters = this.addToHttpParams(
+        queryParameters,
+        <any>bucket,
+        'bucket'
+      )
+    }
+    if (id) {
+      id.forEach((element) => {
+        queryParameters = this.addToHttpParams(
+          queryParameters,
+          <any>element,
+          'id'
+        )
+      })
+    }
+    if (clear !== undefined && clear !== null) {
+      queryParameters = this.addToHttpParams(
+        queryParameters,
+        <any>clear,
+        'clear'
+      )
+    }
+
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.put<MetadataProcessingReportApiModel>(
+      `${this.configuration.basePath}/records/tags`,
+      null,
+      {
+        params: queryParameters,
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
    * Trigger MEF backup archive
    * The backup contains all metadata not harvested including templates.
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -7045,440 +7459,6 @@ export class RecordsApiService {
   }
 
   /**
-   * Add tags to one or more records
-   * @param id Tag identifier
-   * @param uuids Record UUIDs. If null current selection is used.
-   * @param bucket Selection bucket name
-   * @param clear Clear all before adding new ones
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public updateTags(
-    id: Array<number>,
-    uuids?: Array<string>,
-    bucket?: string,
-    clear?: boolean,
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<MetadataProcessingReportApiModel>
-  public updateTags(
-    id: Array<number>,
-    uuids?: Array<string>,
-    bucket?: string,
-    clear?: boolean,
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>
-  public updateTags(
-    id: Array<number>,
-    uuids?: Array<string>,
-    bucket?: string,
-    clear?: boolean,
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>
-  public updateTags(
-    id: Array<number>,
-    uuids?: Array<string>,
-    bucket?: string,
-    clear?: boolean,
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any> {
-    if (id === null || id === undefined) {
-      throw new Error(
-        'Required parameter id was null or undefined when calling updateTags.'
-      )
-    }
-
-    let queryParameters = new HttpParams({ encoder: this.encoder })
-    if (uuids) {
-      uuids.forEach((element) => {
-        queryParameters = this.addToHttpParams(
-          queryParameters,
-          <any>element,
-          'uuids'
-        )
-      })
-    }
-    if (bucket !== undefined && bucket !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>bucket,
-        'bucket'
-      )
-    }
-    if (id) {
-      id.forEach((element) => {
-        queryParameters = this.addToHttpParams(
-          queryParameters,
-          <any>element,
-          'id'
-        )
-      })
-    }
-    if (clear !== undefined && clear !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>clear,
-        'clear'
-      )
-    }
-
-    let headers = this.defaultHeaders
-
-    let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept
-    if (httpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
-    }
-    if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected)
-    }
-
-    let responseType: 'text' | 'json' = 'json'
-    if (
-      httpHeaderAcceptSelected &&
-      httpHeaderAcceptSelected.startsWith('text')
-    ) {
-      responseType = 'text'
-    }
-
-    return this.httpClient.put<MetadataProcessingReportApiModel>(
-      `${this.configuration.basePath}/records/tags`,
-      null,
-      {
-        params: queryParameters,
-        responseType: <any>responseType,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress,
-      }
-    )
-  }
-
-  /**
-   * Delete tags to one or more records
-   * @param id Tag identifier
-   * @param uuids Record UUIDs. If null current selection is used.
-   * @param bucket Selection bucket name
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public updateTags1(
-    id: Array<number>,
-    uuids?: Array<string>,
-    bucket?: string,
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<MetadataProcessingReportApiModel>
-  public updateTags1(
-    id: Array<number>,
-    uuids?: Array<string>,
-    bucket?: string,
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>
-  public updateTags1(
-    id: Array<number>,
-    uuids?: Array<string>,
-    bucket?: string,
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>
-  public updateTags1(
-    id: Array<number>,
-    uuids?: Array<string>,
-    bucket?: string,
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any> {
-    if (id === null || id === undefined) {
-      throw new Error(
-        'Required parameter id was null or undefined when calling updateTags1.'
-      )
-    }
-
-    let queryParameters = new HttpParams({ encoder: this.encoder })
-    if (uuids) {
-      uuids.forEach((element) => {
-        queryParameters = this.addToHttpParams(
-          queryParameters,
-          <any>element,
-          'uuids'
-        )
-      })
-    }
-    if (bucket !== undefined && bucket !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>bucket,
-        'bucket'
-      )
-    }
-    if (id) {
-      id.forEach((element) => {
-        queryParameters = this.addToHttpParams(
-          queryParameters,
-          <any>element,
-          'id'
-        )
-      })
-    }
-
-    let headers = this.defaultHeaders
-
-    let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept
-    if (httpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
-    }
-    if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected)
-    }
-
-    let responseType: 'text' | 'json' = 'json'
-    if (
-      httpHeaderAcceptSelected &&
-      httpHeaderAcceptSelected.startsWith('text')
-    ) {
-      responseType = 'text'
-    }
-
-    return this.httpClient.delete<MetadataProcessingReportApiModel>(
-      `${this.configuration.basePath}/records/tags`,
-      {
-        params: queryParameters,
-        responseType: <any>responseType,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress,
-      }
-    )
-  }
-
-  /**
-   * Add tags to a record
-   * @param metadataUuid Record UUID.
-   * @param id Tag identifier
-   * @param clear Clear all before adding new ones
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public updateTags2(
-    metadataUuid: string,
-    id: Array<number>,
-    clear?: boolean,
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>
-  public updateTags2(
-    metadataUuid: string,
-    id: Array<number>,
-    clear?: boolean,
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>
-  public updateTags2(
-    metadataUuid: string,
-    id: Array<number>,
-    clear?: boolean,
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>
-  public updateTags2(
-    metadataUuid: string,
-    id: Array<number>,
-    clear?: boolean,
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any> {
-    if (metadataUuid === null || metadataUuid === undefined) {
-      throw new Error(
-        'Required parameter metadataUuid was null or undefined when calling updateTags2.'
-      )
-    }
-    if (id === null || id === undefined) {
-      throw new Error(
-        'Required parameter id was null or undefined when calling updateTags2.'
-      )
-    }
-
-    let queryParameters = new HttpParams({ encoder: this.encoder })
-    if (id) {
-      id.forEach((element) => {
-        queryParameters = this.addToHttpParams(
-          queryParameters,
-          <any>element,
-          'id'
-        )
-      })
-    }
-    if (clear !== undefined && clear !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>clear,
-        'clear'
-      )
-    }
-
-    let headers = this.defaultHeaders
-
-    let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept
-    if (httpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
-    }
-    if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected)
-    }
-
-    let responseType: 'text' | 'json' = 'json'
-    if (
-      httpHeaderAcceptSelected &&
-      httpHeaderAcceptSelected.startsWith('text')
-    ) {
-      responseType = 'text'
-    }
-
-    return this.httpClient.put<any>(
-      `${this.configuration.basePath}/records/${encodeURIComponent(
-        String(metadataUuid)
-      )}/tags`,
-      null,
-      {
-        params: queryParameters,
-        responseType: <any>responseType,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress,
-      }
-    )
-  }
-
-  /**
-   * Submit a record to the INSPIRE service for validation.
-   * User MUST be able to edit the record to validate it. An INSPIRE endpoint must be configured in Settings. This activates an asyncronous process, this method does not return any report. This method returns an id to be used to get the report.
-   * @param metadataUuid Record UUID.
-   * @param testsuite Test suite to run
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public validateRecord(
-    metadataUuid: string,
-    testsuite: string,
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' | 'text/plain' }
-  ): Observable<string>
-  public validateRecord(
-    metadataUuid: string,
-    testsuite: string,
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' | 'text/plain' }
-  ): Observable<HttpResponse<string>>
-  public validateRecord(
-    metadataUuid: string,
-    testsuite: string,
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' | 'text/plain' }
-  ): Observable<HttpEvent<string>>
-  public validateRecord(
-    metadataUuid: string,
-    testsuite: string,
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json' | 'text/plain' }
-  ): Observable<any> {
-    if (metadataUuid === null || metadataUuid === undefined) {
-      throw new Error(
-        'Required parameter metadataUuid was null or undefined when calling validateRecord.'
-      )
-    }
-    if (testsuite === null || testsuite === undefined) {
-      throw new Error(
-        'Required parameter testsuite was null or undefined when calling validateRecord.'
-      )
-    }
-
-    let queryParameters = new HttpParams({ encoder: this.encoder })
-    if (testsuite !== undefined && testsuite !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>testsuite,
-        'testsuite'
-      )
-    }
-
-    let headers = this.defaultHeaders
-
-    let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept
-    if (httpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json', 'text/plain']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
-    }
-    if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected)
-    }
-
-    let responseType: 'text' | 'json' = 'json'
-    if (
-      httpHeaderAcceptSelected &&
-      httpHeaderAcceptSelected.startsWith('text')
-    ) {
-      responseType = 'text'
-    }
-
-    return this.httpClient.put<string>(
-      `${this.configuration.basePath}/records/${encodeURIComponent(
-        String(metadataUuid)
-      )}/validate/inspire`,
-      null,
-      {
-        params: queryParameters,
-        responseType: <any>responseType,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress,
-      }
-    )
-  }
-
-  /**
    * Validate a record
    * User MUST be able to edit the record to validate it. FIXME : id MUST be the id of the current metadata record in session ?
    * @param metadataUuid Record UUID.
@@ -7486,28 +7466,28 @@ export class RecordsApiService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public validateRecord1(
+  public validateRecord(
     metadataUuid: string,
     isvalid?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
   ): Observable<ReportsApiModel>
-  public validateRecord1(
+  public validateRecord(
     metadataUuid: string,
     isvalid?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
   ): Observable<HttpResponse<ReportsApiModel>>
-  public validateRecord1(
+  public validateRecord(
     metadataUuid: string,
     isvalid?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
   ): Observable<HttpEvent<ReportsApiModel>>
-  public validateRecord1(
+  public validateRecord(
     metadataUuid: string,
     isvalid?: boolean,
     observe: any = 'body',
@@ -7516,7 +7496,7 @@ export class RecordsApiService {
   ): Observable<any> {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
-        'Required parameter metadataUuid was null or undefined when calling validateRecord1.'
+        'Required parameter metadataUuid was null or undefined when calling validateRecord.'
       )
     }
 
@@ -7559,6 +7539,101 @@ export class RecordsApiService {
       `${this.configuration.basePath}/records/${encodeURIComponent(
         String(metadataUuid)
       )}/validate/internal`,
+      null,
+      {
+        params: queryParameters,
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
+   * Submit a record to the INSPIRE service for validation.
+   * User MUST be able to edit the record to validate it. An INSPIRE endpoint must be configured in Settings. This activates an asyncronous process, this method does not return any report. This method returns an id to be used to get the report.
+   * @param metadataUuid Record UUID.
+   * @param testsuite Test suite to run
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public validateRecordForInspire(
+    metadataUuid: string,
+    testsuite: string,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' | 'text/plain' }
+  ): Observable<string>
+  public validateRecordForInspire(
+    metadataUuid: string,
+    testsuite: string,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' | 'text/plain' }
+  ): Observable<HttpResponse<string>>
+  public validateRecordForInspire(
+    metadataUuid: string,
+    testsuite: string,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' | 'text/plain' }
+  ): Observable<HttpEvent<string>>
+  public validateRecordForInspire(
+    metadataUuid: string,
+    testsuite: string,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' | 'text/plain' }
+  ): Observable<any> {
+    if (metadataUuid === null || metadataUuid === undefined) {
+      throw new Error(
+        'Required parameter metadataUuid was null or undefined when calling validateRecordForInspire.'
+      )
+    }
+    if (testsuite === null || testsuite === undefined) {
+      throw new Error(
+        'Required parameter testsuite was null or undefined when calling validateRecordForInspire.'
+      )
+    }
+
+    let queryParameters = new HttpParams({ encoder: this.encoder })
+    if (testsuite !== undefined && testsuite !== null) {
+      queryParameters = this.addToHttpParams(
+        queryParameters,
+        <any>testsuite,
+        'testsuite'
+      )
+    }
+
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json', 'text/plain']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.put<string>(
+      `${this.configuration.basePath}/records/${encodeURIComponent(
+        String(metadataUuid)
+      )}/validate/inspire`,
       null,
       {
         params: queryParameters,

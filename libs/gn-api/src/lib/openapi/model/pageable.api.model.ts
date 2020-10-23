@@ -9,12 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { DocumentApiModel } from './document.api.model'
+import { SortApiModel } from './sort.api.model'
 
-export interface ParentApiModel {
-  contentSize?: number
-  document?: DocumentApiModel
-  descendants?: object
-  parent?: ParentApiModel
-  content?: Array<object>
+export interface PageableApiModel {
+  sort?: SortApiModel
+  paged?: boolean
+  unpaged?: boolean
+  pageNumber?: number
+  pageSize?: number
+  offset?: number
 }

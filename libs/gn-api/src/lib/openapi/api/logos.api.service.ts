@@ -282,22 +282,22 @@ export class LogosApiService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public get3(
+  public getLogos(
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<Set<string>>
-  public get3(
+  public getLogos(
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<HttpResponse<Set<string>>>
-  public get3(
+  public getLogos(
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<HttpEvent<Set<string>>>
-  public get3(
+  public getLogos(
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }

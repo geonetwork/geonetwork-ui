@@ -11,10 +11,10 @@
  */
 
 export interface OperationApiModel {
-  reservedOperation?: OperationApiModel.ReservedOperationEnum
-  name?: string
   id?: number
   reserved?: boolean
+  reservedOperation?: OperationApiModel.ReservedOperationEnum
+  name?: string
   label?: { [key: string]: string }
 }
 export namespace OperationApiModel {

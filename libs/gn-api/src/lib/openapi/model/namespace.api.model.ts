@@ -10,8 +10,7 @@
  * Do not edit the class manually.
  */
 
-export interface ValuesApiModel {
-  label?: string
-  code?: string
-  definition?: string
+export interface NamespaceApiModel {
+  prefix?: string
+  uri?: string
 }

@@ -17,11 +17,11 @@ export interface GroupApiModel {
   defaultCategory?: MetadataCategoryApiModel
   allowedCategories?: Array<MetadataCategoryApiModel>
   enableAllowedCategories?: boolean
+  description?: string
+  id?: number
+  reserved?: boolean
+  email?: string
   referrer?: number
   name?: string
-  id?: number
-  description?: string
-  email?: string
-  reserved?: boolean
   label?: { [key: string]: string }
 }

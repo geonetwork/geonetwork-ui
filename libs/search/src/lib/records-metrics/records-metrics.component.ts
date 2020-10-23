@@ -21,8 +21,7 @@ export class RecordsMetricsComponent implements OnInit {
 
   ngOnInit(): void {
     this.results$ = this.searchService
-      .call(
-        '_search',
+      .search(
         'bucket',
         JSON.stringify({
           size: 0,

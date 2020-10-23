@@ -11,12 +11,12 @@
  */
 
 export interface PageJSONWrapperApiModel {
-  linkText?: string
   format?: PageJSONWrapperApiModel.FormatEnum
-  language?: string
-  sections?: Array<PageJSONWrapperApiModel.SectionsEnum>
   status?: PageJSONWrapperApiModel.StatusEnum
   link?: string
+  sections?: Array<PageJSONWrapperApiModel.SectionsEnum>
+  linkText?: string
+  language?: string
 }
 export namespace PageJSONWrapperApiModel {
   export type FormatEnum = 'LINK' | 'HTML' | 'TEXT' | 'MARKDOWN' | 'WIKI'
@@ -26,6 +26,13 @@ export namespace PageJSONWrapperApiModel {
     TEXT: 'TEXT' as FormatEnum,
     MARKDOWN: 'MARKDOWN' as FormatEnum,
     WIKI: 'WIKI' as FormatEnum,
+  }
+  export type StatusEnum = 'PUBLIC' | 'PUBLIC_ONLY' | 'PRIVATE' | 'HIDDEN'
+  export const StatusEnum = {
+    PUBLIC: 'PUBLIC' as StatusEnum,
+    PUBLICONLY: 'PUBLIC_ONLY' as StatusEnum,
+    PRIVATE: 'PRIVATE' as StatusEnum,
+    HIDDEN: 'HIDDEN' as StatusEnum,
   }
   export type SectionsEnum =
     | 'ALL'
@@ -47,12 +54,5 @@ export namespace PageJSONWrapperApiModel {
     CUSTOMMENU2: 'CUSTOM_MENU2' as SectionsEnum,
     CUSTOMMENU3: 'CUSTOM_MENU3' as SectionsEnum,
     DRAFT: 'DRAFT' as SectionsEnum,
-  }
-  export type StatusEnum = 'PUBLIC' | 'PUBLIC_ONLY' | 'PRIVATE' | 'HIDDEN'
-  export const StatusEnum = {
-    PUBLIC: 'PUBLIC' as StatusEnum,
-    PUBLICONLY: 'PUBLIC_ONLY' as StatusEnum,
-    PRIVATE: 'PRIVATE' as StatusEnum,
-    HIDDEN: 'HIDDEN' as StatusEnum,
   }
 }

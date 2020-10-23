@@ -30,10 +30,10 @@ export interface MetadataStatusResponseApiModel {
   uuid?: string
   currentStatus?: string
   previousStatus?: string
-  previousStatusDetails?: string
   currentStatusDetails?: string
-  owner?: number
+  previousStatusDetails?: string
   dueDate?: ISODateApiModel
   closeDate?: ISODateApiModel
+  owner?: number
   asXml?: ElementApiModel
 }

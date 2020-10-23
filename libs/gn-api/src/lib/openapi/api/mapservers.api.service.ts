@@ -521,7 +521,7 @@ export class MapserversApiService {
 
   /**
    * Get mapservers
-   * Mapservers are used by the catalog to publish record attachements (eg. ZIP file with shape) or record associated resources (eg. database table, file on the local network) in a remote mapserver like GeoServer or MapServer. The catalog communicate with the mapserver using GeoServer REST API.
+   * Mapservers are used by the catalog to publish record attachments (eg. ZIP file with shape) or record associated resources (eg. database table, file on the local network) in a remote mapserver like GeoServer or MapServer. The catalog communicate with the mapserver using GeoServer REST API.
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */

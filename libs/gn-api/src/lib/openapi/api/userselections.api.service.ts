@@ -392,34 +392,94 @@ export class UserselectionsApiService {
   }
 
   /**
+   * Get list of user selection sets
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getSelectionList(
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<Array<SelectionApiModel>>
+  public getSelectionList(
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpResponse<Array<SelectionApiModel>>>
+  public getSelectionList(
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpEvent<Array<SelectionApiModel>>>
+  public getSelectionList(
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any> {
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.get<Array<SelectionApiModel>>(
+      `${this.configuration.basePath}/userselections`,
+      {
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
    * Get record in a user selection set
    * @param selectionIdentifier Selection identifier
    * @param userIdentifier User identifier
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public get1(
+  public getSelectionRecords(
     selectionIdentifier: number,
     userIdentifier: number,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<Array<string>>
-  public get1(
+  public getSelectionRecords(
     selectionIdentifier: number,
     userIdentifier: number,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<HttpResponse<Array<string>>>
-  public get1(
+  public getSelectionRecords(
     selectionIdentifier: number,
     userIdentifier: number,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<HttpEvent<Array<string>>>
-  public get1(
+  public getSelectionRecords(
     selectionIdentifier: number,
     userIdentifier: number,
     observe: any = 'body',
@@ -428,12 +488,12 @@ export class UserselectionsApiService {
   ): Observable<any> {
     if (selectionIdentifier === null || selectionIdentifier === undefined) {
       throw new Error(
-        'Required parameter selectionIdentifier was null or undefined when calling get1.'
+        'Required parameter selectionIdentifier was null or undefined when calling getSelectionRecords.'
       )
     }
     if (userIdentifier === null || userIdentifier === undefined) {
       throw new Error(
-        'Required parameter userIdentifier was null or undefined when calling get1.'
+        'Required parameter userIdentifier was null or undefined when calling getSelectionRecords.'
       )
     }
 
@@ -464,66 +524,6 @@ export class UserselectionsApiService {
       `${this.configuration.basePath}/userselections/${encodeURIComponent(
         String(selectionIdentifier)
       )}/${encodeURIComponent(String(userIdentifier))}`,
-      {
-        responseType: <any>responseType,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress,
-      }
-    )
-  }
-
-  /**
-   * Get list of user selection sets
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public get2(
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<SelectionApiModel>>
-  public get2(
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<SelectionApiModel>>>
-  public get2(
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<SelectionApiModel>>>
-  public get2(
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any> {
-    let headers = this.defaultHeaders
-
-    let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept
-    if (httpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
-    }
-    if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected)
-    }
-
-    let responseType: 'text' | 'json' = 'json'
-    if (
-      httpHeaderAcceptSelected &&
-      httpHeaderAcceptSelected.startsWith('text')
-    ) {
-      responseType = 'text'
-    }
-
-    return this.httpClient.get<Array<SelectionApiModel>>(
-      `${this.configuration.basePath}/userselections`,
       {
         responseType: <any>responseType,
         withCredentials: this.configuration.withCredentials,
