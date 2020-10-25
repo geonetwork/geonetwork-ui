@@ -28,7 +28,7 @@ export const RecordPreviewListComponentStory: Story<RecordPreviewListComponent> 
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dapibus euismod libero, eu ullamcorper nisl placerat sit amet. Nulla vel sapien odio. Integer convallis scelerisque lorem, eget ultricies elit ultrices sit amet. Mauris nunc felis, vulputate laoreet lacinia et, volutpat et ligula. Sed a magna et augue convallis pretium. Fusce euismod dui in sapien tincidunt aliquet. Curabitur porttitor mauris a bibendum eleifend.'
       ),
       url: text('Record URL', 'www.goto.com'),
-      lastUpdated: dateObj('Last Updated', new Date()),
+      updateFrequency: text('Update frequency', 'Updated every month'),
       logoUrl: text(
         'Logo URL',
         'https://www.geograndest.fr/geonetwork/images/logos/b1b10881-2a33-472f-b99b-7576a6f84025.png'

@@ -16,10 +16,10 @@ export class ElasticsearchMapper {
       abstract: hit._source.resourceAbstractObject?.default || 'no abstract',
       thumbnailUrl: this.getFirstValue(hit._source.overview)?.url || '',
       url: `/geonetwork/srv/eng/catalog.search#/metadata/${hit._source.uuid}`,
-      lastUpdated: new Date(hit._source.changeDate as string),
       downloadable: (hit as any).download,
       viewable: (hit as any).view,
       logoUrl: `/geonetwork${hit._source.logo}`,
+      updateFrequency: this.getFirstValue(hit._source.codelist_status_text),
     }))
   }
 

@@ -61,12 +61,14 @@
         {{ record.abstract }}
       </p>
       <div class="flex flex-row items-center">
-        <div class="text-gray-500 text-sm truncate">
-          <span translate>lastUpdated</span>
-          {{ record.lastUpdated.toLocaleDateString() }}
+        <div
+          class="text-gray-500 text-sm truncate capitalize border-r mr-4 pr-4"
+          *ngIf="record.updateFrequency"
+        >
+          <span translate>{{ record.updateFrequency }}</span>
         </div>
         <div
-          class="text-gray-500 text-sm border-gray-300 border-l ml-4 px-4 truncate viewable-downloadable"
+          class="text-gray-500 text-sm border-gray-300 truncate viewable-downloadable"
           *ngIf="isViewable || isDownloadable"
         >
           <span *ngIf="isViewable" translate>recordViewable</span>

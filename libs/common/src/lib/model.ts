@@ -9,10 +9,10 @@ export interface RecordSummary {
   abstract: string
   url: string
   thumbnailUrl: string
-  lastUpdated: Date
-  logoUrl: string
-  downloadable: boolean
-  viewable: boolean
+  logoUrl?: string
+  downloadable?: boolean
+  viewable?: boolean
+  updateFrequency?: string
 }
 
 export interface RecordBrief extends RecordSummary {
