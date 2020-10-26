@@ -86,8 +86,7 @@ describe('RecordsMetricsComponent', () => {
     })
 
     it('report warning in console in case of invalid config.', () => {
-      component.config =
-        '{"terms":{"field":"tag","size":2'
+      component.config = '{"terms":{"field":"tag","size":2'
       fixture.detectChanges()
       // TODO: How to check config error is reported?
     })

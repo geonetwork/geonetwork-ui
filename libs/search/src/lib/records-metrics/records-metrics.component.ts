@@ -22,8 +22,10 @@ export class RecordsMetricsComponent implements OnInit {
 
   ngOnInit(): void {
     if (!!this.field === false && !!this.config === false) {
-      console.warn('A field name (eg. tag) '
-        + 'or a JSON aggregation config (eg. {"terms":{"field":"tag","size":2}}) MUST be defined.')
+      console.warn(
+        'A field name (eg. tag) ' +
+          'or a JSON aggregation config (eg. {"terms":{"field":"tag","size":2}}) MUST be defined.'
+      )
       return
     }
 
@@ -37,11 +39,11 @@ export class RecordsMetricsComponent implements OnInit {
     }
 
     const agg = this.config || {
-        terms: {
-          field: this.field,
-          size: this.count,
-        },
-      }
+      terms: {
+        field: this.field,
+        size: this.count,
+      },
+    }
     const search = {
       size: 0,
       track_total_hits: true,
@@ -51,15 +53,11 @@ export class RecordsMetricsComponent implements OnInit {
         },
       },
       aggs: {
-        metric: agg
+        metric: agg,
       },
     }
     this.results$ = this.searchService
-      .call(
-        '_search',
-        'bucket',
-        JSON.stringify(search)
-      )
+      .call('_search', 'bucket', JSON.stringify(search))
       .pipe(
         map<any, RecordMetric[]>(
           (response: SearchResponse<any>) =>
