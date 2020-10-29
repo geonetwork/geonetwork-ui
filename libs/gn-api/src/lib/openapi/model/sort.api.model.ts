@@ -9,12 +9,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { DocumentApiModel } from './document.api.model'
 
-export interface ParentApiModel {
-  contentSize?: number
-  document?: DocumentApiModel
-  descendants?: object
-  parent?: ParentApiModel
-  content?: Array<object>
+export interface SortApiModel {
+  sorted?: boolean
+  unsorted?: boolean
+  empty?: boolean
 }

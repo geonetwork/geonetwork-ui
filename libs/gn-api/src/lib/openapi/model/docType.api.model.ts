@@ -10,11 +10,16 @@
  * Do not edit the class manually.
  */
 import { DocumentApiModel } from './document.api.model'
+import { ElementApiModel } from './element.api.model'
+import { ParentApiModel } from './parent.api.model'
 
-export interface ParentApiModel {
-  contentSize?: number
-  document?: DocumentApiModel
-  descendants?: object
+export interface DocTypeApiModel {
   parent?: ParentApiModel
-  content?: Array<object>
+  elementName?: string
+  publicID?: string
+  systemID?: string
+  internalSubset?: string
+  value?: string
+  parentElement?: ElementApiModel
+  document?: DocumentApiModel
 }

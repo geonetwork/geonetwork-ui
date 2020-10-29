@@ -14,10 +14,10 @@ export interface StatusValueApiModel {
   type?: StatusValueApiModel.TypeEnum
   notificationLevel?: StatusValueApiModel.NotificationLevelEnum
   displayOrder?: number
-  reserved_JpaWorkaround?: string
-  name?: string
   id?: number
+  reserved_JpaWorkaround?: string
   reserved?: boolean
+  name?: string
   label?: { [key: string]: string }
 }
 export namespace StatusValueApiModel {

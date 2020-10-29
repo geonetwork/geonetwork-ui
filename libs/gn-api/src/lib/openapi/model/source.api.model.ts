@@ -9,8 +9,26 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { RelatedMetadataItemApiModel } from './relatedMetadataItem.api.model'
+import { ISODateApiModel } from './iSODate.api.model'
 
 export interface SourceApiModel {
-  item?: Array<RelatedMetadataItemApiModel>
+  type?: SourceApiModel.TypeEnum
+  logo?: string
+  filter?: string
+  uiConfig?: string
+  serviceRecord?: string
+  creationDate?: ISODateApiModel
+  groupOwner?: number
+  uuid?: string
+  name?: string
+  label?: { [key: string]: string }
+}
+export namespace SourceApiModel {
+  export type TypeEnum = 'portal' | 'subportal' | 'externalportal' | 'harvester'
+  export const TypeEnum = {
+    Portal: 'portal' as TypeEnum,
+    Subportal: 'subportal' as TypeEnum,
+    Externalportal: 'externalportal' as TypeEnum,
+    Harvester: 'harvester' as TypeEnum,
+  }
 }

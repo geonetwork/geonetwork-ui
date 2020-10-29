@@ -11,8 +11,8 @@
  */
 
 export interface RatingCriteriaApiModel {
+  id?: number
   internal?: boolean
   name?: string
-  id?: number
   label?: { [key: string]: string }
 }

@@ -273,6 +273,67 @@ export class UsersApiService {
   }
 
   /**
+   * Get owners
+   * Return users who actually owns one or more records.
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getRecordOwners(
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<Array<OwnerResponseApiModel>>
+  public getRecordOwners(
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpResponse<Array<OwnerResponseApiModel>>>
+  public getRecordOwners(
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpEvent<Array<OwnerResponseApiModel>>>
+  public getRecordOwners(
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any> {
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.get<Array<OwnerResponseApiModel>>(
+      `${this.configuration.basePath}/users/owners`,
+      {
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
    * Get user
    * @param userIdentifier User identifier.
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -346,6 +407,90 @@ export class UsersApiService {
   }
 
   /**
+   * Get user identicon
+   * @param userIdentifier User identifier.
+   * @param size Size.
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getUserIdenticon(
+    userIdentifier: number,
+    size?: number,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any>
+  public getUserIdenticon(
+    userIdentifier: number,
+    size?: number,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpResponse<any>>
+  public getUserIdenticon(
+    userIdentifier: number,
+    size?: number,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpEvent<any>>
+  public getUserIdenticon(
+    userIdentifier: number,
+    size?: number,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any> {
+    if (userIdentifier === null || userIdentifier === undefined) {
+      throw new Error(
+        'Required parameter userIdentifier was null or undefined when calling getUserIdenticon.'
+      )
+    }
+
+    let queryParameters = new HttpParams({ encoder: this.encoder })
+    if (size !== undefined && size !== null) {
+      queryParameters = this.addToHttpParams(queryParameters, <any>size, 'size')
+    }
+
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.get<any>(
+      `${this.configuration.basePath}/users/${encodeURIComponent(
+        String(userIdentifier)
+      )}.png`,
+      {
+        params: queryParameters,
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
    * Get users
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -395,67 +540,6 @@ export class UsersApiService {
 
     return this.httpClient.get<Array<UserApiModel>>(
       `${this.configuration.basePath}/users`,
-      {
-        responseType: <any>responseType,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress,
-      }
-    )
-  }
-
-  /**
-   * Get owners
-   * Return users who actually owns one or more records.
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getUsers1(
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<OwnerResponseApiModel>>
-  public getUsers1(
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<OwnerResponseApiModel>>>
-  public getUsers1(
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<OwnerResponseApiModel>>>
-  public getUsers1(
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any> {
-    let headers = this.defaultHeaders
-
-    let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept
-    if (httpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
-    }
-    if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected)
-    }
-
-    let responseType: 'text' | 'json' = 'json'
-    if (
-      httpHeaderAcceptSelected &&
-      httpHeaderAcceptSelected.startsWith('text')
-    ) {
-      responseType = 'text'
-    }
-
-    return this.httpClient.get<Array<OwnerResponseApiModel>>(
-      `${this.configuration.basePath}/users/owners`,
       {
         responseType: <any>responseType,
         withCredentials: this.configuration.withCredentials,

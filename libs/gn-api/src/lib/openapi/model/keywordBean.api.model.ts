@@ -18,9 +18,9 @@ export interface KeywordBeanApiModel {
   coordSouth?: string
   coordNorth?: string
   thesaurusKey?: string
-  thesaurusInfo?: KeywordBeanApiModel
   namespaceCode?: KeywordBeanApiModel
+  thesaurusInfo?: KeywordBeanApiModel
   definition?: string
-  value?: string
   uri?: string
+  value?: string
 }

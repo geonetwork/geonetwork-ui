@@ -14,7 +14,7 @@ export interface AddressApiModel {
   state?: string
   address?: string
   id?: number
-  country?: string
   city?: string
   zip?: string
+  country?: string
 }

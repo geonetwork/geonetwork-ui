@@ -263,66 +263,6 @@ export class StandardsApiService {
   }
 
   /**
-   * Get standards
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getConfigurations1(
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<MetadataSchemaApiModel>>
-  public getConfigurations1(
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<MetadataSchemaApiModel>>>
-  public getConfigurations1(
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<MetadataSchemaApiModel>>>
-  public getConfigurations1(
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any> {
-    let headers = this.defaultHeaders
-
-    let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept
-    if (httpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
-    }
-    if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected)
-    }
-
-    let responseType: 'text' | 'json' = 'json'
-    if (
-      httpHeaderAcceptSelected &&
-      httpHeaderAcceptSelected.startsWith('text')
-    ) {
-      responseType = 'text'
-    }
-
-    return this.httpClient.get<Array<MetadataSchemaApiModel>>(
-      `${this.configuration.basePath}/standards`,
-      {
-        responseType: <any>responseType,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress,
-      }
-    )
-  }
-
-  /**
    * Get editor associated resources panel configuration
    * @param schema Schema identifier
    * @param name Configuration identifier
@@ -806,6 +746,66 @@ export class StandardsApiService {
       )}/codelists/${encodeURIComponent(String(codelist))}`,
       {
         params: queryParameters,
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
+   * Get standards
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getStandardConfigurations(
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<Array<MetadataSchemaApiModel>>
+  public getStandardConfigurations(
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpResponse<Array<MetadataSchemaApiModel>>>
+  public getStandardConfigurations(
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpEvent<Array<MetadataSchemaApiModel>>>
+  public getStandardConfigurations(
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any> {
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.get<Array<MetadataSchemaApiModel>>(
+      `${this.configuration.basePath}/standards`,
+      {
         responseType: <any>responseType,
         withCredentials: this.configuration.withCredentials,
         headers: headers,

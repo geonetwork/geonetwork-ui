@@ -108,52 +108,41 @@ export class SearchApiService {
   }
 
   /**
-   * Search proxy for ElasticSearch
-   * See https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
-   * @param endPoint \&#39;_search\&#39; for search service.
+   * Search endpoint
+   * See https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html for search parameters details.
    * @param bucket
    * @param body JSON request based on Elasticsearch API.
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public call(
-    endPoint: string,
+  public search(
     bucket?: string,
     body?: string,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any>
-  public call(
-    endPoint: string,
+  public search(
     bucket?: string,
     body?: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<HttpResponse<any>>
-  public call(
-    endPoint: string,
+  public search(
     bucket?: string,
     body?: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<HttpEvent<any>>
-  public call(
-    endPoint: string,
+  public search(
     bucket?: string,
     body?: string,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    if (endPoint === null || endPoint === undefined) {
-      throw new Error(
-        'Required parameter endPoint was null or undefined when calling call.'
-      )
-    }
-
     let queryParameters = new HttpParams({ encoder: this.encoder })
     if (bucket !== undefined && bucket !== null) {
       queryParameters = this.addToHttpParams(
@@ -196,9 +185,7 @@ export class SearchApiService {
     }
 
     return this.httpClient.post<any>(
-      `${this.configuration.basePath}/search/records/${encodeURIComponent(
-        String(endPoint)
-      )}`,
+      `${this.configuration.basePath}/search/records/_search`,
       body,
       {
         params: queryParameters,

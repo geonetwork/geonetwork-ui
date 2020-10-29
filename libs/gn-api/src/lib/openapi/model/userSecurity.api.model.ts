@@ -10,10 +10,10 @@
  * Do not edit the class manually.
  */
 export interface UserSecurityApiModel {
-  authType?: string
-  securityNotificationsString?: UserSecurityApiModel
-  securityNotifications?: Set<UserSecurityApiModel.SecurityNotificationsEnum>
   nodeId?: string
+  authType?: string
+  securityNotifications?: Set<UserSecurityApiModel.SecurityNotificationsEnum>
+  securityNotificationsString?: UserSecurityApiModel
 }
 export namespace UserSecurityApiModel {
   export type SecurityNotificationsEnum = 'UPDATE_HASH_REQUIRED' | 'UNKNOWN'

@@ -9,7 +9,7 @@ export class CommonService {
   constructor(private siteApiService: SiteApiService) {}
 
   siteInfoReady() {
-    return this.siteApiService.get4().pipe(
+    return this.siteApiService.getSiteOrPortalDescription().pipe(
       map((r) => r),
       shareReplay()
     )

@@ -13,7 +13,7 @@ import { ISODateApiModel } from './iSODate.api.model'
 
 export interface MetadataStatusIdApiModel {
   changeDate?: ISODateApiModel
+  metadataId?: number
   userId?: number
   statusId?: number
-  metadataId?: number
 }

@@ -108,6 +108,114 @@ export class ToolsApiService {
   }
 
   /**
+   * Add or update database translations.
+   * @param key
+   * @param requestBody
+   * @param replace
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public addTranslations(
+    key: string,
+    requestBody: { [key: string]: string },
+    replace?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<string>
+  public addTranslations(
+    key: string,
+    requestBody: { [key: string]: string },
+    replace?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpResponse<string>>
+  public addTranslations(
+    key: string,
+    requestBody: { [key: string]: string },
+    replace?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpEvent<string>>
+  public addTranslations(
+    key: string,
+    requestBody: { [key: string]: string },
+    replace?: boolean,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any> {
+    if (key === null || key === undefined) {
+      throw new Error(
+        'Required parameter key was null or undefined when calling addTranslations.'
+      )
+    }
+    if (requestBody === null || requestBody === undefined) {
+      throw new Error(
+        'Required parameter requestBody was null or undefined when calling addTranslations.'
+      )
+    }
+
+    let queryParameters = new HttpParams({ encoder: this.encoder })
+    if (replace !== undefined && replace !== null) {
+      queryParameters = this.addToHttpParams(
+        queryParameters,
+        <any>replace,
+        'replace'
+      )
+    }
+
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json']
+    const httpContentTypeSelected:
+      | string
+      | undefined = this.configuration.selectHeaderContentType(consumes)
+    if (httpContentTypeSelected !== undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.put<string>(
+      `${
+        this.configuration.basePath
+      }/tools/i18n/db/translations/${encodeURIComponent(String(key))}`,
+      requestBody,
+      {
+        params: queryParameters,
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
    * Generate a SLD with a new filter
    * Get the currend SLD for the requested layers, add new filters in, save the SLD and return the new SLD URL.
    * @param url The WMS server URL
@@ -221,6 +329,153 @@ export class ToolsApiService {
   }
 
   /**
+   * Call a migration step
+   * @param stepName Class name to execute corresponding to a migration step. See DatabaseMigrationTask.
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public callStep(
+    stepName: string,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' | 'text/plain' }
+  ): Observable<string>
+  public callStep(
+    stepName: string,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' | 'text/plain' }
+  ): Observable<HttpResponse<string>>
+  public callStep(
+    stepName: string,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' | 'text/plain' }
+  ): Observable<HttpEvent<string>>
+  public callStep(
+    stepName: string,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' | 'text/plain' }
+  ): Observable<any> {
+    if (stepName === null || stepName === undefined) {
+      throw new Error(
+        'Required parameter stepName was null or undefined when calling callStep.'
+      )
+    }
+
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json', 'text/plain']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.put<string>(
+      `${
+        this.configuration.basePath
+      }/tools/migration/steps/${encodeURIComponent(String(stepName))}`,
+      null,
+      {
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
+   * Delete database translations.
+   * @param key
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public deleteTranslations(
+    key: string,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any>
+  public deleteTranslations(
+    key: string,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpResponse<any>>
+  public deleteTranslations(
+    key: string,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpEvent<any>>
+  public deleteTranslations(
+    key: string,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any> {
+    if (key === null || key === undefined) {
+      throw new Error(
+        'Required parameter key was null or undefined when calling deleteTranslations.'
+      )
+    }
+
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.delete<any>(
+      `${
+        this.configuration.basePath
+      }/tools/i18n/db/translations/${encodeURIComponent(String(key))}`,
+      {
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
    * Remove all SLD files
    * Clean all SLD generated previously
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -271,6 +526,66 @@ export class ToolsApiService {
 
     return this.httpClient.delete<any>(
       `${this.configuration.basePath}/tools/ogc/sld`,
+      {
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
+   * List database translations (used to overrides client application translations).
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getDbTranslations(
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<{ [key: string]: string }>
+  public getDbTranslations(
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpResponse<{ [key: string]: string }>>
+  public getDbTranslations(
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpEvent<{ [key: string]: string }>>
+  public getDbTranslations(
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any> {
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.get<{ [key: string]: string }>(
+      `${this.configuration.basePath}/tools/i18n/db/translations`,
       {
         responseType: <any>responseType,
         withCredentials: this.configuration.withCredentials,

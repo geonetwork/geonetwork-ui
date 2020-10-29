@@ -11,17 +11,17 @@
  */
 
 export interface ISODateApiModel {
+  hours?: number
+  minutes?: number
+  seconds?: number
+  years?: number
+  days?: number
+  months?: number
+  dateAndTime?: string
   dateAsString?: string
   timeInSeconds?: number
-  dateAndTime?: string
   dateOnly?: boolean
   dateYearOnly?: boolean
   dateYearMonthOnly?: boolean
   timeAsString?: string
-  hours?: number
-  minutes?: number
-  seconds?: number
-  months?: number
-  days?: number
-  years?: number
 }

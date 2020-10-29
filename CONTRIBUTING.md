@@ -60,8 +60,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ### Openapi client generation
 
-Geonetwork publish an `openapi` rest api, and expose an `openapi` specification document.
-This document is temporarily stored in `tools/spec.yml`, but in the end, should point on a geonetwork openapi documentation url.
+GeoNetwork publish an OpenAPI rest api, and expose an `openapi` specification document (see https://localhost:8080/geonetwork/srv/api/doc.yml).
+This document is temporarily stored in `tools/spec.yml`, but in the end, should point on a GeoNetwork OpenAPI documentation url.
 
 From this specification file, we are using [openapi-generator](https://openapi-generator.tech/) to generate a `typescript-angular` client for our application.
 The generated client is stored in the library `gn-api`. It contains the services and model definitions.

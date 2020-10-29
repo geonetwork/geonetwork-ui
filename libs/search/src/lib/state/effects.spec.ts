@@ -17,7 +17,7 @@ import { SearchEffects } from './effects'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
 
 const searchServiceMock = {
-  call: () => of({ hits: { hits: [] } }), // TODO: use a fixture here
+  search: () => of({ hits: { hits: [] } }), // TODO: use a fixture here
 }
 const authServiceMock = {
   authReady: () => of(true),

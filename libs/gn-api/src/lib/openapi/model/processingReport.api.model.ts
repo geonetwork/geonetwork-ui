@@ -20,6 +20,6 @@ export interface ProcessingReportApiModel {
   endIsoDateTime?: string
   ellapsedTimeInSeconds?: number
   totalTimeInSeconds?: number
-  type?: string
   running?: boolean
+  type?: string
 }

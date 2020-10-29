@@ -15,7 +15,7 @@ export interface IProcessingReportApiModel {
   endIsoDateTime?: string
   ellapsedTimeInSeconds?: number
   totalTimeInSeconds?: number
-  type?: string
   running?: boolean
   uuid?: string
+  type?: string
 }

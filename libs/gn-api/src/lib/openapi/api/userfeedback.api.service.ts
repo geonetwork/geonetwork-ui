@@ -652,25 +652,25 @@ export class UserfeedbackApiService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public publish1(
+  public publishFeedback(
     uuid: string,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<string>
-  public publish1(
+  public publishFeedback(
     uuid: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<HttpResponse<string>>
-  public publish1(
+  public publishFeedback(
     uuid: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<HttpEvent<string>>
-  public publish1(
+  public publishFeedback(
     uuid: string,
     observe: any = 'body',
     reportProgress: boolean = false,
@@ -678,7 +678,7 @@ export class UserfeedbackApiService {
   ): Observable<any> {
     if (uuid === null || uuid === undefined) {
       throw new Error(
-        'Required parameter uuid was null or undefined when calling publish1.'
+        'Required parameter uuid was null or undefined when calling publishFeedback.'
       )
     }
 

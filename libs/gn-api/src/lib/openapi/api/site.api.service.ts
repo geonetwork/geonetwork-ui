@@ -116,66 +116,6 @@ export class SiteApiService {
   }
 
   /**
-   * Get site (or portal) description
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public get4(
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<SettingsListResponseApiModel>
-  public get4(
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<SettingsListResponseApiModel>>
-  public get4(
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<SettingsListResponseApiModel>>
-  public get4(
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any> {
-    let headers = this.defaultHeaders
-
-    let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept
-    if (httpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
-    }
-    if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected)
-    }
-
-    let responseType: 'text' | 'json' = 'json'
-    if (
-      httpHeaderAcceptSelected &&
-      httpHeaderAcceptSelected.startsWith('text')
-    ) {
-      responseType = 'text'
-    }
-
-    return this.httpClient.get<SettingsListResponseApiModel>(
-      `${this.configuration.basePath}/site`,
-      {
-        responseType: <any>responseType,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress,
-      }
-    )
-  }
-
-  /**
    * Get site informations
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -501,6 +441,7 @@ export class SiteApiService {
   public getSettingsDetails(
     set?: Array<
       | 'INSPIRE'
+      | 'CSW'
       | 'HARVESTER'
       | 'USER_GROUP_ONLY'
       | 'AUTH'
@@ -518,6 +459,7 @@ export class SiteApiService {
   public getSettingsDetails(
     set?: Array<
       | 'INSPIRE'
+      | 'CSW'
       | 'HARVESTER'
       | 'USER_GROUP_ONLY'
       | 'AUTH'
@@ -535,6 +477,7 @@ export class SiteApiService {
   public getSettingsDetails(
     set?: Array<
       | 'INSPIRE'
+      | 'CSW'
       | 'HARVESTER'
       | 'USER_GROUP_ONLY'
       | 'AUTH'
@@ -552,6 +495,7 @@ export class SiteApiService {
   public getSettingsDetails(
     set?: Array<
       | 'INSPIRE'
+      | 'CSW'
       | 'HARVESTER'
       | 'USER_GROUP_ONLY'
       | 'AUTH'
@@ -633,6 +577,7 @@ export class SiteApiService {
   public getSettingsSet(
     set?: Array<
       | 'INSPIRE'
+      | 'CSW'
       | 'HARVESTER'
       | 'USER_GROUP_ONLY'
       | 'AUTH'
@@ -650,6 +595,7 @@ export class SiteApiService {
   public getSettingsSet(
     set?: Array<
       | 'INSPIRE'
+      | 'CSW'
       | 'HARVESTER'
       | 'USER_GROUP_ONLY'
       | 'AUTH'
@@ -667,6 +613,7 @@ export class SiteApiService {
   public getSettingsSet(
     set?: Array<
       | 'INSPIRE'
+      | 'CSW'
       | 'HARVESTER'
       | 'USER_GROUP_ONLY'
       | 'AUTH'
@@ -684,6 +631,7 @@ export class SiteApiService {
   public getSettingsSet(
     set?: Array<
       | 'INSPIRE'
+      | 'CSW'
       | 'HARVESTER'
       | 'USER_GROUP_ONLY'
       | 'AUTH'
@@ -745,6 +693,66 @@ export class SiteApiService {
       `${this.configuration.basePath}/site/settings`,
       {
         params: queryParameters,
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
+   * Get site (or portal) description
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getSiteOrPortalDescription(
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<SettingsListResponseApiModel>
+  public getSiteOrPortalDescription(
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpResponse<SettingsListResponseApiModel>>
+  public getSiteOrPortalDescription(
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpEvent<SettingsListResponseApiModel>>
+  public getSiteOrPortalDescription(
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any> {
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.get<SettingsListResponseApiModel>(
+      `${this.configuration.basePath}/site`,
+      {
         responseType: <any>responseType,
         withCredentials: this.configuration.withCredentials,
         headers: headers,
@@ -965,14 +973,16 @@ export class SiteApiService {
   /**
    * Index
    * @param reset Drop and recreate index
+   * @param asynchronous Asynchronous mode (only on all records. ie. no selection bucket)
    * @param havingXlinkOnly Records having only XLinks
    * @param indices Index. By default only remove record index.
    * @param bucket Selection bucket name
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public index1(
+  public index(
     reset?: boolean,
+    asynchronous?: boolean,
     havingXlinkOnly?: boolean,
     indices?: Array<string>,
     bucket?: string,
@@ -980,8 +990,9 @@ export class SiteApiService {
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<string>
-  public index1(
+  public index(
     reset?: boolean,
+    asynchronous?: boolean,
     havingXlinkOnly?: boolean,
     indices?: Array<string>,
     bucket?: string,
@@ -989,8 +1000,9 @@ export class SiteApiService {
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<HttpResponse<string>>
-  public index1(
+  public index(
     reset?: boolean,
+    asynchronous?: boolean,
     havingXlinkOnly?: boolean,
     indices?: Array<string>,
     bucket?: string,
@@ -998,8 +1010,9 @@ export class SiteApiService {
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<HttpEvent<string>>
-  public index1(
+  public index(
     reset?: boolean,
+    asynchronous?: boolean,
     havingXlinkOnly?: boolean,
     indices?: Array<string>,
     bucket?: string,
@@ -1013,6 +1026,13 @@ export class SiteApiService {
         queryParameters,
         <any>reset,
         'reset'
+      )
+    }
+    if (asynchronous !== undefined && asynchronous !== null) {
+      queryParameters = this.addToHttpParams(
+        queryParameters,
+        <any>asynchronous,
+        'asynchronous'
       )
     }
     if (havingXlinkOnly !== undefined && havingXlinkOnly !== null) {
@@ -1067,6 +1087,66 @@ export class SiteApiService {
       null,
       {
         params: queryParameters,
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
+   * Index synchronized with database
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public indexAndDbSynchronizationStatus(
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<{ [key: string]: object }>
+  public indexAndDbSynchronizationStatus(
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpResponse<{ [key: string]: object }>>
+  public indexAndDbSynchronizationStatus(
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpEvent<{ [key: string]: object }>>
+  public indexAndDbSynchronizationStatus(
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any> {
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.get<{ [key: string]: object }>(
+      `${this.configuration.basePath}/site/index/synchronized`,
+      {
         responseType: <any>responseType,
         withCredentials: this.configuration.withCredentials,
         headers: headers,

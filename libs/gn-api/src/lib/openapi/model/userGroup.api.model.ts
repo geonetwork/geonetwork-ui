@@ -14,9 +14,9 @@ import { UserGroupIdApiModel } from './userGroupId.api.model'
 import { GroupApiModel } from './group.api.model'
 
 export interface UserGroupApiModel {
+  group?: GroupApiModel
   profile?: UserGroupApiModel.ProfileEnum
   id?: UserGroupIdApiModel
-  group?: GroupApiModel
   user?: UserApiModel
 }
 export namespace UserGroupApiModel {
