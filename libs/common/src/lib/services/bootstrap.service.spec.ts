@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing'
 
-import { CommonService } from './common.service'
+import { BootstrapService } from './bootstrap.service'
 import { of } from 'rxjs'
 import { SITE_FIXTURES, SiteApiService } from '@lib/gn-api'
 
@@ -9,7 +9,7 @@ const siteInfoMock = {
 }
 
 describe('CommonService', () => {
-  let service: CommonService
+  let service: BootstrapService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -20,7 +20,7 @@ describe('CommonService', () => {
         },
       ],
     })
-    service = TestBed.inject(CommonService)
+    service = TestBed.inject(BootstrapService)
   })
 
   it('should be created', () => {

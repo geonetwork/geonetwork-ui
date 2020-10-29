@@ -5,7 +5,7 @@ import { map, shareReplay } from 'rxjs/operators'
 @Injectable({
   providedIn: 'root',
 })
-export class CommonService {
+export class BootstrapService {
   constructor(private siteApiService: SiteApiService) {}
 
   siteInfoReady() {
