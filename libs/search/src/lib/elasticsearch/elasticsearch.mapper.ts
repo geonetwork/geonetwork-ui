@@ -1,4 +1,4 @@
-import { RecordSummary } from '@lib/common'
+import { RecordBrief, RecordSummary } from '@lib/common'
 import { SearchResponse } from 'elasticsearch'
 
 export class ElasticsearchMapper {
@@ -16,6 +16,10 @@ export class ElasticsearchMapper {
       abstract: hit._source.resourceAbstractObject?.default || 'no abstract',
       thumbnailUrl: this.getFirstValue(hit._source.overview)?.url || '',
       url: `/geonetwork/srv/eng/catalog.search#/metadata/${hit._source.uuid}`,
+      downloadable: (hit as any).download,
+      viewable: (hit as any).view,
+      logoUrl: `/geonetwork${hit._source.logo}`,
+      updateFrequency: this.getFirstValue(hit._source.codelist_status_text),
     }))
   }
 

@@ -2,9 +2,10 @@
 
 body {
   background-color: var(--color-background);
+  color: var(--color-main);
 }
 a {
-  color: rgba(var(--color-primary));
+  color: var(--color-primary);
 }
 .clamp-1 {
   overflow: hidden;

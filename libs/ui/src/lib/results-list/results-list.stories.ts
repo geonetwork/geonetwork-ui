@@ -1,11 +1,7 @@
 import { withA11y } from '@storybook/addon-a11y'
 import { object, select, withKnobs } from '@storybook/addon-knobs'
 import { moduleMetadata } from '@storybook/angular'
-import {
-  I18nModule,
-  RecordSummary,
-  ResultsListLayout,
-} from '../../../../common/src'
+import { I18nModule, RecordSummary, ResultsListLayout } from '@lib/common'
 import { UiModule } from '../ui.module'
 import { ResultsListComponent } from './results-list.component'
 
@@ -28,6 +24,11 @@ const records: RecordSummary[] = [
     url: '',
     thumbnailUrl:
       'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
+    updateFrequency: 'Final',
+    logoUrl:
+      'https://www.geograndest.fr/geonetwork/images/logos/b1b10881-2a33-472f-b99b-7576a6f84025.png',
+    viewable: true,
+    downloadable: true,
   },
   {
     id: '139',
@@ -38,6 +39,11 @@ const records: RecordSummary[] = [
     url: '',
     thumbnailUrl:
       'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
+    updateFrequency: 'Final',
+    logoUrl:
+      'https://www.geograndest.fr/geonetwork/images/logos/b1b10881-2a33-472f-b99b-7576a6f84025.png',
+    viewable: true,
+    downloadable: true,
   },
   {
     id: '139',
@@ -47,6 +53,11 @@ const records: RecordSummary[] = [
     url: '',
     thumbnailUrl:
       'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
+    updateFrequency: 'Final',
+    logoUrl:
+      'https://www.geograndest.fr/geonetwork/images/logos/b1b10881-2a33-472f-b99b-7576a6f84025.png',
+    viewable: true,
+    downloadable: true,
   },
   {
     id: '139',
@@ -56,6 +67,11 @@ const records: RecordSummary[] = [
     url: '',
     thumbnailUrl:
       'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
+    updateFrequency: 'Final',
+    logoUrl:
+      'https://www.geograndest.fr/geonetwork/images/logos/b1b10881-2a33-472f-b99b-7576a6f84025.png',
+    viewable: true,
+    downloadable: true,
   },
 ]
 
