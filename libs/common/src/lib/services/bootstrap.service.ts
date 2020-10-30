@@ -5,8 +5,8 @@ import {
   UiApiService,
   UiSettingApiModel,
 } from '@lib/gn-api'
-import { Observable } from 'rxjs'
-import { map, shareReplay } from 'rxjs/operators'
+import { Observable, of } from 'rxjs'
+import { catchError, map, pluck, shareReplay } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root',
@@ -35,12 +35,19 @@ export class BootstrapService {
     )
   }
 
-  uiConfReady(uiIdentifier: string): Observable<UiSettingApiModel> {
+  uiConfReady(uiIdentifier: string): Observable<object> {
     if (!this.uiConfigurations[uiIdentifier]) {
       this.uiConfigurations = {
         ...this.uiConfigurations,
         [uiIdentifier]: this.uiService.getUiConfiguration(uiIdentifier).pipe(
-          map((r) => r),
+          pluck('configuration'),
+          map((configString) => JSON.parse(configString)),
+          catchError((error) => {
+            console.warn(
+              `Error during UI configuration loading: ${uiIdentifier}`
+            )
+            return of({})
+          }),
           shareReplay()
         ),
       }

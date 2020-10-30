@@ -10,13 +10,17 @@ import { of } from 'rxjs'
 
 import { BootstrapService } from './bootstrap.service'
 
+let uiResponse = UI_FIXTURES
+const uiSettings = JSON.parse(UI_FIXTURES.configuration)
+const originalWarn = console.warn
+
 const siteApiServiceMock = {
   getSiteOrPortalDescription: jest.fn(() => of(SITE_FIXTURES)),
   getSettingsSet: jest.fn(() => of(SETTINGS_FIXTURES)),
 }
 
 const uiApiServiceMock = {
-  getUiConfiguration: jest.fn((uiIdentifier) => of(UI_FIXTURES)),
+  getUiConfiguration: jest.fn((uiIdentifier) => of(uiResponse)),
 }
 
 describe('BootstrapService', () => {
@@ -63,7 +67,7 @@ describe('BootstrapService', () => {
         )
       })
       it('return expected conf', () => {
-        expect(uiConf).toEqual(UI_FIXTURES)
+        expect(uiConf).toEqual(uiSettings)
         jest.clearAllMocks()
       })
     })
@@ -76,8 +80,28 @@ describe('BootstrapService', () => {
         expect(service['uiService'].getUiConfiguration).toHaveBeenCalledTimes(1)
       })
       it('return expected conf', () => {
-        expect(uiConf).toEqual(UI_FIXTURES)
+        expect(uiConf).toEqual(uiSettings)
         jest.clearAllMocks()
+      })
+    })
+
+    describe('When there is an error in the configuration', () => {
+      let consoleOutput = []
+      beforeEach(() => {
+        const mockedWarn = (output) => consoleOutput.push(output)
+        console.warn = mockedWarn
+        uiResponse = { id: 'main', configuration: '{{]]' }
+      })
+      afterEach(() => (console.warn = originalWarn))
+      it('return empty conf', () => {
+        service.uiConfReady('conf1').subscribe((conf) => (uiConf = conf))
+        expect(uiConf).toEqual({})
+        jest.clearAllMocks()
+      })
+      it('console warn a message', () => {
+        expect(consoleOutput).toEqual([
+          'Error during UI configuration loading: conf1',
+        ])
       })
     })
   })
