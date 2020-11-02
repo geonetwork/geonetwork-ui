@@ -25,4 +25,9 @@ export class CheckboxInputComponent implements OnInit {
   onExcludedChange(value: boolean) {
     this.excludedChange.emit(value)
   }
+
+  toggleExcluded() {
+    this.excluded = !this.excluded
+    this.onExcludedChange(this.excluded)
+  }
 }
