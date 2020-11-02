@@ -1,1 +1,8 @@
-<p>list works!</p>
+<span>{{ title }}</span>
+<ui-checkbox-input
+  *ngFor="let item of getListItems()"
+  [label]="item.value"
+  [count]="item.count"
+  (selectedChange)="onListItemSelectedChange($event, item)"
+  (invertedChange)="onListItemInvertedChange($event, item)"
+></ui-checkbox-input>
