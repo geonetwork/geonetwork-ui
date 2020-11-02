@@ -7,6 +7,7 @@ import {
 } from '@lib/gn-api'
 import { Observable, of } from 'rxjs'
 import { catchError, map, pluck, shareReplay } from 'rxjs/operators'
+import { LogService } from './log.service'
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,7 @@ export class BootstrapService {
 
   constructor(
     private siteApiService: SiteApiService,
+    private logService: LogService,
     private uiService: UiApiService
   ) {
     this.uiConfigurations = {}
@@ -43,7 +45,7 @@ export class BootstrapService {
           pluck('configuration'),
           map((configString) => JSON.parse(configString)),
           catchError((error) => {
-            console.warn(
+            this.logService.warn(
               `Error during UI configuration loading: ${uiIdentifier}`
             )
             return of({})

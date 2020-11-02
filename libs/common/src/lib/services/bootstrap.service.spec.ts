@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing'
+import { LogService } from '@lib/common'
 import {
   SETTINGS_FIXTURES,
   SITE_FIXTURES,
@@ -12,7 +13,6 @@ import { BootstrapService } from './bootstrap.service'
 
 let uiResponse = UI_FIXTURES
 const uiSettings = JSON.parse(UI_FIXTURES.configuration)
-const originalWarn = console.warn
 
 const siteApiServiceMock = {
   getSiteOrPortalDescription: jest.fn(() => of(SITE_FIXTURES)),
@@ -21,6 +21,10 @@ const siteApiServiceMock = {
 
 const uiApiServiceMock = {
   getUiConfiguration: jest.fn((uiIdentifier) => of(uiResponse)),
+}
+
+const logServiceMock = {
+  warn: jest.fn(),
 }
 
 describe('BootstrapService', () => {
@@ -36,6 +40,10 @@ describe('BootstrapService', () => {
         {
           provide: UiApiService,
           useValue: uiApiServiceMock,
+        },
+        {
+          provide: LogService,
+          useValue: logServiceMock,
         },
       ],
     })
@@ -86,22 +94,18 @@ describe('BootstrapService', () => {
     })
 
     describe('When there is an error in the configuration', () => {
-      let consoleOutput = []
       beforeEach(() => {
-        const mockedWarn = (output) => consoleOutput.push(output)
-        console.warn = mockedWarn
         uiResponse = { id: 'main', configuration: '{{]]' }
       })
-      afterEach(() => (console.warn = originalWarn))
       it('return empty conf', () => {
         service.uiConfReady('conf1').subscribe((conf) => (uiConf = conf))
         expect(uiConf).toEqual({})
-        jest.clearAllMocks()
       })
       it('console warn a message', () => {
-        expect(consoleOutput).toEqual([
-          'Error during UI configuration loading: conf1',
-        ])
+        expect(logServiceMock.warn).toHaveBeenCalledWith(
+          'Error during UI configuration loading: conf1'
+        )
+        jest.clearAllMocks()
       })
     })
   })
