@@ -9,10 +9,10 @@ export class CheckboxInputComponent implements OnInit {
   @Input() label: string
   @Input() count: number
   @Input() selected: boolean
-  @Input() excluded: boolean
+  @Input() inverted: boolean
 
   @Output() selectedChange = new EventEmitter<boolean>()
-  @Output() excludedChange = new EventEmitter<boolean>()
+  @Output() invertedChange = new EventEmitter<boolean>()
 
   constructor() {}
 
@@ -22,12 +22,12 @@ export class CheckboxInputComponent implements OnInit {
     this.selectedChange.emit(value)
   }
 
-  onExcludedChange(value: boolean) {
-    this.excludedChange.emit(value)
+  onInvertedChange(value: boolean) {
+    this.invertedChange.emit(value)
   }
 
-  toggleExcluded() {
-    this.excluded = !this.excluded
-    this.onExcludedChange(this.excluded)
+  toggleInverted() {
+    this.inverted = !this.inverted
+    this.onInvertedChange(this.inverted)
   }
 }

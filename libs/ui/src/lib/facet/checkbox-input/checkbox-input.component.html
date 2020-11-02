@@ -8,10 +8,10 @@
     {{ label }} <span>({{ count }})</span>
   </label>
   <div
-    *ngIf="!excluded"
+    *ngIf="!inverted"
     class="flex-shrink-0"
     style="min-width: 20px;"
-    (click)="toggleExcluded()"
+    (click)="toggleInverted()"
   >
     <!-- minus svg -->
     <svg
@@ -27,10 +27,10 @@
     </svg>
   </div>
   <div
-    *ngIf="excluded"
+    *ngIf="inverted"
     class="flex-shrink-0"
     style="min-width: 20px;"
-    (click)="toggleExcluded()"
+    (click)="toggleInverted()"
   >
     <!-- check svg -->
     <svg
