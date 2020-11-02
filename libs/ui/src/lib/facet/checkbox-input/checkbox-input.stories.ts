@@ -20,9 +20,9 @@ export const CheckboxInputStory = () => ({
     label: text('label', 'my label'),
     count: number('count', 0),
     selected: boolean('selected', false),
-    excluded: boolean('excluded', false),
+    inverted: boolean('inverted', false),
     selectedChange: action('output'),
-    excludedChange: action('output'),
+    invertedChange: action('output'),
   },
 })
 CheckboxInputStory.storyName = 'Checkbox input'
