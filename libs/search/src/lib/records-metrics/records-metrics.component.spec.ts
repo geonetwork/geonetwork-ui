@@ -7,7 +7,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing'
-import { aggsOnly as aggsOnlyFixture } from '@lib/gn-api'
+import { aggsOnly as aggsOnlyFixture } from '@lib/search'
 
 describe('RecordsMetricsComponent', () => {
   let component: RecordsMetricsComponent
