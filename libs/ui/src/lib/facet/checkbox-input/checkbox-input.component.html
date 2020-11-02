@@ -1,1 +1,10 @@
-<p>checkbox-input works!</p>
+<div class="flex flex-row items-center relative">
+  <label class="flex-grow flex-shrink truncate">
+    <input
+      type="checkbox"
+      [ngModel]="selected"
+      (ngModelChange)="onSelectedChange($event)"
+    />
+    {{ label }} <span>({{ count }})</span>
+  </label>
+</div>
