@@ -596,6 +596,12 @@
             "browserTarget": "datafeeder:build"
           }
         },
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "detectOpenHandles": true
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
