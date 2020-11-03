@@ -53,3 +53,4 @@ See [the specific README file](webcomponents).
 
 - How to specify the GN url to use (currently hardcoded in the dev proxy: https://apps.titellus.net/geonetwork)
 - How to build and run web components
+- Explain unit test setup & architecture with jest
