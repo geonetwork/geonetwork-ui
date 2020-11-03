@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
+import { NgxDropzoneModule } from 'ngx-dropzone'
 import { DropdownSelectorComponent } from './dropdown-selector/dropdown-selector.component'
 import { BrowserModule } from '@angular/platform-browser'
 import { AutocompleteComponent } from './autocomplete/autocomplete.component'
@@ -12,6 +13,7 @@ import { RecordPreviewCardComponent } from './record-preview-card/record-preview
 import { RecordPreviewTextComponent } from './record-preview-text/record-preview-text.component'
 import { RecordMetricComponent } from './record-metric/record-metric.component'
 import { CatalogTitleComponent } from './catalog-title/catalog-title.component'
+import { DragAndDropFileInputComponent } from './drag-and-drop-file-input/drag-and-drop-file-input.component'
 
 @NgModule({
   declarations: [
@@ -26,8 +28,9 @@ import { CatalogTitleComponent } from './catalog-title/catalog-title.component'
     RecordMetricComponent,
     ResultsListComponent,
     CatalogTitleComponent,
+    DragAndDropFileInputComponent,
   ],
-  imports: [BrowserModule, TranslateModule.forChild()],
+  imports: [BrowserModule, TranslateModule.forChild(), NgxDropzoneModule],
   exports: [
     DropdownSelectorComponent,
     AutocompleteComponent,
