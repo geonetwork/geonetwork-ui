@@ -8,7 +8,7 @@ describe('EditorService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({})
     service = TestBed.inject(EditorService)
-  });
+  })
 
   it('should be created', () => {
     expect(service).toBeTruthy()

@@ -7,14 +7,10 @@ import { Component, OnInit } from '@angular/core'
       editor works!
     </p>
   `,
-  styles: [
-  ]
+  styles: [],
 })
 export class EditorComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
