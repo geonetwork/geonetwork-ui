@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { EditorComponent } from './editor.component';
+import { NgModule } from '@angular/core'
+import { EditorComponent } from './editor.component'
 
 
 
