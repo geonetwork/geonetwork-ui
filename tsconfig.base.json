@@ -36,6 +36,9 @@
       ],
       "@lib/auth": [
         "libs/auth/src/index.ts"
+      ],
+      "@lib/editor": [
+        "libs/auth/src/index.ts"
       ]
     }
   },
