@@ -3,7 +3,7 @@ import { withA11y } from '@storybook/addon-a11y'
 import { action } from '@storybook/addon-actions'
 import { boolean, number, text, withKnobs } from '@storybook/addon-knobs'
 import { Meta, moduleMetadata } from '@storybook/angular'
-import { CheckboxInputComponent } from './checkbox-input.component'
+import { FacetItemComponent } from './facet-item.component'
 
 const moduleMetadatas = {
   imports: [I18nModule],
@@ -14,8 +14,8 @@ export default {
   decorators: [moduleMetadata(moduleMetadatas), withKnobs, withA11y],
 } as Meta
 
-export const CheckboxInputStory = () => ({
-  component: CheckboxInputComponent,
+export const FacetItemStory = () => ({
+  component: FacetItemComponent,
   props: {
     label: text('label', 'my label'),
     count: number('count', 0),
@@ -25,4 +25,4 @@ export const CheckboxInputStory = () => ({
     invertedChange: action('output'),
   },
 })
-CheckboxInputStory.storyName = 'Checkbox input'
+FacetItemStory.storyName = 'Facet item'

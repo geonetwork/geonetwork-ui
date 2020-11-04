@@ -1,21 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormsModule } from '@angular/forms'
 
-import { CheckboxInputComponent } from './checkbox-input.component'
+import { FacetItemComponent } from './facet-item.component'
 
-describe('CheckboxInputComponent', () => {
-  let component: CheckboxInputComponent
-  let fixture: ComponentFixture<CheckboxInputComponent>
+describe('FacetItemComponent', () => {
+  let component: FacetItemComponent
+  let fixture: ComponentFixture<FacetItemComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CheckboxInputComponent],
+      declarations: [FacetItemComponent],
       imports: [FormsModule],
     }).compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CheckboxInputComponent)
+    fixture = TestBed.createComponent(FacetItemComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

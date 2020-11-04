@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 
 @Component({
   selector: 'ui-checkbox-input',
-  templateUrl: './checkbox-input.component.html',
-  styleUrls: ['./checkbox-input.component.css'],
+  templateUrl: './facet-item.component.html',
+  styleUrls: ['./facet-item.component.css'],
 })
-export class CheckboxInputComponent implements OnInit {
+export class FacetItemComponent implements OnInit {
   @Input() label: string
   @Input() count: number
   @Input() selected: boolean

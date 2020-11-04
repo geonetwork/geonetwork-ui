@@ -3,11 +3,11 @@ import { withA11y } from '@storybook/addon-a11y'
 import { action } from '@storybook/addon-actions'
 import { boolean, object, text, withKnobs } from '@storybook/addon-knobs'
 import { Meta, moduleMetadata } from '@storybook/angular'
-import { CheckboxInputComponent } from '../checkbox-input/checkbox-input.component'
+import { FacetItemComponent } from '../facet-item/facet-item.component'
 import { ListComponent } from './list.component'
 
 const moduleMetadatas = {
-  declarations: [CheckboxInputComponent],
+  declarations: [FacetItemComponent],
   imports: [I18nModule],
 }
 
