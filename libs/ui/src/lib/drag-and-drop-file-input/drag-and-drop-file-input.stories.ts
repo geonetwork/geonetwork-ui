@@ -19,11 +19,6 @@ export const DragAndDropFileInputStory = () => ({
   component: DragAndDropFileInputComponent,
   props: {
     placeholder: text('placeholder', 'Drag and drop file'),
-    cssClassesForLabel: text('css classes for label', 'text-black'),
-    cssClassesForInput: text(
-      'css classes for input',
-      'border-solid border border-red-600'
-    ),
     fileChange: action('output'),
   },
 })
