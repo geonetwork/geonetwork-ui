@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import { BootstrapService } from '@lib/common'
 import { SettingsListResponseApiModel } from '@lib/gn-api'
-import { CommonService } from '@lib/common'
 import { Observable } from 'rxjs'
 
 @Component({
@@ -12,7 +12,7 @@ import { Observable } from 'rxjs'
 export class SiteTitleComponent implements OnInit {
   info$: Observable<SettingsListResponseApiModel>
 
-  constructor(private commonService: CommonService) {
+  constructor(private commonService: BootstrapService) {
     this.info$ = commonService.siteInfoReady()
   }
 

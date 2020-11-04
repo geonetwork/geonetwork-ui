@@ -29,6 +29,7 @@ To run the tests in Intellij, install the Jest plugin and run the test as usual.
 
 You may need to edit your configuration and set up the *Working Directory* to root of the project (e.g `~/dev/geonetwork-ui/`)
 
+You can set up the correct *Working Directory* once for all by putting the correct value in Jest Template (Edit configuration/Templates/Jest/Working Directory)
 
 ## Contributing code
 
