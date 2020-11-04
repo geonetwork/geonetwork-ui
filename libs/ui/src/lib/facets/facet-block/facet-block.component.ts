@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { ModelBlock } from '../facets.model'
 
 @Component({
   selector: 'ui-facet-block',
@@ -9,7 +10,7 @@ export class FacetBlockComponent implements OnInit {
   @Input() title: string
   @Input() canFilter: boolean
   @Input() filter: string
-  @Input() model: any
+  @Input() model: ModelBlock
 
   @Output() filterChange = new EventEmitter<string>()
 
