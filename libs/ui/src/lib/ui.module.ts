@@ -8,7 +8,7 @@ import { CatalogTitleComponent } from './catalog-title/catalog-title.component'
 import { ColorScaleComponent } from './color-scale/color-scale.component'
 import { DragAndDropFileInputComponent } from './drag-and-drop-file-input/drag-and-drop-file-input.component'
 import { DropdownSelectorComponent } from './dropdown-selector/dropdown-selector.component'
-import { FacetModule } from './facet/facet.module'
+import { FacetsModule } from './facets/facets.module'
 import { ProgressBarComponent } from './progress-bar/progress-bar.component'
 import { RecordMetricComponent } from './record-metric/record-metric.component'
 import { RecordPreviewCardComponent } from './record-preview-card/record-preview-card.component'
@@ -37,7 +37,7 @@ import { TextInputComponent } from './text-input/text-input.component'
     BrowserModule,
     TranslateModule.forChild(),
     NgxDropzoneModule,
-    FacetModule,
+    FacetsModule,
   ],
   exports: [
     DropdownSelectorComponent,
@@ -52,7 +52,7 @@ import { TextInputComponent } from './text-input/text-input.component'
     CatalogTitleComponent,
     DragAndDropFileInputComponent,
     ProgressBarComponent,
-    FacetModule,
+    FacetsModule,
   ],
 })
 export class UiModule {}

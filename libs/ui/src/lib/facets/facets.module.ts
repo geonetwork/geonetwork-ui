@@ -8,4 +8,4 @@ import { ListComponent } from './list/list.component'
   declarations: [CheckboxInputComponent, ListComponent],
   imports: [CommonModule, FormsModule],
 })
-export class FacetModule {}
+export class FacetsModule {}
