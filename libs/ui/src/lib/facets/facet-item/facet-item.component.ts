@@ -31,3 +31,14 @@ export class FacetItemComponent implements OnInit {
     this.onInvertedChange(this.inverted)
   }
 }
+
+@Component({ selector: 'ui-facet-item', template: '' })
+export class FacetItemStubComponent implements Partial<FacetItemComponent> {
+  @Input() label: string
+  @Input() count: number
+  @Input() selected: boolean
+  @Input() inverted: boolean
+
+  @Output() selectedChange = new EventEmitter<boolean>()
+  @Output() invertedChange = new EventEmitter<boolean>()
+}

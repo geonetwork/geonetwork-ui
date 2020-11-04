@@ -1,7 +1,7 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormsModule } from '@angular/forms'
 
+import { FacetItemStubComponent } from '../facet-item/facet-item.component'
 import { FacetBlockComponent } from './facet-block.component'
 
 describe('FacetBlockComponent', () => {
@@ -43,9 +43,8 @@ describe('FacetBlockComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FacetBlockComponent],
+      declarations: [FacetBlockComponent, FacetItemStubComponent],
       imports: [FormsModule],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents()
   }))
 
