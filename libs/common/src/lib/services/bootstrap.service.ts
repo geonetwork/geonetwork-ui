@@ -24,17 +24,11 @@ export class BootstrapService {
   }
 
   siteInfoReady(): Observable<SettingsListResponseApiModel> {
-    return this.siteApiService.getSiteOrPortalDescription().pipe(
-      map((r) => r),
-      shareReplay()
-    )
+    return this.siteApiService.getSiteOrPortalDescription().pipe(shareReplay())
   }
 
   settingsReady(): Observable<SettingsListResponseApiModel> {
-    return this.siteApiService.getSettingsSet().pipe(
-      map((r) => r),
-      shareReplay()
-    )
+    return this.siteApiService.getSettingsSet().pipe(shareReplay())
   }
 
   uiConfReady(uiIdentifier: string): Observable<object> {
