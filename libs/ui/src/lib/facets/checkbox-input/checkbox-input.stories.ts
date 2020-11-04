@@ -10,7 +10,7 @@ const moduleMetadatas = {
 }
 
 export default {
-  title: 'UI/Facet',
+  title: 'UI/Facets',
   decorators: [moduleMetadata(moduleMetadatas), withKnobs, withA11y],
 } as Meta
 
