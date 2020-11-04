@@ -1,4 +1,10 @@
 <span>{{ title }}</span>
+<input
+  type="text"
+  *ngIf="canFilter"
+  [ngModel]="filter"
+  (ngModelChange)="onFilterChange($event)"
+/>
 <ui-checkbox-input
   *ngFor="let item of getListItems()"
   [label]="item.value"
@@ -6,3 +12,4 @@
   (selectedChange)="onListItemSelectedChange($event, item)"
   (invertedChange)="onListItemInvertedChange($event, item)"
 ></ui-checkbox-input>
+<a href *ngIf="canShowMore()" (click)="onMoreClick()">more</a>
