@@ -21,8 +21,8 @@ export const FacetItemStory = () => ({
     count: number('count', 0),
     selected: boolean('selected', false),
     inverted: boolean('inverted', false),
-    selectedChange: action('output'),
-    invertedChange: action('output'),
+    selectedChange: action('selectedChange'),
+    invertedChange: action('invertedChange'),
   },
 })
 FacetItemStory.storyName = 'Facet item'
