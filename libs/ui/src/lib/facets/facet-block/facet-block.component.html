@@ -5,11 +5,11 @@
   [ngModel]="filter"
   (ngModelChange)="onFilterChange($event)"
 />
-<ui-checkbox-input
+<ui-facet-item
   *ngFor="let item of getListItems()"
   [label]="item.value"
   [count]="item.count"
   (selectedChange)="onListItemSelectedChange($event, item)"
   (invertedChange)="onListItemInvertedChange($event, item)"
-></ui-checkbox-input>
+></ui-facet-item>
 <a href *ngIf="canShowMore()" (click)="onMoreClick()">more</a>

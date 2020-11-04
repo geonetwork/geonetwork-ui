@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions'
 import { boolean, object, text, withKnobs } from '@storybook/addon-knobs'
 import { Meta, moduleMetadata } from '@storybook/angular'
 import { FacetItemComponent } from '../facet-item/facet-item.component'
-import { ListComponent } from './list.component'
+import { FacetBlockComponent } from './facet-block.component'
 
 const moduleMetadatas = {
   declarations: [FacetItemComponent],
@@ -16,8 +16,8 @@ export default {
   decorators: [moduleMetadata(moduleMetadatas), withKnobs, withA11y],
 } as Meta
 
-export const ListStory = () => ({
-  component: ListComponent,
+export const FacetBlockStory = () => ({
+  component: FacetBlockComponent,
   props: {
     title: text('title', 'my title'),
     canFilter: boolean('canFilter', true),
@@ -57,4 +57,4 @@ export const ListStory = () => ({
     filterChange: action('output'),
   },
 })
-ListStory.storyName = 'List'
+FacetBlockStory.storyName = 'Facet block'

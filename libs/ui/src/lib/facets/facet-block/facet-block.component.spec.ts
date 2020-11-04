@@ -2,11 +2,11 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormsModule } from '@angular/forms'
 
-import { ListComponent } from './list.component'
+import { FacetBlockComponent } from './facet-block.component'
 
-describe('ListComponent', () => {
-  let component: ListComponent
-  let fixture: ComponentFixture<ListComponent>
+describe('FacetBlockComponent', () => {
+  let component: FacetBlockComponent
+  let fixture: ComponentFixture<FacetBlockComponent>
 
   const modelMock = {
     key: 'tag',
@@ -43,14 +43,14 @@ describe('ListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ListComponent],
+      declarations: [FacetBlockComponent],
       imports: [FormsModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListComponent)
+    fixture = TestBed.createComponent(FacetBlockComponent)
     component = fixture.componentInstance
     component.model = modelMock
     fixture.detectChanges()
