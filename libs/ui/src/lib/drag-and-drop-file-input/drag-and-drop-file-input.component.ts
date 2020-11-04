@@ -9,6 +9,8 @@ import { distinctUntilChanged } from 'rxjs/operators'
 })
 export class DragAndDropFileInputComponent implements OnInit {
   @Input() placeholder = 'Nom de mon fichier'
+  @Input() cssClassesForLabel = 'text-black'
+  @Input() cssClassesForInput = ''
   @Output() fileChange = new EventEmitter<any>()
   selectedFile: File = null
 

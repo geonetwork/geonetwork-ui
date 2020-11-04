@@ -1,11 +1,7 @@
 ngx-dropzone {
   height: auto;
-  align-items: flex-start;
-  color: black;
+  align-items: unset;
+  color: unset;
   border: none;
   border-radius: 0;
-}
-
-ngx-dropzone-label {
-  margin: 10px 0 !important;
 }
