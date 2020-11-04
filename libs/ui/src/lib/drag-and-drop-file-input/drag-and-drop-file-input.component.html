@@ -1,7 +1,5 @@
 <ngx-dropzone multiple="false" (change)="selectFile($event)">
-
-  <ngx-dropzone-label *ngIf="!fileName">{{placeholder}}</ngx-dropzone-label>
+  <ngx-dropzone-label *ngIf="!fileName">{{ placeholder }}</ngx-dropzone-label>
 
   <ngx-dropzone-label *ngIf="fileName">{{ fileName }} </ngx-dropzone-label>
-
 </ngx-dropzone>
