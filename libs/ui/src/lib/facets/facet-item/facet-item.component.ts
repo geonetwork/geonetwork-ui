@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 
 @Component({
-  selector: 'ui-checkbox-input',
+  selector: 'ui-facet-item',
   templateUrl: './facet-item.component.html',
   styleUrls: ['./facet-item.component.css'],
 })
