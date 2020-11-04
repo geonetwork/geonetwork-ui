@@ -508,6 +508,113 @@
           }
         }
       }
+    },
+    "lib-editor": {
+      "projectType": "library",
+      "root": "libs/editor",
+      "sourceRoot": "libs/editor/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "detectOpenHandles": true
+          }
+        }
+      }
+    },
+    "datafeeder": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "apps/datafeeder",
+      "sourceRoot": "apps/datafeeder/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/datafeeder",
+            "index": "apps/datafeeder/src/index.html",
+            "main": "apps/datafeeder/src/main.ts",
+            "polyfills": "apps/datafeeder/src/polyfills.ts",
+            "tsConfig": "apps/datafeeder/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/datafeeder/src/favicon.ico",
+              "apps/datafeeder/src/assets"
+            ],
+            "styles": [
+              "apps/datafeeder/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/datafeeder/src/environments/environment.ts",
+                  "with": "apps/datafeeder/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "datafeeder:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "datafeeder:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "datafeeder:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "detectOpenHandles": true
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/datafeeder/tsconfig.app.json",
+              "apps/datafeeder/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "app-search"
