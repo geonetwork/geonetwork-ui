@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { BehaviorSubject, Observable } from 'rxjs'
-import { distinctUntilChanged } from 'rxjs/operators'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+export const placeholder = 'dropFile'
+marker('dropFile')
 
 @Component({
   selector: 'ui-drag-and-drop-file-input',
@@ -8,7 +10,7 @@ import { distinctUntilChanged } from 'rxjs/operators'
   styleUrls: ['./drag-and-drop-file-input.component.css'],
 })
 export class DragAndDropFileInputComponent implements OnInit {
-  @Input() placeholder = 'Nom de mon fichier'
+  @Input() placeholder = placeholder
   @Output() fileChange = new EventEmitter<any>()
   selectedFile: File = null
 

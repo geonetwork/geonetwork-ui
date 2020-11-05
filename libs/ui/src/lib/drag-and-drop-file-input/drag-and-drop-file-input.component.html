@@ -1,9 +1,9 @@
-<div class="border-solid border border-black">
+<div>
   <ngx-dropzone multiple="false" (change)="selectFile($event)">
-    <div *ngIf="!fileName" class="text-black pl-4 py-4">
-      {{ placeholder | translate }}
+    <div *ngIf="!fileName" class="text-gray-900 pl-2 py-2" translate="">
+      {{ placeholder }}
     </div>
 
-    <div *ngIf="fileName" class="text-black pl-4 py-4">{{ fileName }}</div>
+    <div *ngIf="fileName" class="text-gray-900 pl-2 py-2">{{ fileName }}</div>
   </ngx-dropzone>
 </div>
