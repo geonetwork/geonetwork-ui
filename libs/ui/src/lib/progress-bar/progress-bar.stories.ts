@@ -1,23 +1,22 @@
-import { I18nModule } from '@lib/common'
 import { withA11y } from '@storybook/addon-a11y'
-import { action } from '@storybook/addon-actions'
-import { number, object, text, withKnobs } from '@storybook/addon-knobs'
-import { Meta, moduleMetadata, Story } from '@storybook/angular'
+import { number, select, withKnobs } from '@storybook/addon-knobs'
+import { Meta } from '@storybook/angular'
 import { ProgressBarComponent } from './progress-bar.component'
-
-const moduleMetadatas = {
-  imports: [I18nModule],
-}
 
 export default {
   title: 'UI',
-  decorators: [moduleMetadata(moduleMetadatas), withKnobs, withA11y],
+  decorators: [withKnobs, withA11y],
 } as Meta
 
 export const ProgressBarStory = () => ({
   component: ProgressBarComponent,
   props: {
-    value: number('Value', 0),
+    value: number('Value', 30),
+    type: select(
+      'Color scheme',
+      ['primary', 'secondary', 'default'],
+      'default'
+    ),
   },
 })
 ProgressBarStory.storyName = 'Progress bar'

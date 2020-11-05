@@ -1,10 +1,12 @@
-<div class="flex bg-white rounded-t-lg rounded-b-lg">
-  <div class="flex w-full bg-blue-600 rounded-t-lg rounded-b-lg my-2 mx-2">
-    <div
-      [style.width.%]="validValue"
-      class="bg-blue-400 my-1 mx-1 transition-width duration-500 ease-in-out rounded-t-lg rounded-b-lg"
-    >
-      <span class="pl-1 py-1 font-bold text-4">{{ validValue }}%</span>
+<div class="flex h-full {{ color.outerBar }} rounded-t-lg rounded-b-lg">
+  <div
+    [style.width.%]="progress"
+    class="flex {{
+      color.innerBar
+    }} my-2 mx-2 transition-width duration-500 ease-in-out rounded-t-md rounded-b-md shadow-xl"
+  >
+    <div class="flex items-center pl-2 py-1 text-gray-900 font-bold text-4">
+      {{ progress }}%
     </div>
   </div>
 </div>

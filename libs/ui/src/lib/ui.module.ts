@@ -44,6 +44,7 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component'
     RecordMetricComponent,
     ResultsListComponent,
     CatalogTitleComponent,
+    ProgressBarComponent,
   ],
 })
 export class UiModule {}
