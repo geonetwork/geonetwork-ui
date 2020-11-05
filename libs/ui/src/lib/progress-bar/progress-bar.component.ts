@@ -22,18 +22,18 @@ export class ProgressBarComponent implements OnInit {
     switch (this.type) {
       case 'default':
         return {
-          outerBar: 'bg-blue-500',
-          innerBar: 'bg-blue-300',
+          outerBar: 'bg-gray-200',
+          innerBar: 'bg-gray-100',
         }
       case 'primary':
         return {
-          outerBar: 'bg-green-500',
-          innerBar: 'bg-green-300',
+          outerBar: 'bg-primary',
+          innerBar: 'bg-primary-lighter',
         }
       case 'secondary':
         return {
-          outerBar: 'bg-red-500',
-          innerBar: 'bg-red-300',
+          outerBar: 'bg-secondary',
+          innerBar: 'bg-secondary-lighter',
         }
     }
   }
