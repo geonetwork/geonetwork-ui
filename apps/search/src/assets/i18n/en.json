@@ -1,15 +1,13 @@
 {
-	"My Geonetwork Catalog": "My Geonetwork Catalog",
 	"Find your metadata": "Find your metadata",
 	"Sort by": "Sort by",
 	"records": "records",
 	"readMore": "Read more",
 	"openRecord": "Open record",
-	"lastUpdated": "Last updated",
 	"recordViewable": "viewable",
 	"recordDownloadable": "downloadable",
 	"loadResults": "Load results",
 	"last changed": "last changed",
 	"popularity": "popularity",
-	"Back": "Back"
+	"dropFile": "drop file"
 }
