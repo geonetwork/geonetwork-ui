@@ -53,3 +53,13 @@ export class FacetBlockComponent implements OnInit {
     return this.model.more
   }
 }
+
+@Component({ selector: 'ui-facet-block', template: '' })
+export class FacetBlockStubComponent implements Partial<FacetBlockComponent> {
+  @Input() title: string
+  @Input() canFilter: boolean
+  @Input() filter: string
+  @Input() model: ModelBlock
+
+  @Output() filterChange = new EventEmitter<string>()
+}
