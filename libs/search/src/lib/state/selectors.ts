@@ -24,3 +24,8 @@ export const getSearchResultsLoading = createSelector(
   getSearchState,
   (state: SearchState) => state.loadingMore
 )
+
+export const getSearchAggregations = createSelector(
+  getSearchState,
+  (state: SearchState) => state.aggregations
+)

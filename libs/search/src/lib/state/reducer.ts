@@ -7,12 +7,14 @@ export interface SearchState {
   params: SearchParams
   sortBy?: string
   results: RecordSummary[]
+  aggregations: any
   loadingMore: boolean
 }
 
 export const initialState: SearchState = {
   params: {},
   results: [],
+  aggregations: {},
   loadingMore: false,
 }
 
@@ -52,6 +54,12 @@ export function reducer(
       return {
         ...state,
         loadingMore: true,
+      }
+    }
+    case fromActions.SET_AGGREGATIONS: {
+      return {
+        ...state,
+        aggregations: action.payload,
       }
     }
   }

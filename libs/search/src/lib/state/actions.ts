@@ -6,6 +6,7 @@ export const SORT_BY = '[Search] Sort By'
 export const ADD_RESULTS = '[Search] Add Results'
 export const CLEAR_RESULTS = '[Search] Clear Results'
 export const REQUEST_MORE_RESULTS = '[Search] Request More Results'
+export const SET_AGGREGATIONS = '[Search] Set Aggregations'
 
 export class UpdateParams implements Action {
   readonly type = UPDATE_PARAMS
@@ -37,9 +38,16 @@ export class RequestMoreResults implements Action {
   constructor() {}
 }
 
+export class SetAggregations implements Action {
+  readonly type = SET_AGGREGATIONS
+
+  constructor(public payload: any) {}
+}
+
 export type SearchActions =
   | UpdateParams
   | SortBy
   | AddResults
   | ClearResults
   | RequestMoreResults
+  | SetAggregations
