@@ -18,10 +18,7 @@ export class ElasticsearchService {
 
   buildPayload(state: SearchState): SearchParams {
     const payload = {
-      // TODO: read from state
-      aggregations: {
-        tag: { terms: { field: 'tag', include: '.*', size: 10 } },
-      },
+      aggregations: state.requestParams.aggregations,
       from: 0,
       size: RESULTS_PAGE_SIZE,
       sort: state.requestParams.sortBy
