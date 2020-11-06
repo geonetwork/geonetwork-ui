@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
+import { ModelBlock } from '../facets.model'
 
 @Component({
   selector: 'ui-facet-list',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./facet-list.component.css'],
 })
 export class FacetListComponent implements OnInit {
+  @Input() models: ModelBlock[]
+
   constructor() {}
 
   ngOnInit(): void {}
