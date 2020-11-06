@@ -9,5 +9,6 @@ import { FacetListComponent } from './facet-list/facet-list.component'
 @NgModule({
   declarations: [FacetItemComponent, FacetBlockComponent, FacetListComponent],
   imports: [CommonModule, FormsModule, TranslateModule.forChild()],
+  exports: [FacetListComponent],
 })
 export class FacetsModule {}
