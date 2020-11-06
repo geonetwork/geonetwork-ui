@@ -19,5 +19,4 @@ export interface RegionResponseApiModel {
   hasGeom?: boolean
   categoryId?: string
   id?: string
-  id?: string
 }
