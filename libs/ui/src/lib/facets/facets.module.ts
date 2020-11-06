@@ -4,9 +4,10 @@ import { FormsModule } from '@angular/forms'
 import { TranslateModule } from '@ngx-translate/core'
 import { FacetBlockComponent } from './facet-block/facet-block.component'
 import { FacetItemComponent } from './facet-item/facet-item.component'
+import { FacetListComponent } from './facet-list/facet-list.component'
 
 @NgModule({
-  declarations: [FacetItemComponent, FacetBlockComponent],
+  declarations: [FacetItemComponent, FacetBlockComponent, FacetListComponent],
   imports: [CommonModule, FormsModule, TranslateModule.forChild()],
 })
 export class FacetsModule {}
