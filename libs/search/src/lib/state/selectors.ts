@@ -5,19 +5,24 @@ export const getSearchState = createFeatureSelector<SearchState>(
   SEARCH_FEATURE_KEY
 )
 
-export const getSearchParams = createSelector(
+export const getSearchFilters = createSelector(
   getSearchState,
-  (state: SearchState) => state.params
+  (state: SearchState) => state.requestParams.filters
 )
 
 export const getSearchSortBy = createSelector(
   getSearchState,
-  (state: SearchState) => state.sortBy
+  (state: SearchState) => state.requestParams.sortBy
+)
+
+export const getSearchRequestAggregations = createSelector(
+  getSearchState,
+  (state: SearchState) => state.requestParams.aggregations
 )
 
 export const getSearchResults = createSelector(
   getSearchState,
-  (state: SearchState) => state.results
+  (state: SearchState) => state.responseProperties.results
 )
 
 export const getSearchResultsLoading = createSelector(
@@ -25,7 +30,7 @@ export const getSearchResultsLoading = createSelector(
   (state: SearchState) => state.loadingMore
 )
 
-export const getSearchAggregations = createSelector(
+export const getSearchResultsAggregations = createSelector(
   getSearchState,
-  (state: SearchState) => state.aggregations
+  (state: SearchState) => state.responseProperties.aggregations
 )

@@ -9,9 +9,9 @@ import { TextInputComponent } from '@lib/ui'
 import { select, Store } from '@ngrx/store'
 import { Subscription } from 'rxjs'
 import { debounceTime, map } from 'rxjs/operators'
-import { UpdateParams } from '../state/actions'
+import { UpdateFilters } from '../state/actions'
 import { SearchState } from '../state/reducer'
-import { getSearchParams } from '../state/selectors'
+import { getSearchFilters } from '../state/selectors'
 
 @Component({
   selector: 'search-fuzzy-search',
@@ -23,8 +23,8 @@ export class FuzzySearchComponent implements OnDestroy, AfterViewInit {
   @ViewChild('searchText') searchText: TextInputComponent
 
   currentTextSearch$ = this.store.pipe(
-    select(getSearchParams),
-    map((params) => params.any || '')
+    select(getSearchFilters),
+    map((filters) => filters.any || '')
   )
   subs = new Subscription()
 
@@ -33,7 +33,7 @@ export class FuzzySearchComponent implements OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
     this.subs.add(
       this.searchText.valueChange.pipe(debounceTime(400)).subscribe((value) => {
-        this.store.dispatch(new UpdateParams({ any: value }))
+        this.store.dispatch(new UpdateFilters({ any: value }))
       })
     )
   }

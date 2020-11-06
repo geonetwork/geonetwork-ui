@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import { map } from 'rxjs/operators'
 import { SearchState } from '../../state/reducer'
-import { getSearchAggregations } from '../../state/selectors'
+import { getSearchResultsAggregations } from '../../state/selectors'
 import { FacetsService } from '../facets.service'
 
 @Component({
@@ -19,7 +19,7 @@ export class FacetsContainerComponent implements OnInit {
   }
 
   models$ = this.store.pipe(
-    select(getSearchAggregations),
+    select(getSearchResultsAggregations),
     map((responseAggregations: any) => {
       return this.facets.createFacetModel(
         this.requestAggregations,

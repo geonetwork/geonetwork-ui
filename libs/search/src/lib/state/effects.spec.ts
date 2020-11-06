@@ -10,14 +10,15 @@ import {
   AddResults,
   ClearResults,
   RequestMoreResults,
+  SetResponseAggregations,
   SortBy,
-  UpdateParams,
+  UpdateFilters,
 } from './actions'
 import { SearchEffects } from './effects'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
 
 const searchServiceMock = {
-  search: () => of({ hits: { hits: [] } }), // TODO: use a fixture here
+  search: () => of({ hits: { hits: [] }, aggregations: {} }), // TODO: use a fixture here
 }
 const authServiceMock = {
   authReady: () => of(true),
@@ -67,7 +68,7 @@ describe('Effects', () => {
       expect(effects.clearResults$).toBeObservable(expected)
     })
     it('clear results list on updateParams action', () => {
-      actions$ = hot('-a---', { a: new UpdateParams({ any: 'abcd' }) })
+      actions$ = hot('-a---', { a: new UpdateFilters({ any: 'abcd' }) })
       const expected = hot('-(bc)', {
         b: new ClearResults(),
         c: new RequestMoreResults(),
@@ -80,7 +81,10 @@ describe('Effects', () => {
   describe('loadResults$', () => {
     it('load new results on requestMoreResults action', () => {
       actions$ = hot('-a-', { a: new RequestMoreResults() })
-      const expected = hot('-b-', { b: new AddResults([]) })
+      const expected = hot('-(bc)-', {
+        b: new AddResults([]),
+        c: new SetResponseAggregations({}),
+      })
 
       expect(effects.loadResults$).toBeObservable(expected)
     })

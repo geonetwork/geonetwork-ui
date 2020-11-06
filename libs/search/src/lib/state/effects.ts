@@ -14,9 +14,9 @@ import {
   ClearResults,
   RequestMoreResults,
   REQUEST_MORE_RESULTS,
-  SetAggregations,
+  SetResponseAggregations,
   SORT_BY,
-  UPDATE_PARAMS,
+  UPDATE_FILTERS,
 } from './actions'
 import { SearchState } from './reducer'
 import { getSearchState } from './selectors'
@@ -33,7 +33,7 @@ export class SearchEffects {
 
   clearResults$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SORT_BY, UPDATE_PARAMS),
+      ofType(SORT_BY, UPDATE_FILTERS),
       switchMap(() => of(new ClearResults(), new RequestMoreResults()))
     )
   )
@@ -55,7 +55,10 @@ export class SearchEffects {
         const mapper = new ElasticsearchMapper(response)
         const records = mapper.toRecordSummary()
         const aggregations = response.aggregations
-        return [new AddResults(records), new SetAggregations(aggregations)]
+        return [
+          new AddResults(records),
+          new SetResponseAggregations(aggregations),
+        ]
       })
     )
   )

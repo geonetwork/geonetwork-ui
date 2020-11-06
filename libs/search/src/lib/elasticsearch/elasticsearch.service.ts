@@ -24,9 +24,15 @@ export class ElasticsearchService {
       },
       from: 0,
       size: RESULTS_PAGE_SIZE,
-      sort: state.sortBy ? [state.sortBy] : undefined,
+      sort: state.requestParams.sortBy
+        ? [state.requestParams.sortBy]
+        : undefined,
       query: {
-        bool: { must: [{ query_string: { query: state.params.any || '*' } }] },
+        bool: {
+          must: [
+            { query_string: { query: state.requestParams.filters.any || '*' } },
+          ],
+        },
       },
     }
     return payload
