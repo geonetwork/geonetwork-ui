@@ -20,6 +20,8 @@
     "prebuild": "NODE_ENV=production npm run generate-css",
     "generate-css": "tailwindcss build libs/ui/src/tailwind.css -o libs/ui/src/tailwind-generated.css",
     "generate-api": "tools/generate-api.sh",
+    "generate-api:gn4": "tools/generate-api.sh gn4",
+    "generate-api:datafeeder": "tools/generate-api.sh datafeeder",
     "dev:ssr": "ng run formatter:serve-ssr",
     "serve:ssr": "node dist/formatter/server/main.js",
     "build:ssr": "ng build --prod && ng run formatter:server:production",
