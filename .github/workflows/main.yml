@@ -74,6 +74,13 @@ jobs:
 
       - run: echo "::set-env name=BRANCH_NAME::${GITHUB_HEAD_REF:-master}"
 
+      - name: docker login
+        uses: docker/login-action@v1.6.0
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: deploy to gh pages
         run: |
           echo "Deploying to directory: ${{env.BRANCH_NAME}}"
