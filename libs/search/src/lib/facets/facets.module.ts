@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
+import { FacetsModule as UiFacetsModule } from '@lib/ui'
 import { TranslateModule } from '@ngx-translate/core'
 import { FacetsContainerComponent } from './facets-container/facets-container.component'
-import { FacetsModule as UiFacetsModule } from 'libs/ui/src/lib/facets/facets.module'
 
 @NgModule({
   declarations: [FacetsContainerComponent],
