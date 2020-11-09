@@ -3,9 +3,10 @@ import { NgModule } from '@angular/core'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
+import { UploadDataComponent } from './components/upload-data/upload-data.component'
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, UploadDataComponent],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],
