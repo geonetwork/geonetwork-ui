@@ -14,6 +14,7 @@ import { RecordPreviewTextComponent } from './record-preview-text/record-preview
 import { RecordMetricComponent } from './record-metric/record-metric.component'
 import { CatalogTitleComponent } from './catalog-title/catalog-title.component'
 import { DragAndDropFileInputComponent } from './drag-and-drop-file-input/drag-and-drop-file-input.component'
+import { ProgressBarComponent } from './progress-bar/progress-bar.component'
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { DragAndDropFileInputComponent } from './drag-and-drop-file-input/drag-a
     ResultsListComponent,
     CatalogTitleComponent,
     DragAndDropFileInputComponent,
+    ProgressBarComponent,
   ],
   imports: [BrowserModule, TranslateModule.forChild(), NgxDropzoneModule],
   exports: [
@@ -42,6 +44,7 @@ import { DragAndDropFileInputComponent } from './drag-and-drop-file-input/drag-a
     RecordMetricComponent,
     ResultsListComponent,
     CatalogTitleComponent,
+    ProgressBarComponent,
   ],
 })
 export class UiModule {}
