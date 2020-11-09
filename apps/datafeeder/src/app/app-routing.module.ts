@@ -3,9 +3,8 @@ import { Routes, RouterModule } from '@angular/router'
 import { UploadDataComponent } from './components/upload-data/upload-data.component'
 
 const routes: Routes = [
-  { path: '', redirectTo: 'georchestra/import', pathMatch: 'full' },
-  { path: 'georchestra/import', component: UploadDataComponent },
-  { path: '**', redirectTo: 'georchestra/import' },
+  { path: '', component: UploadDataComponent },
+  { path: '**', redirectTo: '' }
 ]
 
 @NgModule({
