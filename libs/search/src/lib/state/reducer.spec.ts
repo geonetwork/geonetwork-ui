@@ -198,4 +198,23 @@ describe('Search Reducer', () => {
       expect(state.config.aggregations).toEqual(ES_FIXTURE_AGGS_REQUEST)
     })
   })
+
+  describe('RequestMoreOnAggregation action', () => {
+    it('should replace the aggregations in the config with an updated size', () => {
+      const action = new fromActions.RequestMoreOnAggregation('tag.default')
+      const state = reducer(
+        {
+          ...initialState,
+          config: {
+            ...initialState.config,
+            aggregations: ES_FIXTURE_AGGS_REQUEST,
+          },
+        },
+        action
+      )
+      const clone = JSON.parse(JSON.stringify(ES_FIXTURE_AGGS_REQUEST))
+      clone['tag.default'].terms.size = 30
+      expect(state.config.aggregations).toEqual(clone)
+    })
+  })
 })

@@ -10,6 +10,7 @@ import { Observable, of } from 'rxjs'
 import {
   AddResults,
   ClearResults,
+  RequestMoreOnAggregation,
   RequestMoreResults,
   SetFilters,
   SetResultsAggregations,
@@ -19,7 +20,15 @@ import {
   UpdateFilters,
 } from './actions'
 import { SearchEffects } from './effects'
+import { ES_FIXTURE_AGGS_REQUEST } from '../elasticsearch/fixtures/aggregations-request'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
+
+const initialStateMock = {
+  ...initialState,
+  config: {
+    aggregations: ES_FIXTURE_AGGS_REQUEST,
+  },
+}
 
 const searchServiceMock = {
   search: () => of({ hits: { hits: [] }, aggregations: {} }), // TODO: use a fixture here
@@ -44,7 +53,7 @@ describe('Effects', () => {
         EffectsModule.forRoot(),
         StoreModule.forRoot({}),
         StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
-          initialState,
+          initialState: initialStateMock,
         }),
       ],
       providers: [
@@ -124,6 +133,17 @@ describe('Effects', () => {
       })
 
       expect(effects.loadResults$).toBeObservable(expected)
+    })
+  })
+
+  describe('loadMoreOnAggregation$', () => {
+    it('set aggregation results on requestMoreOnAggregation action', () => {
+      actions$ = hot('-a-', { a: new RequestMoreOnAggregation('abc') })
+      const expected = hot('-b-', {
+        b: new SetResultsAggregations({}),
+      })
+
+      expect(effects.loadMoreOnAggregation$).toBeObservable(expected)
     })
   })
 })

@@ -79,5 +79,7 @@
     (selectedChange)="onItemSelectedChange($event, item)"
     (invertedChange)="onItemInvertedChange($event, item)"
   ></ui-facet-item>
-  <a href *ngIf="canShowMore()" class="a-more" (click)="onMoreClick()">more</a>
+  <a href *ngIf="canShowMore()" class="a-more" (click)="onMoreClick($event)"
+    >more</a
+  >
 </div>

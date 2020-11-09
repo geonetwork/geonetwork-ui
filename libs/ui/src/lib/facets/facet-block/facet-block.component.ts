@@ -17,6 +17,7 @@ export class FacetBlockComponent implements OnInit {
   @Output() filterChange = new EventEmitter<string>()
   @Output() itemSelected = new EventEmitter<string[]>()
   @Output() itemUnselected = new EventEmitter<string[]>()
+  @Output() more = new EventEmitter<void>()
 
   title: string
   hasItems: boolean
@@ -60,9 +61,9 @@ export class FacetBlockComponent implements OnInit {
     console.log('onListItemInvertedChange', inverted, item)
   }
 
-  onMoreClick() {
-    // TODO: ???
-    console.log('onMoreClick')
+  onMoreClick(event: Event) {
+    event.preventDefault()
+    this.more.emit()
   }
 
   getItems() {

@@ -5,14 +5,16 @@ import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
 import { SearchResponse } from 'elasticsearch'
 import { of } from 'rxjs'
-import { switchMap, withLatestFrom } from 'rxjs/operators'
+import { map, switchMap, withLatestFrom } from 'rxjs/operators'
 import { ElasticsearchMetadataModels } from '../elasticsearch/constant'
 import { ElasticsearchMapper } from '../elasticsearch/elasticsearch.mapper'
 import { ElasticsearchService } from '../elasticsearch/elasticsearch.service'
 import {
   AddResults,
   ClearResults,
+  RequestMoreOnAggregation,
   RequestMoreResults,
+  REQUEST_MORE_ON_AGGREGATION,
   REQUEST_MORE_RESULTS,
   SetResultsAggregations,
   SET_SORT_BY,
@@ -69,4 +71,31 @@ export class SearchEffects {
       })
     )
   )
+
+  loadMoreOnAggregation$ = createEffect(() => {
+    const moreOnAggregationAction$ = this.actions$.pipe(
+      ofType<RequestMoreOnAggregation>(REQUEST_MORE_ON_AGGREGATION)
+    )
+
+    return moreOnAggregationAction$.pipe(
+      switchMap(() => this.authService.authReady()), // wait for auth to be known
+      withLatestFrom(
+        this.store$.pipe(select(getSearchState)),
+        moreOnAggregationAction$
+      ),
+      switchMap(([_, state, action]) =>
+        this.searchService.search(
+          'bucket',
+          JSON.stringify(
+            this.esService.buildMoreOnAggregationPayload(state, action.key)
+          )
+        )
+      ),
+      map((response: SearchResponse<any>) => {
+        const aggregations = response.aggregations
+        // TODO: action to replace only current aggregation
+        return new SetResultsAggregations(aggregations)
+      })
+    )
+  })
 }

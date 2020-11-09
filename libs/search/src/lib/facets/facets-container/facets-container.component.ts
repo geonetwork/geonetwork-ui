@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import { combineLatest } from 'rxjs'
 import { map, take, tap } from 'rxjs/operators'
-import { SetFilters } from '../../state/actions'
+import { RequestMoreOnAggregation, SetFilters } from '../../state/actions'
 import { SearchState } from '../../state/reducer'
 import {
   getSearchConfigAggregations,
@@ -111,5 +111,9 @@ export class FacetsContainerComponent implements OnInit {
       current = current[path[i]]
     }
     return clone
+  }
+
+  onMore(key: string): void {
+    this.store.dispatch(new RequestMoreOnAggregation(key))
   }
 }
