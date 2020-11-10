@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { UploadDataPage } from './upload-data.page'
+import { UploadDataPageComponent } from './upload-data.page'
 
 describe('UploadDataComponent', () => {
-  let component: UploadDataPage
-  let fixture: ComponentFixture<UploadDataPage>
+  let component: UploadDataPageComponent
+  let fixture: ComponentFixture<UploadDataPageComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UploadDataPage],
+      declarations: [UploadDataPageComponent],
     }).compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UploadDataPage)
+    fixture = TestBed.createComponent(UploadDataPageComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
