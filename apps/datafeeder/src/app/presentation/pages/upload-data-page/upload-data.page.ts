@@ -8,16 +8,9 @@ import { UploadData } from '../../components/upload-data/upload-data.component'
   styleUrls: ['./upload-data.page.css'],
 })
 export class UploadDataPageComponent implements OnInit {
-  file: File = null
-  haveRights = false
-
   constructor(private logService: LogService) {}
 
   ngOnInit(): void {}
-
-  fileChange(file) {
-    this.file = file
-  }
 
   handleUploadData(uploadData: UploadData) {
     this.logService.log(JSON.stringify(uploadData))
