@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core'
-import { Routes, RouterModule } from '@angular/router'
-import { UploadDataComponent } from './components/upload-data/upload-data.component'
+import { RouterModule, Routes } from '@angular/router'
+import { UploadDataPageComponent } from './presentation/pages/upload-data-page/upload-data.page'
 
 const routes: Routes = [
-  { path: '', component: UploadDataComponent },
+  { path: '', component: UploadDataPageComponent },
   { path: '**', redirectTo: '' },
 ]
 

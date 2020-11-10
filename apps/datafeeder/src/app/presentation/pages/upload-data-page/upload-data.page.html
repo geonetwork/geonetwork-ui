@@ -1,0 +1,12 @@
+<div class="h-screen flex flex-col bg-blue-100 bg-opacity-25">
+  <div class="h-full ml-32 flex items-center">
+    <div class="">
+      <div class="text-6xl font-bold pb-10">Upload your data</div>
+
+      <div class="pb-20">
+        <app-upload-data-component (uploadData)="handleUploadData($event)"></app-upload-data-component>
+      </div>
+
+      <app-upload-data-rules></app-upload-data-rules>
+  </div>
+</div>
