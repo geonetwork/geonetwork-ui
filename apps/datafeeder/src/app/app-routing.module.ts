@@ -4,7 +4,7 @@ import { UploadDataComponent } from './components/upload-data/upload-data.compon
 
 const routes: Routes = [
   { path: '', component: UploadDataComponent },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' },
 ]
 
 @NgModule({
