@@ -1,10 +1,16 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { LogService } from '@lib/common'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 export interface UploadData {
   file: File
   error?: string
 }
+
+marker('I have right to send this data')
+marker('Upload')
+marker('User hast rights to send this data!')
+marker('User didnt select file!')
 
 @Component({
   selector: 'app-upload-data-component',
@@ -27,7 +33,7 @@ export class UploadDataComponent implements OnInit {
 
   handleUploadBtnClick() {
     if (!this.haveRights) {
-      this.emitUploadData(null, 'User hast rights to send this data')
+      this.emitUploadData(null, 'User hast rights to send this data!')
 
       return
     }

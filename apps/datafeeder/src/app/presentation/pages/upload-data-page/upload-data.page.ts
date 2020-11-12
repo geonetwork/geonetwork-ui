@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core'
 import { LogService } from '@lib/common'
 import { UploadData } from '../../components/upload-data/upload-data.component'
+import {marker} from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('Upload your data')
 
 @Component({
   selector: 'app-upload-data-page',
