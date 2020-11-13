@@ -1,10 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { UploadData } from '../upload-data/upload-data.component'
 import { LogService } from '@lib/common'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-
-marker('Accepted file formats')
-marker('Maximum size is')
 
 @Component({
   selector: 'app-upload-data-rules',
@@ -12,7 +7,7 @@ marker('Maximum size is')
   styleUrls: ['./upload-data-rules.component.css'],
 })
 export class UploadDataRulesComponent implements OnInit {
-  @Input() maxFileSize = '30MB'
+  @Input() maxFileSize = 30
   @Input() acceptedFileFormats = ['SHP', 'GeoJSON', 'GeoPackage', 'Spatialite']
 
   constructor(private logService: LogService) {}

@@ -1,16 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 import { LogService } from '@lib/common'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 export interface UploadData {
   file: File
   error?: string
 }
-
-marker('I have right to send this data')
-marker('Upload')
-marker('User hast rights to send this data!')
-marker('User didnt select file!')
 
 @Component({
   selector: 'app-upload-data-component',
