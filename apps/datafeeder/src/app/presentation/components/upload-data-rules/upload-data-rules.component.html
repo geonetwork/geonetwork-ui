@@ -1,12 +1,10 @@
 <div class="text-orange-500">
   <div class="w-20 h-1 bg-orange-500 mb-4"></div>
   <span class="font-bold" translate>datafeeder.upload.acceptedFormats</span>
-  <div
-    *ngFor="let formats of getFormattedFormats()"
-    class="w-64 flex justify-between"
-  >
-    <span>- {{ formats[0] }}</span>
-    <span>- {{ formats[1] }}</span>
+  <div class="formats flex flex-wrap w-64">
+    <span class="w-1/2" *ngFor="let format of acceptedFileFormats">
+      - {{ format }}
+    </span>
   </div>
   <span class="font-bold" translate [translateParams]="{ size: maxFileSize }"
     >datafeeder.upload.maxFileSize</span
