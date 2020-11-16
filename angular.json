@@ -611,7 +611,8 @@
               "apps/datafeeder/tsconfig.spec.json"
             ],
             "exclude": [
-              "**/node_modules/**"
+              "**/node_modules/**",
+              "libs/gn-api/**"
             ]
           }
         }
