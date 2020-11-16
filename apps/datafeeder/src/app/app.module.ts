@@ -10,6 +10,7 @@ import { UploadDataPageComponent } from './presentation/pages/upload-data-page/u
 import { UploadDataRulesComponent } from './presentation/components/upload-data-rules/upload-data-rules.component'
 import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+import { AnalysisProgressPageComponent } from './presentation/pages/analysis-progress-page/analysis-progress.page'
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
     UploadDataPageComponent,
     UploadDataComponent,
     UploadDataRulesComponent,
+    AnalysisProgressPageComponent,
   ],
   imports: [
     BrowserModule,
