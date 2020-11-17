@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { UploadDataRulesComponent } from './upload-data-rules.component'
 import { By } from '@angular/platform-browser'
 import { TranslateModule } from '@ngx-translate/core'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 describe('UploadDataRulesComponent', () => {
   let component: UploadDataRulesComponent
@@ -12,6 +13,7 @@ describe('UploadDataRulesComponent', () => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [UploadDataRulesComponent],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   }))
 

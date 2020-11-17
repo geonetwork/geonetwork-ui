@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { UploadDataPageComponent } from './upload-data.page'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 describe('UploadDataComponent', () => {
   let component: UploadDataPageComponent
@@ -9,6 +10,7 @@ describe('UploadDataComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [UploadDataPageComponent],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   }))
 
