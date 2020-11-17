@@ -544,7 +544,8 @@
               "apps/datafeeder/src/assets"
             ],
             "styles": [
-              "apps/datafeeder/src/styles.css"
+              "apps/datafeeder/src/styles.css",
+              "libs/ui/src/styles.css"
             ],
             "scripts": []
           },
@@ -610,12 +611,13 @@
               "apps/datafeeder/tsconfig.spec.json"
             ],
             "exclude": [
-              "**/node_modules/**"
+              "**/node_modules/**",
+              "libs/gn-api/**"
             ]
           }
         }
       }
     }
   },
-  "defaultProject": "app-search"
+  "defaultProject": "datafeeder"
 }

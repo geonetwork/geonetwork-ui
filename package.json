@@ -27,7 +27,8 @@
     "build:ssr": "ng build --prod && ng run formatter:server:production",
     "prerender": "ng run formatter:prerender",
     "i18n:init": "ngx-translate-extract --input ./src --output ./src/assets/i18n/template.json --key-as-default-value --replace --format json",
-    "i18n:extract": "ngx-translate-extract --input ./apps/search/src  ./libs ./webcomponents/*/src --output ./apps/search/src/assets/i18n/en.json --clean --format json"
+    "i18n:extract": "ngx-translate-extract --input ./apps/search/src  ./libs ./webcomponents/*/src --output ./apps/search/src/assets/i18n/en.json --clean --format json",
+    "i18n:datafeeder:extract": "ngx-translate-extract --input ./apps/datafeeder/src  ./libs ./webcomponents/*/src --output ./apps/datafeeder/src/assets/i18n/en.json --clean --format json"
   },
   "private": true,
   "dependencies": {

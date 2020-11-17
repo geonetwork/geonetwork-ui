@@ -1,0 +1,21 @@
+{
+	"datafeeder.upload.acceptedFormats": "Accepted file formats:",
+	"datafeeder.upload.maxFileSize": "Maximum size is {{size}}MB",
+	"datafeeder.upload.checkboxLabel": "I have right to send this data",
+	"datafeeder.upload.inputLabel": "Import your file",
+	"datafeeder.upload.uploadButton": "Upload",
+	"datafeeder.upload.error.rightsToSend": "User hast rights to send this data!",
+	"datafeeder.upload.error.selectFile": "User didnt select file!",
+	"datafeeder.upload.title": "Upload your data",
+	"Find your metadata": "Find your metadata",
+	"Sort by": "Sort by",
+	"records": "records",
+	"readMore": "Read more",
+	"openRecord": "Open record",
+	"recordViewable": "viewable",
+	"recordDownloadable": "downloadable",
+	"loadResults": "Load results",
+	"last changed": "last changed",
+	"popularity": "popularity",
+	"dropFile": "drop file"
+}
