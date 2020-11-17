@@ -3,10 +3,6 @@ import { ActivatedRoute } from '@angular/router'
 import { LogService } from '@lib/common'
 import { interval, Subscription } from 'rxjs'
 import { take } from 'rxjs/operators'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-
-marker('datafeeder.analysisProgressBar.title')
-marker('datafeeder.analysisProgressBar.subtitle')
 
 @Component({
   selector: 'app-analysis-progress-page',
