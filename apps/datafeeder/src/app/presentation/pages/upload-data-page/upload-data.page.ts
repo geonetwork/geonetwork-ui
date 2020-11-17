@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core'
-import {UploadData} from '../../components/upload-data/upload-data.component'
+import { Component, OnInit } from '@angular/core'
+import { UploadData } from '../../components/upload-data/upload-data.component'
 import { of } from 'rxjs'
 import { Router } from '@angular/router'
 
