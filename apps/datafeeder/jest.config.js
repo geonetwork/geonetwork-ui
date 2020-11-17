@@ -1,7 +1,6 @@
 const { defaults } = require('jest-config')
 
 module.exports = {
-  rootDir: "../../",
   collectCoverage: true,
   collectCoverageFrom: [
     'apps/datafeeder/src/**/*.ts',
