@@ -1,4 +1,4 @@
-name: Run lint & test, publish storybook
+name: Build
 on:
   push:
     branches:
