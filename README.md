@@ -1,3 +1,6 @@
+![Workflow status](https://github.com/geonetwork/geonetwork-ui/workflows/Build/badge.svg?branch=master)
+
+
 # GeoNetwork UI
 
 GeoNetwork UI is a client application to browse your GeoNetwork catalogue.
