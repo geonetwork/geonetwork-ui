@@ -1,15 +1,19 @@
-<div class="flex flex-row items-center relative">
-  <label class="flex-grow flex-shrink truncate">
+<div class="flex flex-row items-center relative group">
+  <label
+    class="flex-grow flex-shrink truncate cursor-pointer text-gray-900 group-hover:text-black"
+  >
     <input
       type="checkbox"
+      class="cursor-pointer"
       [ngModel]="selected"
       (ngModelChange)="onSelectedChange($event)"
     />
-    {{ label }} <span>({{ count }})</span>
+    {{ label }}
+    <span class="text-gray-600 group-hover:text-black">({{ count }})</span>
   </label>
   <div
     *ngIf="!inverted"
-    class="flex-shrink-0"
+    class="flex-shrink-0 cursor-pointer invisible group-hover:visible"
     style="min-width: 20px;"
     (click)="toggleInverted()"
   >
