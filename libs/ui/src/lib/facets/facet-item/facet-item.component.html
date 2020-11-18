@@ -13,7 +13,7 @@
   </label>
   <div
     *ngIf="!inverted"
-    class="flex-shrink-0 cursor-pointer invisible group-hover:visible"
+    class="flex-shrink-0 cursor-pointer invisible group-hover:visible icon-exclude"
     style="min-width: 20px;"
     (click)="toggleInverted()"
   >
@@ -32,7 +32,7 @@
   </div>
   <div
     *ngIf="inverted"
-    class="flex-shrink-0"
+    class="flex-shrink-0 cursor-pointer invisible group-hover:visible icon-include"
     style="min-width: 20px;"
     (click)="toggleInverted()"
   >

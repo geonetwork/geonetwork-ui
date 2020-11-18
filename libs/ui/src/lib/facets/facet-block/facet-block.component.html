@@ -1,11 +1,11 @@
 <div class="flex flex-row items-center group" (click)="toggleCollapsed()">
   <span
-    class="flex-initial truncate font-bold cursor-pointer text-gray-900 group-hover:text-black"
+    class="flex-initial truncate font-bold cursor-pointer text-gray-900 group-hover:text-black span-title"
     >{{ 'facets.block.title.' + title | translate }}</span
   >
   <div
     *ngIf="!collapsed"
-    class="flex-shrink-0 cursor-pointer text-gray-900 group-hover:text-black"
+    class="flex-shrink-0 cursor-pointer text-gray-900 group-hover:text-black icon-collapse"
     style="min-width: 20px;"
   >
     <!-- chevron-down svg -->
@@ -23,7 +23,7 @@
   </div>
   <div
     *ngIf="collapsed"
-    class="flex-shrink-0 cursor-pointer text-gray-900 group-hover:text-black"
+    class="flex-shrink-0 cursor-pointer text-gray-900 group-hover:text-black icon-expand"
     style="min-width: 20px;"
   >
     <!-- chevron-right svg -->
@@ -40,10 +40,10 @@
     </svg>
   </div>
 </div>
-<div *ngIf="!collapsed" class="ml-5">
+<div *ngIf="!collapsed" class="ml-5 collapsible-content">
   <input
     type="text"
-    class="w-full rounded border-solid border-2 border-gray-400"
+    class="w-full rounded border-solid border-2 border-gray-400 input-filter"
     *ngIf="canFilter"
     [ngModel]="filter"
     (ngModelChange)="onFilterChange($event)"
@@ -55,5 +55,5 @@
     (selectedChange)="onListItemSelectedChange($event, item)"
     (invertedChange)="onListItemInvertedChange($event, item)"
   ></ui-facet-item>
-  <a href *ngIf="canShowMore()" (click)="onMoreClick()">more</a>
+  <a href *ngIf="canShowMore()" class="a-more" (click)="onMoreClick()">more</a>
 </div>
