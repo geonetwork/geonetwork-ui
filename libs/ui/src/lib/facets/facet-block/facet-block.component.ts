@@ -7,16 +7,24 @@ import { ModelBlock } from '../facets.model'
   styleUrls: ['./facet-block.component.css'],
 })
 export class FacetBlockComponent implements OnInit {
-  @Input() title: string
+  @Input() collapsed: boolean
   @Input() canFilter: boolean
   @Input() filter: string
   @Input() model: ModelBlock
 
   @Output() filterChange = new EventEmitter<string>()
 
+  title: string
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.title = this.model.key
+  }
+
+  toggleCollapsed() {
+    this.collapsed = !this.collapsed
+  }
 
   onFilterChange(value: string) {
     this.filterChange.emit(value)

@@ -20,7 +20,7 @@ export default {
 export const FacetBlockStory = () => ({
   component: FacetBlockComponent,
   props: {
-    title: text('title', 'my title'),
+    collapsed: boolean('collapsed', false),
     canFilter: boolean('canFilter', true),
     filter: text('filter', ''),
     model: object('excluded', BLOCK_MODEL_FIXTURE),
