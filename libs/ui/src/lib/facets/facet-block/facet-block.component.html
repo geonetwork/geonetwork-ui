@@ -1,6 +1,6 @@
 <div class="flex flex-row items-center group" (click)="toggleCollapsed()">
   <span
-    class="flex-grow flex-shrink truncate font-bold cursor-pointer text-gray-900 group-hover:text-black"
+    class="flex-initial truncate font-bold cursor-pointer text-gray-900 group-hover:text-black"
     >{{ title | translate }}</span
   >
   <div
@@ -40,7 +40,7 @@
     </svg>
   </div>
 </div>
-<div *ngIf="!collapsed" class="ml-8">
+<div *ngIf="!collapsed" class="ml-5">
   <input
     type="text"
     class="w-full rounded border-solid border-2 border-gray-400"
