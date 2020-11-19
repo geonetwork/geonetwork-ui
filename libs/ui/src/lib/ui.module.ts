@@ -19,6 +19,7 @@ import { ResultsListComponent } from './results-list/results-list.component'
 import { TextInputComponent } from './text-input/text-input.component'
 import { RecordPreviewComponent } from './record-preview/record-preview.component'
 import { RecordThumbnailComponent } from './record-thumbnail/record-thumbnail.component'
+import { StepBarComponent } from './step-bar/step-bar.component'
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { RecordThumbnailComponent } from './record-thumbnail/record-thumbnail.co
     CatalogTitleComponent,
     DragAndDropFileInputComponent,
     ProgressBarComponent,
+    StepBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,6 +64,7 @@ import { RecordThumbnailComponent } from './record-thumbnail/record-thumbnail.co
     ProgressBarComponent,
     FacetsModule,
     RecordPreviewComponent,
+    StepBarComponent,
   ],
 })
 export class UiModule {}

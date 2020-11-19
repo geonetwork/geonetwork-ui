@@ -545,7 +545,8 @@
             ],
             "styles": [
               "apps/datafeeder/src/styles.css",
-              "libs/ui/src/styles.css"
+              "libs/ui/src/styles.css",
+              "./node_modules/ol/ol.css"
             ],
             "scripts": []
           },

@@ -11,6 +11,8 @@ import { UploadDataRulesComponent } from './presentation/components/upload-data-
 import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { AnalysisProgressPageComponent } from './presentation/pages/analysis-progress-page/analysis-progress.page'
+import { DatasetValidationPageComponent } from './presentation/pages/dataset-validation-page/dataset-validation-page'
+import { MapViewComponent } from './presentation/components/map-view/map-view.component'
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { AnalysisProgressPageComponent } from './presentation/pages/analysis-pro
     UploadDataComponent,
     UploadDataRulesComponent,
     AnalysisProgressPageComponent,
+    DatasetValidationPageComponent,
+    MapViewComponent,
   ],
   imports: [
     BrowserModule,

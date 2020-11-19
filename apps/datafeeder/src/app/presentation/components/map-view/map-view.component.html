@@ -1,0 +1,20 @@
+<div class="flex flex-col h-full">
+  <div class="flex flex-col justify-center h-12">
+    <span translate class="font-bold pl-6">
+      {{ headerLabel }}
+    </span>
+  </div>
+  <div class="flex-1" [id]="this.mapViewId"></div>
+  <div class="flex justify-end">
+    <div class="w-1/2 mb-1 mt-1">
+      <ui-dropdown-selector
+        [title]="footerLabel | translate"
+        [choices]="footerList"
+        (selectValue)="selectValue($event)"
+        [selected]="selectedValue"
+        ariaName="search-sort-by"
+      >
+      </ui-dropdown-selector>
+    </div>
+  </div>
+</div>

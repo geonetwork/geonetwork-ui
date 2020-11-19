@@ -1,0 +1,11 @@
+<div class="relative flex flex-col justify-center">
+  <div class="flex justify-between ml-16 mr-16 z-10">
+    <div
+      *ngFor="let step of stepCounter; let i = index"
+      class="shadow-md rounded-full h-6 w-6 {{ getCircleColor(i + 1) }}"
+    ></div>
+  </div>
+  <div
+    class="absolute rounded-lg right-0 w-full {{ color.outerBar }} h-2 z-0"
+  ></div>
+</div>

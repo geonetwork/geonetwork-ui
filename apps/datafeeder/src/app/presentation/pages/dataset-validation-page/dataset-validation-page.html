@@ -1,0 +1,38 @@
+<div class="h-screen flex bg-blue-300 bg-opacity-25 items-center">
+  <div class="ml-32 mr-32 w-full">
+    <div class="text-5xl font-bold" translate>
+      datafeeder.datasetValidation.title
+    </div>
+    <div class="pb-4 pt-4">
+      <ui-step-bar [currentStep]="1" type="primary"></ui-step-bar>
+    </div>
+    <div class="text-2xl font-bold" translate>
+      datafeeder.datasetValidation.datasetInformation
+    </div>
+    <div class="flex justify-between pb-16 pt-16">
+      <div class="w-1/2 h-64 bg-white mr-16">
+        <app-map-view
+          [headerLabel]="'Here is a sample entity from the dataset'"
+          [footerLabel]="'Encoding'"
+          [footerList]="encodingList"
+          mapViewId="map1"
+        ></app-map-view>
+      </div>
+      <div class="w-1/2 h-64 bg-white">
+        <app-map-view
+          [headerLabel]="'This is the extent of the dataset'"
+          [footerLabel]="'Ref system'"
+          [footerList]="refSystem"
+          mapViewId="map2"
+        ></app-map-view>
+      </div>
+    </div>
+    <div class="flex justify-end">
+      <ui-button (click)="submitValidation()">
+        <span translate>
+          datafeeder.datasetValidation.submitButton
+        </span>
+      </ui-button>
+    </div>
+  </div>
+</div>

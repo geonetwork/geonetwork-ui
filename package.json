@@ -58,6 +58,7 @@
     "document-register-element": "^1.7.2",
     "express": "^4.15.2",
     "ngx-dropzone": "^2.2.2",
+    "ol": "^6.4.3",
     "parse5": "^6.0.0",
     "prettier": "^2.0.5",
     "rxjs": "~6.5.4",
