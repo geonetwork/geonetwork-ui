@@ -40,7 +40,7 @@ To run the lint step, use `npm run lint`.
 To check whether your code is formatted properly, use `npm run format:check`.
 
 If you want Prettier to run on all the code and make sure everything is formatted, run `npm run format:fix`.
-**This should be done before committint.**
+**This should be done before committing.**
 
 ### Angular CLI
 
