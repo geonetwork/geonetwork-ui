@@ -7,7 +7,7 @@ export interface RecordSummary {
   uuid: string
   title: string
   abstract: string
-  url: string
+  metadataUrl: string
   thumbnailUrl: string
   logoUrl?: string
   downloadable?: boolean
@@ -26,9 +26,9 @@ export interface RecordMetric {
 }
 
 export enum ResultsListLayout {
-  'BLOCK' = 'BLOCK',
-  'LIST' = 'LIST',
-  'TEXT' = 'TEXT',
+  CARD = 'CARD',
+  LIST = 'LIST',
+  TEXT = 'TEXT',
 }
 
 export const RESULTS_PAGE_SIZE = 10

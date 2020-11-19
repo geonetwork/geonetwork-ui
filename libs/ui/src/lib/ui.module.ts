@@ -16,6 +16,8 @@ import { RecordPreviewListComponent } from './record-preview-list/record-preview
 import { RecordPreviewTextComponent } from './record-preview-text/record-preview-text.component'
 import { ResultsListComponent } from './results-list/results-list.component'
 import { TextInputComponent } from './text-input/text-input.component'
+import { RecordPreviewComponent } from './record-preview/record-preview.component'
+import { RecordThumbnailComponent } from './record-thumbnail/record-thumbnail.component'
 
 @NgModule({
   declarations: [
@@ -28,10 +30,12 @@ import { TextInputComponent } from './text-input/text-input.component'
     RecordPreviewCardComponent,
     RecordPreviewTextComponent,
     RecordMetricComponent,
+    RecordThumbnailComponent,
     ResultsListComponent,
     CatalogTitleComponent,
     DragAndDropFileInputComponent,
     ProgressBarComponent,
+    RecordPreviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,11 +52,13 @@ import { TextInputComponent } from './text-input/text-input.component'
     RecordPreviewCardComponent,
     RecordPreviewTextComponent,
     RecordMetricComponent,
+    RecordThumbnailComponent,
     ResultsListComponent,
     CatalogTitleComponent,
     DragAndDropFileInputComponent,
     ProgressBarComponent,
     FacetsModule,
+    RecordPreviewComponent,
   ],
 })
 export class UiModule {}

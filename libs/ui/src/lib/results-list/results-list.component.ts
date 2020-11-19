@@ -15,7 +15,7 @@ import { RecordSummary, ResultsListLayout } from '@lib/common'
 export class ResultsListComponent implements OnInit {
   @Input() records: RecordSummary[]
   @Input() loading: boolean
-  @Input() layout: ResultsListLayout = ResultsListLayout.BLOCK
+  @Input() layout: ResultsListLayout = ResultsListLayout.CARD
   layoutEnum = ResultsListLayout
 
   constructor() {}

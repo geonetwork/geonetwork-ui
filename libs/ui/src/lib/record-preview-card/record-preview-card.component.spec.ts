@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 import { RecordPreviewCardComponent } from './record-preview-card.component'
 
@@ -9,6 +10,7 @@ describe('RecordPreviewCardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RecordPreviewCardComponent],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   }))
 
@@ -20,7 +22,7 @@ describe('RecordPreviewCardComponent', () => {
       uuid: 'd2f30aa4-867e-40b9-9c37-3cb21f541008',
       title: 'abcd',
       abstract: 'Abcd',
-      url: '/abcd.html',
+      metadataUrl: '/abcd.html',
       thumbnailUrl: '/abcd.jpg',
     }
     fixture.detectChanges()

@@ -1,10 +1,5 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  Input,
-} from '@angular/core'
-import type { RecordSummary } from '@lib/common'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { RecordPreviewComponent } from '../record-preview/record-preview.component'
 
 @Component({
   selector: 'ui-record-preview-text',
@@ -12,9 +7,4 @@ import type { RecordSummary } from '@lib/common'
   styleUrls: ['./record-preview-text.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RecordPreviewTextComponent implements OnInit {
-  @Input() record: RecordSummary
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class RecordPreviewTextComponent extends RecordPreviewComponent {}

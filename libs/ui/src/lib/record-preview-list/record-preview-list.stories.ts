@@ -2,6 +2,7 @@ import { withA11y } from '@storybook/addon-a11y'
 import { boolean, date, text, withKnobs } from '@storybook/addon-knobs'
 import { Meta, Story } from '@storybook/angular'
 import { RecordPreviewListComponent } from './record-preview-list.component'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 export default {
   title: 'UI/Record preview',

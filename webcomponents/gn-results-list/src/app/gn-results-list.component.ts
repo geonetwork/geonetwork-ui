@@ -15,7 +15,7 @@ import { BaseComponent } from '../../../base.component'
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class GnResultsListComponent extends BaseComponent {
-  @Input() layout: ResultsListLayout = ResultsListLayout.BLOCK
+  @Input() layout: ResultsListLayout = ResultsListLayout.CARD
   @Input() lines = 10
   @Input() filter
 

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { RecordPreviewTextComponent } from './record-preview-text.component'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 describe('RecordPreviewTextComponent', () => {
   let component: RecordPreviewTextComponent
@@ -9,6 +10,7 @@ describe('RecordPreviewTextComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RecordPreviewTextComponent],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   }))
 
@@ -20,7 +22,7 @@ describe('RecordPreviewTextComponent', () => {
       uuid: 'd2f30aa4-867e-40b9-9c37-3cb21f541008',
       title: 'abcd',
       abstract: 'Abcd',
-      url: '/abcd.html',
+      metadataUrl: '/abcd.html',
       thumbnailUrl: '/abcd.jpg',
     }
     fixture.detectChanges()
