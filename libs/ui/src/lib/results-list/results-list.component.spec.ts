@@ -4,7 +4,7 @@ import { RecordPreviewCardComponent } from '../record-preview-card/record-previe
 import { RecordPreviewTextComponent } from '../record-preview-text/record-preview-text.component'
 
 import { ResultsListComponent } from './results-list.component'
-import {NO_ERRORS_SCHEMA} from '@angular/core'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 describe('ResultsListComponent', () => {
   let component: ResultsListComponent

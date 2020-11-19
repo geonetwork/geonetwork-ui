@@ -2,10 +2,7 @@ import { Component, Input, OnInit } from '@angular/core'
 import { ResultsListLayout } from '@lib/common'
 import { select, Store } from '@ngrx/store'
 import { SearchState } from '../state/reducer'
-import {
-  getSearchResults,
-  getSearchResultsLoading,
-} from '../state/selectors'
+import { getSearchResults, getSearchResultsLoading } from '../state/selectors'
 import { RequestMoreResults } from '../state/actions'
 
 @Component({

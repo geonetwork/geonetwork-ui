@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { RecordPreviewListComponent } from './record-preview-list.component'
-import {NO_ERRORS_SCHEMA} from '@angular/core'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 describe('RecordPreviewListComponent', () => {
   let component: RecordPreviewListComponent
