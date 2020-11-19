@@ -34,12 +34,12 @@ export const GnResultsListListStory = () => ({
 })
 GnResultsListListStory.storyName = 'List'
 
-export const GnResultsListBlockStory = () => ({
+export const GnResultsListCardStory = () => ({
   template: `
 <gn-results-list
   api-url="https://apps.titellus.net/geonetwork/srv/api"
   primary-color="{{primaryColor}}"
-  layout="BLOCKED"
+  layout="CARD"
   secondary-color="{{secondaryColor}}">
 </gn-results-list>`,
   props: {
@@ -47,7 +47,7 @@ export const GnResultsListBlockStory = () => ({
     secondaryColor: color('Secondary Color', 'grey'),
   },
 })
-GnResultsListBlockStory.storyName = 'Block'
+GnResultsListCardStory.storyName = 'Card'
 
 export const GnResultsListTextStory = () => ({
   template: `

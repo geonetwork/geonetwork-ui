@@ -17,8 +17,8 @@ const Template: Story<RecordThumbnailComponent> = (args) => ({
 export const RecordThumbnailComponentStory = Template.bind({})
 
 RecordThumbnailComponentStory.args = {
-    thumbnailUrl:
-      'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
+  thumbnailUrl:
+    'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
 }
 
 RecordThumbnailComponentStory.storyName = 'Record thumbnail'

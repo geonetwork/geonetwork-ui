@@ -28,7 +28,10 @@ export const RecordPreviewListComponentStory: Story<RecordPreviewListComponent> 
         'Abstract',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dapibus euismod libero, eu ullamcorper nisl placerat sit amet. Nulla vel sapien odio. Integer convallis scelerisque lorem, eget ultricies elit ultrices sit amet. Mauris nunc felis, vulputate laoreet lacinia et, volutpat et ligula. Sed a magna et augue convallis pretium. Fusce euismod dui in sapien tincidunt aliquet. Curabitur porttitor mauris a bibendum eleifend.'
       ),
-      metadataUrl: text('Record URL', 'https://sdi.eea.europa.eu/catalogue/srv/api/records/c88e743d-e838-49e1-8c80-54f26bcf4ab8'),
+      metadataUrl: text(
+        'Record URL',
+        'https://sdi.eea.europa.eu/catalogue/srv/api/records/c88e743d-e838-49e1-8c80-54f26bcf4ab8'
+      ),
       updateFrequency: text('Update frequency', 'Updated every month'),
       logoUrl: text(
         'Logo URL',
