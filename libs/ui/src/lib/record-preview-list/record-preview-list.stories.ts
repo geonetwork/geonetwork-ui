@@ -1,18 +1,17 @@
 import { withA11y } from '@storybook/addon-a11y'
 import { boolean, date, text, withKnobs } from '@storybook/addon-knobs'
-import { Meta, Story } from '@storybook/angular'
+import { Meta, moduleMetadata, Story } from '@storybook/angular'
+import { RecordThumbnailComponent } from '../record-thumbnail/record-thumbnail.component'
 import { RecordPreviewListComponent } from './record-preview-list.component'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
+
+const moduleMetadatas = {
+  declarations: [RecordThumbnailComponent],
+}
 
 export default {
   title: 'UI/Record preview',
-  decorators: [withKnobs, withA11y],
+  decorators: [moduleMetadata(moduleMetadatas), withKnobs, withA11y],
 } as Meta
-
-function dateObj(name, defaultValue) {
-  const stringTimestamp = date(name, defaultValue)
-  return new Date(stringTimestamp)
-}
 
 export const RecordPreviewListComponentStory: Story<RecordPreviewListComponent> = () => ({
   component: RecordPreviewListComponent,
