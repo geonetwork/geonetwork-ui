@@ -12,7 +12,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { AnalysisProgressPageComponent } from './presentation/pages/analysis-progress-page/analysis-progress.page'
 import { DatasetValidationPageComponent } from './presentation/pages/dataset-validation-page/dataset-validation-page'
-import { MapViewComponent } from './presentation/components/map-view/map-view.component'
+import { DataImportValidationMapPanelComponent } from './presentation/components/data-import-validation-map-panel/data-import-validation-map-panel.component'
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import { MapViewComponent } from './presentation/components/map-view/map-view.co
     UploadDataRulesComponent,
     AnalysisProgressPageComponent,
     DatasetValidationPageComponent,
-    MapViewComponent,
+    DataImportValidationMapPanelComponent,
   ],
   imports: [
     BrowserModule,

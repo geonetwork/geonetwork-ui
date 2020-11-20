@@ -24,7 +24,7 @@ export class AnalysisProgressPageComponent implements OnInit, OnDestroy {
       this.logService.log(`id: ${id}`)
     })
 
-    interval(10)
+    interval(250)
       .pipe(
         take(100),
         finalize(() => {

@@ -54,6 +54,7 @@
     "@storybook/addon-notes": "^5.3.21",
     "@storybook/angular": "^6.0.26",
     "@storybook/cli": "^6.0.26",
+    "@types/geojson": "^7946.0.7",
     "chroma-js": "^2.1.0",
     "document-register-element": "^1.7.2",
     "express": "^4.15.2",

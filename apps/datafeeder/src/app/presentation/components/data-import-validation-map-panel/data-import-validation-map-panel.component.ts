@@ -1,15 +1,25 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core'
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core'
 import Map from 'ol/Map'
 import View from 'ol/View'
 import OSM from 'ol/source/OSM'
 import TileLayer from 'ol/layer/Tile'
 
 @Component({
-  selector: 'app-map-view',
-  templateUrl: './map-view.component.html',
-  styleUrls: ['./map-view.component.css'],
+  selector: 'app-data-import-validation-map-panel',
+  templateUrl: './data-import-validation-map-panel.component.html',
+  styleUrls: ['./data-import-validation-map-panel.css'],
 })
-export class MapViewComponent implements OnInit, AfterViewInit {
+export class DataImportValidationMapPanelComponent
+  implements OnInit, AfterViewInit {
+  @ViewChild('map') mapElt: ElementRef
+
   @Input() mapViewId = 'map'
   @Input() headerLabel = ''
   @Input() footerLabel = ''
@@ -18,7 +28,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
 
   selectedValue: any
 
-  private map: Map = null
+  private map: Map
 
   constructor() {}
 
@@ -28,12 +38,13 @@ export class MapViewComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.map = new Map({
-      target: this.mapViewId,
+      target: this.mapElt.nativeElement,
       layers: [
         new TileLayer({
           source: new OSM(),
         }),
       ],
+      interactions: [],
       view: new View({
         center: [0, 0],
         zoom: 2,

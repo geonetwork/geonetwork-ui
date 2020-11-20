@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { Subscription } from 'rxjs'
 import { ActivatedRoute, Router } from '@angular/router'
 import { LogService } from '@lib/common'
@@ -8,7 +8,7 @@ import { LogService } from '@lib/common'
   templateUrl: './dataset-validation-page.html',
   styleUrls: ['./dataset-validation-page.css'],
 })
-export class DatasetValidationPageComponent implements OnInit {
+export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   encodingList = [
     {
       label: 'UTF8',
@@ -21,6 +21,7 @@ export class DatasetValidationPageComponent implements OnInit {
       value: 'Lambert93',
     },
   ]
+  numOfEntities = 1549
   private routeParamsSub: Subscription
 
   constructor(
@@ -36,4 +37,8 @@ export class DatasetValidationPageComponent implements OnInit {
   }
 
   submitValidation() {}
+
+  ngOnDestroy() {
+    this.routeParamsSub.unsubscribe()
+  }
 }

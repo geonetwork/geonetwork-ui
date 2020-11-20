@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { DatasetValidationPageComponent } from './dataset-validation-page'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
+import { RouterTestingModule } from '@angular/router/testing'
 
 describe('DatasetValidationPageComponent', () => {
   let component: DatasetValidationPageComponent
@@ -9,6 +11,8 @@ describe('DatasetValidationPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [DatasetValidationPageComponent],
+      imports: [RouterTestingModule],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   }))
 

@@ -8,7 +8,7 @@
 	"datafeeder.analysisProgressBar.subtitle": "The analysis may take several minutes please wait.",
 	"datafeeder.upload.title": "Upload your data",
 	"datafeeder.datasetValidation.title": "Make sure that your data is correct",
-	"datafeeder.datasetValidation.datasetInformation": "The provided dataset contains 1549 entities",
+	"datafeeder.datasetValidation.datasetInformation": "The provided dataset contains {{number}} entities",
 	"datafeeder.datasetValidation.submitButton": "OK, MY DATA IS CORRECT",
 	"Find your metadata": "Find your metadata",
 	"Sort by": "Sort by",
