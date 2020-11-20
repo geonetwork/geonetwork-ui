@@ -8,8 +8,10 @@ import {
 } from '@angular/core'
 import Map from 'ol/Map'
 import View from 'ol/View'
-import OSM from 'ol/source/OSM'
-import TileLayer from 'ol/layer/Tile'
+import { OSM, Vector as VectorSource } from 'ol/source'
+import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer'
+import GeoJSON from 'ol/format/GeoJSON'
+import { Fill, Stroke, Style } from 'ol/style'
 
 @Component({
   selector: 'app-data-import-validation-map-panel',
@@ -37,12 +39,15 @@ export class DataImportValidationMapPanelComponent
   }
 
   ngAfterViewInit() {
+    const vectorLayer = this.buildVectorLayer()
+
     this.map = new Map({
       target: this.mapElt.nativeElement,
       layers: [
         new TileLayer({
           source: new OSM(),
         }),
+        vectorLayer,
       ],
       interactions: [],
       view: new View({
@@ -50,9 +55,37 @@ export class DataImportValidationMapPanelComponent
         zoom: 2,
       }),
     })
+
+    this.map.getView().fit(vectorLayer.getSource().getExtent())
   }
 
   selectValue(event) {
     console.log(event)
+  }
+
+  private getDefaultStyle(): Style {
+    return new Style({
+      stroke: new Stroke({
+        color: 'blue',
+        lineDash: [4],
+        width: 3,
+      }),
+      fill: new Fill({
+        color: 'rgba(0, 0, 255, 0.1)',
+      }),
+    })
+  }
+
+  private buildVectorSource(geoJson: GeoJSON): VectorLayer {
+    return new VectorSource({
+      features: new GeoJSON().readFeatures(this.geoJson),
+    })
+  }
+
+  private buildVectorLayer(): VectorLayer {
+    return new VectorLayer({
+      source: this.buildVectorSource(this.geoJson),
+      style: this.getDefaultStyle(),
+    })
   }
 }

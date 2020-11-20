@@ -21,6 +21,63 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
       value: 'Lambert93',
     },
   ]
+
+  geoJSONData = [
+    {
+      type: 'Feature',
+      geometry: {
+        type: 'GeometryCollection',
+        geometries: [
+          {
+            type: 'LineString',
+            coordinates: [
+              [-5e6, -5e6],
+              [0, -5e6],
+            ],
+          },
+          {
+            type: 'Point',
+            coordinates: [4e6, -5e6],
+          },
+          {
+            type: 'Polygon',
+            coordinates: [
+              [
+                [1e6, -6e6],
+                [2e6, -4e6],
+                [3e6, -6e6],
+              ],
+            ],
+          },
+        ],
+      },
+    },
+    {
+      type: 'Feature',
+      geometry: {
+        type: 'MultiLineString',
+        coordinates: [
+          [
+            [-1e6, -7.5e5],
+            [-1e6, 7.5e5],
+          ],
+          [
+            [1e6, -7.5e5],
+            [1e6, 7.5e5],
+          ],
+          [
+            [-7.5e5, -1e6],
+            [7.5e5, -1e6],
+          ],
+          [
+            [-7.5e5, 1e6],
+            [7.5e5, 1e6],
+          ],
+        ],
+      },
+    },
+  ]
+
   numOfEntities = 1549
   private routeParamsSub: Subscription
 

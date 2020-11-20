@@ -11,7 +11,7 @@ interface ColorScheme {
   styleUrls: ['./step-bar.component.css'],
 })
 export class StepBarComponent implements OnInit {
-  @Input() steps = 6
+  @Input() steps
   @Input() currentStep = 1
   @Input() type: 'primary' | 'secondary' | 'default' = 'default'
 

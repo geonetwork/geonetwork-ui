@@ -4,7 +4,7 @@
       datafeeder.datasetValidation.title
     </div>
     <div class="pb-4 pt-4">
-      <ui-step-bar [currentStep]="1" type="primary"></ui-step-bar>
+      <ui-step-bar [steps]="6" [currentStep]="1" type="primary"></ui-step-bar>
     </div>
     <div
       class="text-2xl font-bold"
@@ -19,6 +19,7 @@
           [headerLabel]="'Here is a sample entity from the dataset'"
           [footerLabel]="'Encoding'"
           [footerList]="encodingList"
+          [geoJson]="geoJSONData[0]"
         ></app-data-import-validation-map-panel>
       </div>
       <div class="w-1/2 h-full bg-white">
@@ -26,6 +27,7 @@
           [headerLabel]="'This is the extent of the dataset'"
           [footerLabel]="'Ref system'"
           [footerList]="refSystem"
+          [geoJson]="geoJSONData[1]"
         ></app-data-import-validation-map-panel>
       </div>
     </div>
