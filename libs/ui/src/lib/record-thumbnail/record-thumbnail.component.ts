@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { RecordSummary } from '@lib/common'
 
 @Component({
   selector: 'ui-record-thumbnail',
