@@ -1,25 +1,36 @@
 <!-- Record list item: List Small -->
-<div
-  class="h-10 border-b border-gray-200 transition duration-200 hover:bg-gray-100 border-gray-300"
->
-  <a
-    [href]="record.metadataUrl"
-    [target]="linkTarget"
-    [title]="record.abstract"
+<div class="mb-4">
+  <div
+    class="h-full flex sm:flex-row flex-col p-5 items-center sm:justify-start justify-center text-center sm:text-left bg-white border-gray-200 border-2 rounded-md"
   >
-    <div class="h-full flex flex-row items-center">
-      <ui-record-thumbnail
-        class="w-10 h-full flex-shrink-0 border-r border-gray-200 bg-gray-100"
-        [thumbnailUrl]="record.thumbnailUrl"
-      ></ui-record-thumbnail>
+    <div class="flex-grow">
+      <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
+        {{ record.title }}
+      </h1>
+      <p class="leading-relaxed mb-3">{{ record.abstract }}</p>
 
-      <div class="flex-grow h-full px-1 py-1 flex flex-col overflow-hidden">
-        <h1
-          class="title-font text-sm font-bold text-gray-900 truncate md:overflow-clip"
+      <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+        <a
+          class="inline-flex items-center md:mb-2 lg:mb-0 hover:underline"
+          [href]="record.metadataUrl"
         >
-          {{ record.title }}
-        </h1>
+          <span translate>readMore</span>
+          <svg
+            class="h-5 w-5"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </a>
       </div>
     </div>
-  </a>
+  </div>
 </div>
