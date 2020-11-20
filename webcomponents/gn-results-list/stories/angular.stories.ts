@@ -46,3 +46,14 @@ export const AngularGnResultsListTextStory = () => ({
   },
 })
 AngularGnResultsListTextStory.storyName = 'Text'
+
+export const AngularGnResultsListTitleStory = () => ({
+  component: GnResultsListComponent,
+  props: {
+    apiUrl: text('api url', 'https://apps.titellus.net/geonetwork/srv/api'),
+    layout: 'TITLE',
+    primaryColor: color('Primary Color', 'blue'),
+    secondaryColor: color('Secondary Color', 'grey'),
+  },
+})
+AngularGnResultsListTitleStory.storyName = 'Title'
