@@ -14,8 +14,11 @@ import { RecordMetricComponent } from './record-metric/record-metric.component'
 import { RecordPreviewCardComponent } from './record-preview-card/record-preview-card.component'
 import { RecordPreviewListComponent } from './record-preview-list/record-preview-list.component'
 import { RecordPreviewTextComponent } from './record-preview-text/record-preview-text.component'
+import { RecordPreviewTitleComponent } from './record-preview-title/record-preview-title.component'
 import { ResultsListComponent } from './results-list/results-list.component'
 import { TextInputComponent } from './text-input/text-input.component'
+import { RecordPreviewComponent } from './record-preview/record-preview.component'
+import { RecordThumbnailComponent } from './record-thumbnail/record-thumbnail.component'
 
 @NgModule({
   declarations: [
@@ -24,10 +27,13 @@ import { TextInputComponent } from './text-input/text-input.component'
     ButtonComponent,
     TextInputComponent,
     ColorScaleComponent,
+    RecordPreviewComponent,
     RecordPreviewListComponent,
     RecordPreviewCardComponent,
     RecordPreviewTextComponent,
+    RecordPreviewTitleComponent,
     RecordMetricComponent,
+    RecordThumbnailComponent,
     ResultsListComponent,
     CatalogTitleComponent,
     DragAndDropFileInputComponent,
@@ -47,12 +53,15 @@ import { TextInputComponent } from './text-input/text-input.component'
     RecordPreviewListComponent,
     RecordPreviewCardComponent,
     RecordPreviewTextComponent,
+    RecordPreviewTitleComponent,
     RecordMetricComponent,
+    RecordThumbnailComponent,
     ResultsListComponent,
     CatalogTitleComponent,
     DragAndDropFileInputComponent,
     ProgressBarComponent,
     FacetsModule,
+    RecordPreviewComponent,
   ],
 })
 export class UiModule {}

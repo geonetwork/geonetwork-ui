@@ -15,7 +15,7 @@ export class ElasticsearchMapper {
       title: hit._source.resourceTitleObject?.default || 'no title',
       abstract: hit._source.resourceAbstractObject?.default || 'no abstract',
       thumbnailUrl: this.getFirstValue(hit._source.overview)?.url || '',
-      url: `/geonetwork/srv/eng/catalog.search#/metadata/${hit._source.uuid}`,
+      metadataUrl: `/geonetwork/srv/eng/catalog.search#/metadata/${hit._source.uuid}`,
       downloadable: (hit as any).download,
       viewable: (hit as any).view,
       logoUrl: `/geonetwork${hit._source.logo}`,

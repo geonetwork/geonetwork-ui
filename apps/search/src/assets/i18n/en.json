@@ -6,7 +6,7 @@
 	"openRecord": "Open record",
 	"recordViewable": "viewable",
 	"recordDownloadable": "downloadable",
-	"loadResults": "Load results",
+	"search.loading": "Loading ...",
 	"last changed": "last changed",
 	"popularity": "popularity",
 	"dropFile": "drop file",

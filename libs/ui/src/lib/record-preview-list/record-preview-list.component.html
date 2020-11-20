@@ -1,81 +1,44 @@
-<div class="h-40">
-  <div
-    class="h-full flex flex-row items-center bg-white border border-gray-200 p-1 rounded-md shadow-sm"
+<div
+  class="h-40 bg-white transition duration-200 hover:bg-gray-100 border-gray-300"
+>
+  <a
+    [href]="record.metadataUrl"
+    [target]="linkTarget"
+    [title]="record.abstract"
   >
     <div
-      class="w-40 h-full relative flex-shrink-0 bg-gray-100 rounded overflow-hidden"
+      class="h-full flex flex-row items-center border border-gray-200 rounded-md shadow-sm"
     >
-      <svg
-        class="text-gray-200 absolute h-12 w-12 transform -translate-x-1/2 -translate-y-1/2"
-        style="top: 50%; left: 50%;"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-        />
-      </svg>
-      <img
-        *ngIf="record.thumbnailUrl"
-        class="relative h-full w-full object-cover object-left-top"
-        [src]="record.thumbnailUrl"
-        alt="thumbnail"
-      />
-    </div>
-    <div class="flex-grow h-full px-6 py-4 flex flex-col overflow-hidden">
-      <div class="mb-3 flex flex-row items-center">
-        <a
-          class="title-font text-primary hover:underline font-bold text-gray-900 truncate mr-6 flex flex-row items-center"
-          [href]="record.url"
-        >
-          <span class="truncate">{{ record.title }}</span>
-          <svg
-            class="h-5 w-5 flex-shrink-0"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </a>
+      <ui-record-thumbnail
+        class="w-40 h-full flex-shrink-0 border-r border-gray-200 bg-gray-100"
+        [thumbnailUrl]="record.thumbnailUrl"
+      ></ui-record-thumbnail>
+
+      <div class="flex-grow h-full px-6 py-4 flex flex-col overflow-hidden">
+        <div class="title-font text-lg font-medium text-gray-900">
+          <h1 class="truncate">{{ record.title }}</h1>
+        </div>
+        <p class="leading-relaxed clamp-3 text-sm text-gray-700">
+          {{ record.abstract }}
+        </p>
         <div class="flex-grow"></div>
-        <img
-          *ngIf="record.logoUrl"
-          class="relative h-6 object-contain"
-          [src]="record.logoUrl"
-          alt="logo"
-        />
-      </div>
-      <p class="leading-relaxed flex-grow mb-4 clamp-2 text-sm">
-        {{ record.abstract }}
-      </p>
-      <div class="flex flex-row items-center">
-        <div
-          class="text-gray-500 text-sm truncate capitalize border-r mr-4 pr-4"
-          *ngIf="record.updateFrequency"
-        >
-          <span translate>{{ record.updateFrequency }}</span>
-        </div>
-        <div
-          class="text-gray-500 text-sm border-gray-300 truncate viewable-downloadable"
-          *ngIf="isViewable || isDownloadable"
-        >
-          <span *ngIf="isViewable" translate>recordViewable</span>
-          <span *ngIf="isViewable && isDownloadable">,&nbsp;</span>
-          <span *ngIf="isDownloadable" translate>recordDownloadable</span>
+        <div class="flex flex-row items-center">
+          <div
+            class="text-gray-500 text-xs truncate capitalize border-r mr-4 pr-4"
+            *ngIf="record.updateFrequency"
+          >
+            <span translate>{{ record.updateFrequency }}</span>
+          </div>
+          <div
+            class="text-gray-500 text-xs border-gray-300 truncate viewable-downloadable"
+            *ngIf="isViewable || isDownloadable"
+          >
+            <span *ngIf="isViewable" translate>recordViewable</span>
+            <span *ngIf="isViewable && isDownloadable">,&nbsp;</span>
+            <span *ngIf="isDownloadable" translate>recordDownloadable</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </a>
 </div>

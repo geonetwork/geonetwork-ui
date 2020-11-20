@@ -3,16 +3,26 @@
 
 # GeoNetwork UI
 
-GeoNetwork UI is a client application to browse your GeoNetwork catalogue.
+GeoNetwork UI is a library of UI and Web Components to embed your catalogue in third party website or to build custom application on top of it. It relies on the GeoNetwork 4 OpenAPI.
+
+The target audience is: 
+* GeoNetwork developers
+* Developers of SDI, portals 
+* Website and CMS maintainers
+
 
 ## Getting started
 
-Install first GeoNetwork 4 [from source](https://geonetwork-opensource.org/manuals/trunk/en/maintainer-guide/installing/installing-from-source-code.html#the-quick-way) 
-or using [docker](https://github.com/geonetwork/docker-geonetwork/tree/master/4.0.0-alpha.1).
+Install first GeoNetwork 4 [from source](https://geonetwork-opensource.org/manuals/4.0.x/eng/users/install-guide/installing-from-source-code.html#building-running) 
+or using [docker](https://github.com/geonetwork/docker-geonetwork/tree/master/4.0.1).
 
 Run `npm install` to fetch all dependencies of the project.
 
-Run `npm run start` to start the full search app in a dev server, available at `http://localhost:4200/`. 
+Run `npm run start` to start the default app.
+
+Run `ng serve app-search` to start the search app in a dev server.
+
+Once started the application is available at `http://localhost:4200/`. 
 
 [The contributing guide](CONTRIBUTING.md) explains the structure of the project and how to work with it.
 

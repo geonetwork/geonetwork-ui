@@ -11,7 +11,7 @@ import { RequestMoreResults } from '../state/actions'
   styleUrls: ['./results-list.container.component.css'],
 })
 export class ResultsListContainerComponent implements OnInit {
-  @Input() layout: ResultsListLayout = ResultsListLayout.BLOCK
+  @Input() layout: ResultsListLayout = ResultsListLayout.CARD
 
   results$ = this.store.pipe(select(getSearchResults))
   isLoading$ = this.store.pipe(select(getSearchResultsLoading))

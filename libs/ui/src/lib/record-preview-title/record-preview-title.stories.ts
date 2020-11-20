@@ -1,15 +1,16 @@
 import { withA11y } from '@storybook/addon-a11y'
 import { withKnobs } from '@storybook/addon-knobs'
 import { Meta, Story } from '@storybook/angular'
-import { RecordPreviewTextComponent } from './record-preview-text.component'
+import { RecordPreviewTitleComponent } from './record-preview-title.component'
 
 export default {
   title: 'UI/Record preview',
+  component: RecordPreviewTitleComponent,
   decorators: [withKnobs, withA11y],
 } as Meta
 
-const Template: Story<RecordPreviewTextComponent> = (args) => ({
-  component: RecordPreviewTextComponent,
+const Template: Story<RecordPreviewTitleComponent> = (args) => ({
+  component: RecordPreviewTitleComponent,
   props: args,
 })
 
@@ -28,4 +29,4 @@ RecordPreviewTextComponentStory.args = {
   },
 }
 
-RecordPreviewTextComponentStory.storyName = 'Title record'
+RecordPreviewTextComponentStory.storyName = 'Text record'

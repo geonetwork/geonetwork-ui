@@ -1,21 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { RecordPreviewTextComponent } from './record-preview-text.component'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
+import { RecordPreviewTitleComponent } from './record-preview-title.component'
 
 describe('RecordPreviewTextComponent', () => {
-  let component: RecordPreviewTextComponent
-  let fixture: ComponentFixture<RecordPreviewTextComponent>
+  let component: RecordPreviewTitleComponent
+  let fixture: ComponentFixture<RecordPreviewTitleComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RecordPreviewTextComponent],
+      declarations: [RecordPreviewTitleComponent],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecordPreviewTextComponent)
+    fixture = TestBed.createComponent(RecordPreviewTitleComponent)
     component = fixture.componentInstance
     component.record = {
       id: '139',
