@@ -9,7 +9,7 @@
     "storybook": "npm run generate-css & start-storybook -p 4201",
     "storybook-wc": "npm run build:wc && npm run generate-css && start-storybook -p 4202 --config-dir webcomponents/.storybook",
     "build:storybook": "build-storybook -o dist/storybook && npm run build:storybook-wc",
-    "build:storybook-wc": "build:wc && build-storybook -c webcomponents/.storybook -o dist/storybook-wc",
+    "build:storybook-wc": "npm run build:wc && build-storybook -c webcomponents/.storybook -o dist/storybook-wc",
     "build:wc": "npm run prestart && tools/build/webcomponent/build-all-wc.sh",
     "serve:wc": "npm run prebuild && tools/build/webcomponent/serve-wc.sh",
     "lint": "ng lint",
