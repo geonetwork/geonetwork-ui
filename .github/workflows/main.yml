@@ -62,12 +62,30 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-
       - name: Install
         run: npm ci
-
       - name: Build webcomponents
         run: npm run build:wc
-
       - name: Build storybook
         run: npm run build:storybook
+
+      - run: echo "::set-env name=BRANCH_NAME::${GITHUB_HEAD_REF:-master}"
+
+      - name: deploy to gh pages
+        run: |
+          echo "Deploying to directory: ${{env.BRANCH_NAME}}"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          npx gh-pages --dist dist/ --src storybook*/**/* --dest ${{env.BRANCH_NAME}} --remove "${{env.BRANCH_NAME}}/**" --no-history --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
+      - name: add PR comment
+        uses: unsplash/comment-on-pr@master
+        if: github.event_name == 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          msg: 'Link to the Storybook:
+
+                * https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/
+
+                * https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook-wc/'
+          check_for_duplicate_msg: true
