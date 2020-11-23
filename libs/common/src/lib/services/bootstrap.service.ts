@@ -31,7 +31,7 @@ export class BootstrapService {
     return this.siteApiService.getSettingsSet().pipe(shareReplay())
   }
 
-  uiConfReady(uiIdentifier: string): Observable<object> {
+  uiConfReady(uiIdentifier: string): Observable<any> {
     if (!this.uiConfigurations[uiIdentifier]) {
       this.uiConfigurations = {
         ...this.uiConfigurations,

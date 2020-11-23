@@ -29,7 +29,7 @@ export class ResultsListContainerComponent implements OnInit {
       .uiConfReady('srv')
       .pipe(
         take(1),
-        map((config) => config['mods'].search.facetConfig),
+        map((config) => config.mods.search.facetConfig),
         // TODO: make the config work not just for tag
         pluck('tag'),
         tap((tagConfig) => {
