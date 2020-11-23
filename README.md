@@ -31,6 +31,11 @@ If you would like to contribute code, please follow our [style guide](STYLEGUIDE
 [Storybook](https://storybook.js.org) is a tool for exploring individual features of the application in an interactive way.
 You can start it with `npm run storybook`.
 
+## Demo
+You can test current master components with storybook
+- [Angular components](https://geonetwork.github.io/geonetwork-ui/master/storybook/?path=/story/ui--auto-complete-story)
+- [Web components](https://geonetwork.github.io/geonetwork-ui/master/storybook-wc/) (custom elements)
+
 ## More information
 
 The GeoNetwork UI project is built using Angular 10 and is composed of:
