@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { ResultsListLayout } from '@lib/common'
+import { BootstrapService, ResultsListLayout } from '@lib/common'
 import { select, Store } from '@ngrx/store'
 import { SearchState } from '../state/reducer'
 import { getSearchResults, getSearchResultsLoading } from '../state/selectors'
-import { RequestMoreResults } from '../state/actions'
+import { RequestMoreResults, SetConfigAggregations } from '../state/actions'
+import { map, pluck, take, tap } from 'rxjs/operators'
 
 @Component({
   selector: 'search-results-list-container',
@@ -16,10 +17,26 @@ export class ResultsListContainerComponent implements OnInit {
   results$ = this.store.pipe(select(getSearchResults))
   isLoading$ = this.store.pipe(select(getSearchResultsLoading))
 
-  constructor(private store: Store<SearchState>) {}
+  constructor(
+    private bootstrap: BootstrapService,
+    private store: Store<SearchState>
+  ) {}
 
   ngOnInit(): void {
     // initial load when showing the component
-    this.store.dispatch(new RequestMoreResults())
+
+    this.bootstrap
+      .uiConfReady('srv')
+      .pipe(
+        take(1),
+        map((config) => config.mods.search.facetConfig),
+        // TODO: make the config work not just for tag
+        pluck('tag'),
+        tap((tagConfig) => {
+          this.store.dispatch(new SetConfigAggregations({ tag: tagConfig }))
+          this.store.dispatch(new RequestMoreResults())
+        })
+      )
+      .subscribe()
   }
 }

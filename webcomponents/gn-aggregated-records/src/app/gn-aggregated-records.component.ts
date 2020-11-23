@@ -6,7 +6,7 @@ import {
 } from '@angular/core'
 import { BaseComponent } from '../../../base.component'
 import { Store } from '@ngrx/store'
-import { SearchState, UpdateParams } from '@lib/search'
+import { SearchState, UpdateFilters } from '@lib/search'
 
 @Component({
   selector: 'wc-component',
@@ -32,7 +32,7 @@ export class GnAggregatedRecordsComponent extends BaseComponent {
 
   setFilter(value: string) {
     this.activeFilter = `+${this.aggregationField}:"${value}"`
-    this.store.dispatch(new UpdateParams({ any: this.activeFilter }))
+    this.store.dispatch(new UpdateFilters({ any: this.activeFilter }))
   }
 
   clearFilter() {

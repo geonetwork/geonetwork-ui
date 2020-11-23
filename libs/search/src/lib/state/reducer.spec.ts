@@ -11,28 +11,31 @@ describe('Search Reducer', () => {
     })
   })
 
-  describe('UPDATE_PARAMS action', () => {
-    it('should set new params', () => {
-      const action = new fromActions.UpdateParams({
+  describe('UPDATE_FILTERS action', () => {
+    it('should set new filters', () => {
+      const action = new fromActions.UpdateFilters({
         any: 'blah',
       })
       const state = reducer(initialState, action)
-      expect(state.params).toEqual({ any: 'blah' })
+      expect(state.params.filters).toEqual({ any: 'blah' })
     })
-    it('should remove params with value undefined', () => {
-      const action = new fromActions.UpdateParams({
+    it('should remove filters with value undefined', () => {
+      const action = new fromActions.UpdateFilters({
         any: undefined,
       })
       const state = reducer(
         {
           ...initialState,
           params: {
-            any: 'bleh',
+            ...initialState.params,
+            filters: {
+              any: 'bleh',
+            },
           },
         },
         action
       )
-      expect(state.params).toEqual({})
+      expect(state.params.filters).toEqual({})
     })
   })
 
@@ -40,7 +43,7 @@ describe('Search Reducer', () => {
     it('should set sort by params', () => {
       const action = new fromActions.SortBy('fieldA')
       const state = reducer(initialState, action)
-      expect(state.sortBy).toEqual('fieldA')
+      expect(state.params.sortBy).toEqual('fieldA')
     })
   })
 
@@ -51,11 +54,17 @@ describe('Search Reducer', () => {
       const state = reducer(
         {
           ...initialState,
-          results: [{ title: 'abcd' } as any],
+          results: {
+            ...initialState.results,
+            records: [{ title: 'abcd' } as any],
+          },
         },
         action
       )
-      expect(state.results).toEqual([{ title: 'abcd' } as any, ...payload])
+      expect(state.results.records).toEqual([
+        { title: 'abcd' } as any,
+        ...payload,
+      ])
     })
     it('should remove the loadingMore flag', () => {
       const payload = [{ title: 'record1' } as any]
@@ -77,11 +86,14 @@ describe('Search Reducer', () => {
       const state = reducer(
         {
           ...initialState,
-          results: [{ title: 'abcd' } as any],
+          results: {
+            ...initialState.results,
+            records: [{ title: 'abcd' } as any],
+          },
         },
         action
       )
-      expect(state.results).toEqual([])
+      expect(state.results.records).toEqual([])
     })
   })
 

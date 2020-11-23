@@ -1,17 +1,18 @@
-import { NgModule } from '@angular/core'
-import { StoreModule } from '@ngrx/store'
-import { ResultsListContainerComponent } from './results-list/results-list.container.component'
-import { initialState, reducer, SEARCH_FEATURE_KEY } from './state/reducer'
-import { SortByComponent } from './sort-by/sort-by.component'
-import { UiModule } from '@lib/ui'
 import { CommonModule } from '@angular/common'
-import { FuzzySearchComponent } from './fuzzy-search/fuzzy-search.component'
-import { SearchEffects } from './state/effects'
-import { EffectsModule } from '@ngrx/effects'
 import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http'
+import { NgModule } from '@angular/core'
 import { GnApiModule } from '@lib/gn-api'
+import { UiModule } from '@lib/ui'
+import { EffectsModule } from '@ngrx/effects'
+import { StoreModule } from '@ngrx/store'
 import { TranslateModule } from '@ngx-translate/core'
+import { FacetsModule } from './facets/facets.module'
+import { FuzzySearchComponent } from './fuzzy-search/fuzzy-search.component'
 import { RecordsMetricsComponent } from './records-metrics/records-metrics.component'
+import { ResultsListContainerComponent } from './results-list/results-list.container.component'
+import { SortByComponent } from './sort-by/sort-by.component'
+import { SearchEffects } from './state/effects'
+import { initialState, reducer, SEARCH_FEATURE_KEY } from './state/reducer'
 
 @NgModule({
   declarations: [
@@ -31,12 +32,14 @@ import { RecordsMetricsComponent } from './records-metrics/records-metrics.compo
     HttpClientXsrfModule,
     UiModule,
     GnApiModule,
+    FacetsModule,
   ],
   exports: [
     SortByComponent,
     FuzzySearchComponent,
     RecordsMetricsComponent,
     ResultsListContainerComponent,
+    FacetsModule,
   ],
 })
 export class LibSearchModule {}

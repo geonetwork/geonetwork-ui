@@ -1,16 +1,18 @@
-import { RecordSummary, SearchParams } from '@lib/common'
+import { RecordSummary, SearchFilters } from '@lib/common'
 import { Action } from '@ngrx/store'
 
-export const UPDATE_PARAMS = '[Search] Update Params'
+export const UPDATE_FILTERS = '[Search] Update Filters'
 export const SORT_BY = '[Search] Sort By'
 export const ADD_RESULTS = '[Search] Add Results'
 export const CLEAR_RESULTS = '[Search] Clear Results'
 export const REQUEST_MORE_RESULTS = '[Search] Request More Results'
+export const SET_RESULTS_AGGREGATIONS = '[Search] Set Results Aggregations'
+export const SET_CONFIG_AGGREGATIONS = '[Search] Set Config Aggregations'
 
-export class UpdateParams implements Action {
-  readonly type = UPDATE_PARAMS
+export class UpdateFilters implements Action {
+  readonly type = UPDATE_FILTERS
 
-  constructor(public payload: SearchParams) {}
+  constructor(public payload: SearchFilters) {}
 }
 
 export class SortBy implements Action {
@@ -37,9 +39,23 @@ export class RequestMoreResults implements Action {
   constructor() {}
 }
 
+export class SetResultsAggregations implements Action {
+  readonly type = SET_RESULTS_AGGREGATIONS
+
+  constructor(public payload: any) {}
+}
+
+export class SetConfigAggregations implements Action {
+  readonly type = SET_CONFIG_AGGREGATIONS
+
+  constructor(public payload: any) {}
+}
+
 export type SearchActions =
-  | UpdateParams
+  | UpdateFilters
   | SortBy
   | AddResults
   | ClearResults
   | RequestMoreResults
+  | SetResultsAggregations
+  | SetConfigAggregations

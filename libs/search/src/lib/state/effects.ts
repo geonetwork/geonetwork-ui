@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core'
 import { AuthService } from '@lib/auth'
-import { RecordSummary } from '@lib/common'
 import { SearchApiService } from '@lib/gn-api'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
 import { SearchResponse } from 'elasticsearch'
 import { of } from 'rxjs'
-import { map, switchMap, withLatestFrom } from 'rxjs/operators'
+import { switchMap, withLatestFrom } from 'rxjs/operators'
 import { ElasticsearchMetadataModels } from '../elasticsearch/constant'
 import { ElasticsearchMapper } from '../elasticsearch/elasticsearch.mapper'
 import { ElasticsearchService } from '../elasticsearch/elasticsearch.service'
 import {
   AddResults,
   ClearResults,
-  REQUEST_MORE_RESULTS,
   RequestMoreResults,
+  REQUEST_MORE_RESULTS,
+  SetResultsAggregations,
   SORT_BY,
-  UPDATE_PARAMS,
+  UPDATE_FILTERS,
 } from './actions'
 import { SearchState } from './reducer'
 import { getSearchState } from './selectors'
@@ -33,7 +33,7 @@ export class SearchEffects {
 
   clearResults$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SORT_BY, UPDATE_PARAMS),
+      ofType(SORT_BY, UPDATE_FILTERS),
       switchMap(() => of(new ClearResults(), new RequestMoreResults()))
     )
   )
@@ -51,11 +51,15 @@ export class SearchEffects {
           )
         )
       ),
-      map<any, RecordSummary[]>((response: SearchResponse<any>) => {
+      switchMap((response: SearchResponse<any>) => {
         const mapper = new ElasticsearchMapper(response)
-        return mapper.toRecordSummary()
-      }),
-      map((records: RecordSummary[]) => new AddResults(records))
+        const records = mapper.toRecordSummary()
+        const aggregations = response.aggregations
+        return [
+          new AddResults(records),
+          new SetResultsAggregations(aggregations),
+        ]
+      })
     )
   )
 }

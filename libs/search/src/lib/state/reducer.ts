@@ -1,18 +1,33 @@
-import { RecordSummary, SearchParams } from '@lib/common'
+import { RecordSummary, SearchFilters } from '@lib/common'
 import * as fromActions from './actions'
 
 export const SEARCH_FEATURE_KEY = 'searchState'
 
 export interface SearchState {
-  params: SearchParams
-  sortBy?: string
-  results: RecordSummary[]
+  config: {
+    aggregations?: any
+  }
+  params: {
+    filters: SearchFilters
+    sortBy?: string
+    size?: number
+  }
+  results: {
+    records: RecordSummary[]
+    aggregations: any
+  }
   loadingMore: boolean
 }
 
 export const initialState: SearchState = {
-  params: {},
-  results: [],
+  config: {},
+  params: {
+    filters: {},
+  },
+  results: {
+    records: [],
+    aggregations: {},
+  },
   loadingMore: false,
 }
 
@@ -21,37 +36,65 @@ export function reducer(
   action: fromActions.SearchActions
 ): SearchState {
   switch (action.type) {
-    case fromActions.UPDATE_PARAMS: {
+    case fromActions.UPDATE_FILTERS: {
       return {
         ...state,
         params: {
-          ...action.payload,
+          ...state.params,
+          filters: { ...action.payload },
         },
       }
     }
     case fromActions.SORT_BY: {
       return {
         ...state,
-        sortBy: action.sortBy,
+        params: {
+          ...state.params,
+          sortBy: action.sortBy,
+        },
       }
     }
     case fromActions.ADD_RESULTS: {
       return {
         ...state,
-        results: [...state.results, ...action.payload],
+        results: {
+          ...state.results,
+          records: [...state.results.records, ...action.payload],
+        },
         loadingMore: false,
       }
     }
     case fromActions.CLEAR_RESULTS: {
       return {
         ...state,
-        results: [],
+        results: {
+          ...state.results,
+          records: [],
+        },
       }
     }
     case fromActions.REQUEST_MORE_RESULTS: {
       return {
         ...state,
         loadingMore: true,
+      }
+    }
+    case fromActions.SET_RESULTS_AGGREGATIONS: {
+      return {
+        ...state,
+        results: {
+          ...state.results,
+          aggregations: action.payload,
+        },
+      }
+    }
+    case fromActions.SET_CONFIG_AGGREGATIONS: {
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          aggregations: action.payload,
+        },
       }
     }
   }

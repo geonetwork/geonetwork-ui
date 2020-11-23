@@ -2,12 +2,15 @@ import { initialState } from './reducer'
 import * as fromSelectors from './selectors'
 
 describe('Search Selectors', () => {
-  describe('getSearchParams', () => {
-    it('should return search params', () => {
-      const result = fromSelectors.getSearchParams.projector({
+  describe('getSearchFilters', () => {
+    it('should return search filters', () => {
+      const result = fromSelectors.getSearchFilters.projector({
         ...initialState,
         params: {
-          any: 'abcd',
+          ...initialState.params,
+          filters: {
+            any: 'abcd',
+          },
         },
       })
       expect(result).toEqual({
@@ -20,7 +23,10 @@ describe('Search Selectors', () => {
     it('should return sort by criteria', () => {
       const result = fromSelectors.getSearchSortBy.projector({
         ...initialState,
-        sortBy: 'title',
+        params: {
+          ...initialState.params,
+          sortBy: 'title',
+        },
       })
       expect(result).toEqual('title')
     })
@@ -31,7 +37,10 @@ describe('Search Selectors', () => {
       const records = [{ title: 'record1' } as any]
       const result = fromSelectors.getSearchResults.projector({
         ...initialState,
-        results: records,
+        results: {
+          ...initialState.results,
+          records: records,
+        },
       })
       expect(result).toEqual(records)
     })
