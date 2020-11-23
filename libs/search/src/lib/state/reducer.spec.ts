@@ -17,7 +17,7 @@ describe('Search Reducer', () => {
         any: 'blah',
       })
       const state = reducer(initialState, action)
-      expect(state.requestParams.filters).toEqual({ any: 'blah' })
+      expect(state.params.filters).toEqual({ any: 'blah' })
     })
     it('should remove filters with value undefined', () => {
       const action = new fromActions.UpdateFilters({
@@ -26,8 +26,8 @@ describe('Search Reducer', () => {
       const state = reducer(
         {
           ...initialState,
-          requestParams: {
-            ...initialState.requestParams,
+          params: {
+            ...initialState.params,
             filters: {
               any: 'bleh',
             },
@@ -35,7 +35,7 @@ describe('Search Reducer', () => {
         },
         action
       )
-      expect(state.requestParams.filters).toEqual({})
+      expect(state.params.filters).toEqual({})
     })
   })
 
@@ -43,7 +43,7 @@ describe('Search Reducer', () => {
     it('should set sort by params', () => {
       const action = new fromActions.SortBy('fieldA')
       const state = reducer(initialState, action)
-      expect(state.requestParams.sortBy).toEqual('fieldA')
+      expect(state.params.sortBy).toEqual('fieldA')
     })
   })
 
@@ -54,14 +54,14 @@ describe('Search Reducer', () => {
       const state = reducer(
         {
           ...initialState,
-          responseProperties: {
-            ...initialState.responseProperties,
-            results: [{ title: 'abcd' } as any],
+          results: {
+            ...initialState.results,
+            records: [{ title: 'abcd' } as any],
           },
         },
         action
       )
-      expect(state.responseProperties.results).toEqual([
+      expect(state.results.records).toEqual([
         { title: 'abcd' } as any,
         ...payload,
       ])
@@ -86,14 +86,14 @@ describe('Search Reducer', () => {
       const state = reducer(
         {
           ...initialState,
-          responseProperties: {
-            ...initialState.responseProperties,
-            results: [{ title: 'abcd' } as any],
+          results: {
+            ...initialState.results,
+            records: [{ title: 'abcd' } as any],
           },
         },
         action
       )
-      expect(state.responseProperties.results).toEqual([])
+      expect(state.results.records).toEqual([])
     })
   })
 

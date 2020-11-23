@@ -1,8 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { select, Store } from '@ngrx/store'
+import { Store } from '@ngrx/store'
+import { combineLatest } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { SearchState } from '../../state/reducer'
-import { getSearchResultsAggregations } from '../../state/selectors'
+import {
+  getSearchConfigAggregations,
+  getSearchResultsAggregations,
+} from '../../state/selectors'
 import { FacetsService } from '../facets.service'
 
 @Component({
@@ -13,17 +17,14 @@ import { FacetsService } from '../facets.service'
 export class FacetsContainerComponent implements OnInit {
   @Input() uiConfig = 'srv'
 
-  // TODO: fixture
-  requestAggregations = {
-    tag: { terms: { field: 'tag', include: '.*', size: 10 } },
-  }
-
-  models$ = this.store.pipe(
-    select(getSearchResultsAggregations),
-    map((responseAggregations: any) => {
+  models$ = combineLatest([
+    this.store.select(getSearchConfigAggregations),
+    this.store.select(getSearchResultsAggregations),
+  ]).pipe(
+    map(([configAggregations, resultsAggregations]) => {
       return this.facets.createFacetModel(
-        this.requestAggregations,
-        responseAggregations,
+        configAggregations,
+        resultsAggregations,
         false
       )
     })

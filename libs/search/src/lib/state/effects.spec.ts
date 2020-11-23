@@ -10,7 +10,7 @@ import {
   AddResults,
   ClearResults,
   RequestMoreResults,
-  SetResponseAggregations,
+  SetResultsAggregations,
   SortBy,
   UpdateFilters,
 } from './actions'
@@ -83,7 +83,7 @@ describe('Effects', () => {
       actions$ = hot('-a-', { a: new RequestMoreResults() })
       const expected = hot('-(bc)-', {
         b: new AddResults([]),
-        c: new SetResponseAggregations({}),
+        c: new SetResultsAggregations({}),
       })
 
       expect(effects.loadResults$).toBeObservable(expected)

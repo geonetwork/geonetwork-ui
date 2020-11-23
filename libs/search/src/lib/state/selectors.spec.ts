@@ -6,8 +6,8 @@ describe('Search Selectors', () => {
     it('should return search filters', () => {
       const result = fromSelectors.getSearchFilters.projector({
         ...initialState,
-        requestParams: {
-          ...initialState.requestParams,
+        params: {
+          ...initialState.params,
           filters: {
             any: 'abcd',
           },
@@ -23,8 +23,8 @@ describe('Search Selectors', () => {
     it('should return sort by criteria', () => {
       const result = fromSelectors.getSearchSortBy.projector({
         ...initialState,
-        requestParams: {
-          ...initialState.requestParams,
+        params: {
+          ...initialState.params,
           sortBy: 'title',
         },
       })
@@ -37,9 +37,9 @@ describe('Search Selectors', () => {
       const records = [{ title: 'record1' } as any]
       const result = fromSelectors.getSearchResults.projector({
         ...initialState,
-        responseProperties: {
-          ...initialState.responseProperties,
-          results: records,
+        results: {
+          ...initialState.results,
+          records: records,
         },
       })
       expect(result).toEqual(records)

@@ -4,28 +4,28 @@ import * as fromActions from './actions'
 export const SEARCH_FEATURE_KEY = 'searchState'
 
 export interface SearchState {
-  requestParams: {
-    filters: SearchFilters
-    sortBy?: string
+  config: {
     aggregations?: any
   }
-  responseProperties: {
-    results: RecordSummary[]
+  params: {
+    filters: SearchFilters
+    sortBy?: string
+    size?: number
+  }
+  results: {
+    records: RecordSummary[]
     aggregations: any
   }
   loadingMore: boolean
 }
 
 export const initialState: SearchState = {
-  requestParams: {
+  config: {},
+  params: {
     filters: {},
-    // TODO: read from config
-    aggregations: {
-      tag: { terms: { field: 'tag', include: '.*', size: 10 } },
-    },
   },
-  responseProperties: {
-    results: [],
+  results: {
+    records: [],
     aggregations: {},
   },
   loadingMore: false,
@@ -39,8 +39,8 @@ export function reducer(
     case fromActions.UPDATE_FILTERS: {
       return {
         ...state,
-        requestParams: {
-          ...state.requestParams,
+        params: {
+          ...state.params,
           filters: { ...action.payload },
         },
       }
@@ -48,8 +48,8 @@ export function reducer(
     case fromActions.SORT_BY: {
       return {
         ...state,
-        requestParams: {
-          ...state.requestParams,
+        params: {
+          ...state.params,
           sortBy: action.sortBy,
         },
       }
@@ -57,9 +57,9 @@ export function reducer(
     case fromActions.ADD_RESULTS: {
       return {
         ...state,
-        responseProperties: {
-          ...state.responseProperties,
-          results: [...state.responseProperties.results, ...action.payload],
+        results: {
+          ...state.results,
+          records: [...state.results.records, ...action.payload],
         },
         loadingMore: false,
       }
@@ -67,9 +67,9 @@ export function reducer(
     case fromActions.CLEAR_RESULTS: {
       return {
         ...state,
-        responseProperties: {
-          ...state.responseProperties,
-          results: [],
+        results: {
+          ...state.results,
+          records: [],
         },
       }
     }
@@ -79,11 +79,20 @@ export function reducer(
         loadingMore: true,
       }
     }
-    case fromActions.SET_RESPONSE_AGGREGATIONS: {
+    case fromActions.SET_RESULTS_AGGREGATIONS: {
       return {
         ...state,
-        responseProperties: {
-          ...state.responseProperties,
+        results: {
+          ...state.results,
+          aggregations: action.payload,
+        },
+      }
+    }
+    case fromActions.SET_CONFIG_AGGREGATIONS: {
+      return {
+        ...state,
+        config: {
+          ...state.config,
           aggregations: action.payload,
         },
       }

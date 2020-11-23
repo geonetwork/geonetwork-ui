@@ -14,7 +14,7 @@ import {
   ClearResults,
   RequestMoreResults,
   REQUEST_MORE_RESULTS,
-  SetResponseAggregations,
+  SetResultsAggregations,
   SORT_BY,
   UPDATE_FILTERS,
 } from './actions'
@@ -57,7 +57,7 @@ export class SearchEffects {
         const aggregations = response.aggregations
         return [
           new AddResults(records),
-          new SetResponseAggregations(aggregations),
+          new SetResultsAggregations(aggregations),
         ]
       })
     )

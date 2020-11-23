@@ -6,7 +6,8 @@ export const SORT_BY = '[Search] Sort By'
 export const ADD_RESULTS = '[Search] Add Results'
 export const CLEAR_RESULTS = '[Search] Clear Results'
 export const REQUEST_MORE_RESULTS = '[Search] Request More Results'
-export const SET_RESPONSE_AGGREGATIONS = '[Search] Set Response Aggregations'
+export const SET_RESULTS_AGGREGATIONS = '[Search] Set Results Aggregations'
+export const SET_CONFIG_AGGREGATIONS = '[Search] Set Config Aggregations'
 
 export class UpdateFilters implements Action {
   readonly type = UPDATE_FILTERS
@@ -38,8 +39,14 @@ export class RequestMoreResults implements Action {
   constructor() {}
 }
 
-export class SetResponseAggregations implements Action {
-  readonly type = SET_RESPONSE_AGGREGATIONS
+export class SetResultsAggregations implements Action {
+  readonly type = SET_RESULTS_AGGREGATIONS
+
+  constructor(public payload: any) {}
+}
+
+export class SetConfigAggregations implements Action {
+  readonly type = SET_CONFIG_AGGREGATIONS
 
   constructor(public payload: any) {}
 }
@@ -50,4 +57,5 @@ export type SearchActions =
   | AddResults
   | ClearResults
   | RequestMoreResults
-  | SetResponseAggregations
+  | SetResultsAggregations
+  | SetConfigAggregations
