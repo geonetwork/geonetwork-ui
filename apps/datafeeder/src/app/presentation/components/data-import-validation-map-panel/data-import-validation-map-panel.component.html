@@ -1,11 +1,20 @@
 <div class="flex flex-col h-full">
-  <div class="flex flex-col justify-center h-12">
-    <span translate class="header-label font-bold pl-6">
+  <div class="flex flex-col justify-center h-16">
+    <span translate class="header-label font-bold pl-6 text-xl">
       {{ headerLabel }}
     </span>
   </div>
-  <div class="flex-1" #map></div>
-  <div class="flex justify-end">
+  <div class="flex flex-1 relative" #map>
+    <div
+      *ngIf="showProperties"
+      class="z-10 absolute top-0 w-64 bg-orange-600 bg-opacity-75 right-1/10 h-full"
+    >
+      <div class="text-xl text-white" *ngFor="let property of getProperties()">
+        &#171; {{ property[0] }} &#187; : &#171; {{ property[1] }} &#187;
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center justify-end h-16 pr-6 pl-6">
     <div class="w-1/2 mb-1 mt-1">
       <ui-dropdown-selector
         [title]="footerLabel | translate"

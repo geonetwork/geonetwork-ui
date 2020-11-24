@@ -4,7 +4,6 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start:datafeeder": "npm run prestart && npm start datafeeder",
     "build": "ng build",
     "test": "ng test",
     "storybook": "npm run generate-css & start-storybook -p 4201",

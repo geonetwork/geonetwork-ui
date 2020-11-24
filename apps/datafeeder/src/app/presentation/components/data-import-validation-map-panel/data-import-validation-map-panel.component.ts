@@ -12,6 +12,7 @@ import { OSM, Vector as VectorSource } from 'ol/source'
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer'
 import GeoJSON from 'ol/format/GeoJSON'
 import { Fill, Stroke, Style } from 'ol/style'
+import { transform } from 'ol/proj'
 
 @Component({
   selector: 'app-data-import-validation-map-panel',
@@ -22,11 +23,11 @@ export class DataImportValidationMapPanelComponent
   implements OnInit, AfterViewInit {
   @ViewChild('map') mapElt: ElementRef
 
-  @Input() mapViewId = 'map'
+  @Input() showProperties = false
   @Input() headerLabel = ''
   @Input() footerLabel = ''
   @Input() footerList = []
-  @Input() geoJson = ''
+  @Input() geoJson: any = {}
 
   selectedValue: any
 
@@ -49,36 +50,44 @@ export class DataImportValidationMapPanelComponent
         }),
         vectorLayer,
       ],
+      controls: [],
       interactions: [],
       view: new View({
-        center: [0, 0],
-        zoom: 2,
+        projection: 'EPSG:4326',
+        center: transform([0, 0], 'EPSG:4326', 'EPSG:3857'),
+        zoom: 1,
       }),
     })
 
-    this.map.getView().fit(vectorLayer.getSource().getExtent())
+    this.map.getView().fit(vectorLayer.getSource().getExtent(), {
+      padding: [100, 100, 100, 100],
+      constrainResolution: false,
+    })
+  }
+
+  getProperties() {
+    return Object.entries(this.geoJson.properties || {})
   }
 
   selectValue(event) {
-    console.log(event)
+    this.selectedValue = event
   }
 
   private getDefaultStyle(): Style {
     return new Style({
       stroke: new Stroke({
-        color: 'blue',
-        lineDash: [4],
+        color: 'orange',
         width: 3,
       }),
       fill: new Fill({
-        color: 'rgba(0, 0, 255, 0.1)',
+        color: 'rgba(255,165,0, 0.1)',
       }),
     })
   }
 
   private buildVectorSource(geoJson: GeoJSON): VectorLayer {
     return new VectorSource({
-      features: new GeoJSON().readFeatures(this.geoJson),
+      features: new GeoJSON().readFeatures(geoJson),
     })
   }
 
