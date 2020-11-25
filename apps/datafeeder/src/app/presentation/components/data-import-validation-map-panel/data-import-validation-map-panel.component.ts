@@ -17,6 +17,8 @@ import { Feature } from 'geojson'
 import { ColorService } from '@lib/common'
 import { asArray, asString } from 'ol/color'
 
+const DEFAULT_PRIMARY_COLOR = '#9a9a9a'
+
 @Component({
   selector: 'app-data-import-validation-map-panel',
   templateUrl: './data-import-validation-map-panel.component.html',
@@ -68,7 +70,8 @@ export class DataImportValidationMapPanelComponent
   }
 
   getPrimaryColor(opacity: number = 1) {
-    const primaryColor = ColorService.getColor('primary')
+    const primaryColor =
+      ColorService.getColor('primary') || DEFAULT_PRIMARY_COLOR
     const [r, g, b] = Array.from(asArray(primaryColor))
 
     return asString([r, g, b, opacity])
