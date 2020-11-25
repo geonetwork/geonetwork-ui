@@ -13,6 +13,9 @@ import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer'
 import GeoJSON from 'ol/format/GeoJSON'
 import { Fill, Stroke, Style } from 'ol/style'
 import { transform } from 'ol/proj'
+import { Feature } from 'geojson'
+import { ColorService } from '@lib/common'
+import { asArray, asString } from 'ol/color'
 
 @Component({
   selector: 'app-data-import-validation-map-panel',
@@ -27,7 +30,7 @@ export class DataImportValidationMapPanelComponent
   @Input() headerLabel = ''
   @Input() footerLabel = ''
   @Input() footerList = []
-  @Input() geoJson: any = {}
+  @Input() geoJson?: Feature
 
   selectedValue: any
 
@@ -53,7 +56,6 @@ export class DataImportValidationMapPanelComponent
       controls: [],
       interactions: [],
       view: new View({
-        projection: 'EPSG:4326',
         center: transform([0, 0], 'EPSG:4326', 'EPSG:3857'),
         zoom: 1,
       }),
@@ -63,6 +65,13 @@ export class DataImportValidationMapPanelComponent
       padding: [100, 100, 100, 100],
       constrainResolution: false,
     })
+  }
+
+  getPrimaryColor(opacity: number = 1) {
+    const primaryColor = ColorService.getColor('primary')
+    const [r, g, b] = Array.from(asArray(primaryColor))
+
+    return asString([r, g, b, opacity])
   }
 
   getProperties() {
@@ -76,18 +85,20 @@ export class DataImportValidationMapPanelComponent
   private getDefaultStyle(): Style {
     return new Style({
       stroke: new Stroke({
-        color: 'orange',
+        color: this.getPrimaryColor(1),
         width: 3,
       }),
       fill: new Fill({
-        color: 'rgba(255,165,0, 0.1)',
+        color: this.getPrimaryColor(0.1),
       }),
     })
   }
 
   private buildVectorSource(geoJson: GeoJSON): VectorLayer {
     return new VectorSource({
-      features: new GeoJSON().readFeatures(geoJson),
+      features: new GeoJSON().readFeatures(geoJson, {
+        featureProjection: 'EPSG:3857',
+      }),
     })
   }
 

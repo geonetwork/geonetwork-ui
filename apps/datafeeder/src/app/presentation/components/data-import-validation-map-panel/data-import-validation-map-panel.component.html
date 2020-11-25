@@ -7,9 +7,13 @@
   <div class="flex flex-1 relative" #map>
     <div
       *ngIf="showProperties"
-      class="z-10 absolute top-0 w-64 bg-orange-600 bg-opacity-75 right-1/10 h-full"
+      [style.background]="getPrimaryColor(0.75)"
+      class="z-10 absolute top-0 w-64 right-1/10 pb-4 pt-4 pr-4 pl-4"
     >
-      <div class="text-xl text-white" *ngFor="let property of getProperties()">
+      <div
+        class="text-base text-white"
+        *ngFor="let property of getProperties()"
+      >
         &#171; {{ property[0] }} &#187; : &#171; {{ property[1] }} &#187;
       </div>
     </div>

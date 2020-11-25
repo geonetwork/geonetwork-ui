@@ -26,7 +26,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
     type: 'Feature',
     properties: {
       id_circuit: 'P1',
-      nom: "Balcons d'Allonnes",
+      nom: 'Balcons dAllonnes',
       commune: 'Allonnes',
       niveau: 'Très facile',
     },
