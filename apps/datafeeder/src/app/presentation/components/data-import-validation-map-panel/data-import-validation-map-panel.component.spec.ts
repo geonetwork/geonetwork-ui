@@ -27,6 +27,9 @@ describe('MapViewComponent', () => {
     component.headerLabel = 'title'
     component.geoJson = {
       type: 'Feature',
+      properties: {
+        id: '0',
+      },
       geometry: {
         type: 'Polygon',
         coordinates: [
