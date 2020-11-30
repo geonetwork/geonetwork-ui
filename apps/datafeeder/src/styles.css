@@ -1,1 +1,75 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Permanent+Marker&display=swap');
+
+:root {
+  --current-font: 'Open Sans', sans-serif;
+  --focus-font: 'Permanent Marker', cursive;
+}
+
+html {
+  font-family: 'dataFeeder', sans-serif !important;
+}
+
+.grey1 {
+  fill:#F2F3F4;
+}
+
+.grey3 {
+  fill:#686C6D;
+}
+
+.grey2 {
+  fill:#CFD8DC;
+}
+
+.opacity-20 {
+  opacity:0.2;
+}
+
+.opacity-50 {
+  opacity:0.5;
+}
+
+.text-focus {
+  font-family: var(--focus-font);
+  font-size: 30px;
+  font-weight: normal;
+  line-height: 1;
+}
+
+.text-help {
+  display: inline-block;
+  margin: 20px 0 0;
+  font-family: var(--current-font);
+  font-size: 16px;
+}
+
+.text-legend {
+  font-family: var(--current-font);
+  font-size: 16px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.mask {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.background-color {
+  fill: var(--color-background);
+}
+
+.primary-color {
+  fill: var(--color-primary);
+}
+.secondary-color {
+  fill: var(--color-secondary);
+}
+
+.current-color {
+  fill: var(--color-main);
+}

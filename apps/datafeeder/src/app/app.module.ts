@@ -13,6 +13,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { AnalysisProgressPageComponent } from './presentation/pages/analysis-progress-page/analysis-progress.page'
 import { DatasetValidationPageComponent } from './presentation/pages/dataset-validation-page/dataset-validation-page'
 import { DataImportValidationMapPanelComponent } from './presentation/components/data-import-validation-map-panel/data-import-validation-map-panel.component'
+import { AnalysisProgressPageComponent } from './presentation/pages/analysis-progress-page/analysis-progress.page';
+import { UploadDataErrorDialogComponent } from './presentation/components/upload-data-error-dialog/upload-data-error-dialog.component'
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { DataImportValidationMapPanelComponent } from './presentation/components
     AnalysisProgressPageComponent,
     DatasetValidationPageComponent,
     DataImportValidationMapPanelComponent,
+    UploadDataErrorDialogComponent,
   ],
   imports: [
     BrowserModule,

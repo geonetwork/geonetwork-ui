@@ -1,0 +1,19 @@
+.error-dialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 50% 65px 50px;
+  width: 700px;
+  min-height: 500px;
+  background: var(--color-secondary);
+  color: #fff;
+  -webkit-clip-path: url(#error-mask);
+  clip-path: url(#error-mask);
+}
+.error-dialog .illustration {
+  position: absolute;
+  right: 0;
+  padding: 0 20px 0 0;
+  width: 50%;
+}

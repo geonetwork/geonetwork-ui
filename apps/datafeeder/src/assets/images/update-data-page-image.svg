@@ -1,29 +1,5 @@
-<div class="h-screen flex flex-col bg-primary-lightest bg-opacity-25 shape s1 overflow-hidden">
-  <svg class="mask">
-    <clipPath id="mask-shape1-1" clipPathUnits="objectBoundingBox"><path d="M1,0 H0.457 c-0.062,0.063,-0.106,0.145,-0.125,0.236 c-0.015,0.069,-0.059,0.264,-0.161,0.347 C0.114,0.631,-0.022,0.823,0.022,0.971 c0.003,0.01,0.007,0.02,0.012,0.028 h0.98 V0"></path></clipPath>
-    <clipPath id="mask-shape1-2" clipPathUnits="objectBoundingBox"><path d="M1,0 H0.505 c-0.046,0.028,-0.087,0.068,-0.119,0.119 c-0.028,0.045,-0.062,0.153,-0.119,0.244 c-0.057,0.092,-0.138,0.167,-0.166,0.212 c-0.083,0.133,-0.076,0.302,0.007,0.425 h0.934 V0"></path></clipPath>
-  </svg>
-  <div class="h-full ml-32 flex items-center z-10">
-    <div>
-      <div class="text-6xl font-bold pb-10" translate>
-        datafeeder.upload.title
-      </div>
-
-      <div class="pb-20 relative">
-        <app-upload-data-component
-          (uploadData)="handleUploadData($event)"
-        ></app-upload-data-component>
-        <app-upload-data-error-dialog class="error-dialog" [error]="error" *ngIf="error"></app-upload-data-error-dialog>
-      </div>
-
-      <app-upload-data-rules
-        maxFileSize="30"
-        [acceptedFileFormats]="['SHP', 'GeoJSON', 'GeoPackage', 'Spatialite']"
-      >
-      </app-upload-data-rules>
-    </div>
-    <svg class="h-full update-data-page-image" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-           viewBox="0 0 789.49 544.1" style="enable-background:new 0 0 789.49 544.1;" xml:space="preserve">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+     viewBox="0 0 789.49 544.1" style="enable-background:new 0 0 789.49 544.1;" xml:space="preserve">
 
       <g class="background-color">
          <path d="M166.1,333.57l-0.45,169.96c-0.1,0.88,0.51,1.68,1.39,1.82l0,0
@@ -57,7 +33,7 @@
         <path  d="M228.61,477.93c0,0,3.82,22.91,9.93,32.08s15.28,6.87,14.51-3.82s-10.69-28.26-10.69-28.26
             L228.61,477.93z"/>
       </g>
-        <path class="primary-color" d="M32.77,513.46c-18.08-7.5-28.45-16.22-28.45-25.54c0-9.35,10.45-18.11,28.64-25.62
+  <path class="primary-color" d="M32.77,513.46c-18.08-7.5-28.45-16.22-28.45-25.54c0-9.35,10.45-18.11,28.64-25.62
          L32.77,513.46z M406.67,469.78l0.14,36.19c8.81-5.61,13.66-11.69,13.66-18.05C420.46,481.52,415.57,475.41,406.67,469.78z
          M402.23,508.65c-32.57,17.6-105.32,29.85-189.84,29.85c-73.55,0-138.18-9.28-175.18-23.28l1.52-55.17
          c2.09-0.77,4.25-1.52,6.5-2.26l-0.04,9.72c0,1.22,0.98,2.2,2.2,2.2c1.18,0,2.15-0.94,2.18-2.12l0.32-11.26
@@ -90,7 +66,7 @@
          c0-4.14-3.36-7.5-7.5-7.5C444.67,306.85,441.31,310.21,441.31,314.35z M557.31,340.35c0,4.14,3.36,7.5,7.5,7.5s7.5-3.36,7.5-7.5
          c0-4.14-3.36-7.5-7.5-7.5S557.31,336.21,557.31,340.35z M682.31,257.35c0,4.14,3.36,7.5,7.5,7.5s7.5-3.36,7.5-7.5
          c0-4.14-3.36-7.5-7.5-7.5S682.31,253.21,682.31,257.35z"/>
-        <path class="opacity-50 background-color" d="M32.77,513.46c-18.08-7.5-28.45-16.22-28.45-25.54c0-9.35,10.45-18.11,28.64-25.62
+  <path class="opacity-50 background-color" d="M32.77,513.46c-18.08-7.5-28.45-16.22-28.45-25.54c0-9.35,10.45-18.11,28.64-25.62
          L32.77,513.46z M401.07,466.58c-2.09-1.09-4.33-2.16-6.72-3.2l0.02,4.14c0.01,1.21-0.96,2.19-2.17,2.2c0,0,0,0,0,0h-0.02
          c-1.19,0-2.16-0.94-2.2-2.12l-0.17-6.1c-26.15-10.35-67.17-18.24-115.85-21.9l0.1,36.81c0.08,0.75-0.45,1.42-1.19,1.53
          c-0.74-0.11-1.26-0.79-1.18-1.53L271,439.37c-0.04,0-0.08-0.01-0.11-0.01l0.18,64.16c0.1,0.88-0.51,1.68-1.39,1.82
@@ -104,9 +80,9 @@
          c0,6.24-27.03,11.3-60.37,11.3c-33.34,0-60.37-5.06-60.37-11.3c0-6.24,27.03-11.3,60.37-11.3
          C250.92,287.77,277.95,292.83,277.95,299.07z M271.14,299c-0.01-0.96-0.8-1.73-1.76-1.72H164.65c-0.97,0-1.76,0.79-1.76,1.76v0.02
          c0.01,0.97,0.8,1.75,1.77,1.74h104.72h0h0.03c0,0,0,0,0,0c0.96-0.01,1.73-0.8,1.72-1.76V299C271.14,299,271.14,299,271.14,299z"/>
-        <path class="secondary-color" d="M372.86,270.72c0,4.11-8.5,7.44-18.99,7.44c-10.49,0-18.99-3.33-18.99-7.44h0
+  <path class="secondary-color" d="M372.86,270.72c0,4.11-8.5,7.44-18.99,7.44c-10.49,0-18.99-3.33-18.99-7.44h0
          l2.8,22.32c0,3.51,7.26,6.36,16.19,6.36s16.21-2.84,16.21-6.36l2.8-22.32H372.86z"/>
-        <path class="current-color" d="M307.34,115.98c-0.39,0-0.78-0.15-1.07-0.45c-0.58-0.59-0.57-1.54,0.02-2.12
+  <path class="current-color" d="M307.34,115.98c-0.39,0-0.78-0.15-1.07-0.45c-0.58-0.59-0.57-1.54,0.02-2.12
          c8.3-8.14,11.03-18.05,12.2-22.29c0.63-2.3,0.9-3.25,2.08-3.43c0.41-0.06,0.81,0.04,1.15,0.27c17.5,6.03,55.91-0.1,56.3-0.16
          c0.81-0.13,1.59,0.42,1.72,1.24c0.13,0.82-0.42,1.59-1.24,1.72c-1.59,0.26-38.36,6.13-56.88,0.33c-0.08,0.27-0.16,0.56-0.23,0.83
          c-1.23,4.47-4.11,14.93-12.99,23.63C308.1,115.83,307.72,115.98,307.34,115.98z M319.68,90.08
@@ -343,15 +319,13 @@
          c1.3-0.41,2.58-0.84,3.83-1.27l-0.98-2.83C574.38,336.97,573.13,337.39,571.86,337.79z M615.41,314.89l1.77,2.42
          c1.08-0.79,2.16-1.59,3.23-2.39l-1.79-2.4C617.56,313.31,616.49,314.1,615.41,314.89z M544.22,165.58l2.6,1.49
          c0.71-1.23,1.34-2.48,1.87-3.72l-2.75-1.19C545.44,163.3,544.87,164.44,544.22,165.58z"/>
-        <g class="text-focus">
+  <g class="text-focus">
          <text transform="matrix(1 0 0 1 328.3139 29.8533)" class="primary-color">Adding data </text>
-          <text transform="matrix(1 0 0 1 328.3139 63.8533)" class="primary-color">has never been easier</text>
-          <text transform="matrix(1 0 0 1 402.3139 210.8533)" class="current-color text-legend">Import</text>
-          <text transform="matrix(1 0 0 1 580.3139 364.8533)" class="current-color text-legend">Enrichment</text>
-          <text transform="matrix(1 0 0 1 629.3139 234.8533)" class="current-color text-legend">Validation</text>
-          <text transform="matrix(1 0 0 1 456.3139 302.8533)" class="current-color text-legend">Verification</text>
+    <text transform="matrix(1 0 0 1 328.3139 63.8533)" class="primary-color">has never been easier</text>
+    <text transform="matrix(1 0 0 1 402.3139 210.8533)" class="current-color text-legend">Import</text>
+    <text transform="matrix(1 0 0 1 580.3139 364.8533)" class="current-color text-legend">Enrichment</text>
+    <text transform="matrix(1 0 0 1 629.3139 234.8533)" class="current-color text-legend">Validation</text>
+    <text transform="matrix(1 0 0 1 456.3139 302.8533)" class="current-color text-legend">Verification</text>
       </g>
 
       </svg>
-  </div>
-</div>

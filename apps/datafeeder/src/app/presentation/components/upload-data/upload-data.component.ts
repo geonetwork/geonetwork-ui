@@ -1,10 +1,13 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core'
-import { LogService } from '@lib/common'
+import {Component, EventEmitter, OnInit, Output} from '@angular/core'
+import {LogService} from '@lib/common'
+import {UploadDataError, UploadDataErrorType} from '../upload-data-error-dialog/upload-data-error-dialog.component'
 
 export interface UploadData {
   file: File
-  error?: string
+  error?: UploadDataError
 }
+
+const VALID_FILE_EXTENSIONS = ['shp', 'json', 'gpkg', 'db']
 
 @Component({
   selector: 'app-upload-data-component',
@@ -17,9 +20,11 @@ export class UploadDataComponent implements OnInit {
 
   @Output() uploadData = new EventEmitter<UploadData>()
 
-  constructor(private logService: LogService) {}
+  constructor(private logService: LogService) {
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   fileChange(file) {
     this.file = file
@@ -27,27 +32,59 @@ export class UploadDataComponent implements OnInit {
 
   handleUploadBtnClick() {
     if (!this.haveRights) {
-      this.emitUploadData(null, 'User hast rights to send this data!')
+      this.emitUploadData(null, {
+        title: 'No rights to send data',
+        subtitle: '',
+        type: UploadDataErrorType.NONE
+      })
 
       return
     }
 
     if (!this.file) {
-      this.emitUploadData(null, 'User didnt select file!')
+      this.emitUploadData(null, {
+        title: 'File hasnt selected',
+        subtitle: '',
+        type: UploadDataErrorType.NONE
+      })
+      return
+    }
+
+    if (this.file.size > 1048576 * 30) {
+      this.emitUploadData(null, {
+        title: 'The selected file size is too large',
+        subtitle: 'Remember, 30MB maximum',
+        type: UploadDataErrorType.MAX_SIZE
+      })
+
+      return
+    }
+
+    if (!this.isFileFormatValid(this.file)) {
+      this.emitUploadData(null, {
+        title: 'The selected file format is not available',
+        subtitle: 'Remember, we accepted SHP, GeoPackage, GeoJSON and Spatialite',
+        type: UploadDataErrorType.FILE_FORMAT
+      })
       return
     }
 
     this.emitUploadData(this.file)
   }
 
-  emitUploadData(file: File, msgErr?: string) {
-    if (msgErr) {
-      this.logService.error(msgErr)
+  emitUploadData(file: File, err?: UploadDataError) {
+    if (err) {
+      this.logService.error(err.title)
     }
 
     this.uploadData.emit({
       file,
-      error: msgErr,
+      error: err,
     })
+  }
+
+  private isFileFormatValid(file: File): boolean {
+    const fileExt = file.name.split('.').pop()
+    return !!VALID_FILE_EXTENSIONS.find(ext => !ext.localeCompare(fileExt.toLocaleLowerCase()))
   }
 }

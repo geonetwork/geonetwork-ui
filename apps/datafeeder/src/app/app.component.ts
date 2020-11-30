@@ -10,6 +10,6 @@ export class AppComponent implements OnInit {
   title = 'datafeeder'
 
   ngOnInit() {
-    ColorService.applyCssVariables('#e73f51', '#c2e9dc', '#212029', '#fdfbff')
+    ColorService.applyCssVariables('#1EA9D5', '#EF7749', '#2E353A', '#fff')
   }
 }
