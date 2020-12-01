@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { UploadData } from '../../components/upload-data/upload-data.component'
 import { of } from 'rxjs'
 import { Router } from '@angular/router'
-import {UploadDataError} from '../../components/upload-data-error-dialog/upload-data-error-dialog.component'
+import { UploadDataError } from '../../components/upload-data-error-dialog/upload-data-error-dialog.component'
 
 @Component({
   selector: 'app-upload-data-page',

@@ -1,6 +1,9 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core'
-import {LogService} from '@lib/common'
-import {UploadDataError, UploadDataErrorType} from '../upload-data-error-dialog/upload-data-error-dialog.component'
+import { Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { LogService } from '@lib/common'
+import {
+  UploadDataError,
+  UploadDataErrorType,
+} from '../upload-data-error-dialog/upload-data-error-dialog.component'
 
 export interface UploadData {
   file: File
@@ -20,11 +23,9 @@ export class UploadDataComponent implements OnInit {
 
   @Output() uploadData = new EventEmitter<UploadData>()
 
-  constructor(private logService: LogService) {
-  }
+  constructor(private logService: LogService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   fileChange(file) {
     this.file = file
@@ -35,7 +36,7 @@ export class UploadDataComponent implements OnInit {
       this.emitUploadData(null, {
         title: 'No rights to send data',
         subtitle: '',
-        type: UploadDataErrorType.NONE
+        type: UploadDataErrorType.NONE,
       })
 
       return
@@ -45,7 +46,7 @@ export class UploadDataComponent implements OnInit {
       this.emitUploadData(null, {
         title: 'File hasnt selected',
         subtitle: '',
-        type: UploadDataErrorType.NONE
+        type: UploadDataErrorType.NONE,
       })
       return
     }
@@ -54,7 +55,7 @@ export class UploadDataComponent implements OnInit {
       this.emitUploadData(null, {
         title: 'The selected file size is too large',
         subtitle: 'Remember, 30MB maximum',
-        type: UploadDataErrorType.MAX_SIZE
+        type: UploadDataErrorType.MAX_SIZE,
       })
 
       return
@@ -63,8 +64,9 @@ export class UploadDataComponent implements OnInit {
     if (!this.isFileFormatValid(this.file)) {
       this.emitUploadData(null, {
         title: 'The selected file format is not available',
-        subtitle: 'Remember, we accepted SHP, GeoPackage, GeoJSON and Spatialite',
-        type: UploadDataErrorType.FILE_FORMAT
+        subtitle:
+          'Remember, we accepted SHP, GeoPackage, GeoJSON and Spatialite',
+        type: UploadDataErrorType.FILE_FORMAT,
       })
       return
     }
@@ -85,6 +87,8 @@ export class UploadDataComponent implements OnInit {
 
   private isFileFormatValid(file: File): boolean {
     const fileExt = file.name.split('.').pop()
-    return !!VALID_FILE_EXTENSIONS.find(ext => !ext.localeCompare(fileExt.toLocaleLowerCase()))
+    return !!VALID_FILE_EXTENSIONS.find(
+      (ext) => !ext.localeCompare(fileExt.toLocaleLowerCase())
+    )
   }
 }
