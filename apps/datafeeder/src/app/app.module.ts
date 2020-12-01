@@ -10,7 +10,6 @@ import { UploadDataPageComponent } from './presentation/pages/upload-data-page/u
 import { UploadDataRulesComponent } from './presentation/components/upload-data-rules/upload-data-rules.component'
 import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
-import { AnalysisProgressPageComponent } from './presentation/pages/analysis-progress-page/analysis-progress.page'
 import { DatasetValidationPageComponent } from './presentation/pages/dataset-validation-page/dataset-validation-page'
 import { DataImportValidationMapPanelComponent } from './presentation/components/data-import-validation-map-panel/data-import-validation-map-panel.component'
 import { AnalysisProgressPageComponent } from './presentation/pages/analysis-progress-page/analysis-progress.page';
