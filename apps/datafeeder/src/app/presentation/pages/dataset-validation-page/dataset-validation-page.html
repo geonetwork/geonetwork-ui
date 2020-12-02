@@ -1,0 +1,44 @@
+<div class="h-screen flex bg-blue-300 bg-opacity-25 items-center">
+  <div class="ml-64 mr-64 pt-16 pb-16 w-full h-full flex flex-col">
+    <div class="text-5xl font-bold" translate>
+      datafeeder.datasetValidation.title
+    </div>
+    <div class="pb-4 pt-4">
+      <ui-step-bar [steps]="6" [currentStep]="1" type="primary"></ui-step-bar>
+    </div>
+    <div
+      class="text-2xl font-bold"
+      translate
+      [translateParams]="{ number: numOfEntities }"
+    >
+      datafeeder.datasetValidation.datasetInformation
+    </div>
+    <div class="flex justify-between pb-10 pt-10 flex-1">
+      <div class="w-1/2 h-full bg-white mr-20 rounded-md">
+        <app-data-import-validation-map-panel
+          [headerLabel]="'Here is a sample entity from the dataset'"
+          [footerLabel]="'Encoding:'"
+          [footerList]="encodingList"
+          [geoJson]="geoJSONData"
+          [showProperties]="true"
+        ></app-data-import-validation-map-panel>
+      </div>
+      <div class="w-1/2 h-full bg-white rounded-md">
+        <app-data-import-validation-map-panel
+          [headerLabel]="'This is the extent of the dataset'"
+          [footerLabel]="'Ref system:'"
+          [footerList]="refSystem"
+          [geoJson]="geoJSONBBox"
+          [showProperties]="false"
+        ></app-data-import-validation-map-panel>
+      </div>
+    </div>
+    <div class="flex justify-end">
+      <ui-button (click)="submitValidation()">
+        <span translate>
+          datafeeder.datasetValidation.submitButton
+        </span>
+      </ui-button>
+    </div>
+  </div>
+</div>

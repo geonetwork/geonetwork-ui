@@ -1,6 +1,9 @@
 module.exports = {
   purge: ['./{apps,libs,webcomponents}/*/src/**/*.{html,ts}'],
   theme: {
+    inset: {
+      '1/10': '10%',
+    },
     extend: {
       colors: {
         primary: 'var(--color-primary)',

@@ -1,0 +1,33 @@
+<div class="flex flex-col h-full">
+  <div class="flex flex-col justify-center h-16">
+    <span translate class="header-label font-bold pl-6 text-xl">
+      {{ headerLabel }}
+    </span>
+  </div>
+  <div class="flex flex-1 relative" #map>
+    <div
+      *ngIf="showProperties"
+      [style.background]="getPrimaryColor(0.75)"
+      class="z-10 absolute top-0 w-64 right-1/10 pb-4 pt-4 pr-4 pl-4"
+    >
+      <div
+        class="text-base text-white"
+        *ngFor="let property of getProperties()"
+      >
+        &#171; {{ property[0] }} &#187; : &#171; {{ property[1] }} &#187;
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center justify-end h-16 pr-6 pl-6">
+    <div class="w-1/2 mb-1 mt-1">
+      <ui-dropdown-selector
+        [title]="footerLabel | translate"
+        [choices]="footerList"
+        (selectValue)="selectValue($event)"
+        [selected]="selectedValue"
+        ariaName="search-sort-by"
+      >
+      </ui-dropdown-selector>
+    </div>
+  </div>
+</div>
