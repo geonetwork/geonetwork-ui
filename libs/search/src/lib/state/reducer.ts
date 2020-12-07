@@ -19,6 +19,7 @@ export interface SearchState {
     records: RecordSummary[]
     aggregations: any
   }
+  resultsLayout?: string
   loadingMore: boolean
 }
 
@@ -64,6 +65,12 @@ export function reducer(
           ...state.params,
           sortBy: action.sortBy,
         },
+      }
+    }
+    case fromActions.UPDATE_RESULTS_LAYOUT: {
+      return {
+        ...state,
+        resultsLayout: action.resultsLayout,
       }
     }
     case fromActions.ADD_RESULTS: {

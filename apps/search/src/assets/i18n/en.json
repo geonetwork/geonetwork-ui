@@ -8,5 +8,8 @@
 	"search.loading": "Loading ...",
 	"last changed": "last changed",
 	"popularity": "popularity",
-	"dropFile": "drop file"
+	"dropFile": "drop file",
+	"Back": "Back",
+        "facets.block.title.tag": "Keywords",
+        "results.layout.selectOne": "Results layout"
 }

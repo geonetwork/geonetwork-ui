@@ -5,6 +5,7 @@ import { SearchStateParams } from './reducer'
 export const UPDATE_FILTERS = '[Search] Update Filters'
 export const SET_SEARCH = '[Search] Set overall search configuration'
 export const SORT_BY = '[Search] Sort By'
+export const UPDATE_RESULTS_LAYOUT = '[Search] Update results layout'
 export const ADD_RESULTS = '[Search] Add Results'
 export const CLEAR_RESULTS = '[Search] Clear Results'
 export const REQUEST_MORE_RESULTS = '[Search] Request More Results'
@@ -27,6 +28,12 @@ export class SortBy implements Action {
   readonly type = SORT_BY
 
   constructor(public sortBy: string) {}
+}
+
+export class UpdateResultsLayout implements Action {
+  readonly type = UPDATE_RESULTS_LAYOUT
+
+  constructor(public resultsLayout: string) {}
 }
 
 export class AddResults implements Action {
@@ -63,6 +70,7 @@ export type SearchActions =
   | UpdateFilters
   | SetSearch
   | SortBy
+  | UpdateResultsLayout
   | AddResults
   | ClearResults
   | RequestMoreResults

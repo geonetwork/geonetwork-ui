@@ -9,6 +9,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { FacetsModule } from './facets/facets.module'
 import { FuzzySearchComponent } from './fuzzy-search/fuzzy-search.component'
 import { RecordsMetricsComponent } from './records-metrics/records-metrics.component'
+import { ResultsLayoutComponent } from './results-layout/results-layout.component'
 import { ResultsListContainerComponent } from './results-list/results-list.container.component'
 import { SortByComponent } from './sort-by/sort-by.component'
 import { SearchEffects } from './state/effects'
@@ -17,6 +18,7 @@ import { initialState, reducer, SEARCH_FEATURE_KEY } from './state/reducer'
 @NgModule({
   declarations: [
     SortByComponent,
+    ResultsLayoutComponent,
     FuzzySearchComponent,
     RecordsMetricsComponent,
     ResultsListContainerComponent,
@@ -36,6 +38,7 @@ import { initialState, reducer, SEARCH_FEATURE_KEY } from './state/reducer'
   ],
   exports: [
     SortByComponent,
+    ResultsLayoutComponent,
     FuzzySearchComponent,
     RecordsMetricsComponent,
     ResultsListContainerComponent,
