@@ -29,7 +29,8 @@ export class SearchEffects {
     private searchService: SearchApiService,
     private store$: Store<SearchState>,
     private authService: AuthService,
-    private esService: ElasticsearchService
+    private esService: ElasticsearchService,
+    private esMapper: ElasticsearchMapper
   ) {}
 
   clearResults$ = createEffect(() =>
@@ -53,8 +54,10 @@ export class SearchEffects {
         )
       ),
       switchMap((response: SearchResponse<any>) => {
-        const mapper = new ElasticsearchMapper(response)
-        const records = mapper.toRecordSummary()
+        const records = this.esMapper.toRecordSummary(
+          response,
+          this.searchService.configuration.basePath
+        )
         const aggregations = response.aggregations
         return [
           new AddResults(records),

@@ -1,21 +1,24 @@
-import { RecordBrief, RecordSummary } from '@lib/common'
+import { Injectable } from '@angular/core'
+import { MetadataUrlService, RecordSummary } from '@lib/common'
 import { SearchResponse } from 'elasticsearch'
 
+@Injectable({
+  providedIn: 'root',
+})
 export class ElasticsearchMapper {
-  response: SearchResponse<any>
+  constructor(private metadataUrlService: MetadataUrlService) {}
 
-  constructor(response: SearchResponse<any>) {
-    this.response = response
-  }
-
-  toRecordSummary(): RecordSummary[] {
-    return this.response.hits.hits.map((hit) => ({
+  toRecordSummary(
+    response: SearchResponse<any>,
+    apiPath?: string
+  ): RecordSummary[] {
+    return response.hits.hits.map((hit) => ({
       uuid: hit._id,
       id: hit._source.id,
       title: hit._source.resourceTitleObject?.default || 'no title',
       abstract: hit._source.resourceAbstractObject?.default || 'no abstract',
       thumbnailUrl: this.getFirstValue(hit._source.overview)?.url || '',
-      metadataUrl: `/geonetwork/srv/eng/catalog.search#/metadata/${hit._source.uuid}`,
+      metadataUrl: this.metadataUrlService.getUrl(hit._source.uuid, apiPath),
       downloadable: (hit as any).download,
       viewable: (hit as any).view,
       logoUrl: `/geonetwork${hit._source.logo}`,
