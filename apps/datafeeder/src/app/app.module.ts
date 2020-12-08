@@ -12,8 +12,14 @@ import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { DatasetValidationPageComponent } from './presentation/pages/dataset-validation-page/dataset-validation-page'
 import { DataImportValidationMapPanelComponent } from './presentation/components/data-import-validation-map-panel/data-import-validation-map-panel.component'
-import { AnalysisProgressPageComponent } from './presentation/pages/analysis-progress-page/analysis-progress.page';
-import { UploadDataErrorDialogComponent } from './presentation/components/upload-data-error-dialog/upload-data-error-dialog.component'
+import { AnalysisProgressPageComponent } from './presentation/pages/analysis-progress-page/analysis-progress.page'
+import { UploadDataErrorDialogComponent } from './presentation/components/svg/upload-data-error-dialog/upload-data-error-dialog.component'
+import { UploadDataBackgroundComponent } from './presentation/components/svg/upload-data-background/upload-data-background.component'
+import { UploadDataIllustrationComponent } from './presentation/components/svg/upload-data-illustration/upload-data-illustration.component'
+import { AnalysisProgressIllustrationUpoadComponent } from './presentation/components/svg/analysis-progress-illustration-upoad/analysis-progress-illustration-upoad.component'
+import { AnalysisProgressIllustrationDetectFileFormatComponent } from './presentation/components/svg/analysis-progress-illustration-detect-file-format/analysis-progress-illustration-detect-file-format.component'
+import { AnalysisProgressIllustrationGatheringInfoComponent } from './presentation/components/svg/analysis-progress-illustration-gathering-info/analysis-progress-illustration-gathering-info.component'
+import { AnalysisProgressIllustrationSamplingDataComponent } from './presentation/components/svg/analysis-progress-illustration-sampling-data/analysis-progress-illustration-sampling-data.component'
 
 @NgModule({
   declarations: [
@@ -25,6 +31,12 @@ import { UploadDataErrorDialogComponent } from './presentation/components/upload
     DatasetValidationPageComponent,
     DataImportValidationMapPanelComponent,
     UploadDataErrorDialogComponent,
+    UploadDataBackgroundComponent,
+    UploadDataIllustrationComponent,
+    AnalysisProgressIllustrationUpoadComponent,
+    AnalysisProgressIllustrationDetectFileFormatComponent,
+    AnalysisProgressIllustrationGatheringInfoComponent,
+    AnalysisProgressIllustrationSamplingDataComponent,
   ],
   imports: [
     BrowserModule,

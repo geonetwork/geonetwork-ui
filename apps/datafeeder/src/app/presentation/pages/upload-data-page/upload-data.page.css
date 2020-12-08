@@ -1,8 +1,14 @@
+:host {
+  display: flex;
+  flex: 1;
+}
+
 .shape {
   position: relative;
   background: linear-gradient(47deg, var(--color-background) 0%, var(--color-primary) 100%);
   border: 1px solid var(--color-current);
 }
+
 .shape::before {
   content: "";
   position: absolute;
@@ -12,6 +18,7 @@
   left: 0;
   background: var(--color-primary);
 }
+
 .shape::after {
   content: "";
   position: absolute;
@@ -21,33 +28,23 @@
   left: 0;
   background: var(--color-background);
 }
+
 .shape.s1::before {
   left: 45%;
   -webkit-clip-path: url(#mask-shape1-1);
   clip-path: url(#mask-shape1-1);
 }
+
 .shape.s1::after {
   left: 45%;
   -webkit-clip-path: url(#mask-shape1-2);
   clip-path: url(#mask-shape1-2);
 }
 
-.mask {
-  position: absolute;
-  width: 0;
-  height: 0;
-}
-
-.update-data-page-image {
-  height: 500px;
-  position: absolute;
-  left: 50%;
-}
-
 .error-dialog {
   position: absolute;
 
-  top: -115px;
+  top: -166px;
   left: 560px;
   z-index: 10;
 }

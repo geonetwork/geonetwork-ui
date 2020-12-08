@@ -1,9 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { LogService } from '@lib/common'
 import {
   UploadDataError,
   UploadDataErrorType,
-} from '../upload-data-error-dialog/upload-data-error-dialog.component'
+} from '../svg/upload-data-error-dialog/upload-data-error-dialog.component'
 
 export interface UploadData {
   file: File
@@ -21,6 +21,7 @@ export class UploadDataComponent implements OnInit {
   file: File = null
   haveRights = false
 
+  @Input() maxFileSizeMb: number
   @Output() uploadData = new EventEmitter<UploadData>()
 
   constructor(private logService: LogService) {}
@@ -51,7 +52,7 @@ export class UploadDataComponent implements OnInit {
       return
     }
 
-    if (this.file.size > 1048576 * 30) {
+    if (this.file.size > 1048576 * this.maxFileSizeMb) {
       this.emitUploadData(null, {
         title: 'The selected file size is too large',
         subtitle: 'Remember, 30MB maximum',

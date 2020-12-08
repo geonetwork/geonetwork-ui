@@ -10,11 +10,15 @@
 </div>
 <div class="pb-4">
   <input
+    class="cursor-pointer"
     type="checkbox"
     [checked]="haveRights"
     (change)="haveRights = !haveRights"
   />
-  <span class="pl-2 italic font-bold" translate
+  <span
+    class="pl-2 italic font-bold cursor-pointer"
+    (click)="haveRights = !haveRights"
+    translate
     >datafeeder.upload.checkboxLabel</span
   >
 </div>

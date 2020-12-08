@@ -4,8 +4,8 @@
   flex-direction: column;
   justify-content: center;
   padding: 20px 50% 65px 50px;
-  width: 700px;
-  min-height: 500px;
+  width: 717px;
+  min-height: 626px;
   background: var(--color-secondary);
   color: #fff;
   -webkit-clip-path: url(#error-mask);
