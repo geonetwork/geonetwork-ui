@@ -11,6 +11,7 @@ import {
   ClearResults,
   RequestMoreResults,
   SetResultsAggregations,
+  SetSearch,
   SortBy,
   UpdateFilters,
 } from './actions'
@@ -69,6 +70,17 @@ describe('Effects', () => {
     })
     it('clear results list on updateParams action', () => {
       actions$ = hot('-a---', { a: new UpdateFilters({ any: 'abcd' }) })
+      const expected = hot('-(bc)', {
+        b: new ClearResults(),
+        c: new RequestMoreResults(),
+      })
+
+      expect(effects.clearResults$).toBeObservable(expected)
+    })
+    it('clear results list on SetSearch action', () => {
+      actions$ = hot('-a---', {
+        a: new SetSearch({ filters: { any: 'abcd' } }),
+      })
       const expected = hot('-(bc)', {
         b: new ClearResults(),
         c: new RequestMoreResults(),

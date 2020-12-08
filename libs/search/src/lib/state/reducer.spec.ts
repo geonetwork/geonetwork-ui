@@ -1,4 +1,4 @@
-import { initialState, reducer } from './reducer'
+import { initialState, reducer, SearchStateParams } from './reducer'
 import * as fromActions from './actions'
 
 describe('Search Reducer', () => {
@@ -36,6 +36,21 @@ describe('Search Reducer', () => {
         action
       )
       expect(state.params.filters).toEqual({})
+    })
+  })
+
+  describe('SET_SEARCH action', () => {
+    it('should set serach params', () => {
+      const searchParams: SearchStateParams = {
+        size: 12,
+        sortBy: 'asc',
+        filters: {
+          any: 'tag:river',
+        },
+      }
+      const action = new fromActions.SetSearch(searchParams)
+      const state = reducer(initialState, action)
+      expect(state.params).toEqual(searchParams)
     })
   })
 
