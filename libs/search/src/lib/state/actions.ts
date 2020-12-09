@@ -24,7 +24,7 @@ export class SetSearch implements Action {
   constructor(public payload: SearchStateParams) {}
 }
 
-export class SortBy implements Action {
+export class SetSortBy implements Action {
   readonly type = SET_SORT_BY
 
   constructor(public sortBy: string) {}
@@ -69,7 +69,7 @@ export class SetConfigAggregations implements Action {
 export type SearchActions =
   | UpdateFilters
   | SetSearch
-  | SortBy
+  | SetSortBy
   | SetResultsLayout
   | AddResults
   | ClearResults

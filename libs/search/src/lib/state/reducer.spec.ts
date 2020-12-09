@@ -57,7 +57,7 @@ describe('Search Reducer', () => {
 
   describe('SortBy action', () => {
     it('should set sort by params', () => {
-      const action = new fromActions.SortBy('fieldA')
+      const action = new fromActions.SetSortBy('fieldA')
       const state = reducer(initialState, action)
       expect(state.params.sortBy).toEqual('fieldA')
     })
