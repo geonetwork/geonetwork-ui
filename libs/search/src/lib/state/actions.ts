@@ -1,7 +1,9 @@
 import { RecordSummary, SearchFilters } from '@lib/common'
 import { Action } from '@ngrx/store'
+import { SearchStateParams } from './reducer'
 
 export const UPDATE_FILTERS = '[Search] Update Filters'
+export const SET_SEARCH = '[Search] Set overall search configuration'
 export const SORT_BY = '[Search] Sort By'
 export const ADD_RESULTS = '[Search] Add Results'
 export const CLEAR_RESULTS = '[Search] Clear Results'
@@ -13,6 +15,12 @@ export class UpdateFilters implements Action {
   readonly type = UPDATE_FILTERS
 
   constructor(public payload: SearchFilters) {}
+}
+
+export class SetSearch implements Action {
+  readonly type = SET_SEARCH
+
+  constructor(public payload: SearchStateParams) {}
 }
 
 export class SortBy implements Action {
@@ -53,6 +61,7 @@ export class SetConfigAggregations implements Action {
 
 export type SearchActions =
   | UpdateFilters
+  | SetSearch
   | SortBy
   | AddResults
   | ClearResults

@@ -17,14 +17,15 @@ export class ElasticsearchService {
   }
 
   buildPayload(state: SearchState): SearchParams {
+    const { size, sortBy, filters } = state.params
     const payload = {
       aggregations: state.config.aggregations,
       from: 0,
-      size: RESULTS_PAGE_SIZE,
-      sort: state.params.sortBy ? [state.params.sortBy] : undefined,
+      size,
+      sort: sortBy ? [sortBy] : undefined,
       query: {
         bool: {
-          must: [{ query_string: { query: state.params.filters.any || '*' } }],
+          must: [{ query_string: { query: filters.any || '*' } }],
         },
       },
     }

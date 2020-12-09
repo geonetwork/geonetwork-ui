@@ -17,6 +17,7 @@ import {
   SetResultsAggregations,
   SORT_BY,
   UPDATE_FILTERS,
+  SET_SEARCH,
 } from './actions'
 import { SearchState } from './reducer'
 import { getSearchState } from './selectors'
@@ -28,12 +29,13 @@ export class SearchEffects {
     private searchService: SearchApiService,
     private store$: Store<SearchState>,
     private authService: AuthService,
-    private esService: ElasticsearchService
+    private esService: ElasticsearchService,
+    private esMapper: ElasticsearchMapper
   ) {}
 
   clearResults$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SORT_BY, UPDATE_FILTERS),
+      ofType(SORT_BY, UPDATE_FILTERS, SET_SEARCH),
       switchMap(() => of(new ClearResults(), new RequestMoreResults()))
     )
   )
@@ -52,8 +54,10 @@ export class SearchEffects {
         )
       ),
       switchMap((response: SearchResponse<any>) => {
-        const mapper = new ElasticsearchMapper(response)
-        const records = mapper.toRecordSummary()
+        const records = this.esMapper.toRecordSummary(
+          response,
+          this.searchService.configuration.basePath
+        )
         const aggregations = response.aggregations
         return [
           new AddResults(records),

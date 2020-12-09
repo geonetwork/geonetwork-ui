@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing'
 import { AuthService } from '@lib/auth'
 import { SearchApiService } from '@lib/gn-api'
+import { ElasticsearchMapper } from '@lib/search'
 import { EffectsModule } from '@ngrx/effects'
 import { provideMockActions } from '@ngrx/effects/testing'
 import { StoreModule } from '@ngrx/store'
@@ -11,6 +12,7 @@ import {
   ClearResults,
   RequestMoreResults,
   SetResultsAggregations,
+  SetSearch,
   SortBy,
   UpdateFilters,
 } from './actions'
@@ -19,9 +21,15 @@ import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
 
 const searchServiceMock = {
   search: () => of({ hits: { hits: [] }, aggregations: {} }), // TODO: use a fixture here
+  configuration: {
+    basePath: 'http://geonetwork/srv/api',
+  },
 }
 const authServiceMock = {
   authReady: () => of(true),
+}
+const esMapperMock = {
+  toRecordSummary: () => [],
 }
 
 describe('Effects', () => {
@@ -48,6 +56,10 @@ describe('Effects', () => {
           provide: AuthService,
           useValue: authServiceMock,
         },
+        {
+          provide: ElasticsearchMapper,
+          useValue: esMapperMock,
+        },
       ],
     })
     effects = TestBed.inject(SearchEffects)
@@ -69,6 +81,17 @@ describe('Effects', () => {
     })
     it('clear results list on updateParams action', () => {
       actions$ = hot('-a---', { a: new UpdateFilters({ any: 'abcd' }) })
+      const expected = hot('-(bc)', {
+        b: new ClearResults(),
+        c: new RequestMoreResults(),
+      })
+
+      expect(effects.clearResults$).toBeObservable(expected)
+    })
+    it('clear results list on SetSearch action', () => {
+      actions$ = hot('-a---', {
+        a: new SetSearch({ filters: { any: 'abcd' } }),
+      })
       const expected = hot('-(bc)', {
         b: new ClearResults(),
         c: new RequestMoreResults(),
