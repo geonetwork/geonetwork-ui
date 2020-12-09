@@ -19,7 +19,7 @@ export class ElasticsearchService {
   buildPayload(state: SearchState): SearchParams {
     const { size, sortBy, filters } = state.params
     const payload = {
-      aggs: state.config.aggregations,
+      aggs: state.config.aggs,
       from: 0,
       size,
       sort: sortBy ? [sortBy] : undefined,

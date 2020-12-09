@@ -12,7 +12,7 @@ export interface SearchStateParams {
 
 export interface SearchState {
   config: {
-    aggregations?: any
+    aggs?: any
   }
   params: SearchStateParams
   results: {
@@ -105,7 +105,7 @@ export function reducer(
         ...state,
         config: {
           ...state.config,
-          aggregations: action.payload,
+          aggs: action.payload,
         },
       }
     }
