@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { select, Store } from '@ngrx/store'
-import { UpdateResultsLayout } from '../state/actions'
+import { SetResultsLayout } from '../state/actions'
 import { SearchState } from '../state/reducer'
 import { getSearchResultsLayout } from '../state/selectors'
 import { ResultsListLayout } from '@lib/common'
@@ -23,6 +23,6 @@ export class ResultsLayoutComponent implements OnInit {
   ngOnInit(): void {}
 
   change(layout: any) {
-    this.store.dispatch(new UpdateResultsLayout(layout))
+    this.store.dispatch(new SetResultsLayout(layout))
   }
 }

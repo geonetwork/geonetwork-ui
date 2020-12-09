@@ -58,7 +58,7 @@ export function reducer(
         },
       }
     }
-    case fromActions.SORT_BY: {
+    case fromActions.SET_SORT_BY: {
       return {
         ...state,
         params: {
@@ -67,7 +67,7 @@ export function reducer(
         },
       }
     }
-    case fromActions.UPDATE_RESULTS_LAYOUT: {
+    case fromActions.SET_RESULTS_LAYOUT: {
       return {
         ...state,
         resultsLayout: action.resultsLayout,
