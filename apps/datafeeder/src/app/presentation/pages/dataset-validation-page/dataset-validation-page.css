@@ -2,3 +2,11 @@
   display: flex;
   flex: 1;
 }
+
+.dataset-validation-bkg {
+  background: linear-gradient(
+    47deg,
+    var(--color-background) 0%,
+    var(--color-primary) 100%
+  );
+}

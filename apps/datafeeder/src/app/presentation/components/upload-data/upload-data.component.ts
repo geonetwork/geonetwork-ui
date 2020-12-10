@@ -4,6 +4,8 @@ import {
   UploadDataError,
   UploadDataErrorType,
 } from '../svg/upload-data-error-dialog/upload-data-error-dialog.component'
+import { TranslateService } from '@ngx-translate/core'
+import { Observable } from 'rxjs'
 
 export interface UploadData {
   file: File
@@ -24,7 +26,10 @@ export class UploadDataComponent implements OnInit {
   @Input() maxFileSizeMb: number
   @Output() uploadData = new EventEmitter<UploadData>()
 
-  constructor(private logService: LogService) {}
+  constructor(
+    private logService: LogService,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -34,52 +39,83 @@ export class UploadDataComponent implements OnInit {
 
   handleUploadBtnClick() {
     if (!this.haveRights) {
-      this.emitUploadData(null, {
-        title: 'No rights to send data',
+      this.translateAndEmitUploadData(null, {
+        title: 'datafeeder.upload.error.title.noRightsToSendData',
         subtitle: '',
         type: UploadDataErrorType.NONE,
-      })
+      }).subscribe()
 
       return
     }
 
     if (!this.file) {
-      this.emitUploadData(null, {
-        title: 'File hasnt selected',
+      this.translateAndEmitUploadData(null, {
+        title: 'datafeeder.upload.error.title.fileHasntSelected',
         subtitle: '',
         type: UploadDataErrorType.NONE,
-      })
+      }).subscribe()
       return
     }
 
     if (this.file.size > 1048576 * this.maxFileSizeMb) {
-      this.emitUploadData(null, {
-        title: 'The selected file size is too large',
-        subtitle: 'Remember, 30MB maximum',
+      this.translateAndEmitUploadData(null, {
+        title: 'datafeeder.upload.error.title.fileSize',
+        subtitle: 'datafeeder.upload.error.subtitle.fileSize',
         type: UploadDataErrorType.MAX_SIZE,
-      })
+      }).subscribe()
 
       return
     }
 
     if (!this.isFileFormatValid(this.file)) {
-      this.emitUploadData(null, {
-        title: 'The selected file format is not available',
-        subtitle:
-          'Remember, we accepted SHP, GeoPackage, GeoJSON and Spatialite',
+      this.translateAndEmitUploadData(null, {
+        title: 'datafeeder.upload.error.title.fileFormat',
+        subtitle: 'datafeeder.upload.error.subtitle.fileFormat',
         type: UploadDataErrorType.FILE_FORMAT,
-      })
+      }).subscribe()
       return
     }
 
-    this.emitUploadData(this.file)
+    this.translateAndEmitUploadData(this.file).subscribe()
   }
 
-  emitUploadData(file: File, err?: UploadDataError) {
+  translateAndEmitUploadData(
+    file: File,
+    err?: UploadDataError
+  ): Observable<void> {
     if (err) {
       this.logService.error(err.title)
+
+      return new Observable<void>((result) => {
+        this.translateService.get(err.title).subscribe((title) => {
+          err.title = title
+          console.log(title)
+
+          if (!err.subtitle) {
+            this.emitUploadData(file, err)
+            result.complete()
+
+            return
+          }
+
+          this.translateService.get(err.subtitle).subscribe((subtitle) => {
+            err.subtitle = subtitle
+
+            this.emitUploadData(file, err)
+
+            result.complete()
+          })
+        })
+      })
     }
 
+    return new Observable<void>((result) => {
+      this.emitUploadData(file, err)
+      result.complete()
+    })
+  }
+
+  private emitUploadData(file: File, err?: UploadDataError) {
     this.uploadData.emit({
       file,
       error: err,
