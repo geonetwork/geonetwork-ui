@@ -16,10 +16,7 @@ import { AnalysisProgressPageComponent } from './presentation/pages/analysis-pro
 import { UploadDataErrorDialogComponent } from './presentation/components/svg/upload-data-error-dialog/upload-data-error-dialog.component'
 import { UploadDataBackgroundComponent } from './presentation/components/svg/upload-data-background/upload-data-background.component'
 import { UploadDataIllustrationComponent } from './presentation/components/svg/upload-data-illustration/upload-data-illustration.component'
-import { AnalysisProgressIllustrationUpoadComponent } from './presentation/components/svg/analysis-progress-illustration-upoad/analysis-progress-illustration-upoad.component'
-import { AnalysisProgressIllustrationDetectFileFormatComponent } from './presentation/components/svg/analysis-progress-illustration-detect-file-format/analysis-progress-illustration-detect-file-format.component'
-import { AnalysisProgressIllustrationGatheringInfoComponent } from './presentation/components/svg/analysis-progress-illustration-gathering-info/analysis-progress-illustration-gathering-info.component'
-import { AnalysisProgressIllustrationSamplingDataComponent } from './presentation/components/svg/analysis-progress-illustration-sampling-data/analysis-progress-illustration-sampling-data.component'
+import { AnalysisProgressIllustrationsComponent } from './presentation/components/svg/analysis-progress-illustrations/analysis-progress-illustrations.component'
 
 @NgModule({
   declarations: [
@@ -33,10 +30,7 @@ import { AnalysisProgressIllustrationSamplingDataComponent } from './presentatio
     UploadDataErrorDialogComponent,
     UploadDataBackgroundComponent,
     UploadDataIllustrationComponent,
-    AnalysisProgressIllustrationUpoadComponent,
-    AnalysisProgressIllustrationDetectFileFormatComponent,
-    AnalysisProgressIllustrationGatheringInfoComponent,
-    AnalysisProgressIllustrationSamplingDataComponent,
+    AnalysisProgressIllustrationsComponent,
   ],
   imports: [
     BrowserModule,
