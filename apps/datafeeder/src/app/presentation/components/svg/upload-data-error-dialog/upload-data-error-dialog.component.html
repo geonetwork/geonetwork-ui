@@ -1,14 +1,25 @@
-<svg class="mask">
-  <clipPath id="error-mask" clipPathUnits="objectBoundingBox">
-    <path
-      d="M0.972,0.31 C0.875,0.123,0.481,-0.105,0.208,0.068 C0.102,0.134,0.051,0.243,0.034,0.361 L0.007,0.388 l0.021,0.021 c-0.013,0.171,0.036,0.35,0.082,0.44 c0.078,0.15,0.251,0.202,0.388,0.117 c0.035,-0.022,0.096,-0.088,0.168,-0.134 c0.072,-0.045,0.155,-0.069,0.19,-0.091 C0.992,0.655,1,0.461,0.972,0.31"
-    ></path>
-  </clipPath>
+<svg
+  version="1.1"
+  x="0px"
+  y="0px"
+  class="mask"
+  viewBox="0 0 292.8 264.9"
+  style="enable-background: new 0 0 292.8 264.9;"
+  xml:space="preserve"
+>
+  <path
+    style="fill: #f07e51;"
+    d="M280.2,81.2C252.3,32.4,139-27.2,60.3,17.8C29.8,35.2,15.2,63.7,10.2,94.5l-7.6,6.9l6.1,5.5
+	C5,151.6,19,198.4,32.4,221.8c22.4,39.2,72.4,52.8,111.6,30.4c10.1-5.8,27.6-23.1,48.3-34.9s44.5-18.1,54.6-23.8
+	C286,171.1,302.6,120.4,280.2,81.2z"
+  />
 </svg>
 
 <div class="error-dialog">
-  <strong class="text-focus">{{ error && error.title }}</strong>
-  <span class="text-help">{{ error && error.subtitle }}</span>
+  <div class="w-1/2">
+    <strong class="text-focus">{{ error && error.title }}</strong>
+    <span class="text-help">{{ error && error.subtitle }}</span>
+  </div>
   <div class="illustration" *ngIf="error && error.type">
     <svg
       *ngIf="error.type === 1"
