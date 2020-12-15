@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  flex: 1;
+}
+
+.analysis-progress-bkg {
+  background: linear-gradient(
+    47deg,
+    var(--color-background) 0%,
+    var(--color-primary) 100%
+  );
+}

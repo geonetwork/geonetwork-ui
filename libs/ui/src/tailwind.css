@@ -2,3 +2,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'dataFeeder';
+    src: url(/apps/datafeeder/src/assets/fonts/dataFeeder.woff) format("woff");
+  }
+}

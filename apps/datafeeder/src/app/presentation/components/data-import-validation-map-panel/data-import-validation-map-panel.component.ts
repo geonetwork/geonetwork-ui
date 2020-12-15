@@ -69,10 +69,10 @@ export class DataImportValidationMapPanelComponent
     })
   }
 
-  getPrimaryColor(opacity: number = 1) {
-    const primaryColor =
-      ColorService.getColor('primary') || DEFAULT_PRIMARY_COLOR
-    const [r, g, b] = Array.from(asArray(primaryColor))
+  getSecondaryColor(opacity: number = 1) {
+    const secondaryColor =
+      ColorService.getColor('secondary') || DEFAULT_PRIMARY_COLOR
+    const [r, g, b] = Array.from(asArray(secondaryColor))
 
     return asString([r, g, b, opacity])
   }
@@ -88,11 +88,11 @@ export class DataImportValidationMapPanelComponent
   private getDefaultStyle(): Style {
     return new Style({
       stroke: new Stroke({
-        color: this.getPrimaryColor(1),
+        color: this.getSecondaryColor(1),
         width: 3,
       }),
       fill: new Fill({
-        color: this.getPrimaryColor(0.1),
+        color: this.getSecondaryColor(0.1),
       }),
     })
   }

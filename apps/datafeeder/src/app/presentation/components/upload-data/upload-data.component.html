@@ -1,5 +1,8 @@
-<div class="text-3xl font-bold" translate>datafeeder.upload.inputLabel</div>
-<div class="border rounded-md border-solid border-indigo-200 h-12 my-2">
+<div class="text-3xl font-bold flex" translate>
+  <img src="./assets/images/uload-icon.svg" alt="" class="w-10" />
+  datafeeder.upload.inputLabel
+</div>
+<div class="border rounded-md border-solid border-2 border-gray-300 h-12 my-2">
   <ui-drag-and-drop-file-input
     (fileChange)="fileChange($event)"
     placeholder="..."
@@ -7,14 +10,18 @@
 </div>
 <div class="pb-4">
   <input
+    class="cursor-pointer"
     type="checkbox"
     [checked]="haveRights"
     (change)="haveRights = !haveRights"
   />
-  <span class="pl-2 italic font-medium text-gray-400" translate
+  <span
+    class="pl-2 italic cursor-pointer"
+    (click)="haveRights = !haveRights"
+    translate
     >datafeeder.upload.checkboxLabel</span
   >
 </div>
-<ui-button (click)="handleUploadBtnClick()">
+<ui-button (click)="handleUploadBtnClick()" type="primary">
   <span translate>datafeeder.upload.uploadButton</span>
 </ui-button>

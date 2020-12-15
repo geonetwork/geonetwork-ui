@@ -1,4 +1,4 @@
-<div class="h-screen flex bg-blue-300 bg-opacity-25 items-center">
+<div class="flex-1 flex items-center dataset-validation-bkg">
   <div class="ml-64 mr-64 pt-16 pb-16 w-full h-full flex flex-col">
     <div class="text-5xl font-bold" translate>
       datafeeder.datasetValidation.title
@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="flex justify-end">
-      <ui-button (click)="submitValidation()">
+      <ui-button (click)="submitValidation()" type="primary">
         <span translate>
           datafeeder.datasetValidation.submitButton
         </span>
