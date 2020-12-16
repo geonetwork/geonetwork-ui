@@ -29,7 +29,10 @@
         "libs/ui/src/index.ts"
       ],
       "@lib/gn-api": [
-        "libs/gn-api/src/index.ts"
+        "libs/gn-api/src/lib/gn4/index.ts"
+      ],
+      "@lib/datafeeder-api": [
+        "libs/gn-api/src/lib/datafeeder/index.ts"
       ],
       "@lib/common": [
         "libs/common/src/index.ts"
