@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { select, Store } from '@ngrx/store'
-import { SortBy } from '../state/actions'
+import { SetSortBy } from '../state/actions'
 import { SearchState } from '../state/reducer'
 import { getSearchSortBy } from '../state/selectors'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -31,7 +31,7 @@ export class SortByComponent implements OnInit {
 
   changeSortBy(criteria: any) {
     if (typeof criteria === 'string') {
-      this.store.dispatch(new SortBy(criteria))
+      this.store.dispatch(new SetSortBy(criteria))
     } else {
       throw new Error(`Unexpected value received: ${criteria}`)
     }

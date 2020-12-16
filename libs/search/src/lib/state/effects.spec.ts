@@ -13,7 +13,7 @@ import {
   RequestMoreResults,
   SetResultsAggregations,
   SetSearch,
-  SortBy,
+  SetSortBy,
   UpdateFilters,
 } from './actions'
 import { SearchEffects } from './effects'
@@ -71,7 +71,7 @@ describe('Effects', () => {
 
   describe('clearResults$', () => {
     it('clear results list on sortBy action', () => {
-      actions$ = hot('-a---', { a: new SortBy('fieldA') })
+      actions$ = hot('-a---', { a: new SetSortBy('fieldA') })
       const expected = hot('-(bc)', {
         b: new ClearResults(),
         c: new RequestMoreResults(),

@@ -15,6 +15,11 @@ export const getSearchSortBy = createSelector(
   (state: SearchState) => state.params.sortBy
 )
 
+export const getSearchResultsLayout = createSelector(
+  getSearchState,
+  (state: SearchState) => state.resultsLayout
+)
+
 export const getSearchConfigAggregations = createSelector(
   getSearchState,
   (state: SearchState) => state.config.aggs

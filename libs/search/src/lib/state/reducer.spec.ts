@@ -1,5 +1,6 @@
 import { initialState, reducer, SearchStateParams } from './reducer'
 import * as fromActions from './actions'
+import { ResultsListLayout } from '@lib/common'
 
 describe('Search Reducer', () => {
   describe('undefined action', () => {
@@ -56,9 +57,17 @@ describe('Search Reducer', () => {
 
   describe('SortBy action', () => {
     it('should set sort by params', () => {
-      const action = new fromActions.SortBy('fieldA')
+      const action = new fromActions.SetSortBy('fieldA')
       const state = reducer(initialState, action)
       expect(state.params.sortBy).toEqual('fieldA')
+    })
+  })
+
+  describe('Set result layout action', () => {
+    it('should set result layout', () => {
+      const action = new fromActions.SetResultsLayout(ResultsListLayout.CARD)
+      const state = reducer(initialState, action)
+      expect(state.resultsLayout).toEqual(ResultsListLayout.CARD)
     })
   })
 

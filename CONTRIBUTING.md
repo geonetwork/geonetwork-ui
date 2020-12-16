@@ -128,7 +128,7 @@ To extract automatically all translations use
 npm run i18n:extract
 ```
 
-Check all target langage are defined in extraction script
+Check all target languages are defined in extraction script
 ```shell script
     "i18n:extract": "ngx-translate-extract --input ./apps/search/src  ./libs --output ./apps/search/src/assets/i18n/{en,fr,da,de,fi,nb,nl,sv}.json --clean --format json"
 ```
