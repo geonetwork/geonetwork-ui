@@ -1,4 +1,7 @@
 name: Cleanup deployed storybook
+env:
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
 on:
   pull_request:
     types: [closed]
