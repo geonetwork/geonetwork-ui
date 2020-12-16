@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core'
-import { UploadData } from '../../components/upload-data/upload-data.component'
-import { of } from 'rxjs'
 import { Router } from '@angular/router'
 import { UploadDataError } from '../../components/svg/upload-data-error-dialog/upload-data-error-dialog.component'
 
@@ -16,14 +14,10 @@ export class UploadDataPageComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  handleUploadData(uploadData: UploadData) {
-    if (uploadData.error) {
-      this.error = uploadData.error
-      return
-    }
-
-    of(10).subscribe((result) => {
-      this.router.navigate(['/', result])
-    })
+  onUploadError(error: UploadDataError) {
+    this.error = error
+  }
+  onJobIdGet(jobId: string) {
+    this.router.navigate(['/', jobId])
   }
 }

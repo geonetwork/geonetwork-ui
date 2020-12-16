@@ -10,8 +10,9 @@
 
       <div class="pb-20 relative">
         <app-upload-data-component
-          (uploadData)="handleUploadData($event)"
           [maxFileSizeMb]="30"
+          (jobId$)="onJobIdGet($event)"
+          (errors$)="onUploadError($event)"
         ></app-upload-data-component>
         <app-upload-data-error-dialog
           class="error-dialog"
