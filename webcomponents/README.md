@@ -93,3 +93,56 @@ export class AppModule {
 ln -s ../../../apps/search/src/assets/ assets
 ```
 - Add stories for storybook to run it.
+
+## Update web component inputs
+You can handle angular custom elements input changes exactly as it's done for Angular component: whithin the `onChanges` implementation.
+
+Update web component input values from the source page:
+```html
+ <div>
+    <button id="changeSizeBtn">Change size</button>
+ </div>
+ <gn-results-list api-url="https://apps.titellus.net/geonetwork/srv/api"></gn-results-list>
+
+ <script>
+    const wc = document.getElementsByTagName('gn-results-list')[0]
+    const btn = document.getElementById('changeSizeBtn')
+    btn.addEventListener('click', () => wc.size = 3)
+ </script>
+```
+
+In your angular component, listen to these changes
+```typescript
+  private setSearch_() {
+    this.store.dispatch(
+      new SetSearch({ filters: { any: this.filter }, size: this.size })
+    )
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    super.ngOnChanges(changes)
+    this.setSearch_()
+  }
+```
+
+This process must follow some rules:
+- Don't call api request before the web component has initiliazed `API_BASE_PATH`
+- `ngOnChanges` is called the first time before `ngOnInit`, so put your code init in `ngOnchanges` instead.
+- Be sure to trigger the change detection when it is expected, because the web component execution (even though it's in an angular custom element) is outside of an Angular zone, meaning the change detection is not triggered.
+```typescript
+  constructor(
+    private changeDetector: ChangeDetectorRef
+  ) {
+    super()
+  }
+
+  ngOnInit(): void {
+    super.ngOnInit()
+    setTimeout(() => {
+      // Be sure to update the source page when the state is updated
+      this.store.pipe(select(getSearchResultsLoading)).subscribe((v) => {
+        this.changeDetector.detectChanges()
+      })
+    })
+  }
+```
