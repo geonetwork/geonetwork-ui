@@ -33,11 +33,11 @@ export class ButtonComponent implements OnInit {
   get borderColor() {
     switch (this.type) {
       case 'default':
-        return 'border-gray-500 hover:border-gray-700'
+        return 'border-gray-100 hover:border-gray-200 focus:border-gray-500 focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50'
       case 'secondary':
-        return 'border-secondary-darker hover:border-secondary-darkest'
+        return 'border-secondary-lighter hover:border-secondary focus:border-secondary-darker focus:ring-4 focus:ring-secondary-darker focus:ring-opacity-50'
       case 'primary':
-        return 'border-primary-darker hover:border-primary-darkest'
+        return 'border-primary-lighter hover:border-primary focus:border-primary-darker focus:ring-4 focus:ring-primary-darker focus:ring-opacity-50'
     }
   }
 
