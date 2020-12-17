@@ -1,1 +1,6 @@
-<ui-facet-list [models]="models$ | async"></ui-facet-list>
+<ui-facet-list
+  [models]="models$ | async"
+  [selectedPaths]="selectedPaths$ | async"
+  (itemSelected)="onItemSelected($event, true)"
+  (itemUnselected)="onItemSelected($event, false)"
+></ui-facet-list>
