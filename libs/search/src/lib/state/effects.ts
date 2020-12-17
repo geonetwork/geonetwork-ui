@@ -17,6 +17,7 @@ import {
   SetResultsAggregations,
   SET_SORT_BY,
   UPDATE_FILTERS,
+  SET_FILTERS,
   SET_SEARCH,
 } from './actions'
 import { SearchState } from './reducer'
@@ -35,7 +36,7 @@ export class SearchEffects {
 
   clearResults$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SET_SORT_BY, UPDATE_FILTERS, SET_SEARCH),
+      ofType(SET_SORT_BY, SET_FILTERS, UPDATE_FILTERS, SET_SEARCH),
       switchMap(() => of(new ClearResults(), new RequestMoreResults()))
     )
   )

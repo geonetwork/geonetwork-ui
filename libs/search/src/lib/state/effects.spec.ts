@@ -11,6 +11,7 @@ import {
   AddResults,
   ClearResults,
   RequestMoreResults,
+  SetFilters,
   SetResultsAggregations,
   SetSearch,
   SetSortBy,
@@ -72,6 +73,17 @@ describe('Effects', () => {
   describe('clearResults$', () => {
     it('clear results list on sortBy action', () => {
       actions$ = hot('-a---', { a: new SetSortBy('fieldA') })
+      const expected = hot('-(bc)', {
+        b: new ClearResults(),
+        c: new RequestMoreResults(),
+      })
+
+      expect(effects.clearResults$).toBeObservable(expected)
+    })
+    it('clear results list on setFilters action', () => {
+      actions$ = hot('-a---', {
+        a: new SetFilters({ any: 'abcd', other: 'ef' }),
+      })
       const expected = hot('-(bc)', {
         b: new ClearResults(),
         c: new RequestMoreResults(),
