@@ -31,6 +31,7 @@ describe('FacetBlockComponent', () => {
     component = fixture.componentInstance
     de = fixture.debugElement
     component.model = BLOCK_MODEL_FIXTURE
+    component.selectedPaths = []
     fixture.detectChanges()
   })
 
@@ -105,5 +106,30 @@ describe('FacetBlockComponent', () => {
       fixture.detectChanges()
       expect(component.filterChange.emit).toHaveBeenCalledWith('europe')
     }))
+  })
+
+  describe('Input selectedPaths', () => {
+    let items: DebugElement[]
+    beforeEach(() => {
+      component.selectedPaths = [
+        [BLOCK_MODEL_FIXTURE.key, 'Romania'],
+        [BLOCK_MODEL_FIXTURE.key, 'Austria'],
+      ]
+      fixture.detectChanges()
+      items = de.queryAll(By.directive(FacetItemStubComponent))
+    })
+    it('selects only the items matching the selected facets', () => {
+      const selectedItems = items.filter((item) => {
+        const stub = item.componentInstance as FacetItemStubComponent
+        return stub.selected === true
+      })
+      expect(selectedItems.length).toBe(2)
+      expect(
+        (selectedItems[0].componentInstance as FacetItemStubComponent).label
+      ).toBe('Austria')
+      expect(
+        (selectedItems[1].componentInstance as FacetItemStubComponent).label
+      ).toBe('Romania')
+    })
   })
 })

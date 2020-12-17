@@ -49,11 +49,12 @@
     (ngModelChange)="onFilterChange($event)"
   />
   <ui-facet-item
-    *ngFor="let item of getListItems()"
+    *ngFor="let item of getItems()"
     [label]="item.value"
     [count]="item.count"
-    (selectedChange)="onListItemSelectedChange($event, item)"
-    (invertedChange)="onListItemInvertedChange($event, item)"
+    [selected]="isItemSelected(item)"
+    (selectedChange)="onItemSelectedChange($event, item)"
+    (invertedChange)="onItemInvertedChange($event, item)"
   ></ui-facet-item>
   <a href *ngIf="canShowMore()" class="a-more" (click)="onMoreClick()">more</a>
 </div>

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { ModelBlock } from '../facets.model'
+import { ModelBlock, ModelItem } from '../facets.model'
 
 @Component({
   selector: 'ui-facet-block',
@@ -11,8 +11,11 @@ export class FacetBlockComponent implements OnInit {
   @Input() canFilter: boolean
   @Input() filter: string
   @Input() model: ModelBlock
+  @Input() selectedPaths: string[][]
 
   @Output() filterChange = new EventEmitter<string>()
+  @Output() itemSelected = new EventEmitter<string[]>()
+  @Output() itemUnselected = new EventEmitter<string[]>()
 
   title: string
 
@@ -30,12 +33,21 @@ export class FacetBlockComponent implements OnInit {
     this.filterChange.emit(value)
   }
 
-  onListItemSelectedChange(selected: boolean, item: any) {
-    // TODO: ???
-    console.log('onListItemSelectedChange', selected, item)
+  isItemSelected(item: ModelItem) {
+    return this.selectedPaths
+      .map((path) => JSON.stringify(path))
+      .includes(JSON.stringify(item.path))
   }
 
-  onListItemInvertedChange(inverted: boolean, item: any) {
+  onItemSelectedChange(selected: boolean, item: ModelItem) {
+    if (selected) {
+      this.itemSelected.emit(item.path)
+    } else {
+      this.itemUnselected.emit(item.path)
+    }
+  }
+
+  onItemInvertedChange(inverted: boolean, item: ModelItem) {
     // TODO: ???
     console.log('onListItemInvertedChange', inverted, item)
   }
@@ -45,7 +57,7 @@ export class FacetBlockComponent implements OnInit {
     console.log('onMoreClick')
   }
 
-  getListItems() {
+  getItems() {
     return this.model.items
   }
 
@@ -60,6 +72,9 @@ export class FacetBlockStubComponent implements Partial<FacetBlockComponent> {
   @Input() canFilter: boolean
   @Input() filter: string
   @Input() model: ModelBlock
+  @Input() selectedPaths: string[][]
 
   @Output() filterChange = new EventEmitter<string>()
+  @Output() itemSelected = new EventEmitter<string[]>()
+  @Output() itemUnselected = new EventEmitter<string[]>()
 }
