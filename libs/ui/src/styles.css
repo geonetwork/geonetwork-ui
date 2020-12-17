@@ -1,24 +1,14 @@
 @import './tailwind-generated.css';
 
-:root {
-  --gn-font-size-md: 1rem;
-  --gn-font-size-sm: 0.875rem;
-  --gn-title-color: #3B82F6;
-  --gn-link-color: #1D4ED8;
-}
-
 body {
   background-color: var(--color-background);
   color: var(--color-main);
 }
 a {
-  color: var(--gn-link-color);
+  color: var(--color-primary);
 }
 h1 {
-  color: var(--gn-title-color);
-}
-p {
-  font-size: var(--gn-font-size-sm);
+  color: var(--color-primary);
 }
 
 .clamp-1 {
