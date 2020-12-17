@@ -1,0 +1,21 @@
+/*
+This file proposes a mapping of keys, between the new gn-ui and core application
+For each key, a mapped value of {filename}:{key} is suggested (empty if none)
+So we can define a script to import existing keys from transifex
+*/
+
+{
+	"Find your metadata": "core:anyPlaceHolder",
+	"Sort by": "core:ui-sortBy",
+	"records": "core:records",
+	"recordViewable": "search:mdActions-view",
+	"recordDownloadable": "search:mdActions-download",
+	"readMore": "search:viewMore",
+	"search.loading": "",
+	"last changed": "search:changeDate",
+	"popularity": "core:popularity",
+	"dropFile": "admin:chooseOrDropResource",
+	"Back": "",
+    "facets.block.title.tag": "core:Keywords",
+    "results.layout.selectOne": ""
+}
