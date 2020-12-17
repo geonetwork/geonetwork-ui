@@ -1,1 +1,7 @@
-<ui-facet-block *ngFor="let model of models" [model]="model"></ui-facet-block>
+<ui-facet-block
+  *ngFor="let model of models"
+  [model]="model"
+  [selectedPaths]="getBlockSelectedPaths(model)"
+  (itemSelected)="onItemSelected($event)"
+  (itemUnselected)="onItemUnselected($event)"
+></ui-facet-block>
