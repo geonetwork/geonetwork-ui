@@ -22,7 +22,7 @@ export const getSearchResultsLayout = createSelector(
 
 export const getSearchConfigAggregations = createSelector(
   getSearchState,
-  (state: SearchState) => state.config.aggs
+  (state: SearchState) => state.config.aggregations
 )
 
 export const getSearchResults = createSelector(

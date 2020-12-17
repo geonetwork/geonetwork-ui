@@ -12,17 +12,18 @@ describe('Search Reducer', () => {
     })
   })
 
-  describe('UPDATE_FILTERS action', () => {
-    it('should set new filters', () => {
+  describe('UpdateFilters action', () => {
+    it('should add new filters', () => {
       const action = new fromActions.UpdateFilters({
         any: 'blah',
+        other: 'Some value',
       })
       const state = reducer(initialState, action)
-      expect(state.params.filters).toEqual({ any: 'blah' })
+      expect(state.params.filters).toEqual({ any: 'blah', other: 'Some value' })
     })
-    it('should remove filters with value undefined', () => {
+    it('should update defined filters and keep undefined filters', () => {
       const action = new fromActions.UpdateFilters({
-        any: undefined,
+        any: 'abc',
       })
       const state = reducer(
         {
@@ -30,18 +31,19 @@ describe('Search Reducer', () => {
           params: {
             ...initialState.params,
             filters: {
-              any: 'bleh',
+              any: 'def',
+              other: 'Some value',
             },
           },
         },
         action
       )
-      expect(state.params.filters).toEqual({})
+      expect(state.params.filters).toEqual({ any: 'abc', other: 'Some value' })
     })
   })
 
-  describe('SET_SEARCH action', () => {
-    it('should set serach params', () => {
+  describe('SetSearch action', () => {
+    it('should set search params', () => {
       const searchParams: SearchStateParams = {
         size: 12,
         sortBy: 'asc',
@@ -105,7 +107,7 @@ describe('Search Reducer', () => {
   })
 
   describe('ClearResults action', () => {
-    it('should add results to the list', () => {
+    it('should clear the results list', () => {
       const action = new fromActions.ClearResults()
       const state = reducer(
         {
