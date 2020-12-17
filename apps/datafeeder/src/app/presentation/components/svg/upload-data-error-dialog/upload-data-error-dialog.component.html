@@ -17,8 +17,8 @@
 
 <div class="error-dialog">
   <div class="w-1/2">
-    <strong class="text-focus">{{ error && error.title }}</strong>
-    <span class="text-help">{{ error && error.subtitle }}</span>
+    <strong class="text-focus">{{ error && (error.title | translate) }}</strong>
+    <span class="text-help">{{ error && (error.subtitle | translate) }}</span>
   </div>
   <div class="illustration" *ngIf="error && error.type">
     <svg
