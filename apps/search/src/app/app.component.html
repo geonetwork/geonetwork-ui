@@ -1,14 +1,16 @@
 <div>
-  <catalog-site-title></catalog-site-title>
+  <div class="p-4">
+    <catalog-site-title></catalog-site-title>
+  </div>
   <search-records-metrics field="tag" count="20"></search-records-metrics>
-  <div class="mb-3 mx-4 p-5 bg-gray-500 rounded flex flex-row">
-    <div class="w-4/5 mr-3">
+  <div class="mb-3 mx-4 rounded flex flex-row">
+    <div class="w-2/4 mr-3">
       <search-fuzzy-search></search-fuzzy-search>
     </div>
-    <div class="flex-grow">
+    <div class="w-1/4 mr-3">
       <search-sort-by></search-sort-by>
     </div>
-    <div class="">
+    <div class="flex-grow">
       <search-results-layout></search-results-layout>
     </div>
   </div>

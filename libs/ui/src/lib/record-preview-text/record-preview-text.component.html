@@ -1,13 +1,13 @@
 <!-- Record list item: List Small -->
 <div class="mb-4">
   <div
-    class="h-full flex sm:flex-row flex-col p-5 items-center sm:justify-start justify-center text-center sm:text-left bg-white border-gray-200 border-2 rounded-md"
+    class="h-full flex sm:flex-row flex-col p-5 items-center sm:justify-start justify-center text-center sm:text-left bg-white hover:bg-gray-100 border-gray-200 border rounded-sm transition duration-200"
   >
     <div class="flex-grow">
       <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
         {{ record.title }}
       </h1>
-      <p class="leading-relaxed mb-3">{{ record.abstract }}</p>
+      <p class="leading-relaxed mb-3 text-gray-700 text-sm whitespace-pre-line">{{ record.abstract }}</p>
 
       <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
         <a

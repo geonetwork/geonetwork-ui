@@ -1,5 +1,5 @@
 <div
-  class="h-40 bg-white transition duration-200 hover:bg-gray-100 border-gray-300"
+  class="h-40 bg-white transition duration-200 hover:bg-gray-100 border-gray-300 rounded-md"
 >
   <a
     [href]="record.metadataUrl"
@@ -7,7 +7,7 @@
     [title]="record.abstract"
   >
     <div
-      class="h-full flex flex-row items-center border border-gray-200 rounded-md shadow-sm"
+      class="h-full flex flex-row items-center border border-gray-200 shadow-sm"
     >
       <ui-record-thumbnail
         class="w-40 h-full flex-shrink-0 border-r border-gray-200 bg-gray-100"
@@ -15,7 +15,7 @@
       ></ui-record-thumbnail>
 
       <div class="flex-grow h-full px-6 py-4 flex flex-col overflow-hidden">
-        <div class="title-font text-lg font-medium text-gray-900">
+        <div class="title-font text-lg font-medium mb-2">
           <h1 class="truncate">{{ record.title }}</h1>
         </div>
         <p class="leading-relaxed clamp-3 text-sm text-gray-700">
