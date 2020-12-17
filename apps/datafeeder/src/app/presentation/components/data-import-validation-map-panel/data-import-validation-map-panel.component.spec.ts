@@ -2,12 +2,13 @@ if (typeof global.URL.createObjectURL !== 'function') {
   global.URL.createObjectURL = jest.fn()
 }
 
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { By } from '@angular/platform-browser'
 import { I18nModule } from '@lib/common'
+import { TranslateModule } from '@ngx-translate/core'
 
 import { DataImportValidationMapPanelComponent } from './data-import-validation-map-panel.component'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { By } from '@angular/platform-browser'
 
 describe('MapViewComponent', () => {
   let component: DataImportValidationMapPanelComponent
@@ -15,7 +16,7 @@ describe('MapViewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [I18nModule],
+      imports: [I18nModule, TranslateModule.forRoot()],
       declarations: [DataImportValidationMapPanelComponent],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()

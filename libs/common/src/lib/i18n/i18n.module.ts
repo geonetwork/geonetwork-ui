@@ -36,18 +36,17 @@ export const LANG_2_TO_3_MAPPER = Object.entries(LANG_3_TO_2_MAPPER).reduce(
   {}
 )
 
+export const TRANSLATE_DEFAULT_CONFIG = {
+  loader: {
+    provide: TranslateLoader,
+    useFactory: HttpLoaderFactory,
+    defaultLanguage: 'en',
+    deps: [HttpClient],
+  },
+}
+
 @NgModule({
-  declarations: [],
-  imports: [
-    HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
-      },
-    }),
-  ],
+  imports: [HttpClientModule],
   exports: [TranslateModule],
 })
 export class I18nModule {

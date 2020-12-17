@@ -1,12 +1,16 @@
+import { TRANSLATE_DEFAULT_CONFIG } from '@lib/common'
+import { TranslateModule } from '@ngx-translate/core'
 import { withA11y } from '@storybook/addon-a11y'
-import { Meta, moduleMetadata } from '@storybook/angular'
 import { color, number, text, withKnobs } from '@storybook/addon-knobs'
-import { I18nModule } from '@lib/common'
+import { Meta, moduleMetadata } from '@storybook/angular'
 import { GnAggregatedRecordsComponent } from '../src/app/gn-aggregated-records.component'
 import { GnAggregatedRecordsModule } from '../src/app/gn-aggregated-records.module'
 
 const moduleMetadatas = {
-  imports: [I18nModule, GnAggregatedRecordsModule],
+  imports: [
+    TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+    GnAggregatedRecordsModule,
+  ],
 }
 
 export default {

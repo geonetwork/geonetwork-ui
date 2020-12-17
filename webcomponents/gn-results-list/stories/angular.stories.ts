@@ -1,12 +1,17 @@
+import { TranslateModule } from '@ngx-translate/core'
 import { withA11y } from '@storybook/addon-a11y'
 import { color, text, withKnobs } from '@storybook/addon-knobs'
 import { moduleMetadata } from '@storybook/angular'
-import { I18nModule } from '../../../libs/common/src'
+import { I18nModule, TRANSLATE_DEFAULT_CONFIG } from '../../../libs/common/src'
 import { GnResultsListComponent } from '../src/app/gn-results-list.component'
 import { GnResultsListModule } from '../src/app/gn-results-list.module'
 
 const moduleMetadatas = {
-  imports: [I18nModule, GnResultsListModule],
+  imports: [
+    I18nModule,
+    TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+    GnResultsListModule,
+  ],
 }
 
 export default {

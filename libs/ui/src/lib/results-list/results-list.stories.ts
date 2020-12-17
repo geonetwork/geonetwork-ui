@@ -1,13 +1,18 @@
+import {
+  RecordSummary,
+  ResultsListLayout,
+  TRANSLATE_DEFAULT_CONFIG,
+} from '@lib/common'
+import { TranslateModule } from '@ngx-translate/core'
 import { withA11y } from '@storybook/addon-a11y'
 import { object, select, withKnobs } from '@storybook/addon-knobs'
 import { moduleMetadata } from '@storybook/angular'
-import { I18nModule, RecordSummary, ResultsListLayout } from '@lib/common'
 import { UiModule } from '../ui.module'
 import { ResultsListComponent } from './results-list.component'
 
 const moduleMetadatas = {
   declaration: [],
-  imports: [I18nModule, UiModule],
+  imports: [TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG), UiModule],
 }
 
 export default {
