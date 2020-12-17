@@ -40,6 +40,15 @@ export function reducer(
   action: fromActions.SearchActions
 ): SearchState {
   switch (action.type) {
+    case fromActions.SET_FILTERS: {
+      return {
+        ...state,
+        params: {
+          ...state.params,
+          filters: { ...action.payload },
+        },
+      }
+    }
     case fromActions.UPDATE_FILTERS: {
       return {
         ...state,

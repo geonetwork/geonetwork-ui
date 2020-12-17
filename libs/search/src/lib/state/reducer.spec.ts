@@ -1,6 +1,8 @@
-import { initialState, reducer, SearchStateParams } from './reducer'
-import * as fromActions from './actions'
 import { ResultsListLayout } from '@lib/common'
+import { ES_FIXTURE_AGGS_REQ_TERM } from '../elasticsearch/fixtures/aggregations-request'
+import { ES_FIXTURE_AGGS_RESPONSE_TERM } from '../elasticsearch/fixtures/aggregations-response'
+import * as fromActions from './actions'
+import { initialState, reducer, SearchStateParams } from './reducer'
 
 describe('Search Reducer', () => {
   describe('undefined action', () => {
@@ -9,6 +11,36 @@ describe('Search Reducer', () => {
       const state = reducer(undefined, action)
 
       expect(state).toBe(initialState)
+    })
+  })
+
+  describe('SetFilters action', () => {
+    it('should add new filters', () => {
+      const action = new fromActions.SetFilters({
+        any: 'blah',
+        other: 'Some value',
+      })
+      const state = reducer(initialState, action)
+      expect(state.params.filters).toEqual({ any: 'blah', other: 'Some value' })
+    })
+    it('should update defined filters and remove undefined filters', () => {
+      const action = new fromActions.SetFilters({
+        any: 'abc',
+      })
+      const state = reducer(
+        {
+          ...initialState,
+          params: {
+            ...initialState.params,
+            filters: {
+              any: 'def',
+              other: 'Some value',
+            },
+          },
+        },
+        action
+      )
+      expect(state.params.filters).toEqual({ any: 'abc' })
     })
   })
 
@@ -128,6 +160,42 @@ describe('Search Reducer', () => {
       const action = new fromActions.RequestMoreResults()
       const state = reducer(initialState, action)
       expect(state.loadingMore).toEqual(true)
+    })
+  })
+
+  describe('SetResultsAggregations action', () => {
+    it('should replace the aggregations in the result', () => {
+      const payload = ES_FIXTURE_AGGS_RESPONSE_TERM
+      const action = new fromActions.SetResultsAggregations(payload)
+      const state = reducer(
+        {
+          ...initialState,
+          results: {
+            ...initialState.results,
+            aggregations: { someKey: 'someValue' },
+          },
+        },
+        action
+      )
+      expect(state.results.aggregations).toEqual(ES_FIXTURE_AGGS_RESPONSE_TERM)
+    })
+  })
+
+  describe('SetConfigAggregations action', () => {
+    it('should replace the aggregations in the config', () => {
+      const payload = ES_FIXTURE_AGGS_REQ_TERM
+      const action = new fromActions.SetConfigAggregations(payload)
+      const state = reducer(
+        {
+          ...initialState,
+          config: {
+            ...initialState.config,
+            aggregations: { someKey: 'someValue' },
+          },
+        },
+        action
+      )
+      expect(state.config.aggregations).toEqual(ES_FIXTURE_AGGS_REQ_TERM)
     })
   })
 })
