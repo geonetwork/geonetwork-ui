@@ -54,7 +54,7 @@ export class ElasticsearchService {
   }
 
   /**
-   * Facet state is an object like this:
+   * Facets state is an object like this:
    *
    * {
    *   'tag': {
@@ -78,27 +78,26 @@ export class ElasticsearchService {
    *     'dataset': true
    *   }
    * }
-   *
-   * @param facetsState
-   * @returns {string}
    */
   facetsToLuceneQuery(facetsState) {
-    var query = []
-    for (var indexKey in facetsState) {
-      var query_chunk = this.parseStateNode(
-        indexKey,
-        facetsState[indexKey],
-        undefined
-      )
-      if (query_chunk) {
-        query.push(query_chunk)
+    const query = []
+    for (const indexKey in facetsState) {
+      if (facetsState.hasOwnProperty(indexKey)) {
+        const queryChunk = this.parseStateNode(
+          indexKey,
+          facetsState[indexKey],
+          undefined
+        )
+        if (queryChunk) {
+          query.push(queryChunk)
+        }
       }
     }
     return this.combineQueryGroups(query)
   }
 
   parseStateNode(nodeName, node, indexKey) {
-    let query_string = ''
+    let queryString = ''
     if (node && typeof node === 'object') {
       const chunks = []
       for (const p in node) {
@@ -119,24 +118,24 @@ export class ElasticsearchService {
             chunks.push('(' + nestedChunks.join(' AND ') + ')')
           }
         } else {
-          var chunk = this.parseStateNode(p, node[p], nodeName).trim()
+          const chunk = this.parseStateNode(p, node[p], nodeName).trim()
           if (chunk) {
             chunks.push(chunk)
           }
         }
       }
       if (chunks && chunks.length) {
-        query_string += '('
-        query_string += chunks.join(' ')
-        query_string += ')'
+        queryString += '('
+        queryString += chunks.join(' ')
+        queryString += ')'
       }
     } else if (typeof node === 'string') {
-      query_string += node
+      queryString += node
     } else if (node === true) {
-      query_string += indexKey + ':"' + nodeName + '"'
+      queryString += indexKey + ':"' + nodeName + '"'
     } else if (node === false) {
-      query_string += '-' + indexKey + ':"' + nodeName + '"'
+      queryString += '-' + indexKey + ':"' + nodeName + '"'
     }
-    return query_string
+    return queryString
   }
 }

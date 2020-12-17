@@ -66,7 +66,8 @@ export class FacetsContainerComponent implements OnInit {
     const path = []
     const results = []
 
-    ;(function find(obj) {
+    // store void result to prevent ; added by prettier before iife
+    const _ = (function find(obj) {
       for (const key of Object.keys(obj)) {
         if (obj[key] === true) {
           // Found a selected path
@@ -76,7 +77,7 @@ export class FacetsContainerComponent implements OnInit {
         }
         const o = obj[key] // The next object to be searched
         if (o && typeof o === 'object') {
-          if (!discoveredObjects.find((obj) => obj === o)) {
+          if (!discoveredObjects.find((discovered) => discovered === o)) {
             // check for cyclic link
             path.push(key)
             discoveredObjects.push(o)
@@ -86,6 +87,7 @@ export class FacetsContainerComponent implements OnInit {
         }
       }
     })(filters)
+
     return results
   }
 
