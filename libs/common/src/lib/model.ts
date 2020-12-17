@@ -1,5 +1,6 @@
 export interface SearchFilters {
   any?: string
+  [x: string]: any
 }
 
 export interface RecordSummary {

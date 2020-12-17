@@ -30,9 +30,9 @@ export class AppComponent implements OnInit {
         take(1),
         map((config) => config.mods.search.facetConfig),
         // TODO: make the config work not just for tag
-        pluck('tag'),
+        pluck('tag.default'),
         tap((tagConfig) => {
-          this.store.dispatch(new SetConfigAggregations({ tag: tagConfig }))
+          new SetConfigAggregations({ 'tag.default': tagConfig })
           this.store.dispatch(new RequestMoreResults())
         })
       )

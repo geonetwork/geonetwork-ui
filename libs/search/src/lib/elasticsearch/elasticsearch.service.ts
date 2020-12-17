@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core'
-import { RESULTS_PAGE_SIZE } from '@lib/common'
 import { SearchParams } from 'elasticsearch'
 import { SearchState } from '../state/reducer'
 import { ElasticsearchMetadataModels, ElasticSearchSources } from './constant'
@@ -19,7 +18,7 @@ export class ElasticsearchService {
   buildPayload(state: SearchState): SearchParams {
     const { size, sortBy, filters } = state.params
     const payload = {
-      aggs: state.config.aggs,
+      aggs: state.config.aggregations,
       from: 0,
       size,
       sort: sortBy ? [sortBy] : undefined,
