@@ -1,0 +1,13 @@
+<tag-input
+  [ngModel]="items"
+  (ngModelChange)="onChange($event)"
+  [onlyFromAutocomplete]="true"
+  [placeholder]="placeholder"
+  class="border-2 border-primary h-full rounded-lg p-2"
+>
+  <tag-input-dropdown
+    [showDropdownIfEmpty]="true"
+    [autocompleteItems]="autocompleteItems"
+  >
+  </tag-input-dropdown>
+</tag-input>

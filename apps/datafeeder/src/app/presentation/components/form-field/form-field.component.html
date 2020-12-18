@@ -1,0 +1,17 @@
+<div class="flex">
+  <i [class]="config.icon"></i>
+  <div class="flex flex-col flex-1">
+    <div translate>
+      {{ config.label }}
+    </div>
+    <div class="w-1/2" *ngIf="formFieldConfig.TEXT === config.type">
+      <ui-text-input></ui-text-input>
+    </div>
+    <ui-chips-input
+      *ngIf="formFieldConfig.CHIPS == config.type"
+    ></ui-chips-input>
+    <ui-text-area
+      *ngIf="formFieldConfig.TEXT_AREA == config.type"
+    ></ui-text-area>
+  </div>
+</div>

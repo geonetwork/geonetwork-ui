@@ -7,7 +7,6 @@ import { UploadDataComponent } from './presentation/components/upload-data/uploa
 import {
   HttpLoaderFactory,
   I18nModule,
-  TRANSLATE_DEFAULT_CONFIG,
 } from '@lib/common'
 import { UiModule } from '@lib/ui'
 import { UploadDataPageComponent } from './presentation/pages/upload-data-page/upload-data.page'
@@ -21,6 +20,8 @@ import { UploadDataErrorDialogComponent } from './presentation/components/svg/up
 import { UploadDataBackgroundComponent } from './presentation/components/svg/upload-data-background/upload-data-background.component'
 import { UploadDataIllustrationComponent } from './presentation/components/svg/upload-data-illustration/upload-data-illustration.component'
 import { AnalysisProgressIllustrationsComponent } from './presentation/components/svg/analysis-progress-illustrations/analysis-progress-illustrations.component'
+import { FormsPageComponent } from './presentation/pages/forms-page/forms-page.component'
+import { FormFieldComponent } from './presentation/components/form-field/form-field.component'
 
 @NgModule({
   declarations: [
@@ -35,14 +36,22 @@ import { AnalysisProgressIllustrationsComponent } from './presentation/component
     UploadDataBackgroundComponent,
     UploadDataIllustrationComponent,
     AnalysisProgressIllustrationsComponent,
+    FormsPageComponent,
+    FormFieldComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    I18nModule,
     UiModule,
     HttpClientModule,
-    I18nModule,
-    TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

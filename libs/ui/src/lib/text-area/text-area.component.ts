@@ -1,21 +1,21 @@
 import { Component, Input, OnInit, Output } from '@angular/core'
-import { distinctUntilChanged } from 'rxjs/operators'
 import { Observable, Subject } from 'rxjs'
+import { distinctUntilChanged } from 'rxjs/operators'
 
 @Component({
-  selector: 'ui-text-input',
-  templateUrl: './text-input.component.html',
-  styleUrls: ['./text-input.component.css'],
+  selector: 'ui-text-area',
+  templateUrl: './text-area.component.html',
+  styleUrls: ['./text-area.component.css'],
 })
-export class TextInputComponent implements OnInit {
+export class TextAreaComponent implements OnInit {
   @Input() value = ''
-  @Input() hint: string
+  @Input() placeholder: string
   @Output() valueChange: Observable<string>
   rawChange = new Subject<string>()
 
   constructor() {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.valueChange = this.rawChange.pipe(distinctUntilChanged())
   }
 }

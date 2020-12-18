@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router'
 import { UploadDataPageComponent } from './presentation/pages/upload-data-page/upload-data.page'
 import { AnalysisProgressPageComponent } from './presentation/pages/analysis-progress-page/analysis-progress.page'
 import { DatasetValidationPageComponent } from './presentation/pages/dataset-validation-page/dataset-validation-page'
+import { FormsPageComponent } from './presentation/pages/forms-page/forms-page.component'
 
 const routes: Routes = [
   { path: '', component: UploadDataPageComponent },
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path: ':id/validation',
     component: DatasetValidationPageComponent,
+  },
+  {
+    path: ':id/step/1',
+    component: FormsPageComponent,
   },
   { path: '**', redirectTo: '' },
 ]
