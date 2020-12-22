@@ -13,7 +13,7 @@ describe('ElasticsearchService', () => {
   })
 
   describe('#facetsToLuceneQuery', () => {
-    describe('when simple buckets', () => {
+    describe('when simple terms', () => {
       beforeEach(() => {
         searchFilters = {
           'tag.default': {
@@ -22,13 +22,13 @@ describe('ElasticsearchService', () => {
           },
         }
       })
-      it('emits a value on subscribe after auth was queried', () => {
+      it('return OR separated query', () => {
         const query = service.facetsToLuceneQuery(searchFilters)
         expect(query).toBe('(tag.default:"world" tag.default:"vector")')
       })
     })
 
-    describe('when recursive buckets', () => {
+    describe('when recursive terms', () => {
       beforeEach(() => {
         searchFilters = {
           resourceType: {
@@ -41,7 +41,7 @@ describe('ElasticsearchService', () => {
           },
         }
       })
-      it('emits a value on subscribe after auth was queried', () => {
+      it('nest sub key with AND operator', () => {
         const query = service.facetsToLuceneQuery(searchFilters)
         expect(query).toBe(
           '((resourceType:"service" AND (serviceType:"OGC:WMS")) resourceType:"dataset")'

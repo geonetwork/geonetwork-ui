@@ -61,6 +61,13 @@ export class FacetsContainerComponent implements OnInit {
       .subscribe()
   }
 
+  /**
+   * Compute filters recursive paths enabled in the state current
+   * search
+   * e.g [["tag.default", "land use"]]
+   *
+   * @param filters Search filters from state
+   */
   findSelectedPaths(filters) {
     const discoveredObjects = [] // For checking for cyclic object
     const path = []
