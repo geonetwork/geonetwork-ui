@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { BootstrapService, ResultsListLayout } from '@lib/common'
+import { ResultsListLayout } from '@lib/common'
 import { select, Store } from '@ngrx/store'
 import { SetResultsLayout } from '../state/actions'
 import { SearchState } from '../state/reducer'

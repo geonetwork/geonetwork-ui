@@ -1,5 +1,4 @@
 import { RecordSummary, SearchFilters } from '@lib/common'
-import { SET_SEARCH } from './actions'
 import * as fromActions from './actions'
 
 export const SEARCH_FEATURE_KEY = 'searchState'
@@ -12,7 +11,7 @@ export interface SearchStateParams {
 
 export interface SearchState {
   config: {
-    aggs?: any
+    aggregations?: any
   }
   params: SearchStateParams
   results: {
@@ -41,12 +40,24 @@ export function reducer(
   action: fromActions.SearchActions
 ): SearchState {
   switch (action.type) {
-    case fromActions.UPDATE_FILTERS: {
+    case fromActions.SET_FILTERS: {
       return {
         ...state,
         params: {
           ...state.params,
           filters: { ...action.payload },
+        },
+      }
+    }
+    case fromActions.UPDATE_FILTERS: {
+      return {
+        ...state,
+        params: {
+          ...state.params,
+          filters: {
+            ...state.params.filters,
+            ...action.payload,
+          },
         },
       }
     }
@@ -112,7 +123,7 @@ export function reducer(
         ...state,
         config: {
           ...state.config,
-          aggs: action.payload,
+          aggregations: action.payload,
         },
       }
     }

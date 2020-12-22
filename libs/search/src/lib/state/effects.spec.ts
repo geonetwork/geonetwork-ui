@@ -11,6 +11,7 @@ import {
   AddResults,
   ClearResults,
   RequestMoreResults,
+  SetFilters,
   SetResultsAggregations,
   SetSearch,
   SetSortBy,
@@ -79,7 +80,18 @@ describe('Effects', () => {
 
       expect(effects.clearResults$).toBeObservable(expected)
     })
-    it('clear results list on updateParams action', () => {
+    it('clear results list on setFilters action', () => {
+      actions$ = hot('-a---', {
+        a: new SetFilters({ any: 'abcd', other: 'ef' }),
+      })
+      const expected = hot('-(bc)', {
+        b: new ClearResults(),
+        c: new RequestMoreResults(),
+      })
+
+      expect(effects.clearResults$).toBeObservable(expected)
+    })
+    it('clear results list on updateFilters action', () => {
       actions$ = hot('-a---', { a: new UpdateFilters({ any: 'abcd' }) })
       const expected = hot('-(bc)', {
         b: new ClearResults(),
@@ -88,7 +100,7 @@ describe('Effects', () => {
 
       expect(effects.clearResults$).toBeObservable(expected)
     })
-    it('clear results list on SetSearch action', () => {
+    it('clear results list on setSearch action', () => {
       actions$ = hot('-a---', {
         a: new SetSearch({ filters: { any: 'abcd' } }),
       })

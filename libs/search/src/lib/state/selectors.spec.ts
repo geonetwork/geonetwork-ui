@@ -1,3 +1,5 @@
+import { ES_FIXTURE_AGGS_REQ_TERM } from '../elasticsearch/fixtures/aggregations-request'
+import { ES_FIXTURE_AGGS_RESPONSE_TERM } from '../elasticsearch/fixtures/aggregations-response'
 import { initialState } from './reducer'
 import * as fromSelectors from './selectors'
 
@@ -32,6 +34,19 @@ describe('Search Selectors', () => {
     })
   })
 
+  describe('getSearchConfigAggregations', () => {
+    it('should return aggregations configuration', () => {
+      const result = fromSelectors.getSearchConfigAggregations.projector({
+        ...initialState,
+        config: {
+          ...initialState.config,
+          aggregations: ES_FIXTURE_AGGS_REQ_TERM,
+        },
+      })
+      expect(result).toEqual(ES_FIXTURE_AGGS_REQ_TERM)
+    })
+  })
+
   describe('getSearchResults', () => {
     it('should return search results', () => {
       const records = [{ title: 'record1' } as any]
@@ -53,6 +68,20 @@ describe('Search Selectors', () => {
         loadingMore: true,
       })
       expect(result).toEqual(true)
+    })
+  })
+
+  describe('getSearchResultsAggregations', () => {
+    it('should return search aggregations results', () => {
+      const aggregations = ES_FIXTURE_AGGS_RESPONSE_TERM
+      const result = fromSelectors.getSearchResultsAggregations.projector({
+        ...initialState,
+        results: {
+          ...initialState.results,
+          aggregations: aggregations,
+        },
+      })
+      expect(result).toEqual(aggregations)
     })
   })
 })
