@@ -50,11 +50,7 @@ export class FacetsContainerComponent implements OnInit {
         take(1),
         select(getSearchFilters),
         tap((filters) => {
-          const newFilters = this.getCloneWithSelectedPath(
-            filters,
-            path,
-            selected
-          )
+          const newFilters = this.computeNewFilters(filters, path, selected)
           this.store.dispatch(new SetFilters(newFilters))
         })
       )
@@ -68,7 +64,7 @@ export class FacetsContainerComponent implements OnInit {
    *
    * @param filters Search filters from state
    */
-  findSelectedPaths(filters) {
+  private findSelectedPaths(filters) {
     const discoveredObjects = [] // For checking for cyclic object
     const path = []
     const results = []
@@ -98,7 +94,7 @@ export class FacetsContainerComponent implements OnInit {
     return results
   }
 
-  getCloneWithSelectedPath(filters, path, selected) {
+  private computeNewFilters(filters, path, selected) {
     const clone = JSON.parse(JSON.stringify(filters))
     let current = clone
 
@@ -114,10 +110,8 @@ export class FacetsContainerComponent implements OnInit {
       if (selected && current[path[i]] === undefined) {
         current[path[i]] = {}
       }
-
       current = current[path[i]]
     }
-
     return clone
   }
 }

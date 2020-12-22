@@ -43,7 +43,7 @@ describe('FacetsContainerComponent', () => {
         searchFilters = SEARCH_STATE_FILTERS_FIXTURE['simpleTerms']
       })
       it('returns simple 2 elements paths', () => {
-        const paths = component.findSelectedPaths(searchFilters)
+        const paths = component['findSelectedPaths'](searchFilters)
         expect(paths).toEqual([
           ['tag.default', 'land use'],
           ['tag.default', 'national'],
@@ -55,11 +55,52 @@ describe('FacetsContainerComponent', () => {
         searchFilters = SEARCH_STATE_FILTERS_FIXTURE['recursiveTerms']
       })
       it('nested elements are appended to the path', () => {
-        const paths = component.findSelectedPaths(searchFilters)
+        const paths = component['findSelectedPaths'](searchFilters)
         expect(paths).toEqual([
           ['resourceType', 'service', 'serviceType', 'OGC:WMS'],
           ['resourceType', 'dataset'],
         ])
+      })
+    })
+  })
+
+  describe('#computeNewFilters', () => {
+    let path, filters
+    describe('when simple terms path', () => {
+      beforeEach(() => {
+        path = ['tag.default', 'Land use']
+      })
+      describe('when no previous filters', () => {
+        beforeEach(() => {
+          filters = {}
+        })
+        it('add filter in state', () => {
+          let stateFilters = component['computeNewFilters'](filters, path, true)
+          expect(stateFilters).toEqual({
+            'tag.default': { 'Land use': true },
+          })
+        })
+      })
+      describe('when previous filters', () => {
+        beforeEach(() => {
+          filters = { 'tag.default': { national: true } }
+        })
+        it('merges previous and new filters', () => {
+          let stateFilters = component['computeNewFilters'](filters, path, true)
+          expect(stateFilters).toEqual({
+            'tag.default': { 'Land use': true, national: true },
+          })
+        })
+        it('removes previous filter', () => {
+          let stateFilters = component['computeNewFilters'](
+            filters,
+            ['tag.default', 'national'],
+            false
+          )
+          expect(stateFilters).toEqual({
+            'tag.default': {},
+          })
+        })
       })
     })
   })
