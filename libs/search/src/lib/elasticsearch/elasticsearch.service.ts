@@ -17,19 +17,25 @@ export class ElasticsearchService {
 
   buildPayload(state: SearchState): SearchParams {
     const { size, sortBy, filters } = state.params
+    const sort = sortBy ? [sortBy] : undefined
+
+    const { any, ...searchFilters } = filters
+    const queryFilters = this.facetsToLuceneQuery(searchFilters)
+    const queryAny = `(${filters.any || '*'})`
+    const query =
+      queryAny + (queryFilters.length > 0 ? ` AND ${queryFilters}` : '')
+
     const payload = {
       aggs: state.config.aggregations,
       from: 0,
       size,
-      sort: sortBy ? [sortBy] : undefined,
+      sort,
       query: {
         bool: {
           must: [
             {
               query_string: {
-                query:
-                  `(${filters.any || '*'})` +
-                  `${this.fromFiltersToQuery(filters)}`,
+                query,
               },
             },
           ],
@@ -37,16 +43,6 @@ export class ElasticsearchService {
       },
     }
     return payload
-  }
-
-  fromFiltersToQuery(filters) {
-    const clone = JSON.parse(JSON.stringify(filters))
-    delete clone.any
-    let query = this.facetsToLuceneQuery(clone)
-    if (query.length > 0) {
-      query = ' AND ' + query
-    }
-    return query
   }
 
   combineQueryGroups(queryGroups) {

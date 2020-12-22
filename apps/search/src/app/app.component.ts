@@ -32,7 +32,9 @@ export class AppComponent implements OnInit {
         // TODO: make the config work not just for tag
         pluck('tag.default'),
         tap((tagConfig) => {
-          new SetConfigAggregations({ 'tag.default': tagConfig })
+          this.store.dispatch(
+            new SetConfigAggregations({ 'tag.default': tagConfig })
+          )
           this.store.dispatch(new RequestMoreResults())
         })
       )
