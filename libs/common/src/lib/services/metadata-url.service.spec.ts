@@ -1,6 +1,4 @@
 import { TestBed } from '@angular/core/testing'
-import { LogService } from '@lib/common'
-import { SiteApiService, UiApiService } from '@lib/gn-api'
 import { TranslateService } from '@ngx-translate/core'
 
 import { MetadataUrlService } from './metadata-url.service'

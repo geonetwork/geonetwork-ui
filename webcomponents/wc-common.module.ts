@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
-import { I18nModule } from '@lib/common'
+import { TRANSLATE_DEFAULT_CONFIG } from '@lib/common'
 import { Configuration } from '@lib/gn-api'
+import { TranslateModule } from '@ngx-translate/core'
 import { apiConfiguration, BaseComponent } from './base.component'
 
 /**
@@ -8,7 +9,7 @@ import { apiConfiguration, BaseComponent } from './base.component'
  */
 @NgModule({
   declarations: [BaseComponent],
-  imports: [I18nModule],
+  imports: [TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)],
   providers: [
     {
       provide: Configuration,

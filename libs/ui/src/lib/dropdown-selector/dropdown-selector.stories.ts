@@ -1,12 +1,13 @@
-import { I18nModule } from '@lib/common'
+import { TRANSLATE_DEFAULT_CONFIG } from '@lib/common'
+import { TranslateModule } from '@ngx-translate/core'
 import { withA11y } from '@storybook/addon-a11y'
 import { action } from '@storybook/addon-actions'
 import { object, text, withKnobs } from '@storybook/addon-knobs'
-import { Meta, moduleMetadata, Story } from '@storybook/angular'
+import { Meta, moduleMetadata } from '@storybook/angular'
 import { DropdownSelectorComponent } from './dropdown-selector.component'
 
 const moduleMetadatas = {
-  imports: [I18nModule],
+  imports: [TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)],
 }
 
 export default {

@@ -1,11 +1,12 @@
-import { I18nModule } from '@lib/common'
+import { TRANSLATE_DEFAULT_CONFIG } from '@lib/common'
+import { TranslateModule } from '@ngx-translate/core'
 import { withA11y } from '@storybook/addon-a11y'
 import { number, text, withKnobs } from '@storybook/addon-knobs'
 import { Meta, moduleMetadata } from '@storybook/angular'
 import { RecordMetricComponent } from './record-metric.component'
 
 const moduleMetadatas = {
-  imports: [I18nModule],
+  imports: [TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)],
 }
 
 export default {

@@ -1,4 +1,5 @@
-import { I18nModule } from '@lib/common'
+import { TRANSLATE_DEFAULT_CONFIG } from '@lib/common'
+import { TranslateModule } from '@ngx-translate/core'
 import { withA11y } from '@storybook/addon-a11y'
 import { select, text, withKnobs } from '@storybook/addon-knobs'
 import { Meta, moduleMetadata, Story } from '@storybook/angular'
@@ -6,7 +7,7 @@ import { UiModule } from '../ui.module'
 import { ButtonComponent } from './button.component'
 
 const moduleMetadatas = {
-  imports: [I18nModule, UiModule],
+  imports: [TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG), UiModule],
 }
 
 export default {

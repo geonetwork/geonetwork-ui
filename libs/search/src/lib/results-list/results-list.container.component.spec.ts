@@ -4,6 +4,7 @@ import { UiModule } from '@lib/ui'
 
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
+import { TranslateModule } from '@ngx-translate/core'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from '../state/reducer'
 import { ResultsListContainerComponent } from './results-list.container.component'
 
@@ -16,6 +17,7 @@ describe('ResultsListContainerComponent', () => {
       declarations: [ResultsListContainerComponent],
       imports: [
         I18nModule,
+        TranslateModule.forRoot(),
         UiModule,
         EffectsModule.forRoot(),
         StoreModule.forRoot({}),
