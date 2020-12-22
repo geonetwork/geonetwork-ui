@@ -17,8 +17,6 @@ import { FacetsService } from '../facets.service'
   styleUrls: ['./facets-container.component.css'],
 })
 export class FacetsContainerComponent implements OnInit {
-  @Input() uiConfig = 'srv'
-
   models$ = combineLatest([
     this.store.select(getSearchConfigAggregations),
     this.store.select(getSearchResultsAggregations),
