@@ -3,11 +3,11 @@ import { withA11y } from '@storybook/addon-a11y'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 // import compiled webcomponents here
 // TODO: write a script to concatenate all these
-import '../dist/runtime'
-import '../dist/main'
-import '../dist/polyfills'
-import '../dist/vendor'
-import '../dist/styles'
+import '../../../../dist/runtime'
+import '../../../../dist/main'
+import '../../../../dist/polyfills'
+import '../../../../dist/vendor'
+import '../../../../dist/styles'
 import { moduleMetadata } from '@storybook/angular'
 
 const moduleMetadatas = {

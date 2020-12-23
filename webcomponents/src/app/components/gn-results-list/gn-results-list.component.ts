@@ -9,12 +9,12 @@ import {
 import { ResultsListLayout } from '@lib/common'
 import { getSearchResultsLoading, SearchState, SetSearch } from '@lib/search'
 import { select, Store } from '@ngrx/store'
-import { BaseComponent } from '../../../base.component'
+import { BaseComponent } from '../base.component'
 
 @Component({
-  selector: 'wc-component',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  selector: 'wc-gn-results-list-component',
+  templateUrl: './gn-results-list.html',
+  styleUrls: ['./gn-results-list.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
 })

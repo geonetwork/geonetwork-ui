@@ -1,10 +1,9 @@
 import { enableProdMode } from '@angular/core'
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
-
-import { GnAggregatedRecordsModule } from './app/gn-aggregated-records.module'
+import { GnWcModule } from './app/gn-wc.module'
 
 enableProdMode()
 
 platformBrowserDynamic()
-  .bootstrapModule(GnAggregatedRecordsModule)
+  .bootstrapModule(GnWcModule)
   .catch((err) => console.error(err))
