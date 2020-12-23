@@ -2,61 +2,55 @@
 
 This directory contains [webcomponents](https://developer.mozilla.org/en-US/docs/Web/Web_Components) relying on the same code as the full GeoNetwork UI, and which are available for use in third-party apps.
 
-They are Angular components as well, but with a slightly different build system.
+Web components are published through an Angular application `gn-wc` hosted in `webcomponents/src` folder. It's a common Angular application, the only difference is that all Angular components
+are registerd as Web Components in the application module.
 
 All web components are prefixed with `gn-`.
 
 Web components are made to be easily included in any context, e.g.:
 
 ```html
-<script src="gn-search-input.js"></script>
+<script src="gn-wc.js"></script>
 ...
-<gn-search-input
-  api-url="https://apps.titellus.net/geonetwork/srv/api"
-  primary-color="#e73f51"
-  secondary-color="#c2e9dc"
-  main-color="#212029"
-  background-color="#fdfbff"
-></gn-search-input>
+    <gn-results-list
+      api-url="https://apps.titellus.net/geonetwork/srv/api"
+      size="10"
+      layout="TITLE"
+      filters="+tag.default:Soil"
+    ></gn-results-list>
 ```
 
 ## Build
-To build a specific webcomponent, run e.g. 
-```
-npm run build -- --project=gn-search-input
-```
-You can build all web component with 
+All Angular custom elements are served by the same application `gn-wc`
 ```
 npm run build:wc
 ```
+You'll find the build files in `webcomponents/dist`
 
 ## Run
 ### Storybook
 ```shell script
 npm run storybook-wc
 ```
-This will build all component and start an instance of Storybook but with specific stories showcasing each individual webcomponent.
+This will build all components and start an instance of Storybook but with specific stories showcasing each individual webcomponent.
 
-To build the storybook application, run
-```shell script
-npm run build:wc
-```
 **Important:** Web components are built in `dev` mode to work with Storybook.
 
 Note that each webcomponent should appear in two stories: one where it is included as an Angular component, and another where it is included as a webcomponent.
 
 
 ### Web server
-To test a specific web component in a real web page, run
+To test your web component in a real production context
 ```shell script
-npm run serve:wc -- (webcomponent_name) [--build]
+npm run serve:wc
 ```
-- `webcomponent_name` is the name you gave to your Angular application in `/webcomponents` root folder. It must also be the tag name you gave in your `AppModule` to your exported web component.
-- `--build` (optional) forces a rebuild of your webcomponent.
 
-**Important:** The component is built in `production` mode.
+**Important:** The components are built in `production` mode.
 
-You'll be able to test your web component on http://127.0.0.1:8001
+You'll be able to test your web components on `http://127.0.0.1:8001/{name_of_sample_file}`
+
+e.g: http://localhost:8001/gn-results-list.sample.html
+
 This script show you how to deploy your web component in a real world, it builds it, then to use your component in a real web page, you have to
 - import the script exported by Angular
 - include your web component in the HTML content.
@@ -67,32 +61,26 @@ The architecture is designed so you can export an Angular component to a custom 
 that is encapsulated with its style in a shadow DOM element, and can be embedded in any web site.
 
 To export content as a web component you have to
-- create a new angular application in `/webcomponents`, the application must start with `gn-`
-- create a new component in this application, that will be exported, this component must have the following properties in the metadata decorator:
+- create a new folder in `/webcomponents/src/app/components`, the folder name must start with `gn-`
+- create a new component in this folder, with same name, that will be exported, this component must have the following properties in the metadata decorator:
 ```typescript
 {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom
 }
 ```
-- export your component as a custom element in `app.module.ts`, the custom element identifier (i.e web component tag name) must be the same as the Angular application name
+- add your component in application module `gn-wc.module.ts` `declarations` list.
+- register your component as a custom element in `CUSTOM_ELEMENTS` const in  application module `gn-wc.module.ts``app.module.ts`, the custom element identifier (i.e web component tag name) must be the same as the Angular component name
 ```typescript
-export class AppModule {
-  constructor(private injector: Injector) {
-    const customButton = createCustomElement(SearchSnapshotWcComponent, {
-      injector,
-    })
-    customElements.define('gn-search-input', customButton)
-  }
-
-  ngDoBootstrap() {}
+const CUSTOM_ELEMENTS: any[] = [
+  [GnFacetsComponent, 'gn-facets'],
+  [GnResultsListComponent, 'gn-results-list'],
+  [GnAggregatedRecordsComponent, 'gn-aggregated-records'],
+]
 }
 ```
-- Add a symbolic link for assets (for translations), from `(web_component)/src` run
-```shell script
-ln -s ../../../apps/search/src/assets/ assets
-```
-- Add stories for storybook to run it.
+- Add stories for storybook to run it (angular and element stories)
+- Add a sample HTML file to show how to use it in a third party web page `${webcomponent_name}.sample.html` eg. gn-results-list.sample.html
 
 ## Update web component inputs
 You can handle angular custom elements input changes exactly as it's done for Angular component: whithin the `onChanges` implementation.
