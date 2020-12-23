@@ -42,6 +42,7 @@
 </div>
 <div *ngIf="!collapsed" class="ml-4 collapsible-content">
   <div
+    *ngIf="canFilter"
     class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500"
   >
     <svg
