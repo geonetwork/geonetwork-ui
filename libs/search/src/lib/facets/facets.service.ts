@@ -7,8 +7,6 @@ import { AggreationsTypesEnum } from './facets.model'
 export class FacetsService {
   constructor() {}
 
-  getUidModel(request, response) {}
-
   createFacetModel(
     requestAggregations,
     responseAggregations,
