@@ -99,27 +99,27 @@
         }
       }
     },
-    "gn-search-input": {
+    "gn-wc": {
       "projectType": "application",
       "schematics": {},
-      "root": "webcomponents/gn-search-input",
-      "sourceRoot": "webcomponents/gn-search-input/src",
+      "root": "webcomponents",
+      "sourceRoot": "webcomponents/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "webcomponents/gn-search-input/dist",
-            "index": "webcomponents/gn-search-input/src/index.html",
-            "main": "webcomponents/gn-search-input/src/main.ts",
-            "polyfills": "webcomponents/gn-search-input/src/polyfills.ts",
-            "tsConfig": "webcomponents/gn-search-input/tsconfig.app.json",
+            "outputPath": "webcomponents/dist",
+            "index": "webcomponents/src/index.html",
+            "main": "webcomponents/src/main.ts",
+            "polyfills": "webcomponents/src/polyfills.ts",
+            "tsConfig": "webcomponents/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "webcomponents/gn-search-input/src/assets"
+              "webcomponents/src/assets"
             ],
             "styles": [
-              "webcomponents/gn-search-input/src/styles.css"
+              "webcomponents/src/styles.css"
             ],
             "scripts": []
           },
@@ -145,141 +145,6 @@
                   "maximumError": "2MB"
                 }
               ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "gn-search-input:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "gn-search-input:build:production"
-            }
-          }
-        }
-      }
-    },
-    "gn-aggregated-records": {
-      "projectType": "application",
-      "schematics": {},
-      "root": "webcomponents/gn-aggregated-records",
-      "sourceRoot": "webcomponents/gn-aggregated-records/src",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "webcomponents/gn-aggregated-records/dist",
-            "index": "webcomponents/gn-aggregated-records/src/index.html",
-            "main": "webcomponents/gn-aggregated-records/src/main.ts",
-            "polyfills": "webcomponents/gn-aggregated-records/src/polyfills.ts",
-            "tsConfig": "webcomponents/gn-aggregated-records/tsconfig.app.json",
-            "aot": true,
-            "assets": [
-              "webcomponents/gn-aggregated-records/src/assets"
-            ],
-            "styles": [
-              "webcomponents/gn-aggregated-records/src/styles.css"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "500kb",
-                  "maximumError": "2MB"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "gn-search-input:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "gn-search-input:build:production"
-            }
-          }
-        }
-      }
-    },
-    "gn-results-list": {
-      "projectType": "application",
-      "schematics": {},
-      "root": "webcomponents/gn-results-list",
-      "sourceRoot": "webcomponents/gn-results-list/src",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "webcomponents/gn-results-list/dist",
-            "index": "webcomponents/gn-results-list/src/index.html",
-            "main": "webcomponents/gn-results-list/src/main.ts",
-            "polyfills": "webcomponents/gn-results-list/src/polyfills.ts",
-            "tsConfig": "webcomponents/gn-results-list/tsconfig.app.json",
-            "aot": true,
-            "assets": [
-              "webcomponents/gn-results-list/src/assets"
-            ],
-            "styles": [
-              "webcomponents/gn-results-list/src/styles.css"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "500kb",
-                  "maximumError": "2MB"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "gn-results-list:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "gn-results-list:build:production"
             }
           }
         }

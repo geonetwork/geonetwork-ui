@@ -1,21 +1,27 @@
 #!/usr/bin/env bash
 
-APP_NAME=${1}
-WC_TAG=${APP_NAME}
-DIST_PATH=webcomponents/${APP_NAME}/dist/
-DIST_WC_PATH=$DIST_PATH'webcomponents/'
+DIST_WC_PATH=webcomponents/dist/webcomponents/
 
-if [ ${2} ] && [ ${2} = "--build" ]
-then
-  echo '-- Build Web Component for' ${APP_NAME}
-  ng build --prod --output-hashing=none --output-path=${DIST_WC_PATH} ${APP_NAME}
-fi
+echo '-- Build Geonetwork Web Components'
+ng build --prod --output-hashing=none --output-path=${DIST_WC_PATH} gn-wc
 
 echo '-- Publish html page for Web Component' ${APP_NAME}
 mkdir -p $DIST_WC_PATH
-cat ${DIST_WC_PATH}{runtime,polyfills,main}.js | gzip > $DIST_WC_PATH${WC_TAG}'.js.gz'
+cat ${DIST_WC_PATH}{runtime,polyfills,main}.js | gzip > $DIST_WC_PATH'gn-wc.js.gz'
+rm -f ${DIST_WC_PATH}main.js
+rm -f ${DIST_WC_PATH}polyfills.js
+rm -f ${DIST_WC_PATH}runtime.js
+rm -f ${DIST_WC_PATH}styles.css
 
-cp tools/build/webcomponent/index.html $DIST_WC_PATH
-sed -i 's/VAR_WC/'${WC_TAG}'/g' $DIST_WC_PATH'index.html'
+sampleLinks=""
+for c in webcomponents/src/app/components/gn-* ; do
+  echo "-- Copy HTML sample for:" `basename $c`
+  fileName=`basename $c`".sample.html"
+  cp $c/$fileName $DIST_WC_PATH
+  sampleLinks+="<a href='"$fileName"'>"`basename $c`"</a>"
+done
+
+#printf -v sampleLinksEscaped "%q\n" ${sampleLinks}
+#sed -e "s/<body>/<body>${sampleLinksEscaped}/g" $DIST_WC_PATH'index.html'
 
 ./node_modules/.bin/http-server $DIST_WC_PATH -p 8001 --gzip

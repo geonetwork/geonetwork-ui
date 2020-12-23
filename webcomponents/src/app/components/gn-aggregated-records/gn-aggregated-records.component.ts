@@ -4,14 +4,14 @@ import {
   Input,
   ViewEncapsulation,
 } from '@angular/core'
-import { BaseComponent } from '../../../base.component'
+import { BaseComponent } from '../base.component'
 import { Store } from '@ngrx/store'
 import { SearchState, UpdateFilters } from '@lib/search'
 
 @Component({
-  selector: 'wc-component',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  selector: 'wc-gn-aggregated-records',
+  templateUrl: './gn-aggregated-records.html',
+  styleUrls: ['./gn-aggregated-records.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
 })
