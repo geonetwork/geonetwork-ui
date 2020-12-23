@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Web Component Demo</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <script src="gn-wc.js"></script>
+    <gn-facets
+      api-url="https://apps.titellus.net/geonetwork/srv/api"
+      facet-config='{"tag.default":{"terms":{"field":"tag.default","include":".*","size": 10}}}'
+    ></gn-facets>
+    <gn-results-list
+      api-url="https://apps.titellus.net/geonetwork/srv/api"
+    ></gn-results-list>
+  </body>
+</html>
