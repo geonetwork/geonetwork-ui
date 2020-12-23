@@ -1,11 +1,12 @@
 import { TranslateModule } from '@ngx-translate/core'
 import { withA11y } from '@storybook/addon-a11y'
-import { color, text, withKnobs } from '@storybook/addon-knobs'
+import { text, withKnobs } from '@storybook/addon-knobs'
 import { moduleMetadata } from '@storybook/angular'
 import {
   I18nModule,
   TRANSLATE_DEFAULT_CONFIG,
 } from '../../../../../libs/common/src'
+import { ES_FIXTURE_AGGS_REQ_TERM } from '../../../../../libs/search/src/lib/elasticsearch/fixtures'
 import { GnWcModule } from '../../gn-wc.module'
 import { GnFacetsComponent } from './gn-facets.component'
 
@@ -18,50 +19,15 @@ const moduleMetadatas = {
 }
 
 export default {
-  title: '_Web Component/Results list',
+  title: '_Web Component/Facets',
   decorators: [moduleMetadata(moduleMetadatas), withKnobs, withA11y],
 }
 
-export const AngularGnResultsListListStory = () => ({
+export const AngularGnFacetsStory = () => ({
   component: GnFacetsComponent,
   props: {
     apiUrl: text('api url', 'https://apps.titellus.net/geonetwork/srv/api'),
-    layout: 'LIST',
-    primaryColor: color('Primary Color', 'blue'),
-    secondaryColor: color('Secondary Color', 'grey'),
+    facetConfig: JSON.stringify(ES_FIXTURE_AGGS_REQ_TERM),
   },
 })
-AngularGnResultsListListStory.storyName = 'List'
-
-export const AngularGnResultsListBlockStory = () => ({
-  component: GnFacetsComponent,
-  props: {
-    apiUrl: text('api url', 'https://apps.titellus.net/geonetwork/srv/api'),
-    layout: 'BLOCK',
-    primaryColor: color('Primary Color', 'blue'),
-    secondaryColor: color('Secondary Color', 'grey'),
-  },
-})
-AngularGnResultsListBlockStory.storyName = 'Block'
-
-export const AngularGnResultsListTextStory = () => ({
-  component: GnFacetsComponent,
-  props: {
-    apiUrl: text('api url', 'https://apps.titellus.net/geonetwork/srv/api'),
-    layout: 'TEXT',
-    primaryColor: color('Primary Color', 'blue'),
-    secondaryColor: color('Secondary Color', 'grey'),
-  },
-})
-AngularGnResultsListTextStory.storyName = 'Text'
-
-export const AngularGnResultsListTitleStory = () => ({
-  component: GnFacetsComponent,
-  props: {
-    apiUrl: text('api url', 'https://apps.titellus.net/geonetwork/srv/api'),
-    layout: 'TITLE',
-    primaryColor: color('Primary Color', 'blue'),
-    secondaryColor: color('Secondary Color', 'grey'),
-  },
-})
-AngularGnResultsListTitleStory.storyName = 'Title'
+AngularGnFacetsStory.storyName = 'Simple terms'

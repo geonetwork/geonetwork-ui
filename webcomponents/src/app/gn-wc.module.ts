@@ -4,6 +4,7 @@ import { createCustomElement } from '@angular/elements'
 import { I18nModule, TRANSLATE_DEFAULT_CONFIG } from '@lib/common'
 import { Configuration } from '@lib/gn-api'
 import { LibSearchModule } from '@lib/search'
+import { UiModule } from '@lib/ui'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { TranslateModule } from '@ngx-translate/core'
@@ -27,6 +28,7 @@ const CUSTOM_ELEMENTS: any[] = [
   ],
   imports: [
     CommonModule,
+    UiModule,
     LibSearchModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot(),

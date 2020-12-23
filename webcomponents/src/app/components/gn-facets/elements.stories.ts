@@ -15,66 +15,20 @@ const moduleMetadatas = {
 }
 
 export default {
-  title: 'Results list',
+  title: 'Facets',
   decorators: [moduleMetadata(moduleMetadatas), withKnobs, withA11y],
 }
 
-export const GnResultsListListStory = () => ({
+export const GnFacetsStory = () => ({
   template: `
-<gn-results-list
-  api-url="https://apps.titellus.net/geonetwork/srv/api"
-  primary-color="{{primaryColor}}"
-  layout="LIST"
-  secondary-color="{{secondaryColor}}">
-</gn-results-list>`,
+    <gn-facets
+      api-url="https://apps.titellus.net/geonetwork/srv/api"
+      facet-config='{"tag.default":{"terms":{"field":"tag.default","include":".*","size": 10}}}'
+    ></gn-facets>
+`,
   props: {
     primaryColor: color('Primary Color', 'blue'),
     secondaryColor: color('Secondary Color', 'grey'),
   },
 })
-GnResultsListListStory.storyName = 'List'
-
-export const GnResultsListCardStory = () => ({
-  template: `
-<gn-results-list
-  api-url="https://apps.titellus.net/geonetwork/srv/api"
-  primary-color="{{primaryColor}}"
-  layout="CARD"
-  secondary-color="{{secondaryColor}}">
-</gn-results-list>`,
-  props: {
-    primaryColor: color('Primary Color', 'blue'),
-    secondaryColor: color('Secondary Color', 'grey'),
-  },
-})
-GnResultsListCardStory.storyName = 'Card'
-
-export const GnResultsListTextStory = () => ({
-  template: `
-<gn-results-list
-  api-url="https://apps.titellus.net/geonetwork/srv/api"
-  primary-color="{{primaryColor}}"
-  layout="TEXT"
-  secondary-color="{{secondaryColor}}">
-</gn-results-list>`,
-  props: {
-    primaryColor: color('Primary Color', 'blue'),
-    secondaryColor: color('Secondary Color', 'grey'),
-  },
-})
-GnResultsListTextStory.storyName = 'Text'
-
-export const GnResultsListTitleStory = () => ({
-  template: `
-<gn-results-list
-  api-url="https://apps.titellus.net/geonetwork/srv/api"
-  primary-color="{{primaryColor}}"
-  layout="TITLE"
-  secondary-color="{{secondaryColor}}">
-</gn-results-list>`,
-  props: {
-    primaryColor: color('Primary Color', 'blue'),
-    secondaryColor: color('Secondary Color', 'grey'),
-  },
-})
-GnResultsListTitleStory.storyName = 'Title'
+GnFacetsStory.storyName = 'Simple terms'
