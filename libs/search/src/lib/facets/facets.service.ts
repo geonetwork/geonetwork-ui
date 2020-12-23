@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { AggreationsTypesEnum } from './facets.model'
+import { AggregationsTypesEnum } from './facets.model'
 
 @Injectable({
   providedIn: 'root',
@@ -34,11 +34,11 @@ export class FacetsService {
           items: [],
           path: [...path, key],
         }
-        if (requestAgg.hasOwnProperty(AggreationsTypesEnum.TERMS)) {
+        if (requestAgg.hasOwnProperty(AggregationsTypesEnum.TERMS)) {
           blockModel = {
             ...blockModel,
-            type: AggreationsTypesEnum.TERMS,
-            size: requestAgg[AggreationsTypesEnum.TERMS].size,
+            type: AggregationsTypesEnum.TERMS,
+            size: requestAgg[AggregationsTypesEnum.TERMS].size,
             more: responseAgg.sum_other_doc_count > 0,
             includeFilter: requestAgg.terms.include !== undefined,
             excludeFilter: requestAgg.terms.exclude !== undefined,

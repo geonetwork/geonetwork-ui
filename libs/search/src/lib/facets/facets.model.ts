@@ -1,4 +1,4 @@
-export enum AggreationsTypesEnum {
+export enum AggregationsTypesEnum {
   TERMS = 'terms',
   HISTOGRAM = 'histogram',
   FILTERS = 'filters',
