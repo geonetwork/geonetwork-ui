@@ -1,5 +1,5 @@
 export const ES_FIXTURE_AGGS_RESPONSE_TERM = {
-  tag: {
+  'tag.default': {
     doc_count_error_upper_bound: 0,
     sum_other_doc_count: 458,
     buckets: [
