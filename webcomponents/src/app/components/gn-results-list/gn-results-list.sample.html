@@ -15,14 +15,13 @@
       filter="GRID"
     ></gn-results-list>
     <div>
-      <button id="changeSizeBtn"
-              onclick="moreRecords()">Load more ...</button>
+      <button id="changeSizeBtn" onclick="moreRecords()">Load more ...</button>
     </div>
   </body>
   <script>
     function moreRecords() {
       const wc = document.getElementsByTagName('gn-results-list')[0]
-      wc.size = parseInt(wc.size) + 10;
+      wc.size = parseInt(wc.size) + 10
     }
   </script>
 </html>
