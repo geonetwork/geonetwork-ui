@@ -31,13 +31,40 @@ export class BootstrapService {
     return this.siteApiService.getSettingsSet().pipe(shareReplay())
   }
 
+  /**
+   * Adapt GeoNetwork current UI config to Angular app UI config.
+   * At some point this should be removed and converge to the same.
+   *
+   * TODO Changes are:
+   * * Aggregation / Move GN specific config properties to the meta tag
+   * (the meta tag is returned by Elasticsearch)
+   */
+  buildConfig(configString) {
+    const config = JSON.parse(configString)
+
+    const aggs = config.mods.search.facetConfig
+    const aggsPropertyToMoveToMeta = ['userHasRole', 'collapsed']
+    Object.keys(aggs).map((key) => {
+      aggsPropertyToMoveToMeta.map((property) => {
+        if (aggs[key].hasOwnProperty(property)) {
+          const o = { ...aggs[key].meta }
+          o[property] = aggs[key][property]
+          aggs[key].meta = o
+          delete aggs[key][property]
+        }
+      })
+    })
+
+    return config
+  }
+
   uiConfReady(uiIdentifier: string): Observable<any> {
     if (!this.uiConfigurations[uiIdentifier]) {
       this.uiConfigurations = {
         ...this.uiConfigurations,
         [uiIdentifier]: this.uiService.getUiConfiguration(uiIdentifier).pipe(
           pluck('configuration'),
-          map((configString) => JSON.parse(configString)),
+          map((configString) => this.buildConfig(configString)),
           catchError((error) => {
             this.logService.warn(
               `Error during UI configuration loading: ${uiIdentifier}`
