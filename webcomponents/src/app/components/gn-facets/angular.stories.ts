@@ -6,7 +6,7 @@ import {
   I18nModule,
   TRANSLATE_DEFAULT_CONFIG,
 } from '../../../../../libs/common/src'
-import { ES_FIXTURE_AGGS_REQ_TERM } from '../../../../../libs/search/src/lib/elasticsearch/fixtures'
+import { ES_FIXTURE_AGGS_REQUEST } from '../../../../../libs/search/src/lib/elasticsearch/fixtures'
 import { GnWcModule } from '../../gn-wc.module'
 import { GnFacetsComponent } from './gn-facets.component'
 
@@ -27,7 +27,7 @@ export const AngularGnFacetsStory = () => ({
   component: GnFacetsComponent,
   props: {
     apiUrl: text('api url', 'https://apps.titellus.net/geonetwork/srv/api'),
-    facetConfig: JSON.stringify(ES_FIXTURE_AGGS_REQ_TERM),
+    facetConfig: JSON.stringify(ES_FIXTURE_AGGS_REQUEST),
   },
 })
 AngularGnFacetsStory.storyName = 'Simple terms'
