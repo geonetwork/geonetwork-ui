@@ -8,19 +8,21 @@
   </head>
   <body>
     <script src="gn-wc.js"></script>
-    <div>
-      <button id="changeSizeBtn">Change size</button>
-    </div>
     <gn-results-list
       api-url="https://apps.titellus.net/geonetwork/srv/api"
       size="10"
       layout="TITLE"
-      filters="+tag.default:Soil"
+      filter="GRID"
     ></gn-results-list>
+    <div>
+      <button id="changeSizeBtn"
+              onclick="moreRecords()">Load more ...</button>
+    </div>
   </body>
   <script>
-    const wc = document.getElementsByTagName('gn-results-list')[0]
-    const btn = document.getElementById('changeSizeBtn')
-    btn.addEventListener('click', () => (wc.size = 3))
+    function moreRecords() {
+      const wc = document.getElementsByTagName('gn-results-list')[0]
+      wc.size = parseInt(wc.size) + 10;
+    }
   </script>
 </html>
