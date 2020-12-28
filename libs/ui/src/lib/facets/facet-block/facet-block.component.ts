@@ -18,11 +18,13 @@ export class FacetBlockComponent implements OnInit {
   @Output() itemUnselected = new EventEmitter<string[]>()
 
   title: string
+  hasItems: boolean
 
   constructor() {}
 
   ngOnInit(): void {
     this.title = this.model.key
+    this.hasItems = this.model.items.length > 0
   }
 
   toggleCollapsed() {

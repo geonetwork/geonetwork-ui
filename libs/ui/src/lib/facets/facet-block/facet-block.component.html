@@ -1,4 +1,8 @@
-<div class="flex flex-row items-center group" (click)="toggleCollapsed()">
+<div
+  class="flex flex-row items-center group"
+  *ngIf="hasItems"
+  (click)="toggleCollapsed()"
+>
   <span
     class="flex-initial truncate font-bold cursor-pointer text-gray-900 group-hover:text-black span-title"
     >{{ 'facets.block.title.' + title | translate }}</span

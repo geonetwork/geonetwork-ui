@@ -11,7 +11,7 @@ import { By } from '@angular/platform-browser'
 import { TranslateModule } from '@ngx-translate/core'
 
 import { FacetItemStubComponent } from '../facet-item/facet-item.component'
-import { BLOCK_MODEL_FIXTURE } from '../fixtures'
+import { BLOCK_MODEL_FIXTURE, EMPTY_BLOCK_MODEL_FIXTURE } from '../fixtures'
 import { FacetBlockComponent } from './facet-block.component'
 
 describe('FacetBlockComponent', () => {
@@ -43,6 +43,7 @@ describe('FacetBlockComponent', () => {
     expect(de.query(By.css('.collapsible-content'))).toBeTruthy()
     expect(de.query(By.css('.input-filter'))).toBeFalsy()
     // Mock fixture
+    expect(de.query(By.css('div > span'))).toBeTruthy()
     expect(de.query(By.css('.span-title')).nativeElement.textContent).toBe(
       'facets.block.title.tag'
     )
@@ -130,6 +131,34 @@ describe('FacetBlockComponent', () => {
       expect(
         (selectedItems[1].componentInstance as FacetItemStubComponent).label
       ).toBe('Romania')
+    })
+  })
+})
+
+describe('EmptyFacetBlockComponent', () => {
+  let component: FacetBlockComponent
+  let fixture: ComponentFixture<FacetBlockComponent>
+  let de: DebugElement
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [FacetBlockComponent, FacetItemStubComponent],
+      imports: [FormsModule, TranslateModule.forRoot()],
+    }).compileComponents()
+  }))
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(FacetBlockComponent)
+    component = fixture.componentInstance
+    de = fixture.debugElement
+    component.model = EMPTY_BLOCK_MODEL_FIXTURE
+    component.selectedPaths = []
+    fixture.detectChanges()
+  })
+
+  describe('Aggregation is hidden if no item', () => {
+    it('hides aggregation', () => {
+      expect(de.query(By.css('div > span'))).toBeFalsy()
     })
   })
 })

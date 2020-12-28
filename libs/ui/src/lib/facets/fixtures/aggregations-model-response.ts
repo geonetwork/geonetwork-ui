@@ -30,3 +30,13 @@ export const BLOCK_MODEL_FIXTURE = {
   includeFilter: true,
   excludeFilter: false,
 }
+export const EMPTY_BLOCK_MODEL_FIXTURE = {
+  key: 'emptytag',
+  items: [],
+  path: ['emptytag'],
+  type: 'terms',
+  size: 21,
+  more: true,
+  includeFilter: true,
+  excludeFilter: false,
+}
