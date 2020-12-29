@@ -20,9 +20,10 @@ ng build (app_name) (--prod)
 ## Tests
 Run `ng test` to execute the unit tests via Jest.
 
-You can test a specific lib or app with
+You can test a specific lib or app or file with
 ```shell script
 ng test (lib_name) (--prod)
+ng test --test-match=/data/dev/gn/ui/libs/common/src/lib/services/bootstrap.service.spec.ts
 ```
 
 To run the tests in Intellij, install the Jest plugin and run the test as usual.

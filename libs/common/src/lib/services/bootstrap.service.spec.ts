@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing'
-import { LogService } from '@lib/common'
+import { LogService } from './log.service'
 import {
   SETTINGS_FIXTURES,
   SITE_FIXTURES,
@@ -75,7 +75,7 @@ describe('BootstrapService', () => {
         )
       })
       it('return expected conf', () => {
-        expect(uiConf).toEqual(uiSettings)
+        expect(uiConf).toEqual(service.buildConfig(uiSettings))
         jest.clearAllMocks()
       })
     })
@@ -88,7 +88,7 @@ describe('BootstrapService', () => {
         expect(service['uiService'].getUiConfiguration).toHaveBeenCalledTimes(1)
       })
       it('return expected conf', () => {
-        expect(uiConf).toEqual(uiSettings)
+        expect(uiConf).toEqual(service.buildConfig(uiSettings))
         jest.clearAllMocks()
       })
     })

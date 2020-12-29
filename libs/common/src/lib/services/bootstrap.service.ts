@@ -40,7 +40,8 @@ export class BootstrapService {
    * (the meta tag is returned by Elasticsearch)
    */
   buildConfig(configString) {
-    const config = JSON.parse(configString)
+    const config =
+      typeof configString === 'string' ? JSON.parse(configString) : configString
 
     const aggs = config.mods.search.facetConfig
     const aggsPropertyToMoveToMeta = ['userHasRole', 'collapsed']
