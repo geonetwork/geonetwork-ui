@@ -14,6 +14,7 @@ import { ResultsListContainerComponent } from './results-list/results-list.conta
 import { SortByComponent } from './sort-by/sort-by.component'
 import { SearchEffects } from './state/effects'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './state/reducer'
+import { ResultsHitsNumberComponent } from './results-hits-number/results-hits-number.component'
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { initialState, reducer, SEARCH_FEATURE_KEY } from './state/reducer'
     FuzzySearchComponent,
     RecordsMetricsComponent,
     ResultsListContainerComponent,
+    ResultsHitsNumberComponent,
   ],
   imports: [
     CommonModule,
@@ -42,6 +44,7 @@ import { initialState, reducer, SEARCH_FEATURE_KEY } from './state/reducer'
     FuzzySearchComponent,
     RecordsMetricsComponent,
     ResultsListContainerComponent,
+    ResultsHitsNumberComponent,
     FacetsModule,
   ],
 })

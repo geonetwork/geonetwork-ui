@@ -1,0 +1,12 @@
+<div *ngIf="(isLoading$ | async) === false" class="w-full pl-4 text-gray-700">
+  <ng-container *ngIf="hits$ | async as hits">
+    <span translate="" [translateParams]="{ hits: hits.value }"
+      >results.records.hits.found</span
+    >
+    <p
+      *ngIf="hits.value === 0"
+      class="mt-4"
+      [innerHtml]="'results.records.hits.found=0.help' | translate"
+    ></p>
+  </ng-container>
+</div>

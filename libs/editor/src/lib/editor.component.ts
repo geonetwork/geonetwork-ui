@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core'
 
 @Component({
   selector: 'lib-editor',
-  template: `
-    <p>
-      editor works!
-    </p>
-  `,
+  template: ` <p>editor works!</p> `,
   styles: [],
 })
 export class EditorComponent implements OnInit {

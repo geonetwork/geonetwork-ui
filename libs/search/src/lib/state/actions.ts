@@ -11,6 +11,7 @@ export const ADD_RESULTS = '[Search] Add Results'
 export const CLEAR_RESULTS = '[Search] Clear Results'
 export const REQUEST_MORE_RESULTS = '[Search] Request More Results'
 export const SET_RESULTS_AGGREGATIONS = '[Search] Set Results Aggregations'
+export const SET_RESULTS_HITS = '[Search] Set Results hits'
 export const SET_CONFIG_AGGREGATIONS = '[Search] Set Config Aggregations'
 
 export class SetFilters implements Action {
@@ -67,6 +68,12 @@ export class SetResultsAggregations implements Action {
   constructor(public payload: any) {}
 }
 
+export class SetResultsHits implements Action {
+  readonly type = SET_RESULTS_HITS
+
+  constructor(public payload: any) {}
+}
+
 export class SetConfigAggregations implements Action {
   readonly type = SET_CONFIG_AGGREGATIONS
 
@@ -83,4 +90,5 @@ export type SearchActions =
   | ClearResults
   | RequestMoreResults
   | SetResultsAggregations
+  | SetResultsHits
   | SetConfigAggregations

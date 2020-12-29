@@ -19,6 +19,7 @@ import {
   UPDATE_FILTERS,
   SET_FILTERS,
   SET_SEARCH,
+  SetResultsHits,
 } from './actions'
 import { SearchState } from './reducer'
 import { getSearchState } from './selectors'
@@ -63,6 +64,7 @@ export class SearchEffects {
         return [
           new AddResults(records),
           new SetResultsAggregations(aggregations),
+          new SetResultsHits(response.hits.total),
         ]
       })
     )
