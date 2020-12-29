@@ -1,6 +1,7 @@
 <input
   class="bg-gray-200 appearance-none border border-gray-800 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-background focus:border-gray-900"
   type="text"
+  autofocus=""
   [value]="value"
   (change)="rawChange.next($event.target.value)"
   (input)="rawChange.next($event.target.value)"
