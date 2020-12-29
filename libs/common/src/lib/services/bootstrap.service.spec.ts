@@ -10,6 +10,7 @@ import {
 import { of } from 'rxjs'
 
 import { BootstrapService } from './bootstrap.service'
+import { DEFAULT_UI_CONFIG } from './constant'
 
 let uiResponse = UI_FIXTURES
 const uiSettings = JSON.parse(UI_FIXTURES.configuration)
@@ -97,13 +98,13 @@ describe('BootstrapService', () => {
       beforeEach(() => {
         uiResponse = { id: 'main', configuration: '{{]]' }
       })
-      it('return empty conf', () => {
+      it('return default UI configuration', () => {
         service.uiConfReady('conf1').subscribe((conf) => (uiConf = conf))
-        expect(uiConf).toEqual({})
+        expect(uiConf).toEqual(DEFAULT_UI_CONFIG)
       })
       it('console warn a message', () => {
         expect(logServiceMock.warn).toHaveBeenCalledWith(
-          'Error during UI configuration loading: conf1'
+          'Error during UI configuration loading: conf1. Using default.'
         )
         jest.clearAllMocks()
       })

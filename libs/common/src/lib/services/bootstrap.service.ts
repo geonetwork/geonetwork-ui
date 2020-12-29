@@ -8,6 +8,7 @@ import {
 import { Observable, of } from 'rxjs'
 import { catchError, map, pluck, shareReplay } from 'rxjs/operators'
 import { LogService } from './log.service'
+import { DEFAULT_UI_CONFIG } from './constant'
 
 @Injectable({
   providedIn: 'root',
@@ -68,9 +69,9 @@ export class BootstrapService {
           map((configString) => this.buildConfig(configString)),
           catchError((error) => {
             this.logService.warn(
-              `Error during UI configuration loading: ${uiIdentifier}`
+              `Error during UI configuration loading: ${uiIdentifier}. Using default.`
             )
-            return of({})
+            return of(this.buildConfig(DEFAULT_UI_CONFIG))
           }),
           shareReplay()
         ),
