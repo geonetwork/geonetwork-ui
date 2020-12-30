@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { TranslateLoader } from '@ngx-translate/core'
 import { forkJoin, Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
-import { SiteApiService, StandardsApiService } from '@lib/gn-api'
+import { StandardsApiService } from '@lib/gn-api'
 import { map } from 'rxjs/operators'
 
 @Injectable({
@@ -16,7 +16,7 @@ export class TranslationService implements TranslateLoader {
 
   getTranslation(lang: string): Observable<any> {
     const observables: Observable<any>[] = []
-    const translationFiles = [`/assets/i18n/${lang}.json`]
+    const translationFiles = [`assets/i18n/${lang}.json`]
 
     const core = this.http.get(translationFiles[0])
     observables.push(core)
