@@ -1,5 +1,5 @@
-<div *ngIf="(isLoading$ | async) === false" class="w-full pl-4 text-gray-700">
-  <ng-container *ngIf="hits$ | async as hits">
+<div *ngIf="!loading" class="w-full pl-4 text-gray-700">
+  <ng-container *ngIf="hits">
     <span translate="" [translateParams]="{ hits: hits.value }"
       >results.records.hits.found</span
     >

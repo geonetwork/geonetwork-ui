@@ -159,6 +159,7 @@ describe('EmptyFacetBlockComponent', () => {
   describe('Aggregation is hidden if no item', () => {
     it('hides aggregation', () => {
       expect(de.query(By.css('div > span'))).toBeFalsy()
+      expect(component.hasItems).toBe(false)
     })
   })
 })
