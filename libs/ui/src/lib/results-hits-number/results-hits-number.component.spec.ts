@@ -7,7 +7,7 @@ import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { StoreModule } from '@ngrx/store'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from '@lib/search'
-import { TranslateTestingModule } from 'ngx-translate-testing';
+import { TranslateTestingModule } from 'ngx-translate-testing'
 
 describe('ResultsHitsNumberComponent', () => {
   let component: ResultsHitsNumberComponent
@@ -23,11 +23,16 @@ describe('ResultsHitsNumberComponent', () => {
           initialState,
         }),
         TranslateModule.forRoot(),
-        TranslateTestingModule.withTranslations({ en: {
-              'results.records.hits.found': '{hits, plural, =0{No documents match the specified search.} one{} other{{hits} records found.}}',
-            "results.records.hits.found=0.help": "Suggestions: <ul class='list-disc list-inside'><li>Try other words</li><li>Specify fewer words</li></ul>",
-          } })  .withDefaultLanguage('en').withCompiler(new TranslateMessageFormatCompiler())
-
+        TranslateTestingModule.withTranslations({
+          en: {
+            'results.records.hits.found':
+              '{hits, plural, =0{No documents match the specified search.} one{} other{{hits} records found.}}',
+            'results.records.hits.found=0.help':
+              "Suggestions: <ul class='list-disc list-inside'><li>Try other words</li><li>Specify fewer words</li></ul>",
+          },
+        })
+          .withDefaultLanguage('en')
+          .withCompiler(new TranslateMessageFormatCompiler()),
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
@@ -73,7 +78,7 @@ describe('ResultsHitsNumberComponent', () => {
     describe('when hits has results', () => {
       beforeEach(() => {
         component.hits = {
-          value: 10
+          value: 10,
         }
         fixture.detectChanges()
       })
@@ -87,22 +92,24 @@ describe('ResultsHitsNumberComponent', () => {
     describe('when hits has 0 results', () => {
       beforeEach(() => {
         component.hits = {
-          value: 0
+          value: 0,
         }
         fixture.detectChanges()
       })
       it('display that no record has been found', () => {
         const span = de.query(By.css('span'))
         expect(span).toBeTruthy()
-        expect(span.nativeElement.innerHTML).toEqual('No documents match the specified search.')
+        expect(span.nativeElement.innerHTML).toEqual(
+          'No documents match the specified search.'
+        )
       })
       it('display the help', () => {
         const p = de.query(By.css('p'))
         expect(p).toBeTruthy()
-        expect(p.nativeElement.innerHTML).toEqual('Suggestions: <ul class="list-disc list-inside"><li>Try other words</li><li>Specify fewer words</li></ul>')
+        expect(p.nativeElement.innerHTML).toEqual(
+          'Suggestions: <ul class="list-disc list-inside"><li>Try other words</li><li>Specify fewer words</li></ul>'
+        )
       })
     })
-
   })
-
 })

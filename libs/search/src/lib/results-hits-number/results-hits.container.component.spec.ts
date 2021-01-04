@@ -22,10 +22,12 @@ describe('ResultsHitsContainerComponent', () => {
   let de: DebugElement
   let items: DebugElement[]
 
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ResultsHitsContainerComponent, ResultsHitsNumberComponentMock],
+      declarations: [
+        ResultsHitsContainerComponent,
+        ResultsHitsNumberComponentMock,
+      ],
       imports: [
         StoreModule.forRoot({}),
         StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
