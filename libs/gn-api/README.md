@@ -1,24 +1,21 @@
-# GnApi
+# GeoNetwork OpenAPI Javascript client
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.9.
+GeoNetwork API is described by an OpenAPI specification document (see https://localhost:8080/geonetwork/srv/api/doc.yml). This document is temporarily stored in `libs/gn-api/src/lib/gn4/spec.yml`. 
 
-## Code scaffolding
+The [openapi-generator](https://openapi-generator.tech/) converts the OpenAPI specification to a `typescript-angular` client. The client is in the `gn-api` library folder and is the `GnApiModule`. It contains the services and model definitions. Update and build the library using:
 
-Run `ng generate component component-name --project gn-api` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project gn-api`.
-> Note: Don't forget to add `--project gn-api` or else it will be added to the default project in your `angular.json` file. 
+```shell script
+curl -o libs/gn-api/src/lib/gn4/spec.yml https://localhost:8080/geonetwork/srv/api/doc.yml
+npm run generate-api:gn4
+```
 
-## Build
 
-Run `ng build gn-api` to build the project. The build artifacts will be stored in the `dist/` directory.
+The api `baseUrl` is stored in the api specification document, and overwritten via Angular injection:
+```typescript
+    {
+      provide: BASE_PATH,
+      useValue: '/geonetwork/srv/api',
+    },
+```
 
-## Publishing
-
-After building your library with `ng build gn-api`, go to the dist folder `cd dist/gn-api` and run `npm publish`.
-
-## Running unit tests
-
-Run `ng test gn-api` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+This might need to be changed for further deployment, it is used in dev mode environment only for the moment.

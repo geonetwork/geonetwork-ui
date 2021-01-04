@@ -1,4 +1,8 @@
-<div class="flex flex-row items-center group" (click)="toggleCollapsed()">
+<div
+  class="flex flex-row items-center group"
+  *ngIf="hasItems"
+  (click)="toggleCollapsed()"
+>
   <span
     class="flex-initial truncate font-bold cursor-pointer text-gray-900 group-hover:text-black span-title"
     >{{ 'facets.block.title.' + title | translate }}</span
@@ -6,7 +10,7 @@
   <div
     *ngIf="!collapsed"
     class="flex-shrink-0 cursor-pointer text-gray-900 group-hover:text-black icon-collapse"
-    style="min-width: 20px;"
+    style="min-width: 20px"
   >
     <!-- chevron-down svg -->
     <svg
@@ -24,7 +28,7 @@
   <div
     *ngIf="collapsed"
     class="flex-shrink-0 cursor-pointer text-gray-900 group-hover:text-black icon-expand"
-    style="min-width: 20px;"
+    style="min-width: 20px"
   >
     <!-- chevron-right svg -->
     <svg
@@ -40,7 +44,7 @@
     </svg>
   </div>
 </div>
-<div *ngIf="!collapsed" class="ml-4 collapsible-content">
+<div *ngIf="!collapsed && hasItems" class="ml-4 collapsible-content">
   <div
     *ngIf="canFilter"
     class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500"

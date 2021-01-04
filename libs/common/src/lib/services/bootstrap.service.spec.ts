@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing'
-import { LogService } from '@lib/common'
+import { LogService } from './log.service'
 import {
   SETTINGS_FIXTURES,
   SITE_FIXTURES,
@@ -10,6 +10,7 @@ import {
 import { of } from 'rxjs'
 
 import { BootstrapService } from './bootstrap.service'
+import { DEFAULT_UI_CONFIG } from './constant'
 
 let uiResponse = UI_FIXTURES
 const uiSettings = JSON.parse(UI_FIXTURES.configuration)
@@ -75,7 +76,7 @@ describe('BootstrapService', () => {
         )
       })
       it('return expected conf', () => {
-        expect(uiConf).toEqual(uiSettings)
+        expect(uiConf).toEqual(service.buildConfig(uiSettings))
         jest.clearAllMocks()
       })
     })
@@ -88,7 +89,7 @@ describe('BootstrapService', () => {
         expect(service['uiService'].getUiConfiguration).toHaveBeenCalledTimes(1)
       })
       it('return expected conf', () => {
-        expect(uiConf).toEqual(uiSettings)
+        expect(uiConf).toEqual(service.buildConfig(uiSettings))
         jest.clearAllMocks()
       })
     })
@@ -97,13 +98,13 @@ describe('BootstrapService', () => {
       beforeEach(() => {
         uiResponse = { id: 'main', configuration: '{{]]' }
       })
-      it('return empty conf', () => {
+      it('return default UI configuration', () => {
         service.uiConfReady('conf1').subscribe((conf) => (uiConf = conf))
-        expect(uiConf).toEqual({})
+        expect(uiConf).toEqual(DEFAULT_UI_CONFIG)
       })
       it('console warn a message', () => {
         expect(logServiceMock.warn).toHaveBeenCalledWith(
-          'Error during UI configuration loading: conf1'
+          'Error during UI configuration loading: conf1. Using default.'
         )
         jest.clearAllMocks()
       })

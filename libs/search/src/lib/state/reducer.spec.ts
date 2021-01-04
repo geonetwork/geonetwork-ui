@@ -1,6 +1,6 @@
 import { ResultsListLayout } from '@lib/common'
-import { ES_FIXTURE_AGGS_REQ_TERM } from '../elasticsearch/fixtures/aggregations-request'
-import { ES_FIXTURE_AGGS_RESPONSE_TERM } from '../elasticsearch/fixtures/aggregations-response'
+import { ES_FIXTURE_AGGS_REQUEST } from '../elasticsearch/fixtures/aggregations-request'
+import { ES_FIXTURE_AGGS_RESPONSE } from '../elasticsearch/fixtures/aggregations-response'
 import * as fromActions from './actions'
 import { initialState, reducer, SearchStateParams } from './reducer'
 
@@ -165,7 +165,7 @@ describe('Search Reducer', () => {
 
   describe('SetResultsAggregations action', () => {
     it('should replace the aggregations in the result', () => {
-      const payload = ES_FIXTURE_AGGS_RESPONSE_TERM
+      const payload = ES_FIXTURE_AGGS_RESPONSE
       const action = new fromActions.SetResultsAggregations(payload)
       const state = reducer(
         {
@@ -177,13 +177,13 @@ describe('Search Reducer', () => {
         },
         action
       )
-      expect(state.results.aggregations).toEqual(ES_FIXTURE_AGGS_RESPONSE_TERM)
+      expect(state.results.aggregations).toEqual(ES_FIXTURE_AGGS_RESPONSE)
     })
   })
 
   describe('SetConfigAggregations action', () => {
     it('should replace the aggregations in the config', () => {
-      const payload = ES_FIXTURE_AGGS_REQ_TERM
+      const payload = ES_FIXTURE_AGGS_REQUEST
       const action = new fromActions.SetConfigAggregations(payload)
       const state = reducer(
         {
@@ -195,7 +195,7 @@ describe('Search Reducer', () => {
         },
         action
       )
-      expect(state.config.aggregations).toEqual(ES_FIXTURE_AGGS_REQ_TERM)
+      expect(state.config.aggregations).toEqual(ES_FIXTURE_AGGS_REQUEST)
     })
   })
 })

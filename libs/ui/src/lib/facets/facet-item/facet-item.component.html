@@ -10,13 +10,13 @@
       [ngModel]="selected"
       (ngModelChange)="onSelectedChange($event)"
     />
-    {{ label }}
+    {{ label | translate }}
     <span class="text-gray-600 group-hover:text-black">({{ count }})</span>
   </label>
   <div
     *ngIf="!inverted"
     class="flex-shrink-0 cursor-pointer invisible group-hover:visible icon-exclude"
-    style="min-width: 20px;"
+    style="min-width: 20px"
     (click)="toggleInverted()"
   >
     <!-- minus svg -->
@@ -35,7 +35,7 @@
   <div
     *ngIf="inverted"
     class="flex-shrink-0 cursor-pointer invisible group-hover:visible icon-include"
-    style="min-width: 20px;"
+    style="min-width: 20px"
     (click)="toggleInverted()"
   >
     <!-- check svg -->

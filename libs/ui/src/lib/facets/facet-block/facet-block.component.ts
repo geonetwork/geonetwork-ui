@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { ModelBlock, ModelItem } from '../facets.model'
+import { AggreationsTypesEnum } from '../../../../../search/src/lib/facets/facets.model'
 
 @Component({
   selector: 'ui-facet-block',
@@ -18,13 +19,20 @@ export class FacetBlockComponent implements OnInit {
   @Output() itemUnselected = new EventEmitter<string[]>()
 
   title: string
+  hasItems: boolean
 
   constructor() {}
 
   ngOnInit(): void {
     this.title = this.model.key
+    this.hasItems = this.countItems() > 0
   }
 
+  countItems() {
+    return this.model.type === AggreationsTypesEnum.FILTERS
+      ? this.model.items.reduce((sum, current) => sum + current.count, 0)
+      : this.model.items.length
+  }
   toggleCollapsed() {
     this.collapsed = !this.collapsed
   }

@@ -13,6 +13,7 @@ import {
   RequestMoreResults,
   SetFilters,
   SetResultsAggregations,
+  SetResultsHits,
   SetSearch,
   SetSortBy,
   UpdateFilters,
@@ -116,9 +117,10 @@ describe('Effects', () => {
   describe('loadResults$', () => {
     it('load new results on requestMoreResults action', () => {
       actions$ = hot('-a-', { a: new RequestMoreResults() })
-      const expected = hot('-(bc)-', {
+      const expected = hot('-(bcd)-', {
         b: new AddResults([]),
         c: new SetResultsAggregations({}),
+        d: new SetResultsHits(undefined),
       })
 
       expect(effects.loadResults$).toBeObservable(expected)

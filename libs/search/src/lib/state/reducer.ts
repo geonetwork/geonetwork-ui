@@ -15,6 +15,10 @@ export interface SearchState {
   }
   params: SearchStateParams
   results: {
+    hits: {
+      value: number
+      eq: string
+    }
     records: RecordSummary[]
     aggregations: any
   }
@@ -29,6 +33,7 @@ export const initialState: SearchState = {
     size: 10,
   },
   results: {
+    hits: null,
     records: [],
     aggregations: {},
   },
@@ -99,6 +104,7 @@ export function reducer(
         ...state,
         results: {
           ...state.results,
+          hits: null,
           records: [],
         },
       }
@@ -107,6 +113,15 @@ export function reducer(
       return {
         ...state,
         loadingMore: true,
+      }
+    }
+    case fromActions.SET_RESULTS_HITS: {
+      return {
+        ...state,
+        results: {
+          ...state.results,
+          hits: action.payload,
+        },
       }
     }
     case fromActions.SET_RESULTS_AGGREGATIONS: {
