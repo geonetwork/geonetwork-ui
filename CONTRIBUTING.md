@@ -60,24 +60,9 @@ ng g c smart/fuzzy-search --project=lib-search --style=css --changeDetection=OnP
 ```
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
-### Openapi client generation
+### OpenAPI client generation
 
-GeoNetwork publish an OpenAPI rest api, and expose an `openapi` specification document (see https://localhost:8080/geonetwork/srv/api/doc.yml).
-This document is temporarily stored in `tools/spec.yml`, but in the end, should point on a GeoNetwork OpenAPI documentation url.
-
-From this specification file, we are using [openapi-generator](https://openapi-generator.tech/) to generate a `typescript-angular` client for our application.
-The generated client is stored in the library `gn-api`. It contains the services and model definitions.
-
-The api `baseUrl` is stored in the api specification document, and overwritten via Angular injection
-```typescript
-    {
-      provide: BASE_PATH,
-      useValue: '/geonetwork/srv/api',
-    },
-```
-This might need to be changed for further deployment, it is used in dev mode environment only for the moment.
-
-To generate the client, run `npm run generate-api`
+Check [How-to generate gn-api lib?](libs/gn-api/README.md)
 
 ### i18n
 

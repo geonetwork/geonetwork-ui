@@ -2,7 +2,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { LibCatalogModule } from '@lib/catalog'
-import { I18nModule, TRANSLATE_DEFAULT_CONFIG } from '@lib/common'
+import { I18nModule, TRANSLATE_GEONETWORK_CONFIG } from '@lib/common'
 import { BASE_PATH } from '@lib/gn-api'
 import { LibSearchModule } from '@lib/search'
 import { EffectsModule } from '@ngrx/effects'
@@ -25,7 +25,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     AppRoutingModule,
     HttpClientModule,
     I18nModule,
-    TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+    TranslateModule.forRoot(TRANSLATE_GEONETWORK_CONFIG),
     LibSearchModule,
     LibCatalogModule,
     StoreModule.forRoot({}, { metaReducers }),

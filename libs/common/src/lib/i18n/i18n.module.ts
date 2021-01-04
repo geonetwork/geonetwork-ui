@@ -8,6 +8,8 @@ import {
 } from '@ngx-translate/core'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
+import { TranslationService } from './i18n.service'
+import { GnApiModule, StandardsApiService } from '@lib/gn-api'
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http)
@@ -51,8 +53,21 @@ export const TRANSLATE_DEFAULT_CONFIG = {
   },
 }
 
+export const TRANSLATE_GEONETWORK_CONFIG = {
+  compiler: {
+    provide: TranslateCompiler,
+    useClass: TranslateMessageFormatCompiler,
+  },
+  loader: {
+    provide: TranslateLoader,
+    useClass: TranslationService,
+    defaultLanguage: 'en',
+    deps: [HttpClient, StandardsApiService],
+  },
+}
+
 @NgModule({
-  imports: [HttpClientModule],
+  imports: [HttpClientModule, GnApiModule],
   exports: [TranslateModule],
 })
 export class I18nModule {

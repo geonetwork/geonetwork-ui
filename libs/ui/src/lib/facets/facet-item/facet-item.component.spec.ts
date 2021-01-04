@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms'
 import { By } from '@angular/platform-browser'
 
 import { FacetItemComponent } from './facet-item.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('FacetItemComponent', () => {
   let component: FacetItemComponent
@@ -13,7 +14,7 @@ describe('FacetItemComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FacetItemComponent],
-      imports: [FormsModule],
+      imports: [FormsModule, TranslateModule.forRoot()],
     }).compileComponents()
   }))
 
