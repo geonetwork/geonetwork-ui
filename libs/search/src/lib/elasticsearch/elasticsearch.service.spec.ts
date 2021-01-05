@@ -1,4 +1,4 @@
-import { ElasticsearchService } from '@lib/search'
+import { ElasticsearchService, initialState } from '@lib/search'
 
 describe('ElasticsearchService', () => {
   let service: ElasticsearchService
@@ -12,6 +12,46 @@ describe('ElasticsearchService', () => {
     expect(service).toBeTruthy()
   })
 
+  describe('#Sort', () => {
+    it('One sort and default direction', () => {
+      const body = service.buildPayload({
+        ...initialState,
+        params: {
+          filters: {
+            any: '',
+          },
+          sortBy: '_score',
+        },
+      })
+      expect(body.sort).toEqual(['_score'])
+    })
+
+    it('One sort and DESC direction', () => {
+      const body = service.buildPayload({
+        ...initialState,
+        params: {
+          filters: {
+            any: '',
+          },
+          sortBy: '-changeDate',
+        },
+      })
+      expect(body.sort).toEqual([{ changeDate: 'desc' }])
+    })
+
+    it('Multiple sorts', () => {
+      const body = service.buildPayload({
+        ...initialState,
+        params: {
+          filters: {
+            any: '',
+          },
+          sortBy: '_score,-changeDate',
+        },
+      })
+      expect(body.sort).toEqual(['_score', { changeDate: 'desc' }])
+    })
+  })
   describe('#facetsToLuceneQuery', () => {
     describe('when simple terms', () => {
       beforeEach(() => {
