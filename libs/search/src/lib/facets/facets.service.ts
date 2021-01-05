@@ -57,14 +57,14 @@ export class FacetsService {
               blockModel.items.push(itemModel)
             }
           })
-        } else if (requestAgg.hasOwnProperty(AggreationsTypesEnum.HISTOGRAM)) {
+        } else if (requestAgg.hasOwnProperty(AggregationsTypesEnum.HISTOGRAM)) {
           blockModel = {
             ...blockModel,
-            type: AggreationsTypesEnum.HISTOGRAM,
-            size: requestAgg[AggreationsTypesEnum.HISTOGRAM].size,
+            type: AggregationsTypesEnum.HISTOGRAM,
+            size: requestAgg[AggregationsTypesEnum.HISTOGRAM].size,
           }
 
-          if (requestAgg[AggreationsTypesEnum.HISTOGRAM].keyed) {
+          if (requestAgg[AggregationsTypesEnum.HISTOGRAM].keyed) {
             const entries = Object.entries(responseAgg.buckets)
             for (let p = 0; p < entries.length; p++) {
               const entry: [string, AggEntry] = entries[p] as [string, AggEntry]
@@ -76,7 +76,7 @@ export class FacetsService {
               const onlyOneBucket = entries.length === 1
               const upperBound = onlyOneBucket
                 ? lowerBound +
-                  Number(requestAgg[AggreationsTypesEnum.HISTOGRAM].interval)
+                  Number(requestAgg[AggregationsTypesEnum.HISTOGRAM].interval)
                 : nextEntry
                 ? nextEntry[1].key
                 : '*'
@@ -101,11 +101,11 @@ export class FacetsService {
                 'min_doc_count: 1}}'
             )
           }
-        } else if (requestAgg.hasOwnProperty(AggreationsTypesEnum.FILTERS)) {
+        } else if (requestAgg.hasOwnProperty(AggregationsTypesEnum.FILTERS)) {
           blockModel = {
             ...blockModel,
-            type: AggreationsTypesEnum.FILTERS,
-            size: requestAgg[AggreationsTypesEnum.FILTERS].size,
+            type: AggregationsTypesEnum.FILTERS,
+            size: requestAgg[AggregationsTypesEnum.FILTERS].size,
           }
 
           Object.entries(responseAgg.buckets).forEach((entry) => {

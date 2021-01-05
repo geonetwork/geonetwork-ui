@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { ModelBlock, ModelItem } from '../facets.model'
-import { AggreationsTypesEnum } from '../../../../../search/src/lib/facets/facets.model'
+import { AggregationsTypesEnum } from '../../../../../search/src/lib/facets/facets.model'
 
 @Component({
   selector: 'ui-facet-block',
@@ -30,7 +30,7 @@ export class FacetBlockComponent implements OnInit {
   }
 
   countItems() {
-    return this.model.type === AggreationsTypesEnum.FILTERS
+    return this.model.type === AggregationsTypesEnum.FILTERS
       ? this.model.items.reduce((sum, current) => sum + current.count, 0)
       : this.model.items.length
   }

@@ -144,7 +144,7 @@ export function reducer(
     }
     case fromActions.REQUEST_MORE_ON_AGGREGATION: {
       const clone = JSON.parse(JSON.stringify(state.config.aggregations))
-      clone[action.key].terms.size += 20
+      clone[action.key].terms.size += action.increment
 
       return {
         ...state,

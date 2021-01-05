@@ -114,6 +114,6 @@ export class FacetsContainerComponent implements OnInit {
   }
 
   onMore(key: string): void {
-    this.store.dispatch(new RequestMoreOnAggregation(key))
+    this.store.dispatch(new RequestMoreOnAggregation(key, 20))
   }
 }

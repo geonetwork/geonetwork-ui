@@ -201,7 +201,7 @@ describe('Search Reducer', () => {
 
   describe('RequestMoreOnAggregation action', () => {
     it('should replace the aggregations in the config with an updated size', () => {
-      const action = new fromActions.RequestMoreOnAggregation('tag.default')
+      const action = new fromActions.RequestMoreOnAggregation('tag.default', 20)
       const state = reducer(
         {
           ...initialState,

@@ -85,7 +85,7 @@ export class SetConfigAggregations implements Action {
 export class RequestMoreOnAggregation implements Action {
   readonly type = REQUEST_MORE_ON_AGGREGATION
 
-  constructor(public key: string) {}
+  constructor(public key: string, public increment: number) {}
 }
 
 export type SearchActions =

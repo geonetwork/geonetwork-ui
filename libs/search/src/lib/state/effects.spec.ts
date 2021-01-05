@@ -138,7 +138,7 @@ describe('Effects', () => {
 
   describe('loadMoreOnAggregation$', () => {
     it('set aggregation results on requestMoreOnAggregation action', () => {
-      actions$ = hot('-a-', { a: new RequestMoreOnAggregation('abc') })
+      actions$ = hot('-a-', { a: new RequestMoreOnAggregation('abc', 1) })
       const expected = hot('-b-', {
         b: new SetResultsAggregations({}),
       })
