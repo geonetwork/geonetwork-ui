@@ -9,7 +9,7 @@ ng build --prod --output-hashing=none --output-path=${DIST_WC_PATH} gn-wc
 
 echo '-- Publish html page for Web Component' ${APP_NAME}
 mkdir -p $DIST_WC_PATH
-cat ${DIST_WC_PATH}{runtime,polyfills,main}.js | gzip > $DIST_WC_PATH'gn-wc.js.gz'
+cat ${DIST_WC_PATH}{runtime,polyfills,main}.js > $DIST_WC_PATH'gn-wc.js'
 rm -f ${DIST_WC_PATH}main.js
 rm -f ${DIST_WC_PATH}polyfills.js
 rm -f ${DIST_WC_PATH}runtime.js
