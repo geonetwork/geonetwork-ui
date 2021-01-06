@@ -72,7 +72,7 @@ jobs:
       - name: Build storybook
         run: npm run build:storybook
       - name: Build webcomponents in production mode and demo pages
-        run: npm run demo
+        run: npm run build:demo
 
       - run: echo "::set-env name=BRANCH_NAME::${GITHUB_HEAD_REF:-master}"
 
@@ -81,14 +81,16 @@ jobs:
           echo "Deploying to directory: ${{env.BRANCH_NAME}}"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          npx gh-pages --dist dist/ --src **/* --dest ${{env.BRANCH_NAME}} --remove "${{env.BRANCH_NAME}}/**" --no-history --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
+          npx gh-pages --dist dist/ --dest ${{env.BRANCH_NAME}} --remove "${{env.BRANCH_NAME}}/**" --no-history --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
       - name: add PR comment
         uses: unsplash/comment-on-pr@master
         if: github.event_name == 'pull_request'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: 'Link to the Storybook:
+          msg: 'Link to gh-pages:
+
+                * https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/demo/
 
                 * https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/
 

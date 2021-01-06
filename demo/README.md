@@ -18,6 +18,6 @@ You will need to load the webcomponents with the correct path to `gn-wc.js`
 ```shell script
 npm run demo
 ```
-You'll be able to test your files on `http://localhost:8001/demo/`
+You'll be able to test your files on `http://localhost:8001/pages/`
 
-e.g: http://localhost:8001/demo/eea/results-list.html
+e.g: http://localhost:8001/pages/eea/results-list.html

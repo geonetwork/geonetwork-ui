@@ -24,7 +24,8 @@ for c in webcomponents/src/app/components/gn-* ; do
 done
 
 echo "-- Copy demo pages"
-cp -R demo/ $DIST_DEMO_PATH
+mkdir -p ${DIST_DEMO_PATH}pages
+cp -R demo/* ${DIST_DEMO_PATH}pages
 
 
 if [ ${1} ] && [ ${1} = "--serve" ]

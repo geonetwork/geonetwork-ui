@@ -11,6 +11,7 @@
     "build:storybook": "build-storybook -o dist/storybook && npm run build:storybook-wc",
     "build:storybook-wc": "npm run build:wc && build-storybook -c webcomponents/.storybook -o dist/storybook-wc",
     "build:wc": "npm run prestart && ng build gn-wc",
+    "build:demo": "npm run prebuild && tools/build/webcomponent/prepare-wc-pages.sh",
     "demo": "npm run prebuild && tools/build/webcomponent/prepare-wc-pages.sh --serve",
     "lint": "ng lint",
     "format:check": "prettier \"**/*.{ts,js,html}\" --check",
