@@ -34,6 +34,7 @@ export class FacetBlockComponent implements OnInit {
       ? this.model.items.reduce((sum, current) => sum + current.count, 0)
       : this.model.items.length
   }
+
   toggleCollapsed() {
     this.collapsed = !this.collapsed
   }
