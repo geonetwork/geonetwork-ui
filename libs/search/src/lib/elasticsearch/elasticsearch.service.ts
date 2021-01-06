@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
-import { SearchParams, SortParams } from './elasticsearch.model'
+import { SortParams } from './elasticsearch.model'
+import { NameList, SearchParams } from 'elasticsearch'
 import { SearchState } from '../state/reducer'
 import { ElasticsearchMetadataModels, ElasticSearchSources } from './constant'
 
@@ -37,7 +38,7 @@ export class ElasticsearchService {
       aggs: state.config.aggregations,
       from: 0,
       size,
-      sort,
+      sort: sort as NameList,
       query: {
         bool: {
           must: [
