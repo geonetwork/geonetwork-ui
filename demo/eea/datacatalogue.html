@@ -1,9 +1,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Geonetwork demo pages</title>
+    <title>Geonetwork EEA data catalogue</title>
     <base href="./" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       rel="shortcut icon"
@@ -12,15 +11,45 @@
     />
     <link rel="shortcut icon" href="https://forest.eea.europa.eu/favicon.ico" />
     <link
-      data-chunk="client"
       rel="stylesheet"
-      href="https://forest.eea.europa.eu/static/css/17.192ff5b2.chunk.css"
+      href="https://forest.eea.europa.eu/facetview/vendor/jquery-ui-1.11.4.custom/jquery-ui.css"
     />
     <link
-      data-chunk="client"
       rel="stylesheet"
-      href="https://forest.eea.europa.eu/static/css/client.0a595a86.chunk.css"
+      href="https://forest.eea.europa.eu/facetview/vendor/dist/themes/default/style.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/facetview/css/style.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/facetview/css/facetview.css"
+    />
+    <link rel="stylesheet" href="https://forest.eea.europa.eu/css/style.css" />
+    <link rel="stylesheet" href="https://forest.eea.europa.eu/css/tiles.css" />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/css/loading.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/css/no-more-tables.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/css/esbootstrap.facetview.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/css/no-more-tables.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/css/esbootstrap.facetview.css"
+    />
+    <link rel="stylesheet" href="https://forest.eea.europa.eu/custom.css" />
+    <script src="../../webcomponents/gn-wc.js"></script>
   </head>
   <body>
     <div id="main">
@@ -47,60 +76,6 @@
                         alt="Plone Site"
                         title="Plone Site"
                     /></a>
-                  </div>
-                  <div class="nav-actions-mobile large screen hidden">
-                    <div class="search">
-                      <form action="/search" class="ui form">
-                        <div class="field searchbox">
-                          <div class="ui transparent input searchInput">
-                            <input
-                              type="text"
-                              aria-label="Search"
-                              name="SearchableText"
-                              value=""
-                              placeholder="Search website"
-                              title="Search"
-                            />
-                          </div>
-                          <button
-                            class="overSearchIcon ui small basic no-border icon button"
-                            aria-label="Search"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 36 36"
-                              style="
-                                height: 29px;
-                                width: auto;
-                                fill: currentColor;
-                              "
-                              class="icon"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M7,16 C7,11.038 11.037,7 16,7 C20.963,7 25,11.038 25,16 C25,20.962 20.963,25 16,25 C11.037,25 7,20.962 7,16 L7,16 Z M32.707,31.293 L24.448,23.034 C26.039,21.125 27,18.673 27,16 C27,9.935 22.065,5 16,5 C9.935,5 5,9.935 5,16 C5,22.065 9.935,27 16,27 C18.673,27 21.125,26.039 23.034,24.448 L31.293,32.707 L32.707,31.293 Z"
-                              ></path>
-                            </svg>
-                          </button>
-                          <button
-                            class="overSearchIcon ui small basic no-border icon button"
-                            aria-label="Search"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 36 36"
-                              style="height: 2; width: auto; fill: currentColor"
-                              class="icon"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M7,16 C7,11.038 11.037,7 16,7 C20.963,7 25,11.038 25,16 C25,20.962 20.963,25 16,25 C11.037,25 7,20.962 7,16 L7,16 Z M32.707,31.293 L24.448,23.034 C26.039,21.125 27,18.673 27,16 C27,9.935 22.065,5 16,5 C9.935,5 5,9.935 5,16 C5,22.065 9.935,27 16,27 C18.673,27 21.125,26.039 23.034,24.448 L31.293,32.707 L32.707,31.293 Z"
-                              ></path>
-                            </svg>
-                          </button>
-                        </div>
-                      </form>
-                    </div>
                   </div>
                   <nav class="navigation">
                     <div class="mobile-nav-wrapper">
@@ -143,51 +118,9 @@
                         </button>
                       </div>
                     </div>
-                    <div class="search computer large screen widescreen only">
-                      <div>
-                        <form
-                          autocomplete="off"
-                          action="/search"
-                          class="ui form searchform"
-                        >
-                          <div class="field searchbox">
-                            <div
-                              style="
-                                width: 100%;
-                                position: relative;
-                                margin-right: 0;
-                              "
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 36 36"
-                                style="
-                                  height: 26px;
-                                  width: auto;
-                                  fill: currentColor;
-                                "
-                                class="icon searchIcon"
-                              >
-                                <path
-                                  fill-rule="evenodd"
-                                  d="M7,16 C7,11.038 11.037,7 16,7 C20.963,7 25,11.038 25,16 C25,20.962 20.963,25 16,25 C11.037,25 7,20.962 7,16 L7,16 Z M32.707,31.293 L24.448,23.034 C26.039,21.125 27,18.673 27,16 C27,9.935 22.065,5 16,5 C9.935,5 5,9.935 5,16 C5,22.065 9.935,27 16,27 C18.673,27 21.125,26.039 23.034,24.448 L31.293,32.707 L32.707,31.293 Z"
-                                ></path>
-                              </svg>
-                              <div class="ui transparent input">
-                                <input
-                                  type="text"
-                                  aria-label="Search"
-                                  placeholder="Search website"
-                                  title="Search"
-                                  value=""
-                                  name="SearchableText"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
+                    <div
+                      class="search computer large screen widescreen only"
+                    ></div>
                     <div
                       class="ui pointing secondary stackable computer large screen widescreen only menu"
                     >
@@ -536,35 +469,6 @@
                             >
                           </div>
                           <div
-                            id="Switzerland"
-                            role="option"
-                            class="item Countries--section-item"
-                          >
-                            <a
-                              class="item secondLevel"
-                              href="/countries/switzerland"
-                              >Switzerland</a
-                            >
-                          </div>
-                          <div
-                            id="Turkey"
-                            role="option"
-                            class="item Countries--section-item"
-                          >
-                            <a class="item secondLevel" href="/countries/turkey"
-                              >Turkey</a
-                            >
-                          </div>
-                          <div
-                            id="Norway"
-                            role="option"
-                            class="item Countries--section-item"
-                          >
-                            <a class="item secondLevel" href="/countries/norway"
-                              >Norway</a
-                            >
-                          </div>
-                          <div
                             id="Regions"
                             role="option"
                             class="item Countries--section-item"
@@ -621,9 +525,7 @@
                           </div>
                         </div>
                       </div>
-                      <a class="item menuActive firstLevel" href="/about"
-                        >About us</a
-                      >
+                      <a class="item firstLevel" href="/about">About us</a>
                     </div>
                   </nav>
                 </div>
@@ -673,192 +575,133 @@
                 width="100%"
               />
               <div class="header-image-overlay"></div>
-              <div class="header-image-content"></div>
+              <div class="header-image-content"><h1>Data catalogue</h1></div>
             </div>
           </div>
         </div>
       </div>
-      <div class="ui basic segment content-area">
-        <div class="ui container">
-          <main>
-            <div class="ui container messages"></div>
-            <div class="editor-toolbar-wrapper"></div>
-            <div id="view">
-              <div class="ui equal width grid zero-margin">
-                <div
-                  class="two wide computer three wide large screen twelve wide mobile twelve wide tablet three wide widescreen column"
-                >
-                  <div id="portlets-ploneleftcolumn"></div>
-                </div>
-                <div
-                  style="position: static"
-                  class="eight wide computer six wide large screen twelve wide tablet six wide widescreen column"
-                >
-                  <div id="page-document" class="ui container">
-                    <h2 id="4bcqq">Forest Information System for Europe</h2>
-                    <p>
-                      FISE is an entry point for sharing information with the
-                      forest community on Europe’s forest environment, its state
-                      and development. FISE brings together data, information
-                      and knowledge gathered or derived through key
-                      forest-related policy drivers.
-                    </p>
-                    <p>
-                      FISE joins the landscape of European Data Infrastructures
-                      and other global and European forest portals supporting
-                      forest-related policy reporting:
-                      <a
-                        href="http://www.fao.org/forest-resources-assessment/en"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >FAO-FRA</a
-                      >
-                      (Food and Agriculture Organisation of the United Nations-
-                      Global Forest Resources Assessments),
-                      <a
-                        href="http://www.unece.org/forests/welcome.html"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >UNECE</a
-                      >
-                      (United Nations Economic Commission for Europe),
-                      <a
-                        href="https://foresteurope.org/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >Forest Europe</a
-                      >,
-                      <a
-                        href="http://www.euforgen.org/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >EUFORGEN</a
-                      >
-                      (European Forest Genetic Resources Programme),
-                      <a
-                        href="http://icp-forests.net/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >ICP-Forests</a
-                      >
-                      (International Co-operative Programme on Assessment and
-                      Monitoring of Air Pollution Effects on Forests),
-                      <a
-                        href="https://www.globalforestwatch.org"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >Global Forest Watch</a
-                      >, and the
-                      <a
-                        href="https://www.efi.int/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >EFI</a
-                      >
-                      (European Forest Institute). FISE is heavily dependent on
-                      data and information coming from the EU and EEA member
-                      states.
-                    </p>
-                    <h3 id="fb7vl">Key partners</h3>
-                    <p>
-                      Developed in a partnership among the services of the
-                      European Commission and the
-                      <a
-                        href="https://www.eea.europa.eu"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >European Environment Agency</a
-                      >
-                      (EEA). This is mainly
-                      <a
-                        href="https://ec.europa.eu/info/departments/environment_en"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >DG-ENV</a
-                      >,
-                      <a
-                        href="https://ec.europa.eu/jrc/en"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >DG-JRC</a
-                      >,
-                      <a
-                        href="http://ec.europa.eu/eurostat"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >Eurostat</a
-                      >, and other Directorates General of the European
-                      Commission.
-                    </p>
-                    <p>
-                      Main important European contributors are the Member States
-                      of the European Union: Austria, Belgium, Bulgaria,
-                      Croatia, Republic of Cyprus, Czech Republic, Denmark,
-                      Estonia, Finland, France, Germany, Greece, Hungary,
-                      Ireland, Italy, Latvia, Lithuania, Luxembourg, Malta,
-                      Netherlands, Poland, Portugal, Romania, Slovakia,
-                      Slovenia, Spain, Sweden; as well as the other EEA Member
-                      countries (Iceland, Liechtenstein, Norway, Switzerland,
-                      Turkey) and cooperating countries of the EEA (Albania,
-                      Bosnia and Herzegovina, North Macedonia, Montenegro,
-                      Serbia and Kosovo*).
-                    </p>
-                    <p>
-                      *This designation is without prejudice to positions on
-                      status, and is in line with UNSCR 1244(1999) and the ICJ
-                      Opinion on the Kosovo Declaration of Independence
-                    </p>
-                    <h2>Lastest datasets</h2>
-                    <script src="../../webcomponents/gn-wc.js"></script>
+    </div>
+    <div id="portal-columns">
+      <div class="container">
+        <div class="content" id="content">
+          <!--h1!= site_title-->
+          <div
+            class="documentExportActions download_data"
+            style="display: block"
+          ></div>
+          <div style="height: 10px"></div>
+          <!--p!= site_description-->
+          <div class="facet-view-simple search-page">
+            <div id="facetview">
+              <div class="row-fluid">
+                <div class="span12" style="margin-left: 0px">
+                  <div
+                    class="span3 right-column-area eea-section eea-right-section"
+                    style="margin-left: 0px"
+                  >
+                    <h3 id="filters-title" style="border-bottom: none">
+                      Filters
+                    </h3>
+                    <i class="sidebar-close fa fa-times"></i>
+                    <h3 class="filters-header-title">Filter by</h3>
+                    <div
+                      id="facetview_trees"
+                      style="padding-top: 0px; position: relative"
+                      class="eea-accordion-panels collapsed-by-default non-exclusive"
+                    >
+                      <gn-facets
+                        api-url="https://apps.titellus.net/geonetwork/srv/api"
+                        facet-config='{"tag.default":{"terms":{"field":"tag.default","include":".*","size": 10}}}'
+                      ></gn-facets>
+                    </div>
+                    <div class="facets_footer_slot"></div>
+                  </div>
+                  <div class="span9" id="facetview_rightcol">
                     <gn-results-list
+                      layout="TEXT"
                       api-url="https://apps.titellus.net/geonetwork/srv/api"
-                      layout="TITLE"
-                      size="4"
-                      filter="forest"
-                      primary-color="#e73f51"
-                      secondary-color="#c2e9dc"
-                      main-color="#212029"
-                      background-color="#fdfbff"
-                      ng-version="10.0.1"
                     ></gn-results-list>
-                    <h2 id="de61n">Contact us</h2>
-                    <p>European Environment Agency (EEA)</p>
-                    <br />
-                    <p>Phone number: (+45) 33 36 71 00</p>
-                    <p>
-                      Email:
-                      <a target="_blank" href="/mailto:info@eea.europa.eu"
-                        >info@eea.europa.eu</a
-                      >
-                    </p>
-                    <div id="forest-metadata-slot"></div>
                   </div>
                 </div>
-                <div
-                  class="two wide computer three wide large screen twelve wide mobile twelve wide tablet three wide widescreen column"
-                >
-                  <div id="portlets-plonerightcolumn"></div>
-                </div>
-              </div>
-              <div class="print-button">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 36 36"
-                  style="height: 32px; width: auto; fill: currentColor"
-                  class="icon"
-                >
-                  <g fill-rule="evenodd">
-                    <path
-                      d="M8.9996,4.9999 L8.9996,14.9999 L4.9996,14.9999 L4.9996,27.0009 L8.9996,27.0009 L8.9996,30.9999 L26.9996,30.9999 L26.9996,27.0009 L31.0006,27.0009 L31.0006,14.9999 L26.9996,14.9999 L26.9996,11.5859 L20.4146,4.9999 L8.9996,4.9999 Z M11.0006,6.9999 L19.0006,6.9999 L19.0006,12.9999 L24.9996,12.9999 L24.9996,14.9999 L11.0006,14.9999 L11.0006,6.9999 Z M21.0006,8.4149 L23.5856,10.9999 L21.0006,10.9999 L21.0006,8.4149 Z M6.9996,16.9999 L8.9996,16.9999 L26.9996,16.9999 L29.0006,16.9999 L29.0006,24.9999 L26.9996,24.9999 L26.9996,22.9999 L8.9996,22.9999 L8.9996,24.9999 L6.9996,24.9999 L6.9996,16.9999 Z M11.0006,27.0009 L11.0006,24.9999 L24.9996,24.9999 L24.9996,27.0009 L24.9996,28.9999 L11.0006,28.9999 L11.0006,27.0009 Z"
-                    ></path>
-                    <path
-                      d="M21 21L23 21 23 19 21 19zM25 21L27 21 27 19 25 19z"
-                    ></path>
-                  </g>
-                </svg>
               </div>
             </div>
-          </main>
+            <div class="visualization-info">
+              <h3>Data sources</h3>
+              <a></a><span> provided by</span
+              ><a href="http://www.eea.europa.eu">
+                European Environment Agency (EEA)</a
+              >
+            </div>
+            <div></div>
+            <div id="detailsmodal"></div>
+            <div id="intro-popup">
+              <div class="popup-backdrop"></div>
+              <div class="popup-content">
+                <a class="close-popup"><i class="fa fa-times"></i></a>
+                <div class="popup-header">
+                  <h1>Getting started with the data catalogue</h1>
+                </div>
+                <div class="popup-body">
+                  <p>
+                    The FISE Data Catalogue is designed to make public, official
+                    forest information from countries in Europe easy to find,
+                    download, use, and share. It includes forest data from the
+                    statistic platforms of the respective countries. All
+                    datasets are listed when entering the data catalogue page.
+                    There are different ways to filter, access and download
+                    datasets.
+                  </p>
+                  <h2>Filtering</h2>
+                  <p>
+                    To narrow down the relevant data, you can filter from the
+                    facets to the right (country, topics, nuts level, publishing
+                    year, time coverage, and content type).
+                  </p>
+                  <h2>Content types</h2>
+                  <p>
+                    There are three different types of content available in the
+                    Data Catalogue: (i) Documentation; (ii) Report; and (iii)
+                    Tabular data.
+                  </p>
+                  <ul>
+                    <li>
+                      Documentation: includes description of applied
+                      methodology, leaflets, glossaries.
+                    </li>
+                    <li>Reports: includes national reports</li>
+                    <li>
+                      Tabular data: refers to databases and datasets at the
+                      national and sub-national levels.
+                    </li>
+                  </ul>
+                  <h2>Metadata</h2>
+                  <p>
+                    Metadata for each dataset can be found by clicking on the
+                    titles. You will find data description, sources with links
+                    as well as the the information on the responsible entity and
+                    contact information.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="visualization-date">
+              <span class="discreet"
+                >Application data last refreshed
+                <strong>06 January 2021 02:30 AM</strong>. Version info
+                <strong>eeacms/esbootstrap:v3.0.27</strong> and tag version
+                <strong>v3.0.27</strong> on
+                <strong>FISE-elastic-app-esapp-1</strong>.</span
+              >
+            </div>
+            <div class="documentActions">
+              <h5 class="hiddenStructure">Document Actions</h5>
+            </div>
+          </div>
+          <div class="right-column-area" id="right-column">
+            <h3 id="filters-title" style="border-bottom: none">Filters</h3>
+            <div class="visualPadding"></div>
+          </div>
+          <div class="visualClear"></div>
         </div>
       </div>
       <div role="contentinfo" class="ui vertical padded segment footerWrapper">
