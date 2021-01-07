@@ -4,5 +4,6 @@
   [selectedPaths]="getBlockSelectedPaths(model)"
   (itemSelected)="onItemSelected($event)"
   (itemUnselected)="onItemUnselected($event)"
+  (filterChange)="onFilterChange(model.key, $event)"
   (more)="onMore(model.key)"
 ></ui-facet-block>

@@ -75,7 +75,11 @@ describe('FacetsContainerComponent', () => {
           filters = {}
         })
         it('add filter in state', () => {
-          let stateFilters = component['computeNewFilters'](filters, path, true)
+          const stateFilters = component['computeNewFilters'](
+            filters,
+            path,
+            true
+          )
           expect(stateFilters).toEqual({
             'tag.default': { 'Land use': true },
           })
@@ -86,13 +90,17 @@ describe('FacetsContainerComponent', () => {
           filters = { 'tag.default': { national: true } }
         })
         it('merges previous and new filters', () => {
-          let stateFilters = component['computeNewFilters'](filters, path, true)
+          const stateFilters = component['computeNewFilters'](
+            filters,
+            path,
+            true
+          )
           expect(stateFilters).toEqual({
             'tag.default': { 'Land use': true, national: true },
           })
         })
         it('removes previous filter', () => {
-          let stateFilters = component['computeNewFilters'](
+          const stateFilters = component['computeNewFilters'](
             filters,
             ['tag.default', 'national'],
             false

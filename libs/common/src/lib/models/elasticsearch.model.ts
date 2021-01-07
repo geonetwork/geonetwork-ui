@@ -4,6 +4,11 @@ interface SortParam {
 }
 export type SortParams = string | SortParam | (string | SortParam)[]
 
+export interface EsRequestAggTerm {
+  field?: string
+  size?: number
+  include?: string
+}
 export interface EsRequestAggTermPatch {
   increment?: number
   size?: number

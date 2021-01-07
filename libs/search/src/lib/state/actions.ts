@@ -1,6 +1,9 @@
-import { RecordSummary, SearchFilters } from '@lib/common'
+import {
+  EsRequestAggTermPatch,
+  RecordSummary,
+  SearchFilters,
+} from '@lib/common'
 import { Action } from '@ngrx/store'
-import { EsRequestAggTermPatch } from '../elasticsearch/elasticsearch.model'
 import { SearchStateParams } from './reducer'
 
 export const SET_FILTERS = '[Search] Set Filters'
