@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { AggregationsTypesEnum } from './facets.model'
+import { AggregationsTypesEnum } from '@lib/common'
 
 @Injectable({
   providedIn: 'root',

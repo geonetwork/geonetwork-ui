@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { AggregationsTypesEnum } from '@lib/common'
 import { ModelBlock, ModelItem } from '../facets.model'
-import { AggregationsTypesEnum } from '../../../../../search/src/lib/facets/facets.model'
 
 @Component({
   selector: 'ui-facet-block',
