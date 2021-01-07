@@ -7,6 +7,10 @@ body {
 a {
   color: var(--color-primary);
 }
+h1 {
+  color: var(--color-primary);
+}
+
 .clamp-1 {
   overflow: hidden;
   display: -webkit-box;
