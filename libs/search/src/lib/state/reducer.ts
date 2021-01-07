@@ -143,14 +143,23 @@ export function reducer(
       }
     }
     case fromActions.REQUEST_MORE_ON_AGGREGATION: {
-      const clone = JSON.parse(JSON.stringify(state.config.aggregations))
-      clone[action.key].terms.size += action.increment
+      const config = state.config
+      const aggregations = config.aggregations
+      const terms = aggregations[action.key].terms
 
       return {
         ...state,
         config: {
-          ...state.config,
-          aggregations: clone,
+          ...config,
+          aggregations: {
+            ...aggregations,
+            [action.key]: {
+              terms: {
+                ...terms,
+                size: terms.size + action.increment,
+              },
+            },
+          },
         },
       }
     }
