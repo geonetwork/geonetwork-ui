@@ -202,22 +202,49 @@ describe('Search Reducer', () => {
     })
   })
 
-  describe('RequestMoreOnAggregation action', () => {
-    it('should replace the aggregations in the config with an updated size', () => {
-      const action = new fromActions.RequestMoreOnAggregation('tag.default', 20)
-      const state = reducer(
-        {
-          ...initialState,
-          config: {
-            ...initialState.config,
-            aggregations: ES_FIXTURE_AGGS_REQUEST,
+  describe('UpdateRequestAggregationTerm action', () => {
+    describe('RequestMoreOnAggregation action', () => {
+      it('should replace the aggregations in the config with an updated size', () => {
+        const action = new fromActions.UpdateRequestAggregationTerm(
+          'tag.default',
+          { increment: 20 }
+        )
+        const state = reducer(
+          {
+            ...initialState,
+            config: {
+              ...initialState.config,
+              aggregations: ES_FIXTURE_AGGS_REQUEST,
+            },
           },
-        },
-        action
-      )
-      const clone = JSON.parse(JSON.stringify(ES_FIXTURE_AGGS_REQUEST))
-      clone['tag.default'].terms.size = 30
-      expect(state.config.aggregations).toEqual(clone)
+          action
+        )
+        const clone = JSON.parse(JSON.stringify(ES_FIXTURE_AGGS_REQUEST))
+        clone['tag.default'].terms.size = 30
+        expect(state.config.aggregations).toEqual(clone)
+      })
+    })
+
+    describe('SetIncludeOnAggregation action', () => {
+      it('should replace the aggregations in the config with an updated include', () => {
+        const action = new fromActions.UpdateRequestAggregationTerm(
+          'tag.default',
+          { include: '.*Land.*' }
+        )
+        const state = reducer(
+          {
+            ...initialState,
+            config: {
+              ...initialState.config,
+              aggregations: ES_FIXTURE_AGGS_REQUEST,
+            },
+          },
+          action
+        )
+        const clone = JSON.parse(JSON.stringify(ES_FIXTURE_AGGS_REQUEST))
+        clone['tag.default'].terms.include = '.*Land.*'
+        expect(state.config.aggregations).toEqual(clone)
+      })
     })
   })
 

@@ -1,5 +1,6 @@
 import { RecordSummary, SearchFilters } from '@lib/common'
 import { Action } from '@ngrx/store'
+import { EsRequestAggTermPatch } from '../elasticsearch/elasticsearch.model'
 import { SearchStateParams } from './reducer'
 
 export const SET_FILTERS = '[Search] Set Filters'
@@ -15,6 +16,9 @@ export const SET_RESULTS_HITS = '[Search] Set Results hits'
 export const SET_CONFIG_AGGREGATIONS = '[Search] Set Config Aggregations'
 export const REQUEST_MORE_ON_AGGREGATION =
   '[Search] Request More On Aggregation'
+export const SET_INCLUDE_ON_AGGREGATION = '[Search] Set term include'
+export const UPDATE_REQUEST_AGGREGATION_TERM =
+  '[Search] Update request aggregation term'
 export const PATCH_RESULTS_AGGREGATIONS = '[Search] Patch Results Aggregations'
 
 export class SetFilters implements Action {
@@ -73,20 +77,27 @@ export class SetResultsAggregations implements Action {
 
 export class SetResultsHits implements Action {
   readonly type = SET_RESULTS_HITS
-
   constructor(public payload: any) {}
 }
 
 export class SetConfigAggregations implements Action {
   readonly type = SET_CONFIG_AGGREGATIONS
-
   constructor(public payload: any) {}
 }
 
 export class RequestMoreOnAggregation implements Action {
   readonly type = REQUEST_MORE_ON_AGGREGATION
-
   constructor(public key: string, public increment: number) {}
+}
+
+export class SetIncludeOnAggregation implements Action {
+  readonly type = SET_INCLUDE_ON_AGGREGATION
+  constructor(public key: string, public include: string) {}
+}
+
+export class UpdateRequestAggregationTerm implements Action {
+  readonly type = UPDATE_REQUEST_AGGREGATION_TERM
+  constructor(public key: string, public patch: EsRequestAggTermPatch) {}
 }
 
 export class PatchResultsAggregations implements Action {
@@ -108,4 +119,6 @@ export type SearchActions =
   | SetResultsHits
   | SetConfigAggregations
   | RequestMoreOnAggregation
+  | SetIncludeOnAggregation
+  | UpdateRequestAggregationTerm
   | PatchResultsAggregations
