@@ -1,6 +1,9 @@
 import { ResultsListLayout } from '@lib/common'
 import { ES_FIXTURE_AGGS_REQUEST } from '../elasticsearch/fixtures/aggregations-request'
-import { ES_FIXTURE_AGGS_RESPONSE } from '../elasticsearch/fixtures/aggregations-response'
+import {
+  ES_FIXTURE_AGGS_RESPONSE,
+  ES_FIXTURE_AGGS_RESPONSE_MORE,
+} from '../elasticsearch/fixtures/aggregations-response'
 import * as fromActions from './actions'
 import { initialState, reducer, SearchStateParams } from './reducer'
 
@@ -196,6 +199,48 @@ describe('Search Reducer', () => {
         action
       )
       expect(state.config.aggregations).toEqual(ES_FIXTURE_AGGS_REQUEST)
+    })
+  })
+
+  describe('RequestMoreOnAggregation action', () => {
+    it('should replace the aggregations in the config with an updated size', () => {
+      const action = new fromActions.RequestMoreOnAggregation('tag.default', 20)
+      const state = reducer(
+        {
+          ...initialState,
+          config: {
+            ...initialState.config,
+            aggregations: ES_FIXTURE_AGGS_REQUEST,
+          },
+        },
+        action
+      )
+      const clone = JSON.parse(JSON.stringify(ES_FIXTURE_AGGS_REQUEST))
+      clone['tag.default'].terms.size = 30
+      expect(state.config.aggregations).toEqual(clone)
+    })
+  })
+
+  describe('PatchResultsAggregations action', () => {
+    it('should replace the aggregations buckets for the key in the result', () => {
+      const payload = ES_FIXTURE_AGGS_RESPONSE_MORE
+      const action = new fromActions.PatchResultsAggregations(
+        'tag.default',
+        payload
+      )
+      const state = reducer(
+        {
+          ...initialState,
+          results: {
+            ...initialState.results,
+            aggregations: ES_FIXTURE_AGGS_RESPONSE,
+          },
+        },
+        action
+      )
+      expect(state.results.aggregations['tag.default'].buckets).toEqual(
+        ES_FIXTURE_AGGS_RESPONSE_MORE['tag.default'].buckets
+      )
     })
   })
 })

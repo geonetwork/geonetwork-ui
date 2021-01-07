@@ -142,6 +142,30 @@ export function reducer(
         },
       }
     }
+    case fromActions.REQUEST_MORE_ON_AGGREGATION: {
+      const clone = JSON.parse(JSON.stringify(state.config.aggregations))
+      clone[action.key].terms.size += action.increment
+
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          aggregations: clone,
+        },
+      }
+    }
+    case fromActions.PATCH_RESULTS_AGGREGATIONS: {
+      const clone = JSON.parse(JSON.stringify(state.results.aggregations))
+      clone[action.key].buckets = action.payload[action.key].buckets
+
+      return {
+        ...state,
+        results: {
+          ...state.results,
+          aggregations: clone,
+        },
+      }
+    }
   }
 
   return state

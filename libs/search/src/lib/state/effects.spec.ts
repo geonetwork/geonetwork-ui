@@ -10,6 +10,8 @@ import { Observable, of } from 'rxjs'
 import {
   AddResults,
   ClearResults,
+  PatchResultsAggregations,
+  RequestMoreOnAggregation,
   RequestMoreResults,
   SetFilters,
   SetResultsAggregations,
@@ -19,10 +21,18 @@ import {
   UpdateFilters,
 } from './actions'
 import { SearchEffects } from './effects'
+import { ES_FIXTURE_AGGS_REQUEST } from '../elasticsearch/fixtures/aggregations-request'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
 
+const initialStateMock = {
+  ...initialState,
+  config: {
+    aggregations: ES_FIXTURE_AGGS_REQUEST,
+  },
+}
+
 const searchServiceMock = {
-  search: () => of({ hits: { hits: [] }, aggregations: {} }), // TODO: use a fixture here
+  search: () => of({ hits: { hits: [] }, aggregations: { abc: {} } }), // TODO: use a fixture here
   configuration: {
     basePath: 'http://geonetwork/srv/api',
   },
@@ -44,7 +54,7 @@ describe('Effects', () => {
         EffectsModule.forRoot(),
         StoreModule.forRoot({}),
         StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
-          initialState,
+          initialState: initialStateMock,
         }),
       ],
       providers: [
@@ -119,11 +129,22 @@ describe('Effects', () => {
       actions$ = hot('-a-', { a: new RequestMoreResults() })
       const expected = hot('-(bcd)-', {
         b: new AddResults([]),
-        c: new SetResultsAggregations({}),
+        c: new SetResultsAggregations({ abc: {} }),
         d: new SetResultsHits(undefined),
       })
 
       expect(effects.loadResults$).toBeObservable(expected)
+    })
+  })
+
+  describe('loadMoreOnAggregation$', () => {
+    it('patch aggregation results on requestMoreOnAggregation action', () => {
+      actions$ = hot('-a-', { a: new RequestMoreOnAggregation('abc', 1) })
+      const expected = hot('-b-', {
+        b: new PatchResultsAggregations('abc', { abc: {} }),
+      })
+
+      expect(effects.loadMoreOnAggregation$).toBeObservable(expected)
     })
   })
 })

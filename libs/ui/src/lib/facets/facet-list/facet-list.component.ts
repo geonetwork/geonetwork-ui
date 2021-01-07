@@ -13,6 +13,8 @@ export class FacetListComponent implements OnInit {
   @Output() itemSelected = new EventEmitter<string[]>()
   @Output() itemUnselected = new EventEmitter<string[]>()
 
+  @Output() more = new EventEmitter<string>()
+
   constructor() {}
 
   ngOnInit(): void {}
@@ -32,5 +34,9 @@ export class FacetListComponent implements OnInit {
 
   onItemUnselected(path: string[]) {
     this.itemUnselected.emit(path)
+  }
+
+  onMore(key: string): void {
+    this.more.emit(key)
   }
 }

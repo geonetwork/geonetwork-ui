@@ -3,4 +3,5 @@
   [selectedPaths]="selectedPaths$ | async"
   (itemSelected)="onItemSelected($event, true)"
   (itemUnselected)="onItemSelected($event, false)"
+  (more)="onMore($event)"
 ></ui-facet-list>
