@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { SortParams } from './elasticsearch.model'
+import { SortParams } from '@lib/common'
 import { NameList, SearchParams } from 'elasticsearch'
 import { SearchState } from '../state/reducer'
 import { ElasticsearchMetadataModels, ElasticSearchSources } from './constant'
