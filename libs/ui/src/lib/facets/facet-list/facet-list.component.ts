@@ -28,6 +28,10 @@ export class FacetListComponent implements OnInit {
     })
   }
 
+  trackByIndexKey(index: number, model: ModelBlock) {
+    return model.key
+  }
+
   onItemSelected(path: string[]) {
     this.itemSelected.emit(path)
   }

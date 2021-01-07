@@ -1,5 +1,5 @@
 <ui-facet-block
-  *ngFor="let model of models"
+  *ngFor="let model of models; trackBy: trackByIndexKey"
   [model]="model"
   [selectedPaths]="getBlockSelectedPaths(model)"
   (itemSelected)="onItemSelected($event)"
