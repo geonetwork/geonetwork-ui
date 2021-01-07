@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
-import { SearchParams } from 'elasticsearch'
+import { SortParams } from './elasticsearch.model'
+import { NameList, SearchParams } from 'elasticsearch'
 import { SearchState } from '../state/reducer'
 import { ElasticsearchMetadataModels, ElasticSearchSources } from './constant'
 
@@ -17,7 +18,15 @@ export class ElasticsearchService {
 
   buildPayload(state: SearchState): SearchParams {
     const { size, sortBy, filters } = state.params
-    const sort = sortBy ? [sortBy] : undefined
+    const sort: SortParams = sortBy
+      ? sortBy.split(',').map((s) => {
+          if (s.startsWith('-')) {
+            return { [s.substring(1)]: 'desc' }
+          } else {
+            return s
+          }
+        })
+      : undefined
 
     const { any, ...searchFilters } = filters
     const queryFilters = this.facetsToLuceneQuery(searchFilters)
@@ -29,7 +38,7 @@ export class ElasticsearchService {
       aggs: state.config.aggregations,
       from: 0,
       size,
-      sort,
+      sort: sort as NameList,
       query: {
         bool: {
           must: [
