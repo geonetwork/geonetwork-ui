@@ -6,7 +6,7 @@ const originalError = console.error
 
 let consoleOutput = []
 
-const mockConsole = (output) => consoleOutput.push(output)
+const mockConsole = jest.fn((output) => consoleOutput.push(output))
 
 describe('LogService', () => {
   let service: LogService
@@ -28,9 +28,11 @@ describe('LogService', () => {
     service.log('log message')
     expect(consoleOutput).toEqual(['log message'])
   })
-  it('call log fn', () => {
-    service.log('log message')
-    expect(consoleOutput).toEqual(['log message'])
+  it('call log fn with arguments', () => {
+    service.log('log message', 1, [1, 2], { a: '35' })
+    expect(mockConsole).toHaveBeenCalledWith('log message', 1, [1, 2], {
+      a: '35',
+    })
   })
   it('call warn fn', () => {
     service.warn('warn message')
