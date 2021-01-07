@@ -42,14 +42,14 @@ Note that each webcomponent should appear in two stories: one where it is includ
 ### Web server
 To test your web component in a real production context
 ```shell script
-npm run serve:wc
+npm run demo
 ```
 
 **Important:** The components are built in `production` mode.
 
-You'll be able to test your web components on `http://127.0.0.1:8001/{name_of_sample_file}`
+You'll be able to test your web components on `http://localhost:8001/webcomponents/{name_of_sample_file}`
 
-e.g: http://localhost:8001/gn-results-list.sample.html
+e.g: http://localhost:8001/webcomponents/gn-results-list.sample.html
 
 This script show you how to deploy your web component in a real world, it builds it, then to use your component in a real web page, you have to
 - import the script exported by Angular
