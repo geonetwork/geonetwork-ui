@@ -154,6 +154,18 @@ export function reducer(
         },
       }
     }
+    case fromActions.PATCH_RESULTS_AGGREGATIONS: {
+      const clone = JSON.parse(JSON.stringify(state.results.aggregations))
+      clone[action.key].buckets = action.payload[action.key].buckets
+
+      return {
+        ...state,
+        results: {
+          ...state.results,
+          aggregations: clone,
+        },
+      }
+    }
   }
 
   return state

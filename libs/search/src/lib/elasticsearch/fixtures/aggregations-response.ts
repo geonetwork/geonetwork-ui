@@ -1,24 +1,26 @@
+const BUCKETS = [
+  { key: 'Hungary', doc_count: 20 },
+  {
+    key: 'Austria',
+    doc_count: 3,
+  },
+  { key: 'Belgium', doc_count: 8 },
+  {
+    key: 'Bulgaria',
+    doc_count: 2,
+  },
+  { key: 'Croatia', doc_count: 15 },
+  {
+    key: 'Cyprus',
+    doc_count: 5,
+  },
+]
+
 export const ES_FIXTURE_AGGS_RESPONSE = {
   'tag.default': {
     doc_count_error_upper_bound: 0,
     sum_other_doc_count: 458,
-    buckets: [
-      { key: 'Hungary', doc_count: 20 },
-      {
-        key: 'Austria',
-        doc_count: 3,
-      },
-      { key: 'Belgium', doc_count: 8 },
-      {
-        key: 'Bulgaria',
-        doc_count: 2,
-      },
-      { key: 'Croatia', doc_count: 15 },
-      {
-        key: 'Cyprus',
-        doc_count: 5,
-      },
-    ],
+    buckets: BUCKETS,
   },
   availableInServices: {
     buckets: {
@@ -42,5 +44,17 @@ export const ES_FIXTURE_AGGS_RESPONSE = {
       '2.0E7': { key: 20000000, doc_count: 9 },
       '6.0E7': { key: 60000000, doc_count: 8 },
     },
+  },
+}
+
+export const ES_FIXTURE_AGGS_RESPONSE_MORE = {
+  'tag.default': {
+    doc_count_error_upper_bound: 0,
+    sum_other_doc_count: 456,
+    buckets: [
+      ...BUCKETS,
+      { key: 'Spain', doc_count: 86 },
+      { key: 'United Kingdom', doc_count: 84 },
+    ],
   },
 }

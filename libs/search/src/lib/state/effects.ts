@@ -22,6 +22,7 @@ import {
   SET_FILTERS,
   SET_SEARCH,
   SetResultsHits,
+  PatchResultsAggregations,
 } from './actions'
 import { SearchState } from './reducer'
 import { getSearchState } from './selectors'
@@ -93,8 +94,8 @@ export class SearchEffects {
       ),
       map((response: SearchResponse<any>) => {
         const aggregations = response.aggregations
-        // TODO: action to replace only current aggregation
-        return new SetResultsAggregations(aggregations)
+        const key = Object.keys(aggregations)[0]
+        return new PatchResultsAggregations(key, aggregations)
       })
     )
   })

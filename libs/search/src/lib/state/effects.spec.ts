@@ -10,6 +10,7 @@ import { Observable, of } from 'rxjs'
 import {
   AddResults,
   ClearResults,
+  PatchResultsAggregations,
   RequestMoreOnAggregation,
   RequestMoreResults,
   SetFilters,
@@ -31,7 +32,7 @@ const initialStateMock = {
 }
 
 const searchServiceMock = {
-  search: () => of({ hits: { hits: [] }, aggregations: {} }), // TODO: use a fixture here
+  search: () => of({ hits: { hits: [] }, aggregations: { abc: {} } }), // TODO: use a fixture here
   configuration: {
     basePath: 'http://geonetwork/srv/api',
   },
@@ -128,7 +129,7 @@ describe('Effects', () => {
       actions$ = hot('-a-', { a: new RequestMoreResults() })
       const expected = hot('-(bcd)-', {
         b: new AddResults([]),
-        c: new SetResultsAggregations({}),
+        c: new SetResultsAggregations({ abc: {} }),
         d: new SetResultsHits(undefined),
       })
 
@@ -137,10 +138,10 @@ describe('Effects', () => {
   })
 
   describe('loadMoreOnAggregation$', () => {
-    it('set aggregation results on requestMoreOnAggregation action', () => {
+    it('patch aggregation results on requestMoreOnAggregation action', () => {
       actions$ = hot('-a-', { a: new RequestMoreOnAggregation('abc', 1) })
       const expected = hot('-b-', {
-        b: new SetResultsAggregations({}),
+        b: new PatchResultsAggregations('abc', { abc: {} }),
       })
 
       expect(effects.loadMoreOnAggregation$).toBeObservable(expected)

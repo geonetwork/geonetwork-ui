@@ -15,6 +15,7 @@ export const SET_RESULTS_HITS = '[Search] Set Results hits'
 export const SET_CONFIG_AGGREGATIONS = '[Search] Set Config Aggregations'
 export const REQUEST_MORE_ON_AGGREGATION =
   '[Search] Request More On Aggregation'
+export const PATCH_RESULTS_AGGREGATIONS = '[Search] Patch Results Aggregations'
 
 export class SetFilters implements Action {
   readonly type = SET_FILTERS
@@ -88,6 +89,12 @@ export class RequestMoreOnAggregation implements Action {
   constructor(public key: string, public increment: number) {}
 }
 
+export class PatchResultsAggregations implements Action {
+  readonly type = PATCH_RESULTS_AGGREGATIONS
+
+  constructor(public key: string, public payload: any) {}
+}
+
 export type SearchActions =
   | SetFilters
   | UpdateFilters
@@ -101,3 +108,4 @@ export type SearchActions =
   | SetResultsHits
   | SetConfigAggregations
   | RequestMoreOnAggregation
+  | PatchResultsAggregations
