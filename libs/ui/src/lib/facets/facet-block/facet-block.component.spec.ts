@@ -110,9 +110,9 @@ describe('FacetBlockComponent', () => {
       spyOn(component.filterChange, 'emit')
       input.nativeElement.value = 'europe'
       input.nativeElement.dispatchEvent(new Event('keyup'))
-      tick(200)
+      tick(300)
       fixture.detectChanges()
-      expect(component.filterChange.emit).toHaveBeenCalledWith('.*europe*')
+      expect(component.filterChange.emit).toHaveBeenCalledWith('europe')
     }))
   })
 

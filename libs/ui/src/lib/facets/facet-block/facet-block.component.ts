@@ -47,7 +47,7 @@ export class FacetBlockComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.eltFilterInputRef) {
       this.subscription.add(
         fromEvent<Event>(this.eltFilterInputRef.nativeElement, 'keyup')
-          .pipe(debounceTime(200))
+          .pipe(debounceTime(300))
           .subscribe((event) =>
             this.onFilterChange((event.target as HTMLInputElement).value)
           )
@@ -70,7 +70,7 @@ export class FacetBlockComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onFilterChange(value: string) {
-    this.filterChange.emit(`.*${value}*`)
+    this.filterChange.emit(value)
   }
 
   isItemSelected(item: ModelItem) {

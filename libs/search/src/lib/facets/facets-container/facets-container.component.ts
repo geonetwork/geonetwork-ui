@@ -121,6 +121,7 @@ export class FacetsContainerComponent implements OnInit {
   }
 
   onFilterChange(term: EsRequestAggTerm): void {
-    this.searchFacade.setIncludeOnAggregation(term.field, term.include)
+    const include = `.*${term.include}.*`
+    this.searchFacade.setIncludeOnAggregation(term.field, include)
   }
 }
