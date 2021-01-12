@@ -32,9 +32,10 @@ If you would like to contribute code, please follow our [style guide](STYLEGUIDE
 You can start it with `npm run storybook`.
 
 ## Demo
-You can test current master components with storybook
-- [Angular components](https://geonetwork.github.io/geonetwork-ui/master/storybook/?path=/story/ui--auto-complete-story)
-- [Web components](https://geonetwork.github.io/geonetwork-ui/master/storybook-wc/) (custom elements)
+You can test current master components with storybook and demo pages
+- [Demo](https://geonetwork.github.io/geonetwork-ui/master/demo/)
+- [Storybook Angular components](https://geonetwork.github.io/geonetwork-ui/master/storybook/?path=/story/ui--auto-complete-story)
+- [Storybook Web components](https://geonetwork.github.io/geonetwork-ui/master/storybook-wc/) (custom elements)
 
 ## More information
 
