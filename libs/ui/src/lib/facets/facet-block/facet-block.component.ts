@@ -48,8 +48,8 @@ export class FacetBlockComponent implements OnInit, AfterViewInit, OnDestroy {
       this.subscription.add(
         fromEvent<Event>(this.eltFilterInputRef.nativeElement, 'keyup')
           .pipe(debounceTime(300))
-          .subscribe((event) =>
-            this.onFilterChange((event.target as HTMLInputElement).value)
+          .subscribe((event: any) =>
+            this.onFilterChange((event.path[0] as HTMLInputElement).value)
           )
       )
     }
