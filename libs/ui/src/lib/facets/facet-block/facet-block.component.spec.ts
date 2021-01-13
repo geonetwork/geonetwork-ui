@@ -59,7 +59,9 @@ describe('FacetBlockComponent', () => {
     it('removes the collapsible content', () => {
       expect(de.query(By.css('.icon-collapse'))).toBeFalsy()
       expect(de.query(By.css('.icon-expand'))).toBeTruthy()
-      expect(de.query(By.css('.collapsible-content'))).toBeFalsy()
+      expect(de.query(By.css('.collapsible-content')).properties.hidden).toBe(
+        true
+      )
     })
   })
 
@@ -109,7 +111,9 @@ describe('FacetBlockComponent', () => {
     it('outputs the changed filter value', fakeAsync(() => {
       spyOn(component.filterChange, 'emit')
       input.nativeElement.value = 'europe'
-      input.nativeElement.dispatchEvent(new Event('keyup'))
+      const event = new Event('keyup') as any
+      event.path = [input.nativeElement]
+      input.nativeElement.dispatchEvent(event)
       tick(300)
       fixture.detectChanges()
       expect(component.filterChange.emit).toHaveBeenCalledWith('europe')
