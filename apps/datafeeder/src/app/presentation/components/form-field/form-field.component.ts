@@ -40,7 +40,7 @@ export interface FormFieldConfig {
 export class FormFieldComponent implements OnInit {
   @Input() config: FormFieldConfig
 
-  datepickerOptions: IMyDpOptions = (this.datepickerOptions = {
+  datepickerOptions: IMyDpOptions = ({
     dateFormat: 'dd mmm yyyy',
   })
 
