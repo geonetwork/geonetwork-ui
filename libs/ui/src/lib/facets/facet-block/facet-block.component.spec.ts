@@ -41,7 +41,7 @@ describe('FacetBlockComponent', () => {
     expect(de.query(By.css('.icon-collapse'))).toBeTruthy()
     expect(de.query(By.css('.icon-expand'))).toBeFalsy()
     expect(de.query(By.css('.collapsible-content'))).toBeTruthy()
-    expect(de.query(By.css('.input-filter'))).toBeFalsy()
+    expect(de.query(By.css('.input-filter'))).toBeTruthy()
     // Mock fixture
     expect(de.query(By.css('div > span'))).toBeTruthy()
     expect(de.query(By.css('.span-title')).nativeElement.textContent).toBe(
@@ -59,7 +59,9 @@ describe('FacetBlockComponent', () => {
     it('removes the collapsible content', () => {
       expect(de.query(By.css('.icon-collapse'))).toBeFalsy()
       expect(de.query(By.css('.icon-expand'))).toBeTruthy()
-      expect(de.query(By.css('.collapsible-content'))).toBeFalsy()
+      expect(de.query(By.css('.collapsible-content')).properties.hidden).toBe(
+        true
+      )
     })
   })
 
@@ -79,31 +81,40 @@ describe('FacetBlockComponent', () => {
     })
   })
 
-  describe('Inputs canFilter and filter', () => {
-    beforeEach(() => {
-      component.canFilter = true
-      component.filter = 'marine'
-      fixture.detectChanges()
+  describe('Input filter', () => {
+    describe('when include filter', () => {
+      beforeEach(() => {
+        fixture.detectChanges()
+      })
+      it('adds the filter input with a value', () => {
+        const input = de.query(By.css('.input-filter'))
+        expect(input).toBeTruthy()
+      })
     })
-    it('adds the filter input with a value', () => {
-      const input = de.query(By.css('.input-filter'))
-      expect(input).toBeTruthy()
-      expect(input.nativeElement.value).toBe('marine')
+    describe('when no include filter', () => {
+      beforeEach(() => {
+        component.model = EMPTY_BLOCK_MODEL_FIXTURE
+        fixture.detectChanges()
+      })
+      it('adds the filter input with a value', () => {
+        const input = de.query(By.css('.input-filter'))
+        expect(input).toBeFalsy()
+      })
     })
   })
 
   describe('Output filterChange', () => {
     let input: DebugElement
     beforeEach(() => {
-      component.canFilter = true
-      fixture.detectChanges()
       input = de.query(By.css('.input-filter'))
     })
     it('outputs the changed filter value', fakeAsync(() => {
       spyOn(component.filterChange, 'emit')
       input.nativeElement.value = 'europe'
-      input.nativeElement.dispatchEvent(new Event('input'))
-      tick()
+      const event = new Event('keyup') as any
+      event.path = [input.nativeElement]
+      input.nativeElement.dispatchEvent(event)
+      tick(300)
       fixture.detectChanges()
       expect(component.filterChange.emit).toHaveBeenCalledWith('europe')
     }))

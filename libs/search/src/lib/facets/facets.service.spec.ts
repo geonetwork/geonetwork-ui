@@ -7,11 +7,16 @@ import { FacetsService } from './facets.service'
 let requestAggregations
 let responseAggregations
 
+const logServiceMock = {
+  warn: jest.fn(),
+  log: jest.fn(),
+  error: jest.fn(),
+}
 describe('FacetsService', () => {
   let service: FacetsService
 
   beforeEach(() => {
-    service = new FacetsService()
+    service = new FacetsService(logServiceMock)
   })
 
   it('should be created', () => {

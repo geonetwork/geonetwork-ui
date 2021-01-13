@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core'
-import { AggregationsTypesEnum } from './facets.model'
+import { AggregationsTypesEnum, LogService } from '@lib/common'
 
 @Injectable({
   providedIn: 'root',
 })
 export class FacetsService {
-  constructor() {}
+  constructor(private logger: LogService) {}
 
   createFacetModel(
     requestAggregations,
@@ -92,7 +92,7 @@ export class FacetsService {
               blockModel.items.push(itemModel)
             }
           } else {
-            console.warn(
+            this.logger.warn(
               'Facet configuration error. Histogram are only supported with keyed mode.' +
                 'eg. creationYearForResource: {histogram: { ' +
                 'field: "creationYearForResource",' +
@@ -122,7 +122,7 @@ export class FacetsService {
             blockModel.items.push(itemModel)
           })
         } else {
-          console.warn('Unsupported aggregation config.', requestAgg)
+          this.logger.warn('Unsupported aggregation config.', requestAgg)
         }
         listModel.push(blockModel)
       }

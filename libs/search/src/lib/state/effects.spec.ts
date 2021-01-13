@@ -1,7 +1,11 @@
 import { TestBed } from '@angular/core/testing'
 import { AuthService } from '@lib/auth'
 import { SearchApiService } from '@lib/gn-api'
-import { ElasticsearchMapper } from '@lib/search'
+import {
+  ElasticsearchMapper,
+  SetIncludeOnAggregation,
+  UpdateRequestAggregationTerm,
+} from '@lib/search'
 import { EffectsModule } from '@ngrx/effects'
 import { provideMockActions } from '@ngrx/effects/testing'
 import { StoreModule } from '@ngrx/store'
@@ -138,13 +142,40 @@ describe('Effects', () => {
   })
 
   describe('loadMoreOnAggregation$', () => {
-    it('patch aggregation results on requestMoreOnAggregation action', () => {
+    it('dispatch UPDATE_REQUEST_AGGREGATION_TERM', () => {
       actions$ = hot('-a-', { a: new RequestMoreOnAggregation('abc', 1) })
+      const expected = hot('-b-', {
+        b: new UpdateRequestAggregationTerm('abc', { increment: 1 }),
+      })
+
+      expect(effects.loadMoreOnAggregation$).toBeObservable(expected)
+    })
+  })
+
+  describe('setIncludeOnAggregation$', () => {
+    it('dispatch UPDATE_REQUEST_AGGREGATION_TERM', () => {
+      actions$ = hot('-a-', { a: new SetIncludeOnAggregation('abc', '*land*') })
+      const expected = hot('-b-', {
+        b: new UpdateRequestAggregationTerm('abc', { include: '*land*' }),
+      })
+
+      expect(effects.setIncludeOnAggregation$).toBeObservable(expected)
+    })
+  })
+
+  describe('upateRequestAggregationTerm$', () => {
+    it('patch aggregation results with new aggretation term definition', () => {
+      actions$ = hot('-a-', {
+        a: new UpdateRequestAggregationTerm('abc', {
+          include: '*land*',
+          increment: 1,
+        }),
+      })
       const expected = hot('-b-', {
         b: new PatchResultsAggregations('abc', { abc: {} }),
       })
 
-      expect(effects.loadMoreOnAggregation$).toBeObservable(expected)
+      expect(effects.upateRequestAggregationTerm$).toBeObservable(expected)
     })
   })
 })

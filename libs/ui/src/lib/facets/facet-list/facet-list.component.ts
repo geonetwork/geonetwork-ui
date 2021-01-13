@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { EsRequestAggTerm } from '@lib/common'
 import { ModelBlock } from '../facets.model'
 
 @Component({
@@ -14,6 +15,7 @@ export class FacetListComponent implements OnInit {
   @Output() itemUnselected = new EventEmitter<string[]>()
 
   @Output() more = new EventEmitter<string>()
+  @Output() filterChange = new EventEmitter<EsRequestAggTerm>()
 
   constructor() {}
 
@@ -28,6 +30,10 @@ export class FacetListComponent implements OnInit {
     })
   }
 
+  trackByIndexKey(index: number, model: ModelBlock) {
+    return model.key
+  }
+
   onItemSelected(path: string[]) {
     this.itemSelected.emit(path)
   }
@@ -38,5 +44,9 @@ export class FacetListComponent implements OnInit {
 
   onMore(key: string): void {
     this.more.emit(key)
+  }
+
+  onFilterChange(field: string, include: string): void {
+    this.filterChange.emit({ field, include })
   }
 }

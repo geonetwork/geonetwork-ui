@@ -1,8 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
+import { EsRequestAggTerm } from '@lib/common'
+import { SearchFacade } from '../../state/search.facade'
 import { select, Store } from '@ngrx/store'
 import { combineLatest } from 'rxjs'
 import { map, take, tap } from 'rxjs/operators'
-import { RequestMoreOnAggregation, SetFilters } from '../../state/actions'
+import { SetFilters } from '../../state/actions'
 import { SearchState } from '../../state/reducer'
 import {
   getSearchConfigAggregations,
@@ -37,7 +39,8 @@ export class FacetsContainerComponent implements OnInit {
 
   constructor(
     private store: Store<SearchState>,
-    private facets: FacetsService
+    private facets: FacetsService,
+    private searchFacade: SearchFacade
   ) {}
 
   ngOnInit(): void {}
@@ -114,6 +117,11 @@ export class FacetsContainerComponent implements OnInit {
   }
 
   onMore(key: string): void {
-    this.store.dispatch(new RequestMoreOnAggregation(key, 20))
+    this.searchFacade.requestMoreOnAggregation(key, 20)
+  }
+
+  onFilterChange(term: EsRequestAggTerm): void {
+    const include = `.*${term.include}.*`
+    this.searchFacade.setIncludeOnAggregation(term.field, include)
   }
 }

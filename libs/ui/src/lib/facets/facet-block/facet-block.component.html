@@ -44,7 +44,7 @@
     </svg>
   </div>
 </div>
-<div *ngIf="!collapsed && hasItems" class="ml-4 collapsible-content">
+<div [hidden]="collapsed || !hasItems" class="ml-4 collapsible-content">
   <div
     *ngIf="canFilter"
     class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500"
@@ -68,8 +68,7 @@
     type="text"
     class="w-full rounded border border-1 border-gray-300 input-filter py-1 px-2 pl-8 focus:outline-none focus:border-blue-400"
     *ngIf="canFilter"
-    [ngModel]="filter"
-    (ngModelChange)="onFilterChange($event)"
+    #filterInput
   />
   <ui-facet-item
     *ngFor="let item of getItems()"

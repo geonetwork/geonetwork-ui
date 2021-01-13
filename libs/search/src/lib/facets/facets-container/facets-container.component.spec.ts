@@ -1,12 +1,20 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { SearchFilters } from '@lib/common'
+import { SearchFacade } from '@lib/search'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { SEARCH_STATE_FILTERS_FIXTURE } from '../../state/fixtures/search-state.fixtures'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from '../../state/reducer'
 
 import { FacetsContainerComponent } from './facets-container.component'
+
+const searchFacadeMock = {
+  setConfigAggregations: jest.fn(),
+  requestMoreResults: jest.fn(),
+  setIncludeOnAggregation: jest.fn(),
+  requestMoreOnAggregation: jest.fn(),
+}
 
 describe('FacetsContainerComponent', () => {
   let component: FacetsContainerComponent
@@ -22,6 +30,12 @@ describe('FacetsContainerComponent', () => {
         StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
           initialState,
         }),
+      ],
+      providers: [
+        {
+          provide: SearchFacade,
+          useValue: searchFacadeMock,
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
@@ -75,7 +89,11 @@ describe('FacetsContainerComponent', () => {
           filters = {}
         })
         it('add filter in state', () => {
-          let stateFilters = component['computeNewFilters'](filters, path, true)
+          const stateFilters = component['computeNewFilters'](
+            filters,
+            path,
+            true
+          )
           expect(stateFilters).toEqual({
             'tag.default': { 'Land use': true },
           })
@@ -86,13 +104,17 @@ describe('FacetsContainerComponent', () => {
           filters = { 'tag.default': { national: true } }
         })
         it('merges previous and new filters', () => {
-          let stateFilters = component['computeNewFilters'](filters, path, true)
+          const stateFilters = component['computeNewFilters'](
+            filters,
+            path,
+            true
+          )
           expect(stateFilters).toEqual({
             'tag.default': { 'Land use': true, national: true },
           })
         })
         it('removes previous filter', () => {
-          let stateFilters = component['computeNewFilters'](
+          const stateFilters = component['computeNewFilters'](
             filters,
             ['tag.default', 'national'],
             false
@@ -102,6 +124,29 @@ describe('FacetsContainerComponent', () => {
           })
         })
       })
+    })
+  })
+
+  describe('#onMore', () => {
+    it('dispatches setIncludeOnAggregation', () => {
+      component.onMore('tag.default')
+      expect(searchFacadeMock.requestMoreOnAggregation).toHaveBeenCalledWith(
+        'tag.default',
+        20
+      )
+    })
+  })
+
+  describe('#onFilterChange', () => {
+    it('dispatches setIncludeOnAggregation', () => {
+      component.onFilterChange({
+        field: 'tag.default',
+        include: 'lan',
+      })
+      expect(searchFacadeMock.setIncludeOnAggregation).toHaveBeenCalledWith(
+        'tag.default',
+        '.*lan.*'
+      )
     })
   })
 })

@@ -37,6 +37,6 @@ export const EMPTY_BLOCK_MODEL_FIXTURE = {
   type: 'terms',
   size: 21,
   more: true,
-  includeFilter: true,
+  includeFilter: false,
   excludeFilter: false,
 }

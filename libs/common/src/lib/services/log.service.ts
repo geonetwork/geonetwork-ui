@@ -5,13 +5,13 @@ import { Injectable } from '@angular/core'
 })
 export class LogService {
   constructor() {}
-  log(message: string): void {
-    console.log(message)
+  log(message: string, ...objects: any[]): void {
+    console.log.apply(this, [message, ...objects])
   }
-  warn(message: string): void {
-    console.warn(message)
+  warn(message: string, ...objects: any[]): void {
+    console.warn.apply(this, [message, ...objects])
   }
-  error(message: string): void {
-    console.error(message)
+  error(message: string, ...objects: any[]): void {
+    console.error.apply(this, [message, ...objects])
   }
 }
