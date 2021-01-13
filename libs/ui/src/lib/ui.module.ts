@@ -25,7 +25,9 @@ import { TextAreaComponent } from './text-area/text-area.component'
 import { TagInputModule } from 'ngx-chips'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { ChipsInputComponent } from './chips-input/chips-input.component'
+import { ChipsInputComponent } from './chips-input/chips-input.component';
+import { DatepickerComponent } from './datepicker/datepicker.component'
+import {MyDatePickerModule} from 'mydatepicker'
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { ChipsInputComponent } from './chips-input/chips-input.component'
     StepBarComponent,
     TextAreaComponent,
     ChipsInputComponent,
+    DatepickerComponent,
     ResultsHitsNumberComponent,
   ],
   imports: [
@@ -59,6 +62,7 @@ import { ChipsInputComponent } from './chips-input/chips-input.component'
     FormsModule,
     ReactiveFormsModule,
     TagInputModule,
+    MyDatePickerModule
   ],
   exports: [
     DropdownSelectorComponent,
@@ -80,6 +84,7 @@ import { ChipsInputComponent } from './chips-input/chips-input.component'
     StepBarComponent,
     TextAreaComponent,
     ChipsInputComponent,
+    DatepickerComponent,
     ResultsHitsNumberComponent,
   ],
 })

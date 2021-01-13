@@ -16,7 +16,7 @@ const routes: Routes = [
     component: DatasetValidationPageComponent,
   },
   {
-    path: ':id/step/1',
+    path: ':id/step/:stepId',
     component: FormsPageComponent,
   },
   { path: '**', redirectTo: '' },

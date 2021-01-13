@@ -15,6 +15,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
       value: 'UTF8',
     },
   ]
+
   refSystem = [
     {
       label: 'Lambert 93',
@@ -95,6 +96,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
 
   numOfEntities = 1549
   private routeParamsSub: Subscription
+  private rootId: number;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -105,10 +107,13 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routeParamsSub = this.activatedRoute.params.subscribe(({ id }) => {
       this.logService.log(`id: ${id}`)
+      this.rootId = id
     })
   }
 
-  submitValidation() {}
+  submitValidation() {
+    this.router.navigate(['/', this.rootId, 'step', 1])
+  }
 
   ngOnDestroy() {
     this.routeParamsSub.unsubscribe()

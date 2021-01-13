@@ -1,17 +1,26 @@
-<div class="flex">
-  <i [class]="config.icon"></i>
+<div class="flex flex-1">
+  <span [class]="config.icon + ' pr-10'"></span>
   <div class="flex flex-col flex-1">
-    <div translate>
+    <div translate class="text-xl font-bold pb-1">
       {{ config.label }}
     </div>
-    <div class="w-1/2" *ngIf="formFieldConfig.TEXT === config.type">
-      <ui-text-input></ui-text-input>
+    <div class="w-1/2 h-12" *ngIf="formFieldConfig.TEXT === config.type">
+      <ui-text-input value="" hint=""></ui-text-input>
     </div>
-    <ui-chips-input
-      *ngIf="formFieldConfig.CHIPS == config.type"
-    ></ui-chips-input>
-    <ui-text-area
-      *ngIf="formFieldConfig.TEXT_AREA == config.type"
-    ></ui-text-area>
+    <div class="flex-1 w-11/12" *ngIf="formFieldConfig.CHIPS == config.type">
+      <ui-chips-input [url]="getUrl"></ui-chips-input>
+    </div>
+    <div class="h-32 w-11/12" *ngIf="formFieldConfig.TEXT_AREA == config.type">
+      <ui-text-area value="" placeholder=""></ui-text-area>
+    </div>
+    <div class="w-1/2 h-12" *ngIf="formFieldConfig.DATA_PICKER == config.type">
+      <ui-datepicker [options]="datepickerOptions"></ui-datepicker>
+    </div>
+    <div class="w-1/2 h-12" *ngIf="formFieldConfig.DROPDOWN == config.type">
+      <ui-dropdown-selector [title]="''"
+                            [choices]="spatialResolutionList"
+                            [selected]="spatialResolutionList[1]"
+                            ariaName="search-sort-by"></ui-dropdown-selector>
+    </div>
   </div>
 </div>

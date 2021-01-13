@@ -1,11 +1,23 @@
-<div class="h-screen flex bg-blue-300 bg-opacity-25 items-center">
-  <div class="ml-64 mr-64 pt-16 pb-16 w-full h-full flex flex-col">
+<div class="flex-1 flex dataset-forms-bkg items-center">
+  <div class="ml-64 mr-64 pt-16 pb-20 w-full h-full flex flex-col">
     <div class="text-5xl font-bold" translate>
       datafeeder.formsPage.title
     </div>
     <div class="pb-4 pt-4">
-      <ui-step-bar [steps]="6" [currentStep]="2" type="primary"></ui-step-bar>
+      <ui-step-bar [steps]="6" [currentStep]="1 + stepId" type="primary"></ui-step-bar>
     </div>
-    <app-form-field [config]="config"></app-form-field>
+    <div class="pl-5 pt-24 flex flex-1 flex-col justify-between">
+      <div class="flex-1 flex" *ngFor="let config of steps[stepId - 1]">
+        <app-form-field [config]="config"></app-form-field>
+      </div>
+    </div>
+    <div class="flex pt-24 pl-8">
+      <ui-button (click)="handlePreviousBtnClick()" type="primary" class="pr-8">
+        <span translate>Previous</span>
+      </ui-button>
+      <ui-button (click)="handleNextBtnClick()" type="primary">
+        <span translate>Next</span>
+      </ui-button>
+    </div>
   </div>
 </div>

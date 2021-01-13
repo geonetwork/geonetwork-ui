@@ -6,6 +6,14 @@
   --focus-font: 'Permanent Marker', cursive;
 }
 
+@font-face {
+  font-family: 'dataFeeder';
+  src: local("dataFeeder"), url('./assets/fonts/dataFeeder.woff') format("woff"),
+  url('./assets/fonts/dataFeeder.svg') format("svg"),
+  url('./assets/fonts/dataFeeder.ttf') format("ttf");
+  src: local("dataFeeder"), url('./assets/fonts/dataFeeder.eot')
+}
+
 html {
   font-family: 'dataFeeder', sans-serif !important;
 }
@@ -72,4 +80,19 @@ html {
 
 .current-color {
   fill: var(--color-main);
+}
+
+.icon-title:before {
+  content: '\e90a';
+  font-size: 35px;
+}
+
+.icon-description:before {
+  content: '\e90b';
+  font-size: 35px;
+}
+
+.icon-tag:before {
+  content: '\e90c';
+  font-size: 35px;
 }

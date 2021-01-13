@@ -3,11 +3,14 @@
   (ngModelChange)="onChange($event)"
   [onlyFromAutocomplete]="true"
   [placeholder]="placeholder"
-  class="border-2 border-primary h-full rounded-lg p-2"
+  class="border-2 border-primary h-full rounded-lg p-2 bg-white"
 >
   <tag-input-dropdown
-    [showDropdownIfEmpty]="true"
-    [autocompleteItems]="autocompleteItems"
+    [autocompleteObservable]="requestAutocompleteItems"
+    [minimumTextLength]="0">
+    <ng-template let-item="item" let-index="index">
+      {{ item.display }}
+    </ng-template>
   >
   </tag-input-dropdown>
 </tag-input>
