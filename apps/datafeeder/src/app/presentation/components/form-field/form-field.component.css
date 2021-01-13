@@ -3,7 +3,7 @@
   flex: 1;
 }
 
-ui-text-input::ng-deep input  {
+ui-text-input::ng-deep input {
   height: 100%;
   background: white;
   color: black;

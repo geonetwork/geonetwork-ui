@@ -4,7 +4,11 @@
       datafeeder.formsPage.title
     </div>
     <div class="pb-4 pt-4">
-      <ui-step-bar [steps]="6" [currentStep]="1 + stepId" type="primary"></ui-step-bar>
+      <ui-step-bar
+        [steps]="6"
+        [currentStep]="1 + stepId"
+        type="primary"
+      ></ui-step-bar>
     </div>
     <div class="pl-5 pt-24 flex flex-1 flex-col justify-between">
       <div class="flex-1 flex" *ngFor="let config of steps[stepId - 1]">

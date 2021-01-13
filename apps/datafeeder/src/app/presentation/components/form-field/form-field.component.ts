@@ -1,13 +1,30 @@
 import { Component, Input, OnInit } from '@angular/core'
-import {IMyDpOptions} from 'mydatepicker'
+import { IMyDpOptions, IMyMonthLabels } from 'mydatepicker'
+import { forkJoin, from, Observable } from 'rxjs'
+import { TranslateService } from '@ngx-translate/core'
 
 export enum FormFieldType {
   TEXT,
   TEXT_AREA,
   CHIPS,
   DATA_PICKER,
-  DROPDOWN
+  DROPDOWN,
 }
+
+const MONTH_OF_THE_YEAR = [
+  'january',
+  'february',
+  'march',
+  'april',
+  'may',
+  'june',
+  'july',
+  'august',
+  'september',
+  'october',
+  'november',
+  'december',
+]
 
 export interface FormFieldConfig {
   label: string
@@ -23,22 +40,15 @@ export interface FormFieldConfig {
 export class FormFieldComponent implements OnInit {
   @Input() config: FormFieldConfig
 
-  datepickerOptions: IMyDpOptions = {
-    todayBtnTxt: 'Today',
+  datepickerOptions: IMyDpOptions = (this.datepickerOptions = {
     dateFormat: 'dd mmm yyyy',
-    firstDayOfWeek: 'mo',
-    sunHighlight: true,
-    inline: false,
-    showTodayBtn: false,
-    height: '100%',
-    selectorHeight: '100%'
-  }
+  })
 
   spatialResolutionList = [
-    {value: '10000', label: '1:10000'},
-    {value: '25000', label: '1:25000'},
-    {value: '50000', label: '1:50000'},
-    {value: '100000', label: '1:100000'}
+    { value: '10000', label: '1:10000' },
+    { value: '25000', label: '1:25000' },
+    { value: '50000', label: '1:50000' },
+    { value: '100000', label: '1:100000' },
   ]
 
   getUrl(text): string {
@@ -49,7 +59,38 @@ export class FormFieldComponent implements OnInit {
     return FormFieldType
   }
 
-  constructor() {}
+  constructor(private translateService: TranslateService) {
+    this.translateMonthLabels().subscribe((monthLabels) => {
+      this.datepickerOptions = {
+        todayBtnTxt: 'Today',
+        markCurrentDay: true,
+        dateFormat: 'dd mmm yyyy',
+        firstDayOfWeek: 'mo',
+        sunHighlight: true,
+        inline: false,
+        showTodayBtn: false,
+        height: '100%',
+        selectorHeight: '100%',
+        monthLabels: monthLabels,
+      }
+    })
+  }
 
   ngOnInit(): void {}
+
+  translateMonthLabels(): Observable<IMyMonthLabels> {
+    return new Observable<IMyMonthLabels>((result) => {
+      const monthLabels = {}
+      const monthTitleObs = []
+      MONTH_OF_THE_YEAR.forEach((m) => {
+        monthTitleObs.push(this.translateService.get(`datafeeder.month.${m}`))
+      })
+
+      forkJoin(monthTitleObs).subscribe((mLabel) => {
+        mLabel.forEach((title, index) => (monthLabels[`${index + 1}`] = title))
+        result.next(monthLabels)
+        result.complete()
+      })
+    })
+  }
 }

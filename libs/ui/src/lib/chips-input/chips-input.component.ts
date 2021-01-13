@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output } from '@angular/core'
 import { BehaviorSubject, Observable, Subject } from 'rxjs'
-import {distinctUntilChanged, map} from 'rxjs/operators'
-import {HttpClient} from '@angular/common/http'
+import { distinctUntilChanged, map } from 'rxjs/operators'
+import { HttpClient } from '@angular/common/http'
 
 export interface Items {
   display: string
@@ -30,7 +30,7 @@ export class ChipsInputComponent implements OnInit {
     const url = this.url(text)
     return this.http
       .get<any>(url)
-      .pipe(map(item => item.map(i => i.values.eng)))
+      .pipe(map((item) => item.map((i) => i.values.eng)))
   }
 
   constructor(private http: HttpClient) {

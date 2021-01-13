@@ -25,9 +25,9 @@ import { TextAreaComponent } from './text-area/text-area.component'
 import { TagInputModule } from 'ngx-chips'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { ChipsInputComponent } from './chips-input/chips-input.component';
+import { ChipsInputComponent } from './chips-input/chips-input.component'
 import { DatepickerComponent } from './datepicker/datepicker.component'
-import {MyDatePickerModule} from 'mydatepicker'
+import { MyDatePickerModule } from 'mydatepicker'
 
 @NgModule({
   declarations: [
@@ -62,7 +62,7 @@ import {MyDatePickerModule} from 'mydatepicker'
     FormsModule,
     ReactiveFormsModule,
     TagInputModule,
-    MyDatePickerModule
+    MyDatePickerModule,
   ],
   exports: [
     DropdownSelectorComponent,

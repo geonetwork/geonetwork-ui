@@ -17,10 +17,13 @@
       <ui-datepicker [options]="datepickerOptions"></ui-datepicker>
     </div>
     <div class="w-1/2 h-12" *ngIf="formFieldConfig.DROPDOWN == config.type">
-      <ui-dropdown-selector [title]="''"
-                            [choices]="spatialResolutionList"
-                            [selected]="spatialResolutionList[1]"
-                            ariaName="search-sort-by"></ui-dropdown-selector>
+      <ui-dropdown-selector
+        [title]="''"
+        [showTitle]="false"
+        [choices]="spatialResolutionList"
+        [selected]="spatialResolutionList[1]"
+        ariaName="search-sort-by"
+      ></ui-dropdown-selector>
     </div>
   </div>
 </div>

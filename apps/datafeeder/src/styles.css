@@ -8,10 +8,10 @@
 
 @font-face {
   font-family: 'dataFeeder';
-  src: local("dataFeeder"), url('./assets/fonts/dataFeeder.woff') format("woff"),
-  url('./assets/fonts/dataFeeder.svg') format("svg"),
-  url('./assets/fonts/dataFeeder.ttf') format("ttf");
-  src: local("dataFeeder"), url('./assets/fonts/dataFeeder.eot')
+  src: local('dataFeeder'), url('./assets/fonts/dataFeeder.woff') format('woff'),
+    url('./assets/fonts/dataFeeder.svg') format('svg'),
+    url('./assets/fonts/dataFeeder.ttf') format('ttf');
+  src: local('dataFeeder'), url('./assets/fonts/dataFeeder.eot');
 }
 
 html {
@@ -19,23 +19,23 @@ html {
 }
 
 .grey1 {
-  fill:#F2F3F4;
+  fill: #f2f3f4;
 }
 
 .grey3 {
-  fill:#686C6D;
+  fill: #686c6d;
 }
 
 .grey2 {
-  fill:#CFD8DC;
+  fill: #cfd8dc;
 }
 
 .opacity-20 {
-  opacity:0.2;
+  opacity: 0.2;
 }
 
 .opacity-50 {
-  opacity:0.5;
+  opacity: 0.5;
 }
 
 .text-focus {
@@ -94,5 +94,20 @@ html {
 
 .icon-tag:before {
   content: '\e90c';
+  font-size: 35px;
+}
+
+.icon-date:before {
+  content: '\e90d';
+  font-size: 35px;
+}
+
+.icon-scale:before {
+  content: '\e90e';
+  font-size: 35px;
+}
+
+.icon-process:before {
+  content: '\e90f';
   font-size: 35px;
 }

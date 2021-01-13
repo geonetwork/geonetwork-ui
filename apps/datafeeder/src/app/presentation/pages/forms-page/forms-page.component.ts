@@ -1,9 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core'
-import {FormFieldType} from '../../components/form-field/form-field.component'
-import {ActivatedRoute, Router} from '@angular/router'
-import {LogService} from '@lib/common'
-import {Subscription} from 'rxjs'
-
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import { FormFieldType } from '../../components/form-field/form-field.component'
+import { ActivatedRoute, Router } from '@angular/router'
+import { LogService } from '@lib/common'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'app-forms-page',
@@ -24,7 +23,7 @@ export class FormsPageComponent implements OnInit, OnDestroy {
         label: 'datafeeder.form.abstract',
         icon: 'icon-description',
         type: FormFieldType.TEXT_AREA,
-      }
+      },
     ],
     [
       {
@@ -32,54 +31,56 @@ export class FormsPageComponent implements OnInit, OnDestroy {
         label: 'datafeeder.form.tags',
         icon: 'icon-tag',
         type: FormFieldType.CHIPS,
-      }
-     ],
+      },
+    ],
     [
       {
         id: 'datepicker',
         label: 'datafeeder.form.datepicker',
-        icon: 'icon-tag',
+        icon: 'icon-date',
         type: FormFieldType.DATA_PICKER,
       },
       {
         id: 'dropdown',
         label: 'datafeeder.form.dropdown',
-        icon: 'icon-tag',
+        icon: 'icon-scale',
         type: FormFieldType.DROPDOWN,
-      }
+      },
     ],
     [
       {
         id: 'description',
         label: 'datafeeder.form.description',
-        icon: 'icon-description',
+        icon: 'icon-process',
         type: FormFieldType.TEXT_AREA,
-      }
-    ]
+      },
+    ],
   ]
 
   stepId: number
   rootId: number
   private routeParamsSub: Subscription
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private router: Router,
-              private logService: LogService) {
-  }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private logService: LogService
+  ) {}
 
   ngOnInit(): void {
-    this.routeParamsSub = this.activatedRoute.params.subscribe(({id, stepId}) => {
-      this.logService.log(`id: ${id}`)
-      this.logService.log(`stepId: ${stepId}`)
+    this.routeParamsSub = this.activatedRoute.params.subscribe(
+      ({ id, stepId }) => {
+        this.logService.log(`id: ${id}`)
+        this.logService.log(`stepId: ${stepId}`)
 
-      this.rootId = id
-      this.stepId = Number(stepId)
-    })
+        this.rootId = id
+        this.stepId = Number(stepId)
+      }
+    )
   }
 
   handleNextBtnClick() {
     if (this.stepId === 4) {
-
       return
     }
 
