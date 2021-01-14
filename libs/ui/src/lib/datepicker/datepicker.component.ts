@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, Output } from '@angular/core'
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker'
 
 @Component({
@@ -8,6 +8,10 @@ import { IMyDateModel, IMyDpOptions } from 'mydatepicker'
 })
 export class DatepickerComponent implements OnInit {
   @Input() options: IMyDpOptions
+  @Input() currentDate: Date
+
+  @Output()
+  selectedDate: Date
 
   model: any
 
@@ -27,16 +31,16 @@ export class DatepickerComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.initializeDate()
+    this.initializeDate(this.currentDate)
   }
 
-  initializeDate() {
-    const date = new Date()
+  initializeDate(date: Date) {
+    const sDate = date || new Date()
     this.model = {
       date: {
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
-        day: date.getDate(),
+        year: sDate.getFullYear(),
+        month: sDate.getMonth() + 1,
+        day: sDate.getDate(),
       },
     }
   }
