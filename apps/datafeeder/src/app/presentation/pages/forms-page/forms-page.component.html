@@ -1,17 +1,18 @@
-<div class="flex-1 flex dataset-forms-bkg items-center">
+<div class="flex-1 flex dataset-forms-bg items-center">
   <div class="ml-64 mr-64 pt-16 pb-20 w-full h-full flex flex-col">
-    <div class="text-5xl font-bold" translate>
-      datafeeder.formsPage.title
-    </div>
+    <div class="text-5xl font-bold" translate>datafeeder.formsPage.title</div>
     <div class="pb-4 pt-4">
       <ui-step-bar
-        [steps]="6"
-        [currentStep]="1 + stepId"
+        [steps]="numSteps"
+        [currentStep]="1 + currentStep"
         type="primary"
       ></ui-step-bar>
     </div>
     <div class="pl-5 pt-24 flex flex-1 flex-col justify-between">
-      <div class="flex-1 flex" *ngFor="let config of steps[stepId - 1]">
+      <div
+        class="flex-1 flex"
+        *ngFor="let config of configuration[currentStep - 1]"
+      >
         <app-form-field [config]="config"></app-form-field>
       </div>
     </div>

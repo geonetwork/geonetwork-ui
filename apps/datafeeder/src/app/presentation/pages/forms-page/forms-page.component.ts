@@ -10,7 +10,11 @@ import { Subscription } from 'rxjs'
   styleUrls: ['./forms-page.component.css'],
 })
 export class FormsPageComponent implements OnInit, OnDestroy {
-  steps = [
+  rootId: number
+
+  private stepId: number
+  private routeParamsSub: Subscription
+  private stepsConfiguration = [
     [
       {
         id: 'title',
@@ -31,6 +35,10 @@ export class FormsPageComponent implements OnInit, OnDestroy {
         label: 'datafeeder.form.tags',
         icon: 'icon-tag',
         type: FormFieldType.CHIPS,
+        options: {
+          url: (text) =>
+            `https://apps.titellus.net/geonetwork/srv/api/registries/vocabularies/search?type=CONTAINS&thesaurus=external.place.regions&rows=200&q=${text}&uri=*QUERY*&lang=eng`,
+        },
       },
     ],
     [
@@ -55,11 +63,20 @@ export class FormsPageComponent implements OnInit, OnDestroy {
         type: FormFieldType.TEXT_AREA,
       },
     ],
+    [],
   ]
 
-  stepId: number
-  rootId: number
-  private routeParamsSub: Subscription
+  get currentStep(): number {
+    return this.stepId
+  }
+
+  get configuration(): any {
+    return this.stepsConfiguration
+  }
+
+  get numSteps(): number {
+    return this.stepsConfiguration.length
+  }
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -70,9 +87,6 @@ export class FormsPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routeParamsSub = this.activatedRoute.params.subscribe(
       ({ id, stepId }) => {
-        this.logService.log(`id: ${id}`)
-        this.logService.log(`stepId: ${stepId}`)
-
         this.rootId = id
         this.stepId = Number(stepId)
       }
@@ -80,24 +94,31 @@ export class FormsPageComponent implements OnInit, OnDestroy {
   }
 
   handleNextBtnClick() {
-    if (this.stepId === 4) {
+    if (this.currentStep === this.numSteps) {
       return
     }
 
-    this.router.navigate(['/', this.rootId, 'step', ++this.stepId])
+    this.changeStep(this.currentStep + 1)
+
+    this.router.navigate(['/', this.rootId, 'step', this.currentStep])
   }
 
   handlePreviousBtnClick() {
-    if (this.stepId === 1) {
+    if (this.currentStep === 1) {
       this.router.navigate(['/', this.rootId, 'validation'])
-
       return
     }
 
-    this.router.navigate(['/', this.rootId, 'step', --this.stepId])
+    this.changeStep(this.currentStep - 1)
+
+    this.router.navigate(['/', this.rootId, 'step', this.currentStep])
   }
 
   ngOnDestroy() {
     this.routeParamsSub.unsubscribe()
+  }
+
+  private changeStep(step: number) {
+    this.stepId = step
   }
 }

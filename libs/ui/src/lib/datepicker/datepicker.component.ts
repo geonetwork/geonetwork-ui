@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { IMyDateModel, IMyDpOptions } from 'mydatepicker'
 
 @Component({
@@ -11,21 +11,12 @@ export class DatepickerComponent implements OnInit {
   @Input() currentDate: Date
 
   @Output()
-  selectedDate: Date
+  selectedDate = new EventEmitter<Date>()
 
   model: any
 
   onDateChanged(event: IMyDateModel) {
-    console.log(
-      'onDateChanged(): ',
-      event.date,
-      ' - jsdate: ',
-      new Date(event.jsdate).toLocaleDateString(),
-      ' - formatted: ',
-      event.formatted,
-      ' - epoc timestamp: ',
-      event.epoc
-    )
+    this.selectedDate.emit(new Date(event.jsdate))
   }
 
   constructor() {}

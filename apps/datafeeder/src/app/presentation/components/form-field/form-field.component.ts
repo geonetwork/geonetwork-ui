@@ -27,9 +27,11 @@ const MONTH_OF_THE_YEAR = [
 ]
 
 export interface FormFieldConfig {
+  id: string
   label: string
   icon: string
   type: FormFieldType
+  options?: any
 }
 
 @Component({
@@ -40,9 +42,9 @@ export interface FormFieldConfig {
 export class FormFieldComponent implements OnInit {
   @Input() config: FormFieldConfig
 
-  datepickerOptions: IMyDpOptions = ({
+  datepickerOptions: IMyDpOptions = {
     dateFormat: 'dd mmm yyyy',
-  })
+  }
 
   spatialResolutionList = [
     { value: '10000', label: '1:10000' },
@@ -50,10 +52,6 @@ export class FormFieldComponent implements OnInit {
     { value: '50000', label: '1:50000' },
     { value: '100000', label: '1:100000' },
   ]
-
-  getUrl(text): string {
-    return `https://apps.titellus.net/geonetwork/srv/api/registries/vocabularies/search?type=CONTAINS&thesaurus=external.place.regions&rows=200&q=${text}&uri=*QUERY*&lang=eng`
-  }
 
   get formFieldConfig(): typeof FormFieldType {
     return FormFieldType
@@ -71,7 +69,7 @@ export class FormFieldComponent implements OnInit {
         showTodayBtn: false,
         height: '100%',
         selectorHeight: '100%',
-        monthLabels: monthLabels,
+        monthLabels,
       }
     })
   }

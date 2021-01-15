@@ -5,21 +5,27 @@
       {{ config.label }}
     </div>
     <div class="w-1/2 h-12" *ngIf="formFieldConfig.TEXT === config.type">
-      <ui-text-input value="" hint=""></ui-text-input>
+      <ui-text-input [id]="config.id" value="" hint=""></ui-text-input>
     </div>
     <div class="flex-1 w-11/12" *ngIf="formFieldConfig.CHIPS == config.type">
-      <ui-chips-input [url]="getUrl"></ui-chips-input>
+      <ui-chips-input
+        [id]="config.id"
+        [url]="config.options.url"
+      ></ui-chips-input>
     </div>
     <div class="h-32 w-11/12" *ngIf="formFieldConfig.TEXT_AREA == config.type">
-      <ui-text-area value="" placeholder=""></ui-text-area>
+      <ui-text-area [id]="config.id" value="" placeholder=""></ui-text-area>
     </div>
     <div class="w-1/2 h-12" *ngIf="formFieldConfig.DATA_PICKER == config.type">
-      <ui-datepicker [options]="datepickerOptions"></ui-datepicker>
+      <ui-datepicker
+        [id]="config.id"
+        [options]="datepickerOptions"
+      ></ui-datepicker>
     </div>
     <div class="w-1/2 h-12" *ngIf="formFieldConfig.DROPDOWN == config.type">
       <ui-dropdown-selector
+        [id]="config.id"
         [title]="''"
-        [showTitle]="false"
         [choices]="spatialResolutionList"
         [selected]="spatialResolutionList[1]"
         ariaName="search-sort-by"

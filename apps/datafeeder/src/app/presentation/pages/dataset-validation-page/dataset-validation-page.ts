@@ -96,7 +96,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
 
   numOfEntities = 1549
   private routeParamsSub: Subscription
-  private rootId: number;
+  private rootId: number
 
   constructor(
     private activatedRoute: ActivatedRoute,
