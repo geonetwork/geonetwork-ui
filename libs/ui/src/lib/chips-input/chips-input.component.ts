@@ -16,14 +16,15 @@ export interface Items {
 export class ChipsInputComponent implements OnInit {
   @Input() url: (text) => string
   @Input() placeholder: string
+  @Input() selectedItems: Items[]
   @Output() itemsChange: Observable<Items[]>
 
-  rawChange: BehaviorSubject<Items[]>
+  rawChange: Subject<Items[]>
 
   items: Items[] = []
 
   onChange(event) {
-    this.rawChange.next(this.items)
+    this.rawChange.next(event)
   }
 
   requestAutocompleteItems = (text: string): Observable<any> => {
@@ -34,9 +35,11 @@ export class ChipsInputComponent implements OnInit {
   }
 
   constructor(private http: HttpClient) {
-    this.rawChange = new BehaviorSubject<Items[]>(this.items)
+    this.rawChange = new Subject<Items[]>()
     this.itemsChange = this.rawChange.pipe(distinctUntilChanged())
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.items = this.selectedItems
+  }
 }

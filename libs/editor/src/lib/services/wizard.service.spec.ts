@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing'
 
-import { EditorService } from './editor.service'
+import { WizardService } from './wizard.service'
 
-describe('EditorService', () => {
-  let service: EditorService
+describe('WizardService', () => {
+  let service: WizardService
 
   beforeEach(() => {
     TestBed.configureTestingModule({})
-    service = TestBed.inject(EditorService)
+    service = TestBed.inject(WizardService)
   })
 
   it('should be created', () => {

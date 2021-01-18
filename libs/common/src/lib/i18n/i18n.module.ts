@@ -41,10 +41,6 @@ export const LANG_2_TO_3_MAPPER = Object.entries(LANG_3_TO_2_MAPPER).reduce(
 )
 
 export const TRANSLATE_DEFAULT_CONFIG = {
-  compiler: {
-    provide: TranslateCompiler,
-    useClass: TranslateMessageFormatCompiler,
-  },
   loader: {
     provide: TranslateLoader,
     useFactory: HttpLoaderFactory,

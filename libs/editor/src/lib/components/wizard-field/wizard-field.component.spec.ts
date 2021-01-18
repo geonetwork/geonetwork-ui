@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { EditorComponent } from './editor.component'
+import { WizardFieldComponent } from './wizard-field.component'
 
-describe('EditorComponent', () => {
-  let component: EditorComponent
-  let fixture: ComponentFixture<EditorComponent>
+describe('WizardFieldsComponent', () => {
+  let component: WizardFieldComponent
+  let fixture: ComponentFixture<WizardFieldComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditorComponent],
+      declarations: [WizardFieldComponent],
     }).compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditorComponent)
+    fixture = TestBed.createComponent(WizardFieldComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

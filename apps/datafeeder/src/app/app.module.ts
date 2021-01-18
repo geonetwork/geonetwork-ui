@@ -18,7 +18,7 @@ import { UploadDataBackgroundComponent } from './presentation/components/svg/upl
 import { UploadDataIllustrationComponent } from './presentation/components/svg/upload-data-illustration/upload-data-illustration.component'
 import { AnalysisProgressIllustrationsComponent } from './presentation/components/svg/analysis-progress-illustrations/analysis-progress-illustrations.component'
 import { FormsPageComponent } from './presentation/pages/forms-page/forms-page.component'
-import { FormFieldComponent } from './presentation/components/form-field/form-field.component'
+import { EditorModule } from '../../../../libs/editor/src'
 
 @NgModule({
   declarations: [
@@ -34,7 +34,6 @@ import { FormFieldComponent } from './presentation/components/form-field/form-fi
     UploadDataIllustrationComponent,
     AnalysisProgressIllustrationsComponent,
     FormsPageComponent,
-    FormFieldComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +41,7 @@ import { FormFieldComponent } from './presentation/components/form-field/form-fi
     UiModule,
     HttpClientModule,
     I18nModule,
+    EditorModule,
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
   ],
   providers: [],

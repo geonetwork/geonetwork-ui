@@ -3,26 +3,14 @@
     <div class="text-5xl font-bold" translate>datafeeder.formsPage.title</div>
     <div class="pb-4 pt-4">
       <ui-step-bar
+
         [steps]="numSteps"
         [currentStep]="1 + currentStep"
         type="primary"
       ></ui-step-bar>
     </div>
-    <div class="pl-5 pt-24 flex flex-1 flex-col justify-between">
-      <div
-        class="flex-1 flex"
-        *ngFor="let config of configuration[currentStep - 1]"
-      >
-        <app-form-field [config]="config"></app-form-field>
-      </div>
-    </div>
-    <div class="flex pt-24 pl-8">
-      <ui-button (click)="handlePreviousBtnClick()" type="primary" class="pr-8">
-        <span translate>Previous</span>
-      </ui-button>
-      <ui-button (click)="handleNextBtnClick()" type="primary">
-        <span translate>Next</span>
-      </ui-button>
-    </div>
+    <lib-wizard
+      (stepChanges)="handleStepChanges($event)"
+      (stepsNumber)="handleStepNumberChanges($event)"></lib-wizard>
   </div>
 </div>

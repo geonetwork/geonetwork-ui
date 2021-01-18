@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { FormFieldComponent } from './form-field.component'
+import { WizardComponent } from './wizard.component'
 
-describe('FormFieldComponent', () => {
-  let component: FormFieldComponent
-  let fixture: ComponentFixture<FormFieldComponent>
+describe('WizzardComponent', () => {
+  let component: WizardComponent
+  let fixture: ComponentFixture<WizardComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FormFieldComponent],
+      declarations: [WizardComponent],
     }).compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FormFieldComponent)
+    fixture = TestBed.createComponent(WizardComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
