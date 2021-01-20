@@ -15,6 +15,7 @@ model/./datasetPublishRequest.api.model.ts
 model/./datasetPublishingStatus.api.model.ts
 model/./datasetUploadStatus.api.model.ts
 model/./inlineObject.api.model.ts
+model/./property.api.model.ts
 model/./publishJobStatus.api.model.ts
 model/./publishRequest.api.model.ts
 model/./uploadJobStatus.api.model.ts

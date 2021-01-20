@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { BoundingBoxApiModel } from './boundingBox.api.model'
+import { PropertyApiModel } from './property.api.model'
 
 /**
  * Describes a recognized uploaded dataset
@@ -25,9 +26,10 @@ export interface DatasetUploadStatusApiModel {
    */
   error?: string
   /**
-   * Associative array of property names and values for the sample feature
+   * Number of features in the dataset
    */
-  sampleProperties?: { [key: string]: object }
+  featureCount?: number
+  sampleProperties?: Array<PropertyApiModel>
   /**
    * Well Known Text representation of an exemplar geometry extracted from the dataset
    */

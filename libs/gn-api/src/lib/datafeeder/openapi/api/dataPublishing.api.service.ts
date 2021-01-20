@@ -23,8 +23,8 @@ import {
 import { CustomHttpParameterCodec } from '../encoder'
 import { Observable } from 'rxjs'
 
-import { DatasetPublishRequestApiModel } from '../model/models'
 import { PublishJobStatusApiModel } from '../model/models'
+import { PublishRequestApiModel } from '../model/models'
 
 import { BASE_PATH, COLLECTION_FORMATS } from '../variables'
 import { Configuration } from '../configuration'
@@ -33,7 +33,7 @@ import { Configuration } from '../configuration'
   providedIn: 'root',
 })
 export class DataPublishingApiService {
-  protected basePath = 'https://sample.url/import'
+  protected basePath = 'https://localhost:8080'
   public defaultHeaders = new HttpHeaders()
   public configuration = new Configuration()
   public encoder: HttpParameterCodec
@@ -53,20 +53,6 @@ export class DataPublishingApiService {
       this.configuration.basePath = basePath
     }
     this.encoder = this.configuration.encoder || new CustomHttpParameterCodec()
-  }
-
-  /**
-   * @param consumes string[] mime-types
-   * @return true: consumes contains 'multipart/form-data', false: otherwise
-   */
-  private canConsumeForm(consumes: string[]): boolean {
-    const form = 'multipart/form-data'
-    for (const consume of consumes) {
-      if (form === consume) {
-        return true
-      }
-    }
-    return false
   }
 
   private addToHttpParams(
@@ -200,34 +186,34 @@ export class DataPublishingApiService {
   /**
    * Publish the dataset(s) from the given upload
    * @param jobId Unique job identifier
-   * @param datasets
+   * @param publishRequestApiModel
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public publish(
     jobId: string,
-    datasets?: Array<DatasetPublishRequestApiModel>,
+    publishRequestApiModel?: PublishRequestApiModel,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<PublishJobStatusApiModel>
   public publish(
     jobId: string,
-    datasets?: Array<DatasetPublishRequestApiModel>,
+    publishRequestApiModel?: PublishRequestApiModel,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<HttpResponse<PublishJobStatusApiModel>>
   public publish(
     jobId: string,
-    datasets?: Array<DatasetPublishRequestApiModel>,
+    publishRequestApiModel?: PublishRequestApiModel,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<HttpEvent<PublishJobStatusApiModel>>
   public publish(
     jobId: string,
-    datasets?: Array<DatasetPublishRequestApiModel>,
+    publishRequestApiModel?: PublishRequestApiModel,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
@@ -254,32 +240,12 @@ export class DataPublishingApiService {
     }
 
     // to determine the Content-Type header
-    const consumes: string[] = ['multipart/form-data']
-
-    const canConsumeForm = this.canConsumeForm(consumes)
-
-    let formParams: { append(param: string, value: any): any }
-    let useForm = false
-    let convertFormParamsToString = false
-    if (useForm) {
-      formParams = new FormData()
-    } else {
-      formParams = new HttpParams({ encoder: this.encoder })
-    }
-
-    if (datasets) {
-      if (useForm) {
-        datasets.forEach((element) => {
-          formParams =
-            (formParams.append('datasets', <any>element) as any) || formParams
-        })
-      } else {
-        formParams =
-          (formParams.append(
-            'datasets',
-            datasets.join(COLLECTION_FORMATS['csv'])
-          ) as any) || formParams
-      }
+    const consumes: string[] = ['application/json']
+    const httpContentTypeSelected:
+      | string
+      | undefined = this.configuration.selectHeaderContentType(consumes)
+    if (httpContentTypeSelected !== undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected)
     }
 
     let responseType: 'text' | 'json' = 'json'
@@ -294,7 +260,95 @@ export class DataPublishingApiService {
       `${this.configuration.basePath}/upload/${encodeURIComponent(
         String(jobId)
       )}/publish`,
-      convertFormParamsToString ? formParams.toString() : formParams,
+      publishRequestApiModel,
+      {
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
+   * Save a draft state for the publication of the dataset(s) from the given upload
+   * @param jobId Unique job identifier
+   * @param publishRequestApiModel
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public saveDraft(
+    jobId: string,
+    publishRequestApiModel?: PublishRequestApiModel,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<PublishJobStatusApiModel>
+  public saveDraft(
+    jobId: string,
+    publishRequestApiModel?: PublishRequestApiModel,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpResponse<PublishJobStatusApiModel>>
+  public saveDraft(
+    jobId: string,
+    publishRequestApiModel?: PublishRequestApiModel,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpEvent<PublishJobStatusApiModel>>
+  public saveDraft(
+    jobId: string,
+    publishRequestApiModel?: PublishRequestApiModel,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any> {
+    if (jobId === null || jobId === undefined) {
+      throw new Error(
+        'Required parameter jobId was null or undefined when calling saveDraft.'
+      )
+    }
+
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json']
+    const httpContentTypeSelected:
+      | string
+      | undefined = this.configuration.selectHeaderContentType(consumes)
+    if (httpContentTypeSelected !== undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.put<PublishJobStatusApiModel>(
+      `${this.configuration.basePath}/upload/${encodeURIComponent(
+        String(jobId)
+      )}/publish`,
+      publishRequestApiModel,
       {
         responseType: <any>responseType,
         withCredentials: this.configuration.withCredentials,

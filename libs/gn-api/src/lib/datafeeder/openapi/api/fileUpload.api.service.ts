@@ -32,7 +32,7 @@ import { Configuration } from '../configuration'
   providedIn: 'root',
 })
 export class FileUploadApiService {
-  protected basePath = 'https://sample.url/import'
+  protected basePath = 'https://localhost:8080'
   public defaultHeaders = new HttpHeaders()
   public configuration = new Configuration()
   public encoder: HttpParameterCodec
@@ -121,6 +121,80 @@ export class FileUploadApiService {
       throw Error('key may not be null if value is not object or array')
     }
     return httpParams
+  }
+
+  /**
+   * Start the analysis process for the uploaded file package
+   * @param jobId Unique job identifier
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public analyze(
+    jobId: string,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: undefined }
+  ): Observable<any>
+  public analyze(
+    jobId: string,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: undefined }
+  ): Observable<HttpResponse<any>>
+  public analyze(
+    jobId: string,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: undefined }
+  ): Observable<HttpEvent<any>>
+  public analyze(
+    jobId: string,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: undefined }
+  ): Observable<any> {
+    if (jobId === null || jobId === undefined) {
+      throw new Error(
+        'Required parameter jobId was null or undefined when calling analyze.'
+      )
+    }
+
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = []
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.post<any>(
+      `${this.configuration.basePath}/upload/${encodeURIComponent(
+        String(jobId)
+      )}/analyze`,
+      null,
+      {
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
   }
 
   /**
@@ -405,7 +479,7 @@ export class FileUploadApiService {
   }
 
   /**
-   * Upload one or multiple files to the server, and get a handle to the job
+   * Upload one or multiple files to the server, and get a handle to the job. Once the files are uploaded, the analysis process should be triggered through \&quot;POST /upload/{jobId}/analyze\&quot;
    * @param filename
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
