@@ -1,7 +1,7 @@
 openapi: 3.0.0
 servers:
   - description: SwaggerHub API Auto Mocking
-    url: https://sample.url/import
+    url: https://localhost:8080/
 info:
   title: DataFeeder API
   description: This API covers dataset upload and publishing features of the application
@@ -19,7 +19,9 @@ paths:
     post:
       tags:
         - File Upload
-      description: 'Upload one or multiple files to the server, and get a handle to the job'
+      description: Upload one or multiple files to the server, and get a handle to the job.
+                   Once the files are uploaded, the analysis process should be triggered
+                   through "POST /upload/{jobId}/analyze"
       operationId: uploadFiles
       requestBody:
         content:
@@ -33,7 +35,7 @@ paths:
                     type: string
                     format: binary
       responses:
-        202:
+        200:
           $ref: '#/components/responses/UploadStatusResponse'
         401:
           description: 'Not authenticated'
@@ -65,7 +67,7 @@ paths:
           description: 'Not authenticated'
         403:
           description: 'Forbidden. User has no priviledges to upload files'
-
+  
   /upload/{jobId}:
     get:
       tags:
@@ -73,7 +75,7 @@ paths:
       description: 'Poll the status of a given upload job by id'
       operationId: findUploadJob
       parameters:
-        - $ref: '#/components/parameters/jobId'
+      - $ref: '#/components/parameters/jobId'
       responses:
         200:
           $ref: '#/components/responses/UploadStatusResponse'
@@ -87,16 +89,16 @@ paths:
       description: 'Remove a job and all its resources (e.g. temporary files). Does not unpublish. Use abort=true to abort a running analysis or publishing job'
       operationId: removeJob
       parameters:
-        - $ref: '#/components/parameters/jobId'
-        - name: abort
-          in: query
-          description: If true, abort the dataset analysis or publishing, if running. Defaults to false
-          required: false
-          schema:
-            type: boolean
-            default: false
+      - $ref: '#/components/parameters/jobId'
+      - name: abort
+        in: query
+        description: If true, abort the dataset analysis or publishing, if running. Defaults to false
+        required: false
+        schema:
+          type: boolean
+          default: false
       responses:
-        202:
+        204:
           description: 'Job removed.'
         401:
           description: 'Not authenticated'
@@ -104,6 +106,26 @@ paths:
           description: 'Forbidden. User has no priviledges access the requested job'
         409:
           description: 'Conflict. The abort=true parameter was not provided and the analysis or publishing job is running'
+  
+  /upload/{jobId}/analyze:
+    post:
+      tags:
+        - File Upload
+      description: 'Start the analysis process for the uploaded file package'
+      operationId: analyze
+      parameters:
+      - $ref: '#/components/parameters/jobId'
+      responses:
+        202:
+          description: Accepted, analysis process started for the given upload package
+        400:
+          description: 'Bad request. Some parameter is not acceptable or missing'
+        401:
+          description: 'Not authenticated'
+        403:
+          description: 'Forbidden. User has no priviledges access the requested job'
+        409:
+          description: 'Conflict. The upload is not ready for publishing.'
 
   /upload/{jobId}/publish:
     post:
@@ -112,10 +134,33 @@ paths:
       description: 'Publish the dataset(s) from the given upload'
       operationId: publish
       parameters:
-        - $ref: '#/components/parameters/jobId'
+      - $ref: '#/components/parameters/jobId'
       requestBody:
         content:
-          multipart/form-data:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishRequest'
+      responses:
+        202:
+          $ref: '#/components/responses/PublishStatusResponse'
+        400:
+          description: 'Bad request. Some parameter is not acceptable or missing'
+        401:
+          description: 'Not authenticated'
+        403:
+          description: 'Forbidden. User has no priviledges access the requested job'
+        409:
+          description: 'Conflict. The upload is not ready for publishing.'
+    put:
+      tags:
+        - Data Publishing
+      description: 'Save a draft state for the publication of the dataset(s) from the given upload'
+      operationId: saveDraft
+      parameters:
+      - $ref: '#/components/parameters/jobId'
+      requestBody:
+        content:
+          application/json:
             schema:
               $ref: '#/components/schemas/PublishRequest'
       responses:
@@ -135,7 +180,7 @@ paths:
       description: 'Poll the publishing staus of the given job'
       operationId: getPublishingStatus
       parameters:
-        - $ref: '#/components/parameters/jobId'
+      - $ref: '#/components/parameters/jobId'
       responses:
         200:
           $ref: '#/components/responses/PublishStatusResponse'
@@ -197,7 +242,7 @@ components:
           type: string
           enum: [PENDING, ANALYZING, DONE, ERROR]
           description: aggregate of status of all datasets in the upload package. If any dataset status is PENDING, ANALYZING, or ERROR, that's the job's status.
-            If at least one dataset status is ERROR, then the job status is ERROR. If no datasets where recognized in the upload, status is ERROR.
+                       If at least one dataset status is ERROR, then the job status is ERROR. If no datasets where recognized in the upload, status is ERROR. 
         error:
           type: string
           description: short description of the error that prevents the job to complete successfully
@@ -219,10 +264,14 @@ components:
         error:
           type: string
           description: short description of the error that prevents the dataset to be analysed
+        featureCount:
+          type: integer
+          format: int32
+          description: Number of features in the dataset
         sampleProperties:
-          type: object
-          additionalProperties: true
-          description: Associative array of property names and values for the sample feature
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
         sampleGeometryWKT:
           type: string
           description: Well Known Text representation of an exemplar geometry extracted from the dataset
@@ -231,6 +280,16 @@ components:
         encoding:
           type: string
           description: detected charset
+    
+    Property:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        type:
+          type: string
 
     CRS:
       type: object
@@ -238,10 +297,11 @@ components:
       properties:
         srs:
           type: string
-          description: Coordinate Reference System's EPSG identifier
+          description: Coordinate Reference System's EPSG identifier.
+                       Can be null if a matching reference system couldn't be found in the EPSG database. 
         WKT:
           type: string
-          description: Coordinate Reference System's Well Known Text representation
+          description: Coordinate Reference System's Well Known Text representation. Despite the 'srs' identifier being found or not, the WKT representation is still available.
     BoundingBox:
       type: object
       properties:
@@ -283,7 +343,7 @@ components:
           type: string
         tags:
           type: array
-          items:
+          items:           
             type: string
         crs:
           description: Optional, Coordinate Reference System to publish the dataset in
