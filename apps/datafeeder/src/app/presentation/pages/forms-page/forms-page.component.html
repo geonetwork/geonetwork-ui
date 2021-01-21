@@ -3,7 +3,6 @@
     <div class="text-5xl font-bold" translate>datafeeder.formsPage.title</div>
     <div class="pb-4 pt-4">
       <ui-step-bar
-
         [steps]="numSteps"
         [currentStep]="1 + currentStep"
         type="primary"
@@ -11,6 +10,7 @@
     </div>
     <lib-wizard
       (stepChanges)="handleStepChanges($event)"
-      (stepsNumber)="handleStepNumberChanges($event)"></lib-wizard>
+      (stepsNumber)="handleStepNumberChanges($event)"
+    ></lib-wizard>
   </div>
 </div>

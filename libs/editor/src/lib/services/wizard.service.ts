@@ -52,7 +52,6 @@ export class WizardService {
 
   onWizardStepChanged(step: number) {
     if (step > 0 && step < this.getConfigurationStepNumber()) {
-      console.log(step)
       this.wizardStep = step
       localStorage.setItem('wizard_step', this.wizardStep.toString())
     }
@@ -84,7 +83,5 @@ export class WizardService {
         this.wizardData.set(stepField.id, fieldData)
       })
     })
-
-    console.log('this.wizardData = ', this.wizardData)
   }
 }

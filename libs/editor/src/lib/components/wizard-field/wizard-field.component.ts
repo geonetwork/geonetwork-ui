@@ -12,11 +12,14 @@ import { SPATIAL_RESOLUTION_LIST } from '../configs/spatial-resolution-dropdown.
 import { WizardService } from '../../services/wizard.service'
 import { IMyDpOptions } from 'mydatepicker'
 import { DATEPICKER_OPTIONS } from '../configs/datepicker.config'
-import { DropdownSelectorComponent, TextInputComponent } from '@lib/ui'
+import {
+  ChipsInputComponent,
+  DatepickerComponent,
+  DropdownSelectorComponent,
+  TextAreaComponent,
+  TextInputComponent,
+} from '@lib/ui'
 import { Subscription } from 'rxjs'
-import { ChipsInputComponent } from '../../../../../ui/src/lib/chips-input/chips-input.component'
-import { TextAreaComponent } from '../../../../../ui/src/lib/text-area/text-area.component'
-import { DatepickerComponent } from '../../../../../ui/src/lib/datepicker/datepicker.component'
 
 @Component({
   selector: 'lib-wizard-field',
@@ -24,7 +27,7 @@ import { DatepickerComponent } from '../../../../../ui/src/lib/datepicker/datepi
   styleUrls: ['./wizard-field.component.css'],
 })
 export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Input() wizardField: WizardFieldModel
+  @Input() wizardFieldConfig: WizardFieldModel
 
   @ViewChild('searchText') searchText: TextInputComponent
   @ViewChild('chips') chips: ChipsInputComponent
@@ -44,8 +47,10 @@ export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   get wizardFieldData() {
-    const data = this.wizardService.getWizardFieldData(this.wizardField.id)
-    switch (this.wizardField.type) {
+    const data = this.wizardService.getWizardFieldData(
+      this.wizardFieldConfig.id
+    )
+    switch (this.wizardFieldConfig.type) {
       case WizardFieldType.TEXT: {
         return data
       }
@@ -84,7 +89,7 @@ export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private initializeListeners() {
-    switch (this.wizardField.type) {
+    switch (this.wizardFieldConfig.type) {
       case WizardFieldType.TEXT: {
         this.initializeTextInputListener()
         break
@@ -112,7 +117,7 @@ export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subs.add(
       this.searchText.valueChange.subscribe((value) => {
         this.wizardService.onWizardWizardFieldDataChanged(
-          this.wizardField.id,
+          this.wizardFieldConfig.id,
           value
         )
       })
@@ -123,7 +128,7 @@ export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subs.add(
       this.chips.itemsChange.subscribe((items) => {
         this.wizardService.onWizardWizardFieldDataChanged(
-          this.wizardField.id,
+          this.wizardFieldConfig.id,
           JSON.stringify(items)
         )
       })
@@ -134,7 +139,7 @@ export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subs.add(
       this.textArea.valueChange.subscribe((value) => {
         this.wizardService.onWizardWizardFieldDataChanged(
-          this.wizardField.id,
+          this.wizardFieldConfig.id,
           value
         )
       })
@@ -145,7 +150,7 @@ export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subs.add(
       this.datepicker.selectedDate.subscribe((value: Date) => {
         this.wizardService.onWizardWizardFieldDataChanged(
-          this.wizardField.id,
+          this.wizardFieldConfig.id,
           value.getTime().toString()
         )
       })
@@ -156,7 +161,7 @@ export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subs.add(
       this.dropdown.selectValue.subscribe((value) => {
         this.wizardService.onWizardWizardFieldDataChanged(
-          this.wizardField.id,
+          this.wizardFieldConfig.id,
           JSON.stringify(value)
         )
       })

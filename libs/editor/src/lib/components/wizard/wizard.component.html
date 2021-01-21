@@ -1,9 +1,6 @@
 <div class="pl-5 pt-24 flex flex-1 flex-col justify-between">
-  <div
-    class="flex-1 flex"
-    *ngFor="let config of configuration"
-  >
-    <lib-wizard-field [wizardField]="config"></lib-wizard-field>
+  <div class="flex-1 flex" *ngFor="let config of configuration">
+    <lib-wizard-field [wizardFieldConfig]="config"></lib-wizard-field>
   </div>
 </div>
 <div class="flex pt-24 pl-8">

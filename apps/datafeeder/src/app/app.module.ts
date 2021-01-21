@@ -8,8 +8,8 @@ import { I18nModule, TRANSLATE_DEFAULT_CONFIG } from '@lib/common'
 import { UiModule } from '@lib/ui'
 import { UploadDataPageComponent } from './presentation/pages/upload-data-page/upload-data.page'
 import { UploadDataRulesComponent } from './presentation/components/upload-data-rules/upload-data-rules.component'
-import { HttpClient, HttpClientModule } from '@angular/common/http'
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+import { HttpClientModule } from '@angular/common/http'
+import { TranslateModule } from '@ngx-translate/core'
 import { DatasetValidationPageComponent } from './presentation/pages/dataset-validation-page/dataset-validation-page'
 import { DataImportValidationMapPanelComponent } from './presentation/components/data-import-validation-map-panel/data-import-validation-map-panel.component'
 import { AnalysisProgressPageComponent } from './presentation/pages/analysis-progress-page/analysis-progress.page'
@@ -18,7 +18,7 @@ import { UploadDataBackgroundComponent } from './presentation/components/svg/upl
 import { UploadDataIllustrationComponent } from './presentation/components/svg/upload-data-illustration/upload-data-illustration.component'
 import { AnalysisProgressIllustrationsComponent } from './presentation/components/svg/analysis-progress-illustrations/analysis-progress-illustrations.component'
 import { FormsPageComponent } from './presentation/pages/forms-page/forms-page.component'
-import { EditorModule } from '../../../../libs/editor/src'
+import { EditorModule } from '@lib/editor'
 
 @NgModule({
   declarations: [

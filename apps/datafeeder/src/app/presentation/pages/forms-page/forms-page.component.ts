@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
 
@@ -16,7 +16,11 @@ export class FormsPageComponent implements OnInit, OnDestroy {
   private stepId: number
   private routeParamsSub: Subscription
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.routeParamsSub = this.activatedRoute.params.subscribe(
@@ -25,6 +29,7 @@ export class FormsPageComponent implements OnInit, OnDestroy {
         this.stepId = Number(stepId)
       }
     )
+    this.cd.detectChanges()
   }
 
   handleStepChanges(step: number) {

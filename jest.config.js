@@ -2,6 +2,7 @@ module.exports = {
   transformIgnorePatterns: ['node_modules/(?!(ol))'],
   setupFiles: ['jest-canvas-mock'],
   moduleNameMapper: {
+    '@lib/editor': '<rootDir>libs/editor/src/index.ts',
     '@lib/search': '<rootDir>libs/search/src/index.ts',
     '@lib/catalog': '<rootDir>libs/catalog/src/index.ts',
     '@lib/gn-api': '<rootDir>libs/gn-api/src/index.ts',
