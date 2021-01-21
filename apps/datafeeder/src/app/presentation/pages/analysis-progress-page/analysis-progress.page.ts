@@ -2,7 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { LogService } from '@lib/common'
 import { interval, Subscription } from 'rxjs'
-import { finalize, take } from 'rxjs/operators'
+import { finalize, map, take, takeWhile, tap, flatMap } from 'rxjs/operators'
+import {
+  FileUploadApiService,
+  UploadJobStatusApiModel,
+} from '@lib/datafeeder-api'
 
 @Component({
   selector: 'app-analysis-progress-page',
@@ -11,34 +15,51 @@ import { finalize, take } from 'rxjs/operators'
 })
 export class AnalysisProgressPageComponent implements OnInit, OnDestroy {
   progress = 0
-  private routeParamsSub: Subscription
+  private subscription: Subscription
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private logService: LogService
+    private logService: LogService,
+    private fileUploadApiService: FileUploadApiService
   ) {}
 
   ngOnInit(): void {
-    this.routeParamsSub = this.activatedRoute.params.subscribe(({ id }) => {
-      this.logService.log(`id: ${id}`)
-    })
-
-    interval(250)
-      .pipe(
-        take(100),
-        finalize(() => {
-          this.router.navigate(['validation'], {
-            relativeTo: this.activatedRoute,
-          })
-        })
-      )
-      .subscribe((value) => {
-        this.progress = Math.floor((value * 100) / 100)
+    this.subscription = new Subscription()
+    this.subscription.add(
+      this.activatedRoute.params.subscribe(({ id }) => {
+        this.subscription.add(
+          interval(100)
+            .pipe(
+              flatMap(() => this.fileUploadApiService.findUploadJob(id)),
+              tap(
+                (job: UploadJobStatusApiModel) => (this.progress = job.progress)
+              ),
+              takeWhile(
+                (job: UploadJobStatusApiModel) =>
+                  ['PENDING', 'ANALYZING'].includes(job.status),
+                true
+              ),
+              map((job: UploadJobStatusApiModel) => {
+                console.log(job.status)
+                if (job.status == 'DONE') {
+                  this.router.navigate(['validation'], {
+                    relativeTo: this.activatedRoute,
+                  })
+                } else {
+                  this.router.navigate(['/'], {
+                    relativeTo: this.activatedRoute,
+                  })
+                }
+              })
+            )
+            .subscribe()
+        )
       })
+    )
   }
 
   ngOnDestroy() {
-    this.routeParamsSub.unsubscribe()
+    this.subscription.unsubscribe()
   }
 }
