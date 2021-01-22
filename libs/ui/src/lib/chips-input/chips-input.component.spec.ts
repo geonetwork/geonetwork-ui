@@ -1,3 +1,4 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { ChipsInputComponent } from './chips-input.component'
@@ -10,6 +11,7 @@ describe('ChipsInputComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ChipsInputComponent],
+      imports: [HttpClientModule],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   }))

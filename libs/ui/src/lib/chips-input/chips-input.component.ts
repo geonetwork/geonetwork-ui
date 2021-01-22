@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, Output } from '@angular/core'
-import { BehaviorSubject, Observable, Subject } from 'rxjs'
-import { distinctUntilChanged, map } from 'rxjs/operators'
 import { HttpClient } from '@angular/common/http'
+import { Component, Input, OnInit, Output } from '@angular/core'
+import { Observable, Subject } from 'rxjs'
+import { distinctUntilChanged, map } from 'rxjs/operators'
 
 export interface Items {
   display: string

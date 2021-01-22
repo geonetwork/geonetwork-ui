@@ -1,7 +1,6 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { DatepickerComponent } from '@lib/ui'
-import { RouterModule } from '@angular/router'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { MyDatePickerModule } from 'mydatepicker'
 
 describe('DatepickerComponent', () => {
@@ -10,7 +9,7 @@ describe('DatepickerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DatepickerComponent, RouterModule.forRoot([])],
+      declarations: [DatepickerComponent],
       imports: [MyDatePickerModule],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()

@@ -1,12 +1,8 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { RouterTestingModule } from '@angular/router/testing'
 
 import { FormsPageComponent } from './forms-page.component'
-import { TranslateModule } from '@ngx-translate/core'
-import { UiModule } from '@lib/ui'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { EditorModule } from '@lib/editor'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { RouterModule } from '@angular/router'
 
 describe('FormsPageComponent', () => {
   let component: FormsPageComponent
@@ -15,13 +11,7 @@ describe('FormsPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FormsPageComponent],
-      imports: [
-        TranslateModule.forRoot(),
-        UiModule,
-        EditorModule,
-        HttpClientTestingModule,
-        RouterModule.forRoot([]),
-      ],
+      imports: [RouterTestingModule],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   }))
