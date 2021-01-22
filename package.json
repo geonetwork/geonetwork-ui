@@ -60,6 +60,8 @@
     "document-register-element": "^1.7.2",
     "express": "^4.15.2",
     "messageformat": "^2.3.0",
+    "mydatepicker": "^9.0.2",
+    "ngx-chips": "^2.2.2",
     "ngx-dropzone": "^2.2.2",
     "ngx-translate-messageformat-compiler": "^4.8.0",
     "ol": "^5.3.3",

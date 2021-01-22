@@ -1,0 +1,30 @@
+:host {
+  display: flex;
+  flex: 1;
+}
+
+ui-text-input::ng-deep input {
+  height: 100%;
+  background: white;
+  color: black;
+  font-style: italic;
+
+  border-width: 2px;
+  border-color: var(--color-primary);
+}
+
+ui-text-area::ng-deep textarea {
+  border-width: 2px;
+  border-color: var(--color-primary);
+}
+
+ui-dropdown-selector::ng-deep div {
+  height: 100%;
+}
+
+ui-dropdown-selector::ng-deep select {
+  height: 100%;
+  border-width: 2px;
+  border-color: var(--color-primary);
+  background-color: white;
+}

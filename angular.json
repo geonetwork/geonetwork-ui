@@ -385,6 +385,12 @@
           "options": {
             "detectOpenHandles": true
           }
+        },
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "detectOpenHandles": true
+          }
         }
       }
     },

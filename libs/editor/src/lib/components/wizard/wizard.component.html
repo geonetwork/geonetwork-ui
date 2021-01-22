@@ -1,0 +1,13 @@
+<div class="pl-5 pt-24 flex flex-1 flex-col justify-between">
+  <div class="flex-1 flex" *ngFor="let config of configuration">
+    <lib-wizard-field [wizardFieldConfig]="config"></lib-wizard-field>
+  </div>
+</div>
+<div class="flex pt-24 pl-8">
+  <ui-button (click)="handlePreviousBtnClick()" type="primary" class="pr-8">
+    <span translate>Previous</span>
+  </ui-button>
+  <ui-button (click)="handleNextBtnClick()" type="primary">
+    <span translate>Next</span>
+  </ui-button>
+</div>

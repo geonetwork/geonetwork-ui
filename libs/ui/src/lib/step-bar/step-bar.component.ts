@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core'
 
 interface ColorScheme {
   outerBar: string
@@ -15,7 +15,7 @@ export class StepBarComponent implements OnInit {
   @Input() currentStep = 1
   @Input() type: 'primary' | 'secondary' | 'default' = 'default'
 
-  constructor() {}
+  constructor(private cdr: ChangeDetectorRef) {}
 
   get stepCounter() {
     return new Array(this.steps)

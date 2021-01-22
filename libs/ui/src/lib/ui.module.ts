@@ -21,6 +21,13 @@ import { TextInputComponent } from './text-input/text-input.component'
 import { RecordPreviewComponent } from './record-preview/record-preview.component'
 import { RecordThumbnailComponent } from './record-thumbnail/record-thumbnail.component'
 import { StepBarComponent } from './step-bar/step-bar.component'
+import { TextAreaComponent } from './text-area/text-area.component'
+import { TagInputModule } from 'ngx-chips'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { ChipsInputComponent } from './chips-input/chips-input.component'
+import { DatepickerComponent } from './datepicker/datepicker.component'
+import { MyDatePickerModule } from 'mydatepicker'
 
 @NgModule({
   declarations: [
@@ -41,6 +48,9 @@ import { StepBarComponent } from './step-bar/step-bar.component'
     DragAndDropFileInputComponent,
     ProgressBarComponent,
     StepBarComponent,
+    TextAreaComponent,
+    ChipsInputComponent,
+    DatepickerComponent,
     ResultsHitsNumberComponent,
   ],
   imports: [
@@ -48,6 +58,11 @@ import { StepBarComponent } from './step-bar/step-bar.component'
     TranslateModule.forChild(),
     NgxDropzoneModule,
     FacetsModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TagInputModule,
+    MyDatePickerModule,
   ],
   exports: [
     DropdownSelectorComponent,
@@ -67,6 +82,9 @@ import { StepBarComponent } from './step-bar/step-bar.component'
     FacetsModule,
     RecordPreviewComponent,
     StepBarComponent,
+    TextAreaComponent,
+    ChipsInputComponent,
+    DatepickerComponent,
     ResultsHitsNumberComponent,
   ],
 })

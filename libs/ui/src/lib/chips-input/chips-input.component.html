@@ -1,0 +1,18 @@
+<tag-input
+  [ngModel]="items"
+  (ngModelChange)="onChange($event)"
+  onlyFromAutocomplete="true"
+  [placeholder]="placeholder"
+  [animationDuration]="{ enter: '0ms', leave: '0ms' }"
+  class="border-2 border-primary h-full rounded-lg p-2 bg-white"
+>
+  <tag-input-dropdown
+    [autocompleteObservable]="requestAutocompleteItems"
+    [minimumTextLength]="0"
+  >
+    <ng-template let-item="item" let-index="index">
+      {{ item.display }}
+    </ng-template>
+    >
+  </tag-input-dropdown>
+</tag-input>

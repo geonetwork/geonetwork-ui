@@ -3,7 +3,7 @@
   flex: 1;
 }
 
-.analysis-progress-bkg {
+.analysis-progress-bg {
   background: linear-gradient(
     47deg,
     var(--color-background) 0%,

@@ -1,0 +1,65 @@
+<div class="flex flex-1">
+  <span [class]="wizardFieldConfig.icon + ' pr-10'"></span>
+  <div class="flex flex-col flex-1">
+    <div translate class="text-xl font-bold pb-1">
+      {{ wizardFieldConfig.label }}
+    </div>
+    <div
+      class="w-1/2 h-12"
+      *ngIf="wizardFieldType.TEXT === wizardFieldConfig.type"
+    >
+      <ui-text-input
+        #searchText
+        [id]="wizardFieldConfig.id"
+        [value]="wizardFieldData"
+        hint=""
+      ></ui-text-input>
+    </div>
+    <div
+      class="flex-1 w-11/12"
+      *ngIf="wizardFieldType.CHIPS == wizardFieldConfig.type"
+    >
+      <ui-chips-input
+        #chips
+        [selectedItems]="wizardFieldData"
+        [id]="wizardFieldConfig.id"
+        [url]="wizardFieldConfig.options.url"
+      ></ui-chips-input>
+    </div>
+    <div
+      class="h-32 w-11/12"
+      *ngIf="wizardFieldType.TEXT_AREA == wizardFieldConfig.type"
+    >
+      <ui-text-area
+        #textArea
+        [id]="wizardFieldConfig.id"
+        [value]="wizardFieldData"
+        placeholder=""
+      ></ui-text-area>
+    </div>
+    <div
+      class="w-1/2 h-12"
+      *ngIf="wizardFieldType.DATA_PICKER == wizardFieldConfig.type"
+    >
+      <ui-datepicker
+        #datepicker
+        [id]="wizardFieldConfig.id"
+        [options]="datepickerOptions"
+        [currentDate]="wizardFieldData"
+      ></ui-datepicker>
+    </div>
+    <div
+      class="w-1/2 h-12"
+      *ngIf="wizardFieldType.DROPDOWN == wizardFieldConfig.type"
+    >
+      <ui-dropdown-selector
+        #dropdown
+        [id]="wizardFieldConfig.id"
+        [title]="''"
+        [choices]="spatialResolutionList"
+        [selected]="wizardFieldData"
+        ariaName="search-sort-by"
+      ></ui-dropdown-selector>
+    </div>
+  </div>
+</div>

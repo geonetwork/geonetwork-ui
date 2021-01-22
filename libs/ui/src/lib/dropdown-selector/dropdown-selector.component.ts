@@ -15,6 +15,7 @@ import {
 })
 export class DropdownSelectorComponent implements OnInit {
   @Input() title: string
+  @Input() showTitle = true
   @Input() ariaName: string
   @Input() choices: {
     value: any

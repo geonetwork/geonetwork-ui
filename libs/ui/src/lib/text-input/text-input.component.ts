@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, Input, OnInit, Output } from '@angular/core'
 import { distinctUntilChanged } from 'rxjs/operators'
 import { Observable, Subject } from 'rxjs'
 
