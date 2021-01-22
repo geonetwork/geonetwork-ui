@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { LogService } from '@lib/common'
-import { interval, Subscription } from 'rxjs'
-import { finalize, map, take, takeWhile, tap, flatMap } from 'rxjs/operators'
 import {
   FileUploadApiService,
-  UploadJobStatusApiModel,
+  UploadJobStatusApiModel
 } from '@lib/datafeeder-api'
+import { interval, Subscription } from 'rxjs'
+import { flatMap, map, takeWhile, tap } from 'rxjs/operators'
 
 @Component({
   selector: 'app-analysis-progress-page',

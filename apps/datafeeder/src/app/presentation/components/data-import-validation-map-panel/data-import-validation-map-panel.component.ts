@@ -4,18 +4,20 @@ import {
   ElementRef,
   Input,
   OnInit,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core'
-import Map from 'ol/Map'
-import View from 'ol/View'
-import { OSM, Vector as VectorSource } from 'ol/source'
-import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer'
-import GeoJSON from 'ol/format/GeoJSON'
-import { Fill, Stroke, Style } from 'ol/style'
-import { transform } from 'ol/proj'
-import { Feature } from 'geojson'
 import { ColorService } from '@lib/common'
+import { Feature } from 'geojson'
 import { asArray, asString } from 'ol/color'
+import GeoJSON from 'ol/format/GeoJSON'
+import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer'
+import Map from 'ol/Map'
+import { isEmpty } from 'ol/extent'
+import { transform } from 'ol/proj'
+import { OSM, Vector as VectorSource } from 'ol/source'
+import { Fill, Stroke, Style } from 'ol/style'
+import View from 'ol/View'
 
 const DEFAULT_PRIMARY_COLOR = '#9a9a9a'
 
@@ -37,23 +39,25 @@ export class DataImportValidationMapPanelComponent
   selectedValue: any
 
   private map: Map
+  private source: VectorSource
+  private vectorLayer: VectorLayer
+  private GeoJSON = new GeoJSON()
 
   constructor() {}
 
   ngOnInit(): void {
     this.selectedValue = this.footerList[0]
+    this.vectorLayer = this.buildVectorLayer()
   }
 
   ngAfterViewInit() {
-    const vectorLayer = this.buildVectorLayer()
-
     this.map = new Map({
       target: this.mapElt.nativeElement,
       layers: [
         new TileLayer({
           source: new OSM(),
         }),
-        vectorLayer,
+        this.vectorLayer,
       ],
       controls: [],
       interactions: [],
@@ -63,10 +67,29 @@ export class DataImportValidationMapPanelComponent
       }),
     })
 
-    this.map.getView().fit(vectorLayer.getSource().getExtent(), {
+    this.fit()
+  }
+
+  fit() {
+    if (isEmpty(this.source.getExtent())) return
+    this.map.getView().fit(this.source.getExtent(), {
       padding: [100, 100, 100, 100],
       constrainResolution: false,
     })
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const geoJson = changes.geoJson.currentValue
+    if (!geoJson || !this.source) return
+    this.source.clear()
+    this.source.addFeatures(
+      geoJson
+        ? this.GeoJSON.readFeatures(geoJson, {
+            featureProjection: 'EPSG:3857',
+          })
+        : []
+    )
+    this.fit()
   }
 
   getSecondaryColor(opacity: number = 1) {
@@ -97,17 +120,14 @@ export class DataImportValidationMapPanelComponent
     })
   }
 
-  private buildVectorSource(geoJson: GeoJSON): VectorLayer {
-    return new VectorSource({
-      features: new GeoJSON().readFeatures(geoJson, {
+  private buildVectorLayer(): VectorLayer {
+    this.source = new VectorSource({
+      features: new GeoJSON().readFeatures(this.geoJson, {
         featureProjection: 'EPSG:3857',
       }),
     })
-  }
-
-  private buildVectorLayer(): VectorLayer {
     return new VectorLayer({
-      source: this.buildVectorSource(this.geoJson),
+      source: this.source,
       style: this.getDefaultStyle(),
     })
   }

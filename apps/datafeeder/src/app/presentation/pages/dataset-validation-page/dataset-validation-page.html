@@ -21,6 +21,7 @@
           [footerList]="encodingList"
           [geoJson]="geoJSONData"
           [showProperties]="true"
+          *ngIf="geoJSONData"
         ></app-data-import-validation-map-panel>
       </div>
       <div class="w-1/2 h-full bg-white rounded-md">
@@ -30,6 +31,7 @@
           [footerList]="refSystem"
           [geoJson]="geoJSONBBox"
           [showProperties]="false"
+          *ngIf="geoJSONBBox"
         ></app-data-import-validation-map-panel>
       </div>
     </div>
