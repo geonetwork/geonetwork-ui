@@ -54,8 +54,12 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
       this.fileUploadApiService
         .findUploadJob(id)
         .subscribe((job: UploadJobStatusApiModel) => {
-          if (job.status !== 'DONE') {
-            alert('truite')
+          if (job.status == 'ERROR') {
+            this.router.navigate(['/'], {
+              relativeTo: this.activatedRoute,
+              queryParams: { error: 'analysis' },
+            })
+            return
           }
 
           const dataset = job.datasets[0]
