@@ -71,7 +71,9 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
           )
           this.geoJSONData = this.format.writeFeatureObject(
             new Feature({
-              ...dataset.sampleProperties[0],
+              ...Object.fromEntries(
+                dataset.sampleProperties.map(o => [o.name, o.value])
+              ),
               geometry: this.formatWKT.readGeometry(dataset.sampleGeometryWKT),
             })
           )
