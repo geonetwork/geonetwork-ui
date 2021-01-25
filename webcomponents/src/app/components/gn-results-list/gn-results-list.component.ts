@@ -42,7 +42,7 @@ export class GnResultsListComponent extends BaseComponent {
 
   private setSearch_() {
     this.store.dispatch(
-      new SetSearch({ filters: { any: this.filter }, size: this.size })
+      new SetSearch({ filters: { any: this.filter }, size: this.size, from: 0 })
     )
   }
 

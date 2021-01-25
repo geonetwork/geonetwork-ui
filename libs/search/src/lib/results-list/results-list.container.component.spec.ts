@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { I18nModule } from '@lib/common'
 import { UiModule } from '@lib/ui'
@@ -15,6 +16,7 @@ describe('ResultsListContainerComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ResultsListContainerComponent],
+      schemas: [NO_ERRORS_SCHEMA],
       imports: [
         I18nModule,
         TranslateModule.forRoot(),
