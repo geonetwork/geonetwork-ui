@@ -63,6 +63,7 @@
     "mydatepicker": "^9.0.2",
     "ngx-chips": "^2.2.2",
     "ngx-dropzone": "^2.2.2",
+    "ngx-infinite-scroll": "^10.0.1",
     "ngx-translate-messageformat-compiler": "^4.8.0",
     "ol": "^5.3.3",
     "parse5": "^6.0.0",
