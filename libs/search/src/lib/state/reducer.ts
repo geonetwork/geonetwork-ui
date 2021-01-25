@@ -1,5 +1,4 @@
 import { RecordSummary, SearchFilters } from '@lib/common'
-import { UPDATE_REQUEST_AGGREGATION_TERM } from './actions'
 import * as fromActions from './actions'
 
 export const SEARCH_FEATURE_KEY = 'searchState'
@@ -81,6 +80,29 @@ export function reducer(
         params: {
           ...state.params,
           sortBy: action.sortBy,
+        },
+      }
+    }
+    case fromActions.SET_PAGINATION: {
+      const { from, size } = action
+      return {
+        ...state,
+        params: {
+          ...state.params,
+          from,
+          size,
+        },
+      }
+    }
+    case fromActions.SCROLL:
+    case fromActions.PAGINATE: {
+      const delta = (action as Paginate).delta || state.params.size
+      const from = Math.max(0, state.params.from + delta)
+      return {
+        ...state,
+        params: {
+          ...state.params,
+          from,
         },
       }
     }

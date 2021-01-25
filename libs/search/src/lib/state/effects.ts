@@ -27,6 +27,9 @@ import {
   UpdateRequestAggregationTerm,
   SET_INCLUDE_ON_AGGREGATION,
   SetIncludeOnAggregation,
+  PAGINATE,
+  SCROLL,
+  SET_PAGINATION,
 } from './actions'
 import { SearchState } from './reducer'
 import { getSearchState } from './selectors'
@@ -44,8 +47,22 @@ export class SearchEffects {
 
   clearResults$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SET_SORT_BY, SET_FILTERS, UPDATE_FILTERS, SET_SEARCH),
+      ofType(
+        SET_SORT_BY,
+        SET_FILTERS,
+        UPDATE_FILTERS,
+        SET_SEARCH,
+        SET_PAGINATION,
+        PAGINATE
+      ),
       switchMap(() => of(new ClearResults(), new RequestMoreResults()))
+    )
+  )
+
+  scroll$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SCROLL),
+      map(() => new RequestMoreResults())
     )
   )
 

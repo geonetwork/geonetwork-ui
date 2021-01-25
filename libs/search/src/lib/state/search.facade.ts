@@ -28,4 +28,16 @@ export class SearchFacade {
   setIncludeOnAggregation(key: string, include: string): void {
     this.store.dispatch(new SetIncludeOnAggregation(key, include))
   }
+
+  setPagination(from: number, size: number): void {
+    this.store.dispatch(new SetPagination(from, size))
+  }
+
+  paginate(delta: number): void {
+    this.store.dispatch(new Paginate(delta))
+  }
+
+  scroll(): void {
+    this.store.dispatch(new Scroll())
+  }
 }
