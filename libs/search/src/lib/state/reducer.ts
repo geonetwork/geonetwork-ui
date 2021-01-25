@@ -7,6 +7,7 @@ export interface SearchStateParams {
   filters?: SearchFilters
   sortBy?: string
   size?: number
+  from?: number
 }
 
 export interface SearchState {
@@ -31,6 +32,7 @@ export const initialState: SearchState = {
   params: {
     filters: {},
     size: 10,
+    from: 0,
   },
   results: {
     hits: null,
