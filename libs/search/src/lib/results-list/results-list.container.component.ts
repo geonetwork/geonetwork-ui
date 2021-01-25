@@ -13,7 +13,9 @@ import { SearchFacade } from '../state/search.facade'
 })
 export class ResultsListContainerComponent implements OnInit {
   @Input() layout: ResultsListLayout = ResultsListLayout.CARD
+  @Input() scrollableOptions: InfiniteScrollModel = {}
 
+  scrollableConfig: InfiniteScrollModel
 
   constructor(public facade: SearchFacade) {}
 

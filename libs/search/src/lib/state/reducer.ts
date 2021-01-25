@@ -1,4 +1,5 @@
 import { RecordSummary, SearchFilters } from '@lib/common'
+import { Paginate } from './actions'
 import * as fromActions from './actions'
 
 export const SEARCH_FEATURE_KEY = 'searchState'
