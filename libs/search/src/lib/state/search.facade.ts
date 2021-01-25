@@ -1,18 +1,33 @@
 import { Injectable } from '@angular/core'
-import { Store } from '@ngrx/store'
+import { ResultsListLayout } from '@lib/common'
+import { select, Store } from '@ngrx/store'
 import {
+  Paginate,
   RequestMoreOnAggregation,
   RequestMoreResults,
+  Scroll,
   SetConfigAggregations,
   SetIncludeOnAggregation,
+  SetPagination,
+  SetResultsLayout,
 } from './actions'
 import { SearchState } from './reducer'
+import {
+  getSearchResults,
+  getSearchResultsLayout,
+  getSearchResultsLoading,
+} from './selectors'
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchFacade {
+  results$ = this.store.pipe(select(getSearchResults))
+  layout$ = this.store.pipe(select(getSearchResultsLayout))
+  isLoading$ = this.store.pipe(select(getSearchResultsLoading))
+
   constructor(private store: Store<SearchState>) {}
+
   setConfigAggregations(config: any): void {
     this.store.dispatch(new SetConfigAggregations(config))
   }
@@ -23,6 +38,10 @@ export class SearchFacade {
 
   requestMoreOnAggregation(key: string, increment: number): void {
     this.store.dispatch(new RequestMoreOnAggregation(key, increment))
+  }
+
+  setResultsLayout(layout: ResultsListLayout): void {
+    this.store.dispatch(new SetResultsLayout(layout))
   }
 
   setIncludeOnAggregation(key: string, include: string): void {

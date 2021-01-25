@@ -1,13 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { ResultsListLayout } from '@lib/common'
-import { select, Store } from '@ngrx/store'
-import { SetResultsLayout } from '../state/actions'
-import { SearchState } from '../state/reducer'
 import {
-  getSearchResults,
-  getSearchResultsLayout,
-  getSearchResultsLoading,
-} from '../state/selectors'
+  InfiniteScrollModel,
+  InfiniteScrollOptionsDefault,
+  ResultsListLayout,
+} from '@lib/common'
+import { SearchFacade } from '../state/search.facade'
 
 @Component({
   selector: 'search-results-list-container',
@@ -17,13 +14,18 @@ import {
 export class ResultsListContainerComponent implements OnInit {
   @Input() layout: ResultsListLayout = ResultsListLayout.CARD
 
-  results$ = this.store.pipe(select(getSearchResults))
-  layout$ = this.store.pipe(select(getSearchResultsLayout))
-  isLoading$ = this.store.pipe(select(getSearchResultsLoading))
 
-  constructor(private store: Store<SearchState>) {}
+  constructor(public facade: SearchFacade) {}
 
   ngOnInit(): void {
-    this.store.dispatch(new SetResultsLayout(this.layout))
+    this.scrollableConfig = {
+      ...InfiniteScrollOptionsDefault,
+      ...this.scrollableOptions,
+    }
+    this.facade.setResultsLayout(this.layout)
+  }
+
+  onScrollDown() {
+    this.facade.scroll()
   }
 }
