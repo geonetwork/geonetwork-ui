@@ -23,6 +23,9 @@ import { PublishPageComponent } from './presentation/pages/publish-page/publish-
 import { PublishPageIllustrationComponent } from './presentation/components/svg/publish-page-illustration/publish-page-illustration.component'
 import { SuccessPublishPageComponent } from './presentation/pages/success-publish-page/success-publish-page.component'
 import { SuccessPublishPageIllustrationComponent } from './presentation/components/svg/success-publish-page-illustration/success-publish-page-illustration.component'
+import { SummarizePageComponent } from './presentation/pages/summarize-page/summarize-page.component'
+import { SummarizeIllustrationComponent } from './presentation/components/svg/summarize-illustration/summarize-illustration.component'
+import { SummarizeBackgroundComponent } from './presentation/components/svg/summarize-background/summarize-background.component'
 
 @NgModule({
   declarations: [
@@ -42,6 +45,9 @@ import { SuccessPublishPageIllustrationComponent } from './presentation/componen
     PublishPageIllustrationComponent,
     SuccessPublishPageComponent,
     SuccessPublishPageIllustrationComponent,
+    SummarizePageComponent,
+    SummarizeIllustrationComponent,
+    SummarizeBackgroundComponent,
   ],
   imports: [
     BrowserModule,

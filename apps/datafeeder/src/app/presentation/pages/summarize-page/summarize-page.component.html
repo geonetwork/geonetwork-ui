@@ -1,0 +1,27 @@
+<div class="flex-1 flex dataset-forms-bg items-center shape s2">
+  <app-summarize-background></app-summarize-background>
+  <div class="ml-64 mr-64 pt-16 pb-20 w-full h-full flex flex-col z-10">
+    <div class="text-5xl font-bold" translate>
+      datafeeder.summarizePage.title
+    </div>
+    <div class="pb-4 pt-4">
+      <ui-step-bar [steps]="6" [currentStep]="6" type="primary"></ui-step-bar>
+    </div>
+    <div class="flex-1 pt-16 pl-20 pr-20 flex flex-col justify-between">
+      <div class="flex">
+        <div class="flex-1 flex flex-col">
+          <lib-wizard-summarize></lib-wizard-summarize>
+          <ui-button class="pt-10" type="primary"
+            ><span translate>datafeeder.summarizePage.submit</span></ui-button
+          >
+        </div>
+        <div class="flex-1">
+          <app-summarize-illustration></app-summarize-illustration>
+        </div>
+      </div>
+      <ui-button type="primary"
+        ><span translate>datafeeder.summarizePage.previous</span></ui-button
+      >
+    </div>
+  </div>
+</div>

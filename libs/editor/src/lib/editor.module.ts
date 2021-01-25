@@ -4,10 +4,15 @@ import { WizardFieldComponent } from './components/wizard-field/wizard-field.com
 import { UiModule } from '../../../ui/src'
 import { BrowserModule } from '@angular/platform-browser'
 import { TranslateModule } from '@ngx-translate/core'
+import { WizardSummarizeComponent } from './components/wizard-summarize/wizard-summarize.component'
 
 @NgModule({
-  declarations: [WizardComponent, WizardFieldComponent],
+  declarations: [
+    WizardComponent,
+    WizardFieldComponent,
+    WizardSummarizeComponent,
+  ],
   imports: [BrowserModule, UiModule, TranslateModule.forChild()],
-  exports: [WizardComponent],
+  exports: [WizardComponent, WizardSummarizeComponent],
 })
 export class EditorModule {}
