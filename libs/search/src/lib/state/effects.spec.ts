@@ -3,6 +3,7 @@ import { AuthService } from '@lib/auth'
 import { SearchApiService } from '@lib/gn-api'
 import {
   ElasticsearchMapper,
+  Scroll,
   SetIncludeOnAggregation,
   UpdateRequestAggregationTerm,
 } from '@lib/search'
@@ -125,6 +126,16 @@ describe('Effects', () => {
       })
 
       expect(effects.clearResults$).toBeObservable(expected)
+    })
+  })
+
+  describe('scroll$', () => {
+    it('clear results list on sortBy action', () => {
+      actions$ = hot('-a---', { a: new Scroll() })
+      const expected = hot('-(b)', {
+        b: new RequestMoreResults(),
+      })
+      expect(effects.scroll$).toBeObservable(expected)
     })
   })
 

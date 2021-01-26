@@ -10,6 +10,9 @@ export const SET_FILTERS = '[Search] Set Filters'
 export const UPDATE_FILTERS = '[Search] Update Filters'
 export const SET_SEARCH = '[Search] Set overall search configuration'
 export const SET_SORT_BY = '[Search] Sort By'
+export const SET_PAGINATION = '[Search] Set pagination'
+export const PAGINATE = '[Search] Paginate'
+export const SCROLL = '[Search] Scroll'
 export const SET_RESULTS_LAYOUT = '[Search] Set results layout'
 export const ADD_RESULTS = '[Search] Add Results'
 export const CLEAR_RESULTS = '[Search] Clear Results'
@@ -44,8 +47,22 @@ export class SetSearch implements Action {
 
 export class SetSortBy implements Action {
   readonly type = SET_SORT_BY
-
   constructor(public sortBy: string) {}
+}
+
+export class SetPagination implements Action {
+  readonly type = SET_PAGINATION
+  constructor(public from: number, public size: number) {}
+}
+
+export class Paginate implements Action {
+  readonly type = PAGINATE
+  constructor(public delta: number) {}
+}
+
+export class Scroll implements Action {
+  readonly type = SCROLL
+  constructor() {}
 }
 
 export class SetResultsLayout implements Action {
@@ -114,6 +131,9 @@ export type SearchActions =
   | UpdateFilters
   | SetSearch
   | SetSortBy
+  | SetPagination
+  | Paginate
+  | Scroll
   | SetResultsLayout
   | AddResults
   | ClearResults

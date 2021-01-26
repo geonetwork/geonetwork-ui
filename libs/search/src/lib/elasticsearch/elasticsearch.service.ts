@@ -17,7 +17,7 @@ export class ElasticsearchService {
   }
 
   buildPayload(state: SearchState): SearchParams {
-    const { size, sortBy } = state.params
+    const { size, sortBy, from } = state.params
     const sort: SortParams = sortBy
       ? sortBy.split(',').map((s) => {
           if (s.startsWith('-')) {
@@ -30,7 +30,7 @@ export class ElasticsearchService {
 
     const payload = {
       aggs: state.config.aggregations,
-      from: 0,
+      from,
       size,
       sort: sort as NameList,
       query: this.partialBuildQuery(state),

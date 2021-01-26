@@ -1,5 +1,15 @@
-<ui-results-list
-  [loading]="isLoading$ | async"
-  [records]="results$ | async"
-  [layout]="layout$ | async"
-></ui-results-list>
+<div
+  class="search-results"
+  infinite-scroll
+  [infiniteScrollDistance]="scrollableConfig.distance"
+  [infiniteScrollUpDistance]="scrollableConfig.upDistance"
+  [infiniteScrollThrottle]="scrollableConfig.throttle"
+  [infiniteScrollDisabled]="scrollableConfig.disabled"
+  (scrolled)="onScrollDown()"
+>
+  <ui-results-list
+    [loading]="facade.isLoading$ | async"
+    [records]="facade.results$ | async"
+    [layout]="facade.layout$ | async"
+  ></ui-results-list>
+</div>

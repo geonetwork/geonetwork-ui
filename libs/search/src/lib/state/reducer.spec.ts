@@ -92,11 +92,37 @@ describe('Search Reducer', () => {
     })
   })
 
-  describe('SortBy action', () => {
+  describe('SetSortBy action', () => {
     it('should set sort by params', () => {
       const action = new fromActions.SetSortBy('fieldA')
       const state = reducer(initialState, action)
       expect(state.params.sortBy).toEqual('fieldA')
+    })
+  })
+
+  describe('SetPagination action', () => {
+    it('should set from and size', () => {
+      const action = new fromActions.SetPagination(12, 15)
+      const state = reducer(initialState, action)
+      expect(state.params.from).toEqual(12)
+      expect(state.params.size).toEqual(15)
+    })
+  })
+
+  describe('Paginate action', () => {
+    it('should set from property and keep size', () => {
+      const action = new fromActions.Paginate(30)
+      const state = reducer(initialState, action)
+      expect(state.params.from).toEqual(30)
+      expect(state.params.size).toEqual(10)
+    })
+  })
+  describe('Scroll action', () => {
+    it('increment `from` property with `size` value', () => {
+      const action = new fromActions.Scroll()
+      const state = reducer(initialState, action)
+      expect(state.params.from).toEqual(10)
+      expect(state.params.size).toEqual(10)
     })
   })
 
