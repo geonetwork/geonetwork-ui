@@ -4,6 +4,11 @@
 :root {
   --current-font: 'Open Sans', sans-serif;
   --focus-font: 'Permanent Marker', cursive;
+  --gradient: linear-gradient(
+    47deg,
+    #fff 0%,
+    #dbeff8 100%
+  );
 }
 
 @font-face {

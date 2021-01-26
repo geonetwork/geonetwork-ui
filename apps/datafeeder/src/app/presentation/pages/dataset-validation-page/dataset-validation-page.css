@@ -4,9 +4,5 @@
 }
 
 .dataset-validation-bg {
-  background: linear-gradient(
-    47deg,
-    #fff 0%,
-    #dbeff8 100%
-  );
+  background: var(--gradient);
 }
