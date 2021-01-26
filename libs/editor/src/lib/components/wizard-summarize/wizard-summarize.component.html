@@ -1,19 +1,20 @@
 <div>
-  <div class="text-2xl font-bold">
+  <div id="title" class="text-2xl font-bold">
     {{ title | uppercase }}
   </div>
-  <div class="text-lg font-bold pt-2">
+  <div id="abstract" class="text-lg font-bold pt-2">
     {{ abstract }}
   </div>
   <div class="text-lg font-normal">
     <span translate>datafeeder.wizardSummarize.createdAt</span>
-    {{ createdDate }} - <span translate>datafeeder.wizardSummarize.scale</span>
-    {{ scale }}
+    <span id="date">{{ createdDate }}</span> -
+    <span translate>datafeeder.wizardSummarize.scale</span>
+    <span id="scale">{{ scale }}</span>
   </div>
-  <div class="text-lg italic font-normal">
+  <div id="description" class="text-lg italic font-normal">
     {{ description }}
   </div>
-  <div class="text-sm font-medium pt-4">
+  <div id="tags" class="text-sm font-medium pt-4">
     <span class="icon-tag pr-2"></span>
     {{ tags }}
   </div>

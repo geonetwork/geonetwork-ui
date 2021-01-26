@@ -9,21 +9,27 @@ import { TranslateService } from '@ngx-translate/core'
 })
 export class WizardSummarizeComponent implements OnInit {
   get title() {
-    return this.wizardService.getWizardFieldData('title')
+    return this.wizardService.getWizardFieldData('title') || ''
   }
 
   get abstract() {
-    return this.wizardService.getWizardFieldData('abstract')
+    return this.wizardService.getWizardFieldData('abstract') || ''
   }
 
-  get tags() {
+  get tags(): string {
+    if (!this.wizardService.getWizardFieldData('tags')) {
+      return ''
+    }
+
     return JSON.parse(this.wizardService.getWizardFieldData('tags'))
       .map((t) => t.display)
       .join(' - ')
   }
 
   get createdDate() {
-    const time = this.wizardService.getWizardFieldData('datepicker')
+    const time =
+      this.wizardService.getWizardFieldData('datepicker') ||
+      new Date().getTime()
     const locale = this.translateService.getDefaultLang()
 
     return new Date(Number(time)).toLocaleDateString(locale, {
@@ -34,6 +40,10 @@ export class WizardSummarizeComponent implements OnInit {
   }
 
   get scale() {
+    if (!this.wizardService.getWizardFieldData('dropdown')) {
+      return ''
+    }
+
     const scaleValue = JSON.parse(
       this.wizardService.getWizardFieldData('dropdown')
     )
@@ -41,7 +51,7 @@ export class WizardSummarizeComponent implements OnInit {
   }
 
   get description() {
-    return this.wizardService.getWizardFieldData('description')
+    return this.wizardService.getWizardFieldData('description') || ''
   }
 
   constructor(
