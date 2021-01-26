@@ -11,11 +11,11 @@
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2015",
+    "target": "esnext",
     "allowJs": true,
     "esModuleInterop": true,
     "lib": [
-      "es2018",
+      "esnext",
       "dom"
     ],
     "paths": {
