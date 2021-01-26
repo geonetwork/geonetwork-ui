@@ -1,12 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core'
 
 @Component({
   selector: 'ui-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent implements OnInit {
   @Input() type: 'primary' | 'secondary' | 'default' = 'default'
+  @Input() extraClass: string = ''
+
+  classList: string = ''
 
   get color() {
     switch (this.type) {
@@ -43,5 +47,7 @@ export class ButtonComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.classList = `${this.color} ${this.textColor} ${this.borderColor} ${this.extraClass}`
+  }
 }
