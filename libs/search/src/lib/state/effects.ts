@@ -32,7 +32,7 @@ import {
   SET_PAGINATION,
 } from './actions'
 import { SearchState } from './reducer'
-import { getSearchState } from './selectors'
+import { getSearchState, getSearchStateSearch } from './selectors'
 
 @Injectable()
 export class SearchEffects {
@@ -70,7 +70,7 @@ export class SearchEffects {
     this.actions$.pipe(
       ofType(REQUEST_MORE_RESULTS),
       switchMap(() => this.authService.authReady()), // wait for auth to be known
-      withLatestFrom(this.store$.pipe(select(getSearchState))),
+      withLatestFrom(this.store$.pipe(select(getSearchStateSearch))),
       switchMap(([_, state]) =>
         this.searchService.search(
           'bucket',
@@ -129,7 +129,7 @@ export class SearchEffects {
     return updateTermAction$.pipe(
       tap((action) => (aggregationKey = action.key)),
       switchMap(() => this.authService.authReady()), // wait for auth to be known
-      withLatestFrom(this.store$.pipe(select(getSearchState))),
+      withLatestFrom(this.store$.pipe(select(getSearchStateSearch))),
       switchMap(([_, state]) =>
         this.searchService.search(
           'bucket',

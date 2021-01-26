@@ -1,5 +1,5 @@
 import { RecordSummary, SearchFilters } from '@lib/common'
-import { Paginate } from './actions'
+import { DEFAULT_SEARCH_KEY } from './actions'
 import * as fromActions from './actions'
 
 export const SEARCH_FEATURE_KEY = 'searchState'
@@ -11,7 +11,7 @@ export interface SearchStateParams {
   from?: number
 }
 
-export interface SearchState {
+export interface SearchStateSearch {
   config: {
     aggregations?: any
   }
@@ -28,25 +28,51 @@ export interface SearchState {
   loadingMore: boolean
 }
 
+export type SearchState = { [key: string]: SearchStateSearch }
+
+export const initSearch = (): SearchStateSearch => {
+  return {
+    config: {},
+    params: {
+      filters: {},
+      size: 10,
+      from: 0,
+    },
+    results: {
+      hits: null,
+      records: [],
+      aggregations: {},
+    },
+    loadingMore: false,
+  }
+}
+
 export const initialState: SearchState = {
-  config: {},
-  params: {
-    filters: {},
-    size: 10,
-    from: 0,
-  },
-  results: {
-    hits: null,
-    records: [],
-    aggregations: {},
-  },
-  loadingMore: false,
+  [DEFAULT_SEARCH_KEY]: initSearch(),
 }
 
 export function reducer(
   state = initialState,
   action: fromActions.SearchActions
 ): SearchState {
+  const { id } = action
+  if (id) {
+    const stateSearch = state[id] || initSearch()
+    const reducedStateSearch = reducerSearch(stateSearch, action)
+    if (reducedStateSearch) {
+      return {
+        ...state,
+        [id]: reducedStateSearch,
+      }
+    }
+  }
+  return state
+}
+
+export function reducerSearch(
+  state: SearchStateSearch,
+  action: fromActions.SearchActions
+): SearchStateSearch {
   switch (action.type) {
     case fromActions.SET_FILTERS: {
       return {
@@ -99,7 +125,7 @@ export function reducer(
     }
     case fromActions.SCROLL:
     case fromActions.PAGINATE: {
-      const delta = (action as Paginate).delta || state.params.size
+      const delta = (action as fromActions.Paginate).delta || state.params.size
       const from = Math.max(0, state.params.from + delta)
       return {
         ...state,
