@@ -36,6 +36,7 @@ export class DataImportValidationMapPanelComponent
   @Input() footerLabel = ''
   @Input() footerList = []
   @Input() geoJson?: Feature
+  @Input() padding = []
 
   selectedValue: any
 
@@ -75,7 +76,7 @@ export class DataImportValidationMapPanelComponent
   fit() {
     if (isEmpty(this.source.getExtent())) return
     this.map.getView().fit(this.source.getExtent(), {
-      padding: Array(4).fill(PADDING),
+      padding: this.padding.length === 0 ? Array(4).fill(PADDING) : this.padding,
       constrainResolution: false,
     })
   }
