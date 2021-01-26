@@ -11,7 +11,7 @@
   "datafeeder.upload.uploadButton": "Upload",
   "datafeeder.analysisProgressBar.title": "Analyze in progress",
   "datafeeder.analysisProgressBar.subtitle": "The analysis may take several minutes please wait.",
-  "datafeeder.datasetValidation.title": "Make sure that your data is correct",
+  "datafeeder.datasetValidation.title": "Make sure your data is correct",
   "datafeeder.datasetValidation.datasetInformation": "The provided dataset contains {{number}} entities",
   "datafeeder.upload.error.title.noRightsToSendData": "No rights to send data",
   "datafeeder.upload.error.title.fileHasntSelected": "File hasn't selected",
