@@ -2,13 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { LogService } from '@lib/common'
 import {
-  FileUploadApiService,
-  UploadJobStatusApiModel,
-  BoundingBoxApiModel
+  BoundingBoxApiModel, FileUploadApiService,
+  UploadJobStatusApiModel
 } from '@lib/datafeeder-api'
 import Feature from 'ol/Feature'
 import GeoJSON from 'ol/format/GeoJSON'
-import WKT from 'ol/format/WKT'
 import { fromExtent } from 'ol/geom/Polygon'
 import { forkJoin, Subscription } from 'rxjs'
 
@@ -39,8 +37,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   numOfEntities: number = 0
   private routeParamsSub: Subscription
   private rootId: number
-  private format = new GeoJSON()
-  private formatWKT = new WKT()
+  private format = new GeoJSON({})
 
   constructor(
     private activatedRoute: ActivatedRoute,
