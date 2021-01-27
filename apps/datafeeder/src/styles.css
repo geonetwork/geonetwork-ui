@@ -23,6 +23,15 @@ html {
   font-family: 'Open Sans', 'dataFeeder', sans-serif !important;
 }
 
+ui-button button[type=button] {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+ui-button button[type=button]:hover {
+  background: var(--color-primary-darker);
+  border-color: var(--color-primary-darker);
+}
+
 .grey1 {
   fill: #f2f3f4;
 }
