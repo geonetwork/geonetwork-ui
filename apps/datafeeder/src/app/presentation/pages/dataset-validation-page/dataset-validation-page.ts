@@ -4,12 +4,13 @@ import { LogService } from '@lib/common'
 import {
   FileUploadApiService,
   UploadJobStatusApiModel,
+  BoundingBoxApiModel
 } from '@lib/datafeeder-api'
 import Feature from 'ol/Feature'
 import GeoJSON from 'ol/format/GeoJSON'
 import WKT from 'ol/format/WKT'
 import { fromExtent } from 'ol/geom/Polygon'
-import { Subscription } from 'rxjs'
+import { forkJoin, Subscription } from 'rxjs'
 
 @Component({
   selector: 'app-dataset-validation-page',
@@ -63,21 +64,19 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
           }
 
           const dataset = job.datasets[0]
-          const { minx, miny, maxx, maxy, crs } = dataset.nativeBounds
-
-          this.geoJSONBBox = this.format.writeFeatureObject(
-            new Feature({ geometry: fromExtent([minx, miny, maxx, maxy]) }),
-            { dataProjection: crs.srs }
-          )
-          this.geoJSONData = this.format.writeFeatureObject(
-            new Feature({
-              ...Object.fromEntries(
-                dataset.sampleProperties.map(o => [o.name, o.value])
-              ),
-              geometry: this.formatWKT.readGeometry(dataset.sampleGeometryWKT),
-            })
-          )
           this.numOfEntities = dataset.featureCount
+
+          forkJoin([
+            this.fileUploadApiService.getBounds(id, dataset.name),
+            this.fileUploadApiService.getSampleFeature(id, dataset.name)
+          ]).subscribe(([bbox, feature]) => {
+            const { minx, miny, maxx, maxy, crs } = bbox as BoundingBoxApiModel
+            this.geoJSONBBox = this.format.writeFeatureObject(
+              new Feature({ geometry: fromExtent([minx, miny, maxx, maxy]) }),
+              { dataProjection: crs.srs }
+            )
+            this.geoJSONData = feature as object // No more precision in API
+          })
         })
     })
   }
