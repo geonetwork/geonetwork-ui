@@ -10,6 +10,8 @@ import { of } from 'rxjs'
 describe('AnalysisProgress.PageComponent', () => {
   let component: AnalysisProgressPageComponent
   let fixture: ComponentFixture<AnalysisProgressPageComponent>
+  let findUploadJob = jest.fn()
+  findUploadJob.mockReturnValue(of('id'))
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -19,8 +21,8 @@ describe('AnalysisProgress.PageComponent', () => {
       providers: [
         {
           provide: FileUploadApiService,
-          value: {
-            findUploadJob: of(1),
+          useValue: {
+            findUploadJob
           },
         },
         { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
@@ -34,7 +36,11 @@ describe('AnalysisProgress.PageComponent', () => {
     fixture.detectChanges()
   })
 
-  it('should create', () => {
+  it('should create', done => {
     expect(component).toBeTruthy()
+    setTimeout(() => {
+      expect(findUploadJob).toHaveBeenCalled()
+      done()
+    }, 150);
   })
 })
