@@ -1,8 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing'
-
-import { UploadDataPageComponent } from './upload-data.page'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { ActivatedRoute } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
+import { of } from 'rxjs'
+import { UploadDataPageComponent } from './upload-data.page'
 
 describe('UploadDataComponent', () => {
   let component: UploadDataPageComponent

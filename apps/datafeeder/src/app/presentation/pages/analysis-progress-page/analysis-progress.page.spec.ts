@@ -3,6 +3,9 @@ import { AnalysisProgressPageComponent } from './analysis-progress.page'
 import { UiModule } from '@lib/ui'
 import { RouterTestingModule } from '@angular/router/testing'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
+import { FileUploadApiService } from '@lib/datafeeder-api'
+import { of } from 'rxjs'
 
 describe('AnalysisProgress.PageComponent', () => {
   let component: AnalysisProgressPageComponent
@@ -13,6 +16,15 @@ describe('AnalysisProgress.PageComponent', () => {
       declarations: [AnalysisProgressPageComponent],
       imports: [UiModule, RouterTestingModule],
       schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        {
+          provide: FileUploadApiService,
+          value: {
+            findUploadJob: of(1),
+          },
+        },
+        { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
+      ],
     }).compileComponents()
   }))
 
