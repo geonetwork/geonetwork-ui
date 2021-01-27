@@ -15,12 +15,9 @@ rm -f ${DIST_WC_PATH}polyfills.js
 rm -f ${DIST_WC_PATH}runtime.js
 rm -f ${DIST_WC_PATH}styles.css
 
-sampleLinks=""
 for c in webcomponents/src/app/components/gn-* ; do
   echo "-- Copy HTML sample for:" `basename $c`
-  fileName=`basename $c`".sample.html"
-  cp $c/$fileName $DIST_WC_PATH
-  sampleLinks+="<a href='"$fileName"'>"`basename $c`"</a>"
+  cp $c/*".sample.html" $DIST_WC_PATH
 done
 
 echo "-- Copy demo pages"
