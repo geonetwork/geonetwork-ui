@@ -1,13 +1,15 @@
 <!-- Record list item: List Small -->
 <div class="mb-4">
   <div
-    class="h-full flex sm:flex-row flex-col p-5 items-center sm:justify-start justify-center text-center sm:text-left bg-white hover:bg-gray-100 border-gray-200 border rounded-sm transition duration-200"
+    class="flex sm:flex-row flex-col p-5 items-center sm:justify-start justify-center text-center sm:text-left bg-white hover:bg-gray-100 border-gray-200 border rounded-sm transition duration-200"
   >
     <div class="flex-grow">
       <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
         {{ record.title }}
       </h1>
-      <p class="leading-relaxed mb-3 text-gray-700 text-sm whitespace-pre-line">
+      <p
+        class="leading-relaxed mb-3 text-gray-700 text-sm whitespace-pre-line clamp-3"
+      >
         {{ record.abstract }}
       </p>
 
