@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   Input,
+  OnChanges,
   OnInit,
   SimpleChanges,
   ViewChild,
@@ -10,10 +11,10 @@ import {
 import { ColorService } from '@lib/common'
 import { Feature } from 'geojson'
 import { asArray, asString } from 'ol/color'
+import { isEmpty } from 'ol/extent'
 import GeoJSON from 'ol/format/GeoJSON'
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer'
 import Map from 'ol/Map'
-import { isEmpty } from 'ol/extent'
 import { transform } from 'ol/proj'
 import { OSM, Vector as VectorSource } from 'ol/source'
 import { Fill, Stroke, Style } from 'ol/style'
@@ -28,7 +29,7 @@ const PADDING = 50
   styleUrls: ['./data-import-validation-map-panel.css'],
 })
 export class DataImportValidationMapPanelComponent
-  implements OnInit, AfterViewInit {
+  implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('map') mapElt: ElementRef
 
   @Input() showProperties = false
@@ -74,7 +75,9 @@ export class DataImportValidationMapPanelComponent
   }
 
   fit() {
-    if (isEmpty(this.source.getExtent())) return
+    if (isEmpty(this.source.getExtent())) {
+      return
+    }
     this.map.getView().fit(this.source.getExtent(), {
       padding:
         this.padding.length === 0 ? Array(4).fill(PADDING) : this.padding,
@@ -84,7 +87,9 @@ export class DataImportValidationMapPanelComponent
 
   ngOnChanges(changes: SimpleChanges) {
     const geoJson = changes.geoJson.currentValue
-    if (!geoJson || !this.source) return
+    if (!geoJson || !this.source) {
+      return
+    }
     this.source.clear()
     this.source.addFeatures(
       geoJson

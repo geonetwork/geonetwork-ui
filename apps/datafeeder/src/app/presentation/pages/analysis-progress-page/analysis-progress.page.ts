@@ -41,7 +41,7 @@ export class AnalysisProgressPageComponent implements OnInit, OnDestroy {
                 true
               ),
               map((job: UploadJobStatusApiModel) => {
-                const done = job.status == 'DONE'
+                const done = job.status === 'DONE'
                 this.router.navigate([done ? 'validation' : '/'], {
                   relativeTo: this.activatedRoute,
                   queryParams: done ? {} : { error: 'analysis' },

@@ -35,7 +35,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
 
   geoJSONBBox: object
 
-  numOfEntities: number = 0
+  numOfEntities = 0
   private routeParamsSub: Subscription
   private rootId: number
   private format = new GeoJSON({})
@@ -53,7 +53,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
       this.fileUploadApiService
         .findUploadJob(id)
         .subscribe((job: UploadJobStatusApiModel) => {
-          if (job.status == 'ERROR') {
+          if (job.status === 'ERROR') {
             this.router.navigate(['/'], {
               relativeTo: this.activatedRoute,
               queryParams: { error: 'analysis' },

@@ -13,9 +13,9 @@ import {
 })
 export class ButtonComponent implements OnInit {
   @Input() type: 'primary' | 'secondary' | 'default' = 'default'
-  @Input() extraClass: string = ''
+  @Input() extraClass = ''
 
-  classList: string = ''
+  classList = ''
 
   get color() {
     switch (this.type) {

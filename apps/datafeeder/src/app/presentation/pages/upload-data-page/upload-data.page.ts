@@ -17,13 +17,14 @@ export class UploadDataPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
-      this.error = params['error']
-        ? {
-            title: 'datafeeder.upload.error.title.analysis',
-            subtitle: '',
-            type: UploadDataErrorType.ANALYSIS,
-          }
-        : undefined
+      this.error =
+        'error' in params
+          ? {
+              title: 'datafeeder.upload.error.title.analysis',
+              subtitle: '',
+              type: UploadDataErrorType.ANALYSIS,
+            }
+          : undefined
       // Remove error param from QS, without reloading
       this.router.navigate([], {
         relativeTo: this.activatedRoute,

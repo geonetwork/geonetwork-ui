@@ -10,7 +10,7 @@ import { of } from 'rxjs'
 describe('AnalysisProgress.PageComponent', () => {
   let component: AnalysisProgressPageComponent
   let fixture: ComponentFixture<AnalysisProgressPageComponent>
-  let findUploadJob = jest.fn()
+  const findUploadJob = jest.fn()
   findUploadJob.mockReturnValue(of('id'))
 
   beforeEach(async(() => {

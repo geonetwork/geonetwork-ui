@@ -8,7 +8,7 @@ import { UploadDataPageComponent } from './upload-data.page'
 describe('UploadDataComponent', () => {
   let component: UploadDataPageComponent
   let fixture: ComponentFixture<UploadDataPageComponent>
-  let activatedRoute = { queryParams: new BehaviorSubject({}) }
+  const activatedRoute = { queryParams: new BehaviorSubject({}) }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
