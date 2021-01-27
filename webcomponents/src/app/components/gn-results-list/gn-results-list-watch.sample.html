@@ -10,9 +10,19 @@
     <script src="gn-wc.js"></script>
     <gn-results-list
       api-url="https://apps.titellus.net/geonetwork/srv/api"
-      size="5"
+      size="10"
       primary-color="#343e9c"
       layout="TITLE"
+      filter="GRID"
     ></gn-results-list>
+    <div>
+      <button id="changeSizeBtn" onclick="moreRecords()">Load more ...</button>
+    </div>
   </body>
+  <script>
+    function moreRecords() {
+      const wc = document.getElementsByTagName('gn-results-list')[0]
+      wc.size = parseInt(wc.size) + 10
+    }
+  </script>
 </html>
