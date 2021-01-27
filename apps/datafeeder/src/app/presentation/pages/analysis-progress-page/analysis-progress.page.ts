@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { LogService } from '@lib/common'
 import {
   FileUploadApiService,
-  UploadJobStatusApiModel
+  UploadJobStatusApiModel,
 } from '@lib/datafeeder-api'
 import { interval, Subscription } from 'rxjs'
 import { flatMap, map, takeWhile, tap } from 'rxjs/operators'

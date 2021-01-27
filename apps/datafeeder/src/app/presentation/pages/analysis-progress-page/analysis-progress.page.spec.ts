@@ -22,7 +22,7 @@ describe('AnalysisProgress.PageComponent', () => {
         {
           provide: FileUploadApiService,
           useValue: {
-            findUploadJob
+            findUploadJob,
           },
         },
         { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
@@ -36,11 +36,11 @@ describe('AnalysisProgress.PageComponent', () => {
     fixture.detectChanges()
   })
 
-  it('should create', done => {
+  it('should create', (done) => {
     expect(component).toBeTruthy()
     setTimeout(() => {
       expect(findUploadJob).toHaveBeenCalled()
       done()
-    }, 150);
+    }, 150)
   })
 })

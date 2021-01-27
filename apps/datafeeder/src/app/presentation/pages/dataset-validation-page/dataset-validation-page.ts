@@ -2,8 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { LogService } from '@lib/common'
 import {
-  BoundingBoxApiModel, FileUploadApiService,
-  UploadJobStatusApiModel
+  BoundingBoxApiModel,
+  FileUploadApiService,
+  UploadJobStatusApiModel,
 } from '@lib/datafeeder-api'
 import Feature from 'ol/Feature'
 import GeoJSON from 'ol/format/GeoJSON'
@@ -65,7 +66,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
 
           forkJoin([
             this.fileUploadApiService.getBounds(id, dataset.name),
-            this.fileUploadApiService.getSampleFeature(id, dataset.name)
+            this.fileUploadApiService.getSampleFeature(id, dataset.name),
           ]).subscribe(([bbox, feature]) => {
             const { minx, miny, maxx, maxy, crs } = bbox as BoundingBoxApiModel
             this.geoJSONBBox = this.format.writeFeatureObject(

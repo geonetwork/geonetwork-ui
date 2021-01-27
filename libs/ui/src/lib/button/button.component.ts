@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core'
 
 @Component({
   selector: 'ui-button',
@@ -10,7 +15,7 @@ export class ButtonComponent implements OnInit {
   @Input() type: 'primary' | 'secondary' | 'default' = 'default'
   @Input() extraClass: string = ''
 
-  classList: string = ''
+  classList: string = ''
 
   get color() {
     switch (this.type) {

@@ -8,7 +8,7 @@ import { UploadDataPageComponent } from './upload-data.page'
 describe('UploadDataComponent', () => {
   let component: UploadDataPageComponent
   let fixture: ComponentFixture<UploadDataPageComponent>
-  let activatedRoute = { queryParams: new BehaviorSubject({})}
+  let activatedRoute = { queryParams: new BehaviorSubject({}) }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -18,9 +18,9 @@ describe('UploadDataComponent', () => {
       providers: [
         {
           provide: ActivatedRoute,
-          useValue: activatedRoute
-        }
-      ]
+          useValue: activatedRoute,
+        },
+      ],
     }).compileComponents()
   }))
 
@@ -38,7 +38,7 @@ describe('UploadDataComponent', () => {
   })
 
   it('should display error if query param', () => {
-    activatedRoute.queryParams.next({error: 'analysis'})
+    activatedRoute.queryParams.next({ error: 'analysis' })
     fixture = TestBed.createComponent(UploadDataPageComponent)
     component = fixture.componentInstance
     fixture.detectChanges()

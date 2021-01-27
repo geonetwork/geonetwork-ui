@@ -20,7 +20,7 @@ import { Fill, Stroke, Style } from 'ol/style'
 import View from 'ol/View'
 
 const DEFAULT_PRIMARY_COLOR = '#9a9a9a'
-const PADDING = 50
+const PADDING = 50
 
 @Component({
   selector: 'app-data-import-validation-map-panel',
@@ -66,7 +66,7 @@ export class DataImportValidationMapPanelComponent
       view: new View({
         center: transform([0, 0], 'EPSG:4326', 'EPSG:3857'),
         zoom: 1,
-        constrainResolution: true
+        constrainResolution: true,
       }),
     })
 
@@ -76,7 +76,8 @@ export class DataImportValidationMapPanelComponent
   fit() {
     if (isEmpty(this.source.getExtent())) return
     this.map.getView().fit(this.source.getExtent(), {
-      padding: this.padding.length === 0 ? Array(4).fill(PADDING) : this.padding,
+      padding:
+        this.padding.length === 0 ? Array(4).fill(PADDING) : this.padding,
       constrainResolution: false,
     })
   }
