@@ -23,6 +23,7 @@ import {
 import { CustomHttpParameterCodec } from '../encoder'
 import { Observable } from 'rxjs'
 
+import { BoundingBoxApiModel } from '../model/models'
 import { UploadJobStatusApiModel } from '../model/models'
 
 import { BASE_PATH, COLLECTION_FORMATS } from '../variables'
@@ -121,80 +122,6 @@ export class FileUploadApiService {
       throw Error('key may not be null if value is not object or array')
     }
     return httpParams
-  }
-
-  /**
-   * Start the analysis process for the uploaded file package
-   * @param jobId Unique job identifier
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public analyze(
-    jobId: string,
-    observe?: 'body',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: undefined }
-  ): Observable<any>
-  public analyze(
-    jobId: string,
-    observe?: 'response',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: undefined }
-  ): Observable<HttpResponse<any>>
-  public analyze(
-    jobId: string,
-    observe?: 'events',
-    reportProgress?: boolean,
-    options?: { httpHeaderAccept?: undefined }
-  ): Observable<HttpEvent<any>>
-  public analyze(
-    jobId: string,
-    observe: any = 'body',
-    reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: undefined }
-  ): Observable<any> {
-    if (jobId === null || jobId === undefined) {
-      throw new Error(
-        'Required parameter jobId was null or undefined when calling analyze.'
-      )
-    }
-
-    let headers = this.defaultHeaders
-
-    let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept
-    if (httpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = []
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
-    }
-    if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected)
-    }
-
-    let responseType: 'text' | 'json' = 'json'
-    if (
-      httpHeaderAcceptSelected &&
-      httpHeaderAcceptSelected.startsWith('text')
-    ) {
-      responseType = 'text'
-    }
-
-    return this.httpClient.post<any>(
-      `${this.configuration.basePath}/upload/${encodeURIComponent(
-        String(jobId)
-      )}/analyze`,
-      null,
-      {
-        responseType: <any>responseType,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress,
-      }
-    )
   }
 
   /**
@@ -391,6 +318,242 @@ export class FileUploadApiService {
   }
 
   /**
+   * Get the bounding box of the dataset, optionally indicating the CRS and whether to reproject from the native CRS to the new one
+   * @param jobId Unique job identifier
+   * @param typeName Feature type name
+   * @param srs Optional, coordinate reference system (e.g. \&#39;EPSG:3857\&#39;)
+   * @param srsReproject Optional, whether to reproject from the native CRS to the one provided in the srs parameter. If false or not provided, the srs parameter overrides the native CRS
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getBounds(
+    jobId: string,
+    typeName: string,
+    srs?: string,
+    srsReproject?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<BoundingBoxApiModel>
+  public getBounds(
+    jobId: string,
+    typeName: string,
+    srs?: string,
+    srsReproject?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpResponse<BoundingBoxApiModel>>
+  public getBounds(
+    jobId: string,
+    typeName: string,
+    srs?: string,
+    srsReproject?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<HttpEvent<BoundingBoxApiModel>>
+  public getBounds(
+    jobId: string,
+    typeName: string,
+    srs?: string,
+    srsReproject?: boolean,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/json' }
+  ): Observable<any> {
+    if (jobId === null || jobId === undefined) {
+      throw new Error(
+        'Required parameter jobId was null or undefined when calling getBounds.'
+      )
+    }
+    if (typeName === null || typeName === undefined) {
+      throw new Error(
+        'Required parameter typeName was null or undefined when calling getBounds.'
+      )
+    }
+
+    let queryParameters = new HttpParams({ encoder: this.encoder })
+    if (srs !== undefined && srs !== null) {
+      queryParameters = this.addToHttpParams(queryParameters, <any>srs, 'srs')
+    }
+    if (srsReproject !== undefined && srsReproject !== null) {
+      queryParameters = this.addToHttpParams(
+        queryParameters,
+        <any>srsReproject,
+        'srs_reproject'
+      )
+    }
+
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/json']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.get<BoundingBoxApiModel>(
+      `${this.configuration.basePath}/upload/${encodeURIComponent(
+        String(jobId)
+      )}/${encodeURIComponent(String(typeName))}/bounds`,
+      {
+        params: queryParameters,
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
+   * Obtain a sample dataset feature in GeoJSON format, optionally specifying a feature index, crs, and/or dataset\&#39;s character encoding. The response encoding is always UTF-8. The \&#39;encoding\&#39; parameter can be used to force reading the native data in a different charset.
+   * @param jobId Unique job identifier
+   * @param typeName Feature type name
+   * @param featureIndex Optional feature index, if unspecified, the first feature (index 0) is returned
+   * @param encoding Optional, force dataset encoding
+   * @param srs Optional, coordinate reference system (e.g. \&#39;EPSG:3857\&#39;)
+   * @param srsReproject Optional, whether to reproject from the native CRS to the one provided in the srs parameter. If false or not provided, the srs parameter overrides the native CRS
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getSampleFeature(
+    jobId: string,
+    typeName: string,
+    featureIndex?: number,
+    encoding?: string,
+    srs?: string,
+    srsReproject?: boolean,
+    observe?: 'body',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/geo+json' }
+  ): Observable<object>
+  public getSampleFeature(
+    jobId: string,
+    typeName: string,
+    featureIndex?: number,
+    encoding?: string,
+    srs?: string,
+    srsReproject?: boolean,
+    observe?: 'response',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/geo+json' }
+  ): Observable<HttpResponse<object>>
+  public getSampleFeature(
+    jobId: string,
+    typeName: string,
+    featureIndex?: number,
+    encoding?: string,
+    srs?: string,
+    srsReproject?: boolean,
+    observe?: 'events',
+    reportProgress?: boolean,
+    options?: { httpHeaderAccept?: 'application/geo+json' }
+  ): Observable<HttpEvent<object>>
+  public getSampleFeature(
+    jobId: string,
+    typeName: string,
+    featureIndex?: number,
+    encoding?: string,
+    srs?: string,
+    srsReproject?: boolean,
+    observe: any = 'body',
+    reportProgress: boolean = false,
+    options?: { httpHeaderAccept?: 'application/geo+json' }
+  ): Observable<any> {
+    if (jobId === null || jobId === undefined) {
+      throw new Error(
+        'Required parameter jobId was null or undefined when calling getSampleFeature.'
+      )
+    }
+    if (typeName === null || typeName === undefined) {
+      throw new Error(
+        'Required parameter typeName was null or undefined when calling getSampleFeature.'
+      )
+    }
+
+    let queryParameters = new HttpParams({ encoder: this.encoder })
+    if (featureIndex !== undefined && featureIndex !== null) {
+      queryParameters = this.addToHttpParams(
+        queryParameters,
+        <any>featureIndex,
+        'featureIndex'
+      )
+    }
+    if (encoding !== undefined && encoding !== null) {
+      queryParameters = this.addToHttpParams(
+        queryParameters,
+        <any>encoding,
+        'encoding'
+      )
+    }
+    if (srs !== undefined && srs !== null) {
+      queryParameters = this.addToHttpParams(queryParameters, <any>srs, 'srs')
+    }
+    if (srsReproject !== undefined && srsReproject !== null) {
+      queryParameters = this.addToHttpParams(
+        queryParameters,
+        <any>srsReproject,
+        'srs_reproject'
+      )
+    }
+
+    let headers = this.defaultHeaders
+
+    let httpHeaderAcceptSelected: string | undefined =
+      options && options.httpHeaderAccept
+    if (httpHeaderAcceptSelected === undefined) {
+      // to determine the Accept header
+      const httpHeaderAccepts: string[] = ['application/geo+json']
+      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
+        httpHeaderAccepts
+      )
+    }
+    if (httpHeaderAcceptSelected !== undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
+    }
+
+    let responseType: 'text' | 'json' = 'json'
+    if (
+      httpHeaderAcceptSelected &&
+      httpHeaderAcceptSelected.startsWith('text')
+    ) {
+      responseType = 'text'
+    }
+
+    return this.httpClient.get<object>(
+      `${this.configuration.basePath}/upload/${encodeURIComponent(
+        String(jobId)
+      )}/${encodeURIComponent(String(typeName))}/sampleFeature`,
+      {
+        params: queryParameters,
+        responseType: <any>responseType,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress,
+      }
+    )
+  }
+
+  /**
    * Remove a job and all its resources (e.g. temporary files). Does not unpublish. Use abort&#x3D;true to abort a running analysis or publishing job
    * @param jobId Unique job identifier
    * @param abort If true, abort the dataset analysis or publishing, if running. Defaults to false
@@ -479,7 +642,7 @@ export class FileUploadApiService {
   }
 
   /**
-   * Upload one or multiple files to the server, and get a handle to the job. Once the files are uploaded, the analysis process should be triggered through \&quot;POST /upload/{jobId}/analyze\&quot;
+   * Upload one or multiple files to the server, and get a handle to the job. Once the files are uploaded, the analysis process is automatically triggered. Its status can be polled with GET /upload/{jobId}
    * @param filename
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.

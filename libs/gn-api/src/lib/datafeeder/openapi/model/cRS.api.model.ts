@@ -21,5 +21,5 @@ export interface CRSApiModel {
   /**
    * Coordinate Reference System\'s Well Known Text representation. Despite the \'srs\' identifier being found or not, the WKT representation is still available.
    */
-  WKT?: string
+  wkt?: string
 }
