@@ -14,13 +14,10 @@ export class ResultsLayoutComponent implements OnInit {
       value: v,
     }
   })
-  currentLayout$: Observable<string>
 
-  constructor(private searchFacade: SearchFacade) {}
+  constructor(public searchFacade: SearchFacade) {}
 
-  ngOnInit(): void {
-    this.currentLayout$ = this.searchFacade.layout$
-  }
+  ngOnInit(): void {}
 
   change(layout: any) {
     this.searchFacade.setResultsLayout(layout)
