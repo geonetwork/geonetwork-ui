@@ -16,6 +16,7 @@ import { SortByComponent } from './sort-by/sort-by.component'
 import { SearchEffects } from './state/effects'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './state/reducer'
 import { ResultsHitsContainerComponent } from './results-hits-number/results-hits.container.component'
+import { SearchStateContainerDirective } from './state/container/search-state.container.directive'
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ResultsHitsContainerComponent } from './results-hits-number/results-hit
     RecordsMetricsComponent,
     ResultsListContainerComponent,
     ResultsHitsContainerComponent,
+    SearchStateContainerDirective,
   ],
   imports: [
     CommonModule,
@@ -48,6 +50,7 @@ import { ResultsHitsContainerComponent } from './results-hits-number/results-hit
     ResultsListContainerComponent,
     ResultsHitsContainerComponent,
     FacetsModule,
+    SearchStateContainerDirective,
   ],
 })
 export class LibSearchModule {}
