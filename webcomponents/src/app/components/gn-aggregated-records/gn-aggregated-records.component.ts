@@ -4,9 +4,8 @@ import {
   Input,
   ViewEncapsulation,
 } from '@angular/core'
+import { SearchFacade } from '@lib/search'
 import { BaseComponent } from '../base.component'
-import { Store } from '@ngrx/store'
-import { SearchState, UpdateFilters } from '@lib/search'
 
 @Component({
   selector: 'wc-gn-aggregated-records',
@@ -22,8 +21,8 @@ export class GnAggregatedRecordsComponent extends BaseComponent {
 
   activeFilter = null
 
-  constructor(private store: Store<SearchState>) {
-    super()
+  constructor(facade: SearchFacade) {
+    super(facade)
   }
 
   ngOnInit(): void {
@@ -32,7 +31,7 @@ export class GnAggregatedRecordsComponent extends BaseComponent {
 
   setFilter(value: string) {
     this.activeFilter = `+${this.aggregationField}:"${value}"`
-    this.store.dispatch(new UpdateFilters({ any: this.activeFilter }))
+    this.facade.updateFilters({ any: this.activeFilter })
   }
 
   clearFilter() {

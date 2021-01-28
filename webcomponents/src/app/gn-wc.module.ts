@@ -3,10 +3,11 @@ import { Injector, NgModule } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
 import { I18nModule, TRANSLATE_DEFAULT_CONFIG } from '@lib/common'
 import { Configuration } from '@lib/gn-api'
-import { LibSearchModule } from '@lib/search'
+import { LibSearchModule, SearchFacade } from '@lib/search'
 import { UiModule } from '@lib/ui'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
+import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { TranslateModule } from '@ngx-translate/core'
 import { apiConfiguration, BaseComponent } from './components/base.component'
 import { GnAggregatedRecordsComponent } from './components/gn-aggregated-records/gn-aggregated-records.component'
@@ -34,12 +35,14 @@ const CUSTOM_ELEMENTS: any[] = [
     EffectsModule.forRoot(),
     I18nModule,
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+    StoreDevtoolsModule.instrument(),
   ],
   providers: [
     {
       provide: Configuration,
       useValue: apiConfiguration,
     },
+    SearchFacade,
   ],
 })
 export class GnWcModule {

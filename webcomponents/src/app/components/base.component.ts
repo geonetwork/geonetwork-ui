@@ -7,6 +7,7 @@ import {
 } from '@angular/core'
 import { ColorService } from '@lib/common'
 import { Configuration } from '@lib/gn-api'
+import { SearchFacade } from '@lib/search'
 
 export const apiConfiguration = new Configuration()
 
@@ -16,6 +17,7 @@ export const apiConfiguration = new Configuration()
 })
 export class BaseComponent implements OnInit, OnChanges {
   @Input() apiUrl = '/'
+  @Input() searchId: string
   @Input() primaryColor = '#9a9a9a'
   @Input() secondaryColor = '#767676'
   @Input() mainColor = '#1a1a1a'
@@ -23,7 +25,7 @@ export class BaseComponent implements OnInit, OnChanges {
 
   isInitialized = false
 
-  constructor() {}
+  constructor(protected facade: SearchFacade) {}
 
   ngOnInit(): void {}
 
@@ -36,6 +38,8 @@ export class BaseComponent implements OnInit, OnChanges {
         this.mainColor,
         this.backgroundColor
       )
+      this.isInitialized = true
+      this.facade.init(this.searchId)
     }
   }
 }

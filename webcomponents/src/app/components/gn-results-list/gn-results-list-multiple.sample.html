@@ -15,11 +15,17 @@
       layout="TITLE"
       filter="+tag.default:forest"
     ></gn-results-list>
+    <gn-facets
+      api-url="https://apps.titellus.net/geonetwork/srv/api"
+      facet-config='{"tag.default":{"terms":{"field":"tag.default","include":".*","size": 10}}}'
+    ></gn-facets>
 
     <h2>Marine</h2>
     <gn-results-list
       api-url="https://apps.titellus.net/geonetwork/srv/api"
       size="5"
+      primary-color="#343e9c"
+      search-id="marine"
       filter="+tag.default:marine"
       layout="TITLE"
     ></gn-results-list>
