@@ -6,6 +6,8 @@ import {
 import { Action } from '@ngrx/store'
 import { SearchStateParams } from './reducer'
 
+export const ADD_SEARCH = '[Search] Add search instance'
+
 export const SET_FILTERS = '[Search] Set Filters'
 export const UPDATE_FILTERS = '[Search] Update Filters'
 export const SET_SEARCH = '[Search] Set overall search configuration'
@@ -34,6 +36,11 @@ abstract class AbstractAction {
   protected constructor(id?: string) {
     this.id = id || DEFAULT_SEARCH_KEY
   }
+}
+
+export class AddSearch implements Action {
+  readonly type = ADD_SEARCH
+  constructor(public id: string) {}
 }
 
 export class SetFilters extends AbstractAction implements Action {
@@ -178,6 +185,7 @@ export class PatchResultsAggregations extends AbstractAction implements Action {
 }
 
 export type SearchActions =
+  | AddSearch
   | SetFilters
   | UpdateFilters
   | SetSearch

@@ -25,6 +25,28 @@ describe('Search Reducer', () => {
     })
   })
 
+  describe('ADD_SEARCH', () => {
+    let action
+    describe('when search already in the state', () => {
+      beforeEach(() => {
+        action = new fromActions.AddSearch('default')
+      })
+      it('does nothing', () => {
+        const state = reducer(initialState, action)
+        expect(state).toEqual(initialState)
+      })
+    })
+    describe('when search is not in the state', () => {
+      beforeEach(() => {
+        action = new fromActions.AddSearch('main')
+      })
+      it('create the search in the state for the given id', () => {
+        const state = reducer(initialState, action)
+        expect(state).toEqual({ ...initialState, main: initialState.default })
+      })
+    })
+  })
+
   describe('SetFilters action', () => {
     it('should add new filters', () => {
       const action = new fromActions.SetFilters({

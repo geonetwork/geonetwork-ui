@@ -57,12 +57,14 @@ export function reducer(
 ): SearchState {
   const { id } = action
   if (id) {
-    const stateSearch = state[id] || initSearch()
-    const reducedStateSearch = reducerSearch(stateSearch, action)
-    if (reducedStateSearch) {
+    let stateSearch = state[id] || initSearch()
+    if (action.type !== fromActions.ADD_SEARCH) {
+      stateSearch = reducerSearch(stateSearch, action)
+    }
+    if (stateSearch) {
       return {
         ...state,
-        [id]: reducedStateSearch,
+        [id]: stateSearch,
       }
     }
   }
