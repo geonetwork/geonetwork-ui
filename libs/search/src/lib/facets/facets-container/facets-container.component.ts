@@ -1,16 +1,9 @@
 import { Component, OnInit } from '@angular/core'
 import { EsRequestAggTerm } from '@lib/common'
-import { SearchFacade } from '../../state/search.facade'
-import { select, Store } from '@ngrx/store'
-import { combineLatest } from 'rxjs'
+import { combineLatest, Observable } from 'rxjs'
 import { map, take, tap } from 'rxjs/operators'
-import { SetFilters } from '../../state/actions'
-import { SearchState } from '../../state/reducer'
-import {
-  getSearchConfigAggregations,
-  getSearchFilters,
-  getSearchResultsAggregations,
-} from '../../state/selectors'
+import { ModelBlock } from '../../../../../ui/src/lib/facets/facets.model'
+import { SearchFacade } from '../../state/search.facade'
 import { FacetsService } from '../facets.service'
 
 @Component({
@@ -19,40 +12,40 @@ import { FacetsService } from '../facets.service'
   styleUrls: ['./facets-container.component.css'],
 })
 export class FacetsContainerComponent implements OnInit {
-  models$ = combineLatest([
-    this.store.select(getSearchConfigAggregations),
-    this.store.select(getSearchResultsAggregations),
-  ]).pipe(
-    map(([configAggregations, resultsAggregations]) => {
-      return this.facets.createFacetModel(
-        configAggregations,
-        resultsAggregations,
-        false
-      )
-    })
-  )
-
-  selectedPaths$ = this.store.pipe(
-    select(getSearchFilters),
-    map((filters) => this.findSelectedPaths(filters))
-  )
+  selectedPaths$: Observable<string[][]>
+  models$: Observable<ModelBlock[]>
 
   constructor(
-    private store: Store<SearchState>,
     private facets: FacetsService,
     private searchFacade: SearchFacade
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.selectedPaths$ = this.searchFacade.searchFilters$.pipe(
+      map((filters) => this.findSelectedPaths(filters))
+    )
+
+    this.models$ = combineLatest([
+      this.searchFacade.configAggregations$,
+      this.searchFacade.resultsAggregations$,
+    ]).pipe(
+      map(([configAggregations, resultsAggregations]) => {
+        return this.facets.createFacetModel(
+          configAggregations,
+          resultsAggregations,
+          false
+        )
+      })
+    )
+  }
 
   onItemSelected(path: string[], selected) {
-    this.store
+    this.searchFacade.searchFilters$
       .pipe(
         take(1),
-        select(getSearchFilters),
         tap((filters) => {
           const newFilters = this.computeNewFilters(filters, path, selected)
-          this.store.dispatch(new SetFilters(newFilters))
+          this.searchFacade.setFilters(newFilters)
         })
       )
       .subscribe()
@@ -65,7 +58,7 @@ export class FacetsContainerComponent implements OnInit {
    *
    * @param filters Search filters from state
    */
-  private findSelectedPaths(filters) {
+  private findSelectedPaths(filters): string[][] {
     const discoveredObjects = [] // For checking for cyclic object
     const path = []
     const results = []

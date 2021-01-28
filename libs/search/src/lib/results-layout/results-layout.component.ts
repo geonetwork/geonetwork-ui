@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core'
-import { select, Store } from '@ngrx/store'
-import { SetResultsLayout } from '../state/actions'
-import { SearchState } from '../state/reducer'
-import { getSearchResultsLayout } from '../state/selectors'
 import { ResultsListLayout } from '@lib/common'
+import { Observable } from 'rxjs'
+import { SearchFacade } from '../state/search.facade'
 
 @Component({
   selector: 'search-results-layout',
@@ -16,13 +14,15 @@ export class ResultsLayoutComponent implements OnInit {
       value: v,
     }
   })
-  currentLayout$ = this.store.pipe(select(getSearchResultsLayout))
+  currentLayout$: Observable<string>
 
-  constructor(private store: Store<SearchState>) {}
+  constructor(private searchFacade: SearchFacade) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.currentLayout$ = this.searchFacade.layout$
+  }
 
   change(layout: any) {
-    this.store.dispatch(new SetResultsLayout(layout))
+    this.searchFacade.setResultsLayout(layout)
   }
 }

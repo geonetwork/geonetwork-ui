@@ -1,11 +1,11 @@
+import { Component, DebugElement, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
+import { SearchFacade } from '@lib/search'
+import { TranslateModule } from '@ngx-translate/core'
+import { of } from 'rxjs'
 
 import { ResultsHitsContainerComponent } from './results-hits.container.component'
-import { Component, DebugElement, Input, NO_ERRORS_SCHEMA } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
-import { StoreModule } from '@ngrx/store'
-import { initialState, reducer, SEARCH_FEATURE_KEY } from '@lib/search'
 
 @Component({
   selector: 'ui-results-hits-number',
@@ -14,6 +14,11 @@ import { initialState, reducer, SEARCH_FEATURE_KEY } from '@lib/search'
 class ResultsHitsNumberComponentMock {
   @Input() hits
   @Input() loading: boolean
+}
+
+const searchFacadeMock = {
+  isLoading$: of(false),
+  resultsHits$: of(null),
 }
 
 describe('ResultsHitsContainerComponent', () => {
@@ -28,12 +33,12 @@ describe('ResultsHitsContainerComponent', () => {
         ResultsHitsContainerComponent,
         ResultsHitsNumberComponentMock,
       ],
-      imports: [
-        StoreModule.forRoot({}),
-        StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
-          initialState,
-        }),
-        TranslateModule.forRoot(),
+      imports: [TranslateModule.forRoot()],
+      providers: [
+        {
+          provide: SearchFacade,
+          useValue: searchFacadeMock,
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
