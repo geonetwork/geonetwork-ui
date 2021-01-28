@@ -39,6 +39,9 @@ const initialStateMock = {
       aggregations: ES_FIXTURE_AGGS_REQUEST,
     },
   },
+  main: {
+    ...initialStateSearchMock,
+  },
 }
 
 const searchServiceMock = {
@@ -123,11 +126,11 @@ describe('Effects', () => {
     })
     it('clear results list on setSearch action', () => {
       actions$ = hot('-a---', {
-        a: new SetSearch({ filters: { any: 'abcd' } }),
+        a: new SetSearch({ filters: { any: 'abcd' } }, 'main'),
       })
       const expected = hot('-(bc)', {
-        b: new ClearResults(),
-        c: new RequestMoreResults(),
+        b: new ClearResults('main'),
+        c: new RequestMoreResults('main'),
       })
 
       expect(effects.clearResults$).toBeObservable(expected)
@@ -136,9 +139,9 @@ describe('Effects', () => {
 
   describe('scroll$', () => {
     it('clear results list on sortBy action', () => {
-      actions$ = hot('-a---', { a: new Scroll() })
+      actions$ = hot('-a---', { a: new Scroll('main') })
       const expected = hot('-(b)', {
-        b: new RequestMoreResults(),
+        b: new RequestMoreResults('main'),
       })
       expect(effects.scroll$).toBeObservable(expected)
     })
@@ -151,6 +154,17 @@ describe('Effects', () => {
         b: new AddResults([]),
         c: new SetResultsAggregations({ abc: {} }),
         d: new SetResultsHits(undefined),
+      })
+
+      expect(effects.loadResults$).toBeObservable(expected)
+    })
+
+    it('propagate action search id', () => {
+      actions$ = hot('-a-', { a: new RequestMoreResults('main') })
+      const expected = hot('-(bcd)-', {
+        b: new AddResults([], 'main'),
+        c: new SetResultsAggregations({ abc: {} }, 'main'),
+        d: new SetResultsHits(undefined, 'main'),
       })
 
       expect(effects.loadResults$).toBeObservable(expected)

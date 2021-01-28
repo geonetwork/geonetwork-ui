@@ -5,34 +5,35 @@ import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
 import { SearchResponse } from 'elasticsearch'
 import { of } from 'rxjs'
-import { map, switchMap, tap, withLatestFrom } from 'rxjs/operators'
+import { map, switchMap, withLatestFrom } from 'rxjs/operators'
 import { ElasticsearchMetadataModels } from '../elasticsearch/constant'
 import { ElasticsearchMapper } from '../elasticsearch/elasticsearch.mapper'
 import { ElasticsearchService } from '../elasticsearch/elasticsearch.service'
 import {
   AddResults,
   ClearResults,
-  RequestMoreOnAggregation,
-  RequestMoreResults,
+  PAGINATE,
+  PatchResultsAggregations,
   REQUEST_MORE_ON_AGGREGATION,
   REQUEST_MORE_RESULTS,
-  SetResultsAggregations,
-  SET_SORT_BY,
-  UPDATE_FILTERS,
+  RequestMoreOnAggregation,
+  RequestMoreResults,
+  SCROLL,
+  SearchActions,
   SET_FILTERS,
+  SET_INCLUDE_ON_AGGREGATION,
+  SET_PAGINATION,
   SET_SEARCH,
+  SET_SORT_BY,
+  SetIncludeOnAggregation,
+  SetResultsAggregations,
   SetResultsHits,
-  PatchResultsAggregations,
+  UPDATE_FILTERS,
   UPDATE_REQUEST_AGGREGATION_TERM,
   UpdateRequestAggregationTerm,
-  SET_INCLUDE_ON_AGGREGATION,
-  SetIncludeOnAggregation,
-  PAGINATE,
-  SCROLL,
-  SET_PAGINATION,
 } from './actions'
 import { SearchState } from './reducer'
-import { getSearchState, getSearchStateSearch } from './selectors'
+import { getSearchStateSearch } from './selectors'
 
 @Injectable()
 export class SearchEffects {
@@ -55,53 +56,67 @@ export class SearchEffects {
         SET_PAGINATION,
         PAGINATE
       ),
-      switchMap(() => of(new ClearResults(), new RequestMoreResults()))
+      switchMap((action: SearchActions) =>
+        of(new ClearResults(action.id), new RequestMoreResults(action.id))
+      )
     )
   )
 
   scroll$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SCROLL),
-      map(() => new RequestMoreResults())
+      map((action: SearchActions) => new RequestMoreResults(action.id))
     )
   )
 
   loadResults$ = createEffect(() =>
     this.actions$.pipe(
       ofType(REQUEST_MORE_RESULTS),
-      switchMap(() => this.authService.authReady()), // wait for auth to be known
-      withLatestFrom(this.store$.pipe(select(getSearchStateSearch))),
-      switchMap(([_, state]) =>
-        this.searchService.search(
-          'bucket',
-          JSON.stringify(
-            this.esService.search(state, ElasticsearchMetadataModels.SUMMARY)
-          )
+      switchMap((action: SearchActions) =>
+        this.authService.authReady().pipe(
+          withLatestFrom(
+            this.store$.pipe(select(getSearchStateSearch, action.id))
+          ),
+          switchMap(([_, state]) =>
+            this.searchService.search(
+              'bucket',
+              JSON.stringify(
+                this.esService.search(
+                  state,
+                  ElasticsearchMetadataModels.SUMMARY
+                )
+              )
+            )
+          ),
+          switchMap((response: SearchResponse<any>) => {
+            const records = this.esMapper.toRecordSummary(
+              response,
+              this.searchService.configuration.basePath
+            )
+            const aggregations = response.aggregations
+            return [
+              new AddResults(records, action.id),
+              new SetResultsAggregations(aggregations, action.id),
+              new SetResultsHits(response.hits.total, action.id),
+            ]
+          })
         )
-      ),
-      switchMap((response: SearchResponse<any>) => {
-        const records = this.esMapper.toRecordSummary(
-          response,
-          this.searchService.configuration.basePath
-        )
-        const aggregations = response.aggregations
-        return [
-          new AddResults(records),
-          new SetResultsAggregations(aggregations),
-          new SetResultsHits(response.hits.total),
-        ]
-      })
+      ) // wait for auth to be known
     )
   )
 
   loadMoreOnAggregation$ = createEffect(() => {
     return this.actions$.pipe(
       ofType<RequestMoreOnAggregation>(REQUEST_MORE_ON_AGGREGATION),
-      switchMap((action) =>
+      switchMap((action: RequestMoreOnAggregation) =>
         of(
-          new UpdateRequestAggregationTerm(action.key, {
-            increment: action.increment,
-          })
+          new UpdateRequestAggregationTerm(
+            action.key,
+            {
+              increment: action.increment,
+            },
+            action.id
+          )
         )
       )
     )
@@ -112,36 +127,45 @@ export class SearchEffects {
       ofType<SetIncludeOnAggregation>(SET_INCLUDE_ON_AGGREGATION),
       switchMap((action) =>
         of(
-          new UpdateRequestAggregationTerm(action.key, {
-            include: action.include,
-          })
+          new UpdateRequestAggregationTerm(
+            action.key,
+            {
+              include: action.include,
+            },
+            action.id
+          )
         )
       )
     )
   })
 
   upateRequestAggregationTerm$ = createEffect(() => {
-    let aggregationKey
     const updateTermAction$ = this.actions$.pipe(
       ofType<UpdateRequestAggregationTerm>(UPDATE_REQUEST_AGGREGATION_TERM)
     )
 
     return updateTermAction$.pipe(
-      tap((action) => (aggregationKey = action.key)),
-      switchMap(() => this.authService.authReady()), // wait for auth to be known
-      withLatestFrom(this.store$.pipe(select(getSearchStateSearch))),
-      switchMap(([_, state]) =>
-        this.searchService.search(
-          'bucket',
-          JSON.stringify(
-            this.esService.buildMoreOnAggregationPayload(state, aggregationKey)
-          )
+      switchMap((action) =>
+        this.authService.authReady().pipe(
+          withLatestFrom(this.store$.pipe(select(getSearchStateSearch))),
+          switchMap(([_, state]) =>
+            this.searchService.search(
+              'bucket',
+              JSON.stringify(
+                this.esService.buildMoreOnAggregationPayload(state, action.key)
+              )
+            )
+          ),
+          map((response: SearchResponse<any>) => {
+            const aggregations = response.aggregations
+            return new PatchResultsAggregations(
+              action.key,
+              aggregations,
+              action.id
+            )
+          })
         )
-      ),
-      map((response: SearchResponse<any>) => {
-        const aggregations = response.aggregations
-        return new PatchResultsAggregations(aggregationKey, aggregations)
-      })
+      ) // wait for auth to be known
     )
   })
 }
