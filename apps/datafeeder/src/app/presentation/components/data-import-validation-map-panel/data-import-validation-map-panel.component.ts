@@ -29,7 +29,7 @@ const PADDING = 50
   styleUrls: ['./data-import-validation-map-panel.css'],
 })
 export class DataImportValidationMapPanelComponent
-  implements OnInit, AfterViewInit, OnChanges {
+  implements OnInit, AfterViewInit {
   @ViewChild('map') mapElt: ElementRef
 
   @Input() showProperties = false
@@ -51,6 +51,18 @@ export class DataImportValidationMapPanelComponent
   ngOnInit(): void {
     this.selectedValue = this.footerList[0]
     this.vectorLayer = this.buildVectorLayer()
+
+    if (!this.geoJson) {
+      return
+    }
+    this.source.clear()
+    this.source.addFeatures(
+      this.geoJson
+        ? this.GeoJSON.readFeatures(this.geoJson, {
+            featureProjection: 'EPSG:3857',
+          })
+        : []
+    )
   }
 
   ngAfterViewInit() {
@@ -83,22 +95,6 @@ export class DataImportValidationMapPanelComponent
         this.padding.length === 0 ? Array(4).fill(PADDING) : this.padding,
       constrainResolution: false,
     })
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    const geoJson = changes.geoJson.currentValue
-    if (!geoJson || !this.source) {
-      return
-    }
-    this.source.clear()
-    this.source.addFeatures(
-      geoJson
-        ? this.GeoJSON.readFeatures(geoJson, {
-            featureProjection: 'EPSG:3857',
-          })
-        : []
-    )
-    this.fit()
   }
 
   getSecondaryColor(opacity: number = 1) {
