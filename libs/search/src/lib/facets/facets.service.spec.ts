@@ -103,7 +103,7 @@ describe('FacetsService', () => {
         const itemModel = blockModel.items[1]
         expect(itemModel.value).toBe('10000-20000')
         expect(itemModel.count).toBe(291)
-        expect(itemModel.path).toEqual(['resolutionScaleDenominator', 10000])
+        expect(itemModel.path).toEqual(['resolutionScaleDenominator', '10000'])
         expect(itemModel.query_string).toEqual(
           '+resolutionScaleDenominator:[10000 TO 20000}'
         )

@@ -81,7 +81,7 @@ export class FacetsService {
                 ? nextEntry[1].key
                 : '*'
               const value = lowerBound + '-' + upperBound
-              const itemPath = [...blockModel.path, lowerBound]
+              const itemPath = [...blockModel.path, lowerBound + '']
               const itemModel = {
                 value,
                 meta: entry[1].meta,
