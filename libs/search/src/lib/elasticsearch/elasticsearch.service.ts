@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { SortParams } from '@lib/common'
 import { NameList, SearchParams } from 'elasticsearch'
-import { SearchState } from '../state/reducer'
+import { SearchState, SearchStateSearch } from '../state/reducer'
 import { ElasticsearchMetadataModels, ElasticSearchSources } from './constant'
 
 @Injectable({
@@ -10,13 +10,16 @@ import { ElasticsearchMetadataModels, ElasticSearchSources } from './constant'
 export class ElasticsearchService {
   constructor() {}
 
-  search(state: SearchState, model: ElasticsearchMetadataModels): SearchParams {
+  search(
+    state: SearchStateSearch,
+    model: ElasticsearchMetadataModels
+  ): SearchParams {
     const payload = this.buildPayload(state)
     payload._source = ElasticSearchSources[model]
     return payload
   }
 
-  buildPayload(state: SearchState): SearchParams {
+  buildPayload(state: SearchStateSearch): SearchParams {
     const { size, sortBy, from } = state.params
     const sort: SortParams = sortBy
       ? sortBy.split(',').map((s) => {
@@ -38,7 +41,10 @@ export class ElasticsearchService {
     return payload
   }
 
-  buildMoreOnAggregationPayload(state: SearchState, key: string): SearchParams {
+  buildMoreOnAggregationPayload(
+    state: SearchStateSearch,
+    key: string
+  ): SearchParams {
     const payload = {
       aggregations: { [key]: state.config.aggregations[key] },
       size: 0,
@@ -47,7 +53,7 @@ export class ElasticsearchService {
     return payload
   }
 
-  partialBuildQuery(state: SearchState) {
+  partialBuildQuery(state: SearchStateSearch) {
     const filters = state.params.filters
     const { any, ...searchFilters } = filters
     const queryFilters = this.facetsToLuceneQuery(searchFilters)

@@ -4,8 +4,16 @@ import {
   ES_FIXTURE_AGGS_RESPONSE,
   ES_FIXTURE_AGGS_RESPONSE_MORE,
 } from '../elasticsearch/fixtures/aggregations-response'
+import { DEFAULT_SEARCH_KEY } from './actions'
 import * as fromActions from './actions'
-import { initialState, reducer, SearchStateParams } from './reducer'
+import {
+  initialState,
+  reducer,
+  reducerSearch,
+  SearchStateParams,
+} from './reducer'
+
+const initialStateSearch = initialState[DEFAULT_SEARCH_KEY]
 
 describe('Search Reducer', () => {
   describe('undefined action', () => {
@@ -17,24 +25,46 @@ describe('Search Reducer', () => {
     })
   })
 
+  describe('ADD_SEARCH', () => {
+    let action
+    describe('when search already in the state', () => {
+      beforeEach(() => {
+        action = new fromActions.AddSearch('default')
+      })
+      it('does nothing', () => {
+        const state = reducer(initialState, action)
+        expect(state).toEqual(initialState)
+      })
+    })
+    describe('when search is not in the state', () => {
+      beforeEach(() => {
+        action = new fromActions.AddSearch('main')
+      })
+      it('create the search in the state for the given id', () => {
+        const state = reducer(initialState, action)
+        expect(state).toEqual({ ...initialState, main: initialState.default })
+      })
+    })
+  })
+
   describe('SetFilters action', () => {
     it('should add new filters', () => {
       const action = new fromActions.SetFilters({
         any: 'blah',
         other: 'Some value',
       })
-      const state = reducer(initialState, action)
+      const state = reducerSearch(initialStateSearch, action)
       expect(state.params.filters).toEqual({ any: 'blah', other: 'Some value' })
     })
     it('should update defined filters and remove undefined filters', () => {
       const action = new fromActions.SetFilters({
         any: 'abc',
       })
-      const state = reducer(
+      const state = reducerSearch(
         {
-          ...initialState,
+          ...initialStateSearch,
           params: {
-            ...initialState.params,
+            ...initialStateSearch.params,
             filters: {
               any: 'def',
               other: 'Some value',
@@ -53,18 +83,18 @@ describe('Search Reducer', () => {
         any: 'blah',
         other: 'Some value',
       })
-      const state = reducer(initialState, action)
+      const state = reducerSearch(initialStateSearch, action)
       expect(state.params.filters).toEqual({ any: 'blah', other: 'Some value' })
     })
     it('should update defined filters and keep undefined filters', () => {
       const action = new fromActions.UpdateFilters({
         any: 'abc',
       })
-      const state = reducer(
+      const state = reducerSearch(
         {
-          ...initialState,
+          ...initialStateSearch,
           params: {
-            ...initialState.params,
+            ...initialStateSearch.params,
             filters: {
               any: 'def',
               other: 'Some value',
@@ -87,7 +117,7 @@ describe('Search Reducer', () => {
         },
       }
       const action = new fromActions.SetSearch(searchParams)
-      const state = reducer(initialState, action)
+      const state = reducerSearch(initialStateSearch, action)
       expect(state.params).toEqual(searchParams)
     })
   })
@@ -95,7 +125,7 @@ describe('Search Reducer', () => {
   describe('SetSortBy action', () => {
     it('should set sort by params', () => {
       const action = new fromActions.SetSortBy('fieldA')
-      const state = reducer(initialState, action)
+      const state = reducerSearch(initialStateSearch, action)
       expect(state.params.sortBy).toEqual('fieldA')
     })
   })
@@ -103,7 +133,7 @@ describe('Search Reducer', () => {
   describe('SetPagination action', () => {
     it('should set from and size', () => {
       const action = new fromActions.SetPagination(12, 15)
-      const state = reducer(initialState, action)
+      const state = reducerSearch(initialStateSearch, action)
       expect(state.params.from).toEqual(12)
       expect(state.params.size).toEqual(15)
     })
@@ -112,7 +142,7 @@ describe('Search Reducer', () => {
   describe('Paginate action', () => {
     it('should set from property and keep size', () => {
       const action = new fromActions.Paginate(30)
-      const state = reducer(initialState, action)
+      const state = reducerSearch(initialStateSearch, action)
       expect(state.params.from).toEqual(30)
       expect(state.params.size).toEqual(10)
     })
@@ -120,7 +150,7 @@ describe('Search Reducer', () => {
   describe('Scroll action', () => {
     it('increment `from` property with `size` value', () => {
       const action = new fromActions.Scroll()
-      const state = reducer(initialState, action)
+      const state = reducerSearch(initialStateSearch, action)
       expect(state.params.from).toEqual(10)
       expect(state.params.size).toEqual(10)
     })
@@ -129,7 +159,7 @@ describe('Search Reducer', () => {
   describe('Set result layout action', () => {
     it('should set result layout', () => {
       const action = new fromActions.SetResultsLayout(ResultsListLayout.CARD)
-      const state = reducer(initialState, action)
+      const state = reducerSearch(initialStateSearch, action)
       expect(state.resultsLayout).toEqual(ResultsListLayout.CARD)
     })
   })
@@ -138,11 +168,11 @@ describe('Search Reducer', () => {
     it('should add results to the list', () => {
       const payload = [{ title: 'record1' } as any, { title: 'record2' } as any]
       const action = new fromActions.AddResults(payload)
-      const state = reducer(
+      const state = reducerSearch(
         {
-          ...initialState,
+          ...initialStateSearch,
           results: {
-            ...initialState.results,
+            ...initialStateSearch.results,
             records: [{ title: 'abcd' } as any],
           },
         },
@@ -156,9 +186,9 @@ describe('Search Reducer', () => {
     it('should remove the loadingMore flag', () => {
       const payload = [{ title: 'record1' } as any]
       const action = new fromActions.AddResults(payload)
-      const state = reducer(
+      const state = reducerSearch(
         {
-          ...initialState,
+          ...initialStateSearch,
           loadingMore: true,
         },
         action
@@ -170,11 +200,11 @@ describe('Search Reducer', () => {
   describe('ClearResults action', () => {
     it('should clear the results list', () => {
       const action = new fromActions.ClearResults()
-      const state = reducer(
+      const state = reducerSearch(
         {
-          ...initialState,
+          ...initialStateSearch,
           results: {
-            ...initialState.results,
+            ...initialStateSearch.results,
             records: [{ title: 'abcd' } as any],
           },
         },
@@ -187,7 +217,7 @@ describe('Search Reducer', () => {
   describe('RequestMoreResults action', () => {
     it('should set the loadingMore flag', () => {
       const action = new fromActions.RequestMoreResults()
-      const state = reducer(initialState, action)
+      const state = reducerSearch(initialStateSearch, action)
       expect(state.loadingMore).toEqual(true)
     })
   })
@@ -196,11 +226,11 @@ describe('Search Reducer', () => {
     it('should replace the aggregations in the result', () => {
       const payload = ES_FIXTURE_AGGS_RESPONSE
       const action = new fromActions.SetResultsAggregations(payload)
-      const state = reducer(
+      const state = reducerSearch(
         {
-          ...initialState,
+          ...initialStateSearch,
           results: {
-            ...initialState.results,
+            ...initialStateSearch.results,
             aggregations: { someKey: 'someValue' },
           },
         },
@@ -214,11 +244,11 @@ describe('Search Reducer', () => {
     it('should replace the aggregations in the config', () => {
       const payload = ES_FIXTURE_AGGS_REQUEST
       const action = new fromActions.SetConfigAggregations(payload)
-      const state = reducer(
+      const state = reducerSearch(
         {
-          ...initialState,
+          ...initialStateSearch,
           config: {
-            ...initialState.config,
+            ...initialStateSearch.config,
             aggregations: { someKey: 'someValue' },
           },
         },
@@ -235,11 +265,11 @@ describe('Search Reducer', () => {
           'tag.default',
           { increment: 20 }
         )
-        const state = reducer(
+        const state = reducerSearch(
           {
-            ...initialState,
+            ...initialStateSearch,
             config: {
-              ...initialState.config,
+              ...initialStateSearch.config,
               aggregations: ES_FIXTURE_AGGS_REQUEST,
             },
           },
@@ -257,11 +287,11 @@ describe('Search Reducer', () => {
           'tag.default',
           { include: '.*Land.*' }
         )
-        const state = reducer(
+        const state = reducerSearch(
           {
-            ...initialState,
+            ...initialStateSearch,
             config: {
-              ...initialState.config,
+              ...initialStateSearch.config,
               aggregations: ES_FIXTURE_AGGS_REQUEST,
             },
           },
@@ -281,11 +311,11 @@ describe('Search Reducer', () => {
         'tag.default',
         payload
       )
-      const state = reducer(
+      const state = reducerSearch(
         {
-          ...initialState,
+          ...initialStateSearch,
           results: {
-            ...initialState.results,
+            ...initialStateSearch.results,
             aggregations: ES_FIXTURE_AGGS_RESPONSE,
           },
         },

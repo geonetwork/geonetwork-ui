@@ -3,5 +3,5 @@
   [ariaName]="'results.layout.selectOne' | translate"
   [choices]="choices"
   (selectValue)="change($event)"
-  [selected]="currentLayout$ | async"
+  [selected]="searchFacade.layout$ | async"
 ></ui-dropdown-selector>

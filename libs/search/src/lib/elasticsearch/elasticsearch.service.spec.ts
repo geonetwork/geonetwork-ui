@@ -1,4 +1,10 @@
-import { ElasticsearchService, initialState } from '@lib/search'
+import {
+  DEFAULT_SEARCH_KEY,
+  ElasticsearchService,
+  initialState,
+} from '@lib/search'
+
+const initialStateSearch = initialState[DEFAULT_SEARCH_KEY]
 
 describe('ElasticsearchService', () => {
   let service: ElasticsearchService
@@ -15,7 +21,7 @@ describe('ElasticsearchService', () => {
   describe('#Sort', () => {
     it('One sort and default direction', () => {
       const body = service.buildPayload({
-        ...initialState,
+        ...initialStateSearch,
         params: {
           filters: {
             any: '',
@@ -28,7 +34,7 @@ describe('ElasticsearchService', () => {
 
     it('One sort and DESC direction', () => {
       const body = service.buildPayload({
-        ...initialState,
+        ...initialStateSearch,
         params: {
           filters: {
             any: '',
@@ -41,7 +47,7 @@ describe('ElasticsearchService', () => {
 
     it('Multiple sorts', () => {
       const body = service.buildPayload({
-        ...initialState,
+        ...initialStateSearch,
         params: {
           filters: {
             any: '',

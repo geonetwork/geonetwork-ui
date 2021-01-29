@@ -6,6 +6,8 @@ import {
 import { Action } from '@ngrx/store'
 import { SearchStateParams } from './reducer'
 
+export const ADD_SEARCH = '[Search] Add search instance'
+
 export const SET_FILTERS = '[Search] Set Filters'
 export const UPDATE_FILTERS = '[Search] Update Filters'
 export const SET_SEARCH = '[Search] Set overall search configuration'
@@ -27,106 +29,163 @@ export const UPDATE_REQUEST_AGGREGATION_TERM =
   '[Search] Update request aggregation term'
 export const PATCH_RESULTS_AGGREGATIONS = '[Search] Patch Results Aggregations'
 
-export class SetFilters implements Action {
+export const DEFAULT_SEARCH_KEY = 'default'
+
+abstract class AbstractAction {
+  id?: string
+  protected constructor(id?: string) {
+    this.id = id || DEFAULT_SEARCH_KEY
+  }
+}
+
+export class AddSearch implements Action {
+  readonly type = ADD_SEARCH
+  constructor(public id: string) {}
+}
+
+export class SetFilters extends AbstractAction implements Action {
   readonly type = SET_FILTERS
 
-  constructor(public payload: SearchFilters) {}
+  constructor(public payload: SearchFilters, id?: string) {
+    super(id)
+  }
 }
 
-export class UpdateFilters implements Action {
+export class UpdateFilters extends AbstractAction implements Action {
   readonly type = UPDATE_FILTERS
 
-  constructor(public payload: SearchFilters) {}
+  constructor(public payload: SearchFilters, id?: string) {
+    super(id)
+  }
 }
 
-export class SetSearch implements Action {
+export class SetSearch extends AbstractAction implements Action {
   readonly type = SET_SEARCH
 
-  constructor(public payload: SearchStateParams) {}
+  constructor(public payload: SearchStateParams, id?: string) {
+    super(id)
+  }
 }
 
-export class SetSortBy implements Action {
+export class SetSortBy extends AbstractAction implements Action {
   readonly type = SET_SORT_BY
-  constructor(public sortBy: string) {}
+  constructor(public sortBy: string, id?: string) {
+    super(id)
+  }
 }
 
-export class SetPagination implements Action {
+export class SetPagination extends AbstractAction implements Action {
   readonly type = SET_PAGINATION
-  constructor(public from: number, public size: number) {}
+  constructor(public from: number, public size: number, id?: string) {
+    super(id)
+  }
 }
 
-export class Paginate implements Action {
+export class Paginate extends AbstractAction implements Action {
   readonly type = PAGINATE
-  constructor(public delta: number) {}
+  constructor(public delta: number, id?: string) {
+    super(id)
+  }
 }
 
-export class Scroll implements Action {
+export class Scroll extends AbstractAction implements Action {
   readonly type = SCROLL
-  constructor() {}
+  constructor(id?: string) {
+    super(id)
+  }
 }
 
-export class SetResultsLayout implements Action {
+export class SetResultsLayout extends AbstractAction implements Action {
   readonly type = SET_RESULTS_LAYOUT
 
-  constructor(public resultsLayout: string) {}
+  constructor(public resultsLayout: string, id?: string) {
+    super(id)
+  }
 }
 
-export class AddResults implements Action {
+export class AddResults extends AbstractAction implements Action {
   readonly type = ADD_RESULTS
 
-  constructor(public payload: RecordSummary[]) {}
+  constructor(public payload: RecordSummary[], id?: string) {
+    super(id)
+  }
 }
 
-export class ClearResults implements Action {
+export class ClearResults extends AbstractAction implements Action {
   readonly type = CLEAR_RESULTS
 
-  constructor() {}
+  constructor(id?: string) {
+    super(id)
+  }
 }
 
-export class RequestMoreResults implements Action {
+export class RequestMoreResults extends AbstractAction implements Action {
   readonly type = REQUEST_MORE_RESULTS
 
-  constructor() {}
+  constructor(id?: string) {
+    super(id)
+  }
 }
 
-export class SetResultsAggregations implements Action {
+export class SetResultsAggregations extends AbstractAction implements Action {
   readonly type = SET_RESULTS_AGGREGATIONS
 
-  constructor(public payload: any) {}
+  constructor(public payload: any, id?: string) {
+    super(id)
+  }
 }
 
-export class SetResultsHits implements Action {
+export class SetResultsHits extends AbstractAction implements Action {
   readonly type = SET_RESULTS_HITS
-  constructor(public payload: any) {}
+  constructor(public payload: any, id?: string) {
+    super(id)
+  }
 }
 
-export class SetConfigAggregations implements Action {
+export class SetConfigAggregations extends AbstractAction implements Action {
   readonly type = SET_CONFIG_AGGREGATIONS
-  constructor(public payload: any) {}
+  constructor(public payload: any, id?: string) {
+    super(id)
+  }
 }
 
-export class RequestMoreOnAggregation implements Action {
+export class RequestMoreOnAggregation extends AbstractAction implements Action {
   readonly type = REQUEST_MORE_ON_AGGREGATION
-  constructor(public key: string, public increment: number) {}
+  constructor(public key: string, public increment: number, id?: string) {
+    super(id)
+  }
 }
 
-export class SetIncludeOnAggregation implements Action {
+export class SetIncludeOnAggregation extends AbstractAction implements Action {
   readonly type = SET_INCLUDE_ON_AGGREGATION
-  constructor(public key: string, public include: string) {}
+  constructor(public key: string, public include: string, id?: string) {
+    super(id)
+  }
 }
 
-export class UpdateRequestAggregationTerm implements Action {
+export class UpdateRequestAggregationTerm
+  extends AbstractAction
+  implements Action {
   readonly type = UPDATE_REQUEST_AGGREGATION_TERM
-  constructor(public key: string, public patch: EsRequestAggTermPatch) {}
+  constructor(
+    public key: string,
+    public patch: EsRequestAggTermPatch,
+    id?: string
+  ) {
+    super(id)
+  }
 }
 
-export class PatchResultsAggregations implements Action {
+export class PatchResultsAggregations extends AbstractAction implements Action {
   readonly type = PATCH_RESULTS_AGGREGATIONS
 
-  constructor(public key: string, public payload: any) {}
+  constructor(public key: string, public payload: any, id?: string) {
+    super(id)
+  }
 }
 
 export type SearchActions =
+  | AddSearch
   | SetFilters
   | UpdateFilters
   | SetSearch

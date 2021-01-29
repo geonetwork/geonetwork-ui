@@ -17,13 +17,13 @@ import { BaseComponent } from '../base.component'
 export class GnFacetsComponent extends BaseComponent {
   @Input() facetConfig: string = '{}'
 
-  constructor(private searchFacade: SearchFacade) {
-    super()
+  constructor(facade: SearchFacade) {
+    super(facade)
   }
 
   ngOnInit(): void {
     super.ngOnInit()
-    this.searchFacade.setConfigAggregations(JSON.parse(this.facetConfig))
-    this.searchFacade.requestMoreResults()
+    this.facade.setConfigAggregations(JSON.parse(this.facetConfig))
+    this.facade.requestMoreResults()
   }
 }

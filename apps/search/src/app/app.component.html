@@ -1,24 +1,8 @@
-<div>
-  <div class="p-4">
-    <catalog-site-title></catalog-site-title>
-  </div>
-  <search-records-metrics field="tag" count="20"></search-records-metrics>
-  <div class="mb-3 mx-4 rounded flex flex-row">
-    <div class="w-2/4 mr-3">
-      <search-fuzzy-search></search-fuzzy-search>
-    </div>
-    <div class="w-1/4 mr-3">
-      <search-sort-by></search-sort-by>
-    </div>
-    <div class="flex-grow">
-      <search-results-layout></search-results-layout>
-    </div>
-  </div>
-  <div class="flex flex-row">
-    <search-facets-container class="w-1/4"></search-facets-container>
-    <div class="w-3/4">
-      <search-results-hits></search-results-hits>
-      <search-results-list-container></search-results-list-container>
-    </div>
-  </div>
+<div class="p-4">
+  <catalog-site-title></catalog-site-title>
+</div>
+<search-records-metrics field="tag" count="20"></search-records-metrics>
+
+<div searchSearchStateContainer="mainSearch">
+  <app-main-search></app-main-search>
 </div>

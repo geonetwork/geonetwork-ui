@@ -1,15 +1,18 @@
 import { ES_FIXTURE_AGGS_REQUEST } from '../elasticsearch/fixtures/aggregations-request'
 import { ES_FIXTURE_AGGS_RESPONSE } from '../elasticsearch/fixtures/aggregations-response'
+import { DEFAULT_SEARCH_KEY } from './actions'
 import { initialState } from './reducer'
 import * as fromSelectors from './selectors'
+
+const initialStateSearch = initialState[DEFAULT_SEARCH_KEY]
 
 describe('Search Selectors', () => {
   describe('getSearchFilters', () => {
     it('should return search filters', () => {
       const result = fromSelectors.getSearchFilters.projector({
-        ...initialState,
+        ...initialStateSearch,
         params: {
-          ...initialState.params,
+          ...initialStateSearch.params,
           filters: {
             any: 'abcd',
           },
@@ -24,9 +27,9 @@ describe('Search Selectors', () => {
   describe('getSearchSortBy', () => {
     it('should return sort by criteria', () => {
       const result = fromSelectors.getSearchSortBy.projector({
-        ...initialState,
+        ...initialStateSearch,
         params: {
-          ...initialState.params,
+          ...initialStateSearch.params,
           sortBy: 'title',
         },
       })
@@ -37,9 +40,9 @@ describe('Search Selectors', () => {
   describe('getSearchConfigAggregations', () => {
     it('should return aggregations configuration', () => {
       const result = fromSelectors.getSearchConfigAggregations.projector({
-        ...initialState,
+        ...initialStateSearch,
         config: {
-          ...initialState.config,
+          ...initialStateSearch.config,
           aggregations: ES_FIXTURE_AGGS_REQUEST,
         },
       })
@@ -51,10 +54,10 @@ describe('Search Selectors', () => {
     it('should return search results', () => {
       const records = [{ title: 'record1' } as any]
       const result = fromSelectors.getSearchResults.projector({
-        ...initialState,
+        ...initialStateSearch,
         results: {
-          ...initialState.results,
-          records: records,
+          ...initialStateSearch.results,
+          records,
         },
       })
       expect(result).toEqual(records)
@@ -64,7 +67,7 @@ describe('Search Selectors', () => {
   describe('getSearchResultsLoading', () => {
     it('should return whether more results are loading', () => {
       const result = fromSelectors.getSearchResultsLoading.projector({
-        ...initialState,
+        ...initialStateSearch,
         loadingMore: true,
       })
       expect(result).toEqual(true)
@@ -75,10 +78,10 @@ describe('Search Selectors', () => {
     it('should return search aggregations results', () => {
       const aggregations = ES_FIXTURE_AGGS_RESPONSE
       const result = fromSelectors.getSearchResultsAggregations.projector({
-        ...initialState,
+        ...initialStateSearch,
         results: {
-          ...initialState.results,
-          aggregations: aggregations,
+          ...initialStateSearch.results,
+          aggregations,
         },
       })
       expect(result).toEqual(aggregations)

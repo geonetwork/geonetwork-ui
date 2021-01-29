@@ -2,10 +2,8 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { SearchFilters } from '@lib/common'
 import { SearchFacade } from '@lib/search'
-import { EffectsModule } from '@ngrx/effects'
-import { StoreModule } from '@ngrx/store'
+import { of } from 'rxjs'
 import { SEARCH_STATE_FILTERS_FIXTURE } from '../../state/fixtures/search-state.fixtures'
-import { initialState, reducer, SEARCH_FEATURE_KEY } from '../../state/reducer'
 
 import { FacetsContainerComponent } from './facets-container.component'
 
@@ -14,6 +12,9 @@ const searchFacadeMock = {
   requestMoreResults: jest.fn(),
   setIncludeOnAggregation: jest.fn(),
   requestMoreOnAggregation: jest.fn(),
+  searchFilters$: of({}),
+  configAggregations$: of({}),
+  resultsAggregations$: of({}),
 }
 
 describe('FacetsContainerComponent', () => {
@@ -24,13 +25,7 @@ describe('FacetsContainerComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FacetsContainerComponent],
-      imports: [
-        EffectsModule.forRoot(),
-        StoreModule.forRoot({}),
-        StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
-          initialState,
-        }),
-      ],
+      imports: [],
       providers: [
         {
           provide: SearchFacade,

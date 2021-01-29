@@ -1,4 +1,4 @@
 <ui-results-hits-number
-  [loading]="loading$ | async"
-  [hits]="hits$ | async"
+  [loading]="facade.isLoading$ | async"
+  [hits]="facade.resultsHits$ | async"
 ></ui-results-hits-number>
