@@ -8,6 +8,8 @@ import {
 import { interval, Subscription } from 'rxjs'
 import { flatMap, map, takeWhile, tap } from 'rxjs/operators'
 
+const { PENDING, ANALYZING, DONE } = UploadJobStatusApiModel.StatusEnum
+
 @Component({
   selector: 'app-analysis-progress-page',
   templateUrl: './analysis-progress.page.html',
@@ -37,11 +39,11 @@ export class AnalysisProgressPageComponent implements OnInit, OnDestroy {
               ),
               takeWhile(
                 (job: UploadJobStatusApiModel) =>
-                  ['PENDING', 'ANALYZING'].includes(job.status),
+                  [PENDING, ANALYZING].includes(job.status),
                 true
               ),
               map((job: UploadJobStatusApiModel) => {
-                const done = job.status === 'DONE'
+                const done = job.status === DONE
                 this.router.navigate([done ? 'validation' : '/'], {
                   relativeTo: this.activatedRoute,
                   queryParams: done ? {} : { error: 'analysis' },
