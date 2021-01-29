@@ -304,6 +304,33 @@ describe('FacetsService', () => {
         })
       })
     })
+    describe('when nested terms', () => {
+      beforeEach(() => {
+        path = ['resourceType', 'service', 'serviceType', 'OGC:WMS']
+        value = true
+      })
+      describe('when no previous filters', () => {
+        beforeEach(() => {
+          filters = {}
+        })
+        it('add filter in state', () => {
+          const stateFilters = service.computeNewFiltersFromState(
+            filters,
+            path,
+            value
+          )
+          expect(stateFilters).toEqual({
+            resourceType: {
+              service: {
+                serviceType: {
+                  'OGC:WMS': true,
+                },
+              },
+            },
+          })
+        })
+      })
+    })
   })
 
   describe('#findSelectedPaths', () => {
