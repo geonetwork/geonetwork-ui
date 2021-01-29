@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { EsRequestAggTerm } from '@lib/common'
-import { ModelBlock } from '../facets.model'
+import { FacetSelectEvent, ModelBlock } from '../facets.model'
 
 @Component({
   selector: 'ui-facet-list',
@@ -11,8 +11,7 @@ export class FacetListComponent implements OnInit {
   @Input() models: ModelBlock[]
   @Input() selectedPaths: string[][]
 
-  @Output() itemSelected = new EventEmitter<string[]>()
-  @Output() itemUnselected = new EventEmitter<string[]>()
+  @Output() itemChange = new EventEmitter<FacetSelectEvent>()
 
   @Output() more = new EventEmitter<string>()
   @Output() filterChange = new EventEmitter<EsRequestAggTerm>()
@@ -34,12 +33,8 @@ export class FacetListComponent implements OnInit {
     return model.key
   }
 
-  onItemSelected(path: string[]) {
-    this.itemSelected.emit(path)
-  }
-
-  onItemUnselected(path: string[]) {
-    this.itemUnselected.emit(path)
+  onItemChange(facetEvent: FacetSelectEvent) {
+    this.itemChange.emit(facetEvent)
   }
 
   onMore(key: string): void {

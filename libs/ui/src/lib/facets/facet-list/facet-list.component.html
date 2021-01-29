@@ -2,8 +2,7 @@
   *ngFor="let model of models; trackBy: trackByIndexKey"
   [model]="model"
   [selectedPaths]="getBlockSelectedPaths(model)"
-  (itemSelected)="onItemSelected($event)"
-  (itemUnselected)="onItemUnselected($event)"
+  (itemChange)="onItemChange($event)"
   (filterChange)="onFilterChange(model.key, $event)"
   (more)="onMore(model.key)"
 ></ui-facet-block>
