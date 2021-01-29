@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core'
-import { AggregationsTypesEnum, LogService } from '@lib/common'
+import {
+  AggregationsTypesEnum,
+  LogService,
+  parse,
+  PARSE_DELIMITER,
+  SearchFilters,
+} from '@lib/common'
+import { FacetPath, ModelBlock, ModelItem } from '@lib/ui'
 
 @Injectable({
   providedIn: 'root',
@@ -102,22 +109,24 @@ export class FacetsService {
             )
           }
         } else if (requestAgg.hasOwnProperty(AggregationsTypesEnum.FILTERS)) {
+          const type = AggregationsTypesEnum.FILTERS
           blockModel = {
             ...blockModel,
-            type: AggregationsTypesEnum.FILTERS,
-            size: requestAgg[AggregationsTypesEnum.FILTERS].size,
+            type,
+            size: requestAgg[type].size,
           }
 
           Object.entries(responseAgg.buckets).forEach((entry) => {
+            const itemValue = entry[0]
             const bucket = entry[1] as AggEntry
-            const itemPath = [...blockModel.path, entry[0]]
+            const itemPath = [...blockModel.path, itemValue]
             const itemModel = {
-              value: entry[0],
+              value: itemValue,
               meta: bucket.meta,
               count: bucket.doc_count,
               path: itemPath,
               query_string:
-                requestAgg.filters.filters[entry[0]].query_string.query,
+                requestAgg.filters.filters[itemValue].query_string.query,
             }
             blockModel.items.push(itemModel)
           })
@@ -128,5 +137,124 @@ export class FacetsService {
       }
     }
     return listModel
+  }
+
+  /**
+   * Compute the path value of a facet item. The path value is the last
+   * element of the path array.
+   * If the item is not selected, returns `null`
+   * For 'terms' facet, it is a boolean, true when selected, false when
+   * inverted.
+   * For 'filters' and 'histogram', it is a lucene expression
+   *
+   * @param block model
+   * @param item model
+   */
+  computeItemPathValue(block: ModelBlock, item: ModelItem) {
+    const { selected, inverted } = item
+    const { type } = block
+    let value: any = !inverted
+
+    if (selected) {
+      if (
+        type === AggregationsTypesEnum.FILTERS ||
+        type === AggregationsTypesEnum.HISTOGRAM
+      ) {
+        value = item.query_string
+        if (inverted) {
+          value = `-(${value})`
+        }
+      }
+    } else {
+      value = null
+    }
+    return value
+  }
+
+  /**
+   * Create a new filter object that will be passed to the state.
+   * It update recursively the object depending on the path structure.
+   *
+   * @param filters previous state
+   * @param path of the updated item
+   * @param value of the updated item
+   */
+  computeNewFiltersFromState(
+    filters: SearchFilters,
+    path: FacetPath,
+    value: any
+  ): SearchFilters {
+    const clone = JSON.parse(JSON.stringify(filters))
+    const getter = parse(path.join(PARSE_DELIMITER))
+    if (value === null) {
+      this.removePathFromFilters_(clone, path)
+    } else {
+      const setter = getter.assign
+      setter(clone, value)
+    }
+    return clone
+  }
+
+  /**
+   * Remove a filter in the state object, depending on the given path, which
+   * could be deep in the parameter tree.
+   *
+   * @param filters state
+   * @param path to remove from state
+   */
+  private removePathFromFilters_(filters: SearchFilters, path: FacetPath) {
+    const head = path[0]
+    const tail = path.slice(1)
+    for (const prop of Object.keys(filters)) {
+      if (filters.hasOwnProperty(prop)) {
+        if (head.toString() === prop && tail.length === 0) {
+          delete filters[prop]
+        } else {
+          if ('object' === typeof filters[prop]) {
+            this.removePathFromFilters_(filters[prop], tail)
+            if (0 === Object.keys(filters[prop]).length) {
+              delete filters[prop]
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Compute filters recursive paths enabled in the state current
+   * search
+   * e.g [["tag.default", "land use"]]
+   *
+   * @param filters Search filters from state
+   */
+  findSelectedPaths(filters): string[][] {
+    const discoveredObjects = [] // For checking for cyclic object
+    const path = []
+    const results = []
+
+    // store void result to prevent ; added by prettier before iife
+    const _ = (function find(obj) {
+      for (const key of Object.keys(obj)) {
+        if (typeof obj[key] !== 'object') {
+          // Found a selected path
+          path.push(key)
+          results.push(Array.from(path))
+          path.pop()
+        }
+        const o = obj[key] // The next object to be searched
+        if (o && typeof o === 'object') {
+          if (!discoveredObjects.find((discovered) => discovered === o)) {
+            // check for cyclic link
+            path.push(key)
+            discoveredObjects.push(o)
+            find(o)
+            path.pop()
+          }
+        }
+      }
+    })(filters)
+
+    return results
   }
 }

@@ -16,4 +16,14 @@ export const SEARCH_STATE_FILTERS_FIXTURE = {
       national: true,
     },
   },
+  histogram: {
+    resolutionScaleDenominator: {
+      10000: '+resolutionScaleDenominator:[10000 TO 20000}',
+    },
+  },
+  filters: {
+    availableInServices: {
+      availableInViewService: '+linkProtocol:/OGC:WMS.*/',
+    },
+  },
 }

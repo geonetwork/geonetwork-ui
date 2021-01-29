@@ -1,8 +1,7 @@
 <ui-facet-list
   [models]="models$ | async"
   [selectedPaths]="selectedPaths$ | async"
-  (itemSelected)="onItemSelected($event, true)"
-  (itemUnselected)="onItemSelected($event, false)"
+  (itemChange)="onItemChange($event)"
   (more)="onMore($event)"
   (filterChange)="onFilterChange($event)"
 ></ui-facet-list>

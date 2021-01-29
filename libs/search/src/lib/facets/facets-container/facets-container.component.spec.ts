@@ -2,25 +2,37 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { SearchFilters } from '@lib/common'
 import { SearchFacade } from '@lib/search'
+import { EMPTY_BLOCK_MODEL_FIXTURE, FACET_ITEM_FIXTURE } from '@lib/ui'
 import { of } from 'rxjs'
 import { SEARCH_STATE_FILTERS_FIXTURE } from '../../state/fixtures/search-state.fixtures'
+import { FacetsService } from '../facets.service'
 
 import { FacetsContainerComponent } from './facets-container.component'
 
+const mockStateFilters = { ...SEARCH_STATE_FILTERS_FIXTURE.simpleTerms }
 const searchFacadeMock = {
   setConfigAggregations: jest.fn(),
   requestMoreResults: jest.fn(),
   setIncludeOnAggregation: jest.fn(),
   requestMoreOnAggregation: jest.fn(),
-  searchFilters$: of({}),
+  setFilters: jest.fn(),
+  searchFilters$: of(mockStateFilters),
   configAggregations$: of({}),
   resultsAggregations$: of({}),
+}
+
+const facetServiceMock = {
+  createFacetModel: jest.fn(),
+  findSelectedPaths: jest.fn(),
+  computeItemPathValue: jest.fn(() => 'mock path'),
+  computeNewFiltersFromState: jest.fn(() => {
+    return { filters: 'mock' }
+  }),
 }
 
 describe('FacetsContainerComponent', () => {
   let component: FacetsContainerComponent
   let fixture: ComponentFixture<FacetsContainerComponent>
-  let searchFilters: SearchFilters
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -30,6 +42,10 @@ describe('FacetsContainerComponent', () => {
         {
           provide: SearchFacade,
           useValue: searchFacadeMock,
+        },
+        {
+          provide: FacetsService,
+          useValue: facetServiceMock,
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],
@@ -44,82 +60,6 @@ describe('FacetsContainerComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
-  })
-
-  describe('#findSelectedPaths', () => {
-    describe('when simple terms', () => {
-      beforeEach(() => {
-        searchFilters = SEARCH_STATE_FILTERS_FIXTURE['simpleTerms']
-      })
-      it('returns simple 2 elements paths', () => {
-        const paths = component['findSelectedPaths'](searchFilters)
-        expect(paths).toEqual([
-          ['tag.default', 'land use'],
-          ['tag.default', 'national'],
-        ])
-      })
-    })
-    describe('when recursive terms', () => {
-      beforeEach(() => {
-        searchFilters = SEARCH_STATE_FILTERS_FIXTURE['recursiveTerms']
-      })
-      it('nested elements are appended to the path', () => {
-        const paths = component['findSelectedPaths'](searchFilters)
-        expect(paths).toEqual([
-          ['resourceType', 'service', 'serviceType', 'OGC:WMS'],
-          ['resourceType', 'dataset'],
-        ])
-      })
-    })
-  })
-
-  describe('#computeNewFilters', () => {
-    let path, filters
-    describe('when simple terms path', () => {
-      beforeEach(() => {
-        path = ['tag.default', 'Land use']
-      })
-      describe('when no previous filters', () => {
-        beforeEach(() => {
-          filters = {}
-        })
-        it('add filter in state', () => {
-          const stateFilters = component['computeNewFilters'](
-            filters,
-            path,
-            true
-          )
-          expect(stateFilters).toEqual({
-            'tag.default': { 'Land use': true },
-          })
-        })
-      })
-      describe('when previous filters', () => {
-        beforeEach(() => {
-          filters = { 'tag.default': { national: true } }
-        })
-        it('merges previous and new filters', () => {
-          const stateFilters = component['computeNewFilters'](
-            filters,
-            path,
-            true
-          )
-          expect(stateFilters).toEqual({
-            'tag.default': { 'Land use': true, national: true },
-          })
-        })
-        it('removes previous filter', () => {
-          const stateFilters = component['computeNewFilters'](
-            filters,
-            ['tag.default', 'national'],
-            false
-          )
-          expect(stateFilters).toEqual({
-            'tag.default': {},
-          })
-        })
-      })
-    })
   })
 
   describe('#onMore', () => {
@@ -142,6 +82,27 @@ describe('FacetsContainerComponent', () => {
         'tag.default',
         '.*lan.*'
       )
+    })
+  })
+
+  describe('#onItemChange', () => {
+    it('update filters state', () => {
+      component.onItemChange({
+        block: EMPTY_BLOCK_MODEL_FIXTURE,
+        item: FACET_ITEM_FIXTURE,
+      })
+      expect(facetServiceMock.computeItemPathValue).toHaveBeenCalledWith(
+        EMPTY_BLOCK_MODEL_FIXTURE,
+        FACET_ITEM_FIXTURE
+      )
+      expect(facetServiceMock.computeNewFiltersFromState).toHaveBeenCalledWith(
+        mockStateFilters,
+        FACET_ITEM_FIXTURE.path,
+        'mock path'
+      )
+      expect(searchFacadeMock.setFilters).toHaveBeenCalledWith({
+        filters: 'mock',
+      })
     })
   })
 })
