@@ -41,6 +41,6 @@ describe('AnalysisProgress.PageComponent', () => {
     setTimeout(() => {
       expect(findUploadJob).toHaveBeenCalled()
       done()
-    }, 150)
+    }, 300)
   })
 })

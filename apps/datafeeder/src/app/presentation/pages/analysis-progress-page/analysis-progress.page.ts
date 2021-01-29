@@ -31,7 +31,7 @@ export class AnalysisProgressPageComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.activatedRoute.params.subscribe(({ id }) => {
         this.subscription.add(
-          interval(100)
+          interval(250)
             .pipe(
               flatMap(() => this.fileUploadApiService.findUploadJob(id)),
               tap(
