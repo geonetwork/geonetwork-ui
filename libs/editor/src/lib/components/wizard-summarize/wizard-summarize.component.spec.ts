@@ -70,7 +70,7 @@ describe('WizardSummarizeComponent', () => {
   })
 
   it('should display title', () => {
-    const title = fixture.debugElement.query(By.css('#title')).nativeElement
+    const title = fixture.debugElement.query(By.css('.title')).nativeElement
       .textContent
 
     expect(title.trim()).toEqual(
@@ -79,7 +79,7 @@ describe('WizardSummarizeComponent', () => {
   })
 
   it('should display abstract', () => {
-    const abstract = fixture.debugElement.query(By.css('#abstract'))
+    const abstract = fixture.debugElement.query(By.css('.abstract'))
       .nativeElement.textContent
 
     expect(abstract.trim()).toEqual(
@@ -88,7 +88,7 @@ describe('WizardSummarizeComponent', () => {
   })
 
   it('should display date', () => {
-    const date = fixture.debugElement.query(By.css('#date')).nativeElement
+    const date = fixture.debugElement.query(By.css('.date')).nativeElement
       .textContent
 
     const time = window.localStorage.getItem('datepicker')
@@ -103,7 +103,7 @@ describe('WizardSummarizeComponent', () => {
   })
 
   it('should display scale', () => {
-    const scale = fixture.debugElement.query(By.css('#scale')).nativeElement
+    const scale = fixture.debugElement.query(By.css('.scale')).nativeElement
       .textContent
 
     expect(scale.trim()).toEqual(
@@ -112,7 +112,7 @@ describe('WizardSummarizeComponent', () => {
   })
 
   it('should display description', () => {
-    const description = fixture.debugElement.query(By.css('#description'))
+    const description = fixture.debugElement.query(By.css('.description'))
       .nativeElement.textContent
 
     expect(description.trim()).toEqual(
@@ -121,7 +121,7 @@ describe('WizardSummarizeComponent', () => {
   })
 
   it('should display tags', () => {
-    const tags = fixture.debugElement.query(By.css('#tags')).nativeElement
+    const tags = fixture.debugElement.query(By.css('.tags')).nativeElement
       .textContent
 
     const expectedTags = JSON.parse(window.localStorage.getItem('tags'))
