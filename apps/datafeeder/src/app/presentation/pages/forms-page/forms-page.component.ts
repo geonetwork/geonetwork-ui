@@ -33,8 +33,14 @@ export class FormsPageComponent implements OnInit, OnDestroy {
   }
 
   handleStepChanges(step: number) {
-    this.currentStep = step
-    this.router.navigate(['/', this.rootId, 'step', step])
+    let route
+    if (this.currentStep === 1 && step === 1) {
+      route = ['/', this.rootId, 'validation']
+    } else {
+      this.currentStep = step
+      route = ['/', this.rootId, 'step', step]
+    }
+    this.router.navigate(route)
   }
 
   handleStepNumberChanges(steps: number) {
