@@ -19,6 +19,10 @@ import { UploadDataIllustrationComponent } from './presentation/components/svg/u
 import { AnalysisProgressIllustrationsComponent } from './presentation/components/svg/analysis-progress-illustrations/analysis-progress-illustrations.component'
 import { FormsPageComponent } from './presentation/pages/forms-page/forms-page.component'
 import { EditorModule } from '@lib/editor'
+import { PublishPageComponent } from './presentation/pages/publish-page/publish-page.component'
+import { PublishPageIllustrationComponent } from './presentation/components/svg/publish-page-illustration/publish-page-illustration.component'
+import { SuccessPublishPageComponent } from './presentation/pages/success-publish-page/success-publish-page.component'
+import { SuccessPublishPageIllustrationComponent } from './presentation/components/svg/success-publish-page-illustration/success-publish-page-illustration.component'
 
 @NgModule({
   declarations: [
@@ -34,6 +38,10 @@ import { EditorModule } from '@lib/editor'
     UploadDataIllustrationComponent,
     AnalysisProgressIllustrationsComponent,
     FormsPageComponent,
+    PublishPageComponent,
+    PublishPageIllustrationComponent,
+    SuccessPublishPageComponent,
+    SuccessPublishPageIllustrationComponent,
   ],
   imports: [
     BrowserModule,

@@ -4,6 +4,8 @@ import { UploadDataPageComponent } from './presentation/pages/upload-data-page/u
 import { AnalysisProgressPageComponent } from './presentation/pages/analysis-progress-page/analysis-progress.page'
 import { DatasetValidationPageComponent } from './presentation/pages/dataset-validation-page/dataset-validation-page'
 import { FormsPageComponent } from './presentation/pages/forms-page/forms-page.component'
+import { PublishPageComponent } from './presentation/pages/publish-page/publish-page.component'
+import { SuccessPublishPageComponent } from './presentation/pages/success-publish-page/success-publish-page.component'
 
 const routes: Routes = [
   { path: '', component: UploadDataPageComponent },
@@ -18,6 +20,14 @@ const routes: Routes = [
   {
     path: ':id/step/:stepId',
     component: FormsPageComponent,
+  },
+  {
+    path: ':id/publish',
+    component: PublishPageComponent,
+  },
+  {
+    path: ':id/publishok',
+    component: SuccessPublishPageComponent,
   },
   { path: '**', redirectTo: '' },
 ]
