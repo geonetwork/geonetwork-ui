@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { BoundingBoxApiModel } from './boundingBox.api.model'
+import { AnalysisStatusEnumApiModel } from './analysisStatusEnum.api.model'
 
 /**
  * Describes a recognized uploaded dataset
@@ -19,7 +20,7 @@ export interface DatasetUploadStatusApiModel {
    * Name of the dataset in the uploaded package
    */
   name?: string
-  status?: DatasetUploadStatusApiModel.StatusEnum
+  status?: AnalysisStatusEnumApiModel
   /**
    * short description of the error that prevents the dataset to be analysed
    */
@@ -33,13 +34,4 @@ export interface DatasetUploadStatusApiModel {
    * detected charset
    */
   encoding?: string
-}
-export namespace DatasetUploadStatusApiModel {
-  export type StatusEnum = 'PENDING' | 'ANALYZING' | 'DONE' | 'ERROR'
-  export const StatusEnum = {
-    PENDING: 'PENDING' as StatusEnum,
-    ANALYZING: 'ANALYZING' as StatusEnum,
-    DONE: 'DONE' as StatusEnum,
-    ERROR: 'ERROR' as StatusEnum,
-  }
 }

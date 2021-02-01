@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { AnalysisStatusEnumApiModel } from './analysisStatusEnum.api.model'
 import { DatasetUploadStatusApiModel } from './datasetUploadStatus.api.model'
 
 /**
@@ -23,22 +24,10 @@ export interface UploadJobStatusApiModel {
    * Estimated completion progress, from 0 to 1.
    */
   progress?: number
-  /**
-   * aggregate of status of all datasets in the upload package. If any dataset status is PENDING, ANALYZING, or ERROR, that\'s the job\'s status. If at least one dataset status is ERROR, then the job status is ERROR. If no datasets where recognized in the upload, status is ERROR.
-   */
-  status?: UploadJobStatusApiModel.StatusEnum
+  status?: AnalysisStatusEnumApiModel
   /**
    * short description of the error that prevents the job to complete successfully
    */
   error?: string
   datasets?: Array<DatasetUploadStatusApiModel>
-}
-export namespace UploadJobStatusApiModel {
-  export type StatusEnum = 'PENDING' | 'ANALYZING' | 'DONE' | 'ERROR'
-  export const StatusEnum = {
-    PENDING: 'PENDING' as StatusEnum,
-    ANALYZING: 'ANALYZING' as StatusEnum,
-    DONE: 'DONE' as StatusEnum,
-    ERROR: 'ERROR' as StatusEnum,
-  }
 }

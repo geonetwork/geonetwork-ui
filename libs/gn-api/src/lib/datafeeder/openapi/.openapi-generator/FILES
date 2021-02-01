@@ -9,8 +9,10 @@ configuration.ts
 encoder.ts
 git_push.sh
 index.ts
+model/./analysisStatusEnum.api.model.ts
 model/./boundingBox.api.model.ts
 model/./cRS.api.model.ts
+model/./datasetMetadata.api.model.ts
 model/./datasetPublishRequest.api.model.ts
 model/./datasetPublishingStatus.api.model.ts
 model/./datasetUploadStatus.api.model.ts
@@ -18,6 +20,7 @@ model/./inlineObject.api.model.ts
 model/./property.api.model.ts
 model/./publishJobStatus.api.model.ts
 model/./publishRequest.api.model.ts
+model/./publishStatusEnum.api.model.ts
 model/./uploadJobStatus.api.model.ts
 model/models.ts
 variables.ts

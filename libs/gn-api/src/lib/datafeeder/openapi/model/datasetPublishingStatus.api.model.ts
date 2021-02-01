@@ -9,13 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { PublishStatusEnumApiModel } from './publishStatusEnum.api.model'
 
 /**
  * Describes the status of publishing a given dataset
  */
 export interface DatasetPublishingStatusApiModel {
   /**
-   * Name of the dataset in the uploaded package
+   * Name of the dataset in the uploaded package, necessary to identify which dataset to publish from the UploadJobStatus
    */
   nativeName?: string
   /**
@@ -23,24 +24,9 @@ export interface DatasetPublishingStatusApiModel {
    */
   publishedName?: string
   title?: string
-  status?: DatasetPublishingStatusApiModel.StatusEnum
+  status?: PublishStatusEnumApiModel
   /**
    * short description of the error that prevents the dataset to be published
    */
   error?: string
-}
-export namespace DatasetPublishingStatusApiModel {
-  export type StatusEnum =
-    | 'PENDING'
-    | 'IMPORTING'
-    | 'PUBLISHING'
-    | 'DONE'
-    | 'ERROR'
-  export const StatusEnum = {
-    PENDING: 'PENDING' as StatusEnum,
-    IMPORTING: 'IMPORTING' as StatusEnum,
-    PUBLISHING: 'PUBLISHING' as StatusEnum,
-    DONE: 'DONE' as StatusEnum,
-    ERROR: 'ERROR' as StatusEnum,
-  }
 }

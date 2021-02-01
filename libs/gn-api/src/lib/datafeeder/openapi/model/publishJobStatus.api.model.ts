@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { PublishStatusEnumApiModel } from './publishStatusEnum.api.model'
 import { DatasetPublishingStatusApiModel } from './datasetPublishingStatus.api.model'
 
 /**
@@ -23,19 +24,10 @@ export interface PublishJobStatusApiModel {
    * Estimated completion progress, from 0 to 1.
    */
   progress?: number
-  status?: PublishJobStatusApiModel.StatusEnum
+  status?: PublishStatusEnumApiModel
   /**
    * short description of the error that prevents the job to complete successfully
    */
   error?: string
   datasets?: Array<DatasetPublishingStatusApiModel>
-}
-export namespace PublishJobStatusApiModel {
-  export type StatusEnum = 'PENDING' | 'RUNNING' | 'DONE' | 'ERROR'
-  export const StatusEnum = {
-    PENDING: 'PENDING' as StatusEnum,
-    RUNNING: 'RUNNING' as StatusEnum,
-    DONE: 'DONE' as StatusEnum,
-    ERROR: 'ERROR' as StatusEnum,
-  }
 }
