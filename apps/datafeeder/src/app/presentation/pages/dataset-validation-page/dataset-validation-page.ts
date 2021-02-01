@@ -5,6 +5,7 @@ import {
   BoundingBoxApiModel,
   FileUploadApiService,
   UploadJobStatusApiModel,
+  AnalysisStatusEnumApiModel,
 } from '@lib/datafeeder-api'
 import Feature from 'ol/Feature'
 import GeoJSON from 'ol/format/GeoJSON'
@@ -53,7 +54,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
       this.fileUploadApiService
         .findUploadJob(id)
         .subscribe((job: UploadJobStatusApiModel) => {
-          if (job.status === 'ERROR') {
+          if (job.status === AnalysisStatusEnumApiModel.ERROR) {
             this.router.navigate(['/'], {
               relativeTo: this.activatedRoute,
               queryParams: { error: 'analysis' },

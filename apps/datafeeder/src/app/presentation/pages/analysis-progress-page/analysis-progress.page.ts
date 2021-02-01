@@ -4,11 +4,12 @@ import { LogService } from '@lib/common'
 import {
   FileUploadApiService,
   UploadJobStatusApiModel,
+  AnalysisStatusEnumApiModel,
 } from '@lib/datafeeder-api'
 import { interval, Subscription } from 'rxjs'
 import { flatMap, map, takeWhile, tap } from 'rxjs/operators'
 
-const { PENDING, ANALYZING, DONE } = UploadJobStatusApiModel.StatusEnum
+const { PENDING, ANALYZING, DONE } = AnalysisStatusEnumApiModel
 
 @Component({
   selector: 'app-analysis-progress-page',
