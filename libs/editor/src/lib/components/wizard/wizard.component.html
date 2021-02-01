@@ -4,10 +4,19 @@
   </div>
 </div>
 <div class="flex pt-24 pl-8">
-  <ui-button (click)="handlePreviousBtnClick()" type="primary" class="pr-8">
-    <span translate>Previous</span>
+  <ui-button
+    (click)="handlePreviousBtnClick()"
+    type="primary"
+    class="pr-8"
+    extraClass="rounded-full px-20"
+  >
+    <span class="uppercase text-white font-bold" translate>Previous</span>
   </ui-button>
-  <ui-button (click)="handleNextBtnClick()" type="primary">
-    <span translate>Next</span>
+  <ui-button
+    (click)="handleNextBtnClick()"
+    type="primary"
+    extraClass="rounded-full px-20"
+  >
+    <span class="uppercase text-white font-bold" translate>Next</span>
   </ui-button>
 </div>
