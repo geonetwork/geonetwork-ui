@@ -38,6 +38,12 @@ html {
   opacity: 0.5;
 }
 
+.text-current {
+  font-family: var(--current-font);
+  font-size: 30px;
+  font-weight: normal;
+}
+
 .text-focus {
   font-family: var(--focus-font);
   font-size: 30px;
