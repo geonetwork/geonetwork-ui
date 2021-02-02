@@ -71,11 +71,14 @@ describe('DatasetValidationPageComponent', () => {
     it('fetch bounds and geometry', () => {
       expect(fileUploadApiServiceMock.getBounds).toHaveBeenCalledWith(
         1,
-        'f_name'
+        'f_name',
+        'EPSG:3857',
+        true
       )
       expect(fileUploadApiServiceMock.getSampleFeature).toHaveBeenCalledWith(
         1,
-        'f_name'
+        'f_name',
+        0
       )
 
       expect(component.geoJSONData).toEqual({ id: 'feature_id' })

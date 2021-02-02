@@ -33,7 +33,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
 
   dataset: DatasetUploadStatusApiModel
 
-  featureIndex = 25
+  featureIndex = 0
   crs = ''
   encoding = ''
 
@@ -65,7 +65,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
 
           this.dataset = job.datasets[0]
           this.numOfEntities = this.dataset.featureCount
-          this.crs = this.dataset.nativeBounds.crs.srs
+          this.crs = this.dataset.nativeBounds?.crs?.srs
           this.encoding = this.dataset.encoding
 
           forkJoin([
