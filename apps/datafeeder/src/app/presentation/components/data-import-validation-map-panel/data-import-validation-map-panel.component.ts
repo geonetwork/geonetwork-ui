@@ -2,10 +2,10 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
-  OnChanges,
   OnInit,
-  SimpleChanges,
+  Output,
   ViewChild,
 } from '@angular/core'
 import { ColorService } from '@lib/common'
@@ -37,7 +37,10 @@ export class DataImportValidationMapPanelComponent
   @Input() footerLabel = ''
   @Input() footerList = []
   @Input() geoJson?: Feature
+  @Input() footerValue = ''
   @Input() padding = []
+
+  @Output() propertyChange = new EventEmitter<string>()
 
   selectedValue: any
 
@@ -49,7 +52,7 @@ export class DataImportValidationMapPanelComponent
   constructor() {}
 
   ngOnInit(): void {
-    this.selectedValue = this.footerList[0]
+    this.selectedValue = this.footerValue || ''
     this.vectorLayer = this.buildVectorLayer()
 
     if (!this.geoJson) {
@@ -111,6 +114,7 @@ export class DataImportValidationMapPanelComponent
 
   selectValue(event) {
     this.selectedValue = event
+    this.propertyChange.emit(event)
   }
 
   private getDefaultStyle(): Style {
