@@ -12,6 +12,15 @@ import { of } from 'rxjs'
 
 import { DataImportValidationMapPanelComponent } from './data-import-validation-map-panel.component'
 
+const readFeatures = jest.fn()
+readFeatures.mockReturnValue([])
+jest.mock('ol/format/GeoJSON', () => ({
+  __esModule: true,
+  default: jest.fn().mockImplementation(() => {
+    return { readFeatures }
+  }),
+}))
+
 describe('MapViewComponent', () => {
   let component: DataImportValidationMapPanelComponent
   let fixture: ComponentFixture<DataImportValidationMapPanelComponent>
