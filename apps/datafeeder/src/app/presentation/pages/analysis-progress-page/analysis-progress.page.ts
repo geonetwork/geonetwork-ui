@@ -2,12 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { LogService } from '@lib/common'
 import {
+  AnalysisStatusEnumApiModel,
   FileUploadApiService,
   UploadJobStatusApiModel,
-  AnalysisStatusEnumApiModel,
 } from '@lib/datafeeder-api'
-import { interval, Subscription } from 'rxjs'
-import { flatMap, map, takeWhile, tap } from 'rxjs/operators'
+import { interval, Observable, Subscription } from 'rxjs'
+import { switchMap, takeWhile, tap } from 'rxjs/operators'
 
 const { PENDING, ANALYZING, DONE } = AnalysisStatusEnumApiModel
 
@@ -19,6 +19,7 @@ const { PENDING, ANALYZING, DONE } = AnalysisStatusEnumApiModel
 export class AnalysisProgressPageComponent implements OnInit, OnDestroy {
   progress = 0
   private subscription: Subscription
+  statusFetch$: Observable<UploadJobStatusApiModel>
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -29,32 +30,35 @@ export class AnalysisProgressPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = new Subscription()
-    this.subscription.add(
-      this.activatedRoute.params.subscribe(({ id }) => {
-        this.subscription.add(
-          interval(250)
-            .pipe(
-              flatMap(() => this.fileUploadApiService.findUploadJob(id)),
-              tap(
-                (job: UploadJobStatusApiModel) => (this.progress = job.progress)
-              ),
-              takeWhile(
-                (job: UploadJobStatusApiModel) =>
-                  [PENDING, ANALYZING].includes(job.status),
-                true
-              ),
-              map((job: UploadJobStatusApiModel) => {
-                const done = job.status === DONE
-                this.router.navigate([done ? 'validation' : '/'], {
-                  relativeTo: this.activatedRoute,
-                  queryParams: done ? {} : { error: 'analysis' },
-                })
-              })
-            )
-            .subscribe()
+    this.statusFetch$ = this.activatedRoute.params.pipe(
+      switchMap(({ id }) => {
+        return interval(250).pipe(
+          switchMap(() => {
+            return this.fileUploadApiService.findUploadJob(id)
+          }),
+          tap((job: UploadJobStatusApiModel) => (this.progress = job.progress)),
+          takeWhile(
+            (job: UploadJobStatusApiModel) =>
+              [PENDING, ANALYZING].includes(job.status),
+            true
+          )
         )
       })
     )
+
+    this.subscription.add(
+      this.statusFetch$.subscribe((job: UploadJobStatusApiModel) =>
+        this.onJobFinish(job)
+      )
+    )
+  }
+
+  onJobFinish(job: UploadJobStatusApiModel) {
+    const done = job.status === DONE
+    this.router.navigate([done ? 'validation' : '/'], {
+      relativeTo: this.activatedRoute,
+      queryParams: done ? {} : { error: 'analysis' },
+    })
   }
 
   ngOnDestroy() {
