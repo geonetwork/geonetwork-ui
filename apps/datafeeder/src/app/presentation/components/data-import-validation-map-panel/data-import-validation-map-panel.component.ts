@@ -44,7 +44,7 @@ export class DataImportValidationMapPanelComponent
   private map: Map
   private source: VectorSource
   private vectorLayer: VectorLayer
-  private GeoJSON = new GeoJSON()
+  private format = new GeoJSON({})
 
   constructor() {}
 
@@ -58,7 +58,7 @@ export class DataImportValidationMapPanelComponent
     this.source.clear()
     this.source.addFeatures(
       this.geoJson
-        ? this.GeoJSON.readFeatures(this.geoJson, {
+        ? this.format.readFeatures(this.geoJson, {
             featureProjection: 'EPSG:3857',
           })
         : []
@@ -127,7 +127,7 @@ export class DataImportValidationMapPanelComponent
 
   private buildVectorLayer(): VectorLayer {
     this.source = new VectorSource({
-      features: new GeoJSON().readFeatures(this.geoJson, {
+      features: this.format.readFeatures(this.geoJson, {
         featureProjection: 'EPSG:3857',
       }),
     })
