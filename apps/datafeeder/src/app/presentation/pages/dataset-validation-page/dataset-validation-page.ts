@@ -6,11 +6,17 @@ import {
   FileUploadApiService,
   UploadJobStatusApiModel,
   AnalysisStatusEnumApiModel,
+  DatasetUploadStatusApiModel,
 } from '@lib/datafeeder-api'
 import Feature from 'ol/Feature'
 import GeoJSON from 'ol/format/GeoJSON'
 import { fromExtent } from 'ol/geom/Polygon'
+import { transformExtent } from 'ol/proj'
 import { forkJoin, Subscription } from 'rxjs'
+import { environment } from '../../../../environments/environment'
+
+const unknownLabel = 'datafeeder.datasetValidation.unknown'
+const bboxSrs = 'EPSG:3857'
 
 @Component({
   selector: 'app-dataset-validation-page',
@@ -18,22 +24,18 @@ import { forkJoin, Subscription } from 'rxjs'
   styleUrls: ['./dataset-validation-page.css'],
 })
 export class DatasetValidationPageComponent implements OnInit, OnDestroy {
-  encodingList = [
-    {
-      label: 'UTF8',
-      value: 'UTF8',
-    },
-  ]
+  encodingList = [{ label: unknownLabel, value: '' }, ...environment.encodings]
 
-  refSystem = [
-    {
-      label: 'Lambert 93',
-      value: 'Lambert93',
-    },
-  ]
+  refSystem = [{ label: unknownLabel, value: '' }, ...environment.projections]
 
   geoJSONData: object
   geoJSONBBox: object
+
+  dataset: DatasetUploadStatusApiModel
+
+  featureIndex = 25
+  crs = ''
+  encoding = ''
 
   numOfEntities = 0
   private routeParamsSub: Subscription
@@ -61,22 +63,48 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
             return
           }
 
-          const dataset = job.datasets[0]
-          this.numOfEntities = dataset.featureCount
+          this.dataset = job.datasets[0]
+          this.numOfEntities = this.dataset.featureCount
+          this.crs = this.dataset.nativeBounds.crs.srs
+          this.encoding = this.dataset.encoding
 
           forkJoin([
-            this.fileUploadApiService.getBounds(id, dataset.name),
-            this.fileUploadApiService.getSampleFeature(id, dataset.name),
+            this.fileUploadApiService.getBounds(
+              id,
+              this.dataset.name,
+              bboxSrs,
+              true
+            ),
+            this.fileUploadApiService.getSampleFeature(
+              id,
+              this.dataset.name,
+              this.featureIndex
+            ),
           ]).subscribe(([bbox, feature]) => {
-            const { minx, miny, maxx, maxy, crs } = bbox as BoundingBoxApiModel
+            const { minx, miny, maxx, maxy } = bbox as BoundingBoxApiModel
             this.geoJSONBBox = this.format.writeFeatureObject(
               new Feature({ geometry: fromExtent([minx, miny, maxx, maxy]) }),
-              { dataProjection: crs.srs }
+              { featureProjection: bboxSrs }
             )
             this.geoJSONData = feature as object // No more precision in API
           })
         })
     })
+  }
+
+  handleEncodingChange(encoding) {
+    this.fileUploadApiService
+      .getSampleFeature(
+        this.rootId.toString(),
+        this.dataset.name,
+        this.featureIndex,
+        encoding
+      )
+      .subscribe((feature) => (this.geoJSONData = feature))
+  }
+
+  handleCrsChange(crs) {
+    console.log(`CRS changed to «${crs}»`)
   }
 
   submitValidation() {
