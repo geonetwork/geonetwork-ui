@@ -1,9 +1,13 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
 import { BehaviorSubject, of } from 'rxjs'
 import { UploadDataPageComponent } from './upload-data.page'
+
+const routerMock = {
+  navigate: jest.fn(),
+}
 
 describe('UploadDataComponent', () => {
   let component: UploadDataPageComponent
@@ -13,12 +17,16 @@ describe('UploadDataComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [UploadDataPageComponent],
-      imports: [RouterTestingModule],
+      imports: [],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: activatedRoute,
+        },
+        {
+          provide: Router,
+          useValue: routerMock,
         },
       ],
     }).compileComponents()

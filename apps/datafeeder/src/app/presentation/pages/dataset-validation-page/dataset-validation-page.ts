@@ -33,7 +33,6 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   ]
 
   geoJSONData: object
-
   geoJSONBBox: object
 
   numOfEntities = 0
