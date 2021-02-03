@@ -13,8 +13,25 @@ export class WizardService {
   private wizardStep = 1
   private wizardData: Map<string, any> = new Map()
 
-  constructor(private translateService: TranslateService) {
-    this.initialize()
+  private id: string
+
+  constructor(private translateService: TranslateService) {}
+
+  initialize(id: string): void {
+    this.id = id
+    this.wizardData.clear()
+
+    const savedWizardData = localStorage.getItem(id)
+      ? JSON.parse(localStorage.getItem(id))
+      : {}
+
+    this.wizardStep = savedWizardData.step || 1
+
+    const wizardConfig = savedWizardData.config ? savedWizardData.config : []
+
+    wizardConfig.forEach((i) => {
+      this.wizardData.set(i.id, i.value)
+    })
   }
 
   getCurrentStep(): number {
@@ -39,21 +56,35 @@ export class WizardService {
 
   onWizardWizardFieldDataChanged(fieldId: string, data: any): void {
     this.updateWizardFieldData(fieldId, data)
-    this.saveWizardFieldData(fieldId, data)
+    this.saveWizardFieldData()
   }
 
   updateWizardFieldData(fieldId: string, data: any): void {
     this.wizardData.set(fieldId, data)
   }
 
-  saveWizardFieldData(fieldId: string, data: any): void {
-    localStorage.setItem(fieldId, data)
+  saveWizardFieldData(): void {
+    const config = []
+
+    this.wizardData.forEach((value, key) => {
+      config.push({
+        id: key,
+        value,
+      })
+    })
+
+    const data = {
+      step: this.wizardStep,
+      config,
+    }
+
+    localStorage.setItem(this.id, JSON.stringify(data))
   }
 
   onWizardStepChanged(step: number) {
     if (step > 0 && step < this.getConfigurationStepNumber()) {
       this.wizardStep = step
-      localStorage.setItem('wizard_step', this.wizardStep.toString())
+      this.saveWizardFieldData()
     }
   }
 
@@ -69,18 +100,6 @@ export class WizardService {
         mLabel.forEach((title, index) => (monthLabels[`${index + 1}`] = title))
         result.next(monthLabels)
         result.complete()
-      })
-    })
-  }
-
-  private initialize(): void {
-    this.wizardStep = Number(localStorage.getItem('wizard_step') || 1)
-
-    const wizardConfiguration = DEFAULT_WIZARD_CONFIGURATION
-    wizardConfiguration.forEach((stepConfiguration) => {
-      stepConfiguration.forEach((stepField) => {
-        const fieldData = localStorage.getItem(stepField.id)
-        this.wizardData.set(stepField.id, fieldData)
       })
     })
   }

@@ -52,13 +52,13 @@ export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
     )
     switch (this.wizardFieldConfig.type) {
       case WizardFieldType.TEXT: {
-        return data
+        return data || ''
       }
       case WizardFieldType.CHIPS: {
         return data ? JSON.parse(data) : []
       }
       case WizardFieldType.TEXT_AREA: {
-        return data
+        return data || ''
       }
       case WizardFieldType.DATA_PICKER: {
         return data ? new Date(Number(data)) : new Date()

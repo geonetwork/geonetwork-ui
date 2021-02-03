@@ -9,6 +9,7 @@
       ></ui-step-bar>
     </div>
     <lib-wizard
+      [id]="rootId"
       (stepChanges)="handleStepChanges($event)"
       (stepsNumber)="handleStepNumberChanges($event)"
     ></lib-wizard>
