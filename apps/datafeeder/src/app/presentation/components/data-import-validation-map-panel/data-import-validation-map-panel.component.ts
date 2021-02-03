@@ -44,7 +44,7 @@ export class DataImportValidationMapPanelComponent
   private map: Map
   private source: VectorSource
   private vectorLayer: VectorLayer
-  private format = new GeoJSON({})
+  private format: any = new GeoJSON({})
 
   constructor() {}
 
