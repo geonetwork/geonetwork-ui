@@ -149,3 +149,7 @@ ui-button button[type=button].secondary:hover {
   content: '\e90f';
   font-size: 35px;
 }
+
+.icon-check:before {
+  content:  "\e905";
+}
