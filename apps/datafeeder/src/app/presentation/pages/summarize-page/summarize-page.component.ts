@@ -21,7 +21,6 @@ export class SummarizePageComponent implements OnInit, OnDestroy {
 
   submit() {
     this.router.navigate(['/', this.rootId, 'publish'])
-
   }
 
   previous() {
