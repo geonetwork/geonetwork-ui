@@ -23,6 +23,10 @@ html {
   font-family: 'Open Sans', 'dataFeeder', sans-serif !important;
 }
 
+app-root {
+  background: var(--gradient);
+}
+
 ui-button button[type=button] {
   background: var(--color-primary);
   border-color: var(--color-primary);
