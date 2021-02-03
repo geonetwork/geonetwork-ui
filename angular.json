@@ -421,7 +421,7 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "rbush"
+              "rbush", "pixelworks"
             ]
           },
           "configurations": {
