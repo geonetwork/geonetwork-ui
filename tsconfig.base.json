@@ -11,11 +11,11 @@
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2015",
+    "target": "es2019",
     "allowJs": true,
     "esModuleInterop": true,
     "lib": [
-      "es2018",
+      "es2019",
       "dom"
     ],
     "paths": {
@@ -29,7 +29,10 @@
         "libs/ui/src/index.ts"
       ],
       "@lib/gn-api": [
-        "libs/gn-api/src/index.ts"
+        "libs/gn-api/src/lib/gn4/index.ts"
+      ],
+      "@lib/datafeeder-api": [
+        "libs/gn-api/src/lib/datafeeder/index.ts"
       ],
       "@lib/common": [
         "libs/common/src/index.ts"

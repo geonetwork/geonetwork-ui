@@ -8,13 +8,11 @@
     <div
       *ngIf="showProperties"
       [style.background]="getSecondaryColor(0.75)"
-      class="z-10 absolute top-0 w-64 right-1/10 pb-4 pt-4 pr-4 pl-4"
+      class="z-10 absolute top-0 w-56 right-1/10 p-3 h-full max-w-full overflow-y-auto"
     >
-      <div
-        class="text-base text-white"
-        *ngFor="let property of getProperties()"
-      >
-        &#171; {{ property[0] }} &#187; : &#171; {{ property[1] }} &#187;
+      <div class="text-sm text-white" *ngFor="let property of getProperties()">
+        <strong>{{ property[0] }}</strong
+        >: {{ property[1] }}
       </div>
     </div>
   </div>
@@ -26,8 +24,15 @@
         (selectValue)="selectValue($event)"
         [selected]="selectedValue"
         ariaName="search-sort-by"
+        *ngIf="footerList.length > 0"
       >
       </ui-dropdown-selector>
+      <span
+        *ngIf="footerList.length === 0"
+        class="block uppercase tracking-wide text-gray-800 text-xs font-bold whitespace-no-wrap text-right"
+      >
+        {{ footerLabel | translate }} {{ selectedValue | translate }}
+      </span>
     </div>
   </div>
 </div>

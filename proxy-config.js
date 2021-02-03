@@ -8,4 +8,16 @@ module.exports = {
       '/geonetwork': '/',
     },
   },
+  '/datafeeder': {
+    target: 'http://localhost:8080',
+    pathRewrite: {
+      '^/datafeeder/': '/import/',
+    },
+    secure: true,
+    logLevel: 'debug',
+    changeOrigin: true,
+    cookiePathRewrite: {
+      '/datafeeder': '/',
+    },
+  },
 }

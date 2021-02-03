@@ -5,8 +5,10 @@ if (typeof global.URL.createObjectURL !== 'function') {
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
+import { ActivatedRoute } from '@angular/router'
 import { I18nModule } from '@lib/common'
 import { TranslateModule } from '@ngx-translate/core'
+import { of } from 'rxjs'
 
 import { DataImportValidationMapPanelComponent } from './data-import-validation-map-panel.component'
 
@@ -19,6 +21,12 @@ describe('MapViewComponent', () => {
       imports: [I18nModule, TranslateModule.forRoot()],
       declarations: [DataImportValidationMapPanelComponent],
       schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: { params: of({ id: 1 }) },
+        },
+      ],
     }).compileComponents()
   }))
 
@@ -54,7 +62,6 @@ describe('MapViewComponent', () => {
 
   it('should display head title', () => {
     const el = fixture.debugElement.query(By.css('.header-label')).nativeElement
-
     expect(el.textContent).toEqual(' title ')
   })
 })

@@ -4,18 +4,32 @@
 :root {
   --current-font: 'Open Sans', sans-serif;
   --focus-font: 'Permanent Marker', cursive;
+  --gradient: linear-gradient(
+    47deg,
+    #fff 0%,
+    #dbeff8 100%
+  );
 }
 
 @font-face {
   font-family: 'dataFeeder';
-  src: local('dataFeeder'), url('./assets/fonts/dataFeeder.woff') format('woff'),
+  src: url('./assets/fonts/dataFeeder.woff') format('woff'),
     url('./assets/fonts/dataFeeder.svg') format('svg'),
     url('./assets/fonts/dataFeeder.ttf') format('ttf');
-  src: local('dataFeeder'), url('./assets/fonts/dataFeeder.eot');
+  /* src: url('./assets/fonts/dataFeeder.eot'); FIXME file looks corrupted */
 }
 
 html {
-  font-family: 'dataFeeder', sans-serif !important;
+  font-family: 'Open Sans', 'dataFeeder', sans-serif !important;
+}
+
+ui-button button[type=button] {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+ui-button button[type=button]:hover {
+  background: var(--color-primary-darker);
+  border-color: var(--color-primary-darker);
 }
 
 .grey1 {

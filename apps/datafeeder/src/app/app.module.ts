@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
+import { BASE_PATH, Configuration } from '@lib/datafeeder-api'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -26,6 +27,14 @@ import { SuccessPublishPageIllustrationComponent } from './presentation/componen
 import { SummarizePageComponent } from './presentation/pages/summarize-page/summarize-page.component'
 import { SummarizeIllustrationComponent } from './presentation/components/svg/summarize-illustration/summarize-illustration.component'
 import { SummarizeBackgroundComponent } from './presentation/components/svg/summarize-background/summarize-background.component'
+
+export const API_BASE_PATH = '/datafeeder'
+
+export function apiConfigurationFactory() {
+  return new Configuration({
+    withCredentials: true,
+  })
+}
 
 @NgModule({
   declarations: [
@@ -58,7 +67,12 @@ import { SummarizeBackgroundComponent } from './presentation/components/svg/summ
     EditorModule,
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: BASE_PATH,
+      useFactory: () => API_BASE_PATH,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
