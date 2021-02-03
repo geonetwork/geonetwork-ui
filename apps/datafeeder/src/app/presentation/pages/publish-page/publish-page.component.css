@@ -5,7 +5,7 @@
 
 .shape {
   position: relative;
-  background: linear-gradient(47deg, var(--color-background) 0%, var(--color-primary) 100%);
+  background: var(--gradient);
   border: 1px solid var(--color-current);
 }
 

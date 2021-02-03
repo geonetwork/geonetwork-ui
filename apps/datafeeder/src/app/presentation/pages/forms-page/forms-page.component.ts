@@ -11,9 +11,8 @@ export class FormsPageComponent implements OnInit, OnDestroy {
   rootId: number
 
   currentStep: number
-  numSteps: number
+  numSteps = 6
 
-  private stepId: number
   private routeParamsSub: Subscription
 
   constructor(
@@ -26,7 +25,6 @@ export class FormsPageComponent implements OnInit, OnDestroy {
     this.routeParamsSub = this.activatedRoute.params.subscribe(
       ({ id, stepId }) => {
         this.rootId = id
-        this.stepId = Number(stepId)
       }
     )
     this.cd.detectChanges()
@@ -36,6 +34,8 @@ export class FormsPageComponent implements OnInit, OnDestroy {
     let route
     if (this.currentStep === 1 && step === 1) {
       route = ['/', this.rootId, 'validation']
+    } else if (this.currentStep === 4 && step === 4) {
+      route = ['/', this.rootId, 'confirm']
     } else {
       this.currentStep = step
       route = ['/', this.rootId, 'step', step]

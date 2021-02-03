@@ -7,7 +7,7 @@ tag-input::ng-deep .ng2-tag-input.ng2-tag-input--focused {
 
 tag-input::ng-deep tag {
   border-radius: 5px;
-  background: var(--color-primary);
+  background: var(--color-primary-lightest);
   font-family: inherit;
 
   align-content: center;
