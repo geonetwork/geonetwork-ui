@@ -27,8 +27,11 @@
         *ngIf="footerList.length > 0"
       >
       </ui-dropdown-selector>
-      <span *ngIf="footerList.length === 0" class="block uppercase tracking-wide text-gray-800 text-xs font-bold whitespace-no-wrap text-right">
-        {{footerLabel | translate }} {{selectedValue | translate}}
+      <span
+        *ngIf="footerList.length === 0"
+        class="block uppercase tracking-wide text-gray-800 text-xs font-bold whitespace-no-wrap text-right"
+      >
+        {{ footerLabel | translate }} {{ selectedValue | translate }}
       </span>
     </div>
   </div>
