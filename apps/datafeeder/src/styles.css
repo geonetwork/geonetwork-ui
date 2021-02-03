@@ -19,8 +19,11 @@
   /* src: url('./assets/fonts/dataFeeder.eot'); FIXME file looks corrupted */
 }
 
-html {
+html, .force-font {
   font-family: 'Open Sans', 'dataFeeder', sans-serif !important;
+}
+.force-font {
+  font-size: 1.1rem;
 }
 
 app-root {
@@ -34,6 +37,17 @@ ui-button button[type=button] {
 ui-button button[type=button]:hover {
   background: var(--color-primary-darker);
   border-color: var(--color-primary-darker);
+}
+
+ui-button button[type=button].secondary {
+  background: white;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  border-width: 1px;
+}
+ui-button button[type=button].secondary:hover {
+  background: var(--color-primary-darker);
+  color: white;
 }
 
 .grey1 {

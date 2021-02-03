@@ -15,6 +15,7 @@
             class="pt-10"
             type="primary"
             extraClass="rounded-full px-20"
+            (click)="submit()"
             ><span class="uppercase text-white font-bold" translate
               >datafeeder.summarizePage.submit</span
             ></ui-button
@@ -24,9 +25,12 @@
           <app-summarize-illustration></app-summarize-illustration>
         </div>
       </div>
-      <ui-button type="primary" extraClass="rounded-full px-20"
-        ><span class="uppercase text-white font-bold" translate
-          >datafeeder.summarizePage.previous</span
+      <ui-button
+        type="primary"
+        extraClass="rounded-full px-20 secondary"
+        (click)="previous()"
+        ><span class="uppercase font-bold"
+          >&lt; {{ 'datafeeder.summarizePage.previous' | translate }}</span
         ></ui-button
       >
     </div>
