@@ -13,6 +13,8 @@
   "datafeeder.analysisProgressBar.subtitle": "The analysis may take several minutes please wait.",
   "datafeeder.datasetValidation.title": "Make sure your data is correct",
   "datafeeder.datasetValidation.datasetInformation": "The provided dataset contains {{number}} entities",
+  "datafeeder.datasetValidation.submitButton": "OK, my data is correct",
+  "datafeeder.datasetValidation.unknown": "Unknown",
   "datafeeder.upload.error.title.noRightsToSendData": "No rights to send data",
   "datafeeder.upload.error.title.fileHasntSelected": "File hasn't selected",
   "datafeeder.upload.error.title.fileSize": "The selected file size is too large",

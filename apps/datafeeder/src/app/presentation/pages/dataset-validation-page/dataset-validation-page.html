@@ -4,7 +4,7 @@
       datafeeder.datasetValidation.title
     </div>
     <div class="pb-4 pt-4">
-      <ui-step-bar [steps]="6" [currentStep]="1" type="primary"></ui-step-bar>
+      <ui-step-bar [steps]="5" [currentStep]="1" type="primary"></ui-step-bar>
     </div>
     <div
       class="text-2xl font-bold"
@@ -19,9 +19,11 @@
           [headerLabel]="'Here is a sample entity from the dataset'"
           [footerLabel]="'Encoding:'"
           [footerList]="encodingList"
+          [footerValue]="encoding"
           [geoJson]="geoJSONData"
           [showProperties]="true"
           [padding]="[50, 300, 50, 50]"
+          (propertyChange)="handleEncodingChange($event)"
           *ngIf="geoJSONData"
         ></app-data-import-validation-map-panel>
       </div>
@@ -30,8 +32,10 @@
           [headerLabel]="'This is the extent of the dataset'"
           [footerLabel]="'Ref system:'"
           [footerList]="refSystem"
+          [footerValue]="crs"
           [geoJson]="geoJSONBBox"
           [showProperties]="false"
+          (propertyChange)="handleCrsChange($event)"
           *ngIf="geoJSONBBox"
         ></app-data-import-validation-map-panel>
       </div>
