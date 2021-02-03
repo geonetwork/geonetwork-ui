@@ -34,6 +34,8 @@ export class FormsPageComponent implements OnInit, OnDestroy {
     let route
     if (this.currentStep === 1 && step === 1) {
       route = ['/', this.rootId, 'validation']
+    } else if (this.currentStep === 4 && step === 4) {
+      route = ['/', this.rootId, 'confirm']
     } else {
       this.currentStep = step
       route = ['/', this.rootId, 'step', step]
