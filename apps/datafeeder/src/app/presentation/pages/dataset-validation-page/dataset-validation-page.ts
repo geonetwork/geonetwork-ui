@@ -24,7 +24,7 @@ const bboxSrs = 'EPSG:3857'
   styleUrls: ['./dataset-validation-page.css'],
 })
 export class DatasetValidationPageComponent implements OnInit, OnDestroy {
-  encodingList = [{ label: unknownLabel, value: '' }, ...environment.encodings]
+  encodingList = environment.encodings
 
   refSystem = [{ label: unknownLabel, value: '' }, ...environment.projections]
 
@@ -67,6 +67,9 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
           this.numOfEntities = this.dataset.featureCount
           this.crs = this.dataset.nativeBounds?.crs?.srs
           this.encoding = this.dataset.encoding
+          if (this.crs) {
+            this.refSystem = []
+          }
 
           forkJoin([
             this.fileUploadApiService.getBounds(
