@@ -8,14 +8,38 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { WizardService } from '../../services/wizard.service'
 
-const localStorageMock = () => {
-  let storage = {}
-  return {
-    getItem: (key) => (key in storage ? storage[key] : null),
-    setItem: (key, value) => (storage[key] = value || ''),
-    removeItem: (key) => delete storage[key],
-    clear: () => (storage = {}),
-  }
+const wizardServiceMock = {
+  getWizardFieldData: jest.fn((id) => {
+    switch (id) {
+      case 'title': {
+        return 'title'
+      }
+      case 'abstract': {
+        return 'abstract'
+      }
+      case 'tags': {
+        return JSON.stringify([
+          {
+            display: 'tagName1',
+            value: 'tagName1',
+          },
+          {
+            display: 'tagName2',
+            value: 'tagName2',
+          },
+        ])
+      }
+      case 'datepicker': {
+        return String(new Date().getTime())
+      }
+      case 'dropdown': {
+        return JSON.stringify('10000')
+      }
+      case 'description': {
+        return 'description'
+      }
+    }
+  }),
 }
 
 describe('WizardSummarizeComponent', () => {
@@ -32,7 +56,12 @@ describe('WizardSummarizeComponent', () => {
         HttpClientTestingModule,
       ],
       schemas: [NO_ERRORS_SCHEMA],
-      providers: [WizardService],
+      providers: [
+        {
+          provide: WizardService,
+          useValue: wizardServiceMock,
+        },
+      ],
     }).compileComponents()
   }))
 
@@ -40,29 +69,6 @@ describe('WizardSummarizeComponent', () => {
     fixture = TestBed.createComponent(WizardSummarizeComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
-  })
-
-  beforeEach(() => {
-    Object.defineProperty(window, 'localStorage', { value: localStorageMock() })
-
-    window.localStorage.setItem('title', 'title')
-    window.localStorage.setItem('abstract', 'abstract')
-    window.localStorage.setItem(
-      'tags',
-      JSON.stringify([
-        {
-          display: 'tagName1',
-          value: 'tagName1',
-        },
-        {
-          display: 'tagName2',
-          value: 'tagName2',
-        },
-      ])
-    )
-    window.localStorage.setItem('datepicker', String(new Date().getTime()))
-    window.localStorage.setItem('dropdown', JSON.stringify('10000'))
-    window.localStorage.setItem('description', 'description')
   })
 
   it('should create', () => {

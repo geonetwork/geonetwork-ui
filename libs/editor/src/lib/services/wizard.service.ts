@@ -21,9 +21,9 @@ export class WizardService {
     this.id = id
     this.wizardData.clear()
 
-    const savedWizardData = localStorage.getItem(id)
-      ? JSON.parse(localStorage.getItem(id))
-      : {}
+    const datafeederData = this.getDataFeederState()
+
+    const savedWizardData = datafeederData[id] || {}
 
     this.wizardStep = savedWizardData.step || 1
 
@@ -78,7 +78,10 @@ export class WizardService {
       config,
     }
 
-    localStorage.setItem(this.id, JSON.stringify(data))
+    const datafeederState = this.getDataFeederState()
+    datafeederState[this.id] = data
+
+    localStorage.setItem('datafeeder-state', JSON.stringify(datafeederState))
   }
 
   onWizardStepChanged(step: number) {
@@ -102,5 +105,13 @@ export class WizardService {
         result.complete()
       })
     })
+  }
+
+  private getDataFeederState() {
+    const datafeederData = localStorage.getItem('datafeeder-state')
+      ? JSON.parse(localStorage.getItem('datafeeder-state'))
+      : {}
+
+    return datafeederData
   }
 }
