@@ -31,7 +31,7 @@ const fileUploadApiServiceMock = {
 }
 
 const wizardServiceMock = {
-  getConfigurationStepNumber: jest.fn(() => 6)
+  getConfigurationStepNumber: jest.fn(() => 6),
 }
 
 const activatedRouteMock = {
@@ -58,7 +58,7 @@ describe('DatasetValidationPageComponent', () => {
         },
         {
           provide: WizardService,
-          useValue: wizardServiceMock
+          useValue: wizardServiceMock,
         },
         { provide: ActivatedRoute, useValue: activatedRouteMock },
         { provide: Router, useValue: routerMock },
