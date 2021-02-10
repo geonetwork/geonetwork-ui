@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
+import { WizardService } from '@lib/editor'
 
 @Component({
   selector: 'app-summarize-page',
@@ -11,9 +12,16 @@ export class SummarizePageComponent implements OnInit, OnDestroy {
   private routeParamsSub: Subscription
   private rootId: number
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  numberOfSteps: number
+
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private wizard: WizardService
+  ) {}
 
   ngOnInit(): void {
+    this.numberOfSteps = this.wizard.getConfigurationStepNumber() + 1
     this.routeParamsSub = this.activatedRoute.params.subscribe(({ id }) => {
       this.rootId = id
     })
