@@ -13,6 +13,7 @@ import GeoJSON from 'ol/format/GeoJSON'
 import { fromExtent } from 'ol/geom/Polygon'
 import { transformExtent } from 'ol/proj'
 import { forkJoin, Subscription } from 'rxjs'
+import { WizardService } from '@lib/editor'
 import { environment } from '../../../../environments/environment'
 
 const unknownLabel = 'datafeeder.datasetValidation.unknown'
@@ -25,7 +26,6 @@ const bboxSrs = 'EPSG:3857'
 })
 export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   encodingList = environment.encodings
-
   refSystem = [{ label: unknownLabel, value: '' }, ...environment.projections]
 
   geoJSONData: object
@@ -36,8 +36,9 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   featureIndex = 0
   crs = ''
   encoding = ''
-
   numOfEntities = 0
+  numberOfSteps: number
+
   private routeParamsSub: Subscription
   private rootId: number
   private format = new GeoJSON({})
@@ -46,10 +47,12 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private logService: LogService,
-    private fileUploadApiService: FileUploadApiService
+    private fileUploadApiService: FileUploadApiService,
+    private wizard: WizardService
   ) {}
 
   ngOnInit(): void {
+    this.numberOfSteps = this.wizard.getConfigurationStepNumber() + 1
     this.routeParamsSub = this.activatedRoute.params.subscribe(({ id }) => {
       this.rootId = id
       this.fileUploadApiService

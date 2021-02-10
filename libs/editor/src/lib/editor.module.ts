@@ -5,6 +5,7 @@ import { UiModule } from '../../../ui/src'
 import { BrowserModule } from '@angular/platform-browser'
 import { TranslateModule } from '@ngx-translate/core'
 import { WizardSummarizeComponent } from './components/wizard-summarize/wizard-summarize.component'
+import { WizardService } from './services/wizard.service'
 
 @NgModule({
   declarations: [
@@ -16,3 +17,4 @@ import { WizardSummarizeComponent } from './components/wizard-summarize/wizard-s
   exports: [WizardComponent, WizardSummarizeComponent],
 })
 export class EditorModule {}
+export * from './services/wizard.service'

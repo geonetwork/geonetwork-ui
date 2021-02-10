@@ -7,6 +7,7 @@ import {
   UploadJobStatusApiModel,
 } from '@lib/datafeeder-api'
 import { of } from 'rxjs'
+import { WizardService } from '@lib/editor'
 import { DatasetValidationPageComponent } from './dataset-validation-page'
 
 const jobMock: UploadJobStatusApiModel = {
@@ -27,6 +28,10 @@ const fileUploadApiServiceMock = {
     of({ crs: { srs: 'EPSG:4326' }, minx: 0, maxx: 1, miny: 2, maxy: 3 })
   ),
   getSampleFeature: jest.fn(() => of({ id: 'feature_id' })),
+}
+
+const wizardServiceMock = {
+  getConfigurationStepNumber: jest.fn(() => 6)
 }
 
 const activatedRouteMock = {
@@ -50,6 +55,10 @@ describe('DatasetValidationPageComponent', () => {
         {
           provide: FileUploadApiService,
           useValue: fileUploadApiServiceMock,
+        },
+        {
+          provide: WizardService,
+          useValue: wizardServiceMock
         },
         { provide: ActivatedRoute, useValue: activatedRouteMock },
         { provide: Router, useValue: routerMock },
