@@ -108,10 +108,8 @@ export class WizardService {
   }
 
   private getDataFeederState() {
-    const datafeederData = localStorage.getItem('datafeeder-state')
+    return localStorage.getItem('datafeeder-state')
       ? JSON.parse(localStorage.getItem('datafeeder-state'))
       : {}
-
-    return datafeederData
   }
 }
