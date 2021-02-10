@@ -20,9 +20,17 @@ export interface DatasetPublishingStatusApiModel {
    */
   nativeName?: string
   /**
-   * Name of the dataset in the uploaded package
+   * Name of the GeoServer workspace under which the dataset has been published.
+   */
+  publishedWorkspace?: string
+  /**
+   * Final name under which the layer was published to GeoServer. It may have been modified from the requested layer name in order to avoid duplication if a layer with such name already exists in the target GeoServer workspace.
    */
   publishedName?: string
+  /**
+   * Identifier for the metadta record created while publishing the dataset\'s metadata to GeoNetwork.
+   */
+  metadataRecordId?: string
   title?: string
   status?: PublishStatusEnumApiModel
   /**
