@@ -15,6 +15,7 @@ const VALID_FILE_EXTENSIONS = ['zip', 'png' /*'shp', 'json', 'gpkg', 'db'*/]
 export class UploadDataComponent implements OnInit {
   file: File = null
   haveRights = false
+  uploading = false
 
   @Input() maxFileSizeMb: number
   @Output() errors$ = new EventEmitter<UploadDataError>()
@@ -63,8 +64,10 @@ export class UploadDataComponent implements OnInit {
   }
 
   private uploadFile_(file: File) {
+    this.uploading = true
     this.fileUploadApiService.uploadFiles([file]).subscribe((job) => {
       this.jobId$.emit(job.jobId)
+      this.uploading = false
     })
   }
 
