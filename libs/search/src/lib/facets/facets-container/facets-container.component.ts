@@ -12,6 +12,19 @@ import {
   getSearchResultsAggregations,
 } from '../../state/selectors'
 import { FacetsService } from '../facets.service'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('facets.block.title.OrgForResource')
+marker('facets.block.title.availableInServices')
+marker('facets.block.title.cl_hierarchyLevel.key')
+marker('facets.block.title.cl_maintenanceAndUpdateFrequency.key')
+marker('facets.block.title.cl_spatialRepresentationType.key')
+marker('facets.block.title.cl_status.key')
+marker('facets.block.title.creationYearForResource')
+marker('facets.block.title.resolutionScaleDenominator')
+marker('facets.block.title.tag')
+marker('facets.block.title.tag.default')
+marker('facets.block.title.th_regions_tree.default')
 
 @Component({
   selector: 'search-facets-container',
