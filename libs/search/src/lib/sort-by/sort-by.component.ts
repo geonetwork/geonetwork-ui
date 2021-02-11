@@ -5,6 +5,10 @@ import { SearchState } from '../state/reducer'
 import { getSearchSortBy } from '../state/selectors'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
+marker('results.sortBy.relevancy')
+marker('results.sortBy.dateStamp')
+marker('results.sortBy.popularity')
+
 @Component({
   selector: 'search-sort-by',
   templateUrl: './sort-by.component.html',
