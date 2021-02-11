@@ -17,7 +17,7 @@ import { WizardService } from '@lib/editor'
 import { environment } from '../../../../environments/environment'
 
 const unknownLabel = 'datafeeder.datasetValidation.unknown'
-const bboxSrs = 'EPSG:3857'
+const viewSrs = 'EPSG:3857'
 
 @Component({
   selector: 'app-dataset-validation-page',
@@ -78,19 +78,22 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
             this.fileUploadApiService.getBounds(
               id,
               this.dataset.name,
-              bboxSrs,
+              viewSrs,
               true
             ),
             this.fileUploadApiService.getSampleFeature(
               id,
               this.dataset.name,
-              this.featureIndex
+              this.featureIndex,
+              undefined,
+              viewSrs,
+              true
             ),
           ]).subscribe(([bbox, feature]) => {
             const { minx, miny, maxx, maxy } = bbox as BoundingBoxApiModel
             this.geoJSONBBox = this.format.writeFeatureObject(
               new Feature({ geometry: fromExtent([minx, miny, maxx, maxy]) }),
-              { featureProjection: bboxSrs }
+              { featureProjection: viewSrs }
             )
             this.geoJSONData = feature as object // No more precision in API
           })
