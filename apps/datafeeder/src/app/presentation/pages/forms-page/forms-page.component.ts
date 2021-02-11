@@ -22,11 +22,9 @@ export class FormsPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.routeParamsSub = this.activatedRoute.params.subscribe(
-      ({ id }) => {
-        this.rootId = id
-      }
-    )
+    this.routeParamsSub = this.activatedRoute.params.subscribe(({ id }) => {
+      this.rootId = id
+    })
     this.cd.detectChanges()
   }
 

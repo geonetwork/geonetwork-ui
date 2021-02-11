@@ -42,6 +42,8 @@ const routerMock = {
   navigate: jest.fn(),
 }
 
+const proj = 'EPSG:3857'
+
 describe('DatasetValidationPageComponent', () => {
   let component: DatasetValidationPageComponent
   let fixture: ComponentFixture<DatasetValidationPageComponent>
@@ -81,13 +83,16 @@ describe('DatasetValidationPageComponent', () => {
       expect(fileUploadApiServiceMock.getBounds).toHaveBeenCalledWith(
         1,
         'f_name',
-        'EPSG:3857',
+        proj,
         true
       )
       expect(fileUploadApiServiceMock.getSampleFeature).toHaveBeenCalledWith(
         1,
         'f_name',
-        0
+        0,
+        undefined,
+        proj,
+        true
       )
 
       expect(component.geoJSONData).toEqual({ id: 'feature_id' })
