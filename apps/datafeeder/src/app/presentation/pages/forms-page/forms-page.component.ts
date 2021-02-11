@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs'
 export class FormsPageComponent implements OnInit, OnDestroy {
   rootId: number
 
-  currentStep = 1
+  currentStep: number
   numSteps = 6
 
   private routeParamsSub: Subscription

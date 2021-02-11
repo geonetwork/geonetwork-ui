@@ -25,8 +25,6 @@ export class WizardService {
 
     const savedWizardData = datafeederData[id] || {}
 
-    this.wizardStep = savedWizardData.step || 1
-
     const wizardConfig = savedWizardData.config ? savedWizardData.config : []
 
     wizardConfig.forEach((i) => {
