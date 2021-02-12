@@ -35,7 +35,7 @@ export const initSearch = (): SearchStateSearch => {
     config: {},
     params: {
       filters: {},
-      size: 10,
+      size: RESULTS_PAGE_SIZE,
       from: 0,
     },
     results: {
