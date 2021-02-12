@@ -1,4 +1,4 @@
-import { ResultsListLayout } from '@lib/common'
+import { RESULTS_PAGE_SIZE, ResultsListLayout } from '@lib/common'
 import { ES_FIXTURE_AGGS_REQUEST } from '../elasticsearch/fixtures/aggregations-request'
 import {
   ES_FIXTURE_AGGS_RESPONSE,
@@ -144,15 +144,15 @@ describe('Search Reducer', () => {
       const action = new fromActions.Paginate(30)
       const state = reducerSearch(initialStateSearch, action)
       expect(state.params.from).toEqual(30)
-      expect(state.params.size).toEqual(10)
+      expect(state.params.size).toEqual(RESULTS_PAGE_SIZE)
     })
   })
   describe('Scroll action', () => {
     it('increment `from` property with `size` value', () => {
       const action = new fromActions.Scroll()
       const state = reducerSearch(initialStateSearch, action)
-      expect(state.params.from).toEqual(10)
-      expect(state.params.size).toEqual(10)
+      expect(state.params.from).toEqual(RESULTS_PAGE_SIZE)
+      expect(state.params.size).toEqual(RESULTS_PAGE_SIZE)
     })
   })
 

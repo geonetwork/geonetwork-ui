@@ -25,6 +25,7 @@ class ResultsListMockComponent {
 
 const searchFacadeMock = {
   isLoading$: of(true),
+  isEndOfResults$: of(true),
   results$: of(['one']),
   layout$: of('CARD'),
   setResultsLayout: jest.fn(),

@@ -26,6 +26,7 @@ import {
   getSearchResultsHits,
   getSearchResultsLayout,
   getSearchResultsLoading,
+  isEndOfResults,
 } from './selectors'
 
 @Injectable()
@@ -33,6 +34,7 @@ export class SearchFacade {
   results$: Observable<any>
   layout$: Observable<string>
   isLoading$: Observable<boolean>
+  isEndOfResults$: Observable<boolean>
   searchFilters$: Observable<SearchFilters>
   configAggregations$: Observable<any>
   resultsAggregations$: Observable<any>
@@ -51,6 +53,7 @@ export class SearchFacade {
     this.isLoading$ = this.store.pipe(select(getSearchResultsLoading, searchId))
     this.searchFilters$ = this.store.pipe(select(getSearchFilters, searchId))
     this.resultsHits$ = this.store.pipe(select(getSearchResultsHits, searchId))
+    this.isEndOfResults$ = this.store.pipe(select(isEndOfResults, searchId))
     this.configAggregations$ = this.store.pipe(
       select(getSearchConfigAggregations, searchId)
     )

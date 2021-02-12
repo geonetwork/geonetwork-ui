@@ -5,6 +5,7 @@ import {
   ResultsListLayout,
 } from '@lib/common'
 import { SearchFacade } from '../state/search.facade'
+import { pipe } from 'rxjs'
 
 @Component({
   selector: 'search-results-list-container',
@@ -25,6 +26,9 @@ export class ResultsListContainerComponent implements OnInit {
       ...this.scrollableOptions,
     }
     this.facade.setResultsLayout(this.layout)
+    this.facade.isEndOfResults$.subscribe((isTheEnd) => {
+      this.scrollableConfig.disabled = isTheEnd
+    })
   }
 
   onScrollDown() {

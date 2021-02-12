@@ -50,3 +50,13 @@ export const getSearchResultsHits = createSelector(
   getSearchStateSearch,
   (state: SearchStateSearch) => state.results.hits
 )
+
+export const isEndOfResults = createSelector(
+  getSearchStateSearch,
+  (state: SearchStateSearch) => {
+    return (
+      state.results.hits &&
+      state.params.from + state.params.size >= state.results.hits.value
+    )
+  }
+)
