@@ -6,6 +6,16 @@ import { initialState, reducer, SEARCH_FEATURE_KEY } from '../state/reducer'
 import { FuzzySearchComponent } from './fuzzy-search.component'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
+import { SearchFacade } from '@lib/search'
+import { of } from 'rxjs'
+
+const searchFacadeMock = {
+  isLoading$: of(true),
+  results$: of(['one']),
+  layout$: of('CARD'),
+  setResultsLayout: jest.fn(),
+  scroll: jest.fn(),
+}
 
 describe('FuzzySearchComponent', () => {
   let component: FuzzySearchComponent
@@ -14,6 +24,12 @@ describe('FuzzySearchComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FuzzySearchComponent],
+      providers: [
+        {
+          provide: SearchFacade,
+          useValue: searchFacadeMock,
+        },
+      ],
       imports: [
         UiModule,
         StoreModule.forRoot({}),
