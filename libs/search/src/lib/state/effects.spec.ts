@@ -205,7 +205,7 @@ describe('Effects', () => {
         b: new PatchResultsAggregations('abc', { abc: {} }),
       })
 
-      expect(effects.upateRequestAggregationTerm$).toBeObservable(expected)
+      expect(effects.updateRequestAggregationTerm$).toBeObservable(expected)
     })
   })
 })

@@ -141,7 +141,7 @@ export class SearchEffects {
     )
   })
 
-  upateRequestAggregationTerm$ = createEffect(() => {
+  updateRequestAggregationTerm$ = createEffect(() => {
     const updateTermAction$ = this.actions$.pipe(
       ofType<UpdateRequestAggregationTerm>(UPDATE_REQUEST_AGGREGATION_TERM)
     )
