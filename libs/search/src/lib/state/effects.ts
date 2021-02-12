@@ -11,6 +11,8 @@ import { ElasticsearchMapper } from '../elasticsearch/elasticsearch.mapper'
 import { ElasticsearchService } from '../elasticsearch/elasticsearch.service'
 import {
   AddResults,
+  CLEAR_PAGINATION,
+  ClearPagination,
   ClearResults,
   PAGINATE,
   PatchResultsAggregations,
@@ -57,7 +59,11 @@ export class SearchEffects {
         PAGINATE
       ),
       switchMap((action: SearchActions) =>
-        of(new ClearResults(action.id), new RequestMoreResults(action.id))
+        of(
+          new ClearResults(action.id),
+          new ClearPagination(action.id),
+          new RequestMoreResults(action.id)
+        )
       )
     )
   )

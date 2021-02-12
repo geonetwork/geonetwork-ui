@@ -1,6 +1,6 @@
-import { RecordSummary, SearchFilters } from '@lib/common'
-import { DEFAULT_SEARCH_KEY } from './actions'
+import { RecordSummary, RESULTS_PAGE_SIZE, SearchFilters } from '@lib/common'
 import * as fromActions from './actions'
+import { DEFAULT_SEARCH_KEY } from './actions'
 
 export const SEARCH_FEATURE_KEY = 'searchState'
 
@@ -125,6 +125,15 @@ export function reducerSearch(
         },
       }
     }
+    case fromActions.CLEAR_PAGINATION:
+      return {
+        ...state,
+        params: {
+          ...state.params,
+          from: 0,
+          size: state.params.size,
+        },
+      }
     case fromActions.SCROLL:
     case fromActions.PAGINATE: {
       const delta = (action as fromActions.Paginate).delta || state.params.size
