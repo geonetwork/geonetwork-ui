@@ -18,3 +18,4 @@ import { WizardService } from './services/wizard.service'
 })
 export class EditorModule {}
 export * from './services/wizard.service'
+export * from './models/index'

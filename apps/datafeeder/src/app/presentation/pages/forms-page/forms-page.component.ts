@@ -1,6 +1,10 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
+import {
+  DEFAULT_WIZARD_CONFIGURATION,
+  DEFAULT_CHIPS_ITEMS_URL,
+} from '../../../configs/wizard.config'
 
 @Component({
   selector: 'app-forms-page',
@@ -12,6 +16,8 @@ export class FormsPageComponent implements OnInit, OnDestroy {
 
   currentStep: number
   numSteps = 6
+
+  wizardConfig = DEFAULT_WIZARD_CONFIGURATION
 
   private routeParamsSub: Subscription
 

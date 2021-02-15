@@ -32,6 +32,7 @@ const fileUploadApiServiceMock = {
 
 const wizardServiceMock = {
   getConfigurationStepNumber: jest.fn(() => 6),
+  initialize: jest.fn(),
 }
 
 const activatedRouteMock = {

@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core'
-import { forkJoin, Observable } from 'rxjs'
-import { IMyMonthLabels } from 'mydatepicker'
-import { MONTH_OF_THE_YEAR } from '../components/configs/datepicker.config'
 import { TranslateService } from '@ngx-translate/core'
-import { DEFAULT_WIZARD_CONFIGURATION } from '../components/configs/wizard.config'
+import { IMyMonthLabels } from 'mydatepicker'
+import { forkJoin, Observable } from 'rxjs'
+import { MONTH_OF_THE_YEAR } from '../components/configs/datepicker.config'
 import { WizardFieldModel } from '../models/wizard-field.model'
 
 @Injectable({
@@ -14,11 +13,12 @@ export class WizardService {
   private wizardData: Map<string, any> = new Map()
 
   private id: string
-
+  configuration: WizardFieldModel[][]
   constructor(private translateService: TranslateService) {}
 
-  initialize(id: string): void {
+  initialize(id: string, configuration: WizardFieldModel[][]): void {
     this.id = id
+    this.configuration = configuration
     this.wizardData.clear()
 
     const datafeederData = this.getDataFeederState()
@@ -37,15 +37,15 @@ export class WizardService {
   }
 
   getStepConfiguration(): WizardFieldModel[] {
-    return DEFAULT_WIZARD_CONFIGURATION[this.wizardStep - 1]
+    return this.configuration[this.wizardStep - 1]
   }
 
   getConfiguration(): WizardFieldModel[][] {
-    return DEFAULT_WIZARD_CONFIGURATION
+    return this.configuration
   }
 
   getConfigurationStepNumber(): number {
-    return DEFAULT_WIZARD_CONFIGURATION.length
+    return this.configuration.length
   }
 
   getWizardFieldData(fieldId: string) {

@@ -9,6 +9,7 @@ import { WizardFieldModel } from '../../models/wizard-field.model'
 })
 export class WizardComponent implements OnInit {
   @Input() id: string
+  @Input() initialConfig: WizardFieldModel[][]
 
   @Output() stepChanges = new EventEmitter<number>()
   @Output() stepsNumber = new EventEmitter<number>()
@@ -19,7 +20,7 @@ export class WizardComponent implements OnInit {
   constructor(private wizardService: WizardService) {}
 
   ngOnInit(): void {
-    this.wizardService.initialize(this.id)
+    this.wizardService.initialize(this.id, this.initialConfig)
 
     this.initializeCurrentStep()
     this.stepChanges.emit(this.wizardService.getCurrentStep())

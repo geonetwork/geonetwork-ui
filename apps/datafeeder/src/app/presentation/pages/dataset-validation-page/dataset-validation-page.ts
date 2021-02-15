@@ -2,19 +2,19 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { LogService } from '@lib/common'
 import {
+  AnalysisStatusEnumApiModel,
   BoundingBoxApiModel,
+  DatasetUploadStatusApiModel,
   FileUploadApiService,
   UploadJobStatusApiModel,
-  AnalysisStatusEnumApiModel,
-  DatasetUploadStatusApiModel,
 } from '@lib/datafeeder-api'
+import { WizardService } from '@lib/editor'
 import Feature from 'ol/Feature'
 import GeoJSON from 'ol/format/GeoJSON'
 import { fromExtent } from 'ol/geom/Polygon'
-import { transformExtent } from 'ol/proj'
 import { forkJoin, Subscription } from 'rxjs'
-import { WizardService } from '@lib/editor'
 import { environment } from '../../../../environments/environment'
+import { DEFAULT_WIZARD_CONFIGURATION } from '../../../configs/wizard.config'
 
 const unknownLabel = 'datafeeder.datasetValidation.unknown'
 const viewSrs = 'EPSG:3857'
@@ -32,6 +32,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   geoJSONBBox: object
 
   dataset: DatasetUploadStatusApiModel
+  wizardConfig = DEFAULT_WIZARD_CONFIGURATION
 
   featureIndex = 0
   crs = ''
@@ -52,9 +53,11 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.numberOfSteps = this.wizard.getConfigurationStepNumber() + 1
     this.routeParamsSub = this.activatedRoute.params.subscribe(({ id }) => {
       this.rootId = id
+      this.wizard.initialize(id, this.wizardConfig)
+      this.numberOfSteps = this.wizard.getConfigurationStepNumber() + 1
+
       this.fileUploadApiService
         .findUploadJob(id)
         .subscribe((job: UploadJobStatusApiModel) => {
