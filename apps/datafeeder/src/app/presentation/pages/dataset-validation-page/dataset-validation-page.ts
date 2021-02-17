@@ -14,7 +14,7 @@ import GeoJSON from 'ol/format/GeoJSON'
 import { fromExtent } from 'ol/geom/Polygon'
 import { forkJoin, Subscription } from 'rxjs'
 import { environment } from '../../../../environments/environment'
-import { DEFAULT_WIZARD_CONFIGURATION } from '../../../configs/wizard.config'
+import { config as wizardConfig } from '../../../configs/wizard.config'
 
 const unknownLabel = 'datafeeder.datasetValidation.unknown'
 const viewSrs = 'EPSG:3857'
@@ -32,7 +32,6 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   geoJSONBBox: object
 
   dataset: DatasetUploadStatusApiModel
-  wizardConfig = DEFAULT_WIZARD_CONFIGURATION
 
   featureIndex = 0
   crs = ''
@@ -55,7 +54,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routeParamsSub = this.activatedRoute.params.subscribe(({ id }) => {
       this.rootId = id
-      this.wizard.initialize(id, this.wizardConfig)
+      this.wizard.initialize(id, wizardConfig)
       this.numberOfSteps = this.wizard.getConfigurationStepNumber() + 1
 
       this.fileUploadApiService

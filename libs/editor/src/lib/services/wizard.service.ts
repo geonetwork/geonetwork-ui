@@ -13,12 +13,21 @@ export class WizardService {
   private wizardData: Map<string, any> = new Map()
 
   private id: string
+  private storageKey: string
   configuration: WizardFieldModel[][]
   constructor(private translateService: TranslateService) {}
 
-  initialize(id: string, configuration: WizardFieldModel[][]): void {
+  initialize(
+    id: string,
+    options: {
+      configuration: WizardFieldModel[][]
+      storageKey: string
+    }
+  ): void {
     this.id = id
+    const { configuration, storageKey } = options
     this.configuration = configuration
+    this.storageKey = storageKey
     this.wizardData.clear()
 
     const datafeederData = this.getDataFeederState()
@@ -79,7 +88,7 @@ export class WizardService {
     const datafeederState = this.getDataFeederState()
     datafeederState[this.id] = data
 
-    localStorage.setItem('datafeeder-state', JSON.stringify(datafeederState))
+    localStorage.setItem(this.storageKey, JSON.stringify(datafeederState))
   }
 
   onWizardStepChanged(step: number) {
@@ -106,8 +115,7 @@ export class WizardService {
   }
 
   private getDataFeederState() {
-    return localStorage.getItem('datafeeder-state')
-      ? JSON.parse(localStorage.getItem('datafeeder-state'))
-      : {}
+    const lsItem = localStorage.getItem(this.storageKey)
+    return lsItem ? JSON.parse(lsItem) : {}
   }
 }

@@ -9,7 +9,10 @@ import { WizardFieldModel } from '../../models/wizard-field.model'
 })
 export class WizardComponent implements OnInit {
   @Input() id: string
-  @Input() initialConfig: WizardFieldModel[][]
+  @Input() initialConfig: {
+    configuration: WizardFieldModel[][]
+    storageKey: string
+  }
 
   @Output() stepChanges = new EventEmitter<number>()
   @Output() stepsNumber = new EventEmitter<number>()
