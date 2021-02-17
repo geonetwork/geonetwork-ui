@@ -1,4 +1,5 @@
 import {
+  AfterContentInit,
   AfterViewInit,
   Component,
   Input,
@@ -28,6 +29,7 @@ import { Subscription } from 'rxjs'
 })
 export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() wizardFieldConfig: WizardFieldModel
+  @Input() focus: boolean
 
   @ViewChild('searchText') searchText: TextInputComponent
   @ViewChild('chips') chips: ChipsInputComponent

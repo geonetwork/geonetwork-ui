@@ -28,3 +28,19 @@ tag-input::ng-deep
 tag-input::ng-deep .tag__text {
   padding-right: 7px;
 }
+
+tag-input::ng-deep div {
+  height: 100%;
+}
+
+tag-input::ng-deep tag-input-form {
+  width: 100% ;
+}
+
+tag-input::ng-deep form {
+  height: 100%;
+}
+
+tag-input::ng-deep input {
+  width: 100%;
+}

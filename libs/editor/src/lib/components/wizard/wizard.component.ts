@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core'
 import { WizardService } from '../../services/wizard.service'
 import { WizardFieldModel } from '../../models/wizard-field.model'
 
@@ -17,6 +26,8 @@ export class WizardComponent implements OnInit {
   @Output() stepChanges = new EventEmitter<number>()
   @Output() stepsNumber = new EventEmitter<number>()
 
+  @ViewChild('wizardFields') wizardFieldsEl: ElementRef<HTMLInputElement>
+
   currentStep: number
   configuration: WizardFieldModel[]
 
@@ -28,6 +39,8 @@ export class WizardComponent implements OnInit {
     this.initializeCurrentStep()
     this.stepChanges.emit(this.wizardService.getCurrentStep())
     this.stepsNumber.emit(this.wizardService.getConfigurationStepNumber())
+
+    this.setFocus()
   }
 
   handlePreviousBtnClick() {
@@ -44,11 +57,23 @@ export class WizardComponent implements OnInit {
 
   onStepChange(step: number) {
     this.wizardService.onWizardStepChanged(step)
+
+    this.setFocus()
     this.initializeCurrentStep()
   }
 
   private initializeCurrentStep() {
     this.currentStep = this.wizardService.getCurrentStep()
     this.configuration = this.wizardService.getStepConfiguration()
+  }
+
+  private setFocus() {
+    setTimeout(() => {
+      const inputEl =
+        this.wizardFieldsEl.nativeElement.getElementsByTagName('input')[0] ||
+        this.wizardFieldsEl.nativeElement.getElementsByTagName('textarea')[0]
+
+      inputEl.focus()
+    }, 100)
   }
 }
