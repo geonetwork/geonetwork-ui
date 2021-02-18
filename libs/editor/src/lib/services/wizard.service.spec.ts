@@ -47,7 +47,10 @@ describe('WizardService', () => {
   })
 
   it('initialize', () => {
-    service.initialize('1', { configuration: [], storageKey: 'datafeeder-state' })
+    service.initialize('1', {
+      configuration: [],
+      storageKey: 'datafeeder-state',
+    })
 
     expect(service.getWizardFieldData('title')).toEqual('title')
     expect(service.getWizardFieldData('abstract')).toEqual('dataset')

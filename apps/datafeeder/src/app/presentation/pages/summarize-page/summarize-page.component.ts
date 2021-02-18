@@ -1,7 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { Subscription } from 'rxjs'
+import {
+  DataPublishingApiService,
+  PublishJobStatusApiModel,
+  PublishStatusEnumApiModel,
+  DatasetPublishRequestApiModel,
+} from '@lib/datafeeder-api'
 import { WizardService } from '@lib/editor'
+import { Subscription } from 'rxjs'
 import { config as wizardConfig } from '../../../configs/wizard.config'
 
 @Component({
@@ -18,7 +24,8 @@ export class SummarizePageComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private wizard: WizardService
+    private wizard: WizardService,
+    private publishService: DataPublishingApiService
   ) {}
 
   ngOnInit(): void {
@@ -30,7 +37,21 @@ export class SummarizePageComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    this.router.navigate(['/', this.rootId, 'publish'])
+    const dataset = this.wizard.getDataObject()
+    // fix property names
+    const scale = dataset.dropdown
+    delete dataset.dropdown
+    dataset.scale = scale
+
+    this.publishService
+      .publish(this.rootId.toString(), {
+        datasets: [dataset as DatasetPublishRequestApiModel],
+      })
+      .subscribe((job: PublishJobStatusApiModel) => {
+        if (job.status === PublishStatusEnumApiModel.ERROR) {
+          this.router.navigate(['/', this.rootId, 'publish'])
+        }
+      })
   }
 
   previous() {

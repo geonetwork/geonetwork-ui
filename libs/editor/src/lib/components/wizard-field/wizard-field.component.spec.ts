@@ -11,7 +11,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 const DEFAULT_CHIPS_ITEMS_URL = (keys) =>
   `https://apps.titellus.net/geonetwork/srv/api/registries/vocabularies/search?type=CONTAINS&thesaurus=external.place.regions&rows=200&q=${keys}&uri=*QUERY*&lang=eng`
 
-
 describe('WizardFieldsComponent', () => {
   let component: WizardFieldComponent
   let fixture: ComponentFixture<WizardFieldComponent>
