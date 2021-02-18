@@ -122,9 +122,8 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   }
 
   submitValidation() {
-    ['encoding', 'nativeName', 'crs'].forEach(f =>
-      this.wizard.setWizardFieldData(f, this[f])
-    )
+    const fields = ['encoding', 'nativeName', 'crs']
+    fields.forEach((f) => this.wizard.setWizardFieldData(f, this[f]))
     this.router.navigate(['/', this.rootId, 'step', 1])
   }
 
