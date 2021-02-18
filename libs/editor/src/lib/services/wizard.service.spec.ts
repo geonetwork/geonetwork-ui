@@ -38,7 +38,7 @@ describe('WizardService', () => {
 
     window.localStorage.setItem(
       'datafeeder-state',
-      '{"1":{"step":4,"config":[{"id":"title","value":"title"},{"id":"abstract","value":"dataset"},{"id":"tags","value":"[{\\"display\\":\\"Faeroe Islands\\",\\"value\\":\\"Faeroe Islands\\"}]"},{"id":"dropdown","value":"\\"25000\\""},{"id":"description","value":"description"}]},"10":{"step":4,"config":[{"id":"title","value":"title"},{"id":"abstract","value":"dataset"},{"id":"tags","value":"[{\\"display\\":\\"Davis Sea\\",\\"value\\":\\"Davis Sea\\"}]"},{"id":"dropdown","value":"\\"50000\\""},{"id":"description","value":"desctription"}]}}'
+      '{"1":{"step":4,"values":[{"id":"title","value":"title"},{"id":"abstract","value":"dataset"},{"id":"tags","value":"[{\\"display\\":\\"Faeroe Islands\\",\\"value\\":\\"Faeroe Islands\\"}]"},{"id":"dropdown","value":"\\"25000\\""},{"id":"description","value":"description"}]},"10":{"step":4,"values":[{"id":"title","value":"title"},{"id":"abstract","value":"dataset"},{"id":"tags","value":"[{\\"display\\":\\"Davis Sea\\",\\"value\\":\\"Davis Sea\\"}]"},{"id":"dropdown","value":"\\"50000\\""},{"id":"description","value":"desctription"}]}}'
     )
   })
 
@@ -47,7 +47,7 @@ describe('WizardService', () => {
   })
 
   it('initialize', () => {
-    service.initialize('10')
+    service.initialize('1', { configuration: [], storageKey: 'datafeeder-state' })
 
     expect(service.getWizardFieldData('title')).toEqual('title')
     expect(service.getWizardFieldData('abstract')).toEqual('dataset')

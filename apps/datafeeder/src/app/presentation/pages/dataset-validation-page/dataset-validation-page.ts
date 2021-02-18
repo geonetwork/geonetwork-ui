@@ -36,12 +36,14 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   featureIndex = 0
   crs = ''
   encoding = ''
+
   numOfEntities = 0
   numberOfSteps: number
 
   private routeParamsSub: Subscription
   private rootId: number
   private format = new GeoJSON({})
+  private nativeName = ''
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -69,6 +71,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
           }
 
           this.dataset = job.datasets[0]
+          this.nativeName = this.dataset.name
           this.numOfEntities = this.dataset.featureCount
           this.crs = this.dataset.nativeBounds?.crs?.srs
           this.encoding = this.dataset.encoding
@@ -119,6 +122,9 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   }
 
   submitValidation() {
+    ;['encoding', 'nativeName', 'crs'].forEach((f) =>
+      this.wizard.setWizardFieldData(f, this[f])
+    )
     this.router.navigate(['/', this.rootId, 'step', 1])
   }
 

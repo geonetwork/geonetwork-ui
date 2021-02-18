@@ -30,15 +30,7 @@ export class WizardService {
     this.storageKey = storageKey
     this.wizardData.clear()
 
-    const datafeederData = this.getDataFeederState()
-
-    const savedWizardData = datafeederData[id] || {}
-
-    const wizardConfig = savedWizardData.config ? savedWizardData.config : []
-
-    wizardConfig.forEach((i) => {
-      this.wizardData.set(i.id, i.value)
-    })
+    this.load()
   }
 
   getCurrentStep(): number {
@@ -62,31 +54,25 @@ export class WizardService {
   }
 
   onWizardWizardFieldDataChanged(fieldId: string, data: any): void {
-    this.updateWizardFieldData(fieldId, data)
-    this.saveWizardFieldData()
+    this.setWizardFieldData(fieldId, data)
   }
 
-  updateWizardFieldData(fieldId: string, data: any): void {
+  setWizardFieldData(fieldId: string, data: any): void {
     this.wizardData.set(fieldId, data)
+    this.save()
   }
 
-  saveWizardFieldData(): void {
-    const config = []
+  save(): void {
+    const values = [...this.wizardData].map(([key, value]) => ({
+      id: key,
+      value,
+    }))
+    const datafeederState = this.load(false)
 
-    this.wizardData.forEach((value, key) => {
-      config.push({
-        id: key,
-        value,
-      })
-    })
-
-    const data = {
+    datafeederState[this.id] = {
       step: this.wizardStep,
-      config,
+      values,
     }
-
-    const datafeederState = this.getDataFeederState()
-    datafeederState[this.id] = data
 
     localStorage.setItem(this.storageKey, JSON.stringify(datafeederState))
   }
@@ -94,7 +80,7 @@ export class WizardService {
   onWizardStepChanged(step: number) {
     if (step > 0 && step < this.getConfigurationStepNumber()) {
       this.wizardStep = step
-      this.saveWizardFieldData()
+      this.save()
     }
   }
 
@@ -114,8 +100,19 @@ export class WizardService {
     })
   }
 
-  private getDataFeederState() {
+  private load(write = true) {
     const lsItem = localStorage.getItem(this.storageKey)
-    return lsItem ? JSON.parse(lsItem) : {}
+    const datafeederData = lsItem ? JSON.parse(lsItem) : {}
+    if (write) {
+      datafeederData[this.id]?.values?.forEach((i) => {
+        this.wizardData.set(i.id, i.value)
+      })
+    }
+    return datafeederData
+  }
+
+  getDataObject() {
+    this.load()
+    return Object.fromEntries(this.wizardData)
   }
 }
