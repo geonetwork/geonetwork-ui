@@ -10,12 +10,6 @@
  * Do not edit the class manually.
  */
 
-export interface IProcessingReportApiModel {
-  running?: boolean
-  uuid?: string
-  startIsoDateTime?: string
-  endIsoDateTime?: string
-  ellapsedTimeInSeconds?: number
-  totalTimeInSeconds?: number
-  type?: string
+export interface InlineObject3ApiModel {
+  file?: Blob
 }
