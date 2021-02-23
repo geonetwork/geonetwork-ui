@@ -33,9 +33,9 @@
             class="text-gray-500 text-xs border-gray-300 truncate viewable-downloadable"
             *ngIf="isViewable || isDownloadable"
           >
-            <span *ngIf="isViewable" translate>recordViewable</span>
+            <span *ngIf="isViewable" translate>record.action.view</span>
             <span *ngIf="isViewable && isDownloadable">,&nbsp;</span>
-            <span *ngIf="isDownloadable" translate>recordDownloadable</span>
+            <span *ngIf="isDownloadable" translate>record.action.download</span>
           </div>
         </div>
       </div>

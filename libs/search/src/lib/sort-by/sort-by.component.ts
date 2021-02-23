@@ -5,8 +5,9 @@ import { SearchState } from '../state/reducer'
 import { getSearchSortBy } from '../state/selectors'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
-marker('last changed')
-marker('popularity')
+marker('results.sortBy.relevancy')
+marker('results.sortBy.dateStamp')
+marker('results.sortBy.popularity')
 
 @Component({
   selector: 'search-sort-by',
@@ -15,15 +16,15 @@ marker('popularity')
 export class SortByComponent implements OnInit {
   choices = [
     {
-      label: 'relevancy',
+      label: 'results.sortBy.relevancy',
       value: '_score',
     },
     {
-      label: 'last changed',
+      label: 'results.sortBy.dateStamp',
       value: '-dateStamp',
     },
     {
-      label: 'popularity',
+      label: 'results.sortBy.popularity',
       value: 'popularity',
     },
   ]
