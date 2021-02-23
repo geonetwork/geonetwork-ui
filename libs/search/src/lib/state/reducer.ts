@@ -131,7 +131,6 @@ export function reducerSearch(
         params: {
           ...state.params,
           from: 0,
-          size: state.params.size,
         },
       }
     case fromActions.SCROLL:
