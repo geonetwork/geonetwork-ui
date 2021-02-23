@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core'
-import { EsRequestAggTerm } from '@lib/common'
+import { EsRequestAggTerm, SearchFilters } from '@lib/common'
+import { FacetSelectEvent, ModelBlock } from '@lib/ui'
 import { combineLatest, Observable } from 'rxjs'
-import { map, take, tap } from 'rxjs/operators'
-import { ModelBlock } from '../../../../../ui/src/lib/facets/facets.model'
+import { map, take } from 'rxjs/operators'
 import { SearchFacade } from '../../state/search.facade'
 import { FacetsService } from '../facets.service'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -35,7 +35,7 @@ export class FacetsContainerComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectedPaths$ = this.searchFacade.searchFilters$.pipe(
-      map((filters) => this.findSelectedPaths(filters))
+      map((filters) => this.facets.findSelectedPaths(filters))
     )
 
     this.models$ = combineLatest([
@@ -43,83 +43,32 @@ export class FacetsContainerComponent implements OnInit {
       this.searchFacade.resultsAggregations$,
     ]).pipe(
       map(([configAggregations, resultsAggregations]) => {
-        return this.facets.createFacetModel(
+        const model = this.facets.createFacetModel(
           configAggregations,
           resultsAggregations,
           false
         )
+        return model
       })
     )
   }
 
-  onItemSelected(path: string[], selected) {
-    this.searchFacade.searchFilters$
-      .pipe(
-        take(1),
-        tap((filters) => {
-          const newFilters = this.computeNewFilters(filters, path, selected)
-          this.searchFacade.setFilters(newFilters)
-        })
-      )
-      .subscribe()
+  onItemChange(facetEvent: FacetSelectEvent) {
+    this.searchFacade.searchFilters$.pipe(take(1)).subscribe((filters) => {
+      this.updateFilters(filters, facetEvent)
+    })
   }
 
-  /**
-   * Compute filters recursive paths enabled in the state current
-   * search
-   * e.g [["tag.default", "land use"]]
-   *
-   * @param filters Search filters from state
-   */
-  private findSelectedPaths(filters): string[][] {
-    const discoveredObjects = [] // For checking for cyclic object
-    const path = []
-    const results = []
-
-    // store void result to prevent ; added by prettier before iife
-    const _ = (function find(obj) {
-      for (const key of Object.keys(obj)) {
-        if (obj[key] === true) {
-          // Found a selected path
-          path.push(key)
-          results.push(Array.from(path))
-          path.pop()
-        }
-        const o = obj[key] // The next object to be searched
-        if (o && typeof o === 'object') {
-          if (!discoveredObjects.find((discovered) => discovered === o)) {
-            // check for cyclic link
-            path.push(key)
-            discoveredObjects.push(o)
-            find(o)
-            path.pop()
-          }
-        }
-      }
-    })(filters)
-
-    return results
-  }
-
-  private computeNewFilters(filters, path, selected) {
-    const clone = JSON.parse(JSON.stringify(filters))
-    let current = clone
-
-    for (let i = 0; i < path.length; i++) {
-      if (i === path.length - 1) {
-        if (selected) {
-          current[path[i]] = selected
-        } else {
-          delete current[path[i]]
-        }
-      }
-
-      if (selected && current[path[i]] === undefined) {
-        current[path[i]] = {}
-      }
-      current = current[path[i]]
-    }
-    return clone
+  private updateFilters(filters: SearchFilters, facetEvent: FacetSelectEvent) {
+    const { item, block } = facetEvent
+    const { path } = item
+    const pathValue = this.facets.computeItemPathValue(block, item)
+    const newFilters = this.facets.computeNewFiltersFromState(
+      filters,
+      path,
+      pathValue
+    )
+    this.searchFacade.setFilters(newFilters)
   }
 
   onMore(key: string): void {

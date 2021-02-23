@@ -1,4 +1,7 @@
-export const BLOCK_MODEL_FIXTURE = {
+import { AggregationsTypesEnum } from '@lib/common'
+import { ModelBlock, ModelItem } from '@lib/ui'
+
+export const BLOCK_MODEL_FIXTURE: ModelBlock = {
   key: 'tag',
   items: [
     { value: 'Hungary', count: 20, path: ['tag', 'Hungary'] },
@@ -24,19 +27,27 @@ export const BLOCK_MODEL_FIXTURE = {
     { value: 'Slovakia', count: 17, path: ['tag', 'Slovakia'] },
   ],
   path: ['tag'],
-  type: 'terms',
+  type: AggregationsTypesEnum.TERMS,
   size: 21,
   more: true,
   includeFilter: true,
   excludeFilter: false,
 }
-export const EMPTY_BLOCK_MODEL_FIXTURE = {
+export const EMPTY_BLOCK_MODEL_FIXTURE: ModelBlock = {
   key: 'emptytag',
   items: [],
   path: ['emptytag'],
-  type: 'terms',
+  type: AggregationsTypesEnum.TERMS,
   size: 21,
   more: true,
   includeFilter: false,
   excludeFilter: false,
+}
+
+export const FACET_ITEM_FIXTURE: ModelItem = {
+  path: ['tag.default', 'land use'],
+  value: 'land use',
+  count: 500,
+  selected: true,
+  inverted: false,
 }
