@@ -151,7 +151,7 @@ export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
       this.datepicker.selectedDate.subscribe((value: Date) => {
         this.wizardService.onWizardWizardFieldDataChanged(
           this.wizardFieldConfig.id,
-          value.getTime().toString()
+          value.getDate().toString()
         )
       })
     )

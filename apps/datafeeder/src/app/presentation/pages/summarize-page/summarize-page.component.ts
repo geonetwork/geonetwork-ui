@@ -37,21 +37,32 @@ export class SummarizePageComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    const dataset = this.wizard.getDataObject()
-    // fix property names
-    const scale = dataset.dropdown
-    delete dataset.dropdown
-    dataset.scale = scale
-
     this.publishService
       .publish(this.rootId.toString(), {
-        datasets: [dataset as DatasetPublishRequestApiModel],
+        datasets: [this.formatDataset(this.wizard.getDataObject())],
       })
       .subscribe((job: PublishJobStatusApiModel) => {
         if (job.status === PublishStatusEnumApiModel.ERROR) {
           this.router.navigate(['/', this.rootId, 'publish'])
         }
       })
+  }
+
+  formatDataset(dataset: any): DatasetPublishRequestApiModel {
+    return {
+      nativeName: dataset.nativeName,
+      // publishedName?: string
+      encoding: dataset.encoding,
+      srs: dataset.srs,
+      metadata: {
+        title: dataset.title,
+        abstract: dataset.abstract,
+        tags: JSON.parse(dataset.tags).map(t => t.value),
+        creationDate: new Date(parseInt(dataset.datepicker)).toISOString(),
+        scale: parseInt(dataset.dropdown),
+        creationProcessDescription: dataset.description
+      },
+    }
   }
 
   previous() {
