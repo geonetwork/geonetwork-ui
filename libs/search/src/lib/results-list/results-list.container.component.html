@@ -4,7 +4,7 @@
   [infiniteScrollDistance]="scrollableConfig.distance"
   [infiniteScrollUpDistance]="scrollableConfig.upDistance"
   [infiniteScrollThrottle]="scrollableConfig.throttle"
-  [infiniteScrollDisabled]="scrollableConfig.disabled"
+  [infiniteScrollDisabled]="scrollDisable$ | async"
   (scrolled)="onScrollDown()"
 >
   <ui-results-list

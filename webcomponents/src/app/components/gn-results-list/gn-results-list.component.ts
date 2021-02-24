@@ -22,6 +22,10 @@ export class GnResultsListComponent extends BaseComponent {
   @Input() layout: ResultsListLayout = ResultsListLayout.CARD
   @Input() size = 10
   @Input() filter = ''
+  _fixed: boolean
+  @Input() set fixed(value: string) {
+    this._fixed = value === 'true'
+  }
 
   constructor(facade: SearchFacade, private changeDetector: ChangeDetectorRef) {
     super(facade)
