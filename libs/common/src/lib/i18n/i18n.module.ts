@@ -8,6 +8,9 @@ import { I18nInterceptor } from './i18n.interceptor'
 @NgModule({
   imports: [HttpClientModule, GnApiModule],
   exports: [TranslateModule],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: I18nInterceptor, multi: true },
+  ],
 })
 export class I18nModule {
   constructor(translate: TranslateService) {
