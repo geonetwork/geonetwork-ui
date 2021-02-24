@@ -46,7 +46,7 @@ describe('StepBarComponent', () => {
 
     for (let i = 0; i < currentStep - 1; i++) {
       const childEl = childArr[i]
-      expect(childEl.className.includes(component.color.innerBar)).toBeTruthy()
+      expect(childEl.className.includes('bg-white')).toBeTruthy()
     }
   })
 
@@ -58,7 +58,7 @@ describe('StepBarComponent', () => {
 
     for (let i = currentStep; i < childArr.length; i++) {
       const childEl = childArr[i]
-      expect(childEl.className.includes('bg-white')).toBeTruthy()
+      expect(childEl.className.includes(component.color.innerBar)).toBeTruthy()
     }
   })
 })
