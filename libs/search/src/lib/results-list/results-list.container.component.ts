@@ -4,8 +4,8 @@ import {
   InfiniteScrollOptionsDefault,
   ResultsListLayout,
 } from '@lib/common'
-import { Subscription } from 'rxjs'
-import { distinctUntilChanged } from 'rxjs/operators'
+import { iif, Observable, of } from 'rxjs'
+import { distinctUntilChanged, mergeMap } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 
 @Component({
@@ -17,8 +17,8 @@ export class ResultsListContainerComponent implements OnInit, OnDestroy {
   @Input() layout: ResultsListLayout = ResultsListLayout.CARD
   @Input() scrollableOptions: InfiniteScrollModel = {}
 
+  scrollDisable$: Observable<boolean>
   scrollableConfig: InfiniteScrollModel
-  subscription = new Subscription()
 
   constructor(public facade: SearchFacade) {}
 
@@ -28,12 +28,12 @@ export class ResultsListContainerComponent implements OnInit, OnDestroy {
       ...this.scrollableOptions,
     }
     this.facade.setResultsLayout(this.layout)
-    this.subscription.add(
-      this.facade.isEndOfResults$
-        .pipe(distinctUntilChanged())
-        .subscribe((isTheEnd) => {
-          this.scrollableConfig.disabled = isTheEnd
-        })
+
+    this.scrollDisable$ = of(this.scrollableConfig.disabled).pipe(
+      mergeMap((disabled) =>
+        iif(() => !!disabled, of(true), this.facade.isEndOfResults$)
+      ),
+      distinctUntilChanged()
     )
   }
 
@@ -41,7 +41,5 @@ export class ResultsListContainerComponent implements OnInit, OnDestroy {
     this.facade.scroll()
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe()
-  }
+  ngOnDestroy(): void {}
 }

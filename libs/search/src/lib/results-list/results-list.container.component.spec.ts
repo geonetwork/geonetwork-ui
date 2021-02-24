@@ -10,7 +10,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { RecordSummary, ResultsListLayout } from '@lib/common'
 import { SearchFacade } from '@lib/search'
-import { of } from 'rxjs'
+import { BehaviorSubject, of } from 'rxjs'
 import { ResultsListContainerComponent } from './results-list.container.component'
 
 @Component({
@@ -23,9 +23,10 @@ class ResultsListMockComponent {
   @Input() layout: ResultsListLayout = ResultsListLayout.CARD
 }
 
+const isEndOfResultsSubject = new BehaviorSubject(false)
 const searchFacadeMock = {
   isLoading$: of(true),
-  isEndOfResults$: of(true),
+  isEndOfResults$: isEndOfResultsSubject,
   results$: of(['one']),
   layout$: of('CARD'),
   setResultsLayout: jest.fn(),
@@ -51,30 +52,74 @@ describe('ResultsListContainerComponent', () => {
     }).compileComponents()
   }))
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ResultsListContainerComponent)
-    component = fixture.componentInstance
-    de = fixture.debugElement
-    items = de.queryAll(By.directive(ResultsListMockComponent))
-    fixture.detectChanges()
+  describe('default init', () => {
+    beforeEach(() => {
+      fixture = TestBed.createComponent(ResultsListContainerComponent)
+      component = fixture.componentInstance
+      de = fixture.debugElement
+      items = de.queryAll(By.directive(ResultsListMockComponent))
+      fixture.detectChanges()
+    })
+
+    it('should create', () => {
+      expect(component).toBeTruthy()
+    })
+
+    it('init list from state', () => {
+      const uiComponent = items[0]
+      expect(uiComponent).toBeTruthy()
+      expect(searchFacadeMock.setResultsLayout).toHaveBeenCalledWith('CARD')
+
+      expect(uiComponent.componentInstance.loading).toBe(true)
+      expect(uiComponent.componentInstance.layout).toBe('CARD')
+      expect(uiComponent.componentInstance.records).toEqual(['one'])
+    })
+
+    it('scroll call facade', () => {
+      component.onScrollDown()
+      expect(searchFacadeMock.scroll).toHaveBeenCalled()
+    })
   })
 
-  it('should create', () => {
-    expect(component).toBeTruthy()
-  })
+  describe('scrollDisable$', () => {
+    let disabled
+    let subscription
+    describe('when scroll is disabled from input', () => {
+      beforeEach(() => {
+        fixture = TestBed.createComponent(ResultsListContainerComponent)
+        component = fixture.componentInstance
+        component.scrollableOptions = {
+          disabled: true,
+        }
+        fixture.detectChanges()
+        subscription = component.scrollDisable$.subscribe((v) => (disabled = v))
+      })
+      afterEach(() => {
+        subscription.unsubscribe()
+      })
+      it('emits true', () => {
+        expect(disabled).toBe(true)
+      })
+    })
 
-  it('init list from state', () => {
-    const uiComponent = items[0]
-    expect(uiComponent).toBeTruthy()
-    expect(searchFacadeMock.setResultsLayout).toHaveBeenCalledWith('CARD')
-
-    expect(uiComponent.componentInstance.loading).toBe(true)
-    expect(uiComponent.componentInstance.layout).toBe('CARD')
-    expect(uiComponent.componentInstance.records).toEqual(['one'])
-  })
-
-  it('scroll call facade', () => {
-    component.onScrollDown()
-    expect(searchFacadeMock.scroll).toHaveBeenCalled()
+    describe('when scroll is enabled from input', () => {
+      beforeEach(() => {
+        fixture = TestBed.createComponent(ResultsListContainerComponent)
+        component = fixture.componentInstance
+        component.scrollableOptions = {
+          disabled: false,
+        }
+        fixture.detectChanges()
+        subscription = component.scrollDisable$.subscribe((v) => (disabled = v))
+      })
+      afterEach(() => {
+        subscription.unsubscribe()
+      })
+      it('emits isEndOfResults$', () => {
+        expect(disabled).toBe(false)
+        isEndOfResultsSubject.next(true)
+        expect(disabled).toBe(true)
+      })
+    })
   })
 })
