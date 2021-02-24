@@ -17,6 +17,7 @@ export const PAGINATE = '[Search] Paginate'
 export const SCROLL = '[Search] Scroll'
 export const SET_RESULTS_LAYOUT = '[Search] Set results layout'
 export const ADD_RESULTS = '[Search] Add Results'
+export const CLEAR_PAGINATION = '[Search] Clear Paging'
 export const CLEAR_RESULTS = '[Search] Clear Results'
 export const REQUEST_MORE_RESULTS = '[Search] Request More Results'
 export const SET_RESULTS_AGGREGATIONS = '[Search] Set Results Aggregations'
@@ -84,6 +85,14 @@ export class SetPagination extends AbstractAction implements Action {
 export class Paginate extends AbstractAction implements Action {
   readonly type = PAGINATE
   constructor(public delta: number, id?: string) {
+    super(id)
+  }
+}
+
+export class ClearPagination extends AbstractAction implements Action {
+  readonly type = CLEAR_PAGINATION
+
+  constructor(id?: string) {
     super(id)
   }
 }
@@ -195,6 +204,7 @@ export type SearchActions =
   | Scroll
   | SetResultsLayout
   | AddResults
+  | ClearPagination
   | ClearResults
   | RequestMoreResults
   | SetResultsAggregations

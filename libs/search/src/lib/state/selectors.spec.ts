@@ -74,6 +74,58 @@ describe('Search Selectors', () => {
     })
   })
 
+  describe('isEndOfResults', () => {
+    it('should return true once at the end of results list', () => {
+      const result = fromSelectors.isEndOfResults.projector({
+        ...initialStateSearch,
+        params: {
+          ...initialStateSearch.params,
+          from: 0,
+          size: 20,
+        },
+        results: {
+          ...initialStateSearch.results,
+          hits: {
+            value: 62,
+          },
+        },
+      })
+      expect(result).toEqual(false)
+
+      const endResult = fromSelectors.isEndOfResults.projector({
+        ...initialStateSearch,
+        params: {
+          ...initialStateSearch.params,
+          from: 60,
+          size: 20,
+        },
+        results: {
+          ...initialStateSearch.results,
+          hits: {
+            value: 62,
+          },
+        },
+      })
+      expect(endResult).toEqual(true)
+
+      const exactEndOfResult = fromSelectors.isEndOfResults.projector({
+        ...initialStateSearch,
+        params: {
+          ...initialStateSearch.params,
+          from: 40,
+          size: 20,
+        },
+        results: {
+          ...initialStateSearch.results,
+          hits: {
+            value: 60,
+          },
+        },
+      })
+      expect(exactEndOfResult).toEqual(true)
+    })
+  })
+
   describe('getSearchResultsAggregations', () => {
     it('should return search aggregations results', () => {
       const aggregations = ES_FIXTURE_AGGS_RESPONSE

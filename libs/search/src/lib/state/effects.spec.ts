@@ -3,6 +3,7 @@ import { AuthService } from '@lib/auth'
 import { SearchApiService } from '@lib/gn-api'
 import { ElasticsearchMapper } from '../elasticsearch/elasticsearch.mapper'
 import {
+  ClearPagination,
   DEFAULT_SEARCH_KEY,
   Scroll,
   SetIncludeOnAggregation,
@@ -97,9 +98,10 @@ describe('Effects', () => {
   describe('clearResults$', () => {
     it('clear results list on sortBy action', () => {
       actions$ = hot('-a---', { a: new SetSortBy('fieldA') })
-      const expected = hot('-(bc)', {
+      const expected = hot('-(bcd)', {
         b: new ClearResults(),
-        c: new RequestMoreResults(),
+        c: new ClearPagination(),
+        d: new RequestMoreResults(),
       })
 
       expect(effects.clearResults$).toBeObservable(expected)
@@ -108,18 +110,20 @@ describe('Effects', () => {
       actions$ = hot('-a---', {
         a: new SetFilters({ any: 'abcd', other: 'ef' }),
       })
-      const expected = hot('-(bc)', {
+      const expected = hot('-(bcd)', {
         b: new ClearResults(),
-        c: new RequestMoreResults(),
+        c: new ClearPagination(),
+        d: new RequestMoreResults(),
       })
 
       expect(effects.clearResults$).toBeObservable(expected)
     })
     it('clear results list on updateFilters action', () => {
       actions$ = hot('-a---', { a: new UpdateFilters({ any: 'abcd' }) })
-      const expected = hot('-(bc)', {
+      const expected = hot('-(bcd)', {
         b: new ClearResults(),
-        c: new RequestMoreResults(),
+        c: new ClearPagination(),
+        d: new RequestMoreResults(),
       })
 
       expect(effects.clearResults$).toBeObservable(expected)
@@ -128,9 +132,10 @@ describe('Effects', () => {
       actions$ = hot('-a---', {
         a: new SetSearch({ filters: { any: 'abcd' } }, 'main'),
       })
-      const expected = hot('-(bc)', {
+      const expected = hot('-(bcd)', {
         b: new ClearResults('main'),
-        c: new RequestMoreResults('main'),
+        c: new ClearPagination('main'),
+        d: new RequestMoreResults('main'),
       })
 
       expect(effects.clearResults$).toBeObservable(expected)
@@ -138,7 +143,7 @@ describe('Effects', () => {
   })
 
   describe('scroll$', () => {
-    it('clear results list on sortBy action', () => {
+    it('request more results on scroll action', () => {
       actions$ = hot('-a---', { a: new Scroll('main') })
       const expected = hot('-(b)', {
         b: new RequestMoreResults('main'),
@@ -205,7 +210,7 @@ describe('Effects', () => {
         b: new PatchResultsAggregations('abc', { abc: {} }),
       })
 
-      expect(effects.upateRequestAggregationTerm$).toBeObservable(expected)
+      expect(effects.updateRequestAggregationTerm$).toBeObservable(expected)
     })
   })
 })

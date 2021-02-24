@@ -6,12 +6,9 @@ import {
   ViewChild,
 } from '@angular/core'
 import { TextInputComponent } from '@lib/ui'
-import { select, Store } from '@ngrx/store'
 import { Subscription } from 'rxjs'
-import { debounceTime, map } from 'rxjs/operators'
-import { UpdateFilters } from '../state/actions'
-import { SearchState } from '../state/reducer'
-import { getSearchFilters } from '../state/selectors'
+import { debounceTime } from 'rxjs/operators'
+import { SearchFacade } from '../state/search.facade'
 
 @Component({
   selector: 'search-fuzzy-search',
@@ -22,18 +19,18 @@ import { getSearchFilters } from '../state/selectors'
 export class FuzzySearchComponent implements OnDestroy, AfterViewInit {
   @ViewChild('searchText') searchText: TextInputComponent
 
-  currentTextSearch$ = this.store.pipe(
-    select(getSearchFilters),
-    map((filters) => filters.any || '')
-  )
+  currentTextSearch$
+
   subs = new Subscription()
 
-  constructor(private store: Store<SearchState>) {}
+  constructor(private searchFacade: SearchFacade) {
+    this.currentTextSearch$ = this.searchFacade.searchFilters$
+  }
 
   ngAfterViewInit(): void {
     this.subs.add(
       this.searchText.valueChange.pipe(debounceTime(400)).subscribe((value) => {
-        this.store.dispatch(new UpdateFilters({ any: value }))
+        this.searchFacade.setFilters({ any: value })
       })
     )
   }
