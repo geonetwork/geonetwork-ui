@@ -1,9 +1,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Geonetwork demo pages</title>
+    <title>Geonetwork EEA data catalogue</title>
     <base href="./" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       rel="shortcut icon"
@@ -12,15 +11,45 @@
     />
     <link rel="shortcut icon" href="https://forest.eea.europa.eu/favicon.ico" />
     <link
-      data-chunk="client"
       rel="stylesheet"
-      href="https://forest.eea.europa.eu/static/css/17.192ff5b2.chunk.css"
+      href="https://forest.eea.europa.eu/facetview/vendor/jquery-ui-1.11.4.custom/jquery-ui.css"
     />
     <link
-      data-chunk="client"
       rel="stylesheet"
-      href="https://forest.eea.europa.eu/static/css/client.0a595a86.chunk.css"
+      href="https://forest.eea.europa.eu/facetview/vendor/dist/themes/default/style.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/facetview/css/style.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/facetview/css/facetview.css"
+    />
+    <link rel="stylesheet" href="https://forest.eea.europa.eu/css/style.css" />
+    <link rel="stylesheet" href="https://forest.eea.europa.eu/css/tiles.css" />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/css/loading.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/css/no-more-tables.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/css/esbootstrap.facetview.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/css/no-more-tables.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://forest.eea.europa.eu/css/esbootstrap.facetview.css"
+    />
+    <link rel="stylesheet" href="https://forest.eea.europa.eu/custom.css" />
+    <script src="../webcomponents/gn-wc.js"></script>
   </head>
   <body>
     <div id="main">
@@ -809,7 +838,6 @@
                       Opinion on the Kosovo Declaration of Independence
                     </p>
                     <h2>Lastest datasets</h2>
-                    <script src="../webcomponents/gn-wc.js"></script>
                     <gn-results-list
                       api-url="https://apps.titellus.net/geonetwork/srv/api"
                       layout="TITLE"
@@ -819,7 +847,7 @@
                       secondary-color="#c2e9dc"
                       main-color="#212029"
                       background-color="#fdfbff"
-                      ng-version="10.0.1"
+                      fixed="true"
                     ></gn-results-list>
                     <h2 id="de61n">Contact us</h2>
                     <p>European Environment Agency (EEA)</p>
