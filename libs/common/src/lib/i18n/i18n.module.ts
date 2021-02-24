@@ -9,7 +9,7 @@ import {
 } from '@ngx-translate/core'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
-import { TranslationService } from './i18n.service'
+import { Gn4TranslateLoader } from './gn4.translate.loader'
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http)
@@ -56,7 +56,7 @@ export const TRANSLATE_GEONETWORK_CONFIG = {
   },
   loader: {
     provide: TranslateLoader,
-    useClass: TranslationService,
+    useClass: Gn4TranslateLoader,
     defaultLanguage: 'en',
     deps: [ToolsApiService],
   },

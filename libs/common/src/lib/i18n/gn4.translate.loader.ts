@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core'
-import { StandardsApiService, ToolsApiService } from '@lib/gn-api'
+import { ToolsApiService } from '@lib/gn-api'
 import { TranslateLoader } from '@ngx-translate/core'
 import { Observable } from 'rxjs'
 
 @Injectable({
   providedIn: 'root',
 })
-export class TranslationService implements TranslateLoader {
+export class Gn4TranslateLoader implements TranslateLoader {
   constructor(private toolsApiService: ToolsApiService) {}
 
   getTranslation(lang: string): Observable<any> {
