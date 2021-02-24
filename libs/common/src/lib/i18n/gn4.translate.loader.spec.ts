@@ -1,14 +1,16 @@
 import { TestBed } from '@angular/core/testing'
 import { ToolsApiService } from '@lib/gn-api'
 import { of } from 'rxjs'
-import { TranslationService } from './i18n.service'
+import { Gn4TranslateLoader } from './gn4.translate.loader'
 
 const toolsApiServiceMock = {
-  getTranslationsPackage1: jest.fn(() => of({ farming: 'Farming' })),
+  getTranslationsPackage1: jest.fn(() =>
+    of({ farming: 'Farming', legacy: '{{ id }} id' })
+  ),
 }
 
 describe('i18nService', () => {
-  let service: TranslationService
+  let service: Gn4TranslateLoader
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -19,7 +21,7 @@ describe('i18nService', () => {
         },
       ],
     })
-    service = TestBed.inject(TranslationService)
+    service = TestBed.inject(Gn4TranslateLoader)
   })
 
   it('should be created', () => {
@@ -30,5 +32,11 @@ describe('i18nService', () => {
     let translations
     service.getTranslation('en').subscribe((r) => (translations = r))
     expect(translations.farming).toBe('Farming')
+  })
+
+  it('filters {{ }} pattern', () => {
+    let translations
+    service.getTranslation('en').subscribe((r) => (translations = r))
+    expect(translations).not.toHaveProperty('legacy')
   })
 })
