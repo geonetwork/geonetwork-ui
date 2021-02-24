@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common'
 import { Injector, NgModule } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
-import { I18nModule, TRANSLATE_DEFAULT_CONFIG } from '@lib/common'
+import { I18nModule, TRANSLATE_GEONETWORK_CONFIG } from '@lib/common'
 import { Configuration } from '@lib/gn-api'
 import { LibSearchModule, SearchFacade } from '@lib/search'
 import { UiModule } from '@lib/ui'
-import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
+import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { TranslateModule } from '@ngx-translate/core'
 import { apiConfiguration, BaseComponent } from './components/base.component'
@@ -34,7 +34,7 @@ const CUSTOM_ELEMENTS: any[] = [
     StoreModule.forRoot({}),
     EffectsModule.forRoot(),
     I18nModule,
-    TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+    TranslateModule.forRoot(TRANSLATE_GEONETWORK_CONFIG),
     StoreDevtoolsModule.instrument(),
   ],
   providers: [

@@ -1,15 +1,10 @@
 import { TestBed } from '@angular/core/testing'
-import { StandardsApiService } from '@lib/gn-api'
+import { ToolsApiService } from '@lib/gn-api'
 import { of } from 'rxjs'
 import { TranslationService } from './i18n.service'
-import { HttpClient } from '@angular/common/http'
 
-const standardApiServiceMock = {
-  getCodelistsTranslations: jest.fn(() => of({ farming: 'Farming' })),
-}
-
-const httpClient = {
-  get: jest.fn(() => of({ 'facets.block.title.tag': 'Keywords' })),
+const toolsApiServiceMock = {
+  getTranslationsPackage1: jest.fn(() => of({ farming: 'Farming' })),
 }
 
 describe('i18nService', () => {
@@ -19,12 +14,8 @@ describe('i18nService', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: HttpClient,
-          useValue: httpClient,
-        },
-        {
-          provide: StandardsApiService,
-          useValue: standardApiServiceMock,
+          provide: ToolsApiService,
+          useValue: toolsApiServiceMock,
         },
       ],
     })
@@ -35,10 +26,9 @@ describe('i18nService', () => {
     expect(service).toBeTruthy()
   })
 
-  it('to have loaded core translations + codelist translations', () => {
+  it('loads translation from getTranslationsPackage1', () => {
     let translations
     service.getTranslation('en').subscribe((r) => (translations = r))
-    expect(translations['facets.block.title.tag']).toBe('Keywords')
     expect(translations.farming).toBe('Farming')
   })
 })

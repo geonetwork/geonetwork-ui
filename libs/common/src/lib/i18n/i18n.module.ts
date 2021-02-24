@@ -1,5 +1,6 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
+import { GnApiModule, ToolsApiService } from '@lib/gn-api'
 import {
   TranslateCompiler,
   TranslateLoader,
@@ -9,7 +10,6 @@ import {
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
 import { TranslationService } from './i18n.service'
-import { GnApiModule, StandardsApiService } from '@lib/gn-api'
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http)
@@ -58,7 +58,7 @@ export const TRANSLATE_GEONETWORK_CONFIG = {
     provide: TranslateLoader,
     useClass: TranslationService,
     defaultLanguage: 'en',
-    deps: [HttpClient, StandardsApiService],
+    deps: [ToolsApiService],
   },
 }
 
