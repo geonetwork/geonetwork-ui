@@ -41,11 +41,9 @@ export class SummarizePageComponent implements OnInit, OnDestroy {
       .publish(this.rootId.toString(), {
         datasets: [this.formatDataset(this.wizard.getDataObject())],
       })
-      .subscribe((job: PublishJobStatusApiModel) => {
-        if (job.status === PublishStatusEnumApiModel.ERROR) {
-          this.router.navigate(['/', this.rootId, 'publish'])
-        }
-      })
+      .subscribe((job: PublishJobStatusApiModel) =>
+        this.router.navigate(['/', this.rootId, 'publish'])
+      )
   }
 
   formatDataset(dataset: any): DatasetPublishRequestApiModel {

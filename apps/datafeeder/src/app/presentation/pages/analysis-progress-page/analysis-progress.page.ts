@@ -7,7 +7,7 @@ import {
   UploadJobStatusApiModel,
 } from '@lib/datafeeder-api'
 import { interval, Observable, Subscription } from 'rxjs'
-import { switchMap, takeWhile, tap } from 'rxjs/operators'
+import { filter, switchMap, tap } from 'rxjs/operators'
 
 const { PENDING, ANALYZING, DONE } = AnalysisStatusEnumApiModel
 
@@ -31,19 +31,16 @@ export class AnalysisProgressPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = new Subscription()
     this.statusFetch$ = this.activatedRoute.params.pipe(
-      switchMap(({ id }) => {
-        return interval(250).pipe(
-          switchMap(() => {
-            return this.fileUploadApiService.findUploadJob(id)
-          }),
+      switchMap(({ id }) =>
+        interval(250).pipe(
+          switchMap(() => this.fileUploadApiService.findUploadJob(id)),
           tap((job: UploadJobStatusApiModel) => (this.progress = job.progress)),
-          takeWhile(
+          filter(
             (job: UploadJobStatusApiModel) =>
-              [PENDING, ANALYZING].includes(job.status),
-            true
+              ![PENDING, ANALYZING].includes(job.status)
           )
         )
-      })
+      )
     )
 
     this.subscription.add(
