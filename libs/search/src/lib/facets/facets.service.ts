@@ -39,7 +39,8 @@ export class FacetsService {
         let blockModel: any = {
           key,
           items: [],
-          path: [...path, key],
+          path: [...path, responseAgg.meta?.field || key],
+          meta: responseAgg.meta,
         }
         if (requestAgg.hasOwnProperty(AggregationsTypesEnum.TERMS)) {
           blockModel = {
