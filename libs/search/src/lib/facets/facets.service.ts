@@ -31,7 +31,7 @@ export class FacetsService {
       doc_count: number
     }
 
-    for (const key in responseAggregations) {
+    for (const key in requestAggregations) {
       if (responseAggregations.hasOwnProperty(key)) {
         const requestAgg = requestAggregations[key]
         const responseAgg = responseAggregations[key]
