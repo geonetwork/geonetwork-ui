@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import {
   DataPublishingApiService,
@@ -15,7 +15,7 @@ const { PENDING, RUNNING, DONE } = PublishStatusEnumApiModel
   templateUrl: './publish-page.component.html',
   styleUrls: ['./publish-page.component.css'],
 })
-export class PublishPageComponent implements OnInit {
+export class PublishPageComponent implements OnInit, OnDestroy {
   progress = 0
   private subscription: Subscription
   private rootId: number
