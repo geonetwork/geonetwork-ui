@@ -4,6 +4,6 @@
 
 export * from './lib/services'
 export * from './lib/common.module'
-export * from './lib/i18n/i18n.module'
+export * from './lib/i18n'
 export * from './lib/models/'
 export * from './lib/utils/'

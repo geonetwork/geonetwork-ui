@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
-import { LANG_2_TO_3_MAPPER } from '../i18n/i18n.module'
 import { TranslateService } from '@ngx-translate/core'
+import { LANG_2_TO_3_MAPPER } from '../i18n/i18n.constants'
 
 const DEFAULT_API_PATH = '/geonetwork/srv/api'
 
