@@ -13,7 +13,7 @@ import { UiModule } from '@lib/ui'
 import { UploadDataPageComponent } from './presentation/pages/upload-data-page/upload-data.page'
 import { UploadDataRulesComponent } from './presentation/components/upload-data-rules/upload-data-rules.component'
 import { HttpClientModule } from '@angular/common/http'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { DatasetValidationPageComponent } from './presentation/pages/dataset-validation-page/dataset-validation-page'
 import { DataImportValidationMapPanelComponent } from './presentation/components/data-import-validation-map-panel/data-import-validation-map-panel.component'
 import { AnalysisProgressPageComponent } from './presentation/pages/analysis-progress-page/analysis-progress.page'
@@ -82,4 +82,8 @@ export function apiConfigurationFactory() {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(translate: TranslateService) {
+    translate.use('fr')
+  }
+}

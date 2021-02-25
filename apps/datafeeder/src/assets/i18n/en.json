@@ -20,7 +20,7 @@
   "datafeeder.upload.error.title.fileSize": "The selected file size is too large",
   "datafeeder.upload.error.subtitle.fileSize": "Remember, 30MB maximum",
   "datafeeder.upload.error.title.fileFormat": "The selected file format is not available",
-  "datafeeder.upload.error.subtitle.fileFormat": "Remember, we accepted SHP, GeoPackage, GeoJSON and Spatialite",
+  "datafeeder.upload.error.subtitle.fileFormat": "Remember, we accepted SHP",
   "datafeeder.upload.error.title.analysis": "Error while analysing dataset",
   "datafeeder.analysisProgressBar.illustration.fileFormatDetection": "File format \n detection",
   "datafeeder.analysisProgressBar.illustration.samplingData": "Sampling \n data",
