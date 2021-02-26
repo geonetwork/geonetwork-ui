@@ -5,7 +5,7 @@ import { Gn4TranslateLoader } from './gn4.translate.loader'
 
 const toolsApiServiceMock = {
   getTranslationsPackage1: jest.fn(() =>
-    of({ farming: 'Farming', legacy: '{{ id }} id' })
+    of({ farming: 'Farming', legacy: ' {{ id }} id' })
   ),
 }
 
