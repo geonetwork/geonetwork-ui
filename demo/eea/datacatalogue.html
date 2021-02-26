@@ -611,7 +611,24 @@
                     >
                       <gn-facets
                         api-url="https://apps.titellus.net/geonetwork/srv/api"
-                        facet-config='{"tag.default":{"terms":{"field":"tag.default","include":".*","size": 10}}}'
+                        facet-config='{
+                          "th_gemet.default":{"terms":{
+                            "field":"th_gemet.default",
+                            "include":".*",
+                            "size": 10}},
+                          "Countries":{"terms":{
+                            "field":"keywordType-place.default",
+                            "include": "Austria|Belgium|Bulgaria|Croatia|Cyprus|Czech Republic|Denmark|Estonia|Finland|France|Germany|Greece|Hungary|Ireland|Italy|Kosovo|Latvia|Lithuania|Luxembourg|Malta|Montenegro|Netherlands|North Macedonia|Norway|Poland|Portugal|Romania|Serbia|Slovakia|Slovenia|Spain|Sweden",
+                            "size": 30}, "meta": {"field": "keywordType-place.default"}},
+                              "creationYearForResource": {
+                          "histogram": {
+                            "field": "creationYearForResource",
+                            "interval": 5,
+                            "keyed" : true,
+                            "min_doc_count": 1}},
+                          "resourceType":{"terms":{
+                            "field":"resourceType",
+                            "size": 10}}}'
                       ></gn-facets>
                     </div>
                     <div class="facets_footer_slot"></div>

@@ -31,7 +31,7 @@ export class FacetsService {
       doc_count: number
     }
 
-    for (const key in responseAggregations) {
+    for (const key in requestAggregations) {
       if (responseAggregations.hasOwnProperty(key)) {
         const requestAgg = requestAggregations[key]
         const responseAgg = responseAggregations[key]
@@ -39,7 +39,8 @@ export class FacetsService {
         let blockModel: any = {
           key,
           items: [],
-          path: [...path, key],
+          path: [...path, responseAgg.meta?.field || key],
+          meta: responseAgg.meta,
         }
         if (requestAgg.hasOwnProperty(AggregationsTypesEnum.TERMS)) {
           blockModel = {
