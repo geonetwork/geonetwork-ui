@@ -17,7 +17,7 @@ export class Gn4TranslateLoader implements TranslateLoader {
       map((json) =>
         Object.keys(json).reduce((translations, key) => {
           const value = json[key]
-          if (!value.includes('{{')) {
+          if (!value.includes(' {{')) {
             translations[key] = value
           }
           return translations
