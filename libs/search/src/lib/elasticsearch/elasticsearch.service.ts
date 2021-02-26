@@ -50,9 +50,31 @@ export class ElasticsearchService {
     const partialQuery = {
       bool: {
         must: [{ query_string: { query } }],
+        filter: this.buildPayloadFilter(state),
       },
     }
     return partialQuery
+  }
+
+  private buildPayloadFilter(state: SearchStateSearch) {
+    const { filters } = state.config
+    const { custom, elastic } = filters
+    const queryString = this.stateFiltersToQueryString(custom)
+    const query = []
+    if (elastic) {
+      if (!Array.isArray(elastic)) {
+        query.push(elastic)
+      } else {
+        query.push(...elastic)
+      }
+    } else if (custom) {
+      query.push({
+        query_string: {
+          query: queryString,
+        },
+      })
+    }
+    return query
   }
 
   buildMoreOnAggregationPayload(

@@ -9,6 +9,7 @@ const initialStateSearch = initialState[DEFAULT_SEARCH_KEY]
 describe('ElasticsearchService', () => {
   let service: ElasticsearchService
   let searchFilters
+  let state
 
   beforeEach(() => {
     service = new ElasticsearchService()
@@ -120,6 +121,90 @@ describe('ElasticsearchService', () => {
             },
           ],
         },
+      })
+    })
+  })
+
+  describe('#buildPayloadFilter', () => {
+    describe('when elastic object config', () => {
+      beforeEach(() => {
+        state = {
+          ...initialStateSearch,
+          config: {
+            filters: {
+              elastic: { term: { 'cl_hierarchyLevel.key': 'service' } },
+            },
+          },
+        }
+      })
+      it('returns the input config', () => {
+        const filter = service['buildPayloadFilter'](state)
+        expect(filter).toEqual([
+          { term: { 'cl_hierarchyLevel.key': 'service' } },
+        ])
+      })
+    })
+    describe('when elastic array config', () => {
+      beforeEach(() => {
+        state = {
+          ...initialStateSearch,
+          config: {
+            filters: {
+              elastic: [{ term: { 'cl_hierarchyLevel.key': 'service' } }],
+            },
+          },
+        }
+      })
+      it('returns the input config', () => {
+        const filter = service['buildPayloadFilter'](state)
+        expect(filter).toEqual([
+          { term: { 'cl_hierarchyLevel.key': 'service' } },
+        ])
+      })
+    })
+    describe('when custom config', () => {
+      beforeEach(() => {
+        state = {
+          ...initialStateSearch,
+          config: {
+            filters: {
+              custom: {
+                'cl_hierarchyLevel.key': {
+                  service: true,
+                },
+              },
+            },
+          },
+        }
+      })
+      it('returns the corresponding query_string', () => {
+        const filter = service['buildPayloadFilter'](state)
+        expect(filter).toEqual([
+          { query_string: { query: '(cl_hierarchyLevel.key:"service")' } },
+        ])
+      })
+    })
+    describe('when having both config', () => {
+      beforeEach(() => {
+        state = {
+          ...initialStateSearch,
+          config: {
+            filters: {
+              elastic: [{ term: { 'cl_hierarchyLevel.key': 'service' } }],
+              custom: {
+                'cl_hierarchyLevel.key': {
+                  service: true,
+                },
+              },
+            },
+          },
+        }
+      })
+      it('elastic config priors', () => {
+        const filter = service['buildPayloadFilter'](state)
+        expect(filter).toEqual([
+          { term: { 'cl_hierarchyLevel.key': 'service' } },
+        ])
       })
     })
   })
