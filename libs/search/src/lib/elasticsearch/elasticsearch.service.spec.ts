@@ -58,7 +58,7 @@ describe('ElasticsearchService', () => {
       expect(body.sort).toEqual(['_score', { changeDate: 'desc' }])
     })
   })
-  describe('#facetsToLuceneQuery', () => {
+  describe('#stateFiltersToQueryString', () => {
     describe('when simple terms', () => {
       beforeEach(() => {
         searchFilters = {
@@ -69,7 +69,7 @@ describe('ElasticsearchService', () => {
         }
       })
       it('return OR separated query', () => {
-        const query = service.facetsToLuceneQuery(searchFilters)
+        const query = service.stateFiltersToQueryString(searchFilters)
         expect(query).toBe('(tag.default:"world" tag.default:"vector")')
       })
     })
@@ -88,7 +88,7 @@ describe('ElasticsearchService', () => {
         }
       })
       it('nest sub key with AND operator', () => {
-        const query = service.facetsToLuceneQuery(searchFilters)
+        const query = service.stateFiltersToQueryString(searchFilters)
         expect(query).toBe(
           '((resourceType:"service" AND (serviceType:"OGC:WMS")) resourceType:"dataset")'
         )

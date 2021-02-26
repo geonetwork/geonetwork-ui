@@ -56,7 +56,7 @@ export class ElasticsearchService {
   partialBuildQuery(state: SearchStateSearch) {
     const filters = state.params.filters
     const { any, ...searchFilters } = filters
-    const queryFilters = this.facetsToLuceneQuery(searchFilters)
+    const queryFilters = this.stateFiltersToQueryString(searchFilters)
     const queryAny = `(${filters.any || '*'})`
     const query =
       queryAny + (queryFilters.length > 0 ? ` AND ${queryFilters}` : '')
@@ -99,7 +99,7 @@ export class ElasticsearchService {
    *   }
    * }
    */
-  facetsToLuceneQuery(facetsState) {
+  stateFiltersToQueryString(facetsState) {
     const query = []
     for (const indexKey in facetsState) {
       if (facetsState.hasOwnProperty(indexKey)) {
