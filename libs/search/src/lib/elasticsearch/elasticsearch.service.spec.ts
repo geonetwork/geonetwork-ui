@@ -20,7 +20,7 @@ describe('ElasticsearchService', () => {
 
   describe('#Sort', () => {
     it('One sort and default direction', () => {
-      const body = service.buildPayload({
+      const sort = service['buildPayloadSort']({
         ...initialStateSearch,
         params: {
           filters: {
@@ -29,11 +29,11 @@ describe('ElasticsearchService', () => {
           sortBy: '_score',
         },
       })
-      expect(body.sort).toEqual(['_score'])
+      expect(sort).toEqual(['_score'])
     })
 
     it('One sort and DESC direction', () => {
-      const body = service.buildPayload({
+      const sort = service['buildPayloadSort']({
         ...initialStateSearch,
         params: {
           filters: {
@@ -42,11 +42,11 @@ describe('ElasticsearchService', () => {
           sortBy: '-changeDate',
         },
       })
-      expect(body.sort).toEqual([{ changeDate: 'desc' }])
+      expect(sort).toEqual([{ changeDate: 'desc' }])
     })
 
     it('Multiple sorts', () => {
-      const body = service.buildPayload({
+      const sort = service['buildPayloadSort']({
         ...initialStateSearch,
         params: {
           filters: {
@@ -55,7 +55,7 @@ describe('ElasticsearchService', () => {
           sortBy: '_score,-changeDate',
         },
       })
-      expect(body.sort).toEqual(['_score', { changeDate: 'desc' }])
+      expect(sort).toEqual(['_score', { changeDate: 'desc' }])
     })
   })
   describe('#stateFiltersToQueryString', () => {
@@ -92,6 +92,34 @@ describe('ElasticsearchService', () => {
         expect(query).toBe(
           '((resourceType:"service" AND (serviceType:"OGC:WMS")) resourceType:"dataset")'
         )
+      })
+    })
+  })
+
+  describe('#buildPayloadQuery', () => {
+    it('return OR separated query', () => {
+      const sort = service['buildPayloadQuery']({
+        ...initialStateSearch,
+        params: {
+          filters: {
+            'tag.default': {
+              world: true,
+              vector: true,
+            },
+            any: '',
+          },
+        },
+      })
+      expect(sort).toEqual({
+        bool: {
+          must: [
+            {
+              query_string: {
+                query: '(*) AND (tag.default:"world" tag.default:"vector")',
+              },
+            },
+          ],
+        },
       })
     })
   })

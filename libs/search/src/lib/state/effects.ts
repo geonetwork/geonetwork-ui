@@ -89,7 +89,7 @@ export class SearchEffects {
             this.searchService.search(
               'bucket',
               JSON.stringify(
-                this.esService.search(
+                this.esService.getSearchRequestBody(
                   state,
                   ElasticsearchMetadataModels.SUMMARY
                 )
