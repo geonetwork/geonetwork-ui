@@ -47,6 +47,20 @@ describe('Search Reducer', () => {
     })
   })
 
+  describe('SetConfigFilters action', () => {
+    it('set config filters', () => {
+      const action = new fromActions.SetConfigFilters({
+        custom: { any: 'blah', other: 'Some value' },
+        elastic: {},
+      })
+      const state = reducerSearch(initialStateSearch, action)
+      expect(state.config.filters).toEqual({
+        custom: { any: 'blah', other: 'Some value' },
+        elastic: {},
+      })
+    })
+  })
+
   describe('SetFilters action', () => {
     it('should add new filters', () => {
       const action = new fromActions.SetFilters({
