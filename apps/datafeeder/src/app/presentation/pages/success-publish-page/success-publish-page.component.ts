@@ -3,14 +3,13 @@ import {
   DataPublishingApiService,
   PublishJobStatusApiModel,
   PublishStatusEnumApiModel,
-  DatasetPublishingStatusApiModel
+  DatasetPublishingStatusApiModel,
 } from '@lib/datafeeder-api'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Observable, Subscription } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
 
-
-interface DatasetModel extends  DatasetPublishingStatusApiModel {
+interface DatasetModel extends DatasetPublishingStatusApiModel {
   _links: any
 }
 export interface JobStatusModel extends PublishJobStatusApiModel {
@@ -20,7 +19,6 @@ export interface JobStatusModel extends PublishJobStatusApiModel {
   error?: string
   datasets: DatasetModel[]
 }
-
 
 @Component({
   selector: 'app-success-publish-page',
