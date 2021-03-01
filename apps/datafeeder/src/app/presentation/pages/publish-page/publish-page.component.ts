@@ -6,7 +6,7 @@ import {
   PublishStatusEnumApiModel,
 } from '@lib/datafeeder-api'
 import { interval, Observable, Subscription } from 'rxjs'
-import { filter, switchMap, tap } from 'rxjs/operators'
+import { filter, switchMap, take, tap } from 'rxjs/operators'
 
 const { PENDING, RUNNING, DONE } = PublishStatusEnumApiModel
 
@@ -41,7 +41,8 @@ export class PublishPageComponent implements OnInit, OnDestroy {
           filter(
             (job: PublishJobStatusApiModel) =>
               ![PENDING, RUNNING].includes(job.status)
-          )
+          ),
+          take(1)
         )
       })
     )

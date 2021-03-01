@@ -56,4 +56,34 @@ describe('SumUpPageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
   })
+
+  it('fetches batch status', () => {
+    const scheduler = new TestScheduler((actual, expected) => {
+      expect(actual).toEqual(expected)
+    })
+    scheduler.run(({ expectObservable }) => {
+      const expected = '250ms (a-|)'
+      const values = {
+        a: jobMock,
+      }
+      expectObservable(component.statusFetch$).toBe(expected, values)
+    })
+    expect(publishServiceMock.getPublishingStatus).toHaveBeenCalledWith(1)
+    expect(component.progress).toBe(1)
+  })
+
+  describe('publish DONE', () => {
+    let job
+    beforeEach(() => {
+      job = jobMock
+      component.onJobFinish(job)
+    })
+
+    it('route to publishok page', () => {
+      expect(routerMock.navigate).toHaveBeenCalledWith(['/', 1, 'publishok'], {
+        relativeTo: activatedRouteMock,
+        queryParams: {},
+      })
+    })
+  })
 })
