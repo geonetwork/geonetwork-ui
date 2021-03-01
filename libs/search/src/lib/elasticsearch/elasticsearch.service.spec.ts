@@ -113,6 +113,7 @@ describe('ElasticsearchService', () => {
       })
       expect(sort).toEqual({
         bool: {
+          filter: [],
           must: [
             {
               query_string: {
