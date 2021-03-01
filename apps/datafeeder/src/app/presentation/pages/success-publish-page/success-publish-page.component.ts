@@ -49,6 +49,10 @@ export class SuccessPublishPageComponent implements OnInit, OnDestroy {
     window.open(this.gsLink, '_blank')
   }
 
+  backToHome() {
+    this.router.navigate(['/'])
+  }
+
   ngOnDestroy() {
     this.subscription.unsubscribe()
   }
