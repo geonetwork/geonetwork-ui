@@ -7,7 +7,7 @@ import {
   UploadJobStatusApiModel,
 } from '@lib/datafeeder-api'
 import { interval, Observable, Subscription } from 'rxjs'
-import { filter, switchMap, tap } from 'rxjs/operators'
+import { filter, switchMap, take, tap } from 'rxjs/operators'
 
 const { PENDING, ANALYZING, DONE } = AnalysisStatusEnumApiModel
 
@@ -38,7 +38,8 @@ export class AnalysisProgressPageComponent implements OnInit, OnDestroy {
           filter(
             (job: UploadJobStatusApiModel) =>
               ![PENDING, ANALYZING].includes(job.status)
-          )
+          ),
+          take(1)
         )
       )
     )
