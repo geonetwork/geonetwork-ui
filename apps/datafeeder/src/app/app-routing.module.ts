@@ -7,16 +7,19 @@ import { FormsPageComponent } from './presentation/pages/forms-page/forms-page.c
 import { PublishPageComponent } from './presentation/pages/publish-page/publish-page.component'
 import { SuccessPublishPageComponent } from './presentation/pages/success-publish-page/success-publish-page.component'
 import { SummarizePageComponent } from './presentation/pages/summarize-page/summarize-page.component'
+import { StatusGuard } from './router/status.guard'
 
 const routes: Routes = [
   { path: '', component: UploadDataPageComponent },
   {
     path: ':id',
     component: AnalysisProgressPageComponent,
+    canActivate: [StatusGuard],
   },
   {
     path: ':id/validation',
     component: DatasetValidationPageComponent,
+    canActivate: [StatusGuard],
   },
   {
     path: ':id/step/:stepId',
