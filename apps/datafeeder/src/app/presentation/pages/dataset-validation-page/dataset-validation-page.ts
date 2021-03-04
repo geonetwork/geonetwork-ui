@@ -13,8 +13,10 @@ import Feature from 'ol/Feature'
 import GeoJSON from 'ol/format/GeoJSON'
 import { fromExtent } from 'ol/geom/Polygon'
 import { forkJoin, Subscription } from 'rxjs'
+import { take } from 'rxjs/operators'
 import { environment } from '../../../../environments/environment'
 import { config as wizardConfig } from '../../../configs/wizard.config'
+import { DatafeederFacade } from '../../../store/datafeeder.facade'
 
 const unknownLabel = 'datafeeder.datasetValidation.unknown'
 const viewSrs = 'EPSG:3857'
@@ -49,8 +51,9 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private logService: LogService,
+    private wizard: WizardService,
     private fileUploadApiService: FileUploadApiService,
-    private wizard: WizardService
+    private facade: DatafeederFacade
   ) {}
 
   ngOnInit(): void {
@@ -59,8 +62,8 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
       this.wizard.initialize(id, wizardConfig)
       this.numberOfSteps = this.wizard.getConfigurationStepNumber() + 1
 
-      this.fileUploadApiService
-        .findUploadJob(id)
+      this.facade.upload$
+        .pipe(take(1))
         .subscribe((job: UploadJobStatusApiModel) => {
           if (job.status === AnalysisStatusEnumApiModel.ERROR) {
             this.router.navigate(['/'], {

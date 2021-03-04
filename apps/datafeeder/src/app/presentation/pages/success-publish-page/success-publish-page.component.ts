@@ -1,13 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
 import {
   DataPublishingApiService,
+  DatasetPublishingStatusApiModel,
   PublishJobStatusApiModel,
   PublishStatusEnumApiModel,
-  DatasetPublishingStatusApiModel,
 } from '@lib/datafeeder-api'
-import { ActivatedRoute, Router } from '@angular/router'
-import { Observable, Subscription } from 'rxjs'
-import { switchMap } from 'rxjs/operators'
+import { Subscription } from 'rxjs'
+import { take } from 'rxjs/operators'
+import { DatafeederFacade } from '../../../store/datafeeder.facade'
 
 interface DatasetModel extends DatasetPublishingStatusApiModel {
   _links: any
@@ -29,25 +30,20 @@ export class SuccessPublishPageComponent implements OnInit, OnDestroy {
   subscription: Subscription
   gnLink: string
   gsLink: string
-  statusFetch$: Observable<PublishJobStatusApiModel>
 
-  constructor(
-    private publishService: DataPublishingApiService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
-  ) {}
+  constructor(private facade: DatafeederFacade, private router: Router) {}
 
   ngOnInit(): void {
     this.subscription = new Subscription()
-    this.statusFetch$ = this.activatedRoute.params.pipe(
-      switchMap(({ id }) => this.publishService.getPublishingStatus(id))
-    )
+
     this.subscription.add(
-      this.statusFetch$.subscribe((job: JobStatusModel) => {
-        const links = job.datasets[0]._links
-        this.gsLink = links.preview.href
-        this.gnLink = links.describedBy[1].href
-      })
+      this.facade.publication$
+        .pipe(take(1))
+        .subscribe((job: JobStatusModel) => {
+          const links = job.datasets[0]._links
+          this.gsLink = links.preview.href
+          this.gnLink = links.describedBy[1].href
+        })
     )
   }
 

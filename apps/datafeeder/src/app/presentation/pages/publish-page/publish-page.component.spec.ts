@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { DatafeederFacade } from '../../../store/datafeeder.facade'
 
 import { PublishPageComponent } from './publish-page.component'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
@@ -29,6 +30,9 @@ const activatedRouteMock = {
 const routerMock = {
   navigate: jest.fn(),
 }
+const facadeMock = {
+  setPublication: jest.fn(),
+}
 
 describe('SumUpPageComponent', () => {
   let component: PublishPageComponent
@@ -40,6 +44,10 @@ describe('SumUpPageComponent', () => {
       imports: [UiModule],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        {
+          provide: DatafeederFacade,
+          useValue: facadeMock,
+        },
         { provide: DataPublishingApiService, useValue: publishServiceMock },
         { provide: Router, useValue: routerMock },
         { provide: ActivatedRoute, useValue: activatedRouteMock },
@@ -69,6 +77,11 @@ describe('SumUpPageComponent', () => {
       expectObservable(component.statusFetch$).toBe(expected, values)
     })
     expect(publishServiceMock.getPublishingStatus).toHaveBeenCalledWith(1)
+    expect(facadeMock.setPublication).toHaveBeenCalledWith({
+      jobId: '1234',
+      progress: 1,
+      status: 'DONE',
+    })
     expect(component.progress).toBe(1)
   })
 
