@@ -7,35 +7,41 @@ import { FormsPageComponent } from './presentation/pages/forms-page/forms-page.c
 import { PublishPageComponent } from './presentation/pages/publish-page/publish-page.component'
 import { SuccessPublishPageComponent } from './presentation/pages/success-publish-page/success-publish-page.component'
 import { SummarizePageComponent } from './presentation/pages/summarize-page/summarize-page.component'
-import { StatusGuard } from './router/status.guard'
+import { PublicationStatusGuard } from './router/publication-status.guard'
+import { UploadProgressGuard } from './router/upload-progress.guard'
+import { UploadStatusGuard } from './router/upload-status.guard'
 
 const routes: Routes = [
   { path: '', component: UploadDataPageComponent },
   {
     path: ':id',
     component: AnalysisProgressPageComponent,
-    canActivate: [StatusGuard],
+    canActivate: [UploadStatusGuard, UploadProgressGuard],
   },
   {
     path: ':id/validation',
     component: DatasetValidationPageComponent,
-    canActivate: [StatusGuard],
+    canActivate: [UploadStatusGuard],
   },
   {
     path: ':id/step/:stepId',
     component: FormsPageComponent,
-  },
-  {
-    path: ':id/publish',
-    component: PublishPageComponent,
-  },
-  {
-    path: ':id/publishok',
-    component: SuccessPublishPageComponent,
+    canActivate: [UploadStatusGuard],
   },
   {
     path: ':id/confirm',
     component: SummarizePageComponent,
+    canActivate: [UploadStatusGuard],
+  },
+  {
+    path: ':id/publish',
+    component: PublishPageComponent,
+    canActivate: [UploadStatusGuard, PublicationStatusGuard],
+  },
+  {
+    path: ':id/publishok',
+    component: SuccessPublishPageComponent,
+    canActivate: [UploadStatusGuard, PublicationStatusGuard],
   },
   { path: '**', redirectTo: '' },
 ]
