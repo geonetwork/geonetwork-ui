@@ -1,5 +1,10 @@
 <div class="flex h-full">
-  <ngx-dropzone class="flex-1" multiple="false" (change)="selectFile($event)">
+  <ngx-dropzone
+    class="flex-1"
+    multiple="false"
+    (change)="selectFile($event)"
+    [accept]="accept"
+  >
     <div *ngIf="!fileName" class="text-gray-900 pl-2 py-2" translate="">
       {{ placeholder }}
     </div>
