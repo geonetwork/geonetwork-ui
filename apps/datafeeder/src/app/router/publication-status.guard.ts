@@ -10,7 +10,7 @@ import {
   PublishJobStatusApiModel,
   PublishStatusEnumApiModel,
 } from '@lib/datafeeder-api'
-import { iif, Observable, of, throwError } from 'rxjs'
+import { iif, Observable, of } from 'rxjs'
 import { catchError, mapTo, mergeMap, tap } from 'rxjs/operators'
 import { DatafeederFacade } from '../store/datafeeder.facade'
 

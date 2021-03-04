@@ -7,6 +7,7 @@ import { FormsPageComponent } from './presentation/pages/forms-page/forms-page.c
 import { PublishPageComponent } from './presentation/pages/publish-page/publish-page.component'
 import { SuccessPublishPageComponent } from './presentation/pages/success-publish-page/success-publish-page.component'
 import { SummarizePageComponent } from './presentation/pages/summarize-page/summarize-page.component'
+import { PublicationLockGuard } from './router/publication-lock.guard'
 import { PublicationStatusGuard } from './router/publication-status.guard'
 import { UploadProgressGuard } from './router/upload-progress.guard'
 import { UploadStatusGuard } from './router/upload-status.guard'
@@ -21,17 +22,17 @@ const routes: Routes = [
   {
     path: ':id/validation',
     component: DatasetValidationPageComponent,
-    canActivate: [UploadStatusGuard],
+    canActivate: [UploadStatusGuard, PublicationLockGuard],
   },
   {
     path: ':id/step/:stepId',
     component: FormsPageComponent,
-    canActivate: [UploadStatusGuard],
+    canActivate: [UploadStatusGuard, PublicationLockGuard],
   },
   {
     path: ':id/confirm',
     component: SummarizePageComponent,
-    canActivate: [UploadStatusGuard],
+    canActivate: [UploadStatusGuard, PublicationLockGuard],
   },
   {
     path: ':id/publish',
