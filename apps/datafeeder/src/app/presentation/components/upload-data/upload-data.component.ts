@@ -16,6 +16,7 @@ export class UploadDataComponent implements OnInit {
   file: File = null
   haveRights = false
   uploading = false
+  acceptedMimeType = ['application/zip']
 
   @Input() maxFileSizeMb: number
   @Output() errors$ = new EventEmitter<UploadDataError>()
@@ -72,9 +73,6 @@ export class UploadDataComponent implements OnInit {
   }
 
   private isFileFormatValid(file: File): boolean {
-    const fileExt = file.name.split('.').pop()
-    return !!VALID_FILE_EXTENSIONS.find(
-      (ext) => !ext.localeCompare(fileExt.toLocaleLowerCase())
-    )
+    return this.acceptedMimeType.includes(file.type)
   }
 }
