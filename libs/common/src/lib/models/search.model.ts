@@ -3,6 +3,11 @@ export interface SearchFilters {
   [x: string]: any
 }
 
+export interface StateConfigFilters {
+  custom?: SearchFilters
+  elastic?: any
+}
+
 export interface RecordSummary {
   id: string
   uuid: string

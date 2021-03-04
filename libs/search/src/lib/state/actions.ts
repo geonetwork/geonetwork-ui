@@ -2,6 +2,7 @@ import {
   EsRequestAggTermPatch,
   RecordSummary,
   SearchFilters,
+  StateConfigFilters,
 } from '@lib/common'
 import { Action } from '@ngrx/store'
 import { SearchStateParams } from './reducer'
@@ -9,6 +10,7 @@ import { SearchStateParams } from './reducer'
 export const ADD_SEARCH = '[Search] Add search instance'
 
 export const SET_FILTERS = '[Search] Set Filters'
+export const SET_CONFIG_FILTERS = '[Search] Set config filters'
 export const UPDATE_FILTERS = '[Search] Update Filters'
 export const SET_SEARCH = '[Search] Set overall search configuration'
 export const SET_SORT_BY = '[Search] Sort By'
@@ -42,6 +44,14 @@ abstract class AbstractAction {
 export class AddSearch implements Action {
   readonly type = ADD_SEARCH
   constructor(public id: string) {}
+}
+
+export class SetConfigFilters extends AbstractAction implements Action {
+  readonly type = SET_CONFIG_FILTERS
+
+  constructor(public payload: StateConfigFilters, id?: string) {
+    super(id)
+  }
 }
 
 export class SetFilters extends AbstractAction implements Action {
@@ -195,6 +205,7 @@ export class PatchResultsAggregations extends AbstractAction implements Action {
 
 export type SearchActions =
   | AddSearch
+  | SetConfigFilters
   | SetFilters
   | UpdateFilters
   | SetSearch

@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core'
-import { ResultsListLayout, SearchFilters } from '@lib/common'
+import {
+  ResultsListLayout,
+  SearchFilters,
+  StateConfigFilters,
+} from '@lib/common'
 import { select, Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
 import {
@@ -10,6 +14,7 @@ import {
   RequestMoreResults,
   Scroll,
   SetConfigAggregations,
+  SetConfigFilters,
   SetFilters,
   SetIncludeOnAggregation,
   SetPagination,
@@ -64,6 +69,10 @@ export class SearchFacade {
 
   setConfigAggregations(config: any): void {
     this.store.dispatch(new SetConfigAggregations(config, this.searchId))
+  }
+
+  setConfigFilters(filters: StateConfigFilters): void {
+    this.store.dispatch(new SetConfigFilters(filters, this.searchId))
   }
 
   requestMoreResults(): void {

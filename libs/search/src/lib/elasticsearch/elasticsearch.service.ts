@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { SortParams } from '@lib/common'
 import { NameList, SearchParams } from 'elasticsearch'
-import { SearchState, SearchStateSearch } from '../state/reducer'
+import { SearchStateSearch } from '../state/reducer'
 import { ElasticsearchMetadataModels, ElasticSearchSources } from './constant'
 
 @Injectable({
@@ -10,18 +10,25 @@ import { ElasticsearchMetadataModels, ElasticSearchSources } from './constant'
 export class ElasticsearchService {
   constructor() {}
 
-  search(
+  getSearchRequestBody(
     state: SearchStateSearch,
     model: ElasticsearchMetadataModels
   ): SearchParams {
-    const payload = this.buildPayload(state)
-    payload._source = ElasticSearchSources[model]
+    const { size, from } = state.params
+    const payload = {
+      aggregations: state.config.aggregations,
+      from,
+      size,
+      sort: this.buildPayloadSort(state) as NameList,
+      query: this.buildPayloadQuery(state),
+      _source: ElasticSearchSources[model],
+    }
     return payload
   }
 
-  buildPayload(state: SearchStateSearch): SearchParams {
-    const { size, sortBy, from } = state.params
-    const sort: SortParams = sortBy
+  private buildPayloadSort(state: SearchStateSearch): SortParams {
+    const { sortBy } = state.params
+    return sortBy
       ? sortBy.split(',').map((s) => {
           if (s.startsWith('-')) {
             return { [s.substring(1)]: 'desc' }
@@ -30,15 +37,44 @@ export class ElasticsearchService {
           }
         })
       : undefined
+  }
 
-    const payload = {
-      aggs: state.config.aggregations,
-      from,
-      size,
-      sort: sort as NameList,
-      query: this.partialBuildQuery(state),
+  private buildPayloadQuery(state: SearchStateSearch) {
+    const { filters } = state.params
+    const { any, ...searchFilters } = filters
+    const queryFilters = this.stateFiltersToQueryString(searchFilters)
+    const queryAny = `(${any || '*'})`
+    const query =
+      queryAny + (queryFilters.length > 0 ? ` AND ${queryFilters}` : '')
+
+    const partialQuery = {
+      bool: {
+        must: [{ query_string: { query } }],
+        filter: this.buildPayloadFilter(state),
+      },
     }
-    return payload
+    return partialQuery
+  }
+
+  private buildPayloadFilter(state: SearchStateSearch) {
+    const { filters } = state.config
+    const { custom, elastic } = filters
+    const queryString = this.stateFiltersToQueryString(custom)
+    const query = []
+    if (elastic) {
+      if (!Array.isArray(elastic)) {
+        query.push(elastic)
+      } else {
+        query.push(...elastic)
+      }
+    } else if (custom) {
+      query.push({
+        query_string: {
+          query: queryString,
+        },
+      })
+    }
+    return query
   }
 
   buildMoreOnAggregationPayload(
@@ -48,25 +84,9 @@ export class ElasticsearchService {
     const payload = {
       aggregations: { [key]: state.config.aggregations[key] },
       size: 0,
-      query: this.partialBuildQuery(state),
+      query: this.buildPayloadQuery(state),
     }
     return payload
-  }
-
-  partialBuildQuery(state: SearchStateSearch) {
-    const filters = state.params.filters
-    const { any, ...searchFilters } = filters
-    const queryFilters = this.facetsToLuceneQuery(searchFilters)
-    const queryAny = `(${filters.any || '*'})`
-    const query =
-      queryAny + (queryFilters.length > 0 ? ` AND ${queryFilters}` : '')
-
-    const partialQuery = {
-      bool: {
-        must: [{ query_string: { query } }],
-      },
-    }
-    return partialQuery
   }
 
   combineQueryGroups(queryGroups) {
@@ -99,7 +119,7 @@ export class ElasticsearchService {
    *   }
    * }
    */
-  facetsToLuceneQuery(facetsState) {
+  stateFiltersToQueryString(facetsState) {
     const query = []
     for (const indexKey in facetsState) {
       if (facetsState.hasOwnProperty(indexKey)) {
@@ -116,7 +136,7 @@ export class ElasticsearchService {
     return this.combineQueryGroups(query)
   }
 
-  parseStateNode(nodeName, node, indexKey) {
+  private parseStateNode(nodeName, node, indexKey) {
     let queryString = ''
     if (node && typeof node === 'object') {
       const chunks = []

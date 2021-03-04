@@ -8,24 +8,24 @@
   </head>
   <body>
     <script src="gn-wc.js"></script>
-    <h2>Forest</h2>
+    <h1>Filter on services</h1>
+    <h2>elasticsearch object</h2>
     <gn-results-list
       api-url="https://apps.titellus.net/geonetwork/srv/api"
       size="5"
       layout="TITLE"
+      search-id="elastic"
       fixed="true"
-      query="+tag.default:forest"
+      filter='{"elastic": [{ "term": { "cl_hierarchyLevel.key": "service" } }]}'
     ></gn-results-list>
-
-    <h2>Marine</h2>
+    <h2>custom object</h2>
     <gn-results-list
       api-url="https://apps.titellus.net/geonetwork/srv/api"
       size="5"
-      primary-color="#343e9c"
-      search-id="marine"
-      fixed="true"
-      query="+tag.default:marine"
       layout="TITLE"
+      search-id="custom"
+      fixed="true"
+      filter='{"custom": { "cl_hierarchyLevel.key": { "service": true } }}'
     ></gn-results-list>
   </body>
 </html>

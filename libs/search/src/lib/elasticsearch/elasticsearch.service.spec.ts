@@ -9,6 +9,7 @@ const initialStateSearch = initialState[DEFAULT_SEARCH_KEY]
 describe('ElasticsearchService', () => {
   let service: ElasticsearchService
   let searchFilters
+  let state
 
   beforeEach(() => {
     service = new ElasticsearchService()
@@ -20,7 +21,7 @@ describe('ElasticsearchService', () => {
 
   describe('#Sort', () => {
     it('One sort and default direction', () => {
-      const body = service.buildPayload({
+      const sort = service['buildPayloadSort']({
         ...initialStateSearch,
         params: {
           filters: {
@@ -29,11 +30,11 @@ describe('ElasticsearchService', () => {
           sortBy: '_score',
         },
       })
-      expect(body.sort).toEqual(['_score'])
+      expect(sort).toEqual(['_score'])
     })
 
     it('One sort and DESC direction', () => {
-      const body = service.buildPayload({
+      const sort = service['buildPayloadSort']({
         ...initialStateSearch,
         params: {
           filters: {
@@ -42,11 +43,11 @@ describe('ElasticsearchService', () => {
           sortBy: '-changeDate',
         },
       })
-      expect(body.sort).toEqual([{ changeDate: 'desc' }])
+      expect(sort).toEqual([{ changeDate: 'desc' }])
     })
 
     it('Multiple sorts', () => {
-      const body = service.buildPayload({
+      const sort = service['buildPayloadSort']({
         ...initialStateSearch,
         params: {
           filters: {
@@ -55,10 +56,10 @@ describe('ElasticsearchService', () => {
           sortBy: '_score,-changeDate',
         },
       })
-      expect(body.sort).toEqual(['_score', { changeDate: 'desc' }])
+      expect(sort).toEqual(['_score', { changeDate: 'desc' }])
     })
   })
-  describe('#facetsToLuceneQuery', () => {
+  describe('#stateFiltersToQueryString', () => {
     describe('when simple terms', () => {
       beforeEach(() => {
         searchFilters = {
@@ -69,7 +70,7 @@ describe('ElasticsearchService', () => {
         }
       })
       it('return OR separated query', () => {
-        const query = service.facetsToLuceneQuery(searchFilters)
+        const query = service.stateFiltersToQueryString(searchFilters)
         expect(query).toBe('(tag.default:"world" tag.default:"vector")')
       })
     })
@@ -88,10 +89,123 @@ describe('ElasticsearchService', () => {
         }
       })
       it('nest sub key with AND operator', () => {
-        const query = service.facetsToLuceneQuery(searchFilters)
+        const query = service.stateFiltersToQueryString(searchFilters)
         expect(query).toBe(
           '((resourceType:"service" AND (serviceType:"OGC:WMS")) resourceType:"dataset")'
         )
+      })
+    })
+  })
+
+  describe('#buildPayloadQuery', () => {
+    it('return OR separated query', () => {
+      const sort = service['buildPayloadQuery']({
+        ...initialStateSearch,
+        params: {
+          filters: {
+            'tag.default': {
+              world: true,
+              vector: true,
+            },
+            any: '',
+          },
+        },
+      })
+      expect(sort).toEqual({
+        bool: {
+          filter: [],
+          must: [
+            {
+              query_string: {
+                query: '(*) AND (tag.default:"world" tag.default:"vector")',
+              },
+            },
+          ],
+        },
+      })
+    })
+  })
+
+  describe('#buildPayloadFilter', () => {
+    describe('when elastic object config', () => {
+      beforeEach(() => {
+        state = {
+          ...initialStateSearch,
+          config: {
+            filters: {
+              elastic: { term: { 'cl_hierarchyLevel.key': 'service' } },
+            },
+          },
+        }
+      })
+      it('returns the input config', () => {
+        const filter = service['buildPayloadFilter'](state)
+        expect(filter).toEqual([
+          { term: { 'cl_hierarchyLevel.key': 'service' } },
+        ])
+      })
+    })
+    describe('when elastic array config', () => {
+      beforeEach(() => {
+        state = {
+          ...initialStateSearch,
+          config: {
+            filters: {
+              elastic: [{ term: { 'cl_hierarchyLevel.key': 'service' } }],
+            },
+          },
+        }
+      })
+      it('returns the input config', () => {
+        const filter = service['buildPayloadFilter'](state)
+        expect(filter).toEqual([
+          { term: { 'cl_hierarchyLevel.key': 'service' } },
+        ])
+      })
+    })
+    describe('when custom config', () => {
+      beforeEach(() => {
+        state = {
+          ...initialStateSearch,
+          config: {
+            filters: {
+              custom: {
+                'cl_hierarchyLevel.key': {
+                  service: true,
+                },
+              },
+            },
+          },
+        }
+      })
+      it('returns the corresponding query_string', () => {
+        const filter = service['buildPayloadFilter'](state)
+        expect(filter).toEqual([
+          { query_string: { query: '(cl_hierarchyLevel.key:"service")' } },
+        ])
+      })
+    })
+    describe('when having both config', () => {
+      beforeEach(() => {
+        state = {
+          ...initialStateSearch,
+          config: {
+            filters: {
+              elastic: [{ term: { 'cl_hierarchyLevel.key': 'service' } }],
+              custom: {
+                'cl_hierarchyLevel.key': {
+                  service: true,
+                },
+              },
+            },
+          },
+        }
+      })
+      it('elastic config priors', () => {
+        const filter = service['buildPayloadFilter'](state)
+        expect(filter).toEqual([
+          { term: { 'cl_hierarchyLevel.key': 'service' } },
+        ])
       })
     })
   })
