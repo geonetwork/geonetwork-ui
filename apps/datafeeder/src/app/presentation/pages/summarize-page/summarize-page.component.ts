@@ -55,7 +55,7 @@ export class SummarizePageComponent implements OnInit, OnDestroy {
       metadata: {
         title: dataset.title,
         abstract: dataset.abstract,
-        tags: JSON.parse(dataset.tags).map((t) => t.value),
+        tags: JSON.parse(dataset.tags || '[]').map((t) => t.value),
         creationDate: new Date(parseInt(dataset.datepicker, 10)).toISOString(),
         scale: parseInt(dataset.dropdown, 10),
         creationProcessDescription: dataset.description,
