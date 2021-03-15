@@ -33,7 +33,7 @@ export class PublishPageComponent implements OnInit, OnDestroy {
     this.statusFetch$ = this.activatedRoute.params.pipe(
       switchMap(({ id }) => {
         this.rootId = id
-        return interval(250).pipe(
+        return interval(500).pipe(
           switchMap(() => this.publishService.getPublishingStatus(id)),
           tap(
             (job: PublishJobStatusApiModel) => (this.progress = job.progress)

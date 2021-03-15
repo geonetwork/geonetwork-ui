@@ -32,7 +32,7 @@ export class AnalysisProgressPageComponent implements OnInit, OnDestroy {
     this.subscription = new Subscription()
     this.statusFetch$ = this.activatedRoute.params.pipe(
       switchMap(({ id }) =>
-        interval(250).pipe(
+        interval(500).pipe(
           switchMap(() => this.fileUploadApiService.findUploadJob(id)),
           tap((job: UploadJobStatusApiModel) => (this.progress = job.progress)),
           filter(

@@ -62,7 +62,7 @@ describe('SumUpPageComponent', () => {
       expect(actual).toEqual(expected)
     })
     scheduler.run(({ expectObservable }) => {
-      const expected = '250ms (a-|)'
+      const expected = '500ms (a-|)'
       const values = {
         a: jobMock,
       }
