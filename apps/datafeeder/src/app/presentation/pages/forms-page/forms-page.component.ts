@@ -9,7 +9,7 @@ import { config as wizardConfig } from '../../../configs/wizard.config'
   styleUrls: ['./forms-page.component.css'],
 })
 export class FormsPageComponent implements OnInit, OnDestroy {
-  rootId: number
+  id: number
 
   currentStep: number
   numSteps = 6
@@ -26,7 +26,7 @@ export class FormsPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.routeParamsSub = this.activatedRoute.params.subscribe(({ id }) => {
-      this.rootId = id
+      this.id = id
     })
     this.cd.detectChanges()
   }
@@ -34,12 +34,12 @@ export class FormsPageComponent implements OnInit, OnDestroy {
   handleStepChanges(step: number) {
     let route
     if (this.currentStep === 1 && step === 1) {
-      route = ['/', this.rootId, 'validation']
+      route = ['/', this.id, 'validation']
     } else if (this.currentStep === 4 && step === 4) {
-      route = ['/', this.rootId, 'confirm']
+      route = ['/', this.id, 'confirm']
     } else {
       this.currentStep = step
-      route = ['/', this.rootId, 'step', step]
+      route = ['/', this.id, 'step', step]
     }
     this.router.navigate(route)
   }

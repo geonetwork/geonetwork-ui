@@ -26,7 +26,6 @@ export interface JobStatusModel extends PublishJobStatusApiModel {
   styleUrls: ['./success-publish-page.component.css'],
 })
 export class SuccessPublishPageComponent implements OnInit, OnDestroy {
-  id: string
   subscription: Subscription
   gnLink: string
   gsLink: string
