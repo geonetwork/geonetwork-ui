@@ -16,10 +16,7 @@ tag-input::ng-deep tag {
 }
 
 tag-input::ng-deep
-  tag::ng-deep:not(:focus):not(.tag--editing):not(:active):not(.readonly):hover {
-  background: var(--color-primary) !important;
-}
-
+  tag::ng-deep:not(:focus):not(.tag--editing):not(:active):not(.readonly):hover,
 tag-input::ng-deep
   tag:not(:focus):not(.tag--editing):not(:active):not(.readonly):hover {
   background: var(--color-primary) !important;
@@ -29,18 +26,12 @@ tag-input::ng-deep .tag__text {
   padding-right: 7px;
 }
 
-tag-input::ng-deep div {
-  height: 100%;
-}
-
-tag-input::ng-deep tag-input-form {
-  width: 100% ;
-}
-
+tag-input::ng-deep div,
 tag-input::ng-deep form {
   height: 100%;
 }
 
+tag-input::ng-deep tag-input-form,
 tag-input::ng-deep input {
   width: 100%;
 }

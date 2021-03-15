@@ -50,26 +50,17 @@ ui-button button[type=button].secondary:hover {
   color: white;
 }
 
-.focus\:border-primary:focus {
-  border-color: var(--color-primary-darker) !important;
-}
-
-my-date-picker .mydp {
-  border-width: 2px;
-  border-color: var(--color-primary);
-}
-
-my-date-picker .mydp:focus-within {
-  border-color: var(--color-primary-darker) !important;
-}
-
-my-date-picker::ng-deep input::ng-deep:focus {
-  border-color: var(--color-primary-darker) !important;
-}
-
+.focus:border-primary:focus,
+my-date-picker .mydp,
+my-date-picker .mydp:focus-within,
+my-date-picker::ng-deep input::ng-deep:focus,
 tag-input:focus-within, my-date-picker:focus-within {
   border-color: var(--color-primary-darker) !important;
 }
+my-date-picker .mydp {
+  border-width: 2px;
+}
+
 
 
 .grey1 {
