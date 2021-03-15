@@ -16,7 +16,7 @@ import { WizardFieldModel } from '../../models/wizard-field.model'
   templateUrl: './wizard.component.html',
   styleUrls: ['./wizard.component.css'],
 })
-export class WizardComponent implements OnInit {
+export class WizardComponent implements OnInit, AfterViewInit {
   @Input() id: string
   @Input() initialConfig: {
     configuration: WizardFieldModel[][]
@@ -39,7 +39,9 @@ export class WizardComponent implements OnInit {
     this.initializeCurrentStep()
     this.stepChanges.emit(this.wizardService.getCurrentStep())
     this.stepsNumber.emit(this.wizardService.getConfigurationStepNumber())
+  }
 
+  ngAfterViewInit() {
     this.setFocus()
   }
 
@@ -68,12 +70,9 @@ export class WizardComponent implements OnInit {
   }
 
   private setFocus() {
-    setTimeout(() => {
-      const inputEl =
-        this.wizardFieldsEl.nativeElement.getElementsByTagName('input')[0] ||
-        this.wizardFieldsEl.nativeElement.getElementsByTagName('textarea')[0]
-
-      inputEl.focus()
-    }, 100)
+    const inputEl = this.wizardFieldsEl.nativeElement.querySelectorAll(
+      'input, textarea, select'
+    )[0] as HTMLElement
+    inputEl?.focus()
   }
 }
