@@ -6,8 +6,10 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { WizardFieldType } from '../../models/wizard-field.type'
 import { UiModule } from '@lib/ui'
 import { BrowserModule, By } from '@angular/platform-browser'
-import { DEFAULT_CHIPS_ITEMS_URL } from '../configs/wizard.config'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
+
+const DEFAULT_CHIPS_ITEMS_URL = (keys) =>
+  `https://apps.titellus.net/geonetwork/srv/api/registries/vocabularies/search?type=CONTAINS&thesaurus=external.place.regions&rows=200&q=${keys}&uri=*QUERY*&lang=eng`
 
 describe('WizardFieldsComponent', () => {
   let component: WizardFieldComponent

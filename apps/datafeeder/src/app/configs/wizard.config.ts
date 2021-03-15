@@ -1,8 +1,10 @@
-import { WizardFieldType } from '../../models/wizard-field.type'
-import { WizardFieldModel } from '../../models/wizard-field.model'
+import { WizardFieldType } from '@lib/editor'
+import { WizardFieldModel } from '@lib/editor'
 
 export const DEFAULT_CHIPS_ITEMS_URL = (keys) =>
-  `https://apps.titellus.net/geonetwork/srv/api/registries/vocabularies/search?type=CONTAINS&thesaurus=external.place.regions&rows=200&q=${keys}&uri=*QUERY*&lang=eng`
+  `https://www.pigma.org/geonetwork/srv/api/registries/vocabularies/search?type=CONTAINS&thesaurus=external.theme.inspire-theme&rows=200&q=${keys}&uri=**&lang=eng`
+
+export const STORAGE_KEY = 'datafeeder-state'
 
 export const DEFAULT_WIZARD_CONFIGURATION: WizardFieldModel[][] = [
   [
@@ -54,3 +56,8 @@ export const DEFAULT_WIZARD_CONFIGURATION: WizardFieldModel[][] = [
   ],
   [],
 ]
+
+export const config = {
+  storageKey: STORAGE_KEY,
+  configuration: DEFAULT_WIZARD_CONFIGURATION,
+}

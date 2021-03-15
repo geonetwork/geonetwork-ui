@@ -1,11 +1,15 @@
 <div class="flex-1 flex dataset-forms-bg items-center shape s2">
   <app-summarize-background></app-summarize-background>
-  <div class="ml-64 mr-64 pt-16 pb-20 w-full h-full flex flex-col z-10">
+  <div class="container mx-auto pt-16 pb-16 w-full h-full flex flex-col z-10">
     <div class="text-5xl font-bold" translate>
       datafeeder.summarizePage.title
     </div>
     <div class="pb-4 pt-4">
-      <ui-step-bar [steps]="6" [currentStep]="6" type="primary"></ui-step-bar>
+      <ui-step-bar
+        [steps]="numberOfSteps"
+        [currentStep]="numberOfSteps"
+        type="primary"
+      ></ui-step-bar>
     </div>
     <div class="flex-1 pt-16 pl-20 pr-20 flex flex-col justify-between">
       <div class="flex">

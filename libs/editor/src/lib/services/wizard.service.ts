@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core'
-import { forkJoin, Observable } from 'rxjs'
-import { IMyMonthLabels } from 'mydatepicker'
-import { MONTH_OF_THE_YEAR } from '../components/configs/datepicker.config'
 import { TranslateService } from '@ngx-translate/core'
-import { DEFAULT_WIZARD_CONFIGURATION } from '../components/configs/wizard.config'
+import { IMyMonthLabels } from 'mydatepicker'
+import { forkJoin, Observable } from 'rxjs'
+import { MONTH_OF_THE_YEAR } from '../components/configs/datepicker.config'
 import { WizardFieldModel } from '../models/wizard-field.model'
 
 @Injectable({
@@ -13,8 +12,25 @@ export class WizardService {
   private wizardStep = 1
   private wizardData: Map<string, any> = new Map()
 
-  constructor(private translateService: TranslateService) {
-    this.initialize()
+  private id: string
+  private storageKey: string
+  configuration: WizardFieldModel[][]
+  constructor(private translateService: TranslateService) {}
+
+  initialize(
+    id: string,
+    options: {
+      configuration: WizardFieldModel[][]
+      storageKey: string
+    }
+  ): void {
+    this.id = id
+    const { configuration, storageKey } = options
+    this.configuration = configuration
+    this.storageKey = storageKey
+    this.wizardData.clear()
+
+    this.load()
   }
 
   getCurrentStep(): number {
@@ -22,15 +38,15 @@ export class WizardService {
   }
 
   getStepConfiguration(): WizardFieldModel[] {
-    return DEFAULT_WIZARD_CONFIGURATION[this.wizardStep - 1]
+    return this.configuration[this.wizardStep - 1]
   }
 
   getConfiguration(): WizardFieldModel[][] {
-    return DEFAULT_WIZARD_CONFIGURATION
+    return this.configuration
   }
 
   getConfigurationStepNumber(): number {
-    return DEFAULT_WIZARD_CONFIGURATION.length
+    return this.configuration.length
   }
 
   getWizardFieldData(fieldId: string) {
@@ -38,22 +54,33 @@ export class WizardService {
   }
 
   onWizardWizardFieldDataChanged(fieldId: string, data: any): void {
-    this.updateWizardFieldData(fieldId, data)
-    this.saveWizardFieldData(fieldId, data)
+    this.setWizardFieldData(fieldId, data)
   }
 
-  updateWizardFieldData(fieldId: string, data: any): void {
+  setWizardFieldData(fieldId: string, data: any): void {
     this.wizardData.set(fieldId, data)
+    this.save()
   }
 
-  saveWizardFieldData(fieldId: string, data: any): void {
-    localStorage.setItem(fieldId, data)
+  save(): void {
+    const values = [...this.wizardData].map(([key, value]) => ({
+      id: key,
+      value,
+    }))
+    const datafeederState = this.load(false)
+
+    datafeederState[this.id] = {
+      step: this.wizardStep,
+      values,
+    }
+
+    localStorage.setItem(this.storageKey, JSON.stringify(datafeederState))
   }
 
   onWizardStepChanged(step: number) {
     if (step > 0 && step < this.getConfigurationStepNumber()) {
       this.wizardStep = step
-      localStorage.setItem('wizard_step', this.wizardStep.toString())
+      this.save()
     }
   }
 
@@ -73,15 +100,19 @@ export class WizardService {
     })
   }
 
-  private initialize(): void {
-    this.wizardStep = Number(localStorage.getItem('wizard_step') || 1)
-
-    const wizardConfiguration = DEFAULT_WIZARD_CONFIGURATION
-    wizardConfiguration.forEach((stepConfiguration) => {
-      stepConfiguration.forEach((stepField) => {
-        const fieldData = localStorage.getItem(stepField.id)
-        this.wizardData.set(stepField.id, fieldData)
+  private load(write = true) {
+    const lsItem = localStorage.getItem(this.storageKey)
+    const datafeederData = lsItem ? JSON.parse(lsItem) : {}
+    if (write) {
+      datafeederData[this.id]?.values?.forEach((i) => {
+        this.wizardData.set(i.id, i.value)
       })
-    })
+    }
+    return datafeederData
+  }
+
+  getDataObject() {
+    this.load()
+    return Object.fromEntries(this.wizardData)
   }
 }

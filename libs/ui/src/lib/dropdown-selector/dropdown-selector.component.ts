@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
@@ -13,7 +14,7 @@ import {
   styleUrls: ['./dropdown-selector.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DropdownSelectorComponent implements OnInit {
+export class DropdownSelectorComponent implements OnInit, AfterViewInit {
   @Input() title: string
   @Input() showTitle = true
   @Input() ariaName: string
@@ -34,5 +35,9 @@ export class DropdownSelectorComponent implements OnInit {
 
   isSelected(choice) {
     return choice.value === this.selected
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => this.selectValue.emit(this.choices[0].value))
   }
 }

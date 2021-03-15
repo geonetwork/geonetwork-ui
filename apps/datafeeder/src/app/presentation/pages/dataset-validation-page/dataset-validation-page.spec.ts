@@ -7,6 +7,7 @@ import {
   UploadJobStatusApiModel,
 } from '@lib/datafeeder-api'
 import { of } from 'rxjs'
+import { WizardService } from '@lib/editor'
 import { DatasetValidationPageComponent } from './dataset-validation-page'
 
 const jobMock: UploadJobStatusApiModel = {
@@ -29,6 +30,11 @@ const fileUploadApiServiceMock = {
   getSampleFeature: jest.fn(() => of({ id: 'feature_id' })),
 }
 
+const wizardServiceMock = {
+  getConfigurationStepNumber: jest.fn(() => 6),
+  initialize: jest.fn(),
+}
+
 const activatedRouteMock = {
   params: of({ id: 1 }),
 }
@@ -36,6 +42,8 @@ const activatedRouteMock = {
 const routerMock = {
   navigate: jest.fn(),
 }
+
+const proj = 'EPSG:3857'
 
 describe('DatasetValidationPageComponent', () => {
   let component: DatasetValidationPageComponent
@@ -50,6 +58,10 @@ describe('DatasetValidationPageComponent', () => {
         {
           provide: FileUploadApiService,
           useValue: fileUploadApiServiceMock,
+        },
+        {
+          provide: WizardService,
+          useValue: wizardServiceMock,
         },
         { provide: ActivatedRoute, useValue: activatedRouteMock },
         { provide: Router, useValue: routerMock },
@@ -72,13 +84,16 @@ describe('DatasetValidationPageComponent', () => {
       expect(fileUploadApiServiceMock.getBounds).toHaveBeenCalledWith(
         1,
         'f_name',
-        'EPSG:3857',
+        proj,
         true
       )
       expect(fileUploadApiServiceMock.getSampleFeature).toHaveBeenCalledWith(
         1,
         'f_name',
-        0
+        0,
+        undefined,
+        proj,
+        true
       )
 
       expect(component.geoJSONData).toEqual({ id: 'feature_id' })

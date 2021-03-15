@@ -3,7 +3,9 @@
     <div
       *ngFor="let step of stepCounter; let i = index"
       class="shadow-md rounded-full h-6 w-6 {{ getCircleColor(i + 1) }}"
-    ></div>
+    >
+      <span class="icon-check pl-1" *ngIf="getChecked(i)"></span>
+    </div>
   </div>
   <div
     class="absolute rounded-lg right-0 w-full {{ color.outerBar }} h-2 z-0"

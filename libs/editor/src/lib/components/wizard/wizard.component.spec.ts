@@ -27,6 +27,10 @@ describe('WizardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WizardComponent)
     component = fixture.componentInstance
+    component.initialConfig = {
+      configuration: [],
+      storageKey: 'datafeeder-storage',
+    }
     fixture.detectChanges()
   })
 

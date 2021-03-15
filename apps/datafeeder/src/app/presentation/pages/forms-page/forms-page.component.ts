@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Subscription } from 'rxjs'
+import { config as wizardConfig } from '../../../configs/wizard.config'
 
 @Component({
   selector: 'app-forms-page',
@@ -8,10 +9,12 @@ import { Subscription } from 'rxjs'
   styleUrls: ['./forms-page.component.css'],
 })
 export class FormsPageComponent implements OnInit, OnDestroy {
-  rootId: number
+  id: number
 
   currentStep: number
   numSteps = 6
+
+  wizardConfig = wizardConfig
 
   private routeParamsSub: Subscription
 
@@ -22,23 +25,21 @@ export class FormsPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.routeParamsSub = this.activatedRoute.params.subscribe(
-      ({ id, stepId }) => {
-        this.rootId = id
-      }
-    )
+    this.routeParamsSub = this.activatedRoute.params.subscribe(({ id }) => {
+      this.id = id
+    })
     this.cd.detectChanges()
   }
 
   handleStepChanges(step: number) {
     let route
     if (this.currentStep === 1 && step === 1) {
-      route = ['/', this.rootId, 'validation']
+      route = ['/', this.id, 'validation']
     } else if (this.currentStep === 4 && step === 4) {
-      route = ['/', this.rootId, 'confirm']
+      route = ['/', this.id, 'confirm']
     } else {
       this.currentStep = step
-      route = ['/', this.rootId, 'step', step]
+      route = ['/', this.id, 'step', step]
     }
     this.router.navigate(route)
   }

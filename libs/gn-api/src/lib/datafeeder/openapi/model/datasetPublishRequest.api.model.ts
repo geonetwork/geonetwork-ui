@@ -20,7 +20,7 @@ export interface DatasetPublishRequestApiModel {
    */
   nativeName: string
   /**
-   * Name under which the dataset is published to GeoServer, defaults to nativeName
+   * Name under which the dataset is published to GeoServer, defaults to nativeName. It can be modified by the system to avoid duplicated layer names.
    */
   publishedName?: string
   /**

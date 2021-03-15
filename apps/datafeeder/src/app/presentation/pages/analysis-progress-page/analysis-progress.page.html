@@ -7,7 +7,10 @@
       datafeeder.analysisProgressBar.subtitle
     </div>
     <div class="h-16 border-4 border-white rounded-lg">
-      <ui-progress-bar type="primary" [value]="progress"></ui-progress-bar>
+      <ui-progress-bar
+        type="primary"
+        [value]="progress * 100"
+      ></ui-progress-bar>
     </div>
     <app-analysis-progress-illustrations
       [progress]="progress"

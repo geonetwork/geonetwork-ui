@@ -8,14 +8,40 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { WizardService } from '../../services/wizard.service'
 
-const localStorageMock = () => {
-  let storage = {}
-  return {
-    getItem: (key) => (key in storage ? storage[key] : null),
-    setItem: (key, value) => (storage[key] = value || ''),
-    removeItem: (key) => delete storage[key],
-    clear: () => (storage = {}),
-  }
+const TIME = new Date().getTime()
+
+const wizardServiceMock = {
+  getWizardFieldData: jest.fn((id) => {
+    switch (id) {
+      case 'title': {
+        return 'title'
+      }
+      case 'abstract': {
+        return 'abstract'
+      }
+      case 'tags': {
+        return JSON.stringify([
+          {
+            display: 'tagName1',
+            value: 'tagName1',
+          },
+          {
+            display: 'tagName2',
+            value: 'tagName2',
+          },
+        ])
+      }
+      case 'datepicker': {
+        return String(TIME)
+      }
+      case 'dropdown': {
+        return JSON.stringify('10000')
+      }
+      case 'description': {
+        return 'description'
+      }
+    }
+  }),
 }
 
 describe('WizardSummarizeComponent', () => {
@@ -32,7 +58,12 @@ describe('WizardSummarizeComponent', () => {
         HttpClientTestingModule,
       ],
       schemas: [NO_ERRORS_SCHEMA],
-      providers: [WizardService],
+      providers: [
+        {
+          provide: WizardService,
+          useValue: wizardServiceMock,
+        },
+      ],
     }).compileComponents()
   }))
 
@@ -40,29 +71,6 @@ describe('WizardSummarizeComponent', () => {
     fixture = TestBed.createComponent(WizardSummarizeComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
-  })
-
-  beforeEach(() => {
-    Object.defineProperty(window, 'localStorage', { value: localStorageMock() })
-
-    window.localStorage.setItem('title', 'title')
-    window.localStorage.setItem('abstract', 'abstract')
-    window.localStorage.setItem(
-      'tags',
-      JSON.stringify([
-        {
-          display: 'tagName1',
-          value: 'tagName1',
-        },
-        {
-          display: 'tagName2',
-          value: 'tagName2',
-        },
-      ])
-    )
-    window.localStorage.setItem('datepicker', String(new Date().getTime()))
-    window.localStorage.setItem('dropdown', JSON.stringify('10000'))
-    window.localStorage.setItem('description', 'description')
   })
 
   it('should create', () => {
@@ -74,7 +82,7 @@ describe('WizardSummarizeComponent', () => {
       .textContent
 
     expect(title.trim()).toEqual(
-      window.localStorage.getItem('title').toUpperCase().trim()
+      wizardServiceMock.getWizardFieldData('title').toUpperCase().trim()
     )
   })
 
@@ -83,7 +91,7 @@ describe('WizardSummarizeComponent', () => {
       .nativeElement.textContent
 
     expect(abstract.trim()).toEqual(
-      window.localStorage.getItem('abstract').trim()
+      wizardServiceMock.getWizardFieldData('abstract').trim()
     )
   })
 
@@ -91,10 +99,8 @@ describe('WizardSummarizeComponent', () => {
     const date = fixture.debugElement.query(By.css('.date')).nativeElement
       .textContent
 
-    const time = window.localStorage.getItem('datepicker')
-
     expect(date).toEqual(
-      new Date(Number(time)).toLocaleDateString('en', {
+      new Date(TIME).toLocaleDateString('en', {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
@@ -107,7 +113,7 @@ describe('WizardSummarizeComponent', () => {
       .textContent
 
     expect(scale.trim()).toEqual(
-      `1:${JSON.parse(window.localStorage.getItem('dropdown'))}`
+      `1:${JSON.parse(wizardServiceMock.getWizardFieldData('dropdown'))}`
     )
   })
 
@@ -116,7 +122,7 @@ describe('WizardSummarizeComponent', () => {
       .nativeElement.textContent
 
     expect(description.trim()).toEqual(
-      window.localStorage.getItem('description').trim()
+      wizardServiceMock.getWizardFieldData('description').trim()
     )
   })
 
@@ -124,7 +130,9 @@ describe('WizardSummarizeComponent', () => {
     const tags = fixture.debugElement.query(By.css('.tags')).nativeElement
       .textContent
 
-    const expectedTags = JSON.parse(window.localStorage.getItem('tags'))
+    const expectedTags = JSON.parse(
+      wizardServiceMock.getWizardFieldData('tags')
+    )
       .map((t) => t.display)
       .join(' - ')
 

@@ -4,7 +4,11 @@
       datafeeder.datasetValidation.title
     </div>
     <div class="pb-4 pt-4">
-      <ui-step-bar [steps]="6" [currentStep]="1" type="primary"></ui-step-bar>
+      <ui-step-bar
+        [steps]="numberOfSteps"
+        [currentStep]="1"
+        type="primary"
+      ></ui-step-bar>
     </div>
     <div
       class="text-2xl font-bold"

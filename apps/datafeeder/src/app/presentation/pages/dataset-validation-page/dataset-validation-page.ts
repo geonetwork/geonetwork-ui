@@ -2,21 +2,22 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { LogService } from '@lib/common'
 import {
+  AnalysisStatusEnumApiModel,
   BoundingBoxApiModel,
+  DatasetUploadStatusApiModel,
   FileUploadApiService,
   UploadJobStatusApiModel,
-  AnalysisStatusEnumApiModel,
-  DatasetUploadStatusApiModel,
 } from '@lib/datafeeder-api'
+import { WizardService } from '@lib/editor'
 import Feature from 'ol/Feature'
 import GeoJSON from 'ol/format/GeoJSON'
 import { fromExtent } from 'ol/geom/Polygon'
-import { transformExtent } from 'ol/proj'
 import { forkJoin, Subscription } from 'rxjs'
 import { environment } from '../../../../environments/environment'
+import { config as wizardConfig } from '../../../configs/wizard.config'
 
 const unknownLabel = 'datafeeder.datasetValidation.unknown'
-const bboxSrs = 'EPSG:3857'
+const viewSrs = 'EPSG:3857'
 
 @Component({
   selector: 'app-dataset-validation-page',
@@ -25,7 +26,6 @@ const bboxSrs = 'EPSG:3857'
 })
 export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   encodingList = environment.encodings
-
   refSystem = [{ label: unknownLabel, value: '' }, ...environment.projections]
 
   geoJSONData: object
@@ -38,20 +38,27 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   encoding = ''
 
   numOfEntities = 0
+  numberOfSteps: number
+
   private routeParamsSub: Subscription
   private rootId: number
   private format = new GeoJSON({})
+  private nativeName = ''
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private logService: LogService,
-    private fileUploadApiService: FileUploadApiService
+    private fileUploadApiService: FileUploadApiService,
+    private wizard: WizardService
   ) {}
 
   ngOnInit(): void {
     this.routeParamsSub = this.activatedRoute.params.subscribe(({ id }) => {
       this.rootId = id
+      this.wizard.initialize(id, wizardConfig)
+      this.numberOfSteps = this.wizard.getConfigurationStepNumber() + 1
+
       this.fileUploadApiService
         .findUploadJob(id)
         .subscribe((job: UploadJobStatusApiModel) => {
@@ -64,6 +71,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
           }
 
           this.dataset = job.datasets[0]
+          this.nativeName = this.dataset.name
           this.numOfEntities = this.dataset.featureCount
           this.crs = this.dataset.nativeBounds?.crs?.srs
           this.encoding = this.dataset.encoding
@@ -75,19 +83,22 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
             this.fileUploadApiService.getBounds(
               id,
               this.dataset.name,
-              bboxSrs,
+              viewSrs,
               true
             ),
             this.fileUploadApiService.getSampleFeature(
               id,
               this.dataset.name,
-              this.featureIndex
+              this.featureIndex,
+              undefined,
+              viewSrs,
+              true
             ),
           ]).subscribe(([bbox, feature]) => {
             const { minx, miny, maxx, maxy } = bbox as BoundingBoxApiModel
             this.geoJSONBBox = this.format.writeFeatureObject(
               new Feature({ geometry: fromExtent([minx, miny, maxx, maxy]) }),
-              { featureProjection: bboxSrs }
+              { featureProjection: viewSrs }
             )
             this.geoJSONData = feature as object // No more precision in API
           })
@@ -111,6 +122,8 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   }
 
   submitValidation() {
+    const fields = ['encoding', 'nativeName', 'crs']
+    fields.forEach((f) => this.wizard.setWizardFieldData(f, this[f]))
     this.router.navigate(['/', this.rootId, 'step', 1])
   }
 

@@ -13,6 +13,7 @@ import {
 })
 export class ButtonComponent implements OnInit {
   @Input() type: 'primary' | 'secondary' | 'default' = 'default'
+  @Input() disabled = false
   @Input() extraClass = ''
 
   classList = ''

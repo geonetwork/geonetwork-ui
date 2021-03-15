@@ -13,19 +13,29 @@
       <div class="flex-1 flex flex-col justify-between pl-20">
         <div class="flex flex-col pt-8">
           <ui-button
-            ><span translate class="text-lg font-bold uppercase"
+            type="primary"
+            extraClass="rounded-full px-20 mb-2"
+            (click)="openGeonetworkLink()"
+            ><span translate class="uppercase text-white font-bold"
               >datafeeder.publishSuccess.geonetworkRecord</span
             ></ui-button
           >
-          <ui-button class="pt-4"
-            ><span class="pt-4 text-lg font-bold uppercase" translate
+          <ui-button
+            type="primary"
+            extraClass="rounded-full px-20"
+            (click)="openGeoserverLink()"
+            ><span class="uppercase text-white font-bold" translate
               >datafeeder.publishSuccess.mapViewer</span
             ></ui-button
           >
         </div>
 
-        <ui-button type="primary">
-          <span translate class="text-lg font-bold text-white"
+        <ui-button
+          type="primary"
+          extraClass="rounded-full px-20 secondary"
+          (click)="backToHome()"
+        >
+          <span translate class="uppercase font-bold"
             >datafeeder.publishSuccess.uploadAnotherData</span
           >
         </ui-button>

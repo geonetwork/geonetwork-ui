@@ -13,7 +13,10 @@
       <div class="text-xl" translate>datafeeder.publish.hint</div>
 
       <div class="w-7/12 h-6 mt-20">
-        <ui-progress-bar type="primary" [value]="10"></ui-progress-bar>
+        <ui-progress-bar
+          type="primary"
+          [value]="progress * 100"
+        ></ui-progress-bar>
       </div>
     </div>
     <div class="z-10 w-1/3">

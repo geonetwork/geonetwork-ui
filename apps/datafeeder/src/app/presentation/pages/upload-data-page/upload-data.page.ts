@@ -12,6 +12,7 @@ import {
 })
 export class UploadDataPageComponent implements OnInit {
   error: UploadDataError
+  maxFileSize = 30
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 

@@ -47,7 +47,11 @@ export class StepBarComponent implements OnInit {
     return index === this.currentStep
       ? 'bg-black'
       : index < this.currentStep
-      ? this.color.innerBar
-      : 'bg-white'
+      ? 'bg-white'
+      : this.color.innerBar
+  }
+
+  getChecked(index: number): boolean {
+    return index + 1 < this.currentStep
   }
 }
