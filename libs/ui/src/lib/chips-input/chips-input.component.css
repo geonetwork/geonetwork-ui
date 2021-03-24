@@ -30,8 +30,3 @@ tag-input::ng-deep div,
 tag-input::ng-deep form {
   height: 100%;
 }
-
-tag-input::ng-deep tag-input-form,
-tag-input::ng-deep input {
-  width: 100%;
-}
