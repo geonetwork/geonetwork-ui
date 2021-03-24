@@ -58,6 +58,7 @@ select:focus,
 tag-input:focus-within,
 my-date-picker .mydp:focus-within {
   border-color: var(--color-primary-darker) !important;
+  color: black;
 }
 
 .grey1 {
