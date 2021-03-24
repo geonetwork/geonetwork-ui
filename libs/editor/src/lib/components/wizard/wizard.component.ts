@@ -26,7 +26,7 @@ export class WizardComponent implements OnInit, AfterViewInit {
   @Output() stepChanges = new EventEmitter<number>()
   @Output() stepsNumber = new EventEmitter<number>()
 
-  @ViewChild('wizardFields') wizardFieldsEl: ElementRef<HTMLInputElement>
+  @ViewChild('wizardFields') wizardFieldsEl: ElementRef<HTMLElement>
 
   currentStep: number
   configuration: WizardFieldModel[]
@@ -70,9 +70,11 @@ export class WizardComponent implements OnInit, AfterViewInit {
   }
 
   private setFocus() {
-    const inputEl = this.wizardFieldsEl.nativeElement.querySelectorAll(
-      'input, textarea, select'
-    )[0] as HTMLElement
-    inputEl?.focus()
+    setTimeout(() => {
+      const inputEl = this.wizardFieldsEl.nativeElement.querySelectorAll(
+        'input, textarea, select'
+      )[0] as HTMLElement
+      inputEl.focus()
+    }, 0)
   }
 }
