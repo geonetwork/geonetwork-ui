@@ -5,8 +5,6 @@ import {
 } from '../svg/upload-data-error-dialog/upload-data-error-dialog.component'
 import { FileUploadApiService } from '@lib/datafeeder-api'
 
-const VALID_FILE_EXTENSIONS = ['zip', 'png' /*'shp', 'json', 'gpkg', 'db'*/]
-
 @Component({
   selector: 'app-upload-data-component',
   templateUrl: './upload-data.component.html',
