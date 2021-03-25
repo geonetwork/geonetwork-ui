@@ -33,20 +33,13 @@ export class DatepickerComponent implements OnInit, AfterViewInit {
   }
 
   initializeDate(date: Date) {
-    const sDate = date || new Date()
     this.model = {
-      date: {
-        year: sDate.getFullYear(),
-        month: sDate.getMonth(),
-        day: sDate.getDate(),
-      },
+     jsdate: date || new Date()
     }
   }
 
   ngAfterViewInit() {
-    const m = this.model.date
-    const value = new Date(m.year, m.month, m.day)
     // to delay emit after parent viewinit completed
-    setTimeout(() => this.selectedDate.emit(value))
+    setTimeout(() => this.selectedDate.emit(this.model.jsdate))
   }
 }
