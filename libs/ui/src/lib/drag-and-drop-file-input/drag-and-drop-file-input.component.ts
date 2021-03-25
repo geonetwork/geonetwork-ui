@@ -11,6 +11,7 @@ marker('dropFile')
 })
 export class DragAndDropFileInputComponent implements OnInit {
   @Input() placeholder = placeholder
+  @Input() accept = '*'
   @Output() fileChange = new EventEmitter<any>()
   selectedFile: File = null
 

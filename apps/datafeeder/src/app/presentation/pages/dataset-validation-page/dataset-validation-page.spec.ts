@@ -8,6 +8,7 @@ import {
 } from '@lib/datafeeder-api'
 import { of } from 'rxjs'
 import { WizardService } from '@lib/editor'
+import { DatafeederFacade } from '../../../store/datafeeder.facade'
 import { DatasetValidationPageComponent } from './dataset-validation-page'
 
 const jobMock: UploadJobStatusApiModel = {
@@ -22,8 +23,11 @@ const jobMock: UploadJobStatusApiModel = {
   ],
 }
 
+const facadeMock = {
+  upload$: of(jobMock),
+}
+
 const fileUploadApiServiceMock = {
-  findUploadJob: jest.fn(() => of(jobMock)),
   getBounds: jest.fn(() =>
     of({ crs: { srs: 'EPSG:4326' }, minx: 0, maxx: 1, miny: 2, maxy: 3 })
   ),
@@ -62,6 +66,10 @@ describe('DatasetValidationPageComponent', () => {
         {
           provide: WizardService,
           useValue: wizardServiceMock,
+        },
+        {
+          provide: DatafeederFacade,
+          useValue: facadeMock,
         },
         { provide: ActivatedRoute, useValue: activatedRouteMock },
         { provide: Router, useValue: routerMock },

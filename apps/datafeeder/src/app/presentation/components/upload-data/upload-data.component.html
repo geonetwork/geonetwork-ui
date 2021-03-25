@@ -6,6 +6,7 @@
   <ui-drag-and-drop-file-input
     (fileChange)="fileChange($event)"
     placeholder="..."
+    [accept]="acceptedMimeType.join(',')"
   ></ui-drag-and-drop-file-input>
 </div>
 <div class="pb-4">

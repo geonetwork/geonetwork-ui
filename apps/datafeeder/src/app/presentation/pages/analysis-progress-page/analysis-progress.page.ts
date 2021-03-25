@@ -8,6 +8,7 @@ import {
 } from '@lib/datafeeder-api'
 import { interval, Observable, Subscription } from 'rxjs'
 import { filter, switchMap, take, tap } from 'rxjs/operators'
+import { DatafeederFacade } from '../../../store/datafeeder.facade'
 
 const { PENDING, ANALYZING, DONE } = AnalysisStatusEnumApiModel
 
@@ -25,6 +26,7 @@ export class AnalysisProgressPageComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private logService: LogService,
+    private facade: DatafeederFacade,
     private fileUploadApiService: FileUploadApiService
   ) {}
 
@@ -34,6 +36,7 @@ export class AnalysisProgressPageComponent implements OnInit, OnDestroy {
       switchMap(({ id }) =>
         interval(500).pipe(
           switchMap(() => this.fileUploadApiService.findUploadJob(id)),
+          tap((job: UploadJobStatusApiModel) => this.facade.setUpload(job)),
           tap((job: UploadJobStatusApiModel) => (this.progress = job.progress)),
           filter(
             (job: UploadJobStatusApiModel) =>

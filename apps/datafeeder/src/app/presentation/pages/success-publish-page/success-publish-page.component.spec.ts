@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { DatafeederFacade } from '../../../store/datafeeder.facade'
 
 import {
   SuccessPublishPageComponent,
@@ -30,16 +31,16 @@ const jobMock: JobStatusModel = {
   ],
 }
 
-const publishServiceMock = {
-  getPublishingStatus: jest.fn(() => of(jobMock)),
-}
-
 const activatedRouteMock = {
   params: of({ id: 1 }),
 }
 
 const routerMock = {
   navigate: jest.fn(),
+}
+
+const facadeMock = {
+  publication$: of(jobMock),
 }
 
 describe('SuccessPublishPageComponent', () => {
@@ -52,7 +53,10 @@ describe('SuccessPublishPageComponent', () => {
       imports: [UiModule],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
-        { provide: DataPublishingApiService, useValue: publishServiceMock },
+        {
+          provide: DatafeederFacade,
+          useValue: facadeMock,
+        },
         { provide: Router, useValue: routerMock },
         { provide: ActivatedRoute, useValue: activatedRouteMock },
       ],
@@ -70,7 +74,6 @@ describe('SuccessPublishPageComponent', () => {
   })
 
   it('fetches batch status', () => {
-    expect(publishServiceMock.getPublishingStatus).toHaveBeenCalledWith(1)
     expect(component.gnLink).toBe(GN_LINK)
     expect(component.gsLink).toBe(GS_LINK)
   })

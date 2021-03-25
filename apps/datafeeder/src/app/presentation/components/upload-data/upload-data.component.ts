@@ -5,8 +5,6 @@ import {
 } from '../svg/upload-data-error-dialog/upload-data-error-dialog.component'
 import { FileUploadApiService } from '@lib/datafeeder-api'
 
-const VALID_FILE_EXTENSIONS = ['zip', 'png' /*'shp', 'json', 'gpkg', 'db'*/]
-
 @Component({
   selector: 'app-upload-data-component',
   templateUrl: './upload-data.component.html',
@@ -16,6 +14,7 @@ export class UploadDataComponent implements OnInit {
   file: File = null
   haveRights = false
   uploading = false
+  acceptedMimeType = ['application/zip']
 
   @Input() maxFileSizeMb: number
   @Output() errors$ = new EventEmitter<UploadDataError>()
@@ -72,9 +71,6 @@ export class UploadDataComponent implements OnInit {
   }
 
   private isFileFormatValid(file: File): boolean {
-    const fileExt = file.name.split('.').pop()
-    return !!VALID_FILE_EXTENSIONS.find(
-      (ext) => !ext.localeCompare(fileExt.toLocaleLowerCase())
-    )
+    return this.acceptedMimeType.includes(file.type)
   }
 }

@@ -2,9 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import {
   DataPublishingApiService,
-  PublishJobStatusApiModel,
-  PublishStatusEnumApiModel,
   DatasetPublishRequestApiModel,
+  PublishJobStatusApiModel,
 } from '@lib/datafeeder-api'
 import { WizardService } from '@lib/editor'
 import { Subscription } from 'rxjs'
