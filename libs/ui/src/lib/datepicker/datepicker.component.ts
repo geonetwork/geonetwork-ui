@@ -34,7 +34,7 @@ export class DatepickerComponent implements OnInit, AfterViewInit {
 
   initializeDate(date: Date) {
     this.model = {
-     jsdate: date || new Date()
+      jsdate: date || new Date(),
     }
   }
 
