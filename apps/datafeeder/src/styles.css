@@ -4,11 +4,7 @@
 :root {
   --current-font: 'Open Sans', sans-serif;
   --focus-font: 'Permanent Marker', cursive;
-  --gradient: linear-gradient(
-    65deg,
-    #fff 0%,
-    #dbeff8 100%
-  );
+  --gradient: linear-gradient(65deg, #fff 0%, #dbeff8 100%);
 }
 
 @font-face {
@@ -19,7 +15,8 @@
   /* src: url('./assets/fonts/dataFeeder.eot'); FIXME file looks corrupted */
 }
 
-html, .force-font {
+html,
+.force-font {
   font-family: 'Open Sans', 'dataFeeder', sans-serif !important;
 }
 .force-font {
@@ -30,24 +27,38 @@ app-root {
   background: var(--gradient);
 }
 
-ui-button button[type=button] {
+ui-button button[type='button'] {
   background: var(--color-primary);
   border-color: var(--color-primary);
 }
-ui-button button[type=button]:hover {
+ui-button button[type='button']:hover {
   background: var(--color-primary-darker);
   border-color: var(--color-primary-darker);
 }
 
-ui-button button[type=button].secondary {
+ui-button button[type='button'].secondary {
   background: white;
   color: var(--color-primary);
   border-color: var(--color-primary);
   border-width: 1px;
 }
-ui-button button[type=button].secondary:hover {
+ui-button button[type='button'].secondary:hover {
   background: var(--color-primary-darker);
   color: white;
+}
+
+my-date-picker .mydp {
+  border-color: var(--color-primary);
+  border-width: 2px;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+tag-input:focus-within,
+my-date-picker .mydp:focus-within {
+  border-color: var(--color-primary-darker) !important;
+  color: black;
 }
 
 .grey1 {
@@ -151,5 +162,5 @@ ui-button button[type=button].secondary:hover {
 }
 
 .icon-check:before {
-  content:  "\e905";
+  content: '\e905';
 }

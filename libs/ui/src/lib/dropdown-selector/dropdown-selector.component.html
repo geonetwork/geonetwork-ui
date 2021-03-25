@@ -9,7 +9,7 @@
   <select
     [id]="id"
     (change)="this.selectValue.emit($event.target.value)"
-    class="block w-full bg-white border border-gray-300 text-gray-800 py-2 px-3 pr-6 rounded leading-tight focus:outline-none focus:border-blue-500"
+    class="block w-full bg-white border border-gray-300 text-gray-800 py-2 px-3 pr-6 rounded leading-tight focus:outline-none focus:border-primary"
   >
     <option
       *ngFor="let choice of choices"

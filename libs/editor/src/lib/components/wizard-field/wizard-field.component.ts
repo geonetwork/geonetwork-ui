@@ -1,4 +1,5 @@
 import {
+  AfterContentInit,
   AfterViewInit,
   Component,
   Input,
@@ -151,7 +152,7 @@ export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
       this.datepicker.selectedDate.subscribe((value: Date) => {
         this.wizardService.onWizardWizardFieldDataChanged(
           this.wizardFieldConfig.id,
-          value.getDate().toString()
+          (+value).toString()
         )
       })
     )
