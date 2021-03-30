@@ -24,6 +24,7 @@
               "apps/search/src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "libs/ui/src/styles.css",
               "apps/search/src/styles.css"
             ],
@@ -421,7 +422,8 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "rbush", "pixelworks"
+              "rbush",
+              "pixelworks"
             ]
           },
           "configurations": {
