@@ -1,0 +1,55 @@
+@font-face {
+    font-family: "Open Sans";
+    src: url(assets/font/opensans-regular.woff2) format("woff2");
+}
+@font-face {
+    font-family: "Open Sans";
+    src: url(assets/font/opensans-bold.woff2) format("woff2");
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "Cera";
+    src: url(assets/font/CeraPRO-Bold.woff2) format("woff2");
+    font-weight: bold;
+}
+
+html, body {
+    height: 100%;
+    font-family: "Open Sans";
+}
+
+h1, h2, h3 {
+    font-family: Cera;
+}
+
+.container-sm {
+    max-width: 640px;
+}
+.container-md {
+    max-width: 768px;
+}
+.container-lg {
+    max-width: 1024px;
+}
+.hover\:scale-105:hover {
+    --transform-scale-x: 1.02;
+    --transform-scale-y: 1.02;
+}
+
+.mat-autocomplete-panel {
+    margin-top: -2px;
+}
+.mat-autocomplete-panel .mat-option {
+    line-height: 36px;
+    height: 36px;
+    padding: 0 12px;
+}
+.mat-autocomplete-panel .mat-option:hover:not(.mat-option-disabled), .mat-autocomplete-panel .mat-option:focus:not(.mat-option-disabled) {
+    background: rgba(9,53,100,.1);
+}
+.mat-autocomplete-panel .mat-option.mat-active {
+    color: var(--color-primary-lighter);
+    background: rgba(9,53,100,.1);
+}
+
