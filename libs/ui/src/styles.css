@@ -31,6 +31,3 @@ h1 {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
