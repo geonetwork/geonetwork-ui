@@ -33,7 +33,7 @@ export const LANG_2_TO_3_MAPPER = Object.entries(LANG_3_TO_2_MAPPER).reduce(
 )
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http)
+  return new TranslateHttpLoader(http, './assets/i18n/')
 }
 
 export const TRANSLATE_DEFAULT_CONFIG = {
