@@ -8,6 +8,16 @@ export interface StateConfigFilters {
   elastic?: any
 }
 
+export interface RecordResponseLink {
+  protocol?: string
+  function?: string
+  name?: string
+  applicationProfile?: string
+  description?: string
+  url?: string
+  group?: number
+}
+
 export interface RecordSummary {
   id: string
   uuid: string
@@ -19,6 +29,7 @@ export interface RecordSummary {
   downloadable?: boolean
   viewable?: boolean
   updateFrequency?: string
+  link?: RecordResponseLink[]
 }
 
 export interface RecordBrief extends RecordSummary {

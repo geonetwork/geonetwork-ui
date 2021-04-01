@@ -11,5 +11,6 @@
     [loading]="facade.isLoading$ | async"
     [records]="facade.results$ | async"
     [layout]="facade.layout$ | async"
+    (mdSelect)="onMetadataSelection($event)"
   ></ui-results-list>
 </div>

@@ -1,0 +1,6 @@
+.close-btn {
+    margin-top: -8px;
+}
+.vh-fill {
+    height: calc(100vh - 374px);
+}

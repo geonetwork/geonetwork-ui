@@ -1,0 +1,57 @@
+<div class="">
+  <div
+    class="mt-4 font-cera text-primary text-xl font-bold"
+    *ngIf="links.length > 0"
+  >
+    Liens
+  </div>
+  <div *ngFor="let link of links" class="text-sm text-sm ml-3 mb-2">
+    <a
+      [href]="link.url"
+      target="_blank"
+      class="text-primary-lighter hover:text-primary"
+      >{{ link.description || link.name || link.url }}</a
+    >
+  </div>
+
+  <div
+    *ngIf="mapService.layers.length > 0"
+    class="mt-4 font-cera text-primary text-xl font-bold"
+  >
+    Ressources associées
+  </div>
+  <div
+    *ngFor="let layer of mapService.layers"
+    class="text-sm ml-3 mb-2 text-primary-lighter"
+  >
+    <div>{{ layer.description }}</div>
+    <span
+      *ngIf="layer['OGC:WMS']"
+      (click)="mapService.toggleLayer(layer)"
+      class="mr-1 bg-blue-200 text-blue-800 rounded text-xs py-1 px-2 cursor-pointer hover:text-blue-500"
+    >
+      WMS
+    </span>
+    <span
+      *ngIf="layer['OGC:WFS']"
+      (click)="mapService.toggleData(layer)"
+      class="mr-1 bg-green-200 text-green-800 rounded text-xs py-1 px-2 cursor-pointer hover:text-green-500"
+    >
+      WFS
+    </span>
+    <a
+      *ngIf="layer['OGC:WFS']"
+      target="_blank"
+      [href]="
+        layer['OGC:WFS'] +
+        '?REQUEST=GetFeature&SERVICE=WFS&VERSION=1.1.0&TypeName=surval_parametre_point&outputformat=geojson'
+      "
+    >
+      <span
+        class="mr-1 bg-orange-200 text-orange-800 rounded text-xs py-1 px-2 cursor-pointer hover:text-orange-500"
+      >
+        GeoJSON
+      </span>
+    </a>
+  </div>
+</div>

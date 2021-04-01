@@ -18,8 +18,16 @@
       </div>
     </div>
   </div>
-  <div class="container-lg mx-auto py-4">
+  <div *ngIf="!selectedMetadata" class="container-lg mx-auto py-4">
     <search-results-hits></search-results-hits>
-    <search-results-list-container></search-results-list-container>
+    <search-results-list-container
+      (mdSelect)="onMetadataSelection($event)"
+    ></search-results-list-container>
+  </div>
+  <div *ngIf="selectedMetadata">
+    <app-md-visu
+      [metadata]="selectedMetadata"
+      (closePanel)="onMetadataSelection(null)"
+    ></app-md-visu>
   </div>
 </main>

@@ -7,6 +7,7 @@ import {
   ViewChild,
 } from '@angular/core'
 import { FormControl } from '@angular/forms'
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
 import { SearchApiService } from '@lib/gn-api'
 import { ElasticsearchMapper, SearchFacade } from '@lib/search'
 import { SearchResponse } from 'elasticsearch'
@@ -24,6 +25,7 @@ export class SearchInputComponent implements OnInit, AfterViewInit {
   suggestions: Observable<string[]>
 
   @ViewChild('searchInput') searchInputRef: ElementRef<HTMLInputElement>
+  @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger
 
   constructor(
     private searchService: SearchApiService,
@@ -47,10 +49,12 @@ export class SearchInputComponent implements OnInit, AfterViewInit {
 
   triggerSearch(value: string) {
     this.searchFacade.setFilters({ any: value })
+    this.autocomplete.closePanel()
   }
 
-  private _normalizeValue(value: string): string {
-    return value.toLowerCase().replace(/\s/g, '')
+  clear(): void {
+    this.searchInputRef.nativeElement.value = ''
+    this.searchInputRef.nativeElement.focus()
   }
 
   private getSuggestions(query: string): Observable<string[]> {
@@ -83,6 +87,7 @@ export class SearchInputComponent implements OnInit, AfterViewInit {
           },
         },
       },
+      _source: ['uuid', 'id', 'title', 'resourceTitleObject'],
     }
 
     return this.searchService.search('bucket', JSON.stringify(payload)).pipe(

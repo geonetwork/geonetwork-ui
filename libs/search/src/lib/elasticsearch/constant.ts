@@ -20,6 +20,7 @@ export const ES_SOURCE_BRIEF = [
   ...ES_SOURCE_SUMMARY,
   'resourceTypeObject',
   'Org',
+  'link',
 ]
 
 export const ElasticSearchSources = {

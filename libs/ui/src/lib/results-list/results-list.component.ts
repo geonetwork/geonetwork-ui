@@ -1,8 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
 } from '@angular/core'
 import { RecordSummary, ResultsListLayout } from '@lib/common'
 
@@ -10,12 +12,12 @@ import { RecordSummary, ResultsListLayout } from '@lib/common'
   selector: 'ui-results-list',
   templateUrl: './results-list.component.html',
   styleUrls: ['./results-list.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResultsListComponent implements OnInit {
   @Input() records: RecordSummary[]
   @Input() loading: boolean
   @Input() layout: ResultsListLayout = ResultsListLayout.CARD
+  @Output() mdSelect = new EventEmitter<RecordSummary>()
   layoutEnum = ResultsListLayout
 
   constructor() {}

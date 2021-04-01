@@ -28,6 +28,7 @@
     <ui-record-preview-card
       *ngFor="let record of records"
       [record]="record"
+      (mdSelect)="mdSelect.emit($event)"
       linkTarget="_blank"
     ></ui-record-preview-card>
   </div>

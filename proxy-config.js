@@ -1,6 +1,6 @@
 module.exports = {
   '/geonetwork': {
-    target: 'https://apps.titellus.net',
+    target: 'https://sextant-test.ifremer.fr',
     secure: true,
     logLevel: 'debug',
     changeOrigin: true,

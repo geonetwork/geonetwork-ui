@@ -1,0 +1,15 @@
+table {
+    width: 100%;
+}
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+    padding-right: 20px;
+}
+tr.mat-row, tr.mat-footer-row {
+    height: 36px;
+}
+tr:hover {
+    background: whitesmoke;
+}
+tr.mat-header-row {
+    height: 48px;
+}

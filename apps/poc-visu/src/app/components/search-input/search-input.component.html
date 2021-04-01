@@ -1,12 +1,24 @@
-<input
-  type="text"
-  class="appearance-none rounded w-full p-3 text-primary leading-tight focus:outline-none focus:border-primary"
-  placeholder=""
-  [formControl]="control"
-  [matAutocomplete]="auto"
-  (keyup.enter)="triggerSearch($event.target.value)"
-  #searchInput
-/>
+<div class="relative">
+  <input
+    type="text"
+    class="appearance-none rounded w-full p-3 text-primary leading-tight focus:outline-none focus:border-primary"
+    placeholder=""
+    [formControl]="control"
+    [matAutocomplete]="auto"
+    (keyup.enter)="triggerSearch($event.target.value)"
+    #searchInput
+  />
+  <button
+    class="text-primary hover:text-primary-lighter absolute clear-btn"
+    *ngIf="searchInput.value"
+    matSuffix
+    aria-label="Clear"
+    (click)="clear()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
 <mat-autocomplete
   #auto="matAutocomplete"
   (optionSelected)="triggerSearch($event.option.value)"

@@ -1,7 +1,15 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core'
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core'
 import {
   InfiniteScrollModel,
   InfiniteScrollOptionsDefault,
+  RecordSummary,
   ResultsListLayout,
 } from '@lib/common'
 import { iif, Observable, of } from 'rxjs'
@@ -16,6 +24,7 @@ import { SearchFacade } from '../state/search.facade'
 export class ResultsListContainerComponent implements OnInit, OnDestroy {
   @Input() layout: ResultsListLayout = ResultsListLayout.CARD
   @Input() scrollableOptions: InfiniteScrollModel = {}
+  @Output() mdSelect = new EventEmitter<RecordSummary>()
 
   scrollDisable$: Observable<boolean>
   scrollableConfig: InfiniteScrollModel
@@ -35,6 +44,9 @@ export class ResultsListContainerComponent implements OnInit, OnDestroy {
       ),
       distinctUntilChanged()
     )
+  }
+  onMetadataSelection(metadata: RecordSummary): void {
+    this.mdSelect.emit(metadata)
   }
 
   onScrollDown() {

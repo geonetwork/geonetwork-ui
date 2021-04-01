@@ -18,8 +18,15 @@ html, body {
     height: 100%;
     font-family: "Open Sans";
 }
+html {
+    overflow-y: scroll;
+}
 
 h1, h2, h3 {
+    font-family: Cera;
+}
+
+.font-cera {
     font-family: Cera;
 }
 

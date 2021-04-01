@@ -1,0 +1,55 @@
+<div class="flex text-primary bg-primary-lightest pt-4 text-xl font-bold">
+  <div
+    (click)="closePanel.emit()"
+    class="close-btn text-3xl pb-2 px-8 cursor-pointer hover:text-primary-darker"
+  >
+    &times;
+  </div>
+  <div class="flex-grow font-cera whitespace-pre-line clamp-1 pr-6">
+    {{ metadata.title }}
+  </div>
+</div>
+<mat-tab-group (selectedIndexChange)="onTabIndexChange($event)">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-3">info</mat-icon>
+      Info
+    </ng-template>
+    <div class="my-6 container-lg mx-auto">
+      <app-summary [metadata]="metadata"></app-summary>
+    </div>
+  </mat-tab>
+
+  <mat-tab [disabled]="!(mapService.data$ | async)">
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-3">list</mat-icon>
+      Données
+    </ng-template>
+    <div
+      class="flex-grow overflow-auto vh-fill"
+      *ngIf="mapService.data$ | async as data"
+    >
+      <app-grid [collection]="data"></app-grid>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-3">map</mat-icon>
+      Carte
+    </ng-template>
+    <div class="vh-fill">
+      <app-map></app-map>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-3">download</mat-icon>
+      Téléchargement
+    </ng-template>
+    <div class="my-6 container-md mx-auto">
+      <app-resources [metadata]="metadata"></app-resources>
+    </div>
+  </mat-tab>
+</mat-tab-group>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { ColorService } from '@lib/common'
+import { ColorService, RecordSummary } from '@lib/common'
 
 @Component({
   selector: 'app-root',
@@ -7,7 +7,13 @@ import { ColorService } from '@lib/common'
   styles: [],
 })
 export class AppComponent {
+  selectedMetadata: RecordSummary
+
   constructor() {
     ColorService.applyCssVariables('#093564', '#c2e9dc', '#212029', '#fdfbff')
+  }
+
+  onMetadataSelection(metadata: RecordSummary): void {
+    this.selectedMetadata = metadata
   }
 }
