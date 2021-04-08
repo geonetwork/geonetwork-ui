@@ -3,7 +3,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  EventEmitter,
   OnInit,
+  Output,
   ViewChild,
 } from '@angular/core'
 import { FormControl } from '@angular/forms'
@@ -23,6 +25,7 @@ import { debounceTime, filter, map, switchMap } from 'rxjs/operators'
 export class SearchInputComponent implements OnInit, AfterViewInit {
   control = new FormControl()
   suggestions: Observable<string[]>
+  @Output() search = new EventEmitter<void>()
 
   @ViewChild('searchInput') searchInputRef: ElementRef<HTMLInputElement>
   @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger
@@ -50,6 +53,7 @@ export class SearchInputComponent implements OnInit, AfterViewInit {
   triggerSearch(value: string) {
     this.searchFacade.setFilters({ any: value })
     this.autocomplete.closePanel()
+    this.search.emit()
   }
 
   clear(): void {
