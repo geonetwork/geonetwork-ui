@@ -20,7 +20,7 @@ export class ResourcesComponent implements OnInit {
   constructor(public mapService: MapService) {}
 
   ngOnInit(): void {
-    this.links = this.metadata.link.filter((link) =>
+    this.links = this.metadata.link?.filter((link) =>
       link.protocol.startsWith('WWW:LINK')
     )
   }

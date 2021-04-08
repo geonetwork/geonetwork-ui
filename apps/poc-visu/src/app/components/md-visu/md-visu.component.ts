@@ -34,25 +34,30 @@ export class MdVisuComponent implements OnInit {
   }
 
   buildLayerList(): RecordLayer[] {
-    const tree = this.metadata.link
-      .filter((link) => ['OGC:WFS', 'OGC:WMS'].includes(link.protocol))
-      .reduce((linkTree, link) => {
-        return linkTree[link.name]
-          ? {
-              ...linkTree,
-              [link.name]: {
-                ...linkTree[link.name],
-                [link.protocol]: link.url,
-              },
-            }
-          : {
-              ...linkTree,
-              [link.name]: {
-                description: link.description,
-                [link.protocol]: link.url,
-              },
-            }
-      }, {})
+    const tree =
+      this.metadata.link
+        ?.filter((link) =>
+          ['OGC:WFS', 'OGC:WMS'].some((protocol) =>
+            link.protocol.startsWith(protocol)
+          )
+        )
+        .reduce((linkTree, link) => {
+          return linkTree[link.name]
+            ? {
+                ...linkTree,
+                [link.name]: {
+                  ...linkTree[link.name],
+                  [link.protocol]: link.url,
+                },
+              }
+            : {
+                ...linkTree,
+                [link.name]: {
+                  description: link.description,
+                  [link.protocol]: link.url,
+                },
+              }
+        }, {}) || {}
     return Object.keys(tree).map((key) => {
       return { ...tree[key], name: key }
     })

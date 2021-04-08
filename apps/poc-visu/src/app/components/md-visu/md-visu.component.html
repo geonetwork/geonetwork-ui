@@ -33,7 +33,7 @@
     </div>
   </mat-tab>
 
-  <mat-tab>
+  <mat-tab [disabled]="!mapService.layers?.length">
     <ng-template mat-tab-label>
       <mat-icon class="mr-3">map</mat-icon>
       Carte
@@ -43,7 +43,7 @@
     </div>
   </mat-tab>
 
-  <mat-tab>
+  <mat-tab [disabled]="!metadata.link">
     <ng-template mat-tab-label>
       <mat-icon class="mr-3">download</mat-icon>
       Téléchargement

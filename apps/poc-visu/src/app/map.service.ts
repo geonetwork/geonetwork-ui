@@ -80,8 +80,12 @@ export class MapService {
 
   fetchFeatures(recordLayer: RecordLayer) {
     if (!this.datas[recordLayer.name]) {
+      const serviceUrl = recordLayer['OGC:WFS']
+      const outputformat = serviceUrl.includes('geoserver')
+        ? 'application/json'
+        : 'geojson'
       this.datas[recordLayer.name] = this.http.get<FeatureCollection>(
-        `${recordLayer['OGC:WFS']}?REQUEST=GetFeature&SERVICE=WFS&VERSION=1.1.0&TypeName=surval_parametre_point&outputformat=geojson&MAXFEATURES=50`
+        `${serviceUrl}?REQUEST=GetFeature&SERVICE=WFS&VERSION=1.1.0&TypeName=${recordLayer.name}&outputformat=${outputformat}&MAXFEATURES=50`
       )
     }
     return this.datas[recordLayer.name]

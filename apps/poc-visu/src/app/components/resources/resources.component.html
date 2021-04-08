@@ -1,21 +1,23 @@
 <div class="">
-  <div
-    class="mt-4 font-cera text-primary text-xl font-bold"
-    *ngIf="links.length > 0"
-  >
-    Liens
-  </div>
-  <div *ngFor="let link of links" class="text-sm text-sm ml-3 mb-2">
-    <a
-      [href]="link.url"
-      target="_blank"
-      class="text-primary-lighter hover:text-primary"
-      >{{ link.description || link.name || link.url }}</a
+  <ng-container *ngIf="links">
+    <div
+      class="mt-4 font-cera text-primary text-xl font-bold"
+      *ngIf="links.length > 0"
     >
-  </div>
+      Liens
+    </div>
+    <div *ngFor="let link of links" class="text-sm text-sm ml-3 mb-2">
+      <a
+        [href]="link.url"
+        target="_blank"
+        class="text-primary-lighter hover:text-primary"
+        >{{ link.description || link.name || link.url }}</a
+      >
+    </div>
+  </ng-container>
 
   <div
-    *ngIf="mapService.layers.length > 0"
+    *ngIf="mapService?.layers?.length > 0"
     class="mt-4 font-cera text-primary text-xl font-bold"
   >
     Ressources associées
