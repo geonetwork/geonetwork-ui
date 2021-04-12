@@ -15,6 +15,7 @@ import { fromExtent } from 'ol/geom/Polygon'
 import { forkJoin, Subscription } from 'rxjs'
 import { take } from 'rxjs/operators'
 import { environment } from '../../../../environments/environment'
+import SETTINGS from '../../../../settings'
 import { config as wizardConfig } from '../../../configs/wizard.config'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
 
@@ -27,8 +28,8 @@ const viewSrs = 'EPSG:3857'
   styleUrls: ['./dataset-validation-page.css'],
 })
 export class DatasetValidationPageComponent implements OnInit, OnDestroy {
-  encodingList = environment.encodings
-  refSystem = [{ label: unknownLabel, value: '' }, ...environment.projections]
+  encodingList = SETTINGS.encodings
+  refSystem = [{ label: unknownLabel, value: '' }, ...SETTINGS.projections]
 
   geoJSONData: object
   geoJSONBBox: object

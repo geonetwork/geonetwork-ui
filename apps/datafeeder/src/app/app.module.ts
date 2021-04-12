@@ -4,6 +4,7 @@ import { BASE_PATH, Configuration } from '@lib/datafeeder-api'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { environment } from '../../../search/src/environments/environment'
+import SETTINGS from '../settings'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -31,8 +32,6 @@ import { SummarizePageComponent } from './presentation/pages/summarize-page/summ
 import { SummarizeIllustrationComponent } from './presentation/components/svg/summarize-illustration/summarize-illustration.component'
 import { SummarizeBackgroundComponent } from './presentation/components/svg/summarize-background/summarize-background.component'
 import { DATAFEEDER_STATE_KEY, reducer } from './store/datafeeder.reducer'
-
-export const API_BASE_PATH = '/datafeeder'
 
 export function apiConfigurationFactory() {
   return new Configuration({
@@ -78,7 +77,7 @@ export function apiConfigurationFactory() {
   providers: [
     {
       provide: BASE_PATH,
-      useFactory: () => API_BASE_PATH,
+      useFactory: () => SETTINGS.apiUrl,
     },
   ],
   bootstrap: [AppComponent],

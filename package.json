@@ -71,6 +71,7 @@
     "rxjs": "~6.5.4",
     "ts-jest": "^26.4.4",
     "tslib": "^2.0.3",
+    "whatwg-fetch": "^3.6.2",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
