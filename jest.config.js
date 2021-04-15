@@ -11,4 +11,9 @@ module.exports = {
     '@lib/common': '<rootDir>libs/common/src/index.ts',
     '@lib/auth': '<rootDir>libs/auth/src/index.ts',
   },
+  globals: {
+    env: {
+      apiUrl: '/datafeeder',
+    },
+  },
 }

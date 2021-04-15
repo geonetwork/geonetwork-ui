@@ -7,7 +7,7 @@ import {
   UploadJobStatusApiModel,
 } from '@lib/datafeeder-api'
 import { interval, Observable, Subscription } from 'rxjs'
-import { filter, switchMap, take, tap } from 'rxjs/operators'
+import { filter, mergeMap, switchMap, take, tap } from 'rxjs/operators'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
 
 const { PENDING, RUNNING, DONE } = PublishStatusEnumApiModel
@@ -34,7 +34,7 @@ export class PublishPageComponent implements OnInit, OnDestroy {
     this.subscription = new Subscription()
 
     this.statusFetch$ = this.activatedRoute.params.pipe(
-      switchMap(({ id }) => {
+      mergeMap(({ id }) => {
         this.rootId = id
         return interval(500).pipe(
           switchMap(() => this.publishService.getPublishingStatus(id)),

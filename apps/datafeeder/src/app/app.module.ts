@@ -1,10 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
-import { BASE_PATH, Configuration } from '@lib/datafeeder-api'
+import { ApiModule, BASE_PATH, Configuration } from '@lib/datafeeder-api'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { environment } from '../../../search/src/environments/environment'
-import SETTINGS from '../settings'
+import { environment } from '../environments/environment'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -68,6 +67,7 @@ export function apiConfigurationFactory() {
     HttpClientModule,
     I18nModule,
     EditorModule,
+    ApiModule.forRoot(apiConfigurationFactory),
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
     StoreModule.forRoot({
       [DATAFEEDER_STATE_KEY]: reducer,
@@ -77,7 +77,7 @@ export function apiConfigurationFactory() {
   providers: [
     {
       provide: BASE_PATH,
-      useFactory: () => SETTINGS.apiUrl,
+      useFactory: () => environment.apiUrl,
     },
   ],
   bootstrap: [AppComponent],

@@ -1,7 +1,9 @@
 import 'whatwg-fetch'
+import { environment } from './environments/environment'
+
+const SETTING_API = `${environment.apiUrl}/config/frontend`
 
 class Settings {
-  apiUrl = ''
   encodings = [
     {
       label: 'UTF-8',
@@ -28,7 +30,7 @@ class Settings {
   ]
 
   init() {
-    return fetch('assets/settings.json')
+    return fetch(SETTING_API)
       .then((response) => response.json())
       .then((json) => {
         Object.assign(this, json)
