@@ -47,9 +47,9 @@ export class ChipsInputComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.items = this.selectedItems
-    this.subscription = this.rawChange.pipe(
-      tap(v => this.invalid = v.length === 0)
-    ).subscribe()
+    this.subscription = this.rawChange
+      .pipe(tap((v) => (this.invalid = v.length === 0)))
+      .subscribe()
     this.rawChange.next(this.items)
   }
 
