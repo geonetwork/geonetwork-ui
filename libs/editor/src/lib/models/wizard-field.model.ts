@@ -6,4 +6,5 @@ export interface WizardFieldModel {
   icon: string
   type: WizardFieldType
   options?: any
+  required?: boolean
 }
