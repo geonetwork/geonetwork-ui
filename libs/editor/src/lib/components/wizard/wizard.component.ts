@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
@@ -10,11 +11,13 @@ import {
 } from '@angular/core'
 import { WizardService } from '../../services/wizard.service'
 import { WizardFieldModel } from '../../models/wizard-field.model'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'lib-wizard',
   templateUrl: './wizard.component.html',
   styleUrls: ['./wizard.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardComponent implements OnInit, AfterViewInit {
   @Input() id: string
@@ -31,7 +34,10 @@ export class WizardComponent implements OnInit, AfterViewInit {
   currentStep: number
   configuration: WizardFieldModel[]
 
-  constructor(private wizardService: WizardService) {}
+  constructor(
+    private wizardService: WizardService,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit(): void {
     this.wizardService.initialize(this.id, this.initialConfig)
@@ -51,7 +57,17 @@ export class WizardComponent implements OnInit, AfterViewInit {
     this.stepChanges.emit(this.currentStep)
   }
 
-  handleNextBtnClick() {
+  async handleNextBtnClick() {
+    if (
+      this.wizardFieldsEl?.nativeElement?.querySelectorAll('.invalid').length >
+      0
+    ) {
+      const msg = await this.translate
+        .get('datafeeder.wizard.emptyRequiredValuesMessage')
+        .toPromise()
+      alert(msg)
+      return
+    }
     this.onStepChange(this.currentStep + 1)
 
     this.stepChanges.emit(this.currentStep)
