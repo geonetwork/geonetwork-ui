@@ -1,6 +1,5 @@
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
@@ -17,7 +16,6 @@ import { TranslateService } from '@ngx-translate/core'
   selector: 'lib-wizard',
   templateUrl: './wizard.component.html',
   styleUrls: ['./wizard.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardComponent implements OnInit, AfterViewInit {
   @Input() id: string
