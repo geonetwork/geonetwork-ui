@@ -13,6 +13,7 @@ export class FormsPageComponent implements OnInit, OnDestroy {
 
   currentStep: number
   numSteps = 6
+  requiredMsgKey = 'datafeeder.wizard.emptyRequiredValuesMessage'
 
   wizardConfig = wizardConfig
 

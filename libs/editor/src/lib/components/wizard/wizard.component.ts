@@ -8,9 +8,10 @@ import {
   Output,
   ViewChild,
 } from '@angular/core'
-import { WizardService } from '../../services/wizard.service'
-import { WizardFieldModel } from '../../models/wizard-field.model'
 import { TranslateService } from '@ngx-translate/core'
+import { take } from 'rxjs/operators'
+import { WizardFieldModel } from '../../models/wizard-field.model'
+import { WizardService } from '../../services/wizard.service'
 
 @Component({
   selector: 'lib-wizard',
@@ -23,6 +24,7 @@ export class WizardComponent implements OnInit, AfterViewInit {
     configuration: WizardFieldModel[][]
     storageKey: string
   }
+  @Input() requiredMsgKey: string
 
   @Output() stepChanges = new EventEmitter<number>()
   @Output() stepsNumber = new EventEmitter<number>()
@@ -55,15 +57,12 @@ export class WizardComponent implements OnInit, AfterViewInit {
     this.stepChanges.emit(this.currentStep)
   }
 
-  async handleNextBtnClick() {
+  handleNextBtnClick() {
     if (
       this.wizardFieldsEl?.nativeElement?.querySelectorAll('.invalid').length >
       0
     ) {
-      const msg = await this.translate
-        .get('datafeeder.wizard.emptyRequiredValuesMessage')
-        .toPromise()
-      alert(msg)
+      this.translate.get(this.requiredMsgKey).pipe(take(1)).subscribe(alert)
       return
     }
     this.onStepChange(this.currentStep + 1)
