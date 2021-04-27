@@ -1,9 +1,11 @@
 <input
+  #input
   class="appearance-none border border-gray-300 rounded w-full p-2 text-gray-700 leading-tight focus:outline-none focus:border-primary"
   type="text"
   [value]="value"
-  (change)="rawChange.next($event.target.value)"
-  (input)="rawChange.next($event.target.value)"
+  (change)="handleChange($event)"
+  (input)="handleChange($event)"
   [placeholder]="hint"
   [attr.aria-label]="hint"
+  [attr.required]="required || null"
 />

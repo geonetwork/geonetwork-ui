@@ -30,3 +30,7 @@ tag-input::ng-deep div,
 tag-input::ng-deep form {
   height: 100%;
 }
+
+tag-input.invalid {
+  border-color: var(--color-secondary);
+}

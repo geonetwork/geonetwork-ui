@@ -13,12 +13,14 @@ export const DEFAULT_WIZARD_CONFIGURATION: WizardFieldModel[][] = [
       label: 'datafeeder.form.title',
       icon: 'icon-title',
       type: WizardFieldType.TEXT,
+      required: true,
     },
     {
       id: 'abstract',
       label: 'datafeeder.form.abstract',
       icon: 'icon-description',
       type: WizardFieldType.TEXT_AREA,
+      required: true,
     },
   ],
   [
@@ -30,6 +32,7 @@ export const DEFAULT_WIZARD_CONFIGURATION: WizardFieldModel[][] = [
       options: {
         url: DEFAULT_CHIPS_ITEMS_URL,
       },
+      required: true,
     },
   ],
   [
@@ -52,6 +55,7 @@ export const DEFAULT_WIZARD_CONFIGURATION: WizardFieldModel[][] = [
       label: 'datafeeder.form.description',
       icon: 'icon-process',
       type: WizardFieldType.TEXT_AREA,
+      required: true,
     },
   ],
   [],

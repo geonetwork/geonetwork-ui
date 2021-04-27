@@ -8,8 +8,10 @@ import {
   Output,
   ViewChild,
 } from '@angular/core'
-import { WizardService } from '../../services/wizard.service'
+import { TranslateService } from '@ngx-translate/core'
+import { take } from 'rxjs/operators'
 import { WizardFieldModel } from '../../models/wizard-field.model'
+import { WizardService } from '../../services/wizard.service'
 
 @Component({
   selector: 'lib-wizard',
@@ -22,6 +24,7 @@ export class WizardComponent implements OnInit, AfterViewInit {
     configuration: WizardFieldModel[][]
     storageKey: string
   }
+  @Input() requiredMsgKey: string
 
   @Output() stepChanges = new EventEmitter<number>()
   @Output() stepsNumber = new EventEmitter<number>()
@@ -31,7 +34,10 @@ export class WizardComponent implements OnInit, AfterViewInit {
   currentStep: number
   configuration: WizardFieldModel[]
 
-  constructor(private wizardService: WizardService) {}
+  constructor(
+    private wizardService: WizardService,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit(): void {
     this.wizardService.initialize(this.id, this.initialConfig)
@@ -52,6 +58,13 @@ export class WizardComponent implements OnInit, AfterViewInit {
   }
 
   handleNextBtnClick() {
+    if (
+      this.wizardFieldsEl?.nativeElement?.querySelectorAll('.invalid').length >
+      0
+    ) {
+      this.translate.get(this.requiredMsgKey).pipe(take(1)).subscribe(alert)
+      return
+    }
     this.onStepChange(this.currentStep + 1)
 
     this.stepChanges.emit(this.currentStep)

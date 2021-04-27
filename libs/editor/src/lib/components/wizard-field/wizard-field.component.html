@@ -12,6 +12,7 @@
         #searchText
         [id]="wizardFieldConfig.id"
         [value]="wizardFieldData"
+        [required]="wizardFieldConfig.required || false"
         hint=""
       ></ui-text-input>
     </div>
@@ -34,6 +35,7 @@
         #textArea
         [id]="wizardFieldConfig.id"
         [value]="wizardFieldData"
+        [required]="wizardFieldConfig.required || false"
         placeholder=""
       ></ui-text-area>
     </div>

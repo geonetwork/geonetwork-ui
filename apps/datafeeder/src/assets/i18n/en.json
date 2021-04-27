@@ -63,6 +63,7 @@
   "datafeeder.month.november": "November",
   "datafeeder.month.december": "December",
   "Find your metadata": "Find your metadata",
+  "datafeeder.wizard.emptyRequiredValuesMessage": "Please fill mandatory fields",
   "Sort by": "Sort by",
   "records": "records",
   "openRecord": "Open record",
