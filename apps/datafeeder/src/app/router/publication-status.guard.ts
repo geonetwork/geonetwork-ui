@@ -11,7 +11,7 @@ import {
   PublishStatusEnumApiModel,
 } from '@lib/datafeeder-api'
 import { iif, Observable, of } from 'rxjs'
-import { catchError, mapTo, mergeMap, tap } from 'rxjs/operators'
+import { catchError, mapTo, mergeMap, take, tap } from 'rxjs/operators'
 import { DatafeederFacade } from '../store/datafeeder.facade'
 
 @Injectable({ providedIn: 'root' })
@@ -29,6 +29,7 @@ export class PublicationStatusGuard implements CanActivate {
     const id = route.params.id
 
     return this.facade.publication$.pipe(
+      take(1),
       mergeMap((statePublication) =>
         iif(
           () =>
