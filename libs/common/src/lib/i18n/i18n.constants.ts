@@ -53,7 +53,6 @@ export const TRANSLATE_GEONETWORK_CONFIG = {
   loader: {
     provide: TranslateLoader,
     useClass: Gn4TranslateLoader,
-    defaultLanguage: DEFAULT_LANG,
     deps: [ToolsApiService],
   },
 }

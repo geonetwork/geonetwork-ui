@@ -1,5 +1,6 @@
 import {
   Component,
+  Injector,
   Input,
   OnChanges,
   OnInit,
@@ -8,6 +9,7 @@ import {
 import { ColorService } from '@lib/common'
 import { Configuration } from '@lib/gn-api'
 import { SearchFacade } from '@lib/search'
+import { TranslateService } from '@ngx-translate/core'
 
 export const apiConfiguration = new Configuration()
 
@@ -24,14 +26,20 @@ export class BaseComponent implements OnInit, OnChanges {
   @Input() backgroundColor = '#cecece'
 
   isInitialized = false
+  facade: SearchFacade
+  translate: TranslateService
 
-  constructor(protected facade: SearchFacade) {}
+  constructor(private injector: Injector) {
+    this.facade = injector.get(SearchFacade)
+    this.translate = injector.get(TranslateService)
+  }
 
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!this.isInitialized) {
       apiConfiguration.basePath = this.apiUrl
+      this.translate.reloadLang(this.translate.currentLang)
       ColorService.applyCssVariables(
         this.primaryColor,
         this.secondaryColor,

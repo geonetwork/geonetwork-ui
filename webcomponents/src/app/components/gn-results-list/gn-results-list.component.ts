@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Injector,
   Input,
   OnChanges,
   OnInit,
@@ -36,8 +37,8 @@ export class GnResultsListComponent
     this.scrollDisabled = value === 'true'
   }
 
-  constructor(facade: SearchFacade, private changeDetector: ChangeDetectorRef) {
-    super(facade)
+  constructor(injector: Injector, private changeDetector: ChangeDetectorRef) {
+    super(injector)
   }
 
   ngOnInit(): void {
