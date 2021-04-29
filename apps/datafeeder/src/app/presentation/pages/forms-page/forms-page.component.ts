@@ -1,7 +1,10 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { Subscription } from 'rxjs'
 import { config as wizardConfig } from '../../../configs/wizard.config'
+
+marker('datafeeder.wizard.emptyRequiredValuesMessage')
 
 @Component({
   selector: 'app-forms-page',

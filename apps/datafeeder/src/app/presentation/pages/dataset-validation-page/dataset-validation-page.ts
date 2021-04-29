@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { LogService } from '@lib/common'
 import {
   AnalysisStatusEnumApiModel,
@@ -14,13 +15,17 @@ import GeoJSON from 'ol/format/GeoJSON'
 import { fromExtent } from 'ol/geom/Polygon'
 import { forkJoin, Subscription } from 'rxjs'
 import { take } from 'rxjs/operators'
-import { environment } from '../../../../environments/environment'
 import SETTINGS from '../../../../settings'
 import { config as wizardConfig } from '../../../configs/wizard.config'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
 
 const unknownLabel = 'datafeeder.datasetValidation.unknown'
 const viewSrs = 'EPSG:3857'
+
+marker('datafeeder.validation.sample.title')
+marker('datafeeder.validation.extent.title')
+marker('datafeeder.validation.encoding')
+marker('datafeeder.validation.projection')
 
 @Component({
   selector: 'app-dataset-validation-page',
