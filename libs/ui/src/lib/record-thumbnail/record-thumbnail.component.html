@@ -17,7 +17,7 @@
   <img
     *ngIf="thumbnailUrl"
     class="relative h-full w-full object-cover object-left-top"
-    [src]="thumbnailUrl"
+    [src]="thumbnailUrl | safe: 'url'"
     alt="thumbnail"
   />
 </div>

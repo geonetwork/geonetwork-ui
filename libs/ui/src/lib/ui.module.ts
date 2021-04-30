@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
+import { CommonModule } from '@lib/common'
 import { TranslateModule } from '@ngx-translate/core'
 import { NgxDropzoneModule } from 'ngx-dropzone'
 import { AutocompleteComponent } from './autocomplete/autocomplete.component'
@@ -63,6 +64,7 @@ import { MyDatePickerModule } from 'mydatepicker'
     ReactiveFormsModule,
     TagInputModule,
     MyDatePickerModule,
+    CommonModule,
   ],
   exports: [
     DropdownSelectorComponent,
