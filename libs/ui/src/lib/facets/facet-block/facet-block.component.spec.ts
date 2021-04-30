@@ -1,4 +1,4 @@
-import { DebugElement } from '@angular/core'
+import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
 import {
   async,
   ComponentFixture,
@@ -23,7 +23,11 @@ describe('FacetBlockComponent', () => {
     TestBed.configureTestingModule({
       declarations: [FacetBlockComponent, FacetItemStubComponent],
       imports: [FormsModule, TranslateModule.forRoot()],
-    }).compileComponents()
+    })
+      .overrideComponent(FacetBlockComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents()
   }))
 
   beforeEach(() => {
