@@ -17,7 +17,7 @@ import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer'
 import Map from 'ol/Map'
 import { transform } from 'ol/proj'
 import { OSM, Vector as VectorSource } from 'ol/source'
-import { Fill, Stroke, Style } from 'ol/style'
+import { Fill, Stroke, Style, RegularShape } from 'ol/style'
 import View from 'ol/View'
 
 const DEFAULT_PRIMARY_COLOR = '#9a9a9a'
@@ -97,6 +97,7 @@ export class DataImportValidationMapPanelComponent
       padding:
         this.padding.length === 0 ? Array(4).fill(PADDING) : this.padding,
       constrainResolution: false,
+      maxZoom: 18,
     })
   }
 
@@ -118,15 +119,26 @@ export class DataImportValidationMapPanelComponent
   }
 
   private getDefaultStyle(): Style {
-    return new Style({
-      stroke: new Stroke({
-        color: this.getSecondaryColor(1),
-        width: 3,
-      }),
-      fill: new Fill({
-        color: this.getSecondaryColor(0.1),
-      }),
+    const stroke = new Stroke({
+      color: this.getSecondaryColor(1),
+      width: 3,
     })
+    const fill = new Fill({
+      color: this.getSecondaryColor(0.1),
+    })
+    return [
+      new Style({ stroke, fill }),
+      new Style({
+        image: new RegularShape({
+          fill,
+          stroke,
+          points: 5,
+          radius: 12,
+          radius2: 4,
+          angle: 0,
+        }),
+      }),
+    ]
   }
 
   private buildVectorLayer(): VectorLayer {
