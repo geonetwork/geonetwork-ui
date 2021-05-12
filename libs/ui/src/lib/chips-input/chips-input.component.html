@@ -10,6 +10,7 @@
   <tag-input-dropdown
     [autocompleteObservable]="requestAutocompleteItems"
     [minimumTextLength]="0"
+    [showDropdownIfEmpty]="true"
   >
     <ng-template let-item="item" let-index="index">
       {{ item.display }}
