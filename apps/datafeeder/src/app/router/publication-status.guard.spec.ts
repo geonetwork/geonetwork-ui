@@ -80,19 +80,6 @@ describe('PublicationStatusGuard', () => {
     beforeEach(() => {
       publicationStateStatusMock.status = PublishStatusEnumApiModel.PENDING
     })
-    describe('when api returns PENDING', () => {
-      beforeEach(() => {
-        guard
-          .canActivate(routeMock, routeStateMock)
-          .subscribe((res) => (output = res))
-      })
-      it('redirects to ./confirm', () => {
-        expect(facadeMock.setPublication).toHaveBeenCalledWith(
-          publicationApiStatusMock
-        )
-        expect(routerMock.navigate).toHaveBeenCalledWith(['123/confirm'])
-      })
-    })
     describe('when api returns DONE', () => {
       beforeEach(() => {
         publicationApiStatusMock.status = PublishStatusEnumApiModel.DONE
