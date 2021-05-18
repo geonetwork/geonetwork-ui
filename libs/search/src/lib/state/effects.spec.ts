@@ -56,7 +56,7 @@ const authServiceMock = {
   authReady: () => of(true),
 }
 const esMapperMock = {
-  toRecordSummary: () => [],
+  toRecordSummaries: () => [],
 }
 
 describe('Effects', () => {

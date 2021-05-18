@@ -228,7 +228,7 @@ export function reducerSearch(
       const { increment, ...patch } = action.patch
 
       if (increment) {
-        patch.size = terms.size + increment
+        patch.size = (terms.size || 0) + increment
       }
       return {
         ...state,

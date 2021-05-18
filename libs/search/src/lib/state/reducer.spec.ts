@@ -293,6 +293,27 @@ describe('Search Reducer', () => {
         clone['tag.default'].terms.size = 30
         expect(state.config.aggregations).toEqual(clone)
       })
+      it('when intial size is Nan', () => {
+        const action = new fromActions.UpdateRequestAggregationTerm(
+          'tag.default',
+          { increment: 20 }
+        )
+        const state = reducerSearch(
+          {
+            ...initialStateSearch,
+            config: {
+              ...initialStateSearch.config,
+              aggregations: {
+                'tag.default': {
+                  terms: { field: 'tag.default' },
+                },
+              },
+            },
+          },
+          action
+        )
+        expect(state.config.aggregations['tag.default'].terms.size).toEqual(20)
+      })
     })
 
     describe('SetIncludeOnAggregation action', () => {

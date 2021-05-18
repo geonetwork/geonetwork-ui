@@ -1,7 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  Injector,
   Input,
+  OnInit,
   ViewEncapsulation,
 } from '@angular/core'
 import { SearchFacade } from '@lib/search'
@@ -14,15 +16,17 @@ import { BaseComponent } from '../base.component'
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
 })
-export class GnAggregatedRecordsComponent extends BaseComponent {
+export class GnAggregatedRecordsComponent
+  extends BaseComponent
+  implements OnInit {
   @Input() aggregationField: string
   @Input() aggregationMaxCount = 20
   @Input() aggregationQueryString: string
 
   activeFilter = null
 
-  constructor(facade: SearchFacade) {
-    super(facade)
+  constructor(injector: Injector) {
+    super(injector)
   }
 
   ngOnInit(): void {

@@ -1,12 +1,15 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core'
 import { AggregationsTypesEnum } from '@lib/common'
@@ -23,8 +26,10 @@ import {
   selector: 'ui-facet-block',
   templateUrl: './facet-block.component.html',
   styleUrls: ['./facet-block.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FacetBlockComponent implements OnInit, AfterViewInit, OnDestroy {
+export class FacetBlockComponent
+  implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @Input() collapsed: boolean
   @Input() filter: string
   @Input() model: ModelBlock
@@ -43,8 +48,8 @@ export class FacetBlockComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor() {}
 
   ngOnInit(): void {
-    this.title = this.model.key
     this.hasItems = this.countItems() > 0
+    this.title = this.model.key
   }
 
   ngAfterViewInit(): void {
@@ -113,6 +118,13 @@ export class FacetBlockComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe()
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const model = changes.model
+    if (model) {
+      this.hasItems = this.countItems() > 0
+    }
   }
 }
 

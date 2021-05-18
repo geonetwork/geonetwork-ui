@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  Injector,
   Input,
   OnInit,
   ViewEncapsulation,
@@ -18,8 +19,8 @@ import { BaseComponent } from '../base.component'
 export class GnFacetsComponent extends BaseComponent implements OnInit {
   @Input() facetConfig = '{}'
 
-  constructor(facade: SearchFacade) {
-    super(facade)
+  constructor(injector: Injector) {
+    super(injector)
   }
 
   ngOnInit(): void {

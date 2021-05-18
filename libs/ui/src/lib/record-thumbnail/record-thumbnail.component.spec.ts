@@ -1,6 +1,7 @@
 import { DebugElement } from '@angular/core'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
+import { CommonModule } from '@lib/common'
 
 import { RecordThumbnailComponent } from './record-thumbnail.component'
 
@@ -11,6 +12,7 @@ describe('RecordThumbnailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [CommonModule],
       declarations: [RecordThumbnailComponent],
     }).compileComponents()
   }))
