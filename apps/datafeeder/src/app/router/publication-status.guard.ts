@@ -39,11 +39,6 @@ export class PublicationStatusGuard implements CanActivate {
           this.publishService.getPublishingStatus(id).pipe(
             tap((publication) => this.facade.setPublication(publication)),
             tap((publication: PublishJobStatusApiModel) => {
-              if (publication.status === PublishStatusEnumApiModel.PENDING) {
-                this.router.navigate([`${id}/confirm`])
-              }
-            }),
-            tap((publication: PublishJobStatusApiModel) => {
               if (publication.status === PublishStatusEnumApiModel.ERROR) {
                 throw new Error('api error')
               }

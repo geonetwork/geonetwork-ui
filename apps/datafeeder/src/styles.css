@@ -61,6 +61,11 @@ my-date-picker .mydp:focus-within {
   color: black;
 }
 
+ng2-dropdown-menu .ng2-dropdown-menu {
+  min-width: 24em;
+  max-width: 90vw;
+}
+
 .grey1 {
   fill: #f2f3f4;
 }
