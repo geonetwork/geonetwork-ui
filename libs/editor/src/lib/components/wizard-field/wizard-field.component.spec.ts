@@ -155,6 +155,7 @@ describe('WizardFieldsComponent', () => {
         label: 'datafeeder.form.dropdown',
         icon: 'icon-scale',
         type: WizardFieldType.DROPDOWN,
+        options: [{ label: '1', value: '1' }],
       }
 
       fixture.detectChanges()
