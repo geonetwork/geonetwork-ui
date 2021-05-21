@@ -28,6 +28,12 @@ class Settings {
       value: 'EPSG:3857',
     },
   ]
+  scales = [
+    { value: '10000', label: '1:10000' },
+    { value: '25000', label: '1:25000' },
+    { value: '50000', label: '1:50000' },
+    { value: '100000', label: '1:100000' },
+  ]
 
   init() {
     return fetch(SETTING_API)
