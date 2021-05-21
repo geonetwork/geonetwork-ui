@@ -48,7 +48,7 @@ export const DEFAULT_WIZARD_CONFIGURATION: WizardFieldModel[][] = [
       label: 'datafeeder.form.dropdown',
       icon: 'icon-scale',
       type: WizardFieldType.DROPDOWN,
-      options: SETTINGS.scales
+      options: SETTINGS.scales,
     },
   ],
   [
