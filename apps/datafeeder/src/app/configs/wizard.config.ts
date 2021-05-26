@@ -1,5 +1,6 @@
 import { WizardFieldType } from '@lib/editor'
 import { WizardFieldModel } from '@lib/editor'
+import SETTINGS from '../../settings'
 
 export const DEFAULT_CHIPS_ITEMS_URL = (keys) =>
   `https://www.pigma.org/geonetwork/srv/api/registries/vocabularies/search?type=CONTAINS&thesaurus=external.theme.inspire-theme&rows=200&q=${keys}&uri=**&lang=eng`
@@ -47,6 +48,7 @@ export const DEFAULT_WIZARD_CONFIGURATION: WizardFieldModel[][] = [
       label: 'datafeeder.form.dropdown',
       icon: 'icon-scale',
       type: WizardFieldType.DROPDOWN,
+      options: SETTINGS.scales,
     },
   ],
   [

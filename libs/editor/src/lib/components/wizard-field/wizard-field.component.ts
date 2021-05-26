@@ -1,5 +1,4 @@
 import {
-  AfterContentInit,
   AfterViewInit,
   Component,
   Input,
@@ -9,7 +8,6 @@ import {
 } from '@angular/core'
 import { WizardFieldModel } from '../../models/wizard-field.model'
 import { WizardFieldType } from '../../models/wizard-field.type'
-import { SPATIAL_RESOLUTION_LIST } from '../configs/spatial-resolution-dropdown.config'
 import { WizardService } from '../../services/wizard.service'
 import { IMyDpOptions } from 'mydatepicker'
 import { DATEPICKER_OPTIONS } from '../configs/datepicker.config'
@@ -43,8 +41,8 @@ export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
     return WizardFieldType
   }
 
-  get spatialResolutionList(): any {
-    return SPATIAL_RESOLUTION_LIST
+  get dropdownChoices(): any {
+    return this.wizardFieldConfig.options
   }
 
   get wizardFieldData() {
@@ -65,7 +63,7 @@ export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
         return data ? new Date(Number(data)) : new Date()
       }
       case WizardFieldType.DROPDOWN: {
-        return data ? JSON.parse(data) : this.spatialResolutionList[1]
+        return data ? JSON.parse(data) : this.dropdownChoices[1]
       }
     }
   }
