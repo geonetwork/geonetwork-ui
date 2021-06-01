@@ -2,7 +2,11 @@ import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { LibCatalogModule } from '@lib/catalog'
-import { I18nModule, TRANSLATE_GEONETWORK_CONFIG } from '@lib/common'
+import {
+  getDefaultLang,
+  I18nModule,
+  TRANSLATE_GEONETWORK_CONFIG,
+} from '@lib/common'
 import { BASE_PATH } from '@lib/gn-api'
 import { LibSearchModule } from '@lib/search'
 import { EffectsModule } from '@ngrx/effects'
@@ -43,7 +47,8 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
 })
 export class AppModule {
   constructor(translate: TranslateService) {
-    translate.setDefaultLang('en')
-    translate.use('en')
+    const lang = getDefaultLang()
+    translate.setDefaultLang(lang)
+    translate.use(lang)
   }
 }
