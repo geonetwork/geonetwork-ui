@@ -2,7 +2,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
+  OnChanges,
   OnInit,
+  SimpleChanges,
 } from '@angular/core'
 
 @Component({
@@ -11,7 +13,7 @@ import {
   styleUrls: ['./button.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent implements OnInit, OnChanges {
   @Input() type: 'primary' | 'secondary' | 'default' = 'default'
   @Input() disabled = false
   @Input() extraClass = ''
@@ -19,14 +21,26 @@ export class ButtonComponent implements OnInit {
   classList = ''
 
   get color() {
+    let classes = ''
     switch (this.type) {
       case 'default':
-        return 'bg-gray-100 hover:bg-gray-200'
+        classes = 'bg-gray-100 hover:bg-gray-200'
+        break
       case 'primary':
-        return 'bg-primary-lighter hover:bg-primary'
+        classes = 'bg-primary-lighter hover:bg-primary'
+        break
       case 'secondary':
-        return 'bg-secondary-lighter hover:bg-secondary'
+        classes = 'bg-secondary-lighter hover:bg-secondary'
+        break
     }
+    if (this.disabled) {
+      classes = [
+        classes.split(' ').filter((cls) => !cls.startsWith('hover:')),
+        'disabled:opacity-50',
+        'cursor-auto',
+      ].join(' ')
+    }
+    return classes
   }
 
   get textColor() {
@@ -41,19 +55,35 @@ export class ButtonComponent implements OnInit {
   }
 
   get borderColor() {
+    let classes = ''
     switch (this.type) {
       case 'default':
-        return 'border-gray-100 hover:border-gray-200 focus:border-gray-500 focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50'
+        classes =
+          'border-gray-100 hover:border-gray-200 focus:border-gray-500 focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50'
+        break
       case 'secondary':
-        return 'border-secondary-lighter hover:border-secondary focus:border-secondary-darker focus:ring-4 focus:ring-secondary-darker focus:ring-opacity-50'
+        classes =
+          'border-secondary-lighter hover:border-secondary focus:border-secondary-darker focus:ring-4 focus:ring-secondary-darker focus:ring-opacity-50'
+        break
       case 'primary':
-        return 'border-primary-lighter hover:border-primary focus:border-primary-darker focus:ring-4 focus:ring-primary-darker focus:ring-opacity-50'
+        classes =
+          'border-primary-lighter hover:border-primary focus:border-primary-darker focus:ring-4 focus:ring-primary-darker focus:ring-opacity-50'
+        break
     }
+    if (this.disabled) {
+      classes = classes
+        .split(' ')
+        .filter((cls) => !cls.startsWith('hover:'))
+        .join(' ')
+    }
+    return classes
   }
 
   constructor() {}
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.classList = `${this.color} ${this.textColor} ${this.borderColor} ${this.extraClass}`
   }
+
+  ngOnInit(): void {}
 }

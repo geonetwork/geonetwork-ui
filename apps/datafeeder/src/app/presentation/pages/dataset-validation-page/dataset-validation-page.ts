@@ -37,7 +37,6 @@ marker('datafeeder.validation.projection')
   selector: 'app-dataset-validation-page',
   templateUrl: './dataset-validation-page.html',
   styleUrls: ['./dataset-validation-page.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   encodingList = SETTINGS.encodings
