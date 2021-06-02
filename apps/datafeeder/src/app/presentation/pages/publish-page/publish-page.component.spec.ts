@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { I18nModule } from '@lib/common'
+import { TranslateModule } from '@ngx-translate/core'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
 
 import { PublishPageComponent } from './publish-page.component'
@@ -41,7 +43,7 @@ describe('SumUpPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PublishPageComponent],
-      imports: [UiModule],
+      imports: [UiModule, I18nModule, TranslateModule.forRoot()],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
@@ -77,12 +79,8 @@ describe('SumUpPageComponent', () => {
       expectObservable(component.statusFetch$).toBe(expected, values)
     })
     expect(publishServiceMock.getPublishingStatus).toHaveBeenCalledWith(1)
-    expect(facadeMock.setPublication).toHaveBeenCalledWith({
-      jobId: '1234',
-      progress: 1,
-      status: 'DONE',
-    })
-    expect(component.progress).toBe(1)
+    expect(facadeMock.setPublication).toHaveBeenCalledWith(jobMock)
+    expect(component.progress).toBe(100)
   })
 
   describe('publish DONE', () => {
