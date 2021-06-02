@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core'
+import { LANG_2_TO_3_MAPPER } from '@lib/common'
+import { TranslateService } from '@ngx-translate/core'
 import { Observable, Subject, Subscription } from 'rxjs'
 import { distinctUntilChanged, map, tap } from 'rxjs/operators'
 
@@ -34,12 +36,13 @@ export class ChipsInputComponent implements OnInit, OnDestroy {
 
   requestAutocompleteItems = (text: string): Observable<any> => {
     const url = this.url(text)
+    const lang = LANG_2_TO_3_MAPPER[this.translate.currentLang]
     return this.http
-      .get<any>(url)
-      .pipe(map((item) => item.map((i) => i.values.eng)))
+      .get<any>(url.replace('${lang}', lang))
+      .pipe(map((item) => item.map((i) => i.values[lang])))
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private translate: TranslateService) {
     this.rawChange = new Subject<Items[]>()
     this.itemsChange = this.rawChange.pipe(distinctUntilChanged())
     this.subscription = new Subscription()

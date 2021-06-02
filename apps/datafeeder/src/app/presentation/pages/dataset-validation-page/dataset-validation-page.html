@@ -20,8 +20,8 @@
     <div class="flex justify-between pb-10 pt-10 flex-1">
       <div class="w-1/2 h-full bg-white mr-20 rounded-md">
         <app-data-import-validation-map-panel
-          [headerLabel]="'Here is a sample entity from the dataset'"
-          [footerLabel]="'Encoding:'"
+          headerLabel="datafeeder.validation.sample.title"
+          footerLabel="datafeeder.validation.encoding"
           [footerList]="encodingList"
           [footerValue]="encoding"
           [geoJson]="geoJSONData"
@@ -33,8 +33,8 @@
       </div>
       <div class="w-1/2 h-full bg-white rounded-md">
         <app-data-import-validation-map-panel
-          [headerLabel]="'This is the extent of the dataset'"
-          [footerLabel]="'Ref system:'"
+          headerLabel="datafeeder.validation.extent.title"
+          footerLabel="datafeeder.validation.projection"
           [footerList]="refSystem"
           [footerValue]="crs"
           [geoJson]="geoJSONBBox"

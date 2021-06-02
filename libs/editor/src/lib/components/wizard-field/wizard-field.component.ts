@@ -6,6 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { WizardFieldModel } from '../../models/wizard-field.model'
 import { WizardFieldType } from '../../models/wizard-field.type'
 import { WizardService } from '../../services/wizard.service'
@@ -19,6 +20,19 @@ import {
   TextInputComponent,
 } from '@lib/ui'
 import { Subscription } from 'rxjs'
+
+marker('datafeeder.month.january')
+marker('datafeeder.month.february')
+marker('datafeeder.month.march')
+marker('datafeeder.month.april')
+marker('datafeeder.month.may')
+marker('datafeeder.month.june')
+marker('datafeeder.month.july')
+marker('datafeeder.month.august')
+marker('datafeeder.month.september')
+marker('datafeeder.month.october')
+marker('datafeeder.month.november')
+marker('datafeeder.month.december')
 
 @Component({
   selector: 'lib-wizard-field',

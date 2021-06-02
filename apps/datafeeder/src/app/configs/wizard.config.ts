@@ -1,11 +1,20 @@
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { WizardFieldType } from '@lib/editor'
 import { WizardFieldModel } from '@lib/editor'
 import SETTINGS from '../../settings'
 
 export const DEFAULT_CHIPS_ITEMS_URL = (keys) =>
-  `https://www.pigma.org/geonetwork/srv/api/registries/vocabularies/search?type=CONTAINS&thesaurus=external.theme.inspire-theme&rows=200&q=${keys}&uri=**&lang=eng`
+  `https://www.pigma.org/geonetwork/srv/api/registries/vocabularies/search?type=CONTAINS&thesaurus=external.theme.inspire-theme&rows=200&q=${keys}&uri=**&lang=` +
+  '${lang}'
 
 export const STORAGE_KEY = 'datafeeder-state'
+
+marker('datafeeder.form.title')
+marker('datafeeder.form.abstract')
+marker('datafeeder.form.tags')
+marker('datafeeder.form.datepicker')
+marker('datafeeder.form.description')
+marker('datafeeder.form.dropdown')
 
 export const DEFAULT_WIZARD_CONFIGURATION: WizardFieldModel[][] = [
   [
