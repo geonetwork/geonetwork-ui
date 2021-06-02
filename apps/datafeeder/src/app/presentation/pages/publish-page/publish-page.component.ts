@@ -6,6 +6,7 @@ import {
   PublishStatusEnumApiModel,
   UploadJobStatusApiModel,
 } from '@lib/datafeeder-api'
+import { WizardService } from '@lib/editor'
 import { interval, Observable, Subscription } from 'rxjs'
 import { filter, mergeMap, switchMap, take, tap } from 'rxjs/operators'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
@@ -27,6 +28,7 @@ export class PublishPageComponent implements OnInit, OnDestroy {
     private publishService: DataPublishingApiService,
     private activatedRoute: ActivatedRoute,
     private facade: DatafeederFacade,
+    private wizardService: WizardService,
     private router: Router
   ) {}
 
@@ -61,6 +63,7 @@ export class PublishPageComponent implements OnInit, OnDestroy {
 
   onJobFinish(job: PublishJobStatusApiModel) {
     const done = job.status === DONE
+    this.wizardService.reset()
     this.router.navigate(done ? ['/', this.rootId, 'publishok'] : ['/'], {
       relativeTo: this.activatedRoute,
       queryParams: done ? {} : { error: 'publish' },
