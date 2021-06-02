@@ -40,15 +40,15 @@ export class UploadDataComponent implements OnInit {
   }
 
   handleUploadBtnClick() {
-    if (!this.haveRights) {
+    if (!this.file) {
       this.emitErrors_({
-        title: 'datafeeder.upload.error.title.noRightsToSendData',
+        title: 'datafeeder.upload.error.title.fileHasntSelected',
         subtitle: '',
         type: UploadDataErrorType.NONE,
       })
-    } else if (!this.file) {
+    } else if (!this.haveRights) {
       this.emitErrors_({
-        title: 'datafeeder.upload.error.title.fileHasntSelected',
+        title: 'datafeeder.upload.error.title.noRightsToSendData',
         subtitle: '',
         type: UploadDataErrorType.NONE,
       })
