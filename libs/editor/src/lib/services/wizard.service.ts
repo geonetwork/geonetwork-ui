@@ -112,6 +112,7 @@ export class WizardService {
       datafeederData[this.id]?.values?.forEach((i) => {
         this.wizardData.set(i.id, i.value)
       })
+      this.wizardStep = datafeederData[this.id]?.step || 1
     }
     return datafeederData
   }
