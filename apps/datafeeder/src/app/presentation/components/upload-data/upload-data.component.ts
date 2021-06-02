@@ -1,9 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   UploadDataError,
   UploadDataErrorType,
 } from '../svg/upload-data-error-dialog/upload-data-error-dialog.component'
 import { FileUploadApiService } from '@lib/datafeeder-api'
+
+marker('datafeeder.upload.error.title.noRightsToSendData')
+marker('datafeeder.upload.error.title.fileHasntSelected')
+marker('datafeeder.upload.error.title.fileSize')
+marker('datafeeder.upload.error.subtitle.fileSize')
+marker('datafeeder.upload.error.title.fileFormat')
+marker('datafeeder.upload.error.subtitle.fileFormat')
+marker('datafeeder.upload.error.title.cantOpenFile')
+marker('datafeeder.upload.error.subtitle.cantOpenFile')
 
 @Component({
   selector: 'app-upload-data-component',
