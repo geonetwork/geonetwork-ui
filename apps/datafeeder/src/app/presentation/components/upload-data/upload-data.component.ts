@@ -65,10 +65,20 @@ export class UploadDataComponent implements OnInit {
 
   private uploadFile_(file: File) {
     this.uploading = true
-    this.fileUploadApiService.uploadFiles([file]).subscribe((job) => {
-      this.jobId$.emit(job.jobId)
-      this.uploading = false
-    })
+    this.fileUploadApiService.uploadFiles([file]).subscribe(
+      (job) => {
+        this.jobId$.emit(job.jobId)
+        this.uploading = false
+      },
+      (error) => {
+        this.uploading = false
+        this.emitErrors_({
+          title: 'datafeeder.upload.error.title.cantOpenFile',
+          subtitle: 'datafeeder.upload.error.subtitle.cantOpenFile',
+          type: UploadDataErrorType.OPEN_FILE,
+        })
+      }
+    )
   }
 
   private isFileFormatValid(file: File): boolean {
