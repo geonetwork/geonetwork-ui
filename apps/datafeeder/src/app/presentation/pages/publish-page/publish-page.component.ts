@@ -44,7 +44,8 @@ export class PublishPageComponent implements OnInit, OnDestroy {
             this.facade.setPublication(job)
           ),
           tap(
-            (job: PublishJobStatusApiModel) => (this.progress = job.progress)
+            (job: PublishJobStatusApiModel) =>
+              (this.progress = Math.round(job.progress * 100))
           ),
           filter(
             (job: PublishJobStatusApiModel) =>
