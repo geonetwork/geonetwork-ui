@@ -15,7 +15,14 @@ const jobMock: UploadJobStatusApiModel = {
   jobId: '1234',
   status: AnalysisStatusEnumApiModel.DONE,
   progress: 1,
+  datasets: [{}],
 }
+const jobMockNoDS: UploadJobStatusApiModel = {
+  jobId: '1234',
+  status: AnalysisStatusEnumApiModel.DONE,
+  progress: 1,
+}
+
 const facadeMock = {
   setUpload: jest.fn(),
 }
@@ -78,25 +85,37 @@ describe('AnalysisProgress.PageComponent', () => {
       expectObservable(component.statusFetch$).toBe(expected, values)
     })
     expect(fileUploadApiServiceMock.findUploadJob).toHaveBeenCalledWith(1)
-    expect(facadeMock.setUpload).toHaveBeenCalledWith({
-      jobId: '1234',
-      progress: 1,
-      status: 'DONE',
-    })
+    expect(facadeMock.setUpload).toHaveBeenCalledWith(jobMock)
     expect(component.progress).toBe(1)
   })
 
   describe('Analysis DONE', () => {
-    let job
-    beforeEach(() => {
-      job = jobMock
-      component.onJobFinish(job)
-    })
+    describe('with dataset', () => {
+      let job
+      beforeEach(() => {
+        job = jobMock
+        component.onJobFinish(job)
+      })
 
-    it('route to validation page', () => {
-      expect(routerMock.navigate).toHaveBeenCalledWith(['validation'], {
-        relativeTo: activatedRouteMock,
-        queryParams: {},
+      it('route to validation page', () => {
+        expect(routerMock.navigate).toHaveBeenCalledWith(['validation'], {
+          relativeTo: activatedRouteMock,
+          queryParams: {},
+        })
+      })
+    })
+    describe('with no dataset', () => {
+      let job
+      beforeEach(() => {
+        job = jobMockNoDS
+        component.onJobFinish(job)
+      })
+
+      it('route to home page with error', () => {
+        expect(routerMock.navigate).toHaveBeenCalledWith(['/'], {
+          relativeTo: activatedRouteMock,
+          queryParams: { error: 'analysis' },
+        })
       })
     })
   })
@@ -108,7 +127,7 @@ describe('AnalysisProgress.PageComponent', () => {
       component.onJobFinish(job)
     })
 
-    it('route to validation page', () => {
+    it('route to home page with error', () => {
       expect(routerMock.navigate).toHaveBeenCalledWith(['/'], {
         relativeTo: activatedRouteMock,
         queryParams: { error: 'analysis' },

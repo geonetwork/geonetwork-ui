@@ -36,6 +36,15 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/')
 }
 
+export function getLangFromHtml() {
+  const html: HTMLElement = document.getElementsByTagName('html')[0]
+  const lang = html.getAttribute('lang')
+  return lang.substr(0, 2)
+}
+export function getDefaultLang() {
+  return getLangFromHtml() || 'en'
+}
+
 export const TRANSLATE_DEFAULT_CONFIG = {
   loader: {
     provide: TranslateLoader,

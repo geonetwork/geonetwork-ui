@@ -5,6 +5,7 @@ export enum UploadDataErrorType {
   MAX_SIZE,
   FILE_FORMAT,
   ANALYSIS,
+  OPEN_FILE,
 }
 
 export interface UploadDataError {

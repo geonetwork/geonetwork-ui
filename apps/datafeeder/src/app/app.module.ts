@@ -8,7 +8,11 @@ import { environment } from '../environments/environment'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { UploadDataComponent } from './presentation/components/upload-data/upload-data.component'
-import { I18nModule, TRANSLATE_DEFAULT_CONFIG } from '@lib/common'
+import {
+  getLangFromHtml,
+  I18nModule,
+  TRANSLATE_DEFAULT_CONFIG,
+} from '@lib/common'
 import { UiModule } from '@lib/ui'
 import { UploadDataPageComponent } from './presentation/pages/upload-data-page/upload-data.page'
 import { UploadDataRulesComponent } from './presentation/components/upload-data-rules/upload-data-rules.component'
@@ -84,6 +88,6 @@ export function apiConfigurationFactory() {
 })
 export class AppModule {
   constructor(translate: TranslateService) {
-    translate.use('fr')
+    translate.use(getLangFromHtml() || 'fr')
   }
 }

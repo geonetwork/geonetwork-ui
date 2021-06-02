@@ -1,9 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   UploadDataError,
   UploadDataErrorType,
 } from '../svg/upload-data-error-dialog/upload-data-error-dialog.component'
 import { FileUploadApiService } from '@lib/datafeeder-api'
+
+marker('datafeeder.upload.error.title.noRightsToSendData')
+marker('datafeeder.upload.error.title.fileHasntSelected')
+marker('datafeeder.upload.error.title.fileSize')
+marker('datafeeder.upload.error.subtitle.fileSize')
+marker('datafeeder.upload.error.title.fileFormat')
+marker('datafeeder.upload.error.subtitle.fileFormat')
+marker('datafeeder.upload.error.title.cantOpenFile')
+marker('datafeeder.upload.error.subtitle.cantOpenFile')
 
 @Component({
   selector: 'app-upload-data-component',
@@ -30,15 +40,15 @@ export class UploadDataComponent implements OnInit {
   }
 
   handleUploadBtnClick() {
-    if (!this.haveRights) {
+    if (!this.file) {
       this.emitErrors_({
-        title: 'datafeeder.upload.error.title.noRightsToSendData',
+        title: 'datafeeder.upload.error.title.fileHasntSelected',
         subtitle: '',
         type: UploadDataErrorType.NONE,
       })
-    } else if (!this.file) {
+    } else if (!this.haveRights) {
       this.emitErrors_({
-        title: 'datafeeder.upload.error.title.fileHasntSelected',
+        title: 'datafeeder.upload.error.title.noRightsToSendData',
         subtitle: '',
         type: UploadDataErrorType.NONE,
       })
@@ -65,10 +75,20 @@ export class UploadDataComponent implements OnInit {
 
   private uploadFile_(file: File) {
     this.uploading = true
-    this.fileUploadApiService.uploadFiles([file]).subscribe((job) => {
-      this.jobId$.emit(job.jobId)
-      this.uploading = false
-    })
+    this.fileUploadApiService.uploadFiles([file]).subscribe(
+      (job) => {
+        this.jobId$.emit(job.jobId)
+        this.uploading = false
+      },
+      (error) => {
+        this.uploading = false
+        this.emitErrors_({
+          title: 'datafeeder.upload.error.title.cantOpenFile',
+          subtitle: 'datafeeder.upload.error.subtitle.cantOpenFile',
+          type: UploadDataErrorType.OPEN_FILE,
+        })
+      }
+    )
   }
 
   private isFileFormatValid(file: File): boolean {

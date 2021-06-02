@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   UploadDataError,
   UploadDataErrorType,
 } from '../../components/svg/upload-data-error-dialog/upload-data-error-dialog.component'
+
+marker('datafeeder.upload.error.title.analysis')
+marker('datafeeder.upload.error.subtitle.analysis')
 
 @Component({
   selector: 'app-upload-data-page',
@@ -21,7 +25,7 @@ export class UploadDataPageComponent implements OnInit {
       if ('error' in params) {
         this.error = {
           title: 'datafeeder.upload.error.title.analysis',
-          subtitle: '',
+          subtitle: 'datafeeder.upload.error.subtitle.analysis',
           type: UploadDataErrorType.ANALYSIS,
         }
       }

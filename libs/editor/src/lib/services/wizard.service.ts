@@ -84,6 +84,11 @@ export class WizardService {
     }
   }
 
+  reset() {
+    this.wizardStep = 1
+    localStorage.removeItem(this.storageKey)
+  }
+
   translateMonthLabels(): Observable<IMyMonthLabels> {
     return new Observable<IMyMonthLabels>((result) => {
       const monthLabels = {}
@@ -107,6 +112,7 @@ export class WizardService {
       datafeederData[this.id]?.values?.forEach((i) => {
         this.wizardData.set(i.id, i.value)
       })
+      this.wizardStep = datafeederData[this.id]?.step || 1
     }
     return datafeederData
   }
