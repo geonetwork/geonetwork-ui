@@ -1,4 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { LogService } from '@lib/common'
@@ -22,6 +27,7 @@ import { DatafeederFacade } from '../../../store/datafeeder.facade'
 const unknownLabel = 'datafeeder.datasetValidation.unknown'
 const viewSrs = 'EPSG:3857'
 
+marker('datafeeder.datasetValidation.unknown')
 marker('datafeeder.validation.sample.title')
 marker('datafeeder.validation.extent.title')
 marker('datafeeder.validation.encoding')
@@ -31,6 +37,7 @@ marker('datafeeder.validation.projection')
   selector: 'app-dataset-validation-page',
   templateUrl: './dataset-validation-page.html',
   styleUrls: ['./dataset-validation-page.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   encodingList = SETTINGS.encodings
@@ -127,13 +134,21 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   }
 
   handleCrsChange(crs) {
+    this.crs = crs
     console.log(`CRS changed to «${crs}»`)
   }
 
   submitValidation() {
+    if (!this.isValid()) {
+      return
+    }
     const fields = ['encoding', 'nativeName', 'crs']
     fields.forEach((f) => this.wizard.setWizardFieldData(f, this[f]))
     this.router.navigate(['/', this.rootId, 'step', 1])
+  }
+
+  isValid(): boolean {
+    return !!this.crs
   }
 
   ngOnDestroy() {
