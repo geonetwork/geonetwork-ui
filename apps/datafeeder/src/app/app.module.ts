@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { UploadDataComponent } from './presentation/components/upload-data/upload-data.component'
 import {
+  getLangFromBrowser,
   getLangFromHtml,
   I18nModule,
   TRANSLATE_DEFAULT_CONFIG,
@@ -88,6 +89,7 @@ export function apiConfigurationFactory() {
 })
 export class AppModule {
   constructor(translate: TranslateService) {
+    document.documentElement.lang = getLangFromBrowser()
     translate.use(getLangFromHtml() || 'fr')
   }
 }

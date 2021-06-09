@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { LANG_2_TO_3_MAPPER } from '@lib/common'
 import { TranslateService } from '@ngx-translate/core'
-import { Observable, Subject, Subscription } from 'rxjs'
+import { Observable, of, Subject, Subscription } from 'rxjs'
 import { distinctUntilChanged, map, tap } from 'rxjs/operators'
 
 export interface Items {
@@ -20,6 +20,7 @@ export class ChipsInputComponent implements OnInit, OnDestroy {
   @Input() placeholder: string
   @Input() selectedItems: Items[]
   @Input() required = false
+  @Input() autocompleteItems: Items[]
   @Output() itemsChange: Observable<Items[]>
 
   private subscription: Subscription
@@ -35,11 +36,16 @@ export class ChipsInputComponent implements OnInit, OnDestroy {
   }
 
   requestAutocompleteItems = (text: string): Observable<any> => {
-    const url = this.url(text)
-    const lang = LANG_2_TO_3_MAPPER[this.translate.currentLang]
-    return this.http
-      .get<any>(url.replace('${lang}', lang))
-      .pipe(map((item) => item.map((i) => i.values[lang])))
+    if (this.url) {
+      const url = this.url(text)
+
+      const lang = LANG_2_TO_3_MAPPER[this.translate.currentLang]
+      return this.http
+        .get<any>(url.replace('${lang}', lang))
+        .pipe(map((item) => item.map((i) => i.values[lang])))
+    } else if (this.autocompleteItems) {
+      return of(this.autocompleteItems)
+    }
   }
 
   constructor(private http: HttpClient, private translate: TranslateService) {
