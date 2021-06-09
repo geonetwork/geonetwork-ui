@@ -2,11 +2,12 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { WizardFieldComponent } from './wizard-field.component'
 import { TranslateModule } from '@ngx-translate/core'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core'
 import { WizardFieldType } from '../../models/wizard-field.type'
 import { UiModule } from '@lib/ui'
 import { BrowserModule, By } from '@angular/platform-browser'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { WizardService } from '../../services/wizard.service'
 
 const DEFAULT_CHIPS_ITEMS_URL = (keys) =>
   `https://apps.titellus.net/geonetwork/srv/api/registries/vocabularies/search?type=CONTAINS&thesaurus=external.place.regions&rows=200&q=${keys}&uri=*QUERY*&lang=eng`
@@ -14,6 +15,9 @@ const DEFAULT_CHIPS_ITEMS_URL = (keys) =>
 describe('WizardFieldsComponent', () => {
   let component: WizardFieldComponent
   let fixture: ComponentFixture<WizardFieldComponent>
+  let debugElement: DebugElement
+  let wizardService: WizardService
+  let dataChangedSpy
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -148,7 +152,14 @@ describe('WizardFieldsComponent', () => {
   describe('Dropdown', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(WizardFieldComponent)
+      debugElement = fixture.debugElement
       component = fixture.componentInstance
+
+      wizardService = debugElement.injector.get(WizardService)
+      dataChangedSpy = spyOn(
+        wizardService,
+        'onWizardWizardFieldDataChanged'
+      ).and.callThrough()
 
       component.wizardFieldConfig = {
         id: 'dropdown',
@@ -165,6 +176,12 @@ describe('WizardFieldsComponent', () => {
       const el = fixture.debugElement.query(By.css('#dropdown'))
 
       expect(el).not.toBeNull()
+    })
+    it('should call the service with correct value', (done) => {
+      setTimeout(() => {
+        expect(dataChangedSpy).toHaveBeenCalledWith('dropdown', '1')
+        done()
+      })
     })
   })
 
