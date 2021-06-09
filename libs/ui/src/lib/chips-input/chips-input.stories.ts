@@ -1,8 +1,9 @@
+import { TranslateModule } from '@ngx-translate/core'
 import { withA11y } from '@storybook/addon-a11y'
 import { action } from '@storybook/addon-actions'
 import { object, text, withKnobs } from '@storybook/addon-knobs'
 import { ChipsInputComponent } from './chips-input.component'
-import { I18nModule } from '../../../../common/src'
+import { I18nModule, TRANSLATE_DEFAULT_CONFIG } from '../../../../common/src'
 import { TagInputModule } from 'ngx-chips'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
@@ -13,6 +14,7 @@ import { moduleMetadata } from '@storybook/angular'
 const moduleMetadatas = {
   imports: [
     I18nModule,
+    TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
     BrowserModule,
     BrowserAnimationsModule,
     CommonModule,
@@ -30,7 +32,9 @@ export default {
 export const ChipsInput = () => ({
   component: ChipsInputComponent,
   props: {
-    items: object('input values', [{ display: 'item1', value: 'item1' }]),
+    selectedItems: object('input values', [
+      { display: 'item1', value: 'item1' },
+    ]),
     autocompleteItems: object('autocomplete values', [
       { display: 'item1', value: 'item1' },
       { display: 'item2', value: 'item2' },

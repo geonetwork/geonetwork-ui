@@ -6,8 +6,8 @@ import { DEFAULT_LANG } from './i18n.constants'
 import { I18nInterceptor } from './i18n.interceptor'
 
 @NgModule({
-  imports: [HttpClientModule, GnApiModule],
-  exports: [TranslateModule],
+  imports: [HttpClientModule, GnApiModule, TranslateModule.forChild()],
+  exports: [],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: I18nInterceptor, multi: true },
   ],
