@@ -50,7 +50,7 @@ export class SummarizePageComponent implements OnInit, OnDestroy {
       nativeName: dataset.nativeName,
       // publishedName?: string
       encoding: dataset.encoding,
-      srs: dataset.srs,
+      srs: dataset.crs,
       metadata: {
         title: dataset.title,
         abstract: dataset.abstract,
