@@ -161,7 +161,7 @@ export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
       this.dropdown.selectValue.subscribe((value) => {
         this.wizardService.onWizardWizardFieldDataChanged(
           this.wizardFieldConfig.id,
-          JSON.stringify(value)
+          value
         )
       })
     )
