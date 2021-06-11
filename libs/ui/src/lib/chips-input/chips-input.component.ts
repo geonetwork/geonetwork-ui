@@ -3,7 +3,13 @@ import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { LANG_2_TO_3_MAPPER } from '@lib/common'
 import { TranslateService } from '@ngx-translate/core'
 import { Observable, of, Subject, Subscription } from 'rxjs'
-import { distinctUntilChanged, map, tap } from 'rxjs/operators'
+import {
+  distinctUntilChanged,
+  map,
+  shareReplay,
+  take,
+  tap,
+} from 'rxjs/operators'
 
 export interface Items {
   display: string
@@ -20,6 +26,7 @@ export class ChipsInputComponent implements OnInit, OnDestroy {
   @Input() placeholder: string
   @Input() selectedItems: Items[]
   @Input() required = false
+  @Input() loadOnce = false
   @Input() autocompleteItems: Items[]
   @Output() itemsChange: Observable<Items[]>
 
@@ -31,12 +38,17 @@ export class ChipsInputComponent implements OnInit, OnDestroy {
 
   items: Items[] = []
 
+  loadedItems: Observable<Items[]>
+
   onChange(event) {
     this.rawChange.next(event)
   }
 
   requestAutocompleteItems = (text: string): Observable<any> => {
     if (this.url) {
+      if (this.loadOnce && this.loadedItems) {
+        return this.loadedItems
+      }
       const url = this.url(text)
 
       const lang = LANG_2_TO_3_MAPPER[this.translate.currentLang]
@@ -55,6 +67,10 @@ export class ChipsInputComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    if (this.loadOnce) {
+      this.loadedItems = this.requestAutocompleteItems('*').pipe(shareReplay(1))
+    }
+
     this.items = this.selectedItems
     this.subscription = this.rawChange
       .pipe(tap((v) => (this.invalid = v.length === 0)))

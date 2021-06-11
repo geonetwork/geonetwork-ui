@@ -41,6 +41,7 @@ export const DEFAULT_WIZARD_CONFIGURATION: WizardFieldModel[][] = [
       type: WizardFieldType.CHIPS,
       options: {
         url: DEFAULT_CHIPS_ITEMS_URL,
+        loadOnce: true
       },
       required: true,
     },
