@@ -5,7 +5,7 @@ import {
   DataPublishingApiService,
   AnalysisStatusEnumApiModel,
   FileUploadApiService,
-} from '@lib/datafeeder-api'
+} from '@geonetwork-ui/data-access/datafeeder'
 import { of, throwError } from 'rxjs'
 import { DatafeederFacade } from '../store/datafeeder.facade'
 import { UploadStatusGuard } from './upload-status.guard'
@@ -13,12 +13,12 @@ import { UploadStatusGuard } from './upload-status.guard'
 const uploadStateStatusMock = {
   jobId: '123',
   progress: 1,
-  status: AnalysisStatusEnumApiModel.PENDING,
+  status: PublishStatusEnumApiModel.Pending,
 }
 const uploadApiStatusMock = {
   jobId: '123',
   progress: 1,
-  status: AnalysisStatusEnumApiModel.PENDING,
+  status: PublishStatusEnumApiModel.Pending,
 }
 
 const fileUploadApiServiceMock = {

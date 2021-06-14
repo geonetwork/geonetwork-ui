@@ -1,26 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
 
-import {
-  SuccessPublishPageComponent,
-  JobStatusModel,
-} from './success-publish-page.component'
-import { UiModule } from '@lib/ui'
+import { JobStatusModel, SuccessPublishPageComponent } from './success-publish-page.component'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { Router, ActivatedRoute } from '@angular/router'
-import {
-  DataPublishingApiService,
-  PublishJobStatusApiModel,
-  PublishStatusEnumApiModel,
-} from '@lib/datafeeder-api'
+import { ActivatedRoute, Router } from '@angular/router'
+import { PublishStatusEnumApiModel } from '@geonetwork-ui/data-access/datafeeder'
 import { of } from 'rxjs'
-import { TestScheduler } from 'rxjs/testing'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 
 const GN_LINK = 'a'
 const GS_LINK = 'b'
 const jobMock: JobStatusModel = {
   jobId: '1234',
-  status: PublishStatusEnumApiModel.DONE,
+  status: PublishStatusEnumApiModel.Done,
   datasets: [
     {
       _links: {
@@ -47,10 +39,10 @@ describe('SuccessPublishPageComponent', () => {
   let component: SuccessPublishPageComponent
   let fixture: ComponentFixture<SuccessPublishPageComponent>
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [SuccessPublishPageComponent],
-      imports: [UiModule],
+      imports: [UiInputsModule],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
@@ -61,7 +53,7 @@ describe('SuccessPublishPageComponent', () => {
         { provide: ActivatedRoute, useValue: activatedRouteMock },
       ],
     }).compileComponents()
-  }))
+  })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SuccessPublishPageComponent)

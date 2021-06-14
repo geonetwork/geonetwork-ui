@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { LogService } from '@lib/common'
+import { LogService } from '@geonetwork-ui/util/shared'
 import {
   AnalysisStatusEnumApiModel,
   FileUploadApiService,
   UploadJobStatusApiModel,
-} from '@lib/datafeeder-api'
+} from '@geonetwork-ui/data-access/datafeeder'
 import { interval, Observable, Subscription } from 'rxjs'
 import { filter, mergeMap, switchMap, take, tap } from 'rxjs/operators'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'

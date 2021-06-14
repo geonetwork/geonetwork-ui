@@ -4,9 +4,8 @@ import {
   DataPublishingApiService,
   PublishJobStatusApiModel,
   PublishStatusEnumApiModel,
-  UploadJobStatusApiModel,
-} from '@lib/datafeeder-api'
-import { WizardService } from '@lib/editor'
+} from '@geonetwork-ui/data-access/datafeeder'
+import { WizardService } from '@geonetwork-ui/feature/editor'
 import { interval, Observable, Subscription } from 'rxjs'
 import { filter, mergeMap, switchMap, take, tap } from 'rxjs/operators'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'

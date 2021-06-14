@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import {
-  DataPublishingApiService,
   DatasetPublishingStatusApiModel,
   PublishJobStatusApiModel,
   PublishStatusEnumApiModel,
-} from '@lib/datafeeder-api'
+} from '@geonetwork-ui/data-access/datafeeder'
 import { Subscription } from 'rxjs'
 import { take } from 'rxjs/operators'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'

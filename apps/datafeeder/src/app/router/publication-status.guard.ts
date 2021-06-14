@@ -9,7 +9,7 @@ import {
   DataPublishingApiService,
   PublishJobStatusApiModel,
   PublishStatusEnumApiModel,
-} from '@lib/datafeeder-api'
+} from '@geonetwork-ui/data-access/datafeeder'
 import { iif, Observable, of } from 'rxjs'
 import { catchError, mapTo, mergeMap, take, tap } from 'rxjs/operators'
 import { DatafeederFacade } from '../store/datafeeder.facade'
@@ -34,7 +34,7 @@ export class PublicationStatusGuard implements CanActivate {
         iif(
           () =>
             statePublication &&
-            statePublication.status !== PublishStatusEnumApiModel.PENDING,
+            statePublication.status !== PublishStatusEnumApiModel.Pending,
           of(true),
           this.publishService.getPublishingStatus(id).pipe(
             tap((publication) => this.facade.setPublication(publication)),

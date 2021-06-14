@@ -1,4 +1,5 @@
 module.exports = {
+  darkMode: false, // or 'media' or 'class'
   purge: ['./{apps,libs,webcomponents}/*/src/**/*.{html,ts}'],
   theme: {
     inset: {

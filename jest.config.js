@@ -1,19 +1,20 @@
 module.exports = {
-  transformIgnorePatterns: ['node_modules/(?!(ol))'],
-  setupFiles: ['jest-canvas-mock'],
-  moduleNameMapper: {
-    '@lib/editor': '<rootDir>libs/editor/src/index.ts',
-    '@lib/search': '<rootDir>libs/search/src/index.ts',
-    '@lib/catalog': '<rootDir>libs/catalog/src/index.ts',
-    '@lib/gn-api': '<rootDir>libs/gn-api/src/lib/gn4/index.ts',
-    '@lib/datafeeder-api': '<rootDir>libs/gn-api/src/lib/datafeeder/index.ts',
-    '@lib/ui': '<rootDir>libs/ui/src/index.ts',
-    '@lib/common': '<rootDir>libs/common/src/index.ts',
-    '@lib/auth': '<rootDir>libs/auth/src/index.ts',
-  },
-  globals: {
-    env: {
-      apiUrl: '/datafeeder',
-    },
-  },
-}
+  projects: [
+    '<rootDir>/apps/search',
+    '<rootDir>/libs/ui',
+    '<rootDir>/libs/feature/search',
+    '<rootDir>/libs/feature/auth',
+    '<rootDir>/libs/ui/search',
+    '<rootDir>/libs/ui/inputs',
+    '<rootDir>/libs/ui/layout',
+    '<rootDir>/libs/ui/widgets',
+    '<rootDir>/libs/feature/editor',
+    '<rootDir>/libs/feature/catalog',
+    '<rootDir>/libs/ui/catalog',
+    '<rootDir>/apps/datafeeder',
+    '<rootDir>/libs/util/i18n',
+    '<rootDir>/libs/data-access/gn4',
+    '<rootDir>/libs/data-access/datafeeder',
+    '<rootDir>/libs/util/shared',
+  ],
+};

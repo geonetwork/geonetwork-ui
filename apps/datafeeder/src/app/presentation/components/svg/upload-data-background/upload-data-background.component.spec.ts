@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { UploadDataBackgroundComponent } from './upload-data-background.component'
 
@@ -6,11 +6,11 @@ describe('UploadDataBackgroundComponent', () => {
   let component: UploadDataBackgroundComponent
   let fixture: ComponentFixture<UploadDataBackgroundComponent>
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [UploadDataBackgroundComponent],
     }).compileComponents()
-  }))
+  })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(UploadDataBackgroundComponent)

@@ -6,15 +6,15 @@ import {
 } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { LogService } from '@lib/common'
+import { LogService } from '@geonetwork-ui/util/shared'
 import {
   AnalysisStatusEnumApiModel,
   BoundingBoxApiModel,
   DatasetUploadStatusApiModel,
   FileUploadApiService,
   UploadJobStatusApiModel,
-} from '@lib/datafeeder-api'
-import { WizardService } from '@lib/editor'
+} from '@geonetwork-ui/data-access/datafeeder'
+import { WizardService } from '@geonetwork-ui/feature/editor'
 import Feature from 'ol/Feature'
 import GeoJSON from 'ol/format/GeoJSON'
 import { fromExtent } from 'ol/geom/Polygon'

@@ -4,7 +4,7 @@ import { Router } from '@angular/router'
 import {
   FileUploadApiService,
   AnalysisStatusEnumApiModel,
-} from '@lib/datafeeder-api'
+} from '@geonetwork-ui/data-access/datafeeder'
 import { of, throwError } from 'rxjs'
 import { UploadProgressGuard } from './upload-progress.guard'
 
@@ -65,7 +65,7 @@ describe('UploadProgressGuard', () => {
   })
   describe('status is not DONE ', () => {
     beforeEach(() => {
-      uploadApiStatusMock.status = AnalysisStatusEnumApiModel.PENDING
+      uploadApiStatusMock.status = PublishStatusEnumApiModel.Pending
       guard
         .canActivate(routeMock, routeStateMock)
         .subscribe((res) => (output = res))
@@ -89,7 +89,7 @@ describe('UploadProgressGuard', () => {
 
   describe('api throws error ', () => {
     beforeEach(() => {
-      uploadApiStatusMock.status = AnalysisStatusEnumApiModel.PENDING
+      uploadApiStatusMock.status = PublishStatusEnumApiModel.Pending
       guard['fileUploadApiService'].findUploadJob = jest.fn(() =>
         throwError('api')
       )

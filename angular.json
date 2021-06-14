@@ -1,471 +1,443 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "apps",
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "search",
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "css",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "css",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "css"
+    }
+  },
   "projects": {
-    "app-search": {
+    "search": {
       "projectType": "application",
-      "schematics": {},
       "root": "apps/search",
       "sourceRoot": "apps/search/src",
-      "prefix": "app",
+      "prefix": "geonetwork-ui",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "dist/search",
+            "outputPath": "dist/apps/search",
             "index": "apps/search/src/index.html",
             "main": "apps/search/src/main.ts",
             "polyfills": "apps/search/src/polyfills.ts",
             "tsConfig": "apps/search/tsconfig.app.json",
-            "aot": true,
-            "assets": [
-              "apps/search/src/favicon.ico",
-              "apps/search/src/assets"
-            ],
-            "styles": [
-              "libs/ui/src/styles.css",
-              "apps/search/src/styles.css"
-            ],
+            "assets": ["apps/search/src/favicon.ico", "apps/search/src/assets"],
+            "styles": ["apps/search/src/styles.css"],
             "scripts": []
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "apps/search/src/environments/environment.ts",
                   "with": "apps/search/src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "app-search:build",
-            "proxyConfig": "proxy-config.js"
-          },
           "configurations": {
             "production": {
-              "browserTarget": "app-search:build:production"
+              "browserTarget": "search:build:production"
+            },
+            "development": {
+              "browserTarget": "search:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "app-search:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-builders/jest:run",
-          "options": {
-            "detectOpenHandles": true
+            "browserTarget": "search:build"
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": [
-              "apps/search/tsconfig.app.json",
-              "apps/search/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "libs/gn-api/**"
+            "lintFilePatterns": [
+              "apps/search/src/**/*.ts",
+              "apps/search/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/search"],
+          "options": {
+            "jestConfig": "apps/search/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "search-e2e": {
+      "root": "apps/search-e2e",
+      "sourceRoot": "apps/search-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/search-e2e/cypress.json",
+            "tsConfig": "apps/search-e2e/tsconfig.e2e.json",
+            "devServerTarget": "search:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "search:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/search-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "feature-search": {
+      "projectType": "library",
+      "root": "libs/feature/search",
+      "sourceRoot": "libs/feature/search/src",
+      "prefix": "geonetwork-ui",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/feature/search"],
+          "options": {
+            "jestConfig": "libs/feature/search/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/feature/search/src/**/*.ts",
+              "libs/feature/search/src/**/*.html"
             ]
           }
         }
       }
     },
-    "gn-wc": {
-      "projectType": "application",
-      "schematics": {},
-      "root": "webcomponents",
-      "sourceRoot": "webcomponents/src",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "webcomponents/dist",
-            "index": "webcomponents/src/index.html",
-            "main": "webcomponents/src/main.ts",
-            "polyfills": "webcomponents/src/polyfills.ts",
-            "tsConfig": "webcomponents/tsconfig.app.json",
-            "aot": true,
-            "assets": [
-              "webcomponents/src/assets"
-            ],
-            "styles": [
-              "webcomponents/src/styles.css"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "500kb",
-                  "maximumError": "2MB"
-                }
-              ]
-            }
-          }
-        }
-      }
-    },
-    "lib-search": {
+    "feature-auth": {
       "projectType": "library",
-      "root": "libs/search",
-      "sourceRoot": "libs/search/src",
-      "prefix": "search",
+      "root": "libs/feature/auth",
+      "sourceRoot": "libs/feature/auth/src",
+      "prefix": "geonetwork-ui",
       "architect": {
         "test": {
-          "builder": "@angular-builders/jest:run",
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/feature/auth"],
           "options": {
-            "detectOpenHandles": true
-          }
-        }
-      }
-    },
-    "lib-catalog": {
-      "projectType": "library",
-      "root": "libs/catalog",
-      "sourceRoot": "libs/catalog/src",
-      "prefix": "catalog",
-      "architect": {
-        "test": {
-          "builder": "@angular-builders/jest:run",
-          "options": {
-            "detectOpenHandles": true
-          }
-        }
-      }
-    },
-    "lib-ui": {
-      "projectType": "library",
-      "root": "libs/ui",
-      "sourceRoot": "libs/ui/src",
-      "prefix": "ui",
-      "architect": {
-        "test": {
-          "builder": "@angular-builders/jest:run",
-          "options": {
-            "detectOpenHandles": true
-          }
-        }
-      }
-    },
-    "lib-gn-api": {
-      "projectType": "library",
-      "root": "libs/gn-api",
-      "sourceRoot": "libs/gn-api/src"
-    },
-    "ssr-formatter": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "inlineTemplate": true,
-          "inlineStyle": true,
-          "skipTests": true
-        },
-        "@schematics/angular:class": {
-          "skipTests": true
-        },
-        "@schematics/angular:directive": {
-          "skipTests": true
-        },
-        "@schematics/angular:guard": {
-          "skipTests": true
-        },
-        "@schematics/angular:interceptor": {
-          "skipTests": true
-        },
-        "@schematics/angular:module": {
-          "skipTests": true
-        },
-        "@schematics/angular:pipe": {
-          "skipTests": true
-        },
-        "@schematics/angular:service": {
-          "skipTests": true
-        }
-      },
-      "root": "ssr/formatter",
-      "sourceRoot": "ssr/formatter/src",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/formatter/browser",
-            "index": "ssr/formatter/src/index.html",
-            "main": "ssr/formatter/src/main.ts",
-            "polyfills": "ssr/formatter/src/polyfills.ts",
-            "tsConfig": "ssr/formatter/tsconfig.app.json",
-            "aot": true,
-            "assets": [
-              "ssr/formatter/src/favicon.ico",
-              "ssr/formatter/src/assets"
-            ],
-            "styles": [
-              "ssr/formatter/src/styles.css"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "ssr/formatter/src/environments/environment.ts",
-                  "with": "ssr/formatter/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
-            }
+            "jestConfig": "libs/feature/auth/jest.config.js",
+            "passWithNoTests": true
           }
         },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "browserTarget": "ssr-formatter:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "ssr-formatter:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "ssr-formatter:build"
-          }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/ssr-formatter/server",
-            "main": "ssr/formatter/server.ts",
-            "tsConfig": "ssr/formatter/tsconfig.server.json"
-          },
-          "configurations": {
-            "production": {
-              "outputHashing": "media",
-              "fileReplacements": [
-                {
-                  "replace": "ssr/formatter/src/environments/environment.ts",
-                  "with": "ssr/formatter/src/environments/environment.prod.ts"
-                }
-              ],
-              "sourceMap": false,
-              "optimization": true
-            }
-          }
-        },
-        "serve-ssr": {
-          "builder": "@nguniversal/builders:ssr-dev-server",
-          "options": {
-            "browserTarget": "ssr-formatter:build",
-            "serverTarget": "ssr-formatter:server"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "ssr-formatter:build:production",
-              "serverTarget": "ssr-formatter:server:production"
-            }
-          }
-        },
-        "prerender": {
-          "builder": "@nguniversal/builders:prerender",
-          "options": {
-            "browserTarget": "ssr-formatter:build:production",
-            "serverTarget": "ssr-formatter:server:production",
-            "routes": [
-              "/"
+            "lintFilePatterns": [
+              "libs/feature/auth/src/**/*.ts",
+              "libs/feature/auth/src/**/*.html"
             ]
-          },
-          "configurations": {
-            "production": {}
           }
         }
       }
     },
-    "lib-common": {
+    "ui-search": {
       "projectType": "library",
-      "root": "libs/common",
-      "sourceRoot": "libs/common/src",
-      "prefix": "lib",
+      "root": "libs/ui/search",
+      "sourceRoot": "libs/ui/search/src",
+      "prefix": "geonetwork-ui",
       "architect": {
         "test": {
-          "builder": "@angular-builders/jest:run",
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ui/search"],
           "options": {
-            "detectOpenHandles": true
-          }
-        }
-      }
-    },
-    "lib-auth": {
-      "projectType": "library",
-      "root": "libs/auth",
-      "sourceRoot": "libs/auth/src",
-      "prefix": "lib",
-      "architect": {
-        "test": {
-          "builder": "@angular-builders/jest:run",
-          "options": {
-            "detectOpenHandles": true
-          }
-        }
-      }
-    },
-    "lib-editor": {
-      "projectType": "library",
-      "root": "libs/editor",
-      "sourceRoot": "libs/editor/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-builders/jest:run",
-          "options": {
-            "detectOpenHandles": true
+            "jestConfig": "libs/ui/search/jest.config.js",
+            "passWithNoTests": true
           }
         },
-        "test": {
-          "builder": "@angular-builders/jest:run",
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "detectOpenHandles": true
+            "lintFilePatterns": [
+              "libs/ui/search/src/**/*.ts",
+              "libs/ui/search/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "ui-inputs": {
+      "projectType": "library",
+      "root": "libs/ui/inputs",
+      "sourceRoot": "libs/ui/inputs/src",
+      "prefix": "geonetwork-ui",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ui/inputs"],
+          "options": {
+            "jestConfig": "libs/ui/inputs/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ui/inputs/src/**/*.ts",
+              "libs/ui/inputs/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "ui-layout": {
+      "projectType": "library",
+      "root": "libs/ui/layout",
+      "sourceRoot": "libs/ui/layout/src",
+      "prefix": "geonetwork-ui",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ui/layout"],
+          "options": {
+            "jestConfig": "libs/ui/layout/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ui/layout/src/**/*.ts",
+              "libs/ui/layout/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "ui-widgets": {
+      "projectType": "library",
+      "root": "libs/ui/widgets",
+      "sourceRoot": "libs/ui/widgets/src",
+      "prefix": "geonetwork-ui",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ui/widgets"],
+          "options": {
+            "jestConfig": "libs/ui/widgets/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ui/widgets/src/**/*.ts",
+              "libs/ui/widgets/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "feature-editor": {
+      "projectType": "library",
+      "root": "libs/feature/editor",
+      "sourceRoot": "libs/feature/editor/src",
+      "prefix": "geonetwork-ui",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/feature/editor"],
+          "options": {
+            "jestConfig": "libs/feature/editor/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/feature/editor/src/**/*.ts",
+              "libs/feature/editor/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "feature-catalog": {
+      "projectType": "library",
+      "root": "libs/feature/catalog",
+      "sourceRoot": "libs/feature/catalog/src",
+      "prefix": "geonetwork-ui",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/feature/catalog"],
+          "options": {
+            "jestConfig": "libs/feature/catalog/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/feature/catalog/src/**/*.ts",
+              "libs/feature/catalog/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "ui-catalog": {
+      "projectType": "library",
+      "root": "libs/ui/catalog",
+      "sourceRoot": "libs/ui/catalog/src",
+      "prefix": "geonetwork-ui",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ui/catalog"],
+          "options": {
+            "jestConfig": "libs/ui/catalog/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ui/catalog/src/**/*.ts",
+              "libs/ui/catalog/src/**/*.html"
+            ]
           }
         }
       }
     },
     "datafeeder": {
       "projectType": "application",
-      "schematics": {},
       "root": "apps/datafeeder",
       "sourceRoot": "apps/datafeeder/src",
-      "prefix": "app",
+      "prefix": "geonetwork-ui",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "dist/datafeeder",
+            "outputPath": "dist/apps/datafeeder",
             "index": "apps/datafeeder/src/index.html",
             "main": "apps/datafeeder/src/main.ts",
             "polyfills": "apps/datafeeder/src/polyfills.ts",
             "tsConfig": "apps/datafeeder/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "apps/datafeeder/src/favicon.ico",
               "apps/datafeeder/src/assets"
             ],
-            "styles": [
-              "apps/datafeeder/src/styles.css",
-              "libs/ui/src/styles.css",
-              "./node_modules/ol/ol.css"
-            ],
-            "scripts": [],
-            "allowedCommonJsDependencies": [
-              "rbush", "pixelworks"
-            ]
+            "styles": ["apps/datafeeder/src/styles.css"],
+            "scripts": []
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "apps/datafeeder/src/environments/environment.ts",
                   "with": "apps/datafeeder/src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "datafeeder:build",
-            "proxyConfig": "proxy-config.js"
-          },
           "configurations": {
             "production": {
               "browserTarget": "datafeeder:build:production"
+            },
+            "development": {
+              "browserTarget": "datafeeder:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -473,27 +445,150 @@
             "browserTarget": "datafeeder:build"
           }
         },
-        "test": {
-          "builder": "@angular-builders/jest:run",
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "detectOpenHandles": true
+            "lintFilePatterns": [
+              "apps/datafeeder/src/**/*.ts",
+              "apps/datafeeder/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/datafeeder"],
+          "options": {
+            "jestConfig": "apps/datafeeder/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "datafeeder-e2e": {
+      "root": "apps/datafeeder-e2e",
+      "sourceRoot": "apps/datafeeder-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/datafeeder-e2e/cypress.json",
+            "tsConfig": "apps/datafeeder-e2e/tsconfig.e2e.json",
+            "devServerTarget": "datafeeder:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "datafeeder:serve:production"
+            }
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": [
-              "apps/datafeeder/tsconfig.app.json",
-              "apps/datafeeder/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "libs/gn-api/**"
+            "lintFilePatterns": ["apps/datafeeder-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "util-i18n": {
+      "projectType": "library",
+      "root": "libs/util/i18n",
+      "sourceRoot": "libs/util/i18n/src",
+      "prefix": "geonetwork-ui",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/util/i18n"],
+          "options": {
+            "jestConfig": "libs/util/i18n/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/util/i18n/src/**/*.ts",
+              "libs/util/i18n/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "data-access-gn4": {
+      "projectType": "library",
+      "root": "libs/data-access/gn4",
+      "sourceRoot": "libs/data-access/gn4/src",
+      "prefix": "geonetwork-ui",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/data-access/gn4"],
+          "options": {
+            "jestConfig": "libs/data-access/gn4/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/data-access/gn4/src/**/*.ts",
+              "libs/data-access/gn4/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "data-access-datafeeder": {
+      "projectType": "library",
+      "root": "libs/data-access/datafeeder",
+      "sourceRoot": "libs/data-access/datafeeder/src",
+      "prefix": "geonetwork-ui",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/data-access/datafeeder"],
+          "options": {
+            "jestConfig": "libs/data-access/datafeeder/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/data-access/datafeeder/src/**/*.ts",
+              "libs/data-access/datafeeder/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "util-shared": {
+      "projectType": "library",
+      "root": "libs/util/shared",
+      "sourceRoot": "libs/util/shared/src",
+      "prefix": "geonetwork-ui",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/util/shared"],
+          "options": {
+            "jestConfig": "libs/util/shared/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/util/shared/src/**/*.ts",
+              "libs/util/shared/src/**/*.html"
             ]
           }
         }
       }
     }
-  },
-  "defaultProject": "app-search"
+  }
 }

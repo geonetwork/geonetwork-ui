@@ -8,7 +8,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core'
-import { ColorService } from '@lib/common'
+import { ColorService } from '@geonetwork-ui/util/shared'
 import { Feature } from 'geojson'
 import { asArray, asString } from 'ol/color'
 import { isEmpty } from 'ol/extent'

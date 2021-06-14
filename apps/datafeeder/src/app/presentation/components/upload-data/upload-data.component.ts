@@ -4,7 +4,7 @@ import {
   UploadDataError,
   UploadDataErrorType,
 } from '../svg/upload-data-error-dialog/upload-data-error-dialog.component'
-import { FileUploadApiService } from '@lib/datafeeder-api'
+import { FileUploadApiService } from '@geonetwork-ui/data-access/datafeeder'
 
 marker('datafeeder.upload.error.title.noRightsToSendData')
 marker('datafeeder.upload.error.title.fileHasntSelected')

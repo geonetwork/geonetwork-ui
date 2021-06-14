@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common'
 import { Injector, NgModule } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
-import { I18nModule, TRANSLATE_GEONETWORK_CONFIG } from '@lib/common'
-import { Configuration } from '@lib/gn-api'
-import { LibSearchModule, SearchFacade } from '@lib/search'
-import { UiModule } from '@lib/ui'
+import { UtilI18nModule, TRANSLATE_GEONETWORK_CONFIG } from '@geonetwork-ui/util/i18n'
+import { Configuration } from '@geonetwork-ui/data-access/gn4'
+import { FeatureSearchModule, SearchFacade } from '@geonetwork-ui/feature/search'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
@@ -13,6 +12,8 @@ import { apiConfiguration, BaseComponent } from './components/base.component'
 import { GnAggregatedRecordsComponent } from './components/gn-aggregated-records/gn-aggregated-records.component'
 import { GnFacetsComponent } from './components/gn-facets/gn-facets.component'
 import { GnResultsListComponent } from './components/gn-results-list/gn-results-list.component'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { UiSearchModule } from '@geonetwork-ui/ui/search'
 
 const CUSTOM_ELEMENTS: any[] = [
   [GnFacetsComponent, 'gn-facets'],
@@ -29,11 +30,12 @@ const CUSTOM_ELEMENTS: any[] = [
   ],
   imports: [
     CommonModule,
-    UiModule,
-    LibSearchModule,
+    UiInputsModule,
+    UiSearchModule,
+    FeatureSearchModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot(),
-    I18nModule,
+    UtilI18nModule,
     TranslateModule.forRoot(TRANSLATE_GEONETWORK_CONFIG),
     StoreDevtoolsModule.instrument(),
   ],

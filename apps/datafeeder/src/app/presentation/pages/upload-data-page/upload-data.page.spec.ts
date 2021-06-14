@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ActivatedRoute, Router } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
 import { BehaviorSubject, of } from 'rxjs'
@@ -14,8 +14,8 @@ describe('UploadDataComponent', () => {
   let fixture: ComponentFixture<UploadDataPageComponent>
   const activatedRoute = { queryParams: new BehaviorSubject({}) }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [UploadDataPageComponent],
       imports: [],
       schemas: [NO_ERRORS_SCHEMA],
@@ -30,7 +30,7 @@ describe('UploadDataComponent', () => {
         },
       ],
     }).compileComponents()
-  }))
+  })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(UploadDataPageComponent)

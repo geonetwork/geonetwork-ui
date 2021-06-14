@@ -13,8 +13,8 @@ import {
   ResultsListLayout,
   SearchFilters,
   StateConfigFilters,
-} from '@lib/common'
-import { SearchFacade, SearchStateParams } from '@lib/search'
+} from '@geonetwork-ui/util/shared'
+import { SearchFacade, SearchStateParams } from '@geonetwork-ui/feature/search'
 import { BaseComponent } from '../base.component'
 
 @Component({

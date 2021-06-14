@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ColorService } from '@lib/common'
+import { ColorService } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'app-root',

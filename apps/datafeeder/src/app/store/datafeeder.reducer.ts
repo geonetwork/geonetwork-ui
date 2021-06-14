@@ -1,7 +1,7 @@
 import {
   PublishJobStatusApiModel,
   UploadJobStatusApiModel,
-} from '@lib/datafeeder-api'
+} from '@geonetwork-ui/data-access/datafeeder'
 import {
   DatafeederAction,
   SET_PUBLICATION,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
-import { BootstrapService } from '@lib/common'
-import { SearchFacade } from '@lib/search'
+import { BootstrapService } from '@geonetwork-ui/util/shared'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { map, take, tap } from 'rxjs/operators'
 
 @Component({

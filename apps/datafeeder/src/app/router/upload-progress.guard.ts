@@ -8,7 +8,7 @@ import {
 import {
   FileUploadApiService,
   AnalysisStatusEnumApiModel,
-} from '@lib/datafeeder-api'
+} from '@geonetwork-ui/data-access/datafeeder'
 import { Observable, of } from 'rxjs'
 import { catchError, filter, map } from 'rxjs/operators'
 

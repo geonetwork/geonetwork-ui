@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
-import { ApiModule, BASE_PATH, Configuration } from '@lib/datafeeder-api'
+import { ApiModule, BASE_PATH, Configuration } from '@geonetwork-ui/data-access/datafeeder'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { environment } from '../environments/environment'
@@ -11,10 +11,10 @@ import { UploadDataComponent } from './presentation/components/upload-data/uploa
 import {
   getLangFromBrowser,
   getLangFromHtml,
-  I18nModule,
+  UtilI18nModule,
   TRANSLATE_DEFAULT_CONFIG,
-} from '@lib/common'
-import { UiModule } from '@lib/ui'
+} from '@geonetwork-ui/util/i18n'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UploadDataPageComponent } from './presentation/pages/upload-data-page/upload-data.page'
 import { UploadDataRulesComponent } from './presentation/components/upload-data-rules/upload-data-rules.component'
 import { HttpClientModule } from '@angular/common/http'
@@ -27,7 +27,7 @@ import { UploadDataBackgroundComponent } from './presentation/components/svg/upl
 import { UploadDataIllustrationComponent } from './presentation/components/svg/upload-data-illustration/upload-data-illustration.component'
 import { AnalysisProgressIllustrationsComponent } from './presentation/components/svg/analysis-progress-illustrations/analysis-progress-illustrations.component'
 import { FormsPageComponent } from './presentation/pages/forms-page/forms-page.component'
-import { EditorModule } from '@lib/editor'
+import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
 import { PublishPageComponent } from './presentation/pages/publish-page/publish-page.component'
 import { PublishPageIllustrationComponent } from './presentation/components/svg/publish-page-illustration/publish-page-illustration.component'
 import { SuccessPublishPageComponent } from './presentation/pages/success-publish-page/success-publish-page.component'
@@ -68,10 +68,10 @@ export function apiConfigurationFactory() {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    UiModule,
+    UiInputsModule,
     HttpClientModule,
-    I18nModule,
-    EditorModule,
+    UtilI18nModule,
+    FeatureEditorModule,
     ApiModule.forRoot(apiConfigurationFactory),
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
     StoreModule.forRoot({

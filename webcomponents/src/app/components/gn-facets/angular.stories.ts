@@ -3,7 +3,7 @@ import { withA11y } from '@storybook/addon-a11y'
 import { text, withKnobs } from '@storybook/addon-knobs'
 import { moduleMetadata } from '@storybook/angular'
 import {
-  I18nModule,
+  UtilI18nModule,
   TRANSLATE_DEFAULT_CONFIG,
 } from '../../../../../libs/common/src'
 import { ES_FIXTURE_AGGS_REQUEST } from '../../../../../libs/search/src/lib/elasticsearch/fixtures'
@@ -12,7 +12,7 @@ import { GnFacetsComponent } from './gn-facets.component'
 
 const moduleMetadatas = {
   imports: [
-    I18nModule,
+    UtilI18nModule,
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
     GnWcModule,
   ],

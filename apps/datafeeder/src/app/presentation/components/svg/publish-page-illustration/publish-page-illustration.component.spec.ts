@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { PublishPageIllustrationComponent } from './publish-page-illustration.component'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
@@ -7,12 +7,12 @@ describe('SumUpPageIllustrationComponent', () => {
   let component: PublishPageIllustrationComponent
   let fixture: ComponentFixture<PublishPageIllustrationComponent>
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [PublishPageIllustrationComponent],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
-  }))
+  })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PublishPageIllustrationComponent)
