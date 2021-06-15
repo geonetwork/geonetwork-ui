@@ -64,7 +64,7 @@ export class DataImportValidationMapPanelComponent
 
   addFeature() {
     if (!this.source) {
-      return;
+      return
     }
     this.source.clear()
     this.source.addFeatures(
