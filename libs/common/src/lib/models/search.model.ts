@@ -36,6 +36,12 @@ export enum ResultsListLayout {
   LIST = 'LIST',
   TEXT = 'TEXT',
   TITLE = 'TITLE',
+  TABLE = 'TABLE',
+}
+
+export enum FieldsList {
+  title,
+  abstract
 }
 
 export const RESULTS_PAGE_SIZE = 20

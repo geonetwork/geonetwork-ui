@@ -4,7 +4,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core'
-import { RecordSummary, ResultsListLayout } from '@lib/common'
+import { RecordSummary, ResultsListLayout, FieldsList } from '@lib/common'
 
 @Component({
   selector: 'ui-results-list',
@@ -19,6 +19,9 @@ export class ResultsListComponent implements OnInit {
   layoutEnum = ResultsListLayout
 
   constructor() {}
+    fields: any
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.fields = FieldsList;
+  }
 }
