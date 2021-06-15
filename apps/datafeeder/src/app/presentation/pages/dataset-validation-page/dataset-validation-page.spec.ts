@@ -88,24 +88,20 @@ describe('DatasetValidationPageComponent', () => {
       fixture.detectChanges()
     })
 
-    it('fetch bounds and geometry', () => {
-      expect(fileUploadApiServiceMock.getBounds).toHaveBeenCalledWith(
-        1,
-        'f_name',
-        proj,
-        true
-      )
-      expect(fileUploadApiServiceMock.getSampleFeature).toHaveBeenCalledWith(
-        1,
-        'f_name',
-        0,
-        undefined,
-        proj,
-        true
-      )
-
-      expect(component.geoJSONData).toEqual({ id: 'feature_id' })
+    it('fetch bounds', () => {
+      const args = ['1', 'f_name', proj, undefined]
+      expect(fileUploadApiServiceMock.getBounds.mock.calls).toEqual([
+        [...args],
+        [...args],
+      ])
       expect(component.geoJSONBBox).toBeDefined()
+    })
+    it('fetch feature', () => {
+      const args = ['1', 'f_name', 0, undefined, proj, undefined]
+      expect(fileUploadApiServiceMock.getSampleFeature).toHaveBeenCalledWith(
+        ...args
+      )
+      expect(component.geoJSONData).toEqual({ id: 'feature_id' })
     })
   })
 

@@ -1,12 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { LogService } from '@lib/common'
 import {
   AnalysisStatusEnumApiModel,
   BoundingBoxApiModel,
@@ -18,7 +12,7 @@ import { WizardService } from '@lib/editor'
 import Feature from 'ol/Feature'
 import GeoJSON from 'ol/format/GeoJSON'
 import { fromExtent } from 'ol/geom/Polygon'
-import { forkJoin, Subscription } from 'rxjs'
+import { Subscription } from 'rxjs'
 import { take } from 'rxjs/operators'
 import SETTINGS from '../../../../settings'
 import { config as wizardConfig } from '../../../configs/wizard.config'
@@ -48,8 +42,8 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   dataset: DatasetUploadStatusApiModel
 
   featureIndex = 0
-  crs = ''
-  encoding = ''
+  crs: string
+  encoding: string
 
   numOfEntities = 0
   numberOfSteps: number
@@ -57,12 +51,10 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   private routeParamsSub: Subscription
   private rootId: number
   private format = new GeoJSON({})
-  private nativeName = ''
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private logService: LogService,
     private wizard: WizardService,
     private fileUploadApiService: FileUploadApiService,
     private facade: DatafeederFacade
@@ -86,7 +78,6 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
           }
 
           this.dataset = job.datasets[0]
-          this.nativeName = this.dataset.name
           this.numOfEntities = this.dataset.featureCount
           this.crs = this.dataset.nativeBounds?.crs?.srs
           this.encoding = this.dataset.encoding
@@ -94,47 +85,49 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
             this.refSystem = []
           }
 
-          forkJoin([
-            this.fileUploadApiService.getBounds(
-              id,
-              this.dataset.name,
-              viewSrs,
-              true
-            ),
-            this.fileUploadApiService.getSampleFeature(
-              id,
-              this.dataset.name,
-              this.featureIndex,
-              undefined,
-              viewSrs,
-              true
-            ),
-          ]).subscribe(([bbox, feature]) => {
-            const { minx, miny, maxx, maxy } = bbox as BoundingBoxApiModel
-            this.geoJSONBBox = this.format.writeFeatureObject(
-              new Feature({ geometry: fromExtent([minx, miny, maxx, maxy]) }),
-              { featureProjection: viewSrs }
-            )
-            this.geoJSONData = feature as object // No more precision in API
-          })
+          this.loadBounds()
+          this.loadSampleFeature()
         })
     })
   }
 
-  handleEncodingChange(encoding) {
+  loadSampleFeature() {
     this.fileUploadApiService
       .getSampleFeature(
         this.rootId.toString(),
         this.dataset.name,
         this.featureIndex,
-        encoding
+        this.encoding,
+        viewSrs,
+        this.crs
       )
       .subscribe((feature) => (this.geoJSONData = feature))
   }
 
+  loadBounds() {
+    this.fileUploadApiService
+      .getBounds(this.rootId.toString(), this.dataset.name, viewSrs, this.crs)
+      .subscribe((bbox: BoundingBoxApiModel) => {
+        const { minx, miny, maxx, maxy } = bbox
+        this.geoJSONBBox = this.format.writeFeatureObject(
+          new Feature({ geometry: fromExtent([minx, miny, maxx, maxy]) }),
+          { featureProjection: viewSrs }
+        )
+      })
+  }
+
+  handleEncodingChange(encoding) {
+    this.encoding = encoding
+    this.loadSampleFeature()
+  }
+
   handleCrsChange(crs) {
+    if (crs === '') {
+      return
+    }
     this.crs = crs
-    console.log(`CRS changed to «${crs}»`)
+    this.loadBounds()
+    this.loadSampleFeature()
   }
 
   submitValidation() {
