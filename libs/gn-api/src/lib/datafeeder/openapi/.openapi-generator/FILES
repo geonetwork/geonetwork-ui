@@ -3,6 +3,7 @@
 README.md
 api.module.ts
 api/api.ts
+api/config.api.service.ts
 api/dataPublishing.api.service.ts
 api/fileUpload.api.service.ts
 configuration.ts
@@ -21,6 +22,7 @@ model/./property.api.model.ts
 model/./publishJobStatus.api.model.ts
 model/./publishRequest.api.model.ts
 model/./publishStatusEnum.api.model.ts
+model/./publishStepEnum.api.model.ts
 model/./uploadJobStatus.api.model.ts
 model/models.ts
 variables.ts
