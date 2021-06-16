@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core'
-import { SortParams } from '@geonetwork-ui/util/shared'
+import { BootstrapService, SortParams } from '@geonetwork-ui/util/shared'
 import { NameList, SearchParams } from 'elasticsearch'
 import { SearchStateSearch } from '../state/reducer'
 import { ElasticsearchMetadataModels, ElasticSearchSources } from './constant'
+import { Observable } from 'rxjs'
+import { map, take } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ElasticsearchService {
-  constructor() {}
+  constructor(private bootstrap: BootstrapService) {}
+
+  uiConf = this.bootstrap.uiConfReady('srv').pipe(take(1))
 
   getSearchRequestBody(
     state: SearchStateSearch,
@@ -87,6 +91,34 @@ export class ElasticsearchService {
       query: this.buildPayloadQuery(state),
     }
     return payload
+  }
+
+  buildAutocompletePayload(query: string): Observable<SearchParams> {
+    return this.uiConf.pipe(
+      map((config) => {
+        const template = config.mods.search.autocompleteConfig
+        return {
+          ...template,
+          query: {
+            ...template.query,
+            bool: {
+              ...template.query.bool,
+              must: [
+                {
+                  multi_match: {
+                    ...template.query.bool.must[0].multi_match,
+                    query,
+                  },
+                },
+                ...template.query.bool.must.filter(
+                  (clause) => !('multi_match' in clause)
+                ),
+              ],
+            },
+          },
+        }
+      })
+    )
   }
 
   combineQueryGroups(queryGroups) {

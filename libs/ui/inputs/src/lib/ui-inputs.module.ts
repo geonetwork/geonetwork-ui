@@ -15,6 +15,8 @@ import { DragAndDropFileInputComponent } from './drag-and-drop-file-input/drag-a
 import { DropdownSelectorComponent } from './dropdown-selector/dropdown-selector.component'
 import { TextAreaComponent } from './text-area/text-area.component'
 import { TextInputComponent } from './text-input/text-input.component'
+import { MatAutocompleteModule } from '@angular/material/autocomplete'
+import { MatIconModule } from '@angular/material/icon'
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { TextInputComponent } from './text-input/text-input.component'
     TagInputModule,
     AngularMyDatePickerModule,
     UtilSharedModule,
+    MatAutocompleteModule,
+    MatIconModule,
   ],
   exports: [
     DropdownSelectorComponent,

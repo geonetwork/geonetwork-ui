@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { AutocompleteComponent } from './autocomplete.component'
+import { MatAutocompleteModule } from '@angular/material/autocomplete'
+import { ReactiveFormsModule } from '@angular/forms'
 
 describe('AutocompleteComponent', () => {
   let component: AutocompleteComponent
@@ -8,6 +10,7 @@ describe('AutocompleteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [MatAutocompleteModule, ReactiveFormsModule],
       declarations: [AutocompleteComponent],
     }).compileComponents()
   })

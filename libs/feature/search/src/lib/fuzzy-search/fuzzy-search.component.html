@@ -1,5 +1,4 @@
-<ui-text-input
-  #searchText
-  [hint]="'search.field.any.placeholder' | translate"
-  [value]="currentTextSearch$ | async"
-></ui-text-input>
+<ui-autocomplete
+  [placeholder]="'search.field.any.placeholder' | translate"
+  (changed)="handleSearchTextChange($event)"
+></ui-autocomplete>

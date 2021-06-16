@@ -1,7 +1,32 @@
-<div class="form-group">
+<div class="relative">
   <input
+    #searchInput
     type="text"
-    class="form-control form-control-lg"
+    class="appearance-none border border-gray-300 p-2 leading-tight rounded w-full text-gray-700 focus:border-primary"
     [placeholder]="placeholder"
+    [formControl]="control"
+    [matAutocomplete]="auto"
+    (keyup.enter)="handleSelection($event.target.value)"
   />
+  <button
+    class="text-primary hover:text-primary-lighter absolute clear-btn"
+    *ngIf="searchInput.value"
+    matSuffix
+    aria-label="Clear"
+    (click)="clear()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
 </div>
+<mat-autocomplete
+  #auto="matAutocomplete"
+  (optionSelected)="handleSelection($event.option.value)"
+>
+  <mat-option
+    *ngFor="let suggestion of suggestions$ | async"
+    [value]="suggestion"
+    class="p-2 text-sm text-primary-lighter"
+  >
+    {{ suggestion }}
+  </mat-option>
+</mat-autocomplete>

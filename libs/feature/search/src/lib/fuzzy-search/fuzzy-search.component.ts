@@ -2,13 +2,17 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
   ViewChild,
 } from '@angular/core'
-import { TextInputComponent } from '@geonetwork-ui/ui/inputs'
-import { Subscription } from 'rxjs'
-import { debounceTime } from 'rxjs/operators'
+import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
 import { SearchFacade } from '../state/search.facade'
+import {
+  ElasticsearchMapper,
+  ElasticsearchService,
+} from '@geonetwork-ui/feature/search'
+import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
+import { map, switchMap } from 'rxjs/operators'
+import { SearchResponse } from 'elasticsearch'
 
 @Component({
   selector: 'search-fuzzy-search',
@@ -16,26 +20,39 @@ import { SearchFacade } from '../state/search.facade'
   styleUrls: ['./fuzzy-search.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FuzzySearchComponent implements OnDestroy, AfterViewInit {
-  @ViewChild('searchText') searchText: TextInputComponent
+export class FuzzySearchComponent implements AfterViewInit {
+  @ViewChild(AutocompleteComponent) autocomplete: AutocompleteComponent
 
-  currentTextSearch$
-
-  subs = new Subscription()
-
-  constructor(private searchFacade: SearchFacade) {
-    this.currentTextSearch$ = this.searchFacade.searchFilters$
-  }
+  constructor(
+    private searchFacade: SearchFacade,
+    private searchService: SearchApiService,
+    private esMapper: ElasticsearchMapper,
+    private esService: ElasticsearchService
+  ) {}
 
   ngAfterViewInit(): void {
-    this.subs.add(
-      this.searchText.valueChange.pipe(debounceTime(400)).subscribe((value) => {
-        this.searchFacade.setFilters({ any: value })
-      })
-    )
+    this.autocomplete.action = (query) =>
+      this.esService
+        .buildAutocompletePayload(query)
+        .pipe(
+          switchMap((payload) =>
+            this.searchService
+              .search('bucket', JSON.stringify(payload))
+              .pipe(
+                map((response: SearchResponse<any>) =>
+                  this.esMapper
+                    .toRecordSummaries(
+                      response,
+                      this.searchService.configuration.basePath
+                    )
+                    .map((record) => record.title)
+                )
+              )
+          )
+        )
   }
 
-  ngOnDestroy(): void {
-    this.subs.unsubscribe()
+  handleSearchTextChange(newValue: string) {
+    this.searchFacade.setFilters({ any: newValue })
   }
 }

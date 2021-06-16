@@ -3,8 +3,27 @@ import {
   ElasticsearchService,
   initialState,
 } from '@geonetwork-ui/feature/search'
+import { Observable } from 'rxjs'
+import { BootstrapService } from '@geonetwork-ui/util/shared'
 
 const initialStateSearch = initialState[DEFAULT_SEARCH_KEY]
+
+let autocompleteConfig
+
+class MockBootstrapService {
+  uiConfReady(uiIdentifier: string): Observable<any> {
+    return new Observable((observer) => {
+      observer.next({
+        mods: {
+          search: {
+            autocompleteConfig,
+          },
+        },
+      })
+      observer.complete()
+    })
+  }
+}
 
 describe('ElasticsearchService', () => {
   let service: ElasticsearchService
@@ -12,7 +31,9 @@ describe('ElasticsearchService', () => {
   let state
 
   beforeEach(() => {
-    service = new ElasticsearchService()
+    service = new ElasticsearchService(
+      new MockBootstrapService() as BootstrapService
+    )
   })
 
   it('should be created', () => {
@@ -206,6 +227,70 @@ describe('ElasticsearchService', () => {
         expect(filter).toEqual([
           { term: { 'cl_hierarchyLevel.key': 'service' } },
         ])
+      })
+    })
+  })
+
+  describe('#buildAutocompletePayload', () => {
+    describe('given an autocomplete config', () => {
+      beforeEach(() => {
+        autocompleteConfig = {
+          query: {
+            bool: {
+              must: [
+                {
+                  multi_match: {
+                    query: '',
+                    type: 'bool_prefix',
+                    fields: [
+                      'resourceTitleObject.*',
+                      'resourceAbstractObject.*',
+                      'tag',
+                      'resourceIdentifier',
+                    ],
+                  },
+                },
+                {
+                  terms: {
+                    isTemplate: ['n'],
+                  },
+                },
+              ],
+            },
+          },
+          _source: ['uuid', 'id', 'title', 'resourceTitleObject'],
+        }
+      })
+      it('returns the search payload', async () => {
+        const payload = await service
+          .buildAutocompletePayload('blarg')
+          .toPromise()
+        expect(payload).toEqual({
+          query: {
+            bool: {
+              must: [
+                {
+                  multi_match: {
+                    query: 'blarg',
+                    type: 'bool_prefix',
+                    fields: [
+                      'resourceTitleObject.*',
+                      'resourceAbstractObject.*',
+                      'tag',
+                      'resourceIdentifier',
+                    ],
+                  },
+                },
+                {
+                  terms: {
+                    isTemplate: ['n'],
+                  },
+                },
+              ],
+            },
+          },
+          _source: ['uuid', 'id', 'title', 'resourceTitleObject'],
+        })
       })
     })
   })
