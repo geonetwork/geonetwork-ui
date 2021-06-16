@@ -4,7 +4,7 @@
     [ngTemplateOutlet]="block"
   ></ng-container>
   <div *ngSwitchCase="layoutEnum.TABLE" class="gap-4 p-4">
-      <ui-record-table [record]="records" [fieldsTable]="fields"></ui-record-table>
+      <ui-results-table [record]="records" [fieldsTable]="fields"></ui-results-table>
   </div>
   <div *ngSwitchCase="layoutEnum.LIST" class="gap-4 p-4">
     <div class="pb-4" *ngFor="let record of records">
