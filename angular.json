@@ -522,50 +522,14 @@
       "root": "libs/data-access/gn4",
       "sourceRoot": "libs/data-access/gn4/src",
       "prefix": "geonetwork-ui",
-      "architect": {
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/data-access/gn4"],
-          "options": {
-            "jestConfig": "libs/data-access/gn4/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/data-access/gn4/src/**/*.ts",
-              "libs/data-access/gn4/src/**/*.html"
-            ]
-          }
-        }
-      }
+      "architect": {}
     },
     "data-access-datafeeder": {
       "projectType": "library",
       "root": "libs/data-access/datafeeder",
       "sourceRoot": "libs/data-access/datafeeder/src",
       "prefix": "geonetwork-ui",
-      "architect": {
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/data-access/datafeeder"],
-          "options": {
-            "jestConfig": "libs/data-access/datafeeder/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/data-access/datafeeder/src/**/*.ts",
-              "libs/data-access/datafeeder/src/**/*.html"
-            ]
-          }
-        }
-      }
+      "architect": {}
     },
     "util-shared": {
       "projectType": "library",
