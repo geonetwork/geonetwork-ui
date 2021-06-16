@@ -48,7 +48,7 @@
             "polyfills": "apps/search/src/polyfills.ts",
             "tsConfig": "apps/search/tsconfig.app.json",
             "assets": ["apps/search/src/favicon.ico", "apps/search/src/assets"],
-            "styles": ["apps/search/src/styles.css"],
+            "styles": ["apps/search/src/styles.css", "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"],
             "scripts": []
           },
           "configurations": {
