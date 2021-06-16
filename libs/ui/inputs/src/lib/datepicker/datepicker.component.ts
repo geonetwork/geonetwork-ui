@@ -34,12 +34,12 @@ export class DatepickerComponent implements OnInit, AfterViewInit {
 
   initializeDate(date: Date) {
     this.model = {
-      singleDate: { jsdate: date || new Date() },
+      singleDate: { jsDate: date || new Date() },
     }
   }
 
   ngAfterViewInit() {
     // to delay emit after parent viewinit completed
-    setTimeout(() => this.selectedDate.emit(this.model.singleDate.jsdate))
+    setTimeout(() => this.selectedDate.emit(this.model.singleDate.jsDate))
   }
 }
