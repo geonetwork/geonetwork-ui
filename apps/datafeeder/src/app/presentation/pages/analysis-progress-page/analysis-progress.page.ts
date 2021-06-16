@@ -10,7 +10,7 @@ import { interval, Observable, Subscription } from 'rxjs'
 import { filter, mergeMap, switchMap, take, tap } from 'rxjs/operators'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
 
-const { PENDING, ANALYZING, DONE } = AnalysisStatusEnumApiModel
+const { Pending, Analyzing, Done } = AnalysisStatusEnumApiModel
 
 @Component({
   selector: 'app-analysis-progress-page',
@@ -40,7 +40,7 @@ export class AnalysisProgressPageComponent implements OnInit, OnDestroy {
           tap((job: UploadJobStatusApiModel) => (this.progress = job.progress)),
           filter(
             (job: UploadJobStatusApiModel) =>
-              ![PENDING, ANALYZING].includes(job.status)
+              ![Pending, Analyzing].includes(job.status)
           ),
           take(1)
         )
@@ -55,7 +55,7 @@ export class AnalysisProgressPageComponent implements OnInit, OnDestroy {
   }
 
   onJobFinish(job: UploadJobStatusApiModel) {
-    const done = job.status === DONE && job.datasets?.length > 0
+    const done = job.status === Done && job.datasets?.length > 0
     this.router.navigate([done ? 'validation' : '/'], {
       relativeTo: this.activatedRoute,
       queryParams: done ? {} : { error: 'analysis' },

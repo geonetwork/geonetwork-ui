@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
-import { IMyMonthLabels } from 'mydatepicker'
+import { IMyMonthLabels } from 'angular-mydatepicker'
 import { forkJoin, Observable } from 'rxjs'
 import { MONTH_OF_THE_YEAR } from '../components/configs/datepicker.config'
 import { WizardFieldModel } from '../models/wizard-field.model'

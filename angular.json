@@ -435,7 +435,8 @@
               "browserTarget": "datafeeder:build:production"
             },
             "development": {
-              "browserTarget": "datafeeder:build:development"
+              "browserTarget": "datafeeder:build:development",
+              "proxyConfig": "proxy-config.js"
             }
           },
           "defaultConfiguration": "development"

@@ -5,6 +5,7 @@ import {
   BASE_PATH,
   Configuration,
 } from '@geonetwork-ui/data-access/datafeeder'
+import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { environment } from '../environments/environment'
@@ -73,6 +74,7 @@ export function apiConfigurationFactory() {
     BrowserModule,
     AppRoutingModule,
     UiInputsModule,
+    UiWidgetsModule,
     HttpClientModule,
     UtilI18nModule,
     FeatureEditorModule,

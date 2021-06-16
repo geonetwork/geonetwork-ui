@@ -7,10 +7,10 @@ import {
   ViewChild,
 } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { IMyOptions } from 'angular-mydatepicker'
 import { WizardFieldModel } from '../../models/wizard-field.model'
 import { WizardFieldType } from '../../models/wizard-field.type'
 import { WizardService } from '../../services/wizard.service'
-import { IMyDpOptions } from 'mydatepicker'
 import { DATEPICKER_OPTIONS } from '../configs/datepicker.config'
 import {
   ChipsInputComponent,
@@ -48,7 +48,7 @@ export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('datepicker') datepicker: DatepickerComponent
   @ViewChild('dropdown') dropdown: DropdownSelectorComponent
 
-  datepickerOptions: IMyDpOptions = DATEPICKER_OPTIONS
+  datepickerOptions: IMyOptions = DATEPICKER_OPTIONS
   subs = new Subscription()
 
   get wizardFieldType(): typeof WizardFieldType {

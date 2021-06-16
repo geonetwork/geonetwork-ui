@@ -77,7 +77,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
       this.facade.upload$
         .pipe(take(1))
         .subscribe((job: UploadJobStatusApiModel) => {
-          if (job.status === AnalysisStatusEnumApiModel.ERROR) {
+          if (job.status === AnalysisStatusEnumApiModel.Error) {
             this.router.navigate(['/'], {
               relativeTo: this.activatedRoute,
               queryParams: { error: 'analysis' },

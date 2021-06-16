@@ -27,11 +27,11 @@ export class UploadProgressGuard implements CanActivate {
     return this.fileUploadApiService.findUploadJob(id).pipe(
       filter((job) => !!job),
       map((job) => {
-        if (job.status === AnalysisStatusEnumApiModel.DONE) {
+        if (job.status === AnalysisStatusEnumApiModel.Done) {
           this.router.navigate([state.url, `validation`])
           return false
         }
-        if (job.status === AnalysisStatusEnumApiModel.ERROR) {
+        if (job.status === AnalysisStatusEnumApiModel.Error) {
           this.router.navigate([`/`])
           return false
         }

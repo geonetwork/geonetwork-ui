@@ -21,7 +21,7 @@ export interface DatasetMetadataApiModel {
   /**
    * Metadata abtract text for the dataset
    */
-  _abstract: string
+  abstract: string
   /**
    * metadata keyworkds for the dataset
    */
