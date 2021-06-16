@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
+import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import {
   getDefaultLang,
   UtilI18nModule,
@@ -18,6 +19,7 @@ import { environment } from '../environments/environment'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { MainSearchComponent } from './main-search/main-search.component'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
@@ -33,9 +35,11 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     TranslateModule.forRoot(TRANSLATE_GEONETWORK_CONFIG),
     FeatureSearchModule,
     FeatureCatalogModule,
+    UiLayoutModule,
     StoreModule.forRoot({}, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot(),
+    NoopAnimationsModule,
   ],
   providers: [
     {
