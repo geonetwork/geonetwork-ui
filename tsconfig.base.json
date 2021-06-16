@@ -35,12 +35,8 @@
         "libs/data-access/datafeeder/src/index.ts"
       ],
       "@geonetwork-ui/util/shared": ["libs/util/shared/src/index.ts"]
-    }
-  },
-  "angularCompilerOptions": {
-    "fullTemplateTypeCheck": false,
-    "strictInjectionParameters": true,
-    "strictTemplates": false
+    },
+    "allowJs": true
   },
   "exclude": ["node_modules", "tmp"]
 }
