@@ -9,13 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ReplaceEntryChangeApiModel } from './replaceEntryChange.api.model';
+import { ReplaceEntryChangeApiModel } from './replaceEntryChange.api.model'
 
 export interface ReplaceReportApiModel {
-  message?: string;
-  uuid?: string;
-  draft?: boolean;
-  approved?: boolean;
-  date?: string;
-  elementChanges?: Array<ReplaceEntryChangeApiModel>;
+  message?: string
+  uuid?: string
+  draft?: boolean
+  approved?: boolean
+  date?: string
+  elementChanges?: Array<ReplaceEntryChangeApiModel>
 }

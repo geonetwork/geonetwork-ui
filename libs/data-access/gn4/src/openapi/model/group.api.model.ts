@@ -9,19 +9,19 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { MetadataCategoryApiModel } from './metadataCategory.api.model';
+import { MetadataCategoryApiModel } from './metadataCategory.api.model'
 
 export interface GroupApiModel {
-  logo?: string;
-  website?: string;
-  defaultCategory?: MetadataCategoryApiModel;
-  allowedCategories?: Array<MetadataCategoryApiModel>;
-  enableAllowedCategories?: boolean;
-  description?: string;
-  id?: number;
-  email?: string;
-  referrer?: number;
-  reserved?: boolean;
-  name?: string;
-  label?: { [key: string]: string };
+  logo?: string
+  website?: string
+  defaultCategory?: MetadataCategoryApiModel
+  allowedCategories?: Array<MetadataCategoryApiModel>
+  enableAllowedCategories?: boolean
+  description?: string
+  id?: number
+  email?: string
+  referrer?: number
+  reserved?: boolean
+  name?: string
+  label?: { [key: string]: string }
 }

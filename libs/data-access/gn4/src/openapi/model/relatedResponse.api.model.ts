@@ -9,32 +9,32 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { FcatApiModel } from './fcat.api.model';
-import { SourceApiModel } from './source.api.model';
-import { RelatedApiModel } from './related.api.model';
-import { HasfeaturecatsApiModel } from './hasfeaturecats.api.model';
-import { HassourceApiModel } from './hassource.api.model';
-import { ParentApiModel } from './parent.api.model';
-import { ThumbnailApiModel } from './thumbnail.api.model';
-import { SiblingsApiModel } from './siblings.api.model';
-import { OnlineApiModel } from './online.api.model';
-import { ServiceApiModel } from './service.api.model';
-import { AssociatedApiModel } from './associated.api.model';
-import { DatasetApiModel } from './dataset.api.model';
-import { ChildrenApiModel } from './children.api.model';
+import { FcatApiModel } from './fcat.api.model'
+import { SourceApiModel } from './source.api.model'
+import { RelatedApiModel } from './related.api.model'
+import { HasfeaturecatsApiModel } from './hasfeaturecats.api.model'
+import { HassourceApiModel } from './hassource.api.model'
+import { ParentApiModel } from './parent.api.model'
+import { ThumbnailApiModel } from './thumbnail.api.model'
+import { SiblingsApiModel } from './siblings.api.model'
+import { OnlineApiModel } from './online.api.model'
+import { ServiceApiModel } from './service.api.model'
+import { AssociatedApiModel } from './associated.api.model'
+import { DatasetApiModel } from './dataset.api.model'
+import { ChildrenApiModel } from './children.api.model'
 
 export interface RelatedResponseApiModel {
-  children?: ChildrenApiModel;
-  parent?: ParentApiModel;
-  siblings?: SiblingsApiModel;
-  associated?: AssociatedApiModel;
-  services?: ServiceApiModel;
-  datasets?: DatasetApiModel;
-  fcats?: FcatApiModel;
-  hasfeaturecats?: HasfeaturecatsApiModel;
-  sources?: SourceApiModel;
-  hassources?: HassourceApiModel;
-  related?: RelatedApiModel;
-  onlines?: OnlineApiModel;
-  thumbnails?: ThumbnailApiModel;
+  children?: ChildrenApiModel
+  parent?: ParentApiModel
+  siblings?: SiblingsApiModel
+  associated?: AssociatedApiModel
+  services?: ServiceApiModel
+  datasets?: DatasetApiModel
+  fcats?: FcatApiModel
+  hasfeaturecats?: HasfeaturecatsApiModel
+  sources?: SourceApiModel
+  hassources?: HassourceApiModel
+  related?: RelatedApiModel
+  onlines?: OnlineApiModel
+  thumbnails?: ThumbnailApiModel
 }

@@ -11,15 +11,15 @@
  */
 
 export interface UserSecurityApiModel {
-  authType?: string;
-  nodeId?: string;
-  securityNotificationsString?: UserSecurityApiModel;
-  securityNotifications?: Set<UserSecurityApiModel.SecurityNotificationsEnum>;
+  authType?: string
+  nodeId?: string
+  securityNotificationsString?: UserSecurityApiModel
+  securityNotifications?: Set<UserSecurityApiModel.SecurityNotificationsEnum>
 }
 export namespace UserSecurityApiModel {
-  export type SecurityNotificationsEnum = 'UPDATE_HASH_REQUIRED' | 'UNKNOWN';
+  export type SecurityNotificationsEnum = 'UPDATE_HASH_REQUIRED' | 'UNKNOWN'
   export const SecurityNotificationsEnum = {
     UpdateHashRequired: 'UPDATE_HASH_REQUIRED' as SecurityNotificationsEnum,
     Unknown: 'UNKNOWN' as SecurityNotificationsEnum,
-  };
+  }
 }

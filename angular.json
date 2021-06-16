@@ -91,7 +91,8 @@
               "browserTarget": "search:build:production"
             },
             "development": {
-              "browserTarget": "search:build:development"
+              "browserTarget": "search:build:development",
+              "proxyConfig": "proxy-config.js"
             }
           },
           "defaultConfiguration": "development"

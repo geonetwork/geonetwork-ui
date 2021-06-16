@@ -17,9 +17,9 @@ export interface CRSApiModel {
   /**
    * Coordinate Reference System\'s EPSG identifier. Can be null if a matching reference system couldn\'t be found in the EPSG database.
    */
-  srs?: string;
+  srs?: string
   /**
    * Coordinate Reference System\'s Well Known Text representation. Despite the \'srs\' identifier being found or not, the WKT representation is still available.
    */
-  wkt?: string;
+  wkt?: string
 }

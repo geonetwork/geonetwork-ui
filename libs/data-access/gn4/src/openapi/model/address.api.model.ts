@@ -11,10 +11,10 @@
  */
 
 export interface AddressApiModel {
-  state?: string;
-  address?: string;
-  id?: number;
-  city?: string;
-  zip?: string;
-  country?: string;
+  state?: string
+  address?: string
+  id?: number
+  city?: string
+  zip?: string
+  country?: string
 }

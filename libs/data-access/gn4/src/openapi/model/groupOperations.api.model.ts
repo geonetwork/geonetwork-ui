@@ -11,6 +11,6 @@
  */
 
 export interface GroupOperationsApiModel {
-  operations?: { [key: string]: boolean };
-  group?: number;
+  operations?: { [key: string]: boolean }
+  group?: number
 }

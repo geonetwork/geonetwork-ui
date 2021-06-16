@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { BoundingBoxApiModel } from './boundingBox.api.model';
-import { AnalysisStatusEnumApiModel } from './analysisStatusEnum.api.model';
+import { BoundingBoxApiModel } from './boundingBox.api.model'
+import { AnalysisStatusEnumApiModel } from './analysisStatusEnum.api.model'
 
 /**
  * Describes a recognized uploaded dataset
@@ -19,19 +19,19 @@ export interface DatasetUploadStatusApiModel {
   /**
    * Name of the dataset in the uploaded package
    */
-  name?: string;
-  status?: AnalysisStatusEnumApiModel;
+  name?: string
+  status?: AnalysisStatusEnumApiModel
   /**
    * short description of the error that prevents the dataset to be analysed
    */
-  error?: string;
+  error?: string
   /**
    * Number of features in the dataset
    */
-  featureCount?: number;
-  nativeBounds?: BoundingBoxApiModel;
+  featureCount?: number
+  nativeBounds?: BoundingBoxApiModel
   /**
    * detected charset
    */
-  encoding?: string;
+  encoding?: string
 }

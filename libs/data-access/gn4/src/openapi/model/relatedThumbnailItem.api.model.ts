@@ -9,11 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { MultilingualValueApiModel } from './multilingualValue.api.model';
+import { MultilingualValueApiModel } from './multilingualValue.api.model'
 
 export interface RelatedThumbnailItemApiModel {
-  id?: string;
-  url?: MultilingualValueApiModel;
-  type?: string;
-  title: MultilingualValueApiModel;
+  id?: string
+  url?: MultilingualValueApiModel
+  type?: string
+  title: MultilingualValueApiModel
 }

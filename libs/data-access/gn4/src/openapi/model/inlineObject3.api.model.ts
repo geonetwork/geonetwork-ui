@@ -11,5 +11,5 @@
  */
 
 export interface InlineObject3ApiModel {
-  file?: Blob;
+  file?: Blob
 }

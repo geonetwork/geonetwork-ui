@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { LocalizedStringApiModel } from './localizedString.api.model';
+import { LocalizedStringApiModel } from './localizedString.api.model'
 
 export interface DescriptionApiModel {
-  value?: Array<LocalizedStringApiModel>;
+  value?: Array<LocalizedStringApiModel>
 }

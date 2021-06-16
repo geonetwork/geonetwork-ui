@@ -11,9 +11,9 @@
  */
 
 export interface CrsApiModel {
-  code?: string;
-  authority?: string;
-  version?: string;
-  codeSpace?: string;
-  description?: string;
+  code?: string
+  authority?: string
+  version?: string
+  codeSpace?: string
+  description?: string
 }

@@ -11,9 +11,9 @@
  */
 
 export interface UserGroupIdApiModel {
-  profile?: UserGroupIdApiModel.ProfileEnum;
-  groupId?: number;
-  userId?: number;
+  profile?: UserGroupIdApiModel.ProfileEnum
+  groupId?: number
+  userId?: number
 }
 export namespace UserGroupIdApiModel {
   export type ProfileEnum =
@@ -23,7 +23,7 @@ export namespace UserGroupIdApiModel {
     | 'Editor'
     | 'RegisteredUser'
     | 'Guest'
-    | 'Monitor';
+    | 'Monitor'
   export const ProfileEnum = {
     Administrator: 'Administrator' as ProfileEnum,
     UserAdmin: 'UserAdmin' as ProfileEnum,
@@ -32,5 +32,5 @@ export namespace UserGroupIdApiModel {
     RegisteredUser: 'RegisteredUser' as ProfileEnum,
     Guest: 'Guest' as ProfileEnum,
     Monitor: 'Monitor' as ProfileEnum,
-  };
+  }
 }

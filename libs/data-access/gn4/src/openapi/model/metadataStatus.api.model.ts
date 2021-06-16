@@ -9,24 +9,24 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ElementApiModel } from './element.api.model';
-import { StatusValueApiModel } from './statusValue.api.model';
-import { ISODateApiModel } from './iSODate.api.model';
+import { ElementApiModel } from './element.api.model'
+import { StatusValueApiModel } from './statusValue.api.model'
+import { ISODateApiModel } from './iSODate.api.model'
 
 export interface MetadataStatusApiModel {
-  id?: number;
-  metadataId?: number;
-  userId?: number;
-  changeMessage?: string;
-  statusValue?: StatusValueApiModel;
-  previousState?: string;
-  currentState?: string;
-  uuid?: string;
-  titles?: string;
-  owner?: number;
-  changeDate?: ISODateApiModel;
-  dueDate?: ISODateApiModel;
-  closeDate?: ISODateApiModel;
-  asXml?: ElementApiModel;
-  relatedMetadataStatusId?: number;
+  id?: number
+  metadataId?: number
+  userId?: number
+  changeMessage?: string
+  statusValue?: StatusValueApiModel
+  previousState?: string
+  currentState?: string
+  uuid?: string
+  titles?: string
+  owner?: number
+  changeDate?: ISODateApiModel
+  dueDate?: ISODateApiModel
+  closeDate?: ISODateApiModel
+  asXml?: ElementApiModel
+  relatedMetadataStatusId?: number
 }

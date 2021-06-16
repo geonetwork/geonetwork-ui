@@ -11,7 +11,7 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core'
 import {
   HttpClient,
   HttpHeaders,
@@ -19,28 +19,28 @@ import {
   HttpResponse,
   HttpEvent,
   HttpParameterCodec,
-} from '@angular/common/http';
-import { CustomHttpParameterCodec } from '../encoder';
-import { Observable } from 'rxjs';
+} from '@angular/common/http'
+import { CustomHttpParameterCodec } from '../encoder'
+import { Observable } from 'rxjs'
 
-import { CrsApiModel } from '../model/models';
-import { ElementApiModel } from '../model/models';
-import { InlineObject2ApiModel } from '../model/models';
-import { InlineObject3ApiModel } from '../model/models';
-import { KeywordBeanApiModel } from '../model/models';
-import { SimpleMetadataProcessingReportApiModel } from '../model/models';
+import { CrsApiModel } from '../model/models'
+import { ElementApiModel } from '../model/models'
+import { InlineObject2ApiModel } from '../model/models'
+import { InlineObject3ApiModel } from '../model/models'
+import { KeywordBeanApiModel } from '../model/models'
+import { SimpleMetadataProcessingReportApiModel } from '../model/models'
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
-import { Configuration } from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables'
+import { Configuration } from '../configuration'
 
 @Injectable({
   providedIn: 'root',
 })
 export class RegistriesApiService {
-  protected basePath = 'https://apps.titellus.net/geonetwork/srv/api';
-  public defaultHeaders = new HttpHeaders();
-  public configuration = new Configuration();
-  public encoder: HttpParameterCodec;
+  protected basePath = 'https://apps.titellus.net/geonetwork/srv/api'
+  public defaultHeaders = new HttpHeaders()
+  public configuration = new Configuration()
+  public encoder: HttpParameterCodec
 
   constructor(
     protected httpClient: HttpClient,
@@ -48,15 +48,15 @@ export class RegistriesApiService {
     @Optional() configuration: Configuration
   ) {
     if (configuration) {
-      this.configuration = configuration;
+      this.configuration = configuration
     }
     if (typeof this.configuration.basePath !== 'string') {
       if (typeof basePath !== 'string') {
-        basePath = this.basePath;
+        basePath = this.basePath
       }
-      this.configuration.basePath = basePath;
+      this.configuration.basePath = basePath
     }
-    this.encoder = this.configuration.encoder || new CustomHttpParameterCodec();
+    this.encoder = this.configuration.encoder || new CustomHttpParameterCodec()
   }
 
   /**
@@ -64,13 +64,13 @@ export class RegistriesApiService {
    * @return true: consumes contains 'multipart/form-data', false: otherwise
    */
   private canConsumeForm(consumes: string[]): boolean {
-    const form = 'multipart/form-data';
+    const form = 'multipart/form-data'
     for (const consume of consumes) {
       if (form === consume) {
-        return true;
+        return true
       }
     }
-    return false;
+    return false
   }
 
   private addToHttpParams(
@@ -79,11 +79,11 @@ export class RegistriesApiService {
     key?: string
   ): HttpParams {
     if (typeof value === 'object' && value instanceof Date === false) {
-      httpParams = this.addToHttpParamsRecursive(httpParams, value);
+      httpParams = this.addToHttpParamsRecursive(httpParams, value)
     } else {
-      httpParams = this.addToHttpParamsRecursive(httpParams, value, key);
+      httpParams = this.addToHttpParamsRecursive(httpParams, value, key)
     }
-    return httpParams;
+    return httpParams
   }
 
   private addToHttpParamsRecursive(
@@ -92,23 +92,23 @@ export class RegistriesApiService {
     key?: string
   ): HttpParams {
     if (value == null) {
-      return httpParams;
+      return httpParams
     }
 
     if (typeof value === 'object') {
       if (Array.isArray(value)) {
-        (value as any[]).forEach(
+        ;(value as any[]).forEach(
           (elem) =>
             (httpParams = this.addToHttpParamsRecursive(httpParams, elem, key))
-        );
+        )
       } else if (value instanceof Date) {
         if (key != null) {
           httpParams = httpParams.append(
             key,
             (value as Date).toISOString().substr(0, 10)
-          );
+          )
         } else {
-          throw Error('key may not be null if value is Date');
+          throw Error('key may not be null if value is Date')
         }
       } else {
         Object.keys(value).forEach(
@@ -118,14 +118,14 @@ export class RegistriesApiService {
               value[k],
               key != null ? `${key}.${k}` : k
             ))
-        );
+        )
       }
     } else if (key != null) {
-      httpParams = httpParams.append(key, value);
+      httpParams = httpParams.append(key, value)
     } else {
-      throw Error('key may not be null if value is not object or array');
+      throw Error('key may not be null if value is not object or array')
     }
-    return httpParams;
+    return httpParams
   }
 
   /**
@@ -140,19 +140,19 @@ export class RegistriesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public deleteThesaurus(
     thesaurus: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public deleteThesaurus(
     thesaurus: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public deleteThesaurus(
     thesaurus: string,
     observe: any = 'body',
@@ -162,30 +162,30 @@ export class RegistriesApiService {
     if (thesaurus === null || thesaurus === undefined) {
       throw new Error(
         'Required parameter thesaurus was null or undefined when calling deleteThesaurus.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.delete<any>(
@@ -199,7 +199,7 @@ export class RegistriesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -213,19 +213,19 @@ export class RegistriesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<CrsApiModel>;
+  ): Observable<CrsApiModel>
   public getCrs(
     id: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpResponse<CrsApiModel>>;
+  ): Observable<HttpResponse<CrsApiModel>>
   public getCrs(
     id: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpEvent<CrsApiModel>>;
+  ): Observable<HttpEvent<CrsApiModel>>
   public getCrs(
     id: string,
     observe: any = 'body',
@@ -235,33 +235,33 @@ export class RegistriesApiService {
     if (id === null || id === undefined) {
       throw new Error(
         'Required parameter id was null or undefined when calling getCrs.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = [
         'application/json',
         'application/xml',
-      ];
+      ]
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<CrsApiModel>(
@@ -275,7 +275,7 @@ export class RegistriesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -287,43 +287,43 @@ export class RegistriesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<string>>;
+  ): Observable<Array<string>>
   public getCrsTypes(
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<string>>>;
+  ): Observable<HttpResponse<Array<string>>>
   public getCrsTypes(
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<string>>>;
+  ): Observable<HttpEvent<Array<string>>>
   public getCrsTypes(
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<string>>(
@@ -335,7 +335,7 @@ export class RegistriesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -358,7 +358,7 @@ export class RegistriesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<ElementApiModel>;
+  ): Observable<ElementApiModel>
   public getEntry(
     uuid: string,
     process?: Array<string>,
@@ -368,7 +368,7 @@ export class RegistriesApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpResponse<ElementApiModel>>;
+  ): Observable<HttpResponse<ElementApiModel>>
   public getEntry(
     uuid: string,
     process?: Array<string>,
@@ -378,7 +378,7 @@ export class RegistriesApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpEvent<ElementApiModel>>;
+  ): Observable<HttpEvent<ElementApiModel>>
   public getEntry(
     uuid: string,
     process?: Array<string>,
@@ -392,25 +392,25 @@ export class RegistriesApiService {
     if (uuid === null || uuid === undefined) {
       throw new Error(
         'Required parameter uuid was null or undefined when calling getEntry.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (process) {
       process.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'process'
-        );
-      });
+        )
+      })
     }
     if (transformation !== undefined && transformation !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>transformation,
         'transformation'
-      );
+      )
     }
     if (lang) {
       lang.forEach((element) => {
@@ -418,41 +418,41 @@ export class RegistriesApiService {
           queryParameters,
           <any>element,
           'lang'
-        );
-      });
+        )
+      })
     }
     if (schema !== undefined && schema !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>schema,
         'schema'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = [
         'application/json',
         'application/xml',
-      ];
+      ]
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<ElementApiModel>(
@@ -467,7 +467,7 @@ export class RegistriesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -494,7 +494,7 @@ export class RegistriesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<object>;
+  ): Observable<object>
   public getKeywordById(
     id: string,
     thesaurus: string,
@@ -506,7 +506,7 @@ export class RegistriesApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpResponse<object>>;
+  ): Observable<HttpResponse<object>>
   public getKeywordById(
     id: string,
     thesaurus: string,
@@ -518,7 +518,7 @@ export class RegistriesApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpEvent<object>>;
+  ): Observable<HttpEvent<object>>
   public getKeywordById(
     id: string,
     thesaurus: string,
@@ -534,24 +534,24 @@ export class RegistriesApiService {
     if (id === null || id === undefined) {
       throw new Error(
         'Required parameter id was null or undefined when calling getKeywordById.'
-      );
+      )
     }
     if (thesaurus === null || thesaurus === undefined) {
       throw new Error(
         'Required parameter thesaurus was null or undefined when calling getKeywordById.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (id !== undefined && id !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>id, 'id');
+      queryParameters = this.addToHttpParams(queryParameters, <any>id, 'id')
     }
     if (thesaurus !== undefined && thesaurus !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>thesaurus,
         'thesaurus'
-      );
+      )
     }
     if (lang) {
       lang.forEach((element) => {
@@ -559,58 +559,58 @@ export class RegistriesApiService {
           queryParameters,
           <any>element,
           'lang'
-        );
-      });
+        )
+      })
     }
     if (keywordOnly !== undefined && keywordOnly !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>keywordOnly,
         'keywordOnly'
-      );
+      )
     }
     if (transformation !== undefined && transformation !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>transformation,
         'transformation'
-      );
+      )
     }
     if (langMap !== undefined && langMap !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>langMap,
         'langMap'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
     if (accept !== undefined && accept !== null) {
-      headers = headers.set('Accept', String(accept));
+      headers = headers.set('Accept', String(accept))
     }
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = [
         'application/json',
         'application/xml',
-      ];
+      ]
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<object>(
@@ -623,7 +623,7 @@ export class RegistriesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -638,19 +638,19 @@ export class RegistriesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public getThesaurus(
     thesaurus: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public getThesaurus(
     thesaurus: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public getThesaurus(
     thesaurus: string,
     observe: any = 'body',
@@ -660,30 +660,30 @@ export class RegistriesApiService {
     if (thesaurus === null || thesaurus === undefined) {
       throw new Error(
         'Required parameter thesaurus was null or undefined when calling getThesaurus.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<any>(
@@ -697,7 +697,7 @@ export class RegistriesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -740,7 +740,7 @@ export class RegistriesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public importCsvAsThesaurus(
     type?: string,
     dir?: string,
@@ -760,7 +760,7 @@ export class RegistriesApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public importCsvAsThesaurus(
     type?: string,
     dir?: string,
@@ -780,7 +780,7 @@ export class RegistriesApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public importCsvAsThesaurus(
     type?: string,
     dir?: string,
@@ -801,30 +801,26 @@ export class RegistriesApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (type !== undefined && type !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>type,
-        'type'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>type, 'type')
     }
     if (dir !== undefined && dir !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>dir, 'dir');
+      queryParameters = this.addToHttpParams(queryParameters, <any>dir, 'dir')
     }
     if (encoding !== undefined && encoding !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>encoding,
         'encoding'
-      );
+      )
     }
     if (thesaurusNs !== undefined && thesaurusNs !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>thesaurusNs,
         'thesaurusNs'
-      );
+      )
     }
     if (languages) {
       languages.forEach((element) => {
@@ -832,29 +828,29 @@ export class RegistriesApiService {
           queryParameters,
           <any>element,
           'languages'
-        );
-      });
+        )
+      })
     }
     if (thesaurusTitle !== undefined && thesaurusTitle !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>thesaurusTitle,
         'thesaurusTitle'
-      );
+      )
     }
     if (conceptIdColumn !== undefined && conceptIdColumn !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>conceptIdColumn,
         'conceptIdColumn'
-      );
+      )
     }
     if (conceptLabelColumn !== undefined && conceptLabelColumn !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>conceptLabelColumn,
         'conceptLabelColumn'
-      );
+      )
     }
     if (
       conceptDescriptionColumn !== undefined &&
@@ -864,7 +860,7 @@ export class RegistriesApiService {
         queryParameters,
         <any>conceptDescriptionColumn,
         'conceptDescriptionColumn'
-      );
+      )
     }
     if (
       conceptBroaderIdColumn !== undefined &&
@@ -874,7 +870,7 @@ export class RegistriesApiService {
         queryParameters,
         <any>conceptBroaderIdColumn,
         'conceptBroaderIdColumn'
-      );
+      )
     }
     if (
       conceptNarrowerIdColumn !== undefined &&
@@ -884,7 +880,7 @@ export class RegistriesApiService {
         queryParameters,
         <any>conceptNarrowerIdColumn,
         'conceptNarrowerIdColumn'
-      );
+      )
     }
     if (
       conceptRelatedIdColumn !== undefined &&
@@ -894,53 +890,53 @@ export class RegistriesApiService {
         queryParameters,
         <any>conceptRelatedIdColumn,
         'conceptRelatedIdColumn'
-      );
+      )
     }
     if (conceptLinkSeparator !== undefined && conceptLinkSeparator !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>conceptLinkSeparator,
         'conceptLinkSeparator'
-      );
+      )
     }
     if (importAsThesaurus !== undefined && importAsThesaurus !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>importAsThesaurus,
         'importAsThesaurus'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
     // to determine the Content-Type header
-    const consumes: string[] = ['application/json'];
+    const consumes: string[] = ['application/json']
     const httpContentTypeSelected:
       | string
-      | undefined = this.configuration.selectHeaderContentType(consumes);
+      | undefined = this.configuration.selectHeaderContentType(consumes)
     if (httpContentTypeSelected !== undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
+      headers = headers.set('Content-Type', httpContentTypeSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.post<any>(
@@ -954,7 +950,7 @@ export class RegistriesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -989,7 +985,7 @@ export class RegistriesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<SimpleMetadataProcessingReportApiModel>;
+  ): Observable<SimpleMetadataProcessingReportApiModel>
   public importSpatialEntries(
     uuidAttribute?: string,
     uuidPattern?: string,
@@ -1005,7 +1001,7 @@ export class RegistriesApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<SimpleMetadataProcessingReportApiModel>>;
+  ): Observable<HttpResponse<SimpleMetadataProcessingReportApiModel>>
   public importSpatialEntries(
     uuidAttribute?: string,
     uuidPattern?: string,
@@ -1021,7 +1017,7 @@ export class RegistriesApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<SimpleMetadataProcessingReportApiModel>>;
+  ): Observable<HttpEvent<SimpleMetadataProcessingReportApiModel>>
   public importSpatialEntries(
     uuidAttribute?: string,
     uuidPattern?: string,
@@ -1038,120 +1034,120 @@ export class RegistriesApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (uuidAttribute !== undefined && uuidAttribute !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>uuidAttribute,
         'uuidAttribute'
-      );
+      )
     }
     if (uuidPattern !== undefined && uuidPattern !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>uuidPattern,
         'uuidPattern'
-      );
+      )
     }
     if (descriptionAttribute !== undefined && descriptionAttribute !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>descriptionAttribute,
         'descriptionAttribute'
-      );
+      )
     }
     if (geomProjectionTo !== undefined && geomProjectionTo !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>geomProjectionTo,
         'geomProjectionTo'
-      );
+      )
     }
     if (lenient !== undefined && lenient !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>lenient,
         'lenient'
-      );
+      )
     }
     if (onlyBoundingBox !== undefined && onlyBoundingBox !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>onlyBoundingBox,
         'onlyBoundingBox'
-      );
+      )
     }
     if (process !== undefined && process !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>process,
         'process'
-      );
+      )
     }
     if (schema !== undefined && schema !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>schema,
         'schema'
-      );
+      )
     }
     if (uuidProcessing !== undefined && uuidProcessing !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>uuidProcessing,
         'uuidProcessing'
-      );
+      )
     }
     if (group !== undefined && group !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>group,
         'group'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
     // to determine the Content-Type header
-    const consumes: string[] = ['multipart/form-data'];
+    const consumes: string[] = ['multipart/form-data']
 
-    const canConsumeForm = this.canConsumeForm(consumes);
+    const canConsumeForm = this.canConsumeForm(consumes)
 
-    let formParams: { append(param: string, value: any): any };
-    let useForm = false;
-    let convertFormParamsToString = false;
+    let formParams: { append(param: string, value: any): any }
+    let useForm = false
+    let convertFormParamsToString = false
     // use FormData to transmit files using content-type "multipart/form-data"
     // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
-    useForm = canConsumeForm;
+    useForm = canConsumeForm
     if (useForm) {
-      formParams = new FormData();
+      formParams = new FormData()
     } else {
-      formParams = new HttpParams({ encoder: this.encoder });
+      formParams = new HttpParams({ encoder: this.encoder })
     }
 
     if (file !== undefined) {
-      formParams = (formParams.append('file', <any>file) as any) || formParams;
+      formParams = (formParams.append('file', <any>file) as any) || formParams
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.post<SimpleMetadataProcessingReportApiModel>(
@@ -1165,7 +1161,7 @@ export class RegistriesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -1192,7 +1188,7 @@ export class RegistriesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<object>;
+  ): Observable<object>
   public previewUpdatedRecordEntries(
     xpath: string,
     uuids?: Array<string>,
@@ -1204,7 +1200,7 @@ export class RegistriesApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpResponse<object>>;
+  ): Observable<HttpResponse<object>>
   public previewUpdatedRecordEntries(
     xpath: string,
     uuids?: Array<string>,
@@ -1216,7 +1212,7 @@ export class RegistriesApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpEvent<object>>;
+  ): Observable<HttpEvent<object>>
   public previewUpdatedRecordEntries(
     xpath: string,
     uuids?: Array<string>,
@@ -1232,39 +1228,39 @@ export class RegistriesApiService {
     if (xpath === null || xpath === undefined) {
       throw new Error(
         'Required parameter xpath was null or undefined when calling previewUpdatedRecordEntries.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (uuids) {
       uuids.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'uuids'
-        );
-      });
+        )
+      })
     }
     if (bucket !== undefined && bucket !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>bucket,
         'bucket'
-      );
+      )
     }
     if (xpath !== undefined && xpath !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>xpath,
         'xpath'
-      );
+      )
     }
     if (identifierXpath !== undefined && identifierXpath !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>identifierXpath,
         'identifierXpath'
-      );
+      )
     }
     if (propertiesToCopy) {
       propertiesToCopy.forEach((element) => {
@@ -1272,44 +1268,44 @@ export class RegistriesApiService {
           queryParameters,
           <any>element,
           'propertiesToCopy'
-        );
-      });
+        )
+      })
     }
     if (substituteAsXLink !== undefined && substituteAsXLink !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>substituteAsXLink,
         'substituteAsXLink'
-      );
+      )
     }
     if (fq !== undefined && fq !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>fq, 'fq');
+      queryParameters = this.addToHttpParams(queryParameters, <any>fq, 'fq')
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = [
         'application/json',
         'application/xml',
-      ];
+      ]
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<object>(
@@ -1322,7 +1318,7 @@ export class RegistriesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -1345,7 +1341,7 @@ export class RegistriesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<CrsApiModel>>;
+  ): Observable<Array<CrsApiModel>>
   public searchCrs(
     q?: string,
     type?:
@@ -1357,7 +1353,7 @@ export class RegistriesApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<CrsApiModel>>>;
+  ): Observable<HttpResponse<Array<CrsApiModel>>>
   public searchCrs(
     q?: string,
     type?:
@@ -1369,7 +1365,7 @@ export class RegistriesApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<CrsApiModel>>>;
+  ): Observable<HttpEvent<Array<CrsApiModel>>>
   public searchCrs(
     q?: string,
     type?:
@@ -1382,46 +1378,38 @@ export class RegistriesApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (q !== undefined && q !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>q, 'q');
+      queryParameters = this.addToHttpParams(queryParameters, <any>q, 'q')
     }
     if (type !== undefined && type !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>type,
-        'type'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>type, 'type')
     }
     if (rows !== undefined && rows !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>rows,
-        'rows'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>rows, 'rows')
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<CrsApiModel>>(
@@ -1434,7 +1422,7 @@ export class RegistriesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -1464,7 +1452,7 @@ export class RegistriesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<KeywordBeanApiModel>>;
+  ): Observable<Array<KeywordBeanApiModel>>
   public searchKeywords(
     q?: string,
     lang?: string,
@@ -1478,7 +1466,7 @@ export class RegistriesApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<KeywordBeanApiModel>>>;
+  ): Observable<HttpResponse<Array<KeywordBeanApiModel>>>
   public searchKeywords(
     q?: string,
     lang?: string,
@@ -1492,7 +1480,7 @@ export class RegistriesApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<KeywordBeanApiModel>>>;
+  ): Observable<HttpEvent<Array<KeywordBeanApiModel>>>
   public searchKeywords(
     q?: string,
     lang?: string,
@@ -1507,30 +1495,22 @@ export class RegistriesApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (q !== undefined && q !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>q, 'q');
+      queryParameters = this.addToHttpParams(queryParameters, <any>q, 'q')
     }
     if (lang !== undefined && lang !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>lang,
-        'lang'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>lang, 'lang')
     }
     if (rows !== undefined && rows !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>rows,
-        'rows'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>rows, 'rows')
     }
     if (start !== undefined && start !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>start,
         'start'
-      );
+      )
     }
     if (pLang) {
       pLang.forEach((element) => {
@@ -1538,8 +1518,8 @@ export class RegistriesApiService {
           queryParameters,
           <any>element,
           'pLang'
-        );
-      });
+        )
+      })
     }
     if (thesaurus) {
       thesaurus.forEach((element) => {
@@ -1547,48 +1527,40 @@ export class RegistriesApiService {
           queryParameters,
           <any>element,
           'thesaurus'
-        );
-      });
+        )
+      })
     }
     if (type !== undefined && type !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>type,
-        'type'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>type, 'type')
     }
     if (uri !== undefined && uri !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>uri, 'uri');
+      queryParameters = this.addToHttpParams(queryParameters, <any>uri, 'uri')
     }
     if (sort !== undefined && sort !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>sort,
-        'sort'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>sort, 'sort')
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<KeywordBeanApiModel>>(
@@ -1601,7 +1573,7 @@ export class RegistriesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -1628,7 +1600,7 @@ export class RegistriesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<object>;
+  ): Observable<object>
   public updateRecordEntries(
     xpath: string,
     uuids?: Array<string>,
@@ -1640,7 +1612,7 @@ export class RegistriesApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<object>>;
+  ): Observable<HttpResponse<object>>
   public updateRecordEntries(
     xpath: string,
     uuids?: Array<string>,
@@ -1652,7 +1624,7 @@ export class RegistriesApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<object>>;
+  ): Observable<HttpEvent<object>>
   public updateRecordEntries(
     xpath: string,
     uuids?: Array<string>,
@@ -1668,39 +1640,39 @@ export class RegistriesApiService {
     if (xpath === null || xpath === undefined) {
       throw new Error(
         'Required parameter xpath was null or undefined when calling updateRecordEntries.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (uuids) {
       uuids.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'uuids'
-        );
-      });
+        )
+      })
     }
     if (bucket !== undefined && bucket !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>bucket,
         'bucket'
-      );
+      )
     }
     if (xpath !== undefined && xpath !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>xpath,
         'xpath'
-      );
+      )
     }
     if (identifierXpath !== undefined && identifierXpath !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>identifierXpath,
         'identifierXpath'
-      );
+      )
     }
     if (propertiesToCopy) {
       propertiesToCopy.forEach((element) => {
@@ -1708,41 +1680,41 @@ export class RegistriesApiService {
           queryParameters,
           <any>element,
           'propertiesToCopy'
-        );
-      });
+        )
+      })
     }
     if (substituteAsXLink !== undefined && substituteAsXLink !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>substituteAsXLink,
         'substituteAsXLink'
-      );
+      )
     }
     if (fq !== undefined && fq !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>fq, 'fq');
+      queryParameters = this.addToHttpParams(queryParameters, <any>fq, 'fq')
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<object>(
@@ -1756,7 +1728,7 @@ export class RegistriesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -1777,7 +1749,7 @@ export class RegistriesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'text/xml' }
-  ): Observable<string>;
+  ): Observable<string>
   public uploadThesaurus(
     type?: string,
     dir?: string,
@@ -1786,7 +1758,7 @@ export class RegistriesApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'text/xml' }
-  ): Observable<HttpResponse<string>>;
+  ): Observable<HttpResponse<string>>
   public uploadThesaurus(
     type?: string,
     dir?: string,
@@ -1795,7 +1767,7 @@ export class RegistriesApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'text/xml' }
-  ): Observable<HttpEvent<string>>;
+  ): Observable<HttpEvent<string>>
   public uploadThesaurus(
     type?: string,
     dir?: string,
@@ -1805,55 +1777,51 @@ export class RegistriesApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' | 'text/xml' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (type !== undefined && type !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>type,
-        'type'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>type, 'type')
     }
     if (dir !== undefined && dir !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>dir, 'dir');
+      queryParameters = this.addToHttpParams(queryParameters, <any>dir, 'dir')
     }
     if (stylesheet !== undefined && stylesheet !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>stylesheet,
         'stylesheet'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json', 'text/xml'];
+      const httpHeaderAccepts: string[] = ['application/json', 'text/xml']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
     // to determine the Content-Type header
-    const consumes: string[] = ['application/json'];
+    const consumes: string[] = ['application/json']
     const httpContentTypeSelected:
       | string
-      | undefined = this.configuration.selectHeaderContentType(consumes);
+      | undefined = this.configuration.selectHeaderContentType(consumes)
     if (httpContentTypeSelected !== undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
+      headers = headers.set('Content-Type', httpContentTypeSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.post<string>(
@@ -1867,7 +1835,7 @@ export class RegistriesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -1894,7 +1862,7 @@ export class RegistriesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'text/xml' }
-  ): Observable<string>;
+  ): Observable<string>
   public uploadThesaurusFromUrl(
     url?: string,
     registryUrl?: string,
@@ -1906,7 +1874,7 @@ export class RegistriesApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'text/xml' }
-  ): Observable<HttpResponse<string>>;
+  ): Observable<HttpResponse<string>>
   public uploadThesaurusFromUrl(
     url?: string,
     registryUrl?: string,
@@ -1918,7 +1886,7 @@ export class RegistriesApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'text/xml' }
-  ): Observable<HttpEvent<string>>;
+  ): Observable<HttpEvent<string>>
   public uploadThesaurusFromUrl(
     url?: string,
     registryUrl?: string,
@@ -1931,23 +1899,23 @@ export class RegistriesApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' | 'text/xml' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (url !== undefined && url !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>url, 'url');
+      queryParameters = this.addToHttpParams(queryParameters, <any>url, 'url')
     }
     if (registryUrl !== undefined && registryUrl !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>registryUrl,
         'registryUrl'
-      );
+      )
     }
     if (registryType !== undefined && registryType !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>registryType,
         'registryType'
-      );
+      )
     }
     if (registryLanguage) {
       registryLanguage.forEach((element) => {
@@ -1955,48 +1923,44 @@ export class RegistriesApiService {
           queryParameters,
           <any>element,
           'registryLanguage'
-        );
-      });
+        )
+      })
     }
     if (type !== undefined && type !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>type,
-        'type'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>type, 'type')
     }
     if (dir !== undefined && dir !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>dir, 'dir');
+      queryParameters = this.addToHttpParams(queryParameters, <any>dir, 'dir')
     }
     if (stylesheet !== undefined && stylesheet !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>stylesheet,
         'stylesheet'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json', 'text/xml'];
+      const httpHeaderAccepts: string[] = ['application/json', 'text/xml']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<string>(
@@ -2010,6 +1974,6 @@ export class RegistriesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 }

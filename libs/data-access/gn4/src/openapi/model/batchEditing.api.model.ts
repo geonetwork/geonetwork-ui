@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { SectionApiModel } from './section.api.model';
+import { SectionApiModel } from './section.api.model'
 
 export interface BatchEditingApiModel {
-  section: Array<SectionApiModel>;
+  section: Array<SectionApiModel>
 }

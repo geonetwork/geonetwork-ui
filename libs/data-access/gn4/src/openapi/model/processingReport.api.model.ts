@@ -9,17 +9,17 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { InfoReportApiModel } from './infoReport.api.model';
-import { ReportApiModel } from './report.api.model';
+import { InfoReportApiModel } from './infoReport.api.model'
+import { ReportApiModel } from './report.api.model'
 
 export interface ProcessingReportApiModel {
-  errors?: Array<ReportApiModel>;
-  infos?: Array<InfoReportApiModel>;
-  uuid?: string;
-  running?: boolean;
-  startIsoDateTime?: string;
-  endIsoDateTime?: string;
-  ellapsedTimeInSeconds?: number;
-  totalTimeInSeconds?: number;
-  type?: string;
+  errors?: Array<ReportApiModel>
+  infos?: Array<InfoReportApiModel>
+  uuid?: string
+  running?: boolean
+  startIsoDateTime?: string
+  endIsoDateTime?: string
+  ellapsedTimeInSeconds?: number
+  totalTimeInSeconds?: number
+  type?: string
 }

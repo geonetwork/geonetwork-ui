@@ -1,6 +1,7 @@
 import {
   RecordSummary,
   RESULTS_PAGE_SIZE,
+  ResultsListLayout,
   SearchFilters,
   StateConfigFilters,
 } from '@geonetwork-ui/util/shared'
@@ -30,7 +31,7 @@ export interface SearchStateSearch {
     records: RecordSummary[]
     aggregations: any
   }
-  resultsLayout?: string
+  resultsLayout?: ResultsListLayout
   loadingMore: boolean
 }
 

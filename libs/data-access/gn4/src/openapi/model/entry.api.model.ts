@@ -11,8 +11,8 @@
  */
 
 export interface EntryApiModel {
-  code: string;
-  label: string;
-  description: string;
-  hideInEditMode?: string;
+  code: string
+  label: string
+  description: string
+  hideInEditMode?: string
 }

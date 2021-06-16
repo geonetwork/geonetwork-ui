@@ -9,13 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ValuesApiModel } from './values.api.model';
+import { ValuesApiModel } from './values.api.model'
 
 export interface ElementApiModel {
-  name?: string;
-  definition?: string;
-  code?: string;
-  link?: string;
-  type?: string;
-  values?: Array<ValuesApiModel>;
+  name?: string
+  definition?: string
+  code?: string
+  link?: string
+  type?: string
+  values?: Array<ValuesApiModel>
 }

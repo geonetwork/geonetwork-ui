@@ -11,17 +11,17 @@
  */
 
 export interface MeResponseApiModel {
-  id?: string;
-  profile?: string;
-  username?: string;
-  name?: string;
-  surname?: string;
-  email?: string;
-  hash?: string;
-  organisation?: string;
-  admin?: boolean;
-  groupsWithRegisteredUser?: Array<number>;
-  groupsWithEditor?: Array<number>;
-  groupsWithReviewer?: Array<number>;
-  groupsWithUserAdmin?: Array<number>;
+  id?: string
+  profile?: string
+  username?: string
+  name?: string
+  surname?: string
+  email?: string
+  hash?: string
+  organisation?: string
+  admin?: boolean
+  groupsWithRegisteredUser?: Array<number>
+  groupsWithEditor?: Array<number>
+  groupsWithReviewer?: Array<number>
+  groupsWithUserAdmin?: Array<number>
 }

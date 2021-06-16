@@ -11,9 +11,9 @@
  */
 
 export interface SavedQueryApiModel {
-  id?: string;
-  xpath?: string;
-  label?: string;
-  cleanValues?: string;
-  parameters?: Array<string>;
+  id?: string
+  xpath?: string
+  label?: string
+  cleanValues?: string
+  parameters?: Array<string>
 }

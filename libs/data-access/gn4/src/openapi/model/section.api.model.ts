@@ -9,9 +9,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { FieldApiModel } from './field.api.model';
+import { FieldApiModel } from './field.api.model'
 
 export interface SectionApiModel {
-  field: Array<FieldApiModel>;
-  name?: string;
+  field: Array<FieldApiModel>
+  name?: string
 }

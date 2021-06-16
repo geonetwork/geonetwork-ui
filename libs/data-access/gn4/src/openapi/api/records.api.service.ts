@@ -11,7 +11,7 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core'
 import {
   HttpClient,
   HttpHeaders,
@@ -19,40 +19,40 @@ import {
   HttpResponse,
   HttpEvent,
   HttpParameterCodec,
-} from '@angular/common/http';
-import { CustomHttpParameterCodec } from '../encoder';
-import { Observable } from 'rxjs';
+} from '@angular/common/http'
+import { CustomHttpParameterCodec } from '../encoder'
+import { Observable } from 'rxjs'
 
-import { BatchEditParameterApiModel } from '../model/models';
-import { ElementApiModel } from '../model/models';
-import { ExtentDtoApiModel } from '../model/models';
-import { FeatureResponseApiModel } from '../model/models';
-import { IProcessingReportApiModel } from '../model/models';
-import { InlineObject1ApiModel } from '../model/models';
-import { MetadataCategoryApiModel } from '../model/models';
-import { MetadataProcessingReportApiModel } from '../model/models';
-import { MetadataResourceApiModel } from '../model/models';
-import { MetadataStatusResponseApiModel } from '../model/models';
-import { MetadataWorkflowStatusResponseApiModel } from '../model/models';
-import { RelatedResponseApiModel } from '../model/models';
-import { ReportsApiModel } from '../model/models';
-import { SavedQueryApiModel } from '../model/models';
-import { SharingParameterApiModel } from '../model/models';
-import { SharingResponseApiModel } from '../model/models';
-import { SimpleMetadataProcessingReportApiModel } from '../model/models';
-import { SuggestionTypeApiModel } from '../model/models';
+import { BatchEditParameterApiModel } from '../model/models'
+import { ElementApiModel } from '../model/models'
+import { ExtentDtoApiModel } from '../model/models'
+import { FeatureResponseApiModel } from '../model/models'
+import { IProcessingReportApiModel } from '../model/models'
+import { InlineObject1ApiModel } from '../model/models'
+import { MetadataCategoryApiModel } from '../model/models'
+import { MetadataProcessingReportApiModel } from '../model/models'
+import { MetadataResourceApiModel } from '../model/models'
+import { MetadataStatusResponseApiModel } from '../model/models'
+import { MetadataWorkflowStatusResponseApiModel } from '../model/models'
+import { RelatedResponseApiModel } from '../model/models'
+import { ReportsApiModel } from '../model/models'
+import { SavedQueryApiModel } from '../model/models'
+import { SharingParameterApiModel } from '../model/models'
+import { SharingResponseApiModel } from '../model/models'
+import { SimpleMetadataProcessingReportApiModel } from '../model/models'
+import { SuggestionTypeApiModel } from '../model/models'
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
-import { Configuration } from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables'
+import { Configuration } from '../configuration'
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecordsApiService {
-  protected basePath = 'https://apps.titellus.net/geonetwork/srv/api';
-  public defaultHeaders = new HttpHeaders();
-  public configuration = new Configuration();
-  public encoder: HttpParameterCodec;
+  protected basePath = 'https://apps.titellus.net/geonetwork/srv/api'
+  public defaultHeaders = new HttpHeaders()
+  public configuration = new Configuration()
+  public encoder: HttpParameterCodec
 
   constructor(
     protected httpClient: HttpClient,
@@ -60,15 +60,15 @@ export class RecordsApiService {
     @Optional() configuration: Configuration
   ) {
     if (configuration) {
-      this.configuration = configuration;
+      this.configuration = configuration
     }
     if (typeof this.configuration.basePath !== 'string') {
       if (typeof basePath !== 'string') {
-        basePath = this.basePath;
+        basePath = this.basePath
       }
-      this.configuration.basePath = basePath;
+      this.configuration.basePath = basePath
     }
-    this.encoder = this.configuration.encoder || new CustomHttpParameterCodec();
+    this.encoder = this.configuration.encoder || new CustomHttpParameterCodec()
   }
 
   private addToHttpParams(
@@ -77,11 +77,11 @@ export class RecordsApiService {
     key?: string
   ): HttpParams {
     if (typeof value === 'object' && value instanceof Date === false) {
-      httpParams = this.addToHttpParamsRecursive(httpParams, value);
+      httpParams = this.addToHttpParamsRecursive(httpParams, value)
     } else {
-      httpParams = this.addToHttpParamsRecursive(httpParams, value, key);
+      httpParams = this.addToHttpParamsRecursive(httpParams, value, key)
     }
-    return httpParams;
+    return httpParams
   }
 
   private addToHttpParamsRecursive(
@@ -90,23 +90,23 @@ export class RecordsApiService {
     key?: string
   ): HttpParams {
     if (value == null) {
-      return httpParams;
+      return httpParams
     }
 
     if (typeof value === 'object') {
       if (Array.isArray(value)) {
-        (value as any[]).forEach(
+        ;(value as any[]).forEach(
           (elem) =>
             (httpParams = this.addToHttpParamsRecursive(httpParams, elem, key))
-        );
+        )
       } else if (value instanceof Date) {
         if (key != null) {
           httpParams = httpParams.append(
             key,
             (value as Date).toISOString().substr(0, 10)
-          );
+          )
         } else {
-          throw Error('key may not be null if value is Date');
+          throw Error('key may not be null if value is Date')
         }
       } else {
         Object.keys(value).forEach(
@@ -116,14 +116,14 @@ export class RecordsApiService {
               value[k],
               key != null ? `${key}.${k}` : k
             ))
-        );
+        )
       }
     } else if (key != null) {
-      httpParams = httpParams.append(key, value);
+      httpParams = httpParams.append(key, value)
     } else {
-      throw Error('key may not be null if value is not object or array');
+      throw Error('key may not be null if value is not object or array')
     }
-    return httpParams;
+    return httpParams
   }
 
   /**
@@ -143,7 +143,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public addElement(
     metadataUuid: string,
     ref: string,
@@ -152,7 +152,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public addElement(
     metadataUuid: string,
     ref: string,
@@ -161,7 +161,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public addElement(
     metadataUuid: string,
     ref: string,
@@ -174,52 +174,52 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling addElement.'
-      );
+      )
     }
     if (ref === null || ref === undefined) {
       throw new Error(
         'Required parameter ref was null or undefined when calling addElement.'
-      );
+      )
     }
     if (direction === null || direction === undefined) {
       throw new Error(
         'Required parameter direction was null or undefined when calling addElement.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (ref !== undefined && ref !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>ref, 'ref');
+      queryParameters = this.addToHttpParams(queryParameters, <any>ref, 'ref')
     }
     if (displayAttributes !== undefined && displayAttributes !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>displayAttributes,
         'displayAttributes'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<any>(
@@ -235,7 +235,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -250,19 +250,19 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<SimpleMetadataProcessingReportApiModel>;
+  ): Observable<SimpleMetadataProcessingReportApiModel>
   public addSamples(
     schema: Array<string>,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpResponse<SimpleMetadataProcessingReportApiModel>>;
+  ): Observable<HttpResponse<SimpleMetadataProcessingReportApiModel>>
   public addSamples(
     schema: Array<string>,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpEvent<SimpleMetadataProcessingReportApiModel>>;
+  ): Observable<HttpEvent<SimpleMetadataProcessingReportApiModel>>
   public addSamples(
     schema: Array<string>,
     observe: any = 'body',
@@ -272,41 +272,41 @@ export class RecordsApiService {
     if (schema === null || schema === undefined) {
       throw new Error(
         'Required parameter schema was null or undefined when calling addSamples.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (schema) {
       schema.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'schema'
-        );
-      });
+        )
+      })
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json', '*/*'];
+      const httpHeaderAccepts: string[] = ['application/json', '*/*']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<SimpleMetadataProcessingReportApiModel>(
@@ -320,7 +320,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -335,19 +335,19 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<SimpleMetadataProcessingReportApiModel>;
+  ): Observable<SimpleMetadataProcessingReportApiModel>
   public addTemplates(
     schema: Array<string>,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpResponse<SimpleMetadataProcessingReportApiModel>>;
+  ): Observable<HttpResponse<SimpleMetadataProcessingReportApiModel>>
   public addTemplates(
     schema: Array<string>,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpEvent<SimpleMetadataProcessingReportApiModel>>;
+  ): Observable<HttpEvent<SimpleMetadataProcessingReportApiModel>>
   public addTemplates(
     schema: Array<string>,
     observe: any = 'body',
@@ -357,41 +357,41 @@ export class RecordsApiService {
     if (schema === null || schema === undefined) {
       throw new Error(
         'Required parameter schema was null or undefined when calling addTemplates.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (schema) {
       schema.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'schema'
-        );
-      });
+        )
+      })
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json', '*/*'];
+      const httpHeaderAccepts: string[] = ['application/json', '*/*']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<SimpleMetadataProcessingReportApiModel>(
@@ -405,7 +405,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -422,21 +422,21 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<{ [key: string]: string }>;
+  ): Observable<{ [key: string]: string }>
   public applyQuery(
     metadataUuid: string,
     savedQuery: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<{ [key: string]: string }>>;
+  ): Observable<HttpResponse<{ [key: string]: string }>>
   public applyQuery(
     metadataUuid: string,
     savedQuery: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<{ [key: string]: string }>>;
+  ): Observable<HttpEvent<{ [key: string]: string }>>
   public applyQuery(
     metadataUuid: string,
     savedQuery: string,
@@ -447,35 +447,35 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling applyQuery.'
-      );
+      )
     }
     if (savedQuery === null || savedQuery === undefined) {
       throw new Error(
         'Required parameter savedQuery was null or undefined when calling applyQuery.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.post<{ [key: string]: string }>(
@@ -490,7 +490,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -510,7 +510,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<IProcessingReportApiModel>;
+  ): Observable<IProcessingReportApiModel>
   public batchEdit(
     batchEditParameterApiModel: Array<BatchEditParameterApiModel>,
     uuids?: Array<string>,
@@ -519,7 +519,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<IProcessingReportApiModel>>;
+  ): Observable<HttpResponse<IProcessingReportApiModel>>
   public batchEdit(
     batchEditParameterApiModel: Array<BatchEditParameterApiModel>,
     uuids?: Array<string>,
@@ -528,7 +528,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<IProcessingReportApiModel>>;
+  ): Observable<HttpEvent<IProcessingReportApiModel>>
   public batchEdit(
     batchEditParameterApiModel: Array<BatchEditParameterApiModel>,
     uuids?: Array<string>,
@@ -544,64 +544,64 @@ export class RecordsApiService {
     ) {
       throw new Error(
         'Required parameter batchEditParameterApiModel was null or undefined when calling batchEdit.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (uuids) {
       uuids.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'uuids'
-        );
-      });
+        )
+      })
     }
     if (bucket !== undefined && bucket !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>bucket,
         'bucket'
-      );
+      )
     }
     if (updateDateStamp !== undefined && updateDateStamp !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>updateDateStamp,
         'updateDateStamp'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
     // to determine the Content-Type header
-    const consumes: string[] = ['application/json'];
+    const consumes: string[] = ['application/json']
     const httpContentTypeSelected:
       | string
-      | undefined = this.configuration.selectHeaderContentType(consumes);
+      | undefined = this.configuration.selectHeaderContentType(consumes)
     if (httpContentTypeSelected !== undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
+      headers = headers.set('Content-Type', httpContentTypeSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<IProcessingReportApiModel>(
@@ -615,7 +615,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -630,19 +630,19 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public cancelEdits(
     metadataUuid: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public cancelEdits(
     metadataUuid: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public cancelEdits(
     metadataUuid: string,
     observe: any = 'body',
@@ -652,30 +652,30 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling cancelEdits.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.delete<any>(
@@ -689,7 +689,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -703,19 +703,19 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<{ [key: string]: boolean }>;
+  ): Observable<{ [key: string]: boolean }>
   public checkDoiStatus(
     metadataUuid: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<{ [key: string]: boolean }>>;
+  ): Observable<HttpResponse<{ [key: string]: boolean }>>
   public checkDoiStatus(
     metadataUuid: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<{ [key: string]: boolean }>>;
+  ): Observable<HttpEvent<{ [key: string]: boolean }>>
   public checkDoiStatus(
     metadataUuid: string,
     observe: any = 'body',
@@ -725,30 +725,30 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling checkDoiStatus.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<{ [key: string]: boolean }>(
@@ -762,7 +762,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -777,19 +777,19 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<{ [key: string]: string }>;
+  ): Observable<{ [key: string]: string }>
   public checkValidation(
     testId: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<{ [key: string]: string }>>;
+  ): Observable<HttpResponse<{ [key: string]: string }>>
   public checkValidation(
     testId: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<{ [key: string]: string }>>;
+  ): Observable<HttpEvent<{ [key: string]: string }>>
   public checkValidation(
     testId: string,
     observe: any = 'body',
@@ -799,30 +799,30 @@ export class RecordsApiService {
     if (testId === null || testId === undefined) {
       throw new Error(
         'Required parameter testId was null or undefined when calling checkValidation.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<{ [key: string]: string }>(
@@ -836,7 +836,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -852,21 +852,21 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<SimpleMetadataProcessingReportApiModel>;
+  ): Observable<SimpleMetadataProcessingReportApiModel>
   public cleanValidationStatus(
     uuids?: Array<string>,
     bucket?: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<SimpleMetadataProcessingReportApiModel>>;
+  ): Observable<HttpResponse<SimpleMetadataProcessingReportApiModel>>
   public cleanValidationStatus(
     uuids?: Array<string>,
     bucket?: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<SimpleMetadataProcessingReportApiModel>>;
+  ): Observable<HttpEvent<SimpleMetadataProcessingReportApiModel>>
   public cleanValidationStatus(
     uuids?: Array<string>,
     bucket?: string,
@@ -874,45 +874,45 @@ export class RecordsApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (uuids) {
       uuids.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'uuids'
-        );
-      });
+        )
+      })
     }
     if (bucket !== undefined && bucket !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>bucket,
         'bucket'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.delete<SimpleMetadataProcessingReportApiModel>(
@@ -925,7 +925,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -958,7 +958,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<string>;
+  ): Observable<string>
   public create(
     sourceUuid: string,
     group: string,
@@ -975,7 +975,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<string>>;
+  ): Observable<HttpResponse<string>>
   public create(
     sourceUuid: string,
     group: string,
@@ -992,7 +992,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<string>>;
+  ): Observable<HttpEvent<string>>
   public create(
     sourceUuid: string,
     group: string,
@@ -1013,42 +1013,42 @@ export class RecordsApiService {
     if (sourceUuid === null || sourceUuid === undefined) {
       throw new Error(
         'Required parameter sourceUuid was null or undefined when calling create.'
-      );
+      )
     }
     if (group === null || group === undefined) {
       throw new Error(
         'Required parameter group was null or undefined when calling create.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (metadataType !== undefined && metadataType !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>metadataType,
         'metadataType'
-      );
+      )
     }
     if (sourceUuid !== undefined && sourceUuid !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>sourceUuid,
         'sourceUuid'
-      );
+      )
     }
     if (targetUuid !== undefined && targetUuid !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>targetUuid,
         'targetUuid'
-      );
+      )
     }
     if (group !== undefined && group !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>group,
         'group'
-      );
+      )
     }
     if (
       isVisibleByAllGroupMembers !== undefined &&
@@ -1058,7 +1058,7 @@ export class RecordsApiService {
         queryParameters,
         <any>isVisibleByAllGroupMembers,
         'isVisibleByAllGroupMembers'
-      );
+      )
     }
     if (category) {
       category.forEach((element) => {
@@ -1066,45 +1066,45 @@ export class RecordsApiService {
           queryParameters,
           <any>element,
           'category'
-        );
-      });
+        )
+      })
     }
     if (hasCategoryOfSource !== undefined && hasCategoryOfSource !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>hasCategoryOfSource,
         'hasCategoryOfSource'
-      );
+      )
     }
     if (isChildOfSource !== undefined && isChildOfSource !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>isChildOfSource,
         'isChildOfSource'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<string>(
@@ -1118,7 +1118,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -1132,19 +1132,19 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<{ [key: string]: string }>;
+  ): Observable<{ [key: string]: string }>
   public createDoi(
     metadataUuid: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<{ [key: string]: string }>>;
+  ): Observable<HttpResponse<{ [key: string]: string }>>
   public createDoi(
     metadataUuid: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<{ [key: string]: string }>>;
+  ): Observable<HttpEvent<{ [key: string]: string }>>
   public createDoi(
     metadataUuid: string,
     observe: any = 'body',
@@ -1154,30 +1154,30 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling createDoi.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<{ [key: string]: string }>(
@@ -1192,7 +1192,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -1210,7 +1210,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public deleteAttribute(
     metadataUuid: string,
     ref: string,
@@ -1218,7 +1218,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public deleteAttribute(
     metadataUuid: string,
     ref: string,
@@ -1226,7 +1226,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public deleteAttribute(
     metadataUuid: string,
     ref: string,
@@ -1238,47 +1238,47 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling deleteAttribute.'
-      );
+      )
     }
     if (ref === null || ref === undefined) {
       throw new Error(
         'Required parameter ref was null or undefined when calling deleteAttribute.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (ref !== undefined && ref !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>ref, 'ref');
+      queryParameters = this.addToHttpParams(queryParameters, <any>ref, 'ref')
     }
     if (displayAttributes !== undefined && displayAttributes !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>displayAttributes,
         'displayAttributes'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.delete<any>(
@@ -1293,7 +1293,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -1313,7 +1313,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public deleteElement(
     metadataUuid: string,
     ref: Array<string>,
@@ -1322,7 +1322,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public deleteElement(
     metadataUuid: string,
     ref: Array<string>,
@@ -1331,7 +1331,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public deleteElement(
     metadataUuid: string,
     ref: Array<string>,
@@ -1344,65 +1344,65 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling deleteElement.'
-      );
+      )
     }
     if (ref === null || ref === undefined) {
       throw new Error(
         'Required parameter ref was null or undefined when calling deleteElement.'
-      );
+      )
     }
     if (parent === null || parent === undefined) {
       throw new Error(
         'Required parameter parent was null or undefined when calling deleteElement.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (ref) {
       ref.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'ref'
-        );
-      });
+        )
+      })
     }
     if (parent !== undefined && parent !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>parent,
         'parent'
-      );
+      )
     }
     if (displayAttributes !== undefined && displayAttributes !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>displayAttributes,
         'displayAttributes'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.delete<any>(
@@ -1417,7 +1417,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -1436,7 +1436,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<SimpleMetadataProcessingReportApiModel>;
+  ): Observable<SimpleMetadataProcessingReportApiModel>
   public deleteRecords(
     uuids?: Array<string>,
     bucket?: string,
@@ -1444,7 +1444,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<SimpleMetadataProcessingReportApiModel>>;
+  ): Observable<HttpResponse<SimpleMetadataProcessingReportApiModel>>
   public deleteRecords(
     uuids?: Array<string>,
     bucket?: string,
@@ -1452,7 +1452,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<SimpleMetadataProcessingReportApiModel>>;
+  ): Observable<HttpEvent<SimpleMetadataProcessingReportApiModel>>
   public deleteRecords(
     uuids?: Array<string>,
     bucket?: string,
@@ -1461,52 +1461,52 @@ export class RecordsApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (uuids) {
       uuids.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'uuids'
-        );
-      });
+        )
+      })
     }
     if (bucket !== undefined && bucket !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>bucket,
         'bucket'
-      );
+      )
     }
     if (withBackup !== undefined && withBackup !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>withBackup,
         'withBackup'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.delete<SimpleMetadataProcessingReportApiModel>(
@@ -1519,7 +1519,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -1537,7 +1537,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<MetadataProcessingReportApiModel>;
+  ): Observable<MetadataProcessingReportApiModel>
   public deleteTagForRecords(
     id: Array<number>,
     uuids?: Array<string>,
@@ -1545,7 +1545,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>;
+  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>
   public deleteTagForRecords(
     id: Array<number>,
     uuids?: Array<string>,
@@ -1553,7 +1553,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>;
+  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>
   public deleteTagForRecords(
     id: Array<number>,
     uuids?: Array<string>,
@@ -1565,25 +1565,25 @@ export class RecordsApiService {
     if (id === null || id === undefined) {
       throw new Error(
         'Required parameter id was null or undefined when calling deleteTagForRecords.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (uuids) {
       uuids.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'uuids'
-        );
-      });
+        )
+      })
     }
     if (bucket !== undefined && bucket !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>bucket,
         'bucket'
-      );
+      )
     }
     if (id) {
       id.forEach((element) => {
@@ -1591,31 +1591,31 @@ export class RecordsApiService {
           queryParameters,
           <any>element,
           'id'
-        );
-      });
+        )
+      })
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.delete<MetadataProcessingReportApiModel>(
@@ -1628,7 +1628,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -1644,21 +1644,21 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public deleteTags(
     metadataUuid: string,
     id?: Array<number>,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public deleteTags(
     metadataUuid: string,
     id?: Array<number>,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public deleteTags(
     metadataUuid: string,
     id?: Array<number>,
@@ -1669,41 +1669,41 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling deleteTags.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (id) {
       id.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'id'
-        );
-      });
+        )
+      })
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.delete<any>(
@@ -1718,7 +1718,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -1731,46 +1731,46 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/zip' }
-  ): Observable<any>;
+  ): Observable<any>
   public downloadBackup(
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/zip' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public downloadBackup(
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/zip' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public downloadBackup(
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' | 'application/zip' }
   ): Observable<any> {
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = [
         'application/json',
         'application/zip',
-      ];
+      ]
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<any>(
@@ -1782,7 +1782,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -1796,19 +1796,19 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<string>;
+  ): Observable<string>
   public enableVersionControl(
     metadataUuid: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpResponse<string>>;
+  ): Observable<HttpResponse<string>>
   public enableVersionControl(
     metadataUuid: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpEvent<string>>;
+  ): Observable<HttpEvent<string>>
   public enableVersionControl(
     metadataUuid: string,
     observe: any = 'body',
@@ -1818,30 +1818,30 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling enableVersionControl.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json', '*/*'];
+      const httpHeaderAccepts: string[] = ['application/json', '*/*']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<string>(
@@ -1856,7 +1856,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -1872,21 +1872,21 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<MetadataProcessingReportApiModel>;
+  ): Observable<MetadataProcessingReportApiModel>
   public enableVersionControlForRecords(
     uuids?: Array<string>,
     bucket?: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>;
+  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>
   public enableVersionControlForRecords(
     uuids?: Array<string>,
     bucket?: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>;
+  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>
   public enableVersionControlForRecords(
     uuids?: Array<string>,
     bucket?: string,
@@ -1894,45 +1894,45 @@ export class RecordsApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (uuids) {
       uuids.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'uuids'
-        );
-      });
+        )
+      })
     }
     if (bucket !== undefined && bucket !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>bucket,
         'bucket'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<MetadataProcessingReportApiModel>(
@@ -1946,7 +1946,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -1963,21 +1963,21 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public exportAsCsv(
     uuids?: Array<string>,
     bucket?: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public exportAsCsv(
     uuids?: Array<string>,
     bucket?: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public exportAsCsv(
     uuids?: Array<string>,
     bucket?: string,
@@ -1985,45 +1985,45 @@ export class RecordsApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (uuids) {
       uuids.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'uuids'
-        );
-      });
+        )
+      })
     }
     if (bucket !== undefined && bucket !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>bucket,
         'bucket'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<any>(
@@ -2036,7 +2036,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -2067,7 +2067,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public exportAsMef(
     uuids?: Array<string>,
     bucket?: string,
@@ -2081,7 +2081,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public exportAsMef(
     uuids?: Array<string>,
     bucket?: string,
@@ -2095,7 +2095,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public exportAsMef(
     uuids?: Array<string>,
     bucket?: string,
@@ -2110,90 +2110,90 @@ export class RecordsApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (uuids) {
       uuids.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'uuids'
-        );
-      });
+        )
+      })
     }
     if (bucket !== undefined && bucket !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>bucket,
         'bucket'
-      );
+      )
     }
     if (format !== undefined && format !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>format,
         'format'
-      );
+      )
     }
     if (withRelated !== undefined && withRelated !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>withRelated,
         'withRelated'
-      );
+      )
     }
     if (withXLinksResolved !== undefined && withXLinksResolved !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>withXLinksResolved,
         'withXLinksResolved'
-      );
+      )
     }
     if (withXLinkAttribute !== undefined && withXLinkAttribute !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>withXLinkAttribute,
         'withXLinkAttribute'
-      );
+      )
     }
     if (addSchemaLocation !== undefined && addSchemaLocation !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>addSchemaLocation,
         'addSchemaLocation'
-      );
+      )
     }
     if (approved !== undefined && approved !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>approved,
         'approved'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
     if (accept !== undefined && accept !== null) {
-      headers = headers.set('Accept', String(accept));
+      headers = headers.set('Accept', String(accept))
     }
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<any>(
@@ -2206,7 +2206,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -2223,21 +2223,21 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public exportAsPdf(
     uuids?: Array<string>,
     bucket?: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public exportAsPdf(
     uuids?: Array<string>,
     bucket?: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public exportAsPdf(
     uuids?: Array<string>,
     bucket?: string,
@@ -2245,45 +2245,45 @@ export class RecordsApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (uuids) {
       uuids.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'uuids'
-        );
-      });
+        )
+      })
     }
     if (bucket !== undefined && bucket !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>bucket,
         'bucket'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<any>(
@@ -2296,7 +2296,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -2314,7 +2314,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public getActiveUsers(
     dateFrom: string,
     dateTo: string,
@@ -2322,7 +2322,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public getActiveUsers(
     dateFrom: string,
     dateTo: string,
@@ -2330,7 +2330,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public getActiveUsers(
     dateFrom: string,
     dateTo: string,
@@ -2342,28 +2342,28 @@ export class RecordsApiService {
     if (dateFrom === null || dateFrom === undefined) {
       throw new Error(
         'Required parameter dateFrom was null or undefined when calling getActiveUsers.'
-      );
+      )
     }
     if (dateTo === null || dateTo === undefined) {
       throw new Error(
         'Required parameter dateTo was null or undefined when calling getActiveUsers.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (dateFrom !== undefined && dateFrom !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>dateFrom,
         'dateFrom'
-      );
+      )
     }
     if (dateTo !== undefined && dateTo !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>dateTo,
         'dateTo'
-      );
+      )
     }
     if (groups) {
       groups.forEach((element) => {
@@ -2371,31 +2371,31 @@ export class RecordsApiService {
           queryParameters,
           <any>element,
           'groups'
-        );
-      });
+        )
+      })
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<any>(
@@ -2408,7 +2408,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -2423,19 +2423,19 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<ExtentDtoApiModel>>;
+  ): Observable<Array<ExtentDtoApiModel>>
   public getAllRecordExtentAsJson(
     metadataUuid: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<ExtentDtoApiModel>>>;
+  ): Observable<HttpResponse<Array<ExtentDtoApiModel>>>
   public getAllRecordExtentAsJson(
     metadataUuid: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<ExtentDtoApiModel>>>;
+  ): Observable<HttpEvent<Array<ExtentDtoApiModel>>>
   public getAllRecordExtentAsJson(
     metadataUuid: string,
     observe: any = 'body',
@@ -2445,30 +2445,30 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling getAllRecordExtentAsJson.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<ExtentDtoApiModel>>(
@@ -2482,7 +2482,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -2503,7 +2503,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<MetadataResourceApiModel>>;
+  ): Observable<Array<MetadataResourceApiModel>>
   public getAllResources(
     metadataUuid: string,
     sort?: 'type' | 'name',
@@ -2512,7 +2512,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<MetadataResourceApiModel>>>;
+  ): Observable<HttpResponse<Array<MetadataResourceApiModel>>>
   public getAllResources(
     metadataUuid: string,
     sort?: 'type' | 'name',
@@ -2521,7 +2521,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<MetadataResourceApiModel>>>;
+  ): Observable<HttpEvent<Array<MetadataResourceApiModel>>>
   public getAllResources(
     metadataUuid: string,
     sort?: 'type' | 'name',
@@ -2534,53 +2534,49 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling getAllResources.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (sort !== undefined && sort !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>sort,
-        'sort'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>sort, 'sort')
     }
     if (approved !== undefined && approved !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>approved,
         'approved'
-      );
+      )
     }
     if (filter !== undefined && filter !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>filter,
         'filter'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<MetadataResourceApiModel>>(
@@ -2595,7 +2591,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -2608,43 +2604,43 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public getAsRdf(
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public getAsRdf(
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public getAsRdf(
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<any>(`${this.configuration.basePath}/records`, {
@@ -2653,7 +2649,7 @@ export class RecordsApiService {
       headers: headers,
       observe: observe,
       reportProgress: reportProgress,
-    });
+    })
   }
 
   /**
@@ -2689,7 +2685,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<RelatedResponseApiModel>;
+  ): Observable<RelatedResponseApiModel>
   public getAssociatedResources(
     metadataUuid: string,
     type?: Array<
@@ -2713,7 +2709,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpResponse<RelatedResponseApiModel>>;
+  ): Observable<HttpResponse<RelatedResponseApiModel>>
   public getAssociatedResources(
     metadataUuid: string,
     type?: Array<
@@ -2737,7 +2733,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpEvent<RelatedResponseApiModel>>;
+  ): Observable<HttpEvent<RelatedResponseApiModel>>
   public getAssociatedResources(
     metadataUuid: string,
     type?: Array<
@@ -2765,58 +2761,54 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling getAssociatedResources.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (type) {
       type.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'type'
-        );
-      });
+        )
+      })
     }
     if (start !== undefined && start !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>start,
         'start'
-      );
+      )
     }
     if (rows !== undefined && rows !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>rows,
-        'rows'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>rows, 'rows')
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = [
         'application/json',
         'application/xml',
-      ];
+      ]
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<RelatedResponseApiModel>(
@@ -2831,7 +2823,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -2846,19 +2838,19 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<FeatureResponseApiModel>;
+  ): Observable<FeatureResponseApiModel>
   public getFeatureCatalog(
     metadataUuid: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpResponse<FeatureResponseApiModel>>;
+  ): Observable<HttpResponse<FeatureResponseApiModel>>
   public getFeatureCatalog(
     metadataUuid: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpEvent<FeatureResponseApiModel>>;
+  ): Observable<HttpEvent<FeatureResponseApiModel>>
   public getFeatureCatalog(
     metadataUuid: string,
     observe: any = 'body',
@@ -2868,33 +2860,33 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling getFeatureCatalog.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = [
         'application/json',
         'application/xml',
-      ];
+      ]
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<FeatureResponseApiModel>(
@@ -2908,7 +2900,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -2934,7 +2926,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<object>;
+  ): Observable<object>
   public getRecordAs(
     metadataUuid: string,
     addSchemaLocation?: boolean,
@@ -2946,7 +2938,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpResponse<object>>;
+  ): Observable<HttpResponse<object>>
   public getRecordAs(
     metadataUuid: string,
     addSchemaLocation?: boolean,
@@ -2958,7 +2950,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpEvent<object>>;
+  ): Observable<HttpEvent<object>>
   public getRecordAs(
     metadataUuid: string,
     addSchemaLocation?: boolean,
@@ -2974,73 +2966,73 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling getRecordAs.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (addSchemaLocation !== undefined && addSchemaLocation !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>addSchemaLocation,
         'addSchemaLocation'
-      );
+      )
     }
     if (increasePopularity !== undefined && increasePopularity !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>increasePopularity,
         'increasePopularity'
-      );
+      )
     }
     if (withInfo !== undefined && withInfo !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>withInfo,
         'withInfo'
-      );
+      )
     }
     if (attachment !== undefined && attachment !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>attachment,
         'attachment'
-      );
+      )
     }
     if (approved !== undefined && approved !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>approved,
         'approved'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
     if (accept !== undefined && accept !== null) {
-      headers = headers.set('Accept', String(accept));
+      headers = headers.set('Accept', String(accept))
     }
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = [
         'application/json',
         'application/xml',
-      ];
+      ]
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<object>(
@@ -3055,7 +3047,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -3081,7 +3073,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<object>;
+  ): Observable<object>
   public getRecordAs1(
     metadataUuid: string,
     addSchemaLocation?: boolean,
@@ -3093,7 +3085,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpResponse<object>>;
+  ): Observable<HttpResponse<object>>
   public getRecordAs1(
     metadataUuid: string,
     addSchemaLocation?: boolean,
@@ -3105,7 +3097,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpEvent<object>>;
+  ): Observable<HttpEvent<object>>
   public getRecordAs1(
     metadataUuid: string,
     addSchemaLocation?: boolean,
@@ -3121,73 +3113,73 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling getRecordAs1.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (addSchemaLocation !== undefined && addSchemaLocation !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>addSchemaLocation,
         'addSchemaLocation'
-      );
+      )
     }
     if (increasePopularity !== undefined && increasePopularity !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>increasePopularity,
         'increasePopularity'
-      );
+      )
     }
     if (withInfo !== undefined && withInfo !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>withInfo,
         'withInfo'
-      );
+      )
     }
     if (attachment !== undefined && attachment !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>attachment,
         'attachment'
-      );
+      )
     }
     if (approved !== undefined && approved !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>approved,
         'approved'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
     if (accept !== undefined && accept !== null) {
-      headers = headers.set('Accept', String(accept));
+      headers = headers.set('Accept', String(accept))
     }
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = [
         'application/json',
         'application/xml',
-      ];
+      ]
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<object>(
@@ -3202,7 +3194,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -3231,7 +3223,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public getRecordAsZip(
     metadataUuid: string,
     format?: 'simple' | 'partial' | 'full',
@@ -3244,7 +3236,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public getRecordAsZip(
     metadataUuid: string,
     format?: 'simple' | 'partial' | 'full',
@@ -3257,7 +3249,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public getRecordAsZip(
     metadataUuid: string,
     format?: 'simple' | 'partial' | 'full',
@@ -3274,77 +3266,77 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling getRecordAsZip.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (format !== undefined && format !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>format,
         'format'
-      );
+      )
     }
     if (withRelated !== undefined && withRelated !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>withRelated,
         'withRelated'
-      );
+      )
     }
     if (withXLinksResolved !== undefined && withXLinksResolved !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>withXLinksResolved,
         'withXLinksResolved'
-      );
+      )
     }
     if (withXLinkAttribute !== undefined && withXLinkAttribute !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>withXLinkAttribute,
         'withXLinkAttribute'
-      );
+      )
     }
     if (addSchemaLocation !== undefined && addSchemaLocation !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>addSchemaLocation,
         'addSchemaLocation'
-      );
+      )
     }
     if (approved !== undefined && approved !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>approved,
         'approved'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
     if (accept !== undefined && accept !== null) {
-      headers = headers.set('Accept', String(accept));
+      headers = headers.set('Accept', String(accept))
     }
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<any>(
@@ -3359,7 +3351,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -3387,7 +3379,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public getRecordFormattedBy(
     formatterId: string,
     metadataUuid: string,
@@ -3400,7 +3392,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public getRecordFormattedBy(
     formatterId: string,
     metadataUuid: string,
@@ -3413,7 +3405,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public getRecordFormattedBy(
     formatterId: string,
     metadataUuid: string,
@@ -3430,75 +3422,75 @@ export class RecordsApiService {
     if (formatterId === null || formatterId === undefined) {
       throw new Error(
         'Required parameter formatterId was null or undefined when calling getRecordFormattedBy.'
-      );
+      )
     }
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling getRecordFormattedBy.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (width !== undefined && width !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>width,
         'width'
-      );
+      )
     }
     if (mdpath !== undefined && mdpath !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>mdpath,
         'mdpath'
-      );
+      )
     }
     if (language !== undefined && language !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>language,
         'language'
-      );
+      )
     }
     if (output !== undefined && output !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>output,
         'output'
-      );
+      )
     }
     if (approved !== undefined && approved !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>approved,
         'approved'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
     if (accept !== undefined && accept !== null) {
-      headers = headers.set('Accept', String(accept));
+      headers = headers.set('Accept', String(accept))
     }
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<any>(
@@ -3513,7 +3505,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -3528,19 +3520,19 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<SharingResponseApiModel>;
+  ): Observable<SharingResponseApiModel>
   public getRecordSharingSettings(
     metadataUuid: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<SharingResponseApiModel>>;
+  ): Observable<HttpResponse<SharingResponseApiModel>>
   public getRecordSharingSettings(
     metadataUuid: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<SharingResponseApiModel>>;
+  ): Observable<HttpEvent<SharingResponseApiModel>>
   public getRecordSharingSettings(
     metadataUuid: string,
     observe: any = 'body',
@@ -3550,30 +3542,30 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling getRecordSharingSettings.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<SharingResponseApiModel>(
@@ -3587,7 +3579,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -3605,7 +3597,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<MetadataStatusResponseApiModel>>;
+  ): Observable<Array<MetadataStatusResponseApiModel>>
   public getRecordStatusHistory(
     metadataUuid: string,
     details?: boolean,
@@ -3613,7 +3605,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<MetadataStatusResponseApiModel>>>;
+  ): Observable<HttpResponse<Array<MetadataStatusResponseApiModel>>>
   public getRecordStatusHistory(
     metadataUuid: string,
     details?: boolean,
@@ -3621,7 +3613,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<MetadataStatusResponseApiModel>>>;
+  ): Observable<HttpEvent<Array<MetadataStatusResponseApiModel>>>
   public getRecordStatusHistory(
     metadataUuid: string,
     details?: boolean,
@@ -3633,46 +3625,46 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling getRecordStatusHistory.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (details !== undefined && details !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>details,
         'details'
-      );
+      )
     }
     if (sortOrder !== undefined && sortOrder !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>sortOrder,
         'sortOrder'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<MetadataStatusResponseApiModel>>(
@@ -3687,7 +3679,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -3707,7 +3699,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<MetadataStatusResponseApiModel>>;
+  ): Observable<Array<MetadataStatusResponseApiModel>>
   public getRecordStatusHistoryByType(
     metadataUuid: string,
     type: 'workflow' | 'task' | 'event',
@@ -3716,7 +3708,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<MetadataStatusResponseApiModel>>>;
+  ): Observable<HttpResponse<Array<MetadataStatusResponseApiModel>>>
   public getRecordStatusHistoryByType(
     metadataUuid: string,
     type: 'workflow' | 'task' | 'event',
@@ -3725,7 +3717,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<MetadataStatusResponseApiModel>>>;
+  ): Observable<HttpEvent<Array<MetadataStatusResponseApiModel>>>
   public getRecordStatusHistoryByType(
     metadataUuid: string,
     type: 'workflow' | 'task' | 'event',
@@ -3738,51 +3730,51 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling getRecordStatusHistoryByType.'
-      );
+      )
     }
     if (type === null || type === undefined) {
       throw new Error(
         'Required parameter type was null or undefined when calling getRecordStatusHistoryByType.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (details !== undefined && details !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>details,
         'details'
-      );
+      )
     }
     if (sortOrder !== undefined && sortOrder !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>sortOrder,
         'sortOrder'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<MetadataStatusResponseApiModel>>(
@@ -3797,7 +3789,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -3812,19 +3804,19 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Set<MetadataCategoryApiModel>>;
+  ): Observable<Set<MetadataCategoryApiModel>>
   public getRecordTags(
     metadataUuid: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Set<MetadataCategoryApiModel>>>;
+  ): Observable<HttpResponse<Set<MetadataCategoryApiModel>>>
   public getRecordTags(
     metadataUuid: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Set<MetadataCategoryApiModel>>>;
+  ): Observable<HttpEvent<Set<MetadataCategoryApiModel>>>
   public getRecordTags(
     metadataUuid: string,
     observe: any = 'body',
@@ -3834,30 +3826,30 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling getRecordTags.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Set<MetadataCategoryApiModel>>(
@@ -3871,7 +3863,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -3889,7 +3881,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public getReportDataDownloads(
     dateFrom: string,
     dateTo: string,
@@ -3897,7 +3889,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public getReportDataDownloads(
     dateFrom: string,
     dateTo: string,
@@ -3905,7 +3897,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public getReportDataDownloads(
     dateFrom: string,
     dateTo: string,
@@ -3917,28 +3909,28 @@ export class RecordsApiService {
     if (dateFrom === null || dateFrom === undefined) {
       throw new Error(
         'Required parameter dateFrom was null or undefined when calling getReportDataDownloads.'
-      );
+      )
     }
     if (dateTo === null || dateTo === undefined) {
       throw new Error(
         'Required parameter dateTo was null or undefined when calling getReportDataDownloads.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (dateFrom !== undefined && dateFrom !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>dateFrom,
         'dateFrom'
-      );
+      )
     }
     if (dateTo !== undefined && dateTo !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>dateTo,
         'dateTo'
-      );
+      )
     }
     if (groups) {
       groups.forEach((element) => {
@@ -3946,31 +3938,31 @@ export class RecordsApiService {
           queryParameters,
           <any>element,
           'groups'
-        );
-      });
+        )
+      })
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<any>(
@@ -3983,7 +3975,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -4001,7 +3993,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public getReportDataUploads(
     dateFrom: string,
     dateTo: string,
@@ -4009,7 +4001,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public getReportDataUploads(
     dateFrom: string,
     dateTo: string,
@@ -4017,7 +4009,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public getReportDataUploads(
     dateFrom: string,
     dateTo: string,
@@ -4029,28 +4021,28 @@ export class RecordsApiService {
     if (dateFrom === null || dateFrom === undefined) {
       throw new Error(
         'Required parameter dateFrom was null or undefined when calling getReportDataUploads.'
-      );
+      )
     }
     if (dateTo === null || dateTo === undefined) {
       throw new Error(
         'Required parameter dateTo was null or undefined when calling getReportDataUploads.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (dateFrom !== undefined && dateFrom !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>dateFrom,
         'dateFrom'
-      );
+      )
     }
     if (dateTo !== undefined && dateTo !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>dateTo,
         'dateTo'
-      );
+      )
     }
     if (groups) {
       groups.forEach((element) => {
@@ -4058,31 +4050,31 @@ export class RecordsApiService {
           queryParameters,
           <any>element,
           'groups'
-        );
-      });
+        )
+      })
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<any>(
@@ -4095,7 +4087,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -4113,7 +4105,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public getReportInternalMetadata(
     dateFrom: string,
     dateTo: string,
@@ -4121,7 +4113,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public getReportInternalMetadata(
     dateFrom: string,
     dateTo: string,
@@ -4129,7 +4121,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public getReportInternalMetadata(
     dateFrom: string,
     dateTo: string,
@@ -4141,28 +4133,28 @@ export class RecordsApiService {
     if (dateFrom === null || dateFrom === undefined) {
       throw new Error(
         'Required parameter dateFrom was null or undefined when calling getReportInternalMetadata.'
-      );
+      )
     }
     if (dateTo === null || dateTo === undefined) {
       throw new Error(
         'Required parameter dateTo was null or undefined when calling getReportInternalMetadata.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (dateFrom !== undefined && dateFrom !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>dateFrom,
         'dateFrom'
-      );
+      )
     }
     if (dateTo !== undefined && dateTo !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>dateTo,
         'dateTo'
-      );
+      )
     }
     if (groups) {
       groups.forEach((element) => {
@@ -4170,31 +4162,31 @@ export class RecordsApiService {
           queryParameters,
           <any>element,
           'groups'
-        );
-      });
+        )
+      })
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<any>(
@@ -4207,7 +4199,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -4225,7 +4217,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public getReportUpdatedMetadata(
     dateFrom: string,
     dateTo: string,
@@ -4233,7 +4225,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public getReportUpdatedMetadata(
     dateFrom: string,
     dateTo: string,
@@ -4241,7 +4233,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public getReportUpdatedMetadata(
     dateFrom: string,
     dateTo: string,
@@ -4253,28 +4245,28 @@ export class RecordsApiService {
     if (dateFrom === null || dateFrom === undefined) {
       throw new Error(
         'Required parameter dateFrom was null or undefined when calling getReportUpdatedMetadata.'
-      );
+      )
     }
     if (dateTo === null || dateTo === undefined) {
       throw new Error(
         'Required parameter dateTo was null or undefined when calling getReportUpdatedMetadata.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (dateFrom !== undefined && dateFrom !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>dateFrom,
         'dateFrom'
-      );
+      )
     }
     if (dateTo !== undefined && dateTo !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>dateTo,
         'dateTo'
-      );
+      )
     }
     if (groups) {
       groups.forEach((element) => {
@@ -4282,31 +4274,31 @@ export class RecordsApiService {
           queryParameters,
           <any>element,
           'groups'
-        );
-      });
+        )
+      })
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<any>(
@@ -4319,7 +4311,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -4339,7 +4331,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<Array<string>>;
+  ): Observable<Array<string>>
   public getResource(
     metadataUuid: string,
     resourceId: string,
@@ -4348,7 +4340,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpResponse<Array<string>>>;
+  ): Observable<HttpResponse<Array<string>>>
   public getResource(
     metadataUuid: string,
     resourceId: string,
@@ -4357,7 +4349,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpEvent<Array<string>>>;
+  ): Observable<HttpEvent<Array<string>>>
   public getResource(
     metadataUuid: string,
     resourceId: string,
@@ -4370,51 +4362,47 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling getResource.'
-      );
+      )
     }
     if (resourceId === null || resourceId === undefined) {
       throw new Error(
         'Required parameter resourceId was null or undefined when calling getResource.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (approved !== undefined && approved !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>approved,
         'approved'
-      );
+      )
     }
     if (size !== undefined && size !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>size,
-        'size'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>size, 'size')
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json', '*/*'];
+      const httpHeaderAccepts: string[] = ['application/json', '*/*']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<string>>(
@@ -4429,7 +4417,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -4443,19 +4431,19 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<SavedQueryApiModel>>;
+  ): Observable<Array<SavedQueryApiModel>>
   public getSavedQueries(
     metadataUuid: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<SavedQueryApiModel>>>;
+  ): Observable<HttpResponse<Array<SavedQueryApiModel>>>
   public getSavedQueries(
     metadataUuid: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<SavedQueryApiModel>>>;
+  ): Observable<HttpEvent<Array<SavedQueryApiModel>>>
   public getSavedQueries(
     metadataUuid: string,
     observe: any = 'body',
@@ -4465,30 +4453,30 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling getSavedQueries.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<SavedQueryApiModel>>(
@@ -4502,7 +4490,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -4514,43 +4502,43 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<SharingResponseApiModel>;
+  ): Observable<SharingResponseApiModel>
   public getSharingSettings(
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<SharingResponseApiModel>>;
+  ): Observable<HttpResponse<SharingResponseApiModel>>
   public getSharingSettings(
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<SharingResponseApiModel>>;
+  ): Observable<HttpEvent<SharingResponseApiModel>>
   public getSharingSettings(
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<SharingResponseApiModel>(
@@ -4562,7 +4550,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -4576,19 +4564,19 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<MetadataWorkflowStatusResponseApiModel>;
+  ): Observable<MetadataWorkflowStatusResponseApiModel>
   public getStatus(
     metadataUuid: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<MetadataWorkflowStatusResponseApiModel>>;
+  ): Observable<HttpResponse<MetadataWorkflowStatusResponseApiModel>>
   public getStatus(
     metadataUuid: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<MetadataWorkflowStatusResponseApiModel>>;
+  ): Observable<HttpEvent<MetadataWorkflowStatusResponseApiModel>>
   public getStatus(
     metadataUuid: string,
     observe: any = 'body',
@@ -4598,30 +4586,30 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling getStatus.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<MetadataWorkflowStatusResponseApiModel>(
@@ -4635,7 +4623,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -4650,19 +4638,19 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<SuggestionTypeApiModel>>;
+  ): Observable<Array<SuggestionTypeApiModel>>
   public getSuggestions(
     metadataUuid: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<SuggestionTypeApiModel>>>;
+  ): Observable<HttpResponse<Array<SuggestionTypeApiModel>>>
   public getSuggestions(
     metadataUuid: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<SuggestionTypeApiModel>>>;
+  ): Observable<HttpEvent<Array<SuggestionTypeApiModel>>>
   public getSuggestions(
     metadataUuid: string,
     observe: any = 'body',
@@ -4672,30 +4660,30 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling getSuggestions.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<SuggestionTypeApiModel>>(
@@ -4709,7 +4697,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -4724,19 +4712,19 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<{ [key: string]: Array<string> }>;
+  ): Observable<{ [key: string]: Array<string> }>
   public getTestSuites(
     metadataUuid: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<{ [key: string]: Array<string> }>>;
+  ): Observable<HttpResponse<{ [key: string]: Array<string> }>>
   public getTestSuites(
     metadataUuid: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<{ [key: string]: Array<string> }>>;
+  ): Observable<HttpEvent<{ [key: string]: Array<string> }>>
   public getTestSuites(
     metadataUuid: string,
     observe: any = 'body',
@@ -4746,30 +4734,30 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling getTestSuites.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<{ [key: string]: Array<string> }>(
@@ -4783,7 +4771,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -4817,7 +4805,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<MetadataStatusResponseApiModel>>;
+  ): Observable<Array<MetadataStatusResponseApiModel>>
   public getWorkflowStatusByType(
     type?: Array<'workflow' | 'task' | 'event'>,
     details?: boolean,
@@ -4833,7 +4821,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<MetadataStatusResponseApiModel>>>;
+  ): Observable<HttpResponse<Array<MetadataStatusResponseApiModel>>>
   public getWorkflowStatusByType(
     type?: Array<'workflow' | 'task' | 'event'>,
     details?: boolean,
@@ -4849,7 +4837,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<MetadataStatusResponseApiModel>>>;
+  ): Observable<HttpEvent<Array<MetadataStatusResponseApiModel>>>
   public getWorkflowStatusByType(
     type?: Array<'workflow' | 'task' | 'event'>,
     details?: boolean,
@@ -4866,22 +4854,22 @@ export class RecordsApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (type) {
       type.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'type'
-        );
-      });
+        )
+      })
     }
     if (details !== undefined && details !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>details,
         'details'
-      );
+      )
     }
     if (author) {
       author.forEach((element) => {
@@ -4889,8 +4877,8 @@ export class RecordsApiService {
           queryParameters,
           <any>element,
           'author'
-        );
-      });
+        )
+      })
     }
     if (owner) {
       owner.forEach((element) => {
@@ -4898,8 +4886,8 @@ export class RecordsApiService {
           queryParameters,
           <any>element,
           'owner'
-        );
-      });
+        )
+      })
     }
     if (id) {
       id.forEach((element) => {
@@ -4907,8 +4895,8 @@ export class RecordsApiService {
           queryParameters,
           <any>element,
           'id'
-        );
-      });
+        )
+      })
     }
     if (record) {
       record.forEach((element) => {
@@ -4916,8 +4904,8 @@ export class RecordsApiService {
           queryParameters,
           <any>element,
           'record'
-        );
-      });
+        )
+      })
     }
     if (uuid) {
       uuid.forEach((element) => {
@@ -4925,59 +4913,51 @@ export class RecordsApiService {
           queryParameters,
           <any>element,
           'uuid'
-        );
-      });
+        )
+      })
     }
     if (dateFrom !== undefined && dateFrom !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>dateFrom,
         'dateFrom'
-      );
+      )
     }
     if (dateTo !== undefined && dateTo !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>dateTo,
         'dateTo'
-      );
+      )
     }
     if (from !== undefined && from !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>from,
-        'from'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>from, 'from')
     }
     if (size !== undefined && size !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>size,
-        'size'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>size, 'size')
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<MetadataStatusResponseApiModel>>(
@@ -4990,7 +4970,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -5007,21 +4987,21 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<{ [key: string]: object }>;
+  ): Observable<{ [key: string]: object }>
   public index(
     uuids?: Array<string>,
     bucket?: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<{ [key: string]: object }>>;
+  ): Observable<HttpResponse<{ [key: string]: object }>>
   public index(
     uuids?: Array<string>,
     bucket?: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<{ [key: string]: object }>>;
+  ): Observable<HttpEvent<{ [key: string]: object }>>
   public index(
     uuids?: Array<string>,
     bucket?: string,
@@ -5029,45 +5009,45 @@ export class RecordsApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (uuids) {
       uuids.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'uuids'
-        );
-      });
+        )
+      })
     }
     if (bucket !== undefined && bucket !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>bucket,
         'bucket'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<{ [key: string]: object }>(
@@ -5080,7 +5060,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -5125,7 +5105,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<SimpleMetadataProcessingReportApiModel>;
+  ): Observable<SimpleMetadataProcessingReportApiModel>
   public insert(
     metadataType?:
       | 'METADATA'
@@ -5148,7 +5128,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<SimpleMetadataProcessingReportApiModel>>;
+  ): Observable<HttpResponse<SimpleMetadataProcessingReportApiModel>>
   public insert(
     metadataType?:
       | 'METADATA'
@@ -5171,7 +5151,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<SimpleMetadataProcessingReportApiModel>>;
+  ): Observable<HttpEvent<SimpleMetadataProcessingReportApiModel>>
   public insert(
     metadataType?:
       | 'METADATA'
@@ -5195,13 +5175,13 @@ export class RecordsApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (metadataType !== undefined && metadataType !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>metadataType,
         'metadataType'
-      );
+      )
     }
     if (url) {
       url.forEach((element) => {
@@ -5209,50 +5189,50 @@ export class RecordsApiService {
           queryParameters,
           <any>element,
           'url'
-        );
-      });
+        )
+      })
     }
     if (serverFolder !== undefined && serverFolder !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>serverFolder,
         'serverFolder'
-      );
+      )
     }
     if (recursiveSearch !== undefined && recursiveSearch !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>recursiveSearch,
         'recursiveSearch'
-      );
+      )
     }
     if (publishToAll !== undefined && publishToAll !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>publishToAll,
         'publishToAll'
-      );
+      )
     }
     if (assignToCatalog !== undefined && assignToCatalog !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>assignToCatalog,
         'assignToCatalog'
-      );
+      )
     }
     if (uuidProcessing !== undefined && uuidProcessing !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>uuidProcessing,
         'uuidProcessing'
-      );
+      )
     }
     if (group !== undefined && group !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>group,
         'group'
-      );
+      )
     }
     if (category) {
       category.forEach((element) => {
@@ -5260,51 +5240,51 @@ export class RecordsApiService {
           queryParameters,
           <any>element,
           'category'
-        );
-      });
+        )
+      })
     }
     if (rejectIfInvalid !== undefined && rejectIfInvalid !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>rejectIfInvalid,
         'rejectIfInvalid'
-      );
+      )
     }
     if (transformWith !== undefined && transformWith !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>transformWith,
         'transformWith'
-      );
+      )
     }
     if (schema !== undefined && schema !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>schema,
         'schema'
-      );
+      )
     }
     if (extra !== undefined && extra !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>extra,
         'extra'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
     // to determine the Content-Type header
@@ -5312,20 +5292,20 @@ export class RecordsApiService {
       'application/xml',
       'application/json',
       'application/x-www-form-urlencoded',
-    ];
+    ]
     const httpContentTypeSelected:
       | string
-      | undefined = this.configuration.selectHeaderContentType(consumes);
+      | undefined = this.configuration.selectHeaderContentType(consumes)
     if (httpContentTypeSelected !== undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
+      headers = headers.set('Content-Type', httpContentTypeSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<SimpleMetadataProcessingReportApiModel>(
@@ -5339,7 +5319,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -5378,7 +5358,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<SimpleMetadataProcessingReportApiModel>;
+  ): Observable<SimpleMetadataProcessingReportApiModel>
   public insertFile(
     metadataType?:
       | 'METADATA'
@@ -5398,7 +5378,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<SimpleMetadataProcessingReportApiModel>>;
+  ): Observable<HttpResponse<SimpleMetadataProcessingReportApiModel>>
   public insertFile(
     metadataType?:
       | 'METADATA'
@@ -5418,7 +5398,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<SimpleMetadataProcessingReportApiModel>>;
+  ): Observable<HttpEvent<SimpleMetadataProcessingReportApiModel>>
   public insertFile(
     metadataType?:
       | 'METADATA'
@@ -5439,13 +5419,13 @@ export class RecordsApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (metadataType !== undefined && metadataType !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>metadataType,
         'metadataType'
-      );
+      )
     }
     if (file) {
       file.forEach((element) => {
@@ -5453,22 +5433,22 @@ export class RecordsApiService {
           queryParameters,
           <any>element,
           'file'
-        );
-      });
+        )
+      })
     }
     if (uuidProcessing !== undefined && uuidProcessing !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>uuidProcessing,
         'uuidProcessing'
-      );
+      )
     }
     if (group !== undefined && group !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>group,
         'group'
-      );
+      )
     }
     if (category) {
       category.forEach((element) => {
@@ -5476,73 +5456,73 @@ export class RecordsApiService {
           queryParameters,
           <any>element,
           'category'
-        );
-      });
+        )
+      })
     }
     if (rejectIfInvalid !== undefined && rejectIfInvalid !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>rejectIfInvalid,
         'rejectIfInvalid'
-      );
+      )
     }
     if (publishToAll !== undefined && publishToAll !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>publishToAll,
         'publishToAll'
-      );
+      )
     }
     if (assignToCatalog !== undefined && assignToCatalog !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>assignToCatalog,
         'assignToCatalog'
-      );
+      )
     }
     if (transformWith !== undefined && transformWith !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>transformWith,
         'transformWith'
-      );
+      )
     }
     if (schema !== undefined && schema !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>schema,
         'schema'
-      );
+      )
     }
     if (extra !== undefined && extra !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>extra,
         'extra'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.post<SimpleMetadataProcessingReportApiModel>(
@@ -5556,7 +5536,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -5593,7 +5573,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<SimpleMetadataProcessingReportApiModel>;
+  ): Observable<SimpleMetadataProcessingReportApiModel>
   public insertOgcMapContextFile(
     title: string,
     recordAbstract?: string,
@@ -5610,7 +5590,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<SimpleMetadataProcessingReportApiModel>>;
+  ): Observable<HttpResponse<SimpleMetadataProcessingReportApiModel>>
   public insertOgcMapContextFile(
     title: string,
     recordAbstract?: string,
@@ -5627,7 +5607,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<SimpleMetadataProcessingReportApiModel>>;
+  ): Observable<HttpEvent<SimpleMetadataProcessingReportApiModel>>
   public insertOgcMapContextFile(
     title: string,
     recordAbstract?: string,
@@ -5648,108 +5628,108 @@ export class RecordsApiService {
     if (title === null || title === undefined) {
       throw new Error(
         'Required parameter title was null or undefined when calling insertOgcMapContextFile.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (title !== undefined && title !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>title,
         'title'
-      );
+      )
     }
     if (recordAbstract !== undefined && recordAbstract !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>recordAbstract,
         'recordAbstract'
-      );
+      )
     }
     if (xml !== undefined && xml !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>xml, 'xml');
+      queryParameters = this.addToHttpParams(queryParameters, <any>xml, 'xml')
     }
     if (filename !== undefined && filename !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>filename,
         'filename'
-      );
+      )
     }
     if (url !== undefined && url !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>url, 'url');
+      queryParameters = this.addToHttpParams(queryParameters, <any>url, 'url')
     }
     if (viewerUrl !== undefined && viewerUrl !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>viewerUrl,
         'viewerUrl'
-      );
+      )
     }
     if (overview !== undefined && overview !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>overview,
         'overview'
-      );
+      )
     }
     if (overviewFilename !== undefined && overviewFilename !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>overviewFilename,
         'overviewFilename'
-      );
+      )
     }
     if (topic !== undefined && topic !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>topic,
         'topic'
-      );
+      )
     }
     if (publishToAll !== undefined && publishToAll !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>publishToAll,
         'publishToAll'
-      );
+      )
     }
     if (uuidProcessing !== undefined && uuidProcessing !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>uuidProcessing,
         'uuidProcessing'
-      );
+      )
     }
     if (group !== undefined && group !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>group,
         'group'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.post<SimpleMetadataProcessingReportApiModel>(
@@ -5763,7 +5743,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -5783,7 +5763,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<MetadataResourceApiModel>;
+  ): Observable<MetadataResourceApiModel>
   public patchResource(
     metadataUuid: string,
     resourceId: string,
@@ -5792,7 +5772,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<MetadataResourceApiModel>>;
+  ): Observable<HttpResponse<MetadataResourceApiModel>>
   public patchResource(
     metadataUuid: string,
     resourceId: string,
@@ -5801,7 +5781,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<MetadataResourceApiModel>>;
+  ): Observable<HttpEvent<MetadataResourceApiModel>>
   public patchResource(
     metadataUuid: string,
     resourceId: string,
@@ -5814,56 +5794,56 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling patchResource.'
-      );
+      )
     }
     if (resourceId === null || resourceId === undefined) {
       throw new Error(
         'Required parameter resourceId was null or undefined when calling patchResource.'
-      );
+      )
     }
     if (visibility === null || visibility === undefined) {
       throw new Error(
         'Required parameter visibility was null or undefined when calling patchResource.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (visibility !== undefined && visibility !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>visibility,
         'visibility'
-      );
+      )
     }
     if (approved !== undefined && approved !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>approved,
         'approved'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.patch<MetadataResourceApiModel>(
@@ -5879,7 +5859,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -5896,21 +5876,21 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<string>;
+  ): Observable<string>
   public processRecord(
     metadataUuid: string,
     process: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpResponse<string>>;
+  ): Observable<HttpResponse<string>>
   public processRecord(
     metadataUuid: string,
     process: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpEvent<string>>;
+  ): Observable<HttpEvent<string>>
   public processRecord(
     metadataUuid: string,
     process: string,
@@ -5921,38 +5901,38 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling processRecord.'
-      );
+      )
     }
     if (process === null || process === undefined) {
       throw new Error(
         'Required parameter process was null or undefined when calling processRecord.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = [
         'application/json',
         'application/xml',
-      ];
+      ]
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.post<string>(
@@ -5967,7 +5947,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -5984,21 +5964,21 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<ElementApiModel>;
+  ): Observable<ElementApiModel>
   public processRecordPreview(
     metadataUuid: string,
     process: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpResponse<ElementApiModel>>;
+  ): Observable<HttpResponse<ElementApiModel>>
   public processRecordPreview(
     metadataUuid: string,
     process: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpEvent<ElementApiModel>>;
+  ): Observable<HttpEvent<ElementApiModel>>
   public processRecordPreview(
     metadataUuid: string,
     process: string,
@@ -6009,38 +5989,38 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling processRecordPreview.'
-      );
+      )
     }
     if (process === null || process === undefined) {
       throw new Error(
         'Required parameter process was null or undefined when calling processRecordPreview.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = [
         'application/json',
         'application/xml',
-      ];
+      ]
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<ElementApiModel>(
@@ -6054,7 +6034,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -6071,21 +6051,21 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<MetadataProcessingReportApiModel>;
+  ): Observable<MetadataProcessingReportApiModel>
   public publish(
     uuids?: Array<string>,
     bucket?: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>;
+  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>
   public publish(
     uuids?: Array<string>,
     bucket?: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>;
+  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>
   public publish(
     uuids?: Array<string>,
     bucket?: string,
@@ -6093,45 +6073,45 @@ export class RecordsApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (uuids) {
       uuids.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'uuids'
-        );
-      });
+        )
+      })
     }
     if (bucket !== undefined && bucket !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>bucket,
         'bucket'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json', '*/*'];
+      const httpHeaderAccepts: string[] = ['application/json', '*/*']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<MetadataProcessingReportApiModel>(
@@ -6145,7 +6125,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -6165,7 +6145,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<MetadataResourceApiModel>;
+  ): Observable<MetadataResourceApiModel>
   public putResource(
     metadataUuid: string,
     visibility?: 'public' | 'private',
@@ -6174,7 +6154,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<MetadataResourceApiModel>>;
+  ): Observable<HttpResponse<MetadataResourceApiModel>>
   public putResource(
     metadataUuid: string,
     visibility?: 'public' | 'private',
@@ -6183,7 +6163,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<MetadataResourceApiModel>>;
+  ): Observable<HttpEvent<MetadataResourceApiModel>>
   public putResource(
     metadataUuid: string,
     visibility?: 'public' | 'private',
@@ -6196,55 +6176,55 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling putResource.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (visibility !== undefined && visibility !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>visibility,
         'visibility'
-      );
+      )
     }
     if (approved !== undefined && approved !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>approved,
         'approved'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
     // to determine the Content-Type header
-    const consumes: string[] = ['application/json'];
+    const consumes: string[] = ['application/json']
     const httpContentTypeSelected:
       | string
-      | undefined = this.configuration.selectHeaderContentType(consumes);
+      | undefined = this.configuration.selectHeaderContentType(consumes)
     if (httpContentTypeSelected !== undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
+      headers = headers.set('Content-Type', httpContentTypeSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.post<MetadataResourceApiModel>(
@@ -6260,7 +6240,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -6280,7 +6260,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<MetadataResourceApiModel>;
+  ): Observable<MetadataResourceApiModel>
   public putResourceFromURL(
     metadataUuid: string,
     url: string,
@@ -6289,7 +6269,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpResponse<MetadataResourceApiModel>>;
+  ): Observable<HttpResponse<MetadataResourceApiModel>>
   public putResourceFromURL(
     metadataUuid: string,
     url: string,
@@ -6298,7 +6278,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpEvent<MetadataResourceApiModel>>;
+  ): Observable<HttpEvent<MetadataResourceApiModel>>
   public putResourceFromURL(
     metadataUuid: string,
     url: string,
@@ -6311,54 +6291,54 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling putResourceFromURL.'
-      );
+      )
     }
     if (url === null || url === undefined) {
       throw new Error(
         'Required parameter url was null or undefined when calling putResourceFromURL.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (visibility !== undefined && visibility !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>visibility,
         'visibility'
-      );
+      )
     }
     if (url !== undefined && url !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>url, 'url');
+      queryParameters = this.addToHttpParams(queryParameters, <any>url, 'url')
     }
     if (approved !== undefined && approved !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>approved,
         'approved'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json', '*/*'];
+      const httpHeaderAccepts: string[] = ['application/json', '*/*']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<MetadataResourceApiModel>(
@@ -6374,7 +6354,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -6391,21 +6371,21 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<number>;
+  ): Observable<number>
   public rateRecord(
     metadataUuid: string,
     body: number,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpResponse<number>>;
+  ): Observable<HttpResponse<number>>
   public rateRecord(
     metadataUuid: string,
     body: number,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpEvent<number>>;
+  ): Observable<HttpEvent<number>>
   public rateRecord(
     metadataUuid: string,
     body: number,
@@ -6416,44 +6396,44 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling rateRecord.'
-      );
+      )
     }
     if (body === null || body === undefined) {
       throw new Error(
         'Required parameter body was null or undefined when calling rateRecord.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json', '*/*'];
+      const httpHeaderAccepts: string[] = ['application/json', '*/*']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
     // to determine the Content-Type header
-    const consumes: string[] = ['application/json'];
+    const consumes: string[] = ['application/json']
     const httpContentTypeSelected:
       | string
-      | undefined = this.configuration.selectHeaderContentType(consumes);
+      | undefined = this.configuration.selectHeaderContentType(consumes)
     if (httpContentTypeSelected !== undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
+      headers = headers.set('Content-Type', httpContentTypeSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<number>(
@@ -6468,7 +6448,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -6488,7 +6468,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public restoreAtStatusSave(
     metadataUuid: string,
     statusId: number,
@@ -6497,7 +6477,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public restoreAtStatusSave(
     metadataUuid: string,
     statusId: number,
@@ -6506,7 +6486,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public restoreAtStatusSave(
     metadataUuid: string,
     statusId: number,
@@ -6519,45 +6499,45 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling restoreAtStatusSave.'
-      );
+      )
     }
     if (statusId === null || statusId === undefined) {
       throw new Error(
         'Required parameter statusId was null or undefined when calling restoreAtStatusSave.'
-      );
+      )
     }
     if (userId === null || userId === undefined) {
       throw new Error(
         'Required parameter userId was null or undefined when calling restoreAtStatusSave.'
-      );
+      )
     }
     if (changeDate === null || changeDate === undefined) {
       throw new Error(
         'Required parameter changeDate was null or undefined when calling restoreAtStatusSave.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.post<any>(
@@ -6574,7 +6554,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -6605,7 +6585,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public saveEdits(
     metadataUuid: string,
     tab?: string,
@@ -6619,7 +6599,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public saveEdits(
     metadataUuid: string,
     tab?: string,
@@ -6633,7 +6613,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public saveEdits(
     metadataUuid: string,
     tab?: string,
@@ -6651,84 +6631,80 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling saveEdits.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (tab !== undefined && tab !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>tab, 'tab');
+      queryParameters = this.addToHttpParams(queryParameters, <any>tab, 'tab')
     }
     if (withAttributes !== undefined && withAttributes !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>withAttributes,
         'withAttributes'
-      );
+      )
     }
     if (withValidationErrors !== undefined && withValidationErrors !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>withValidationErrors,
         'withValidationErrors'
-      );
+      )
     }
     if (minor !== undefined && minor !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>minor,
         'minor'
-      );
+      )
     }
     if (status !== undefined && status !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>status,
         'status'
-      );
+      )
     }
     if (commit !== undefined && commit !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>commit,
         'commit'
-      );
+      )
     }
     if (terminate !== undefined && terminate !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>terminate,
         'terminate'
-      );
+      )
     }
     if (data !== undefined && data !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>data,
-        'data'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>data, 'data')
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.post<any>(
@@ -6744,7 +6720,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -6763,7 +6739,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<MetadataResourceApiModel>;
+  ): Observable<MetadataResourceApiModel>
   public saveThumbnail(
     metadataUuid: string,
     jsonConfig: string,
@@ -6771,7 +6747,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpResponse<MetadataResourceApiModel>>;
+  ): Observable<HttpResponse<MetadataResourceApiModel>>
   public saveThumbnail(
     metadataUuid: string,
     jsonConfig: string,
@@ -6779,7 +6755,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpEvent<MetadataResourceApiModel>>;
+  ): Observable<HttpEvent<MetadataResourceApiModel>>
   public saveThumbnail(
     metadataUuid: string,
     jsonConfig: string,
@@ -6791,51 +6767,51 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling saveThumbnail.'
-      );
+      )
     }
     if (jsonConfig === null || jsonConfig === undefined) {
       throw new Error(
         'Required parameter jsonConfig was null or undefined when calling saveThumbnail.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (jsonConfig !== undefined && jsonConfig !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>jsonConfig,
         'jsonConfig'
-      );
+      )
     }
     if (rotationAngle !== undefined && rotationAngle !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>rotationAngle,
         'rotationAngle'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json', '*/*'];
+      const httpHeaderAccepts: string[] = ['application/json', '*/*']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<MetadataResourceApiModel>(
@@ -6851,7 +6827,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -6873,7 +6849,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<MetadataProcessingReportApiModel>;
+  ): Observable<MetadataProcessingReportApiModel>
   public setGroupAndOwner(
     groupIdentifier: number,
     userIdentifier: number,
@@ -6883,7 +6859,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>;
+  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>
   public setGroupAndOwner(
     groupIdentifier: number,
     userIdentifier: number,
@@ -6893,7 +6869,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>;
+  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>
   public setGroupAndOwner(
     groupIdentifier: number,
     userIdentifier: number,
@@ -6907,74 +6883,74 @@ export class RecordsApiService {
     if (groupIdentifier === null || groupIdentifier === undefined) {
       throw new Error(
         'Required parameter groupIdentifier was null or undefined when calling setGroupAndOwner.'
-      );
+      )
     }
     if (userIdentifier === null || userIdentifier === undefined) {
       throw new Error(
         'Required parameter userIdentifier was null or undefined when calling setGroupAndOwner.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (uuids) {
       uuids.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'uuids'
-        );
-      });
+        )
+      })
     }
     if (groupIdentifier !== undefined && groupIdentifier !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>groupIdentifier,
         'groupIdentifier'
-      );
+      )
     }
     if (bucket !== undefined && bucket !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>bucket,
         'bucket'
-      );
+      )
     }
     if (userIdentifier !== undefined && userIdentifier !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>userIdentifier,
         'userIdentifier'
-      );
+      )
     }
     if (approved !== undefined && approved !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>approved,
         'approved'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json', '*/*'];
+      const httpHeaderAccepts: string[] = ['application/json', '*/*']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<MetadataProcessingReportApiModel>(
@@ -6988,7 +6964,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -7005,21 +6981,21 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public setRecordGroup(
     metadataUuid: string,
     body: number,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public setRecordGroup(
     metadataUuid: string,
     body: number,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public setRecordGroup(
     metadataUuid: string,
     body: number,
@@ -7030,44 +7006,44 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling setRecordGroup.'
-      );
+      )
     }
     if (body === null || body === undefined) {
       throw new Error(
         'Required parameter body was null or undefined when calling setRecordGroup.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
     // to determine the Content-Type header
-    const consumes: string[] = ['application/json'];
+    const consumes: string[] = ['application/json']
     const httpContentTypeSelected:
       | string
-      | undefined = this.configuration.selectHeaderContentType(consumes);
+      | undefined = this.configuration.selectHeaderContentType(consumes)
     if (httpContentTypeSelected !== undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
+      headers = headers.set('Content-Type', httpContentTypeSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<any>(
@@ -7082,7 +7058,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -7102,7 +7078,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<MetadataProcessingReportApiModel>;
+  ): Observable<MetadataProcessingReportApiModel>
   public setRecordOwnership(
     metadataUuid: string,
     groupIdentifier: number,
@@ -7111,7 +7087,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>;
+  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>
   public setRecordOwnership(
     metadataUuid: string,
     groupIdentifier: number,
@@ -7120,7 +7096,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>;
+  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>
   public setRecordOwnership(
     metadataUuid: string,
     groupIdentifier: number,
@@ -7133,63 +7109,63 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling setRecordOwnership.'
-      );
+      )
     }
     if (groupIdentifier === null || groupIdentifier === undefined) {
       throw new Error(
         'Required parameter groupIdentifier was null or undefined when calling setRecordOwnership.'
-      );
+      )
     }
     if (userIdentifier === null || userIdentifier === undefined) {
       throw new Error(
         'Required parameter userIdentifier was null or undefined when calling setRecordOwnership.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (groupIdentifier !== undefined && groupIdentifier !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>groupIdentifier,
         'groupIdentifier'
-      );
+      )
     }
     if (userIdentifier !== undefined && userIdentifier !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>userIdentifier,
         'userIdentifier'
-      );
+      )
     }
     if (approved !== undefined && approved !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>approved,
         'approved'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json', '*/*'];
+      const httpHeaderAccepts: string[] = ['application/json', '*/*']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<MetadataProcessingReportApiModel>(
@@ -7205,7 +7181,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -7224,7 +7200,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<MetadataProcessingReportApiModel>;
+  ): Observable<MetadataProcessingReportApiModel>
   public share(
     sharingParameterApiModel: SharingParameterApiModel,
     uuids?: Array<string>,
@@ -7232,7 +7208,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>;
+  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>
   public share(
     sharingParameterApiModel: SharingParameterApiModel,
     uuids?: Array<string>,
@@ -7240,7 +7216,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>;
+  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>
   public share(
     sharingParameterApiModel: SharingParameterApiModel,
     uuids?: Array<string>,
@@ -7255,57 +7231,57 @@ export class RecordsApiService {
     ) {
       throw new Error(
         'Required parameter sharingParameterApiModel was null or undefined when calling share.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (uuids) {
       uuids.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'uuids'
-        );
-      });
+        )
+      })
     }
     if (bucket !== undefined && bucket !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>bucket,
         'bucket'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json', '*/*'];
+      const httpHeaderAccepts: string[] = ['application/json', '*/*']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
     // to determine the Content-Type header
-    const consumes: string[] = ['application/json'];
+    const consumes: string[] = ['application/json']
     const httpContentTypeSelected:
       | string
-      | undefined = this.configuration.selectHeaderContentType(consumes);
+      | undefined = this.configuration.selectHeaderContentType(consumes)
     if (httpContentTypeSelected !== undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
+      headers = headers.set('Content-Type', httpContentTypeSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<MetadataProcessingReportApiModel>(
@@ -7319,7 +7295,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -7339,7 +7315,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<string>;
+  ): Observable<string>
   public showStatusAfter(
     metadataUuid: string,
     statusId: number,
@@ -7348,7 +7324,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpResponse<string>>;
+  ): Observable<HttpResponse<string>>
   public showStatusAfter(
     metadataUuid: string,
     statusId: number,
@@ -7357,7 +7333,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpEvent<string>>;
+  ): Observable<HttpEvent<string>>
   public showStatusAfter(
     metadataUuid: string,
     statusId: number,
@@ -7370,48 +7346,48 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling showStatusAfter.'
-      );
+      )
     }
     if (statusId === null || statusId === undefined) {
       throw new Error(
         'Required parameter statusId was null or undefined when calling showStatusAfter.'
-      );
+      )
     }
     if (userId === null || userId === undefined) {
       throw new Error(
         'Required parameter userId was null or undefined when calling showStatusAfter.'
-      );
+      )
     }
     if (changeDate === null || changeDate === undefined) {
       throw new Error(
         'Required parameter changeDate was null or undefined when calling showStatusAfter.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = [
         'application/json',
         'application/xml',
-      ];
+      ]
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<string>(
@@ -7427,7 +7403,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -7447,7 +7423,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<string>;
+  ): Observable<string>
   public showStatusBefore(
     metadataUuid: string,
     statusId: number,
@@ -7456,7 +7432,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpResponse<string>>;
+  ): Observable<HttpResponse<string>>
   public showStatusBefore(
     metadataUuid: string,
     statusId: number,
@@ -7465,7 +7441,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpEvent<string>>;
+  ): Observable<HttpEvent<string>>
   public showStatusBefore(
     metadataUuid: string,
     statusId: number,
@@ -7478,48 +7454,48 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling showStatusBefore.'
-      );
+      )
     }
     if (statusId === null || statusId === undefined) {
       throw new Error(
         'Required parameter statusId was null or undefined when calling showStatusBefore.'
-      );
+      )
     }
     if (userId === null || userId === undefined) {
       throw new Error(
         'Required parameter userId was null or undefined when calling showStatusBefore.'
-      );
+      )
     }
     if (changeDate === null || changeDate === undefined) {
       throw new Error(
         'Required parameter changeDate was null or undefined when calling showStatusBefore.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = [
         'application/json',
         'application/xml',
-      ];
+      ]
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<string>(
@@ -7535,7 +7511,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -7553,7 +7529,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public tagRecord(
     metadataUuid: string,
     id: Array<number>,
@@ -7561,7 +7537,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public tagRecord(
     metadataUuid: string,
     id: Array<number>,
@@ -7569,7 +7545,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public tagRecord(
     metadataUuid: string,
     id: Array<number>,
@@ -7581,53 +7557,53 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling tagRecord.'
-      );
+      )
     }
     if (id === null || id === undefined) {
       throw new Error(
         'Required parameter id was null or undefined when calling tagRecord.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (id) {
       id.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'id'
-        );
-      });
+        )
+      })
     }
     if (clear !== undefined && clear !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>clear,
         'clear'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<any>(
@@ -7643,7 +7619,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -7665,7 +7641,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<MetadataProcessingReportApiModel>;
+  ): Observable<MetadataProcessingReportApiModel>
   public tagRecords(
     uuids?: Array<string>,
     bucket?: string,
@@ -7675,7 +7651,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>;
+  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>
   public tagRecords(
     uuids?: Array<string>,
     bucket?: string,
@@ -7685,7 +7661,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>;
+  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>
   public tagRecords(
     uuids?: Array<string>,
     bucket?: string,
@@ -7696,22 +7672,22 @@ export class RecordsApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (uuids) {
       uuids.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'uuids'
-        );
-      });
+        )
+      })
     }
     if (bucket !== undefined && bucket !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>bucket,
         'bucket'
-      );
+      )
     }
     if (id) {
       id.forEach((element) => {
@@ -7719,8 +7695,8 @@ export class RecordsApiService {
           queryParameters,
           <any>element,
           'id'
-        );
-      });
+        )
+      })
     }
     if (removeId) {
       removeId.forEach((element) => {
@@ -7728,38 +7704,38 @@ export class RecordsApiService {
           queryParameters,
           <any>element,
           'removeId'
-        );
-      });
+        )
+      })
     }
     if (clear !== undefined && clear !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>clear,
         'clear'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<MetadataProcessingReportApiModel>(
@@ -7773,7 +7749,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -7786,43 +7762,43 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<string>;
+  ): Observable<string>
   public trigger(
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<string>>;
+  ): Observable<HttpResponse<string>>
   public trigger(
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<string>>;
+  ): Observable<HttpEvent<string>>
   public trigger(
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<string>(
@@ -7835,7 +7811,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -7852,21 +7828,21 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<MetadataProcessingReportApiModel>;
+  ): Observable<MetadataProcessingReportApiModel>
   public unpublish(
     uuids?: Array<string>,
     bucket?: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>;
+  ): Observable<HttpResponse<MetadataProcessingReportApiModel>>
   public unpublish(
     uuids?: Array<string>,
     bucket?: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
-  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>;
+  ): Observable<HttpEvent<MetadataProcessingReportApiModel>>
   public unpublish(
     uuids?: Array<string>,
     bucket?: string,
@@ -7874,45 +7850,45 @@ export class RecordsApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' | '*/*' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (uuids) {
       uuids.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'uuids'
-        );
-      });
+        )
+      })
     }
     if (bucket !== undefined && bucket !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>bucket,
         'bucket'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json', '*/*'];
+      const httpHeaderAccepts: string[] = ['application/json', '*/*']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<MetadataProcessingReportApiModel>(
@@ -7926,7 +7902,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -7940,19 +7916,19 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<string>;
+  ): Observable<string>
   public unregisterDoi(
     metadataUuid: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<string>>;
+  ): Observable<HttpResponse<string>>
   public unregisterDoi(
     metadataUuid: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<string>>;
+  ): Observable<HttpEvent<string>>
   public unregisterDoi(
     metadataUuid: string,
     observe: any = 'body',
@@ -7962,30 +7938,30 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling unregisterDoi.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.delete<string>(
@@ -7999,7 +7975,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -8016,21 +7992,21 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<ReportsApiModel>;
+  ): Observable<ReportsApiModel>
   public validateRecord(
     metadataUuid: string,
     isvalid?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpResponse<ReportsApiModel>>;
+  ): Observable<HttpResponse<ReportsApiModel>>
   public validateRecord(
     metadataUuid: string,
     isvalid?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpEvent<ReportsApiModel>>;
+  ): Observable<HttpEvent<ReportsApiModel>>
   public validateRecord(
     metadataUuid: string,
     isvalid?: boolean,
@@ -8041,42 +8017,42 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling validateRecord.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (isvalid !== undefined && isvalid !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>isvalid,
         'isvalid'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = [
         'application/json',
         'application/xml',
-      ];
+      ]
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<ReportsApiModel>(
@@ -8092,7 +8068,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -8111,7 +8087,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'text/plain' }
-  ): Observable<string>;
+  ): Observable<string>
   public validateRecordForInspire(
     metadataUuid: string,
     testsuite: string,
@@ -8119,7 +8095,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'text/plain' }
-  ): Observable<HttpResponse<string>>;
+  ): Observable<HttpResponse<string>>
   public validateRecordForInspire(
     metadataUuid: string,
     testsuite: string,
@@ -8127,7 +8103,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'text/plain' }
-  ): Observable<HttpEvent<string>>;
+  ): Observable<HttpEvent<string>>
   public validateRecordForInspire(
     metadataUuid: string,
     testsuite: string,
@@ -8139,51 +8115,47 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling validateRecordForInspire.'
-      );
+      )
     }
     if (testsuite === null || testsuite === undefined) {
       throw new Error(
         'Required parameter testsuite was null or undefined when calling validateRecordForInspire.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (testsuite !== undefined && testsuite !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>testsuite,
         'testsuite'
-      );
+      )
     }
     if (mode !== undefined && mode !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>mode,
-        'mode'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>mode, 'mode')
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json', 'text/plain'];
+      const httpHeaderAccepts: string[] = ['application/json', 'text/plain']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<string>(
@@ -8199,7 +8171,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -8218,7 +8190,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<SimpleMetadataProcessingReportApiModel>;
+  ): Observable<SimpleMetadataProcessingReportApiModel>
   public validateRecords(
     uuids?: Array<string>,
     approved?: boolean,
@@ -8226,7 +8198,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<SimpleMetadataProcessingReportApiModel>>;
+  ): Observable<HttpResponse<SimpleMetadataProcessingReportApiModel>>
   public validateRecords(
     uuids?: Array<string>,
     approved?: boolean,
@@ -8234,7 +8206,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<SimpleMetadataProcessingReportApiModel>>;
+  ): Observable<HttpEvent<SimpleMetadataProcessingReportApiModel>>
   public validateRecords(
     uuids?: Array<string>,
     approved?: boolean,
@@ -8243,52 +8215,52 @@ export class RecordsApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (uuids) {
       uuids.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'uuids'
-        );
-      });
+        )
+      })
     }
     if (approved !== undefined && approved !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>approved,
         'approved'
-      );
+      )
     }
     if (bucket !== undefined && bucket !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>bucket,
         'bucket'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<SimpleMetadataProcessingReportApiModel>(
@@ -8302,7 +8274,7 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -8321,7 +8293,7 @@ export class RecordsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<string>;
+  ): Observable<string>
   public validateRecordsInspire(
     uuids?: Array<string>,
     bucket?: string,
@@ -8329,7 +8301,7 @@ export class RecordsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<string>>;
+  ): Observable<HttpResponse<string>>
   public validateRecordsInspire(
     uuids?: Array<string>,
     bucket?: string,
@@ -8337,7 +8309,7 @@ export class RecordsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<string>>;
+  ): Observable<HttpEvent<string>>
   public validateRecordsInspire(
     uuids?: Array<string>,
     bucket?: string,
@@ -8346,52 +8318,48 @@ export class RecordsApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (uuids) {
       uuids.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'uuids'
-        );
-      });
+        )
+      })
     }
     if (bucket !== undefined && bucket !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>bucket,
         'bucket'
-      );
+      )
     }
     if (mode !== undefined && mode !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>mode,
-        'mode'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>mode, 'mode')
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<string>(
@@ -8405,6 +8373,6 @@ export class RecordsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 }

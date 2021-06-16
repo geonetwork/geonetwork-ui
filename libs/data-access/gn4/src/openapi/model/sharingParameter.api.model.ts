@@ -9,9 +9,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { GroupOperationsApiModel } from './groupOperations.api.model';
+import { GroupOperationsApiModel } from './groupOperations.api.model'
 
 export interface SharingParameterApiModel {
-  privileges?: Array<GroupOperationsApiModel>;
-  clear?: boolean;
+  privileges?: Array<GroupOperationsApiModel>
+  clear?: boolean
 }

@@ -11,7 +11,7 @@
  */
 
 export interface ValuesApiModel {
-  label?: string;
-  code?: string;
-  definition?: string;
+  label?: string
+  code?: string
+  definition?: string
 }

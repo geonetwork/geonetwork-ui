@@ -9,18 +9,18 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { DescriptionApiModel } from './description.api.model';
-import { MultilingualValueApiModel } from './multilingualValue.api.model';
+import { DescriptionApiModel } from './description.api.model'
+import { MultilingualValueApiModel } from './multilingualValue.api.model'
 
 export interface AssociatedSiblingMetadataItemApiModel {
-  id?: string;
-  url?: MultilingualValueApiModel;
-  type?: string;
-  title: MultilingualValueApiModel;
-  description: DescriptionApiModel;
-  mdType: Array<string>;
-  origin?: string;
-  agg_isTemporalStatOf?: Array<string>;
-  agg_largerWorkCitation?: Array<string>;
-  agg_isDescriptionOf?: Array<string>;
+  id?: string
+  url?: MultilingualValueApiModel
+  type?: string
+  title: MultilingualValueApiModel
+  description: DescriptionApiModel
+  mdType: Array<string>
+  origin?: string
+  agg_isTemporalStatOf?: Array<string>
+  agg_largerWorkCitation?: Array<string>
+  agg_isDescriptionOf?: Array<string>
 }

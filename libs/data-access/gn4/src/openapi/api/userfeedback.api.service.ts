@@ -11,7 +11,7 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core'
 import {
   HttpClient,
   HttpHeaders,
@@ -19,25 +19,25 @@ import {
   HttpResponse,
   HttpEvent,
   HttpParameterCodec,
-} from '@angular/common/http';
-import { CustomHttpParameterCodec } from '../encoder';
-import { Observable } from 'rxjs';
+} from '@angular/common/http'
+import { CustomHttpParameterCodec } from '../encoder'
+import { Observable } from 'rxjs'
 
-import { RatingAverageApiModel } from '../model/models';
-import { RatingCriteriaApiModel } from '../model/models';
-import { UserFeedbackDTOApiModel } from '../model/models';
+import { RatingAverageApiModel } from '../model/models'
+import { RatingCriteriaApiModel } from '../model/models'
+import { UserFeedbackDTOApiModel } from '../model/models'
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
-import { Configuration } from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables'
+import { Configuration } from '../configuration'
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserfeedbackApiService {
-  protected basePath = 'https://apps.titellus.net/geonetwork/srv/api';
-  public defaultHeaders = new HttpHeaders();
-  public configuration = new Configuration();
-  public encoder: HttpParameterCodec;
+  protected basePath = 'https://apps.titellus.net/geonetwork/srv/api'
+  public defaultHeaders = new HttpHeaders()
+  public configuration = new Configuration()
+  public encoder: HttpParameterCodec
 
   constructor(
     protected httpClient: HttpClient,
@@ -45,15 +45,15 @@ export class UserfeedbackApiService {
     @Optional() configuration: Configuration
   ) {
     if (configuration) {
-      this.configuration = configuration;
+      this.configuration = configuration
     }
     if (typeof this.configuration.basePath !== 'string') {
       if (typeof basePath !== 'string') {
-        basePath = this.basePath;
+        basePath = this.basePath
       }
-      this.configuration.basePath = basePath;
+      this.configuration.basePath = basePath
     }
-    this.encoder = this.configuration.encoder || new CustomHttpParameterCodec();
+    this.encoder = this.configuration.encoder || new CustomHttpParameterCodec()
   }
 
   private addToHttpParams(
@@ -62,11 +62,11 @@ export class UserfeedbackApiService {
     key?: string
   ): HttpParams {
     if (typeof value === 'object' && value instanceof Date === false) {
-      httpParams = this.addToHttpParamsRecursive(httpParams, value);
+      httpParams = this.addToHttpParamsRecursive(httpParams, value)
     } else {
-      httpParams = this.addToHttpParamsRecursive(httpParams, value, key);
+      httpParams = this.addToHttpParamsRecursive(httpParams, value, key)
     }
-    return httpParams;
+    return httpParams
   }
 
   private addToHttpParamsRecursive(
@@ -75,23 +75,23 @@ export class UserfeedbackApiService {
     key?: string
   ): HttpParams {
     if (value == null) {
-      return httpParams;
+      return httpParams
     }
 
     if (typeof value === 'object') {
       if (Array.isArray(value)) {
-        (value as any[]).forEach(
+        ;(value as any[]).forEach(
           (elem) =>
             (httpParams = this.addToHttpParamsRecursive(httpParams, elem, key))
-        );
+        )
       } else if (value instanceof Date) {
         if (key != null) {
           httpParams = httpParams.append(
             key,
             (value as Date).toISOString().substr(0, 10)
-          );
+          )
         } else {
-          throw Error('key may not be null if value is Date');
+          throw Error('key may not be null if value is Date')
         }
       } else {
         Object.keys(value).forEach(
@@ -101,14 +101,14 @@ export class UserfeedbackApiService {
               value[k],
               key != null ? `${key}.${k}` : k
             ))
-        );
+        )
       }
     } else if (key != null) {
-      httpParams = httpParams.append(key, value);
+      httpParams = httpParams.append(key, value)
     } else {
-      throw Error('key may not be null if value is not object or array');
+      throw Error('key may not be null if value is not object or array')
     }
-    return httpParams;
+    return httpParams
   }
 
   /**
@@ -123,19 +123,19 @@ export class UserfeedbackApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<string>;
+  ): Observable<string>
   public deleteUserFeedback(
     uuid: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<string>>;
+  ): Observable<HttpResponse<string>>
   public deleteUserFeedback(
     uuid: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<string>>;
+  ): Observable<HttpEvent<string>>
   public deleteUserFeedback(
     uuid: string,
     observe: any = 'body',
@@ -145,30 +145,30 @@ export class UserfeedbackApiService {
     if (uuid === null || uuid === undefined) {
       throw new Error(
         'Required parameter uuid was null or undefined when calling deleteUserFeedback.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.delete<string>(
@@ -182,7 +182,7 @@ export class UserfeedbackApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -196,19 +196,19 @@ export class UserfeedbackApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<RatingAverageApiModel>;
+  ): Observable<RatingAverageApiModel>
   public getMetadataRating(
     metadataUuid: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<RatingAverageApiModel>>;
+  ): Observable<HttpResponse<RatingAverageApiModel>>
   public getMetadataRating(
     metadataUuid: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<RatingAverageApiModel>>;
+  ): Observable<HttpEvent<RatingAverageApiModel>>
   public getMetadataRating(
     metadataUuid: string,
     observe: any = 'body',
@@ -218,30 +218,30 @@ export class UserfeedbackApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling getMetadataRating.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<RatingAverageApiModel>(
@@ -255,7 +255,7 @@ export class UserfeedbackApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -267,43 +267,43 @@ export class UserfeedbackApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<RatingCriteriaApiModel>>;
+  ): Observable<Array<RatingCriteriaApiModel>>
   public getRatingCriteria(
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<RatingCriteriaApiModel>>>;
+  ): Observable<HttpResponse<Array<RatingCriteriaApiModel>>>
   public getRatingCriteria(
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<RatingCriteriaApiModel>>>;
+  ): Observable<HttpEvent<Array<RatingCriteriaApiModel>>>
   public getRatingCriteria(
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<RatingCriteriaApiModel>>(
@@ -315,7 +315,7 @@ export class UserfeedbackApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -329,19 +329,19 @@ export class UserfeedbackApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<UserFeedbackDTOApiModel>;
+  ): Observable<UserFeedbackDTOApiModel>
   public getUserComment(
     uuid: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<UserFeedbackDTOApiModel>>;
+  ): Observable<HttpResponse<UserFeedbackDTOApiModel>>
   public getUserComment(
     uuid: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<UserFeedbackDTOApiModel>>;
+  ): Observable<HttpEvent<UserFeedbackDTOApiModel>>
   public getUserComment(
     uuid: string,
     observe: any = 'body',
@@ -351,30 +351,30 @@ export class UserfeedbackApiService {
     if (uuid === null || uuid === undefined) {
       throw new Error(
         'Required parameter uuid was null or undefined when calling getUserComment.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<UserFeedbackDTOApiModel>(
@@ -388,7 +388,7 @@ export class UserfeedbackApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -405,21 +405,21 @@ export class UserfeedbackApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<UserFeedbackDTOApiModel>>;
+  ): Observable<Array<UserFeedbackDTOApiModel>>
   public getUserComments(
     metadataUuid?: string,
     size?: number,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<UserFeedbackDTOApiModel>>>;
+  ): Observable<HttpResponse<Array<UserFeedbackDTOApiModel>>>
   public getUserComments(
     metadataUuid?: string,
     size?: number,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<UserFeedbackDTOApiModel>>>;
+  ): Observable<HttpEvent<Array<UserFeedbackDTOApiModel>>>
   public getUserComments(
     metadataUuid?: string,
     size?: number,
@@ -427,43 +427,39 @@ export class UserfeedbackApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (metadataUuid !== undefined && metadataUuid !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>metadataUuid,
         'metadataUuid'
-      );
+      )
     }
     if (size !== undefined && size !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>size,
-        'size'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>size, 'size')
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<UserFeedbackDTOApiModel>>(
@@ -476,7 +472,7 @@ export class UserfeedbackApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -493,21 +489,21 @@ export class UserfeedbackApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<UserFeedbackDTOApiModel>>;
+  ): Observable<Array<UserFeedbackDTOApiModel>>
   public getUserCommentsOnARecord(
     metadataUuid: string,
     size?: number,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<UserFeedbackDTOApiModel>>>;
+  ): Observable<HttpResponse<Array<UserFeedbackDTOApiModel>>>
   public getUserCommentsOnARecord(
     metadataUuid: string,
     size?: number,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<UserFeedbackDTOApiModel>>>;
+  ): Observable<HttpEvent<Array<UserFeedbackDTOApiModel>>>
   public getUserCommentsOnARecord(
     metadataUuid: string,
     size?: number,
@@ -518,39 +514,35 @@ export class UserfeedbackApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling getUserCommentsOnARecord.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (size !== undefined && size !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>size,
-        'size'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>size, 'size')
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<UserFeedbackDTOApiModel>>(
@@ -565,7 +557,7 @@ export class UserfeedbackApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -580,19 +572,19 @@ export class UserfeedbackApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<string>;
+  ): Observable<string>
   public newUserFeedback(
     userFeedbackDTOApiModel: UserFeedbackDTOApiModel,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<string>>;
+  ): Observable<HttpResponse<string>>
   public newUserFeedback(
     userFeedbackDTOApiModel: UserFeedbackDTOApiModel,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<string>>;
+  ): Observable<HttpEvent<string>>
   public newUserFeedback(
     userFeedbackDTOApiModel: UserFeedbackDTOApiModel,
     observe: any = 'body',
@@ -605,39 +597,39 @@ export class UserfeedbackApiService {
     ) {
       throw new Error(
         'Required parameter userFeedbackDTOApiModel was null or undefined when calling newUserFeedback.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
     // to determine the Content-Type header
-    const consumes: string[] = ['application/json'];
+    const consumes: string[] = ['application/json']
     const httpContentTypeSelected:
       | string
-      | undefined = this.configuration.selectHeaderContentType(consumes);
+      | undefined = this.configuration.selectHeaderContentType(consumes)
     if (httpContentTypeSelected !== undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
+      headers = headers.set('Content-Type', httpContentTypeSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.post<string>(
@@ -650,7 +642,7 @@ export class UserfeedbackApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -665,19 +657,19 @@ export class UserfeedbackApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<string>;
+  ): Observable<string>
   public publishFeedback(
     uuid: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<string>>;
+  ): Observable<HttpResponse<string>>
   public publishFeedback(
     uuid: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<string>>;
+  ): Observable<HttpEvent<string>>
   public publishFeedback(
     uuid: string,
     observe: any = 'body',
@@ -687,30 +679,30 @@ export class UserfeedbackApiService {
     if (uuid === null || uuid === undefined) {
       throw new Error(
         'Required parameter uuid was null or undefined when calling publishFeedback.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<string>(
@@ -724,7 +716,7 @@ export class UserfeedbackApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -760,7 +752,7 @@ export class UserfeedbackApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<string>;
+  ): Observable<string>
   public sendEmailToContact(
     metadataUuid: string,
     name: string,
@@ -777,7 +769,7 @@ export class UserfeedbackApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<string>>;
+  ): Observable<HttpResponse<string>>
   public sendEmailToContact(
     metadataUuid: string,
     name: string,
@@ -794,7 +786,7 @@ export class UserfeedbackApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<string>>;
+  ): Observable<HttpEvent<string>>
   public sendEmailToContact(
     metadataUuid: string,
     name: string,
@@ -815,125 +807,117 @@ export class UserfeedbackApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling sendEmailToContact.'
-      );
+      )
     }
     if (name === null || name === undefined) {
       throw new Error(
         'Required parameter name was null or undefined when calling sendEmailToContact.'
-      );
+      )
     }
     if (org === null || org === undefined) {
       throw new Error(
         'Required parameter org was null or undefined when calling sendEmailToContact.'
-      );
+      )
     }
     if (email === null || email === undefined) {
       throw new Error(
         'Required parameter email was null or undefined when calling sendEmailToContact.'
-      );
+      )
     }
     if (comments === null || comments === undefined) {
       throw new Error(
         'Required parameter comments was null or undefined when calling sendEmailToContact.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (recaptcha !== undefined && recaptcha !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>recaptcha,
         'recaptcha'
-      );
+      )
     }
     if (name !== undefined && name !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>name,
-        'name'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>name, 'name')
     }
     if (org !== undefined && org !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>org, 'org');
+      queryParameters = this.addToHttpParams(queryParameters, <any>org, 'org')
     }
     if (email !== undefined && email !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>email,
         'email'
-      );
+      )
     }
     if (comments !== undefined && comments !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>comments,
         'comments'
-      );
+      )
     }
     if (phone !== undefined && phone !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>phone,
         'phone'
-      );
+      )
     }
     if (subject !== undefined && subject !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>subject,
         'subject'
-      );
+      )
     }
     if (_function !== undefined && _function !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>_function,
         'function'
-      );
+      )
     }
     if (type !== undefined && type !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>type,
-        'type'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>type, 'type')
     }
     if (category !== undefined && category !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>category,
         'category'
-      );
+      )
     }
     if (metadataEmail !== undefined && metadataEmail !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>metadataEmail,
         'metadataEmail'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.post<string>(
@@ -949,6 +933,6 @@ export class UserfeedbackApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 }

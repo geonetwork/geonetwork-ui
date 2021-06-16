@@ -81,6 +81,6 @@ export class ColorService {
     for (let i = 0; i < label.length; i++) {
       hue += label.charCodeAt(i)
     }
-    return chroma.hsl(hue % 360, saturation, lightness)
+    return chroma.hsl(hue % 360, saturation, lightness).css()
   }
 }

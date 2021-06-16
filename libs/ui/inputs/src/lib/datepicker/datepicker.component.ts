@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core'
-import { IMyDateModel, IMyDpOptions } from 'mydatepicker'
+import { IMyDateModel, IMyOptions } from 'angular-mydatepicker'
 
 @Component({
   selector: ' ui-datepicker',
@@ -14,7 +14,7 @@ import { IMyDateModel, IMyDpOptions } from 'mydatepicker'
   styleUrls: ['./datepicker.component.css'],
 })
 export class DatepickerComponent implements OnInit, AfterViewInit {
-  @Input() options: IMyDpOptions
+  @Input() options: IMyOptions
   @Input() currentDate: Date
 
   @Output()
@@ -23,7 +23,7 @@ export class DatepickerComponent implements OnInit, AfterViewInit {
   model: any
 
   onDateChanged(event: IMyDateModel) {
-    this.selectedDate.emit(new Date(event.jsdate))
+    this.selectedDate.emit(new Date(event.singleDate.jsDate))
   }
 
   constructor() {}
@@ -34,12 +34,12 @@ export class DatepickerComponent implements OnInit, AfterViewInit {
 
   initializeDate(date: Date) {
     this.model = {
-      jsdate: date || new Date(),
+      singleDate: { jsdate: date || new Date() },
     }
   }
 
   ngAfterViewInit() {
     // to delay emit after parent viewinit completed
-    setTimeout(() => this.selectedDate.emit(this.model.jsdate))
+    setTimeout(() => this.selectedDate.emit(this.model.singleDate.jsdate))
   }
 }

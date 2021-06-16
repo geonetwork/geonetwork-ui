@@ -11,6 +11,6 @@
  */
 
 export interface MetadataLinkApiModel {
-  metadataId?: number;
-  metadataUuid?: string;
+  metadataId?: number
+  metadataUuid?: string
 }

@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { DatasetMetadataApiModel } from './datasetMetadata.api.model';
+import { DatasetMetadataApiModel } from './datasetMetadata.api.model'
 
 /**
  * Name of the dataset in the uploaded package, necessary to identify which dataset to publish from the UploadJobStatus
@@ -18,22 +18,22 @@ export interface DatasetPublishRequestApiModel {
   /**
    * Name of the dataset in the uploaded package, necessary to identify which dataset to publish from the UploadJobStatus
    */
-  nativeName: string;
+  nativeName: string
   /**
    * Name under which the dataset is published to GeoServer, defaults to nativeName. It can be modified by the system to avoid duplicated layer names.
    */
-  publishedName?: string;
+  publishedName?: string
   /**
    * Specify which charset (e.g. ISO-8859-1, UTF-8, etc.) to interpret the dataset alphanumeric properties with. Takes effect only for uploaded shapefiles.
    */
-  encoding?: string;
+  encoding?: string
   /**
    * Optional, Coordinate Reference System identifier to publish the dataset in. If not provided, the dataset is published using the CRS inferred during the upload analysis process. If no CRS identifier was determined, the job will fail.
    */
-  srs?: string;
+  srs?: string
   /**
    * Optional, whether to reproject from the native CRS to the one provided in the srs parameter. If false or not provided, the srs parameter overrides the native CRS without reprojection.
    */
-  srs_reproject?: boolean;
-  metadata: DatasetMetadataApiModel;
+  srs_reproject?: boolean
+  metadata: DatasetMetadataApiModel
 }

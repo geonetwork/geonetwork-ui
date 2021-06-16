@@ -9,9 +9,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { UserSearchDtoApiModel } from './userSearchDto.api.model';
+import { UserSearchDtoApiModel } from './userSearchDto.api.model'
 
 export interface PaginatedUserSearchResponseApiModel {
-  total?: number;
-  rows?: Array<UserSearchDtoApiModel>;
+  total?: number
+  rows?: Array<UserSearchDtoApiModel>
 }

@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AnalysisStatusEnumApiModel } from './analysisStatusEnum.api.model';
-import { DatasetUploadStatusApiModel } from './datasetUploadStatus.api.model';
+import { AnalysisStatusEnumApiModel } from './analysisStatusEnum.api.model'
+import { DatasetUploadStatusApiModel } from './datasetUploadStatus.api.model'
 
 /**
  * Describes the status of processing a dataset upload
@@ -19,15 +19,15 @@ export interface UploadJobStatusApiModel {
   /**
    * Identifier for the upload processing job
    */
-  jobId?: string;
+  jobId?: string
   /**
    * Estimated completion progress, from 0 to 1.
    */
-  progress?: number;
-  status?: AnalysisStatusEnumApiModel;
+  progress?: number
+  status?: AnalysisStatusEnumApiModel
   /**
    * short description of the error that prevents the job to complete successfully
    */
-  error?: string;
-  datasets?: Array<DatasetUploadStatusApiModel>;
+  error?: string
+  datasets?: Array<DatasetUploadStatusApiModel>
 }

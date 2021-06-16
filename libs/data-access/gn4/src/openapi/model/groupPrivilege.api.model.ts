@@ -11,12 +11,12 @@
  */
 
 export interface GroupPrivilegeApiModel {
-  operations?: { [key: string]: boolean };
-  group?: number;
-  userProfiles?: Array<GroupPrivilegeApiModel.UserProfilesEnum>;
-  userGroup?: boolean;
-  reserved?: boolean;
-  userProfile?: Array<GroupPrivilegeApiModel.UserProfileEnum>;
+  operations?: { [key: string]: boolean }
+  group?: number
+  userProfiles?: Array<GroupPrivilegeApiModel.UserProfilesEnum>
+  userGroup?: boolean
+  reserved?: boolean
+  userProfile?: Array<GroupPrivilegeApiModel.UserProfileEnum>
 }
 export namespace GroupPrivilegeApiModel {
   export type UserProfilesEnum =
@@ -26,7 +26,7 @@ export namespace GroupPrivilegeApiModel {
     | 'Editor'
     | 'RegisteredUser'
     | 'Guest'
-    | 'Monitor';
+    | 'Monitor'
   export const UserProfilesEnum = {
     Administrator: 'Administrator' as UserProfilesEnum,
     UserAdmin: 'UserAdmin' as UserProfilesEnum,
@@ -35,7 +35,7 @@ export namespace GroupPrivilegeApiModel {
     RegisteredUser: 'RegisteredUser' as UserProfilesEnum,
     Guest: 'Guest' as UserProfilesEnum,
     Monitor: 'Monitor' as UserProfilesEnum,
-  };
+  }
   export type UserProfileEnum =
     | 'Administrator'
     | 'UserAdmin'
@@ -43,7 +43,7 @@ export namespace GroupPrivilegeApiModel {
     | 'Editor'
     | 'RegisteredUser'
     | 'Guest'
-    | 'Monitor';
+    | 'Monitor'
   export const UserProfileEnum = {
     Administrator: 'Administrator' as UserProfileEnum,
     UserAdmin: 'UserAdmin' as UserProfileEnum,
@@ -52,5 +52,5 @@ export namespace GroupPrivilegeApiModel {
     RegisteredUser: 'RegisteredUser' as UserProfileEnum,
     Guest: 'Guest' as UserProfileEnum,
     Monitor: 'Monitor' as UserProfileEnum,
-  };
+  }
 }

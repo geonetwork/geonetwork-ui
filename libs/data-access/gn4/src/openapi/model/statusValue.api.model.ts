@@ -11,22 +11,22 @@
  */
 
 export interface StatusValueApiModel {
-  type?: StatusValueApiModel.TypeEnum;
-  notificationLevel?: StatusValueApiModel.NotificationLevelEnum;
-  displayOrder?: number;
-  id?: number;
-  reserved?: boolean;
-  reserved_JpaWorkaround?: string;
-  name?: string;
-  label?: { [key: string]: string };
+  type?: StatusValueApiModel.TypeEnum
+  notificationLevel?: StatusValueApiModel.NotificationLevelEnum
+  displayOrder?: number
+  id?: number
+  reserved?: boolean
+  reserved_JpaWorkaround?: string
+  name?: string
+  label?: { [key: string]: string }
 }
 export namespace StatusValueApiModel {
-  export type TypeEnum = 'workflow' | 'task' | 'event';
+  export type TypeEnum = 'workflow' | 'task' | 'event'
   export const TypeEnum = {
     Workflow: 'workflow' as TypeEnum,
     Task: 'task' as TypeEnum,
     Event: 'event' as TypeEnum,
-  };
+  }
   export type NotificationLevelEnum =
     | 'statusUserOwner'
     | 'catalogueAdministrator'
@@ -37,7 +37,7 @@ export namespace StatusValueApiModel {
     | 'catalogueProfileRegisteredUser'
     | 'catalogueProfileGuest'
     | 'recordProfileReviewer'
-    | 'recordUserAuthor';
+    | 'recordUserAuthor'
   export const NotificationLevelEnum = {
     StatusUserOwner: 'statusUserOwner' as NotificationLevelEnum,
     CatalogueAdministrator: 'catalogueAdministrator' as NotificationLevelEnum,
@@ -49,5 +49,5 @@ export namespace StatusValueApiModel {
     CatalogueProfileGuest: 'catalogueProfileGuest' as NotificationLevelEnum,
     RecordProfileReviewer: 'recordProfileReviewer' as NotificationLevelEnum,
     RecordUserAuthor: 'recordUserAuthor' as NotificationLevelEnum,
-  };
+  }
 }

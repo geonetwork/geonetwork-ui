@@ -1,19 +1,18 @@
 ![Workflow status](https://github.com/geonetwork/geonetwork-ui/workflows/Build/badge.svg?branch=master)
 
-
 # GeoNetwork UI
 
 GeoNetwork UI is a library of UI and Web Components to embed your catalogue in third party website or to build custom application on top of it. It relies on the GeoNetwork 4 OpenAPI.
 
-The target audience is: 
-* GeoNetwork developers
-* Developers of SDI, portals 
-* Website and CMS maintainers
+The target audience is:
 
+- GeoNetwork developers
+- Developers of SDI, portals
+- Website and CMS maintainers
 
 ## Getting started
 
-Install first GeoNetwork 4 [from source](https://geonetwork-opensource.org/manuals/4.0.x/eng/users/install-guide/installing-from-source-code.html#building-running) 
+Install first GeoNetwork 4 [from source](https://geonetwork-opensource.org/manuals/4.0.x/eng/users/install-guide/installing-from-source-code.html#building-running)
 or using [docker](https://github.com/geonetwork/docker-geonetwork/tree/master/4.0.1).
 
 Run `npm install` to fetch all dependencies of the project.
@@ -22,7 +21,7 @@ Run `npm run start` to start the default app.
 
 Run `ng serve app-search` to start the search app in a dev server.
 
-Once started the application is available at `http://localhost:4200/`. 
+Once started the application is available at `http://localhost:4200/`.
 
 [The contributing guide](CONTRIBUTING.md) explains the structure of the project and how to work with it.
 
@@ -32,7 +31,9 @@ If you would like to contribute code, please follow our [style guide](STYLEGUIDE
 You can start it with `npm run storybook`.
 
 ## Demo
+
 You can test current master components with storybook and demo pages
+
 - [Demo](https://geonetwork.github.io/geonetwork-ui/master/demo/)
 - [Storybook Angular components](https://geonetwork.github.io/geonetwork-ui/master/storybook/?path=/story/ui--auto-complete-story)
 - [Storybook Web components](https://geonetwork.github.io/geonetwork-ui/master/storybook-wc/) (custom elements)
@@ -40,9 +41,10 @@ You can test current master components with storybook and demo pages
 ## More information
 
 The GeoNetwork UI project was generated using [Nx](https://nx.dev) and is composed of:
-* **libraries** containing components and services
-* **applications** using said components
-* **web components** using also said components
+
+- **libraries** containing components and services
+- **applications** using said components
+- **web components** using also said components
 
 ### Quick Start & Documentation
 

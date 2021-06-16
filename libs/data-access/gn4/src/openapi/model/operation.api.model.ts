@@ -11,11 +11,11 @@
  */
 
 export interface OperationApiModel {
-  id?: number;
-  reserved?: boolean;
-  reservedOperation?: OperationApiModel.ReservedOperationEnum;
-  name?: string;
-  label?: { [key: string]: string };
+  id?: number
+  reserved?: boolean
+  reservedOperation?: OperationApiModel.ReservedOperationEnum
+  name?: string
+  label?: { [key: string]: string }
 }
 export namespace OperationApiModel {
   export type ReservedOperationEnum =
@@ -24,7 +24,7 @@ export namespace OperationApiModel {
     | 'editing'
     | 'notify'
     | 'dynamic'
-    | 'featured';
+    | 'featured'
   export const ReservedOperationEnum = {
     View: 'view' as ReservedOperationEnum,
     Download: 'download' as ReservedOperationEnum,
@@ -32,5 +32,5 @@ export namespace OperationApiModel {
     Notify: 'notify' as ReservedOperationEnum,
     Dynamic: 'dynamic' as ReservedOperationEnum,
     Featured: 'featured' as ReservedOperationEnum,
-  };
+  }
 }

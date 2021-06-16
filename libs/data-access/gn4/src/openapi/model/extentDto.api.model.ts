@@ -11,8 +11,8 @@
  */
 
 export interface ExtentDtoApiModel {
-  href?: string;
-  type?: string;
-  xpath?: string;
-  description?: string;
+  href?: string
+  type?: string
+  xpath?: string
+  description?: string
 }

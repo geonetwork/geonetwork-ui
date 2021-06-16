@@ -11,9 +11,9 @@
  */
 
 export interface UserGroupsResponseApiModel {
-  userId?: number;
-  userName?: string;
-  groupId?: number;
-  groupName?: string;
-  userProfile?: string;
+  userId?: number
+  userName?: string
+  groupId?: number
+  groupName?: string
+  userProfile?: string
 }

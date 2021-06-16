@@ -11,5 +11,5 @@
  */
 
 export interface FeatureResponseApiModel {
-  decodeMap?: { [key: string]: Array<string> };
+  decodeMap?: { [key: string]: Array<string> }
 }

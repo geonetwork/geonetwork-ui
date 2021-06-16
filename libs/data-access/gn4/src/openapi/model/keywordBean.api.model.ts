@@ -11,16 +11,16 @@
  */
 
 export interface KeywordBeanApiModel {
-  values?: { [key: string]: string };
-  definitions?: { [key: string]: string };
-  coordEast?: string;
-  coordWest?: string;
-  coordSouth?: string;
-  coordNorth?: string;
-  thesaurusKey?: string;
-  thesaurusInfo?: KeywordBeanApiModel;
-  namespaceCode?: KeywordBeanApiModel;
-  definition?: string;
-  uri?: string;
-  value?: string;
+  values?: { [key: string]: string }
+  definitions?: { [key: string]: string }
+  coordEast?: string
+  coordWest?: string
+  coordSouth?: string
+  coordNorth?: string
+  thesaurusKey?: string
+  thesaurusInfo?: KeywordBeanApiModel
+  namespaceCode?: KeywordBeanApiModel
+  definition?: string
+  uri?: string
+  value?: string
 }

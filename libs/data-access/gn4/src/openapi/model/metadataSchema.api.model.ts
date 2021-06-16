@@ -9,22 +9,22 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ElementApiModel } from './element.api.model';
+import { ElementApiModel } from './element.api.model'
 
 export interface MetadataSchemaApiModel {
-  name?: string;
-  titles?: { [key: string]: string };
-  descriptions?: { [key: string]: string };
-  standardUrl?: string;
-  targetNamespace?: string;
-  namespaces?: { [key: string]: string };
-  readwriteUUID?: boolean;
-  schematronRules?: Array<string>;
-  version?: string;
-  appMinorVersionSupported?: string;
-  appMajorVersionSupported?: string;
-  canEdit?: boolean;
-  rootAppInfoElements?: Array<ElementApiModel>;
-  dependsOn?: string;
-  operationFilters?: { [key: string]: object };
+  name?: string
+  titles?: { [key: string]: string }
+  descriptions?: { [key: string]: string }
+  standardUrl?: string
+  targetNamespace?: string
+  namespaces?: { [key: string]: string }
+  readwriteUUID?: boolean
+  schematronRules?: Array<string>
+  version?: string
+  appMinorVersionSupported?: string
+  appMajorVersionSupported?: string
+  canEdit?: boolean
+  rootAppInfoElements?: Array<ElementApiModel>
+  dependsOn?: string
+  operationFilters?: { [key: string]: object }
 }

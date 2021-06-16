@@ -3,12 +3,12 @@ import {
   ModuleWithProviders,
   SkipSelf,
   Optional,
-} from '@angular/core';
-import { Configuration } from './configuration';
-import { HttpClient } from '@angular/common/http';
+} from '@angular/core'
+import { Configuration } from './configuration'
+import { HttpClient } from '@angular/common/http'
 
-import { DataPublishingApiService } from './api/dataPublishing.api.service';
-import { FileUploadApiService } from './api/fileUpload.api.service';
+import { DataPublishingApiService } from './api/dataPublishing.api.service'
+import { FileUploadApiService } from './api/fileUpload.api.service'
 
 @NgModule({
   imports: [],
@@ -23,7 +23,7 @@ export class ApiModule {
     return {
       ngModule: ApiModule,
       providers: [{ provide: Configuration, useFactory: configurationFactory }],
-    };
+    }
   }
 
   constructor(
@@ -33,13 +33,13 @@ export class ApiModule {
     if (parentModule) {
       throw new Error(
         'ApiModule is already loaded. Import in your base AppModule only.'
-      );
+      )
     }
     if (!http) {
       throw new Error(
         'You need to import the HttpClientModule in your AppModule! \n' +
           'See also https://github.com/angular/angular/issues/20575'
-      );
+      )
     }
   }
 }

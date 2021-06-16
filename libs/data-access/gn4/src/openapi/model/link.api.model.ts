@@ -9,24 +9,24 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { MetadataLinkApiModel } from './metadataLink.api.model';
-import { LinkStatusApiModel } from './linkStatus.api.model';
-import { ISODateApiModel } from './iSODate.api.model';
+import { MetadataLinkApiModel } from './metadataLink.api.model'
+import { LinkStatusApiModel } from './linkStatus.api.model'
+import { ISODateApiModel } from './iSODate.api.model'
 
 export interface LinkApiModel {
-  records?: Set<MetadataLinkApiModel>;
-  linkStatus?: Set<LinkStatusApiModel>;
-  lastState?: number;
-  lastCheck?: ISODateApiModel;
-  protocol?: string;
-  url?: string;
-  id?: number;
-  linkType?: LinkApiModel.LinkTypeEnum;
+  records?: Set<MetadataLinkApiModel>
+  linkStatus?: Set<LinkStatusApiModel>
+  lastState?: number
+  lastCheck?: ISODateApiModel
+  protocol?: string
+  url?: string
+  id?: number
+  linkType?: LinkApiModel.LinkTypeEnum
 }
 export namespace LinkApiModel {
-  export type LinkTypeEnum = 'HTTP' | 'METADATA';
+  export type LinkTypeEnum = 'HTTP' | 'METADATA'
   export const LinkTypeEnum = {
     Http: 'HTTP' as LinkTypeEnum,
     Metadata: 'METADATA' as LinkTypeEnum,
-  };
+  }
 }

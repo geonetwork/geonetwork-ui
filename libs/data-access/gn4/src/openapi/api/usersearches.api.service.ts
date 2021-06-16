@@ -11,7 +11,7 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core'
 import {
   HttpClient,
   HttpHeaders,
@@ -19,24 +19,24 @@ import {
   HttpResponse,
   HttpEvent,
   HttpParameterCodec,
-} from '@angular/common/http';
-import { CustomHttpParameterCodec } from '../encoder';
-import { Observable } from 'rxjs';
+} from '@angular/common/http'
+import { CustomHttpParameterCodec } from '../encoder'
+import { Observable } from 'rxjs'
 
-import { PaginatedUserSearchResponseApiModel } from '../model/models';
-import { UserSearchDtoApiModel } from '../model/models';
+import { PaginatedUserSearchResponseApiModel } from '../model/models'
+import { UserSearchDtoApiModel } from '../model/models'
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
-import { Configuration } from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables'
+import { Configuration } from '../configuration'
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersearchesApiService {
-  protected basePath = 'https://apps.titellus.net/geonetwork/srv/api';
-  public defaultHeaders = new HttpHeaders();
-  public configuration = new Configuration();
-  public encoder: HttpParameterCodec;
+  protected basePath = 'https://apps.titellus.net/geonetwork/srv/api'
+  public defaultHeaders = new HttpHeaders()
+  public configuration = new Configuration()
+  public encoder: HttpParameterCodec
 
   constructor(
     protected httpClient: HttpClient,
@@ -44,15 +44,15 @@ export class UsersearchesApiService {
     @Optional() configuration: Configuration
   ) {
     if (configuration) {
-      this.configuration = configuration;
+      this.configuration = configuration
     }
     if (typeof this.configuration.basePath !== 'string') {
       if (typeof basePath !== 'string') {
-        basePath = this.basePath;
+        basePath = this.basePath
       }
-      this.configuration.basePath = basePath;
+      this.configuration.basePath = basePath
     }
-    this.encoder = this.configuration.encoder || new CustomHttpParameterCodec();
+    this.encoder = this.configuration.encoder || new CustomHttpParameterCodec()
   }
 
   private addToHttpParams(
@@ -61,11 +61,11 @@ export class UsersearchesApiService {
     key?: string
   ): HttpParams {
     if (typeof value === 'object' && value instanceof Date === false) {
-      httpParams = this.addToHttpParamsRecursive(httpParams, value);
+      httpParams = this.addToHttpParamsRecursive(httpParams, value)
     } else {
-      httpParams = this.addToHttpParamsRecursive(httpParams, value, key);
+      httpParams = this.addToHttpParamsRecursive(httpParams, value, key)
     }
-    return httpParams;
+    return httpParams
   }
 
   private addToHttpParamsRecursive(
@@ -74,23 +74,23 @@ export class UsersearchesApiService {
     key?: string
   ): HttpParams {
     if (value == null) {
-      return httpParams;
+      return httpParams
     }
 
     if (typeof value === 'object') {
       if (Array.isArray(value)) {
-        (value as any[]).forEach(
+        ;(value as any[]).forEach(
           (elem) =>
             (httpParams = this.addToHttpParamsRecursive(httpParams, elem, key))
-        );
+        )
       } else if (value instanceof Date) {
         if (key != null) {
           httpParams = httpParams.append(
             key,
             (value as Date).toISOString().substr(0, 10)
-          );
+          )
         } else {
-          throw Error('key may not be null if value is Date');
+          throw Error('key may not be null if value is Date')
         }
       } else {
         Object.keys(value).forEach(
@@ -100,14 +100,14 @@ export class UsersearchesApiService {
               value[k],
               key != null ? `${key}.${k}` : k
             ))
-        );
+        )
       }
     } else if (key != null) {
-      httpParams = httpParams.append(key, value);
+      httpParams = httpParams.append(key, value)
     } else {
-      throw Error('key may not be null if value is not object or array');
+      throw Error('key may not be null if value is not object or array')
     }
-    return httpParams;
+    return httpParams
   }
 
   /**
@@ -122,19 +122,19 @@ export class UsersearchesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<number>;
+  ): Observable<number>
   public createUserCustomSearch(
     userSearchDtoApiModel: UserSearchDtoApiModel,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<number>>;
+  ): Observable<HttpResponse<number>>
   public createUserCustomSearch(
     userSearchDtoApiModel: UserSearchDtoApiModel,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<number>>;
+  ): Observable<HttpEvent<number>>
   public createUserCustomSearch(
     userSearchDtoApiModel: UserSearchDtoApiModel,
     observe: any = 'body',
@@ -144,39 +144,39 @@ export class UsersearchesApiService {
     if (userSearchDtoApiModel === null || userSearchDtoApiModel === undefined) {
       throw new Error(
         'Required parameter userSearchDtoApiModel was null or undefined when calling createUserCustomSearch.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
     // to determine the Content-Type header
-    const consumes: string[] = ['application/json'];
+    const consumes: string[] = ['application/json']
     const httpContentTypeSelected:
       | string
-      | undefined = this.configuration.selectHeaderContentType(consumes);
+      | undefined = this.configuration.selectHeaderContentType(consumes)
     if (httpContentTypeSelected !== undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
+      headers = headers.set('Content-Type', httpContentTypeSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<number>(
@@ -189,7 +189,7 @@ export class UsersearchesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -204,19 +204,19 @@ export class UsersearchesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<string>;
+  ): Observable<string>
   public deleteUserCustomSerach(
     searchIdentifier: number,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<string>>;
+  ): Observable<HttpResponse<string>>
   public deleteUserCustomSerach(
     searchIdentifier: number,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<string>>;
+  ): Observable<HttpEvent<string>>
   public deleteUserCustomSerach(
     searchIdentifier: number,
     observe: any = 'body',
@@ -226,30 +226,30 @@ export class UsersearchesApiService {
     if (searchIdentifier === null || searchIdentifier === undefined) {
       throw new Error(
         'Required parameter searchIdentifier was null or undefined when calling deleteUserCustomSerach.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.delete<string>(
@@ -263,7 +263,7 @@ export class UsersearchesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -277,55 +277,55 @@ export class UsersearchesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<UserSearchDtoApiModel>>;
+  ): Observable<Array<UserSearchDtoApiModel>>
   public getAllUserCustomSearches(
     featuredType?: 'HOME' | 'EDITOR_BOARD',
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<UserSearchDtoApiModel>>>;
+  ): Observable<HttpResponse<Array<UserSearchDtoApiModel>>>
   public getAllUserCustomSearches(
     featuredType?: 'HOME' | 'EDITOR_BOARD',
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<UserSearchDtoApiModel>>>;
+  ): Observable<HttpEvent<Array<UserSearchDtoApiModel>>>
   public getAllUserCustomSearches(
     featuredType?: 'HOME' | 'EDITOR_BOARD',
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (featuredType !== undefined && featuredType !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>featuredType,
         'featuredType'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<UserSearchDtoApiModel>>(
@@ -338,7 +338,7 @@ export class UsersearchesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -358,7 +358,7 @@ export class UsersearchesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<PaginatedUserSearchResponseApiModel>;
+  ): Observable<PaginatedUserSearchResponseApiModel>
   public getAllUserCustomSearchesPage(
     featuredType?: 'HOME' | 'EDITOR_BOARD',
     search?: string,
@@ -367,7 +367,7 @@ export class UsersearchesApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<PaginatedUserSearchResponseApiModel>>;
+  ): Observable<HttpResponse<PaginatedUserSearchResponseApiModel>>
   public getAllUserCustomSearchesPage(
     featuredType?: 'HOME' | 'EDITOR_BOARD',
     search?: string,
@@ -376,7 +376,7 @@ export class UsersearchesApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<PaginatedUserSearchResponseApiModel>>;
+  ): Observable<HttpEvent<PaginatedUserSearchResponseApiModel>>
   public getAllUserCustomSearchesPage(
     featuredType?: 'HOME' | 'EDITOR_BOARD',
     search?: string,
@@ -386,57 +386,57 @@ export class UsersearchesApiService {
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (featuredType !== undefined && featuredType !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>featuredType,
         'featuredType'
-      );
+      )
     }
     if (search !== undefined && search !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>search,
         'search'
-      );
+      )
     }
     if (offset !== undefined && offset !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>offset,
         'offset'
-      );
+      )
     }
     if (limit !== undefined && limit !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>limit,
         'limit'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<PaginatedUserSearchResponseApiModel>(
@@ -449,7 +449,7 @@ export class UsersearchesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -463,55 +463,51 @@ export class UsersearchesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<UserSearchDtoApiModel>>;
+  ): Observable<Array<UserSearchDtoApiModel>>
   public getFeaturedUserCustomSearches(
     type?: 'HOME' | 'EDITOR_BOARD',
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<UserSearchDtoApiModel>>>;
+  ): Observable<HttpResponse<Array<UserSearchDtoApiModel>>>
   public getFeaturedUserCustomSearches(
     type?: 'HOME' | 'EDITOR_BOARD',
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<UserSearchDtoApiModel>>>;
+  ): Observable<HttpEvent<Array<UserSearchDtoApiModel>>>
   public getFeaturedUserCustomSearches(
     type?: 'HOME' | 'EDITOR_BOARD',
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (type !== undefined && type !== null) {
-      queryParameters = this.addToHttpParams(
-        queryParameters,
-        <any>type,
-        'type'
-      );
+      queryParameters = this.addToHttpParams(queryParameters, <any>type, 'type')
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<UserSearchDtoApiModel>>(
@@ -524,7 +520,7 @@ export class UsersearchesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -538,19 +534,19 @@ export class UsersearchesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<UserSearchDtoApiModel>;
+  ): Observable<UserSearchDtoApiModel>
   public getUserCustomSearch(
     searchIdentifier: number,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<UserSearchDtoApiModel>>;
+  ): Observable<HttpResponse<UserSearchDtoApiModel>>
   public getUserCustomSearch(
     searchIdentifier: number,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<UserSearchDtoApiModel>>;
+  ): Observable<HttpEvent<UserSearchDtoApiModel>>
   public getUserCustomSearch(
     searchIdentifier: number,
     observe: any = 'body',
@@ -560,30 +556,30 @@ export class UsersearchesApiService {
     if (searchIdentifier === null || searchIdentifier === undefined) {
       throw new Error(
         'Required parameter searchIdentifier was null or undefined when calling getUserCustomSearch.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<UserSearchDtoApiModel>(
@@ -597,7 +593,7 @@ export class UsersearchesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -609,43 +605,43 @@ export class UsersearchesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<UserSearchDtoApiModel>>;
+  ): Observable<Array<UserSearchDtoApiModel>>
   public getUserCustomSearches(
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<UserSearchDtoApiModel>>>;
+  ): Observable<HttpResponse<Array<UserSearchDtoApiModel>>>
   public getUserCustomSearches(
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<UserSearchDtoApiModel>>>;
+  ): Observable<HttpEvent<Array<UserSearchDtoApiModel>>>
   public getUserCustomSearches(
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<UserSearchDtoApiModel>>(
@@ -657,7 +653,7 @@ export class UsersearchesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -673,21 +669,21 @@ export class UsersearchesApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public updateCustomUserSearch(
     searchIdentifier: number,
     userSearchDtoApiModel: UserSearchDtoApiModel,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public updateCustomUserSearch(
     searchIdentifier: number,
     userSearchDtoApiModel: UserSearchDtoApiModel,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public updateCustomUserSearch(
     searchIdentifier: number,
     userSearchDtoApiModel: UserSearchDtoApiModel,
@@ -698,44 +694,44 @@ export class UsersearchesApiService {
     if (searchIdentifier === null || searchIdentifier === undefined) {
       throw new Error(
         'Required parameter searchIdentifier was null or undefined when calling updateCustomUserSearch.'
-      );
+      )
     }
     if (userSearchDtoApiModel === null || userSearchDtoApiModel === undefined) {
       throw new Error(
         'Required parameter userSearchDtoApiModel was null or undefined when calling updateCustomUserSearch.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
     // to determine the Content-Type header
-    const consumes: string[] = ['application/json'];
+    const consumes: string[] = ['application/json']
     const httpContentTypeSelected:
       | string
-      | undefined = this.configuration.selectHeaderContentType(consumes);
+      | undefined = this.configuration.selectHeaderContentType(consumes)
     if (httpContentTypeSelected !== undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
+      headers = headers.set('Content-Type', httpContentTypeSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.put<any>(
@@ -750,6 +746,6 @@ export class UsersearchesApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 }

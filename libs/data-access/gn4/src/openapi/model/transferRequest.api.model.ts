@@ -11,8 +11,8 @@
  */
 
 export interface TransferRequestApiModel {
-  sourceUser?: number;
-  sourceGroup?: number;
-  targetUser?: number;
-  targetGroup?: number;
+  sourceUser?: number
+  sourceGroup?: number
+  targetUser?: number
+  targetGroup?: number
 }

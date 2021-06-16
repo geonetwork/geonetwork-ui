@@ -17,25 +17,25 @@ export interface DatasetMetadataApiModel {
   /**
    * Metadata title for the dataset
    */
-  title: string;
+  title: string
   /**
    * Metadata abtract text for the dataset
    */
-  _abstract: string;
+  _abstract: string
   /**
    * metadata keyworkds for the dataset
    */
-  tags?: Array<string>;
+  tags?: Array<string>
   /**
    * Dataset creation date, in RFC3339 format
    */
-  creationDate?: string;
+  creationDate?: string
   /**
    * Optional, scale the data was created for (e.g. 500000 for a 1:500000 scale)
    */
-  scale?: number;
+  scale?: number
   /**
    * textual description of dataset lineage
    */
-  creationProcessDescription?: string;
+  creationProcessDescription?: string
 }

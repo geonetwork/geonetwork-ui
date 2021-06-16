@@ -9,15 +9,15 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { UserApiModel } from './user.api.model';
-import { UserGroupIdApiModel } from './userGroupId.api.model';
-import { GroupApiModel } from './group.api.model';
+import { UserApiModel } from './user.api.model'
+import { UserGroupIdApiModel } from './userGroupId.api.model'
+import { GroupApiModel } from './group.api.model'
 
 export interface UserGroupApiModel {
-  profile?: UserGroupApiModel.ProfileEnum;
-  group?: GroupApiModel;
-  id?: UserGroupIdApiModel;
-  user?: UserApiModel;
+  profile?: UserGroupApiModel.ProfileEnum
+  group?: GroupApiModel
+  id?: UserGroupIdApiModel
+  user?: UserApiModel
 }
 export namespace UserGroupApiModel {
   export type ProfileEnum =
@@ -27,7 +27,7 @@ export namespace UserGroupApiModel {
     | 'Editor'
     | 'RegisteredUser'
     | 'Guest'
-    | 'Monitor';
+    | 'Monitor'
   export const ProfileEnum = {
     Administrator: 'Administrator' as ProfileEnum,
     UserAdmin: 'UserAdmin' as ProfileEnum,
@@ -36,5 +36,5 @@ export namespace UserGroupApiModel {
     RegisteredUser: 'RegisteredUser' as ProfileEnum,
     Guest: 'Guest' as ProfileEnum,
     Monitor: 'Monitor' as ProfileEnum,
-  };
+  }
 }

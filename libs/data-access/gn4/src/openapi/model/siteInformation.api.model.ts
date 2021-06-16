@@ -11,9 +11,9 @@
  */
 
 export interface SiteInformationApiModel {
-  catalogue?: { [key: string]: string };
-  index?: { [key: string]: string };
-  main?: { [key: string]: string };
-  database?: { [key: string]: string };
-  version?: { [key: string]: string };
+  catalogue?: { [key: string]: string }
+  index?: { [key: string]: string }
+  main?: { [key: string]: string }
+  database?: { [key: string]: string }
+  version?: { [key: string]: string }
 }

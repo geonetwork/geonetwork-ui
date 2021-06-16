@@ -11,6 +11,6 @@
  */
 
 export interface PasswordUpdateParameterApiModel {
-  password?: string;
-  changeKey?: string;
+  password?: string
+  changeKey?: string
 }

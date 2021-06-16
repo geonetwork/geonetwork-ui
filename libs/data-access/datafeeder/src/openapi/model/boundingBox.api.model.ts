@@ -9,12 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { CRSApiModel } from './cRS.api.model';
+import { CRSApiModel } from './cRS.api.model'
 
 export interface BoundingBoxApiModel {
-  crs?: CRSApiModel;
-  minx?: number;
-  maxx?: number;
-  miny?: number;
-  maxy?: number;
+  crs?: CRSApiModel
+  minx?: number
+  maxx?: number
+  miny?: number
+  maxy?: number
 }

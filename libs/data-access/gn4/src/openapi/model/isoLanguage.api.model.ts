@@ -11,8 +11,8 @@
  */
 
 export interface IsoLanguageApiModel {
-  id?: number;
-  code?: string;
-  shortCode?: string;
-  label?: { [key: string]: string };
+  id?: number
+  code?: string
+  shortCode?: string
+  label?: { [key: string]: string }
 }

@@ -9,13 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { StatusValueApiModel } from './statusValue.api.model';
-import { UserApiModel } from './user.api.model';
-import { MetadataStatusApiModel } from './metadataStatus.api.model';
+import { StatusValueApiModel } from './statusValue.api.model'
+import { UserApiModel } from './user.api.model'
+import { MetadataStatusApiModel } from './metadataStatus.api.model'
 
 export interface MetadataWorkflowStatusResponseApiModel {
-  currentStatus?: MetadataStatusApiModel;
-  reviewers?: Array<UserApiModel>;
-  hasEditPermission?: boolean;
-  status?: Array<StatusValueApiModel>;
+  currentStatus?: MetadataStatusApiModel
+  reviewers?: Array<UserApiModel>
+  hasEditPermission?: boolean
+  status?: Array<StatusValueApiModel>
 }

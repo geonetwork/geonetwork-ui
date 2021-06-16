@@ -11,7 +11,7 @@
  */
 
 export interface OwnerResponseApiModel {
-  id?: number;
-  name?: string;
-  records?: number;
+  id?: number
+  name?: string
+  records?: number
 }

@@ -9,29 +9,29 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { InfoReportApiModel } from './infoReport.api.model';
-import { ReportApiModel } from './report.api.model';
+import { InfoReportApiModel } from './infoReport.api.model'
+import { ReportApiModel } from './report.api.model'
 
 export interface XsltMetadataProcessingReportApiModel {
-  errors?: Array<ReportApiModel>;
-  infos?: Array<InfoReportApiModel>;
-  uuid?: string;
-  totalRecords?: number;
-  metadata?: Set<number>;
-  metadataErrors?: { [key: string]: Array<ReportApiModel> };
-  metadataInfos?: { [key: string]: Array<InfoReportApiModel> };
-  processId?: string;
-  noProcessFoundCount?: number;
-  numberOfRecordNotFound?: number;
-  numberOfRecordsNotEditable?: number;
-  numberOfRecords?: number;
-  numberOfNullRecords?: number;
-  numberOfRecordsProcessed?: number;
-  numberOfRecordsWithErrors?: number;
-  running?: boolean;
-  startIsoDateTime?: string;
-  endIsoDateTime?: string;
-  ellapsedTimeInSeconds?: number;
-  totalTimeInSeconds?: number;
-  type?: string;
+  errors?: Array<ReportApiModel>
+  infos?: Array<InfoReportApiModel>
+  uuid?: string
+  totalRecords?: number
+  metadata?: Set<number>
+  metadataErrors?: { [key: string]: Array<ReportApiModel> }
+  metadataInfos?: { [key: string]: Array<InfoReportApiModel> }
+  processId?: string
+  noProcessFoundCount?: number
+  numberOfRecordNotFound?: number
+  numberOfRecordsNotEditable?: number
+  numberOfRecords?: number
+  numberOfNullRecords?: number
+  numberOfRecordsProcessed?: number
+  numberOfRecordsWithErrors?: number
+  running?: boolean
+  startIsoDateTime?: string
+  endIsoDateTime?: string
+  ellapsedTimeInSeconds?: number
+  totalTimeInSeconds?: number
+  type?: string
 }

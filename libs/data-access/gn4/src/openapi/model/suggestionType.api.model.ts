@@ -11,11 +11,11 @@
  */
 
 export interface SuggestionTypeApiModel {
-  name: string;
-  operational: string;
-  params?: string;
-  process?: string;
-  id?: string;
-  category?: string;
-  target?: string;
+  name: string
+  operational: string
+  params?: string
+  process?: string
+  id?: string
+  category?: string
+  target?: string
 }

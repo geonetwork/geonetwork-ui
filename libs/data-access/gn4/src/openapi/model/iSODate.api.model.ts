@@ -11,18 +11,18 @@
  */
 
 export interface ISODateApiModel {
-  internalDateTime?: string;
-  hours?: number;
-  minutes?: number;
-  seconds?: number;
-  years?: number;
-  months?: number;
-  days?: number;
-  dateAndTime?: string;
-  dateAsString?: string;
-  timeInSeconds?: number;
-  dateOnly?: boolean;
-  dateYearOnly?: boolean;
-  dateYearMonthOnly?: boolean;
-  timeAsString?: string;
+  internalDateTime?: string
+  hours?: number
+  minutes?: number
+  seconds?: number
+  years?: number
+  months?: number
+  days?: number
+  dateAndTime?: string
+  dateAsString?: string
+  timeInSeconds?: number
+  dateOnly?: boolean
+  dateYearOnly?: boolean
+  dateYearMonthOnly?: boolean
+  timeAsString?: string
 }

@@ -11,13 +11,13 @@
  */
 
 export interface UserSearchDtoApiModel {
-  id?: number;
-  url?: string;
-  featuredType?: string;
-  creationDate?: string;
-  creatorId?: number;
-  creator?: string;
-  logo?: string;
-  names?: { [key: string]: string };
-  groups?: Array<number>;
+  id?: number
+  url?: string
+  featuredType?: string
+  creationDate?: string
+  creatorId?: number
+  creator?: string
+  logo?: string
+  names?: { [key: string]: string }
+  groups?: Array<number>
 }

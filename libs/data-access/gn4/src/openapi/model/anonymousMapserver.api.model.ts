@@ -9,21 +9,21 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { MapServerApiModel } from './mapServer.api.model';
+import { MapServerApiModel } from './mapServer.api.model'
 
 export interface AnonymousMapserverApiModel {
-  password?: string;
-  username?: string;
-  namespace?: string;
-  description?: string;
-  id?: number;
-  namespacePrefix?: string;
-  configurl?: string;
-  wmsurl?: string;
-  wfsurl?: string;
-  wcsurl?: string;
-  stylerurl?: string;
-  pushStyleInWorkspace_JpaWorkaround?: string;
-  pushStyleInWorkspace?: MapServerApiModel;
-  name?: string;
+  password?: string
+  username?: string
+  namespace?: string
+  description?: string
+  id?: number
+  namespacePrefix?: string
+  configurl?: string
+  wmsurl?: string
+  wfsurl?: string
+  wcsurl?: string
+  stylerurl?: string
+  pushStyleInWorkspace_JpaWorkaround?: string
+  pushStyleInWorkspace?: MapServerApiModel
+  name?: string
 }

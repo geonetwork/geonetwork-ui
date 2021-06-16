@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { PublishStatusEnumApiModel } from './publishStatusEnum.api.model';
+import { PublishStatusEnumApiModel } from './publishStatusEnum.api.model'
 
 /**
  * Describes the status of publishing a given dataset
@@ -18,23 +18,23 @@ export interface DatasetPublishingStatusApiModel {
   /**
    * Name of the dataset in the uploaded package, necessary to identify which dataset to publish from the UploadJobStatus
    */
-  nativeName?: string;
+  nativeName?: string
   /**
    * Name of the GeoServer workspace under which the dataset has been published.
    */
-  publishedWorkspace?: string;
+  publishedWorkspace?: string
   /**
    * Final name under which the layer was published to GeoServer. It may have been modified from the requested layer name in order to avoid duplication if a layer with such name already exists in the target GeoServer workspace.
    */
-  publishedName?: string;
+  publishedName?: string
   /**
    * Identifier for the metadta record created while publishing the dataset\'s metadata to GeoNetwork.
    */
-  metadataRecordId?: string;
-  title?: string;
-  status?: PublishStatusEnumApiModel;
+  metadataRecordId?: string
+  title?: string
+  status?: PublishStatusEnumApiModel
   /**
    * short description of the error that prevents the dataset to be published
    */
-  error?: string;
+  error?: string
 }

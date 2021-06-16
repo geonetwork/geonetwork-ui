@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { RelatedThumbnailItemApiModel } from './relatedThumbnailItem.api.model';
+import { RelatedThumbnailItemApiModel } from './relatedThumbnailItem.api.model'
 
 export interface ThumbnailApiModel {
-  item?: Array<RelatedThumbnailItemApiModel>;
+  item?: Array<RelatedThumbnailItemApiModel>
 }

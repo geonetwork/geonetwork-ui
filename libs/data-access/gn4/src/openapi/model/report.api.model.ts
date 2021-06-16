@@ -11,9 +11,9 @@
  */
 
 export interface ReportApiModel {
-  message?: string;
-  uuid?: string;
-  draft?: boolean;
-  approved?: boolean;
-  date?: string;
+  message?: string
+  uuid?: string
+  draft?: boolean
+  approved?: boolean
+  date?: string
 }

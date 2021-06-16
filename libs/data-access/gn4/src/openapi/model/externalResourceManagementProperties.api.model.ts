@@ -11,7 +11,7 @@
  */
 
 export interface ExternalResourceManagementPropertiesApiModel {
-  url?: string;
-  windowParameters?: string;
-  modal?: boolean;
+  url?: string
+  windowParameters?: string
+  modal?: boolean
 }

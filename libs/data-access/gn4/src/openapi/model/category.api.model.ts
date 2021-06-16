@@ -11,6 +11,6 @@
  */
 
 export interface CategoryApiModel {
-  id?: string;
-  label?: string;
+  id?: string
+  label?: string
 }

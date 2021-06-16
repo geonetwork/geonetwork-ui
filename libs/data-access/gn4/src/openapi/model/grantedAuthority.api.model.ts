@@ -11,5 +11,5 @@
  */
 
 export interface GrantedAuthorityApiModel {
-  authority?: string;
+  authority?: string
 }

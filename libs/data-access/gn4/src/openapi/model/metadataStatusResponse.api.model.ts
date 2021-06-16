@@ -9,36 +9,36 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ElementApiModel } from './element.api.model';
-import { StatusValueApiModel } from './statusValue.api.model';
-import { ISODateApiModel } from './iSODate.api.model';
+import { ElementApiModel } from './element.api.model'
+import { StatusValueApiModel } from './statusValue.api.model'
+import { ISODateApiModel } from './iSODate.api.model'
 
 export interface MetadataStatusResponseApiModel {
-  id?: number;
-  metadataId?: number;
-  userId?: number;
-  changeMessage?: string;
-  statusValue?: StatusValueApiModel;
-  previousState?: string;
-  currentState?: string;
-  uuid?: string;
-  titles?: string;
-  authorName?: string;
-  authorEmail?: string;
-  authorProfile?: string;
-  ownerName?: string;
-  ownerEmail?: string;
-  ownerProfile?: string;
-  title?: string;
-  currentStatus?: string;
-  previousStatus?: string;
-  currentStateEmpty?: boolean;
-  previousStateEmpty?: boolean;
-  statusId?: number;
-  owner?: number;
-  changeDate?: ISODateApiModel;
-  dueDate?: ISODateApiModel;
-  closeDate?: ISODateApiModel;
-  asXml?: ElementApiModel;
-  relatedMetadataStatusId?: number;
+  id?: number
+  metadataId?: number
+  userId?: number
+  changeMessage?: string
+  statusValue?: StatusValueApiModel
+  previousState?: string
+  currentState?: string
+  uuid?: string
+  titles?: string
+  authorName?: string
+  authorEmail?: string
+  authorProfile?: string
+  ownerName?: string
+  ownerEmail?: string
+  ownerProfile?: string
+  title?: string
+  currentStatus?: string
+  previousStatus?: string
+  currentStateEmpty?: boolean
+  previousStateEmpty?: boolean
+  statusId?: number
+  owner?: number
+  changeDate?: ISODateApiModel
+  dueDate?: ISODateApiModel
+  closeDate?: ISODateApiModel
+  asXml?: ElementApiModel
+  relatedMetadataStatusId?: number
 }

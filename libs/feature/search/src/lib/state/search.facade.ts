@@ -37,7 +37,7 @@ import {
 @Injectable()
 export class SearchFacade {
   results$: Observable<any>
-  layout$: Observable<string>
+  layout$: Observable<ResultsListLayout>
   isLoading$: Observable<boolean>
   isEndOfResults$: Observable<boolean>
   searchFilters$: Observable<SearchFilters>

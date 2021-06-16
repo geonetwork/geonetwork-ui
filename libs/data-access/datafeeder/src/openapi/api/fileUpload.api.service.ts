@@ -11,7 +11,7 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core'
 import {
   HttpClient,
   HttpHeaders,
@@ -19,24 +19,24 @@ import {
   HttpResponse,
   HttpEvent,
   HttpParameterCodec,
-} from '@angular/common/http';
-import { CustomHttpParameterCodec } from '../encoder';
-import { Observable } from 'rxjs';
+} from '@angular/common/http'
+import { CustomHttpParameterCodec } from '../encoder'
+import { Observable } from 'rxjs'
 
-import { BoundingBoxApiModel } from '../model/models';
-import { UploadJobStatusApiModel } from '../model/models';
+import { BoundingBoxApiModel } from '../model/models'
+import { UploadJobStatusApiModel } from '../model/models'
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
-import { Configuration } from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables'
+import { Configuration } from '../configuration'
 
 @Injectable({
   providedIn: 'root',
 })
 export class FileUploadApiService {
-  protected basePath = 'https://localhost:8080';
-  public defaultHeaders = new HttpHeaders();
-  public configuration = new Configuration();
-  public encoder: HttpParameterCodec;
+  protected basePath = 'https://localhost:8080'
+  public defaultHeaders = new HttpHeaders()
+  public configuration = new Configuration()
+  public encoder: HttpParameterCodec
 
   constructor(
     protected httpClient: HttpClient,
@@ -44,15 +44,15 @@ export class FileUploadApiService {
     @Optional() configuration: Configuration
   ) {
     if (configuration) {
-      this.configuration = configuration;
+      this.configuration = configuration
     }
     if (typeof this.configuration.basePath !== 'string') {
       if (typeof basePath !== 'string') {
-        basePath = this.basePath;
+        basePath = this.basePath
       }
-      this.configuration.basePath = basePath;
+      this.configuration.basePath = basePath
     }
-    this.encoder = this.configuration.encoder || new CustomHttpParameterCodec();
+    this.encoder = this.configuration.encoder || new CustomHttpParameterCodec()
   }
 
   /**
@@ -60,13 +60,13 @@ export class FileUploadApiService {
    * @return true: consumes contains 'multipart/form-data', false: otherwise
    */
   private canConsumeForm(consumes: string[]): boolean {
-    const form = 'multipart/form-data';
+    const form = 'multipart/form-data'
     for (const consume of consumes) {
       if (form === consume) {
-        return true;
+        return true
       }
     }
-    return false;
+    return false
   }
 
   private addToHttpParams(
@@ -75,11 +75,11 @@ export class FileUploadApiService {
     key?: string
   ): HttpParams {
     if (typeof value === 'object' && value instanceof Date === false) {
-      httpParams = this.addToHttpParamsRecursive(httpParams, value);
+      httpParams = this.addToHttpParamsRecursive(httpParams, value)
     } else {
-      httpParams = this.addToHttpParamsRecursive(httpParams, value, key);
+      httpParams = this.addToHttpParamsRecursive(httpParams, value, key)
     }
-    return httpParams;
+    return httpParams
   }
 
   private addToHttpParamsRecursive(
@@ -88,23 +88,23 @@ export class FileUploadApiService {
     key?: string
   ): HttpParams {
     if (value == null) {
-      return httpParams;
+      return httpParams
     }
 
     if (typeof value === 'object') {
       if (Array.isArray(value)) {
-        (value as any[]).forEach(
+        ;(value as any[]).forEach(
           (elem) =>
             (httpParams = this.addToHttpParamsRecursive(httpParams, elem, key))
-        );
+        )
       } else if (value instanceof Date) {
         if (key != null) {
           httpParams = httpParams.append(
             key,
             (value as Date).toISOString().substr(0, 10)
-          );
+          )
         } else {
-          throw Error('key may not be null if value is Date');
+          throw Error('key may not be null if value is Date')
         }
       } else {
         Object.keys(value).forEach(
@@ -114,14 +114,14 @@ export class FileUploadApiService {
               value[k],
               key != null ? `${key}.${k}` : k
             ))
-        );
+        )
       }
     } else if (key != null) {
-      httpParams = httpParams.append(key, value);
+      httpParams = httpParams.append(key, value)
     } else {
-      throw Error('key may not be null if value is not object or array');
+      throw Error('key may not be null if value is not object or array')
     }
-    return httpParams;
+    return httpParams
   }
 
   /**
@@ -133,43 +133,43 @@ export class FileUploadApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<UploadJobStatusApiModel>>;
+  ): Observable<Array<UploadJobStatusApiModel>>
   public findAllUploadJobs(
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<UploadJobStatusApiModel>>>;
+  ): Observable<HttpResponse<Array<UploadJobStatusApiModel>>>
   public findAllUploadJobs(
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<UploadJobStatusApiModel>>>;
+  ): Observable<HttpEvent<Array<UploadJobStatusApiModel>>>
   public findAllUploadJobs(
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<UploadJobStatusApiModel>>(
@@ -181,7 +181,7 @@ export class FileUploadApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -195,19 +195,19 @@ export class FileUploadApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<UploadJobStatusApiModel>;
+  ): Observable<UploadJobStatusApiModel>
   public findUploadJob(
     jobId: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<UploadJobStatusApiModel>>;
+  ): Observable<HttpResponse<UploadJobStatusApiModel>>
   public findUploadJob(
     jobId: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<UploadJobStatusApiModel>>;
+  ): Observable<HttpEvent<UploadJobStatusApiModel>>
   public findUploadJob(
     jobId: string,
     observe: any = 'body',
@@ -217,30 +217,30 @@ export class FileUploadApiService {
     if (jobId === null || jobId === undefined) {
       throw new Error(
         'Required parameter jobId was null or undefined when calling findUploadJob.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<UploadJobStatusApiModel>(
@@ -254,7 +254,7 @@ export class FileUploadApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -266,43 +266,43 @@ export class FileUploadApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<UploadJobStatusApiModel>>;
+  ): Observable<Array<UploadJobStatusApiModel>>
   public findUserUploadJobs(
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<UploadJobStatusApiModel>>>;
+  ): Observable<HttpResponse<Array<UploadJobStatusApiModel>>>
   public findUserUploadJobs(
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<UploadJobStatusApiModel>>>;
+  ): Observable<HttpEvent<Array<UploadJobStatusApiModel>>>
   public findUserUploadJobs(
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<UploadJobStatusApiModel>>(
@@ -314,7 +314,7 @@ export class FileUploadApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -334,7 +334,7 @@ export class FileUploadApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<BoundingBoxApiModel>;
+  ): Observable<BoundingBoxApiModel>
   public getBounds(
     jobId: string,
     typeName: string,
@@ -343,7 +343,7 @@ export class FileUploadApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<BoundingBoxApiModel>>;
+  ): Observable<HttpResponse<BoundingBoxApiModel>>
   public getBounds(
     jobId: string,
     typeName: string,
@@ -352,7 +352,7 @@ export class FileUploadApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<BoundingBoxApiModel>>;
+  ): Observable<HttpEvent<BoundingBoxApiModel>>
   public getBounds(
     jobId: string,
     typeName: string,
@@ -365,47 +365,47 @@ export class FileUploadApiService {
     if (jobId === null || jobId === undefined) {
       throw new Error(
         'Required parameter jobId was null or undefined when calling getBounds.'
-      );
+      )
     }
     if (typeName === null || typeName === undefined) {
       throw new Error(
         'Required parameter typeName was null or undefined when calling getBounds.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (srs !== undefined && srs !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>srs, 'srs');
+      queryParameters = this.addToHttpParams(queryParameters, <any>srs, 'srs')
     }
     if (srsReproject !== undefined && srsReproject !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>srsReproject,
         'srs_reproject'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<BoundingBoxApiModel>(
@@ -420,7 +420,7 @@ export class FileUploadApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -444,7 +444,7 @@ export class FileUploadApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/geo+json' }
-  ): Observable<object>;
+  ): Observable<object>
   public getSampleFeature(
     jobId: string,
     typeName: string,
@@ -455,7 +455,7 @@ export class FileUploadApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/geo+json' }
-  ): Observable<HttpResponse<object>>;
+  ): Observable<HttpResponse<object>>
   public getSampleFeature(
     jobId: string,
     typeName: string,
@@ -466,7 +466,7 @@ export class FileUploadApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/geo+json' }
-  ): Observable<HttpEvent<object>>;
+  ): Observable<HttpEvent<object>>
   public getSampleFeature(
     jobId: string,
     typeName: string,
@@ -481,61 +481,61 @@ export class FileUploadApiService {
     if (jobId === null || jobId === undefined) {
       throw new Error(
         'Required parameter jobId was null or undefined when calling getSampleFeature.'
-      );
+      )
     }
     if (typeName === null || typeName === undefined) {
       throw new Error(
         'Required parameter typeName was null or undefined when calling getSampleFeature.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (featureIndex !== undefined && featureIndex !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>featureIndex,
         'featureIndex'
-      );
+      )
     }
     if (encoding !== undefined && encoding !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>encoding,
         'encoding'
-      );
+      )
     }
     if (srs !== undefined && srs !== null) {
-      queryParameters = this.addToHttpParams(queryParameters, <any>srs, 'srs');
+      queryParameters = this.addToHttpParams(queryParameters, <any>srs, 'srs')
     }
     if (srsReproject !== undefined && srsReproject !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>srsReproject,
         'srs_reproject'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/geo+json'];
+      const httpHeaderAccepts: string[] = ['application/geo+json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<object>(
@@ -550,7 +550,7 @@ export class FileUploadApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -566,21 +566,21 @@ export class FileUploadApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: undefined }
-  ): Observable<any>;
+  ): Observable<any>
   public removeJob(
     jobId: string,
     abort?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: undefined }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public removeJob(
     jobId: string,
     abort?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: undefined }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public removeJob(
     jobId: string,
     abort?: boolean,
@@ -591,39 +591,39 @@ export class FileUploadApiService {
     if (jobId === null || jobId === undefined) {
       throw new Error(
         'Required parameter jobId was null or undefined when calling removeJob.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (abort !== undefined && abort !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>abort,
         'abort'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = [];
+      const httpHeaderAccepts: string[] = []
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.delete<any>(
@@ -638,7 +638,7 @@ export class FileUploadApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -652,78 +652,78 @@ export class FileUploadApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<UploadJobStatusApiModel>;
+  ): Observable<UploadJobStatusApiModel>
   public uploadFiles(
     filename?: Array<Blob>,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<UploadJobStatusApiModel>>;
+  ): Observable<HttpResponse<UploadJobStatusApiModel>>
   public uploadFiles(
     filename?: Array<Blob>,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<UploadJobStatusApiModel>>;
+  ): Observable<HttpEvent<UploadJobStatusApiModel>>
   public uploadFiles(
     filename?: Array<Blob>,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
     // to determine the Content-Type header
-    const consumes: string[] = ['multipart/form-data'];
+    const consumes: string[] = ['multipart/form-data']
 
-    const canConsumeForm = this.canConsumeForm(consumes);
+    const canConsumeForm = this.canConsumeForm(consumes)
 
-    let formParams: { append(param: string, value: any): any };
-    let useForm = false;
-    let convertFormParamsToString = false;
+    let formParams: { append(param: string, value: any): any }
+    let useForm = false
+    let convertFormParamsToString = false
     // use FormData to transmit files using content-type "multipart/form-data"
     // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
-    useForm = canConsumeForm;
+    useForm = canConsumeForm
     if (useForm) {
-      formParams = new FormData();
+      formParams = new FormData()
     } else {
-      formParams = new HttpParams({ encoder: this.encoder });
+      formParams = new HttpParams({ encoder: this.encoder })
     }
 
     if (filename) {
       if (useForm) {
         filename.forEach((element) => {
           formParams =
-            (formParams.append('filename', <any>element) as any) || formParams;
-        });
+            (formParams.append('filename', <any>element) as any) || formParams
+        })
       } else {
         formParams =
           (formParams.append(
             'filename',
             filename.join(COLLECTION_FORMATS['csv'])
-          ) as any) || formParams;
+          ) as any) || formParams
       }
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.post<UploadJobStatusApiModel>(
@@ -736,6 +736,6 @@ export class FileUploadApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 }

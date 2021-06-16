@@ -11,7 +11,7 @@
  */
 
 export interface PropertyApiModel {
-  name?: string;
-  value?: string;
-  type?: string;
+  name?: string
+  value?: string
+  type?: string
 }

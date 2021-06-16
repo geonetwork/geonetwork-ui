@@ -11,8 +11,8 @@
  */
 
 export interface RatingAverageApiModel {
-  ratingCount?: number;
-  ratingAverages?: { [key: string]: number };
-  userfeedbackCount?: number;
-  lastComment?: string;
+  ratingCount?: number
+  ratingAverages?: { [key: string]: number }
+  userfeedbackCount?: number
+  lastComment?: string
 }

@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { DatasetPublishRequestApiModel } from './datasetPublishRequest.api.model';
+import { DatasetPublishRequestApiModel } from './datasetPublishRequest.api.model'
 
 export interface PublishRequestApiModel {
-  datasets?: Array<DatasetPublishRequestApiModel>;
+  datasets?: Array<DatasetPublishRequestApiModel>
 }

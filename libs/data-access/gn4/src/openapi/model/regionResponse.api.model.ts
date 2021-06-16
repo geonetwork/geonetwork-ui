@@ -11,12 +11,12 @@
  */
 
 export interface RegionResponseApiModel {
-  north?: number;
-  east?: number;
-  south?: number;
-  west?: number;
-  label?: { [key: string]: string };
-  hasGeom?: boolean;
-  categoryId?: string;
-  id?: string;
+  north?: number
+  east?: number
+  south?: number
+  west?: number
+  label?: { [key: string]: string }
+  hasGeom?: boolean
+  categoryId?: string
+  id?: string
 }

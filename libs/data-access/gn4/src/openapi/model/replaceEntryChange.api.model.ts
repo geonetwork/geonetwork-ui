@@ -11,7 +11,7 @@
  */
 
 export interface ReplaceEntryChangeApiModel {
-  originalVal?: string;
-  changedVal?: string;
-  fieldId?: string;
+  originalVal?: string
+  changedVal?: string
+  fieldId?: string
 }

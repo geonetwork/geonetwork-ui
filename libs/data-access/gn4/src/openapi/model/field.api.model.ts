@@ -11,12 +11,12 @@
  */
 
 export interface FieldApiModel {
-  template?: string;
-  name?: string;
-  xpath?: string;
-  indexField?: string;
-  use?: string;
-  removable?: boolean;
-  insertMode?: string;
-  codelist?: string;
+  template?: string
+  name?: string
+  xpath?: string
+  indexField?: string
+  use?: string
+  removable?: boolean
+  insertMode?: string
+  codelist?: string
 }

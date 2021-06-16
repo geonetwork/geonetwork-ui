@@ -9,13 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ISODateApiModel } from './iSODate.api.model';
+import { ISODateApiModel } from './iSODate.api.model'
 
 export interface LinkStatusApiModel {
-  id?: number;
-  checkDate?: ISODateApiModel;
-  statusValue?: string;
-  statusInfo?: string;
-  batchKey?: string;
-  failing?: boolean;
+  id?: number
+  checkDate?: ISODateApiModel
+  statusValue?: string
+  statusInfo?: string
+  batchKey?: string
+  failing?: boolean
 }

@@ -9,23 +9,23 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AddressApiModel } from './address.api.model';
+import { AddressApiModel } from './address.api.model'
 
 export interface UserDtoApiModel {
-  id?: string;
-  profile?: string;
-  username?: string;
-  name?: string;
-  surname?: string;
-  emailAddresses?: Array<string>;
-  organisation?: string;
-  addresses?: Array<AddressApiModel>;
-  kind?: string;
-  password?: string;
-  groupsRegisteredUser?: Array<string>;
-  groupsEditor?: Array<string>;
-  groupsReviewer?: Array<string>;
-  groupsUserAdmin?: Array<string>;
-  enabled?: boolean;
-  email?: UserDtoApiModel;
+  id?: string
+  profile?: string
+  username?: string
+  name?: string
+  surname?: string
+  emailAddresses?: Array<string>
+  organisation?: string
+  addresses?: Array<AddressApiModel>
+  kind?: string
+  password?: string
+  groupsRegisteredUser?: Array<string>
+  groupsEditor?: Array<string>
+  groupsReviewer?: Array<string>
+  groupsUserAdmin?: Array<string>
+  enabled?: boolean
+  email?: UserDtoApiModel
 }

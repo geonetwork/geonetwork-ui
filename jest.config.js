@@ -17,4 +17,4 @@ module.exports = {
     '<rootDir>/libs/data-access/datafeeder',
     '<rootDir>/libs/util/shared',
   ],
-};
+}

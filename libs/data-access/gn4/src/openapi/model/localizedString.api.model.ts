@@ -11,7 +11,7 @@
  */
 
 export interface LocalizedStringApiModel {
-  value?: string;
-  lang?: string;
-  href?: string;
+  value?: string
+  lang?: string
+  href?: string
 }

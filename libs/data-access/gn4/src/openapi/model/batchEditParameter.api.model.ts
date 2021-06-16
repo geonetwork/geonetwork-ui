@@ -11,7 +11,7 @@
  */
 
 export interface BatchEditParameterApiModel {
-  xpath: string;
-  value: string;
-  condition?: string;
+  xpath: string
+  value: string
+  condition?: string
 }

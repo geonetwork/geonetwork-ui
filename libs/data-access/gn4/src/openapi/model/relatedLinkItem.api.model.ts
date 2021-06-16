@@ -9,16 +9,16 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { DescriptionApiModel } from './description.api.model';
-import { MultilingualValueApiModel } from './multilingualValue.api.model';
+import { DescriptionApiModel } from './description.api.model'
+import { MultilingualValueApiModel } from './multilingualValue.api.model'
 
 export interface RelatedLinkItemApiModel {
-  id?: string;
-  url?: MultilingualValueApiModel;
-  type?: string;
-  title: MultilingualValueApiModel;
-  protocol?: string;
-  description: DescriptionApiModel;
-  _function?: string;
-  applicationProfile?: string;
+  id?: string
+  url?: MultilingualValueApiModel
+  type?: string
+  title: MultilingualValueApiModel
+  protocol?: string
+  description: DescriptionApiModel
+  _function?: string
+  applicationProfile?: string
 }

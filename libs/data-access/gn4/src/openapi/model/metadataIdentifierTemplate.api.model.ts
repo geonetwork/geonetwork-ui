@@ -11,10 +11,10 @@
  */
 
 export interface MetadataIdentifierTemplateApiModel {
-  id?: number;
-  template?: string;
-  systemProvided_JPAWorkaround?: string;
-  systemProvided?: boolean;
-  systemDefault?: boolean;
-  name?: string;
+  id?: number
+  template?: string
+  systemProvided_JPAWorkaround?: string
+  systemProvided?: boolean
+  systemDefault?: boolean
+  name?: string
 }

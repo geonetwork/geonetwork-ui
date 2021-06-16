@@ -9,15 +9,15 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AddressApiModel } from './address.api.model';
+import { AddressApiModel } from './address.api.model'
 
 export interface UserRegisterDtoApiModel {
-  profile?: string;
-  username?: string;
-  email?: string;
-  name?: string;
-  surname?: string;
-  organisation?: string;
-  address?: AddressApiModel;
-  captcha?: string;
+  profile?: string
+  username?: string
+  email?: string
+  name?: string
+  surname?: string
+  organisation?: string
+  address?: AddressApiModel
+  captcha?: string
 }

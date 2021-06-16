@@ -11,11 +11,11 @@
  */
 
 export interface IProcessingReportApiModel {
-  running?: boolean;
-  uuid?: string;
-  startIsoDateTime?: string;
-  endIsoDateTime?: string;
-  ellapsedTimeInSeconds?: number;
-  totalTimeInSeconds?: number;
-  type?: string;
+  running?: boolean
+  uuid?: string
+  startIsoDateTime?: string
+  endIsoDateTime?: string
+  ellapsedTimeInSeconds?: number
+  totalTimeInSeconds?: number
+  type?: string
 }

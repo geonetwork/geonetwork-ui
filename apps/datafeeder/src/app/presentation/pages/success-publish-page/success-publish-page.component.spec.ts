@@ -1,7 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
 
-import { JobStatusModel, SuccessPublishPageComponent } from './success-publish-page.component'
+import {
+  JobStatusModel,
+  SuccessPublishPageComponent,
+} from './success-publish-page.component'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { PublishStatusEnumApiModel } from '@geonetwork-ui/data-access/datafeeder'

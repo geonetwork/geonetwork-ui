@@ -3,13 +3,7 @@ import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core'
 import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n'
 import { TranslateService } from '@ngx-translate/core'
 import { Observable, of, Subject, Subscription } from 'rxjs'
-import {
-  distinctUntilChanged,
-  map,
-  shareReplay,
-  take,
-  tap,
-} from 'rxjs/operators'
+import { distinctUntilChanged, map, shareReplay, tap } from 'rxjs/operators'
 
 export interface Items {
   display: string
@@ -27,7 +21,7 @@ export class ChipsInputComponent implements OnInit, OnDestroy {
   @Input() selectedItems: Items[]
   @Input() required = false
   @Input() loadOnce = false
-  @Input() autocompleteItems: Items[]
+  @Input() autocompleteItems: Items[] = []
   @Output() itemsChange: Observable<Items[]>
 
   private subscription: Subscription
@@ -55,8 +49,8 @@ export class ChipsInputComponent implements OnInit, OnDestroy {
       return this.http
         .get<any>(url.replace('${lang}', lang))
         .pipe(map((item) => item.map((i) => i.values[lang])))
-    } else if (this.autocompleteItems) {
-      return of(this.autocompleteItems)
+    } else {
+      return of(this.autocompleteItems || [])
     }
   }
 

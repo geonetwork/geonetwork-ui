@@ -11,19 +11,19 @@
  */
 
 export interface SettingApiModel {
-  name?: string;
-  value?: string;
-  dataType?: SettingApiModel.DataTypeEnum;
-  position?: number;
-  internal?: boolean;
-  internal_JpaWorkaround?: string;
+  name?: string
+  value?: string
+  dataType?: SettingApiModel.DataTypeEnum
+  position?: number
+  internal?: boolean
+  internal_JpaWorkaround?: string
 }
 export namespace SettingApiModel {
-  export type DataTypeEnum = 'STRING' | 'INT' | 'BOOLEAN' | 'JSON';
+  export type DataTypeEnum = 'STRING' | 'INT' | 'BOOLEAN' | 'JSON'
   export const DataTypeEnum = {
     String: 'STRING' as DataTypeEnum,
     Int: 'INT' as DataTypeEnum,
     Boolean: 'BOOLEAN' as DataTypeEnum,
     Json: 'JSON' as DataTypeEnum,
-  };
+  }
 }

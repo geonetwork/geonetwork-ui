@@ -37,5 +37,10 @@
       "@geonetwork-ui/util/shared": ["libs/util/shared/src/index.ts"]
     }
   },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": false,
+    "strictInjectionParameters": true,
+    "strictTemplates": false
+  },
   "exclude": ["node_modules", "tmp"]
 }

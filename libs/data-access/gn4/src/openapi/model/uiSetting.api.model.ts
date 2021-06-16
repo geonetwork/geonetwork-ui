@@ -11,6 +11,6 @@
  */
 
 export interface UiSettingApiModel {
-  id?: string;
-  configuration?: string;
+  id?: string
+  configuration?: string
 }

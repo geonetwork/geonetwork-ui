@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
+import { AngularMyDatePickerModule } from 'angular-mydatepicker'
+import { TagInputModule } from 'ngx-chips'
 import { NgxDropzoneModule } from 'ngx-dropzone'
 import { AutocompleteComponent } from './autocomplete/autocomplete.component'
 import { ButtonComponent } from './button/button.component'
-import { DragAndDropFileInputComponent } from './drag-and-drop-file-input/drag-and-drop-file-input.component'
-import { DropdownSelectorComponent } from './dropdown-selector/dropdown-selector.component'
-import { TextInputComponent } from './text-input/text-input.component'
-import { TextAreaComponent } from './text-area/text-area.component'
-import { TagInputModule } from 'ngx-chips'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ChipsInputComponent } from './chips-input/chips-input.component'
 import { DatepickerComponent } from './datepicker/datepicker.component'
-import { MyDatePickerModule } from 'mydatepicker'
+import { DragAndDropFileInputComponent } from './drag-and-drop-file-input/drag-and-drop-file-input.component'
+import { DropdownSelectorComponent } from './dropdown-selector/dropdown-selector.component'
+import { TextAreaComponent } from './text-area/text-area.component'
+import { TextInputComponent } from './text-input/text-input.component'
 
 @NgModule({
   declarations: [
@@ -35,7 +35,7 @@ import { MyDatePickerModule } from 'mydatepicker'
     FormsModule,
     ReactiveFormsModule,
     TagInputModule,
-    MyDatePickerModule,
+    AngularMyDatePickerModule,
     UtilSharedModule,
   ],
   exports: [

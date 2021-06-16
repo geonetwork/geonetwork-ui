@@ -11,18 +11,18 @@
  */
 
 export interface MapServerApiModel {
-  namespace?: string;
-  description?: string;
-  password?: string;
-  username?: string;
-  id?: number;
-  namespacePrefix?: string;
-  configurl?: string;
-  wmsurl?: string;
-  wfsurl?: string;
-  wcsurl?: string;
-  stylerurl?: string;
-  pushStyleInWorkspace_JpaWorkaround?: string;
-  pushStyleInWorkspace?: MapServerApiModel;
-  name?: string;
+  namespace?: string
+  description?: string
+  password?: string
+  username?: string
+  id?: number
+  namespacePrefix?: string
+  configurl?: string
+  wmsurl?: string
+  wfsurl?: string
+  wcsurl?: string
+  stylerurl?: string
+  pushStyleInWorkspace_JpaWorkaround?: string
+  pushStyleInWorkspace?: MapServerApiModel
+  name?: string
 }

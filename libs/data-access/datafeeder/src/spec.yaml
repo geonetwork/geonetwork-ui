@@ -5,7 +5,7 @@ servers:
 info:
   title: DataFeeder API
   description: This API covers dataset upload and publishing features of the application
-  version: "1.0.0"
+  version: '1.0.0'
   contact:
     email: psc@georchestra.org
 tags:
@@ -19,8 +19,9 @@ paths:
     post:
       tags:
         - File Upload
-      description: Upload one or multiple files to the server, and get a handle to the job.
-                   Once the files are uploaded, the analysis process is automatically triggered. Its status can be polled with GET /upload/{jobId}
+      description:
+        Upload one or multiple files to the server, and get a handle to the job.
+        Once the files are uploaded, the analysis process is automatically triggered. Its status can be polled with GET /upload/{jobId}
       operationId: uploadFiles
       requestBody:
         content:
@@ -66,7 +67,7 @@ paths:
           description: 'Not authenticated'
         403:
           description: 'Forbidden. User has no priviledges to upload files'
-  
+
   /upload/{jobId}:
     get:
       tags:
@@ -74,7 +75,7 @@ paths:
       description: 'Poll the status of a given upload job by id'
       operationId: findUploadJob
       parameters:
-      - $ref: '#/components/parameters/jobId'
+        - $ref: '#/components/parameters/jobId'
       responses:
         200:
           $ref: '#/components/responses/UploadStatusResponse'
@@ -88,14 +89,14 @@ paths:
       description: 'Remove a job and all its resources (e.g. temporary files). Does not unpublish. Use abort=true to abort a running analysis or publishing job'
       operationId: removeJob
       parameters:
-      - $ref: '#/components/parameters/jobId'
-      - name: abort
-        in: query
-        description: If true, abort the dataset analysis or publishing, if running. Defaults to false
-        required: false
-        schema:
-          type: boolean
-          default: false
+        - $ref: '#/components/parameters/jobId'
+        - name: abort
+          in: query
+          description: If true, abort the dataset analysis or publishing, if running. Defaults to false
+          required: false
+          schema:
+            type: boolean
+            default: false
       responses:
         204:
           description: 'Job removed.'
@@ -111,38 +112,39 @@ paths:
       tags:
         - File Upload
       operationId: getSampleFeature
-      description: Obtain a sample dataset feature in GeoJSON format, optionally specifying a feature index, crs, and/or dataset's character encoding.
-                   The response encoding is always UTF-8. The 'encoding' parameter can be used to force reading the native data in a different charset.
+      description:
+        Obtain a sample dataset feature in GeoJSON format, optionally specifying a feature index, crs, and/or dataset's character encoding.
+        The response encoding is always UTF-8. The 'encoding' parameter can be used to force reading the native data in a different charset.
       parameters:
-      - $ref: '#/components/parameters/jobId'
-      - $ref: '#/components/parameters/typeName'
-      - name: featureIndex
-        in: query
-        description: Optional feature index, if unspecified, the first feature (index 0) is returned
-        required: false
-        schema:
-          type: integer
-          format: int32
-          minimum: 0
-      - name: encoding
-        in: query
-        description: Optional, force dataset encoding
-        required: false
-        schema:
-          type: string
-      - name: srs
-        in: query
-        description: Optional, coordinate reference system (e.g. 'EPSG:3857')
-        required: false
-        schema:
-          type: string
-      - name: srs_reproject
-        in: query
-        description: Optional, whether to reproject from the native CRS to the one provided in the srs parameter. If false or not provided, the srs parameter overrides the native CRS
-        required: false
-        schema:
-          type: boolean
-          default: false
+        - $ref: '#/components/parameters/jobId'
+        - $ref: '#/components/parameters/typeName'
+        - name: featureIndex
+          in: query
+          description: Optional feature index, if unspecified, the first feature (index 0) is returned
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+        - name: encoding
+          in: query
+          description: Optional, force dataset encoding
+          required: false
+          schema:
+            type: string
+        - name: srs
+          in: query
+          description: Optional, coordinate reference system (e.g. 'EPSG:3857')
+          required: false
+          schema:
+            type: string
+        - name: srs_reproject
+          in: query
+          description: Optional, whether to reproject from the native CRS to the one provided in the srs parameter. If false or not provided, the srs parameter overrides the native CRS
+          required: false
+          schema:
+            type: boolean
+            default: false
       responses:
         202:
           $ref: '#/components/responses/SampleFeatureResponse'
@@ -160,21 +162,21 @@ paths:
       operationId: getBounds
       description: Get the bounding box of the dataset, optionally indicating the CRS and whether to reproject from the native CRS to the new one
       parameters:
-      - $ref: '#/components/parameters/jobId'
-      - $ref: '#/components/parameters/typeName'
-      - name: srs
-        in: query
-        description: Optional, coordinate reference system (e.g. 'EPSG:3857')
-        required: false
-        schema:
-          type: string
-      - name: srs_reproject
-        in: query
-        description: Optional, whether to reproject from the native CRS to the one provided in the srs parameter. If false or not provided, the srs parameter overrides the native CRS
-        required: false
-        schema:
-          type: boolean
-          default: false
+        - $ref: '#/components/parameters/jobId'
+        - $ref: '#/components/parameters/typeName'
+        - name: srs
+          in: query
+          description: Optional, coordinate reference system (e.g. 'EPSG:3857')
+          required: false
+          schema:
+            type: string
+        - name: srs_reproject
+          in: query
+          description: Optional, whether to reproject from the native CRS to the one provided in the srs parameter. If false or not provided, the srs parameter overrides the native CRS
+          required: false
+          schema:
+            type: boolean
+            default: false
       responses:
         202:
           $ref: '#/components/responses/BoundingBoxResponse'
@@ -192,7 +194,7 @@ paths:
       description: 'Publish the dataset(s) from the given upload'
       operationId: publish
       parameters:
-      - $ref: '#/components/parameters/jobId'
+        - $ref: '#/components/parameters/jobId'
       requestBody:
         content:
           application/json:
@@ -215,7 +217,7 @@ paths:
       description: 'Poll the publishing staus of the given job'
       operationId: getPublishingStatus
       parameters:
-      - $ref: '#/components/parameters/jobId'
+        - $ref: '#/components/parameters/jobId'
       responses:
         200:
           $ref: '#/components/responses/PublishStatusResponse'
@@ -301,8 +303,9 @@ components:
           default: 0.0
         status:
           $ref: '#/components/schemas/AnalysisStatusEnum'
-          description: aggregate of status of all datasets in the upload package. If any dataset status is PENDING, ANALYZING, or ERROR, that's the job's status.
-                       If at least one dataset status is ERROR, then the job status is ERROR. If no datasets where recognized in the upload, status is ERROR. 
+          description:
+            aggregate of status of all datasets in the upload package. If any dataset status is PENDING, ANALYZING, or ERROR, that's the job's status.
+            If at least one dataset status is ERROR, then the job status is ERROR. If no datasets where recognized in the upload, status is ERROR.
         error:
           type: string
           description: short description of the error that prevents the job to complete successfully
@@ -332,7 +335,7 @@ components:
         encoding:
           type: string
           description: detected charset
-    
+
     Property:
       type: object
       properties:
@@ -350,7 +353,7 @@ components:
         srs:
           type: string
           description: Coordinate Reference System's EPSG identifier.
-                       Can be null if a matching reference system couldn't be found in the EPSG database. 
+            Can be null if a matching reference system couldn't be found in the EPSG database.
         wkt:
           type: string
           description: Coordinate Reference System's Well Known Text representation. Despite the 'srs' identifier being found or not, the WKT representation is still available.
@@ -384,19 +387,19 @@ components:
       type: object
       description: User supplied dataset metadata information
       required:
-      - title 
-      - abstract
+        - title
+        - abstract
       properties:
         title:
           type: string
           description: Metadata title for the dataset
         abstract:
           type: string
-          description: Metadata abtract text for the dataset 
+          description: Metadata abtract text for the dataset
         tags:
           type: array
           description: metadata keyworkds for the dataset
-          items:           
+          items:
             type: string
         creationDate:
           description: Dataset creation date, in RFC3339 format
@@ -416,8 +419,8 @@ components:
       type: object
       description: Name of the dataset in the uploaded package, necessary to identify which dataset to publish from the UploadJobStatus
       required:
-      - nativeName
-      - metadata 
+        - nativeName
+        - metadata
       properties:
         nativeName:
           type: string
@@ -429,12 +432,14 @@ components:
           type: string
           description: Specify which charset (e.g. ISO-8859-1, UTF-8, etc.) to interpret the dataset alphanumeric properties with. Takes effect only for uploaded shapefiles.
         srs:
-          description: Optional, Coordinate Reference System identifier to publish the dataset in. If not provided, the dataset is published using the CRS inferred
-                       during the upload analysis process. If no CRS identifier was determined, the job will fail.
+          description:
+            Optional, Coordinate Reference System identifier to publish the dataset in. If not provided, the dataset is published using the CRS inferred
+            during the upload analysis process. If no CRS identifier was determined, the job will fail.
           type: string
         srs_reproject:
-          description: Optional, whether to reproject from the native CRS to the one provided in the srs parameter.
-                       If false or not provided, the srs parameter overrides the native CRS without reprojection.
+          description:
+            Optional, whether to reproject from the native CRS to the one provided in the srs parameter.
+            If false or not provided, the srs parameter overrides the native CRS without reprojection.
           type: boolean
           default: false
         metadata:
@@ -477,8 +482,9 @@ components:
           description: Name of the GeoServer workspace under which the dataset has been published.
         publishedName:
           type: string
-          description: Final name under which the layer was published to GeoServer. It may have been modified from the requested layer name
-                       in order to avoid duplication if a layer with such name already exists in the target GeoServer workspace.
+          description:
+            Final name under which the layer was published to GeoServer. It may have been modified from the requested layer name
+            in order to avoid duplication if a layer with such name already exists in the target GeoServer workspace.
         metadataRecordId:
           type: string
           description: Identifier for the metadta record created while publishing the dataset's metadata to GeoNetwork.

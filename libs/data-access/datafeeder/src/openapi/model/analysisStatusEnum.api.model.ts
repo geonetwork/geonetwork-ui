@@ -14,11 +14,11 @@ export type AnalysisStatusEnumApiModel =
   | 'PENDING'
   | 'ANALYZING'
   | 'DONE'
-  | 'ERROR';
+  | 'ERROR'
 
 export const AnalysisStatusEnumApiModel = {
   Pending: 'PENDING' as AnalysisStatusEnumApiModel,
   Analyzing: 'ANALYZING' as AnalysisStatusEnumApiModel,
   Done: 'DONE' as AnalysisStatusEnumApiModel,
   Error: 'ERROR' as AnalysisStatusEnumApiModel,
-};
+}

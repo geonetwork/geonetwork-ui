@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { RelatedMetadataItemApiModel } from './relatedMetadataItem.api.model';
+import { RelatedMetadataItemApiModel } from './relatedMetadataItem.api.model'
 
 export interface ServiceApiModel {
-  item?: Array<RelatedMetadataItemApiModel>;
+  item?: Array<RelatedMetadataItemApiModel>
 }

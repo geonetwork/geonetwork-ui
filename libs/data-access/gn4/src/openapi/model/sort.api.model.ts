@@ -11,7 +11,7 @@
  */
 
 export interface SortApiModel {
-  sorted?: boolean;
-  unsorted?: boolean;
-  empty?: boolean;
+  sorted?: boolean
+  unsorted?: boolean
+  empty?: boolean
 }

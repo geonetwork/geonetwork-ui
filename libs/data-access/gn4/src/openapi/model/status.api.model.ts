@@ -11,10 +11,10 @@
  */
 
 export interface StatusApiModel {
-  id?: string;
-  state?: StatusApiModel.StateEnum;
-  date?: string;
-  message?: string;
+  id?: string
+  state?: StatusApiModel.StateEnum
+  date?: string
+  message?: string
 }
 export namespace StatusApiModel {
   export type StateEnum =
@@ -22,12 +22,12 @@ export namespace StatusApiModel {
     | 'UNINITIALIZED'
     | 'YELLOW'
     | 'GREEN'
-    | 'DISABLED';
+    | 'DISABLED'
   export const StateEnum = {
     Red: 'RED' as StateEnum,
     Uninitialized: 'UNINITIALIZED' as StateEnum,
     Yellow: 'YELLOW' as StateEnum,
     Green: 'GREEN' as StateEnum,
     Disabled: 'DISABLED' as StateEnum,
-  };
+  }
 }

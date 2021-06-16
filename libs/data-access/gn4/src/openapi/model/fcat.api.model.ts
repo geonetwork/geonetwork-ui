@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { FCRelatedMetadataItemApiModel } from './fCRelatedMetadataItem.api.model';
+import { FCRelatedMetadataItemApiModel } from './fCRelatedMetadataItem.api.model'
 
 export interface FcatApiModel {
-  item?: Array<FCRelatedMetadataItemApiModel>;
+  item?: Array<FCRelatedMetadataItemApiModel>
 }

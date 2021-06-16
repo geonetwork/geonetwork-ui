@@ -11,5 +11,5 @@
  */
 
 export interface CategoryResponseApiModel {
-  label?: { [key: string]: string };
+  label?: { [key: string]: string }
 }

@@ -11,14 +11,14 @@
  */
 
 export interface SystemInfoApiModel {
-  stagingProfile?: string;
-  buildDate?: string;
-  version?: string;
-  subVersion?: string;
-  buildOsInfo?: string;
-  buildJavaVersion?: string;
-  buildJavaVendor?: string;
-  scmUrl?: string;
-  scmRevision?: string;
-  devMode?: boolean;
+  stagingProfile?: string
+  buildDate?: string
+  version?: string
+  subVersion?: string
+  buildOsInfo?: string
+  buildJavaVersion?: string
+  buildJavaVendor?: string
+  scmUrl?: string
+  scmRevision?: string
+  devMode?: boolean
 }

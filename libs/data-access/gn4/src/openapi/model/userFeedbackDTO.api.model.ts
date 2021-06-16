@@ -11,22 +11,22 @@
  */
 
 export interface UserFeedbackDTOApiModel {
-  uuid?: string;
-  comment?: string;
-  rating?: { [key: string]: number };
-  ratingAVG?: number;
-  metadataUUID?: string;
-  metadataTitle?: string;
-  authorUserId?: number;
-  authorName?: string;
-  authorEmail?: string;
-  authorOrganization?: string;
-  approverName?: string;
-  optionPrivacy?: boolean;
-  published?: boolean;
-  parentUuid?: string;
-  captcha?: string;
-  date?: string;
-  showApproveButton?: boolean;
-  keywords?: Array<string>;
+  uuid?: string
+  comment?: string
+  rating?: { [key: string]: number }
+  ratingAVG?: number
+  metadataUUID?: string
+  metadataTitle?: string
+  authorUserId?: number
+  authorName?: string
+  authorEmail?: string
+  authorOrganization?: string
+  approverName?: string
+  optionPrivacy?: boolean
+  published?: boolean
+  parentUuid?: string
+  captcha?: string
+  date?: string
+  showApproveButton?: boolean
+  keywords?: Array<string>
 }

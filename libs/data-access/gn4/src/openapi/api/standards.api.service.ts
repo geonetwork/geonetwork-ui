@@ -11,7 +11,7 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core'
 import {
   HttpClient,
   HttpHeaders,
@@ -19,26 +19,26 @@ import {
   HttpResponse,
   HttpEvent,
   HttpParameterCodec,
-} from '@angular/common/http';
-import { CustomHttpParameterCodec } from '../encoder';
-import { Observable } from 'rxjs';
+} from '@angular/common/http'
+import { CustomHttpParameterCodec } from '../encoder'
+import { Observable } from 'rxjs'
 
-import { BatchEditingApiModel } from '../model/models';
-import { CodelistApiModel } from '../model/models';
-import { ElementApiModel } from '../model/models';
-import { MetadataSchemaApiModel } from '../model/models';
+import { BatchEditingApiModel } from '../model/models'
+import { CodelistApiModel } from '../model/models'
+import { ElementApiModel } from '../model/models'
+import { MetadataSchemaApiModel } from '../model/models'
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
-import { Configuration } from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables'
+import { Configuration } from '../configuration'
 
 @Injectable({
   providedIn: 'root',
 })
 export class StandardsApiService {
-  protected basePath = 'https://apps.titellus.net/geonetwork/srv/api';
-  public defaultHeaders = new HttpHeaders();
-  public configuration = new Configuration();
-  public encoder: HttpParameterCodec;
+  protected basePath = 'https://apps.titellus.net/geonetwork/srv/api'
+  public defaultHeaders = new HttpHeaders()
+  public configuration = new Configuration()
+  public encoder: HttpParameterCodec
 
   constructor(
     protected httpClient: HttpClient,
@@ -46,15 +46,15 @@ export class StandardsApiService {
     @Optional() configuration: Configuration
   ) {
     if (configuration) {
-      this.configuration = configuration;
+      this.configuration = configuration
     }
     if (typeof this.configuration.basePath !== 'string') {
       if (typeof basePath !== 'string') {
-        basePath = this.basePath;
+        basePath = this.basePath
       }
-      this.configuration.basePath = basePath;
+      this.configuration.basePath = basePath
     }
-    this.encoder = this.configuration.encoder || new CustomHttpParameterCodec();
+    this.encoder = this.configuration.encoder || new CustomHttpParameterCodec()
   }
 
   private addToHttpParams(
@@ -63,11 +63,11 @@ export class StandardsApiService {
     key?: string
   ): HttpParams {
     if (typeof value === 'object' && value instanceof Date === false) {
-      httpParams = this.addToHttpParamsRecursive(httpParams, value);
+      httpParams = this.addToHttpParamsRecursive(httpParams, value)
     } else {
-      httpParams = this.addToHttpParamsRecursive(httpParams, value, key);
+      httpParams = this.addToHttpParamsRecursive(httpParams, value, key)
     }
-    return httpParams;
+    return httpParams
   }
 
   private addToHttpParamsRecursive(
@@ -76,23 +76,23 @@ export class StandardsApiService {
     key?: string
   ): HttpParams {
     if (value == null) {
-      return httpParams;
+      return httpParams
     }
 
     if (typeof value === 'object') {
       if (Array.isArray(value)) {
-        (value as any[]).forEach(
+        ;(value as any[]).forEach(
           (elem) =>
             (httpParams = this.addToHttpParamsRecursive(httpParams, elem, key))
-        );
+        )
       } else if (value instanceof Date) {
         if (key != null) {
           httpParams = httpParams.append(
             key,
             (value as Date).toISOString().substr(0, 10)
-          );
+          )
         } else {
-          throw Error('key may not be null if value is Date');
+          throw Error('key may not be null if value is Date')
         }
       } else {
         Object.keys(value).forEach(
@@ -102,14 +102,14 @@ export class StandardsApiService {
               value[k],
               key != null ? `${key}.${k}` : k
             ))
-        );
+        )
       }
     } else if (key != null) {
-      httpParams = httpParams.append(key, value);
+      httpParams = httpParams.append(key, value)
     } else {
-      throw Error('key may not be null if value is not object or array');
+      throw Error('key may not be null if value is not object or array')
     }
-    return httpParams;
+    return httpParams
   }
 
   /**
@@ -126,21 +126,21 @@ export class StandardsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<{ [key: string]: string }>;
+  ): Observable<{ [key: string]: string }>
   public getCodelistsTranslations(
     schema: string,
     codelist: Array<string>,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<{ [key: string]: string }>>;
+  ): Observable<HttpResponse<{ [key: string]: string }>>
   public getCodelistsTranslations(
     schema: string,
     codelist: Array<string>,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<{ [key: string]: string }>>;
+  ): Observable<HttpEvent<{ [key: string]: string }>>
   public getCodelistsTranslations(
     schema: string,
     codelist: Array<string>,
@@ -151,46 +151,46 @@ export class StandardsApiService {
     if (schema === null || schema === undefined) {
       throw new Error(
         'Required parameter schema was null or undefined when calling getCodelistsTranslations.'
-      );
+      )
     }
     if (codelist === null || codelist === undefined) {
       throw new Error(
         'Required parameter codelist was null or undefined when calling getCodelistsTranslations.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (codelist) {
       codelist.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'codelist'
-        );
-      });
+        )
+      })
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<{ [key: string]: string }>(
@@ -205,7 +205,7 @@ export class StandardsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -219,19 +219,19 @@ export class StandardsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<{ [key: string]: BatchEditingApiModel }>;
+  ): Observable<{ [key: string]: BatchEditingApiModel }>
   public getConfiguration(
     schema: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<{ [key: string]: BatchEditingApiModel }>>;
+  ): Observable<HttpResponse<{ [key: string]: BatchEditingApiModel }>>
   public getConfiguration(
     schema: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<{ [key: string]: BatchEditingApiModel }>>;
+  ): Observable<HttpEvent<{ [key: string]: BatchEditingApiModel }>>
   public getConfiguration(
     schema: string,
     observe: any = 'body',
@@ -241,30 +241,30 @@ export class StandardsApiService {
     if (schema === null || schema === undefined) {
       throw new Error(
         'Required parameter schema was null or undefined when calling getConfiguration.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<{ [key: string]: BatchEditingApiModel }>(
@@ -278,7 +278,7 @@ export class StandardsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -292,57 +292,57 @@ export class StandardsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<{ [key: string]: BatchEditingApiModel }>;
+  ): Observable<{ [key: string]: BatchEditingApiModel }>
   public getConfigurations(
     schema?: Array<string>,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<{ [key: string]: BatchEditingApiModel }>>;
+  ): Observable<HttpResponse<{ [key: string]: BatchEditingApiModel }>>
   public getConfigurations(
     schema?: Array<string>,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<{ [key: string]: BatchEditingApiModel }>>;
+  ): Observable<HttpEvent<{ [key: string]: BatchEditingApiModel }>>
   public getConfigurations(
     schema?: Array<string>,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (schema) {
       schema.forEach((element) => {
         queryParameters = this.addToHttpParams(
           queryParameters,
           <any>element,
           'schema'
-        );
-      });
+        )
+      })
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<{ [key: string]: BatchEditingApiModel }>(
@@ -355,7 +355,7 @@ export class StandardsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -371,21 +371,21 @@ export class StandardsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<string>;
+  ): Observable<string>
   public getEditorAssociatedPanelConfiguration(
     schema: string,
     name: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<string>>;
+  ): Observable<HttpResponse<string>>
   public getEditorAssociatedPanelConfiguration(
     schema: string,
     name: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<string>>;
+  ): Observable<HttpEvent<string>>
   public getEditorAssociatedPanelConfiguration(
     schema: string,
     name: string,
@@ -396,35 +396,35 @@ export class StandardsApiService {
     if (schema === null || schema === undefined) {
       throw new Error(
         'Required parameter schema was null or undefined when calling getEditorAssociatedPanelConfiguration.'
-      );
+      )
     }
     if (name === null || name === undefined) {
       throw new Error(
         'Required parameter name was null or undefined when calling getEditorAssociatedPanelConfiguration.'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<string>(
@@ -440,7 +440,7 @@ export class StandardsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -464,7 +464,7 @@ export class StandardsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<ElementApiModel>;
+  ): Observable<ElementApiModel>
   public getElementDetails(
     schema: string,
     element: string,
@@ -475,7 +475,7 @@ export class StandardsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpResponse<ElementApiModel>>;
+  ): Observable<HttpResponse<ElementApiModel>>
   public getElementDetails(
     schema: string,
     element: string,
@@ -486,7 +486,7 @@ export class StandardsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpEvent<ElementApiModel>>;
+  ): Observable<HttpEvent<ElementApiModel>>
   public getElementDetails(
     schema: string,
     element: string,
@@ -501,68 +501,68 @@ export class StandardsApiService {
     if (schema === null || schema === undefined) {
       throw new Error(
         'Required parameter schema was null or undefined when calling getElementDetails.'
-      );
+      )
     }
     if (element === null || element === undefined) {
       throw new Error(
         'Required parameter element was null or undefined when calling getElementDetails.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (parent !== undefined && parent !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>parent,
         'parent'
-      );
+      )
     }
     if (displayIf !== undefined && displayIf !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>displayIf,
         'displayIf'
-      );
+      )
     }
     if (xpath !== undefined && xpath !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>xpath,
         'xpath'
-      );
+      )
     }
     if (isoType !== undefined && isoType !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>isoType,
         'isoType'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = [
         'application/json',
         'application/xml',
-      ];
+      ]
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<ElementApiModel>(
@@ -577,7 +577,7 @@ export class StandardsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -601,7 +601,7 @@ export class StandardsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<CodelistApiModel>;
+  ): Observable<CodelistApiModel>
   public getSchemaCodelistsWithDetails(
     schema: string,
     codelist: string,
@@ -612,7 +612,7 @@ export class StandardsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpResponse<CodelistApiModel>>;
+  ): Observable<HttpResponse<CodelistApiModel>>
   public getSchemaCodelistsWithDetails(
     schema: string,
     codelist: string,
@@ -623,7 +623,7 @@ export class StandardsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpEvent<CodelistApiModel>>;
+  ): Observable<HttpEvent<CodelistApiModel>>
   public getSchemaCodelistsWithDetails(
     schema: string,
     codelist: string,
@@ -638,68 +638,68 @@ export class StandardsApiService {
     if (schema === null || schema === undefined) {
       throw new Error(
         'Required parameter schema was null or undefined when calling getSchemaCodelistsWithDetails.'
-      );
+      )
     }
     if (codelist === null || codelist === undefined) {
       throw new Error(
         'Required parameter codelist was null or undefined when calling getSchemaCodelistsWithDetails.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (parent !== undefined && parent !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>parent,
         'parent'
-      );
+      )
     }
     if (displayIf !== undefined && displayIf !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>displayIf,
         'displayIf'
-      );
+      )
     }
     if (xpath !== undefined && xpath !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>xpath,
         'xpath'
-      );
+      )
     }
     if (isoType !== undefined && isoType !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>isoType,
         'isoType'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = [
         'application/json',
         'application/xml',
-      ];
+      ]
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<CodelistApiModel>(
@@ -714,7 +714,7 @@ export class StandardsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -738,7 +738,7 @@ export class StandardsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<{ [key: string]: string }>;
+  ): Observable<{ [key: string]: string }>
   public getSchemaTranslations(
     schema: string,
     codelist: string,
@@ -749,7 +749,7 @@ export class StandardsApiService {
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<{ [key: string]: string }>>;
+  ): Observable<HttpResponse<{ [key: string]: string }>>
   public getSchemaTranslations(
     schema: string,
     codelist: string,
@@ -760,7 +760,7 @@ export class StandardsApiService {
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<{ [key: string]: string }>>;
+  ): Observable<HttpEvent<{ [key: string]: string }>>
   public getSchemaTranslations(
     schema: string,
     codelist: string,
@@ -775,65 +775,65 @@ export class StandardsApiService {
     if (schema === null || schema === undefined) {
       throw new Error(
         'Required parameter schema was null or undefined when calling getSchemaTranslations.'
-      );
+      )
     }
     if (codelist === null || codelist === undefined) {
       throw new Error(
         'Required parameter codelist was null or undefined when calling getSchemaTranslations.'
-      );
+      )
     }
 
-    let queryParameters = new HttpParams({ encoder: this.encoder });
+    let queryParameters = new HttpParams({ encoder: this.encoder })
     if (parent !== undefined && parent !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>parent,
         'parent'
-      );
+      )
     }
     if (displayIf !== undefined && displayIf !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>displayIf,
         'displayIf'
-      );
+      )
     }
     if (xpath !== undefined && xpath !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>xpath,
         'xpath'
-      );
+      )
     }
     if (isoType !== undefined && isoType !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
         <any>isoType,
         'isoType'
-      );
+      )
     }
 
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<{ [key: string]: string }>(
@@ -848,7 +848,7 @@ export class StandardsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -860,43 +860,43 @@ export class StandardsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<Array<MetadataSchemaApiModel>>;
+  ): Observable<Array<MetadataSchemaApiModel>>
   public getStandardConfigurations(
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<Array<MetadataSchemaApiModel>>>;
+  ): Observable<HttpResponse<Array<MetadataSchemaApiModel>>>
   public getStandardConfigurations(
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<Array<MetadataSchemaApiModel>>>;
+  ): Observable<HttpEvent<Array<MetadataSchemaApiModel>>>
   public getStandardConfigurations(
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<Array<MetadataSchemaApiModel>>(
@@ -908,7 +908,7 @@ export class StandardsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 
   /**
@@ -920,43 +920,43 @@ export class StandardsApiService {
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<any>;
+  ): Observable<any>
   public reloadSchema(
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpResponse<any>>;
+  ): Observable<HttpResponse<any>>
   public reloadSchema(
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
-  ): Observable<HttpEvent<any>>;
+  ): Observable<HttpEvent<any>>
   public reloadSchema(
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<any> {
-    let headers = this.defaultHeaders;
+    let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =
-      options && options.httpHeaderAccept;
+      options && options.httpHeaderAccept
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
-      const httpHeaderAccepts: string[] = ['application/json'];
+      const httpHeaderAccepts: string[] = ['application/json']
       httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
         httpHeaderAccepts
-      );
+      )
     }
     if (httpHeaderAcceptSelected !== undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Accept', httpHeaderAcceptSelected)
     }
 
-    let responseType_: 'text' | 'json' = 'json';
+    let responseType_: 'text' | 'json' = 'json'
     if (
       httpHeaderAcceptSelected &&
       httpHeaderAcceptSelected.startsWith('text')
     ) {
-      responseType_ = 'text';
+      responseType_ = 'text'
     }
 
     return this.httpClient.get<any>(
@@ -968,6 +968,6 @@ export class StandardsApiService {
         observe: observe,
         reportProgress: reportProgress,
       }
-    );
+    )
   }
 }

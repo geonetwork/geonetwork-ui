@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { EntryApiModel } from './entry.api.model';
+import { EntryApiModel } from './entry.api.model'
 
 export interface CodelistApiModel {
-  entry?: Array<EntryApiModel>;
-  name?: string;
-  alias?: string;
+  entry?: Array<EntryApiModel>
+  name?: string
+  alias?: string
 }
