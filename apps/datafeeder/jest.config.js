@@ -1,6 +1,7 @@
 module.exports = {
   displayName: 'datafeeder',
   preset: '../../jest.preset.js',
+  transformIgnorePatterns: ['node_modules/(?!(ol))'],
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
@@ -12,6 +13,9 @@ module.exports = {
           'jest-preset-angular/build/StripStylesTransformer',
         ],
       },
+    },
+    env: {
+      apiUrl: '/datafeeder',
     },
   },
   coverageDirectory: '../../coverage/apps/datafeeder',

@@ -30,13 +30,13 @@ describe('UploadDataComponent', () => {
         },
       ],
     }).compileComponents()
-  })
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(UploadDataComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
+
+  beforeEach(() => {})
 
   it('should create', () => {
     expect(component).toBeTruthy()

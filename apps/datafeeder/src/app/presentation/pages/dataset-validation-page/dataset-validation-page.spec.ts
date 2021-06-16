@@ -13,7 +13,7 @@ import { DatasetValidationPageComponent } from './dataset-validation-page'
 
 const jobMock: UploadJobStatusApiModel = {
   jobId: '1234',
-  status: AnalysisStatusEnumApiModel.DONE,
+  status: AnalysisStatusEnumApiModel.Done,
   progress: 100,
   datasets: [
     {
@@ -111,7 +111,7 @@ describe('DatasetValidationPageComponent', () => {
 
   describe('Job ERROR', () => {
     beforeEach(() => {
-      jobMock.status = AnalysisStatusEnumApiModel.ERROR
+      jobMock.status = AnalysisStatusEnumApiModel.Error
       createComponent()
     })
 

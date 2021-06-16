@@ -13,13 +13,13 @@ import { AnalysisProgressPageComponent } from './analysis-progress.page'
 
 const jobMock: UploadJobStatusApiModel = {
   jobId: '1234',
-  status: AnalysisStatusEnumApiModel.DONE,
+  status: AnalysisStatusEnumApiModel.Done,
   progress: 1,
   datasets: [{}],
 }
 const jobMockNoDS: UploadJobStatusApiModel = {
   jobId: '1234',
-  status: AnalysisStatusEnumApiModel.DONE,
+  status: AnalysisStatusEnumApiModel.Done,
   progress: 1,
 }
 
@@ -123,7 +123,7 @@ describe('AnalysisProgress.PageComponent', () => {
   describe('Analysis ERROR', () => {
     let job
     beforeEach(() => {
-      job = { ...jobMock, status: AnalysisStatusEnumApiModel.ERROR }
+      job = { ...jobMock, status: AnalysisStatusEnumApiModel.Error }
       component.onJobFinish(job)
     })
 

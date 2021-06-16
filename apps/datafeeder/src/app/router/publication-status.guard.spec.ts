@@ -97,7 +97,7 @@ describe('PublicationStatusGuard', () => {
     })
     describe('when api returns ERROR', () => {
       beforeEach(() => {
-        publicationApiStatusMock.status = PublishStatusEnumApiModel.ERROR
+        publicationApiStatusMock.status = PublishStatusEnumApiModel.Error
         guard
           .canActivate(routeMock, routeStateMock)
           .subscribe((res) => (output = res))
