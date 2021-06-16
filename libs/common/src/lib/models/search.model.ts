@@ -40,8 +40,10 @@ export enum ResultsListLayout {
 }
 
 export enum FieldsList {
-  title,
-  abstract
+  'resourceTitleObject.default',
+  'resourceAltTitle.default',
+  'MD_LegalConstraintsOtherConstraintsObject',
+  'licenseObject.default'
 }
 
 export const RESULTS_PAGE_SIZE = 20
