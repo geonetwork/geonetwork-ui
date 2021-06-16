@@ -1,4 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* For base styles (check out normalize.css) */
+@tailwind base;
+/* Simple reusable components provided by tailwind */
+@tailwind components;
+/* utility classes generated based on our tailwind.config.js */
+@tailwind utilities;
+
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Permanent+Marker&display=swap');
 
 :root {
