@@ -1,7 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { DatepickerComponent } from '@geonetwork-ui/ui/inputs'
-import { MyDatePickerModule } from 'mydatepicker'
+import { AngularMyDatePickerModule } from 'angular-mydatepicker'
 
 describe('DatepickerComponent', () => {
   let component: DatepickerComponent
@@ -10,7 +10,7 @@ describe('DatepickerComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DatepickerComponent],
-      imports: [MyDatePickerModule],
+      imports: [AngularMyDatePickerModule],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   })

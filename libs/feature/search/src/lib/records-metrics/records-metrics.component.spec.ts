@@ -20,7 +20,7 @@ describe('RecordsMetricsComponent', () => {
       imports: [UiSearchModule, TranslateModule.forRoot(), HttpClientTestingModule],
     }).compileComponents()
     httpMock = TestBed.inject(HttpTestingController)
-  }))
+  })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RecordsMetricsComponent)

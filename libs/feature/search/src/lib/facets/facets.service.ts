@@ -21,7 +21,7 @@ export class FacetsService {
     path: string[] = []
   ): ModelBlock[] {
     const listModel = []
-    if (requestAggregations === undefined) {
+    if (requestAggregations !== undefined) {
       interface AggEntry {
         key: string
         meta: object

@@ -43,6 +43,10 @@ const initialStateMock = {
   },
   main: {
     ...initialStateSearchMock,
+    config: {
+      ...initialStateSearchMock.config,
+      aggregations: {},
+    },
   },
 }
 

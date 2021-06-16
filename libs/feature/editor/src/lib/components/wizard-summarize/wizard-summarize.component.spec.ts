@@ -40,6 +40,8 @@ const wizardServiceMock = {
       case 'description': {
         return 'description'
       }
+      default:
+        return 'unknown'
     }
   }),
 }
