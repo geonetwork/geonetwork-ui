@@ -1,14 +1,12 @@
 <div
-  class="h-40 bg-white transition duration-200 hover:bg-gray-100 border-gray-300 rounded-md"
+  class="h-40 bg-white transition duration-200 border border-gray-200 rounded-md hover:bg-gray-50 hover:border-primary hover:text-primary"
 >
   <a
     [href]="record.metadataUrl"
     [target]="linkTarget"
     [title]="record.abstract"
   >
-    <div
-      class="h-full flex flex-row items-center border border-gray-200 shadow-sm"
-    >
+    <div class="h-full flex flex-row items-center shadow-sm">
       <gn-ui-record-thumbnail
         class="w-40 h-full flex-shrink-0 border-r border-gray-200 bg-gray-100"
         [thumbnailUrl]="record.thumbnailUrl"
