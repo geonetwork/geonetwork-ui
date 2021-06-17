@@ -2,3 +2,6 @@
 
 /dist
 /coverage
+
+# OpenAPI generated specs
+**/spec.yaml
