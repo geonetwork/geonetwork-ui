@@ -36,7 +36,7 @@
       "projectType": "application",
       "root": "apps/search",
       "sourceRoot": "apps/search/src",
-      "prefix": "geonetwork-ui",
+      "prefix": "gn-ui",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -48,7 +48,11 @@
             "polyfills": "apps/search/src/polyfills.ts",
             "tsConfig": "apps/search/tsconfig.app.json",
             "assets": ["apps/search/src/favicon.ico", "apps/search/src/assets"],
-            "styles": ["apps/search/src/styles.css", "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"],
+            "styles": [
+              "apps/search/src/styles.css",
+              "node_modules/ol/ol.css",
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -152,7 +156,7 @@
       "projectType": "library",
       "root": "libs/feature/search",
       "sourceRoot": "libs/feature/search/src",
-      "prefix": "geonetwork-ui",
+      "prefix": "gn-ui",
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -177,7 +181,7 @@
       "projectType": "library",
       "root": "libs/feature/auth",
       "sourceRoot": "libs/feature/auth/src",
-      "prefix": "geonetwork-ui",
+      "prefix": "gn-ui",
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -202,7 +206,7 @@
       "projectType": "library",
       "root": "libs/ui/search",
       "sourceRoot": "libs/ui/search/src",
-      "prefix": "geonetwork-ui",
+      "prefix": "gn-ui",
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -227,7 +231,7 @@
       "projectType": "library",
       "root": "libs/ui/inputs",
       "sourceRoot": "libs/ui/inputs/src",
-      "prefix": "geonetwork-ui",
+      "prefix": "gn-ui",
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -252,7 +256,7 @@
       "projectType": "library",
       "root": "libs/ui/layout",
       "sourceRoot": "libs/ui/layout/src",
-      "prefix": "geonetwork-ui",
+      "prefix": "gn-ui",
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -277,7 +281,7 @@
       "projectType": "library",
       "root": "libs/ui/widgets",
       "sourceRoot": "libs/ui/widgets/src",
-      "prefix": "geonetwork-ui",
+      "prefix": "gn-ui",
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -302,7 +306,7 @@
       "projectType": "library",
       "root": "libs/feature/editor",
       "sourceRoot": "libs/feature/editor/src",
-      "prefix": "geonetwork-ui",
+      "prefix": "gn-ui",
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -327,7 +331,7 @@
       "projectType": "library",
       "root": "libs/feature/catalog",
       "sourceRoot": "libs/feature/catalog/src",
-      "prefix": "geonetwork-ui",
+      "prefix": "gn-ui",
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -352,7 +356,7 @@
       "projectType": "library",
       "root": "libs/ui/catalog",
       "sourceRoot": "libs/ui/catalog/src",
-      "prefix": "geonetwork-ui",
+      "prefix": "gn-ui",
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -377,7 +381,7 @@
       "projectType": "application",
       "root": "apps/datafeeder",
       "sourceRoot": "apps/datafeeder/src",
-      "prefix": "geonetwork-ui",
+      "prefix": "gn-ui",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -497,7 +501,7 @@
       "projectType": "library",
       "root": "libs/util/i18n",
       "sourceRoot": "libs/util/i18n/src",
-      "prefix": "geonetwork-ui",
+      "prefix": "gn-ui",
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -522,21 +526,21 @@
       "projectType": "library",
       "root": "libs/data-access/gn4",
       "sourceRoot": "libs/data-access/gn4/src",
-      "prefix": "geonetwork-ui",
+      "prefix": "gn-ui",
       "architect": {}
     },
     "data-access-datafeeder": {
       "projectType": "library",
       "root": "libs/data-access/datafeeder",
       "sourceRoot": "libs/data-access/datafeeder/src",
-      "prefix": "geonetwork-ui",
+      "prefix": "gn-ui",
       "architect": {}
     },
     "util-shared": {
       "projectType": "library",
       "root": "libs/util/shared",
       "sourceRoot": "libs/util/shared/src",
-      "prefix": "geonetwork-ui",
+      "prefix": "gn-ui",
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -552,6 +556,56 @@
             "lintFilePatterns": [
               "libs/util/shared/src/**/*.ts",
               "libs/util/shared/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "ui-map": {
+      "projectType": "library",
+      "root": "libs/ui/map",
+      "sourceRoot": "libs/ui/map/src",
+      "prefix": "gn-ui",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ui/map"],
+          "options": {
+            "jestConfig": "libs/ui/map/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ui/map/src/**/*.ts",
+              "libs/ui/map/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "feature-map": {
+      "projectType": "library",
+      "root": "libs/feature/map",
+      "sourceRoot": "libs/feature/map/src",
+      "prefix": "gn-ui",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/feature/map"],
+          "options": {
+            "jestConfig": "libs/feature/map/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/feature/map/src/**/*.ts",
+              "libs/feature/map/src/**/*.html"
             ]
           }
         }

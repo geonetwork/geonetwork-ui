@@ -71,6 +71,12 @@
     },
     "util-shared": {
       "tags": []
+    },
+    "ui-map": {
+      "tags": []
+    },
+    "feature-map": {
+      "tags": []
     }
   }
 }

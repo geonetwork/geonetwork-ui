@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
+import { UiMapModule } from '@geonetwork-ui/ui/map'
 import {
   getDefaultLang,
   UtilI18nModule,
@@ -36,6 +37,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     FeatureSearchModule,
     FeatureCatalogModule,
     UiLayoutModule,
+    UiMapModule,
     StoreModule.forRoot({}, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot(),

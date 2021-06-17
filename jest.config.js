@@ -16,5 +16,7 @@ module.exports = {
     '<rootDir>/libs/data-access/gn4',
     '<rootDir>/libs/data-access/datafeeder',
     '<rootDir>/libs/util/shared',
+    '<rootDir>/libs/ui/map',
+    '<rootDir>/libs/feature/map',
   ],
 }
