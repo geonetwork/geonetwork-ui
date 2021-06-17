@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import {
   InfiniteScrollModel,
   InfiniteScrollOptionsDefault,
@@ -13,7 +13,7 @@ import { SearchFacade } from '../state/search.facade'
   templateUrl: './results-list.container.component.html',
   styleUrls: ['./results-list.container.component.css'],
 })
-export class ResultsListContainerComponent implements OnInit, OnDestroy {
+export class ResultsListContainerComponent implements OnInit {
   @Input() layout: ResultsListLayout = ResultsListLayout.CARD
   @Input() scrollableOptions: InfiniteScrollModel = {}
 
