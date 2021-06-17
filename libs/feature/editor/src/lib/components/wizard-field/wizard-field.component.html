@@ -18,7 +18,7 @@
     </div>
     <div
       class="flex-1 w-11/12"
-      *ngIf="wizardFieldType.CHIPS == wizardFieldConfig.type"
+      *ngIf="wizardFieldType.CHIPS === wizardFieldConfig.type"
     >
       <gn-ui-chips-input
         #chips
@@ -31,7 +31,7 @@
     </div>
     <div
       class="h-32 w-11/12"
-      *ngIf="wizardFieldType.TEXT_AREA == wizardFieldConfig.type"
+      *ngIf="wizardFieldType.TEXT_AREA === wizardFieldConfig.type"
     >
       <gn-ui-text-area
         #textArea
@@ -43,7 +43,7 @@
     </div>
     <div
       class="w-1/2 h-12"
-      *ngIf="wizardFieldType.DATA_PICKER == wizardFieldConfig.type"
+      *ngIf="wizardFieldType.DATA_PICKER === wizardFieldConfig.type"
     >
       <gn-ui-datepicker
         #datepicker
@@ -54,7 +54,7 @@
     </div>
     <div
       class="w-1/2 h-12"
-      *ngIf="wizardFieldType.DROPDOWN == wizardFieldConfig.type"
+      *ngIf="wizardFieldType.DROPDOWN === wizardFieldConfig.type"
     >
       <gn-ui-dropdown-selector
         #dropdown

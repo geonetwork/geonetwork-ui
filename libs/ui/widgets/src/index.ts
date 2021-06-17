@@ -1,1 +1,1 @@
-export * from './lib/ui-widgets.module';
+export * from './lib/ui-widgets.module'

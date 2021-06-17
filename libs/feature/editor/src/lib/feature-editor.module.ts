@@ -14,7 +14,13 @@ import { CommonModule } from '@angular/common'
     WizardFieldComponent,
     WizardSummarizeComponent,
   ],
-  imports: [BrowserModule, UiInputsModule, UiWidgetsModule, TranslateModule.forChild(), CommonModule],
+  imports: [
+    BrowserModule,
+    UiInputsModule,
+    UiWidgetsModule,
+    TranslateModule.forChild(),
+    CommonModule,
+  ],
   exports: [WizardComponent, WizardSummarizeComponent],
 })
 export class FeatureEditorModule {}

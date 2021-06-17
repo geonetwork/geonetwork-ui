@@ -17,7 +17,7 @@ export const MAP_CTX_LAYER_WMS_FIXTURE: MapContextLayerModel = {
 }
 export const MAP_CTX_LAYER_GEOJSON_FIXTURE: MapContextLayerModel = {
   type: MapContextLayerTypeEnum.GEOJSON,
-  data: FEATURE_COLLECTION_POLYGON_FIXTURE_4326
+  data: FEATURE_COLLECTION_POLYGON_FIXTURE_4326,
 }
 
 export const MAP_CTX_VIEW_FIXTURE: MapContextViewModel = {
@@ -26,7 +26,10 @@ export const MAP_CTX_VIEW_FIXTURE: MapContextViewModel = {
 }
 
 export const MAP_CTX_FIXTURE: MapContextModel = {
-  layers: [MAP_CTX_LAYER_XYZ_FIXTURE, MAP_CTX_LAYER_WMS_FIXTURE, MAP_CTX_LAYER_GEOJSON_FIXTURE],
+  layers: [
+    MAP_CTX_LAYER_XYZ_FIXTURE,
+    MAP_CTX_LAYER_WMS_FIXTURE,
+    MAP_CTX_LAYER_GEOJSON_FIXTURE,
+  ],
   view: MAP_CTX_VIEW_FIXTURE,
 }
-

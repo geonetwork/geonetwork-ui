@@ -7,7 +7,12 @@ import { I18nInterceptor } from './i18n.interceptor'
 import { CommonModule } from '@angular/common'
 
 @NgModule({
-  imports: [HttpClientModule, ApiModule, TranslateModule.forChild(), CommonModule],
+  imports: [
+    HttpClientModule,
+    ApiModule,
+    TranslateModule.forChild(),
+    CommonModule,
+  ],
   exports: [],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: I18nInterceptor, multi: true },

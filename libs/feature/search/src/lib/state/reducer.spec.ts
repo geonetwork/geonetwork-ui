@@ -1,4 +1,7 @@
-import { RESULTS_PAGE_SIZE, ResultsListLayout } from '@geonetwork-ui/util/shared'
+import {
+  RESULTS_PAGE_SIZE,
+  ResultsListLayout,
+} from '@geonetwork-ui/util/shared'
 import { ES_FIXTURE_AGGS_REQUEST } from '../elasticsearch/fixtures/aggregations-request'
 import {
   ES_FIXTURE_AGGS_RESPONSE,

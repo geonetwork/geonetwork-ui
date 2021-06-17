@@ -31,7 +31,9 @@ describe('MapUtilsService', () => {
         expect(featureSample).toBeInstanceOf(Feature)
       })
       it('output data in 3857', () => {
-        expect(featureSample.getGeometry().getLinearRing(0).getFirstCoordinate()).toEqual([353183.8433283152, 6448353.725194501])
+        expect(
+          featureSample.getGeometry().getLinearRing(0).getFirstCoordinate()
+        ).toEqual([353183.8433283152, 6448353.725194501])
       })
     })
     describe('when featureProjection = 4326', () => {
@@ -40,7 +42,9 @@ describe('MapUtilsService', () => {
         featureSample = olFeatures[0]
       })
       it('output data in 4326', () => {
-        expect(featureSample.getGeometry().getLinearRing(0).getFirstCoordinate()).toEqual([3.172704445659, 50.011996744997])
+        expect(
+          featureSample.getGeometry().getLinearRing(0).getFirstCoordinate()
+        ).toEqual([3.172704445659, 50.011996744997])
       })
     })
   })

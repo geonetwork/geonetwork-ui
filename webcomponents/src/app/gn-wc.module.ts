@@ -1,9 +1,15 @@
 import { CommonModule } from '@angular/common'
 import { Injector, NgModule } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
-import { UtilI18nModule, TRANSLATE_GEONETWORK_CONFIG } from '@geonetwork-ui/util/i18n'
+import {
+  UtilI18nModule,
+  TRANSLATE_GEONETWORK_CONFIG,
+} from '@geonetwork-ui/util/i18n'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
-import { FeatureSearchModule, SearchFacade } from '@geonetwork-ui/feature/search'
+import {
+  FeatureSearchModule,
+  SearchFacade,
+} from '@geonetwork-ui/feature/search'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'

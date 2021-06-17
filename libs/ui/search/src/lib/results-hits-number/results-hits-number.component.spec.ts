@@ -6,7 +6,11 @@ import { ResultsHitsNumberComponent } from './results-hits-number.component'
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { StoreModule } from '@ngrx/store'
-import { initialState, reducer, SEARCH_FEATURE_KEY } from '@geonetwork-ui/feature/search'
+import {
+  initialState,
+  reducer,
+  SEARCH_FEATURE_KEY,
+} from '@geonetwork-ui/feature/search'
 import { TranslateTestingModule } from 'ngx-translate-testing'
 
 describe('ResultsHitsNumberComponent', () => {

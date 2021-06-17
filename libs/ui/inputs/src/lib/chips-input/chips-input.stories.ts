@@ -3,7 +3,10 @@ import { withA11y } from '@storybook/addon-a11y'
 import { action } from '@storybook/addon-actions'
 import { object, text, withKnobs } from '@storybook/addon-knobs'
 import { ChipsInputComponent } from './chips-input.component'
-import { UtilI18nModule, TRANSLATE_DEFAULT_CONFIG } from '../../../../common/src'
+import {
+  UtilI18nModule,
+  TRANSLATE_DEFAULT_CONFIG,
+} from '../../../../common/src'
 import { TagInputModule } from 'ngx-chips'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'

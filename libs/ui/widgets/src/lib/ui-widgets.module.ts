@@ -11,11 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 @NgModule({
-  declarations: [
-    ColorScaleComponent,
-    ProgressBarComponent,
-    StepBarComponent,
-  ],
+  declarations: [ColorScaleComponent, ProgressBarComponent, StepBarComponent],
   imports: [
     BrowserModule,
     TranslateModule.forChild(),
@@ -26,9 +22,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
     TagInputModule,
     UtilSharedModule,
   ],
-  exports: [
-    ProgressBarComponent,
-    StepBarComponent,
-  ],
+  exports: [ProgressBarComponent, StepBarComponent],
 })
 export class UiWidgetsModule {}
