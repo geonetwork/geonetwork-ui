@@ -45,10 +45,7 @@ export class AutocompleteComponent implements OnInit {
       filter((value) => value.length > 2),
       debounceTime(200),
       distinctUntilChanged(),
-      tap(() => {
-        this.searching = true
-        this.triggerRef.openPanel()
-      }),
+      tap(() => (this.searching = true)),
       switchMap((value) => this.action(value)),
       finalize(() => (this.searching = false))
     )
