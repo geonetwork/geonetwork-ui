@@ -9,7 +9,7 @@ import {
 import { IMyDateModel, IMyOptions } from 'angular-mydatepicker'
 
 @Component({
-  selector: ' ui-datepicker',
+  selector: 'gn-ui-datepicker',
   templateUrl: './datepicker.component.html',
   styleUrls: ['./datepicker.component.css'],
 })
@@ -25,8 +25,6 @@ export class DatepickerComponent implements OnInit, AfterViewInit {
   onDateChanged(event: IMyDateModel) {
     this.selectedDate.emit(new Date(event.singleDate.jsDate))
   }
-
-  constructor() {}
 
   ngOnInit(): void {
     this.initializeDate(this.currentDate)

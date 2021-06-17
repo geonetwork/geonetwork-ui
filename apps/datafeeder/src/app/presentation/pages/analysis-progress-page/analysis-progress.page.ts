@@ -13,7 +13,7 @@ import { DatafeederFacade } from '../../../store/datafeeder.facade'
 const { Pending, Analyzing, Done } = AnalysisStatusEnumApiModel
 
 @Component({
-  selector: 'app-analysis-progress-page',
+  selector: 'gn-ui-analysis-progress-page',
   templateUrl: './analysis-progress.page.html',
   styleUrls: ['./analysis-progress.page.css'],
 })

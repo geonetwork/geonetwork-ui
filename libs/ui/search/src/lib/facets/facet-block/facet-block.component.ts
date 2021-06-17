@@ -23,7 +23,7 @@ import {
 } from '../facets.model'
 
 @Component({
-  selector: 'ui-facet-block',
+  selector: 'gn-ui-facet-block',
   templateUrl: './facet-block.component.html',
   styleUrls: ['./facet-block.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,8 +44,6 @@ export class FacetBlockComponent
   title: string
   hasItems: boolean
   private subscription = new Subscription()
-
-  constructor() {}
 
   ngOnInit(): void {
     this.hasItems = this.countItems() > 0
@@ -128,7 +126,7 @@ export class FacetBlockComponent
   }
 }
 
-@Component({ selector: 'ui-facet-block', template: '' })
+@Component({ selector: 'gn-ui-facet-block', template: '' })
 export class FacetBlockStubComponent implements Partial<FacetBlockComponent> {
   @Input() title: string
   @Input() model: ModelBlock

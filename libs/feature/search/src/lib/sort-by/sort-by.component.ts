@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import { SetSortBy } from '../state/actions'
 import { SearchState } from '../state/reducer'
@@ -10,10 +10,10 @@ marker('results.sortBy.dateStamp')
 marker('results.sortBy.popularity')
 
 @Component({
-  selector: 'search-sort-by',
+  selector: 'gn-ui-sort-by',
   templateUrl: './sort-by.component.html',
 })
-export class SortByComponent implements OnInit {
+export class SortByComponent {
   choices = [
     {
       label: 'results.sortBy.relevancy',
@@ -31,8 +31,6 @@ export class SortByComponent implements OnInit {
   currentSortBy$ = this.store.pipe(select(getSearchSortBy))
 
   constructor(private store: Store<SearchState>) {}
-
-  ngOnInit(): void {}
 
   changeSortBy(criteria: any) {
     if (typeof criteria === 'string') {

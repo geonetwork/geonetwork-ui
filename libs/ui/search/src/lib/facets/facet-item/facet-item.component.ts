@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 
 @Component({
-  selector: 'ui-facet-item',
+  selector: 'gn-ui-facet-item',
   templateUrl: './facet-item.component.html',
   styleUrls: ['./facet-item.component.css'],
 })
-export class FacetItemComponent implements OnInit {
+export class FacetItemComponent {
   @Input() label: string
   @Input() count: number
   @Input() selected: boolean
@@ -13,10 +13,6 @@ export class FacetItemComponent implements OnInit {
 
   @Output() selectedChange = new EventEmitter<boolean>()
   @Output() invertedChange = new EventEmitter<boolean>()
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   onSelectedChange(value: boolean) {
     this.selectedChange.emit(value)
@@ -32,7 +28,7 @@ export class FacetItemComponent implements OnInit {
   }
 }
 
-@Component({ selector: 'ui-facet-item', template: '' })
+@Component({ selector: 'gn-ui-facet-item', template: '' })
 export class FacetItemStubComponent implements Partial<FacetItemComponent> {
   @Input() label: string
   @Input() count: number

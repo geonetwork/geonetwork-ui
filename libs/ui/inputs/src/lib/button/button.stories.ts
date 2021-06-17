@@ -17,7 +17,7 @@ export default {
 
 export const ButtonSimpleStory = () => ({
   component: ButtonComponent,
-  template: '<ui-button [type]="type">{{content}}</ui-button>',
+  template: '<gn-ui-button [type]="type">{{content}}</ui-button>',
   props: {
     type: select('buttonType', ['primary', 'secondary', 'default'], 'primary'),
     content: text('buttonContent', 'My Button2'),

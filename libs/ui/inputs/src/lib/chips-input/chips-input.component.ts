@@ -11,7 +11,7 @@ export interface Items {
 }
 
 @Component({
-  selector: 'ui-chips-input',
+  selector: 'gn-ui-chips-input',
   templateUrl: './chips-input.component.html',
   styleUrls: ['./chips-input.component.css'],
 })

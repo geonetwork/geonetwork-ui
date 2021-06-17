@@ -8,13 +8,13 @@ import {
 } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { SearchFacade } from '../state/search.facade'
 import { TranslateModule } from '@ngx-translate/core'
 import { of } from 'rxjs'
 import { ResultsLayoutComponent } from './results-layout.component'
 
 @Component({
-  selector: 'ui-dropdown-selector',
+  selector: 'gn-ui-dropdown-selector',
   template: '',
 })
 class DropdownSelectorMockComponent {

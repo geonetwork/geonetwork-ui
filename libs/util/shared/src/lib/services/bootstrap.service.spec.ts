@@ -82,7 +82,6 @@ describe('BootstrapService', () => {
     })
 
     describe('When we require configuration already fetched', () => {
-      beforeEach(() => {})
       it('calls api only once', () => {
         service.uiConfReady('conf1').subscribe((conf) => (uiConf = conf))
         service.uiConfReady('conf1').subscribe((conf) => (uiConf = conf))

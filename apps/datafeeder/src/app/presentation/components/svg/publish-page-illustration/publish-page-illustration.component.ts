@@ -1,12 +1,8 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 
 @Component({
-  selector: 'app-publish-page-illustration',
+  selector: 'gn-ui-publish-page-illustration',
   templateUrl: './publish-page-illustration.component.html',
   styleUrls: ['./publish-page-illustration.component.css'],
 })
-export class PublishPageIllustrationComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class PublishPageIllustrationComponent {}

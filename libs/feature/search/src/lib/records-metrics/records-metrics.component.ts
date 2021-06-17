@@ -6,7 +6,7 @@ import { map, share } from 'rxjs/operators'
 import { SearchResponse } from 'elasticsearch'
 
 @Component({
-  selector: 'search-records-metrics',
+  selector: 'gn-ui-records-metrics',
   templateUrl: './records-metrics.component.html',
   styleUrls: ['./records-metrics.component.css'],
 })

@@ -1,10 +1,8 @@
-import {
-  DEFAULT_SEARCH_KEY,
-  ElasticsearchService,
-  initialState,
-} from '@geonetwork-ui/feature/search'
+import { ElasticsearchService } from './elasticsearch.service'
 import { Observable } from 'rxjs'
 import { BootstrapService } from '@geonetwork-ui/util/shared'
+import { DEFAULT_SEARCH_KEY } from '../state/actions'
+import { initialState } from '../state/reducer'
 
 const initialStateSearch = initialState[DEFAULT_SEARCH_KEY]
 

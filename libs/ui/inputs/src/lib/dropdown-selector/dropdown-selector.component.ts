@@ -4,17 +4,16 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
 } from '@angular/core'
 
 @Component({
-  selector: 'ui-dropdown-selector',
+  selector: 'gn-ui-dropdown-selector',
   templateUrl: './dropdown-selector.component.html',
   styleUrls: ['./dropdown-selector.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DropdownSelectorComponent implements OnInit, AfterViewInit {
+export class DropdownSelectorComponent implements AfterViewInit {
   @Input() title: string
   @Input() showTitle = true
   @Input() ariaName: string
@@ -28,10 +27,6 @@ export class DropdownSelectorComponent implements OnInit, AfterViewInit {
   get id() {
     return this.title.toLowerCase().replace(/[^a-z]+/g, '-')
   }
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   isSelected(choice) {
     return choice.value === this.selected

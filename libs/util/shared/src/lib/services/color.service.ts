@@ -5,8 +5,6 @@ import chroma from 'chroma-js'
   providedIn: 'root',
 })
 export class ColorService {
-  constructor() {}
-
   static getColor(name: string) {
     return document.documentElement.style.getPropertyValue(`--color-${name}`)
   }

@@ -1,17 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { RecordSummary } from '@geonetwork-ui/util/shared'
 
 @Component({
-  selector: 'ui-record-preview',
+  selector: 'gn-ui-record-preview',
   template: '',
 })
-export class RecordPreviewComponent implements OnInit {
+export class RecordPreviewComponent {
   @Input() record: RecordSummary
   @Input() linkTarget = '_blank'
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   get isViewable() {
     return this.record.viewable

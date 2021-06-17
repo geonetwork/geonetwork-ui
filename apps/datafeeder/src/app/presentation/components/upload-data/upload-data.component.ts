@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   UploadDataError,
@@ -16,11 +16,11 @@ marker('datafeeder.upload.error.title.cantOpenFile')
 marker('datafeeder.upload.error.subtitle.cantOpenFile')
 
 @Component({
-  selector: 'app-upload-data-component',
+  selector: 'gn-ui-upload-data-component',
   templateUrl: './upload-data.component.html',
   styleUrls: ['./upload-data.component.css'],
 })
-export class UploadDataComponent implements OnInit {
+export class UploadDataComponent {
   file: File = null
   haveRights = false
   uploading = false
@@ -32,8 +32,6 @@ export class UploadDataComponent implements OnInit {
   @Output() jobId$ = new EventEmitter<string>()
 
   constructor(private fileUploadApiService: FileUploadApiService) {}
-
-  ngOnInit(): void {}
 
   fileChange(file) {
     this.file = file

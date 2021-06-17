@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs'
 import { config as wizardConfig } from '../../../configs/wizard.config'
 
 @Component({
-  selector: 'app-summarize-page',
+  selector: 'gn-ui-summarize-page',
   templateUrl: './summarize-page.component.html',
   styleUrls: ['./summarize-page.component.css'],
 })

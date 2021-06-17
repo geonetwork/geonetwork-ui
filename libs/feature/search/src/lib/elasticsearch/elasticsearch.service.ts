@@ -154,7 +154,7 @@ export class ElasticsearchService {
   stateFiltersToQueryString(facetsState) {
     const query = []
     for (const indexKey in facetsState) {
-      if (facetsState.hasOwnProperty(indexKey)) {
+      if (indexKey in facetsState) {
         const queryChunk = this.parseStateNode(
           indexKey,
           facetsState[indexKey],

@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core'
   providedIn: 'root',
 })
 export class LogService {
-  constructor() {}
   log(message: string, ...objects: any[]): void {
     console.log.apply(this, [message, ...objects])
   }

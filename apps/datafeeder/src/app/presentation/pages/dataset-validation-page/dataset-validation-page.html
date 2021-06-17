@@ -4,11 +4,11 @@
       datafeeder.datasetValidation.title
     </div>
     <div class="pb-4 pt-4">
-      <ui-step-bar
+      <gn-ui-step-bar
         [steps]="numberOfSteps"
         [currentStep]="1"
         type="primary"
-      ></ui-step-bar>
+      ></gn-ui-step-bar>
     </div>
     <div
       class="text-2xl font-bold"
@@ -19,7 +19,7 @@
     </div>
     <div class="flex justify-between pb-10 pt-10 flex-1">
       <div class="w-1/2 h-full bg-white mr-20 rounded-md">
-        <app-data-import-validation-map-panel
+        <gn-ui-data-import-validation-map-panel
           headerLabel="datafeeder.validation.sample.title"
           footerLabel="datafeeder.validation.encoding"
           [footerList]="encodingList"
@@ -29,10 +29,10 @@
           [padding]="[50, 300, 50, 50]"
           (propertyChange)="handleEncodingChange($event)"
           *ngIf="geoJSONData"
-        ></app-data-import-validation-map-panel>
+        ></gn-ui-data-import-validation-map-panel>
       </div>
       <div class="w-1/2 h-full bg-white rounded-md">
-        <app-data-import-validation-map-panel
+        <gn-ui-data-import-validation-map-panel
           headerLabel="datafeeder.validation.extent.title"
           footerLabel="datafeeder.validation.projection"
           [footerList]="refSystem"
@@ -41,11 +41,11 @@
           [showProperties]="false"
           (propertyChange)="handleCrsChange($event)"
           *ngIf="geoJSONBBox"
-        ></app-data-import-validation-map-panel>
+        ></gn-ui-data-import-validation-map-panel>
       </div>
     </div>
     <div class="flex justify-end">
-      <ui-button
+      <gn-ui-button
         (click)="submitValidation()"
         [disabled]="!isValid()"
         type="primary"
@@ -54,7 +54,7 @@
         <span class="uppercase text-white font-bold" translate>
           datafeeder.datasetValidation.submitButton
         </span>
-      </ui-button>
+      </gn-ui-button>
     </div>
   </div>
 </div>

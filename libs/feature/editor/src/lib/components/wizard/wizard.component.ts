@@ -14,7 +14,7 @@ import { WizardFieldModel } from '../../models/wizard-field.model'
 import { WizardService } from '../../services/wizard.service'
 
 @Component({
-  selector: 'lib-wizard',
+  selector: 'gn-ui-wizard',
   templateUrl: './wizard.component.html',
   styleUrls: ['./wizard.component.css'],
 })

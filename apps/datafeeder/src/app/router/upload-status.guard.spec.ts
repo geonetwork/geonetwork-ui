@@ -3,7 +3,7 @@ import { getTestBed, TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
 import { FileUploadApiService } from '@geonetwork-ui/data-access/datafeeder'
 import { of, throwError } from 'rxjs'
-import { PublishStatusEnumApiModel } from '../../../../../libs/data-access/datafeeder/src/openapi/model/publishStatusEnum.api.model'
+import { PublishStatusEnumApiModel } from '@geonetwork-ui/data-access/datafeeder'
 import { DatafeederFacade } from '../store/datafeeder.facade'
 import { UploadStatusGuard } from './upload-status.guard'
 

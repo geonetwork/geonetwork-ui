@@ -48,7 +48,7 @@ export class BootstrapService {
     const aggsPropertyToMoveToMeta = ['userHasRole', 'collapsed']
     Object.keys(aggs).map((key) => {
       aggsPropertyToMoveToMeta.map((property) => {
-        if (aggs[key].hasOwnProperty(property)) {
+        if (property in aggs[key]) {
           const o = { ...aggs[key].meta }
           o[property] = aggs[key][property]
           aggs[key].meta = o

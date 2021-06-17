@@ -1,7 +1,10 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { EMPTY_BLOCK_MODEL_FIXTURE, FACET_ITEM_FIXTURE } from '@geonetwork-ui/ui/search'
+import { SearchFacade } from '../../state/search.facade'
+import {
+  EMPTY_BLOCK_MODEL_FIXTURE,
+  FACET_ITEM_FIXTURE,
+} from '@geonetwork-ui/ui/search'
 import { of } from 'rxjs'
 import { SEARCH_STATE_FILTERS_FIXTURE } from '../../state/fixtures/search-state.fixtures'
 import { FacetsService } from '../facets.service'

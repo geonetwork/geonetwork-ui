@@ -22,7 +22,7 @@ import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
 import { FormControl } from '@angular/forms'
 
 @Component({
-  selector: 'ui-autocomplete',
+  selector: 'gn-ui-autocomplete',
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -37,8 +37,6 @@ export class AutocompleteComponent implements OnInit {
   searching: boolean
   suggestions$: Observable<string[]>
   control = new FormControl()
-
-  constructor() {}
 
   ngOnInit(): void {
     this.suggestions$ = this.control.valueChanges.pipe(

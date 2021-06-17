@@ -13,7 +13,7 @@ import { DatafeederFacade } from '../../../store/datafeeder.facade'
 const { Pending, Running, Done } = PublishStatusEnumApiModel
 
 @Component({
-  selector: 'app-publish-page',
+  selector: 'gn-ui-publish-page',
   templateUrl: './publish-page.component.html',
   styleUrls: ['./publish-page.component.css'],
 })

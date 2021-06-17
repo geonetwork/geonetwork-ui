@@ -1,14 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input } from '@angular/core'
 
 @Component({
-  selector: 'ui-results-hits-number',
+  selector: 'gn-ui-results-hits-number',
   templateUrl: './results-hits-number.component.html',
 })
-export class ResultsHitsNumberComponent implements OnInit {
+export class ResultsHitsNumberComponent {
   @Input() hits
   @Input() loading: boolean
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { EsRequestAggTerm } from '@geonetwork-ui/util/shared'
 import { FacetSelectEvent, ModelBlock } from '../facets.model'
 
 @Component({
-  selector: 'ui-facet-list',
+  selector: 'gn-ui-facet-list',
   templateUrl: './facet-list.component.html',
   styleUrls: ['./facet-list.component.css'],
 })
-export class FacetListComponent implements OnInit {
+export class FacetListComponent {
   @Input() models: ModelBlock[]
   @Input() selectedPaths: string[][]
 
@@ -15,10 +15,6 @@ export class FacetListComponent implements OnInit {
 
   @Output() more = new EventEmitter<string>()
   @Output() filterChange = new EventEmitter<EsRequestAggTerm>()
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   getBlockSelectedPaths(model: ModelBlock) {
     return this.selectedPaths.filter((path) => {

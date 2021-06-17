@@ -3,7 +3,6 @@ import {
   Component,
   Input,
   OnDestroy,
-  OnInit,
   ViewChild,
 } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -35,11 +34,11 @@ marker('datafeeder.month.november')
 marker('datafeeder.month.december')
 
 @Component({
-  selector: 'lib-wizard-field',
+  selector: 'gn-ui-wizard-field',
   templateUrl: './wizard-field.component.html',
   styleUrls: ['./wizard-field.component.css'],
 })
-export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
+export class WizardFieldComponent implements AfterViewInit, OnDestroy {
   @Input() wizardFieldConfig: WizardFieldModel
 
   @ViewChild('searchText') searchText: TextInputComponent
@@ -90,8 +89,6 @@ export class WizardFieldComponent implements OnInit, AfterViewInit, OnDestroy {
       this.datepickerOptions = options
     })
   }
-
-  ngOnInit(): void {}
 
   ngAfterViewInit() {
     this.initializeListeners()

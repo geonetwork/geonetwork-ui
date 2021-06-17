@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core'
+import { ChangeDetectorRef, Component, Input } from '@angular/core'
 
 interface ColorScheme {
   outerBar: string
@@ -6,11 +6,11 @@ interface ColorScheme {
 }
 
 @Component({
-  selector: 'ui-step-bar',
+  selector: 'gn-ui-step-bar',
   templateUrl: './step-bar.component.html',
   styleUrls: ['./step-bar.component.css'],
 })
-export class StepBarComponent implements OnInit {
+export class StepBarComponent {
   @Input() steps
   @Input() currentStep = 1
   @Input() type: 'primary' | 'secondary' | 'default' = 'default'
@@ -40,8 +40,6 @@ export class StepBarComponent implements OnInit {
         }
     }
   }
-
-  ngOnInit(): void {}
 
   getCircleColor(index: number): string {
     return index === this.currentStep

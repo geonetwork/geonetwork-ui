@@ -21,7 +21,7 @@ export interface JobStatusModel extends PublishJobStatusApiModel {
 }
 
 @Component({
-  selector: 'app-success-publish-page',
+  selector: 'gn-ui-success-publish-page',
   templateUrl: './success-publish-page.component.html',
   styleUrls: ['./success-publish-page.component.css'],
 })

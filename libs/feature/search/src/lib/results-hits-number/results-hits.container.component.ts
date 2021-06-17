@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 import { SearchFacade } from '../state/search.facade'
 
 @Component({
-  selector: 'search-results-hits',
+  selector: 'gn-ui-results-hits',
   templateUrl: './results-hits.container.component.html',
 })
-export class ResultsHitsContainerComponent implements OnInit {
+export class ResultsHitsContainerComponent {
   constructor(public facade: SearchFacade) {}
-  ngOnInit(): void {}
 }

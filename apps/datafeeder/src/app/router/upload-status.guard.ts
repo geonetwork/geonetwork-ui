@@ -27,7 +27,7 @@ export class UploadStatusGuard implements CanActivate {
     return this.facade.upload$.pipe(
       take(1),
       mergeMap((stateUpload) => {
-        return !!stateUpload
+        return stateUpload
           ? of(true)
           : this.fileUploadApiService.findUploadJob(id).pipe(
               tap((upload) => this.facade.setUpload(upload)),

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input } from '@angular/core'
 
 export enum UploadDataErrorType {
   NONE,
@@ -15,14 +15,10 @@ export interface UploadDataError {
 }
 
 @Component({
-  selector: 'app-upload-data-error-dialog',
+  selector: 'gn-ui-upload-data-error-dialog',
   templateUrl: './upload-data-error-dialog.component.html',
   styleUrls: ['./upload-data-error-dialog.component.css'],
 })
-export class UploadDataErrorDialogComponent implements OnInit {
+export class UploadDataErrorDialogComponent {
   @Input() error: UploadDataError
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

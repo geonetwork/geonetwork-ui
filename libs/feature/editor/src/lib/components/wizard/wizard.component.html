@@ -4,23 +4,23 @@
     class="flex-1 flex"
     *ngFor="let config of configuration; let i = index"
   >
-    <lib-wizard-field [wizardFieldConfig]="config"></lib-wizard-field>
+    <gn-ui-wizard-field [wizardFieldConfig]="config"></gn-ui-wizard-field>
   </div>
 </div>
 <div class="flex pt-24 pl-8">
-  <ui-button
+  <gn-ui-button
     (click)="handlePreviousBtnClick()"
     type="primary"
     class="pr-8"
     extraClass="rounded-full px-20"
   >
     <span class="uppercase text-white font-bold" translate>previous</span>
-  </ui-button>
-  <ui-button
+  </gn-ui-button>
+  <gn-ui-button
     (click)="handleNextBtnClick()"
     type="primary"
     extraClass="rounded-full px-20"
   >
     <span class="uppercase text-white font-bold" translate>next</span>
-  </ui-button>
+  </gn-ui-button>
 </div>

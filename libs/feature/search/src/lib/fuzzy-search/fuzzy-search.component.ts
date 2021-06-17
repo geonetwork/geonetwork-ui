@@ -6,16 +6,14 @@ import {
 } from '@angular/core'
 import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
 import { SearchFacade } from '../state/search.facade'
-import {
-  ElasticsearchMapper,
-  ElasticsearchService,
-} from '@geonetwork-ui/feature/search'
+import { ElasticsearchService } from '../elasticsearch/elasticsearch.service'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { map, switchMap } from 'rxjs/operators'
 import { SearchResponse } from 'elasticsearch'
+import { ElasticsearchMapper } from '../elasticsearch/elasticsearch.mapper'
 
 @Component({
-  selector: 'search-fuzzy-search',
+  selector: 'gn-ui-fuzzy-search',
   templateUrl: './fuzzy-search.component.html',
   styleUrls: ['./fuzzy-search.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

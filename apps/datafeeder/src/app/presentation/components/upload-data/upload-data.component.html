@@ -14,11 +14,11 @@
   datafeeder.upload.inputLabel
 </div>
 <div class="border rounded-md border-solid border-2 border-gray-300 h-12 my-2">
-  <ui-drag-and-drop-file-input
+  <gn-ui-drag-and-drop-file-input
     (fileChange)="fileChange($event)"
     placeholder="..."
     [accept]="acceptedMimeType.join(',')"
-  ></ui-drag-and-drop-file-input>
+  ></gn-ui-drag-and-drop-file-input>
 </div>
 <div class="pb-4">
   <input
@@ -34,7 +34,7 @@
     >datafeeder.upload.checkboxLabel</span
   >
 </div>
-<ui-button
+<gn-ui-button
   (click)="handleUploadBtnClick()"
   type="primary"
   extraClass="rounded-full px-20"
@@ -64,4 +64,4 @@
   <span class="uppercase text-white font-bold" translate
     >datafeeder.upload.uploadButton</span
   >
-</ui-button>
+</gn-ui-button>

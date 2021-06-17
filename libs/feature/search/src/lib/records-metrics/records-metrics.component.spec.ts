@@ -7,7 +7,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing'
-import { aggsOnly as aggsOnlyFixture } from '@geonetwork-ui/feature/search'
+import { aggsOnly as aggsOnlyFixture } from '../elasticsearch/fixtures'
 
 describe('RecordsMetricsComponent', () => {
   let component: RecordsMetricsComponent
@@ -17,7 +17,11 @@ describe('RecordsMetricsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [RecordsMetricsComponent],
-      imports: [UiSearchModule, TranslateModule.forRoot(), HttpClientTestingModule],
+      imports: [
+        UiSearchModule,
+        TranslateModule.forRoot(),
+        HttpClientTestingModule,
+      ],
     }).compileComponents()
     httpMock = TestBed.inject(HttpTestingController)
   })

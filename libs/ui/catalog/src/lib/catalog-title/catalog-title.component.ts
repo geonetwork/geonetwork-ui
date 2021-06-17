@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core'
 
 @Component({
-  selector: 'ui-catalog-title',
+  selector: 'gn-ui-catalog-title',
   templateUrl: './catalog-title.component.html',
   styleUrls: ['./catalog-title.component.css'],
 })

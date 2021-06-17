@@ -24,12 +24,12 @@ export class FacetsService {
     if (requestAggregations !== undefined) {
       interface AggEntry {
         key: string
-        meta: object
+        meta: Record<string, unknown>
         doc_count: number
       }
 
       for (const key in requestAggregations) {
-        if (responseAggregations.hasOwnProperty(key)) {
+        if (key in responseAggregations) {
           const requestAgg = requestAggregations[key]
           const responseAgg = responseAggregations[key]
 
@@ -39,7 +39,7 @@ export class FacetsService {
             path: [...path, responseAgg.meta?.field || key],
             meta: responseAgg.meta,
           }
-          if (requestAgg.hasOwnProperty(AggregationsTypesEnum.TERMS)) {
+          if (AggregationsTypesEnum.TERMS in requestAgg) {
             blockModel = {
               ...blockModel,
               type: AggregationsTypesEnum.TERMS,
@@ -62,9 +62,7 @@ export class FacetsService {
                 blockModel.items.push(itemModel)
               }
             })
-          } else if (
-            requestAgg.hasOwnProperty(AggregationsTypesEnum.HISTOGRAM)
-          ) {
+          } else if (AggregationsTypesEnum.HISTOGRAM in requestAgg) {
             blockModel = {
               ...blockModel,
               type: AggregationsTypesEnum.HISTOGRAM,
@@ -111,7 +109,7 @@ export class FacetsService {
                   'min_doc_count: 1}}'
               )
             }
-          } else if (requestAgg.hasOwnProperty(AggregationsTypesEnum.FILTERS)) {
+          } else if (AggregationsTypesEnum.FILTERS in requestAgg) {
             const type = AggregationsTypesEnum.FILTERS
             blockModel = {
               ...blockModel,
@@ -210,7 +208,7 @@ export class FacetsService {
     const head = path[0]
     const tail = path.slice(1)
     for (const prop of Object.keys(filters)) {
-      if (filters.hasOwnProperty(prop)) {
+      if (prop in filters) {
         if (head.toString() === prop && tail.length === 0) {
           delete filters[prop]
         } else {

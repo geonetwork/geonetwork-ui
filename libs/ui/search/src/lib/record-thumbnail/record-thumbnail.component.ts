@@ -1,13 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input } from '@angular/core'
 
 @Component({
-  selector: 'ui-record-thumbnail',
+  selector: 'gn-ui-record-thumbnail',
   templateUrl: './record-thumbnail.component.html',
 })
-export class RecordThumbnailComponent implements OnInit {
+export class RecordThumbnailComponent {
   @Input() thumbnailUrl: string
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

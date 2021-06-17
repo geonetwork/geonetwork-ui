@@ -5,7 +5,7 @@ import { text, withKnobs } from '@storybook/addon-knobs'
 import { Meta, moduleMetadata } from '@storybook/angular'
 import { NgxDropzoneModule } from 'ngx-dropzone'
 import { DatepickerComponent } from './datepicker.component'
-import { AngularMyDatePickerModule } from angular-mydatepicker
+import { AngularMyDatePickerModule } from 'angular-mydatepicker'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { CommonModule } from '@angular/common'

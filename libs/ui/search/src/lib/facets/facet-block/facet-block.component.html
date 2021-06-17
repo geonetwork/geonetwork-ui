@@ -72,14 +72,14 @@
     *ngIf="canFilter"
     #filterInput
   />
-  <ui-facet-item
+  <gn-ui-facet-item
     *ngFor="let item of getItems()"
     [label]="item.value"
     [count]="item.count"
     [selected]="isItemSelected(item)"
     (selectedChange)="onItemSelectedChange($event, item)"
     (invertedChange)="onItemInvertedChange($event, item)"
-  ></ui-facet-item>
+  ></gn-ui-facet-item>
   <a href *ngIf="canShowMore()" class="a-more" (click)="onMoreClick($event)"
     >more</a
   >

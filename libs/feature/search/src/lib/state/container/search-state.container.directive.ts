@@ -2,11 +2,11 @@ import { Directive, Host, Input, OnInit } from '@angular/core'
 import { SearchFacade } from '../search.facade'
 
 @Directive({
-  selector: '[searchSearchStateContainer]',
+  selector: '[gnUiSearchStateContainer]',
   providers: [SearchFacade],
 })
 export class SearchStateContainerDirective implements OnInit {
-  @Input('searchSearchStateContainer') searchId: string
+  @Input('gnUiSearchStateContainer') searchId: string
 
   constructor(@Host() private facade: SearchFacade) {}
 

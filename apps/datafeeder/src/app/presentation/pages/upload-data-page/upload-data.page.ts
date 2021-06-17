@@ -10,7 +10,7 @@ marker('datafeeder.upload.error.title.analysis')
 marker('datafeeder.upload.error.subtitle.analysis')
 
 @Component({
-  selector: 'app-upload-data-page',
+  selector: 'gn-ui-upload-data-page',
   templateUrl: './upload-data.page.html',
   styleUrls: ['./upload-data.page.css'],
 })

@@ -3,17 +3,16 @@ import {
   Component,
   Input,
   OnChanges,
-  OnInit,
   SimpleChanges,
 } from '@angular/core'
 
 @Component({
-  selector: 'ui-button',
+  selector: 'gn-ui-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ButtonComponent implements OnInit, OnChanges {
+export class ButtonComponent implements OnChanges {
   @Input() type: 'primary' | 'secondary' | 'default' = 'default'
   @Input() disabled = false
   @Input() extraClass = ''
@@ -79,11 +78,7 @@ export class ButtonComponent implements OnInit, OnChanges {
     return classes
   }
 
-  constructor() {}
-
   ngOnChanges(changes: SimpleChanges): void {
     this.classList = `${this.color} ${this.textColor} ${this.borderColor} ${this.extraClass}`
   }
-
-  ngOnInit(): void {}
 }

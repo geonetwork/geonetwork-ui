@@ -1,17 +1,17 @@
 import { Component, DebugElement, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { SearchFacade } from '../state/search.facade'
 import { TranslateModule } from '@ngx-translate/core'
 import { of } from 'rxjs'
 
 import { ResultsHitsContainerComponent } from './results-hits.container.component'
 
 @Component({
-  selector: 'ui-results-hits-number',
+  selector: 'gn-ui-results-hits-number',
   template: '',
 })
-class ResultsHitsNumberComponentMock {
+class MockResultsHitsNumberComponent {
   @Input() hits
   @Input() loading: boolean
 }
@@ -31,7 +31,7 @@ describe('ResultsHitsContainerComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         ResultsHitsContainerComponent,
-        ResultsHitsNumberComponentMock,
+        MockResultsHitsNumberComponent,
       ],
       imports: [TranslateModule.forRoot()],
       providers: [
@@ -49,7 +49,7 @@ describe('ResultsHitsContainerComponent', () => {
     component = fixture.componentInstance
     fixture.detectChanges()
     de = fixture.debugElement
-    items = de.queryAll(By.directive(ResultsHitsNumberComponentMock))
+    items = de.queryAll(By.directive(MockResultsHitsNumberComponent))
   })
 
   it('should create', () => {

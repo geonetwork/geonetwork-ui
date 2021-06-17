@@ -20,7 +20,7 @@ marker('facets.block.title.tag.default')
 marker('facets.block.title.th_regions_tree.default')
 
 @Component({
-  selector: 'search-facets-container',
+  selector: 'gn-ui-facets-container',
   templateUrl: './facets-container.component.html',
   styleUrls: ['./facets-container.component.css'],
 })

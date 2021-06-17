@@ -9,12 +9,12 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { RecordSummary, ResultsListLayout } from '@geonetwork-ui/util/shared'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { SearchFacade } from '../state/search.facade'
 import { BehaviorSubject, of } from 'rxjs'
 import { ResultsListContainerComponent } from './results-list.container.component'
 
 @Component({
-  selector: 'ui-results-list',
+  selector: 'gn-ui-results-list',
   template: '',
 })
 class ResultsListMockComponent {

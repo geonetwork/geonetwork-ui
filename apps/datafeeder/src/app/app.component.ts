@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ColorService } from '@geonetwork-ui/util/shared'
 
 @Component({
-  selector: 'app-root',
+  selector: 'gn-ui-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })

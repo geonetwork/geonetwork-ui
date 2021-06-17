@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input } from '@angular/core'
 
 interface ColorScheme {
   outerBar: string
@@ -6,11 +6,11 @@ interface ColorScheme {
 }
 
 @Component({
-  selector: 'ui-progress-bar',
+  selector: 'gn-ui-progress-bar',
   templateUrl: './progress-bar.component.html',
   styleUrls: ['./progress-bar.component.css'],
 })
-export class ProgressBarComponent implements OnInit {
+export class ProgressBarComponent {
   @Input() value = 0
   @Input() type: 'primary' | 'secondary' | 'default' = 'default'
 
@@ -37,8 +37,4 @@ export class ProgressBarComponent implements OnInit {
         }
     }
   }
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

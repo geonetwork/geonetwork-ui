@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 import { WizardService } from '../../services/wizard.service'
 import { TranslateService } from '@ngx-translate/core'
 
 @Component({
-  selector: 'lib-wizard-summarize',
+  selector: 'gn-ui-wizard-summarize',
   templateUrl: './wizard-summarize.component.html',
   styleUrls: ['./wizard-summarize.component.css'],
 })
-export class WizardSummarizeComponent implements OnInit {
+export class WizardSummarizeComponent {
   get title() {
     return this.wizardService.getWizardFieldData('title') || ''
   }
@@ -58,6 +58,4 @@ export class WizardSummarizeComponent implements OnInit {
     private wizardService: WizardService,
     private translateService: TranslateService
   ) {}
-
-  ngOnInit(): void {}
 }

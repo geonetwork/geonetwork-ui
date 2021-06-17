@@ -7,17 +7,17 @@
       visibility: !!activeFilter ? 'hidden' : 'visible'
     }"
   >
-    <search-records-metrics
+    <gn-ui-records-metrics
       [field]="aggregationField"
       [count]="aggregationMaxCount"
       [attr.queryString]="aggregationQueryString || undefined"
       (metricSelect)="setFilter($event.value)"
-    ></search-records-metrics>
+    ></gn-ui-records-metrics>
   </div>
   <div>
-    <ui-button type="secondary" (click)="clearFilter()" translate
-      >nav.back</ui-button
+    <gn-ui-button type="secondary" (click)="clearFilter()" translate
+      >nav.back</gn-ui-button
     >
-    <search-results-list-container></search-results-list-container>
+    <gn-ui-results-list-container></gn-ui-results-list-container>
   </div>
 </div>

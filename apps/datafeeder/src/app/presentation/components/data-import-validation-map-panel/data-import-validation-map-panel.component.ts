@@ -24,7 +24,7 @@ const DEFAULT_PRIMARY_COLOR = '#9a9a9a'
 const PADDING = 50
 
 @Component({
-  selector: 'app-data-import-validation-map-panel',
+  selector: 'gn-ui-data-import-validation-map-panel',
   templateUrl: './data-import-validation-map-panel.component.html',
   styleUrls: ['./data-import-validation-map-panel.css'],
 })
@@ -48,8 +48,6 @@ export class DataImportValidationMapPanelComponent
   private source: VectorSource
   private vectorLayer: VectorLayer
   private format: any = new GeoJSON({})
-
-  constructor() {}
 
   ngOnInit(): void {
     this.selectedValue = this.footerValue || ''

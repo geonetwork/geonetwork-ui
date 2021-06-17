@@ -36,8 +36,6 @@ describe('UploadDataComponent', () => {
     fixture.detectChanges()
   })
 
-  beforeEach(() => {})
-
   it('should create', () => {
     expect(component).toBeTruthy()
   })

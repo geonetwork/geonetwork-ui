@@ -1,12 +1,8 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 
 @Component({
-  selector: 'ui-color-scale',
+  selector: 'gn-ui-color-scale',
   templateUrl: './color-scale.component.html',
   styleUrls: ['./color-scale.component.css'],
 })
-export class ColorScaleComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class ColorScaleComponent {}

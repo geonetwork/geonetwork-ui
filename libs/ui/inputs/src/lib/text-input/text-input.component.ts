@@ -10,7 +10,7 @@ import { distinctUntilChanged } from 'rxjs/operators'
 import { Observable, Subject } from 'rxjs'
 
 @Component({
-  selector: 'ui-text-input',
+  selector: 'gn-ui-text-input',
   templateUrl: './text-input.component.html',
   styleUrls: ['./text-input.component.css'],
 })
@@ -23,8 +23,6 @@ export class TextInputComponent implements OnInit, AfterViewInit {
   @ViewChild('input') input
 
   rawChange = new Subject<string>()
-
-  constructor() {}
 
   ngOnInit() {
     this.valueChange = this.rawChange.pipe(distinctUntilChanged())

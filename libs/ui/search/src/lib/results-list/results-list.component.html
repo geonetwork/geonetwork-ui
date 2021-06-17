@@ -5,31 +5,33 @@
   ></ng-container>
   <div *ngSwitchCase="layoutEnum.LIST" class="gap-4 p-4">
     <div class="pb-4" *ngFor="let record of records">
-      <ui-record-preview-list [record]="record"></ui-record-preview-list>
+      <gn-ui-record-preview-list [record]="record"></gn-ui-record-preview-list>
     </div>
   </div>
   <div *ngSwitchCase="layoutEnum.TITLE" class="gap-4 p-4">
     <div class="pb-4" *ngFor="let record of records">
-      <ui-record-preview-title [record]="record"></ui-record-preview-title>
+      <gn-ui-record-preview-title
+        [record]="record"
+      ></gn-ui-record-preview-title>
     </div>
   </div>
   <div *ngSwitchCase="layoutEnum.TEXT" class="gap-4 p-4">
-    <ui-record-preview-text
+    <gn-ui-record-preview-text
       style="height: 24rem"
       *ngFor="let record of records"
       [record]="record"
-    ></ui-record-preview-text>
+    ></gn-ui-record-preview-text>
   </div>
   <ng-container *ngSwitchDefault [ngTemplateOutlet]="block"></ng-container>
 </ng-container>
 
 <ng-template #block>
   <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
-    <ui-record-preview-card
+    <gn-ui-record-preview-card
       *ngFor="let record of records"
       [record]="record"
       linkTarget="_blank"
-    ></ui-record-preview-card>
+    ></gn-ui-record-preview-card>
   </div>
 </ng-template>
 

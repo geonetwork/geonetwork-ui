@@ -172,9 +172,7 @@ describe('FacetsService', () => {
         item = { ...item, query_string: '+linkProtocol:/OGC:WMS.*/' }
       })
       describe('when it is selected', () => {
-        beforeEach(() => {})
         describe('when it is not inverted', () => {
-          beforeEach(() => {})
           it('returns the query_string', () => {
             const value = service.computeItemPathValue(block, item)
             expect(value).toBe('+linkProtocol:/OGC:WMS.*/')

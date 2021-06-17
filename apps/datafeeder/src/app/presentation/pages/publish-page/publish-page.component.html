@@ -1,7 +1,7 @@
 <div
   class="flex-1 flex flex-col bg-primary-lightest bg-opacity-25 shape s1 overflow-hidden"
 >
-  <app-upload-data-background></app-upload-data-background>
+  <gn-ui-upload-data-background></gn-ui-upload-data-background>
   <div class="pl-64 pr-64 pt-16 pb-20 w-full h-full flex z-10 items-center">
     <div class="flex-1 self-start">
       <div class="text-5xl font-bold pb-10 whitespace-pre-line" translate>
@@ -13,11 +13,14 @@
       <div class="text-xl" translate>datafeeder.publish.hint</div>
 
       <div class="w-7/12 h-6 mt-20">
-        <ui-progress-bar type="primary" [value]="progress"></ui-progress-bar>
+        <gn-ui-progress-bar
+          type="primary"
+          [value]="progress"
+        ></gn-ui-progress-bar>
       </div>
     </div>
     <div class="z-10 w-1/3">
-      <app-publish-page-illustration></app-publish-page-illustration>
+      <gn-ui-publish-page-illustration></gn-ui-publish-page-illustration>
     </div>
   </div>
 </div>

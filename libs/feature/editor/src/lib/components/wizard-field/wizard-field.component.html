@@ -8,55 +8,55 @@
       class="w-1/2 h-12"
       *ngIf="wizardFieldType.TEXT === wizardFieldConfig.type"
     >
-      <ui-text-input
+      <gn-ui-text-input
         #searchText
         [id]="wizardFieldConfig.id"
         [value]="wizardFieldData"
         [required]="wizardFieldConfig.required || false"
         hint=""
-      ></ui-text-input>
+      ></gn-ui-text-input>
     </div>
     <div
       class="flex-1 w-11/12"
       *ngIf="wizardFieldType.CHIPS == wizardFieldConfig.type"
     >
-      <ui-chips-input
+      <gn-ui-chips-input
         #chips
         [selectedItems]="wizardFieldData"
         placeholder=""
         [id]="wizardFieldConfig.id"
         [url]="wizardFieldConfig.options.url"
         [loadOnce]="wizardFieldConfig.options.loadOnce"
-      ></ui-chips-input>
+      ></gn-ui-chips-input>
     </div>
     <div
       class="h-32 w-11/12"
       *ngIf="wizardFieldType.TEXT_AREA == wizardFieldConfig.type"
     >
-      <ui-text-area
+      <gn-ui-text-area
         #textArea
         [id]="wizardFieldConfig.id"
         [value]="wizardFieldData"
         [required]="wizardFieldConfig.required || false"
         placeholder=""
-      ></ui-text-area>
+      ></gn-ui-text-area>
     </div>
     <div
       class="w-1/2 h-12"
       *ngIf="wizardFieldType.DATA_PICKER == wizardFieldConfig.type"
     >
-      <ui-datepicker
+      <gn-ui-datepicker
         #datepicker
         [id]="wizardFieldConfig.id"
         [options]="datepickerOptions"
         [currentDate]="wizardFieldData"
-      ></ui-datepicker>
+      ></gn-ui-datepicker>
     </div>
     <div
       class="w-1/2 h-12"
       *ngIf="wizardFieldType.DROPDOWN == wizardFieldConfig.type"
     >
-      <ui-dropdown-selector
+      <gn-ui-dropdown-selector
         #dropdown
         [id]="wizardFieldConfig.id"
         [title]="''"
@@ -64,7 +64,7 @@
         [choices]="dropdownChoices"
         [selected]="wizardFieldData"
         ariaName="search-sort-by"
-      ></ui-dropdown-selector>
+      ></gn-ui-dropdown-selector>
     </div>
   </div>
 </div>

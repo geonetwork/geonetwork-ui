@@ -1,5 +1,5 @@
 import { AggregationsTypesEnum } from '@geonetwork-ui/util/shared'
-import { ModelBlock, ModelItem } from '@geonetwork-ui/ui/search'
+import { ModelBlock, ModelItem } from '../facets.model'
 
 export const BLOCK_MODEL_FIXTURE: ModelBlock = {
   key: 'tag',

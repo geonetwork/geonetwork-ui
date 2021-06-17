@@ -6,7 +6,7 @@ import { map, take, tap } from 'rxjs/operators'
 import { fromLonLat } from 'ol/proj'
 
 @Component({
-  selector: 'app-main-search',
+  selector: 'gn-ui-main-search',
   templateUrl: './main-search.component.html',
   styleUrls: ['./main-search.component.scss'],
 })

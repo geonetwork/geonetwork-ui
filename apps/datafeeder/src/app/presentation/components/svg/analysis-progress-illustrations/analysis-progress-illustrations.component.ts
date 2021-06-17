@@ -1,14 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input } from '@angular/core'
 
 @Component({
-  selector: 'app-analysis-progress-illustrations',
+  selector: 'gn-ui-analysis-progress-illustrations',
   templateUrl: './analysis-progress-illustrations.component.html',
   styleUrls: ['./analysis-progress-illustrations.component.css'],
 })
-export class AnalysisProgressIllustrationsComponent implements OnInit {
+export class AnalysisProgressIllustrationsComponent {
   @Input() progress
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

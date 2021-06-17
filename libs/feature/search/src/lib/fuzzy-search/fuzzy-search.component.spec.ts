@@ -5,13 +5,11 @@ import { initialState, reducer, SEARCH_FEATURE_KEY } from '../state/reducer'
 import { FuzzySearchComponent } from './fuzzy-search.component'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
-import {
-  ElasticsearchService,
-  SearchFacade,
-} from '@geonetwork-ui/feature/search'
+import { SearchFacade } from '../state/search.facade'
 import { of } from 'rxjs'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
+import { ElasticsearchService } from '../elasticsearch/elasticsearch.service'
 
 const searchFacadeMock = {
   setFilters: jest.fn(),

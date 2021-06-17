@@ -9,7 +9,7 @@ import { distinctUntilChanged, mergeMap } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 
 @Component({
-  selector: 'search-results-list-container',
+  selector: 'gn-ui-results-list-container',
   templateUrl: './results-list.container.component.html',
   styleUrls: ['./results-list.container.component.css'],
 })
@@ -40,6 +40,4 @@ export class ResultsListContainerComponent implements OnInit, OnDestroy {
   onScrollDown() {
     this.facade.scroll()
   }
-
-  ngOnDestroy(): void {}
 }
