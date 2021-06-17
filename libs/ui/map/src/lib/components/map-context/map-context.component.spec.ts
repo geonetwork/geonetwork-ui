@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MapContextService } from '../../services/map-context.service'
@@ -5,8 +6,11 @@ import { MAP_CTX_FIXTURE } from '../../fixtures/map-context.fixtures'
 
 import { MapContextComponent } from './map-context.component'
 
+const mapMock = {
+  on: jest.fn(),
+}
 const mapContextServiceMock = {
-  createMap: jest.fn(),
+  createMap: jest.fn(() => mapMock),
 }
 
 describe('MapContextComponent', () => {

@@ -1,13 +1,22 @@
+import { HttpClient } from '@angular/common/http'
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
   Input,
+  OnInit,
+  Output,
 } from '@angular/core'
-import { MapContextService } from '../../services/map-context.service'
-import { MapContextModel } from '../../models/map-context.model'
+import { FeatureCollection } from 'geojson'
+import Feature from 'ol/Feature'
 
 import Map from 'ol/Map'
+import VectorSource from 'ol/source/Vector'
+import { forkJoin, Observable, of } from 'rxjs'
+import { map } from 'rxjs/operators'
+import { MapContextModel } from '../../models/map-context.model'
+import { MapContextService } from '../../services/map-context.service'
+import { MapUtilsService } from '../../services/map-utils.service'
 
 @Component({
   selector: 'gn-ui-map-context',
@@ -17,10 +26,42 @@ import Map from 'ol/Map'
 })
 export class MapContextComponent implements OnInit {
   @Input() context: MapContextModel
+  @Output() featureClicked = new EventEmitter<Feature[]>()
+
   map: Map
-  constructor(private service: MapContextService) {}
+
+  constructor(
+    private service: MapContextService,
+    private mapUtils: MapUtilsService
+  ) {}
 
   ngOnInit(): void {
     this.map = this.service.createMap(this.context)
+    this.initInteractions()
+  }
+
+  private initInteractions(): void {
+    this.map.on('click', (event) => {
+      const gfiFeaturesObservables = this.mapUtils.getGFIFeaturesObservablesFromClick(
+        this.map,
+        event
+      )
+      const vectorFeatures$ = of(
+        this.mapUtils.getVectorFeaturesFromClick(this.map, event)
+      )
+
+      const featuresObservablesArray: Observable<Feature[]>[] = [
+        ...gfiFeaturesObservables,
+        vectorFeatures$,
+      ]
+
+      forkJoin(...featuresObservablesArray).subscribe((featuresArrays) => {
+        const allFeatures = featuresArrays.reduce(
+          (outputFeatures, features) => [...outputFeatures, ...features],
+          []
+        )
+        this.featureClicked.emit(allFeatures)
+      })
+    })
   }
 }

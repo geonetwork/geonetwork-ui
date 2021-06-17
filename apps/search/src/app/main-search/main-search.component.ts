@@ -19,8 +19,8 @@ export class MainSearchComponent implements OnInit {
       },
       {
         type: MapContextLayerTypeEnum.WMS,
-        url: 'https://www.geograndest.fr/geoserver/region-grand-est/ows?',
-        name: 'commune_actuelle_3857',
+        url: 'https://public.sig.rennesmetropole.fr/geoserver/ref_alti/ows?',
+        name: 'mnt_point_culminant',
       },
       {
         type: 'geojson',
@@ -32493,7 +32493,7 @@ export class MainSearchComponent implements OnInit {
     ],
     view: {
       center: fromLonLat([7.75, 48.6], 'EPSG:3857'),
-      zoom: 9,
+      zoom: 4,
     },
   }
 
@@ -32757,6 +32757,10 @@ export class MainSearchComponent implements OnInit {
     private bootstrap: BootstrapService,
     private searchFacade: SearchFacade
   ) {}
+
+  onMapFeaturesClick(features) {
+    console.log(features)
+  }
 
   ngOnInit(): void {
     this.bootstrap

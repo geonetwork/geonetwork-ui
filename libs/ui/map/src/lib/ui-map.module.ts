@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { MapComponent } from './components/map/map.component'
@@ -5,7 +6,7 @@ import { MapContextComponent } from './components/map-context/map-context.compon
 
 @NgModule({
   declarations: [MapComponent, MapContextComponent],
-  imports: [CommonModule],
+  imports: [CommonModule, HttpClientModule],
   exports: [MapComponent, MapContextComponent],
 })
 export class UiMapModule {}
