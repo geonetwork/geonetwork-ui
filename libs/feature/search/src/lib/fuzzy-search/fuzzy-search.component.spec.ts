@@ -5,16 +5,48 @@ import { initialState, reducer, SEARCH_FEATURE_KEY } from '../state/reducer'
 import { FuzzySearchComponent } from './fuzzy-search.component'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
+import {
+  ElasticsearchService,
+  SearchFacade,
+} from '@geonetwork-ui/feature/search'
 import { of } from 'rxjs'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 
 const searchFacadeMock = {
-  isLoading$: of(true),
-  results$: of(['one']),
-  layout$: of('CARD'),
-  setResultsLayout: jest.fn(),
-  scroll: jest.fn(),
+  setFilters: jest.fn(),
+}
+
+const searchServiceMock = {
+  configuration: {
+    basePath: '/api',
+  },
+  search: jest.fn(() =>
+    of({
+      hits: {
+        hits: [
+          {
+            _source: {
+              resourceTitleObject: {
+                default: 'abc',
+              },
+            },
+          },
+          {
+            _source: {
+              resourceTitleObject: {
+                default: 'def',
+              },
+            },
+          },
+        ],
+      },
+    })
+  ),
+}
+
+const esServiceMock = {
+  buildAutocompletePayload: jest.fn(() => of({ fakeQuery: '' })),
 }
 
 describe('FuzzySearchComponent', () => {
@@ -28,6 +60,14 @@ describe('FuzzySearchComponent', () => {
         {
           provide: SearchFacade,
           useValue: searchFacadeMock,
+        },
+        {
+          provide: ElasticsearchService,
+          useValue: esServiceMock,
+        },
+        {
+          provide: SearchApiService,
+          useValue: searchServiceMock,
         },
       ],
       imports: [
@@ -50,5 +90,25 @@ describe('FuzzySearchComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  describe('suggestions loading', () => {
+    let emitted
+    beforeEach(() => {
+      emitted = null
+      component.autocomplete.action('').subscribe((e) => (emitted = e))
+    })
+    it('emits an array of title', () => {
+      expect(emitted).toEqual(['abc', 'def'])
+    })
+  })
+
+  describe('search text change', () => {
+    beforeEach(() => {
+      component.handleSearchTextChange('blarg')
+    })
+    it('changes the search filters', () => {
+      expect(searchFacadeMock.setFilters).toHaveBeenCalledWith({ any: 'blarg' })
+    })
   })
 })
