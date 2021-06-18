@@ -1,10 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
-
-/* For base styles (check out normalize.css) */
 @tailwind base;
-/* Simple reusable components provided by tailwind */
 @tailwind components;
-/* utility classes generated based on our tailwind.config.js */
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Permanent+Marker&display=swap');
@@ -13,6 +8,10 @@
   --current-font: 'Open Sans', sans-serif;
   --focus-font: 'Permanent Marker', cursive;
   --gradient: linear-gradient(65deg, #fff 0%, #dbeff8 100%);
+}
+
+body {
+  color: var(--color-main);
 }
 
 @font-face {
