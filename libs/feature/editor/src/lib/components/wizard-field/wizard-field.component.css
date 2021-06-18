@@ -3,7 +3,8 @@
   flex: 1;
 }
 
-ui-text-input::ng-deep input {
+gn-ui-text-input::ng-deep input,
+input[type='text'] {
   height: 100%;
   background: white;
   color: black;
@@ -13,16 +14,16 @@ ui-text-input::ng-deep input {
   border-color: var(--color-primary);
 }
 
-ui-text-area::ng-deep textarea {
+gn-ui-text-area::ng-deep textarea {
   border-width: 2px;
   border-color: var(--color-primary);
 }
 
-ui-dropdown-selector::ng-deep div {
+gn-ui-dropdown-selector::ng-deep div {
   height: 100%;
 }
 
-ui-dropdown-selector::ng-deep select {
+gn-ui-dropdown-selector::ng-deep select {
   height: 100%;
   border-width: 2px;
   border-color: var(--color-primary);

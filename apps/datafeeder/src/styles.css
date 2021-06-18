@@ -31,31 +31,31 @@ html,
   font-size: 1.1rem;
 }
 
-app-root {
+gn-ui-root {
   background: var(--gradient);
 }
 
-ui-button button[type='button'] {
+gn-ui-button button[type='button'] {
   background: var(--color-primary);
   border-color: var(--color-primary);
 }
-ui-button button[type='button']:not([disabled]):hover {
+gn-ui-button button[type='button']:not([disabled]):hover {
   background: var(--color-primary-darker);
   border-color: var(--color-primary-darker);
 }
 
-ui-button button[type='button'].secondary {
+gn-ui-button button[type='button'].secondary {
   background: white;
   color: var(--color-primary);
   border-color: var(--color-primary);
   border-width: 1px;
 }
-ui-button button[type='button'].secondary:hover {
+gn-ui-button button[type='button'].secondary:hover {
   background: var(--color-primary-darker);
   color: white;
 }
 
-my-date-picker .mydp {
+[angular-mydatepicker] .mydp {
   border-color: var(--color-primary);
   border-width: 2px;
 }
@@ -64,7 +64,7 @@ input:focus,
 textarea:focus,
 select:focus,
 tag-input:focus-within,
-my-date-picker .mydp:focus-within {
+[angular-mydatepicker] .mydp:focus-within {
   border-color: var(--color-primary-darker) !important;
   color: black;
 }
