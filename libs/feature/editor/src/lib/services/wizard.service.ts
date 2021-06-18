@@ -89,22 +89,6 @@ export class WizardService {
     localStorage.removeItem(this.storageKey)
   }
 
-  translateMonthLabels(): Observable<IMyMonthLabels> {
-    return new Observable<IMyMonthLabels>((result) => {
-      const monthLabels = {}
-      const monthTitleObs = []
-      MONTH_OF_THE_YEAR.forEach((m) => {
-        monthTitleObs.push(this.translateService.get(`datafeeder.month.${m}`))
-      })
-
-      forkJoin(monthTitleObs).subscribe((mLabel) => {
-        mLabel.forEach((title, index) => (monthLabels[`${index + 1}`] = title))
-        result.next(monthLabels)
-        result.complete()
-      })
-    })
-  }
-
   private load(write = true) {
     const lsItem = localStorage.getItem(this.storageKey)
     const datafeederData = lsItem ? JSON.parse(lsItem) : {}

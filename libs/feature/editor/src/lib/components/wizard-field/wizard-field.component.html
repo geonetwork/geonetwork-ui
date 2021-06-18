@@ -45,13 +45,16 @@
       class="w-1/2 h-12"
       *ngIf="wizardFieldType.DATA_PICKER === wizardFieldConfig.type"
     >
-      <gn-ui-datepicker
-        #datepicker
-        [id]="wizardFieldConfig.id"
-        [options]="datepickerOptions"
-        [currentDate]="wizardFieldData"
-      ></gn-ui-datepicker>
-    </div>
+        <input
+            type="text"
+            (click)="datepicker.open()"
+            class="rounded p-2 text-gray-700 w-full leading-tight focus:outline-none focus:border-primary"
+            [value]="wizardFieldData"
+            [matDatepicker]="datepicker"
+            (dateChange)="onDateChange($event)"
+        />
+        <mat-datepicker #datepicker></mat-datepicker>
+      </div>
     <div
       class="w-1/2 h-12"
       *ngIf="wizardFieldType.DROPDOWN === wizardFieldConfig.type"

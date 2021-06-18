@@ -30,7 +30,7 @@ export class WizardSummarizeComponent {
     const time =
       this.wizardService.getWizardFieldData('datepicker') ||
       new Date().getTime()
-    const locale = this.translateService.getDefaultLang()
+    const locale = this.translateService.currentLang
 
     return new Date(Number(time)).toLocaleDateString(locale, {
       year: 'numeric',

@@ -5,12 +5,22 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core'
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MAT_MOMENT_DATE_FORMATS,
+  MomentDateAdapter,
+} from '@angular/material-moment-adapter'
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core'
+import { MatDatepickerInputEvent } from '@angular/material/datepicker'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { IMyOptions } from 'angular-mydatepicker'
+import { getLangFromBrowser } from '@geonetwork-ui/util/i18n'
 import { WizardFieldModel } from '../../models/wizard-field.model'
 import { WizardFieldType } from '../../models/wizard-field.type'
 import { WizardService } from '../../services/wizard.service'
-import { DATEPICKER_OPTIONS } from '../configs/datepicker.config'
 import {
   ChipsInputComponent,
   DatepickerComponent,
@@ -33,10 +43,31 @@ marker('datafeeder.month.october')
 marker('datafeeder.month.november')
 marker('datafeeder.month.december')
 
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'LL',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+}
+
 @Component({
   selector: 'gn-ui-wizard-field',
   templateUrl: './wizard-field.component.html',
   styleUrls: ['./wizard-field.component.css'],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: getLangFromBrowser() },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ],
 })
 export class WizardFieldComponent implements AfterViewInit, OnDestroy {
   @Input() wizardFieldConfig: WizardFieldModel
@@ -44,10 +75,8 @@ export class WizardFieldComponent implements AfterViewInit, OnDestroy {
   @ViewChild('searchText') searchText: TextInputComponent
   @ViewChild('chips') chips: ChipsInputComponent
   @ViewChild('textArea') textArea: TextAreaComponent
-  @ViewChild('datepicker') datepicker: DatepickerComponent
   @ViewChild('dropdown') dropdown: DropdownSelectorComponent
 
-  datepickerOptions: IMyOptions = DATEPICKER_OPTIONS
   subs = new Subscription()
 
   get wizardFieldType(): typeof WizardFieldType {
@@ -81,14 +110,7 @@ export class WizardFieldComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  constructor(private wizardService: WizardService) {
-    this.wizardService.translateMonthLabels().subscribe((monthLabels) => {
-      const options = DATEPICKER_OPTIONS
-      options.monthLabels = monthLabels
-
-      this.datepickerOptions = options
-    })
-  }
+  constructor(private wizardService: WizardService) {}
 
   ngAfterViewInit() {
     this.initializeListeners()
@@ -113,7 +135,6 @@ export class WizardFieldComponent implements AfterViewInit, OnDestroy {
         return
       }
       case WizardFieldType.DATA_PICKER: {
-        this.initializeDatePickerListener()
         return
       }
       case WizardFieldType.DROPDOWN: {
@@ -156,14 +177,10 @@ export class WizardFieldComponent implements AfterViewInit, OnDestroy {
     )
   }
 
-  private initializeDatePickerListener() {
-    this.subs.add(
-      this.datepicker.selectedDate.subscribe((value: Date) => {
-        this.wizardService.onWizardWizardFieldDataChanged(
-          this.wizardFieldConfig.id,
-          (+value).toString()
-        )
-      })
+  onDateChange(event: MatDatepickerInputEvent<Date>) {
+    this.wizardService.onWizardWizardFieldDataChanged(
+      this.wizardFieldConfig.id,
+      event.value.valueOf()
     )
   }
 

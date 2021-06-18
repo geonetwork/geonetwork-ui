@@ -1,4 +1,7 @@
 import { NgModule } from '@angular/core'
+import { MatNativeDateModule } from '@angular/material/core'
+import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatFormFieldModule } from '@angular/material/form-field'
 import { WizardComponent } from './components/wizard/wizard.component'
 import { WizardFieldComponent } from './components/wizard-field/wizard-field.component'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
@@ -20,6 +23,9 @@ import { CommonModule } from '@angular/common'
     UiWidgetsModule,
     TranslateModule.forChild(),
     CommonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
   ],
   exports: [WizardComponent, WizardSummarizeComponent],
 })

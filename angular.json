@@ -397,7 +397,10 @@
               "apps/datafeeder/src/favicon.ico",
               "apps/datafeeder/src/assets"
             ],
-            "styles": ["apps/datafeeder/src/styles.css"],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "apps/datafeeder/src/styles.css"
+            ],
             "scripts": []
           },
           "configurations": {
