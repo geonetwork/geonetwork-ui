@@ -41,7 +41,7 @@ describe('UploadDataComponent', () => {
   it('should create with non error', () => {
     expect(component).toBeTruthy()
     const el: HTMLElement = fixture.nativeElement
-    const errorEl = el.querySelector('app-upload-data-error-dialog')
+    const errorEl = el.querySelector('gn-ui-upload-data-error-dialog')
     expect(errorEl).toBeFalsy()
   })
 
@@ -51,7 +51,7 @@ describe('UploadDataComponent', () => {
     component = fixture.componentInstance
     fixture.detectChanges()
     const el: HTMLElement = fixture.nativeElement
-    const errorEl = el.querySelector('app-upload-data-error-dialog')
+    const errorEl = el.querySelector('gn-ui-upload-data-error-dialog')
     expect(errorEl).toBeTruthy()
   })
 })
