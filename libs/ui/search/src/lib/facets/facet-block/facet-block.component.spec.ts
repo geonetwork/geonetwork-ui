@@ -51,7 +51,7 @@ describe('FacetBlockComponent', () => {
     expect(de.query(By.css('.span-title')).nativeElement.textContent).toBe(
       'facets.block.title.tag'
     )
-    expect(de.queryAll(By.css('ui-facet-item')).length).toEqual(21)
+    expect(de.queryAll(By.css('gn-ui-facet-item')).length).toEqual(21)
     expect(de.query(By.css('.a-more'))).toBeTruthy()
   })
 
