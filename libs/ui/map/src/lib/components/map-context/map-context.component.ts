@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,13 +6,10 @@ import {
   OnInit,
   Output,
 } from '@angular/core'
-import { FeatureCollection } from 'geojson'
-import Feature from 'ol/Feature'
 
+import Feature from 'ol/Feature'
 import Map from 'ol/Map'
-import VectorSource from 'ol/source/Vector'
 import { forkJoin, Observable, of } from 'rxjs'
-import { map } from 'rxjs/operators'
 import { MapContextModel } from '../../models/map-context.model'
 import { MapContextService } from '../../services/map-context.service'
 import { MapUtilsService } from '../../services/map-utils.service'

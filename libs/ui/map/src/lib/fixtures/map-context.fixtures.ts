@@ -3,7 +3,7 @@ import {
   MapContextLayerTypeEnum,
   MapContextModel,
   MapContextViewModel,
-} from '@geonetwork-ui/ui/map'
+} from '../models'
 import { FEATURE_COLLECTION_POLYGON_FIXTURE_4326 } from './geojson.fixtures'
 
 export const MAP_CTX_LAYER_XYZ_FIXTURE: MapContextLayerModel = {

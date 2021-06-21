@@ -44,7 +44,7 @@ export class MapContextService {
             params: { LAYERS: layerModel.name },
           }),
         })
-      case MapContextLayerTypeEnum.GEOJSON:
+      case MapContextLayerTypeEnum.GEOJSON: {
         const { data } = layerModel
         const features = this.mapUtils.readFeatureCollection(data)
         return new VectorLayer({
@@ -52,6 +52,7 @@ export class MapContextService {
             features,
           }),
         })
+      }
     }
   }
 

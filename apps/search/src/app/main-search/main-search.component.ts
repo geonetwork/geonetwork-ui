@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core'
 import { MapContextLayerTypeEnum } from '@geonetwork-ui/ui/map'
-import { BootstrapService } from '@geonetwork-ui/util/shared'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { map, take, tap } from 'rxjs/operators'
 import { fromLonLat } from 'ol/proj'
+import { BootstrapService } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-main-search',

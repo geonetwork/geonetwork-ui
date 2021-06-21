@@ -1,17 +1,11 @@
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
+import { TranslateModule } from '@ngx-translate/core'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
+import { TranslateTestingModule } from 'ngx-translate-testing'
 
 import { ResultsHitsNumberComponent } from './results-hits-number.component'
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
-import { StoreModule } from '@ngrx/store'
-import {
-  initialState,
-  reducer,
-  SEARCH_FEATURE_KEY,
-} from '@geonetwork-ui/feature/search'
-import { TranslateTestingModule } from 'ngx-translate-testing'
 
 describe('ResultsHitsNumberComponent', () => {
   let component: ResultsHitsNumberComponent
@@ -22,10 +16,6 @@ describe('ResultsHitsNumberComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ResultsHitsNumberComponent],
       imports: [
-        StoreModule.forRoot({}),
-        StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
-          initialState,
-        }),
         TranslateModule.forRoot(),
         TranslateTestingModule.withTranslations({
           en: {
