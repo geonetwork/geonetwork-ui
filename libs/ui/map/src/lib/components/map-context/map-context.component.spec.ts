@@ -1,8 +1,8 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MapContextService } from '../../services/map-context.service'
 import { MAP_CTX_FIXTURE } from '../../fixtures/map-context.fixtures'
+import { MapContextService } from '../../services/map-context.service'
+import { MapUtilsService } from '../../services/map-utils.service'
 
 import { MapContextComponent } from './map-context.component'
 
@@ -11,6 +11,10 @@ const mapMock = {
 }
 const mapContextServiceMock = {
   createMap: jest.fn(() => mapMock),
+}
+
+const mapUtilsServiceMock = {
+  createLayer: jest.fn(),
 }
 
 describe('MapContextComponent', () => {
@@ -26,6 +30,10 @@ describe('MapContextComponent', () => {
         {
           provide: MapContextService,
           useValue: mapContextServiceMock,
+        },
+        {
+          provide: MapUtilsService,
+          useValue: mapUtilsServiceMock,
         },
       ],
     }).compileComponents()

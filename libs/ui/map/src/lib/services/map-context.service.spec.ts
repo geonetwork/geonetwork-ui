@@ -1,4 +1,12 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { TestBed } from '@angular/core/testing'
+import TileLayer from 'ol/layer/Tile'
+import VectorLayer from 'ol/layer/Vector'
+import Map from 'ol/Map'
+import TileWMS from 'ol/source/TileWMS'
+import VectorSource from 'ol/source/Vector'
+import XYZ from 'ol/source/XYZ'
+import View from 'ol/View'
 import {
   MAP_CTX_FIXTURE,
   MAP_CTX_LAYER_GEOJSON_FIXTURE,
@@ -6,14 +14,6 @@ import {
   MAP_CTX_LAYER_XYZ_FIXTURE,
   MAP_CTX_VIEW_FIXTURE,
 } from '../fixtures/map-context.fixtures'
-import Map from 'ol/Map'
-import View from 'ol/View'
-import Layer from 'ol/layer/Base'
-import VectorLayer from 'ol/layer/Vector'
-import TileWMS from 'ol/source/TileWMS'
-import TileLayer from 'ol/layer/Tile'
-import XYZ from 'ol/source/XYZ'
-import VectorSource from 'ol/source/Vector'
 
 import { MapContextService } from './map-context.service'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
