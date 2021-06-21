@@ -30,6 +30,7 @@ import {
 import { SearchEffects } from './effects'
 import { ES_FIXTURE_AGGS_REQUEST } from '../elasticsearch/fixtures/aggregations-request'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 
 const initialStateSearchMock = initialState[DEFAULT_SEARCH_KEY]
 const initialStateMock = {
@@ -75,6 +76,7 @@ describe('Effects', () => {
         StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
           initialState: initialStateMock,
         }),
+        HttpClientTestingModule,
       ],
       providers: [
         provideMockActions(() => actions$),
