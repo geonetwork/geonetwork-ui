@@ -16,7 +16,6 @@ import {
 } from '../fixtures/map-context.fixtures'
 
 import { MapContextService } from './map-context.service'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
 
 describe('MapContextService', () => {
   let service: MapContextService
