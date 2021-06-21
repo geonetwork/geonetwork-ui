@@ -102,7 +102,7 @@ describe('WizardSummarizeComponent', () => {
       .textContent
 
     expect(date).toEqual(
-      new Date(TIME).toLocaleDateString('en', {
+      new Date(TIME).toLocaleDateString(undefined, {
         year: 'numeric',
         month: 'long',
         day: 'numeric',

@@ -46,6 +46,7 @@
       *ngIf="wizardFieldType.DATA_PICKER === wizardFieldConfig.type"
     >
       <input
+        [id]="wizardFieldConfig.id"
         type="text"
         (click)="datepicker.open()"
         class="rounded p-2 text-gray-700 w-full leading-tight focus:outline-none focus:border-primary"

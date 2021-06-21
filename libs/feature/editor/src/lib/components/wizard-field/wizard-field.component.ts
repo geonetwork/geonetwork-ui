@@ -7,7 +7,6 @@ import {
 } from '@angular/core'
 import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-  MAT_MOMENT_DATE_FORMATS,
   MomentDateAdapter,
 } from '@angular/material-moment-adapter'
 import {
@@ -23,7 +22,6 @@ import { WizardFieldType } from '../../models/wizard-field.type'
 import { WizardService } from '../../services/wizard.service'
 import {
   ChipsInputComponent,
-  DatepickerComponent,
   DropdownSelectorComponent,
   TextAreaComponent,
   TextInputComponent,
