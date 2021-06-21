@@ -16,11 +16,15 @@ import { MatTableDataSource } from '@angular/material/table'
 export class TableComponent implements OnInit, AfterViewInit {
   @Input() data: any
   @ViewChild(MatSort) sort: MatSort
-  properties: string[]
   dataSource: MatTableDataSource<any>
 
+  get properties(): string[] {
+    return Array.isArray(this.data) && this.data.length
+      ? Object.keys(this.data[0])
+      : []
+  }
+
   ngOnInit(): void {
-    this.properties = Object.keys(this.data[0])
     this.dataSource = new MatTableDataSource(this.data)
   }
 

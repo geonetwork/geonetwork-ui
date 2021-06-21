@@ -1,6 +1,7 @@
 module.exports = {
   displayName: 'ui-map',
   preset: '../../../jest.preset.js',
+  transformIgnorePatterns: ['node_modules/(?!(ol))'],
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {

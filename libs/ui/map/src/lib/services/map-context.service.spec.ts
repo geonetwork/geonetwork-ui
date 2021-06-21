@@ -16,12 +16,15 @@ import XYZ from 'ol/source/XYZ'
 import VectorSource from 'ol/source/Vector'
 
 import { MapContextService } from './map-context.service'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 
 describe('MapContextService', () => {
   let service: MapContextService
 
   beforeEach(() => {
-    TestBed.configureTestingModule({})
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+    })
     service = TestBed.inject(MapContextService)
   })
 

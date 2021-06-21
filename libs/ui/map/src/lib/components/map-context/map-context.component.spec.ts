@@ -20,6 +20,7 @@ describe('MapContextComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [MapContextComponent],
+      imports: [HttpClientTestingModule],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
