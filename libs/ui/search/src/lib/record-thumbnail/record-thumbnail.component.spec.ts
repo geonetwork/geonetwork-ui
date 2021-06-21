@@ -51,7 +51,7 @@ describe('RecordThumbnailComponent', () => {
         expect(img).toBeTruthy()
       })
       it('url attribute as url @Input', () => {
-        expect(img.properties.src).toEqual(url)
+        expect(img.nativeElement.getAttribute('src')).toEqual(url)
       })
     })
   })
