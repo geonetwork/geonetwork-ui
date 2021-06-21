@@ -1,4 +1,4 @@
-import { DebugElement } from '@angular/core'
+import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
@@ -14,7 +14,11 @@ describe('RecordThumbnailComponent', () => {
     await TestBed.configureTestingModule({
       imports: [UtilSharedModule],
       declarations: [RecordThumbnailComponent],
-    }).compileComponents()
+    })
+      .overrideComponent(RecordThumbnailComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents()
   })
 
   beforeEach(() => {
