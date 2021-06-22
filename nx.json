@@ -7,7 +7,7 @@
     ".eslintrc.json": "*"
   },
   "affected": {
-    "defaultBase": "master"
+    "defaultBase": "remotes/origin/master"
   },
   "npmScope": "geonetwork-ui",
   "tasksRunnerOptions": {

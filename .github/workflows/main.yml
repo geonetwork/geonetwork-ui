@@ -10,13 +10,12 @@ on:
     types: [opened, synchronize]
 
 jobs:
-
   lint-test-build:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [ 14.x ]
+        node-version: [14.x]
 
     steps:
       - name: Checkout
@@ -63,7 +62,6 @@ jobs:
   gh-pages:
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -103,9 +101,9 @@ jobs:
         with:
           msg: 'Link to gh-pages:
 
-                * https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/demo/
+            * https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/demo/
 
-                * https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/
+            * https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/
 
-                * https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook-wc/'
+            * https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook-wc/'
           check_for_duplicate_msg: true
