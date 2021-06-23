@@ -1,12 +1,8 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 
 @Component({
-  selector: 'app-summarize-background',
+  selector: 'gn-ui-summarize-background',
   templateUrl: './summarize-background.component.html',
   styleUrls: ['./summarize-background.component.css'],
 })
-export class SummarizeBackgroundComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class SummarizeBackgroundComponent {}

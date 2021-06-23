@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import {
-  DataPublishingApiService,
   DatasetPublishingStatusApiModel,
   PublishJobStatusApiModel,
   PublishStatusEnumApiModel,
-} from '@lib/datafeeder-api'
+} from '@geonetwork-ui/data-access/datafeeder'
 import { Subscription } from 'rxjs'
 import { take } from 'rxjs/operators'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
@@ -22,7 +21,7 @@ export interface JobStatusModel extends PublishJobStatusApiModel {
 }
 
 @Component({
-  selector: 'app-success-publish-page',
+  selector: 'gn-ui-success-publish-page',
   templateUrl: './success-publish-page.component.html',
   styleUrls: ['./success-publish-page.component.css'],
 })

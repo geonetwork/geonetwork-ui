@@ -1,14 +1,28 @@
-const { defaults } = require('jest-config')
-
 module.exports = {
-  collectCoverage: true,
-  collectCoverageFrom: [
-    'apps/datafeeder/src/**/*.ts',
-    '!apps/datafeeder/src/main.ts',
-    '!apps/datafeeder/src/polyfills.ts',
-    '!apps/datafeeder/src/environments/*',
-    '!apps/datafeeder/src/**/model.ts',
-    '!apps/datafeeder/src/**/*.module.ts',
-    '!apps/datafeeder/src/**/*.stories.ts',
+  displayName: 'datafeeder',
+  preset: '../../jest.preset.js',
+  transformIgnorePatterns: ['node_modules/(?!(ol))'],
+  transform: { '\\.ts$': ['ts-jest'] },
+  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
+  globals: {
+    'ts-jest': {
+      tsconfig: '<rootDir>/tsconfig.spec.json',
+      stringifyContentPathRegex: '\\.(html|svg)$',
+      astTransformers: {
+        before: [
+          'jest-preset-angular/build/InlineFilesTransformer',
+          'jest-preset-angular/build/StripStylesTransformer',
+        ],
+      },
+    },
+    env: {
+      apiUrl: '/datafeeder',
+    },
+  },
+  coverageDirectory: '../../coverage/apps/datafeeder',
+  snapshotSerializers: [
+    'jest-preset-angular/build/serializers/no-ng-attributes',
+    'jest-preset-angular/build/serializers/ng-snapshot',
+    'jest-preset-angular/build/serializers/html-comment',
   ],
 }

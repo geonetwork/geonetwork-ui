@@ -1,6 +1,6 @@
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { WizardFieldType } from '@lib/editor'
-import { WizardFieldModel } from '@lib/editor'
+import { WizardFieldType } from '@geonetwork-ui/feature/editor'
+import { WizardFieldModel } from '@geonetwork-ui/feature/editor'
 import SETTINGS from '../../settings'
 
 export const DEFAULT_CHIPS_ITEMS_URL = (keys) =>

@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 
-libFolderName=$1
+libName=$1
+libRootPath=libs/data-access/"$libName"/src/openapi
+specPath=libs/data-access/"$libName"/src/spec.yaml
 
-rm -rf libs/gn-api/src/lib/"$libFolderName"/openapi
+rm -rf "$libRootPath"
 
-./node_modules/.bin/openapi-generator generate \
-  -i libs/gn-api/src/lib/"$libFolderName"/spec.yml \
+./node_modules/.bin/openapi-generator-cli generate \
+  -i "$specPath" \
   -g typescript-angular \
-  -o libs/gn-api/src/lib/"$libFolderName"/openapi \
+  -o "$libRootPath" \
   -c openapi-codegen-config.json \
   --skip-validate-spec \
 
-sed -i "s/' | }/' }/" libs/gn-api/src/lib/"$libFolderName"/openapi/**/*.ts
-sed -i "s/SetApiModel/Set/" libs/gn-api/src/lib/"$libFolderName"/openapi/**/*.ts
-sed -i "s/import { Set } from '.\/set.api.model'//" libs/gn-api/src/lib/"$libFolderName"/openapi/**/*.ts
+sed -i "s/' | }/' }/" "$libRootPath"/**/*.ts
+sed -i "s/SetApiModel/Set/" "$libRootPath"/**/*.ts
+sed -i "s/import { Set } from '.\/set.api.model'//" "$libRootPath"/**/*.ts
 
-prettier --write "libs/gn-api/src/lib/$libFolderName/openapi/**/*.ts"
+prettier --write "$libRootPath/**/*.ts"

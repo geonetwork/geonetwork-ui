@@ -1,0 +1,15 @@
+<div
+  class="search-results"
+  infinite-scroll
+  [infiniteScrollDistance]="scrollableConfig.distance"
+  [infiniteScrollUpDistance]="scrollableConfig.upDistance"
+  [infiniteScrollThrottle]="scrollableConfig.throttle"
+  [infiniteScrollDisabled]="scrollDisable$ | async"
+  (scrolled)="onScrollDown()"
+>
+  <gn-ui-results-list
+    [loading]="facade.isLoading$ | async"
+    [records]="facade.results$ | async"
+    [layout]="facade.layout$ | async"
+  ></gn-ui-results-list>
+</div>

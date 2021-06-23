@@ -4,17 +4,16 @@ import {
   DataPublishingApiService,
   PublishJobStatusApiModel,
   PublishStatusEnumApiModel,
-  UploadJobStatusApiModel,
-} from '@lib/datafeeder-api'
-import { WizardService } from '@lib/editor'
+} from '@geonetwork-ui/data-access/datafeeder'
+import { WizardService } from '@geonetwork-ui/feature/editor'
 import { interval, Observable, Subscription } from 'rxjs'
 import { filter, mergeMap, switchMap, take, tap } from 'rxjs/operators'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
 
-const { PENDING, RUNNING, DONE } = PublishStatusEnumApiModel
+const { Pending, Running, Done } = PublishStatusEnumApiModel
 
 @Component({
-  selector: 'app-publish-page',
+  selector: 'gn-ui-publish-page',
   templateUrl: './publish-page.component.html',
   styleUrls: ['./publish-page.component.css'],
 })
@@ -49,7 +48,7 @@ export class PublishPageComponent implements OnInit, OnDestroy {
           ),
           filter(
             (job: PublishJobStatusApiModel) =>
-              ![PENDING, RUNNING].includes(job.status)
+              ![Pending, Running].includes(job.status)
           ),
           take(1)
         )
@@ -63,7 +62,7 @@ export class PublishPageComponent implements OnInit, OnDestroy {
   }
 
   onJobFinish(job: PublishJobStatusApiModel) {
-    const done = job.status === DONE
+    const done = job.status === Done
     this.wizardService.reset()
     this.router.navigate(done ? ['/', this.rootId, 'publishok'] : ['/'], {
       relativeTo: this.activatedRoute,

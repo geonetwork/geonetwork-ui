@@ -7,7 +7,7 @@ import { config as wizardConfig } from '../../../configs/wizard.config'
 marker('datafeeder.wizard.emptyRequiredValuesMessage')
 
 @Component({
-  selector: 'app-forms-page',
+  selector: 'gn-ui-forms-page',
   templateUrl: './forms-page.component.html',
   styleUrls: ['./forms-page.component.css'],
 })

@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   UploadDataError,
   UploadDataErrorType,
 } from '../svg/upload-data-error-dialog/upload-data-error-dialog.component'
-import { FileUploadApiService } from '@lib/datafeeder-api'
+import { FileUploadApiService } from '@geonetwork-ui/data-access/datafeeder'
 
 marker('datafeeder.upload.error.title.noRightsToSendData')
 marker('datafeeder.upload.error.title.fileHasntSelected')
@@ -16,11 +16,11 @@ marker('datafeeder.upload.error.title.cantOpenFile')
 marker('datafeeder.upload.error.subtitle.cantOpenFile')
 
 @Component({
-  selector: 'app-upload-data-component',
+  selector: 'gn-ui-upload-data-component',
   templateUrl: './upload-data.component.html',
   styleUrls: ['./upload-data.component.css'],
 })
-export class UploadDataComponent implements OnInit {
+export class UploadDataComponent {
   file: File = null
   haveRights = false
   uploading = false
@@ -32,8 +32,6 @@ export class UploadDataComponent implements OnInit {
   @Output() jobId$ = new EventEmitter<string>()
 
   constructor(private fileUploadApiService: FileUploadApiService) {}
-
-  ngOnInit(): void {}
 
   fileChange(file) {
     this.file = file

@@ -5,7 +5,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router'
-import { FileUploadApiService } from '@lib/datafeeder-api'
+import { FileUploadApiService } from '@geonetwork-ui/data-access/datafeeder'
 import { Observable, of } from 'rxjs'
 import { catchError, mapTo, mergeMap, take, tap } from 'rxjs/operators'
 import { DatafeederFacade } from '../store/datafeeder.facade'
@@ -27,7 +27,7 @@ export class UploadStatusGuard implements CanActivate {
     return this.facade.upload$.pipe(
       take(1),
       mergeMap((stateUpload) => {
-        return !!stateUpload
+        return stateUpload
           ? of(true)
           : this.fileUploadApiService.findUploadJob(id).pipe(
               tap((upload) => this.facade.setUpload(upload)),

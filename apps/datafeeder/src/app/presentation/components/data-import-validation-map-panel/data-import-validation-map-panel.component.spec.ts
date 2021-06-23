@@ -3,10 +3,10 @@ if (typeof global.URL.createObjectURL !== 'function') {
 }
 
 import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
-import { I18nModule } from '@lib/common'
+import { UtilI18nModule } from '@geonetwork-ui/util/i18n'
 import { TranslateModule } from '@ngx-translate/core'
 import { of } from 'rxjs'
 
@@ -16,9 +16,9 @@ describe('MapViewComponent', () => {
   let component: DataImportValidationMapPanelComponent
   let fixture: ComponentFixture<DataImportValidationMapPanelComponent>
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [I18nModule, TranslateModule.forRoot()],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [UtilI18nModule, TranslateModule.forRoot()],
       declarations: [DataImportValidationMapPanelComponent],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
@@ -28,7 +28,7 @@ describe('MapViewComponent', () => {
         },
       ],
     }).compileComponents()
-  }))
+  })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DataImportValidationMapPanelComponent)

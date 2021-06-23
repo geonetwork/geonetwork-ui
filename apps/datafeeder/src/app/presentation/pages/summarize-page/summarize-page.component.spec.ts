@@ -1,18 +1,18 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RouterTestingModule } from '@angular/router/testing'
-import { WizardService } from '@lib/editor'
+import { WizardService } from '@geonetwork-ui/feature/editor'
 import { SummarizePageComponent } from './summarize-page.component'
 import {
   DataPublishingApiService,
   PublishJobStatusApiModel,
   PublishStatusEnumApiModel,
-} from '@lib/datafeeder-api'
+} from '@geonetwork-ui/data-access/datafeeder'
 import { of } from 'rxjs'
 
 const publishJobMock: PublishJobStatusApiModel = {
   jobId: '1234',
-  status: PublishStatusEnumApiModel.DONE,
+  status: PublishStatusEnumApiModel.Done,
   progress: 100,
   datasets: [{}],
 }
@@ -29,8 +29,8 @@ describe('SummarizePageComponent', () => {
   let component: SummarizePageComponent
   let fixture: ComponentFixture<SummarizePageComponent>
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [SummarizePageComponent],
       imports: [RouterTestingModule],
       schemas: [NO_ERRORS_SCHEMA],
@@ -45,7 +45,7 @@ describe('SummarizePageComponent', () => {
         },
       ],
     }).compileComponents()
-  }))
+  })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SummarizePageComponent)

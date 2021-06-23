@@ -1,7 +1,7 @@
 import {
   PublishJobStatusApiModel,
   UploadJobStatusApiModel,
-} from '@lib/datafeeder-api'
+} from '@geonetwork-ui/data-access/datafeeder'
 import {
   DatafeederAction,
   SET_PUBLICATION,
@@ -23,18 +23,20 @@ export function reducer(
   action: DatafeederAction
 ): DatafeederState {
   switch (action.type) {
-    case SET_UPLOAD:
+    case SET_UPLOAD: {
       const upload = action.payload
       return {
         ...state,
         upload,
       }
-    case SET_PUBLICATION:
+    }
+    case SET_PUBLICATION: {
       const publication = action.payload
       return {
         ...state,
         publication,
       }
+    }
   }
   return state
 }

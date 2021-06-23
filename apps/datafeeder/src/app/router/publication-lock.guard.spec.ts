@@ -4,7 +4,7 @@ import { Router } from '@angular/router'
 import {
   DataPublishingApiService,
   PublishStatusEnumApiModel,
-} from '@lib/datafeeder-api'
+} from '@geonetwork-ui/data-access/datafeeder'
 import { of, throwError } from 'rxjs'
 import { DatafeederFacade } from '../store/datafeeder.facade'
 import { PublicationLockGuard } from './publication-lock.guard'
@@ -12,7 +12,7 @@ import { PublicationLockGuard } from './publication-lock.guard'
 const publicationApiStatusMock = {
   jobId: '123',
   progress: 1,
-  status: PublishStatusEnumApiModel.PENDING,
+  status: PublishStatusEnumApiModel.Pending,
 }
 
 const dataPublishingApiServiceMock = {
@@ -90,7 +90,7 @@ describe('PublicationLockGuard', () => {
   })
   describe('publication status is ERROR', () => {
     beforeEach(() => {
-      publicationApiStatusMock.status = PublishStatusEnumApiModel.ERROR
+      publicationApiStatusMock.status = PublishStatusEnumApiModel.Error
       guard
         .canActivate(routeMock, routeStateMock)
         .subscribe((res) => (output = res))

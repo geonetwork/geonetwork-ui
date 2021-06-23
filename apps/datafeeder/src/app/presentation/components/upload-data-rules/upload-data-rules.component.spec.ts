@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { UploadDataRulesComponent } from './upload-data-rules.component'
 import { By } from '@angular/platform-browser'
@@ -9,13 +9,13 @@ describe('UploadDataRulesComponent', () => {
   let component: UploadDataRulesComponent
   let fixture: ComponentFixture<UploadDataRulesComponent>
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [UploadDataRulesComponent],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
-  }))
+  })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(UploadDataRulesComponent)

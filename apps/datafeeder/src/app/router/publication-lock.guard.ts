@@ -9,7 +9,7 @@ import {
   DataPublishingApiService,
   PublishJobStatusApiModel,
   PublishStatusEnumApiModel,
-} from '@lib/datafeeder-api'
+} from '@geonetwork-ui/data-access/datafeeder'
 import { Observable, of } from 'rxjs'
 import { catchError, mapTo, mergeMap, tap } from 'rxjs/operators'
 import { DatafeederFacade } from '../store/datafeeder.facade'
@@ -31,10 +31,10 @@ export class PublicationLockGuard implements CanActivate {
     return this.publishService.getPublishingStatus(id).pipe(
       tap((publication) => this.facade.setPublication(publication)),
       tap((publication: PublishJobStatusApiModel) => {
-        if (publication.status === PublishStatusEnumApiModel.DONE) {
+        if (publication.status === PublishStatusEnumApiModel.Done) {
           this.router.navigate([`${id}/publishok`])
         }
-        if (publication.status === PublishStatusEnumApiModel.RUNNING) {
+        if (publication.status === PublishStatusEnumApiModel.Running) {
           this.router.navigate([`${id}/publish`])
         }
       }),

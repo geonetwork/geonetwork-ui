@@ -2,7 +2,7 @@ import { Action } from '@ngrx/store'
 import {
   PublishJobStatusApiModel,
   UploadJobStatusApiModel,
-} from '@lib/datafeeder-api'
+} from '@geonetwork-ui/data-access/datafeeder'
 
 export const SET_UPLOAD = '[datafeeder] Set upload status'
 export const SET_PUBLICATION = '[datafeeder] Set publication status'

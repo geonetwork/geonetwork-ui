@@ -1,8 +1,8 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { TestBed } from '@angular/core/testing'
 import { RouterTestingModule } from '@angular/router/testing'
-import { BootstrapService } from '@lib/common'
-import { SearchFacade } from '@lib/search'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { BootstrapService } from '@geonetwork-ui/util/shared'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { of } from 'rxjs'
@@ -28,8 +28,8 @@ const searchFacadeMock = {
 }
 
 describe('MainSearchComponent', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
         EffectsModule.forRoot(),
@@ -48,7 +48,7 @@ describe('MainSearchComponent', () => {
         },
       ],
     }).compileComponents()
-  }))
+  })
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent)

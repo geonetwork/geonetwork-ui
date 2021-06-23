@@ -1,14 +1,16 @@
 import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-import { LibCatalogModule } from '@lib/catalog'
+import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
+import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
+import { UiMapModule } from '@geonetwork-ui/ui/map'
 import {
   getDefaultLang,
-  I18nModule,
+  UtilI18nModule,
   TRANSLATE_GEONETWORK_CONFIG,
-} from '@lib/common'
-import { BASE_PATH } from '@lib/gn-api'
-import { LibSearchModule } from '@lib/search'
+} from '@geonetwork-ui/util/i18n'
+import { BASE_PATH } from '@geonetwork-ui/data-access/gn4'
+import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
@@ -18,6 +20,7 @@ import { environment } from '../environments/environment'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { MainSearchComponent } from './main-search/main-search.component'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
@@ -29,13 +32,16 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    I18nModule,
+    UtilI18nModule,
     TranslateModule.forRoot(TRANSLATE_GEONETWORK_CONFIG),
-    LibSearchModule,
-    LibCatalogModule,
+    FeatureSearchModule,
+    FeatureCatalogModule,
+    UiLayoutModule,
+    UiMapModule,
     StoreModule.forRoot({}, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot(),
+    NoopAnimationsModule,
   ],
   providers: [
     {

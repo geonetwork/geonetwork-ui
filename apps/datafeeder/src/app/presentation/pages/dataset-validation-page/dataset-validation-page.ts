@@ -6,15 +6,15 @@ import {
 } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { LogService } from '@lib/common'
+import { LogService } from '@geonetwork-ui/util/shared'
 import {
   AnalysisStatusEnumApiModel,
   BoundingBoxApiModel,
   DatasetUploadStatusApiModel,
   FileUploadApiService,
   UploadJobStatusApiModel,
-} from '@lib/datafeeder-api'
-import { WizardService } from '@lib/editor'
+} from '@geonetwork-ui/data-access/datafeeder'
+import { WizardService } from '@geonetwork-ui/feature/editor'
 import Feature from 'ol/Feature'
 import GeoJSON from 'ol/format/GeoJSON'
 import { fromExtent } from 'ol/geom/Polygon'
@@ -34,7 +34,7 @@ marker('datafeeder.validation.encoding')
 marker('datafeeder.validation.projection')
 
 @Component({
-  selector: 'app-dataset-validation-page',
+  selector: 'gn-ui-dataset-validation-page',
   templateUrl: './dataset-validation-page.html',
   styleUrls: ['./dataset-validation-page.css'],
 })
@@ -42,8 +42,8 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   encodingList = SETTINGS.encodings
   refSystem = [{ label: unknownLabel, value: '' }, ...SETTINGS.projections]
 
-  geoJSONData: object
-  geoJSONBBox: object
+  geoJSONData: Record<string, unknown>
+  geoJSONBBox: Record<string, unknown>
 
   dataset: DatasetUploadStatusApiModel
 
@@ -77,7 +77,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
       this.facade.upload$
         .pipe(take(1))
         .subscribe((job: UploadJobStatusApiModel) => {
-          if (job.status === AnalysisStatusEnumApiModel.ERROR) {
+          if (job.status === AnalysisStatusEnumApiModel.Error) {
             this.router.navigate(['/'], {
               relativeTo: this.activatedRoute,
               queryParams: { error: 'analysis' },
@@ -115,7 +115,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
               new Feature({ geometry: fromExtent([minx, miny, maxx, maxy]) }),
               { featureProjection: viewSrs }
             )
-            this.geoJSONData = feature as object // No more precision in API
+            this.geoJSONData = feature as Record<string, any> // No more precision in API
           })
         })
     })
@@ -129,7 +129,9 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
         this.featureIndex,
         encoding
       )
-      .subscribe((feature) => (this.geoJSONData = feature))
+      .subscribe(
+        (feature) => (this.geoJSONData = feature as Record<string, any>)
+      )
   }
 
   handleCrsChange(crs) {

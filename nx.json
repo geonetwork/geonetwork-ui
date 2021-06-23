@@ -1,0 +1,82 @@
+{
+  "implicitDependencies": {
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    ".eslintrc.json": "*"
+  },
+  "affected": {
+    "defaultBase": "remotes/origin/master"
+  },
+  "npmScope": "geonetwork-ui",
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
+    }
+  },
+  "projects": {
+    "search": {
+      "tags": []
+    },
+    "search-e2e": {
+      "tags": [],
+      "implicitDependencies": ["search"]
+    },
+    "feature-search": {
+      "tags": []
+    },
+    "feature-auth": {
+      "tags": []
+    },
+    "ui-search": {
+      "tags": []
+    },
+    "ui-inputs": {
+      "tags": []
+    },
+    "ui-layout": {
+      "tags": []
+    },
+    "ui-widgets": {
+      "tags": []
+    },
+    "feature-editor": {
+      "tags": []
+    },
+    "feature-catalog": {
+      "tags": []
+    },
+    "ui-catalog": {
+      "tags": []
+    },
+    "datafeeder": {
+      "tags": []
+    },
+    "datafeeder-e2e": {
+      "tags": [],
+      "implicitDependencies": ["datafeeder"]
+    },
+    "util-i18n": {
+      "tags": []
+    },
+    "data-access-gn4": {
+      "tags": []
+    },
+    "data-access-datafeeder": {
+      "tags": []
+    },
+    "util-shared": {
+      "tags": []
+    },
+    "ui-map": {
+      "tags": []
+    },
+    "feature-map": {
+      "tags": []
+    }
+  }
+}

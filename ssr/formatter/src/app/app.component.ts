@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core'
-import { RecordSummary } from '@lib/search'
+import { RecordSummary } from '@geonetwork-ui/feature/search'
 import { map } from 'rxjs/operators'
 
 @Component({
-  selector: 'app-root',
+  selector: 'gn-ui-root',
   template: `
     <div class="container" *ngIf="metadata">
       <h1>{{ metadata.title }}</h1>

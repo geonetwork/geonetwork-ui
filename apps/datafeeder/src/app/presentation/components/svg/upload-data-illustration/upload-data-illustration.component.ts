@@ -1,12 +1,8 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 
 @Component({
-  selector: 'app-upload-data-illustration',
+  selector: 'gn-ui-upload-data-illustration',
   templateUrl: './upload-data-illustration.component.html',
   styleUrls: ['./upload-data-illustration.component.css'],
 })
-export class UploadDataIllustrationComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class UploadDataIllustrationComponent {}

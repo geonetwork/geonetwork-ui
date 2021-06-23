@@ -1,7 +1,7 @@
 <div
   class="flex-1 flex flex-col bg-primary-lightest bg-opacity-25 shape s1 overflow-hidden"
 >
-  <app-upload-data-background></app-upload-data-background>
+  <gn-ui-upload-data-background></gn-ui-upload-data-background>
   <div class="pl-64 pr-64 pt-16 pb-40 w-full h-full flex z-10 items-center">
     <div class="flex-1 self-start flex flex-col h-full">
       <div class="text-5xl font-bold pb-10 whitespace-pre-line" translate>
@@ -12,25 +12,25 @@
       </div>
       <div class="flex-1 flex flex-col justify-between pl-20">
         <div class="flex flex-col pt-8">
-          <ui-button
+          <gn-ui-button
             type="primary"
             extraClass="rounded-full px-20 mb-2"
             (click)="openGeonetworkLink()"
             ><span translate class="uppercase text-white font-bold"
               >datafeeder.publishSuccess.geonetworkRecord</span
-            ></ui-button
+            ></gn-ui-button
           >
-          <ui-button
+          <gn-ui-button
             type="primary"
             extraClass="rounded-full px-20"
             (click)="openGeoserverLink()"
             ><span class="uppercase text-white font-bold" translate
               >datafeeder.publishSuccess.mapViewer</span
-            ></ui-button
+            ></gn-ui-button
           >
         </div>
 
-        <ui-button
+        <gn-ui-button
           type="primary"
           extraClass="rounded-full px-20 secondary"
           (click)="backToHome()"
@@ -38,11 +38,11 @@
           <span translate class="uppercase font-bold"
             >datafeeder.publishSuccess.uploadAnotherData</span
           >
-        </ui-button>
+        </gn-ui-button>
       </div>
     </div>
     <div class="z-10 w-5/12 self-end">
-      <app-success-publish-page-illustration></app-success-publish-page-illustration>
+      <gn-ui-success-publish-page-illustration></gn-ui-success-publish-page-illustration>
     </div>
   </div>
 </div>

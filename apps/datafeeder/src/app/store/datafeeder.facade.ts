@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import {
   PublishJobStatusApiModel,
   UploadJobStatusApiModel,
-} from '@lib/datafeeder-api'
+} from '@geonetwork-ui/data-access/datafeeder'
 import { select, Store } from '@ngrx/store'
 import { SetPublication, SetUpload } from './datafeeder.action'
 import { DatafeederState } from './datafeeder.reducer'

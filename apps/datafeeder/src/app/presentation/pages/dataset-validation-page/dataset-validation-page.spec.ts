@@ -1,19 +1,19 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ActivatedRoute, Router } from '@angular/router'
 import {
   AnalysisStatusEnumApiModel,
   FileUploadApiService,
   UploadJobStatusApiModel,
-} from '@lib/datafeeder-api'
+} from '@geonetwork-ui/data-access/datafeeder'
 import { of } from 'rxjs'
-import { WizardService } from '@lib/editor'
+import { WizardService } from '@geonetwork-ui/feature/editor'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
 import { DatasetValidationPageComponent } from './dataset-validation-page'
 
 const jobMock: UploadJobStatusApiModel = {
   jobId: '1234',
-  status: AnalysisStatusEnumApiModel.DONE,
+  status: AnalysisStatusEnumApiModel.Done,
   progress: 100,
   datasets: [
     {
@@ -53,8 +53,8 @@ describe('DatasetValidationPageComponent', () => {
   let component: DatasetValidationPageComponent
   let fixture: ComponentFixture<DatasetValidationPageComponent>
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [DatasetValidationPageComponent],
       imports: [],
       schemas: [NO_ERRORS_SCHEMA],
@@ -75,7 +75,7 @@ describe('DatasetValidationPageComponent', () => {
         { provide: Router, useValue: routerMock },
       ],
     }).compileComponents()
-  }))
+  })
 
   it('should create', () => {
     createComponent()
@@ -111,7 +111,7 @@ describe('DatasetValidationPageComponent', () => {
 
   describe('Job ERROR', () => {
     beforeEach(() => {
-      jobMock.status = AnalysisStatusEnumApiModel.ERROR
+      jobMock.status = AnalysisStatusEnumApiModel.Error
       createComponent()
     })
 

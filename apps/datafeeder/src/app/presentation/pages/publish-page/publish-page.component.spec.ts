@@ -1,23 +1,23 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing'
-import { I18nModule } from '@lib/common'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { UtilI18nModule } from '@geonetwork-ui/util/i18n'
 import { TranslateModule } from '@ngx-translate/core'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
 
 import { PublishPageComponent } from './publish-page.component'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { UiModule } from '@lib/ui'
 import { Router, ActivatedRoute } from '@angular/router'
 import {
   DataPublishingApiService,
   PublishJobStatusApiModel,
   PublishStatusEnumApiModel,
-} from '@lib/datafeeder-api'
+} from '@geonetwork-ui/data-access/datafeeder'
 import { of } from 'rxjs'
 import { TestScheduler } from 'rxjs/testing'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 
 const jobMock: PublishJobStatusApiModel = {
   jobId: '1234',
-  status: PublishStatusEnumApiModel.DONE,
+  status: PublishStatusEnumApiModel.Done,
   progress: 1,
 }
 
@@ -40,10 +40,10 @@ describe('SumUpPageComponent', () => {
   let component: PublishPageComponent
   let fixture: ComponentFixture<PublishPageComponent>
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [PublishPageComponent],
-      imports: [UiModule, I18nModule, TranslateModule.forRoot()],
+      imports: [UiInputsModule, UtilI18nModule, TranslateModule.forRoot()],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
@@ -55,7 +55,7 @@ describe('SumUpPageComponent', () => {
         { provide: ActivatedRoute, useValue: activatedRouteMock },
       ],
     }).compileComponents()
-  }))
+  })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PublishPageComponent)

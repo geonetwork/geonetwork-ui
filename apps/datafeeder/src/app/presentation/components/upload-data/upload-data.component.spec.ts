@@ -1,6 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { async, ComponentFixture, TestBed } from '@angular/core/testing'
-import { FileUploadApiService } from '@lib/datafeeder-api'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { FileUploadApiService } from '@geonetwork-ui/data-access/datafeeder'
 import { TranslateModule } from '@ngx-translate/core'
 import { of } from 'rxjs'
 
@@ -18,8 +18,8 @@ describe('UploadDataComponent', () => {
   let component: UploadDataComponent
   let fixture: ComponentFixture<UploadDataComponent>
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [UploadDataComponent],
       imports: [TranslateModule.forRoot()],
       schemas: [NO_ERRORS_SCHEMA],
@@ -30,9 +30,7 @@ describe('UploadDataComponent', () => {
         },
       ],
     }).compileComponents()
-  }))
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(UploadDataComponent)
     component = fixture.componentInstance
     fixture.detectChanges()

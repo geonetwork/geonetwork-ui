@@ -9,7 +9,7 @@
 }
 
 .shape::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   right: 0;
@@ -19,7 +19,7 @@
 }
 
 .shape::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   right: 0;
@@ -40,6 +40,6 @@
   clip-path: url(#mask-shape1-2);
 }
 
-ui-button::ng-deep button {
+gn-ui-button::ng-deep button {
   width: 24rem;
 }

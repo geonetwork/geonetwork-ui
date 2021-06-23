@@ -1,52 +1,46 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
+    "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "module": "esnext",
     "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "es2019",
-    "allowJs": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2019", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "strictNullChecks": false,
+    "strictFunctionTypes": false,
+    "strictPropertyInitialization": false,
+    "noImplicitAny": false,
     "esModuleInterop": true,
-    "lib": [
-      "es2019",
-      "dom"
-    ],
     "paths": {
-      "@lib/search": [
-        "libs/search/src/index.ts"
+      "ol": ["node_modules/ol/src"],
+      "ol/*": ["node_modules/ol/src/*"],
+      "@geonetwork-ui/feature/search": ["libs/feature/search/src/index.ts"],
+      "@geonetwork-ui/feature/auth": ["libs/feature/auth/src/index.ts"],
+      "@geonetwork-ui/ui/search": ["libs/ui/search/src/index.ts"],
+      "@geonetwork-ui/ui/inputs": ["libs/ui/inputs/src/index.ts"],
+      "@geonetwork-ui/ui/layout": ["libs/ui/layout/src/index.ts"],
+      "@geonetwork-ui/ui/widgets": ["libs/ui/widgets/src/index.ts"],
+      "@geonetwork-ui/feature/editor": ["libs/feature/editor/src/index.ts"],
+      "@geonetwork-ui/feature/catalog": ["libs/feature/catalog/src/index.ts"],
+      "@geonetwork-ui/ui/catalog": ["libs/ui/catalog/src/index.ts"],
+      "@geonetwork-ui/util/i18n": ["libs/util/i18n/src/index.ts"],
+      "@geonetwork-ui/data-access/gn4": ["libs/data-access/gn4/src/index.ts"],
+      "@geonetwork-ui/data-access/datafeeder": [
+        "libs/data-access/datafeeder/src/index.ts"
       ],
-      "@lib/catalog": [
-        "libs/catalog/src/index.ts"
-      ],
-      "@lib/ui": [
-        "libs/ui/src/index.ts"
-      ],
-      "@lib/gn-api": [
-        "libs/gn-api/src/lib/gn4/index.ts"
-      ],
-      "@lib/datafeeder-api": [
-        "libs/gn-api/src/lib/datafeeder/index.ts"
-      ],
-      "@lib/common": [
-        "libs/common/src/index.ts"
-      ],
-      "@lib/auth": [
-        "libs/auth/src/index.ts"
-      ],
-      "@lib/editor": [
-        "libs/editor/src/index.ts"
-      ]
-    }
+      "@geonetwork-ui/util/shared": ["libs/util/shared/src/index.ts"],
+      "@geonetwork-ui/ui/map": ["libs/ui/map/src/index.ts"],
+      "@geonetwork-ui/feature/map": ["libs/feature/map/src/index.ts"]
+    },
+    "allowJs": true
   },
-  "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
-  }
+  "exclude": ["node_modules", "tmp"]
 }

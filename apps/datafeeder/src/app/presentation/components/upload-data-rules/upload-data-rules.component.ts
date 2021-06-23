@@ -1,15 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input } from '@angular/core'
 
 @Component({
-  selector: 'app-upload-data-rules',
+  selector: 'gn-ui-upload-data-rules',
   templateUrl: './upload-data-rules.component.html',
   styleUrls: ['./upload-data-rules.component.css'],
 })
-export class UploadDataRulesComponent implements OnInit {
+export class UploadDataRulesComponent {
   @Input() maxFileSize = 30
   @Input() acceptedFileFormats = ['SHP', 'GeoJSON', 'GeoPackage', 'Spatialite']
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

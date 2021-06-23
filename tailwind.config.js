@@ -1,4 +1,5 @@
 module.exports = {
+  darkMode: false, // or 'media' or 'class'
   purge: ['./{apps,libs,webcomponents}/*/src/**/*.{html,ts}'],
   theme: {
     inset: {
@@ -29,6 +30,18 @@ module.exports = {
           700: 'var(--color-gray-700)',
           800: 'var(--color-gray-800)',
           900: 'var(--color-gray-900)',
+        },
+        orange: {
+          50: '#fff8f1',
+          100: '#feecdc',
+          200: '#fcd9bd',
+          300: '#fdba8c',
+          400: '#ff8a4c',
+          500: '#ff5a1f',
+          600: '#d03801',
+          700: '#b43403',
+          800: '#8a2c0d',
+          900: '#73230d',
         },
       },
     },

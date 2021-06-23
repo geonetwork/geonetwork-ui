@@ -3,7 +3,7 @@ import { withA11y } from '@storybook/addon-a11y'
 import { color, text, withKnobs } from '@storybook/addon-knobs'
 import { moduleMetadata } from '@storybook/angular'
 import {
-  I18nModule,
+  UtilI18nModule,
   TRANSLATE_DEFAULT_CONFIG,
 } from '../../../../../libs/common/src'
 import { GnWcModule } from '../../gn-wc.module'
@@ -11,7 +11,7 @@ import { GnResultsListComponent } from './gn-results-list.component'
 
 const moduleMetadatas = {
   imports: [
-    I18nModule,
+    UtilI18nModule,
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
     GnWcModule,
   ],

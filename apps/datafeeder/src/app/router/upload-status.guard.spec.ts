@@ -1,24 +1,21 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { getTestBed, TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
-import {
-  DataPublishingApiService,
-  AnalysisStatusEnumApiModel,
-  FileUploadApiService,
-} from '@lib/datafeeder-api'
+import { FileUploadApiService } from '@geonetwork-ui/data-access/datafeeder'
 import { of, throwError } from 'rxjs'
+import { PublishStatusEnumApiModel } from '@geonetwork-ui/data-access/datafeeder'
 import { DatafeederFacade } from '../store/datafeeder.facade'
 import { UploadStatusGuard } from './upload-status.guard'
 
 const uploadStateStatusMock = {
   jobId: '123',
   progress: 1,
-  status: AnalysisStatusEnumApiModel.PENDING,
+  status: PublishStatusEnumApiModel.Pending,
 }
 const uploadApiStatusMock = {
   jobId: '123',
   progress: 1,
-  status: AnalysisStatusEnumApiModel.PENDING,
+  status: PublishStatusEnumApiModel.Pending,
 }
 
 const fileUploadApiServiceMock = {

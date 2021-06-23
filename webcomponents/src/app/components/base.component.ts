@@ -3,12 +3,11 @@ import {
   Injector,
   Input,
   OnChanges,
-  OnInit,
   SimpleChanges,
 } from '@angular/core'
-import { ColorService } from '@lib/common'
-import { Configuration } from '@lib/gn-api'
-import { SearchFacade } from '@lib/search'
+import { ColorService } from '@geonetwork-ui/util/shared'
+import { Configuration } from '@geonetwork-ui/data-access/gn4'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { TranslateService } from '@ngx-translate/core'
 
 export const apiConfiguration = new Configuration()
@@ -17,7 +16,7 @@ export const apiConfiguration = new Configuration()
   selector: 'wc-base',
   template: `<div></div>`,
 })
-export class BaseComponent implements OnInit, OnChanges {
+export class BaseComponent implements OnChanges {
   @Input() apiUrl = '/'
   @Input() searchId: string
   @Input() primaryColor = '#9a9a9a'
@@ -33,8 +32,6 @@ export class BaseComponent implements OnInit, OnChanges {
     this.facade = injector.get(SearchFacade)
     this.translate = injector.get(TranslateService)
   }
-
-  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!this.isInitialized) {

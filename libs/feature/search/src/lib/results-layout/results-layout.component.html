@@ -1,0 +1,7 @@
+<gn-ui-dropdown-selector
+  [title]="'results.layout.selectOne' | translate"
+  [ariaName]="'results.layout.selectOne' | translate"
+  [choices]="choices"
+  (selectValue)="change($event)"
+  [selected]="searchFacade.layout$ | async"
+></gn-ui-dropdown-selector>

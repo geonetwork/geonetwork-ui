@@ -1,0 +1,7 @@
+<gn-ui-facet-list
+  [models]="models$ | async"
+  [selectedPaths]="selectedPaths$ | async"
+  (itemChange)="onItemChange($event)"
+  (more)="onMore($event)"
+  (filterChange)="onFilterChange($event)"
+></gn-ui-facet-list>

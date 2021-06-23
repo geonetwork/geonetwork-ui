@@ -4,7 +4,7 @@ import { Router } from '@angular/router'
 import {
   DataPublishingApiService,
   PublishStatusEnumApiModel,
-} from '@lib/datafeeder-api'
+} from '@geonetwork-ui/data-access/datafeeder'
 import { of } from 'rxjs'
 import { DatafeederFacade } from '../store/datafeeder.facade'
 import { PublicationStatusGuard } from './publication-status.guard'
@@ -12,12 +12,12 @@ import { PublicationStatusGuard } from './publication-status.guard'
 const publicationStateStatusMock = {
   jobId: '123',
   progress: 1,
-  status: PublishStatusEnumApiModel.PENDING,
+  status: PublishStatusEnumApiModel.Pending,
 }
 const publicationApiStatusMock = {
   jobId: '123',
   progress: 1,
-  status: PublishStatusEnumApiModel.PENDING,
+  status: PublishStatusEnumApiModel.Pending,
 }
 
 const dataPublishingApiServiceMock = {
@@ -65,7 +65,7 @@ describe('PublicationStatusGuard', () => {
   describe('when status ready in state', () => {
     let output
     beforeEach(() => {
-      publicationStateStatusMock.status = PublishStatusEnumApiModel.DONE
+      publicationStateStatusMock.status = PublishStatusEnumApiModel.Done
       guard
         .canActivate(routeMock, routeStateMock)
         .subscribe((res) => (output = res))
@@ -78,11 +78,11 @@ describe('PublicationStatusGuard', () => {
   describe('when status not ready in state', () => {
     let output
     beforeEach(() => {
-      publicationStateStatusMock.status = PublishStatusEnumApiModel.PENDING
+      publicationStateStatusMock.status = PublishStatusEnumApiModel.Pending
     })
     describe('when api returns DONE', () => {
       beforeEach(() => {
-        publicationApiStatusMock.status = PublishStatusEnumApiModel.DONE
+        publicationApiStatusMock.status = PublishStatusEnumApiModel.Done
         guard
           .canActivate(routeMock, routeStateMock)
           .subscribe((res) => (output = res))
@@ -97,7 +97,7 @@ describe('PublicationStatusGuard', () => {
     })
     describe('when api returns ERROR', () => {
       beforeEach(() => {
-        publicationApiStatusMock.status = PublishStatusEnumApiModel.ERROR
+        publicationApiStatusMock.status = PublishStatusEnumApiModel.Error
         guard
           .canActivate(routeMock, routeStateMock)
           .subscribe((res) => (output = res))
