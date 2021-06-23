@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { PublishStepEnumApiModel } from './publishStepEnum.api.model'
 import { PublishStatusEnumApiModel } from './publishStatusEnum.api.model'
 
 /**
@@ -37,4 +38,13 @@ export interface DatasetPublishingStatusApiModel {
    * short description of the error that prevents the dataset to be published
    */
   error?: string
+  /**
+   * true if this dataset is scheduled to be published (as requested through a PublishRequest)
+   */
+  publish?: boolean
+  /**
+   * Estimated completion progress, from 0 to 1.
+   */
+  progress?: number
+  progressStep?: PublishStepEnumApiModel
 }

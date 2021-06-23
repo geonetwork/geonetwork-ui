@@ -7,6 +7,7 @@ import {
 import { Configuration } from './configuration'
 import { HttpClient } from '@angular/common/http'
 
+import { ConfigApiService } from './api/config.api.service'
 import { DataPublishingApiService } from './api/dataPublishing.api.service'
 import { FileUploadApiService } from './api/fileUpload.api.service'
 

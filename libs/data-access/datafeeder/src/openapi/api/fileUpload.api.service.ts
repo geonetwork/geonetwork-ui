@@ -318,11 +318,11 @@ export class FileUploadApiService {
   }
 
   /**
-   * Get the bounding box of the dataset, optionally indicating the CRS and whether to reproject from the native CRS to the new one
+   * Get the bounding box of the dataset, optionally indicating the CRS and whether to reproject from the native CRS to the new one The returned geometry CRS is controlled by the \&quot;srs\&quot;, and \&quot;srsOverride\&quot; query parameters. If none is provided, the geometry is returned as-is, in the dataset\&#39;s native CRS (possibly null). The \&quot;srsOverride\&quot; parameter allows to override the dataset\&#39;s native CRS, which also means assuming a native CRS when the dataset didn\&#39;t provide a native CRS (e.g. a shapefile uploaded without .prj side-car file). The \&quot;srs\&quot; parameter specifies the output geometry CRS. The geometry will be reprojected from the source CRS to the output CRS.
    * @param jobId Unique job identifier
    * @param typeName Feature type name
-   * @param srs Optional, coordinate reference system (e.g. \&#39;EPSG:3857\&#39;)
-   * @param srsReproject Optional, whether to reproject from the native CRS to the one provided in the srs parameter. If false or not provided, the srs parameter overrides the native CRS
+   * @param srs Optional, output coordinate reference system (e.g. \&#39;EPSG:3857\&#39;)
+   * @param srsOverride Optional, EPSG SRS used to override the native CRS, or assume a native SRS when the native CRS is unknown (for example, a shapefile uploaded without .prj side-car file). This allows to request the dataset bounds using a user defined native CRS for datasets that do not specify a native CRS, and still get a reprojected response to another CRS in combination with the \&quot;srs\&quot; parameter.
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
@@ -330,7 +330,7 @@ export class FileUploadApiService {
     jobId: string,
     typeName: string,
     srs?: string,
-    srsReproject?: boolean,
+    srsOverride?: string,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
@@ -339,7 +339,7 @@ export class FileUploadApiService {
     jobId: string,
     typeName: string,
     srs?: string,
-    srsReproject?: boolean,
+    srsOverride?: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
@@ -348,7 +348,7 @@ export class FileUploadApiService {
     jobId: string,
     typeName: string,
     srs?: string,
-    srsReproject?: boolean,
+    srsOverride?: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
@@ -357,7 +357,7 @@ export class FileUploadApiService {
     jobId: string,
     typeName: string,
     srs?: string,
-    srsReproject?: boolean,
+    srsOverride?: string,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
@@ -377,11 +377,11 @@ export class FileUploadApiService {
     if (srs !== undefined && srs !== null) {
       queryParameters = this.addToHttpParams(queryParameters, <any>srs, 'srs')
     }
-    if (srsReproject !== undefined && srsReproject !== null) {
+    if (srsOverride !== undefined && srsOverride !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
-        <any>srsReproject,
-        'srs_reproject'
+        <any>srsOverride,
+        'srsOverride'
       )
     }
 
@@ -424,13 +424,13 @@ export class FileUploadApiService {
   }
 
   /**
-   * Obtain a sample dataset feature in GeoJSON format, optionally specifying a feature index, crs, and/or dataset\&#39;s character encoding. The response encoding is always UTF-8. The \&#39;encoding\&#39; parameter can be used to force reading the native data in a different charset.
+   * Obtain a sample dataset feature in GeoJSON format, optionally specifying a feature index, crs, and/or dataset\&#39;s character encoding. The response encoding is always UTF-8. The \&#39;encoding\&#39; parameter can be used to force reading the native data in a different charset. The returned geometry CRS is controlled by the \&quot;srs\&quot;, and \&quot;srsOverride\&quot; query parameters. If none is provided, the geometry is returned as-is, in the dataset\&#39;s native CRS (possibly null). The \&quot;srsOverride\&quot; parameter allows to override the dataset\&#39;s native CRS, which also means assuming a native CRS when the dataset didn\&#39;t provide a native CRS (e.g. a shapefile uploaded without .prj side-car file). The \&quot;srs\&quot; parameter specifies the output geometry CRS. The geometry will be reprojected from the source CRS to the output CRS.
    * @param jobId Unique job identifier
    * @param typeName Feature type name
    * @param featureIndex Optional feature index, if unspecified, the first feature (index 0) is returned
    * @param encoding Optional, force dataset encoding
    * @param srs Optional, coordinate reference system (e.g. \&#39;EPSG:3857\&#39;)
-   * @param srsReproject Optional, whether to reproject from the native CRS to the one provided in the srs parameter. If false or not provided, the srs parameter overrides the native CRS
+   * @param srsOverride Optional, EPSG SRS used to override the native CRS, or assume a native SRS when the native CRS is unknown (for example, a shapefile uploaded without .prj side-car file). This allows to request a feature using a source CRS for datasets that do not specify a native CRS, and still get a reprojected response to another CRS in combination with the \&quot;srs\&quot; parameter.
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
@@ -440,7 +440,7 @@ export class FileUploadApiService {
     featureIndex?: number,
     encoding?: string,
     srs?: string,
-    srsReproject?: boolean,
+    srsOverride?: string,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/geo+json' }
@@ -451,7 +451,7 @@ export class FileUploadApiService {
     featureIndex?: number,
     encoding?: string,
     srs?: string,
-    srsReproject?: boolean,
+    srsOverride?: string,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/geo+json' }
@@ -462,7 +462,7 @@ export class FileUploadApiService {
     featureIndex?: number,
     encoding?: string,
     srs?: string,
-    srsReproject?: boolean,
+    srsOverride?: string,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/geo+json' }
@@ -473,7 +473,7 @@ export class FileUploadApiService {
     featureIndex?: number,
     encoding?: string,
     srs?: string,
-    srsReproject?: boolean,
+    srsOverride?: string,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/geo+json' }
@@ -507,11 +507,11 @@ export class FileUploadApiService {
     if (srs !== undefined && srs !== null) {
       queryParameters = this.addToHttpParams(queryParameters, <any>srs, 'srs')
     }
-    if (srsReproject !== undefined && srsReproject !== null) {
+    if (srsOverride !== undefined && srsOverride !== null) {
       queryParameters = this.addToHttpParams(
         queryParameters,
-        <any>srsReproject,
-        'srs_reproject'
+        <any>srsOverride,
+        'srsOverride'
       )
     }
 
