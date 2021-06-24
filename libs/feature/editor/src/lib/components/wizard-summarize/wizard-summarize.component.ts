@@ -27,9 +27,7 @@ export class WizardSummarizeComponent {
   }
 
   get createdDate() {
-    const time =
-      this.wizardService.getWizardFieldData('datepicker') ||
-      new Date().getTime()
+    const time = this.wizardService.getWizardFieldData('datepicker')
     const locale = this.translateService.currentLang
 
     return new Date(Number(time)).toLocaleDateString(locale, {
