@@ -44,6 +44,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   featureIndex = 0
   crs: string
   encoding: string
+  nativeName: string
 
   numOfEntities = 0
   numberOfSteps: number
@@ -78,6 +79,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
           }
 
           this.dataset = job.datasets[0]
+          this.nativeName = this.dataset.name
           this.numOfEntities = this.dataset.featureCount
           this.crs = this.dataset.nativeBounds?.crs?.srs
           this.encoding = this.dataset.encoding
