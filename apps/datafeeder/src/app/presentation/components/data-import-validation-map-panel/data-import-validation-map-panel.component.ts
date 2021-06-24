@@ -4,6 +4,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
   ViewChild,
@@ -29,7 +30,7 @@ const PADDING = 50
   styleUrls: ['./data-import-validation-map-panel.css'],
 })
 export class DataImportValidationMapPanelComponent
-  implements OnInit, AfterViewInit {
+  implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('map') mapElt: ElementRef
 
   @Input() showProperties = false
@@ -56,6 +57,13 @@ export class DataImportValidationMapPanelComponent
     if (!this.geoJson) {
       return
     }
+    this.addFeature()
+  }
+
+  addFeature() {
+    if (!this.source) {
+      return
+    }
     this.source.clear()
     this.source.addFeatures(
       this.geoJson
@@ -64,6 +72,13 @@ export class DataImportValidationMapPanelComponent
           })
         : []
     )
+    if (this.map) {
+      this.fit()
+    }
+  }
+
+  ngOnChanges() {
+    this.addFeature()
   }
 
   ngAfterViewInit() {

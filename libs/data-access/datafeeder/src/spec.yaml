@@ -5,7 +5,7 @@ servers:
 info:
   title: DataFeeder API
   description: This API covers dataset upload and publishing features of the application
-  version: '1.0.0'
+  version: "1.0.0"
   contact:
     email: psc@georchestra.org
 tags:
@@ -15,12 +15,27 @@ tags:
     description: 'API to control jobs related to publishing geospatial datasets previously uploaded'
 
 paths:
+  /config/frontend:
+    get:
+      tags:
+        - Config
+      description: 'Get the front-end application configuration object'
+      operationId: getFrontendConfig
+      responses:
+        200:
+          description: Front-end application configuration object
+          content:
+            application/json:
+              schema:
+                type: object
+        401:
+          description: 'Not authenticated'
+
   /upload:
     post:
       tags:
         - File Upload
-      description:
-        Upload one or multiple files to the server, and get a handle to the job.
+      description: Upload one or multiple files to the server, and get a handle to the job.
         Once the files are uploaded, the analysis process is automatically triggered. Its status can be polled with GET /upload/{jobId}
       operationId: uploadFiles
       requestBody:
@@ -112,9 +127,13 @@ paths:
       tags:
         - File Upload
       operationId: getSampleFeature
-      description:
-        Obtain a sample dataset feature in GeoJSON format, optionally specifying a feature index, crs, and/or dataset's character encoding.
+      description: Obtain a sample dataset feature in GeoJSON format, optionally specifying a feature index, crs, and/or dataset's character encoding.
         The response encoding is always UTF-8. The 'encoding' parameter can be used to force reading the native data in a different charset.
+        The returned geometry CRS is controlled by the "srs", and "srsOverride" query parameters.
+        If none is provided, the geometry is returned as-is, in the dataset's native CRS (possibly null).
+        The "srsOverride" parameter allows to override the dataset's native CRS, which also means assuming a native CRS when the
+        dataset didn't provide a native CRS (e.g. a shapefile uploaded without .prj side-car file).
+        The "srs" parameter specifies the output geometry CRS. The geometry will be reprojected from the source CRS to the output CRS.
       parameters:
         - $ref: '#/components/parameters/jobId'
         - $ref: '#/components/parameters/typeName'
@@ -138,13 +157,15 @@ paths:
           required: false
           schema:
             type: string
-        - name: srs_reproject
+        - name: srsOverride
           in: query
-          description: Optional, whether to reproject from the native CRS to the one provided in the srs parameter. If false or not provided, the srs parameter overrides the native CRS
+          description: Optional, EPSG SRS used to override the native CRS, or assume a native SRS when the native CRS is unknown (for example, a shapefile uploaded without .prj side-car file).
+            This allows to request a feature using a source CRS for datasets that do not specify a native CRS, and still get a reprojected response to
+            another CRS in combination with the "srs" parameter.
           required: false
           schema:
-            type: boolean
-            default: false
+            type: string
+          example: EPSG:4326
       responses:
         202:
           $ref: '#/components/responses/SampleFeatureResponse'
@@ -161,22 +182,29 @@ paths:
         - File Upload
       operationId: getBounds
       description: Get the bounding box of the dataset, optionally indicating the CRS and whether to reproject from the native CRS to the new one
+        The returned geometry CRS is controlled by the "srs", and "srsOverride" query parameters.
+        If none is provided, the geometry is returned as-is, in the dataset's native CRS (possibly null).
+        The "srsOverride" parameter allows to override the dataset's native CRS, which also means assuming a native CRS when the
+        dataset didn't provide a native CRS (e.g. a shapefile uploaded without .prj side-car file).
+        The "srs" parameter specifies the output geometry CRS. The geometry will be reprojected from the source CRS to the output CRS.
       parameters:
         - $ref: '#/components/parameters/jobId'
         - $ref: '#/components/parameters/typeName'
         - name: srs
           in: query
-          description: Optional, coordinate reference system (e.g. 'EPSG:3857')
+          description: Optional, output coordinate reference system (e.g. 'EPSG:3857')
           required: false
           schema:
             type: string
-        - name: srs_reproject
+        - name: srsOverride
           in: query
-          description: Optional, whether to reproject from the native CRS to the one provided in the srs parameter. If false or not provided, the srs parameter overrides the native CRS
+          description: Optional, EPSG SRS used to override the native CRS, or assume a native SRS when the native CRS is unknown (for example, a shapefile uploaded without .prj side-car file).
+            This allows to request the dataset bounds using a user defined native CRS for datasets that do not specify a native CRS,
+            and still get a reprojected response to another CRS in combination with the "srs" parameter.
           required: false
           schema:
-            type: boolean
-            default: false
+            type: string
+          example: EPSG:4326
       responses:
         202:
           $ref: '#/components/responses/BoundingBoxResponse'
@@ -285,6 +313,9 @@ components:
     PublishStatusEnum:
       type: string
       enum: [PENDING, RUNNING, DONE, ERROR]
+    PublishStepEnum:
+      type: string
+      enum: [SKIPPED, SCHEDULED, DATA_IMPORT_STARTED, DATA_IMPORT_FINISHED, OWS_PUBLISHING_STARTED, OWS_PUBLISHING_FINISHED, METADATA_PUBLISHING_STARTED, METADATA_PUBLISHING_FINISHED, OWS_METADATA_UPDATE_STARTED, OWS_METADATA_UPDATE_FINISHED, COMPLETED]
 
     UploadJobStatus:
       type: object
@@ -303,8 +334,7 @@ components:
           default: 0.0
         status:
           $ref: '#/components/schemas/AnalysisStatusEnum'
-          description:
-            aggregate of status of all datasets in the upload package. If any dataset status is PENDING, ANALYZING, or ERROR, that's the job's status.
+          description: aggregate of status of all datasets in the upload package. If any dataset status is PENDING, ANALYZING, or ERROR, that's the job's status.
             If at least one dataset status is ERROR, then the job status is ERROR. If no datasets where recognized in the upload, status is ERROR.
         error:
           type: string
@@ -408,8 +438,8 @@ components:
           example: 2017-07-21
         scale:
           description: Optional, scale the data was created for (e.g. 500000 for a 1:500000 scale)
-          type: number
-          format: double
+          type: integer
+          format: int32
           example: 25000
         creationProcessDescription:
           type: string
@@ -432,13 +462,11 @@ components:
           type: string
           description: Specify which charset (e.g. ISO-8859-1, UTF-8, etc.) to interpret the dataset alphanumeric properties with. Takes effect only for uploaded shapefiles.
         srs:
-          description:
-            Optional, Coordinate Reference System identifier to publish the dataset in. If not provided, the dataset is published using the CRS inferred
+          description: Optional, Coordinate Reference System identifier to publish the dataset in. If not provided, the dataset is published using the CRS inferred
             during the upload analysis process. If no CRS identifier was determined, the job will fail.
           type: string
         srs_reproject:
-          description:
-            Optional, whether to reproject from the native CRS to the one provided in the srs parameter.
+          description: Optional, whether to reproject from the native CRS to the one provided in the srs parameter.
             If false or not provided, the srs parameter overrides the native CRS without reprojection.
           type: boolean
           default: false
@@ -482,8 +510,7 @@ components:
           description: Name of the GeoServer workspace under which the dataset has been published.
         publishedName:
           type: string
-          description:
-            Final name under which the layer was published to GeoServer. It may have been modified from the requested layer name
+          description: Final name under which the layer was published to GeoServer. It may have been modified from the requested layer name
             in order to avoid duplication if a layer with such name already exists in the target GeoServer workspace.
         metadataRecordId:
           type: string
@@ -495,3 +522,16 @@ components:
         error:
           type: string
           description: short description of the error that prevents the dataset to be published
+        publish:
+          type: boolean
+          description: true if this dataset is scheduled to be published (as requested through a PublishRequest)
+        progress:
+          description: Estimated completion progress, from 0 to 1.
+          type: number
+          format: double
+          minimum: 0.0
+          maximum: 1.0
+          default: 0.0
+        progressStep:
+          $ref: '#/components/schemas/PublishStepEnum'
+

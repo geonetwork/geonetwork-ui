@@ -133,6 +133,7 @@ export class WizardFieldComponent implements AfterViewInit, OnDestroy {
         return
       }
       case WizardFieldType.DATA_PICKER: {
+        this.initializeDateInput()
         return
       }
       case WizardFieldType.DROPDOWN: {
@@ -173,6 +174,18 @@ export class WizardFieldComponent implements AfterViewInit, OnDestroy {
         )
       })
     )
+  }
+
+  initializeDateInput() {
+    const time = this.wizardService.getWizardFieldData(
+      this.wizardFieldConfig.id
+    )
+    if (!time) {
+      this.wizardService.onWizardWizardFieldDataChanged(
+        this.wizardFieldConfig.id,
+        new Date().valueOf()
+      )
+    }
   }
 
   onDateChange(event: MatDatepickerInputEvent<Date>) {
