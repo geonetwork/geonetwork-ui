@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Permanent+Marker&display=swap');
-
 :root {
   --current-font: 'Open Sans', sans-serif;
   --focus-font: 'Permanent Marker', cursive;
