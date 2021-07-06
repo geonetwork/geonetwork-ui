@@ -111,13 +111,18 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   loadBounds() {
     this.fileUploadApiService
       .getBounds(this.rootId.toString(), this.dataset.name, viewSrs, this.crs)
-      .subscribe((bbox: BoundingBoxApiModel) => {
-        const { minx, miny, maxx, maxy } = bbox
-        this.geoJSONBBox = this.format.writeFeatureObject(
-          new Feature({ geometry: fromExtent([minx, miny, maxx, maxy]) }),
-          { featureProjection: viewSrs }
-        )
-      })
+      .subscribe(
+        (bbox: BoundingBoxApiModel) => {
+          const { minx, miny, maxx, maxy } = bbox
+          this.geoJSONBBox = this.format.writeFeatureObject(
+            new Feature({ geometry: fromExtent([minx, miny, maxx, maxy]) }),
+            { featureProjection: viewSrs }
+          )
+        },
+        (error) => {
+          this.geoJSONBBox = null
+        }
+      )
   }
 
   handleEncodingChange(encoding) {

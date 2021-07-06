@@ -53,11 +53,9 @@ export class DataImportValidationMapPanelComponent
   ngOnInit(): void {
     this.selectedValue = this.footerValue || ''
     this.vectorLayer = this.buildVectorLayer()
-
-    if (!this.geoJson) {
-      return
+    if (this.geoJson) {
+      this.addFeature()
     }
-    this.addFeature()
   }
 
   addFeature() {
@@ -88,7 +86,6 @@ export class DataImportValidationMapPanelComponent
         new TileLayer({
           source: new OSM(),
         }),
-        this.vectorLayer,
       ],
       controls: [],
       interactions: [],
@@ -98,6 +95,9 @@ export class DataImportValidationMapPanelComponent
         constrainResolution: true,
       }),
     })
+    if (this.vectorLayer) {
+      this.map.addLayer(this.vectorLayer)
+    }
 
     this.fit()
   }
@@ -155,11 +155,14 @@ export class DataImportValidationMapPanelComponent
   }
 
   private buildVectorLayer(): VectorLayer {
-    this.source = new VectorSource({
-      features: this.format.readFeatures(this.geoJson, {
-        featureProjection: 'EPSG:3857',
-      }),
-    })
+    this.source = new VectorSource({})
+    if (this.geoJson) {
+      this.source.addFeatures(
+        this.format.readFeatures(this.geoJson, {
+          featureProjection: 'EPSG:3857',
+        })
+      )
+    }
     return new VectorLayer({
       source: this.source,
       style: this.getDefaultStyle(),
