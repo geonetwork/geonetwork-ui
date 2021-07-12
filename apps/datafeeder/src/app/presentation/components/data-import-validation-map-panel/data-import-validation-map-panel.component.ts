@@ -80,26 +80,27 @@ export class DataImportValidationMapPanelComponent
   }
 
   ngAfterViewInit() {
-    this.map = new Map({
-      target: this.mapElt.nativeElement,
-      layers: [
-        new TileLayer({
-          source: new OSM(),
+    setTimeout(() => {
+      this.map = new Map({
+        target: this.mapElt.nativeElement,
+        layers: [
+          new TileLayer({
+            source: new OSM(),
+          }),
+        ],
+        controls: [],
+        interactions: [],
+        view: new View({
+          center: [0, 0],
+          zoom: 1,
+          constrainResolution: true,
         }),
-      ],
-      controls: [],
-      interactions: [],
-      view: new View({
-        center: transform([0, 0], 'EPSG:4326', 'EPSG:3857'),
-        zoom: 1,
-        constrainResolution: true,
-      }),
+      })
+      if (this.vectorLayer) {
+        this.map.addLayer(this.vectorLayer)
+      }
+      this.fit()
     })
-    if (this.vectorLayer) {
-      this.map.addLayer(this.vectorLayer)
-    }
-
-    this.fit()
   }
 
   fit() {
