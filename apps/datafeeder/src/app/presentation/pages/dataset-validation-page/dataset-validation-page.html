@@ -20,26 +20,26 @@
     <div class="flex justify-between pb-10 pt-10 flex-1">
       <div class="w-1/2 h-full bg-white mr-20 rounded-md">
         <gn-ui-data-import-validation-map-panel
-          headerLabel="datafeeder.validation.sample.title"
-          footerLabel="datafeeder.validation.encoding"
-          [footerList]="encodingList"
-          [footerValue]="encoding"
-          [geoJson]="geoJSONData"
-          [showProperties]="true"
-          [padding]="[50, 300, 50, 50]"
-          (propertyChange)="handleEncodingChange($event)"
-          *ngIf="geoJSONData"
+            headerLabel="datafeeder.validation.extent.title"
+            footerLabel="datafeeder.validation.projection"
+            [footerList]="refSystem"
+            [footerValue]="crs"
+            [geoJson]="geoJSONBBox"
+            [showProperties]="false"
+            (propertyChange)="handleCrsChange($event)"
         ></gn-ui-data-import-validation-map-panel>
       </div>
       <div class="w-1/2 h-full bg-white rounded-md">
         <gn-ui-data-import-validation-map-panel
-          headerLabel="datafeeder.validation.extent.title"
-          footerLabel="datafeeder.validation.projection"
-          [footerList]="refSystem"
-          [footerValue]="crs"
-          [geoJson]="geoJSONBBox"
-          [showProperties]="false"
-          (propertyChange)="handleCrsChange($event)"
+            headerLabel="datafeeder.validation.sample.title"
+            footerLabel="datafeeder.validation.encoding"
+            [footerList]="encodingList"
+            [footerValue]="encoding"
+            [geoJson]="geoJSONData"
+            [showProperties]="true"
+            [padding]="[50, 300, 50, 50]"
+            (propertyChange)="handleEncodingChange($event)"
+            *ngIf="geoJSONData"
         ></gn-ui-data-import-validation-map-panel>
       </div>
     </div>
