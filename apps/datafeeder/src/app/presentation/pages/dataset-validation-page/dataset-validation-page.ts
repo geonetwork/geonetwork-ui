@@ -135,7 +135,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
 
   getBBoxPanelFooterLabel(): string {
     return `datafeeder.validation.projection${
-      this.refSystem.length === 1 ? '' : '.unknown'
+      this.refSystem.length < 2 ? '' : '.unknown'
     }`
   }
 
@@ -147,6 +147,8 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   handleCrsChange(crs) {
     if (crs === '') {
       return
+    } else if (this.refSystem[0]?.value === '') {
+      this.refSystem.shift()
     }
     this.crs = crs
     this.loadBounds()
