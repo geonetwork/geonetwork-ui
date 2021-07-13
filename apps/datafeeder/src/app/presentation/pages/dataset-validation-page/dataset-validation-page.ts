@@ -24,8 +24,10 @@ const viewSrs = 'EPSG:3857'
 marker('datafeeder.datasetValidation.unknown')
 marker('datafeeder.validation.sample.title')
 marker('datafeeder.validation.extent.title')
+marker('datafeeder.validation.extent.title.unknown')
 marker('datafeeder.validation.encoding')
 marker('datafeeder.validation.projection')
+marker('datafeeder.validation.projection.unknown')
 
 @Component({
   selector: 'gn-ui-dataset-validation-page',
@@ -123,6 +125,18 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
           this.geoJSONBBox = null
         }
       )
+  }
+
+  getBBoxPanelTitle(): string {
+    return `datafeeder.validation.extent.title${
+      this.geoJSONBBox ? '' : '.unknown'
+    }`
+  }
+
+  getBBoxPanelFooterLabel(): string {
+    return `datafeeder.validation.projection${
+      this.refSystem.length === 1 ? '' : '.unknown'
+    }`
   }
 
   handleEncodingChange(encoding) {
