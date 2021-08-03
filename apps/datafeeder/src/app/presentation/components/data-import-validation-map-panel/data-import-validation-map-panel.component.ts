@@ -14,11 +14,12 @@ import { Feature } from 'geojson'
 import { asArray, asString } from 'ol/color'
 import { isEmpty } from 'ol/extent'
 import GeoJSON from 'ol/format/GeoJSON'
+import { Geometry } from 'ol/geom'
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer'
 import Map from 'ol/Map'
-import { transform } from 'ol/proj'
 import { OSM, Vector as VectorSource } from 'ol/source'
-import { Fill, Stroke, Style, RegularShape } from 'ol/style'
+import { Fill, RegularShape, Stroke, Style } from 'ol/style'
+import { StyleLike } from 'ol/style/Style'
 import View from 'ol/View'
 
 const DEFAULT_PRIMARY_COLOR = '#9a9a9a'
@@ -46,8 +47,8 @@ export class DataImportValidationMapPanelComponent
   selectedValue: any
 
   private map: Map
-  private source: VectorSource
-  private vectorLayer: VectorLayer
+  private source: VectorSource<Geometry>
+  private vectorLayer: VectorLayer<VectorSource<Geometry>>
   private format: any = new GeoJSON({})
 
   ngOnInit(): void {
@@ -110,7 +111,6 @@ export class DataImportValidationMapPanelComponent
     this.map.getView().fit(this.source.getExtent(), {
       padding:
         this.padding.length === 0 ? Array(4).fill(PADDING) : this.padding,
-      constrainResolution: false,
       maxZoom: 18,
     })
   }
@@ -132,7 +132,7 @@ export class DataImportValidationMapPanelComponent
     this.propertyChange.emit(event)
   }
 
-  private getDefaultStyle(): Style {
+  private getDefaultStyle(): StyleLike {
     const stroke = new Stroke({
       color: this.getSecondaryColor(1),
       width: 3,
@@ -155,7 +155,7 @@ export class DataImportValidationMapPanelComponent
     ]
   }
 
-  private buildVectorLayer(): VectorLayer {
+  private buildVectorLayer(): VectorLayer<VectorSource<Geometry>> {
     this.source = new VectorSource({})
     if (this.geoJson) {
       this.source.addFeatures(
