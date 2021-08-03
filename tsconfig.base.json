@@ -20,8 +20,6 @@
     "noImplicitAny": false,
     "esModuleInterop": true,
     "paths": {
-      "ol": ["node_modules/ol/src"],
-      "ol/*": ["node_modules/ol/src/*"],
       "@geonetwork-ui/feature/search": ["libs/feature/search/src/index.ts"],
       "@geonetwork-ui/feature/auth": ["libs/feature/auth/src/index.ts"],
       "@geonetwork-ui/ui/search": ["libs/ui/search/src/index.ts"],
