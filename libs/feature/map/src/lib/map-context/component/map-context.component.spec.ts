@@ -1,5 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { MapManagerService } from '../../manager/map-manager.service'
 import { MAP_CTX_FIXTURE } from '../map-context.fixtures'
 import { MapContextService } from '../map-context.service'
 import { MapUtilsService } from '../../utils/map-utils.service'
@@ -10,11 +11,13 @@ const mapMock = {
   on: jest.fn(),
 }
 const mapContextServiceMock = {
-  createMap: jest.fn(() => mapMock),
+  resetMapFromContext: jest.fn(),
 }
 
-const mapUtilsServiceMock = {
-  createLayer: jest.fn(),
+const mapUtilsServiceMock = {}
+
+const mapManagerMock = {
+  map: mapMock,
 }
 
 describe('MapContextComponent', () => {
@@ -34,6 +37,10 @@ describe('MapContextComponent', () => {
           provide: MapUtilsService,
           useValue: mapUtilsServiceMock,
         },
+        {
+          provide: MapManagerService,
+          useValue: mapManagerMock,
+        },
       ],
     }).compileComponents()
   })
@@ -49,8 +56,9 @@ describe('MapContextComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  it('create the map', () => {
-    expect(mapContextServiceMock.createMap).toHaveBeenCalledWith(
+  it('reset the map from context', () => {
+    expect(mapContextServiceMock.resetMapFromContext).toHaveBeenCalledWith(
+      mapMock,
       MAP_CTX_FIXTURE
     )
   })

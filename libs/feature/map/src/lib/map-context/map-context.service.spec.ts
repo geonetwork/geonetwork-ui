@@ -121,11 +121,11 @@ describe('MapContextService', () => {
       expect(center).toEqual(viewModel.zoom)
     })
   })
-  describe('#createMap', () => {
-    let map
-    const mapModel = MAP_CTX_FIXTURE
+  describe('#resetMapFromContext', () => {
+    const map = new Map({})
+    const mapContext = MAP_CTX_FIXTURE
     beforeEach(() => {
-      map = service.createMap(mapModel)
+      service.resetMapFromContext(map, mapContext)
     })
     it('create a map', () => {
       expect(map).toBeTruthy()

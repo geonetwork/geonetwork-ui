@@ -23,6 +23,7 @@ export class MapContextService {
 
   resetMapFromContext(map: Map, mapContext: MapContextModel): Map {
     map.setView(this.createView(mapContext.view))
+    map.getLayers().clear()
     mapContext.layers.forEach((layer) => map.addLayer(this.createLayer(layer)))
     return map
   }
