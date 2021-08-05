@@ -1,8 +1,8 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MAP_CTX_FIXTURE } from '../../fixtures/map-context.fixtures'
-import { MapContextService } from '../../services/map-context.service'
-import { MapUtilsService } from '../../services/map-utils.service'
+import { MAP_CTX_FIXTURE } from '../map-context.fixtures'
+import { MapContextService } from '../map-context.service'
+import { MapUtilsService } from '../../utils/map-utils.service'
 
 import { MapContextComponent } from './map-context.component'
 

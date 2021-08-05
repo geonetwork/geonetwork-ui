@@ -1,10 +1,10 @@
+import { FEATURE_COLLECTION_POLYGON_FIXTURE_4326 } from '@geonetwork-ui/util/shared'
 import {
   MapContextLayerModel,
   MapContextLayerTypeEnum,
   MapContextModel,
   MapContextViewModel,
-} from '../models'
-import { FEATURE_COLLECTION_POLYGON_FIXTURE_4326 } from './geojson.fixtures'
+} from '../map-context/map-context.model'
 
 export const MAP_CTX_LAYER_XYZ_FIXTURE: MapContextLayerModel = {
   type: MapContextLayerTypeEnum.XYZ,

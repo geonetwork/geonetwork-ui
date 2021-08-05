@@ -13,7 +13,7 @@ import {
   MAP_CTX_LAYER_WMS_FIXTURE,
   MAP_CTX_LAYER_XYZ_FIXTURE,
   MAP_CTX_VIEW_FIXTURE,
-} from '../fixtures/map-context.fixtures'
+} from './map-context.fixtures'
 
 import { MapContextService } from './map-context.service'
 

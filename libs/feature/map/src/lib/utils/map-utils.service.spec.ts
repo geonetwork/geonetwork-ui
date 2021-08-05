@@ -8,7 +8,7 @@ import ImageWMS from 'ol/source/ImageWMS'
 import TileWMS from 'ol/source/TileWMS'
 import XYZ from 'ol/source/XYZ'
 
-import { FEATURE_COLLECTION_POLYGON_FIXTURE_4326 } from '../fixtures/geojson.fixtures'
+import { FEATURE_COLLECTION_POLYGON_FIXTURE_4326 } from '../../../../../ui/map/src/lib/fixtures/geojson.fixtures'
 
 import { MapUtilsService } from './map-utils.service'
 
