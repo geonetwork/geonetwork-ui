@@ -4,6 +4,7 @@ import { FeatureCollection } from 'geojson'
 import OlFeature from 'ol/Feature'
 import GeoJSON from 'ol/format/GeoJSON'
 import { Geometry } from 'ol/geom'
+import Map from 'ol/Map'
 import { Source } from 'ol/source'
 import ImageWMS from 'ol/source/ImageWMS'
 import TileWMS from 'ol/source/TileWMS'
@@ -20,6 +21,14 @@ const DATA_PROJECTION = 'EPSG:4326'
 })
 export class MapUtilsService {
   constructor(private http: HttpClient) {}
+
+  createEmptyMap(): Map {
+    const map = new Map({
+      controls: [],
+      pixelRatio: 1,
+    })
+    return map
+  }
 
   readFeatureCollection = (
     featureCollection: FeatureCollection,

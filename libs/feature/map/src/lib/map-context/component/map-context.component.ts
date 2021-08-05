@@ -10,10 +10,10 @@ import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
 
 import Map from 'ol/Map'
-import { forkJoin, Observable, of } from 'rxjs'
-import { MapContextModel } from '../../models/map-context.model'
-import { MapContextService } from '../../services/map-context.service'
-import { MapUtilsService } from '../../services/map-utils.service'
+import { FeatureInfoService } from '../../feature-info/feature-info.service'
+import { MapManagerService } from '../../manager/map-manager.service'
+import { MapContextModel } from '../map-context.model'
+import { MapContextService } from '../map-context.service'
 
 @Component({
   selector: 'gn-ui-map-context',
@@ -29,36 +29,13 @@ export class MapContextComponent implements OnInit {
 
   constructor(
     private service: MapContextService,
-    private mapUtils: MapUtilsService
-  ) {}
-
-  ngOnInit(): void {
-    this.map = this.service.createMap(this.context)
-    this.initInteractions()
+    private featureInfo: FeatureInfoService,
+    private manager: MapManagerService
+  ) {
+    this.map = manager.map
   }
 
-  private initInteractions(): void {
-    this.map.on('click', (event) => {
-      const gfiFeaturesObservables = this.mapUtils.getGFIFeaturesObservablesFromClick(
-        this.map,
-        event
-      )
-      const vectorFeatures$ = of(
-        this.mapUtils.getVectorFeaturesFromClick(this.map, event)
-      )
-
-      const featuresObservablesArray: Observable<Feature<Geometry>[]>[] = [
-        ...gfiFeaturesObservables,
-        vectorFeatures$,
-      ]
-
-      forkJoin(...featuresObservablesArray).subscribe((featuresArrays) => {
-        const allFeatures = featuresArrays.reduce(
-          (outputFeatures, features) => [...outputFeatures, ...features],
-          []
-        )
-        this.featureClicked.emit(allFeatures)
-      })
-    })
+  ngOnInit(): void {
+    this.service.resetMapFromContext(this.map, this.context)
   }
 }
