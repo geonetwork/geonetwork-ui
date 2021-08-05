@@ -1,15 +1,16 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { TestBed } from '@angular/core/testing'
+import Feature from 'ol/Feature'
+import { Polygon } from 'ol/geom'
 import ImageLayer from 'ol/layer/Image'
-import ImageWMS from 'ol/source/ImageWMS'
 import TileLayer from 'ol/layer/Tile'
+import ImageWMS from 'ol/source/ImageWMS'
 import TileWMS from 'ol/source/TileWMS'
 import XYZ from 'ol/source/XYZ'
 
 import { FEATURE_COLLECTION_POLYGON_FIXTURE_4326 } from '../fixtures/geojson.fixtures'
 
 import { MapUtilsService } from './map-utils.service'
-import Feature from 'ol/Feature'
 
 const wmsTileLayer = new TileLayer({
   source: new TileWMS({
@@ -46,7 +47,7 @@ describe('MapUtilsService', () => {
 
   describe('#readFeatureCollection', () => {
     const collection = FEATURE_COLLECTION_POLYGON_FIXTURE_4326
-    let olFeatures, featureSample: Feature
+    let olFeatures, featureSample: Feature<Polygon>
     describe('when no option', () => {
       beforeEach(() => {
         olFeatures = service.readFeatureCollection(collection)

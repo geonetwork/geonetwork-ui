@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { FeatureCollection } from 'geojson'
-import Feature from 'ol/Feature'
 import OlFeature from 'ol/Feature'
 import GeoJSON from 'ol/format/GeoJSON'
+import { Geometry } from 'ol/geom'
+import { Source } from 'ol/source'
 import ImageWMS from 'ol/source/ImageWMS'
 import TileWMS from 'ol/source/TileWMS'
-import Layer from 'ol/layer/Base'
+import Layer from 'ol/layer/Layer'
 import VectorSource from 'ol/source/Vector'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -24,7 +25,7 @@ export class MapUtilsService {
     featureCollection: FeatureCollection,
     featureProjection = FEATURE_PROJECTION,
     dataProjection = DATA_PROJECTION
-  ): OlFeature[] => {
+  ): OlFeature<Geometry>[] => {
     const olFeatures = new GeoJSON().readFeatures(featureCollection, {
       featureProjection,
       dataProjection,
@@ -32,7 +33,7 @@ export class MapUtilsService {
     return olFeatures
   }
 
-  isWMSLayer(layer: Layer): boolean {
+  isWMSLayer(layer: Layer<Source>): boolean {
     return (
       layer.getSource() instanceof TileWMS ||
       layer.getSource() instanceof ImageWMS
@@ -57,11 +58,11 @@ export class MapUtilsService {
     return url
   }
 
-  getVectorFeaturesFromClick(olMap, event): Feature[] {
+  getVectorFeaturesFromClick(olMap, event): OlFeature<Geometry>[] {
     const features = []
     const hit = olMap.forEachFeatureAtPixel(
       event.pixel,
-      (feature: Feature) => {
+      (feature: OlFeature<Geometry>) => {
         return feature
       },
       { layerFilter: (layer) => layer.getSource() instanceof VectorSource }
@@ -72,7 +73,10 @@ export class MapUtilsService {
     return features
   }
 
-  getGFIFeaturesObservablesFromClick(olMap, event): Observable<Feature[]>[] {
+  getGFIFeaturesObservablesFromClick(
+    olMap,
+    event
+  ): Observable<OlFeature<Geometry>[]>[] {
     const wmsLayers = olMap.getLayers().getArray().filter(this.isWMSLayer)
 
     if (wmsLayers.length > 0) {

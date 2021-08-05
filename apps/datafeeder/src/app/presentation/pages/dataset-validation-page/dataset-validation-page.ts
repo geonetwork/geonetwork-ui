@@ -9,8 +9,9 @@ import {
   UploadJobStatusApiModel,
 } from '@geonetwork-ui/data-access/datafeeder'
 import { WizardService } from '@geonetwork-ui/feature/editor'
-import Feature from 'ol/Feature'
+import { Feature } from 'geojson'
 import GeoJSON from 'ol/format/GeoJSON'
+import OlFeature from 'ol/Feature'
 import { fromExtent } from 'ol/geom/Polygon'
 import { Subscription } from 'rxjs'
 import { take } from 'rxjs/operators'
@@ -38,8 +39,8 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
   encodingList = SETTINGS.encodings
   refSystem = [{ label: unknownLabel, value: '' }, ...SETTINGS.projections]
 
-  geoJSONData: Record<string, unknown>
-  geoJSONBBox: Record<string, unknown>
+  geoJSONData: Feature
+  geoJSONBBox: Feature
 
   dataset: DatasetUploadStatusApiModel
 
@@ -105,9 +106,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
         viewSrs,
         this.crs
       )
-      .subscribe(
-        (feature) => (this.geoJSONData = feature as Record<string, any>)
-      )
+      .subscribe((feature: Feature) => (this.geoJSONData = feature))
   }
 
   loadBounds() {
@@ -117,7 +116,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
         (bbox: BoundingBoxApiModel) => {
           const { minx, miny, maxx, maxy } = bbox
           this.geoJSONBBox = this.format.writeFeatureObject(
-            new Feature({ geometry: fromExtent([minx, miny, maxx, maxy]) }),
+            new OlFeature({ geometry: fromExtent([minx, miny, maxx, maxy]) }),
             { featureProjection: viewSrs }
           )
         },

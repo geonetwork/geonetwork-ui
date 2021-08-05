@@ -1,7 +1,6 @@
 module.exports = {
   displayName: 'datafeeder',
   preset: '../../jest.preset.js',
-  transformIgnorePatterns: ['node_modules/(?!(ol))'],
   transform: { '\\.ts$': ['ts-jest'] },
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {

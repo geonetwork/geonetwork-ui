@@ -6,8 +6,9 @@ import {
   OnInit,
   Output,
 } from '@angular/core'
-
 import Feature from 'ol/Feature'
+import { Geometry } from 'ol/geom'
+
 import Map from 'ol/Map'
 import { forkJoin, Observable, of } from 'rxjs'
 import { MapContextModel } from '../../models/map-context.model'
@@ -22,7 +23,7 @@ import { MapUtilsService } from '../../services/map-utils.service'
 })
 export class MapContextComponent implements OnInit {
   @Input() context: MapContextModel
-  @Output() featureClicked = new EventEmitter<Feature[]>()
+  @Output() featureClicked = new EventEmitter<Feature<Geometry>[]>()
 
   map: Map
 
@@ -46,7 +47,7 @@ export class MapContextComponent implements OnInit {
         this.mapUtils.getVectorFeaturesFromClick(this.map, event)
       )
 
-      const featuresObservablesArray: Observable<Feature[]>[] = [
+      const featuresObservablesArray: Observable<Feature<Geometry>[]>[] = [
         ...gfiFeaturesObservables,
         vectorFeatures$,
       ]

@@ -15,7 +15,7 @@ describe('MapComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MapComponent)
     component = fixture.componentInstance
-    component.map = new Map()
+    component.map = new Map({})
     fixture.detectChanges()
   })
 
