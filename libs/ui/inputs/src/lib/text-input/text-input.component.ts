@@ -2,31 +2,25 @@ import {
   AfterViewInit,
   Component,
   Input,
-  OnInit,
   Output,
   ViewChild,
 } from '@angular/core'
 import { distinctUntilChanged } from 'rxjs/operators'
-import { Observable, Subject } from 'rxjs'
+import { Subject } from 'rxjs'
 
 @Component({
   selector: 'gn-ui-text-input',
   templateUrl: './text-input.component.html',
   styleUrls: ['./text-input.component.css'],
 })
-export class TextInputComponent implements OnInit, AfterViewInit {
+export class TextInputComponent implements AfterViewInit {
   @Input() value = ''
   @Input() hint: string
   @Input() required = false
-  @Output() valueChange: Observable<string>
+  rawChange = new Subject<string>()
+  @Output() valueChange = this.rawChange.pipe(distinctUntilChanged())
 
   @ViewChild('input') input
-
-  rawChange = new Subject<string>()
-
-  ngOnInit() {
-    this.valueChange = this.rawChange.pipe(distinctUntilChanged())
-  }
 
   ngAfterViewInit() {
     this.checkRequired(this.input.nativeElement.value)
