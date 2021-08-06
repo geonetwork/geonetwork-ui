@@ -39,6 +39,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     FeatureCatalogModule,
     UiLayoutModule,
     FeatureMapModule,
+    UiMapModule,
     StoreModule.forRoot({}, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot(),
