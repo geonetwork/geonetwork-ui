@@ -5,6 +5,6 @@ import { MapManagerService } from './map-manager.service'
   selector: '[gnUiMapContainer]',
   providers: [MapManagerService],
 })
-export class MapContainerDirective {
+export class MapInstanceDirective {
   constructor(@Host() private manager: MapManagerService) {}
 }
