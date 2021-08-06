@@ -2,10 +2,11 @@ import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { MapComponent } from './components/map/map.component'
+import { FeatureDetailComponent } from './components/feature-detail/feature-detail.component'
 
 @NgModule({
-  declarations: [MapComponent],
+  declarations: [MapComponent, FeatureDetailComponent],
   imports: [CommonModule, HttpClientModule],
-  exports: [MapComponent],
+  exports: [MapComponent, FeatureDetailComponent],
 })
 export class UiMapModule {}
