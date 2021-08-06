@@ -73,7 +73,7 @@ describe('FacetItemComponent', () => {
       input = de.query(By.css('input'))
     })
     it('outputs the toggled selected value', () => {
-      spyOn(component.selectedChange, 'emit')
+      jest.spyOn(component.selectedChange, 'emit')
       input.nativeElement.click()
       expect(component.selectedChange.emit).toHaveBeenCalledWith(false)
     })
@@ -87,7 +87,7 @@ describe('FacetItemComponent', () => {
       icon = de.query(By.css('.icon-include'))
     })
     it('outputs the toggled inverted value', () => {
-      spyOn(component.invertedChange, 'emit')
+      jest.spyOn(component.invertedChange, 'emit')
       icon.nativeElement.click()
       expect(component.invertedChange.emit).toHaveBeenCalledWith(false)
     })

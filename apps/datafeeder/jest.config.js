@@ -1,7 +1,6 @@
 module.exports = {
   displayName: 'datafeeder',
   preset: '../../jest.preset.js',
-  transform: { '\\.ts$': ['ts-jest'] },
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
@@ -18,4 +17,5 @@ module.exports = {
     'jest-preset-angular/build/serializers/ng-snapshot',
     'jest-preset-angular/build/serializers/html-comment',
   ],
+  transform: { '^.+\\.(ts|js|html)$': 'jest-preset-angular' },
 }

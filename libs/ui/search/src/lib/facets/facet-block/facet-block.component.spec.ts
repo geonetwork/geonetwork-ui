@@ -113,7 +113,7 @@ describe('FacetBlockComponent', () => {
       input = de.query(By.css('.input-filter'))
     })
     it('outputs the changed filter value', fakeAsync(() => {
-      spyOn(component.filterChange, 'emit')
+      jest.spyOn(component.filterChange, 'emit')
       input.nativeElement.value = 'europe'
       const event = new Event('keyup') as any
       event.path = [input.nativeElement]
