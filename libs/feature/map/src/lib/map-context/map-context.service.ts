@@ -4,7 +4,7 @@ import {
   MapContextLayerTypeEnum,
   MapContextModel,
   MapContextViewModel,
-} from '../models/map-context.model'
+} from './map-context.model'
 import Map from 'ol/Map'
 import View from 'ol/View'
 import Layer from 'ol/layer/Base'
@@ -13,7 +13,7 @@ import TileWMS from 'ol/source/TileWMS'
 import TileLayer from 'ol/layer/Tile'
 import XYZ from 'ol/source/XYZ'
 import VectorSource from 'ol/source/Vector'
-import { MapUtilsService } from './map-utils.service'
+import { MapUtilsService } from '../utils/map-utils.service'
 
 @Injectable({
   providedIn: 'root',
@@ -21,9 +21,9 @@ import { MapUtilsService } from './map-utils.service'
 export class MapContextService {
   constructor(private mapUtils: MapUtilsService) {}
 
-  createMap(mapContext: MapContextModel): Map {
-    const map = this.createEmptyMap()
+  resetMapFromContext(map: Map, mapContext: MapContextModel): Map {
     map.setView(this.createView(mapContext.view))
+    map.getLayers().clear()
     mapContext.layers.forEach((layer) => map.addLayer(this.createLayer(layer)))
     return map
   }
@@ -64,13 +64,5 @@ export class MapContextService {
       multiWorld: true,
       constrainResolution: true,
     })
-  }
-
-  private createEmptyMap(): Map {
-    const map = new Map({
-      controls: [],
-      pixelRatio: 1,
-    })
-    return map
   }
 }

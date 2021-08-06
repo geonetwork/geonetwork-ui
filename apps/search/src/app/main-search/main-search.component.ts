@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core'
-import { MapContextLayerTypeEnum } from '@geonetwork-ui/ui/map'
+import {
+  FeatureInfoService,
+  MapContextLayerTypeEnum,
+} from '@geonetwork-ui/feature/map'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { map, take, tap } from 'rxjs/operators'
-import { fromLonLat } from 'ol/proj'
 import { BootstrapService } from '@geonetwork-ui/util/shared'
+import { fromLonLat } from 'ol/proj'
+import { map, take, tap } from 'rxjs/operators'
 
 @Component({
   selector: 'gn-ui-main-search',
@@ -32755,6 +32758,7 @@ export class MainSearchComponent implements OnInit {
 
   constructor(
     private bootstrap: BootstrapService,
+    private featureInfo: FeatureInfoService,
     private searchFacade: SearchFacade
   ) {}
 
@@ -32774,5 +32778,10 @@ export class MainSearchComponent implements OnInit {
         })
       )
       .subscribe()
+
+    this.featureInfo.handleFeatureInfo()
+    this.featureInfo.features$.subscribe((features) =>
+      this.onMapFeaturesClick(features)
+    )
   }
 }
