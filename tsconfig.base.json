@@ -38,7 +38,8 @@
       "@geonetwork-ui/util/i18n": ["libs/util/i18n/src/index.ts"],
       "@geonetwork-ui/util/shared": ["libs/util/shared/src/index.ts"]
     },
-    "allowJs": true
+    "allowJs": true,
+    "outDir": "/"
   },
   "exclude": ["node_modules", "tmp"]
 }
