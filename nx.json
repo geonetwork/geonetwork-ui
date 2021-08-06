@@ -19,38 +19,10 @@
     }
   },
   "projects": {
-    "search": {
+    "data-access-datafeeder": {
       "tags": []
     },
-    "search-e2e": {
-      "tags": [],
-      "implicitDependencies": ["search"]
-    },
-    "feature-search": {
-      "tags": []
-    },
-    "feature-auth": {
-      "tags": []
-    },
-    "ui-search": {
-      "tags": []
-    },
-    "ui-inputs": {
-      "tags": []
-    },
-    "ui-layout": {
-      "tags": []
-    },
-    "ui-widgets": {
-      "tags": []
-    },
-    "feature-editor": {
-      "tags": []
-    },
-    "feature-catalog": {
-      "tags": []
-    },
-    "ui-catalog": {
+    "data-access-gn4": {
       "tags": []
     },
     "datafeeder": {
@@ -60,23 +32,59 @@
       "tags": [],
       "implicitDependencies": ["datafeeder"]
     },
-    "util-i18n": {
+    "feature-auth": {
       "tags": []
     },
-    "data-access-gn4": {
+    "feature-catalog": {
       "tags": []
     },
-    "data-access-datafeeder": {
+    "feature-editor": {
       "tags": []
     },
-    "util-shared": {
+    "feature-map": {
+      "tags": []
+    },
+    "feature-search": {
+      "tags": []
+    },
+    "search": {
+      "tags": []
+    },
+    "search-e2e": {
+      "tags": [],
+      "implicitDependencies": ["search"]
+    },
+    "ui-catalog": {
+      "tags": []
+    },
+    "ui-inputs": {
+      "tags": []
+    },
+    "ui-layout": {
       "tags": []
     },
     "ui-map": {
       "tags": []
     },
-    "feature-map": {
+    "ui-search": {
+      "tags": []
+    },
+    "ui-widgets": {
+      "tags": []
+    },
+    "util-i18n": {
+      "tags": []
+    },
+    "util-shared": {
       "tags": []
     }
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
   }
 }
