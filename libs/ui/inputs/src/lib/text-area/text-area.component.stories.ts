@@ -2,7 +2,7 @@ import { moduleMetadata, Story, Meta } from '@storybook/angular'
 import { TextAreaComponent } from './text-area.component'
 
 export default {
-  title: 'TextAreaComponent',
+  title: 'Inputs/TextAreaComponent',
   component: TextAreaComponent,
   decorators: [
     moduleMetadata({

@@ -12,7 +12,7 @@ import {
 } from '@geonetwork-ui/util/i18n'
 
 export default {
-  title: 'ChipsInputComponent',
+  title: 'Inputs/ChipsInputComponent',
   component: ChipsInputComponent,
   decorators: [
     moduleMetadata({

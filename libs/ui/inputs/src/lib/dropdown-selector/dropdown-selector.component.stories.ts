@@ -7,7 +7,7 @@ import {
 } from '@geonetwork-ui/util/i18n'
 
 export default {
-  title: 'DropdownSelectorComponent',
+  title: 'Inputs/DropdownSelectorComponent',
   component: DropdownSelectorComponent,
   decorators: [
     moduleMetadata({

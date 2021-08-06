@@ -7,7 +7,7 @@ import {
 } from '@geonetwork-ui/util/i18n'
 
 export default {
-  title: 'ButtonComponent',
+  title: 'Inputs/ButtonComponent',
   component: ButtonComponent,
   decorators: [
     moduleMetadata({

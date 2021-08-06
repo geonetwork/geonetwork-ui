@@ -10,7 +10,7 @@ import {
 } from '@geonetwork-ui/util/i18n'
 
 export default {
-  title: 'FacetBlockComponent',
+  title: 'Search/FacetBlockComponent',
   component: FacetBlockComponent,
   decorators: [
     moduleMetadata({

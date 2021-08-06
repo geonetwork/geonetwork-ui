@@ -2,7 +2,7 @@ import { moduleMetadata, Story, Meta } from '@storybook/angular'
 import { StepBarComponent } from './step-bar.component'
 
 export default {
-  title: 'StepBarComponent',
+  title: 'Widgets/StepBarComponent',
   component: StepBarComponent,
   decorators: [
     moduleMetadata({

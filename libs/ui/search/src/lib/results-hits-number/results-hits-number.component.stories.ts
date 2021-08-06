@@ -7,7 +7,7 @@ import {
 } from '../../../../../util/i18n/src'
 
 export default {
-  title: 'ResultsHitsNumberComponent',
+  title: 'Search/ResultsHitsNumberComponent',
   component: ResultsHitsNumberComponent,
   decorators: [
     moduleMetadata({

@@ -12,7 +12,7 @@ import {
 } from '@geonetwork-ui/util/i18n'
 
 export default {
-  title: 'FacetListComponent',
+  title: 'Search/FacetListComponent',
   component: FacetListComponent,
   decorators: [
     moduleMetadata({

@@ -1,12 +1,12 @@
-import { moduleMetadata, Story, Meta } from '@storybook/angular'
+import { Meta, moduleMetadata, Story } from '@storybook/angular'
 import { AutocompleteComponent } from './autocomplete.component'
 import { of } from 'rxjs'
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { MatIconModule } from '@angular/material/icon'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { ReactiveFormsModule } from '@angular/forms'
 
 export default {
-  title: 'AutocompleteComponent',
+  title: 'Inputs/AutocompleteComponent',
   component: AutocompleteComponent,
   decorators: [
     moduleMetadata({

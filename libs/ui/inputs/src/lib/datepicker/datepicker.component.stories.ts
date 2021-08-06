@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms'
 import { AngularMyDatePickerModule } from 'angular-mydatepicker'
 
 export default {
-  title: 'DatepickerComponent',
+  title: 'Inputs/DatepickerComponent',
   component: DatepickerComponent,
   decorators: [
     moduleMetadata({

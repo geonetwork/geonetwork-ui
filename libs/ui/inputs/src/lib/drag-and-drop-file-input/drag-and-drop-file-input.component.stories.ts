@@ -8,7 +8,7 @@ import {
 import { NgxDropzoneModule } from 'ngx-dropzone'
 
 export default {
-  title: 'DragAndDropFileInputComponent',
+  title: 'Inputs/DragAndDropFileInputComponent',
   component: DragAndDropFileInputComponent,
   decorators: [
     moduleMetadata({

@@ -2,7 +2,7 @@ import { moduleMetadata, Story, Meta } from '@storybook/angular'
 import { RecordMetricComponent } from './record-metric.component'
 
 export default {
-  title: 'RecordMetricComponent',
+  title: 'Search/RecordMetricComponent',
   component: RecordMetricComponent,
   decorators: [
     moduleMetadata({

@@ -5,7 +5,7 @@ import { RecordThumbnailComponent } from '../record-thumbnail/record-thumbnail.c
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 
 export default {
-  title: 'RecordPreviewListComponent',
+  title: 'Search/RecordPreviewListComponent',
   component: RecordPreviewListComponent,
   decorators: [
     moduleMetadata({

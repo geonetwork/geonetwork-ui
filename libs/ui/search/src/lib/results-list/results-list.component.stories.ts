@@ -14,7 +14,7 @@ import {
 import { TranslateModule } from '@ngx-translate/core'
 
 export default {
-  title: 'ResultsListComponent',
+  title: 'Search/ResultsListComponent',
   component: ResultsListComponent,
   decorators: [
     moduleMetadata({

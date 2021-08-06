@@ -3,7 +3,7 @@ import { ColorScaleComponent } from './color-scale.component'
 import { ColorService } from '@geonetwork-ui/util/shared'
 
 export default {
-  title: 'ColorScaleComponent',
+  title: 'Widgets/ColorScaleComponent',
   component: ColorScaleComponent,
   decorators: [
     moduleMetadata({

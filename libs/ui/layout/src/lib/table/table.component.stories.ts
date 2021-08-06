@@ -4,7 +4,7 @@ import { UiLayoutModule } from '../ui-layout.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 export default {
-  title: 'TableComponent',
+  title: 'Layout/TableComponent',
   component: TableComponent,
   decorators: [
     moduleMetadata({
