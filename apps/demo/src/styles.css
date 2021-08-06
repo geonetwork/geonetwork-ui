@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* For base styles (check out normalize.css) */
+@tailwind base;
+/* Simple reusable components provided by tailwind */
+@tailwind components;
+/* utility classes generated based on our tailwind.config.js */
+@tailwind utilities;
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}

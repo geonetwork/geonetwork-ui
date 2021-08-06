@@ -38,6 +38,13 @@
       "tags": [],
       "implicitDependencies": ["datafeeder"]
     },
+    "demo": {
+      "tags": []
+    },
+    "demo-e2e": {
+      "tags": [],
+      "implicitDependencies": ["demo"]
+    },
     "feature-auth": {
       "tags": []
     },
