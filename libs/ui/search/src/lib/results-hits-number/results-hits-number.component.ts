@@ -5,6 +5,6 @@ import { Component, Input } from '@angular/core'
   templateUrl: './results-hits-number.component.html',
 })
 export class ResultsHitsNumberComponent {
-  @Input() hits
+  @Input() hits: number
   @Input() loading: boolean
 }
