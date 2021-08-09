@@ -28,6 +28,6 @@ const Template: Story<ResultsHitsNumberComponent> = (
 
 export const Primary = Template.bind({})
 Primary.args = {
-  hits: 32,
+  hits: { value: 32 },
   loading: false,
 }
