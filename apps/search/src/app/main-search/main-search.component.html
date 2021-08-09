@@ -1,8 +1,16 @@
 <div style="width: 100%; height: 300px" class="">
-  <gn-ui-map-context
-    [context]="mapContext"
-    (featureClicked)="onMapFeaturesClick($event)"
-  ></gn-ui-map-context>
+  <div class="flex h-full">
+    <gn-ui-map-context
+      class="flex-grow"
+      [context]="mapContext"
+      (featureClicked)="onMapFeaturesClick($event)"
+    ></gn-ui-map-context>
+    <gn-ui-feature-detail
+      style="width: 250px"
+      class="p-3 flex-shrink-0 overflow-auto"
+      [feature]="featureDetail$ | async"
+    ></gn-ui-feature-detail>
+  </div>
 </div>
 <div class="mb-3 mx-4 rounded flex flex-row">
   <div class="w-2/4 mr-3">

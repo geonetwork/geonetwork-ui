@@ -1,4 +1,4 @@
-import { Directive, Host } from '@angular/core'
+import { Directive } from '@angular/core'
 import { MapManagerService } from './map-manager.service'
 
 @Directive({
@@ -6,5 +6,5 @@ import { MapManagerService } from './map-manager.service'
   providers: [MapManagerService],
 })
 export class MapInstanceDirective {
-  constructor(@Host() private manager: MapManagerService) {}
+  constructor(private manager: MapManagerService) {}
 }

@@ -5,8 +5,10 @@ import {
 } from '@geonetwork-ui/feature/map'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { BootstrapService } from '@geonetwork-ui/util/shared'
+import { Feature } from 'ol'
+import Geometry from 'ol/geom/Geometry'
 import { fromLonLat } from 'ol/proj'
-import { map, take, tap } from 'rxjs/operators'
+import { filter, map, take, tap } from 'rxjs/operators'
 
 @Component({
   selector: 'gn-ui-main-search',
@@ -32756,6 +32758,11 @@ export class MainSearchComponent implements OnInit {
     },
   ]
 
+  featureDetail$ = this.featureInfo.features$.pipe(
+    filter((features) => features && features.length > 0),
+    map((features) => features[0])
+  )
+
   constructor(
     private bootstrap: BootstrapService,
     private featureInfo: FeatureInfoService,
@@ -32780,8 +32787,5 @@ export class MainSearchComponent implements OnInit {
       .subscribe()
 
     this.featureInfo.handleFeatureInfo()
-    this.featureInfo.features$.subscribe((features) =>
-      this.onMapFeaturesClick(features)
-    )
   }
 }
