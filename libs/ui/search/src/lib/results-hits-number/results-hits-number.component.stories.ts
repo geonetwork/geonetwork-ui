@@ -1,10 +1,10 @@
 import { Meta, moduleMetadata, Story } from '@storybook/angular'
-import { ResultsHitsNumberComponent } from './results-hits-number.component'
-import { TranslateModule } from '@ngx-translate/core'
 import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
-} from '../../../../../util/i18n/src'
+} from '@geonetwork-ui/util/i18n'
+import { ResultsHitsNumberComponent } from './results-hits-number.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 export default {
   title: 'Search/ResultsHitsNumberComponent',
