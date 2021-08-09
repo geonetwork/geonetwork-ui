@@ -1,0 +1,9 @@
+body {
+    padding: 1rem;
+}
+
+gn-ui-map-context {
+    width: 400px;
+    height: 300px;
+    display: block;
+}
