@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { TranslateService } from '@ngx-translate/core'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
 
 import {
@@ -11,8 +12,11 @@ import { PublishStatusEnumApiModel } from '@geonetwork-ui/data-access/datafeeder
 import { of } from 'rxjs'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 
-const GN_LINK = 'a'
-const GS_LINK = 'b'
+const GN_LINK =
+  'https://georchestra-127-0-1-1.traefik.me/geonetwork/srv/eng/catalog.search#/metadata/68ef889e-7bcd-434e-880b-606de90f673b'
+const GS_LINK =
+  'https://georchestra-127-0-1-1.traefik.me/geoserver/camptocamp/wms?'
+
 const jobMock: JobStatusModel = {
   jobId: '1234',
   status: PublishStatusEnumApiModel.Done,
@@ -37,6 +41,9 @@ const routerMock = {
 const facadeMock = {
   publication$: of(jobMock),
 }
+const translateServiceMock = {
+  currentLang: 'fr',
+}
 
 describe('SuccessPublishPageComponent', () => {
   let component: SuccessPublishPageComponent
@@ -51,6 +58,10 @@ describe('SuccessPublishPageComponent', () => {
         {
           provide: DatafeederFacade,
           useValue: facadeMock,
+        },
+        {
+          provide: TranslateService,
+          useValue: translateServiceMock,
         },
         { provide: Router, useValue: routerMock },
         { provide: ActivatedRoute, useValue: activatedRouteMock },
@@ -69,7 +80,9 @@ describe('SuccessPublishPageComponent', () => {
   })
 
   it('fetches batch status', () => {
-    expect(component.gnLink).toBe(GN_LINK)
+    expect(component.gnLink).toBe(
+      'https://georchestra-127-0-1-1.traefik.me/geonetwork/srv/fre/catalog.search#/metadata/68ef889e-7bcd-434e-880b-606de90f673b'
+    )
     expect(component.gsLink).toBe(GS_LINK)
   })
 })

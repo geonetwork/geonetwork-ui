@@ -5,6 +5,8 @@ import {
   PublishJobStatusApiModel,
   PublishStatusEnumApiModel,
 } from '@geonetwork-ui/data-access/datafeeder'
+import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n'
+import { TranslateService } from '@ngx-translate/core'
 import { Subscription } from 'rxjs'
 import { take } from 'rxjs/operators'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
@@ -30,7 +32,11 @@ export class SuccessPublishPageComponent implements OnInit, OnDestroy {
   gnLink: string
   gsLink: string
 
-  constructor(private facade: DatafeederFacade, private router: Router) {}
+  constructor(
+    private facade: DatafeederFacade,
+    private router: Router,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit(): void {
     this.subscription = new Subscription()
@@ -41,7 +47,10 @@ export class SuccessPublishPageComponent implements OnInit, OnDestroy {
         .subscribe((job: JobStatusModel) => {
           const links = job.datasets[0]._links
           this.gsLink = links.preview.href
-          this.gnLink = links.describedBy[1].href
+          this.gnLink = links.describedBy[1].href.replace(
+            '/eng/',
+            `/${LANG_2_TO_3_MAPPER[this.translateService.currentLang]}/`
+          )
         })
     )
   }
