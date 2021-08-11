@@ -20,25 +20,26 @@
     "noImplicitAny": false,
     "esModuleInterop": true,
     "paths": {
-      "@geonetwork-ui/feature/search": ["libs/feature/search/src/index.ts"],
-      "@geonetwork-ui/feature/auth": ["libs/feature/auth/src/index.ts"],
-      "@geonetwork-ui/ui/search": ["libs/ui/search/src/index.ts"],
-      "@geonetwork-ui/ui/inputs": ["libs/ui/inputs/src/index.ts"],
-      "@geonetwork-ui/ui/layout": ["libs/ui/layout/src/index.ts"],
-      "@geonetwork-ui/ui/widgets": ["libs/ui/widgets/src/index.ts"],
-      "@geonetwork-ui/feature/editor": ["libs/feature/editor/src/index.ts"],
-      "@geonetwork-ui/feature/catalog": ["libs/feature/catalog/src/index.ts"],
-      "@geonetwork-ui/ui/catalog": ["libs/ui/catalog/src/index.ts"],
-      "@geonetwork-ui/util/i18n": ["libs/util/i18n/src/index.ts"],
-      "@geonetwork-ui/data-access/gn4": ["libs/data-access/gn4/src/index.ts"],
       "@geonetwork-ui/data-access/datafeeder": [
         "libs/data-access/datafeeder/src/index.ts"
       ],
-      "@geonetwork-ui/util/shared": ["libs/util/shared/src/index.ts"],
+      "@geonetwork-ui/data-access/gn4": ["libs/data-access/gn4/src/index.ts"],
+      "@geonetwork-ui/feature/auth": ["libs/feature/auth/src/index.ts"],
+      "@geonetwork-ui/feature/catalog": ["libs/feature/catalog/src/index.ts"],
+      "@geonetwork-ui/feature/editor": ["libs/feature/editor/src/index.ts"],
+      "@geonetwork-ui/feature/map": ["libs/feature/map/src/index.ts"],
+      "@geonetwork-ui/feature/search": ["libs/feature/search/src/index.ts"],
+      "@geonetwork-ui/ui/catalog": ["libs/ui/catalog/src/index.ts"],
+      "@geonetwork-ui/ui/inputs": ["libs/ui/inputs/src/index.ts"],
+      "@geonetwork-ui/ui/layout": ["libs/ui/layout/src/index.ts"],
       "@geonetwork-ui/ui/map": ["libs/ui/map/src/index.ts"],
-      "@geonetwork-ui/feature/map": ["libs/feature/map/src/index.ts"]
+      "@geonetwork-ui/ui/search": ["libs/ui/search/src/index.ts"],
+      "@geonetwork-ui/ui/widgets": ["libs/ui/widgets/src/index.ts"],
+      "@geonetwork-ui/util/i18n": ["libs/util/i18n/src/index.ts"],
+      "@geonetwork-ui/util/shared": ["libs/util/shared/src/index.ts"]
     },
-    "allowJs": true
+    "allowJs": true,
+    "outDir": "/"
   },
   "exclude": ["node_modules", "tmp"]
 }

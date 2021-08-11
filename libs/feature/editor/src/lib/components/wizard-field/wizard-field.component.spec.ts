@@ -156,10 +156,10 @@ describe('WizardFieldsComponent', () => {
       component = fixture.componentInstance
 
       wizardService = debugElement.injector.get(WizardService)
-      dataChangedSpy = spyOn(
+      dataChangedSpy = jest.spyOn(
         wizardService,
         'onWizardWizardFieldDataChanged'
-      ).and.callThrough()
+      )
 
       component.wizardFieldConfig = {
         id: 'dropdown',

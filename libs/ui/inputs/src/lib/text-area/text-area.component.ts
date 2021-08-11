@@ -2,11 +2,10 @@ import {
   AfterViewInit,
   Component,
   Input,
-  OnInit,
   Output,
   ViewChild,
 } from '@angular/core'
-import { Observable, Subject } from 'rxjs'
+import { Subject } from 'rxjs'
 import { distinctUntilChanged } from 'rxjs/operators'
 
 @Component({
@@ -14,19 +13,15 @@ import { distinctUntilChanged } from 'rxjs/operators'
   templateUrl: './text-area.component.html',
   styleUrls: ['./text-area.component.css'],
 })
-export class TextAreaComponent implements OnInit, AfterViewInit {
+export class TextAreaComponent implements AfterViewInit {
   @Input() value = ''
   @Input() placeholder: string
   @Input() required = false
-  @Output() valueChange: Observable<string>
-
-  @ViewChild('input') input
 
   rawChange = new Subject<string>()
+  @Output() valueChange = this.rawChange.pipe(distinctUntilChanged())
 
-  ngOnInit(): void {
-    this.valueChange = this.rawChange.pipe(distinctUntilChanged())
-  }
+  @ViewChild('input') input
 
   ngAfterViewInit() {
     this.checkRequired(this.input.nativeElement.value)

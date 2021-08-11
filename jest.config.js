@@ -1,22 +1,10 @@
+const { getJestProjects } = require('@nrwl/jest')
+
 module.exports = {
   projects: [
-    '<rootDir>/apps/search',
+    ...getJestProjects(),
     '<rootDir>/libs/ui',
-    '<rootDir>/libs/feature/search',
-    '<rootDir>/libs/feature/auth',
-    '<rootDir>/libs/ui/search',
-    '<rootDir>/libs/ui/inputs',
-    '<rootDir>/libs/ui/layout',
-    '<rootDir>/libs/ui/widgets',
-    '<rootDir>/libs/feature/editor',
-    '<rootDir>/libs/feature/catalog',
-    '<rootDir>/libs/ui/catalog',
-    '<rootDir>/apps/datafeeder',
-    '<rootDir>/libs/util/i18n',
     '<rootDir>/libs/data-access/gn4',
     '<rootDir>/libs/data-access/datafeeder',
-    '<rootDir>/libs/util/shared',
-    '<rootDir>/libs/ui/map',
-    '<rootDir>/libs/feature/map',
   ],
 }
