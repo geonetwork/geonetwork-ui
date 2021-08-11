@@ -1,6 +1,8 @@
 module.exports = {
-  darkMode: false, // or 'media' or 'class'
-  purge: ['./{apps,libs,webcomponents}/*/src/**/*.{html,ts}'],
+  purge: {
+    enabled: process.env.TAILWIND_MODE === 'build',
+  },
+  darkMode: false, // or 'media' or 'class',
   theme: {
     inset: {
       '1/10': '10%',
