@@ -18,7 +18,11 @@ import {
   MapManagerService,
   MapOptionsModel,
 } from '@geonetwork-ui/feature/map'
-import { TableComponent } from '@geonetwork-ui/ui/layout'
+import {
+  TableComponent,
+  TableItemModel,
+  TableItemId,
+} from '@geonetwork-ui/ui/layout'
 import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared'
 import { FeatureCollection } from 'geojson'
 import { Feature, Map, View } from 'ol'
@@ -44,9 +48,9 @@ export class GeoTableViewComponent implements OnInit, AfterViewInit, OnDestroy {
   private vectorSource: VectorSource<Geometry>
   private features: Feature<Geometry>[]
 
-  tableData: any
+  tableData: TableItemModel[]
   mapContext: MapContextModel
-  selectionId: any
+  selectionId: TableItemId
   selection: Feature<Geometry>
   private subscription = new Subscription()
 
@@ -71,16 +75,16 @@ export class GeoTableViewComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     const map = (this.map = this.manager.map)
     this.view = map.getView()
-    this.vectorLayer = this.manager.map.getLayers().item(1) as VectorLayer<any>
+    this.vectorLayer = this.manager.map.getLayers().item(1) as VectorLayer<
+      VectorSource<Geometry>
+    >
     this.vectorLayer.setStyle(this.styleFn.bind(this))
     this.vectorSource = this.vectorLayer.getSource()
     this.features = this.vectorSource.getFeatures()
-    this.view.fit(this.vectorSource.getExtent(), {
-      maxZoom: 15,
-    })
+    this.view.fit(this.vectorSource.getExtent())
   }
 
-  onTableSelect(tableEntry: any) {
+  onTableSelect(tableEntry: TableItemModel) {
     const { id } = tableEntry
     this.selectionId = id
     this.selection = this.getFeatureFromId(id)
@@ -121,11 +125,11 @@ export class GeoTableViewComponent implements OnInit, AfterViewInit, OnDestroy {
   private animateToFeature(feature: Feature<Geometry>): void {
     this.view.fit(feature.getGeometry().getExtent(), {
       duration: 1000,
-      maxZoom: 15,
+      maxZoom: 11,
     })
   }
 
-  private getFeatureFromId(id: any) {
+  private getFeatureFromId(id: TableItemId) {
     return this.features.find((feature) => feature.getId() === id)
   }
 
