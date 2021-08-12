@@ -1,12 +1,17 @@
 import {
   AfterViewInit,
   Component,
+  ElementRef,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
   ViewChild,
 } from '@angular/core'
 import { MatSort } from '@angular/material/sort'
 import { MatTableDataSource } from '@angular/material/table'
+
+const rowIdPrefix = 'table-item-'
 
 @Component({
   selector: 'gn-ui-table',
@@ -15,8 +20,14 @@ import { MatTableDataSource } from '@angular/material/table'
 })
 export class TableComponent implements OnInit, AfterViewInit {
   @Input() data: any
+  @Input() activeId: any
+  @Output() selected = new EventEmitter<any>()
+
   @ViewChild(MatSort) sort: MatSort
   dataSource: MatTableDataSource<any>
+  headerHeight: number
+
+  constructor(private eltRef: ElementRef) {}
 
   get properties(): string[] {
     return Array.isArray(this.data) && this.data.length
@@ -30,5 +41,18 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort
+    this.headerHeight =
+      this.eltRef.nativeElement.querySelector('thead').offsetHeight
+  }
+
+  scrollToItem(itemId: string): void {
+    const row = this.eltRef.nativeElement.querySelector(
+      `#${this.getRowEltId(itemId)}`
+    )
+    this.eltRef.nativeElement.scrollTop = row.offsetTop - this.headerHeight
+  }
+
+  public getRowEltId(id: string): string {
+    return rowIdPrefix + id
   }
 }

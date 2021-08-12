@@ -365,6 +365,31 @@
         }
       }
     },
+    "feature-dataviz": {
+      "projectType": "library",
+      "root": "libs/feature/dataviz",
+      "sourceRoot": "libs/feature/dataviz/src",
+      "prefix": "geonetwork-ui",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/feature/dataviz"],
+          "options": {
+            "jestConfig": "libs/feature/dataviz/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/feature/dataviz/src/**/*.ts",
+              "libs/feature/dataviz/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "feature-editor": {
       "projectType": "library",
       "root": "libs/feature/editor",

@@ -8,7 +8,7 @@ export enum MapContextLayerTypeEnum {
 
 export interface MapContextModel {
   layers: MapContextLayerModel[]
-  view: MapContextViewModel
+  view?: MapContextViewModel
 }
 
 export interface MapContextLayerModel {
