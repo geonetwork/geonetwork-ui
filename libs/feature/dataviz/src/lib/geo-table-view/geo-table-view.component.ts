@@ -24,7 +24,7 @@ import {
   TableItemId,
 } from '@geonetwork-ui/ui/layout'
 import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared'
-import { FeatureCollection } from 'geojson'
+import type { FeatureCollection } from 'geojson'
 import { Feature, Map, View } from 'ol'
 import { Geometry } from 'ol/geom'
 import VectorLayer from 'ol/layer/Vector'

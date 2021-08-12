@@ -10,7 +10,7 @@ import {
   ViewChild,
 } from '@angular/core'
 import { ColorService } from '@geonetwork-ui/util/shared'
-import { Feature } from 'geojson'
+import type { Feature } from 'geojson'
 import { asArray, asString } from 'ol/color'
 import { isEmpty } from 'ol/extent'
 import GeoJSON from 'ol/format/GeoJSON'

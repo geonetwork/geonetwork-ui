@@ -1,4 +1,4 @@
-import { FeatureCollection } from 'geojson'
+import type { FeatureCollection } from 'geojson'
 
 export enum MapContextLayerTypeEnum {
   XYZ = 'xyz',

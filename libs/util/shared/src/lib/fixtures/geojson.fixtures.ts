@@ -1,4 +1,4 @@
-import { FeatureCollection } from 'geojson'
+import type { FeatureCollection } from 'geojson'
 
 export const FEATURE_COLLECTION_POLYGON_FIXTURE_4326: FeatureCollection = {
   type: 'FeatureCollection',
