@@ -1,10 +1,10 @@
 const baseConfig = require('../../tailwind.base.config')
-const { createGlobPatternsForDependencies } = require('@nrwl/angular/tailwind')
 
 module.exports = {
   ...baseConfig,
   purge: {
     ...baseConfig.purge,
-    content: createGlobPatternsForDependencies(__dirname),
+    // use all libs when purging for storybook to work
+    content: ['./apps/demo/src/**/*.html', './libs/*/*/src/**/*.html'],
   },
 }

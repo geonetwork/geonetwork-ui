@@ -51,6 +51,9 @@
     "feature-catalog": {
       "tags": []
     },
+    "feature-dataviz": {
+      "tags": []
+    },
     "feature-editor": {
       "tags": []
     },

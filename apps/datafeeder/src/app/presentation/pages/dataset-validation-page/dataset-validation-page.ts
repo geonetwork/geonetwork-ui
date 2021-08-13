@@ -9,7 +9,7 @@ import {
   UploadJobStatusApiModel,
 } from '@geonetwork-ui/data-access/datafeeder'
 import { WizardService } from '@geonetwork-ui/feature/editor'
-import { Feature } from 'geojson'
+import type { Feature } from 'geojson'
 import GeoJSON from 'ol/format/GeoJSON'
 import OlFeature from 'ol/Feature'
 import { fromExtent } from 'ol/geom/Polygon'

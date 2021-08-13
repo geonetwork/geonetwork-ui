@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
+import { FeatureDatavizModule } from '@geonetwork-ui/feature/dataviz'
 import { FeatureMapModule } from '@geonetwork-ui/feature/map'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { UiMapModule } from '@geonetwork-ui/ui/map'
@@ -40,6 +41,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     UiLayoutModule,
     FeatureMapModule,
     UiMapModule,
+    FeatureDatavizModule,
     StoreModule.forRoot({}, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot(),

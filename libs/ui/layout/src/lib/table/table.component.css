@@ -16,3 +16,11 @@ tr:hover {
 tr.mat-header-row {
   height: 48px;
 }
+
+tr {
+  cursor: pointer;
+}
+
+.active .mat-cell {
+  color: var(--color-primary);
+}

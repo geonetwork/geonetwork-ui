@@ -1,4 +1,4 @@
-import { FeatureCollection } from 'geojson'
+import type { FeatureCollection } from 'geojson'
 
 export enum MapContextLayerTypeEnum {
   XYZ = 'xyz',
@@ -8,7 +8,7 @@ export enum MapContextLayerTypeEnum {
 
 export interface MapContextModel {
   layers: MapContextLayerModel[]
-  view: MapContextViewModel
+  view?: MapContextViewModel
 }
 
 export interface MapContextLayerModel {

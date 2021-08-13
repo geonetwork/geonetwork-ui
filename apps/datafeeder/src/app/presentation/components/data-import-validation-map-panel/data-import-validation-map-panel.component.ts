@@ -10,7 +10,7 @@ import {
   ViewChild,
 } from '@angular/core'
 import { ColorService } from '@geonetwork-ui/util/shared'
-import { Feature } from 'geojson'
+import type { Feature } from 'geojson'
 import { asArray, asString } from 'ol/color'
 import { isEmpty } from 'ol/extent'
 import GeoJSON from 'ol/format/GeoJSON'
@@ -31,7 +31,8 @@ const PADDING = 50
   styleUrls: ['./data-import-validation-map-panel.css'],
 })
 export class DataImportValidationMapPanelComponent
-  implements OnInit, AfterViewInit, OnChanges {
+  implements OnInit, AfterViewInit, OnChanges
+{
   @ViewChild('map') mapElt: ElementRef
 
   @Input() showProperties = false

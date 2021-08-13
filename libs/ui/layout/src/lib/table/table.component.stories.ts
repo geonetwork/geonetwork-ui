@@ -1,4 +1,9 @@
-import { moduleMetadata, Story, Meta } from '@storybook/angular'
+import {
+  moduleMetadata,
+  Story,
+  Meta,
+  componentWrapperDecorator,
+} from '@storybook/angular'
 import { TableComponent } from './table.component'
 import { UiLayoutModule } from '../ui-layout.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -10,6 +15,9 @@ export default {
     moduleMetadata({
       imports: [UiLayoutModule, BrowserAnimationsModule],
     }),
+    componentWrapperDecorator(
+      (story) => `<div style="max-width: 700px">${story}</div>`
+    ),
   ],
 } as Meta<TableComponent>
 
