@@ -2,7 +2,12 @@ import { HttpClientModule } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiMapModule } from '@geonetwork-ui/ui/map'
 import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared'
-import { Meta, moduleMetadata, Story } from '@storybook/angular'
+import {
+  componentWrapperDecorator,
+  Meta,
+  moduleMetadata,
+  Story,
+} from '@storybook/angular'
 import { GeoTableViewComponent } from './geo-table-view.component'
 import {
   defaultMapOptions,
@@ -24,6 +29,9 @@ export default {
         BrowserAnimationsModule,
       ],
     }),
+    componentWrapperDecorator(
+      (story) => `<div style="height: 400px">${story}</div>`
+    ),
   ],
 } as Meta<GeoTableViewComponent>
 

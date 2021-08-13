@@ -1,7 +1,12 @@
 import { HttpClientModule } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiMapModule } from '@geonetwork-ui/ui/map'
-import { Meta, moduleMetadata, Story } from '@storybook/angular'
+import {
+  componentWrapperDecorator,
+  Meta,
+  moduleMetadata,
+  Story,
+} from '@storybook/angular'
 import { fromLonLat } from 'ol/proj'
 import {
   MAP_CTX_LAYER_GEOJSON_FIXTURE,
@@ -17,6 +22,9 @@ export default {
     moduleMetadata({
       imports: [HttpClientModule, UiMapModule, BrowserAnimationsModule],
     }),
+    componentWrapperDecorator(
+      (story) => `<div style="height: 300px; max-width: 500px" >${story}</div>`
+    ),
   ],
 } as Meta<MapContextComponent>
 
