@@ -1,10 +1,13 @@
 import { Component } from '@angular/core'
+import { ColorService } from '@geonetwork-ui/util/shared'
 
 @Component({
-  selector: 'geonetwork-ui-root',
+  selector: 'gn-ui-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'datahub'
+  constructor() {
+    ColorService.applyCssVariables('#093564', '#c2e9dc', '#212029', '#fdfbff')
+  }
 }

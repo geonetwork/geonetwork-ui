@@ -173,7 +173,7 @@
       "projectType": "application",
       "root": "apps/datahub",
       "sourceRoot": "apps/datahub/src",
-      "prefix": "geonetwork-ui",
+      "prefix": "gn-ui",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -188,7 +188,11 @@
               "apps/datahub/src/favicon.ico",
               "apps/datahub/src/assets"
             ],
-            "styles": ["apps/datahub/src/styles.css"],
+            "styles": [
+              "apps/datahub/src/styles.css",
+              "node_modules/ol/ol.css",
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -196,13 +200,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "10kb",
+                  "maximumError": "20kb"
                 }
               ],
               "fileReplacements": [
@@ -231,7 +235,8 @@
               "browserTarget": "datahub:build:production"
             },
             "development": {
-              "browserTarget": "datahub:build:development"
+              "browserTarget": "datahub:build:development",
+              "proxyConfig": "proxy-config.js"
             }
           },
           "defaultConfiguration": "development"
@@ -490,7 +495,7 @@
       "projectType": "library",
       "root": "libs/feature/dataviz",
       "sourceRoot": "libs/feature/dataviz/src",
-      "prefix": "geonetwork-ui",
+      "prefix": "gn-ui",
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
