@@ -1,5 +1,3 @@
-import { SearchResponse } from 'elasticsearch'
-
 export const aggsOnly = {
   took: 7,
   timed_out: false,
@@ -29,20 +27,17 @@ export const aggsOnly = {
         },
         { key: 'Zones à risque naturel', doc_count: 26 },
         {
-          key:
-            'Habitats et biotopes Lebensräume und Biotope Habitat e biotopi Habitats and biotopes',
+          key: 'Habitats et biotopes Lebensräume und Biotope Habitat e biotopi Habitats and biotopes',
           doc_count: 25,
         },
         { key: 'Natural risk zones', doc_count: 25 },
         { key: 'Zone a rischio naturale', doc_count: 25 },
         {
-          key:
-            'Lebensräume und Biotope Habitats et biotopes Habitat e biotopi Habitats and biotopes',
+          key: 'Lebensräume und Biotope Habitats et biotopes Habitat e biotopi Habitats and biotopes',
           doc_count: 24,
         },
         {
-          key:
-            'Réseaux de transport Verkehrsnetze Reti di trasporto Transport networks',
+          key: 'Réseaux de transport Verkehrsnetze Reti di trasporto Transport networks',
           doc_count: 23,
         },
         { key: 'Geologia', doc_count: 22 },
@@ -77,8 +72,7 @@ export const hitsOnly: any = {
           overview: [
             {
               data: 'data:image/png;base64, ',
-              url:
-                'https://sdi.eea.europa.eu/public/catalogue-graphic-overview/20e9e1a1-83c1-4f13-89ef-c19767d6ee18f.png',
+              url: 'https://sdi.eea.europa.eu/public/catalogue-graphic-overview/20e9e1a1-83c1-4f13-89ef-c19767d6ee18f.png',
             },
           ],
           resourceDate: [
@@ -148,8 +142,7 @@ export const hitsOnly: any = {
           overview: [
             {
               data: 'data:image/png;base64, ',
-              url:
-                'https://sdi.eea.europa.eu/public/catalogue-graphic-overview/5b35f06e-8c6b-4907-b8f4-39541d170360.png',
+              url: 'https://sdi.eea.europa.eu/public/catalogue-graphic-overview/5b35f06e-8c6b-4907-b8f4-39541d170360.png',
             },
           ],
           resourceDate: [
