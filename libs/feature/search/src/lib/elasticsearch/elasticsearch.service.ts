@@ -7,7 +7,6 @@ import {
 import { Observable } from 'rxjs'
 import { map, take } from 'rxjs/operators'
 import { SearchStateSearch } from '../state/reducer'
-import { ElasticsearchMetadataModels, ElasticSearchSources } from './constant'
 
 @Injectable({
   providedIn: 'root',
@@ -17,10 +16,7 @@ export class ElasticsearchService {
 
   uiConf = this.bootstrap.uiConfReady('srv').pipe(take(1))
 
-  getSearchRequestBody(
-    state: SearchStateSearch,
-    model: ElasticsearchMetadataModels
-  ): EsSearchParams {
+  getSearchRequestBody(state: SearchStateSearch): EsSearchParams {
     const { size, from } = state.params
     const payload = {
       aggregations: state.config.aggregations,
@@ -28,7 +24,7 @@ export class ElasticsearchService {
       size,
       sort: this.buildPayloadSort(state),
       query: this.buildPayloadQuery(state),
-      _source: ElasticSearchSources[model],
+      _source: state.config.source,
     }
     return payload
   }

@@ -86,12 +86,7 @@ export class SearchEffects {
           switchMap(([_, state]) =>
             this.searchService.search(
               'bucket',
-              JSON.stringify(
-                this.esService.getSearchRequestBody(
-                  state,
-                  ElasticsearchMetadataModels.SUMMARY
-                )
-              )
+              JSON.stringify(this.esService.getSearchRequestBody(state))
             )
           ),
           switchMap((response: EsSearchResponse) => {
