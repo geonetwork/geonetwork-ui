@@ -65,12 +65,15 @@ Run `ng g @nrwl/angular:app my-app` to generate an application.
 When using Nx, you can create multiple applications and libraries in the same workspace.
 
 You'll need manual configuration to make the application running:
+
 - Update the root `tsconfig.json` of your application by setting
+
 ```js
   "angularCompilerOptions": {
     "strictTemplates": false
   }
 ```
+
 - Add `postcss.config.js` and `tailwind.config.js` at the root of your project if you want to use TailwindCSS.
 
 ### Generate a library

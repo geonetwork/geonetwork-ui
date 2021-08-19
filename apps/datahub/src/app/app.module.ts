@@ -33,12 +33,6 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     TranslateModule.forRoot(TRANSLATE_GEONETWORK_CONFIG),
     FeatureSearchModule,
   ],
-  providers: [
-    {
-      provide: BASE_PATH,
-      useValue: '/geonetwork/srv/api',
-    },
-  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {
