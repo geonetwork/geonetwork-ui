@@ -14,3 +14,10 @@ export interface EsRequestAggTermPatch {
   size?: number
   include?: string
 }
+
+export interface EsRequestSource {
+  includes: string[]
+}
+
+export type SourceParam = string | string[] | EsRequestSource
+

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import {
   ResultsListLayout,
   SearchFilters,
+  SourceParam,
   StateConfigFilters,
 } from '@geonetwork-ui/util/shared'
 import { select, Store } from '@ngrx/store'
@@ -15,6 +16,7 @@ import {
   Scroll,
   SetConfigAggregations,
   SetConfigFilters,
+  SetConfigSource,
   SetFilters,
   SetIncludeOnAggregation,
   SetPagination,
@@ -69,6 +71,9 @@ export class SearchFacade {
 
   setConfigAggregations(config: any): void {
     this.store.dispatch(new SetConfigAggregations(config, this.searchId))
+  }
+  setConfigSource(source: SourceParam): void {
+    this.store.dispatch(new SetConfigSource(source, this.searchId))
   }
 
   setConfigFilters(filters: StateConfigFilters): void {
