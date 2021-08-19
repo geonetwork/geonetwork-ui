@@ -31,6 +31,16 @@ export interface RecordMetric {
   recordCount: number
 }
 
+export interface RecordResponseLink {
+  protocol?: string
+  function?: string
+  name?: string
+  applicationProfile?: string
+  description?: string
+  url?: string
+  group?: number
+}
+
 export enum ResultsListLayout {
   CARD = 'CARD',
   LIST = 'LIST',

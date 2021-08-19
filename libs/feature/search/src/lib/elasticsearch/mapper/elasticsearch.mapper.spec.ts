@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing'
 import { MetadataUrlService } from '@geonetwork-ui/util/shared'
 import { ElasticsearchMapper } from './elasticsearch.mapper'
-import { hitsOnly } from './fixtures'
+import { hitsOnly } from '../fixtures'
 
 const metadataUrlServiceMock = {
   translate: undefined,
@@ -26,10 +26,10 @@ describe('ElasticsearchMapper', () => {
     expect(service).toBeTruthy()
   })
 
-  describe('#toRecordSummaries', () => {
+  describe('#toRecords', () => {
     it('Output records', () => {
       const hit = hitsOnly.hits.hits[0]
-      const summary = service.toRecordSummaries(hitsOnly, 'path')
+      const summary = service.toRecords(hitsOnly)
       expect(summary).toEqual([
         {
           abstract: 'The grid is based on proposal ',
@@ -60,7 +60,7 @@ describe('ElasticsearchMapper', () => {
     })
   })
 
-  describe('#toRecordSummary', () => {
+  describe('#toRecord', () => {
     let hit
     beforeEach(() => {
       hit = hitsOnly.hits.hits[0]
@@ -68,19 +68,19 @@ describe('ElasticsearchMapper', () => {
 
     describe('overview', () => {
       it('when data', () => {
-        const summary = service.toRecordSummary(hit, '')
+        const summary = service.toRecord(hit)
         expect(summary.thumbnailUrl).toBe('data:image/png;base64, ')
       })
       it('when no data and url', () => {
         hit._source.overview = {
           url: 'imgUrl',
         }
-        const summary = service.toRecordSummary(hit, '')
+        const summary = service.toRecord(hit)
         expect(summary.thumbnailUrl).toBe('imgUrl')
       })
       it('when no data no url', () => {
         hit._source.overview = {}
-        const summary = service.toRecordSummary(hit, '')
+        const summary = service.toRecord(hit)
         expect(summary.thumbnailUrl).toBe('')
       })
     })
