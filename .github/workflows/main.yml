@@ -86,6 +86,9 @@ jobs:
       - name: Build storybook for web components
         run: npm run build:storybook-wc
 
+      - name: Build Datahub application
+        run: npm run build datahub --prod
+
       #      - name: Build webcomponents in production mode and demo pages
       #        run: npm run build:demo
 
