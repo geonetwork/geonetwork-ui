@@ -7,14 +7,14 @@ import {
   TRANSLATE_DEFAULT_CONFIG,
 } from '../../../../../libs/common/src'
 import { ES_FIXTURE_AGGS_REQUEST } from '../../../../../libs/search/src/lib/elasticsearch/fixtures'
-import { GnWcModule } from '../../gn-wc.module'
+import { WebcomponentsModule } from '../../gn-wc.module'
 import { GnFacetsComponent } from './gn-facets.component'
 
 const moduleMetadatas = {
   imports: [
     UtilI18nModule,
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-    GnWcModule,
+    WebcomponentsModule,
   ],
 }
 

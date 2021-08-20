@@ -6,7 +6,6 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { BaseComponent } from '../base.component'
 
 @Component({
@@ -24,7 +23,6 @@ export class GnFacetsComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    super.ngOnInit()
     this.facade.setConfigAggregations(JSON.parse(this.facetConfig))
     this.facade.requestMoreResults()
   }

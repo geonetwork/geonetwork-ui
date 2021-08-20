@@ -6,14 +6,14 @@ import {
   UtilI18nModule,
   TRANSLATE_DEFAULT_CONFIG,
 } from '../../../../../libs/common/src'
-import { GnWcModule } from '../../gn-wc.module'
+import { WebcomponentsModule } from '../../gn-wc.module'
 import { GnResultsListComponent } from './gn-results-list.component'
 
 const moduleMetadatas = {
   imports: [
     UtilI18nModule,
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-    GnWcModule,
+    WebcomponentsModule,
   ],
 }
 

@@ -3,11 +3,14 @@ import { TranslateModule } from '@ngx-translate/core'
 import { withA11y } from '@storybook/addon-a11y'
 import { color, number, text, withKnobs } from '@storybook/addon-knobs'
 import { Meta, moduleMetadata } from '@storybook/angular'
-import { GnWcModule } from '../../gn-wc.module'
+import { WebcomponentsModule } from '../../gn-wc.module'
 import { GnAggregatedRecordsComponent } from './gn-aggregated-records.component'
 
 const moduleMetadatas = {
-  imports: [TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG), GnWcModule],
+  imports: [
+    TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+    WebcomponentsModule,
+  ],
 }
 
 export default {

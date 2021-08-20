@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common'
-import { Injector, NgModule } from '@angular/core'
+import { DoBootstrap, Injector, NgModule } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
 import {
-  UtilI18nModule,
   TRANSLATE_GEONETWORK_CONFIG,
+  UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import {
@@ -21,7 +21,7 @@ import { GnResultsListComponent } from './components/gn-results-list/gn-results-
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 
-const CUSTOM_ELEMENTS: any[] = [
+const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnFacetsComponent, 'gn-facets'],
   [GnResultsListComponent, 'gn-results-list'],
   [GnAggregatedRecordsComponent, 'gn-aggregated-records'],
@@ -53,7 +53,7 @@ const CUSTOM_ELEMENTS: any[] = [
     SearchFacade,
   ],
 })
-export class GnWcModule {
+export class WebcomponentsModule implements DoBootstrap {
   constructor(private injector: Injector) {}
 
   ngDoBootstrap() {

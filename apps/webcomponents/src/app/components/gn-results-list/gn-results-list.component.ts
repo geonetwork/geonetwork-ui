@@ -43,11 +43,10 @@ export class GnResultsListComponent
   }
 
   ngOnInit(): void {
-    super.ngOnInit()
     setTimeout(() => {
       // Be sure to update the source page when the state is updated
       // timeout cause must be the last subscriber to the change
-      this.facade.isLoading$.subscribe((v) => {
+      this.facade.isLoading$.subscribe(() => {
         this.changeDetector.detectChanges()
       })
     })

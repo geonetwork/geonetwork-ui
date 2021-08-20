@@ -3,10 +3,8 @@ import {
   Component,
   Injector,
   Input,
-  OnInit,
   ViewEncapsulation,
 } from '@angular/core'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { BaseComponent } from '../base.component'
 
 @Component({
@@ -16,10 +14,7 @@ import { BaseComponent } from '../base.component'
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
 })
-export class GnAggregatedRecordsComponent
-  extends BaseComponent
-  implements OnInit
-{
+export class GnAggregatedRecordsComponent extends BaseComponent {
   @Input() aggregationField: string
   @Input() aggregationMaxCount = 20
   @Input() aggregationQueryString: string
@@ -28,10 +23,6 @@ export class GnAggregatedRecordsComponent
 
   constructor(injector: Injector) {
     super(injector)
-  }
-
-  ngOnInit(): void {
-    super.ngOnInit()
   }
 
   setFilter(value: string) {
