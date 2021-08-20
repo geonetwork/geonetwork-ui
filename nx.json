@@ -93,6 +93,13 @@
     },
     "util-shared": {
       "tags": []
+    },
+    "webcomponents": {
+      "tags": []
+    },
+    "webcomponents-e2e": {
+      "tags": [],
+      "implicitDependencies": ["webcomponents"]
     }
   },
   "targetDependencies": {
