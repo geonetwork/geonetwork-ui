@@ -5,6 +5,9 @@ module.exports = {
   ...baseConfig,
   purge: {
     ...baseConfig.purge,
-    content: createGlobPatternsForDependencies(__dirname),
+    content: [
+      __dirname + '/src/**/!(*.stories|*.spec).{ts,html}',
+      ...createGlobPatternsForDependencies(__dirname),
+    ],
   },
 }
