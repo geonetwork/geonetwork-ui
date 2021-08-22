@@ -7,8 +7,8 @@ rootMain.core = { ...rootMain.core, builder: 'webpack5' }
 rootMain.stories.push(
   // This will look for libs and apps stories in the repo
   ...[
-    '../../../{apps,libs}/**/*.stories.mdx',
-    '../../../{apps,libs}/**/*.stories.@(js|jsx|ts|tsx)',
+    '../../../libs/**/*.stories.mdx',
+    '../../../libs/**/*.stories.@(js|jsx|ts|tsx)',
   ]
 )
 
