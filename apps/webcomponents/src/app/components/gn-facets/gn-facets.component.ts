@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Injector,
   Input,
   OnInit,
   ViewEncapsulation,
@@ -16,11 +15,13 @@ import { BaseComponent } from '../base.component'
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class GnFacetsComponent extends BaseComponent implements OnInit {
+  @Input() apiUrl = '/'
+  @Input() searchId: string
+  @Input() primaryColor = '#9a9a9a'
+  @Input() secondaryColor = '#767676'
+  @Input() mainColor = '#1a1a1a'
+  @Input() backgroundColor = '#cecece'
   @Input() facetConfig = '{}'
-
-  constructor(injector: Injector) {
-    super(injector)
-  }
 
   ngOnInit(): void {
     this.facade.setConfigAggregations(JSON.parse(this.facetConfig))

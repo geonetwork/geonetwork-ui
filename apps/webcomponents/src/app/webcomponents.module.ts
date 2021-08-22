@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common'
 import { DoBootstrap, Injector, NgModule } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
 import {
@@ -20,6 +19,7 @@ import { GnFacetsComponent } from './components/gn-facets/gn-facets.component'
 import { GnResultsListComponent } from './components/gn-results-list/gn-results-list.component'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
+import { CommonModule } from '@angular/common'
 
 const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnFacetsComponent, 'gn-facets'],
@@ -28,6 +28,12 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
 ]
 
 @NgModule({
+  exports: [
+    BaseComponent,
+    GnFacetsComponent,
+    GnResultsListComponent,
+    GnAggregatedRecordsComponent,
+  ],
   declarations: [
     BaseComponent,
     GnFacetsComponent,

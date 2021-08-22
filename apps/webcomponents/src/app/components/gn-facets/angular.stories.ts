@@ -1,33 +1,38 @@
-import { TranslateModule } from '@ngx-translate/core'
-import { withA11y } from '@storybook/addon-a11y'
-import { text, withKnobs } from '@storybook/addon-knobs'
-import { moduleMetadata } from '@storybook/angular'
-import {
-  UtilI18nModule,
-  TRANSLATE_DEFAULT_CONFIG,
-} from '../../../../../libs/common/src'
-import { ES_FIXTURE_AGGS_REQUEST } from '../../../../../libs/search/src/lib/elasticsearch/fixtures'
-import { WebcomponentsModule } from '../../gn-wc.module'
+import { ES_FIXTURE_AGGS_REQUEST } from '@geonetwork-ui/feature/search'
+import { Meta, moduleMetadata, Story } from '@storybook/angular'
 import { GnFacetsComponent } from './gn-facets.component'
-
-const moduleMetadatas = {
-  imports: [
-    UtilI18nModule,
-    TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-    WebcomponentsModule,
-  ],
-}
+import { WebcomponentsModule } from '../../webcomponents.module'
 
 export default {
-  title: '_Web Component/Facets',
-  decorators: [moduleMetadata(moduleMetadatas), withKnobs, withA11y],
-}
-
-export const AngularGnFacetsStory = () => ({
+  title: 'Angular Components/GnFacets',
   component: GnFacetsComponent,
-  props: {
-    apiUrl: text('api url', 'https://apps.titellus.net/geonetwork/srv/api'),
-    facetConfig: JSON.stringify(ES_FIXTURE_AGGS_REQUEST),
+  decorators: [
+    moduleMetadata({
+      imports: [WebcomponentsModule],
+    }),
+  ],
+  argTypes: {
+    apiUrl: {
+      control: 'text',
+    },
+    primaryColor: { control: 'color' },
+    secondaryColor: { control: 'color' },
+    mainColor: { control: 'color' },
+    backgroundColor: { control: 'color' },
   },
+} as Meta<GnFacetsComponent>
+
+const Template: Story<GnFacetsComponent> = (args: GnFacetsComponent) => ({
+  component: GnFacetsComponent,
+  props: args,
 })
-AngularGnFacetsStory.storyName = 'Simple terms'
+
+export const SimpleTerms = Template.bind({})
+SimpleTerms.args = {
+  apiUrl: 'https://apps.titellus.net/geonetwork/srv/api',
+  primaryColor: '#e73f51',
+  secondaryColor: '#c2e9dc',
+  mainColor: '#212029',
+  backgroundColor: '#fdfbff',
+  facetConfig: JSON.stringify(ES_FIXTURE_AGGS_REQUEST),
+}

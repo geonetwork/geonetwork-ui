@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Injector,
   Input,
   ViewEncapsulation,
 } from '@angular/core'
@@ -15,15 +14,17 @@ import { BaseComponent } from '../base.component'
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class GnAggregatedRecordsComponent extends BaseComponent {
+  @Input() apiUrl = '/'
+  @Input() searchId: string
+  @Input() primaryColor = '#9a9a9a'
+  @Input() secondaryColor = '#767676'
+  @Input() mainColor = '#1a1a1a'
+  @Input() backgroundColor = '#cecece'
   @Input() aggregationField: string
   @Input() aggregationMaxCount = 20
   @Input() aggregationQueryString: string
 
   activeFilter = null
-
-  constructor(injector: Injector) {
-    super(injector)
-  }
 
   setFilter(value: string) {
     this.activeFilter = `+${this.aggregationField}:"${value}"`

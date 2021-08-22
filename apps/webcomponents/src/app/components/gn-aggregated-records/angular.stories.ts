@@ -1,34 +1,41 @@
-import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
-import { TranslateModule } from '@ngx-translate/core'
-import { withA11y } from '@storybook/addon-a11y'
-import { color, number, text, withKnobs } from '@storybook/addon-knobs'
-import { Meta, moduleMetadata } from '@storybook/angular'
-import { WebcomponentsModule } from '../../gn-wc.module'
+import { Meta, moduleMetadata, Story } from '@storybook/angular'
 import { GnAggregatedRecordsComponent } from './gn-aggregated-records.component'
-
-const moduleMetadatas = {
-  imports: [
-    TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-    WebcomponentsModule,
-  ],
-}
+import { WebcomponentsModule } from '../../webcomponents.module'
 
 export default {
-  title: '_Web Component',
-  decorators: [moduleMetadata(moduleMetadatas), withKnobs, withA11y],
-} as Meta
-
-export const AggregatedRecordsStory = () => ({
+  title: 'Angular Components/GnAggregatedRecordsComponent',
   component: GnAggregatedRecordsComponent,
-  props: {
-    aggregationField: text('Aggregation Field', 'tag'),
-    aggregationMaxCount: number('Aggregation Max Count', 20),
-    aggregationQueryString: text('Aggregation Query String', '+isTemplate:n'),
-    apiUrl: text('Api URL', 'https://apps.titellus.net/geonetwork/srv/api'),
-    primaryColor: color('Primary Color', '#e73f51'),
-    secondaryColor: color('Secondary Color', '#c2e9dc'),
-    mainColor: color('Main Color', '#212029'),
-    backgroundColor: color('Background Color', '#fdfbff'),
+  decorators: [
+    moduleMetadata({
+      imports: [WebcomponentsModule],
+    }),
+  ],
+  argTypes: {
+    apiUrl: {
+      control: 'text',
+    },
+    primaryColor: { control: 'color' },
+    secondaryColor: { control: 'color' },
+    mainColor: { control: 'color' },
+    backgroundColor: { control: 'color' },
   },
+} as Meta<GnAggregatedRecordsComponent>
+
+const Template: Story<GnAggregatedRecordsComponent> = (
+  args: GnAggregatedRecordsComponent
+) => ({
+  component: GnAggregatedRecordsComponent,
+  props: args,
 })
-AggregatedRecordsStory.storyName = 'Aggregated Records Component'
+
+export const ByKeywords = Template.bind({})
+ByKeywords.args = {
+  aggregationField: 'tag.default',
+  aggregationMaxCount: 20,
+  aggregationQueryString: '+isTemplate:n',
+  apiUrl: 'https://apps.titellus.net/geonetwork/srv/api',
+  primaryColor: '#e73f51',
+  secondaryColor: '#c2e9dc',
+  mainColor: '#212029',
+  backgroundColor: '#fdfbff',
+}

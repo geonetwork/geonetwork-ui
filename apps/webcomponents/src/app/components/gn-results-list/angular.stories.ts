@@ -1,67 +1,70 @@
-import { TranslateModule } from '@ngx-translate/core'
-import { withA11y } from '@storybook/addon-a11y'
-import { color, text, withKnobs } from '@storybook/addon-knobs'
-import { moduleMetadata } from '@storybook/angular'
-import {
-  UtilI18nModule,
-  TRANSLATE_DEFAULT_CONFIG,
-} from '../../../../../libs/common/src'
-import { WebcomponentsModule } from '../../gn-wc.module'
+import { Meta, moduleMetadata, Story } from '@storybook/angular'
 import { GnResultsListComponent } from './gn-results-list.component'
-
-const moduleMetadatas = {
-  imports: [
-    UtilI18nModule,
-    TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-    WebcomponentsModule,
-  ],
-}
+import { ResultsListLayout } from '@geonetwork-ui/util/shared'
+import { WebcomponentsModule } from '../../webcomponents.module'
 
 export default {
-  title: '_Web Component/Results list',
-  decorators: [moduleMetadata(moduleMetadatas), withKnobs, withA11y],
+  title: 'Angular Components/GnResultsListComponent',
+  component: GnResultsListComponent,
+  decorators: [
+    moduleMetadata({
+      imports: [WebcomponentsModule],
+    }),
+  ],
+  argTypes: {
+    apiUrl: {
+      control: 'text',
+    },
+    layout: {
+      control: 'radio',
+      options: Object.values(ResultsListLayout),
+    },
+    primaryColor: { control: 'color' },
+    secondaryColor: { control: 'color' },
+    mainColor: { control: 'color' },
+    backgroundColor: { control: 'color' },
+  },
+} as Meta<GnResultsListComponent>
+
+const Template: Story<GnResultsListComponent> = (
+  args: GnResultsListComponent
+) => ({
+  component: GnResultsListComponent,
+  props: args,
+})
+
+const defaultArgs = {
+  apiUrl: 'https://apps.titellus.net/geonetwork/srv/api',
+  primaryColor: '#e73f51',
+  secondaryColor: '#c2e9dc',
+  mainColor: '#212029',
+  backgroundColor: '#fdfbff',
+  size: 10,
+  query: '',
+  filter: '',
+  fixed: '',
 }
 
-export const AngularGnResultsListListStory = () => ({
-  component: GnResultsListComponent,
-  props: {
-    apiUrl: text('api url', 'https://apps.titellus.net/geonetwork/srv/api'),
-    layout: 'LIST',
-    primaryColor: color('Primary Color', 'blue'),
-    secondaryColor: color('Secondary Color', 'grey'),
-  },
-})
-AngularGnResultsListListStory.storyName = 'List'
+export const AsList = Template.bind({})
+AsList.args = {
+  ...defaultArgs,
+  layout: ResultsListLayout.LIST,
+}
 
-export const AngularGnResultsListBlockStory = () => ({
-  component: GnResultsListComponent,
-  props: {
-    apiUrl: text('api url', 'https://apps.titellus.net/geonetwork/srv/api'),
-    layout: 'BLOCK',
-    primaryColor: color('Primary Color', 'blue'),
-    secondaryColor: color('Secondary Color', 'grey'),
-  },
-})
-AngularGnResultsListBlockStory.storyName = 'Block'
+export const AsCard = Template.bind({})
+AsCard.args = {
+  ...defaultArgs,
+  layout: ResultsListLayout.CARD,
+}
 
-export const AngularGnResultsListTextStory = () => ({
-  component: GnResultsListComponent,
-  props: {
-    apiUrl: text('api url', 'https://apps.titellus.net/geonetwork/srv/api'),
-    layout: 'TEXT',
-    primaryColor: color('Primary Color', 'blue'),
-    secondaryColor: color('Secondary Color', 'grey'),
-  },
-})
-AngularGnResultsListTextStory.storyName = 'Text'
+export const AsText = Template.bind({})
+AsText.args = {
+  ...defaultArgs,
+  layout: ResultsListLayout.TEXT,
+}
 
-export const AngularGnResultsListTitleStory = () => ({
-  component: GnResultsListComponent,
-  props: {
-    apiUrl: text('api url', 'https://apps.titellus.net/geonetwork/srv/api'),
-    layout: 'TITLE',
-    primaryColor: color('Primary Color', 'blue'),
-    secondaryColor: color('Secondary Color', 'grey'),
-  },
-})
-AngularGnResultsListTitleStory.storyName = 'Title'
+export const AsTitle = Template.bind({})
+AsTitle.args = {
+  ...defaultArgs,
+  layout: ResultsListLayout.TITLE,
+}
