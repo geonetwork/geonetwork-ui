@@ -60,19 +60,20 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   ],
 })
 export class WebcomponentsModule implements DoBootstrap {
-  constructor(private injector: Injector) {}
-
-  ngDoBootstrap() {
+  constructor(private injector: Injector) {
     CUSTOM_ELEMENTS.forEach((ceDefinition) => {
       const angularComponent = ceDefinition[0]
       const ceTagName = ceDefinition[1]
 
       const customElement = createCustomElement(angularComponent, {
-        injector: this.injector,
+        injector,
       })
       if (!customElements.get(ceTagName)) {
         customElements.define(ceTagName, customElement)
       }
     })
   }
+
+  // eslint-disable-next-line
+  ngDoBootstrap() {}
 }
