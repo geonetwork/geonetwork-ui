@@ -1,13 +1,13 @@
-# GeoNetwork UI Webcomponents
+# GeoNetwork UI Web Components
 
-This directory contains [webcomponents](https://developer.mozilla.org/en-US/docs/Web/Web_Components) relying on the same code as the full GeoNetwork UI, and which are available for use in third-party apps.
+This directory contains [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) relying on the same code as the full GeoNetwork UI, and which are available for use in third-party apps.
 
-Web components are published through an Angular application `gn-wc` hosted in `webcomponents/src` folder. It's a common Angular application, the only difference is that all Angular components
-are registerd as Web Components in the application module.
+Web Components are published through an Angular application `webcomponents` hosted in `apps/webcomponents/src` folder. It's a common Angular application, the only difference is that all Angular components
+are registered as Web Components in the application module.
 
-All web components are prefixed with `gn-`.
+All Web Components are prefixed with `gn-`.
 
-Web components are made to be easily included in any context, e.g.:
+Web Components are made to be easily included in any context, e.g.:
 
 ```html
 <script src="gn-wc.js"></script>
@@ -22,7 +22,7 @@ Web components are made to be easily included in any context, e.g.:
 
 ## Build
 
-All Angular custom elements are served by the same application `gn-wc`
+All Angular custom elements are served by the same application `webcomponents`
 
 ```
 npm run build:wc
@@ -38,15 +38,15 @@ You'll find the build files in `webcomponents/dist`
 npm run storybook-wc
 ```
 
-This will build all components and start an instance of Storybook but with specific stories showcasing each individual webcomponent.
+This will build all components and start an instance of Storybook but with specific stories showcasing each individual Web Component.
 
-**Important:** Web components are built in `dev` mode to work with Storybook.
-
-Note that each webcomponent should appear in two stories: one where it is included as an Angular component, and another where it is included as a webcomponent.
+Note that each WebComponent should appear in two stories: one where it is included as an Angular component, and another where it is included as a Web Component.
 
 ### Web server
 
-To test your web component in a real production context
+> NOTE: this is currently not functional
+
+To test your Web Component in a real production context
 
 ```shell script
 npm run demo
@@ -54,23 +54,23 @@ npm run demo
 
 **Important:** The components are built in `production` mode.
 
-You'll be able to test your web components on `http://localhost:8001/webcomponents/{name_of_sample_file}`
+You'll be able to test your Web Components on `http://localhost:8001/webcomponents/{name_of_sample_file}`
 
 e.g: http://localhost:8001/webcomponents/gn-results-list.sample.html
 
-This script show you how to deploy your web component in a real world, it builds it, then to use your component in a real web page, you have to
+This script show you how to deploy your Web Component in a real world, it builds it, then to use your component in a real web page, you have to
 
 - import the script exported by Angular
-- include your web component in the HTML content.
+- include your Web Component in the HTML content.
 
 ## Create a new Web Component
 
 The architecture is designed so you can export an Angular component to a custom element (eg Web Component),
-that is encapsulated with its style in a shadow DOM element, and can be embedded in any web site.
+that is encapsulated with its style in a shadow DOM element, and can be embedded in any website.
 
-To export content as a web component you have to
+To export content as a Web Component you have to:
 
-- create a new folder in `/webcomponents/src/app/components`, the folder name must start with `gn-`
+- create a new folder in `/apps/webcomponents/src/app/components`, the folder name must start with `gn-`
 - create a new component in this folder, with same name, that will be exported, this component must have the following properties in the metadata decorator:
 
 ```typescript
@@ -80,8 +80,8 @@ To export content as a web component you have to
 }
 ```
 
-- add your component in application module `gn-wc.module.ts` `declarations` list.
-- register your component as a custom element in `CUSTOM_ELEMENTS` const in application module ` gn-wc.module.ts``app.module.ts `, the custom element identifier (i.e web component tag name) must be the same as the Angular component name
+- add your component in application module `webcomponents.module.ts` `declarations` list.
+- register your component as a custom element in the `CUSTOM_ELEMENTS` array in application module `webcomponents.ts`, the custom element identifier (i.e Web Component tag name) _must_ be the same as the component folder name
 
 ```typescript
 const CUSTOM_ELEMENTS: any[] = [
@@ -95,11 +95,11 @@ const CUSTOM_ELEMENTS: any[] = [
 - Add stories for storybook to run it (angular and element stories)
 - Add a sample HTML file to show how to use it in a third party web page `${webcomponent_name}.sample.html` eg. gn-results-list.sample.html
 
-## Update web component inputs
+## Update Web Component inputs
 
-You can handle angular custom elements input changes exactly as it's done for Angular component: whithin the `onChanges` implementation.
+You can handle angular custom elements input changes exactly as it's done for Angular component: within the `onChanges` implementation.
 
-Update web component input values from the source page:
+Update Web Component input values from the source page:
 
 ```html
 <div>
@@ -133,9 +133,9 @@ In your angular component, listen to these changes
 
 This process must follow some rules:
 
-- Don't call api request before the web component has initiliazed `API_BASE_PATH`
+- Don't call api request before the Web Component has initialized `API_BASE_PATH`
 - `ngOnChanges` is called the first time before `ngOnInit`, so put your code init in `ngOnchanges` instead.
-- Be sure to trigger the change detection when it is expected, because the web component execution (even though it's in an angular custom element) is outside of an Angular zone, meaning the change detection is not triggered.
+- Be sure to trigger the change detection when it is expected, because the Web Component execution (even though it's in an angular custom element) is outside an Angular zone, meaning the change detection is not triggered.
 
 ```typescript
   constructor(
