@@ -1,0 +1,13 @@
+import { enableProdMode } from '@angular/core'
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
+
+import { environment } from './environments/environment'
+import { WebcomponentsModule } from './app/webcomponents.module'
+
+if (environment.production) {
+  enableProdMode()
+}
+
+platformBrowserDynamic()
+  .bootstrapModule(WebcomponentsModule)
+  .catch((err) => console.error(err))

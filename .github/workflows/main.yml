@@ -80,11 +80,11 @@ jobs:
       - name: Install
         run: npm ci
 
-      #      - name: Build webcomponents
-      #        run: npm run build:wc
-
       - name: Build storybook
         run: npm run build:storybook
+
+      - name: Build storybook for web components
+        run: npm run build:storybook-wc
 
       #      - name: Build webcomponents in production mode and demo pages
       #        run: npm run build:demo
@@ -104,14 +104,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          #          msg: 'Link to gh-pages:
-          #
-          #            * https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/demo/
-          #
-          #            * https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/
-          #
-          #            * https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook-wc/'
-          msg: 'Storybook of UI components is available here:
+          msg: 'Links to the Storybooks:
 
-            https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/demo/'
+            * UI components: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/demo/
+
+            * Web Components: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/webcomponents/'
           check_for_duplicate_msg: true
