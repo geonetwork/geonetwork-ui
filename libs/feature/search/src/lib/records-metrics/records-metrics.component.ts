@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { RecordMetric } from '@geonetwork-ui/util/shared'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
+import { EsSearchResponse, RecordMetric } from '@geonetwork-ui/util/shared'
 import { Observable } from 'rxjs'
 import { map, share } from 'rxjs/operators'
-import { SearchResponse } from 'elasticsearch'
 
 @Component({
   selector: 'gn-ui-records-metrics',
@@ -39,7 +38,7 @@ export class RecordsMetricsComponent implements OnInit {
       )
       .pipe(
         map<any, RecordMetric[]>(
-          (response: SearchResponse<any>) =>
+          (response: EsSearchResponse) =>
             response.aggregations.results.buckets.map((category) => ({
               value: category.key,
               recordCount: category.doc_count,

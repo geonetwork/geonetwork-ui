@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core'
-import { BootstrapService, SortParams } from '@geonetwork-ui/util/shared'
-import { NameList, SearchParams } from 'elasticsearch'
-import { SearchStateSearch } from '../state/reducer'
-import { ElasticsearchMetadataModels, ElasticSearchSources } from './constant'
+import {
+  BootstrapService,
+  EsSearchParams,
+  SortParams,
+} from '@geonetwork-ui/util/shared'
 import { Observable } from 'rxjs'
 import { map, take } from 'rxjs/operators'
+import { SearchStateSearch } from '../state/reducer'
 
 @Injectable({
   providedIn: 'root',
@@ -14,18 +16,15 @@ export class ElasticsearchService {
 
   uiConf = this.bootstrap.uiConfReady('srv').pipe(take(1))
 
-  getSearchRequestBody(
-    state: SearchStateSearch,
-    model: ElasticsearchMetadataModels
-  ): SearchParams {
+  getSearchRequestBody(state: SearchStateSearch): EsSearchParams {
     const { size, from } = state.params
     const payload = {
       aggregations: state.config.aggregations,
       from,
       size,
-      sort: this.buildPayloadSort(state) as NameList,
+      sort: this.buildPayloadSort(state),
       query: this.buildPayloadQuery(state),
-      _source: ElasticSearchSources[model],
+      _source: state.config.source,
     }
     return payload
   }
@@ -84,7 +83,7 @@ export class ElasticsearchService {
   buildMoreOnAggregationPayload(
     state: SearchStateSearch,
     key: string
-  ): SearchParams {
+  ): EsSearchParams {
     const payload = {
       aggregations: { [key]: state.config.aggregations[key] },
       size: 0,
@@ -93,7 +92,7 @@ export class ElasticsearchService {
     return payload
   }
 
-  buildAutocompletePayload(query: string): Observable<SearchParams> {
+  buildAutocompletePayload(query: string): Observable<EsSearchParams> {
     return this.uiConf.pipe(
       map((config) => {
         const template = config.mods.search.autocompleteConfig

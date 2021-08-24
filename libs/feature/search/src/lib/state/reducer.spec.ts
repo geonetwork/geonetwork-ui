@@ -275,6 +275,20 @@ describe('Search Reducer', () => {
     })
   })
 
+  describe('SetConfigRequestFields action', () => {
+    it('should replace the _source in the config', () => {
+      const payload = { includes: ['title', 'abstract'] }
+      const action = new fromActions.SetConfigRequestFields(payload)
+      const state = reducerSearch(
+        {
+          ...initialStateSearch,
+        },
+        action
+      )
+      expect(state.config.source).toEqual({ includes: ['title', 'abstract'] })
+    })
+  })
+
   describe('UpdateRequestAggregationTerm action', () => {
     describe('RequestMoreOnAggregation action', () => {
       it('should replace the aggregations in the config with an updated size', () => {

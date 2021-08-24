@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core'
-import { AuthService } from '@geonetwork-ui/feature/auth'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
+import { AuthService } from '@geonetwork-ui/feature/auth'
+import { EsSearchResponse } from '@geonetwork-ui/util/shared'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
-import { SearchResponse } from 'elasticsearch'
 import { of } from 'rxjs'
 import { flatMap, map, switchMap, withLatestFrom } from 'rxjs/operators'
-import { ElasticsearchMetadataModels } from '../elasticsearch/constant'
 import { ElasticsearchMapper } from '../elasticsearch/elasticsearch.mapper'
 import { ElasticsearchService } from '../elasticsearch/elasticsearch.service'
 import {
   AddResults,
-  CLEAR_PAGINATION,
   ClearPagination,
   ClearResults,
   PAGINATE,
@@ -88,15 +86,10 @@ export class SearchEffects {
           switchMap(([_, state]) =>
             this.searchService.search(
               'bucket',
-              JSON.stringify(
-                this.esService.getSearchRequestBody(
-                  state,
-                  ElasticsearchMetadataModels.SUMMARY
-                )
-              )
+              JSON.stringify(this.esService.getSearchRequestBody(state))
             )
           ),
-          switchMap((response: SearchResponse<any>) => {
+          switchMap((response: EsSearchResponse) => {
             const records = this.esMapper.toRecordSummaries(
               response,
               this.searchService.configuration.basePath
@@ -164,7 +157,7 @@ export class SearchEffects {
               )
             )
           ),
-          map((response: SearchResponse<any>) => {
+          map((response: EsSearchResponse) => {
             const aggregations = response.aggregations
             return new PatchResultsAggregations(
               action.key,

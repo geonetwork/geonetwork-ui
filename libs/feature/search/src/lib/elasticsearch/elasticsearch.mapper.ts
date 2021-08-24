@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core'
-import { MetadataUrlService, RecordSummary } from '@geonetwork-ui/util/shared'
-import { SearchResponse } from 'elasticsearch'
+import {
+  EsSearchResponse,
+  MetadataUrlService,
+  RecordSummary,
+} from '@geonetwork-ui/util/shared'
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +11,10 @@ import { SearchResponse } from 'elasticsearch'
 export class ElasticsearchMapper {
   constructor(private metadataUrlService: MetadataUrlService) {}
 
-  toRecordSummaries(response: any, apiPath?: string): RecordSummary[] {
+  toRecordSummaries(
+    response: EsSearchResponse,
+    apiPath?: string
+  ): RecordSummary[] {
     return response.hits.hits.map((hit) => this.toRecordSummary(hit, apiPath))
   }
 

@@ -4,13 +4,13 @@ import {
   Component,
   ViewChild,
 } from '@angular/core'
-import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
-import { SearchFacade } from '../state/search.facade'
-import { ElasticsearchService } from '../elasticsearch/elasticsearch.service'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
+import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
+import { EsSearchResponse } from '@geonetwork-ui/util/shared'
 import { map, switchMap } from 'rxjs/operators'
-import { SearchResponse } from 'elasticsearch'
 import { ElasticsearchMapper } from '../elasticsearch/elasticsearch.mapper'
+import { ElasticsearchService } from '../elasticsearch/elasticsearch.service'
+import { SearchFacade } from '../state/search.facade'
 
 @Component({
   selector: 'gn-ui-fuzzy-search',
@@ -37,7 +37,7 @@ export class FuzzySearchComponent implements AfterViewInit {
             this.searchService
               .search('bucket', JSON.stringify(payload))
               .pipe(
-                map((response: SearchResponse<any>) =>
+                map((response: EsSearchResponse) =>
                   this.esMapper
                     .toRecordSummaries(
                       response,

@@ -1,12 +1,14 @@
 import {
+  RequestFields,
   RecordSummary,
   RESULTS_PAGE_SIZE,
   ResultsListLayout,
   SearchFilters,
   StateConfigFilters,
 } from '@geonetwork-ui/util/shared'
+import { ES_SOURCE_SUMMARY } from '../elasticsearch/constant'
 import * as fromActions from './actions'
-import { DEFAULT_SEARCH_KEY } from './actions'
+import { DEFAULT_SEARCH_KEY, SET_CONFIG_REQUEST_FIELDS } from './actions'
 
 export const SEARCH_FEATURE_KEY = 'searchState'
 
@@ -21,6 +23,7 @@ export interface SearchStateSearch {
   config: {
     aggregations?: any
     filters?: StateConfigFilters
+    source?: RequestFields
   }
   params: SearchStateParams
   results: {
@@ -41,6 +44,7 @@ export const initSearch = (): SearchStateSearch => {
   return {
     config: {
       filters: {},
+      source: { includes: ES_SOURCE_SUMMARY },
     },
     params: {
       filters: {},
@@ -219,6 +223,15 @@ export function reducerSearch(
         config: {
           ...state.config,
           aggregations: action.payload,
+        },
+      }
+    }
+    case fromActions.SET_CONFIG_REQUEST_FIELDS: {
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          source: action.payload,
         },
       }
     }

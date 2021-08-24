@@ -3,6 +3,7 @@ import {
   RecordSummary,
   ResultsListLayout,
   SearchFilters,
+  RequestFields,
   StateConfigFilters,
 } from '@geonetwork-ui/util/shared'
 import { Action } from '@ngrx/store'
@@ -26,6 +27,7 @@ export const REQUEST_MORE_RESULTS = '[Search] Request More Results'
 export const SET_RESULTS_AGGREGATIONS = '[Search] Set Results Aggregations'
 export const SET_RESULTS_HITS = '[Search] Set Results hits'
 export const SET_CONFIG_AGGREGATIONS = '[Search] Set Config Aggregations'
+export const SET_CONFIG_REQUEST_FIELDS = '[Search] Set Config requested fields'
 export const REQUEST_MORE_ON_AGGREGATION =
   '[Search] Request More On Aggregation'
 export const SET_INCLUDE_ON_AGGREGATION = '[Search] Set term include'
@@ -169,6 +171,13 @@ export class SetConfigAggregations extends AbstractAction implements Action {
   }
 }
 
+export class SetConfigRequestFields extends AbstractAction implements Action {
+  readonly type = SET_CONFIG_REQUEST_FIELDS
+  constructor(public payload: RequestFields, id?: string) {
+    super(id)
+  }
+}
+
 export class RequestMoreOnAggregation extends AbstractAction implements Action {
   readonly type = REQUEST_MORE_ON_AGGREGATION
   constructor(public key: string, public increment: number, id?: string) {
@@ -185,7 +194,8 @@ export class SetIncludeOnAggregation extends AbstractAction implements Action {
 
 export class UpdateRequestAggregationTerm
   extends AbstractAction
-  implements Action {
+  implements Action
+{
   readonly type = UPDATE_REQUEST_AGGREGATION_TERM
   constructor(
     public key: string,
@@ -222,6 +232,7 @@ export type SearchActions =
   | SetResultsAggregations
   | SetResultsHits
   | SetConfigAggregations
+  | SetConfigRequestFields
   | RequestMoreOnAggregation
   | SetIncludeOnAggregation
   | UpdateRequestAggregationTerm
