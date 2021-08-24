@@ -1,15 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
+import { ElasticsearchMapper } from '../elasticsearch/mapper/elasticsearch.mapper'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
-import { initialState, reducer, SEARCH_FEATURE_KEY } from '../state/reducer'
+import { of } from 'rxjs'
+import { ElasticsearchService } from '../elasticsearch/elasticsearch.service'
+import { SearchFacade } from '../state/search.facade'
 
 import { FuzzySearchComponent } from './fuzzy-search.component'
-import { EffectsModule } from '@ngrx/effects'
-import { StoreModule } from '@ngrx/store'
-import { SearchFacade } from '../state/search.facade'
-import { of } from 'rxjs'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
-import { ElasticsearchService } from '../elasticsearch/elasticsearch.service'
 
 const searchFacadeMock = {
   setFilters: jest.fn(),
@@ -46,6 +44,9 @@ const searchServiceMock = {
 const esServiceMock = {
   buildAutocompletePayload: jest.fn(() => of({ fakeQuery: '' })),
 }
+const elasticsearchMapperMock = {
+  toRecords: jest.fn(() => [{ title: 'abc' }, { title: 'def' }]),
+}
 
 describe('FuzzySearchComponent', () => {
   let component: FuzzySearchComponent
@@ -64,19 +65,15 @@ describe('FuzzySearchComponent', () => {
           useValue: esServiceMock,
         },
         {
+          provide: ElasticsearchMapper,
+          useValue: elasticsearchMapperMock,
+        },
+        {
           provide: SearchApiService,
           useValue: searchServiceMock,
         },
       ],
-      imports: [
-        UiInputsModule,
-        StoreModule.forRoot({}),
-        EffectsModule.forRoot(),
-        TranslateModule.forRoot(),
-        StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
-          initialState,
-        }),
-      ],
+      imports: [UiInputsModule, TranslateModule.forRoot()],
     }).compileComponents()
   })
 

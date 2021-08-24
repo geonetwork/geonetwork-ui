@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing'
 import { AuthService } from '@geonetwork-ui/feature/auth'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
-import { ElasticsearchMapper } from '../elasticsearch/elasticsearch.mapper'
+import { ElasticsearchMapper } from '../elasticsearch/mapper/elasticsearch.mapper'
 import {
   ClearPagination,
   DEFAULT_SEARCH_KEY,
@@ -61,7 +61,7 @@ const authServiceMock = {
   authReady: () => of(true),
 }
 const esMapperMock = {
-  toRecordSummaries: () => [],
+  toRecords: () => [],
 }
 
 describe('Effects', () => {
