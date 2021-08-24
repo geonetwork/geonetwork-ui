@@ -292,4 +292,21 @@ describe('ElasticsearchService', () => {
       })
     })
   })
+
+  describe('#getMetadataByIdPayload', () => {
+    let uuid, payload
+    beforeEach(() => {
+      uuid = '132132132132321'
+      payload = service.getMetadataByIdPayload(uuid)
+    })
+    it('returns ES payload', () => {
+      expect(payload).toEqual({
+        query: {
+          ids: {
+            values: [uuid],
+          },
+        },
+      })
+    })
+  })
 })
