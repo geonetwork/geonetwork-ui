@@ -6,7 +6,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
 import { of } from 'rxjs'
 import { flatMap, map, switchMap, withLatestFrom } from 'rxjs/operators'
-import { ElasticsearchMapper } from '../elasticsearch/elasticsearch.mapper'
+import { ElasticsearchMapper } from '../elasticsearch/mapper/elasticsearch.mapper'
 import { ElasticsearchService } from '../elasticsearch/elasticsearch.service'
 import {
   AddResults,
@@ -90,10 +90,7 @@ export class SearchEffects {
             )
           ),
           switchMap((response: EsSearchResponse) => {
-            const records = this.esMapper.toRecordSummaries(
-              response,
-              this.searchService.configuration.basePath
-            )
+            const records = this.esMapper.toRecords(response)
             const aggregations = response.aggregations
             return [
               new AddResults(records, action.id),

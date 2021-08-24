@@ -13,29 +13,6 @@ type EsFieldMapperFn = (
 export class ElasticsearchFieldMapper {
   constructor(private metadataUrlService: MetadataUrlService) {}
 
-  mapGenericField(
-    output: RecordSummary,
-    source: ESResponseSource,
-    fieldName: string,
-    outputPropName?: string
-  ) {
-    outputPropName = outputPropName || fieldName
-    output[outputPropName] = source[fieldName]
-    return output
-  }
-
-  mapTranslatedField(
-    output: RecordSummary,
-    source: ESResponseSource,
-    fieldName: string,
-    outputPropName?: string,
-    defaultValue?: string
-  ) {
-    outputPropName = outputPropName || fieldName
-    output[outputPropName] = source[fieldName]?.default || defaultValue
-    return output
-  }
-
   fields: Record<string, EsFieldMapperFn> = {
     uuid: (output: RecordSummary, source: ESResponseSource) => {
       this.mapGenericField(output, source, 'uuid')
@@ -95,6 +72,29 @@ export class ElasticsearchFieldMapper {
     resourceType: (output: RecordSummary, source: ESResponseSource) => {
       return output
     },
+  }
+
+  mapGenericField(
+    output: RecordSummary,
+    source: ESResponseSource,
+    fieldName: string,
+    outputPropName?: string
+  ) {
+    outputPropName = outputPropName || fieldName
+    output[outputPropName] = source[fieldName]
+    return output
+  }
+
+  mapTranslatedField(
+    output: RecordSummary,
+    source: ESResponseSource,
+    fieldName: string,
+    outputPropName?: string,
+    defaultValue?: string
+  ) {
+    outputPropName = outputPropName || fieldName
+    output[outputPropName] = source[fieldName]?.default || defaultValue
+    return output
   }
 
   private getFirstValue(field) {
