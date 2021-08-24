@@ -8,7 +8,7 @@ import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
 import { EsSearchResponse } from '@geonetwork-ui/util/shared'
 import { map, switchMap } from 'rxjs/operators'
-import { ElasticsearchMapper } from '../elasticsearch/elasticsearch.mapper'
+import { ElasticsearchMapper } from '../elasticsearch/mapper/elasticsearch.mapper'
 import { ElasticsearchService } from '../elasticsearch/elasticsearch.service'
 import { SearchFacade } from '../state/search.facade'
 
@@ -39,10 +39,7 @@ export class FuzzySearchComponent implements AfterViewInit {
               .pipe(
                 map((response: EsSearchResponse) =>
                   this.esMapper
-                    .toRecordSummaries(
-                      response,
-                      this.searchService.configuration.basePath
-                    )
+                    .toRecords(response)
                     .map((record) => record.title)
                 )
               )
