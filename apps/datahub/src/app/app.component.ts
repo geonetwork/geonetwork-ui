@@ -13,6 +13,6 @@ export class AppComponent {
   }
 
   onMetadataSelection(metadata: RecordSummary): void {
-    this.mdViewFacade.setUuid(metadata.uuid)
+    this.mdViewFacade.setPreview(metadata)
   }
 }

@@ -1,20 +1,25 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
-import { EffectsModule } from '@ngrx/effects'
-import { StoreModule } from '@ngrx/store'
-import { AppComponent } from './app.component'
 import { RouterTestingModule } from '@angular/router/testing'
+import { MdViewFacade } from '@geonetwork-ui/feature/search'
+import { AppComponent } from './app.component'
+
+const mdViewFacadeMock = {
+  setPreview: jest.fn(),
+}
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        EffectsModule.forRoot(),
-        StoreModule.forRoot({}),
-      ],
+      imports: [RouterTestingModule],
       declarations: [AppComponent],
       schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        {
+          provide: MdViewFacade,
+          useValue: mdViewFacadeMock,
+        },
+      ],
     }).compileComponents()
   })
 
