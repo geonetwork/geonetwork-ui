@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'
-import { ColorService } from '@geonetwork-ui/util/shared'
+import { MdViewFacade } from '@geonetwork-ui/feature/search'
+import { ColorService, RecordSummary } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-root',
@@ -7,7 +8,11 @@ import { ColorService } from '@geonetwork-ui/util/shared'
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  constructor() {
+  constructor(private mdViewFacade: MdViewFacade) {
     ColorService.applyCssVariables('#093564', '#c2e9dc', '#212029', '#fdfbff')
+  }
+
+  onMetadataSelection(metadata: RecordSummary): void {
+    this.mdViewFacade.setUuid(metadata.uuid)
   }
 }

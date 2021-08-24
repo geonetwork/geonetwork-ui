@@ -9,7 +9,6 @@ import { TranslateModule } from '@ngx-translate/core'
 import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 import { FacetsModule } from './facets/facets.module'
 import { FuzzySearchComponent } from './fuzzy-search/fuzzy-search.component'
-import { MdViewModule } from './metadata-view/metadata-view.module'
 import { RecordsMetricsComponent } from './records-metrics/records-metrics.component'
 import { ResultsLayoutComponent } from './results-layout/results-layout.component'
 import { ResultsListContainerComponent } from './results-list/results-list.container.component'
@@ -43,7 +42,6 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
     UiInputsModule,
     ApiModule,
     FacetsModule,
-    MdViewModule,
     InfiniteScrollModule,
   ],
   exports: [
