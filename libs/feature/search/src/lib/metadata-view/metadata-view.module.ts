@@ -13,4 +13,4 @@ import { MD_VIEW_FEATURE_STATE_KEY, reducer } from './state/mdview.reducer'
   providers: [MdViewFacade],
   exports: [],
 })
-export class FeatureSearchModule {}
+export class MdViewModule {}

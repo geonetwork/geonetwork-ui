@@ -2,10 +2,12 @@ import { Component, Input, OnInit } from '@angular/core'
 import {
   InfiniteScrollModel,
   InfiniteScrollOptionsDefault,
+  RecordSummary,
   ResultsListLayout,
 } from '@geonetwork-ui/util/shared'
 import { iif, Observable, of } from 'rxjs'
 import { distinctUntilChanged, mergeMap } from 'rxjs/operators'
+import { MdViewFacade } from '../metadata-view/state/mdview.facade'
 import { SearchFacade } from '../state/search.facade'
 
 @Component({
@@ -20,7 +22,10 @@ export class ResultsListContainerComponent implements OnInit {
   scrollDisable$: Observable<boolean>
   scrollableConfig: InfiniteScrollModel
 
-  constructor(public facade: SearchFacade) {}
+  constructor(
+    public facade: SearchFacade,
+    private mdViewFacade: MdViewFacade
+  ) {}
 
   ngOnInit(): void {
     this.scrollableConfig = {
@@ -35,6 +40,10 @@ export class ResultsListContainerComponent implements OnInit {
       ),
       distinctUntilChanged()
     )
+  }
+
+  onMetadataSelection(metadata: RecordSummary): void {
+    this.mdViewFacade.setUuid(metadata.uuid)
   }
 
   onScrollDown() {
