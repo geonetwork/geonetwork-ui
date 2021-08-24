@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
+import { BASE_PATH } from '@geonetwork-ui/data-access/gn4'
 import {
   FeatureSearchModule,
   MdViewModule,
@@ -35,6 +36,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     FeatureSearchModule,
     MdViewModule,
   ],
+  providers: [{ provide: BASE_PATH, useValue: environment.API_BASE_PATH }],
   bootstrap: [AppComponent],
 })
 export class AppModule {
