@@ -17,3 +17,11 @@ export const getMdViewFull = createSelector(
   getMdViewState,
   (state: MdViewState) => state.full
 )
+export const getMdViewLoading = createSelector(
+  getMdViewState,
+  (state: MdViewState) => state.loading
+)
+export const getMdViewError = createSelector(
+  getMdViewState,
+  (state: MdViewState) => state.error
+)

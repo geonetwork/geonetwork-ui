@@ -12,14 +12,18 @@ describe('MdView Reducer', () => {
     })
   })
 
-  describe('setUuid', () => {
+  describe('loadFull', () => {
     let action
     beforeEach(() => {
-      action = MdViewActions.setUuid({ uuid: '123132132132132132' })
+      action = MdViewActions.loadFull({ uuid: '123132132132132132' })
     })
-    it('update uuid', () => {
+    it('load full metadata', () => {
       const state = reducer(initialMdviewState, action)
-      expect(state).toEqual({ uuid: '123132132132132132' })
+      expect(state).toEqual({
+        ...initialMdviewState,
+        uuid: '123132132132132132',
+        loading: true,
+      })
     })
   })
   describe('setPreview', () => {
@@ -31,19 +35,41 @@ describe('MdView Reducer', () => {
     })
     it('set Preview', () => {
       const state = reducer(initialMdviewState, action)
-      expect(state).toEqual({ preview: RECORDS_SUMMARY_FIXTURE[0] })
-    })
-  })
-  describe('setFull', () => {
-    let action
-    beforeEach(() => {
-      action = MdViewActions.setPreview({
+      expect(state).toEqual({
+        ...initialMdviewState,
         preview: RECORDS_SUMMARY_FIXTURE[0],
       })
     })
+  })
+  describe('loadFullSuccess', () => {
+    let action
+    beforeEach(() => {
+      action = MdViewActions.loadFullSuccess({
+        full: RECORDS_SUMMARY_FIXTURE[0],
+      })
+    })
     it('set Full Metadata', () => {
-      const state = reducer(initialMdviewState, action)
-      expect(state).toEqual({ preview: RECORDS_SUMMARY_FIXTURE[0] })
+      const state = reducer({ ...initialMdviewState, loading: true }, action)
+      expect(state).toEqual({
+        ...initialMdviewState,
+        loading: false,
+        full: RECORDS_SUMMARY_FIXTURE[0],
+      })
+    })
+  })
+  describe('loadFullFailure', () => {
+    let action
+    beforeEach(() => {
+      action = MdViewActions.loadFullFailure({
+        error: 'error',
+      })
+    })
+    it('set error', () => {
+      const state = reducer({ ...initialMdviewState, loading: true }, action)
+      expect(state).toEqual({
+        ...initialMdviewState,
+        error: 'error',
+      })
     })
   })
 })

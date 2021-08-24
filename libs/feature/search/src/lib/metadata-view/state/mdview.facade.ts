@@ -11,16 +11,15 @@ export class MdViewFacade {
   uuid$ = this.store.pipe(select(MdViewSelectors.getMdViewUuid))
   preview$ = this.store.pipe(select(MdViewSelectors.getMdViewPreview))
   full$ = this.store.pipe(select(MdViewSelectors.getMdViewFull))
+  error$ = this.store.pipe(select(MdViewSelectors.getMdViewError))
+  loading$ = this.store.pipe(select(MdViewSelectors.getMdViewLoading))
 
   constructor(private store: Store) {}
 
-  setUuid(uuid: string) {
-    this.store.dispatch(MdViewActions.setUuid({ uuid }))
+  loadFull(uuid: string) {
+    this.store.dispatch(MdViewActions.loadFull({ uuid }))
   }
   setPreview(preview: RecordSummary) {
     this.store.dispatch(MdViewActions.setPreview({ preview }))
-  }
-  setFull(full: RecordSummary) {
-    this.store.dispatch(MdViewActions.setFull({ full }))
   }
 }

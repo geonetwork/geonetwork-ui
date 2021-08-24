@@ -8,15 +8,33 @@ export interface MdViewState {
   uuid?: string
   preview?: RecordSummary
   full?: RecordSummary
+  loading?: boolean
+  error: string | null
 }
 
-export const initialMdviewState: MdViewState = {}
+export const initialMdviewState: MdViewState = {
+  error: null,
+  loading: false,
+}
 
 const mdViewReducer = createReducer(
   initialMdviewState,
-  on(MdViewActions.setUuid, (state, { uuid }) => ({ ...state, uuid })),
+  on(MdViewActions.loadFull, (state, { uuid }) => ({
+    ...state,
+    uuid,
+    loading: true,
+  })),
   on(MdViewActions.setPreview, (state, { preview }) => ({ ...state, preview })),
-  on(MdViewActions.setFull, (state, { full }) => ({ ...state, full }))
+  on(MdViewActions.loadFullSuccess, (state, { full }) => ({
+    ...state,
+    full,
+    loading: false,
+  })),
+  on(MdViewActions.loadFullFailure, (state, { error }) => ({
+    ...state,
+    error,
+    loading: false,
+  }))
 )
 
 export function reducer(state: MdViewState | undefined, action: Action) {
