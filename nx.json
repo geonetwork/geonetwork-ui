@@ -38,6 +38,13 @@
       "tags": [],
       "implicitDependencies": ["datafeeder"]
     },
+    "datahub": {
+      "tags": []
+    },
+    "datahub-e2e": {
+      "tags": [],
+      "implicitDependencies": ["datahub"]
+    },
     "demo": {
       "tags": []
     },
