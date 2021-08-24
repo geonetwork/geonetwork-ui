@@ -24,16 +24,13 @@ export class ElasticsearchMapper {
       const mappingFn = (
         this.getMappingFn(fieldName) || this.fieldMapper.mapGenericField
       ).bind(this.fieldMapper)
-      mappingFn(record, _source, fieldName)
+      mappingFn(record as RecordSummary, _source, fieldName)
     })
 
     return record as RecordSummary
   }
 
   private getMappingFn(fieldName: string) {
-    return this.fieldMapper[`map${this.captitalizeFirstLetter(fieldName)}`]
-  }
-  private captitalizeFirstLetter(s: string) {
-    return s.charAt(0).toUpperCase() + s.slice(1)
+    return this.fieldMapper.fields[fieldName]
   }
 }
