@@ -275,10 +275,10 @@ describe('Search Reducer', () => {
     })
   })
 
-  describe('SetConfigSource action', () => {
+  describe('SetConfigRequestFields action', () => {
     it('should replace the _source in the config', () => {
       const payload = { includes: ['title', 'abstract'] }
-      const action = new fromActions.SetConfigSource(payload)
+      const action = new fromActions.SetConfigRequestFields(payload)
       const state = reducerSearch(
         {
           ...initialStateSearch,

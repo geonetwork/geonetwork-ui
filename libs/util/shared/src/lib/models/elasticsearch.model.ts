@@ -19,7 +19,7 @@ export interface EsRequestSource {
   includes: string[]
 }
 
-export type SourceParam = string | string[] | EsRequestSource
+export type RequestFields = string | string[] | EsRequestSource
 
 export interface EsSearchParams {
   aggregations?: Record<string, unknown>
@@ -28,7 +28,7 @@ export interface EsSearchParams {
   size: number
   sort?: SortParams
   track_total_hits?: boolean
-  _source?: SourceParam
+  _source?: RequestFields
 }
 
 export type EsSearchResponse = any
