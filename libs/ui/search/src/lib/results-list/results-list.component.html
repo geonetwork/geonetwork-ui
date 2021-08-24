@@ -5,13 +5,17 @@
   ></ng-container>
   <div *ngSwitchCase="layoutEnum.LIST" class="gap-4 p-4">
     <div class="pb-4" *ngFor="let record of records">
-      <gn-ui-record-preview-list [record]="record"></gn-ui-record-preview-list>
+      <gn-ui-record-preview-list
+        [record]="record"
+        (mdSelect)="mdSelect.emit($event)"
+      ></gn-ui-record-preview-list>
     </div>
   </div>
   <div *ngSwitchCase="layoutEnum.TITLE" class="gap-4 p-4">
     <div class="pb-4" *ngFor="let record of records">
       <gn-ui-record-preview-title
         [record]="record"
+        (mdSelect)="mdSelect.emit($event)"
       ></gn-ui-record-preview-title>
     </div>
   </div>
@@ -20,6 +24,7 @@
       style="height: 24rem"
       *ngFor="let record of records"
       [record]="record"
+      (mdSelect)="mdSelect.emit($event)"
     ></gn-ui-record-preview-text>
   </div>
   <ng-container *ngSwitchDefault [ngTemplateOutlet]="block"></ng-container>
@@ -30,6 +35,7 @@
     <gn-ui-record-preview-card
       *ngFor="let record of records"
       [record]="record"
+      (mdSelect)="mdSelect.emit($event)"
       linkTarget="_blank"
       style="height: 24em"
     ></gn-ui-record-preview-card>
