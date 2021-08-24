@@ -1,11 +1,19 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store'
-import { MD_VIEW_FEATURE_STATE_KEY, MdviewState } from './mdview.reducer'
+import { MD_VIEW_FEATURE_STATE_KEY, MdViewState } from './mdview.reducer'
 
-export const getMdViewState = createFeatureSelector<MdviewState>(
+export const getMdViewState = createFeatureSelector<MdViewState>(
   MD_VIEW_FEATURE_STATE_KEY
 )
 
 export const getMdViewUuid = createSelector(
   getMdViewState,
-  (state: MdviewState) => state.uuid
+  (state: MdViewState) => state.uuid
+)
+export const getMdViewPreview = createSelector(
+  getMdViewState,
+  (state: MdViewState) => state.preview
+)
+export const getMdViewFull = createSelector(
+  getMdViewState,
+  (state: MdViewState) => state.full
 )
