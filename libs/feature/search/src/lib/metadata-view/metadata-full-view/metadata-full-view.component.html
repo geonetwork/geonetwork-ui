@@ -1,5 +1,6 @@
 <div *ngIf="$loading | async">Loading metadata...</div>
-<div *ngIf="($loading | async) === false">
-  <p class="text-xl">{{ ($metadata | async).title }}</p>
-  <p class="">{{ ($metadata | async).abstract }}</p>
-</div>
+<gn-ui-metadata-page
+  *ngIf="($loading | async) === false"
+  [metadata]="$metadata | async"
+>
+</gn-ui-metadata-page>
