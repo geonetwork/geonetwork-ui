@@ -1,1 +1,5 @@
-<p>metadata-full-view works!</p>
+<div *ngIf="$loading | async">Loading metadata...</div>
+<div *ngIf="($loading | async) === false">
+  <p class="text-xl">{{ ($metadata | async).title }}</p>
+  <p class="">{{ ($metadata | async).abstract }}</p>
+</div>
