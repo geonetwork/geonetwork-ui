@@ -34,7 +34,13 @@ const mdViewReducer = createReducer(
     ...state,
     error,
     loading: false,
-  }))
+  })),
+  on(MdViewActions.close, (state) => {
+    const { uuid, preview, full, ...stateWithoutMd } = state
+    return {
+      ...stateWithoutMd,
+    }
+  })
 )
 
 export function reducer(state: MdViewState | undefined, action: Action) {

@@ -72,4 +72,23 @@ describe('MdView Reducer', () => {
       })
     })
   })
+  describe('close', () => {
+    let action
+    beforeEach(() => {
+      action = MdViewActions.close()
+    })
+    it('set error', () => {
+      const state = reducer(
+        {
+          ...initialMdviewState,
+          loading: false,
+          full: RECORDS_SUMMARY_FIXTURE[0],
+        },
+        action
+      )
+      expect(state).toEqual({
+        ...initialMdviewState,
+      })
+    })
+  })
 })

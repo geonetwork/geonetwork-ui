@@ -20,3 +20,5 @@ export const loadFullFailure = createAction(
   '[Metadata view] Load full failure',
   props<{ error: any }>()
 )
+
+export const close = createAction('[Metadata view] close')

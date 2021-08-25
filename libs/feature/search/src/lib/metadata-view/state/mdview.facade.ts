@@ -22,4 +22,7 @@ export class MdViewFacade {
   setPreview(preview: RecordSummary) {
     this.store.dispatch(MdViewActions.setPreview({ preview }))
   }
+  close() {
+    this.store.dispatch(MdViewActions.close())
+  }
 }
