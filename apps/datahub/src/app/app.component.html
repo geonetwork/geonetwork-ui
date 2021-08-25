@@ -16,6 +16,8 @@
   </div>
   <div class="container-lg mx-auto py-4">
     <gn-ui-results-hits></gn-ui-results-hits>
-    <gn-ui-results-list-container></gn-ui-results-list-container>
+    <gn-ui-results-list-container
+      (mdSelect)="onMetadataSelection($event)"
+    ></gn-ui-results-list-container>
   </div>
 </main>

@@ -47,12 +47,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     EffectsModule.forRoot(),
     NoopAnimationsModule,
   ],
-  providers: [
-    {
-      provide: BASE_PATH,
-      useValue: '/geonetwork/srv/api',
-    },
-  ],
+  providers: [{ provide: BASE_PATH, useValue: environment.API_BASE_PATH }],
   bootstrap: [AppComponent],
 })
 export class AppModule {

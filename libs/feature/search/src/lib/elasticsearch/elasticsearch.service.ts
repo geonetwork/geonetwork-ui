@@ -29,6 +29,16 @@ export class ElasticsearchService {
     return payload
   }
 
+  getMetadataByIdPayload(uuid: string): EsSearchParams {
+    return {
+      query: {
+        ids: {
+          values: [uuid],
+        },
+      },
+    }
+  }
+
   private buildPayloadSort(state: SearchStateSearch): SortParams {
     const { sortBy } = state.params
     return sortBy

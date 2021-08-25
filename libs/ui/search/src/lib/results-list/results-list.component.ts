@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core'
 import { RecordSummary, ResultsListLayout } from '@geonetwork-ui/util/shared'
 
 @Component({
@@ -11,5 +17,6 @@ export class ResultsListComponent {
   @Input() records: RecordSummary[]
   @Input() loading: boolean
   @Input() layout: ResultsListLayout = ResultsListLayout.CARD
+  @Output() mdSelect = new EventEmitter<RecordSummary>()
   layoutEnum = ResultsListLayout
 }

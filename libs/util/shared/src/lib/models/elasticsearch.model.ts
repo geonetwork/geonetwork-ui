@@ -25,7 +25,7 @@ export interface EsSearchParams {
   aggregations?: Record<string, unknown>
   from?: number
   query?: Record<string, unknown>
-  size: number
+  size?: number
   sort?: SortParams
   track_total_hits?: boolean
   _source?: RequestFields

@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
+import { RouterModule } from '@angular/router'
 import { BASE_PATH } from '@geonetwork-ui/data-access/gn4'
-import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import {
-  getDefaultLang,
+  FeatureSearchModule,
+  MdViewModule,
+} from '@geonetwork-ui/feature/search'
+import {
   TRANSLATE_GEONETWORK_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
@@ -15,7 +18,6 @@ import { storeFreeze } from 'ngrx-store-freeze'
 import { environment } from '../environments/environment'
 
 import { AppComponent } from './app.component'
-import { RouterModule } from '@angular/router'
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
@@ -32,7 +34,9 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     UtilI18nModule,
     TranslateModule.forRoot(TRANSLATE_GEONETWORK_CONFIG),
     FeatureSearchModule,
+    MdViewModule,
   ],
+  providers: [{ provide: BASE_PATH, useValue: environment.API_BASE_PATH }],
   bootstrap: [AppComponent],
 })
 export class AppModule {
