@@ -7,7 +7,7 @@ import {
   SimpleChanges,
 } from '@angular/core'
 import { TableItemModel } from '@geonetwork-ui/ui/layout'
-import { FigureService } from '../figure-service.service'
+import { FigureService } from '../figure.service'
 
 @Component({
   selector: 'gn-ui-figure-container',
