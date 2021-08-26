@@ -12,9 +12,9 @@ export interface RecordSummary {
   id: string
   uuid: string
   title: string
-  abstract: string
   metadataUrl: string
-  thumbnailUrl: string
+  abstract?: string
+  thumbnailUrl?: string
   logoUrl?: string
   downloadable?: boolean
   viewable?: boolean

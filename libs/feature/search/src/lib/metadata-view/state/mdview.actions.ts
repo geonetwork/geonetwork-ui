@@ -1,14 +1,14 @@
 import { RecordSummary } from '@geonetwork-ui/util/shared'
 import { createAction, props } from '@ngrx/store'
 
-export const loadFull = createAction(
+export const loadFullMetadata = createAction(
   '[Metadata view] Load full metadata',
   props<{ uuid: string }>()
 )
 
-export const setPreview = createAction(
-  '[Metadata view] Set preview',
-  props<{ preview: RecordSummary }>()
+export const setIncompleteMetadata = createAction(
+  '[Metadata view] Set incomplete metadata',
+  props<{ incomplete: RecordSummary }>()
 )
 
 export const loadFullSuccess = createAction(

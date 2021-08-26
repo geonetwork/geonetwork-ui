@@ -5,23 +5,19 @@ export const getMdViewState = createFeatureSelector<MdViewState>(
   MD_VIEW_FEATURE_STATE_KEY
 )
 
-export const getMdViewUuid = createSelector(
+export const getMetadataUuid = createSelector(
   getMdViewState,
-  (state: MdViewState) => state.uuid
+  (state: MdViewState) => (state.metadata ? state.metadata.uuid : null)
 )
-export const getMdViewPreview = createSelector(
+export const getMetadata = createSelector(
   getMdViewState,
-  (state: MdViewState) => state.preview
+  (state: MdViewState) => state.metadata
 )
-export const getMdViewFull = createSelector(
+export const getMetadataIsIncomplete = createSelector(
   getMdViewState,
-  (state: MdViewState) => state.full
+  (state: MdViewState) => (state.metadata ? state.loadingFull : null)
 )
-export const getMdViewLoading = createSelector(
-  getMdViewState,
-  (state: MdViewState) => state.loading
-)
-export const getMdViewError = createSelector(
+export const getMetadataError = createSelector(
   getMdViewState,
   (state: MdViewState) => state.error
 )

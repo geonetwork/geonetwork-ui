@@ -13,7 +13,7 @@ import { Observable, of, throwError } from 'rxjs'
 import * as MdViewActions from './mdview.actions'
 import { MdViewEffects } from './mdview.effects'
 
-const preview = {
+const incomplete = {
   uuid: '1231321321',
   title: 'title',
 } as RecordSummary
@@ -66,23 +66,25 @@ describe('StationsEffects', () => {
     effects = TestBed.inject(MdViewEffects)
   })
 
-  describe('setPreview$', () => {
+  describe('loadFromIncomplete$', () => {
     it('should work', () => {
-      actions = hot('-a-|', { a: MdViewActions.setPreview({ preview }) })
-
-      const expected = hot('-a-|', {
-        a: MdViewActions.loadFull({ uuid: preview.uuid }),
+      actions = hot('-a-|', {
+        a: MdViewActions.setIncompleteMetadata({ incomplete }),
       })
 
-      expect(effects.setPreview$).toBeObservable(expected)
+      const expected = hot('-a-|', {
+        a: MdViewActions.loadFullMetadata({ uuid: incomplete.uuid }),
+      })
+
+      expect(effects.loadFromIncomplete$).toBeObservable(expected)
     })
   })
 
-  describe('loadFull$', () => {
+  describe('loadFullRecord$', () => {
     describe('when api sucess', () => {
       it('dispatch loadFullSuccess', () => {
         actions = hot('-a-|', {
-          a: MdViewActions.loadFull({ uuid: full.uuid }),
+          a: MdViewActions.loadFullMetadata({ uuid: full.uuid }),
         })
         const expected = hot('-a-|', {
           a: MdViewActions.loadFullSuccess({ full }),
@@ -96,7 +98,7 @@ describe('StationsEffects', () => {
       })
       it('dispatch loadFullFailure', () => {
         actions = hot('-a-|', {
-          a: MdViewActions.loadFull({ uuid: full.uuid }),
+          a: MdViewActions.loadFullMetadata({ uuid: full.uuid }),
         })
         const expected = hot('-(a|)', {
           a: MdViewActions.loadFullFailure({ error: 'api' }),

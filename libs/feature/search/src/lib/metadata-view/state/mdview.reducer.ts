@@ -5,41 +5,39 @@ import * as MdViewActions from './mdview.actions'
 export const MD_VIEW_FEATURE_STATE_KEY = 'mdView'
 
 export interface MdViewState {
-  uuid?: string
-  preview?: RecordSummary
-  full?: RecordSummary
-  loading?: boolean
+  loadingFull: boolean
   error: string | null
+  metadata?: RecordSummary
 }
 
 export const initialMdviewState: MdViewState = {
   error: null,
-  loading: false,
+  loadingFull: false,
 }
 
 const mdViewReducer = createReducer(
   initialMdviewState,
-  on(MdViewActions.loadFull, (state, { uuid }) => ({
+  on(MdViewActions.loadFullMetadata, (state, { uuid }) => ({
     ...state,
-    uuid,
-    loading: true,
+    loadingFull: true,
   })),
-  on(MdViewActions.setPreview, (state, { preview }) => ({ ...state, preview })),
+  on(MdViewActions.setIncompleteMetadata, (state, { incomplete }) => ({
+    ...state,
+    metadata: incomplete,
+  })),
   on(MdViewActions.loadFullSuccess, (state, { full }) => ({
     ...state,
-    full,
-    loading: false,
+    metadata: full,
+    loadingFull: false,
   })),
   on(MdViewActions.loadFullFailure, (state, { error }) => ({
     ...state,
     error,
-    loading: false,
+    loadingFull: false,
   })),
   on(MdViewActions.close, (state) => {
-    const { uuid, preview, full, ...stateWithoutMd } = state
-    return {
-      ...stateWithoutMd,
-    }
+    const { metadata, ...stateWithoutMd } = state
+    return stateWithoutMd
   })
 )
 

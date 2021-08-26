@@ -17,16 +17,18 @@ export class MdViewEffects {
     private esMapper: ElasticsearchMapper
   ) {}
 
-  setPreview$ = createEffect(() =>
+  loadFromIncomplete$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(MdViewActions.setPreview),
-      map(({ preview }) => MdViewActions.loadFull({ uuid: preview.uuid }))
+      ofType(MdViewActions.setIncompleteMetadata),
+      map(({ incomplete }) =>
+        MdViewActions.loadFullMetadata({ uuid: incomplete.uuid })
+      )
     )
   )
 
   loadFull$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(MdViewActions.loadFull),
+      ofType(MdViewActions.loadFullMetadata),
       switchMap(({ uuid }) =>
         this.searchService.search(
           'bucket',
