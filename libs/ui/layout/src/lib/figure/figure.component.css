@@ -1,3 +1,7 @@
 .icon {
-    font-size: 36px;
+  font-size: 36px;
+}
+mat-icon {
+  width: 48px;
+  height: 48px;
 }

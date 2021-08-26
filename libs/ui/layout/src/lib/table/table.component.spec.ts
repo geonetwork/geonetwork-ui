@@ -3,26 +3,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { TABLE_ITEM_FIXTURE } from './table.fixtures'
 
 import { TableComponent } from './table.component'
 
-const data = [
-  {
-    name: 'name 1',
-    id: 'id 1',
-    age: 15,
-  },
-  {
-    name: 'name 2',
-    id: 'id 2',
-    age: 10,
-  },
-  {
-    name: 'name 3',
-    id: 'id 3',
-    age: 55,
-  },
-]
+const data = TABLE_ITEM_FIXTURE
+
 describe('TableComponent', () => {
   let component: TableComponent
   let fixture: ComponentFixture<TableComponent>
