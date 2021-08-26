@@ -20,7 +20,7 @@ describe('FigureComponent', () => {
     component = fixture.componentInstance
     component.title = 'Average population in European countries'
     component.icon = 'group'
-    component.figure = 1020500
+    component.figure = '1020500'
     component.unit = 'hab.'
     fixture.detectChanges()
     compiled = fixture.nativeElement as HTMLElement
