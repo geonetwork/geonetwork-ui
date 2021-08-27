@@ -1,6 +1,7 @@
-<div *ngIf="$loading | async">Loading metadata...</div>
+<div *ngIf="(isPresent$ | async) === false" class='empty'>Nothing to show.</div>
 <gn-ui-metadata-page
-  *ngIf="($loading | async) === false"
-  [metadata]="$metadata | async"
+  *ngIf="(isPresent$ | async) === true"
+  [metadata]="metadata$ | async"
+  [incomplete]="isIncomplete$ | async"
 >
 </gn-ui-metadata-page>

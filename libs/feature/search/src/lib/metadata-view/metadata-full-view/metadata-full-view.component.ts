@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
-import { MdViewFacade } from '@geonetwork-ui/feature/search'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { MdViewFacade } from '../state/mdview.facade'
 
 @Component({
   selector: 'gn-ui-metadata-full-view',
@@ -8,8 +8,9 @@ import { MdViewFacade } from '@geonetwork-ui/feature/search'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MetadataFullViewComponent {
-  $loading = this.mdViewFacade.loading$
-  $metadata = this.mdViewFacade.full$
+  isPresent$ = this.mdViewFacade.isPresent$
+  metadata$ = this.mdViewFacade.metadata$
+  isIncomplete$ = this.mdViewFacade.isIncomplete$
 
   constructor(private mdViewFacade: MdViewFacade) {}
 }
