@@ -4,7 +4,7 @@ import { MdViewFacade } from '../state/mdview.facade'
 @Component({
   selector: 'gn-ui-metadata-full-view',
   templateUrl: './metadata-full-view.component.html',
-  styleUrls: ['./metadata-full-view.component.scss'],
+  styleUrls: ['./metadata-full-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MetadataFullViewComponent {
