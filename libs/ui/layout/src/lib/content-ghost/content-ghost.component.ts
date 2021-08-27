@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
 @Component({
   selector: 'gn-ui-content-ghost',
@@ -6,4 +6,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   styleUrls: ['./content-ghost.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContentGhostComponent {}
+export class ContentGhostComponent {
+  @Input() showContent: boolean
+  @Input() ghostClass = ''
+}
