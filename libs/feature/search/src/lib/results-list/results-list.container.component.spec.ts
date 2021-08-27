@@ -1,7 +1,7 @@
 import { Component, DebugElement, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { RecordSummary, ResultsListLayout } from '@geonetwork-ui/util/shared'
+import { MetadataRecord, ResultsListLayout } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { ResultsListContainerComponent } from './results-list.container.component'
@@ -11,7 +11,7 @@ import { ResultsListContainerComponent } from './results-list.container.componen
   template: '',
 })
 class ResultsListMockComponent {
-  @Input() records: RecordSummary[]
+  @Input() records: MetadataRecord[]
   @Input() loading: boolean
   @Input() layout: ResultsListLayout = ResultsListLayout.CARD
 }

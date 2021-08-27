@@ -5,7 +5,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core'
-import { RecordSummary, ResultsListLayout } from '@geonetwork-ui/util/shared'
+import { MetadataRecord, ResultsListLayout } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-results-list',
@@ -14,9 +14,9 @@ import { RecordSummary, ResultsListLayout } from '@geonetwork-ui/util/shared'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResultsListComponent {
-  @Input() records: RecordSummary[]
+  @Input() records: MetadataRecord[]
   @Input() loading: boolean
   @Input() layout: ResultsListLayout = ResultsListLayout.CARD
-  @Output() mdSelect = new EventEmitter<RecordSummary>()
+  @Output() mdSelect = new EventEmitter<MetadataRecord>()
   layoutEnum = ResultsListLayout
 }

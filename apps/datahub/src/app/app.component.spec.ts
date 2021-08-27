@@ -3,9 +3,12 @@ import { TestBed } from '@angular/core/testing'
 import { RouterTestingModule } from '@angular/router/testing'
 import { MdViewFacade } from '@geonetwork-ui/feature/search'
 import { AppComponent } from './app.component'
+import { of } from 'rxjs'
 
-const mdViewFacadeMock = {
-  setPreview: jest.fn(),
+class MdViewFacadeMock {
+  close = jest.fn()
+  isPresent$ = of()
+  metadata$ = of()
 }
 
 describe('AppComponent', () => {
@@ -17,7 +20,7 @@ describe('AppComponent', () => {
       providers: [
         {
           provide: MdViewFacade,
-          useValue: mdViewFacadeMock,
+          useClass: MdViewFacadeMock,
         },
       ],
     }).compileComponents()

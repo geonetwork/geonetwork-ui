@@ -14,10 +14,28 @@
       </div>
     </div>
   </div>
+  <div class="border-b border-gray-300">
+    <div class="container-lg mx-auto py-4">
+      <a
+        class="
+          text-primary
+          truncate
+          no-underline
+          hover:text-primary-lighter hover:underline
+        "
+        href
+        (click)="backToSearch($event)"
+        >Data Hub</a
+      >
+      > {{ $breadcrumb | async }}
+    </div>
+  </div>
   <div class="container-lg mx-auto py-4">
-    <gn-ui-results-hits></gn-ui-results-hits>
-    <gn-ui-results-list-container
-      (mdSelect)="onMetadataSelection($event)"
-    ></gn-ui-results-list-container>
+    <gn-ui-main-search
+      *ngIf="($isRecordOpened | async) === false"
+    ></gn-ui-main-search>
+    <gn-ui-metadata-full-view
+      *ngIf="$isRecordOpened | async"
+    ></gn-ui-metadata-full-view>
   </div>
 </main>

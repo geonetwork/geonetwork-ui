@@ -1,6 +1,6 @@
 import {
   EsRequestAggTermPatch,
-  RecordSummary,
+  MetadataRecord,
   ResultsListLayout,
   SearchFilters,
   RequestFields,
@@ -128,7 +128,7 @@ export class SetResultsLayout extends AbstractAction implements Action {
 export class AddResults extends AbstractAction implements Action {
   readonly type = ADD_RESULTS
 
-  constructor(public payload: RecordSummary[], id?: string) {
+  constructor(public payload: MetadataRecord[], id?: string) {
     super(id)
   }
 }

@@ -12,52 +12,54 @@ describe('MdView Reducer', () => {
     })
   })
 
-  describe('loadFull', () => {
+  describe('loadFullMetadata', () => {
     let action
     beforeEach(() => {
-      action = MdViewActions.loadFull({ uuid: '123132132132132132' })
+      action = MdViewActions.loadFullMetadata({ uuid: '123132132132132132' })
     })
-    it('load full metadata', () => {
+    it('store the loading state', () => {
       const state = reducer(initialMdviewState, action)
       expect(state).toEqual({
         ...initialMdviewState,
-        uuid: '123132132132132132',
-        loading: true,
+        loadingFull: true,
       })
     })
   })
-  describe('setPreview', () => {
+  describe('setIncompleteMetadata', () => {
     let action
     beforeEach(() => {
-      action = MdViewActions.setPreview({
-        preview: RECORDS_SUMMARY_FIXTURE[0],
+      action = MdViewActions.setIncompleteMetadata({
+        incomplete: RECORDS_SUMMARY_FIXTURE[0],
       })
     })
-    it('set Preview', () => {
+    it('saves incomplete metadata', () => {
       const state = reducer(initialMdviewState, action)
       expect(state).toEqual({
         ...initialMdviewState,
-        preview: RECORDS_SUMMARY_FIXTURE[0],
+        metadata: RECORDS_SUMMARY_FIXTURE[0],
       })
     })
   })
-  describe('loadFullSuccess', () => {
+  describe('loadFullRecordSuccess', () => {
     let action
     beforeEach(() => {
       action = MdViewActions.loadFullSuccess({
         full: RECORDS_SUMMARY_FIXTURE[0],
       })
     })
-    it('set Full Metadata', () => {
-      const state = reducer({ ...initialMdviewState, loading: true }, action)
+    it('saves full metadata ', () => {
+      const state = reducer(
+        { ...initialMdviewState, loadingFull: true },
+        action
+      )
       expect(state).toEqual({
         ...initialMdviewState,
-        loading: false,
-        full: RECORDS_SUMMARY_FIXTURE[0],
+        loadingFull: false,
+        metadata: RECORDS_SUMMARY_FIXTURE[0],
       })
     })
   })
-  describe('loadFullFailure', () => {
+  describe('loadFullRecordFailure', () => {
     let action
     beforeEach(() => {
       action = MdViewActions.loadFullFailure({
@@ -65,11 +67,32 @@ describe('MdView Reducer', () => {
       })
     })
     it('set error', () => {
-      const state = reducer({ ...initialMdviewState, loading: true }, action)
+      const state = reducer(
+        { ...initialMdviewState, loadingFull: true },
+        action
+      )
       expect(state).toEqual({
         ...initialMdviewState,
+        loadingFull: false,
         error: 'error',
       })
+    })
+  })
+  describe('close', () => {
+    let action
+    beforeEach(() => {
+      action = MdViewActions.close()
+    })
+    it('set error', () => {
+      const state = reducer(
+        {
+          ...initialMdviewState,
+          loadingFull: false,
+          metadata: RECORDS_SUMMARY_FIXTURE[0],
+        },
+        action
+      )
+      expect(state).toEqual(initialMdviewState)
     })
   })
 })

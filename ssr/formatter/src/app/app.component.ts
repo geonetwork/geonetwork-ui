@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core'
-import { RecordSummary } from '@geonetwork-ui/feature/search'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { map } from 'rxjs/operators'
 
 @Component({
@@ -14,7 +14,7 @@ import { map } from 'rxjs/operators'
   styles: [],
 })
 export class AppComponent implements OnInit {
-  metadata: RecordSummary
+  metadata: MetadataRecord
 
   constructor(private http: HttpClient) {}
   ngOnInit(): void {
@@ -25,6 +25,8 @@ export class AppComponent implements OnInit {
       .pipe(
         map((hit: any) => {
           return {
+            uuid: hit._source.uuid,
+            id: hit.id,
             title: hit._source.resourceTitleObject
               ? hit._source.resourceTitleObject.default
               : 'no title',
@@ -32,7 +34,7 @@ export class AppComponent implements OnInit {
               ? hit._source.resourceAbstractObject.default
               : 'no abstract',
             thumbnailUrl: hit._source.overview ? hit._source.overview.url : '',
-            url: `/geonetwork/srv/eng/catalog.search#/metadata/${hit._source.uuid}`,
+            metadataUrl: `/geonetwork/srv/eng/catalog.search#/metadata/${hit._source.uuid}`,
           }
         })
       )

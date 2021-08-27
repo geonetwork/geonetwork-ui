@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import {
   InfiniteScrollModel,
   InfiniteScrollOptionsDefault,
-  RecordSummary,
+  MetadataRecord,
   ResultsListLayout,
 } from '@geonetwork-ui/util/shared'
 import { iif, Observable, of } from 'rxjs'
@@ -17,7 +17,7 @@ import { SearchFacade } from '../state/search.facade'
 export class ResultsListContainerComponent implements OnInit {
   @Input() layout: ResultsListLayout = ResultsListLayout.CARD
   @Input() scrollableOptions: InfiniteScrollModel = {}
-  @Output() mdSelect = new EventEmitter<RecordSummary>()
+  @Output() mdSelect = new EventEmitter<MetadataRecord>()
 
   scrollDisable$: Observable<boolean>
   scrollableConfig: InfiniteScrollModel
@@ -39,7 +39,7 @@ export class ResultsListContainerComponent implements OnInit {
     )
   }
 
-  onMetadataSelection(metadata: RecordSummary): void {
+  onMetadataSelection(metadata: MetadataRecord): void {
     this.mdSelect.emit(metadata)
   }
 

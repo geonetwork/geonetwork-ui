@@ -18,13 +18,14 @@ import { storeFreeze } from 'ngrx-store-freeze'
 import { environment } from '../environments/environment'
 
 import { AppComponent } from './app.component'
+import { MainSearchComponent } from './main-search/main-search.component'
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
   : []
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, MainSearchComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),

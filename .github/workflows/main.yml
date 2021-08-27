@@ -107,9 +107,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: 'Links to the Storybooks:
+          msg: 'GitHub Pages links:
 
-            * UI components: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/demo/
+            * Datahub application: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/apps/datahub/
 
-            * Web Components: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/webcomponents/'
+            * UI components storybook: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/demo/
+
+            * Web Components storybook: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/webcomponents/'
           check_for_duplicate_msg: true

@@ -5,31 +5,71 @@ describe('MdView Selectors', () => {
 
   beforeEach(() => {
     state = {
-      uuid: '321321321321',
-      preview: {
-        uuid: '321321321321',
-        title: 'title',
-      },
-      full: {
+      metadata: {
         uuid: '321321321321',
         title: 'title',
         abstract: 'abstract',
       },
+      loadingFull: false,
+      error: null,
     }
   })
 
   describe('MdView Selectors', () => {
-    it('getMdViewUuid() returns the uuid', () => {
-      const results = MdViewSelectors.getMdViewUuid.projector(state)
-      expect(results).toBe('321321321321')
+    describe('getMetadataUuid', () => {
+      it('returns the uuid of the metadata in the state', () => {
+        const results = MdViewSelectors.getMetadataUuid.projector(state)
+        expect(results).toBe('321321321321')
+      })
+      it('returns null if no metadata in the state', () => {
+        const results = MdViewSelectors.getMetadataUuid.projector({
+          loadingFull: false,
+          error: null,
+        })
+        expect(results).toBe(null)
+      })
     })
-    it('getMdViewPreview() returns the preview', () => {
-      const results = MdViewSelectors.getMdViewPreview.projector(state)
-      expect(results).toBe(state.preview)
+    describe('getMetadata', () => {
+      it('returns the metadata in the state', () => {
+        const results = MdViewSelectors.getMetadata.projector(state)
+        expect(results).toBe(state.metadata)
+      })
     })
-    it('getMdViewFull() returns the full metadata', () => {
-      const results = MdViewSelectors.getMdViewFull.projector(state)
-      expect(results).toBe(state.full)
+    describe('getMetadataIsIncomplete', () => {
+      it('returns true when incomplete', () => {
+        const results = MdViewSelectors.getMetadataIsIncomplete.projector({
+          ...state,
+          loadingFull: true,
+        })
+        expect(results).toBe(true)
+      })
+      it('returns false when complete', () => {
+        const results = MdViewSelectors.getMetadataIsIncomplete.projector(state)
+        expect(results).toBe(false)
+      })
+      it('returns null if no metadata', () => {
+        const results = MdViewSelectors.getMetadataIsIncomplete.projector({
+          loadingFull: false,
+          error: null,
+        })
+        expect(results).toBe(null)
+      })
+    })
+    describe('getMetadataError', () => {
+      it('returns error if present', () => {
+        const results = MdViewSelectors.getMetadataError.projector({
+          ...state,
+          error: 'ouch',
+        })
+        expect(results).toBe('ouch')
+      })
+      it('returns null if no error', () => {
+        const results = MdViewSelectors.getMetadataError.projector({
+          loadingFull: false,
+          error: null,
+        })
+        expect(results).toBe(null)
+      })
     })
   })
 })
