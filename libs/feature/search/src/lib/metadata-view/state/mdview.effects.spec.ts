@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { ElasticsearchMapper } from '../../elasticsearch/mapper'
 import { ElasticsearchService } from '../../elasticsearch/'
-import { RecordSummary } from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
 
 import { provideMockActions } from '@ngrx/effects/testing'
 import { provideMockStore } from '@ngrx/store/testing'
@@ -16,13 +16,13 @@ import { MdViewEffects } from './mdview.effects'
 const incomplete = {
   uuid: '1231321321',
   title: 'title',
-} as RecordSummary
+} as MetadataRecord
 
 const full = {
   uuid: '1231321321',
   title: 'title',
   abstract: 'abstract',
-} as RecordSummary
+} as MetadataRecord
 
 const searchServiceMock = {
   search: () => of({ hits: { hits: [] }, aggregations: { abc: {} } }),

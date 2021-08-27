@@ -1,4 +1,4 @@
-import { RecordSummary } from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { Action, createReducer, on } from '@ngrx/store'
 import * as MdViewActions from './mdview.actions'
 
@@ -7,7 +7,7 @@ export const MD_VIEW_FEATURE_STATE_KEY = 'mdView'
 export interface MdViewState {
   loadingFull: boolean
   error: string | null
-  metadata?: RecordSummary
+  metadata?: MetadataRecord
 }
 
 export const initialMdviewState: MdViewState = {

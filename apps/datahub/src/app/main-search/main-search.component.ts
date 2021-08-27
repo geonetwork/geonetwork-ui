@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { RecordSummary } from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { MdViewFacade } from '@geonetwork-ui/feature/search'
 
 @Component({
@@ -11,7 +11,7 @@ import { MdViewFacade } from '@geonetwork-ui/feature/search'
 export class MainSearchComponent {
   constructor(private mdViewFacade: MdViewFacade) {}
 
-  onMetadataSelection(metadata: RecordSummary): void {
+  onMetadataSelection(metadata: MetadataRecord): void {
     this.mdViewFacade.setIncompleteMetadata(metadata)
   }
 }

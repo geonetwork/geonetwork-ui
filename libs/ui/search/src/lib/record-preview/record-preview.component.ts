@@ -7,7 +7,7 @@ import {
   OnDestroy,
   ElementRef,
 } from '@angular/core'
-import { RecordSummary } from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { fromEvent, Subscription } from 'rxjs'
 
 @Component({
@@ -15,9 +15,9 @@ import { fromEvent, Subscription } from 'rxjs'
   template: '',
 })
 export class RecordPreviewComponent implements OnInit, OnDestroy {
-  @Input() record: RecordSummary
+  @Input() record: MetadataRecord
   @Input() linkTarget = '_blank'
-  @Output() mdSelect = new EventEmitter<RecordSummary>()
+  @Output() mdSelect = new EventEmitter<MetadataRecord>()
   subscription = new Subscription()
 
   get isViewable() {

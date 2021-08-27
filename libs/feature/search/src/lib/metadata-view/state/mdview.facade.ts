@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { RecordSummary } from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
 
 import { select, Store } from '@ngrx/store'
 import { filter, map } from 'rxjs/operators'
@@ -37,9 +37,9 @@ export class MdViewFacade {
   /**
    * This will load an incomplete record (e.g. from a search result) in the state
    * The full record will be automatically loaded subsequently
-   * @param {RecordSummary} incomplete
+   * @param {MetadataRecord} incomplete
    */
-  setIncompleteMetadata(incomplete: RecordSummary) {
+  setIncompleteMetadata(incomplete: MetadataRecord) {
     this.store.dispatch(MdViewActions.setIncompleteMetadata({ incomplete }))
   }
   close() {

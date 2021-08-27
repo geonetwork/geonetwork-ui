@@ -1,6 +1,6 @@
 import {
   RequestFields,
-  RecordSummary,
+  MetadataRecord,
   RESULTS_PAGE_SIZE,
   ResultsListLayout,
   SearchFilters,
@@ -31,7 +31,7 @@ export interface SearchStateSearch {
       value: number
       eq: string
     }
-    records: RecordSummary[]
+    records: MetadataRecord[]
     aggregations: any
   }
   resultsLayout?: ResultsListLayout

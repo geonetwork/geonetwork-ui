@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { RecordSummary } from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { ElasticsearchFieldMapper } from './elasticsearch.field.mapper'
 
 @Injectable({
@@ -8,13 +8,13 @@ import { ElasticsearchFieldMapper } from './elasticsearch.field.mapper'
 export class ElasticsearchMapper {
   constructor(private fieldMapper: ElasticsearchFieldMapper) {}
 
-  toRecords(response: any): RecordSummary[] {
+  toRecords(response: any): MetadataRecord[] {
     return response.hits.hits.map((hit) => this.toRecord(hit))
   }
 
   toRecord(hit: any) {
     const { _source } = hit
-    const record: Partial<RecordSummary> = {
+    const record: Partial<MetadataRecord> = {
       uuid: hit._id,
       viewable: hit.view,
       downloadable: hit.download,
@@ -24,10 +24,10 @@ export class ElasticsearchMapper {
       const mappingFn = (
         this.getMappingFn(fieldName) || this.fieldMapper.mapGenericField
       ).bind(this.fieldMapper)
-      mappingFn(record as RecordSummary, _source, fieldName)
+      mappingFn(record as MetadataRecord, _source, fieldName)
     })
 
-    return record as RecordSummary
+    return record as MetadataRecord
   }
 
   private getMappingFn(fieldName: string) {
