@@ -12,6 +12,6 @@ export class MainSearchComponent {
   constructor(private mdViewFacade: MdViewFacade) {}
 
   onMetadataSelection(metadata: RecordSummary): void {
-    this.mdViewFacade.setPreview(metadata)
+    this.mdViewFacade.setIncompleteMetadata(metadata)
   }
 }

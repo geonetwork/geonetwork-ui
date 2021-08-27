@@ -1,7 +1,8 @@
 import { Component } from '@angular/core'
 import { ColorService } from '@geonetwork-ui/util/shared'
 import { MdViewFacade } from '@geonetwork-ui/feature/search'
-import { map } from 'rxjs/operators'
+import { map, switchMap } from 'rxjs/operators'
+import { of } from 'rxjs'
 
 @Component({
   selector: 'gn-ui-root',
@@ -9,12 +10,15 @@ import { map } from 'rxjs/operators'
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  // FIXME: replace this with an actual router
-  $isRecordOpened = this.mdViewFacade.uuid$.pipe(map((uuid) => !!uuid))
+  $isRecordOpened = this.mdViewFacade.isPresent$
 
-  $breadcrumb = this.mdViewFacade.preview$.pipe(
-    map((preview) =>
-      preview ? `Jeu de donnée > ${preview.title}` : 'Recherche'
+  $breadcrumb = this.mdViewFacade.isPresent$.pipe(
+    switchMap((present) =>
+      present
+        ? this.mdViewFacade.metadata$.pipe(
+            map((md) => `Jeu de donnée > ${md.title}`)
+          )
+        : of('Recherche')
     )
   )
 
