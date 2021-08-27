@@ -1,4 +1,4 @@
-<div *ngIf="(isPresent$ | async) === false" class='empty'>Nothing to show.</div>
+<div *ngIf="(isPresent$ | async) === false" class="empty">Nothing to show.</div>
 <gn-ui-metadata-page
   *ngIf="(isPresent$ | async) === true"
   [metadata]="metadata$ | async"
