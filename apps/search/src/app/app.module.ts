@@ -11,7 +11,7 @@ import {
   UtilI18nModule,
   TRANSLATE_GEONETWORK_CONFIG,
 } from '@geonetwork-ui/util/i18n'
-import { BASE_PATH } from '@geonetwork-ui/data-access/gn4'
+import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
@@ -47,7 +47,14 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     EffectsModule.forRoot(),
     NoopAnimationsModule,
   ],
-  providers: [{ provide: BASE_PATH, useValue: environment.API_BASE_PATH }],
+  providers: [
+    {
+      provide: Configuration,
+      useValue: new Configuration({
+        basePath: environment.API_BASE_PATH,
+      }),
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {

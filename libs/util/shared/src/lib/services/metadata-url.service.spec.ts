@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing'
-import { BASE_PATH } from '@geonetwork-ui/data-access/gn4'
 import { TranslateService } from '@ngx-translate/core'
 
 import { MetadataUrlService } from './metadata-url.service'
+import { Configuration } from '@geonetwork-ui/data-access/gn4'
 
 const translateServiceMock = {
   currentLang: 'en',
@@ -18,8 +18,8 @@ describe('MetadataUrlService', () => {
           useValue: translateServiceMock,
         },
         {
-          provide: BASE_PATH,
-          useValue: '/geonetwork/srv/api',
+          provide: Configuration,
+          useValue: new Configuration({ basePath: '/geonetwork/srv/api' }),
         },
       ],
     })

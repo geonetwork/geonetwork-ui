@@ -12,10 +12,34 @@ npm run generate-api:gn4
 The api `baseUrl` is stored in the api specification document, and overwritten via Angular injection:
 
 ```typescript
+import { Configuration } from '@geonetwork-ui/data-access/gn4'
+
+// ...
+
+@NgModule({
+  exports: [
+    // ...
+  ],
+  declarations: [
+    // ...
+  ],
+  imports: [
+    // ...
+  ],
+  providers: [
     {
-      provide: BASE_PATH,
-      useValue: '/geonetwork/srv/api',
+      provide: Configuration,
+      useValue: new Configuration({
+        basePath: '/geonetwork/srv/api'
+      }),
     },
+    // ...
+  ],
+})
+export class MyModule {
 ```
 
 This might need to be changed for further deployment, it is used in dev mode environment only for the moment.
+
+> Note: libs should **not** rely on the `BASE_PATH` token as it will not be available in Web Components! Use the `Configuration`
+> injectable class from the `@geonetwork-ui/data-access/gn4` module instead.

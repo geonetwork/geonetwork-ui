@@ -1,10 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
-import {
-  ApiModule,
-  BASE_PATH,
-  Configuration,
-} from '@geonetwork-ui/data-access/datafeeder'
+import { ApiModule, Configuration } from '@geonetwork-ui/data-access/datafeeder'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
@@ -16,8 +12,8 @@ import { UploadDataComponent } from './presentation/components/upload-data/uploa
 import {
   getLangFromBrowser,
   getLangFromHtml,
-  UtilI18nModule,
   TRANSLATE_DEFAULT_CONFIG,
+  UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UploadDataPageComponent } from './presentation/pages/upload-data-page/upload-data.page'
@@ -45,6 +41,7 @@ import { DATAFEEDER_STATE_KEY, reducer } from './store/datafeeder.reducer'
 export function apiConfigurationFactory() {
   return new Configuration({
     withCredentials: true,
+    basePath: environment.apiUrl,
   })
 }
 
@@ -84,12 +81,6 @@ export function apiConfigurationFactory() {
       [DATAFEEDER_STATE_KEY]: reducer,
     }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-  ],
-  providers: [
-    {
-      provide: BASE_PATH,
-      useFactory: () => environment.apiUrl,
-    },
   ],
   bootstrap: [AppComponent],
 })
