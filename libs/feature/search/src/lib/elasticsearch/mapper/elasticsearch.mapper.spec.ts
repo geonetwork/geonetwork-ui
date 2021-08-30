@@ -28,7 +28,6 @@ describe('ElasticsearchMapper', () => {
 
   describe('#toRecords', () => {
     it('Output records', () => {
-      const hit = hitsOnly.hits.hits[0]
       const summary = service.toRecords(hitsOnly)
       expect(summary).toEqual([
         {
@@ -36,9 +35,9 @@ describe('ElasticsearchMapper', () => {
           downloadable: false,
           id: '12456',
           logoUrl:
-            '/geonetwork/images/logos/e6826118-7280-4638-b1f9-d898e9efe281.png',
+            'http://localhost/geonetwork/images/logos/e6826118-7280-4638-b1f9-d898e9efe281.png',
           metadataUrl: 'url',
-          thumbnailUrl: 'data:image/png;base64, ',
+          thumbnailUrl: 'data:image/png;base64,',
           title: 'EEA reference grid for Germany (10km), May 2013',
           uuid: '20e9e1a1-83c1-4f13-89ef-c19767d6ee18f',
           viewable: false,
@@ -48,9 +47,9 @@ describe('ElasticsearchMapper', () => {
           downloadable: false,
           id: '12442',
           logoUrl:
-            '/geonetwork/images/logos/e6826118-7280-4638-b1f9-d898e9efe281.png',
+            'http://localhost/geonetwork/images/logos/e6826118-7280-4638-b1f9-d898e9efe281.png',
           metadataUrl: 'url',
-          thumbnailUrl: 'data:image/png;base64, ',
+          thumbnailUrl: 'data:image/png;base64,',
           title:
             'Urban Waste Water Treatment Directive, Sensitive areas - rivers reported under UWWTD data call 2015, Nov. 2017',
           uuid: '5b35f06e-8c6b-4907-b8f4-39541d170360',
@@ -69,19 +68,121 @@ describe('ElasticsearchMapper', () => {
     describe('overview', () => {
       it('when data', () => {
         const summary = service.toRecord(hit)
-        expect(summary.thumbnailUrl).toBe('data:image/png;base64, ')
+        expect(summary.thumbnailUrl).toBe('data:image/png;base64,')
       })
       it('when no data and url', () => {
         hit._source.overview = {
           url: 'imgUrl',
         }
         const summary = service.toRecord(hit)
-        expect(summary.thumbnailUrl).toBe('imgUrl')
+        expect(summary.thumbnailUrl).toBe('http://localhost/imgUrl')
       })
       it('when no data no url', () => {
         hit._source.overview = {}
         const summary = service.toRecord(hit)
-        expect(summary.thumbnailUrl).toBe('')
+        expect(summary.thumbnailUrl).toBe(null)
+      })
+    })
+
+    describe('links', () => {
+      describe('valid link with a protocol and name', () => {
+        beforeEach(() => {
+          hit._source.link = [
+            {
+              protocol: 'MY-PROTOCOL',
+              name: 'my data layer',
+              url: 'https://my.website/services/data/',
+            },
+          ]
+        })
+        it('parses as a valid link', () => {
+          const summary = service.toRecord(hit)
+          expect(summary.links).toEqual([
+            {
+              protocol: 'MY-PROTOCOL',
+              name: 'my data layer',
+              url: 'https://my.website/services/data/',
+            },
+          ])
+        })
+      })
+      describe('valid link pointing to a file', () => {
+        beforeEach(() => {
+          hit._source.link = [
+            {
+              description: 'Download this file!',
+              url: 'https://my.website/services/static/data.csv',
+            },
+          ]
+        })
+        it('parses as a valid link', () => {
+          const summary = service.toRecord(hit)
+          expect(summary.links).toEqual([
+            {
+              description: 'Download this file!',
+              url: 'https://my.website/services/static/data.csv',
+              name: 'data.csv',
+            },
+          ])
+        })
+      })
+      describe('invalid link (no url)', () => {
+        beforeEach(() => {
+          hit._source.link = [
+            {
+              description: 'Download this file!',
+              protocol: 'FILE',
+            },
+          ]
+        })
+        it('parses as an invalid link', () => {
+          const summary = service.toRecord(hit)
+          expect(summary.links).toEqual([
+            {
+              invalid: true,
+              reason: expect.stringContaining('URL'),
+            },
+          ])
+        })
+      })
+      describe('invalid link (invalid url)', () => {
+        beforeEach(() => {
+          hit._source.link = [
+            {
+              protocol: 'MY-PROTOCOL',
+              url: 'https://abcd:1234:5678/@',
+            },
+          ]
+        })
+        it('parses as an invalid link', () => {
+          const summary = service.toRecord(hit)
+          expect(summary.links).toEqual([
+            {
+              invalid: true,
+              reason: expect.stringContaining('URL'),
+            },
+          ])
+        })
+      })
+      describe('invalid link (url with unsupported protocol)', () => {
+        beforeEach(() => {
+          hit._source.link = [
+            {
+              description: 'Download this file!',
+              protocol: 'FILE',
+              url: 'data:image/png;base64,aaaaabbbbbccccc',
+            },
+          ]
+        })
+        it('parses as an invalid link', () => {
+          const summary = service.toRecord(hit)
+          expect(summary.links).toEqual([
+            {
+              invalid: true,
+              reason: expect.stringContaining('protocol'),
+            },
+          ])
+        })
       })
     })
 
@@ -95,45 +196,7 @@ describe('ElasticsearchMapper', () => {
           createdOn: new Date('2021-03-31T12:17:38.105Z'),
           dataCreatedOn: new Date('2012-01-01T00:00:00.000Z'),
           id: '10420',
-          dataLinks: [
-            {
-              description: 'Lieu de surveillance (point)',
-              name: 'surval_parametre_point',
-              protocol: 'OGC:WMS',
-              url: 'https://www.ifremer.fr/services/wms/surveillance_littorale',
-            },
-            {
-              description: 'Lieu de surveillance (point)',
-              name: 'surval_parametre_point',
-              protocol: 'OGC:WFS',
-              url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
-            },
-            {
-              description: "Extraction des données d'observation",
-              name: 'r:survalextraction',
-              protocol: 'OGC:WPS',
-              url: 'https://www.ifremer.fr/services/wps/surval',
-            },
-            {
-              description: 'Lieu de surveillance (polygone)',
-              name: 'surval_parametre_polygone',
-              protocol: 'OGC:WMS',
-              url: 'https://www.ifremer.fr/services/wms/surveillance_littorale',
-            },
-            {
-              description: 'Lieu de surveillance (polygone)',
-              name: 'surval_parametre_polygone',
-              protocol: 'OGC:WFS',
-              url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
-            },
-            {
-              description: "Extraction des données d'observation",
-              name: 'r:survalextraction',
-              protocol: 'OGC:WPS',
-              url: 'https://www.ifremer.fr/services/wps/surval',
-            },
-          ],
-          otherLinks: [
+          links: [
             {
               description: '',
               name: 'La base de données Quadrige',
@@ -154,6 +217,42 @@ describe('ElasticsearchMapper', () => {
               url: 'http://archimer.ifremer.fr/doc/00409/52016/',
             },
             {
+              description: 'Lieu de surveillance (point)',
+              name: 'surval_parametre_point',
+              protocol: 'OGC:WMS',
+              url: 'https://www.ifremer.fr/services/wms/surveillance_littorale',
+            },
+            {
+              description: 'Lieu de surveillance (point)',
+              name: 'surval_parametre_point',
+              protocol: 'OGC:WFS',
+              url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
+            },
+            {
+              description: "Extraction des données d'observation",
+              name: 'r:survalextraction',
+              protocol: 'OGC:WPS',
+              url: 'https://www.ifremer.fr/services/wps/surval',
+            },
+            {
+              description: 'Lieu de surveillance (polygone)',
+              name: 'surval_parametre_polygone',
+              protocol: 'OGC:WMS',
+              url: 'https://www.ifremer.fr/services/wms/surveillance_littorale',
+            },
+            {
+              description: 'Lieu de surveillance (polygone)',
+              name: 'surval_parametre_polygone',
+              protocol: 'OGC:WFS',
+              url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
+            },
+            {
+              description: "Extraction des données d'observation",
+              name: 'r:survalextraction',
+              protocol: 'OGC:WPS',
+              url: 'https://www.ifremer.fr/services/wps/surval',
+            },
+            {
               description: 'DOI du jeu de données',
               name: 'DOI du jeu de données',
               protocol: 'WWW:LINK-1.0-http--metadata-URL',
@@ -161,7 +260,7 @@ describe('ElasticsearchMapper', () => {
             },
           ],
           logoUrl:
-            '/geonetwork/images/logos/cea9bf9f-329a-4583-9092-2dfc7efdcce2.png',
+            'http://localhost/geonetwork/images/logos/cea9bf9f-329a-4583-9092-2dfc7efdcce2.png',
           mainLanguage: 'fre',
           metadataUrl: 'url',
           thumbnailUrl:

@@ -70,7 +70,7 @@ export const RECORDS_FULL_FIXTURE = [
     createdOn: new Date('2021-03-31T12:17:38.105Z'),
     dataCreatedOn: new Date('2012-01-01T00:00:00.000Z'),
     id: '10420',
-    dataLinks: [
+    links: [
       {
         description: 'Lieu de surveillance (point)',
         name: 'surval_parametre_point',
@@ -107,8 +107,6 @@ export const RECORDS_FULL_FIXTURE = [
         protocol: 'OGC:WPS',
         url: 'https://www.ifremer.fr/services/wps/surval',
       },
-    ],
-    otherLinks: [
       {
         description: '',
         name: 'La base de données Quadrige',
