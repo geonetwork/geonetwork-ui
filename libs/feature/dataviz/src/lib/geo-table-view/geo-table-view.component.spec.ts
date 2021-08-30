@@ -150,7 +150,7 @@ describe('GeoTableViewComponent', () => {
   })
 
   describe('#onMapFeatureSelect', () => {
-    let tableEntry, features
+    let features
     beforeEach(() => {
       features = [
         component['vectorSource']
