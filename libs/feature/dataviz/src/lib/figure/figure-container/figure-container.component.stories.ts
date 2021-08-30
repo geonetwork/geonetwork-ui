@@ -20,7 +20,10 @@ export default {
       imports: [UiLayoutModule, BrowserAnimationsModule],
     }),
     componentWrapperDecorator(
-      (story) => `<div style="max-width: 700px">${story}</div>`
+      (story) => `
+<div class="border border-gray-300 p-2" style="width: 300px; resize: both; overflow: auto">
+  ${story}
+</div>`
     ),
   ],
 } as Meta<FigureContainerComponent>
