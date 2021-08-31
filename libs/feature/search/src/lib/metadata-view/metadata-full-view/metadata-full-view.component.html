@@ -10,5 +10,7 @@
   *ngIf="(isPresent$ | async) === true"
   [metadata]="metadata$ | async"
   [incomplete]="isIncomplete$ | async"
+  [dataLinks]="mdDataLinks$ | async"
+  [otherLinks]="mdOtherLinks$ | async"
 >
 </gn-ui-metadata-page>

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataLink, MetadataRecord } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-metadata-page',
@@ -9,6 +9,8 @@ import { MetadataRecord } from '@geonetwork-ui/util/shared'
 })
 export class MetadataPageComponent {
   @Input() metadata: MetadataRecord
+  @Input() dataLinks: MetadataLink[] = []
+  @Input() otherLinks: MetadataLink[] = []
   @Input() incomplete: boolean
 
   fieldReady(propName: string) {

@@ -21,15 +21,15 @@
 <p class="mb-4">
   <gn-ui-content-ghost
     ghostClass="h-24"
-    [showContent]="fieldReady('otherLinks')"
+    [showContent]="!incomplete || !!otherLinks"
   >
     <ul>
-      <li *ngFor="let link of metadata.otherLinks" [title]="link.description">
+      <li *ngFor="let link of otherLinks" [title]="link.name">
         <a
           href="{{ link.url }}"
           class="my-2 p-2 border border-gray-400 rounded block"
         >
-          {{ link.name }}
+          {{ link.description || link.name }}
           <br />
           <span class="text-sm text-gray-500 mr-3">
             {{ link.url }}
@@ -46,15 +46,15 @@
 <p class="mb-4">
   <gn-ui-content-ghost
     ghostClass="h-24"
-    [showContent]="fieldReady('dataLinks')"
+    [showContent]="!incomplete || !!dataLinks"
   >
     <ul>
-      <li *ngFor="let link of metadata.dataLinks" [title]="link.description">
+      <li *ngFor="let link of dataLinks" [title]="link.name">
         <a
           href="{{ link.url }}"
           class="my-2 p-2 border border-gray-400 rounded block"
         >
-          {{ link.name }}
+          {{ link.description || link.name }}
           <br />
           <span class="text-sm text-gray-500 mr-3">
             {{ link.url }}
