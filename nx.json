@@ -101,6 +101,9 @@
     "ui-widgets": {
       "tags": []
     },
+    "util-data-fetcher": {
+      "tags": []
+    },
     "util-i18n": {
       "tags": []
     },
