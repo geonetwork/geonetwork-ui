@@ -96,6 +96,7 @@
     "@nrwl/eslint-plugin-nx": "12.6.5",
     "@nrwl/jest": "12.6.5",
     "@nrwl/linter": "12.6.5",
+    "@nrwl/node": "12.8.0",
     "@nrwl/storybook": "^12.6.5",
     "@nrwl/tao": "12.6.5",
     "@nrwl/workspace": "12.6.5",
