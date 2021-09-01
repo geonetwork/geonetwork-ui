@@ -1,6 +1,7 @@
 module.exports = {
   displayName: 'util-data-fetcher',
   preset: '../../../jest.preset.js',
+  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
