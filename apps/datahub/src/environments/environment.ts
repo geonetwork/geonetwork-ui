@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_BASE_PATH: '/geonetwork/srv/api',
+  API_BASE_PATH: window['env']['apiUrl'],
 }
 
 /*
