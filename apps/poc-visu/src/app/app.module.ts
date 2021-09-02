@@ -9,6 +9,7 @@ import { MatTableModule } from '@angular/material/table'
 import { MatTabsModule } from '@angular/material/tabs'
 import { BrowserModule } from '@angular/platform-browser'
 import { I18nModule, TRANSLATE_GEONETWORK_CONFIG } from '@lib/common'
+import { BASE_PATH } from '@lib/datafeeder-api'
 import { LibSearchModule } from '@lib/search'
 import { UiModule } from '@lib/ui'
 import { EffectsModule } from '@ngrx/effects'
@@ -54,7 +55,12 @@ import { ResourcesComponent } from './components/resources/resources.component'
     EffectsModule.forRoot(),
     TranslateModule.forRoot(TRANSLATE_GEONETWORK_CONFIG),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: BASE_PATH,
+      useValue: 'https://gn4.georchestra.org/geonetwork/srv/api',
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
