@@ -45,13 +45,11 @@ describe('MetadataFullViewComponent', () => {
       facade.isPresent$.next(true)
       fixture.detectChanges()
     })
-    it('does not show the empty message', () => {
-      expect(fixture.debugElement.query(By.css('.empty'))).toBeFalsy()
-    })
-    it('shows the metadata', () => {
-      expect(
-        fixture.debugElement.query(By.directive(MetadataPageComponent))
-      ).toBeTruthy()
+    it('shows the full metadata', () => {
+      const dumb = fixture.debugElement.query(
+        By.directive(MetadataPageComponent)
+      ).componentInstance
+      expect(dumb.metadata).toHaveProperty('abstract')
     })
   })
   describe('if metadata not present', () => {
@@ -59,13 +57,12 @@ describe('MetadataFullViewComponent', () => {
       facade.isPresent$.next(false)
       fixture.detectChanges()
     })
-    it('shows an empty message', () => {
-      expect(fixture.debugElement.query(By.css('.empty'))).toBeTruthy()
-    })
-    it('does not show the metadata', () => {
-      expect(
-        fixture.debugElement.query(By.directive(MetadataPageComponent))
-      ).toBeFalsy()
+    it('shows a placeholder', () => {
+      const dumb = fixture.debugElement.query(
+        By.directive(MetadataPageComponent)
+      ).componentInstance
+      expect(dumb.metadata).not.toHaveProperty('abstract')
+      expect(dumb.incomplete).toBeTruthy()
     })
   })
 })
