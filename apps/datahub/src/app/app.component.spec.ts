@@ -8,6 +8,7 @@ import { of } from 'rxjs'
 class MdViewFacadeMock {
   close = jest.fn()
   isPresent$ = of()
+  isLoading$ = of()
   metadata$ = of()
 }
 

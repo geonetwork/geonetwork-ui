@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { MainSearchComponent } from './main-search.component'
-import { MdViewFacade } from '@geonetwork-ui/feature/search'
+import { RouterFacade } from '@geonetwork-ui/feature/search'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 
-class MdViewFacadeMock {
-  setIncompleteMetadata = jest.fn()
+class RouterFacadeMock {
+  goToMetadata = jest.fn()
 }
 
 describe('MainSearchComponent', () => {
@@ -18,8 +18,8 @@ describe('MainSearchComponent', () => {
       imports: [UiLayoutModule],
       providers: [
         {
-          provide: MdViewFacade,
-          useClass: MdViewFacadeMock,
+          provide: RouterFacade,
+          useClass: RouterFacadeMock,
         },
       ],
     }).compileComponents()
