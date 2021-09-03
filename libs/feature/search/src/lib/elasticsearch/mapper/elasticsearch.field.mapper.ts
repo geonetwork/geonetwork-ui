@@ -1,172 +1,107 @@
 import { Injectable } from '@angular/core'
+import { MetadataRecord, MetadataUrlService } from '@geonetwork-ui/util/shared'
 import {
-  MetadataUrlService,
-  MetadataRecord,
-  MetadataLink,
-} from '@geonetwork-ui/util/shared'
+  getFirstValue,
+  mapLinks,
+  selectFallback,
+  selectFallbackFields,
+  selectField,
+  selectTranslatedField,
+  SourceWithUnknownProps,
+  toDate,
+} from './atomic-operations'
 
-type ESResponseSource = any
+type ESResponseSource = SourceWithUnknownProps
 
 type EsFieldMapperFn = (
-  output: MetadataRecord,
+  output: Partial<MetadataRecord>,
   source: ESResponseSource
-) => MetadataRecord
+) => Partial<MetadataRecord>
+
 @Injectable({
   providedIn: 'root',
 })
 export class ElasticsearchFieldMapper {
   constructor(private metadataUrlService: MetadataUrlService) {}
 
-  fields: Record<string, EsFieldMapperFn> = {
-    uuid: (output: MetadataRecord, source: ESResponseSource) => {
-      this.mapGenericField(output, source, 'uuid')
-      output.metadataUrl = this.metadataUrlService.getUrl(source.uuid)
-      return output
+  protected fields: Record<string, EsFieldMapperFn> = {
+    uuid: (output, source) => {
+      const uuid = selectField<string>(source, 'uuid')
+      const metadataUrl = this.metadataUrlService.getUrl(uuid)
+      return { ...output, uuid, metadataUrl }
     },
-    resourceTitleObject: (output: MetadataRecord, source: ESResponseSource) =>
-      this.mapTranslatedField(
-        output,
-        source,
-        'resourceTitleObject',
-        'title',
+    resourceTitleObject: (output, source) => ({
+      ...output,
+      title: selectFallback(
+        selectTranslatedField(source, 'resourceTitleObject'),
         'no title'
       ),
-    resourceAbstractObject: (
-      output: MetadataRecord,
-      source: ESResponseSource
-    ) =>
-      this.mapTranslatedField(
-        output,
-        source,
-        'resourceAbstractObject',
-        'abstract',
-        'no abstract'
+    }),
+    resourceAbstractObject: (output, source) => ({
+      ...output,
+      abstract: selectFallback(
+        selectTranslatedField(source, 'resourceAbstractObject'),
+        'no title'
       ),
-    overview: (output: MetadataRecord, source: ESResponseSource) => {
-      const overview = this.getFirstValue(source.overview)
-      output.thumbnailUrl = overview?.data || overview?.url || ''
-      return output
-    },
-    codelist_status_text: (
-      output: MetadataRecord,
-      source: ESResponseSource
-    ) => {
-      output.updateFrequency = this.getFirstValue(source.codelist_status_text)
-      return output
-    },
-    logo: (output: MetadataRecord, source: ESResponseSource) => {
-      output.logoUrl = `/geonetwork${source.logo}`
-      return output
-    },
-    resourceDate: (output: MetadataRecord, source: ESResponseSource) => {
-      return output
-    },
-    resourceIdentifier: (output: MetadataRecord, source: ESResponseSource) => {
-      return output
-    },
-    resourceLanguage: (output: MetadataRecord, source: ESResponseSource) => {
-      return output
-    },
-    resourceTemporalDateRange: (
-      output: MetadataRecord,
-      source: ESResponseSource
-    ) => {
-      return output
-    },
-    resourceTemporalExtentDateRange: (
-      output: MetadataRecord,
-      source: ESResponseSource
-    ) => {
-      return output
-    },
-    resourceType: (output: MetadataRecord, source: ESResponseSource) => {
-      return output
-    },
-    creationDateForResource: (
-      output: MetadataRecord,
-      source: ESResponseSource
-    ) => {
-      this.mapDateField(
-        output,
-        source,
-        'creationDateForResource',
-        'dataCreatedOn'
-      )
-      return output
-    },
-    createDate: (output: MetadataRecord, source: ESResponseSource) => {
-      this.mapDateField(output, source, 'createDate', 'createdOn')
-      return output
-    },
-    changeDate: (output: MetadataRecord, source: ESResponseSource) => {
-      this.mapDateField(output, source, 'changeDate', 'updatedOn')
-      return output
-    },
-    link: (output: MetadataRecord, source: ESResponseSource) => {
-      this.mapLinks(output, source, true, 'dataLinks')
-      this.mapLinks(output, source, false, 'otherLinks')
-      return output
+    }),
+    overview: (output, source) => ({
+      ...output,
+      thumbnailUrl: selectFallback(
+        selectFallbackFields(
+          getFirstValue(selectField(source, 'overview')),
+          'data',
+          'url'
+        ),
+        ''
+      ),
+    }),
+    codelist_status_text: (output, source) => ({
+      ...output,
+      updateFrequency: getFirstValue(
+        selectField(source, 'codelist_status_text')
+      ),
+    }),
+    logo: (output, source) => ({
+      ...output,
+      logoUrl: `/geonetwork${selectField(source, 'logo')}`,
+    }),
+    resourceDate: (output) => output,
+    resourceIdentifier: (output) => output,
+    resourceLanguage: (output) => output,
+    resourceTemporalDateRange: (output) => output,
+    resourceTemporalExtentDateRange: (output) => output,
+    resourceType: (output) => output,
+    creationDateForResource: (output, source) => ({
+      ...output,
+      dataCreatedOn: toDate(
+        getFirstValue(selectField<string>(source, 'creationDateForResource'))
+      ),
+    }),
+    createDate: (output, source) => ({
+      ...output,
+      createdOn: toDate(selectField<string>(source, 'createDate')),
+    }),
+    changeDate: (output, source) => ({
+      ...output,
+      updatedOn: toDate(selectField<string>(source, 'changeDate')),
+    }),
+    link: (output, source) => {
+      const links = selectField<SourceWithUnknownProps[]>(source, 'link')
+      const dataProtocols = ['OGC', 'FILE']
+      const filterData = (link) =>
+        dataProtocols.some((p) => link.protocol.includes(p))
+      const dataLinks = mapLinks(links, filterData)
+      const otherLinks = mapLinks(links, (link) => !filterData(link))
+      return { ...output, dataLinks, otherLinks }
     },
   }
 
-  mapGenericField(
-    output: MetadataRecord,
-    source: ESResponseSource,
-    fieldName: string,
-    outputPropName?: string
-  ) {
-    outputPropName = outputPropName || fieldName
-    output[outputPropName] = source[fieldName]
-    return output
-  }
+  private genericField = (output, source, fieldName: string) => ({
+    ...output,
+    [fieldName]: selectField(source, fieldName),
+  })
 
-  mapTranslatedField(
-    output: MetadataRecord,
-    source: ESResponseSource,
-    fieldName: string,
-    outputPropName?: string,
-    defaultValue?: string
-  ) {
-    outputPropName = outputPropName || fieldName
-    output[outputPropName] = source[fieldName]?.default || defaultValue
-    return output
-  }
-
-  mapDateField(
-    output: MetadataRecord,
-    source: ESResponseSource,
-    fieldName: string,
-    outputPropName?: string
-  ) {
-    outputPropName = outputPropName || fieldName
-    output[outputPropName] = new Date(this.getFirstValue(source[fieldName]))
-    return output
-  }
-
-  mapLinks(
-    output: MetadataRecord,
-    source: ESResponseSource,
-    linksToData: boolean,
-    outputPropName?: string
-  ) {
-    const dataProtocols = ['OGC', 'FILE']
-    output[outputPropName] = source.link
-      .map((link) => ({
-        protocol: link.protocol,
-        url: link.url,
-        description: link.description,
-        name: link.name,
-      }))
-      .filter(
-        (link: MetadataLink) =>
-          ('protocol' in link &&
-            dataProtocols.some((p) => link.protocol.includes(p))) ===
-          linksToData
-      )
-    return output
-  }
-
-  private getFirstValue(field) {
-    return Array.isArray(field) ? field[0] : field
+  getMappingFn(fieldName: string) {
+    return fieldName in this.fields ? this.fields[fieldName] : this.genericField
   }
 }

@@ -8,29 +8,21 @@ import { ElasticsearchFieldMapper } from './elasticsearch.field.mapper'
 export class ElasticsearchMapper {
   constructor(private fieldMapper: ElasticsearchFieldMapper) {}
 
-  toRecords(response: any): MetadataRecord[] {
+  toRecords(response): MetadataRecord[] {
     return response.hits.hits.map((hit) => this.toRecord(hit))
   }
 
-  toRecord(hit: any) {
+  toRecord(hit) {
     const { _source } = hit
     const record: Partial<MetadataRecord> = {
-      uuid: hit._id,
       viewable: hit.view,
       downloadable: hit.download,
     }
 
-    Object.keys(_source).forEach((fieldName) => {
-      const mappingFn = (
-        this.getMappingFn(fieldName) || this.fieldMapper.mapGenericField
-      ).bind(this.fieldMapper)
-      mappingFn(record as MetadataRecord, _source, fieldName)
-    })
-
-    return record as MetadataRecord
-  }
-
-  private getMappingFn(fieldName: string) {
-    return this.fieldMapper.fields[fieldName]
+    return Object.keys(_source).reduce(
+      (prev, fieldName) =>
+        this.fieldMapper.getMappingFn(fieldName)(prev, _source, fieldName),
+      record
+    ) as MetadataRecord
   }
 }
