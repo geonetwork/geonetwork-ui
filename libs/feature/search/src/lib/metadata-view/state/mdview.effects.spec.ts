@@ -66,20 +66,6 @@ describe('StationsEffects', () => {
     effects = TestBed.inject(MdViewEffects)
   })
 
-  describe('loadFromIncomplete$', () => {
-    it('should work', () => {
-      actions = hot('-a-|', {
-        a: MdViewActions.setIncompleteMetadata({ incomplete }),
-      })
-
-      const expected = hot('-a-|', {
-        a: MdViewActions.loadFullMetadata({ uuid: incomplete.uuid }),
-      })
-
-      expect(effects.loadFromIncomplete$).toBeObservable(expected)
-    })
-  })
-
   describe('loadFullRecord$', () => {
     describe('when api sucess', () => {
       it('dispatch loadFullSuccess', () => {

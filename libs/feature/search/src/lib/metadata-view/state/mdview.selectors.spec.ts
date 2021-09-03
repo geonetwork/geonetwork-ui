@@ -55,6 +55,19 @@ describe('MdView Selectors', () => {
         expect(results).toBe(null)
       })
     })
+    describe('getMetadataIsLoading', () => {
+      it('returns false if not loading', () => {
+        const results = MdViewSelectors.getMetadataIsLoading.projector(state)
+        expect(results).toBe(false)
+      })
+      it('returns true if loading', () => {
+        const results = MdViewSelectors.getMetadataIsLoading.projector({
+          ...state,
+          loadingFull: true,
+        })
+        expect(results).toBe(true)
+      })
+    })
     describe('getMetadataError', () => {
       it('returns error if present', () => {
         const results = MdViewSelectors.getMetadataError.projector({
