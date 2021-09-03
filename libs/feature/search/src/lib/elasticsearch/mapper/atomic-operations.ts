@@ -17,7 +17,7 @@ export const selectFallbackFields = <T>(
     null
   )
 
-export const selectFallback = (field, fallback) =>
+export const selectFallback = <T, U>(field: T, fallback: U): T | U =>
   field === null ? fallback : field
 
 export const selectTranslatedField = <T>(
