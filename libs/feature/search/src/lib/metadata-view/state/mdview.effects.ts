@@ -5,7 +5,7 @@ import { ElasticsearchMapper } from '../../elasticsearch/mapper'
 import { EsSearchResponse } from '@geonetwork-ui/util/shared'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { of } from 'rxjs'
-import { catchError, map, switchMap } from 'rxjs/operators'
+import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators'
 import * as MdViewActions from './mdview.actions'
 
 @Injectable()
@@ -16,15 +16,6 @@ export class MdViewEffects {
     private esService: ElasticsearchService,
     private esMapper: ElasticsearchMapper
   ) {}
-
-  loadFromIncomplete$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(MdViewActions.setIncompleteMetadata),
-      map(({ incomplete }) =>
-        MdViewActions.loadFullMetadata({ uuid: incomplete.uuid })
-      )
-    )
-  )
 
   loadFull$ = createEffect(() =>
     this.actions$.pipe(

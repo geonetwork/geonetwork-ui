@@ -23,19 +23,18 @@
           no-underline
           hover:text-primary-lighter hover:underline
         "
-        href
-        (click)="backToSearch($event)"
+        routerLink="search"
         >Data Hub</a
       >
-      > {{ $breadcrumb | async }}
+      > {{ breadcrumb$ | async }}
     </div>
   </div>
   <div class="container-lg mx-auto py-4">
     <gn-ui-main-search
-      *ngIf="($isRecordOpened | async) === false"
+      *ngIf="(isRecordOpened$ | async) === false"
     ></gn-ui-main-search>
     <gn-ui-metadata-full-view
-      *ngIf="$isRecordOpened | async"
+      *ngIf="isRecordOpened$ | async"
     ></gn-ui-metadata-full-view>
   </div>
 </main>

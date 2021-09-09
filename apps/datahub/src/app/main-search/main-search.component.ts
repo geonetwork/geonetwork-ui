@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { RouterFacade } from '@geonetwork-ui/feature/search'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
-import { MdViewFacade } from '@geonetwork-ui/feature/search'
 
 @Component({
   selector: 'gn-ui-main-search',
@@ -9,9 +9,9 @@ import { MdViewFacade } from '@geonetwork-ui/feature/search'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainSearchComponent {
-  constructor(private mdViewFacade: MdViewFacade) {}
+  constructor(private searchRouter: RouterFacade) {}
 
   onMetadataSelection(metadata: MetadataRecord): void {
-    this.mdViewFacade.setIncompleteMetadata(metadata)
+    this.searchRouter.goToMetadata(metadata)
   }
 }

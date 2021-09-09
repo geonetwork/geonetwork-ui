@@ -19,6 +19,7 @@ export class MdViewFacade {
     select(MdViewSelectors.getMetadataUuid),
     map((uuid) => !!uuid)
   )
+  isLoading$ = this.store.pipe(select(MdViewSelectors.getMetadataIsLoading))
   metadata$ = this.store.pipe(
     select(MdViewSelectors.getMetadata),
     filter((md) => !!md)
@@ -35,12 +36,17 @@ export class MdViewFacade {
   constructor(private store: Store) {}
 
   /**
-   * This will load an incomplete record (e.g. from a search result) in the state
-   * The full record will be automatically loaded subsequently
-   * @param {MetadataRecord} incomplete
+   * This will show an incomplete record (e.g. from a search result) as a preview
+   * Note: the full record will not be loaded automatically; use the `loadFull` method for that
    */
   setIncompleteMetadata(incomplete: MetadataRecord) {
     this.store.dispatch(MdViewActions.setIncompleteMetadata({ incomplete }))
+  }
+  /**
+   * This will trigger the load of a full metadata record
+   */
+  loadFull(uuid: string) {
+    this.store.dispatch(MdViewActions.loadFullMetadata({ uuid }))
   }
   close() {
     this.store.dispatch(MdViewActions.close())

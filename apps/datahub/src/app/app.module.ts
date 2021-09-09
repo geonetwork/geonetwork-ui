@@ -5,6 +5,7 @@ import { BASE_PATH } from '@geonetwork-ui/data-access/gn4'
 import {
   FeatureSearchModule,
   MdViewModule,
+  SearchRouterModule,
 } from '@geonetwork-ui/feature/search'
 import {
   TRANSLATE_GEONETWORK_CONFIG,
@@ -20,7 +21,7 @@ import { environment } from '../environments/environment'
 import { AppComponent } from './app.component'
 import { MainSearchComponent } from './main-search/main-search.component'
 
-export const metaReducers: MetaReducer<any>[] = !environment.production
+export const metaReducers: MetaReducer[] = !environment.production
   ? [storeFreeze]
   : []
 
@@ -35,6 +36,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     UtilI18nModule,
     TranslateModule.forRoot(TRANSLATE_GEONETWORK_CONFIG),
     FeatureSearchModule,
+    SearchRouterModule,
     MdViewModule,
   ],
   providers: [{ provide: BASE_PATH, useValue: environment.API_BASE_PATH }],

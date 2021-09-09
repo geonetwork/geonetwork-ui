@@ -17,6 +17,10 @@ export const getMetadataIsIncomplete = createSelector(
   getMdViewState,
   (state: MdViewState) => (state.metadata ? state.loadingFull : null)
 )
+export const getMetadataIsLoading = createSelector(
+  getMdViewState,
+  (state: MdViewState) => state.loadingFull
+)
 export const getMetadataError = createSelector(
   getMdViewState,
   (state: MdViewState) => state.error

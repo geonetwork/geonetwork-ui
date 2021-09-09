@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common'
 import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http'
-import { NgModule } from '@angular/core'
 import { ApiModule } from '@geonetwork-ui/data-access/gn4'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { EffectsModule } from '@ngrx/effects'
@@ -18,6 +17,7 @@ import { initialState, reducer, SEARCH_FEATURE_KEY } from './state/reducer'
 import { ResultsHitsContainerComponent } from './results-hits-number/results-hits.container.component'
 import { SearchStateContainerDirective } from './state/container/search-state.container.directive'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { NgModule } from '@angular/core'
 
 @NgModule({
   declarations: [
