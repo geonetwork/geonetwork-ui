@@ -1,0 +1,14 @@
+<div class="mb-2">
+  <h3 class="text-lg text-gray-900">
+    {{ links[0].title }}
+  </h3>
+</div>
+<div class="pb-4" *ngFor="let link of links">
+  <gn-ui-download-entry
+    [format]="link.format"
+    [resourceName]="link.resourceName"
+    [title]="link.title"
+    [description]="link.description"
+    [url]="link.url"
+  ></gn-ui-download-entry>
+</div>

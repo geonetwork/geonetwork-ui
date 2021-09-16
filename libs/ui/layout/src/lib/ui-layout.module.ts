@@ -6,6 +6,7 @@ import { MatTableModule } from '@angular/material/table'
 import { TableComponent } from './table/table.component'
 import { FigureComponent } from './figure/figure.component'
 import { DownloadEntryComponent } from './download-entry/download-entry.component'
+import { DownloadListComponent } from './download-list/download-list.component'
 
 @NgModule({
   imports: [CommonModule, MatTableModule, MatSortModule, MatIconModule],
@@ -15,6 +16,7 @@ import { DownloadEntryComponent } from './download-entry/download-entry.componen
     ContentGhostComponent,
     FigureComponent,
     DownloadEntryComponent,
+    DownloadListComponent,
   ],
   exports: [
     TableComponent,
@@ -22,6 +24,7 @@ import { DownloadEntryComponent } from './download-entry/download-entry.componen
     ContentGhostComponent,
     FigureComponent,
     DownloadEntryComponent,
+    DownloadListComponent,
   ],
 })
 export class UiLayoutModule {}
