@@ -7,6 +7,7 @@ import { TableComponent } from './table/table.component'
 import { MetadataPageComponent } from './metadata-page/metadata-page.component'
 import { ContentGhostComponent } from './content-ghost/content-ghost.component'
 import { FigureComponent } from './figure/figure.component'
+import { DownloadEntryComponent } from './download-entry/download-entry.component'
 
 @NgModule({
   imports: [CommonModule, MatTableModule, MatSortModule, MatIconModule],
@@ -15,12 +16,14 @@ import { FigureComponent } from './figure/figure.component'
     MetadataPageComponent,
     ContentGhostComponent,
     FigureComponent,
+    DownloadEntryComponent,
   ],
   exports: [
     TableComponent,
     MetadataPageComponent,
     ContentGhostComponent,
     FigureComponent,
+    DownloadEntryComponent,
   ],
 })
 export class UiLayoutModule {}
