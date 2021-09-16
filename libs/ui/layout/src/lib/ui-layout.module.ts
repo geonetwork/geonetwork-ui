@@ -5,10 +5,23 @@ import { MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
 import { TableComponent } from './table/table.component'
 import { FigureComponent } from './figure/figure.component'
+import { DownloadEntryComponent } from './download-entry/download-entry.component'
 
 @NgModule({
   imports: [CommonModule, MatTableModule, MatSortModule, MatIconModule],
-  declarations: [TableComponent, FigureComponent],
-  exports: [TableComponent, FigureComponent],
+  declarations: [
+    TableComponent,
+    MetadataPageComponent,
+    ContentGhostComponent,
+    FigureComponent,
+    DownloadEntryComponent,
+  ],
+  exports: [
+    TableComponent,
+    MetadataPageComponent,
+    ContentGhostComponent,
+    FigureComponent,
+    DownloadEntryComponent,
+  ],
 })
 export class UiLayoutModule {}
