@@ -33,15 +33,45 @@ export const getFirstValue = (field) =>
 export const getAsArray = (field) =>
   Array.isArray(field) ? field : field !== null ? [field] : []
 
-export const mapLinks = (
-  sourceLinks: SourceWithUnknownProps[],
-  filter: (MetadataLink) => boolean
-): MetadataLink[] =>
-  getAsArray(sourceLinks)
-    .map((link) => ({
-      protocol: selectFallback(selectField<string>(link, 'protocol'), ''),
-      url: selectFallback(selectField<string>(link, 'url'), ''),
-      description: selectFallback(selectField<string>(link, 'description'), ''),
-      name: selectFallback(selectField<string>(link, 'name'), ''),
-    }))
-    .filter(filter)
+export const getAsUrl = (field) => {
+  // an empty string is not a valid url, even though it could be considered an empty path to the root
+  if (field === '' || field === null) return null
+  try {
+    return new URL(field, window.location.toString()).toString()
+  } catch {
+    return null
+  }
+}
+
+export const mapLink = (sourceLink: SourceWithUnknownProps): MetadataLink => {
+  const url = getAsUrl(selectField<string>(sourceLink, 'url'))
+  // no url: fail early
+  if (url === null) {
+    return { invalid: true, reason: 'The link does not contain a valid URL' }
+  }
+
+  const protocolMatch = /^(https?|ftp):/.test(url)
+  if (!protocolMatch) {
+    return {
+      invalid: true,
+      reason:
+        'The URL for the link is in an unsupported protocol; supported protocols are HTTP, HTTPS and FTP',
+    }
+  }
+
+  const sourceName = selectField<string>(sourceLink, 'name')
+  const sourceNameEmpty = sourceName === null || sourceName === ''
+  const filenameRegex = /\/?([^/]+)$/
+  const name =
+    sourceNameEmpty && filenameRegex.test(url)
+      ? url.match(filenameRegex)[1]
+      : sourceName
+  const description = selectField<string>(sourceLink, 'description')
+  const protocol = selectField<string>(sourceLink, 'protocol')
+  return {
+    url,
+    ...(name !== null && { name }),
+    ...(description !== null && { description }),
+    ...(protocol !== null && { protocol }),
+  }
+}

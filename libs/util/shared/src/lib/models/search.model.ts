@@ -18,20 +18,21 @@ export interface MetadataRecord {
   downloadable?: boolean
   viewable?: boolean
   updateFrequency?: string
-  dataLinks?: MetadataLink[]
-  otherLinks?: MetadataLink[]
+  links?: MetadataLink[]
   updatedOn?: Date
   createdOn?: Date
   dataUpdatedOn?: Date
   dataCreatedOn?: Date
 }
 
-export interface MetadataLink {
-  protocol?: string
-  name: string
-  description?: string
+interface MetadataLinkValid {
   url: string
+  // either a file name, a layer name or any other resource identifier
+  name?: string
+  protocol?: string
+  description?: string
 }
+export type MetadataLink = MetadataLinkValid | { invalid: true; reason: string }
 
 export interface RecordMetric {
   value: string

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core'
 import { MetadataRecord, MetadataUrlService } from '@geonetwork-ui/util/shared'
 import {
+  getAsArray,
+  getAsUrl,
   getFirstValue,
-  mapLinks,
+  mapLink,
   selectFallback,
   selectFallbackFields,
   selectField,
@@ -46,13 +48,15 @@ export class ElasticsearchFieldMapper {
     }),
     overview: (output, source) => ({
       ...output,
-      thumbnailUrl: selectFallback(
-        selectFallbackFields(
-          getFirstValue(selectField(source, 'overview')),
-          'data',
-          'url'
-        ),
-        ''
+      thumbnailUrl: getAsUrl(
+        selectFallback(
+          selectFallbackFields(
+            getFirstValue(selectField(source, 'overview')),
+            'data',
+            'url'
+          ),
+          ''
+        )
       ),
     }),
     codelist_status_text: (output, source) => ({
@@ -63,7 +67,7 @@ export class ElasticsearchFieldMapper {
     }),
     logo: (output, source) => ({
       ...output,
-      logoUrl: `/geonetwork${selectField(source, 'logo')}`,
+      logoUrl: getAsUrl(`/geonetwork${selectField(source, 'logo')}`),
     }),
     resourceDate: (output) => output,
     resourceIdentifier: (output) => output,
@@ -85,15 +89,12 @@ export class ElasticsearchFieldMapper {
       ...output,
       updatedOn: toDate(selectField<string>(source, 'changeDate')),
     }),
-    link: (output, source) => {
-      const links = selectField<SourceWithUnknownProps[]>(source, 'link')
-      const dataProtocols = ['OGC', 'FILE']
-      const filterData = (link) =>
-        dataProtocols.some((p) => link.protocol.includes(p))
-      const dataLinks = mapLinks(links, filterData)
-      const otherLinks = mapLinks(links, (link) => !filterData(link))
-      return { ...output, dataLinks, otherLinks }
-    },
+    link: (output, source) => ({
+      ...output,
+      links: getAsArray(
+        selectField<SourceWithUnknownProps[]>(source, 'link')
+      ).map(mapLink),
+    }),
   }
 
   private genericField = (output, source, fieldName: string) => ({
