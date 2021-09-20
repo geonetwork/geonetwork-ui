@@ -1,74 +1,129 @@
 # Contributing to GeoNetwork UI
 
-## Setting Up Your Development Environment
+The project is organized in a monorepo fashion and relies on Nx. [See Nx Documentation](https://nx.dev/angular)
 
+Nx supports many plugins which add capabilities for developing different types of applications and different tools.
 
+These capabilities include generating applications, libraries, etc. as well as the devtools to test, and build projects as well.
 
-## Running GeoNetwork UI
+There are also many [community plugins](https://nx.dev/nx-community) you could add.
 
-Run `npm run start` for a dev server. Navigate to `http://localhost:4200/`. 
-The app will automatically reload if you change any of the source files.
+## Workspace operations
 
-## Build
-Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### Generate an application
 
-You can build a specific application with
-```shell script
-ng build (app_name) (--prod)
+Run `ng g @nrwl/angular:app my-app` to generate an application.
+
+> You can use any of the plugins above to generate applications as well.
+
+When using Nx, you can create multiple applications and libraries in the same workspace.
+
+You'll need manual configuration to make the application running:
+
+- Update the root `tsconfig.json` of your application by setting
+
+```js
+  "angularCompilerOptions": {
+    "strictTemplates": false
+  }
 ```
 
-## Tests
-Run `ng test` to execute the unit tests via Jest.
+- Add `postcss.config.js` and `tailwind.config.js` at the root of your project if you want to use TailwindCSS.
+
+### Generate a library
+
+Run `ng g @nrwl/angular:lib my-lib` to generate a library.
+
+> You can also use any of the plugins above to generate libraries as well.
+
+Libraries are shareable across libraries and applications. They can be imported from `@geonetwork-ui/mylib`.
+
+### Generate a component or other objects
+
+Run `ng generate component component-name --project=<project name>` to generate a new component. You will have to specify a project, which can be for example:
+
+- `search`: application named "search"
+- `ui-layout`: presentation library with layout components
+- `feature-search`: logic library with search components
+- etc.
+
+You can also generate other kind of Angular objects with `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+Recommended options to generate a component are CSS-based styling and OnPush changes detection, like so:
+
+```shell script
+ng g c smart/fuzzy-search --project=lib-search --style=css --changeDetection=OnPush -d
+```
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+### Development server
+
+Run `ng serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+
+### Build
+
+Run `ng build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+
+### Running unit tests
+
+Run `ng test my-app` to execute the unit tests via [Jest](https://jestjs.io).
 
 You can test a specific lib or app or file with
+
 ```shell script
-ng test (lib_name) (--prod)
+ng test (lib_name)
 ng test --test-match=/data/dev/gn/ui/libs/common/src/lib/services/bootstrap.service.spec.ts
 ```
 
+Run `nx affected:test` to execute the unit tests affected by a change.
+
+### Running end-to-end tests
+
+Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
+
+Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
+
+### Understand your workspace
+
+Run `nx dep-graph` to see a diagram of the dependencies of your projects.
+
+## Setting Up Your Development Environment
+
+### Intellij IDEA
+
 To run the tests in Intellij, install the Jest plugin and run the test as usual.
 
-You may need to edit your configuration and set up the *Working Directory* to root of the project (e.g `~/dev/geonetwork-ui/`)
+You may need to edit your configuration and set up the _Working Directory_ to root of the project (e.g `~/dev/geonetwork-ui/`).
 
-You can set up the correct *Working Directory* once for all by putting the correct value in Jest Template (Edit configuration/Templates/Jest/Working Directory)
+You can set up the correct _Working Directory_ once for all by putting the correct value in Jest Template (Edit configuration/Templates/Jest/Working Directory).
 
 ## Contributing code
 
-### linting & formatting
+### Linting & formatting
+
+All contributed code must pass the lint & format checks.
 
 To run the lint step, use `npm run lint`.
 
 To check whether your code is formatted properly, use `npm run format:check`.
 
-If you want Prettier to run on all the code and make sure everything is formatted, run `npm run format:fix`.
-**This should be done before committing.**
-
-### Angular CLI
-
-### Code scaffolding
-
-Run `ng generate component component-name --project=<project name>` to generate a new component. You will have to specify a project, which can be:
-* `app-search`: main app
-* `lib-search`: search-related smart components
-* `lib-ui`: presentation components
-
-You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-Common command to generate a component in a lib
-```shell script
-ng g c smart/fuzzy-search --project=lib-search --style=css --changeDetection=OnPush -d
-```
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+If you want Prettier to run on all the code and make sure everything is formatted, run `npm run format:write`.
+**This should be done before committing.** The recommended way is to set up your IDE to run Prettier automatically on save.
 
 ### OpenAPI client generation
 
-Check [How-to generate gn-api lib?](libs/gn-api/README.md)
+GeoNetwork-UI contains auto-generated API clients for two backends: [GeoNetwork](https://github.com/geonetwork/core-geonetwork) 4 and [Datafeeder](https://github.com/georchestra/georchestra/tree/master/datafeeder).
+This relies on the [OpenAPI standard](https://www.openapis.org/) (formerly Swagger).
+
+To regenerate the clients, update the `spec.yaml` files in the `libs/data-access/<backend>/src` folder and use either `npm run generate-api:gn4` or `npm run generate-api:datafeeder`.
 
 ### i18n
 
 Translations are managed by [ngx-translate](https://github.com/ngx-translate/core).
 
 To set up translate service, import the module in your application/lib root module:
+
 ```typescript
 // Application module, root
 export function HttpLoaderFactory(http: HttpClient) {
@@ -93,14 +148,14 @@ imports: [
 ```
 
 To declare a string to be translated, use following syntax
-```html
-<input
-  [title]="'Sort by' | translate"
-/>
 
-<div translate>search<div/>
+```html
+<input [title]="'Sort by' | translate" />
+
+<div translate>search</div>
 ```
-``` typescript
+
+```typescript
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 marker('last changed')
@@ -110,11 +165,13 @@ marker('popularity')
 All translated files are stored in applications assets `i18n` folder (eg: apps/search/src/assets/i18n).
 
 To extract automatically all translations use
+
 ```shell script
 npm run i18n:extract
 ```
 
 Check all target languages are defined in extraction script
+
 ```shell script
     "i18n:extract": "ngx-translate-extract --input ./apps/search/src  ./libs --output ./apps/search/src/assets/i18n/{en,fr,da,de,fi,nb,nl,sv}.json --clean --format json"
 ```
