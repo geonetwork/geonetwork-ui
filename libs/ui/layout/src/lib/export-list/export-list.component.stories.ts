@@ -30,16 +30,14 @@ export const Primary = Template.bind({})
 Primary.args = {
   links: [
     {
-      format: 'geojson',
-      resourceName: 'allroads.geojson',
-      title: 'All roads 2021',
+      protocol: 'WWW:DOWNLOAD',
+      name: 'allroads.geojson',
       description: 'A file that contains all roads',
       url: 'https//roads.com/allroads.geojson',
     },
     {
-      format: 'csv',
-      resourceName: 'allroads.csv',
-      title: 'All roads 2021',
+      protocol: 'WWW:DOWNLOAD',
+      name: 'allroads.csv',
       description: 'A file that contains all roads',
       url: 'https//roads.com/allroads.csv',
     },

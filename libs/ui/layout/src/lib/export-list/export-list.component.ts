@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
+import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-export-list',
@@ -7,5 +8,5 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExportListComponent {
-  @Input() links: Array<any> //TODO: type as MetadataLink, once model is updated
+  @Input() links: Array<MetadataLinkValid>
 }

@@ -35,17 +35,6 @@ export interface MetadataLinkValid {
 }
 export type MetadataLink = MetadataLinkValid | { invalid: true; reason: string }
 
-// we will need to change model to contain format:
-// export type MetadataLinkFormats = 'OGC:WMS'|'OGC:WFS'|'OGC:WPS'|'ESRIFeature'|'csv'|'geosjon'|'json'|'shp'|'xls'|'xlsx'|'kml'|'gpkg'|'outbound'|'unknown'
-
-// export interface MetadataLink {
-//   format: MetadataLinkFormats
-//   resourceName: string // layerName WMS, featureType WFS
-//   title: string
-//   description?: string
-//   url: string
-// }
-
 export interface RecordMetric {
   value: string
   recordCount: number

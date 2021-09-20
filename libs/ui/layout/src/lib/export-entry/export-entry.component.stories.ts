@@ -28,9 +28,8 @@ const Template: Story<ExportEntryComponent> = (args: ExportEntryComponent) => ({
 
 export const Primary = Template.bind({})
 Primary.args = {
-  format: 'geojson',
-  resourceName: 'allroads.geojson',
-  title: 'All roads 2021',
+  protocol: 'WWW:DOWNLOAD',
+  name: 'allroads.geojson',
   description: 'A file that contains all roads',
   url: 'https//roads.com/allroads.geojson',
 }

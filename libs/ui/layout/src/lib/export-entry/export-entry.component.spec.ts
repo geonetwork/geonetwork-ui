@@ -16,9 +16,8 @@ describe('ExportEntryComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ExportEntryComponent)
     component = fixture.componentInstance
-    component.format = 'geojson'
-    component.resourceName = 'allroads.geojson'
-    component.title = 'All roads 2021'
+    component.protocol = 'WWW:DOWNLOAD'
+    component.name = 'allroads.geojson'
     component.description = 'A file that contains all roads'
     component.url = 'https//roads.com/allroads.geojson'
     fixture.detectChanges()
