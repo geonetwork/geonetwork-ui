@@ -1,16 +1,51 @@
-<gn-ui-metadata-page
-  *ngIf="(isPresent$ | async) === false"
-  [metadata]="{
-    title: 'Loading...'
-  }"
-  [incomplete]="true"
->
-</gn-ui-metadata-page
-><gn-ui-metadata-page
-  *ngIf="(isPresent$ | async) === true"
-  [metadata]="metadata$ | async"
-  [incomplete]="isIncomplete$ | async"
-  [dataLinks]="mdDataLinks$ | async"
-  [otherLinks]="mdOtherLinks$ | async"
->
-</gn-ui-metadata-page>
+<mat-tab-group (selectedIndexChange)="onTabIndexChange($event)">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-3">info</mat-icon>
+      <span translate="">mdview.tab.info</span>
+    </ng-template>
+    <gn-ui-metadata-page
+      *ngIf="(isPresent$ | async) === false"
+      [metadata]="{
+        title: 'Loading...'
+      }"
+      [incomplete]="true"
+    >
+    </gn-ui-metadata-page
+    ><gn-ui-metadata-page
+      *ngIf="(isPresent$ | async) === true"
+      [metadata]="metadata$ | async"
+      [incomplete]="isIncomplete$ | async"
+      [dataLinks]="mdDataLinks$ | async"
+      [otherLinks]="mdOtherLinks$ | async"
+    >
+    </gn-ui-metadata-page>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-3">list</mat-icon>
+      <span translate="">mdview.tab.data</span>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-3">map</mat-icon>
+      <span translate="">mdview.tab.map</span>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-3">download</mat-icon>
+      <span translate="">mdview.tab.exports</span>
+    </ng-template>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-3">api</mat-icon>
+      <span translate="">mdview.tab.api</span>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

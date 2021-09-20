@@ -34,4 +34,8 @@ export class MetadataFullViewComponent {
     private mdViewFacade: MdViewFacade,
     private datasetFinder: DatasetFinderService
   ) {}
+
+  onTabIndexChange(index: number): void {
+    console.log(index)
+  }
 }
