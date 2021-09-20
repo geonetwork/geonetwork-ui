@@ -3,6 +3,8 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   Input,
+  Output,
+  EventEmitter,
 } from '@angular/core'
 import { ColorService } from '@geonetwork-ui/util/shared'
 
@@ -18,10 +20,15 @@ export class ExportEntryComponent implements OnInit {
   @Input() title: string
   @Input() description: string
   @Input() url: string
+  @Output() exportUrl = new EventEmitter<string>()
 
   color: string
 
   ngOnInit(): void {
     this.color = ColorService.generateLabelColor(this.format, 0.6, 0.5)
+  }
+
+  openUrl() {
+    this.exportUrl.emit(this.url)
   }
 }

@@ -21,9 +21,7 @@ export default {
   ],
 } as Meta<ExportEntryComponent>
 
-const Template: Story<ExportEntryComponent> = (
-  args: ExportEntryComponent
-) => ({
+const Template: Story<ExportEntryComponent> = (args: ExportEntryComponent) => ({
   component: ExportEntryComponent,
   props: args,
 })
@@ -35,4 +33,9 @@ Primary.args = {
   title: 'All roads 2021',
   description: 'A file that contains all roads',
   url: 'https//roads.com/allroads.geojson',
+}
+Primary.argTypes = {
+  exportUrl: {
+    action: 'exportUrl',
+  },
 }
