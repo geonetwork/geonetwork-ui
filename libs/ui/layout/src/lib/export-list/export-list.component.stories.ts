@@ -4,13 +4,13 @@ import {
   Meta,
   componentWrapperDecorator,
 } from '@storybook/angular'
-import { DownloadListComponent } from './download-list.component'
+import { ExportListComponent } from './export-list.component'
 import { UiLayoutModule } from '../ui-layout.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 export default {
-  title: 'Layout/DownloadListComponent',
-  component: DownloadListComponent,
+  title: 'Layout/ExportListComponent',
+  component: ExportListComponent,
   decorators: [
     moduleMetadata({
       imports: [UiLayoutModule, BrowserAnimationsModule],
@@ -19,12 +19,10 @@ export default {
       (story) => `<div style="max-width: 800px">${story}</div>`
     ),
   ],
-} as Meta<DownloadListComponent>
+} as Meta<ExportListComponent>
 
-const Template: Story<DownloadListComponent> = (
-  args: DownloadListComponent
-) => ({
-  component: DownloadListComponent,
+const Template: Story<ExportListComponent> = (args: ExportListComponent) => ({
+  component: ExportListComponent,
   props: args,
 })
 

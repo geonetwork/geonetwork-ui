@@ -4,13 +4,13 @@ import {
   Meta,
   componentWrapperDecorator,
 } from '@storybook/angular'
-import { DownloadEntryComponent } from './download-entry.component'
+import { ExportEntryComponent } from './export-entry.component'
 import { UiLayoutModule } from '../ui-layout.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 export default {
-  title: 'Layout/DownloadEntryComponent',
-  component: DownloadEntryComponent,
+  title: 'Layout/ExportEntryComponent',
+  component: ExportEntryComponent,
   decorators: [
     moduleMetadata({
       imports: [UiLayoutModule, BrowserAnimationsModule],
@@ -19,12 +19,12 @@ export default {
       (story) => `<div style="max-width: 800px">${story}</div>`
     ),
   ],
-} as Meta<DownloadEntryComponent>
+} as Meta<ExportEntryComponent>
 
-const Template: Story<DownloadEntryComponent> = (
-  args: DownloadEntryComponent
+const Template: Story<ExportEntryComponent> = (
+  args: ExportEntryComponent
 ) => ({
-  component: DownloadEntryComponent,
+  component: ExportEntryComponent,
   props: args,
 })
 

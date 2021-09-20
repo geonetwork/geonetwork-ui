@@ -1,11 +1,11 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
 
 @Component({
-  selector: 'gn-ui-download-list',
-  templateUrl: './download-list.component.html',
-  styleUrls: ['./download-list.component.css'],
+  selector: 'gn-ui-export-list',
+  templateUrl: './export-list.component.html',
+  styleUrls: ['./export-list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DownloadListComponent {
+export class ExportListComponent {
   @Input() links: Array<any> //TODO: type as MetadataLink, once model is updated
 }

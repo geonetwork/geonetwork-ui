@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatIconModule } from '@angular/material/icon'
-import { DownloadEntryComponent } from './download-entry.component'
+import { ExportEntryComponent } from './export-entry.component'
 
-describe('DownloadEntryComponent', () => {
-  let component: DownloadEntryComponent
-  let fixture: ComponentFixture<DownloadEntryComponent>
+describe('ExportEntryComponent', () => {
+  let component: ExportEntryComponent
+  let fixture: ComponentFixture<ExportEntryComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DownloadEntryComponent],
+      declarations: [ExportEntryComponent],
       imports: [MatIconModule],
     }).compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DownloadEntryComponent)
+    fixture = TestBed.createComponent(ExportEntryComponent)
     component = fixture.componentInstance
     component.format = 'geojson'
     component.resourceName = 'allroads.geojson'

@@ -4,11 +4,11 @@
   </h3>
 </div>
 <div class="pb-4" *ngFor="let link of links">
-  <gn-ui-download-entry
+  <gn-ui-export-entry
     [format]="link.format"
     [resourceName]="link.resourceName"
     [title]="link.title"
     [description]="link.description"
     [url]="link.url"
-  ></gn-ui-download-entry>
+  ></gn-ui-export-entry>
 </div>
