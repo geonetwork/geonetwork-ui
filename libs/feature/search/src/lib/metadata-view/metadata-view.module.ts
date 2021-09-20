@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { ApiModule } from '@geonetwork-ui/data-access/gn4'
+import { FeatureMapModule } from '@geonetwork-ui/feature/map'
+import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { DataApisComponent } from './data-apis/data-apis.component'
@@ -20,12 +22,13 @@ import { MD_VIEW_FEATURE_STATE_KEY, reducer } from './state/mdview.reducer'
     DataExportsComponent,
     DataApisComponent,
   ],
-
   imports: [
     CommonModule,
     ApiModule,
     StoreModule.forFeature(MD_VIEW_FEATURE_STATE_KEY, reducer),
     EffectsModule.forFeature([MdViewEffects]),
+    UiLayoutModule,
+    FeatureMapModule,
   ],
   providers: [MdViewFacade],
   exports: [
