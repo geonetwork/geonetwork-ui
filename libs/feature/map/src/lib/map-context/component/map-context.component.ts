@@ -5,7 +5,6 @@ import {
   Input,
   OnChanges,
   Output,
-  SimpleChanges,
 } from '@angular/core'
 import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
@@ -36,7 +35,7 @@ export class MapContextComponent implements OnChanges {
     this.map = manager.map
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges() {
     if (this.context) {
       this.service.resetMapFromContext(this.map, this.context)
     }

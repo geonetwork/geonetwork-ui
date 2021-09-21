@@ -3,7 +3,6 @@ import {
   Component,
   Input,
   OnChanges,
-  SimpleChanges,
 } from '@angular/core'
 
 @Component({
@@ -78,7 +77,7 @@ export class ButtonComponent implements OnChanges {
     return classes
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.classList = `${this.color} ${this.textColor} ${this.borderColor} ${this.extraClass}`
   }
 }

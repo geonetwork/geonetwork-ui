@@ -24,7 +24,7 @@ export class PublicationStatusGuard implements CanActivate {
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    state: RouterStateSnapshot // eslint-disable-line
   ): Observable<boolean> {
     const id = route.params.id
 

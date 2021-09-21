@@ -67,7 +67,7 @@ export class BootstrapService {
         [uiIdentifier]: this.uiService.getUiConfiguration(uiIdentifier).pipe(
           pluck('configuration'),
           map((configString) => this.buildConfig(configString)),
-          catchError((error) => {
+          catchError(() => {
             this.logService.warn(
               `Error during UI configuration loading: ${uiIdentifier}. Using default.`
             )

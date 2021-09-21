@@ -5,7 +5,7 @@ import { ElasticsearchMapper } from '../../elasticsearch/mapper'
 import { EsSearchResponse } from '@geonetwork-ui/util/shared'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { of } from 'rxjs'
-import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators'
+import { catchError, map, switchMap } from 'rxjs/operators'
 import * as MdViewActions from './mdview.actions'
 
 @Injectable()

@@ -8,7 +8,7 @@ import {
 } from '@geonetwork-ui/util/shared'
 import { ES_SOURCE_SUMMARY } from '../elasticsearch/constant'
 import * as fromActions from './actions'
-import { DEFAULT_SEARCH_KEY, SET_CONFIG_REQUEST_FIELDS } from './actions'
+import { DEFAULT_SEARCH_KEY } from './actions'
 
 export const SEARCH_FEATURE_KEY = 'searchState'
 

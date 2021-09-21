@@ -1,10 +1,4 @@
-import {
-  Component,
-  Injector,
-  Input,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core'
+import { Component, Injector, Input, OnChanges } from '@angular/core'
 import { ColorService } from '@geonetwork-ui/util/shared'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
@@ -33,7 +27,7 @@ export class BaseComponent implements OnChanges {
     this.translate = injector.get(TranslateService)
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     if (!this.isInitialized) {
       apiConfiguration.basePath = this.apiUrl
       this.translate.reloadLang(this.translate.currentLang)

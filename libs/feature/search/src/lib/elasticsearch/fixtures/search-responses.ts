@@ -59,7 +59,7 @@ export const aggsOnly = {
   },
 }
 
-export const hitsOnly: any = {
+export const hitsOnly: unknown = {
   hits: {
     max_score: 1,
     hits: [

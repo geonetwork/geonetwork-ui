@@ -9,7 +9,7 @@ const initialStateSearch = initialState[DEFAULT_SEARCH_KEY]
 let autocompleteConfig
 
 class MockBootstrapService {
-  uiConfReady(uiIdentifier: string): Observable<any> {
+  uiConfReady(): Observable {
     return new Observable((observer) => {
       observer.next({
         mods: {

@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router'
 import {
   DataPublishingApiService,
   DatasetPublishRequestApiModel,
-  PublishJobStatusApiModel,
 } from '@geonetwork-ui/data-access/datafeeder'
 import { WizardService } from '@geonetwork-ui/feature/editor'
 import { Subscription } from 'rxjs'
@@ -40,7 +39,7 @@ export class SummarizePageComponent implements OnInit, OnDestroy {
       .publish(this.rootId.toString(), {
         datasets: [this.formatDataset(this.wizard.getDataObject())],
       })
-      .subscribe((job: PublishJobStatusApiModel) => {
+      .subscribe(() => {
         this.router.navigate(['/', this.rootId, 'publish'])
       })
   }

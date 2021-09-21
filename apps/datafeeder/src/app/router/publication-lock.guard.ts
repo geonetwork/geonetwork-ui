@@ -11,7 +11,7 @@ import {
   PublishStatusEnumApiModel,
 } from '@geonetwork-ui/data-access/datafeeder'
 import { Observable, of } from 'rxjs'
-import { catchError, mapTo, mergeMap, tap } from 'rxjs/operators'
+import { catchError, mapTo, tap } from 'rxjs/operators'
 import { DatafeederFacade } from '../store/datafeeder.facade'
 
 @Injectable({ providedIn: 'root' })
@@ -24,7 +24,7 @@ export class PublicationLockGuard implements CanActivate {
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    state: RouterStateSnapshot // eslint-disable-line
   ): Observable<boolean> {
     const id = route.params.id
 

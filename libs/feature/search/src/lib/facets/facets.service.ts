@@ -155,7 +155,7 @@ export class FacetsService {
   computeItemPathValue(block: ModelBlock, item: ModelItem) {
     const { selected, inverted } = item
     const { type } = block
-    let value: any = !inverted
+    let value: unknown = !inverted
 
     if (selected) {
       if (
@@ -184,7 +184,7 @@ export class FacetsService {
   computeNewFiltersFromState(
     filters: SearchFilters,
     path: FacetPath,
-    value: any
+    value: unknown
   ): SearchFilters {
     const clone = JSON.parse(JSON.stringify(filters))
     const getter = parse(path.join(PARSE_DELIMITER))
@@ -235,8 +235,7 @@ export class FacetsService {
     const path = []
     const results = []
 
-    // store void result to prevent ; added by prettier before iife
-    const _ = (function find(obj) {
+    ;(function find(obj) {
       for (const key of Object.keys(obj)) {
         if (typeof obj[key] !== 'object') {
           // Found a selected path

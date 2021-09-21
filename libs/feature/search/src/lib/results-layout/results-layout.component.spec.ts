@@ -22,11 +22,11 @@ class DropdownSelectorMockComponent {
   @Input() showTitle = true
   @Input() ariaName: string
   @Input() choices: {
-    value: any
+    value: unknown
     label: string
   }[]
-  @Input() selected: any
-  @Output() selectValue = new EventEmitter<any>()
+  @Input() selected: unknown
+  @Output() selectValue = new EventEmitter<unknown>()
 }
 
 const searchFacadeMock = {

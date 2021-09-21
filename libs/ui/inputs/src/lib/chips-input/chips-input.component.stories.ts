@@ -43,7 +43,7 @@ Primary.args = {
     { display: 'item2', value: 'item2' },
   ],
   placeholder: 'Select tag here!',
-  url: (term) => 'url',
+  url: () => 'url',
 }
 Primary.argTypes = {
   itemsChange: {

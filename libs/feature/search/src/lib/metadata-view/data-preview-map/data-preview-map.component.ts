@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { map, startWith } from 'rxjs/operators'
-import { MdViewFacade } from '@geonetwork-ui/feature/search'
+import { MdViewFacade } from '../state/mdview.facade'
 import { DatasetFinderService, LinkUsage } from '@geonetwork-ui/feature/dataviz'
 import {
   MAP_CTX_LAYER_XYZ_FIXTURE,

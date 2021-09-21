@@ -16,7 +16,7 @@ export class ResultsLayoutComponent {
 
   constructor(public searchFacade: SearchFacade) {}
 
-  change(layout: any) {
+  change(layout: ResultsListLayout) {
     this.searchFacade.setResultsLayout(layout)
   }
 }

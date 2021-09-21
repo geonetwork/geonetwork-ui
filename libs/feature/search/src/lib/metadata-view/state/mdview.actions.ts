@@ -18,7 +18,7 @@ export const loadFullSuccess = createAction(
 
 export const loadFullFailure = createAction(
   '[Metadata view] Load full failure',
-  props<{ error: any }>()
+  props<{ error: string }>()
 )
 
 export const close = createAction('[Metadata view] close')

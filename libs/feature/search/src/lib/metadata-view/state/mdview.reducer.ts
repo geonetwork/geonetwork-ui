@@ -17,7 +17,7 @@ export const initialMdviewState: MdViewState = {
 
 const mdViewReducer = createReducer(
   initialMdviewState,
-  on(MdViewActions.loadFullMetadata, (state, { uuid }) => ({
+  on(MdViewActions.loadFullMetadata, (state) => ({
     ...state,
     loadingFull: true,
   })),
@@ -36,6 +36,7 @@ const mdViewReducer = createReducer(
     loadingFull: false,
   })),
   on(MdViewActions.close, (state) => {
+    // eslint-disable-next-line
     const { metadata, ...stateWithoutMd } = state
     return stateWithoutMd
   })

@@ -37,7 +37,7 @@ export class RecordsMetricsComponent implements OnInit {
         })
       )
       .pipe(
-        map<any, RecordMetric[]>(
+        map<unknown, RecordMetric[]>(
           (response: EsSearchResponse) =>
             response.aggregations.results.buckets.map((category) => ({
               value: category.key,

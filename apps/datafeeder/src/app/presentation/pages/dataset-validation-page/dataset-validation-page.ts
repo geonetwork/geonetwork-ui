@@ -120,7 +120,7 @@ export class DatasetValidationPageComponent implements OnInit, OnDestroy {
             { featureProjection: viewSrs }
           )
         },
-        (error) => {
+        () => {
           this.geoJSONBBox = null
         }
       )
