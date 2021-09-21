@@ -19,14 +19,15 @@ import { environment } from '../environments/environment'
 
 import { AppComponent } from './app.component'
 import { MainSearchComponent } from './main-search/main-search.component'
-import { Configuration } from '@geonetwork-ui/data-access/gn4'
+import { Configuration } from '@geonetwork-ui/data-access/gn4';
+import { DatasetViewComponent } from './dataset-view/dataset-view.component'
 
 export const metaReducers: MetaReducer[] = !environment.production
   ? [storeFreeze]
   : []
 
 @NgModule({
-  declarations: [AppComponent, MainSearchComponent],
+  declarations: [AppComponent, MainSearchComponent, DatasetViewComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
