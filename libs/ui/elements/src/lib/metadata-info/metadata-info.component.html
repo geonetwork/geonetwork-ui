@@ -48,22 +48,6 @@
     ghostClass="h-24"
     [showContent]="!incomplete || !!downloadLinks"
   >
-    <ul>
-      <li *ngFor="let link of downloadLinks" [title]="link.name">
-        <a
-          href="{{ link.url }}"
-          class="my-2 p-2 border border-gray-400 rounded block"
-        >
-          {{ link.description || link.name }}
-          <br />
-          <span class="text-sm text-gray-500 mr-3">
-            {{ link.url }}
-          </span>
-          <span class="text-sm text-gray-500">
-            protocol: {{ link.protocol }}
-          </span>
-        </a>
-      </li>
-    </ul>
+    <gn-ui-export-list [links]="dataLinks"></gn-ui-export-list>
   </gn-ui-content-ghost>
 </p>

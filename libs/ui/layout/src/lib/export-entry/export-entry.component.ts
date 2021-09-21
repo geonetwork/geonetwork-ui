@@ -52,8 +52,8 @@ export class ExportEntryComponent implements OnInit {
 
   checkFileExtensions(link: MetadataLinkValid, extension: string) {
     return (
-      ('name' in link && link.name.match(`\.${extension}`)) ||
-      ('url' in link && link.url.match(`\.${extension}`))
+      ('name' in link && link.name.match(`.${extension}`)) ||
+      ('url' in link && link.url.match(`.${extension}`))
     )
   }
 
