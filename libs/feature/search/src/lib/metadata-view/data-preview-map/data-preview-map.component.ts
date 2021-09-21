@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { filter, map, startWith, tap } from 'rxjs/operators'
+import { map, startWith } from 'rxjs/operators'
 import { MdViewFacade } from '@geonetwork-ui/feature/search'
 import { DatasetFinderService, LinkUsage } from '@geonetwork-ui/feature/dataviz'
 import {
   MAP_CTX_LAYER_XYZ_FIXTURE,
   MapContextModel,
 } from '@geonetwork-ui/feature/map'
-import { MetadataLink, MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
 import { fromLonLat } from 'ol/proj'
+import { BehaviorSubject, combineLatest } from 'rxjs'
 
 @Component({
   selector: 'gn-ui-data-preview-map',
@@ -27,10 +28,25 @@ export class DataPreviewMapComponent {
         (link) =>
           this.datasetFinder.getLinkUsages(link).indexOf(LinkUsage.MAP) > -1
       )
+    ),
+    startWith([])
+  )
+  dropdownChoices$ = this.availableLinks$.pipe(
+    map((links) =>
+      links.length
+        ? links.map((link, index) => ({
+            label: `${link.name} (${link.protocol})`,
+            value: index,
+          }))
+        : [{ label: 'No preview layer', value: 0 }]
     )
   )
-  currentLayers$ = this.availableLinks$.pipe(
-    map((links) => links[0]),
+  selectedLinkIndex$ = new BehaviorSubject(0)
+  currentLayers$ = combineLatest([
+    this.availableLinks$,
+    this.selectedLinkIndex$,
+  ]).pipe(
+    map(([links, index]) => links[index]),
     map((link) =>
       link
         ? [
@@ -64,5 +80,9 @@ export class DataPreviewMapComponent {
 
   getBackgroundLayer() {
     return MAP_CTX_LAYER_XYZ_FIXTURE
+  }
+
+  selectLinkToDisplay(link: number) {
+    this.selectedLinkIndex$.next(link)
   }
 }

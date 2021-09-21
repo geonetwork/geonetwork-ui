@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { ApiModule } from '@geonetwork-ui/data-access/gn4'
 import { FeatureMapModule } from '@geonetwork-ui/feature/map'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
@@ -29,6 +30,7 @@ import { MD_VIEW_FEATURE_STATE_KEY, reducer } from './state/mdview.reducer'
     EffectsModule.forFeature([MdViewEffects]),
     UiLayoutModule,
     FeatureMapModule,
+    UiInputsModule,
   ],
   providers: [MdViewFacade],
   exports: [
