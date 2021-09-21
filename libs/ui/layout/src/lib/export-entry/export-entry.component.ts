@@ -32,6 +32,7 @@ export class ExportEntryComponent implements OnInit {
       'geojson',
       'json',
       'shp',
+      'shape',
       'kml',
       'gpkg',
       'xls',
@@ -40,25 +41,27 @@ export class ExportEntryComponent implements OnInit {
       'pdf',
       'html',
     ]
-    const protocols = ['OGC:WFS', 'WWW:LINK', 'WWW:FTP', 'WWW:DOWNLOAD']
+    const protocols = ['WFS', 'LINK', 'FTP', 'DOWNLOAD']
     for (const extension of extensions) {
       if (this.checkFileExtensions(link, extension)) return extension
     }
     for (const protocol of protocols) {
-      if (this.checkProtocol(link, protocol)) return protocol
+      if (this.checkProtocol(link, protocol)) return protocol.toLowerCase()
     }
     return 'unknown'
   }
 
   checkFileExtensions(link: MetadataLinkValid, extension: string) {
     return (
-      ('name' in link && link.name.match(`.${extension}`)) ||
-      ('url' in link && link.url.match(`.${extension}`))
+      ('name' in link && link.name.match(new RegExp(`${extension}`, 'i'))) ||
+      ('url' in link && link.url.match(new RegExp(`${extension}`, 'i')))
     )
   }
 
   checkProtocol(link: MetadataLinkValid, protocol: string) {
-    return 'protocol' in link && link.protocol.match(`${protocol}`)
+    return (
+      'protocol' in link && link.protocol.match(new RegExp(`${protocol}`, 'i'))
+    )
   }
 
   openUrl() {
