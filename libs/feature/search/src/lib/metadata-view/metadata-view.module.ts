@@ -10,9 +10,10 @@ import { MdViewFacade } from './state/mdview.facade'
 import { MD_VIEW_FEATURE_STATE_KEY, reducer } from './state/mdview.reducer'
 import { MetadataFullViewComponent } from './metadata-full-view/metadata-full-view.component'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
+import { DataTableComponent } from './data-table/data-table.component'
 
 @NgModule({
-  declarations: [MetadataFullViewComponent],
+  declarations: [MetadataFullViewComponent, DataTableComponent],
   imports: [
     CommonModule,
     ApiModule,
