@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing'
-import { MdViewFacade } from '@geonetwork-ui/feature/search'
+import { MdViewFacade } from '../state/mdview.facade'
 import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/ui/search'
 import { Subject } from 'rxjs'
 

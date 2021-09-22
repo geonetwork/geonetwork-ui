@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core'
+import { MatTabsModule } from '@angular/material/tabs'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
 import {
@@ -39,6 +40,7 @@ export const metaReducers: MetaReducer[] = !environment.production
     FeatureSearchModule,
     SearchRouterModule,
     MdViewModule,
+    MatTabsModule,
   ],
   providers: [
     {

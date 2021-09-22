@@ -1,4 +1,51 @@
-<div class="float-right w-96 h-96 m-3 border rounded overflow-hidden">
-  <gn-ui-data-preview-map></gn-ui-data-preview-map>
-</div>
-<gn-ui-metadata-full-view></gn-ui-metadata-full-view>
+<mat-tab-group (selectedIndexChange)="onTabIndexChange($event)">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-3">info</mat-icon>
+      <span translate="">mdview.tab.info</span>
+    </ng-template>
+    <gn-ui-metadata-page
+      *ngIf="(facade.isPresent$ | async) === false"
+      [metadata]="{
+        title: 'Loading...'
+      }"
+      [incomplete]="true"
+    >
+    </gn-ui-metadata-page
+    ><gn-ui-metadata-page
+      *ngIf="(facade.isPresent$ | async) === true"
+      [metadata]="facade.metadata$ | async"
+      [incomplete]="facade.isIncomplete$ | async"
+      [dataLinks]="links.dataLinks$ | async"
+      [otherLinks]="links.otherLinks$ | async"
+    >
+    </gn-ui-metadata-page>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-3">list</mat-icon>
+      <span translate="">mdview.tab.data</span>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-3">map</mat-icon>
+      <span translate="">mdview.tab.map</span>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-3">download</mat-icon>
+      <span translate="">mdview.tab.exports</span>
+    </ng-template>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="mr-3">api</mat-icon>
+      <span translate="">mdview.tab.api</span>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

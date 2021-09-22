@@ -1,9 +1,22 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
+import {
+  LinkClassifierService,
+  MdViewFacade,
+} from '@geonetwork-ui/feature/search'
 
 @Component({
-  selector: 'gn-ui-dataset-view',
-  templateUrl: './dataset-view.component.html',
-  styleUrls: ['./dataset-view.component.css'],
+  selector: 'gn-ui-record-view',
+  templateUrl: './record-view.component.html',
+  styleUrls: ['./record-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DatasetViewComponent {}
+export class RecordViewComponent {
+  constructor(
+    public facade: MdViewFacade,
+    public links: LinkClassifierService
+  ) {}
+
+  onTabIndexChange(index: number): void {
+    console.log(index)
+  }
+}
