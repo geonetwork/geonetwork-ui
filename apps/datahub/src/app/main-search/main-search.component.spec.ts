@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { MainSearchComponent } from './main-search.component'
@@ -16,6 +17,7 @@ describe('MainSearchComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [MainSearchComponent],
       imports: [UiLayoutModule],
+      schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
           provide: RouterFacade,

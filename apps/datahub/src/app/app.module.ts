@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core'
+import { MatIconModule } from '@angular/material/icon'
 import { MatTabsModule } from '@angular/material/tabs'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
@@ -7,6 +8,7 @@ import {
   MdViewModule,
   SearchRouterModule,
 } from '@geonetwork-ui/feature/search'
+import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import {
   TRANSLATE_GEONETWORK_CONFIG,
   UtilI18nModule,
@@ -40,7 +42,9 @@ export const metaReducers: MetaReducer[] = !environment.production
     FeatureSearchModule,
     SearchRouterModule,
     MdViewModule,
+    UiLayoutModule,
     MatTabsModule,
+    MatIconModule,
   ],
   providers: [
     {
