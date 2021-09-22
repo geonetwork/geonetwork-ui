@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { DatasetViewComponent } from './dataset-view.component'
+import { RecordViewComponent } from './dataset-view.component'
 
 describe('DatasetViewComponent', () => {
-  let component: DatasetViewComponent
-  let fixture: ComponentFixture<DatasetViewComponent>
+  let component: RecordViewComponent
+  let fixture: ComponentFixture<RecordViewComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DatasetViewComponent],
+      declarations: [RecordViewComponent],
     }).compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DatasetViewComponent)
+    fixture = TestBed.createComponent(RecordViewComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
