@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MetadataFullViewComponent } from './metadata-full-view.component'
 import { MdViewFacade } from '../state/mdview.facade'
@@ -23,6 +24,7 @@ describe('MetadataFullViewComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [MetadataFullViewComponent],
       imports: [UiLayoutModule],
+      schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
           provide: MdViewFacade,

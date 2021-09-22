@@ -5,7 +5,7 @@
       <span translate="">mdview.tab.info</span>
     </ng-template>
     <gn-ui-metadata-page
-      *ngIf="(isPresent$ | async) === false"
+      *ngIf="(facade.isPresent$ | async) === false"
       [metadata]="{
         title: 'Loading...'
       }"
@@ -13,11 +13,11 @@
     >
     </gn-ui-metadata-page
     ><gn-ui-metadata-page
-      *ngIf="(isPresent$ | async) === true"
-      [metadata]="metadata$ | async"
-      [incomplete]="isIncomplete$ | async"
-      [dataLinks]="mdDataLinks$ | async"
-      [otherLinks]="mdOtherLinks$ | async"
+      *ngIf="(facade.isPresent$ | async) === true"
+      [metadata]="facade.metadata$ | async"
+      [incomplete]="facade.isIncomplete$ | async"
+      [dataLinks]="links.dataLinks$ | async"
+      [otherLinks]="links.otherLinks$ | async"
     >
     </gn-ui-metadata-page>
   </mat-tab>
