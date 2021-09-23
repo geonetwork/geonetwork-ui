@@ -13,7 +13,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "geonetworkUi",
+            "prefix": "gn-ui",
             "style": "camelCase"
           }
         ],
@@ -21,7 +21,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "geonetwork-ui",
+            "prefix": "gn-ui",
             "style": "kebab-case"
           }
         ]

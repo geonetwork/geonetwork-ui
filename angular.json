@@ -740,7 +740,7 @@
       "projectType": "library",
       "root": "libs/ui/elements",
       "sourceRoot": "libs/ui/elements/src",
-      "prefix": "geonetwork-ui",
+      "prefix": "gn-ui",
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
