@@ -1,17 +1,17 @@
 import { Meta, moduleMetadata, Story } from '@storybook/angular'
 import { MetadataPageComponent } from './metadata-page.component'
-import { UiLayoutModule } from '../ui-layout.module'
+import { UiElementsModule } from '../ui-elements.module'
 import {
   RECORDS_FULL_FIXTURE,
   RECORDS_SUMMARY_FIXTURE,
 } from '@geonetwork-ui/ui/search'
 
 export default {
-  title: 'Layout/MetadataPageComponent',
+  title: 'Elements/MetadataPageComponent',
   component: MetadataPageComponent,
   decorators: [
     moduleMetadata({
-      imports: [UiLayoutModule],
+      imports: [UiElementsModule],
     }),
   ],
 } as Meta<MetadataPageComponent>

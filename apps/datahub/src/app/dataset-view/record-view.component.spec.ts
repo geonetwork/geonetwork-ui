@@ -2,7 +2,10 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { MdViewFacade } from '@geonetwork-ui/feature/search'
-import { MetadataPageComponent, UiLayoutModule } from '@geonetwork-ui/ui/layout'
+import {
+  MetadataPageComponent,
+  UiElementsModule,
+} from '@geonetwork-ui/ui/elements'
 import {
   RECORDS_FULL_FIXTURE,
   RECORDS_SUMMARY_FIXTURE,
@@ -25,7 +28,7 @@ describe('DatasetViewComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [RecordViewComponent],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [UiLayoutModule],
+      imports: [UiElementsModule],
       providers: [
         {
           provide: MdViewFacade,
