@@ -24,6 +24,7 @@ import { AppComponent } from './app.component'
 import { MainSearchComponent } from './main-search/main-search.component'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { RecordViewComponent } from './dataset-view/record-view.component'
+import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 
 export const metaReducers: MetaReducer[] = !environment.production
   ? [storeFreeze]
@@ -43,6 +44,7 @@ export const metaReducers: MetaReducer[] = !environment.production
     SearchRouterModule,
     MdViewModule,
     UiLayoutModule,
+    UiElementsModule,
     MatTabsModule,
     MatIconModule,
   ],
