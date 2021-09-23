@@ -736,6 +736,31 @@
         }
       }
     },
+    "ui-elements": {
+      "projectType": "library",
+      "root": "libs/ui/elements",
+      "sourceRoot": "libs/ui/elements/src",
+      "prefix": "geonetwork-ui",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ui/elements"],
+          "options": {
+            "jestConfig": "libs/ui/elements/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ui/elements/src/**/*.ts",
+              "libs/ui/elements/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "ui-inputs": {
       "projectType": "library",
       "root": "libs/ui/inputs",
