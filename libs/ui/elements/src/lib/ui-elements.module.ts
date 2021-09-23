@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { MetadataPageComponent } from './metadata-page/metadata-page.component'
+import { MetadataInfoComponent } from './metadata-info/metadata-info.component'
 import { ContentGhostComponent } from './content-ghost/content-ghost.component'
 
 @NgModule({
   imports: [CommonModule],
-  declarations: [MetadataPageComponent, ContentGhostComponent],
-  exports: [MetadataPageComponent, ContentGhostComponent],
+  declarations: [MetadataInfoComponent, ContentGhostComponent],
+  exports: [MetadataInfoComponent, ContentGhostComponent],
 })
 export class UiElementsModule {}

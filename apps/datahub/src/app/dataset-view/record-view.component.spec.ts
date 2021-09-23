@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { MdViewFacade } from '@geonetwork-ui/feature/search'
 import {
-  MetadataPageComponent,
+  MetadataInfoComponent,
   UiElementsModule,
 } from '@geonetwork-ui/ui/elements'
 import {
@@ -56,7 +56,7 @@ describe('DatasetViewComponent', () => {
     })
     it('shows the full metadata', () => {
       const dumb = fixture.debugElement.query(
-        By.directive(MetadataPageComponent)
+        By.directive(MetadataInfoComponent)
       ).componentInstance
       expect(dumb.metadata).toHaveProperty('abstract')
     })
@@ -68,7 +68,7 @@ describe('DatasetViewComponent', () => {
     })
     it('shows a placeholder', () => {
       const dumb = fixture.debugElement.query(
-        By.directive(MetadataPageComponent)
+        By.directive(MetadataInfoComponent)
       ).componentInstance
       expect(dumb.metadata).not.toHaveProperty('abstract')
       expect(dumb.incomplete).toBeTruthy()
@@ -76,14 +76,14 @@ describe('DatasetViewComponent', () => {
   })
 
   describe('metadata links', () => {
-    let mdPageComponent: MetadataPageComponent
+    let mdPageComponent: MetadataInfoComponent
     describe('full metadata', () => {
       beforeEach(() => {
         facade.isPresent$.next(true)
         facade.metadata$.next(RECORDS_FULL_FIXTURE[0])
         fixture.detectChanges()
         mdPageComponent = fixture.debugElement.query(
-          By.directive(MetadataPageComponent)
+          By.directive(MetadataInfoComponent)
         ).componentInstance
       })
       it('filters out links with and without usage', () => {
@@ -159,7 +159,7 @@ describe('DatasetViewComponent', () => {
         facade.isPresent$.next(true)
         fixture.detectChanges()
         mdPageComponent = fixture.debugElement.query(
-          By.directive(MetadataPageComponent)
+          By.directive(MetadataInfoComponent)
         ).componentInstance
       })
       it('leaves links as empty arrays', () => {

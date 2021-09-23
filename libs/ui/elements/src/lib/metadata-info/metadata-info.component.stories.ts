@@ -1,5 +1,5 @@
 import { Meta, moduleMetadata, Story } from '@storybook/angular'
-import { MetadataPageComponent } from './metadata-page.component'
+import { MetadataInfoComponent } from './metadata-info.component'
 import { UiElementsModule } from '../ui-elements.module'
 import {
   RECORDS_FULL_FIXTURE,
@@ -7,19 +7,19 @@ import {
 } from '@geonetwork-ui/ui/search'
 
 export default {
-  title: 'Elements/MetadataPageComponent',
-  component: MetadataPageComponent,
+  title: 'Elements/MetadataInfoComponent',
+  component: MetadataInfoComponent,
   decorators: [
     moduleMetadata({
       imports: [UiElementsModule],
     }),
   ],
-} as Meta<MetadataPageComponent>
+} as Meta<MetadataInfoComponent>
 
-const Template: Story<MetadataPageComponent> = (
-  args: MetadataPageComponent
+const Template: Story<MetadataInfoComponent> = (
+  args: MetadataInfoComponent
 ) => ({
-  component: MetadataPageComponent,
+  component: MetadataInfoComponent,
   props: args,
 })
 

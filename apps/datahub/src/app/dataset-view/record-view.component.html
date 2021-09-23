@@ -4,22 +4,22 @@
       <mat-icon class="mr-3">info</mat-icon>
       <span translate="">mdview.tab.info</span>
     </ng-template>
-    <gn-ui-metadata-page
+    <gn-ui-metadata-info
       *ngIf="(facade.isPresent$ | async) === false"
       [metadata]="{
         title: 'Loading...'
       }"
       [incomplete]="true"
     >
-    </gn-ui-metadata-page
-    ><gn-ui-metadata-page
+    </gn-ui-metadata-info
+    ><gn-ui-metadata-info
       *ngIf="(facade.isPresent$ | async) === true"
       [metadata]="facade.metadata$ | async"
       [incomplete]="facade.isIncomplete$ | async"
       [dataLinks]="links.dataLinks$ | async"
       [otherLinks]="links.otherLinks$ | async"
     >
-    </gn-ui-metadata-page>
+    </gn-ui-metadata-info>
   </mat-tab>
 
   <mat-tab>

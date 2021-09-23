@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { MetadataPageComponent } from './metadata-page.component'
+import { MetadataInfoComponent } from './metadata-info.component'
 import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
 import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/ui/search'
 
-describe('MetadataPageComponent', () => {
-  let component: MetadataPageComponent
-  let fixture: ComponentFixture<MetadataPageComponent>
+describe('MetadataInfoComponent', () => {
+  let component: MetadataInfoComponent
+  let fixture: ComponentFixture<MetadataInfoComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MetadataPageComponent, ContentGhostComponent],
+      declarations: [MetadataInfoComponent, ContentGhostComponent],
     }).compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MetadataPageComponent)
+    fixture = TestBed.createComponent(MetadataInfoComponent)
     component = fixture.componentInstance
     component.incomplete = false
     component.metadata = RECORDS_FULL_FIXTURE[0]
