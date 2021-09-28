@@ -6,10 +6,20 @@ import { StoreModule } from '@ngrx/store'
 import { MdViewEffects } from './state/mdview.effects'
 import { MdViewFacade } from './state/mdview.facade'
 import { MD_VIEW_FEATURE_STATE_KEY, reducer } from './state/mdview.reducer'
-import { DataTableComponent } from './data-table/data-table.component'
+import { RecordMetadataComponent } from './record-metadata/record-metadata.component'
+import { DataViewMapComponent } from './data-view-map/data-view-map.component'
+import { DataViewTableComponent } from './data-view-table/data-view-table.component'
+import { RecordExportsComponent } from './record-exports/record-exports.component'
+import { RecordApisComponent } from './record-apis/record-apis.component'
 
 @NgModule({
-  declarations: [DataTableComponent],
+  declarations: [
+    RecordMetadataComponent,
+    DataViewMapComponent,
+    DataViewTableComponent,
+    RecordExportsComponent,
+    RecordApisComponent,
+  ],
   imports: [
     CommonModule,
     ApiModule,
@@ -17,6 +27,12 @@ import { DataTableComponent } from './data-table/data-table.component'
     EffectsModule.forFeature([MdViewEffects]),
   ],
   providers: [MdViewFacade],
-  exports: [DataTableComponent],
+  exports: [
+    RecordMetadataComponent,
+    DataViewMapComponent,
+    DataViewTableComponent,
+    RecordExportsComponent,
+    RecordApisComponent,
+  ],
 })
 export class MdViewModule {}

@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { DataTableComponent } from './data-table.component'
+import { RecordApisComponent } from './record-apis.component'
 
-describe('DataTableComponent', () => {
-  let component: DataTableComponent
-  let fixture: ComponentFixture<DataTableComponent>
+describe('RecordApisComponent', () => {
+  let component: RecordApisComponent
+  let fixture: ComponentFixture<RecordApisComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DataTableComponent],
+      declarations: [RecordApisComponent],
     }).compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DataTableComponent)
+    fixture = TestBed.createComponent(RecordApisComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
