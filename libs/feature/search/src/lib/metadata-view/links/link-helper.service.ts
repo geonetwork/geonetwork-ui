@@ -1,31 +1,41 @@
 import { Injectable } from '@angular/core'
-import { DatasetFinderService, LinkUsage } from '@geonetwork-ui/feature/dataviz'
 import { MetadataLink, MetadataRecord } from '@geonetwork-ui/util/shared'
+import { LinkClassifierService, LinkUsage } from './link-classifier.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class LinkHelperService {
-  constructor(private datasetFinder: DatasetFinderService) {}
+  constructor(private linkClassifier: LinkClassifierService) {}
 
   hasLinks(record: MetadataRecord): boolean {
     return 'links' in record
   }
-  isDataLink(link: MetadataLink): boolean {
-    return this.datasetFinder.getLinkUsages(link).length > 0
-  }
-  isOtherLink(link: MetadataLink): boolean {
-    return this.datasetFinder.getLinkUsages(link).length === 0
-  }
   isValidLink(link: MetadataLink): boolean {
     return !('invalid' in link)
   }
-  isMapLink(link: MetadataLink): boolean {
-    return this.datasetFinder.getLinkUsages(link).indexOf(LinkUsage.MAP) > -1
+  isApiLink(link: MetadataLink): boolean {
+    return (
+      this.linkClassifier.getUsagesForLink(link).indexOf(LinkUsage.API) > -1
+    )
+  }
+  isMapApiLink(link: MetadataLink): boolean {
+    return (
+      this.linkClassifier.getUsagesForLink(link).indexOf(LinkUsage.MAPAPI) > -1
+    )
   }
   isDownloadLink(link: MetadataLink): boolean {
     return (
-      this.datasetFinder.getLinkUsages(link).indexOf(LinkUsage.DOWNLOAD) > -1
+      this.linkClassifier.getUsagesForLink(link).indexOf(LinkUsage.DOWNLOAD) >
+      -1
     )
+  }
+  isDataLink(link: MetadataLink): boolean {
+    return (
+      this.linkClassifier.getUsagesForLink(link).indexOf(LinkUsage.DATA) > -1
+    )
+  }
+  isOtherLink(link: MetadataLink): boolean {
+    return this.linkClassifier.getUsagesForLink(link).length === 0
   }
 }

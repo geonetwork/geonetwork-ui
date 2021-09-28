@@ -30,6 +30,7 @@ interface MetadataLinkValid {
   // either a file name, a layer name or any other resource identifier
   name?: string
   protocol?: string
+  format?: string
   description?: string
 }
 export type MetadataLink = MetadataLinkValid | { invalid: true; reason: string }

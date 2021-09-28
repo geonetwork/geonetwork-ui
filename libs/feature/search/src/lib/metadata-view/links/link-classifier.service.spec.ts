@@ -1,141 +1,118 @@
 import { TestBed } from '@angular/core/testing'
-import { MdViewFacade } from '../state/mdview.facade'
-import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/ui/search'
-import { Subject } from 'rxjs'
-
-import { LinkClassifierService } from './link-classifier.service'
-
-const facadeMock = {
-  metadata$: new Subject(),
-} as any
+import { LinkClassifierService, LinkUsage } from './link-classifier.service'
 
 describe('LinkClassifierService', () => {
+  const readmeLink = {
+    protocol: 'WWW:LINK',
+    description: 'Readme page',
+    url: 'http://envlit.ifremer.fr/resultats/quadrige',
+  }
+  const doiLink = {
+    protocol: 'WWW:DOI',
+    description: 'DOI for the resource',
+    url: 'http://doi.org/123-456-678',
+  }
+  const dataCsv = {
+    protocol: 'WWW:DOWNLOAD',
+    description: 'Data in CSV format',
+    name: 'abc.csv',
+    url: 'http://my.server/files/abc.csv',
+  }
+  const dataXls = {
+    protocol: 'WWW:DOWNLOAD',
+    description: 'Data in XLS format',
+    name: 'abc.xls',
+    url: 'https://my.server/files/abc.xls',
+  }
+  const dataXlsx = {
+    protocol: 'WWW:DOWNLOAD',
+    description: 'Data in XLSX format',
+    name: 'abc.XLSX',
+    url: 'https://my.server/files/abc.XLSX',
+  }
+  const dataJson = {
+    protocol: 'WWW:DOWNLOAD',
+    description: 'Data in JSON format',
+    name: 'abc.json',
+    url: 'https://my.server/files/abc.json',
+  }
+  const geodataJson = {
+    protocol: 'WWW:DOWNLOAD',
+    description: 'Geographic data in GeoJSON format',
+    format: 'geojson',
+    name: 'mylayer',
+    url: 'http://my.server/files/geographic/dataset',
+  }
+  const geodataWms = {
+    protocol: 'OGC:WMS',
+    name: 'mylayer',
+    url: 'https://my.ogc.server/wms',
+  }
+  const geodataWfs = {
+    protocol: 'OGC:WFS',
+    name: 'mylayer',
+    url: 'https://my.ogc.server/wfs',
+  }
+  const geodataWms2 = {
+    protocol: 'OGC:WMS',
+    name: 'myotherlayer',
+    url: 'https://my.ogc.server/wms',
+  }
+  const geodataWfs2 = {
+    protocol: 'OGC:WFS',
+    name: 'myotherlayer',
+    url: 'https://my.ogc.server/wfs',
+  }
   let service: LinkClassifierService
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: MdViewFacade,
-          useValue: facadeMock,
-        },
-      ],
-    })
-    service = TestBed.inject(LinkClassifierService)
+    service = new LinkClassifierService()
   })
 
   it('should be created', () => {
     expect(service).toBeTruthy()
   })
 
-  describe('classify links', () => {
-    let allLinks, otherLinks, dataLinks, validMapLinks
-    beforeEach(() => {
-      service.allLinks$.subscribe((links) => (allLinks = links))
-      service.otherLinks$.subscribe((links) => (otherLinks = links))
-      service.dataLinks$.subscribe((links) => (dataLinks = links))
-      service.validMapLinks$.subscribe((links) => (validMapLinks = links))
-      facadeMock.metadata$.next(RECORDS_FULL_FIXTURE[0])
+  describe('#getUsagesForLink', () => {
+    describe('for a WMS link', () => {
+      it('returns map API usage', () => {
+        expect(service.getUsagesForLink(geodataWms)).toEqual([LinkUsage.MAPAPI])
+      })
     })
-    it('all links', () => {
-      expect(allLinks).toEqual(RECORDS_FULL_FIXTURE[0].links)
+    describe('for a WFS link', () => {
+      it('returns download and API usage', () => {
+        expect(service.getUsagesForLink(geodataWfs)).toEqual([
+          LinkUsage.API,
+          LinkUsage.DOWNLOAD,
+          LinkUsage.DATA,
+        ])
+      })
     })
-    it('data links', () => {
-      expect(dataLinks).toEqual([
-        {
-          description: 'Lieu de surveillance (point)',
-          name: 'surval_parametre_point',
-          protocol: 'OGC:WMS',
-          url: 'https://www.ifremer.fr/services/wms/surveillance_littorale',
-        },
-        {
-          description: 'Lieu de surveillance (point)',
-          name: 'surval_parametre_point',
-          protocol: 'OGC:WFS',
-          url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
-        },
-        {
-          description: 'Lieu de surveillance (polygone)',
-          name: 'surval_parametre_polygone',
-          protocol: 'OGC:WMS',
-          url: 'https://www.ifremer.fr/services/wms/surveillance_littorale',
-        },
-        {
-          description: 'Lieu de surveillance (polygone)',
-          name: 'surval_parametre_polygone',
-          protocol: 'OGC:WFS',
-          url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
-        },
-      ])
+    describe('for a link to a CSV file', () => {
+      it('returns a download usage', () => {
+        expect(service.getUsagesForLink(dataCsv)).toEqual([
+          LinkUsage.DOWNLOAD,
+          LinkUsage.DATA,
+        ])
+      })
     })
-    it('other links', () => {
-      expect(otherLinks).toEqual([
-        {
-          description: "Extraction des données d'observation",
-          name: 'r:survalextraction',
-          protocol: 'OGC:WPS',
-          url: 'https://www.ifremer.fr/services/wps/surval',
-        },
-        {
-          description: "Extraction des données d'observation",
-          name: 'r:survalextraction',
-          protocol: 'OGC:WPS',
-          url: 'https://www.ifremer.fr/services/wps/surval',
-        },
-        {
-          description: '',
-          name: 'La base de données Quadrige',
-          protocol: 'WWW:LINK',
-          url: 'http://envlit.ifremer.fr/resultats/quadrige',
-        },
-        {
-          description: '',
-          name: 'La surveillance du milieu marin et côtier',
-          protocol: 'WWW:LINK-1.0-http--link',
-          url: 'http://envlit.ifremer.fr/surveillance/presentation',
-        },
-        {
-          description:
-            'Manuel pour l’utilisation des données REPHY. Informations destinées à améliorer la compréhension des fichiers de données REPHY mis à disposition des scientifiques et du public. ODE/VIGIES/17-15. Ifremer, ODE/VIGIES, Coordination REPHY & Cellule Quadrige (2017).',
-          name: 'Manuel pour l’utilisation des données REPHY',
-          protocol: 'WWW:LINK',
-          url: 'http://archimer.ifremer.fr/doc/00409/52016/',
-        },
-        {
-          description: 'DOI du jeu de données',
-          name: 'DOI du jeu de données',
-          protocol: 'WWW:LINK-1.0-http--metadata-URL',
-          url: 'https://doi.org/10.12770/cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
-        },
-      ])
+    describe('for a link to a XLSX file', () => {
+      it('returns a download usage', () => {
+        expect(service.getUsagesForLink(dataXlsx)).toEqual([LinkUsage.DOWNLOAD])
+      })
     })
-    it('valid map links', () => {
-      expect(validMapLinks).toEqual([
-        {
-          description: 'Lieu de surveillance (point)',
-          name: 'surval_parametre_point',
-          protocol: 'OGC:WMS',
-          url: 'https://www.ifremer.fr/services/wms/surveillance_littorale',
-        },
-        {
-          description: 'Lieu de surveillance (point)',
-          name: 'surval_parametre_point',
-          protocol: 'OGC:WFS',
-          url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
-        },
-        {
-          description: 'Lieu de surveillance (polygone)',
-          name: 'surval_parametre_polygone',
-          protocol: 'OGC:WMS',
-          url: 'https://www.ifremer.fr/services/wms/surveillance_littorale',
-        },
-        {
-          description: 'Lieu de surveillance (polygone)',
-          name: 'surval_parametre_polygone',
-          protocol: 'OGC:WFS',
-          url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
-        },
-      ])
+    describe('for a link to a geojson file', () => {
+      it('returns download and data usage', () => {
+        expect(service.getUsagesForLink(geodataJson)).toEqual([
+          LinkUsage.DOWNLOAD,
+          LinkUsage.DATA,
+        ])
+      })
+    })
+    describe('for a link to a simple page', () => {
+      it('returns null', () => {
+        expect(service.getUsagesForLink(readmeLink)).toEqual([])
+      })
     })
   })
 })

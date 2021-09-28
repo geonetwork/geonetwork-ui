@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing'
-import { DatasetFinderService, LinkUsage } from '@geonetwork-ui/feature/dataviz'
+import { LinkClassifierService, LinkUsage } from './link-classifier.service'
 import {
   RECORDS_FULL_FIXTURE,
   RECORDS_SUMMARY_FIXTURE,
@@ -13,8 +13,8 @@ import {
 import { LinkHelperService } from './link-helper.service'
 
 let linkUsage: LinkUsage[]
-const datasetFinderMock = {
-  getLinkUsages: jest.fn(() => linkUsage),
+const linkClassifierMock = {
+  getUsagesForLink: jest.fn(() => linkUsage),
 }
 
 describe('LinkHelperService', () => {
@@ -27,8 +27,8 @@ describe('LinkHelperService', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: DatasetFinderService,
-          useValue: datasetFinderMock,
+          provide: LinkClassifierService,
+          useValue: linkClassifierMock,
         },
       ],
     })
@@ -65,8 +65,8 @@ describe('LinkHelperService', () => {
         linkUsage = []
         result = service.isDataLink(link)
       })
-      it('calls #getLinkUsages', () => {
-        expect(datasetFinderMock.getLinkUsages).toHaveBeenCalledWith(link)
+      it('calls #getUsagesForLink', () => {
+        expect(linkClassifierMock.getUsagesForLink).toHaveBeenCalledWith(link)
       })
       it('returns false', () => {
         expect(result).toBe(false)
@@ -75,7 +75,7 @@ describe('LinkHelperService', () => {
     describe('with link usages', () => {
       beforeEach(() => {
         linkUsage = [LinkUsage.DOWNLOAD]
-        result = service.isDataLink(link)
+        result = service.isDownloadLink(link)
       })
       it('returns true', () => {
         expect(result).toBe(true)
@@ -88,8 +88,8 @@ describe('LinkHelperService', () => {
         linkUsage = []
         result = service.isOtherLink(link)
       })
-      it('calls #getLinkUsages', () => {
-        expect(datasetFinderMock.getLinkUsages).toHaveBeenCalledWith(link)
+      it('calls #getUsagesForLink', () => {
+        expect(linkClassifierMock.getUsagesForLink).toHaveBeenCalledWith(link)
       })
       it('returns true', () => {
         expect(result).toBe(true)
@@ -132,11 +132,11 @@ describe('LinkHelperService', () => {
   describe('#isMapLink', () => {
     describe('MAP usage', () => {
       beforeEach(() => {
-        linkUsage = [LinkUsage.MAP, LinkUsage.DOWNLOAD]
-        result = service.isMapLink(link)
+        linkUsage = [LinkUsage.MAPAPI, LinkUsage.DOWNLOAD]
+        result = service.isMapApiLink(link)
       })
-      it('calls #getLinkUsages', () => {
-        expect(datasetFinderMock.getLinkUsages).toHaveBeenCalledWith(link)
+      it('calls #getUsagesForLink', () => {
+        expect(linkClassifierMock.getUsagesForLink).toHaveBeenCalledWith(link)
       })
       it('returns true', () => {
         expect(result).toBe(true)
@@ -145,7 +145,7 @@ describe('LinkHelperService', () => {
     describe('no MAP usage', () => {
       beforeEach(() => {
         linkUsage = [LinkUsage.DOWNLOAD]
-        result = service.isMapLink(link)
+        result = service.isMapApiLink(link)
       })
       it('returns false', () => {
         expect(result).toBe(false)
@@ -156,11 +156,11 @@ describe('LinkHelperService', () => {
   describe('#isDownloadLink', () => {
     describe('DOWNLAD usage', () => {
       beforeEach(() => {
-        linkUsage = [LinkUsage.MAP, LinkUsage.DOWNLOAD]
+        linkUsage = [LinkUsage.MAPAPI, LinkUsage.DOWNLOAD]
         result = service.isDownloadLink(link)
       })
-      it('calls #getLinkUsages', () => {
-        expect(datasetFinderMock.getLinkUsages).toHaveBeenCalledWith(link)
+      it('calls #getUsagesForLink', () => {
+        expect(linkClassifierMock.getUsagesForLink).toHaveBeenCalledWith(link)
       })
       it('returns true', () => {
         expect(result).toBe(true)
@@ -168,7 +168,7 @@ describe('LinkHelperService', () => {
     })
     describe('no MAP usage', () => {
       beforeEach(() => {
-        linkUsage = [LinkUsage.MAP]
+        linkUsage = [LinkUsage.MAPAPI]
         result = service.isDownloadLink(link)
       })
       it('returns false', () => {

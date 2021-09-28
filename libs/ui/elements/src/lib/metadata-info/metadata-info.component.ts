@@ -9,7 +9,7 @@ import { MetadataLink, MetadataRecord } from '@geonetwork-ui/util/shared'
 })
 export class MetadataInfoComponent {
   @Input() metadata: MetadataRecord
-  @Input() dataLinks: MetadataLink[] = []
+  @Input() downloadLinks: MetadataLink[] = []
   @Input() otherLinks: MetadataLink[] = []
   @Input() incomplete: boolean
 

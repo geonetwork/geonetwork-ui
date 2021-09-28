@@ -1,8 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import {
-  LinkClassifierService,
-  MdViewFacade,
-} from '@geonetwork-ui/feature/search'
+import { MdViewFacade } from '@geonetwork-ui/feature/search'
 
 @Component({
   selector: 'gn-ui-record-view',
@@ -11,10 +8,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecordViewComponent {
-  constructor(
-    public facade: MdViewFacade,
-    public links: LinkClassifierService
-  ) {}
+  constructor(public facade: MdViewFacade) {}
 
   onTabIndexChange(index: number): void {
     console.log(index)

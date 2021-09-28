@@ -46,10 +46,10 @@
 <p class="mb-4">
   <gn-ui-content-ghost
     ghostClass="h-24"
-    [showContent]="!incomplete || !!dataLinks"
+    [showContent]="!incomplete || !!downloadLinks"
   >
     <ul>
-      <li *ngFor="let link of dataLinks" [title]="link.name">
+      <li *ngFor="let link of downloadLinks" [title]="link.name">
         <a
           href="{{ link.url }}"
           class="my-2 p-2 border border-gray-400 rounded block"
