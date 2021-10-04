@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { RecordExportsComponent } from './record-exports.component'
+import { DataExportsComponent } from './data-exports.component'
 
-describe('RecordExportsComponent', () => {
-  let component: RecordExportsComponent
-  let fixture: ComponentFixture<RecordExportsComponent>
+describe('DataExportsComponent', () => {
+  let component: DataExportsComponent
+  let fixture: ComponentFixture<DataExportsComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecordExportsComponent],
+      declarations: [DataExportsComponent],
     }).compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecordExportsComponent)
+    fixture = TestBed.createComponent(DataExportsComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

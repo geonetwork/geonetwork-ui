@@ -9,16 +9,16 @@ import { MD_VIEW_FEATURE_STATE_KEY, reducer } from './state/mdview.reducer'
 import { RecordMetadataComponent } from './record-metadata/record-metadata.component'
 import { DataViewMapComponent } from './data-view-map/data-view-map.component'
 import { DataViewTableComponent } from './data-view-table/data-view-table.component'
-import { RecordExportsComponent } from './record-exports/record-exports.component'
-import { RecordApisComponent } from './record-apis/record-apis.component'
+import { DataExportsComponent } from './data-exports/data-exports.component'
+import { DataApisComponent } from './data-apis/data-apis.component'
 
 @NgModule({
   declarations: [
     RecordMetadataComponent,
     DataViewMapComponent,
     DataViewTableComponent,
-    RecordExportsComponent,
-    RecordApisComponent,
+    DataExportsComponent,
+    DataApisComponent,
   ],
   imports: [
     CommonModule,
@@ -31,8 +31,8 @@ import { RecordApisComponent } from './record-apis/record-apis.component'
     RecordMetadataComponent,
     DataViewMapComponent,
     DataViewTableComponent,
-    RecordExportsComponent,
-    RecordApisComponent,
+    DataExportsComponent,
+    DataApisComponent,
   ],
 })
 export class MdViewModule {}
