@@ -17,37 +17,3 @@
     {{ metadata.abstract }}
   </gn-ui-content-ghost>
 </p>
-<p class="font-medium text-primary mb-4">Links</p>
-<p class="mb-4">
-  <gn-ui-content-ghost
-    ghostClass="h-24"
-    [showContent]="!incomplete || !!otherLinks"
-  >
-    <ul>
-      <li *ngFor="let link of otherLinks" [title]="link.name">
-        <a
-          href="{{ link.url }}"
-          class="my-2 p-2 border border-gray-400 rounded block"
-        >
-          {{ link.description || link.name }}
-          <br />
-          <span class="text-sm text-gray-500 mr-3">
-            {{ link.url }}
-          </span>
-          <span class="text-sm text-gray-500">
-            protocol: {{ link.protocol }}
-          </span>
-        </a>
-      </li>
-    </ul>
-  </gn-ui-content-ghost>
-</p>
-<p class="font-medium text-primary mb-4">Downloads</p>
-<p class="mb-4">
-  <gn-ui-content-ghost
-    ghostClass="h-24"
-    [showContent]="!incomplete || !!downloadLinks"
-  >
-    <gn-ui-export-list [links]="downloadLinks"></gn-ui-export-list>
-  </gn-ui-content-ghost>
-</p>
