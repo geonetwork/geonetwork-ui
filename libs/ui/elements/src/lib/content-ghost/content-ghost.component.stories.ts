@@ -2,7 +2,7 @@ import { moduleMetadata, Story, Meta } from '@storybook/angular'
 import { ContentGhostComponent } from './content-ghost.component'
 
 export default {
-  title: 'Layout/ContentGhostComponent',
+  title: 'Elements/ContentGhostComponent',
   component: ContentGhostComponent,
   decorators: [
     moduleMetadata({

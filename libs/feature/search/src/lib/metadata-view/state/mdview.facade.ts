@@ -3,6 +3,7 @@ import { MetadataRecord } from '@geonetwork-ui/util/shared'
 
 import { select, Store } from '@ngrx/store'
 import { filter, map } from 'rxjs/operators'
+import { LinkHelperService } from '../links/link-helper.service'
 
 import * as MdViewActions from './mdview.actions'
 import * as MdViewSelectors from './mdview.selectors'
@@ -32,8 +33,26 @@ export class MdViewFacade {
     select(MdViewSelectors.getMetadataError),
     filter((error) => error !== null)
   )
+  allLinks$ = this.metadata$.pipe(
+    map((record) => (this.helper.hasLinks(record) ? record.links : []))
+  )
+  apiLinks$ = this.allLinks$.pipe(
+    map((links) => links.filter((link) => this.helper.isApiLink(link)))
+  )
+  mapApiLinks$ = this.allLinks$.pipe(
+    map((links) => links.filter((link) => this.helper.isMapApiLink(link)))
+  )
+  downloadLinks$ = this.allLinks$.pipe(
+    map((links) => links.filter((link) => this.helper.isDownloadLink(link)))
+  )
+  dataLinks$ = this.allLinks$.pipe(
+    map((links) => links.filter((link) => this.helper.isDataLink(link)))
+  )
+  otherLinks$ = this.allLinks$.pipe(
+    map((links) => links.filter((link) => this.helper.isOtherLink(link)))
+  )
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private helper: LinkHelperService) {}
 
   /**
    * This will show an incomplete record (e.g. from a search result) as a preview

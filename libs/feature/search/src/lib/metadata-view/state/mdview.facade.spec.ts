@@ -3,7 +3,10 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing'
 import { initialMdviewState, MD_VIEW_FEATURE_STATE_KEY } from './mdview.reducer'
 import { MdViewFacade } from './mdview.facade'
 import { hot } from '@nrwl/angular/testing'
-import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/ui/search'
+import {
+  RECORDS_FULL_FIXTURE,
+  RECORDS_SUMMARY_FIXTURE,
+} from '@geonetwork-ui/ui/search'
 import * as MdViewActions from './mdview.actions'
 
 describe('MdViewFacade', () => {
@@ -55,6 +58,22 @@ describe('MdViewFacade', () => {
       })
       const expected = hot('a', { a: RECORDS_SUMMARY_FIXTURE[0] })
       expect(facade.metadata$).toBeObservable(expected)
+    })
+  })
+  describe('allLinks$', () => {
+    it('does not emit if no links', () => {
+      const expected = hot('-')
+      expect(facade.allLinks$).toBeObservable(expected)
+    })
+    it('emits allLinks if present', () => {
+      store.setState({
+        [MD_VIEW_FEATURE_STATE_KEY]: {
+          ...initialMdviewState,
+          metadata: RECORDS_FULL_FIXTURE[0],
+        },
+      })
+      const expected = hot('a', { a: RECORDS_FULL_FIXTURE[0].links })
+      expect(facade.allLinks$).toBeObservable(expected)
     })
   })
   describe('isIncomplete$', () => {

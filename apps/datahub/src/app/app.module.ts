@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core'
+import { MatIconModule } from '@angular/material/icon'
+import { MatTabsModule } from '@angular/material/tabs'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
 import {
@@ -6,6 +8,7 @@ import {
   MdViewModule,
   SearchRouterModule,
 } from '@geonetwork-ui/feature/search'
+import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import {
   TRANSLATE_GEONETWORK_CONFIG,
   UtilI18nModule,
@@ -20,13 +23,15 @@ import { environment } from '../environments/environment'
 import { AppComponent } from './app.component'
 import { MainSearchComponent } from './main-search/main-search.component'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
+import { RecordViewComponent } from './dataset-view/record-view.component'
+import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 
 export const metaReducers: MetaReducer[] = !environment.production
   ? [storeFreeze]
   : []
 
 @NgModule({
-  declarations: [AppComponent, MainSearchComponent],
+  declarations: [AppComponent, MainSearchComponent, RecordViewComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
@@ -38,6 +43,10 @@ export const metaReducers: MetaReducer[] = !environment.production
     FeatureSearchModule,
     SearchRouterModule,
     MdViewModule,
+    UiLayoutModule,
+    UiElementsModule,
+    MatTabsModule,
+    MatIconModule,
   ],
   providers: [
     {
