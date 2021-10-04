@@ -5,15 +5,15 @@ import {
   componentWrapperDecorator,
 } from '@storybook/angular'
 import { ExportEntryComponent } from './export-entry.component'
-import { UiLayoutModule } from '../ui-layout.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { UiElementsModule } from '../ui-elements.module'
 
 export default {
-  title: 'Layout/ExportEntryComponent',
+  title: 'Elements/ExportEntryComponent',
   component: ExportEntryComponent,
   decorators: [
     moduleMetadata({
-      imports: [UiLayoutModule, BrowserAnimationsModule],
+      imports: [UiElementsModule, BrowserAnimationsModule],
     }),
     componentWrapperDecorator(
       (story) => `<div style="max-width: 800px">${story}</div>`

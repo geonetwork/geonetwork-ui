@@ -12,7 +12,7 @@ describe('MetadataInfoComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        MetadataPageComponent,
+        MetadataInfoComponent,
         ContentGhostComponent,
         ExportListComponent,
       ],

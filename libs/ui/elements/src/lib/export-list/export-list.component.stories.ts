@@ -5,16 +5,16 @@ import {
   componentWrapperDecorator,
 } from '@storybook/angular'
 import { ExportListComponent } from './export-list.component'
-import { UiLayoutModule } from '../ui-layout.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { EXPORT_LIST_FIXTURE } from './export-list.fixtures'
+import { UiElementsModule } from '../ui-elements.module'
 
 export default {
-  title: 'Layout/ExportListComponent',
+  title: 'Elements/ExportListComponent',
   component: ExportListComponent,
   decorators: [
     moduleMetadata({
-      imports: [UiLayoutModule, BrowserAnimationsModule],
+      imports: [UiElementsModule, BrowserAnimationsModule],
     }),
     componentWrapperDecorator(
       (story) => `<div style="max-width: 800px">${story}</div>`
