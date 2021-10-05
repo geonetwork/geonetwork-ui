@@ -12,12 +12,14 @@ describe('ExportListComponent', () => {
     {
       protocol: 'WWW:DOWNLOAD',
       name: 'allroads.geojson',
+      format: 'geojson',
       description: 'A file that contains all roads',
       url: 'https//roads.com/allroads.geojson',
     },
     {
       protocol: 'WWW:DOWNLOAD',
       name: 'allroads.csv',
+      format: 'csv',
       description: 'A file that contains all roads',
       url: 'https//roads.com/allroads.csv',
     },

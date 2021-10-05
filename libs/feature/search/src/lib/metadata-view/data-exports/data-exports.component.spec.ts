@@ -9,6 +9,20 @@ import { DataExportsComponent } from './data-exports.component'
 class MdViewFacadeMock {
   isPresent$ = new BehaviorSubject(false)
   metadata$ = new BehaviorSubject(RECORDS_FULL_FIXTURE[0])
+  downloadLinks$ = new BehaviorSubject([
+    {
+      description: 'Lieu de surveillance (point)',
+      name: 'surval_parametre_point',
+      protocol: 'OGC:WFS',
+      url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
+    },
+    {
+      description: 'Lieu de surveillance (polygone)',
+      name: 'surval_parametre_polygone',
+      protocol: 'OGC:WFS',
+      url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
+    },
+  ])
 }
 
 describe('DataExportsComponent', () => {

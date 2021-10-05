@@ -19,6 +19,7 @@ describe('ExportEntryComponent', () => {
     component.link = {
       protocol: 'WWW:DOWNLOAD',
       name: 'allroads.geojson',
+      format: 'geojson',
       description: 'A file that contains all roads',
       url: 'https//roads.com/allroads.geojson',
     }

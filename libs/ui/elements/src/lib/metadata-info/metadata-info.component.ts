@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { MetadataLink, MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-metadata-info',

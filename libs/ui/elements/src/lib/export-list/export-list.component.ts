@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
-import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { MetadataLink } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-export-list',
@@ -8,5 +8,5 @@ import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExportListComponent {
-  @Input() links: Array<MetadataLinkValid>
+  @Input() links: Array<MetadataLink>
 }
