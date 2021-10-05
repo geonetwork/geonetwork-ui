@@ -31,32 +31,32 @@ export class DataExportsComponent implements OnInit {
   }
 
   getFormat(link: MetadataLink) {
-    const extensions = [
-      'csv',
-      'geojson',
-      'json',
-      'shp',
-      'kml',
-      'gpkg',
-      'xls',
-      'xlsx',
-      'zip',
-      'pdf',
-      'html',
-    ]
+    const formats = {
+      csv: ['csv'],
+      geojson: ['geojson'],
+      json: ['json'],
+      shp: ['shp', 'shape'],
+      kml: ['kml'],
+      gpkg: ['gpkg', 'geopackage'],
+      excel: ['xls', 'xlsx'],
+      pdf: ['pdf'],
+      zip: ['zip'],
+    }
     if ('format' in link) {
       return link.format
     }
-    for (const extension of extensions) {
-      if (this.checkFileExtensions(link, extension)) return extension
+    for (const format in formats) {
+      for (const alias of formats[format]) {
+        if (this.findFileFormats(link, alias)) return format
+      }
     }
     return 'unknown'
   }
 
-  checkFileExtensions(link: MetadataLink, extension: string) {
+  findFileFormats(link: MetadataLink, format: string) {
     return (
-      ('name' in link && link.name.match(new RegExp(`.${extension}`, 'i'))) ||
-      ('url' in link && link.url.match(new RegExp(`.${extension}`, 'i')))
+      ('name' in link && link.name.match(new RegExp(`${format}`, 'i'))) ||
+      ('url' in link && link.url.match(new RegExp(`${format}`, 'i')))
     )
   }
 }
