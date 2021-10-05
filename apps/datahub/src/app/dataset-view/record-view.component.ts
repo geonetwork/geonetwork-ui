@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { MapManagerService } from '@geonetwork-ui/feature/map'
 import { MdViewFacade } from '@geonetwork-ui/feature/search'
 
 @Component({
@@ -8,9 +9,14 @@ import { MdViewFacade } from '@geonetwork-ui/feature/search'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecordViewComponent {
-  constructor(public facade: MdViewFacade) {}
+  constructor(
+    public facade: MdViewFacade,
+    private mapManager: MapManagerService
+  ) {}
 
   onTabIndexChange(index: number): void {
-    console.log(index)
+    if (index === 2) {
+      setTimeout(() => this.mapManager.map.updateSize(), 0)
+    }
   }
 }
