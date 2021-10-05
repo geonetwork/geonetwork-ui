@@ -11,12 +11,12 @@ import { LinkClassifierService } from '../links/link-classifier.service'
 import { MdViewFacade } from '../state'
 
 @Component({
-  selector: 'gn-ui-data-exports',
-  templateUrl: './data-exports.component.html',
-  styleUrls: ['./data-exports.component.css'],
+  selector: 'gn-ui-data-downloads',
+  templateUrl: './data-downloads.component.html',
+  styleUrls: ['./data-downloads.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataExportsComponent implements OnInit {
+export class DataDownloadsComponent implements OnInit {
   links$: Observable<Array<MetadataLink>>
 
   constructor(

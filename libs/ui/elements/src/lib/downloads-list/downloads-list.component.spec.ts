@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ExportListComponent } from './export-list.component'
-import { ExportEntryComponent } from '../export-entry/export-entry.component'
+import { DownloadsListComponent } from './downloads-list.component'
+import { DownloadsListItemComponent } from '../downloads-list-item/downloads-list-item.component'
 import { MatIconModule } from '@angular/material/icon'
 
-describe('ExportListComponent', () => {
-  let component: ExportListComponent
-  let fixture: ComponentFixture<ExportListComponent>
+describe('DownloadsListComponent', () => {
+  let component: DownloadsListComponent
+  let fixture: ComponentFixture<DownloadsListComponent>
 
   const linksMock = [
     {
@@ -27,13 +27,13 @@ describe('ExportListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ExportListComponent, ExportEntryComponent],
+      declarations: [DownloadsListComponent, DownloadsListItemComponent],
       imports: [MatIconModule],
     }).compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ExportListComponent)
+    fixture = TestBed.createComponent(DownloadsListComponent)
     component = fixture.componentInstance
     component.links = linksMock
     fixture.detectChanges()

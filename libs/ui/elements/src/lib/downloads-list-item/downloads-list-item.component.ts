@@ -9,12 +9,12 @@ import {
 import { ColorService, MetadataLinkValid } from '@geonetwork-ui/util/shared'
 
 @Component({
-  selector: 'gn-ui-export-entry',
-  templateUrl: './export-entry.component.html',
-  styleUrls: ['./export-entry.component.css'],
+  selector: 'gn-ui-downloads-list-item',
+  templateUrl: './downloads-list-item.component.html',
+  styleUrls: ['./downloads-list-item.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExportEntryComponent implements OnInit {
+export class DownloadsListItemComponent implements OnInit {
   @Input() link: MetadataLinkValid
   @Output() exportUrl = new EventEmitter<string>()
   color: string

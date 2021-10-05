@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs'
 import { MdViewFacade } from '../state'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 
-import { DataExportsComponent } from './data-exports.component'
+import { DataDownloadsComponent } from './data-downloads.component'
 
 class MdViewFacadeMock {
   isPresent$ = new BehaviorSubject(false)
@@ -25,13 +25,13 @@ class MdViewFacadeMock {
   ])
 }
 
-describe('DataExportsComponent', () => {
-  let component: DataExportsComponent
-  let fixture: ComponentFixture<DataExportsComponent>
+describe('DataDownloadsComponent', () => {
+  let component: DataDownloadsComponent
+  let fixture: ComponentFixture<DataDownloadsComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DataExportsComponent],
+      declarations: [DataDownloadsComponent],
       imports: [UiElementsModule],
       providers: [
         {
@@ -43,7 +43,7 @@ describe('DataExportsComponent', () => {
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DataExportsComponent)
+    fixture = TestBed.createComponent(DataDownloadsComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

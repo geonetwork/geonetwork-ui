@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatIconModule } from '@angular/material/icon'
-import { ExportEntryComponent } from './export-entry.component'
+import { DownloadsListItemComponent } from './downloads-list-item.component'
 
-describe('ExportEntryComponent', () => {
-  let component: ExportEntryComponent
-  let fixture: ComponentFixture<ExportEntryComponent>
+describe('DownloadsListItemComponent', () => {
+  let component: DownloadsListItemComponent
+  let fixture: ComponentFixture<DownloadsListItemComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ExportEntryComponent],
+      declarations: [DownloadsListItemComponent],
       imports: [MatIconModule],
     }).compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ExportEntryComponent)
+    fixture = TestBed.createComponent(DownloadsListItemComponent)
     component = fixture.componentInstance
     component.link = {
       protocol: 'WWW:DOWNLOAD',
