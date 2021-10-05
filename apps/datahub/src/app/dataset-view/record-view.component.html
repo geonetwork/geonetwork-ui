@@ -29,12 +29,12 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab>
+  <mat-tab [disabled]="!(displayMap$ | async)">
     <ng-template mat-tab-label>
       <mat-icon class="mr-3">map</mat-icon>
       <span translate="">mdview.tab.map</span>
     </ng-template>
-    <div style="height: 500px">
+    <div style="height: 500px" *ngIf="displayMap$ | async">
       <gn-ui-data-view-map></gn-ui-data-view-map>
     </div>
   </mat-tab>

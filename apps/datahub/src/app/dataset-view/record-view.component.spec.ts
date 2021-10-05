@@ -1,22 +1,21 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
+import { MapManagerService } from '@geonetwork-ui/feature/map'
 import { MdViewFacade } from '@geonetwork-ui/feature/search'
 import {
   MetadataInfoComponent,
   UiElementsModule,
 } from '@geonetwork-ui/ui/elements'
-import {
-  RECORDS_FULL_FIXTURE,
-  RECORDS_SUMMARY_FIXTURE,
-} from '@geonetwork-ui/ui/search'
-import { BehaviorSubject } from 'rxjs'
+import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/ui/search'
+import { BehaviorSubject, Subject } from 'rxjs'
 
 import { RecordViewComponent } from './record-view.component'
 
 class MdViewFacadeMock {
   isPresent$ = new BehaviorSubject(false)
   metadata$ = new BehaviorSubject(RECORDS_SUMMARY_FIXTURE[0])
+  mapApiLinks$ = new Subject()
 }
 
 describe('DatasetViewComponent', () => {
@@ -33,6 +32,10 @@ describe('DatasetViewComponent', () => {
         {
           provide: MdViewFacade,
           useClass: MdViewFacadeMock,
+        },
+        {
+          provide: MapManagerService,
+          useValue: {},
         },
       ],
     }).compileComponents()
@@ -72,6 +75,29 @@ describe('DatasetViewComponent', () => {
       ).componentInstance
       expect(dumb.metadata).not.toHaveProperty('abstract')
       expect(dumb.incomplete).toBeTruthy()
+    })
+  })
+  describe('Map', () => {
+    let mapTab
+    describe('when no MAPAPI link', () => {
+      beforeEach(() => {
+        facade.mapApiLinks$.next(null)
+        fixture.detectChanges()
+        mapTab = fixture.debugElement.queryAll(By.css('mat-tab'))[2]
+      })
+      it('map tab is disabled', () => {
+        expect(mapTab.nativeNode.disabled).toBe(true)
+      })
+    })
+    describe('when no MAPAPI link', () => {
+      beforeEach(() => {
+        facade.mapApiLinks$.next(['link'])
+        fixture.detectChanges()
+        mapTab = fixture.debugElement.queryAll(By.css('mat-tab'))[2]
+      })
+      it('map tab is enabled', () => {
+        expect(mapTab.nativeNode.disabled).toBe(false)
+      })
     })
   })
 })
