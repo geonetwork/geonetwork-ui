@@ -6,7 +6,8 @@ import {
 } from '@angular/core'
 import { MetadataLink } from '@geonetwork-ui/util/shared'
 import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, tap } from 'rxjs/operators'
+import { LinkClassifierService } from '../links/link-classifier.service'
 import { MdViewFacade } from '../state'
 
 @Component({
@@ -18,14 +19,23 @@ import { MdViewFacade } from '../state'
 export class DataExportsComponent implements OnInit {
   links$: Observable<Array<MetadataLink>>
 
-  constructor(public facade: MdViewFacade) {}
+  constructor(
+    public facade: MdViewFacade,
+    public classifier: LinkClassifierService
+  ) {}
 
   ngOnInit() {
     this.links$ = this.facade.downloadLinks$.pipe(
       map((links) =>
-        links.map((link) =>
-          'format' in link ? link : { ...link, format: this.getFormat(link) }
-        )
+        links.flatMap((link) => {
+          if (this.classifier.isWfsLink(link)) {
+            return this.getLinksWithWfsFormats(link)
+          } else {
+            return 'format' in link
+              ? link
+              : { ...link, format: this.getFormat(link) }
+          }
+        })
       )
     )
   }
@@ -58,5 +68,13 @@ export class DataExportsComponent implements OnInit {
       ('name' in link && link.name.match(new RegExp(`${format}`, 'i'))) ||
       ('url' in link && link.url.match(new RegExp(`${format}`, 'i')))
     )
+  }
+
+  //TODO: implement logic calling getcapabilites
+  getLinksWithWfsFormats(link: MetadataLink): Array<MetadataLink> {
+    return [
+      { ...link, format: 'WFS:geojson' },
+      { ...link, format: 'WFS:csv' },
+    ]
   }
 }
