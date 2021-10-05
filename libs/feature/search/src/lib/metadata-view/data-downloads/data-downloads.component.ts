@@ -73,8 +73,11 @@ export class DataDownloadsComponent implements OnInit {
   //TODO: implement logic calling getcapabilites
   getLinksWithWfsFormats(link: MetadataLink): Array<MetadataLink> {
     return [
-      { ...link, format: 'WFS:geojson' },
-      { ...link, format: 'WFS:csv' },
+      //only display 'WFS' for now
+      { ...link, format: 'WFS' },
+      //once implemented we could get multiple formats
+      // { ...link, format: 'WFS:geojson' },
+      // { ...link, format: 'WFS:csv' },
     ]
   }
 }
