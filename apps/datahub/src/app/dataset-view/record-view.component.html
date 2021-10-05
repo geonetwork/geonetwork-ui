@@ -29,7 +29,7 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab [disabled]="!(displayMap$ | async)">
+  <mat-tab [disabled]="(displayMap$ | async) === false">
     <ng-template mat-tab-label>
       <mat-icon class="mr-3">map</mat-icon>
       <span translate="">mdview.tab.map</span>
