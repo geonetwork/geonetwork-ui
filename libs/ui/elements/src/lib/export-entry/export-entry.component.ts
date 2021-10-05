@@ -40,6 +40,9 @@ export class ExportEntryComponent implements OnInit {
       'pdf',
       'html',
     ]
+    if ('format' in link) {
+      return link.format
+    }
     for (const extension of extensions) {
       if (this.checkFileExtensions(link, extension)) return extension
     }
