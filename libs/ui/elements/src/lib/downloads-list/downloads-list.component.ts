@@ -8,5 +8,5 @@ import { MetadataLink } from '@geonetwork-ui/util/shared'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DownloadsListComponent {
-  @Input() links: Array<MetadataLink>
+  @Input() links: MetadataLink[]
 }

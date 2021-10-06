@@ -1,9 +1,4 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  Input,
-  OnInit,
-} from '@angular/core'
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
 import { MetadataLink } from '@geonetwork-ui/util/shared'
 import { Observable } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
@@ -16,29 +11,25 @@ import { MdViewFacade } from '../state'
   styleUrls: ['./data-downloads.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataDownloadsComponent implements OnInit {
-  links$: Observable<Array<MetadataLink>>
-
+export class DataDownloadsComponent {
   constructor(
     public facade: MdViewFacade,
     public classifier: LinkClassifierService
   ) {}
 
-  ngOnInit() {
-    this.links$ = this.facade.downloadLinks$.pipe(
-      map((links) =>
-        links.flatMap((link) => {
-          if (this.classifier.isWfsLink(link)) {
-            return this.getLinksWithWfsFormats(link)
-          } else {
-            return 'format' in link
-              ? link
-              : { ...link, format: this.getFormat(link) }
-          }
-        })
-      )
+  links$ = this.facade.downloadLinks$.pipe(
+    map((links) =>
+      links.flatMap((link) => {
+        if (this.classifier.isWfsLink(link)) {
+          return this.getLinksWithWfsFormats(link)
+        } else {
+          return 'format' in link
+            ? link
+            : { ...link, format: this.getFormat(link) }
+        }
+      })
     )
-  }
+  )
 
   getFormat(link: MetadataLink) {
     const formats = {
