@@ -25,9 +25,8 @@ export class LinkClassifierService {
           ('format' in link &&
             new RegExp(`${dataFormatsExp}`, 'i').test(link.format)) ||
           ('name' in link &&
-            link.name.match(new RegExp(`${dataFormatsExp}`, 'i'))) ||
-          ('url' in link &&
-            link.url.match(new RegExp(`${dataFormatsExp}`, 'i')))
+            new RegExp(`${dataFormatsExp}`, 'i').test(link.name)) ||
+          ('url' in link && new RegExp(`${dataFormatsExp}`, 'i').test(link.url))
         ) {
           return [LinkUsage.DOWNLOAD, LinkUsage.DATA]
         }
@@ -41,5 +40,26 @@ export class LinkClassifierService {
       if (/^OGC:WMTS/.test(link.protocol)) return [LinkUsage.MAPAPI]
     }
     return []
+  }
+
+  /**
+   * Returns boolean if link points to WFS
+   * @param link
+   */
+  isWfsLink(link: MetadataLink): boolean {
+    return (
+      ('protocol' in link && /^OGC:WFS/.test(link.protocol)) ||
+      ('format' in link && new RegExp(`wfs`, 'i').test(link.format)) ||
+      ('name' in link && new RegExp(`wfs`, 'i').test(link.name)) ||
+      ('url' in link && new RegExp(`wfs`, 'i').test(link.url))
+    )
+  }
+
+  /**
+   * Returns boolean if link points to ESRI REST API
+   * @param link
+   */
+  isEsriRestLink(link: MetadataLink): boolean {
+    return 'protocol' in link && /^ESRI:REST/.test(link.protocol)
   }
 }

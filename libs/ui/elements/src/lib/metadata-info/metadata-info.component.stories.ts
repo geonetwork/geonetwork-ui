@@ -1,10 +1,7 @@
 import { Meta, moduleMetadata, Story } from '@storybook/angular'
 import { MetadataInfoComponent } from './metadata-info.component'
 import { UiElementsModule } from '../ui-elements.module'
-import {
-  RECORDS_FULL_FIXTURE,
-  RECORDS_SUMMARY_FIXTURE,
-} from '@geonetwork-ui/ui/search'
+import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/ui/search'
 
 export default {
   title: 'Elements/MetadataInfoComponent',
