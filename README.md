@@ -17,8 +17,6 @@ or using [docker](https://github.com/geonetwork/docker-geonetwork/tree/master/4.
 
 Run `npm install` to fetch all dependencies of the project.
 
-Run `npm run start` to start the default app.
-
 Run `ng serve app-search` to start the search app in a dev server.
 
 Once started the application is available at `http://localhost:4200/`.
@@ -41,101 +39,85 @@ You can either try complete applications or showcases of components using the fo
 
 ## More information
 
-The GeoNetwork UI project was generated using [Nx](https://nx.dev) and is composed of:
+### Running GeoNetwork UI
 
-- **libraries** containing components and services
-- **applications** using said components
-- **web components** using also said components
+To run a specific application using a development server, use:
 
-### Quick Start & Documentation
-
-[Nx Documentation](https://nx.dev/angular)
-
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
-
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
-
-There are also many [community plugins](https://nx.dev/nx-community) you could add.
-
-### Generate an application
-
-Run `ng g @nrwl/angular:app my-app` to generate an application.
-
-> You can use any of the plugins above to generate applications as well.
-
-When using Nx, you can create multiple applications and libraries in the same workspace.
-
-You'll need manual configuration to make the application running:
-
-- Update the root `tsconfig.json` of your application by setting
-
-```js
-  "angularCompilerOptions": {
-    "strictTemplates": false
-  }
+```shell script
+npm start -- (app_name)
 ```
 
-- Add `postcss.config.js` and `tailwind.config.js` at the root of your project if you want to use TailwindCSS.
-
-### Generate a library
-
-Run `ng g @nrwl/angular:lib my-lib` to generate a library.
-
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are shareable across libraries and applications. They can be imported from `@geonetwork-ui/mylib`.
-
-### Development server
-
-Run `ng serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-### Code scaffolding
-
-Run `ng g component my-component --project=my-app` to generate a new component.
+And navigate to `http://localhost:4200/`.
 
 ### Build
 
-Run `ng build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+To build a specific application, use:
 
-### Running unit tests
+```shell script
+npm run build -- (app_name) (--prod)
+```
 
-Run `ng test my-app` to execute the unit tests via [Jest](https://jestjs.io).
+The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-Run `nx affected:test` to execute the unit tests affected by a change.
+### Tests
 
-### Running end-to-end tests
+Run `npm test` to execute the unit tests via Jest.
 
-Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
+You can test a specific lib or app or file with
 
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
+```shell script
+npm test -- (lib_name)
+npm test -- --test-match=/data/dev/gn/ui/libs/common/src/lib/services/bootstrap.service.spec.ts
+```
 
-### Understand your workspace
+## Project structure
 
-Run `nx dep-graph` to see a diagram of the dependencies of your projects.
+The GeoNetwork UI project was generated using [Nx](https://nx.dev) and is composed of:
 
-### Project structure
+- **libraries** containing components and services in the `libs` folder
+- **applications** using said components in the `apps` folder
+- **web components** using also said components in the `apps/webcomponents` folder
 
-#### `libs/search`: Smart search-related components
+### Libraries
 
-These components are communicating with each other using a NgRx store. They rely on presentation components and hold very little
-presentation information.
+Libraries are organized in the following fashion:
 
-#### `libs/ui`: Presentation components
+1. Presentation libraries are in the `ui` folder and are categorized by their forms:
 
-Presentation components are styled using [TailwindCSS](https://tailwindcss.com/) utilities. Many colors are using CSS variables,
-meaning they can be changed at runtime. A custom configuration for TailwindCSS has been created to provide this feature.
+   - `ui-inputs` for reusable components made to collect input from the user (e.g.: form fields, buttons...)
+   - `ui-elements` for components focused on rendering specific types of information in an elaborate way, which may or may not be related to business usages;
+     examples include download links, facet or selection tree, etc.
+   - `ui-layout` for components which occupy a large part of the screen and might contain variable content or other components
+   - `ui-map` for map-specific components (map container, controls, etc.)
+   - `ui-widgets` for reusable, small, self-contained components which show information in a visual way, similar to icons but more elaborate (e.g.: icon with tooltip, status indicator, progress bar...)
 
-#### `libs/common`: Shared library
+   > Note: presentation components contain mainly HTML and CSS code, and should contain very little logic
 
-Holds shared models, fixtures and utility services.
+2. Libraries providing business or data logic and state management are in the `feature` folder and are categorized by their intended use:
 
-#### `libs/gn-api`: Geonetwork API Client
+   - `feature-auth` for logic and components related to authentication
+   - `feature-catalog` for logic and components related to general catalog topics (title, logo, etc.)
+   - `feature-dataviz` for logic and components related to data visualization
+   - `feature-record` for logic and components related to displaying a catalog record's information (metadata, data preview, exports, APIs...)
+   - `feature-editor` for logic and components related to editing metadata
+   - `feature-map` for logic and components related to interactive maps
+   - `feature-search` for logic and components related to searching through the catalog
 
-Library generated dynamically from the GeoNetwork 4 API description. Use `npm run generate-api` to re-generate.
+   > Note: these libraries provide "smart components" which are communicating with each other using a NgRx store.  
+   > They rely on presentation components and as such hold very little HTML or CSS code.
+
+3. Libraries used for interacting with backend services are in the `data-access` folder:
+
+   - `data-access-gn4` contains an auto-generated API client for the GeoNetwork 4 backend
+   - `data-access-datafeeder` contains an auto-generated API client for the Datafeeder backend
+
+4. Libraries providing common services or shared models are in the `util` folder:
+   - `util-i18n` for translation and internationalization
+   - `util-shared` for shared models and types, test fixtures, app-wide settings etc.
 
 #### `webcomponents`: Embeddable webcomponents
 
-See [the specific README file](webcomponents).
+See [the specific README file](apps/webcomponents).
 
 ## To document
 
