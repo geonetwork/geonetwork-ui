@@ -21,7 +21,7 @@ type AutocompleteComponentWithActionResult = AutocompleteComponent & {
 
 const Template: Story<AutocompleteComponentWithActionResult> = (args) => ({
   component: AutocompleteComponent,
-  props: { ...args, action: (term) => of(args.actionResult) },
+  props: { ...args, action: () => of(args.actionResult) },
 })
 
 export const Primary = Template.bind({})

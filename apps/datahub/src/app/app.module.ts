@@ -3,11 +3,13 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatTabsModule } from '@angular/material/tabs'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
+import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import {
   FeatureSearchModule,
   MdViewModule,
   SearchRouterModule,
 } from '@geonetwork-ui/feature/search'
+import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import {
   TRANSLATE_GEONETWORK_CONFIG,
@@ -21,10 +23,8 @@ import { storeFreeze } from 'ngrx-store-freeze'
 import { environment } from '../environments/environment'
 
 import { AppComponent } from './app.component'
-import { MainSearchComponent } from './main-search/main-search.component'
-import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { RecordViewComponent } from './dataset-view/record-view.component'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import { MainSearchComponent } from './main-search/main-search.component'
 
 export const metaReducers: MetaReducer[] = !environment.production
   ? [storeFreeze]

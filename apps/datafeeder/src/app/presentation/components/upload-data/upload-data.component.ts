@@ -78,7 +78,7 @@ export class UploadDataComponent {
         this.jobId$.emit(job.jobId)
         this.uploading = false
       },
-      (error) => {
+      () => {
         this.uploading = false
         this.emitErrors_({
           title: 'datafeeder.upload.error.title.cantOpenFile',

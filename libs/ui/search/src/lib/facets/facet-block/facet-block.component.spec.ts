@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
 import {
-  async,
   ComponentFixture,
   fakeAsync,
   TestBed,
@@ -137,7 +136,7 @@ describe('FacetBlockComponent', () => {
     it('selects only the items matching the selected facets', () => {
       const selectedItems = items.filter((item) => {
         const stub = item.componentInstance as FacetItemStubComponent
-        return stub.selected === true
+        return stub.selected
       })
       expect(selectedItems.length).toBe(2)
       expect(

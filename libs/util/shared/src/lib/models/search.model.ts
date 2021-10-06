@@ -25,7 +25,7 @@ export interface MetadataRecord {
   dataCreatedOn?: Date
 }
 
-interface MetadataLinkValid {
+export interface MetadataLinkValid {
   url: string
   // either a file name, a layer name or any other resource identifier
   name?: string

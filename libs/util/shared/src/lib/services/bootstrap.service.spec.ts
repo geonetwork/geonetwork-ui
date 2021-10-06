@@ -21,7 +21,7 @@ const siteApiServiceMock = {
 }
 
 const uiApiServiceMock = {
-  getUiConfiguration: jest.fn((uiIdentifier) => of(uiResponse)),
+  getUiConfiguration: jest.fn(() => of(uiResponse)),
 }
 
 const logServiceMock = {

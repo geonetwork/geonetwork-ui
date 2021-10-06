@@ -8,8 +8,6 @@ import { StoreModule } from '@ngrx/store'
 import { of } from 'rxjs'
 import { AppComponent } from '../app.component'
 
-import { MainSearchComponent } from './main-search.component'
-
 const configFacetMock = {
   mods: {
     search: {

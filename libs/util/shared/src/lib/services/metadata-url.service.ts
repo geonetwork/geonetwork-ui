@@ -1,4 +1,4 @@
-import { Inject, Injectable, Optional } from '@angular/core'
+import { Inject, Injectable } from '@angular/core'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { TranslateService } from '@ngx-translate/core'
 import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n'

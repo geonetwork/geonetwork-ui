@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing'
 import { MapManagerService } from '../../manager/map-manager.service'
 import { MAP_CTX_FIXTURE } from '../map-context.fixtures'
 import { MapContextService } from '../map-context.service'
@@ -7,17 +7,17 @@ import { MapUtilsService } from '../../utils/map-utils.service'
 
 import { MapContextComponent } from './map-context.component'
 
-const mapMock = {
-  on: jest.fn(),
+class MapMock {
+  on = jest.fn()
 }
-const mapContextServiceMock = {
-  resetMapFromContext: jest.fn(),
+class MapContextServiceMock {
+  resetMapFromContext = jest.fn()
 }
 
-const mapUtilsServiceMock = {}
+class MapUtilsServiceMock {}
 
-const mapManagerMock = {
-  map: mapMock,
+class MapManagerMock {
+  map = new MapMock()
 }
 
 describe('MapContextComponent', () => {
@@ -31,15 +31,15 @@ describe('MapContextComponent', () => {
       providers: [
         {
           provide: MapContextService,
-          useValue: mapContextServiceMock,
+          useClass: MapContextServiceMock,
         },
         {
           provide: MapUtilsService,
-          useValue: mapUtilsServiceMock,
+          useClass: MapUtilsServiceMock,
         },
         {
           provide: MapManagerService,
-          useValue: mapManagerMock,
+          useClass: MapManagerMock,
         },
       ],
     }).compileComponents()
@@ -48,18 +48,64 @@ describe('MapContextComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MapContextComponent)
     component = fixture.componentInstance
-    component.context = MAP_CTX_FIXTURE
     fixture.detectChanges()
   })
 
   it('should create', () => {
+    fixture.detectChanges()
     expect(component).toBeTruthy()
   })
 
-  it('reset the map from context', () => {
-    expect(mapContextServiceMock.resetMapFromContext).toHaveBeenCalledWith(
-      mapMock,
-      MAP_CTX_FIXTURE
-    )
+  describe('with initial value', () => {
+    beforeEach(() => {
+      component.context = MAP_CTX_FIXTURE
+      fixture.detectChanges()
+      component.ngOnChanges({})
+    })
+    it('reset the map from context', inject(
+      [MapContextService],
+      (mapContextService) => {
+        expect(mapContextService.resetMapFromContext).toHaveBeenCalledWith(
+          expect.any(MapMock),
+          MAP_CTX_FIXTURE
+        )
+      }
+    ))
+  })
+
+  describe('no initial value, two values afterwards', () => {
+    beforeEach(() => {
+      component.context = null
+      fixture.detectChanges()
+      component.ngOnChanges({})
+    })
+    it('does not reset the map', inject(
+      [MapContextService],
+      (mapContextService) => {
+        expect(mapContextService.resetMapFromContext).not.toHaveBeenCalled()
+      }
+    ))
+  })
+
+  describe('no initial value, two values afterwards', () => {
+    beforeEach(() => {
+      component.context = null
+      fixture.detectChanges()
+      component.ngOnChanges({})
+      component.context = { ...MAP_CTX_FIXTURE }
+      component.ngOnChanges({})
+      component.context = { ...MAP_CTX_FIXTURE }
+      component.ngOnChanges({})
+    })
+    it('reset the map from context twice', inject(
+      [MapContextService],
+      (mapContextService) => {
+        expect(mapContextService.resetMapFromContext).toHaveBeenCalledWith(
+          expect.any(MapMock),
+          MAP_CTX_FIXTURE
+        )
+        expect(mapContextService.resetMapFromContext).toHaveBeenCalledTimes(2)
+      }
+    ))
   })
 })

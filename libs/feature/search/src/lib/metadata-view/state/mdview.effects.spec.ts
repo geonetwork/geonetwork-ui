@@ -13,11 +13,6 @@ import { Observable, of, throwError } from 'rxjs'
 import * as MdViewActions from './mdview.actions'
 import { MdViewEffects } from './mdview.effects'
 
-const incomplete = {
-  uuid: '1231321321',
-  title: 'title',
-} as MetadataRecord
-
 const full = {
   uuid: '1231321321',
   title: 'title',

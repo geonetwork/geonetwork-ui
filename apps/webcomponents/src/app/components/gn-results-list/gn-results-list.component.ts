@@ -85,8 +85,8 @@ export class GnResultsListComponent
     this.facade.setSearch(searchActionPayload)
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    super.ngOnChanges(changes)
+  ngOnChanges(): void {
+    super.ngOnChanges()
     this.setSearch_()
   }
 }

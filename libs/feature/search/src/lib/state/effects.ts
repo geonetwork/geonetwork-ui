@@ -5,7 +5,7 @@ import { EsSearchResponse } from '@geonetwork-ui/util/shared'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
 import { of } from 'rxjs'
-import { flatMap, map, switchMap, withLatestFrom } from 'rxjs/operators'
+import { switchMap, map, withLatestFrom, mergeMap } from 'rxjs/operators'
 import { ElasticsearchMapper } from '../elasticsearch/mapper/elasticsearch.mapper'
 import { ElasticsearchService } from '../elasticsearch/elasticsearch.service'
 import {
@@ -76,14 +76,14 @@ export class SearchEffects {
   loadResults$ = createEffect(() =>
     this.actions$.pipe(
       ofType(REQUEST_MORE_RESULTS),
-      // flatMap is used because of multiple search concerns
+      // mergeMap is used because of multiple search concerns
       // TODO: should implement our own switchMap to filter by searchId
-      flatMap((action: SearchActions) =>
+      mergeMap((action: SearchActions) =>
         this.authService.authReady().pipe(
           withLatestFrom(
             this.store$.pipe(select(getSearchStateSearch, action.id))
           ),
-          switchMap(([_, state]) =>
+          switchMap(([, state]) =>
             this.searchService.search(
               'bucket',
               JSON.stringify(this.esService.getSearchRequestBody(state))
@@ -146,7 +146,7 @@ export class SearchEffects {
       switchMap((action) =>
         this.authService.authReady().pipe(
           withLatestFrom(this.store$.pipe(select(getSearchStateSearch))),
-          switchMap(([_, state]) =>
+          switchMap(([, state]) =>
             this.searchService.search(
               'bucket',
               JSON.stringify(

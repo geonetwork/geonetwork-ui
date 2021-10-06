@@ -1,10 +1,8 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
+  Component,
   Input,
   OnChanges,
-  SimpleChanges,
 } from '@angular/core'
 import { TableItemModel } from '@geonetwork-ui/ui/layout'
 import { FigureService } from '../figure.service'
@@ -26,7 +24,7 @@ export class FigureContainerComponent implements OnChanges {
 
   constructor(private service: FigureService) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     const figure = this.service
       .compute(this.expression, this.dataset)
       .toFixed(this.digits)

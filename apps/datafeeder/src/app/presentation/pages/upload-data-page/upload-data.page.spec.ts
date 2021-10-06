@@ -1,8 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ActivatedRoute, Router } from '@angular/router'
-import { RouterTestingModule } from '@angular/router/testing'
-import { BehaviorSubject, of } from 'rxjs'
+import { BehaviorSubject } from 'rxjs'
 import { UploadDataPageComponent } from './upload-data.page'
 
 const routerMock = {

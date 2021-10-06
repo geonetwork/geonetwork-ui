@@ -3,7 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
+  OnChanges,
   Output,
 } from '@angular/core'
 import Feature from 'ol/Feature'
@@ -21,7 +21,7 @@ import { MapContextService } from '../map-context.service'
   styleUrls: ['./map-context.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MapContextComponent implements OnInit {
+export class MapContextComponent implements OnChanges {
   @Input() context: MapContextModel
   @Output() featureClicked = new EventEmitter<Feature<Geometry>[]>()
 
@@ -35,7 +35,9 @@ export class MapContextComponent implements OnInit {
     this.map = manager.map
   }
 
-  ngOnInit(): void {
-    this.service.resetMapFromContext(this.map, this.context)
+  ngOnChanges() {
+    if (this.context) {
+      this.service.resetMapFromContext(this.map, this.context)
+    }
   }
 }
