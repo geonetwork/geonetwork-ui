@@ -76,7 +76,10 @@ describe('LinkClassifierService', () => {
   describe('#getUsagesForLink', () => {
     describe('for a WMS link', () => {
       it('returns map API usage', () => {
-        expect(service.getUsagesForLink(geodataWms)).toEqual([LinkUsage.MAPAPI])
+        expect(service.getUsagesForLink(geodataWms)).toEqual([
+          LinkUsage.API,
+          LinkUsage.MAPAPI,
+        ])
       })
     })
     describe('for a WFS link', () => {

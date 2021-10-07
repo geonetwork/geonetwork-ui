@@ -1,0 +1,43 @@
+<div
+  class="
+    p-2
+    rounded
+    flex flex-row
+    items-center
+    relative
+    hover:bg-background hover:border-gray-200
+    border border-gray-100
+    hover:shadow-sm
+  "
+>
+  <div
+    class="
+      h-8
+      w-8
+      rounded-full
+      bg-opacity-50 bg-gray-900
+      flex-shrink-0
+      text-white text-lg text-center
+      min-w-min
+      pr-2
+      pl-2
+    "
+    style="background-color: {{ color }}"
+  >
+    {{ link.protocol }}
+  </div>
+  <span class="px-3 truncate text-sm text-main label flex-grow flex-shrink">{{
+    link.name
+  }}</span>
+  <span class="px-3 truncate text-sm text-main label flex-grow flex-shrink">{{
+    link.url
+  }}</span>
+  <div
+    class="text-gray-600 text-sm border-gray-300 px-3 flex-shrink-0"
+    style="min-width: 4rem"
+  >
+    <button (click)="copyUrl()" class="cursor-pointer">
+      <mat-icon class="align-middle">content_copy</mat-icon>
+    </button>
+  </div>
+</div>

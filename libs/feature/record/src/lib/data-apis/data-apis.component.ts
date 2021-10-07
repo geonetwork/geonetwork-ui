@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core'
+import { MdViewFacade } from '../state'
 
 @Component({
   selector: 'gn-ui-data-apis',
@@ -6,4 +7,6 @@ import { Component, ChangeDetectionStrategy } from '@angular/core'
   styleUrls: ['./data-apis.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataApisComponent {}
+export class DataApisComponent {
+  constructor(public facade: MdViewFacade) {}
+}
