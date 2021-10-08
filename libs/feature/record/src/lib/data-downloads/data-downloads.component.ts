@@ -1,9 +1,9 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
-import { MetadataLink } from '@geonetwork-ui/util/shared'
-import { Observable } from 'rxjs'
-import { map, tap } from 'rxjs/operators'
-import { LinkClassifierService } from '../links/link-classifier.service'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { MetadataLink, MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { map, startWith, switchMap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
+import { WfsEndpoint } from '@camptocamp/ogc-client'
+import { combineLatest, from, of } from 'rxjs'
 
 @Component({
   selector: 'gn-ui-data-downloads',
@@ -12,23 +12,29 @@ import { MdViewFacade } from '../state'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataDownloadsComponent {
-  constructor(
-    public facade: MdViewFacade,
-    public classifier: LinkClassifierService
-  ) {}
+  constructor(public facade: MdViewFacade) {}
 
   links$ = this.facade.downloadLinks$.pipe(
-    map((links) =>
-      links.flatMap((link) => {
-        if (this.classifier.isWfsLink(link)) {
-          return this.getLinksWithWfsFormats(link)
-        } else {
-          return 'format' in link
-            ? link
-            : { ...link, format: this.getFormat(link) }
-        }
-      })
-    )
+    switchMap((links) => {
+      const wfsLinks = links.filter((link) =>
+        link.protocol.startsWith('OGC:WFS')
+      )
+      const otherLinks = links
+        .filter((link) => !link.protocol.startsWith('OGC:WFS'))
+        .map((link) => ({ ...link, format: this.getFormat(link) }))
+
+      return combineLatest(
+        wfsLinks.map((link) => from(this.getLinksWithWfsFormats(link)))
+      ).pipe(
+        map(
+          (wfsDownloadLinks) =>
+            wfsDownloadLinks.reduce((prev, curr) => [...prev, ...curr]),
+          []
+        ),
+        map((wfsDownloadLinks) => [...otherLinks, ...wfsDownloadLinks]),
+        startWith(otherLinks)
+      )
+    })
   )
 
   getFormat(link: MetadataLink) {
@@ -61,14 +67,16 @@ export class DataDownloadsComponent {
     )
   }
 
-  //TODO: implement logic calling getcapabilites
-  getLinksWithWfsFormats(link: MetadataLink): Array<MetadataLink> {
-    return [
-      //only display 'WFS' for now
-      { ...link, format: 'WFS' },
-      //once implemented we could get multiple formats
-      // { ...link, format: 'WFS:geojson' },
-      // { ...link, format: 'WFS:csv' },
-    ]
+  getLinksWithWfsFormats(
+    link: MetadataLinkValid
+  ): Promise<MetadataLinkValid[]> {
+    return new WfsEndpoint(link.url).isReady().then((endpoint) => {
+      const featureType = endpoint.getFeatureTypeSummary(link.name)
+      return featureType.outputFormats.map((format) => ({
+        ...link,
+        url: endpoint.getFeatureUrl(featureType.name, undefined, format),
+        format: `WFS:${format}`,
+      }))
+    })
   }
 }
