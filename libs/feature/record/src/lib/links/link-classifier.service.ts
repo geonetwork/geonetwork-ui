@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core'
-import { map, startWith } from 'rxjs/operators'
 import { MetadataLink } from '@geonetwork-ui/util/shared'
 
 export enum LinkUsage {
