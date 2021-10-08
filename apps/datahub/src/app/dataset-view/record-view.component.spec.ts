@@ -2,7 +2,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { MapManagerService } from '@geonetwork-ui/feature/map'
-import { MdViewFacade } from '@geonetwork-ui/feature/search'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import {
   MetadataInfoComponent,
   UiElementsModule,

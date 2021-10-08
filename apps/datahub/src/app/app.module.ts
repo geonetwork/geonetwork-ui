@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import {
   FeatureSearchModule,
-  MdViewModule,
   SearchRouterModule,
 } from '@geonetwork-ui/feature/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
@@ -25,6 +24,7 @@ import { environment } from '../environments/environment'
 import { AppComponent } from './app.component'
 import { RecordViewComponent } from './dataset-view/record-view.component'
 import { MainSearchComponent } from './main-search/main-search.component'
+import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
 
 export const metaReducers: MetaReducer[] = !environment.production
   ? [storeFreeze]
@@ -42,7 +42,7 @@ export const metaReducers: MetaReducer[] = !environment.production
     TranslateModule.forRoot(TRANSLATE_GEONETWORK_CONFIG),
     FeatureSearchModule,
     SearchRouterModule,
-    MdViewModule,
+    FeatureRecordModule,
     UiLayoutModule,
     UiElementsModule,
     MatTabsModule,

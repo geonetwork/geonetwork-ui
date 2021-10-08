@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { MapManagerService } from '@geonetwork-ui/feature/map'
-import { MdViewFacade } from '@geonetwork-ui/feature/search'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { map } from 'rxjs/operators'
 
 @Component({

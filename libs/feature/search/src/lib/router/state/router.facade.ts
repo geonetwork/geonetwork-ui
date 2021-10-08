@@ -14,7 +14,7 @@ import {
 } from './router.selectors'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { RouterReducerState } from '@ngrx/router-store'
-import { setIncompleteMetadata } from '../../metadata-view/state/mdview.actions'
+import { MdViewActions } from '@geonetwork-ui/feature/record'
 
 @Injectable()
 export class RouterFacade {
@@ -31,7 +31,9 @@ export class RouterFacade {
         path: `metadata/${metadata.uuid}`,
       })
     )
-    this.store.dispatch(setIncompleteMetadata({ incomplete: metadata }))
+    this.store.dispatch(
+      MdViewActions.setIncompleteMetadata({ incomplete: metadata })
+    )
   }
 
   go(payload: RouterGoActionPayload) {
