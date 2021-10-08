@@ -15,6 +15,8 @@ import { MD_VIEW_FEATURE_STATE_KEY, reducer } from './state/mdview.reducer'
 import { DataApisComponent } from './data-apis/data-apis.component'
 import { DataDownloadsComponent } from './data-downloads/data-downloads.component'
 import { RecordMetadataComponent } from './record-metadata/record-metadata.component'
+import { MatTabsModule } from '@angular/material/tabs'
+import { MatIconModule } from '@angular/material/icon'
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { RecordMetadataComponent } from './record-metadata/record-metadata.compo
     FeatureMapModule,
     UiInputsModule,
     UiElementsModule,
+    MatTabsModule,
+    MatIconModule,
   ],
   providers: [MdViewFacade],
   exports: [
