@@ -566,6 +566,31 @@
         }
       }
     },
+    "feature-record": {
+      "projectType": "library",
+      "root": "libs/feature/record",
+      "sourceRoot": "libs/feature/record/src",
+      "prefix": "gn-ui",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/feature/record"],
+          "options": {
+            "jestConfig": "libs/feature/record/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/feature/record/src/**/*.ts",
+              "libs/feature/record/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "feature-search": {
       "projectType": "library",
       "root": "libs/feature/search",
