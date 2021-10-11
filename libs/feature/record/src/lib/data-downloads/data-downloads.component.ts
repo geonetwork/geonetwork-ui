@@ -14,6 +14,18 @@ import { combineLatest, from, of } from 'rxjs'
 export class DataDownloadsComponent {
   constructor(public facade: MdViewFacade) {}
 
+  private downloadFormats = {
+    csv: ['csv'],
+    geojson: ['geojson'],
+    json: ['json'],
+    shp: ['shp', 'shape'],
+    kml: ['kml'],
+    gpkg: ['gpkg', 'geopackage'],
+    excel: ['xls', 'xlsx'],
+    pdf: ['pdf'],
+    zip: ['zip'],
+  }
+
   links$ = this.facade.downloadLinks$.pipe(
     switchMap((links) => {
       const wfsLinks = links.filter((link) =>
@@ -31,39 +43,36 @@ export class DataDownloadsComponent {
             wfsDownloadLinks.reduce((prev, curr) => [...prev, ...curr]),
           []
         ),
+        map((wfsDownloadLinks) =>
+          wfsDownloadLinks
+            .map((link) => ({
+              ...link,
+              format: this.getWfsDisplayFormat(link),
+            }))
+            .filter((link) => link.format !== undefined)
+        ),
         map((wfsDownloadLinks) => [...otherLinks, ...wfsDownloadLinks]),
         startWith(otherLinks)
       )
     })
   )
 
-  getFormat(link: MetadataLink) {
-    const formats = {
-      csv: ['csv'],
-      geojson: ['geojson'],
-      json: ['json'],
-      shp: ['shp', 'shape'],
-      kml: ['kml'],
-      gpkg: ['gpkg', 'geopackage'],
-      excel: ['xls', 'xlsx'],
-      pdf: ['pdf'],
-      zip: ['zip'],
-    }
+  getFormat(link: MetadataLink): string {
     if ('format' in link) {
       return link.format
     }
-    for (const format in formats) {
-      for (const alias of formats[format]) {
+    for (const format in this.downloadFormats) {
+      for (const alias of this.downloadFormats[format]) {
         if (this.findFileFormats(link, alias)) return format
       }
     }
     return 'unknown'
   }
 
-  findFileFormats(link: MetadataLink, format: string) {
+  findFileFormats(link: MetadataLink, format: string): boolean {
     return (
-      ('name' in link && link.name.match(new RegExp(`${format}`, 'i'))) ||
-      ('url' in link && link.url.match(new RegExp(`${format}`, 'i')))
+      ('name' in link && new RegExp(`${format}`, 'i').test(link.name)) ||
+      ('url' in link && new RegExp(`${format}`, 'i').test(link.url))
     )
   }
 
@@ -75,8 +84,18 @@ export class DataDownloadsComponent {
       return featureType.outputFormats.map((format) => ({
         ...link,
         url: endpoint.getFeatureUrl(featureType.name, undefined, format),
-        format: `WFS:${format}`,
+        format: format,
       }))
     })
+  }
+
+  getWfsDisplayFormat(link: MetadataLinkValid): string {
+    for (const format in this.downloadFormats) {
+      for (const alias of this.downloadFormats[format]) {
+        if ('format' in link && new RegExp(`${format}`, 'i').test(link.format))
+          return `WFS:${format}`
+      }
+    }
+    return undefined
   }
 }
