@@ -14,10 +14,10 @@ export function getDownloadFormat(
     csv: ['csv'],
     geojson: ['geojson'],
     json: ['json'],
-    shp: ['shp', 'shape'],
-    kml: ['kml'],
+    shp: ['shp', 'shape', 'zipped-shapefile'],
+    kml: ['kml', 'kmz'],
     gpkg: ['gpkg', 'geopackage'],
-    excel: ['xls', 'xlsx'],
+    excel: ['xls', 'xlsx', 'ms-excel', 'openxmlformats-officedocument'],
     pdf: ['pdf'],
     zip: ['zip'],
   }
@@ -38,8 +38,8 @@ export function getDownloadFormat(
 
 function findFileFormats(link: MetadataLink, format: string): boolean {
   return (
-    ('name' in link && new RegExp(`${format}`, 'i').test(link.name)) ||
-    ('url' in link && new RegExp(`${format}`, 'i').test(link.url))
+    ('name' in link && new RegExp(`[./]${format}`, 'i').test(link.name)) ||
+    ('url' in link && new RegExp(`[./]${format}`, 'i').test(link.url))
   )
 }
 

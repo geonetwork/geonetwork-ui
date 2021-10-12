@@ -40,25 +40,4 @@ export class LinkClassifierService {
     }
     return []
   }
-
-  /**
-   * Returns boolean if link points to WFS
-   * @param link
-   */
-  isWfsLink(link: MetadataLink): boolean {
-    return (
-      ('protocol' in link && /^OGC:WFS/.test(link.protocol)) ||
-      ('format' in link && new RegExp(`wfs`, 'i').test(link.format)) ||
-      ('name' in link && new RegExp(`wfs`, 'i').test(link.name)) ||
-      ('url' in link && new RegExp(`wfs`, 'i').test(link.url))
-    )
-  }
-
-  /**
-   * Returns boolean if link points to ESRI REST API
-   * @param link
-   */
-  isEsriRestLink(link: MetadataLink): boolean {
-    return 'protocol' in link && /^ESRI:REST/.test(link.protocol)
-  }
 }
