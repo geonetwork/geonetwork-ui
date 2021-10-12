@@ -4,10 +4,9 @@ import { map, startWith, switchMap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
 import { combineLatest, from, of } from 'rxjs'
 import {
-  downloadFormats,
-  getFormat,
+  DownloadFormatType,
+  getDownloadFormat,
   getLinksWithWfsFormats,
-  getWfsDisplayFormat,
 } from '../links/link-utils'
 
 @Component({
@@ -26,10 +25,14 @@ export class DataDownloadsComponent {
       )
       const otherLinks = links
         .filter((link) => !link.protocol.startsWith('OGC:WFS'))
-        .map((link) => ({
-          ...link,
-          format: getFormat(link, downloadFormats),
-        }))
+        .map((link) =>
+          'format' in link
+            ? link
+            : {
+                ...link,
+                format: getDownloadFormat(link, DownloadFormatType.FILE),
+              }
+        )
 
       return combineLatest(
         wfsLinks.map((link) => from(getLinksWithWfsFormats(link)))
@@ -43,9 +46,9 @@ export class DataDownloadsComponent {
           wfsDownloadLinks
             .map((link) => ({
               ...link,
-              format: getWfsDisplayFormat(link, downloadFormats),
+              format: getDownloadFormat(link, DownloadFormatType.WFS),
             }))
-            .filter((link) => link.format !== undefined)
+            .filter((link) => link.format !== 'unknown')
         ),
         map((wfsDownloadLinks) => [...otherLinks, ...wfsDownloadLinks]),
         startWith(otherLinks)

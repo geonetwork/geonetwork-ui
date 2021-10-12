@@ -1,25 +1,36 @@
 import { MetadataLink, MetadataLinkValid } from '@geonetwork-ui/util/shared'
 import { WfsEndpoint } from '@camptocamp/ogc-client'
 
-export const downloadFormats = {
-  csv: ['csv'],
-  geojson: ['geojson'],
-  json: ['json'],
-  shp: ['shp', 'shape'],
-  kml: ['kml'],
-  gpkg: ['gpkg', 'geopackage'],
-  excel: ['xls', 'xlsx'],
-  pdf: ['pdf'],
-  zip: ['zip'],
+export enum DownloadFormatType {
+  WFS = 'WFS',
+  FILE = 'FILE',
 }
 
-export function getFormat(link: MetadataLink, formats: any): string {
-  if ('format' in link) {
-    return link.format
+export function getDownloadFormat(
+  link: MetadataLink,
+  type: DownloadFormatType
+): string {
+  const formats = {
+    csv: ['csv'],
+    geojson: ['geojson'],
+    json: ['json'],
+    shp: ['shp', 'shape'],
+    kml: ['kml'],
+    gpkg: ['gpkg', 'geopackage'],
+    excel: ['xls', 'xlsx'],
+    pdf: ['pdf'],
+    zip: ['zip'],
   }
   for (const format in formats) {
     for (const alias of formats[format]) {
-      if (findFileFormats(link, alias)) return format
+      if (type === DownloadFormatType.FILE && findFileFormats(link, alias))
+        return format
+      if (
+        type === DownloadFormatType.WFS &&
+        'format' in link &&
+        new RegExp(`${format}`, 'i').test(link.format)
+      )
+        return `WFS:${format}`
     }
   }
   return 'unknown'
@@ -43,17 +54,4 @@ export function getLinksWithWfsFormats(
       format: format,
     }))
   })
-}
-
-export function getWfsDisplayFormat(
-  link: MetadataLinkValid,
-  formats: any
-): string {
-  for (const format in formats) {
-    for (const alias of formats[format]) {
-      if ('format' in link && new RegExp(`${format}`, 'i').test(link.format))
-        return `WFS:${format}`
-    }
-  }
-  return undefined
 }
