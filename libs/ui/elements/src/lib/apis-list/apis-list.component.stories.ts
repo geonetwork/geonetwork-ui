@@ -31,15 +31,15 @@ Primary.args = {
   links: [
     {
       protocol: 'OGC:WFS',
-      name: 'Roads',
+      name: 'Roads with a long title that is very long',
       description: 'A file that contains all roads',
-      url: 'https//roads.com/wfs',
+      url: 'https//roads.com/fzeiufuzie/fbezfyuezafyezfyezfgezfgyegazfoygezfyouazefyeag/wfs',
     },
     {
       protocol: 'ESRI:REST',
-      name: 'Roads',
+      name: 'Roads_layer_name_that_never_ends_for_some_reason_we do_not_know',
       description: 'A file that contains all roads',
-      url: 'https//roads.com/rest',
+      url: 'https//roads.com/fzeiufuzie/fbezfyuezafyezfyezfgezfgyegazfoygezfyouazefyeag/wfs',
     },
   ],
 }
