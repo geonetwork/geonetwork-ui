@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core'
-import {
-  BootstrapService,
-  EsSearchParams,
-  SortParams,
-} from '@geonetwork-ui/util/shared'
 import { Observable } from 'rxjs'
 import { map, take } from 'rxjs/operators'
-import { SearchStateSearch } from '../state/reducer'
+import {
+  EsSearchParams,
+  RequestFields,
+  SearchFilters,
+  SortParams,
+  StateConfigFilters,
+} from '../models'
+import { BootstrapService } from '../services'
 
 @Injectable({
   providedIn: 'root',
@@ -16,15 +18,22 @@ export class ElasticsearchService {
 
   uiConf = this.bootstrap.uiConfReady('srv').pipe(take(1))
 
-  getSearchRequestBody(state: SearchStateSearch): EsSearchParams {
-    const { size, from } = state.params
+  getSearchRequestBody(
+    aggregations: any,
+    size: number,
+    from: number,
+    sortBy: string,
+    requestFields: RequestFields,
+    searchFilters: SearchFilters,
+    configFilters: StateConfigFilters
+  ): EsSearchParams {
     const payload = {
-      aggregations: state.config.aggregations,
+      aggregations,
       from,
       size,
-      sort: this.buildPayloadSort(state),
-      query: this.buildPayloadQuery(state),
-      _source: state.config.source,
+      sort: this.buildPayloadSort(sortBy),
+      query: this.buildPayloadQuery(searchFilters, configFilters),
+      _source: requestFields,
     }
     return payload
   }
@@ -39,8 +48,7 @@ export class ElasticsearchService {
     }
   }
 
-  private buildPayloadSort(state: SearchStateSearch): SortParams {
-    const { sortBy } = state.params
+  private buildPayloadSort(sortBy: string): SortParams {
     return sortBy
       ? sortBy.split(',').map((s) => {
           if (s.startsWith('-')) {
@@ -52,27 +60,24 @@ export class ElasticsearchService {
       : undefined
   }
 
-  private buildPayloadQuery(state: SearchStateSearch) {
-    const { filters } = state.params
-    const { any, ...searchFilters } = filters
-    const queryFilters = this.stateFiltersToQueryString(searchFilters)
+  private buildPayloadQuery(
+    { any, ...fieldSearchFilters }: SearchFilters,
+    configFilters: StateConfigFilters
+  ) {
+    const queryFilters = this.stateFiltersToQueryString(fieldSearchFilters)
     const queryAny = `(${any || '*'})`
     const query =
       queryAny + (queryFilters.length > 0 ? ` AND ${queryFilters}` : '')
 
-    const partialQuery = {
+    return {
       bool: {
         must: [{ query_string: { query } }],
-        filter: this.buildPayloadFilter(state),
+        filter: this.buildPayloadFilter(configFilters),
       },
     }
-    return partialQuery
   }
 
-  private buildPayloadFilter(state: SearchStateSearch) {
-    const { filters } = state.config
-    const { custom, elastic } = filters
-    const queryString = this.stateFiltersToQueryString(custom)
+  private buildPayloadFilter({ custom, elastic }: StateConfigFilters) {
     const query = []
     if (elastic) {
       if (!Array.isArray(elastic)) {
@@ -83,7 +88,7 @@ export class ElasticsearchService {
     } else if (custom) {
       query.push({
         query_string: {
-          query: queryString,
+          query: this.stateFiltersToQueryString(custom),
         },
       })
     }
@@ -91,15 +96,16 @@ export class ElasticsearchService {
   }
 
   buildMoreOnAggregationPayload(
-    state: SearchStateSearch,
-    key: string
+    aggregations: any,
+    key: string,
+    searchFilters: SearchFilters,
+    configFilters: StateConfigFilters
   ): EsSearchParams {
-    const payload = {
-      aggregations: { [key]: state.config.aggregations[key] },
+    return {
+      aggregations: { [key]: aggregations[key] },
       size: 0,
-      query: this.buildPayloadQuery(state),
+      query: this.buildPayloadQuery(searchFilters, configFilters),
     }
-    return payload
   }
 
   buildAutocompletePayload(query: string): Observable<EsSearchParams> {

@@ -86,7 +86,17 @@ export class SearchEffects {
           switchMap(([, state]) =>
             this.searchService.search(
               'bucket',
-              JSON.stringify(this.esService.getSearchRequestBody(state))
+              JSON.stringify(
+                this.esService.getSearchRequestBody(
+                  state.config.aggregations,
+                  state.params.size,
+                  state.params.from,
+                  state.params.sortBy,
+                  state.config.source,
+                  state.params.filters,
+                  state.config.filters
+                )
+              )
             )
           ),
           switchMap((response: EsSearchResponse) => {
@@ -150,7 +160,12 @@ export class SearchEffects {
             this.searchService.search(
               'bucket',
               JSON.stringify(
-                this.esService.buildMoreOnAggregationPayload(state, action.key)
+                this.esService.buildMoreOnAggregationPayload(
+                  state.config.aggregations,
+                  action.key,
+                  state.params.filters,
+                  state.config.filters
+                )
               )
             )
           ),

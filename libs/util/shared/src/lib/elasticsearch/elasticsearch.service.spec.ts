@@ -1,15 +1,10 @@
 import { ElasticsearchService } from './elasticsearch.service'
 import { Observable } from 'rxjs'
-import { BootstrapService } from '@geonetwork-ui/util/shared'
-import { DEFAULT_SEARCH_KEY } from '../state/actions'
-import { initialState } from '../state/reducer'
-
-const initialStateSearch = initialState[DEFAULT_SEARCH_KEY]
 
 let autocompleteConfig
 
 class MockBootstrapService {
-  uiConfReady(): Observable {
+  uiConfReady(): Observable<any> {
     return new Observable((observer) => {
       observer.next({
         mods: {
@@ -26,12 +21,9 @@ class MockBootstrapService {
 describe('ElasticsearchService', () => {
   let service: ElasticsearchService
   let searchFilters
-  let state
 
   beforeEach(() => {
-    service = new ElasticsearchService(
-      new MockBootstrapService() as BootstrapService
-    )
+    service = new ElasticsearchService(new MockBootstrapService() as any)
   })
 
   it('should be created', () => {
@@ -40,41 +32,17 @@ describe('ElasticsearchService', () => {
 
   describe('#Sort', () => {
     it('One sort and default direction', () => {
-      const sort = service['buildPayloadSort']({
-        ...initialStateSearch,
-        params: {
-          filters: {
-            any: '',
-          },
-          sortBy: '_score',
-        },
-      })
+      const sort = service['buildPayloadSort']('_score')
       expect(sort).toEqual(['_score'])
     })
 
     it('One sort and DESC direction', () => {
-      const sort = service['buildPayloadSort']({
-        ...initialStateSearch,
-        params: {
-          filters: {
-            any: '',
-          },
-          sortBy: '-changeDate',
-        },
-      })
+      const sort = service['buildPayloadSort']('-changeDate')
       expect(sort).toEqual([{ changeDate: 'desc' }])
     })
 
     it('Multiple sorts', () => {
-      const sort = service['buildPayloadSort']({
-        ...initialStateSearch,
-        params: {
-          filters: {
-            any: '',
-          },
-          sortBy: '_score,-changeDate',
-        },
-      })
+      const sort = service['buildPayloadSort']('_score,-changeDate')
       expect(sort).toEqual(['_score', { changeDate: 'desc' }])
     })
   })
@@ -118,19 +86,17 @@ describe('ElasticsearchService', () => {
 
   describe('#buildPayloadQuery', () => {
     it('return OR separated query', () => {
-      const sort = service['buildPayloadQuery']({
-        ...initialStateSearch,
-        params: {
-          filters: {
-            'tag.default': {
-              world: true,
-              vector: true,
-            },
-            any: '',
+      const query = service['buildPayloadQuery'](
+        {
+          'tag.default': {
+            world: true,
+            vector: true,
           },
+          any: '',
         },
-      })
-      expect(sort).toEqual({
+        {}
+      )
+      expect(query).toEqual({
         bool: {
           filter: [],
           must: [
@@ -147,81 +113,49 @@ describe('ElasticsearchService', () => {
 
   describe('#buildPayloadFilter', () => {
     describe('when elastic object config', () => {
-      beforeEach(() => {
-        state = {
-          ...initialStateSearch,
-          config: {
-            filters: {
-              elastic: { term: { 'cl_hierarchyLevel.key': 'service' } },
-            },
-          },
-        }
-      })
       it('returns the input config', () => {
-        const filter = service['buildPayloadFilter'](state)
+        const filter = service['buildPayloadFilter']({
+          elastic: { term: { 'cl_hierarchyLevel.key': 'service' } },
+        })
         expect(filter).toEqual([
           { term: { 'cl_hierarchyLevel.key': 'service' } },
         ])
       })
     })
     describe('when elastic array config', () => {
-      beforeEach(() => {
-        state = {
-          ...initialStateSearch,
-          config: {
-            filters: {
-              elastic: [{ term: { 'cl_hierarchyLevel.key': 'service' } }],
-            },
-          },
-        }
-      })
       it('returns the input config', () => {
-        const filter = service['buildPayloadFilter'](state)
+        const filter = service['buildPayloadFilter']({
+          elastic: [{ term: { 'cl_hierarchyLevel.key': 'service' } }],
+        })
         expect(filter).toEqual([
           { term: { 'cl_hierarchyLevel.key': 'service' } },
         ])
       })
     })
     describe('when custom config', () => {
-      beforeEach(() => {
-        state = {
-          ...initialStateSearch,
-          config: {
-            filters: {
-              custom: {
-                'cl_hierarchyLevel.key': {
-                  service: true,
-                },
-              },
+      it('returns the corresponding query_string', () => {
+        const filter = service['buildPayloadFilter']({
+          custom: {
+            'cl_hierarchyLevel.key': {
+              service: true,
             },
           },
-        }
-      })
-      it('returns the corresponding query_string', () => {
-        const filter = service['buildPayloadFilter'](state)
+        })
         expect(filter).toEqual([
           { query_string: { query: '(cl_hierarchyLevel.key:"service")' } },
         ])
       })
     })
     describe('when having both config', () => {
-      beforeEach(() => {
-        state = {
-          ...initialStateSearch,
-          config: {
-            filters: {
-              elastic: [{ term: { 'cl_hierarchyLevel.key': 'service' } }],
-              custom: {
-                'cl_hierarchyLevel.key': {
-                  service: true,
-                },
-              },
+      it('elastic config priors', () => {
+        const filter = service['buildPayloadFilter']({
+          elastic: [{ term: { 'cl_hierarchyLevel.key': 'service' } }],
+          custom: {
+            'cl_hierarchyLevel.key': {
+              service: true,
             },
           },
-        }
-      })
-      it('elastic config priors', () => {
-        const filter = service['buildPayloadFilter'](state)
+        })
         expect(filter).toEqual([
           { term: { 'cl_hierarchyLevel.key': 'service' } },
         ])
