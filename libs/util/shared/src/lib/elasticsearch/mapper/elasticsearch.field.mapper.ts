@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core'
-import { MetadataRecord, MetadataUrlService } from '@geonetwork-ui/util/shared'
 import {
   getAsArray,
   getAsUrl,
@@ -12,6 +11,8 @@ import {
   SourceWithUnknownProps,
   toDate,
 } from './atomic-operations'
+import { MetadataUrlService } from '../../services'
+import { MetadataRecord } from '../../models'
 
 type ESResponseSource = SourceWithUnknownProps
 

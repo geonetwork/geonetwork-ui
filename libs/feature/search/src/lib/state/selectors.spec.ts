@@ -1,8 +1,10 @@
-import { ES_FIXTURE_AGGS_REQUEST } from '../elasticsearch/fixtures/aggregations-request'
-import { ES_FIXTURE_AGGS_RESPONSE } from '../elasticsearch/fixtures/aggregations-response'
 import { DEFAULT_SEARCH_KEY } from './actions'
 import { initialState } from './reducer'
 import * as fromSelectors from './selectors'
+import {
+  ES_FIXTURE_AGGS_REQUEST,
+  ES_FIXTURE_AGGS_RESPONSE,
+} from '@geonetwork-ui/util/shared'
 
 const initialStateSearch = initialState[DEFAULT_SEARCH_KEY]
 

@@ -7,7 +7,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing'
-import { aggsOnly as aggsOnlyFixture } from '../elasticsearch/fixtures'
+import { aggsOnly as aggsOnlyFixture } from '@geonetwork-ui/util/shared'
 
 describe('RecordsMetricsComponent', () => {
   let component: RecordsMetricsComponent

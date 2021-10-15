@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
-import { ElasticsearchService } from '@geonetwork-ui/feature/search'
-import { ElasticsearchMapper } from '@geonetwork-ui/feature/search'
-import { EsSearchResponse } from '@geonetwork-ui/util/shared'
+import {
+  ElasticsearchMapper,
+  ElasticsearchService,
+  EsSearchResponse,
+} from '@geonetwork-ui/util/shared'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { of } from 'rxjs'
 import { catchError, map, switchMap } from 'rxjs/operators'
