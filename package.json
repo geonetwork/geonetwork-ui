@@ -38,7 +38,6 @@
     "serve:ssr": "node dist/formatter/server/main.js",
     "build:ssr": "ng build --configuration production && ng run formatter:server:production",
     "prerender": "ng run formatter:prerender",
-    "i18n:init": "ngx-translate-extract --input ./src --output ./src/assets/i18n/template.json --key-as-default-value --replace --format json",
     "i18n:extract": "ngx-translate-extract -s --fi '  ' --input ./apps/search/src  ./libs ./webcomponents/src --output ./apps/search/src/assets/i18n/en.json --clean --format json",
     "i18n:datafeeder:extract": "ngx-translate-extract -s --fi '  ' --input ./apps/datafeeder/src  ./libs  --output ./apps/datafeeder/src/assets/i18n/{en,fr}.json --clean --format json"
   },
