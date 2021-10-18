@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { AuthService } from '@geonetwork-ui/feature/auth'
-import { EsSearchResponse } from '@geonetwork-ui/util/shared'
+import {
+  ElasticsearchMapper,
+  ElasticsearchService,
+  EsSearchResponse,
+} from '@geonetwork-ui/util/shared'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
 import { of } from 'rxjs'
 import { switchMap, map, withLatestFrom, mergeMap } from 'rxjs/operators'
-import { ElasticsearchMapper } from '../elasticsearch/mapper/elasticsearch.mapper'
-import { ElasticsearchService } from '../elasticsearch/elasticsearch.service'
 import {
   AddResults,
   ClearPagination,
@@ -86,7 +88,17 @@ export class SearchEffects {
           switchMap(([, state]) =>
             this.searchService.search(
               'bucket',
-              JSON.stringify(this.esService.getSearchRequestBody(state))
+              JSON.stringify(
+                this.esService.getSearchRequestBody(
+                  state.config.aggregations,
+                  state.params.size,
+                  state.params.from,
+                  state.params.sortBy,
+                  state.config.source,
+                  state.params.filters,
+                  state.config.filters
+                )
+              )
             )
           ),
           switchMap((response: EsSearchResponse) => {
@@ -150,7 +162,12 @@ export class SearchEffects {
             this.searchService.search(
               'bucket',
               JSON.stringify(
-                this.esService.buildMoreOnAggregationPayload(state, action.key)
+                this.esService.buildMoreOnAggregationPayload(
+                  state.config.aggregations,
+                  action.key,
+                  state.params.filters,
+                  state.config.filters
+                )
               )
             )
           ),

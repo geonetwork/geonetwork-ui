@@ -1,12 +1,10 @@
 import {
+  ES_FIXTURE_AGGS_REQUEST,
+  ES_FIXTURE_AGGS_RESPONSE,
+  ES_FIXTURE_AGGS_RESPONSE_MORE,
   RESULTS_PAGE_SIZE,
   ResultsListLayout,
 } from '@geonetwork-ui/util/shared'
-import { ES_FIXTURE_AGGS_REQUEST } from '../elasticsearch/fixtures/aggregations-request'
-import {
-  ES_FIXTURE_AGGS_RESPONSE,
-  ES_FIXTURE_AGGS_RESPONSE_MORE,
-} from '../elasticsearch/fixtures/aggregations-response'
 import { DEFAULT_SEARCH_KEY } from './actions'
 import * as fromActions from './actions'
 import {

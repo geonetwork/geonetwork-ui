@@ -1,4 +1,4 @@
-import { ES_FIXTURE_AGGS_REQUEST } from '@geonetwork-ui/feature/search'
+import { ES_FIXTURE_AGGS_REQUEST } from '@geonetwork-ui/util/shared'
 
 export default {
   title: 'Web Components/GnFacets',

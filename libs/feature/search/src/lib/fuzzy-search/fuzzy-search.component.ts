@@ -6,10 +6,12 @@ import {
 } from '@angular/core'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
-import { EsSearchResponse } from '@geonetwork-ui/util/shared'
+import {
+  ElasticsearchMapper,
+  ElasticsearchService,
+  EsSearchResponse,
+} from '@geonetwork-ui/util/shared'
 import { map, switchMap } from 'rxjs/operators'
-import { ElasticsearchMapper } from '../elasticsearch/mapper/elasticsearch.mapper'
-import { ElasticsearchService } from '../elasticsearch/elasticsearch.service'
 import { SearchFacade } from '../state/search.facade'
 
 @Component({

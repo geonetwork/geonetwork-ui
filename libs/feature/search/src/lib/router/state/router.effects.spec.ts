@@ -11,7 +11,7 @@ import { RouterGoActionPayload } from './router.actions'
 import * as fromEffects from './router.effects'
 import { Action } from '@ngrx/store'
 import { routerNavigationAction } from '@ngrx/router-store'
-import * as MdViewActions from '../../metadata-view/state/mdview.actions'
+import { MdViewActions } from '@geonetwork-ui/feature/record'
 import { MetadataRouteComponent, SearchRouteComponent } from '../constants'
 
 describe('RouterEffects', () => {

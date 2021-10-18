@@ -1,7 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { RouterTestingModule } from '@angular/router/testing'
-import { MdViewFacade } from '@geonetwork-ui/feature/search'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { AppComponent } from './app.component'
 import { of } from 'rxjs'
 

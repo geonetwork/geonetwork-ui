@@ -5,7 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { tap } from 'rxjs/operators'
 
 import * as RouterActions from './router.actions'
-import * as MdViewActions from '../../metadata-view/state/mdview.actions'
+import { MdViewActions } from '@geonetwork-ui/feature/record'
 import { navigation } from '@nrwl/angular'
 import { MetadataRouteComponent, SearchRouteComponent } from '../constants'
 

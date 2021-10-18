@@ -22,7 +22,7 @@ import { EffectsModule } from '@ngrx/effects'
 import { RouterModule } from '@angular/router'
 import {
   FeatureSearchModule,
-  MdViewModule,
+  FeatureRecordModule,
   SearchRouterModule,
 } from '@geonetwork-ui/feature/search'
 
@@ -89,7 +89,7 @@ Both search states will be independent and can have different set of filters or 
 
 ## Showing metadata records
 
-To display full metadata records another optional module can be imported from this library: `MdViewModule`.
+To display full metadata records the `FeatureRecordModule` from the `feature/record` library should be used.
 
 This module provides a facade called `MdViewFacade`, which allows you to show or close a metadata record. Please note
 that you will have to use the facade to explicitly load the full record, and you can give it an incomplete record (e.g. coming from

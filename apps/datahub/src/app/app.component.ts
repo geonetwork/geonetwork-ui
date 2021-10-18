@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { ColorService } from '@geonetwork-ui/util/shared'
-import { MdViewFacade } from '@geonetwork-ui/feature/search'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { map, switchMap } from 'rxjs/operators'
 import { combineLatest, of } from 'rxjs'
 

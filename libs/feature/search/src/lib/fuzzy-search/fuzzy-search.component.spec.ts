@@ -1,13 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
-import { ElasticsearchMapper } from '../elasticsearch/mapper/elasticsearch.mapper'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 import { of } from 'rxjs'
-import { ElasticsearchService } from '../elasticsearch/elasticsearch.service'
 import { SearchFacade } from '../state/search.facade'
 
 import { FuzzySearchComponent } from './fuzzy-search.component'
+import {
+  ElasticsearchMapper,
+  ElasticsearchService,
+} from '@geonetwork-ui/util/shared'
 
 const searchFacadeMock = {
   setFilters: jest.fn(),
