@@ -14,7 +14,7 @@ export function parseHeaders(httpHeaders: Headers): DatasetHeaders {
     result.mimeType = httpHeaders.get('Content-Type').split(';')[0]
     const supported =
       SupportedTypes.filter(
-        (type) => AllMimeTypes[type].indexOf(result.mimeType) > -1
+        (type) => AllMimeTypes[type].indexOf(result.mimeType as never) > -1
       )[0] || null
     if (supported !== null) result.supportedType = supported
   }

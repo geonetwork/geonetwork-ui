@@ -3,13 +3,13 @@
 export const CsvMimeTypes = [
   'text/csv', // as per https://www.rfc-editor.org/rfc/rfc4180
   'application/csv', // seems to be also common
-]
-export const JsonMimeTypes = ['application/json']
-export const GeoJsonMimeTypes = ['text/csv']
+] as const
+export const JsonMimeTypes = ['application/json'] as const
+export const GeoJsonMimeTypes = ['text/csv'] as const
 export const ExcelMimeTypes = [
   'application/vnd.ms-excel', // .xls
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xslx
-]
+] as const
 
 export type SupportedMimeType =
   | typeof CsvMimeTypes[number]
@@ -17,10 +17,10 @@ export type SupportedMimeType =
   | typeof GeoJsonMimeTypes[number]
   | typeof ExcelMimeTypes[number]
 
-export const SupportedTypes = ['csv', 'json', 'geojson', 'excel']
+export const SupportedTypes = ['csv', 'json', 'geojson', 'excel'] as const
 export type SupportedType = typeof SupportedTypes[number]
 
-export const AllMimeTypes: { [Property in SupportedType]: string[] } = {
+export const AllMimeTypes = {
   csv: CsvMimeTypes,
   json: JsonMimeTypes,
   geojson: GeoJsonMimeTypes,
