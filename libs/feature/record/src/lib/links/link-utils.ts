@@ -23,7 +23,7 @@ export function getDownloadFormat(
   }
   for (const format in formats) {
     for (const alias of formats[format]) {
-      if (type === DownloadFormatType.FILE && findFileFormats(link, alias))
+      if (type === DownloadFormatType.FILE && checkFileFormat(link, alias))
         return format
       if (
         type === DownloadFormatType.WFS &&
@@ -36,7 +36,7 @@ export function getDownloadFormat(
   return 'unknown'
 }
 
-function findFileFormats(link: MetadataLink, format: string): boolean {
+export function checkFileFormat(link: MetadataLink, format: string): boolean {
   return (
     ('name' in link && new RegExp(`[./]${format}`, 'i').test(link.name)) ||
     ('url' in link && new RegExp(`[./]${format}`, 'i').test(link.url))
