@@ -1,19 +1,13 @@
 import type { Feature } from 'geojson'
-import { SupportedType } from '../mime/types'
 
 export type DataItem = Feature
-export interface DatasetHeaders {
-  mimeType?: string
-  supportedType?: SupportedType
-  fileSizeBytes?: number
-  lastUpdate?: Date
-}
 
 class FetchError {
   constructor(
     public message,
     public httpStatus = 0,
-    public isCrossOriginRelated = false
+    public isCrossOriginRelated = false,
+    public isFileMalformed = false
   ) {}
 }
 
