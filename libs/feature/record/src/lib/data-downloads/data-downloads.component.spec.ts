@@ -110,6 +110,14 @@ describe('DataDownloadsComponent', () => {
             protocol: 'OGC:WFS',
             url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
           },
+          {
+            protocol: 'ESRI:REST',
+            name: 'mes_hdf_journalier_poll_princ',
+            format: 'arcgis geoservices rest api',
+            description: 'ArcGIS GeoService',
+            mediaType: 'application/json',
+            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf_journalier_poll_princ/FeatureServer/0',
+          },
         ])
         tick()
         fixture.detectChanges()
@@ -143,6 +151,22 @@ describe('DataDownloadsComponent', () => {
             format: 'WFS:csv',
             protocol: 'OGC:WFS',
             url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
+          },
+          {
+            protocol: 'ESRI:REST',
+            name: 'mes_hdf_journalier_poll_princ',
+            format: 'REST:json',
+            description: 'ArcGIS GeoService',
+            mediaType: 'application/json',
+            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf_journalier_poll_princ/FeatureServer/0/query?f=json&where=1=1',
+          },
+          {
+            protocol: 'ESRI:REST',
+            name: 'mes_hdf_journalier_poll_princ',
+            format: 'REST:geojson',
+            description: 'ArcGIS GeoService',
+            mediaType: 'application/json',
+            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf_journalier_poll_princ/FeatureServer/0/query?f=geojson&where=1=1',
           },
         ])
       })
