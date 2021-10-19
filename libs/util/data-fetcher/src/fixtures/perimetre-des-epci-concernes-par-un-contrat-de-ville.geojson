@@ -1,0 +1,708 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.37305747018, 43.7929180957]
+      },
+      "properties": {
+        "code_epci": 200017341,
+        "code_region": "76",
+        "objectid": 25,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.7929180957, 3.37305747018],
+        "nom_dep": "HERAULT",
+        "st_area_shape": 554841824.0549872,
+        "st_perimeter_shape": 125726.64842881361,
+        "code_dep": "34",
+        "nom_epci": "CC Lod\u00e9vois et Larzac"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.57226840664, 44.1745337933]
+      },
+      "properties": {
+        "code_epci": 200034692,
+        "code_region": "76",
+        "objectid": 29,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [44.1745337933, 4.57226840664],
+        "nom_dep": "GARD",
+        "st_area_shape": 632262734.2850112,
+        "st_perimeter_shape": 138820.51662269383,
+        "code_dep": "30",
+        "nom_epci": "CA Gard Rhodanien"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.07060920798, 44.1469193094]
+      },
+      "properties": {
+        "code_epci": 200066918,
+        "code_region": "76",
+        "objectid": 39,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [44.1469193094, 4.07060920798],
+        "nom_dep": "GARD",
+        "st_area_shape": 956033995.6150014,
+        "st_perimeter_shape": 239547.70681875545,
+        "code_dep": "30",
+        "nom_epci": "CA Al\u00e8s Agglom\u00e9ration"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.26058648705, 43.4794412523]
+      },
+      "properties": {
+        "code_epci": 200068641,
+        "code_region": "76",
+        "objectid": 43,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.4794412523, 1.26058648705],
+        "nom_dep": "HAUTE-GARONNE",
+        "st_area_shape": 321863629.5750005,
+        "st_perimeter_shape": 160660.64964017196,
+        "code_dep": "31",
+        "nom_epci": "CA Le Muretain Agglo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.17961253606, 42.9178728416]
+      },
+      "properties": {
+        "code_epci": 200067940,
+        "code_region": "76",
+        "objectid": 42,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [42.9178728416, 1.17961253606],
+        "nom_dep": "ARIEGE",
+        "st_area_shape": 1646792947.6950028,
+        "st_perimeter_shape": 219256.7113489019,
+        "code_dep": "09",
+        "nom_epci": "CC Couserans-Pyr\u00e9n\u00e9es"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.25536512715, 43.0192159246]
+      },
+      "properties": {
+        "code_epci": 200071926,
+        "code_region": "76",
+        "objectid": 46,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.0192159246, 2.25536512715],
+        "nom_dep": "AUDE",
+        "st_area_shape": 826285318.7249948,
+        "st_perimeter_shape": 187073.33175720487,
+        "code_dep": "11",
+        "nom_epci": "CC du Limouxin"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.39368300381, 44.057428208]
+      },
+      "properties": {
+        "code_epci": 200034379,
+        "code_region": "76",
+        "objectid": 28,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [44.057428208, 4.39368300381],
+        "nom_dep": "GARD",
+        "st_area_shape": 449525164.9549862,
+        "st_perimeter_shape": 124459.03715973742,
+        "code_dep": "30",
+        "nom_epci": "CC Pays d'Uz\u00e8s"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.85179058028, 42.7518946495]
+      },
+      "properties": {
+        "code_epci": 200027183,
+        "code_region": "76",
+        "objectid": 27,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [42.7518946495, 2.85179058028],
+        "nom_dep": "PYRENEES-ORIENTALES",
+        "st_area_shape": 646668799.300016,
+        "st_perimeter_shape": 203588.7535323603,
+        "code_dep": "66",
+        "nom_epci": "CU Perpignan M\u00e9diterran\u00e9e Ct\u00e9 Urbaine"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.65382940318, 43.4483868717]
+      },
+      "properties": {
+        "code_epci": 200066355,
+        "code_region": "76",
+        "objectid": 38,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.4483868717, 3.65382940318],
+        "nom_dep": "HERAULT",
+        "st_area_shape": 374820171.00999796,
+        "st_perimeter_shape": 106059.55734627097,
+        "code_dep": "34",
+        "nom_epci": "CA S\u00e8te Agglop\u00f4le M\u00e9diterran\u00e9e (SAM)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.66661916614, 43.0743874316]
+      },
+      "properties": {
+        "code_epci": 200035863,
+        "code_region": "76",
+        "objectid": 32,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.0743874316, 2.66661916614],
+        "nom_dep": "AUDE",
+        "st_area_shape": 821811057.3349882,
+        "st_perimeter_shape": 179521.71787777354,
+        "code_dep": "11",
+        "nom_epci": "CC R\u00e9gion L\u00e9zignanaise, Corbi\u00e8res et Minervois"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.09561400189, 44.0674136233]
+      },
+      "properties": {
+        "code_epci": 200066322,
+        "code_region": "76",
+        "objectid": 37,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [44.0674136233, 1.09561400189],
+        "nom_dep": "TARN-ET-GARONNE",
+        "st_area_shape": 449898982.2049921,
+        "st_perimeter_shape": 137765.08678921175,
+        "code_dep": "82",
+        "nom_epci": "CC Terres de Confluences"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.574772301078, 43.6935948818]
+      },
+      "properties": {
+        "code_epci": 200066926,
+        "code_region": "76",
+        "objectid": 40,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.6935948818, 0.574772301078],
+        "nom_dep": "GERS",
+        "st_area_shape": 606703599.0500054,
+        "st_perimeter_shape": 167659.01137218185,
+        "code_dep": "32",
+        "nom_epci": "CA Grand Auch Coeur de Gascogne"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.6012496097, 42.986400138]
+      },
+      "properties": {
+        "code_epci": 200067791,
+        "code_region": "76",
+        "objectid": 41,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [42.986400138, 1.6012496097],
+        "nom_dep": "ARIEGE",
+        "st_area_shape": 448201093.01497656,
+        "st_perimeter_shape": 131212.37718523826,
+        "code_dep": "09",
+        "nom_epci": "CA Pays Foix-Varilhes"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.44212749271, 43.4064744097]
+      },
+      "properties": {
+        "code_epci": 243400819,
+        "code_region": "76",
+        "objectid": 57,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.4064744097, 3.44212749271],
+        "nom_dep": "HERAULT",
+        "st_area_shape": 387748344.4900071,
+        "st_perimeter_shape": 119394.09995887153,
+        "code_dep": "34",
+        "nom_epci": "CA H\u00e9rault M\u00e9diterran\u00e9e"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.99784002834, 44.3512496555]
+      },
+      "properties": {
+        "code_epci": 200069383,
+        "code_region": "76",
+        "objectid": 45,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [44.3512496555, 1.99784002834],
+        "nom_dep": "AVEYRON",
+        "st_area_shape": 670784695.7799929,
+        "st_perimeter_shape": 199596.15575168302,
+        "code_dep": "12",
+        "nom_epci": "CC du Grand Villefranchois"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.99001803475, 43.1371659412]
+      },
+      "properties": {
+        "code_epci": 241100593,
+        "code_region": "76",
+        "objectid": 48,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.1371659412, 2.99001803475],
+        "nom_dep": "AUDE",
+        "st_area_shape": 934103499.0750177,
+        "st_perimeter_shape": 195571.485686266,
+        "code_dep": "11",
+        "nom_epci": "CA le Grand Narbonne"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.41310520955, 43.6273614319]
+      },
+      "properties": {
+        "code_epci": 243100518,
+        "code_region": "76",
+        "objectid": 53,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.6273614319, 1.41310520955],
+        "nom_dep": "HAUTE-GARONNE",
+        "st_area_shape": 460166281.69501996,
+        "st_perimeter_shape": 136759.45029696653,
+        "code_dep": "31",
+        "nom_epci": "Toulouse M\u00e9tropole"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.32605050713, 43.5350813281]
+      },
+      "properties": {
+        "code_epci": 248100430,
+        "code_region": "76",
+        "objectid": 58,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.5350813281, 2.32605050713],
+        "nom_dep": "TARN",
+        "st_area_shape": 408081657.5299901,
+        "st_perimeter_shape": 122867.4224396298,
+        "code_dep": "81",
+        "nom_epci": "CA Castres-Mazamet"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.55285558038, 44.3621808527]
+      },
+      "properties": {
+        "code_epci": 241200187,
+        "code_region": "76",
+        "objectid": 49,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [44.3621808527, 2.55285558038],
+        "nom_dep": "AVEYRON",
+        "st_area_shape": 207796887.22998992,
+        "st_perimeter_shape": 119019.41222979742,
+        "code_dep": "12",
+        "nom_epci": "CA Rodez agglom\u00e9ration"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.25263191595, 44.2631784981]
+      },
+      "properties": {
+        "code_epci": 200035129,
+        "code_region": "76",
+        "objectid": 30,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [44.2631784981, 4.25263191595],
+        "nom_dep": "GARD",
+        "st_area_shape": 321643960.3450031,
+        "st_perimeter_shape": 110585.97648876945,
+        "code_dep": "30",
+        "nom_epci": "CC de C\u00e8ze C\u00e9vennes"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.99981602129, 42.5232915113]
+      },
+      "properties": {
+        "code_epci": 200043602,
+        "code_region": "76",
+        "objectid": 34,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [42.5232915113, 2.99981602129],
+        "nom_dep": "PYRENEES-ORIENTALES",
+        "st_area_shape": 294597930.06999844,
+        "st_perimeter_shape": 108673.45237237931,
+        "code_dep": "66",
+        "nom_epci": "CC Alb\u00e8res et C\u00f4te Vermeille"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.28608424903, 43.651900173]
+      },
+      "properties": {
+        "code_epci": 243000593,
+        "code_region": "76",
+        "objectid": 51,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.651900173, 4.28608424903],
+        "nom_dep": "GARD",
+        "st_area_shape": 204628302.97499096,
+        "st_perimeter_shape": 77844.75797777073,
+        "code_dep": "30",
+        "nom_epci": "CC Petite Camargue"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-0.00380252272386, 43.1545441426]
+      },
+      "properties": {
+        "code_epci": 200069300,
+        "code_region": "76",
+        "objectid": 44,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.1545441426, -0.00380252272386],
+        "nom_dep": "HAUTES-PYRENEES",
+        "st_area_shape": 618400145.125023,
+        "st_perimeter_shape": 197313.6645940687,
+        "code_dep": "65",
+        "nom_epci": "CA Tarbes-Lourdes-Pyr\u00e9n\u00e9es"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0.740918504469, 43.2291028922]
+      },
+      "properties": {
+        "code_epci": 200072643,
+        "code_region": "76",
+        "objectid": 47,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.2291028922, 0.740918504469],
+        "nom_dep": "HAUTE-GARONNE",
+        "st_area_shape": 993440285.6599998,
+        "st_perimeter_shape": 210832.1879869651,
+        "code_dep": "31",
+        "nom_epci": "CC Coeur et C\u00f4teaux du Comminges"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.35577141131, 44.0070566734]
+      },
+      "properties": {
+        "code_epci": 248200099,
+        "code_region": "76",
+        "objectid": 60,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [44.0070566734, 1.35577141131],
+        "nom_dep": "TARN-ET-GARONNE",
+        "st_area_shape": 265155824.33502313,
+        "st_perimeter_shape": 97622.13793972207,
+        "code_dep": "82",
+        "nom_epci": "CA Grand Montauban"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.15871863936, 44.0755076182]
+      },
+      "properties": {
+        "code_epci": 200040905,
+        "code_region": "76",
+        "objectid": 61,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [44.0755076182, 2.15871863936],
+        "nom_dep": "TARN",
+        "st_area_shape": 484190652.0000142,
+        "st_perimeter_shape": 134826.08413369663,
+        "code_dep": "81",
+        "nom_epci": "CC Carmausin-S\u00e9gala"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.15471676552, 43.9120765349]
+      },
+      "properties": {
+        "code_epci": 248100737,
+        "code_region": "76",
+        "objectid": 59,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.9120765349, 2.15471676552],
+        "nom_dep": "TARN",
+        "st_area_shape": 211443700.56999406,
+        "st_perimeter_shape": 85981.11348878455,
+        "code_dep": "81",
+        "nom_epci": "CA de l'Albigeois"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.13907445499, 43.6825926524]
+      },
+      "properties": {
+        "code_epci": 200042646,
+        "code_region": "76",
+        "objectid": 33,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.6825926524, 3.13907445499],
+        "nom_dep": "HERAULT",
+        "st_area_shape": 459271702.83500856,
+        "st_perimeter_shape": 124964.56009882632,
+        "code_dep": "34",
+        "nom_epci": "CC Grand Orb-Ct\u00e9 communes en Languedoc"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.86309318946, 43.6156675448]
+      },
+      "properties": {
+        "code_epci": 243400017,
+        "code_region": "76",
+        "objectid": 54,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.6156675448, 3.86309318946],
+        "nom_dep": "HERAULT",
+        "st_area_shape": 439860451.46498877,
+        "st_perimeter_shape": 172950.3766445226,
+        "code_dep": "34",
+        "nom_epci": "Montpellier M\u00e9diterran\u00e9e M\u00e9tropole"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.10381830477, 43.6927259729]
+      },
+      "properties": {
+        "code_epci": 243400520,
+        "code_region": "76",
+        "objectid": 55,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.6927259729, 4.10381830477],
+        "nom_dep": "HERAULT",
+        "st_area_shape": 158912300.12500116,
+        "st_perimeter_shape": 79575.62829308673,
+        "code_dep": "34",
+        "nom_epci": "CC Pays de Lunel"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.44804690552, 44.4847129041]
+      },
+      "properties": {
+        "code_epci": 200023737,
+        "code_region": "76",
+        "objectid": 26,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [44.4847129041, 1.44804690552],
+        "nom_dep": "LOT",
+        "st_area_shape": 593894024.9800042,
+        "st_perimeter_shape": 191128.487853545,
+        "code_dep": "46",
+        "nom_epci": "CA du Grand Cahors"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.42863945674, 43.228108663]
+      },
+      "properties": {
+        "code_epci": 200035715,
+        "code_region": "76",
+        "objectid": 31,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.228108663, 2.42863945674],
+        "nom_dep": "AUDE",
+        "st_area_shape": 1078697065.1350164,
+        "st_perimeter_shape": 218676.133851491,
+        "code_dep": "11",
+        "nom_epci": "CA Carcassonne Agglo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.82956255007, 43.8914358104]
+      },
+      "properties": {
+        "code_epci": 200066124,
+        "code_region": "76",
+        "objectid": 35,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.8914358104, 1.82956255007],
+        "nom_dep": "TARN",
+        "st_area_shape": 1187434496.8099854,
+        "st_perimeter_shape": 194339.29336224796,
+        "code_dep": "81",
+        "nom_epci": "CA Gaillac-Graulhet"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.60850698591, 43.1693085454]
+      },
+      "properties": {
+        "code_epci": 200066231,
+        "code_region": "76",
+        "objectid": 36,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.1693085454, 1.60850698591],
+        "nom_dep": "ARIEGE",
+        "st_area_shape": 418278474.71001136,
+        "st_perimeter_shape": 134594.6996378332,
+        "code_dep": "09",
+        "nom_epci": "CC des Portes d'Ari\u00e8ge Pyr\u00e9n\u00e9es"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.27477077752, 43.3642365241]
+      },
+      "properties": {
+        "code_epci": 243400769,
+        "code_region": "76",
+        "objectid": 56,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.3642365241, 3.27477077752],
+        "nom_dep": "HERAULT",
+        "st_area_shape": 305610703.9050076,
+        "st_perimeter_shape": 109132.34677753638,
+        "code_dep": "34",
+        "nom_epci": "CA B\u00e9ziers M\u00e9diterran\u00e9e"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.56305742924, 43.7712351644]
+      },
+      "properties": {
+        "code_epci": 243000585,
+        "code_region": "76",
+        "objectid": 50,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.7712351644, 4.56305742924],
+        "nom_dep": "GARD",
+        "st_area_shape": 205240478.8799844,
+        "st_perimeter_shape": 79586.2705693201,
+        "code_dep": "30",
+        "nom_epci": "CC Beaucaire-Terre d'Argence"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.35365495621, 43.8228869191]
+      },
+      "properties": {
+        "code_epci": 243000643,
+        "code_region": "76",
+        "objectid": 52,
+        "nom_region": "OCCITANIE",
+        "geo_point_2d": [43.8228869191, 4.35365495621],
+        "nom_dep": "GARD",
+        "st_area_shape": 793214502.980001,
+        "st_perimeter_shape": 212011.40375299152,
+        "code_dep": "30",
+        "nom_epci": "CA N\u00eemes M\u00e9tropole"
+      }
+    }
+  ]
+}

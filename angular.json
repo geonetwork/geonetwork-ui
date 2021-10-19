@@ -911,6 +911,38 @@
         }
       }
     },
+    "util-data-fetcher": {
+      "root": "libs/util/data-fetcher",
+      "sourceRoot": "libs/util/data-fetcher/src",
+      "projectType": "library",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/util/data-fetcher",
+            "tsConfig": "libs/util/data-fetcher/tsconfig.lib.json",
+            "packageJson": "libs/util/data-fetcher/package.json",
+            "main": "libs/util/data-fetcher/src/index.ts",
+            "assets": ["libs/util/data-fetcher/*.md"]
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/util/data-fetcher/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/util/data-fetcher"],
+          "options": {
+            "jestConfig": "libs/util/data-fetcher/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "util-i18n": {
       "projectType": "library",
       "root": "libs/util/i18n",
