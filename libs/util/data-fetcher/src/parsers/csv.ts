@@ -1,5 +1,6 @@
 import * as Papa from 'papaparse'
 import type { Feature } from 'geojson'
+import { jsonToGeojsonFeature } from './json'
 
 export function parseCsv(text: string): Feature[] {
   const parsed = Papa.parse(text, {
@@ -17,22 +18,5 @@ export function parseCsv(text: string): Feature[] {
           .join('\n')
     )
   }
-  return (parsed.data as any[]).map((item) => {
-    const { id, properties } = Object.keys(item).reduce(
-      (prev, curr) =>
-        curr.toLowerCase().endsWith('id')
-          ? {
-              ...prev,
-              id: item[curr],
-            }
-          : { ...prev, properties: { ...prev.properties, [curr]: item[curr] } },
-      { id: undefined, properties: {} }
-    )
-    return {
-      type: 'Feature',
-      geometry: null,
-      properties,
-      ...(id !== undefined && { id }),
-    }
-  })
+  return (parsed.data as any[]).map(jsonToGeojsonFeature)
 }

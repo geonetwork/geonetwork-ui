@@ -1,6 +1,8 @@
 import type { Feature } from 'geojson'
 import { DatasetHeaders, parseHeaders } from './headers'
 import { parseCsv } from '../parsers/csv'
+import { parseJson } from '../parsers/json'
+import { parseGeojson } from '../parsers/geojson'
 
 export type DataItem = Feature
 
@@ -72,23 +74,21 @@ export function readDataset(url: string): Promise<DataItem[]> {
         else throw FetchError.unknownType()
       }
 
-      // TODO: actually parse text
       try {
         switch (fileInfo.supportedType) {
           case 'csv':
             return parseCsv(text)
           case 'json':
-            break
+            return parseJson(text)
           case 'geojson':
-            break
+            return parseGeojson(text)
           case 'excel':
-            break
+            break // TODO
         }
       } catch (e) {
         throw FetchError.parsingFailed(e.message)
       }
-
-      return []
+      throw new Error('Not implemented')
     })
 }
 

@@ -221,5 +221,54 @@ describe('data-fetcher', () => {
         })
       })
     })
+    describe('JSON file (geospatial data)', () => {
+      it('returns the objects in the file', async () => {
+        const json = await readDataset(
+          'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.json'
+        )
+        expect(json[0]).toEqual({
+          geometry: null,
+          id: 25,
+          properties: {
+            code_dep: '34',
+            code_epci: 200017341,
+            code_region: '76',
+            geo_point_2d: [43.7929180957, 3.37305747018],
+            nom_dep: 'HERAULT',
+            nom_epci: 'CC Lodévois et Larzac',
+            nom_region: 'OCCITANIE',
+            st_area_shape: 554841824.0549872,
+            st_perimeter_shape: 125726.64842881361,
+          },
+          type: 'Feature',
+        })
+      })
+    })
+    describe('GeoJSON file', () => {
+      it('returns the objects in the file', async () => {
+        const json = await readDataset(
+          'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson'
+        )
+        expect(json[0]).toEqual({
+          geometry: {
+            coordinates: [3.37305747018, 43.7929180957],
+            type: 'Point',
+          },
+          properties: {
+            code_dep: '34',
+            code_epci: 200017341,
+            code_region: '76',
+            geo_point_2d: [43.7929180957, 3.37305747018],
+            nom_dep: 'HERAULT',
+            nom_epci: 'CC Lodévois et Larzac',
+            nom_region: 'OCCITANIE',
+            objectid: 25,
+            st_area_shape: 554841824.0549872,
+            st_perimeter_shape: 125726.64842881361,
+          },
+          type: 'Feature',
+        })
+      })
+    })
   })
 })
