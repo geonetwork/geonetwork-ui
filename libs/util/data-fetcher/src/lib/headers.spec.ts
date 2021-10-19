@@ -1,6 +1,6 @@
 import { parseHeaders } from './headers'
 
-describe('all', () => {
+describe('headers', () => {
   describe('parseHeaders', () => {
     let rawHeaders
     describe('content-type', function () {

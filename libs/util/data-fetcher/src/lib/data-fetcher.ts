@@ -1,5 +1,6 @@
 import type { Feature } from 'geojson'
 import { DatasetHeaders, parseHeaders } from './headers'
+import { parseCsv } from '../parsers/csv'
 
 export type DataItem = Feature
 
@@ -63,7 +64,7 @@ export function readDataset(url: string): Promise<DataItem[]> {
         throw FetchError.http(response.status)
       }
       const fileInfo = parseHeaders(response.headers)
-      const rawData = await response.text()
+      const text = await response.text()
 
       if (!('supportedType' in fileInfo)) {
         if ('mimeType' in fileInfo)
@@ -75,7 +76,7 @@ export function readDataset(url: string): Promise<DataItem[]> {
       try {
         switch (fileInfo.supportedType) {
           case 'csv':
-            break
+            return parseCsv(text)
           case 'json':
             break
           case 'geojson':

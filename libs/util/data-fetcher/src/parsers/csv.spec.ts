@@ -1,116 +1,73 @@
-import fs from 'fs/promises'
-import path from 'path'
-import fetchMock from 'fetch-mock-jest'
-import { openCsv } from './csv'
+import { parseCsv } from './csv'
 
-describe('CSV utils', () => {
-  beforeEach(() => {
-    fetchMock.get(
-      (url) => new URL(url).hostname === 'localfile',
-      async (url) =>
-        await fs.readFile(
-          path.join(__dirname, '..', new URL(url).pathname),
-          'utf8'
-        )
-    )
+describe('parseCsv', () => {
+  describe('valid CSV with id', () => {
+    it('returns a parsed object', () => {
+      expect(
+        parseCsv(`OBJID,DEP_NOM,DEP_NUM,FRANCE,FACADE,TYPE,TRANSITION,COMMUNE,POINT,LONG,LAT,QEB_2013,QEB_2014,QEB_2015,QEB_2016,QEB_2017,QEB_2018,QEB_2019,QEB_2020
+"1",AIN,"01",Métropole,Métropole,douce,,ANGLEFORT,PLAN D'EAU D'ANGLEFORT,,,,,,,,,5N,5N`)
+      ).toEqual([
+        {
+          geometry: null,
+          id: '1',
+          properties: {
+            COMMUNE: 'ANGLEFORT',
+            DEP_NOM: 'AIN',
+            DEP_NUM: '01',
+            FACADE: 'Métropole',
+            FRANCE: 'Métropole',
+            LAT: '',
+            LONG: '',
+            POINT: "PLAN D'EAU D'ANGLEFORT",
+            QEB_2013: '',
+            QEB_2014: '',
+            QEB_2015: '',
+            QEB_2016: '',
+            QEB_2017: '',
+            QEB_2018: '',
+            QEB_2019: '5N',
+            QEB_2020: '5N',
+            TRANSITION: '',
+            TYPE: 'douce',
+          },
+          type: 'Feature',
+        },
+      ])
+    })
   })
-  describe('openCsv', () => {
-    describe('valid file (non geospatial data)', () => {
-      it('returns the objects in the file', async () => {
-        const csv = await openCsv('http://localfile/fixtures/rephytox.csv')
-        expect(csv[0]).toEqual({
-          'Coordonnées passage : Coordonnées maxx': '1.99866073',
-          'Coordonnées passage : Coordonnées maxy': '51.00247775',
-          'Coordonnées passage : Coordonnées minx': '1.99866073',
-          'Coordonnées passage : Coordonnées miny': '51.00247775',
-          'Coordonnées passage : Coordonnées redéfinies': '0',
-          'Echantillon : Commentaire': '',
-          'Echantillon : Commentaire de qualification': '',
-          'Echantillon : Date de qualification': '',
-          'Echantillon : Date de validation': '',
-          'Echantillon : Identifiant interne': '5380212',
-          'Echantillon : Libellé du support': 'Bivalve',
-          'Echantillon : Libellé du taxon support': 'Mytilus edulis',
-          'Echantillon : Niveau de qualité': 'Non qualifié',
-          "Libellé de l'engin de prélévement": 'Main ',
-          'Lieu de surveillance : Identifiant': '1001104',
-          'Lieu de surveillance : Libellé': 'Oye plage',
-          'Lieu de surveillance : Mnémonique': '001-P-022',
-          'Passage : Commentaire': '',
-          'Passage : Commentaire de qualification': '',
-          'Passage : Date': '15/04/2008',
-          'Passage : Date de qualification': '',
-          'Passage : Date de validation': '',
-          'Passage : Niveau de qualité': 'Non qualifié',
-          'Prélèvement : Commentaire': '',
-          'Prélèvement : Commentaire de qualification': '',
-          'Prélèvement : Date de qualification': '',
-          'Prélèvement : Date de validation': '',
-          'Prélèvement : Immersion': '0',
-          'Prélèvement : Immersion Max': '',
-          'Prélèvement : Immersion Min': '',
-          'Prélèvement : Niveau': 'Emergé',
-          'Prélèvement : Niveau de qualité': 'Non qualifié',
-          'Prélèvement : Service préleveur : Code': 'PDG-ODE-LITTORAL-LERBL',
-          'Prélèvement : Service préleveur : Libellé':
-            'Laboratoire Environnement Ressources de Boulogne-sur-Mer',
-          "Prélèvement : Symbole de l'unité d'immersion": 'm',
-          "Prélèvement : Unité d'immersion": 'Mètre',
-          'Résultat : Code paramètre': 'ASP',
-          'Résultat : Commentaire de qualification': '',
-          'Résultat : Commentaires': '',
-          'Résultat : Date de qualification': '',
-          'Résultat : Date de validation': '',
-          'Résultat : Libellé fraction': 'Chair totale égouttée',
-          'Résultat : Libellé méthode': 'CL/UV toxines amnésiantes - mg/kg',
-          'Résultat : Libellé paramètre': 'Toxines ASP',
-          'Résultat : Libellé précision': '',
-          'Résultat : Libellé support': 'Bivalve',
-          'Résultat : Libellé unité de mesure associé au quadruplet':
-            'Milligramme par kilogramme',
-          'Résultat : Niveau de qualité': 'Non qualifié',
-          'Résultat : Service analyste : Libellé':
-            'Laboratoire Environnement Ressources de Bretagne Occidentale',
-          'Résultat : Symbole unité de mesure associé au quadruplet': 'mg.kg-1',
-          'Résultat : Valeur de la mesure': '1.1',
-          'Résultat : Valeur qualitative': '',
-        })
-      })
+  describe('valid CSV without id', () => {
+    it('returns a parsed object', () => {
+      expect(
+        parseCsv(`object;code_epci;nom_epci;code_dep;nom_dep;code_region;nom_region;st_area(shape);st_perimeter(shape);geo_point_2d
+25;200017341;CC Lodévois et Larzac;34;HERAULT;76;OCCITANIE;554841824.0549872;125726.64842881361;43.7929180957,3.37305747018
+`)
+      ).toEqual([
+        {
+          geometry: null,
+          properties: {
+            code_dep: '34',
+            code_epci: '200017341',
+            code_region: '76',
+            geo_point_2d: '43.7929180957,3.37305747018',
+            nom_dep: 'HERAULT',
+            nom_epci: 'CC Lodévois et Larzac',
+            nom_region: 'OCCITANIE',
+            object: '25',
+            'st_area(shape)': '554841824.0549872',
+            'st_perimeter(shape)': '125726.64842881361',
+          },
+          type: 'Feature',
+        },
+      ])
     })
-    describe('valid file (geospatial data)', () => {
-      it('returns the objects in the file', async () => {
-        const csv = await openCsv(
-          'http://localfile/fixtures/eaux-baignades.csv'
-        )
-        expect(csv[0]).toEqual({
-          COMMUNE: 'ANGLEFORT',
-          DEP_NOM: 'AIN',
-          DEP_NUM: '01',
-          FACADE: 'Métropole',
-          FRANCE: 'Métropole',
-          ID: '1',
-          LAT: '',
-          LONG: '',
-          POINT: "PLAN D'EAU D'ANGLEFORT",
-          QEB_2013: '',
-          QEB_2014: '',
-          QEB_2015: '',
-          QEB_2016: '',
-          QEB_2017: '',
-          QEB_2018: '',
-          QEB_2019: '5N',
-          QEB_2020: '5N',
-          TRANSITION: '',
-          TYPE: 'douce',
-        })
-      })
-    })
-    describe('file with error', () => {
-      it('returns a rejected promise', () => {
-        return expect(
-          openCsv('http://localfile/fixtures/invalid.csv')
-        ).rejects.toThrowError('CSV parsing failed')
-      })
+  })
+  describe('invalid CSV', () => {
+    it('throws a relevant error', () => {
+      expect(() =>
+        parseCsv(`Passage : Commentaire;Lieu de surveillance : Identifiant;Lieu de surveillance : Mnémonique;Lieu de surveillance : Libellé;Passage : Date;Coordonnées passage : Coordonnées minx;Coordonnées passage : Coordonnées maxx;Coordonnées passage : Coordonnées miny;Coordonnées passage : Coordonnées maxy;Coordonnées passage : Coordonnées redéfinies;Prélèvement : Commentaire;Libellé de l'engin de prélévement;Prélèvement : Niveau;Prélèvement : Immersion;Prélèvement : Immersion Min;Prélèvement : Immersion Max;Prélèvement : Symbole de l'unité d'immersion;Prélèvement : Unité d'immersion;Echantillon : Commentaire;Echantillon : Identifiant interne;Echantillon : Libellé du support;Echantillon : Libellé du taxon support;Résultat : Code paramètre;Résultat : Libellé paramètre;Résultat : Libellé support;Résultat : Libellé fraction;Résultat : Libellé méthode;Résultat : Libellé précision;Résultat : Valeur de la mesure;Résultat : Valeur qualitative;Résultat : Symbole unité de mesure associé au quadruplet;Résultat : Libellé unité de mesure associé au quadruplet;Résultat : Commentaires;Résultat : Service analyste : Libellé;Passage : Date de validation;Passage : Date de qualification;Passage : Niveau de qualité;Passage : Commentaire de qualification;Prélèvement : Date de validation;Prélèvement : Date de qualification;Prélèvement : Niveau de qualité;Prélèvement : Commentaire de qualification;Echantillon : Date de validation;Echantillon : Date de qualification;Echantillon : Niveau de qualité;Echantillon : Commentaire de qualification;Résultat : Date de validation;Résultat : Date de qualification;Résultat : Niveau de qualité;Résultat : Commentaire de qualification;Prélèvement : Service préleveur : Code;Prélèvement : Service préleveur : Libellé
+;1001104;"001-P-022;Oye plage;15/04/2008;1.99866073;1.99866073;51.00247775;51.00247775;0;;Main ;Emergé;0;;;m;Mètre;;5380212;Bivalve;Mytilus edulis;ASP;Toxines ASP;Bivalve;Chair totale égouttée;CL/UV toxines amnésiantes - mg/kg;;1.1;;mg.kg-1;Milligramme par kilogramme;;Laboratoire Environnement Ressources de Bretagne Occidentale;;;Non qualifié;;;;Non qualifié;;;;Non qualifié;;;;Non qualifié;;PDG-ODE-LITTORAL-LERBL;Laboratoire Environnement Ressources de Boulogne-sur-Mer
+`)
+      ).toThrowError('CSV parsing failed')
     })
   })
 })
