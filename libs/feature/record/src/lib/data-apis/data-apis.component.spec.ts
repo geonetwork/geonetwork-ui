@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/ui/search'
 import { Subject } from 'rxjs'
 import { MdViewFacade } from '../state'
 

@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { MetadataLink, MetadataLinkValid } from '@geonetwork-ui/util/shared'
 import { map, startWith, switchMap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
 import { combineLatest, from } from 'rxjs'

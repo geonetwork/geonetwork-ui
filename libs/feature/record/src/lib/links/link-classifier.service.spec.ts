@@ -1,4 +1,3 @@
-import { TestBed } from '@angular/core/testing'
 import { LinkClassifierService, LinkUsage } from './link-classifier.service'
 
 describe('LinkClassifierService', () => {

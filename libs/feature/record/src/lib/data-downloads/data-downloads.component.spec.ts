@@ -4,7 +4,6 @@ import {
   TestBed,
   tick,
 } from '@angular/core/testing'
-import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/ui/search'
 import { Subject } from 'rxjs'
 import { MdViewFacade } from '../state'
 import { DataDownloadsComponent } from './data-downloads.component'
