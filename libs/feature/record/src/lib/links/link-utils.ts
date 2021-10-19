@@ -62,7 +62,7 @@ export function getLinksWithEsriRestFormats(
   const formats = ['json', 'geojson']
   return formats.map((format) => ({
     ...link,
-    url: `${link.url}/query?f=${format}&where=1=1`,
+    url: `${link.url}/query?f=${format}&where=1=1&outFields=*`,
     format: `REST:${format}`,
   }))
 }

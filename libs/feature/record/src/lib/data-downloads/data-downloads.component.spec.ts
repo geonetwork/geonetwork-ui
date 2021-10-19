@@ -157,7 +157,7 @@ describe('DataDownloadsComponent', () => {
             format: 'REST:json',
             description: 'ArcGIS GeoService',
             mediaType: 'application/json',
-            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf_journalier_poll_princ/FeatureServer/0/query?f=json&where=1=1',
+            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf_journalier_poll_princ/FeatureServer/0/query?f=json&where=1=1&outFields=*',
           },
           {
             protocol: 'ESRI:REST',
@@ -165,7 +165,7 @@ describe('DataDownloadsComponent', () => {
             format: 'REST:geojson',
             description: 'ArcGIS GeoService',
             mediaType: 'application/json',
-            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf_journalier_poll_princ/FeatureServer/0/query?f=geojson&where=1=1',
+            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf_journalier_poll_princ/FeatureServer/0/query?f=geojson&where=1=1&outFields=*',
           },
         ])
       })

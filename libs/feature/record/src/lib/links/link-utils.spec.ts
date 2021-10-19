@@ -85,13 +85,13 @@ describe('link utils', () => {
             protocol: 'ESRI:REST',
             name: 'myrestlayer',
             format: 'REST:json',
-            url: 'https://my.esri.server/FeatureServer/query?f=json&where=1=1',
+            url: 'https://my.esri.server/FeatureServer/query?f=json&where=1=1&outFields=*',
           },
           {
             protocol: 'ESRI:REST',
             name: 'myrestlayer',
             format: 'REST:geojson',
-            url: 'https://my.esri.server/FeatureServer/query?f=geojson&where=1=1',
+            url: 'https://my.esri.server/FeatureServer/query?f=geojson&where=1=1&outFields=*',
           },
         ])
       })
