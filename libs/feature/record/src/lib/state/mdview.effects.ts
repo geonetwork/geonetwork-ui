@@ -9,6 +9,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { of } from 'rxjs'
 import { catchError, map, switchMap } from 'rxjs/operators'
 import * as MdViewActions from './mdview.actions'
+import { LINKS_FIXTURE } from './fixture'
 
 @Injectable()
 export class MdViewEffects {
@@ -31,6 +32,12 @@ export class MdViewEffects {
       map((response: EsSearchResponse) => {
         const records = this.esMapper.toRecords(response)
         const full = records[0]
+        //ADD FIXTURE FOR DEV
+        full.links = full.links
+          ? [...full.links, ...LINKS_FIXTURE]
+          : LINKS_FIXTURE
+        console.log(full.links)
+        //END FIXTURE
         return MdViewActions.loadFullSuccess({ full })
       }),
       catchError((error) => of(MdViewActions.loadFullFailure({ error })))
