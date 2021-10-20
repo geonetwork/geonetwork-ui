@@ -5,17 +5,18 @@ import {
   componentWrapperDecorator,
 } from '@storybook/angular'
 import { LoadingMaskComponent } from './loading-mask.component'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 export default {
   title: 'Widgets/LoadingMaskComponent',
   component: LoadingMaskComponent,
   decorators: [
     moduleMetadata({
-      imports: [],
+      imports: [MatProgressSpinnerModule],
     }),
     componentWrapperDecorator(
       (story) => `
-<div class="border border-gray-300 p-2" style="width: 300px; resize: both; overflow: auto">
+<div class="border border-gray-300 p-2" style="width: 600px; height:400px; resize: both; overflow: auto">
   ${story}
 </div>`
     ),
@@ -29,5 +30,5 @@ const Template: Story<LoadingMaskComponent> = (args: LoadingMaskComponent) => ({
 
 export const Primary = Template.bind({})
 Primary.args = {
-  message: '',
+  message: 'Loading some data, please wait...',
 }

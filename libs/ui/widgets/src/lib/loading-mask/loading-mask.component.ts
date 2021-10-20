@@ -1,16 +1,16 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+} from '@angular/core'
 
 @Component({
   selector: 'gn-ui-loading-mask',
   templateUrl: './loading-mask.component.html',
   styleUrls: ['./loading-mask.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoadingMaskComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class LoadingMaskComponent {
+  @Input() message: string
 }
