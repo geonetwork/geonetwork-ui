@@ -18,6 +18,7 @@ import { map, switchMap, tap } from 'rxjs/operators'
 import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
 import { readDataset } from '@geonetwork-ui/data-fetcher'
 import { fromPromise } from 'rxjs/internal-compatibility'
+import { WfsEndpoint } from '@camptocamp/ogc-client'
 
 @Component({
   selector: 'gn-ui-data-view-map',
@@ -75,15 +76,26 @@ export class DataViewMapComponent {
   }
 
   getLayerFromLink(link: MetadataLinkValid): Observable<MapContextLayerModel> {
-    if (link.protocol === 'OGC:WMS' || link.protocol === 'OGC:WFS') {
+    if (link.protocol === 'OGC:WMS') {
       return of({
         url: link.url,
-        type:
-          link.protocol === 'OGC:WMS'
-            ? MapContextLayerTypeEnum.WMS
-            : MapContextLayerTypeEnum.WFS,
+        type: MapContextLayerTypeEnum.WMS,
         name: link.name,
       })
+    } else if (link.protocol === 'OGC:WFS') {
+      return fromPromise(
+        new WfsEndpoint(link.url).isReady().then((endpoint) =>
+          readDataset(
+            endpoint.getFeatureUrl(link.name, undefined, 'application/json')
+          ).then((features) => ({
+            type: MapContextLayerTypeEnum.GEOJSON,
+            data: {
+              type: 'FeatureCollection',
+              features,
+            },
+          }))
+        )
+      )
     } else if (link.protocol?.startsWith('WWW:DOWNLOAD')) {
       return fromPromise(
         readDataset(link.url).then((features) => ({

@@ -12,6 +12,15 @@ import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import { Subject } from 'rxjs'
 import { DataViewMapComponent } from './data-view-map.component'
 
+jest.mock('@camptocamp/ogc-client', () => ({
+  WfsEndpoint: class {
+    isReady() {
+      return Promise.resolve({
+        getFeatureUrl: () => '',
+      })
+    }
+  },
+}))
 jest.mock('@geonetwork-ui/data-fetcher', () => ({
   readDataset: (url) => Promise.resolve(SAMPLE_GEOJSON.features),
 }))
@@ -207,7 +216,7 @@ describe('DataViewMapComponent', () => {
     })
 
     describe('with a link using WFS protocol', () => {
-      beforeEach(() => {
+      beforeEach(fakeAsync(() => {
         mdViewFacade.mapApiLinks$.next([])
         mdViewFacade.dataLinks$.next([
           {
@@ -216,16 +225,16 @@ describe('DataViewMapComponent', () => {
             protocol: 'OGC:WFS',
           },
         ])
+        tick()
         fixture.detectChanges()
-      })
-      it('emits a map context with the base layer and the WFS link', () => {
+      }))
+      it('emits a map context with the base layer and the downloaded data from WFS', () => {
         expect(mapComponent.context).toEqual({
           layers: [
             component.getBackgroundLayer(),
             {
-              url: 'http://abcd.com/wfs',
-              name: 'featuretype',
-              type: 'wfs',
+              type: 'geojson',
+              data: SAMPLE_GEOJSON,
             },
           ],
           view: expect.any(Object),
