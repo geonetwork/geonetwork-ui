@@ -8,10 +8,11 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component'
 import { StepBarComponent } from './step-bar/step-bar.component'
 import { TagInputModule } from 'ngx-chips'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoadingMaskComponent } from './loading-mask/loading-mask.component'
 
 @NgModule({
-  declarations: [ColorScaleComponent, ProgressBarComponent, StepBarComponent],
+  declarations: [ColorScaleComponent, ProgressBarComponent, StepBarComponent, LoadingMaskComponent],
   imports: [
     BrowserModule,
     TranslateModule.forChild(),
@@ -22,6 +23,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
     TagInputModule,
     UtilSharedModule,
   ],
-  exports: [ProgressBarComponent, StepBarComponent],
+  exports: [ProgressBarComponent, StepBarComponent, LoadingMaskComponent],
 })
 export class UiWidgetsModule {}
