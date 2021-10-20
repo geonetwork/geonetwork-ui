@@ -1,12 +1,23 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import {
   MAP_CTX_LAYER_XYZ_FIXTURE,
+  MapContextLayerModel,
+  MapContextLayerTypeEnum,
   MapContextModel,
 } from '@geonetwork-ui/feature/map'
 import { MdViewFacade } from '../state/mdview.facade'
 import { fromLonLat } from 'ol/proj'
-import { BehaviorSubject, combineLatest } from 'rxjs'
-import { map } from 'rxjs/operators'
+import {
+  BehaviorSubject,
+  combineLatest,
+  Observable,
+  of,
+  throwError,
+} from 'rxjs'
+import { map, switchMap, tap } from 'rxjs/operators'
+import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { readDataset } from '@geonetwork-ui/data-fetcher'
+import { fromPromise } from 'rxjs/internal-compatibility'
 
 @Component({
   selector: 'gn-ui-data-view-map',
@@ -15,7 +26,11 @@ import { map } from 'rxjs/operators'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataViewMapComponent {
-  dropdownChoices$ = this.mdViewFacade.mapApiLinks$.pipe(
+  compatibleMapLinks$ = combineLatest([
+    this.mdViewFacade.mapApiLinks$,
+    this.mdViewFacade.dataLinks$,
+  ]).pipe(map(([mapApiLinks, dataLinks]) => [...mapApiLinks, ...dataLinks]))
+  dropdownChoices$ = this.compatibleMapLinks$.pipe(
     map((links) =>
       links.length
         ? links.map((link, index) => ({
@@ -27,22 +42,18 @@ export class DataViewMapComponent {
   )
   selectedLinkIndex$ = new BehaviorSubject(0)
   currentLayers$ = combineLatest([
-    this.mdViewFacade.mapApiLinks$,
+    this.compatibleMapLinks$,
     this.selectedLinkIndex$,
   ]).pipe(
     map(([links, index]) => links[index]),
-    map((link) =>
-      link
-        ? [
-            this.getBackgroundLayer(),
-            {
-              url: link.url,
-              type: link.protocol === 'OGC:WMS' ? 'wms' : 'geojson',
-              name: link.name,
-            },
-          ]
-        : [this.getBackgroundLayer()]
-    )
+    switchMap((link) => {
+      if (!link) {
+        return of([this.getBackgroundLayer()])
+      }
+      return this.getLayerFromLink(link).pipe(
+        map((layer) => [this.getBackgroundLayer(), layer])
+      )
+    })
   )
   mapContext$ = this.currentLayers$.pipe(
     map(
@@ -59,8 +70,32 @@ export class DataViewMapComponent {
 
   constructor(private mdViewFacade: MdViewFacade) {}
 
-  getBackgroundLayer() {
+  getBackgroundLayer(): MapContextLayerModel {
     return MAP_CTX_LAYER_XYZ_FIXTURE
+  }
+
+  getLayerFromLink(link: MetadataLinkValid): Observable<MapContextLayerModel> {
+    if (link.protocol === 'OGC:WMS' || link.protocol === 'OGC:WFS') {
+      return of({
+        url: link.url,
+        type:
+          link.protocol === 'OGC:WMS'
+            ? MapContextLayerTypeEnum.WMS
+            : MapContextLayerTypeEnum.WFS,
+        name: link.name,
+      })
+    } else if (link.protocol?.startsWith('WWW:DOWNLOAD')) {
+      return fromPromise(
+        readDataset(link.url).then((features) => ({
+          type: MapContextLayerTypeEnum.GEOJSON,
+          data: {
+            type: 'FeatureCollection',
+            features,
+          },
+        }))
+      )
+    }
+    return throwError('protocol not supported')
   }
 
   selectLinkToDisplay(link: number) {
