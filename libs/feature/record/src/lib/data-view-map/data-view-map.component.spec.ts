@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core'
 import {
   ComponentFixture,
   fakeAsync,
+  flush,
   TestBed,
   tick,
 } from '@angular/core/testing'
@@ -21,8 +22,13 @@ jest.mock('@camptocamp/ogc-client', () => ({
     }
   },
 }))
+
+// mock a 100ms delay before serving the geojson file
 jest.mock('@geonetwork-ui/data-fetcher', () => ({
-  readDataset: (url) => Promise.resolve(SAMPLE_GEOJSON.features),
+  readDataset: (url) =>
+    new Promise((resolve) => {
+      setTimeout(() => resolve(SAMPLE_GEOJSON.features), 100)
+    }),
 }))
 
 class MdViewFacadeMock {
@@ -62,6 +68,12 @@ export class MockDropdownSelectorComponent {
   @Output() selectValue = new EventEmitter()
 }
 
+@Component({
+  selector: 'gn-ui-loading-mask',
+  template: '<div></div>',
+})
+export class MockLoadingMaskComponent {}
+
 describe('DataViewMapComponent', () => {
   let component: DataViewMapComponent
   let fixture: ComponentFixture<DataViewMapComponent>
@@ -73,6 +85,7 @@ describe('DataViewMapComponent', () => {
         DataViewMapComponent,
         MockMapContextComponent,
         MockDropdownSelectorComponent,
+        MockLoadingMaskComponent,
       ],
       providers: [
         {
@@ -225,10 +238,10 @@ describe('DataViewMapComponent', () => {
             protocol: 'OGC:WFS',
           },
         ])
-        tick()
+        tick(200)
         fixture.detectChanges()
       }))
-      it('emits a map context with the base layer and the downloaded data from WFS', () => {
+      it('emits a map context with the base layer and the downloaded data from WFS', fakeAsync(() => {
         expect(mapComponent.context).toEqual({
           layers: [
             component.getBackgroundLayer(),
@@ -239,7 +252,7 @@ describe('DataViewMapComponent', () => {
           ],
           view: expect.any(Object),
         })
-      })
+      }))
     })
 
     describe('with a link using DOWNLOAD protocol', () => {
@@ -253,10 +266,21 @@ describe('DataViewMapComponent', () => {
             format: 'geojson',
           },
         ])
-        tick()
         fixture.detectChanges()
+        tick(50)
+        flush()
       }))
-      it('emits a map context with the base layer and the downloaded data', () => {
+      it('does not emit immediately a map context', () => {
+        expect(mapComponent.context).toBe(null)
+      })
+      it('shows a loading indicator', () => {
+        expect(
+          fixture.debugElement.query(By.directive(MockLoadingMaskComponent))
+        ).toBeTruthy()
+      })
+      it('emits a map context after loading with the base layer and the downloaded data', fakeAsync(() => {
+        tick(200)
+        fixture.detectChanges()
         expect(mapComponent.context).toEqual({
           layers: [
             component.getBackgroundLayer(),
@@ -267,7 +291,14 @@ describe('DataViewMapComponent', () => {
           ],
           view: expect.any(Object),
         })
-      })
+      }))
+      it('does not show a loading indicator after loading', fakeAsync(() => {
+        tick(200)
+        fixture.detectChanges()
+        expect(
+          fixture.debugElement.query(By.directive(MockLoadingMaskComponent))
+        ).toBeFalsy()
+      }))
     })
 
     describe('when receiving several metadata records', () => {

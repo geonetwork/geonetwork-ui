@@ -1,5 +1,10 @@
 <div class="relative w-full h-full">
   <gn-ui-map-context [context]="mapContext$ | async"></gn-ui-map-context>
+  <gn-ui-loading-mask
+    *ngIf="loading"
+    class="absolute"
+    message="map.loading.data"
+  ></gn-ui-loading-mask>
   <gn-ui-dropdown-selector
     title="available layers"
     class="absolute m-2"

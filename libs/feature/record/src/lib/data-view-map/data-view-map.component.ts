@@ -14,7 +14,7 @@ import {
   of,
   throwError,
 } from 'rxjs'
-import { map, switchMap, tap } from 'rxjs/operators'
+import { catchError, finalize, map, switchMap } from 'rxjs/operators'
 import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
 import { readDataset } from '@geonetwork-ui/data-fetcher'
 import { fromPromise } from 'rxjs/internal-compatibility'
@@ -31,6 +31,7 @@ export class DataViewMapComponent {
     this.mdViewFacade.mapApiLinks$,
     this.mdViewFacade.dataLinks$,
   ]).pipe(map(([mapApiLinks, dataLinks]) => [...mapApiLinks, ...dataLinks]))
+
   dropdownChoices$ = this.compatibleMapLinks$.pipe(
     map((links) =>
       links.length
@@ -42,6 +43,9 @@ export class DataViewMapComponent {
     )
   )
   selectedLinkIndex$ = new BehaviorSubject(0)
+
+  loading = false
+
   currentLayers$ = combineLatest([
     this.compatibleMapLinks$,
     this.selectedLinkIndex$,
@@ -51,11 +55,15 @@ export class DataViewMapComponent {
       if (!link) {
         return of([this.getBackgroundLayer()])
       }
+      this.loading = true
       return this.getLayerFromLink(link).pipe(
-        map((layer) => [this.getBackgroundLayer(), layer])
+        map((layer) => [this.getBackgroundLayer(), layer]),
+        catchError((e) => of([this.getBackgroundLayer()])),
+        finalize(() => (this.loading = false))
       )
     })
   )
+
   mapContext$ = this.currentLayers$.pipe(
     map(
       (layers) =>
@@ -96,7 +104,7 @@ export class DataViewMapComponent {
           }))
         )
       )
-    } else if (link.protocol?.startsWith('WWW:DOWNLOAD')) {
+    } else if (link.protocol.startsWith('WWW:DOWNLOAD')) {
       return fromPromise(
         readDataset(link.url).then((features) => ({
           type: MapContextLayerTypeEnum.GEOJSON,
