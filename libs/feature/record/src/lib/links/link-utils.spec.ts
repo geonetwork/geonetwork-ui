@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing'
 import {
   getDownloadFormat,
   DownloadFormatType,
   checkFileFormat,
+  getLinksWithEsriRestFormats,
 } from './link-utils'
 
 describe('link utils', () => {
@@ -70,5 +70,30 @@ describe('link utils', () => {
             ).toEqual(false)
           })
         })
+    }),
+    describe('#getLinksWithEsriRestFormats', () => {
+      it('returns links with formats for link', () => {
+        expect(
+          getLinksWithEsriRestFormats({
+            protocol: 'ESRI:REST',
+            name: 'myrestlayer',
+            format: 'arcgis geoservices rest api',
+            url: 'https://my.esri.server/FeatureServer',
+          })
+        ).toEqual([
+          {
+            protocol: 'ESRI:REST',
+            name: 'myrestlayer',
+            format: 'REST:json',
+            url: 'https://my.esri.server/FeatureServer/query?f=json&where=1=1&outFields=*',
+          },
+          {
+            protocol: 'ESRI:REST',
+            name: 'myrestlayer',
+            format: 'REST:geojson',
+            url: 'https://my.esri.server/FeatureServer/query?f=geojson&where=1=1&outFields=*',
+          },
+        ])
+      })
     })
 })

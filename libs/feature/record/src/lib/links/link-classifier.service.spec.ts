@@ -1,4 +1,3 @@
-import { TestBed } from '@angular/core/testing'
 import { LinkClassifierService, LinkUsage } from './link-classifier.service'
 
 describe('LinkClassifierService', () => {
@@ -63,6 +62,16 @@ describe('LinkClassifierService', () => {
     name: 'myotherlayer',
     url: 'https://my.ogc.server/wfs',
   }
+  const geodataRest = {
+    protocol: 'ESRI:REST',
+    name: 'myrestlayer',
+    url: 'https://my.esri.server/FeatureServer',
+  }
+  const maplayerRest = {
+    protocol: 'ESRI:REST',
+    name: 'myotherrestlayer',
+    url: 'https://my.esri.server/MapServer',
+  }
   let service: LinkClassifierService
 
   beforeEach(() => {
@@ -75,7 +84,7 @@ describe('LinkClassifierService', () => {
 
   describe('#getUsagesForLink', () => {
     describe('for a WMS link', () => {
-      it('returns map API usage', () => {
+      it('returns map API  and API usage', () => {
         expect(service.getUsagesForLink(geodataWms)).toEqual([
           LinkUsage.API,
           LinkUsage.MAPAPI,
@@ -83,12 +92,25 @@ describe('LinkClassifierService', () => {
       })
     })
     describe('for a WFS link', () => {
-      it('returns download and API usage', () => {
+      it('returns download, data and API usage', () => {
         expect(service.getUsagesForLink(geodataWfs)).toEqual([
           LinkUsage.API,
           LinkUsage.DOWNLOAD,
           LinkUsage.DATA,
         ])
+      })
+    })
+    describe('for a ESRI REST feature service link', () => {
+      it('returns download and API usage', () => {
+        expect(service.getUsagesForLink(geodataRest)).toEqual([
+          LinkUsage.API,
+          LinkUsage.DOWNLOAD,
+        ])
+      })
+    })
+    describe('for a ESRI REST map service link', () => {
+      it('returns no usage', () => {
+        expect(service.getUsagesForLink(maplayerRest)).toEqual([])
       })
     })
     describe('for a link to a CSV file', () => {

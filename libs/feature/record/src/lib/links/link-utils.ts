@@ -55,3 +55,14 @@ export function getLinksWithWfsFormats(
     }))
   })
 }
+
+export function getLinksWithEsriRestFormats(
+  link: MetadataLinkValid
+): MetadataLinkValid[] {
+  const formats = ['json', 'geojson']
+  return formats.map((format) => ({
+    ...link,
+    url: `${link.url}/query?f=${format}&where=1=1&outFields=*`,
+    format: `REST:${format}`,
+  }))
+}
