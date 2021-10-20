@@ -94,7 +94,9 @@ export class DataViewMapComponent {
       return fromPromise(
         new WfsEndpoint(link.url).isReady().then((endpoint) =>
           readDataset(
-            endpoint.getFeatureUrl(link.name, undefined, 'application/json')
+            endpoint.getFeatureUrl(link.name, undefined, 'application/json') +
+              '&srsname=EPSG:4326',
+            'geojson'
           ).then((features) => ({
             type: MapContextLayerTypeEnum.GEOJSON,
             data: {
@@ -106,7 +108,7 @@ export class DataViewMapComponent {
       )
     } else if (link.protocol.startsWith('WWW:DOWNLOAD')) {
       return fromPromise(
-        readDataset(link.url).then((features) => ({
+        readDataset(link.url, 'geojson').then((features) => ({
           type: MapContextLayerTypeEnum.GEOJSON,
           data: {
             type: 'FeatureCollection',

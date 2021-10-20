@@ -2,6 +2,7 @@ import fetchMock from 'fetch-mock-jest'
 import fs from 'fs/promises'
 import path from 'path'
 import { readDataset } from './data-fetcher'
+import * as csv from '../parsers/csv'
 
 describe('data-fetcher', () => {
   beforeEach(() => {
@@ -41,9 +42,11 @@ describe('data-fetcher', () => {
         }
       }
     )
+    jest.spyOn(csv, 'parseCsv')
   })
   afterEach(() => {
     fetchMock.reset()
+    jest.clearAllMocks()
   })
   describe('readDataset', () => {
     describe('network error occurs', () => {
@@ -268,6 +271,17 @@ describe('data-fetcher', () => {
           },
           type: 'Feature',
         })
+      })
+    })
+    describe('specifying a type hint', () => {
+      it('ignores the advertised content type and follow the type hint instead', async () => {
+        try {
+          await readDataset(
+            'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson',
+            'csv'
+          )
+        } catch {}
+        expect(csv.parseCsv).toHaveBeenCalled()
       })
     })
   })
