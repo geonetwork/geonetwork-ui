@@ -3,6 +3,7 @@ import type { FeatureCollection } from 'geojson'
 export enum MapContextLayerTypeEnum {
   XYZ = 'xyz',
   WMS = 'wms',
+  WFS = 'wfs',
   GEOJSON = 'geojson',
 }
 
