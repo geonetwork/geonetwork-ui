@@ -20,6 +20,10 @@ jest.spyOn(utils, 'getLinksWithWfsFormats').mockImplementation((link) =>
     },
     {
       ...link,
+      format: 'geojson',
+    },
+    {
+      ...link,
       format: 'csv',
     },
     {
@@ -121,7 +125,7 @@ describe('DataDownloadsComponent', () => {
         tick()
         fixture.detectChanges()
       }))
-      it('emits download links', () => {
+      it('emits download links once per format', () => {
         expect(downloadsListComponent.links).toEqual([
           {
             description: 'Lieu de surveillance (point)',
