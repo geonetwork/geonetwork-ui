@@ -45,6 +45,7 @@ export class DataViewMapComponent {
   selectedLinkIndex$ = new BehaviorSubject(0)
 
   loading = false
+  error = null
 
   currentLayers$ = combineLatest([
     this.compatibleMapLinks$,
@@ -56,9 +57,13 @@ export class DataViewMapComponent {
         return of([this.getBackgroundLayer()])
       }
       this.loading = true
+      this.error = null
       return this.getLayerFromLink(link).pipe(
         map((layer) => [this.getBackgroundLayer(), layer]),
-        catchError((e) => of([this.getBackgroundLayer()])),
+        catchError((e) => {
+          this.error = e.message
+          return of([this.getBackgroundLayer()])
+        }),
         finalize(() => (this.loading = false))
       )
     })
@@ -92,8 +97,17 @@ export class DataViewMapComponent {
       })
     } else if (link.protocol === 'OGC:WFS') {
       return fromPromise(
-        new WfsEndpoint(link.url).isReady().then((endpoint) =>
-          readDataset(
+        new WfsEndpoint(link.url).isReady().then((endpoint) => {
+          if (
+            !endpoint
+              .getServiceInfo()
+              .outputFormats.some(
+                (format) => format.toLowerCase().indexOf('json') > -1
+              )
+          ) {
+            throw new Error('map.wfs.geojson.not.supported')
+          }
+          return readDataset(
             endpoint.getFeatureUrl(link.name, undefined, 'application/json') +
               '&srsname=EPSG:4326',
             'geojson'
@@ -104,7 +118,7 @@ export class DataViewMapComponent {
               features,
             },
           }))
-        )
+        })
       )
     } else if (link.protocol.startsWith('WWW:DOWNLOAD')) {
       return fromPromise(

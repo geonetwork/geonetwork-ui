@@ -15,9 +15,14 @@ import { DataViewMapComponent } from './data-view-map.component'
 
 jest.mock('@camptocamp/ogc-client', () => ({
   WfsEndpoint: class {
+    constructor(private url) {}
     isReady() {
       return Promise.resolve({
-        getFeatureUrl: () => '',
+        getFeatureUrl: () => this.url + '?GetFeature',
+        getServiceInfo: () => ({
+          outputFormats:
+            this.url.indexOf('nojson') > -1 ? ['gml'] : ['gml', 'geojson'],
+        }),
       })
     }
   },
@@ -26,8 +31,10 @@ jest.mock('@camptocamp/ogc-client', () => ({
 // mock a 100ms delay before serving the geojson file
 jest.mock('@geonetwork-ui/data-fetcher', () => ({
   readDataset: (url) =>
-    new Promise((resolve) => {
-      setTimeout(() => resolve(SAMPLE_GEOJSON.features), 100)
+    new Promise((resolve, reject) => {
+      url.indexOf('error') === -1
+        ? setTimeout(() => resolve(SAMPLE_GEOJSON.features), 100)
+        : reject(new Error('data loading error'))
     }),
 }))
 
@@ -74,6 +81,12 @@ export class MockDropdownSelectorComponent {
 })
 export class MockLoadingMaskComponent {}
 
+@Component({
+  selector: 'gn-ui-popup-alert',
+  template: '<div></div>',
+})
+export class MockPopupAlertComponent {}
+
 describe('DataViewMapComponent', () => {
   let component: DataViewMapComponent
   let fixture: ComponentFixture<DataViewMapComponent>
@@ -86,6 +99,7 @@ describe('DataViewMapComponent', () => {
         MockMapContextComponent,
         MockDropdownSelectorComponent,
         MockLoadingMaskComponent,
+        MockPopupAlertComponent,
       ],
       providers: [
         {
@@ -253,6 +267,44 @@ describe('DataViewMapComponent', () => {
           view: expect.any(Object),
         })
       }))
+    })
+
+    describe('with a link using WFS which returns an error', () => {
+      beforeEach(fakeAsync(() => {
+        mdViewFacade.mapApiLinks$.next([])
+        mdViewFacade.dataLinks$.next([
+          {
+            url: 'http://abcd.com/wfs/error',
+            name: 'featuretype',
+            protocol: 'OGC:WFS',
+          },
+        ])
+        tick()
+        fixture.detectChanges()
+        flush()
+      }))
+      it('shows an error', () => {
+        expect(component.error).toEqual('data loading error')
+      })
+    })
+
+    describe('with a link using WFS protocol not supporting geojson', () => {
+      beforeEach(fakeAsync(() => {
+        mdViewFacade.mapApiLinks$.next([])
+        mdViewFacade.dataLinks$.next([
+          {
+            url: 'http://abcd.com/wfs/nojson',
+            name: 'featuretype',
+            protocol: 'OGC:WFS',
+          },
+        ])
+        tick()
+        fixture.detectChanges()
+        flush()
+      }))
+      it('shows an error', () => {
+        expect(component.error).toEqual('map.wfs.geojson.not.supported')
+      })
     })
 
     describe('with a link using DOWNLOAD protocol', () => {
