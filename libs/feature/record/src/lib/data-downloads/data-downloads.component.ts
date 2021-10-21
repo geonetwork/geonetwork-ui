@@ -50,6 +50,14 @@ export class DataDownloadsComponent {
               format: getDownloadFormat(link, DownloadFormatType.WFS),
             }))
             .filter((link) => link.format !== 'unknown')
+            .filter(
+              (link, i, links) =>
+                links.findIndex(
+                  (firstLink) =>
+                    firstLink.format === link.format &&
+                    firstLink.name === link.name
+                ) === i
+            )
         ),
         map((wfsDownloadLinks) => [
           ...otherLinks,
