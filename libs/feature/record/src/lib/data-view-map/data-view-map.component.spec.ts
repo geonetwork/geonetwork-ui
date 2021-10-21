@@ -1,15 +1,60 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import {
+  ComponentFixture,
+  fakeAsync,
+  flush,
+  TestBed,
+  tick,
+} from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { MapContextModel } from '@geonetwork-ui/feature/map'
 import { MdViewFacade } from '../state/mdview.facade'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import { Subject } from 'rxjs'
-
 import { DataViewMapComponent } from './data-view-map.component'
+
+jest.mock('@camptocamp/ogc-client', () => ({
+  WfsEndpoint: class {
+    constructor(private url) {}
+    isReady() {
+      return Promise.resolve({
+        getFeatureUrl: () => this.url + '?GetFeature',
+        getServiceInfo: () => ({
+          outputFormats:
+            this.url.indexOf('nojson') > -1 ? ['gml'] : ['gml', 'geojson'],
+        }),
+      })
+    }
+  },
+}))
+
+// mock a 100ms delay before serving the geojson file
+jest.mock('@geonetwork-ui/data-fetcher', () => ({
+  readDataset: (url) =>
+    new Promise((resolve, reject) => {
+      url.indexOf('error') === -1
+        ? setTimeout(() => resolve(SAMPLE_GEOJSON.features), 100)
+        : reject(new Error('data loading error'))
+    }),
+}))
 
 class MdViewFacadeMock {
   mapApiLinks$ = new Subject()
+  dataLinks$ = new Subject()
+}
+
+const SAMPLE_GEOJSON = {
+  type: 'FeatureCollection',
+  features: [
+    {
+      type: 'Feature',
+      id: 123,
+      properties: {
+        test: 'abcd',
+      },
+      geometry: {},
+    },
+  ],
 }
 
 @Component({
@@ -30,6 +75,18 @@ export class MockDropdownSelectorComponent {
   @Output() selectValue = new EventEmitter()
 }
 
+@Component({
+  selector: 'gn-ui-loading-mask',
+  template: '<div></div>',
+})
+export class MockLoadingMaskComponent {}
+
+@Component({
+  selector: 'gn-ui-popup-alert',
+  template: '<div></div>',
+})
+export class MockPopupAlertComponent {}
+
 describe('DataViewMapComponent', () => {
   let component: DataViewMapComponent
   let fixture: ComponentFixture<DataViewMapComponent>
@@ -41,6 +98,8 @@ describe('DataViewMapComponent', () => {
         DataViewMapComponent,
         MockMapContextComponent,
         MockDropdownSelectorComponent,
+        MockLoadingMaskComponent,
+        MockPopupAlertComponent,
       ],
       providers: [
         {
@@ -75,9 +134,10 @@ describe('DataViewMapComponent', () => {
       ).componentInstance
     })
 
-    describe('with no link compatible with MAP usage', () => {
+    describe('with no link compatible with MAP_API or DATA usage', () => {
       beforeEach(() => {
         mdViewFacade.mapApiLinks$.next([])
+        mdViewFacade.dataLinks$.next([])
         fixture.detectChanges()
       })
       it('emits a map context with only the base layer', () => {
@@ -96,7 +156,7 @@ describe('DataViewMapComponent', () => {
       })
     })
 
-    describe('with several links compatible with MAP usage', () => {
+    describe('with several links compatible with MAP_API usage', () => {
       beforeEach(() => {
         mdViewFacade.mapApiLinks$.next([
           {
@@ -110,6 +170,7 @@ describe('DataViewMapComponent', () => {
             protocol: 'OGC:WMS',
           },
         ])
+        mdViewFacade.dataLinks$.next([])
         fixture.detectChanges()
       })
       it('emits a map context with the base layer and the first compatible link', () => {
@@ -139,9 +200,170 @@ describe('DataViewMapComponent', () => {
       })
     })
 
+    describe('with links compatible with MAP_API and DATA usage', () => {
+      beforeEach(() => {
+        mdViewFacade.mapApiLinks$.next([
+          {
+            url: 'http://abcd.com/',
+            name: 'layer1',
+            protocol: 'OGC:WMS',
+          },
+        ])
+        mdViewFacade.dataLinks$.next([
+          {
+            url: 'http://abcd.com/wfs',
+            name: 'featuretype',
+            protocol: 'OGC:WFS',
+          },
+          {
+            url: 'http://abcd.com/data.geojson',
+            name: 'data.geojson',
+            protocol: 'WWW:DOWNLOAD',
+            format: 'geojson',
+          },
+        ])
+        fixture.detectChanges()
+      })
+      it('provides a list of links to the dropdown', () => {
+        expect(dropdownComponent.choices).toEqual([
+          {
+            value: 0,
+            label: 'layer1 (OGC:WMS)',
+          },
+          {
+            value: 1,
+            label: 'featuretype (OGC:WFS)',
+          },
+          {
+            value: 2,
+            label: 'data.geojson (WWW:DOWNLOAD)',
+          },
+        ])
+      })
+    })
+
+    describe('with a link using WFS protocol', () => {
+      beforeEach(fakeAsync(() => {
+        mdViewFacade.mapApiLinks$.next([])
+        mdViewFacade.dataLinks$.next([
+          {
+            url: 'http://abcd.com/wfs',
+            name: 'featuretype',
+            protocol: 'OGC:WFS',
+          },
+        ])
+        tick(200)
+        fixture.detectChanges()
+      }))
+      it('emits a map context with the base layer and the downloaded data from WFS', fakeAsync(() => {
+        expect(mapComponent.context).toEqual({
+          layers: [
+            component.getBackgroundLayer(),
+            {
+              type: 'geojson',
+              data: SAMPLE_GEOJSON,
+            },
+          ],
+          view: expect.any(Object),
+        })
+      }))
+    })
+
+    describe('with a link using WFS which returns an error', () => {
+      beforeEach(fakeAsync(() => {
+        mdViewFacade.mapApiLinks$.next([])
+        mdViewFacade.dataLinks$.next([
+          {
+            url: 'http://abcd.com/wfs/error',
+            name: 'featuretype',
+            protocol: 'OGC:WFS',
+          },
+        ])
+        tick()
+        fixture.detectChanges()
+        flush()
+      }))
+      it('shows an error', () => {
+        expect(component.error).toEqual('data loading error')
+      })
+    })
+
+    describe('with a link using WFS protocol not supporting geojson', () => {
+      beforeEach(fakeAsync(() => {
+        mdViewFacade.mapApiLinks$.next([])
+        mdViewFacade.dataLinks$.next([
+          {
+            url: 'http://abcd.com/wfs/nojson',
+            name: 'featuretype',
+            protocol: 'OGC:WFS',
+          },
+        ])
+        tick()
+        fixture.detectChanges()
+        flush()
+      }))
+      it('shows an error', () => {
+        expect(component.error).toEqual('map.wfs.geojson.not.supported')
+      })
+    })
+
+    describe('with a link using DOWNLOAD protocol', () => {
+      beforeEach(fakeAsync(() => {
+        mdViewFacade.mapApiLinks$.next([])
+        mdViewFacade.dataLinks$.next([
+          {
+            url: 'http://abcd.com/data.geojson',
+            name: 'data.geojson',
+            protocol: 'WWW:DOWNLOAD--https',
+            format: 'geojson',
+          },
+        ])
+        fixture.detectChanges()
+        tick(50)
+        flush()
+      }))
+      it('does not emit immediately a map context', () => {
+        expect(mapComponent.context).toBe(null)
+      })
+      it('shows a loading indicator', () => {
+        expect(
+          fixture.debugElement.query(By.directive(MockLoadingMaskComponent))
+        ).toBeTruthy()
+      })
+      it('emits a map context after loading with the base layer and the downloaded data', fakeAsync(() => {
+        tick(200)
+        fixture.detectChanges()
+        expect(mapComponent.context).toEqual({
+          layers: [
+            component.getBackgroundLayer(),
+            {
+              type: 'geojson',
+              data: SAMPLE_GEOJSON,
+            },
+          ],
+          view: expect.any(Object),
+        })
+      }))
+      it('does not show a loading indicator after loading', fakeAsync(() => {
+        tick(200)
+        fixture.detectChanges()
+        expect(
+          fixture.debugElement.query(By.directive(MockLoadingMaskComponent))
+        ).toBeFalsy()
+      }))
+    })
+
     describe('when receiving several metadata records', () => {
       beforeEach(() => {
         mdViewFacade.mapApiLinks$.next([])
+        mdViewFacade.dataLinks$.next([
+          {
+            url: 'http://abcd.com/data.geojson',
+            name: 'data.geojson',
+            protocol: 'WWW:DOWNLOAD',
+            format: 'geojson',
+          },
+        ])
         mdViewFacade.mapApiLinks$.next([
           {
             url: 'http://abcd.com/',
@@ -149,6 +371,7 @@ describe('DataViewMapComponent', () => {
             protocol: 'OGC:WMS',
           },
         ])
+        mdViewFacade.dataLinks$.next([])
         fixture.detectChanges()
       })
       it('emits a map context with the link from the last record', () => {
@@ -188,6 +411,7 @@ describe('DataViewMapComponent', () => {
             protocol: 'OGC:WMS',
           },
         ])
+        mdViewFacade.dataLinks$.next([])
         dropdownComponent.selectValue.emit(1)
         fixture.detectChanges()
       })

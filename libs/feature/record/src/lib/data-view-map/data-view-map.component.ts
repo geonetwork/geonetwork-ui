@@ -1,12 +1,24 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import {
   MAP_CTX_LAYER_XYZ_FIXTURE,
+  MapContextLayerModel,
+  MapContextLayerTypeEnum,
   MapContextModel,
 } from '@geonetwork-ui/feature/map'
 import { MdViewFacade } from '../state/mdview.facade'
 import { fromLonLat } from 'ol/proj'
-import { BehaviorSubject, combineLatest } from 'rxjs'
-import { map } from 'rxjs/operators'
+import {
+  BehaviorSubject,
+  combineLatest,
+  Observable,
+  of,
+  throwError,
+} from 'rxjs'
+import { catchError, finalize, map, switchMap } from 'rxjs/operators'
+import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { readDataset } from '@geonetwork-ui/data-fetcher'
+import { fromPromise } from 'rxjs/internal-compatibility'
+import { WfsEndpoint } from '@camptocamp/ogc-client'
 
 @Component({
   selector: 'gn-ui-data-view-map',
@@ -15,7 +27,12 @@ import { map } from 'rxjs/operators'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataViewMapComponent {
-  dropdownChoices$ = this.mdViewFacade.mapApiLinks$.pipe(
+  compatibleMapLinks$ = combineLatest([
+    this.mdViewFacade.mapApiLinks$,
+    this.mdViewFacade.dataLinks$,
+  ]).pipe(map(([mapApiLinks, dataLinks]) => [...mapApiLinks, ...dataLinks]))
+
+  dropdownChoices$ = this.compatibleMapLinks$.pipe(
     map((links) =>
       links.length
         ? links.map((link, index) => ({
@@ -26,24 +43,32 @@ export class DataViewMapComponent {
     )
   )
   selectedLinkIndex$ = new BehaviorSubject(0)
+
+  loading = false
+  error = null
+
   currentLayers$ = combineLatest([
-    this.mdViewFacade.mapApiLinks$,
+    this.compatibleMapLinks$,
     this.selectedLinkIndex$,
   ]).pipe(
     map(([links, index]) => links[index]),
-    map((link) =>
-      link
-        ? [
-            this.getBackgroundLayer(),
-            {
-              url: link.url,
-              type: link.protocol === 'OGC:WMS' ? 'wms' : 'geojson',
-              name: link.name,
-            },
-          ]
-        : [this.getBackgroundLayer()]
-    )
+    switchMap((link) => {
+      if (!link) {
+        return of([this.getBackgroundLayer()])
+      }
+      this.loading = true
+      this.error = null
+      return this.getLayerFromLink(link).pipe(
+        map((layer) => [this.getBackgroundLayer(), layer]),
+        catchError((e) => {
+          this.error = e.message
+          return of([this.getBackgroundLayer()])
+        }),
+        finalize(() => (this.loading = false))
+      )
+    })
   )
+
   mapContext$ = this.currentLayers$.pipe(
     map(
       (layers) =>
@@ -59,8 +84,54 @@ export class DataViewMapComponent {
 
   constructor(private mdViewFacade: MdViewFacade) {}
 
-  getBackgroundLayer() {
+  getBackgroundLayer(): MapContextLayerModel {
     return MAP_CTX_LAYER_XYZ_FIXTURE
+  }
+
+  getLayerFromLink(link: MetadataLinkValid): Observable<MapContextLayerModel> {
+    if (link.protocol === 'OGC:WMS') {
+      return of({
+        url: link.url,
+        type: MapContextLayerTypeEnum.WMS,
+        name: link.name,
+      })
+    } else if (link.protocol === 'OGC:WFS') {
+      return fromPromise(
+        new WfsEndpoint(link.url).isReady().then((endpoint) => {
+          if (
+            !endpoint
+              .getServiceInfo()
+              .outputFormats.some(
+                (format) => format.toLowerCase().indexOf('json') > -1
+              )
+          ) {
+            throw new Error('map.wfs.geojson.not.supported')
+          }
+          return readDataset(
+            endpoint.getFeatureUrl(link.name, undefined, 'application/json') +
+              '&srsname=EPSG:4326',
+            'geojson'
+          ).then((features) => ({
+            type: MapContextLayerTypeEnum.GEOJSON,
+            data: {
+              type: 'FeatureCollection',
+              features,
+            },
+          }))
+        })
+      )
+    } else if (link.protocol.startsWith('WWW:DOWNLOAD')) {
+      return fromPromise(
+        readDataset(link.url, 'geojson').then((features) => ({
+          type: MapContextLayerTypeEnum.GEOJSON,
+          data: {
+            type: 'FeatureCollection',
+            features,
+          },
+        }))
+      )
+    }
+    return throwError('protocol not supported')
   }
 
   selectLinkToDisplay(link: number) {

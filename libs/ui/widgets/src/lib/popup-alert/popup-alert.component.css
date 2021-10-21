@@ -1,0 +1,33 @@
+:host {
+  pointer-events: none;
+}
+.container {
+  filter: drop-shadow(0px 4px 3px rgba(0, 0, 0, 0.2));
+}
+.message {
+  transition: clip-path 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.message.expanded {
+  clip-path: circle(100%);
+}
+.position-top {
+  clip-path: circle(19px at 20px 20px);
+  align-items: start;
+  top: 0;
+  left: 0;
+}
+.position-bottom {
+  clip-path: circle(19px at 20px calc(100% - 20px));
+  align-items: end;
+  bottom: 0;
+  left: 0;
+}
+
+/* style links inside message */
+.container ::ng-deep a {
+  text-decoration: underline;
+  font-weight: bold;
+}
+.container ::ng-deep a:hover {
+  opacity: 0.85;
+}

@@ -3,3 +3,17 @@ gn-ui-dropdown-selector {
   left: 0;
   right: 0;
 }
+
+gn-ui-loading-mask {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+gn-ui-popup-alert {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

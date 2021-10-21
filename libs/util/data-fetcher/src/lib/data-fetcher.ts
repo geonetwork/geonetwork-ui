@@ -3,6 +3,7 @@ import { DatasetHeaders, parseHeaders } from './headers'
 import { parseCsv } from '../parsers/csv'
 import { parseJson } from '../parsers/json'
 import { parseGeojson } from '../parsers/geojson'
+import { SupportedType } from '../mime/types'
 
 export type DataItem = Feature
 
@@ -56,7 +57,10 @@ class FetchError {
  * This fetches the full dataset at the given URL and parses it according to its mime type.
  * All items in the dataset are converted to GeoJSON features, even if they do not bear any spatial geometry.
  */
-export function readDataset(url: string): Promise<DataItem[]> {
+export function readDataset(
+  url: string,
+  typeHint?: SupportedType
+): Promise<DataItem[]> {
   return fetch(url)
     .catch((error) => {
       throw FetchError.corsOrNetwork(error.message)
@@ -68,14 +72,14 @@ export function readDataset(url: string): Promise<DataItem[]> {
       const fileInfo = parseHeaders(response.headers)
       const text = await response.text()
 
-      if (!('supportedType' in fileInfo)) {
+      if (!typeHint && !('supportedType' in fileInfo)) {
         if ('mimeType' in fileInfo)
           throw FetchError.unsupportedType(fileInfo.mimeType)
         else throw FetchError.unknownType()
       }
 
       try {
-        switch (fileInfo.supportedType) {
+        switch (typeHint || fileInfo.supportedType) {
           case 'csv':
             return parseCsv(text)
           case 'json':

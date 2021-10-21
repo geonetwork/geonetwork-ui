@@ -17,6 +17,7 @@ import { DataDownloadsComponent } from './data-downloads/data-downloads.componen
 import { RecordMetadataComponent } from './record-metadata/record-metadata.component'
 import { MatTabsModule } from '@angular/material/tabs'
 import { MatIconModule } from '@angular/material/icon'
+import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { MatIconModule } from '@angular/material/icon'
     UiElementsModule,
     MatTabsModule,
     MatIconModule,
+    UiWidgetsModule,
   ],
   providers: [MdViewFacade],
   exports: [
