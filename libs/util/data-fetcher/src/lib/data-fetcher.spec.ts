@@ -280,7 +280,7 @@ describe('data-fetcher', () => {
             'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson',
             'csv'
           )
-        } catch {}
+        } catch {} // eslint-disable-line
         expect(csv.parseCsv).toHaveBeenCalled()
       })
     })
