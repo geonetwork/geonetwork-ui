@@ -1,1 +1,27 @@
-<p>popup-alert works!</p>
+<div class="h-full relative container">
+  <div
+    class="
+      pointer-events-auto
+      absolute
+      bg-red-500
+      text-white
+      flex flex-row
+      p-2
+      rounded
+      message
+    "
+    role="alert"
+    [ngClass]="{
+      'position-bottom': position === 'bottom',
+      'position-top': position === 'top',
+      expanded
+    }"
+    (mouseenter)="expand()"
+    (mouseleave)="expandAndClose()"
+  >
+    <mat-icon class="mr-2 flex-shrink-0 select-none">{{ icon }}</mat-icon>
+    <div class="flex-grow" #content [ngClass]="{ invisible: !expanded }">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

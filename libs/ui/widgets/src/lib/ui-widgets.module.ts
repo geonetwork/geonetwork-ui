@@ -10,8 +10,9 @@ import { TagInputModule } from 'ngx-chips'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { LoadingMaskComponent } from './loading-mask/loading-mask.component'
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { PopupAlertComponent } from './popup-alert/popup-alert.component'
+import { MatIconModule } from '@angular/material/icon'
 
 @NgModule({
   declarations: [
@@ -31,7 +32,13 @@ import { PopupAlertComponent } from './popup-alert/popup-alert.component'
     TagInputModule,
     UtilSharedModule,
     MatProgressSpinnerModule,
+    MatIconModule,
   ],
-  exports: [ProgressBarComponent, StepBarComponent, LoadingMaskComponent, PopupAlertComponent],
+  exports: [
+    ProgressBarComponent,
+    StepBarComponent,
+    LoadingMaskComponent,
+    PopupAlertComponent,
+  ],
 })
 export class UiWidgetsModule {}

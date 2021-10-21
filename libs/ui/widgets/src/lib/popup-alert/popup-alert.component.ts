@@ -1,4 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core'
 
 @Component({
   selector: 'gn-ui-popup-alert',
@@ -7,7 +15,36 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PopupAlertComponent implements OnInit {
-  constructor() {}
+  @Input() icon: string
+  @Input() position: 'top' | 'bottom' = 'top'
+  @ViewChild('content') content: ElementRef
+  expanded = false
+  timeout = null
 
-  ngOnInit(): void {}
+  constructor(private changeDetector: ChangeDetectorRef) {}
+
+  get showDuration() {
+    const chars = this.content.nativeElement.innerHTML.length
+    return Math.max(3000, chars * 20)
+  }
+
+  ngOnInit() {
+    this.expandAndClose()
+  }
+
+  expand() {
+    this.expanded = true
+    this.changeDetector.detectChanges()
+    clearTimeout(this.timeout)
+  }
+
+  expandAndClose() {
+    this.expanded = true
+    this.changeDetector.detectChanges()
+    clearTimeout(this.timeout)
+    this.timeout = setTimeout(() => {
+      this.expanded = false
+      this.changeDetector.detectChanges()
+    }, this.showDuration)
+  }
 }
