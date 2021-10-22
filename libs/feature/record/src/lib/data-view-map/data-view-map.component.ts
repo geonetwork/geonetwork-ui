@@ -98,18 +98,14 @@ export class DataViewMapComponent {
     } else if (link.protocol === 'OGC:WFS') {
       return fromPromise(
         new WfsEndpoint(link.url).isReady().then((endpoint) => {
-          if (
-            !endpoint
-              .getServiceInfo()
-              .outputFormats.some(
-                (format) => format.toLowerCase().indexOf('json') > -1
-              )
-          ) {
+          if (!endpoint.supportsJson(link.name)) {
             throw new Error('map.wfs.geojson.not.supported')
           }
           return readDataset(
-            endpoint.getFeatureUrl(link.name, undefined, 'application/json') +
-              '&srsname=EPSG:4326',
+            endpoint.getFeatureUrl(link.name, {
+              asJson: true,
+              outputCrs: 'EPSG:4326',
+            }),
             'geojson'
           ).then((features) => ({
             type: MapContextLayerTypeEnum.GEOJSON,

@@ -5,7 +5,10 @@ export const CsvMimeTypes = [
   'application/csv', // seems to be also common
 ] as const
 export const JsonMimeTypes = ['application/json'] as const
-export const GeoJsonMimeTypes = ['application/geo+json'] as const
+export const GeoJsonMimeTypes = [
+  'application/geo+json',
+  'application/vnd.geo+json',
+] as const
 export const ExcelMimeTypes = [
   'application/vnd.ms-excel', // .xls
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xslx

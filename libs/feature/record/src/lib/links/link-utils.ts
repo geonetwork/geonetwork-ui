@@ -50,7 +50,7 @@ export function getLinksWithWfsFormats(
     const featureType = endpoint.getFeatureTypeSummary(link.name)
     return featureType.outputFormats.map((format) => ({
       ...link,
-      url: endpoint.getFeatureUrl(featureType.name, undefined, format),
+      url: endpoint.getFeatureUrl(featureType.name, { outputFormat: format }),
       format: format,
     }))
   })

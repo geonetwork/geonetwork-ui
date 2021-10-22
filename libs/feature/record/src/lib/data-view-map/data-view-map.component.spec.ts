@@ -19,10 +19,8 @@ jest.mock('@camptocamp/ogc-client', () => ({
     isReady() {
       return Promise.resolve({
         getFeatureUrl: () => this.url + '?GetFeature',
-        getServiceInfo: () => ({
-          outputFormats:
-            this.url.indexOf('nojson') > -1 ? ['gml'] : ['gml', 'geojson'],
-        }),
+        getServiceInfo: () => ({}),
+        supportsJson: () => this.url.indexOf('nojson') === -1,
       })
     }
   },
