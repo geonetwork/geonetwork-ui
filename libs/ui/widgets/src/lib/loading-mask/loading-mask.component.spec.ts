@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-
 import { LoadingMaskComponent } from './loading-mask.component'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 describe('LoadingMaskComponent', () => {
   let component: LoadingMaskComponent
@@ -9,6 +9,7 @@ describe('LoadingMaskComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [LoadingMaskComponent],
+      imports: [MatProgressSpinnerModule],
     }).compileComponents()
   })
 
