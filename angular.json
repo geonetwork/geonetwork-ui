@@ -263,6 +263,19 @@
             "jestConfig": "apps/datahub/jest.config.js",
             "passWithNoTests": true
           }
+        },
+        "docker-build": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "nx build datahub --base-href='/datahub/'",
+                "forwardAllArgs": false
+              },
+              "docker build --build-arg APP_NAME=datahub -f ./tools/docker/Dockerfile.apps . -t {args.tag}"
+            ],
+            "parallel": false
+          }
         }
       }
     },

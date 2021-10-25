@@ -1,0 +1,17 @@
+# This dockerfile should work for all traditional apps,
+# i.e. it only sets up a nginx server with the app dist folder
+
+FROM nginx
+
+ARG APP_NAME="search"
+ENV APP_NAME=${APP_NAME}
+ENV GN4_API_URL "https://localhost/geonetwork/srv/api"
+
+COPY dist/apps/${APP_NAME} /usr/share/nginx/html/${APP_NAME}
+COPY tools/docker/docker-entrypoint.sh /
+COPY tools/docker/nginx.apps.conf /etc/nginx/conf.d/default.conf
+RUN sed -i "s/APP_NAME/${APP_NAME}/" /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+ENTRYPOINT ["/docker-entrypoint.sh", "nginx", "-g", "daemon off;"]
