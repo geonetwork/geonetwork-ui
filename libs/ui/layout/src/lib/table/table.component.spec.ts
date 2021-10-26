@@ -3,11 +3,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import { TABLE_ITEM_FIXTURE } from './table.fixtures'
+import { TABLE_ITEM_FIXTURE, TABLE_ITEM_FIXTURE_HAB } from './table.fixtures'
 
 import { TableComponent } from './table.component'
-
-const data = TABLE_ITEM_FIXTURE
 
 describe('TableComponent', () => {
   let component: TableComponent
@@ -27,11 +25,31 @@ describe('TableComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TableComponent)
     component = fixture.componentInstance
-    component.data = data
-    fixture.detectChanges()
+    component.data = TABLE_ITEM_FIXTURE
   })
 
   it('should create', () => {
+    fixture.detectChanges()
     expect(component).toBeTruthy()
+  })
+
+  it('computes data properties', () => {
+    fixture.detectChanges()
+    expect(component.properties).toEqual(['name', 'id', 'age'])
+  })
+
+  describe('input data change', () => {
+    let previousDataSource
+    beforeEach(() => {
+      previousDataSource = component.dataSource
+      component.data = TABLE_ITEM_FIXTURE_HAB
+      fixture.detectChanges()
+    })
+    it('updates the internal data source', () => {
+      expect(component.dataSource).not.toBe(previousDataSource)
+    })
+    it('recomputes the data properties', () => {
+      expect(component.properties).toEqual(['name', 'id', 'pop'])
+    })
   })
 })

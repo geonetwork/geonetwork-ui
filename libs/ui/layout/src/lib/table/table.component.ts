@@ -5,7 +5,6 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   ViewChild,
 } from '@angular/core'
@@ -28,29 +27,24 @@ export interface TableItemModel {
   styleUrls: ['./table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableComponent implements OnInit, AfterViewInit {
-  @Input() data: TableItemModel[]
+export class TableComponent implements AfterViewInit {
+  @Input() set data(value: TableItemModel[]) {
+    this.dataSource = new MatTableDataSource(value)
+    this.dataSource.sort = this.sort
+    this.properties =
+      Array.isArray(value) && value.length ? Object.keys(value[0]) : []
+  }
   @Input() activeId: TableItemId
   @Output() selected = new EventEmitter<any>()
 
   @ViewChild(MatSort) sort: MatSort
+  properties: string[]
   dataSource: MatTableDataSource<any>
   headerHeight: number
 
   constructor(private eltRef: ElementRef) {}
 
-  get properties(): string[] {
-    return Array.isArray(this.data) && this.data.length
-      ? Object.keys(this.data[0])
-      : []
-  }
-
-  ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.data)
-  }
-
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort
     this.headerHeight =
       this.eltRef.nativeElement.querySelector('thead').offsetHeight
   }
