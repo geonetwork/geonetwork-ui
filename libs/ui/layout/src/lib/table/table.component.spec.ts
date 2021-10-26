@@ -6,6 +6,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { TABLE_ITEM_FIXTURE, TABLE_ITEM_FIXTURE_HAB } from './table.fixtures'
 
 import { TableComponent } from './table.component'
+import { By } from '@angular/platform-browser'
 
 describe('TableComponent', () => {
   let component: TableComponent
@@ -36,6 +37,12 @@ describe('TableComponent', () => {
   it('computes data properties', () => {
     fixture.detectChanges()
     expect(component.properties).toEqual(['name', 'id', 'age'])
+  })
+
+  it('displays the amount of objects in the dataset', () => {
+    fixture.detectChanges()
+    const countEl = fixture.debugElement.query(By.css('.count')).nativeElement
+    expect(countEl.textContent).toEqual('3')
   })
 
   describe('input data change', () => {

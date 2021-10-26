@@ -33,6 +33,7 @@ export class TableComponent implements AfterViewInit {
     this.dataSource.sort = this.sort
     this.properties =
       Array.isArray(value) && value.length ? Object.keys(value[0]) : []
+    this.count = value.length
   }
   @Input() activeId: TableItemId
   @Output() selected = new EventEmitter<any>()
@@ -41,6 +42,7 @@ export class TableComponent implements AfterViewInit {
   properties: string[]
   dataSource: MatTableDataSource<any>
   headerHeight: number
+  count: number
 
   constructor(private eltRef: ElementRef) {}
 

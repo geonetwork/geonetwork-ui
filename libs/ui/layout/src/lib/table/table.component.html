@@ -1,3 +1,7 @@
+<div>
+  <span class="count">{{ count }}</span
+  >&nbsp;<span translate>table.object.count</span>
+</div>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
   <ng-container *ngFor="let prop of properties" [matColumnDef]="prop">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ prop }}</th>
