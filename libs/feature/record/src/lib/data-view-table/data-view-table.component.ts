@@ -10,7 +10,15 @@ import {
   throwError,
 } from 'rxjs'
 import { fromPromise } from 'rxjs/internal-compatibility'
-import { catchError, finalize, map, switchMap, tap } from 'rxjs/operators'
+import {
+  catchError,
+  finalize,
+  map,
+  switchMap,
+  tap,
+  distinctUntilChanged,
+  shareReplay,
+} from 'rxjs/operators'
 import {
   DownloadFormatType,
   getDownloadFormat,
@@ -41,8 +49,8 @@ export class DataViewTableComponent {
   error = null
 
   tableData$ = combineLatest([
-    this.mdViewFacade.dataLinks$,
-    this.selectedLinkIndex$,
+    this.mdViewFacade.dataLinks$.pipe(tap(console.log)), // FIXME: this should not emit the same links twice
+    this.selectedLinkIndex$.pipe(distinctUntilChanged()),
   ]).pipe(
     map(([links, index]) => links[index]),
     switchMap((link) => {
@@ -57,7 +65,8 @@ export class DataViewTableComponent {
           this.loading = false
         })
       )
-    })
+    }),
+    shareReplay(1)
   )
 
   constructor(private mdViewFacade: MdViewFacade) {}
