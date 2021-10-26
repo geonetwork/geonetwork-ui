@@ -4,7 +4,6 @@ import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
 import {
   BehaviorSubject,
   combineLatest,
-  from,
   Observable,
   of,
   throwError,
@@ -19,11 +18,6 @@ import {
   distinctUntilChanged,
   shareReplay,
 } from 'rxjs/operators'
-import {
-  DownloadFormatType,
-  getDownloadFormat,
-  getLinksWithWfsFormats,
-} from '../links/link-utils'
 import { MdViewFacade } from '../state'
 import { WfsEndpoint } from '@camptocamp/ogc-client'
 

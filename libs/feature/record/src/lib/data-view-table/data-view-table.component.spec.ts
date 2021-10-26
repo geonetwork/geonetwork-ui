@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  EventEmitter,
-  Output,
-  ChangeDetectionStrategy,
-} from '@angular/core'
+import { Component, Input, EventEmitter, Output } from '@angular/core'
 import {
   ComponentFixture,
   fakeAsync,
@@ -17,12 +11,7 @@ import { Subject } from 'rxjs'
 import { MdViewFacade } from '../state'
 
 import { DataViewTableComponent } from './data-view-table.component'
-import {
-  readDataset,
-  SupportedTypes,
-  SupportedType,
-} from '@geonetwork-ui/data-fetcher'
-import { getLinksWithWfsFormats } from '../links/link-utils'
+import { readDataset } from '@geonetwork-ui/data-fetcher'
 
 jest.mock('@camptocamp/ogc-client', () => ({
   WfsEndpoint: class {
@@ -100,7 +89,7 @@ class MdViewFacadeMock {
 export class MockTableComponent {
   @Input() data: []
   @Input() activeId: TableItemId
-  @Output() selected = new EventEmitter<any>()
+  @Output() selected = new EventEmitter<number>()
 }
 
 @Component({
