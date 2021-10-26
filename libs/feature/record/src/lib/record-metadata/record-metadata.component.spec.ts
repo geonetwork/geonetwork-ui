@@ -15,6 +15,7 @@ class MdViewFacadeMock {
   isPresent$ = new BehaviorSubject(false)
   metadata$ = new BehaviorSubject(RECORDS_SUMMARY_FIXTURE[0])
   mapApiLinks$ = new Subject()
+  dataLinks$ = new Subject()
 }
 
 describe('RecordMetadataComponent', () => {

@@ -20,11 +20,14 @@
     </gn-ui-metadata-info>
   </mat-tab>
 
-  <mat-tab>
+  <mat-tab [disabled]="(displayData$ | async) === false">
     <ng-template mat-tab-label>
       <mat-icon class="mr-3">list</mat-icon>
       <span translate="">mdview.tab.data</span>
     </ng-template>
+    <div style="height: 500px" *ngIf="displayData$ | async">
+      <gn-ui-data-view-table></gn-ui-data-view-table>
+    </div>
   </mat-tab>
 
   <mat-tab [disabled]="(displayMap$ | async) === false">
