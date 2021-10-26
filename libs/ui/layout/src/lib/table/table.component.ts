@@ -10,6 +10,7 @@ import {
 } from '@angular/core'
 import { MatSort } from '@angular/material/sort'
 import { MatTableDataSource } from '@angular/material/table'
+import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll'
 
 const rowIdPrefix = 'table-item-'
 
@@ -29,7 +30,7 @@ export interface TableItemModel {
 })
 export class TableComponent implements AfterViewInit {
   @Input() set data(value: TableItemModel[]) {
-    this.dataSource = new MatTableDataSource(value)
+    this.dataSource = new TableVirtualScrollDataSource(value)
     this.dataSource.sort = this.sort
     this.properties =
       Array.isArray(value) && value.length ? Object.keys(value[0]) : []

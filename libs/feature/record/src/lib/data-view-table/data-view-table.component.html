@@ -1,13 +1,14 @@
-<div class="relative w-full h-full">
+<div class="relative w-full h-full flex flex-col">
   <gn-ui-dropdown-selector
     title="available data"
-    class="m-2"
+    class="m-2 flex-shrink-0"
     [choices]="dropdownChoices$ | async"
     [showTitle]="false"
     (selectValue)="selectLinkToDisplay($event)"
   ></gn-ui-dropdown-selector>
   <gn-ui-table
-    class="w-1/2 overflow-auto"
+    *ngIf="tableData$ | async"
+    class="overflow-auto flex-grow"
     [data]="tableData$ | async"
     [activeId]="selectionId"
     (selected)="onTableSelect($event)"

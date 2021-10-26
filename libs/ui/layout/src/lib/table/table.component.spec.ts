@@ -7,6 +7,7 @@ import { TABLE_ITEM_FIXTURE, TABLE_ITEM_FIXTURE_HAB } from './table.fixtures'
 
 import { TableComponent } from './table.component'
 import { By } from '@angular/platform-browser'
+import { TableItemSizeDirective } from 'ng-table-virtual-scroll'
 
 describe('TableComponent', () => {
   let component: TableComponent
@@ -15,7 +16,7 @@ describe('TableComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [NoopAnimationsModule, MatTableModule, MatSortModule],
-      declarations: [TableComponent],
+      declarations: [TableComponent, TableItemSizeDirective],
     })
       .overrideComponent(TableComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
