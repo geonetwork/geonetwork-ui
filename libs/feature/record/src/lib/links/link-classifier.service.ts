@@ -19,13 +19,14 @@ export class LinkClassifierService {
   getUsagesForLink(link: MetadataLink): LinkUsage[] {
     if ('protocol' in link) {
       if (/^WWW:DOWNLOAD/.test(link.protocol)) {
-        const dataFormatsExp = '(geojson|csv|wfs)'
+        const dataFormatsExp = '(geojson|json|csv|wfs)'
         if (
           ('format' in link &&
             new RegExp(`${dataFormatsExp}`, 'i').test(link.format)) ||
           ('name' in link &&
-            new RegExp(`${dataFormatsExp}`, 'i').test(link.name)) ||
-          ('url' in link && new RegExp(`${dataFormatsExp}`, 'i').test(link.url))
+            new RegExp(`[./]${dataFormatsExp}`, 'i').test(link.name)) ||
+          ('url' in link &&
+            new RegExp(`[./]${dataFormatsExp}`, 'i').test(link.url))
         ) {
           return [LinkUsage.DOWNLOAD, LinkUsage.DATA]
         }
