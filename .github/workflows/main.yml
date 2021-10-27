@@ -114,4 +114,4 @@ jobs:
             * UI components storybook: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/demo/
 
             * Web Components storybook: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/webcomponents/'
-          check_for_duplicate_msg: true
+          check_duplicate_msg: true
