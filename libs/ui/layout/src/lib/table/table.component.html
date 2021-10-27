@@ -1,12 +1,8 @@
-<div class="flex flex-col h-full">
-  <div class="flex-shrink-0">
-    <span class="count">{{ count }}</span
-    >&nbsp;<span translate>table.object.count</span>
-  </div>
+<div>
   <cdk-virtual-scroll-viewport
-    class="block flex-grow"
     tvsItemSize="48"
     headerHeight="56"
+    style="height: 400px"
   >
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
       <ng-container *ngFor="let prop of properties" [matColumnDef]="prop">
@@ -34,4 +30,8 @@
       ></tr>
     </table>
   </cdk-virtual-scroll-viewport>
+  <div class="mt-2">
+    <span class="count">{{ count }}</span
+    >&nbsp;<span translate>table.object.count</span>
+  </div>
 </div>
