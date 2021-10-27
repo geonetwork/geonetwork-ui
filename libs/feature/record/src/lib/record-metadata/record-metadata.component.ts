@@ -13,15 +13,18 @@ export class RecordMetadataComponent {
   displayMap$ = this.facade.mapApiLinks$.pipe(
     map((links) => !!links && links.length > 0)
   )
+  displayData$ = this.facade.dataLinks$.pipe(
+    map((links) => !!links && links.length > 0)
+  )
 
   constructor(
     public facade: MdViewFacade,
     private mapManager: MapManagerService
   ) {}
 
-  onTabIndexChange(index: number): void {
-    if (index === 2) {
-      setTimeout(() => this.mapManager.map.updateSize(), 0)
-    }
+  onTabIndexChange(): void {
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'))
+    }, 0)
   }
 }
