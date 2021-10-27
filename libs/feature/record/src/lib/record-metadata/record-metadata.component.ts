@@ -22,9 +22,9 @@ export class RecordMetadataComponent {
     private mapManager: MapManagerService
   ) {}
 
-  onTabIndexChange(index: number): void {
-    if (index === 2) {
-      setTimeout(() => this.mapManager.map.updateSize(), 0)
-    }
+  onTabIndexChange(): void {
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'))
+    }, 0)
   }
 }
