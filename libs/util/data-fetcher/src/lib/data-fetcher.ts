@@ -5,6 +5,7 @@ import { parseJson } from '../parsers/json'
 import { parseGeojson } from '../parsers/geojson'
 import { SupportedType } from '../mime/types'
 import { parseExcel } from '../parsers/excel'
+import { useCache, sharedFetch } from '@camptocamp/ogc-client'
 
 export type DataItem = Feature
 
@@ -62,38 +63,42 @@ export function readDataset(
   url: string,
   typeHint?: SupportedType
 ): Promise<DataItem[]> {
-  return fetch(url)
-    .catch((error) => {
-      throw FetchError.corsOrNetwork(error.message)
-    })
-    .then(async (response) => {
-      if (!response.ok) {
-        throw FetchError.http(response.status)
-      }
-      const fileInfo = parseHeaders(response.headers)
+  return useCache(
+    () =>
+      sharedFetch(url)
+        .catch((error) => {
+          throw FetchError.corsOrNetwork(error.message)
+        })
+        .then(async (response) => {
+          if (!response.ok) {
+            throw FetchError.http(response.status)
+          }
+          const fileInfo = parseHeaders(response.headers)
 
-      if (!typeHint && !('supportedType' in fileInfo)) {
-        if ('mimeType' in fileInfo)
-          throw FetchError.unsupportedType(fileInfo.mimeType)
-        else throw FetchError.unknownType()
-      }
+          if (!typeHint && !('supportedType' in fileInfo)) {
+            if ('mimeType' in fileInfo)
+              throw FetchError.unsupportedType(fileInfo.mimeType)
+            else throw FetchError.unknownType()
+          }
 
-      try {
-        switch (typeHint || fileInfo.supportedType) {
-          case 'csv':
-            return parseCsv(await response.text())
-          case 'json':
-            return parseJson(await response.text())
-          case 'geojson':
-            return parseGeojson(await response.text())
-          case 'excel':
-            return parseExcel(await response.arrayBuffer())
-        }
-      } catch (e) {
-        throw FetchError.parsingFailed(e.message)
-      }
-      throw new Error('Not implemented')
-    })
+          try {
+            switch (typeHint || fileInfo.supportedType) {
+              case 'csv':
+                return parseCsv(await response.text())
+              case 'json':
+                return parseJson(await response.text())
+              case 'geojson':
+                return parseGeojson(await response.text())
+              case 'excel':
+                return parseExcel(await response.arrayBuffer())
+            }
+          } catch (e) {
+            throw FetchError.parsingFailed(e.message)
+          }
+          throw new Error('Not implemented')
+        }),
+    url
+  )
 }
 
 /**

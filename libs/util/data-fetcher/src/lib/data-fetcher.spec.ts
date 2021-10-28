@@ -3,6 +3,12 @@ import fs from 'fs/promises'
 import path from 'path'
 import { readDataset } from './data-fetcher'
 import * as csv from '../parsers/csv'
+import { useCache, sharedFetch } from '@camptocamp/ogc-client'
+
+jest.mock('@camptocamp/ogc-client', () => ({
+  useCache: jest.fn((factory) => factory()),
+  sharedFetch: jest.fn((url) => global.fetch(url)),
+}))
 
 describe('data-fetcher', () => {
   beforeEach(() => {
@@ -311,6 +317,19 @@ describe('data-fetcher', () => {
           )
         } catch {} // eslint-disable-line
         expect(csv.parseCsv).toHaveBeenCalled()
+      })
+    })
+    describe('use ogc-client utils for caching', () => {
+      beforeEach(() => {
+        readDataset(
+          'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson'
+        )
+      })
+      it('uses cache', () => {
+        expect(useCache).toHaveBeenCalledTimes(1)
+      })
+      it('avoids identical concurrent requests', () => {
+        expect(sharedFetch).toHaveBeenCalledTimes(1)
       })
     })
   })
