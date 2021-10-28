@@ -3,6 +3,7 @@ import fs from 'fs/promises'
 import path from 'path'
 import { readDataset } from './data-fetcher'
 import * as csv from '../parsers/csv'
+import * as geojson from '../parsers/geojson'
 import { useCache, sharedFetch } from '@camptocamp/ogc-client'
 
 jest.mock('@camptocamp/ogc-client', () => ({
@@ -20,6 +21,7 @@ describe('data-fetcher', () => {
         const filePath = path.join(__dirname, '..', new URL(url).pathname)
         let body
         const fileExt = path.extname(filePath)
+        const noHeader = url.toLowerCase().indexOf('noheader') > -1
         let contentType
         switch (fileExt) {
           case '.csv':
@@ -47,9 +49,11 @@ describe('data-fetcher', () => {
         return {
           body,
           status: 200,
-          headers: {
-            'Content-Type': contentType,
-          },
+          headers: noHeader
+            ? undefined
+            : {
+                'Content-Type': contentType,
+              },
         }
       },
       {
@@ -57,6 +61,7 @@ describe('data-fetcher', () => {
       }
     )
     jest.spyOn(csv, 'parseCsv')
+    jest.spyOn(geojson, 'parseGeojson')
   })
   afterEach(() => {
     fetchMock.reset()
@@ -111,9 +116,7 @@ describe('data-fetcher', () => {
         )
       })
       it('throws a relevant error', () => {
-        return expect(
-          readDataset('http://bla/abcd.json')
-        ).rejects.toMatchObject({
+        return expect(readDataset('http://bla/abcd')).rejects.toMatchObject({
           message: expect.stringContaining('content type is unsupported'),
           contentTypeError: true,
         })
@@ -129,14 +132,14 @@ describe('data-fetcher', () => {
         )
       })
       it('throws a relevant error', () => {
-        return expect(
-          readDataset('http://bla/abcd.json')
-        ).rejects.toMatchObject({
-          message: expect.stringContaining(
-            'content type could not be inferred'
-          ),
-          contentTypeError: true,
-        })
+        return expect(readDataset('http://bla/abcd.gif')).rejects.toMatchObject(
+          {
+            message: expect.stringContaining(
+              'content type could not be inferred'
+            ),
+            contentTypeError: true,
+          }
+        )
       })
     })
     describe('CSV file (non geospatial data)', () => {
@@ -317,6 +320,28 @@ describe('data-fetcher', () => {
           )
         } catch {} // eslint-disable-line
         expect(csv.parseCsv).toHaveBeenCalled()
+      })
+    })
+    describe('when no header present', () => {
+      it('infers type from the file extension (csv)', async () => {
+        await readDataset('http://localfile/fixtures/rephytox.csv?noheader')
+        expect(csv.parseCsv).toHaveBeenCalled()
+      })
+      it('infers type from the file extension (geojson)', async () => {
+        await readDataset(
+          'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson?noheader'
+        )
+        expect(geojson.parseGeojson).toHaveBeenCalled()
+      })
+      it('fails if no recognized extension in the url', async () => {
+        expect(
+          readDataset('http://localfile/fixtures/unrecognized.txt?noheader')
+        ).rejects.toMatchObject({
+          message: expect.stringContaining(
+            'content type could not be inferred'
+          ),
+          contentTypeError: true,
+        })
       })
     })
     describe('use ogc-client utils for caching', () => {
