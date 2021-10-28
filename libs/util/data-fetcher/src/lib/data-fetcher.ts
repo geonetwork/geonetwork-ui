@@ -4,6 +4,7 @@ import { parseCsv } from '../parsers/csv'
 import { parseJson } from '../parsers/json'
 import { parseGeojson } from '../parsers/geojson'
 import { SupportedType } from '../mime/types'
+import { parseExcel } from '../parsers/excel'
 
 export type DataItem = Feature
 
@@ -70,7 +71,6 @@ export function readDataset(
         throw FetchError.http(response.status)
       }
       const fileInfo = parseHeaders(response.headers)
-      const text = await response.text()
 
       if (!typeHint && !('supportedType' in fileInfo)) {
         if ('mimeType' in fileInfo)
@@ -81,13 +81,13 @@ export function readDataset(
       try {
         switch (typeHint || fileInfo.supportedType) {
           case 'csv':
-            return parseCsv(text)
+            return parseCsv(await response.text())
           case 'json':
-            return parseJson(text)
+            return parseJson(await response.text())
           case 'geojson':
-            return parseGeojson(text)
+            return parseGeojson(await response.text())
           case 'excel':
-            break // TODO
+            return parseExcel(await response.arrayBuffer())
         }
       } catch (e) {
         throw FetchError.parsingFailed(e.message)
