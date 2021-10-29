@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataLinkValid, MetadataRecord } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-metadata-info',
@@ -10,6 +10,7 @@ import { MetadataRecord } from '@geonetwork-ui/util/shared'
 export class MetadataInfoComponent {
   @Input() metadata: MetadataRecord
   @Input() incomplete: boolean
+  @Input() otherLinks: MetadataLinkValid[]
 
   fieldReady(propName: string) {
     return !this.incomplete || propName in this.metadata
