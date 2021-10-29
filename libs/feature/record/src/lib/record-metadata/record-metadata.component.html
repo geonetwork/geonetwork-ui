@@ -45,14 +45,15 @@
     </div>
   </mat-tab>
 
-  <mat-tab>
+  <mat-tab [disabled]="(displayDownload$ | async) === false">
     <ng-template mat-tab-label>
       <mat-icon class="mr-3">download</mat-icon>
       <span translate="">mdview.tab.exports</span>
     </ng-template>
     <gn-ui-data-downloads class="block mt-4"></gn-ui-data-downloads>
   </mat-tab>
-  <mat-tab>
+
+  <mat-tab [disabled]="(displayApi$ | async) === false">
     <ng-template mat-tab-label>
       <mat-icon class="mr-3">api</mat-icon>
       <span translate="">mdview.tab.api</span>
