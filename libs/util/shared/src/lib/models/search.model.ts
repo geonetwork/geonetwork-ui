@@ -7,6 +7,16 @@ export interface StateConfigFilters {
   custom?: SearchFilters
   elastic?: any
 }
+
+export interface MetadataContact {
+  name: string
+  email: string
+  website?: string
+  logoUrl?: string
+  address?: string
+  phone?: string
+}
+
 export interface MetadataRecord {
   id: string
   uuid: string
@@ -14,15 +24,19 @@ export interface MetadataRecord {
   metadataUrl: string
   abstract?: string
   thumbnailUrl?: string
-  logoUrl?: string
   downloadable?: boolean
   viewable?: boolean
+  updateStatus?: string
   updateFrequency?: string
   links?: MetadataLink[]
   updatedOn?: Date
   createdOn?: Date
   dataUpdatedOn?: Date
   dataCreatedOn?: Date
+  lineage?: string
+  keywords?: string[]
+  contact?: MetadataContact
+  usageConstraints?: string
 }
 
 export interface MetadataLinkValid {

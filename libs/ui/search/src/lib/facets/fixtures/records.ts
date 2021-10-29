@@ -9,8 +9,6 @@ export const RECORDS_SUMMARY_FIXTURE = [
     thumbnailUrl:
       'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
     updateFrequency: 'Final',
-    logoUrl:
-      'https://www.geograndest.fr/geonetwork/images/logos/b1b10881-2a33-472f-b99b-7576a6f84025.png',
     viewable: true,
     downloadable: true,
   },
@@ -25,8 +23,6 @@ export const RECORDS_SUMMARY_FIXTURE = [
     thumbnailUrl:
       'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
     updateFrequency: 'Final',
-    logoUrl:
-      'https://www.geograndest.fr/geonetwork/images/logos/b1b10881-2a33-472f-b99b-7576a6f84025.png',
     viewable: true,
     downloadable: true,
   },
@@ -40,8 +36,6 @@ export const RECORDS_SUMMARY_FIXTURE = [
     thumbnailUrl:
       'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
     updateFrequency: 'Final',
-    logoUrl:
-      'https://www.geograndest.fr/geonetwork/images/logos/b1b10881-2a33-472f-b99b-7576a6f84025.png',
     viewable: true,
     downloadable: true,
   },
@@ -55,8 +49,6 @@ export const RECORDS_SUMMARY_FIXTURE = [
     thumbnailUrl:
       'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
     updateFrequency: 'Final',
-    logoUrl:
-      'https://www.geograndest.fr/geonetwork/images/logos/b1b10881-2a33-472f-b99b-7576a6f84025.png',
     viewable: true,
     downloadable: true,
   },
@@ -133,8 +125,6 @@ export const RECORDS_FULL_FIXTURE = [
         url: 'https://doi.org/10.12770/cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
       },
     ],
-    logoUrl:
-      '/geonetwork/images/logos/cea9bf9f-329a-4583-9092-2dfc7efdcce2.png',
     mainLanguage: 'fre',
     metadataUrl: 'url',
     thumbnailUrl:

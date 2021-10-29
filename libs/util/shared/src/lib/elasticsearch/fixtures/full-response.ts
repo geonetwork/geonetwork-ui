@@ -11,6 +11,11 @@ export const ES_FIXTURE_FULL_RESPONSE = {
         _type: '_doc',
         _id: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
         _score: 1.0,
+        _ignored: [
+          'resourceAbstractObject.default.keyword',
+          'resourceAbstractObject.langfre.keyword',
+          'link.applicationProfile.keyword',
+        ],
         _source: {
           docType: 'metadata',
           document: '',
@@ -20,8 +25,8 @@ export const ES_FIXTURE_FULL_RESPONSE = {
             langfre: 'ISO 19115:2003/19139 - SEXTANT',
           },
           standardVersionObject: { default: '1.0', langfre: '1.0' },
-          indexingDate: '2021-08-25T07:36:44Z',
-          dateStamp: '2021-04-01T17:38:51.866Z',
+          indexingDate: '2021-10-29T08:41:42.537Z',
+          dateStamp: '2021-09-09T10:41:12.000Z',
           mainLanguage: 'fre',
           cl_characterSet: [
             {
@@ -39,7 +44,7 @@ export const ES_FIXTURE_FULL_RESPONSE = {
               organisation: 'Ifremer',
               role: 'pointOfContact',
               email: 'q2suppor@ifremer.fr',
-              website: '',
+              website: 'https://www.ifremer.fr',
               logo: '',
               individual: "Cellule d'administration Quadrige",
               position: "Cellule d'administration Quadrige",
@@ -103,9 +108,9 @@ export const ES_FIXTURE_FULL_RESPONSE = {
           ],
           cl_accessConstraints: [
             {
-              key: 'otherRestrictions',
-              default: 'Autres restrictions',
-              langfre: 'Autres restrictions',
+              key: 'copyright',
+              default: 'Droit d’auteur / Droit moral (copyright)',
+              langfre: 'Droit d’auteur / Droit moral (copyright)',
               link: 'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode',
             },
           ],
@@ -124,12 +129,15 @@ export const ES_FIXTURE_FULL_RESPONSE = {
           creationDateForResource: ['2012-01-01T00:00:00.000Z'],
           creationYearForResource: '2012',
           creationMonthForResource: '2012-01',
-          publicationDateForResource: ['2018-01-01T00:00:00.000Z'],
-          publicationYearForResource: '2018',
-          publicationMonthForResource: '2018-01',
+          publicationDateForResource: ['2021-04-01T00:00:00.000Z'],
+          publicationYearForResource: '2021',
+          publicationMonthForResource: '2021-04',
           resourceDate: [
             { type: 'creation', date: '2012-01-01T00:00:00.000Z' },
-            { type: 'publication', date: '2018-01-01T00:00:00.000Z' },
+            {
+              type: 'publication',
+              date: '2021-04-01T00:00:00.000Z',
+            },
           ],
           resourceTemporalDateRange: [
             {
@@ -137,9 +145,10 @@ export const ES_FIXTURE_FULL_RESPONSE = {
               lte: '2012-01-01T00:00:00.000Z',
             },
             {
-              gte: '2018-01-01T00:00:00.000Z',
-              lte: '2018-01-01T00:00:00.000Z',
+              gte: '2021-04-01T00:00:00.000Z',
+              lte: '2021-04-01T00:00:00.000Z',
             },
+            { gte: '1974-01-01T00:00:00.000Z' },
           ],
           resourceIdentifier: [
             {
@@ -150,9 +159,9 @@ export const ES_FIXTURE_FULL_RESPONSE = {
           ],
           resourceAbstractObject: {
             default:
-              "Le produit Surval \"Données par paramètre\" met à disposition les données d'observation et de surveillance bancarisées dans Quadrige.\n\nCe produit contient des résultats sur la plupart des paramètres physiques, chimiques et biologiques de description de l'environnement. Les premières données datent par exemple de 1974 pour les paramètres de la qualité générale des eaux et les contaminants, 1987 pour le phytoplancton et les phycotoxines, 1989 pour la microbiologie, du début des années 2000 pour le benthos. \n\nLes données sous moratoire ou les données qualifiées \"Faux\" sont exclues de la diffusion Surval.\nUne donnée validée dans Quadrige aujourd’hui sera disponible dans Surval demain.\n\nL'accès aux données d'observation se réalise par lieu.\nUn lieu de surveillance est un lieu géographique où des observations, des mesures et/ou des prélèvements sont effectués. Il est localisé de façon unique par son emprise cartographique (surface, ligne ou point). Un lieu de mesure peut être utilisé par plusieurs programmes.\n\nAujourd’hui, ce produit met à disposition des données issues d'une sélection de thématiques.\n\nThématiques suivies :\n- Benthos dont récifs coralliens\n- Contaminants chimiques et Écotoxicologie\n- Déchets\n- Microbiologie\n- Phytoplancton et Hydrologie\n- Ressources aquacoles\n- Zooplancton\n- Autres\n\nL'emprise géographique est nationale : la métropole et les départements et régions d'outre-mer (DROM).",
+              "Le produit Surval \"Données par paramètre\" met à disposition les données d'observation et de surveillance bancarisées dans Quadrige, validées et qui ne sont pas sous moratoire.\n\nCe système d'information contient des résultats sur la plupart des paramètres physiques, chimiques et biologiques de description de l'environnement. Les premières données datent par exemple de 1974 pour les paramètres de la qualité générale des eaux et les contaminants, 1987 pour le phytoplancton et les phycotoxines, 1989 pour la microbiologie, du début des années 2000 pour le benthos. \n\nCe produit contient des résultats sur la plupart des paramètres physiques, chimiques et biologiques de description de l'environnement. Les premières données datent par exemple de 1974 pour les paramètres de la qualité générale des eaux et les contaminants.\n\nLes données sous moratoire ou les données qualifiées \"Faux\" sont exclus de la diffusion Surval. Une donnée validée dans Quadrige aujourd’hui sera disponible dans Surval demain.\n\nL'accès aux données d'observation se fait par lieu. Un lieu de surveillance est un lieu géographique où des observations, des mesures et/ou des prélèvements sont effectués. Il est localisé de façon unique par son emprise cartographique (surface, ligne ou point). Un lieu de mesure peut être utilisé par plusieurs programmes d'observation et de surveillance.\n\nA compter du 29 avril 2021, conformément aux obligations de l’ « Open data », toutes les données validées sans moratoire sont diffusées à J+1 et sans traitement. Ainsi tous les paramètres et tous les programmes Quadrige sont diffusés, et regroupés sous forme de thème :\n- Benthos dont récifs coralliens\n- Contaminants chimiques et Écotoxicologie\n- Déchets\n- Microbiologie\n- Phytoplancton et Hydrologie\n- Ressources aquacoles\n- Zooplancton\n- Autres\nUn thème regroupe un ou plusieurs programmes d'acquisition. Un programme correspond à une mise en œuvre d'un protocole, sur une période et un ensemble de lieux. Chaque programme est placé sous la responsabilité d'un animateur. \n\nPour accompagner le résultat, de nombreuses données sont diffusées (téléchargeables en tant que données d’observation), comme :\n- la description complète du « Paramètre-Support-Fraction-Méthode-Unité »;\n- la description complète des « Passages », « Prélèvements » et « Échantillons »;\n- le niveau de qualification du résultat;\n- une proposition de citation, afin d’identifier tous les organismes contribuant à cette observation.\n\nL'emprise géographique est nationale : la métropole et les départements et régions d'outre-mer (DROM).\n\nL'accès au téléchargement direct du jeu de données complet (~ 220 Mo) en date du 9 juillet 2021 s'effectue par ce lien : https://www.ifremer.fr/sextant_doc/surveillance_littorale/surval/data/surval.zip \nL'accès par la carte permet de configurer des extractions et des graphes de visualisation sur demande (email demandé pour le téléchargement).",
             langfre:
-              "Le produit Surval \"Données par paramètre\" met à disposition les données d'observation et de surveillance bancarisées dans Quadrige.\n\nCe produit contient des résultats sur la plupart des paramètres physiques, chimiques et biologiques de description de l'environnement. Les premières données datent par exemple de 1974 pour les paramètres de la qualité générale des eaux et les contaminants, 1987 pour le phytoplancton et les phycotoxines, 1989 pour la microbiologie, du début des années 2000 pour le benthos. \n\nLes données sous moratoire ou les données qualifiées \"Faux\" sont exclues de la diffusion Surval.\nUne donnée validée dans Quadrige aujourd’hui sera disponible dans Surval demain.\n\nL'accès aux données d'observation se réalise par lieu.\nUn lieu de surveillance est un lieu géographique où des observations, des mesures et/ou des prélèvements sont effectués. Il est localisé de façon unique par son emprise cartographique (surface, ligne ou point). Un lieu de mesure peut être utilisé par plusieurs programmes.\n\nAujourd’hui, ce produit met à disposition des données issues d'une sélection de thématiques.\n\nThématiques suivies :\n- Benthos dont récifs coralliens\n- Contaminants chimiques et Écotoxicologie\n- Déchets\n- Microbiologie\n- Phytoplancton et Hydrologie\n- Ressources aquacoles\n- Zooplancton\n- Autres\n\nL'emprise géographique est nationale : la métropole et les départements et régions d'outre-mer (DROM).",
+              "Le produit Surval \"Données par paramètre\" met à disposition les données d'observation et de surveillance bancarisées dans Quadrige, validées et qui ne sont pas sous moratoire.\n\nCe système d'information contient des résultats sur la plupart des paramètres physiques, chimiques et biologiques de description de l'environnement. Les premières données datent par exemple de 1974 pour les paramètres de la qualité générale des eaux et les contaminants, 1987 pour le phytoplancton et les phycotoxines, 1989 pour la microbiologie, du début des années 2000 pour le benthos. \n\nCe produit contient des résultats sur la plupart des paramètres physiques, chimiques et biologiques de description de l'environnement. Les premières données datent par exemple de 1974 pour les paramètres de la qualité générale des eaux et les contaminants.\n\nLes données sous moratoire ou les données qualifiées \"Faux\" sont exclus de la diffusion Surval. Une donnée validée dans Quadrige aujourd’hui sera disponible dans Surval demain.\n\nL'accès aux données d'observation se fait par lieu. Un lieu de surveillance est un lieu géographique où des observations, des mesures et/ou des prélèvements sont effectués. Il est localisé de façon unique par son emprise cartographique (surface, ligne ou point). Un lieu de mesure peut être utilisé par plusieurs programmes d'observation et de surveillance.\n\nA compter du 29 avril 2021, conformément aux obligations de l’ « Open data », toutes les données validées sans moratoire sont diffusées à J+1 et sans traitement. Ainsi tous les paramètres et tous les programmes Quadrige sont diffusés, et regroupés sous forme de thème :\n- Benthos dont récifs coralliens\n- Contaminants chimiques et Écotoxicologie\n- Déchets\n- Microbiologie\n- Phytoplancton et Hydrologie\n- Ressources aquacoles\n- Zooplancton\n- Autres\nUn thème regroupe un ou plusieurs programmes d'acquisition. Un programme correspond à une mise en œuvre d'un protocole, sur une période et un ensemble de lieux. Chaque programme est placé sous la responsabilité d'un animateur. \n\nPour accompagner le résultat, de nombreuses données sont diffusées (téléchargeables en tant que données d’observation), comme :\n- la description complète du « Paramètre-Support-Fraction-Méthode-Unité »;\n- la description complète des « Passages », « Prélèvements » et « Échantillons »;\n- le niveau de qualification du résultat;\n- une proposition de citation, afin d’identifier tous les organismes contribuant à cette observation.\n\nL'emprise géographique est nationale : la métropole et les départements et régions d'outre-mer (DROM).\n\nL'accès au téléchargement direct du jeu de données complet (~ 220 Mo) en date du 9 juillet 2021 s'effectue par ce lien : https://www.ifremer.fr/sextant_doc/surveillance_littorale/surval/data/surval.zip \nL'accès par la carte permet de configurer des extractions et des graphes de visualisation sur demande (email demandé pour le téléchargement).",
           },
           cl_resourceCharacterSet: [
             {
@@ -224,47 +233,97 @@ export const ES_FIXTURE_FULL_RESPONSE = {
               default: 'Lieux de surveillance',
               langfre: 'Lieux de surveillance',
             },
-            { default: 'Observation', langfre: 'Observation' },
+            {
+              default: 'Observation',
+              langfre: 'Observation',
+            },
             { default: 'Surveillance', langfre: 'Surveillance' },
-            { default: 'Environnement', langfre: 'Environnement' },
+            {
+              default: 'Environnement',
+              langfre: 'Environnement',
+            },
             { default: 'Littoral', langfre: 'Littoral' },
-            { default: 'Quadrige', langfre: 'Quadrige' },
+            {
+              default: 'Quadrige',
+              langfre: 'Quadrige',
+            },
             { default: 'DCE', langfre: 'DCE' },
             { default: 'DCSMM', langfre: 'DCSMM' },
-            { default: 'OSPAR', langfre: 'OSPAR' },
+            {
+              default: 'OSPAR',
+              langfre: 'OSPAR',
+            },
             { default: 'MEDPOL', langfre: 'MEDPOL' },
+            {
+              default: 'Données ouvertes',
+              langfre: 'Données ouvertes',
+            },
+            { default: 'Open Data', langfre: 'Open Data' },
+            {
+              default: 'Surval',
+              langfre: 'Surval',
+            },
             {
               default: 'Installations de suivi environnemental',
               langfre: 'Installations de suivi environnemental',
             },
-            { default: 'D5: Eutrophisation', langfre: 'D5: Eutrophisation' },
+            { default: 'D8: Contaminants', langfre: 'D8: Contaminants' },
+            {
+              default: 'D1: Biodiversité',
+              langfre: 'D1: Biodiversité',
+            },
+            {
+              default: 'D7: Changements hydrographiques',
+              langfre: 'D7: Changements hydrographiques',
+            },
             {
               default: 'D4: Réseaux trophiques',
               langfre: 'D4: Réseaux trophiques',
             },
             {
-              default: 'D8: Contaminants chimiques',
-              langfre: 'D8: Contaminants chimiques',
-            },
-            { default: 'D1: Biodiversité', langfre: 'D1: Biodiversité' },
-            {
-              default: 'D2: Espèces non indigènes',
-              langfre: 'D2: Espèces non indigènes',
-            },
-            {
-              default: 'D7: Conditions hydrographiques',
-              langfre: 'D7: Conditions hydrographiques',
+              default: 'D5: Eutrophisation',
+              langfre: 'D5: Eutrophisation',
             },
             {
               default: 'D9: Questions sanitaires',
               langfre: 'D9: Questions sanitaires',
             },
-            { default: 'D10: Déchets marins', langfre: 'D10: Déchets marins' },
+            {
+              default: 'D10: Déchets marins',
+              langfre: 'D10: Déchets marins',
+            },
+            {
+              default: 'D1: Biodiversité - Habitats benthiques',
+              langfre: 'D1: Biodiversité - Habitats benthiques',
+            },
+            {
+              default: 'D1: Biodiversité - Habitats pélagiques',
+              langfre: 'D1: Biodiversité - Habitats pélagiques',
+            },
+            {
+              default: 'D1: Biodiversité - Poissons',
+              langfre: 'D1: Biodiversité - Poissons',
+            },
+            {
+              default: 'D1: Biodiversité - Mammifères',
+              langfre: 'D1: Biodiversité - Mammifères',
+            },
+            {
+              default: 'D1: Biodiversité - Tortues',
+              langfre: 'D1: Biodiversité - Tortues',
+            },
+            {
+              default: 'D1: Biodiversité - Céphalopodes',
+              langfre: 'D1: Biodiversité - Céphalopodes',
+            },
             { default: 'National', langfre: 'National' },
-            { default: 'Observation directe', langfre: 'Observation directe' },
             {
               default: 'Observation par point',
               langfre: 'Observation par point',
+            },
+            {
+              default: 'Observation directe',
+              langfre: 'Observation directe',
             },
             {
               default:
@@ -289,58 +348,62 @@ export const ES_FIXTURE_FULL_RESPONSE = {
               langfre: '/Biologie marine/Bivalves',
             },
             {
-              default: '/Biogéochimie marine/Pigments',
-              langfre: '/Biogéochimie marine/Pigments',
-            },
-            {
               default:
                 '/Biogéochimie marine/Eléments chimiques et contaminants',
               langfre:
                 '/Biogéochimie marine/Eléments chimiques et contaminants',
             },
             {
-              default: '/Biologie marine/Habitats benthiques',
-              langfre: '/Biologie marine/Habitats benthiques',
+              default: "/Physique de l'Océan/Turbidité",
+              langfre: "/Physique de l'Océan/Turbidité",
             },
             {
-              default: '/Biologie marine/Organismes pathogènes',
-              langfre: '/Biologie marine/Organismes pathogènes',
-            },
-            {
-              default: '/Biologie marine/Phytoplancton',
-              langfre: '/Biologie marine/Phytoplancton',
-            },
-            {
-              default: '/Biogéochimie marine/Nutriments (sels nutritifs)',
-              langfre: '/Biogéochimie marine/Nutriments (sels nutritifs)',
+              default: '/Biogéochimie marine/Pigments',
+              langfre: '/Biogéochimie marine/Pigments',
             },
             {
               default: '/Biologie marine/Toxines',
               langfre: '/Biologie marine/Toxines',
             },
             {
-              default: "/Physique de l'Océan/Turbidité",
-              langfre: "/Physique de l'Océan/Turbidité",
+              default: '/Biologie marine/Phytoplancton',
+              langfre: '/Biologie marine/Phytoplancton',
             },
             {
-              default: '/Biologie marine/Matière en suspension',
-              langfre: '/Biologie marine/Matière en suspension',
-            },
-            {
-              default: '/Biogéochimie marine/Oxygène dissous',
-              langfre: '/Biogéochimie marine/Oxygène dissous',
-            },
-            {
-              default: "/Physique de l'Océan/Salinité",
-              langfre: "/Physique de l'Océan/Salinité",
+              default: '/Biologie marine/Zooplancton',
+              langfre: '/Biologie marine/Zooplancton',
             },
             {
               default: "/Physique de l'Océan/Température",
               langfre: "/Physique de l'Océan/Température",
             },
             {
-              default: '/Biologie marine/Zooplancton',
-              langfre: '/Biologie marine/Zooplancton',
+              default: "/Physique de l'Océan/Salinité",
+              langfre: "/Physique de l'Océan/Salinité",
+            },
+            {
+              default: '/Biogéochimie marine/Oxygène dissous',
+              langfre: '/Biogéochimie marine/Oxygène dissous',
+            },
+            {
+              default: '/Biologie marine/Organismes pathogènes',
+              langfre: '/Biologie marine/Organismes pathogènes',
+            },
+            {
+              default: '/Biologie marine/Organismes marins tropicaux',
+              langfre: '/Biologie marine/Organismes marins tropicaux',
+            },
+            {
+              default: '/Biologie marine/Matière en suspension',
+              langfre: '/Biologie marine/Matière en suspension',
+            },
+            {
+              default: '/Biogéochimie marine/Nutriments (sels nutritifs)',
+              langfre: '/Biogéochimie marine/Nutriments (sels nutritifs)',
+            },
+            {
+              default: '/Biologie marine/Habitats benthiques',
+              langfre: '/Biologie marine/Habitats benthiques',
             },
             {
               default: '/Etat du Milieu/Biogéochimie',
@@ -350,53 +413,131 @@ export const ES_FIXTURE_FULL_RESPONSE = {
               default: '/Etat du Milieu/Pollutions',
               langfre: '/Etat du Milieu/Pollutions',
             },
+            {
+              default: '/Etat du Milieu/Littoral',
+              langfre: '/Etat du Milieu/Littoral',
+            },
+            {
+              default: '/Etat du Milieu/Habitats',
+              langfre: '/Etat du Milieu/Habitats',
+            },
+            {
+              default: '/Etat du Milieu/Espèces',
+              langfre: '/Etat du Milieu/Espèces',
+            },
+            {
+              default: 'Brest',
+              langfre: 'Brest',
+            },
+            { default: 'Fort-de-France', langfre: 'Fort-de-France' },
+            {
+              default: 'Boulogne-sur-Mer',
+              langfre: 'Boulogne-sur-Mer',
+            },
+            { default: 'Nouméa', langfre: 'Nouméa' },
+            {
+              default: 'Toulon',
+              langfre: 'Toulon',
+            },
+            { default: 'Sète', langfre: 'Sète' },
+            { default: 'La Rochelle', langfre: 'La Rochelle' },
           ],
-          isOpenData: 'false',
+          isOpenData: 'true',
           'keywordType-theme': [
             {
               default: 'Lieux de surveillance',
               langfre: 'Lieux de surveillance',
             },
             { default: 'Observation', langfre: 'Observation' },
-            { default: 'Surveillance', langfre: 'Surveillance' },
+            {
+              default: 'Surveillance',
+              langfre: 'Surveillance',
+            },
             { default: 'Environnement', langfre: 'Environnement' },
-            { default: 'Littoral', langfre: 'Littoral' },
+            {
+              default: 'Littoral',
+              langfre: 'Littoral',
+            },
             { default: 'Quadrige', langfre: 'Quadrige' },
-            { default: 'DCE', langfre: 'DCE' },
+            {
+              default: 'DCE',
+              langfre: 'DCE',
+            },
             { default: 'DCSMM', langfre: 'DCSMM' },
-            { default: 'OSPAR', langfre: 'OSPAR' },
+            {
+              default: 'OSPAR',
+              langfre: 'OSPAR',
+            },
             { default: 'MEDPOL', langfre: 'MEDPOL' },
+            {
+              default: 'Données ouvertes',
+              langfre: 'Données ouvertes',
+            },
+            { default: 'Open Data', langfre: 'Open Data' },
+            {
+              default: 'Surval',
+              langfre: 'Surval',
+            },
             {
               default: 'Installations de suivi environnemental',
               langfre: 'Installations de suivi environnemental',
             },
-            { default: 'D5: Eutrophisation', langfre: 'D5: Eutrophisation' },
+            { default: 'D8: Contaminants', langfre: 'D8: Contaminants' },
+            {
+              default: 'D1: Biodiversité',
+              langfre: 'D1: Biodiversité',
+            },
+            {
+              default: 'D7: Changements hydrographiques',
+              langfre: 'D7: Changements hydrographiques',
+            },
             {
               default: 'D4: Réseaux trophiques',
               langfre: 'D4: Réseaux trophiques',
             },
             {
-              default: 'D8: Contaminants chimiques',
-              langfre: 'D8: Contaminants chimiques',
-            },
-            { default: 'D1: Biodiversité', langfre: 'D1: Biodiversité' },
-            {
-              default: 'D2: Espèces non indigènes',
-              langfre: 'D2: Espèces non indigènes',
-            },
-            {
-              default: 'D7: Conditions hydrographiques',
-              langfre: 'D7: Conditions hydrographiques',
+              default: 'D5: Eutrophisation',
+              langfre: 'D5: Eutrophisation',
             },
             {
               default: 'D9: Questions sanitaires',
               langfre: 'D9: Questions sanitaires',
             },
-            { default: 'D10: Déchets marins', langfre: 'D10: Déchets marins' },
-            { default: 'Observation directe', langfre: 'Observation directe' },
+            {
+              default: 'D10: Déchets marins',
+              langfre: 'D10: Déchets marins',
+            },
+            {
+              default: 'D1: Biodiversité - Habitats benthiques',
+              langfre: 'D1: Biodiversité - Habitats benthiques',
+            },
+            {
+              default: 'D1: Biodiversité - Habitats pélagiques',
+              langfre: 'D1: Biodiversité - Habitats pélagiques',
+            },
+            {
+              default: 'D1: Biodiversité - Poissons',
+              langfre: 'D1: Biodiversité - Poissons',
+            },
+            {
+              default: 'D1: Biodiversité - Mammifères',
+              langfre: 'D1: Biodiversité - Mammifères',
+            },
+            {
+              default: 'D1: Biodiversité - Tortues',
+              langfre: 'D1: Biodiversité - Tortues',
+            },
+            {
+              default: 'D1: Biodiversité - Céphalopodes',
+              langfre: 'D1: Biodiversité - Céphalopodes',
+            },
             {
               default: 'Observation par point',
               langfre: 'Observation par point',
+            },
+            {
+              default: 'Observation directe',
+              langfre: 'Observation directe',
             },
             {
               default:
@@ -421,58 +562,62 @@ export const ES_FIXTURE_FULL_RESPONSE = {
               langfre: '/Biologie marine/Bivalves',
             },
             {
-              default: '/Biogéochimie marine/Pigments',
-              langfre: '/Biogéochimie marine/Pigments',
-            },
-            {
               default:
                 '/Biogéochimie marine/Eléments chimiques et contaminants',
               langfre:
                 '/Biogéochimie marine/Eléments chimiques et contaminants',
             },
             {
-              default: '/Biologie marine/Habitats benthiques',
-              langfre: '/Biologie marine/Habitats benthiques',
+              default: "/Physique de l'Océan/Turbidité",
+              langfre: "/Physique de l'Océan/Turbidité",
             },
             {
-              default: '/Biologie marine/Organismes pathogènes',
-              langfre: '/Biologie marine/Organismes pathogènes',
-            },
-            {
-              default: '/Biologie marine/Phytoplancton',
-              langfre: '/Biologie marine/Phytoplancton',
-            },
-            {
-              default: '/Biogéochimie marine/Nutriments (sels nutritifs)',
-              langfre: '/Biogéochimie marine/Nutriments (sels nutritifs)',
+              default: '/Biogéochimie marine/Pigments',
+              langfre: '/Biogéochimie marine/Pigments',
             },
             {
               default: '/Biologie marine/Toxines',
               langfre: '/Biologie marine/Toxines',
             },
             {
-              default: "/Physique de l'Océan/Turbidité",
-              langfre: "/Physique de l'Océan/Turbidité",
+              default: '/Biologie marine/Phytoplancton',
+              langfre: '/Biologie marine/Phytoplancton',
             },
             {
-              default: '/Biologie marine/Matière en suspension',
-              langfre: '/Biologie marine/Matière en suspension',
-            },
-            {
-              default: '/Biogéochimie marine/Oxygène dissous',
-              langfre: '/Biogéochimie marine/Oxygène dissous',
-            },
-            {
-              default: "/Physique de l'Océan/Salinité",
-              langfre: "/Physique de l'Océan/Salinité",
+              default: '/Biologie marine/Zooplancton',
+              langfre: '/Biologie marine/Zooplancton',
             },
             {
               default: "/Physique de l'Océan/Température",
               langfre: "/Physique de l'Océan/Température",
             },
             {
-              default: '/Biologie marine/Zooplancton',
-              langfre: '/Biologie marine/Zooplancton',
+              default: "/Physique de l'Océan/Salinité",
+              langfre: "/Physique de l'Océan/Salinité",
+            },
+            {
+              default: '/Biogéochimie marine/Oxygène dissous',
+              langfre: '/Biogéochimie marine/Oxygène dissous',
+            },
+            {
+              default: '/Biologie marine/Organismes pathogènes',
+              langfre: '/Biologie marine/Organismes pathogènes',
+            },
+            {
+              default: '/Biologie marine/Organismes marins tropicaux',
+              langfre: '/Biologie marine/Organismes marins tropicaux',
+            },
+            {
+              default: '/Biologie marine/Matière en suspension',
+              langfre: '/Biologie marine/Matière en suspension',
+            },
+            {
+              default: '/Biogéochimie marine/Nutriments (sels nutritifs)',
+              langfre: '/Biogéochimie marine/Nutriments (sels nutritifs)',
+            },
+            {
+              default: '/Biologie marine/Habitats benthiques',
+              langfre: '/Biologie marine/Habitats benthiques',
             },
             {
               default: '/Etat du Milieu/Biogéochimie',
@@ -482,79 +627,94 @@ export const ES_FIXTURE_FULL_RESPONSE = {
               default: '/Etat du Milieu/Pollutions',
               langfre: '/Etat du Milieu/Pollutions',
             },
+            {
+              default: '/Etat du Milieu/Littoral',
+              langfre: '/Etat du Milieu/Littoral',
+            },
+            {
+              default: '/Etat du Milieu/Habitats',
+              langfre: '/Etat du Milieu/Habitats',
+            },
+            {
+              default: '/Etat du Milieu/Espèces',
+              langfre: '/Etat du Milieu/Espèces',
+            },
           ],
-          'keywordType-place': [{ default: 'National', langfre: 'National' }],
+          'keywordType-place': [
+            { default: 'National', langfre: 'National' },
+            {
+              default: 'Brest',
+              langfre: 'Brest',
+            },
+            { default: 'Fort-de-France', langfre: 'Fort-de-France' },
+            {
+              default: 'Boulogne-sur-Mer',
+              langfre: 'Boulogne-sur-Mer',
+            },
+            { default: 'Nouméa', langfre: 'Nouméa' },
+            {
+              default: 'Toulon',
+              langfre: 'Toulon',
+            },
+            { default: 'Sète', langfre: 'Sète' },
+            { default: 'La Rochelle', langfre: 'La Rochelle' },
+          ],
           'th_httpinspireeceuropaeutheme-themeNumber': '1',
           'th_httpinspireeceuropaeutheme-theme': [
             {
               default: 'Installations de suivi environnemental',
               langfre: 'Installations de suivi environnemental',
-              link: 'http://inspire.ec.europa.eu/theme/ef',
             },
-          ],
-          'th_httpinspireeceuropaeutheme-theme_tree': {
-            default: ['Installations de suivi environnemental'],
-            key: ['http://inspire.ec.europa.eu/theme/ef'],
-          },
-          'th_dcsmm-descripteurNumber': '8',
-          'th_dcsmm-descripteur': [
-            { default: 'D5: Eutrophisation', langfre: 'D5: Eutrophisation' },
-            {
-              default: 'D4: Réseaux trophiques',
-              langfre: 'D4: Réseaux trophiques',
-            },
-            {
-              default: 'D8: Contaminants chimiques',
-              langfre: 'D8: Contaminants chimiques',
-            },
-            { default: 'D1: Biodiversité', langfre: 'D1: Biodiversité' },
-            {
-              default: 'D2: Espèces non indigènes',
-              langfre: 'D2: Espèces non indigènes',
-            },
-            {
-              default: 'D7: Conditions hydrographiques',
-              langfre: 'D7: Conditions hydrographiques',
-            },
-            {
-              default: 'D9: Questions sanitaires',
-              langfre: 'D9: Questions sanitaires',
-            },
-            { default: 'D10: Déchets marins', langfre: 'D10: Déchets marins' },
           ],
           indexingErrorMsg: [
-            'Warning / Keyword D5: Eutrophisation not found in geonetwork.thesaurus.local.theme.dcsmm-descripteur.',
-            'Warning / Keyword D4: Réseaux trophiques not found in geonetwork.thesaurus.local.theme.dcsmm-descripteur.',
-            'Warning / Keyword D8: Contaminants chimiques not found in geonetwork.thesaurus.local.theme.dcsmm-descripteur.',
+            'Warning / Keyword Installations de suivi environnemental not found in geonetwork.thesaurus.external.theme.httpinspireeceuropaeutheme-theme.',
+            'Warning / Keyword D8: Contaminants not found in geonetwork.thesaurus.local.theme.dcsmm-descripteur.',
             'Warning / Keyword D1: Biodiversité not found in geonetwork.thesaurus.local.theme.dcsmm-descripteur.',
-            'Warning / Keyword D2: Espèces non indigènes not found in geonetwork.thesaurus.local.theme.dcsmm-descripteur.',
-            'Warning / Keyword D7: Conditions hydrographiques not found in geonetwork.thesaurus.local.theme.dcsmm-descripteur.',
+            'Warning / Keyword D7: Changements hydrographiques not found in geonetwork.thesaurus.local.theme.dcsmm-descripteur.',
+            'Warning / Keyword D4: Réseaux trophiques not found in geonetwork.thesaurus.local.theme.dcsmm-descripteur.',
+            'Warning / Keyword D5: Eutrophisation not found in geonetwork.thesaurus.local.theme.dcsmm-descripteur.',
             'Warning / Keyword D9: Questions sanitaires not found in geonetwork.thesaurus.local.theme.dcsmm-descripteur.',
             'Warning / Keyword D10: Déchets marins not found in geonetwork.thesaurus.local.theme.dcsmm-descripteur.',
+            'Warning / Keyword D1: Biodiversité - Habitats benthiques not found in geonetwork.thesaurus.local.theme.dcsmm-descripteur.',
+            'Warning / Keyword D1: Biodiversité - Habitats pélagiques not found in geonetwork.thesaurus.local.theme.dcsmm-descripteur.',
+            'Warning / Keyword D1: Biodiversité - Poissons not found in geonetwork.thesaurus.local.theme.dcsmm-descripteur.',
+            'Warning / Keyword D1: Biodiversité - Mammifères not found in geonetwork.thesaurus.local.theme.dcsmm-descripteur.',
+            'Warning / Keyword D1: Biodiversité - Tortues not found in geonetwork.thesaurus.local.theme.dcsmm-descripteur.',
+            'Warning / Keyword D1: Biodiversité - Céphalopodes not found in geonetwork.thesaurus.local.theme.dcsmm-descripteur.',
             'Warning / Keyword National not found in geonetwork.thesaurus.local.place.dcsmm.area.',
-            'Warning / Keyword Observation directe not found in geonetwork.thesaurus.local.theme.dcsmm-methode.',
             'Warning / Keyword Observation par point not found in geonetwork.thesaurus.local.theme.dcsmm-methode.',
+            'Warning / Keyword Observation directe not found in geonetwork.thesaurus.local.theme.dcsmm-methode.',
             "Warning / Keyword /Activités humaines/Réseaux d'observation et de surveillance du littoral not found in geonetwork.thesaurus.local.theme.sextant-theme.",
             'Warning / Keyword /Observations in-situ/Réseaux not found in geonetwork.thesaurus.local.theme.type_jeux_donnee.',
             'Warning / Keyword Base de données de recherche not found in geonetwork.thesaurus.local.theme.odatis_thematiques.',
             'Warning / Keyword Dispositifs de surveillance not found in geonetwork.thesaurus.local.theme.odatis_thematiques.',
             'Warning / Keyword /Biologie marine/Bivalves not found in geonetwork.thesaurus.local.theme.odatis_variables.',
-            'Warning / Keyword /Biogéochimie marine/Pigments not found in geonetwork.thesaurus.local.theme.odatis_variables.',
             'Warning / Keyword /Biogéochimie marine/Eléments chimiques et contaminants not found in geonetwork.thesaurus.local.theme.odatis_variables.',
-            'Warning / Keyword /Biologie marine/Habitats benthiques not found in geonetwork.thesaurus.local.theme.odatis_variables.',
-            'Warning / Keyword /Biologie marine/Organismes pathogènes not found in geonetwork.thesaurus.local.theme.odatis_variables.',
-            'Warning / Keyword /Biologie marine/Phytoplancton not found in geonetwork.thesaurus.local.theme.odatis_variables.',
-            'Warning / Keyword /Biogéochimie marine/Nutriments (sels nutritifs) not found in geonetwork.thesaurus.local.theme.odatis_variables.',
-            'Warning / Keyword /Biologie marine/Toxines not found in geonetwork.thesaurus.local.theme.odatis_variables.',
             "Warning / Keyword /Physique de l'Océan/Turbidité not found in geonetwork.thesaurus.local.theme.odatis_variables.",
-            'Warning / Keyword /Biologie marine/Matière en suspension not found in geonetwork.thesaurus.local.theme.odatis_variables.',
-            'Warning / Keyword /Biogéochimie marine/Oxygène dissous not found in geonetwork.thesaurus.local.theme.odatis_variables.',
-            "Warning / Keyword /Physique de l'Océan/Salinité not found in geonetwork.thesaurus.local.theme.odatis_variables.",
-            "Warning / Keyword /Physique de l'Océan/Température not found in geonetwork.thesaurus.local.theme.odatis_variables.",
+            'Warning / Keyword /Biogéochimie marine/Pigments not found in geonetwork.thesaurus.local.theme.odatis_variables.',
+            'Warning / Keyword /Biologie marine/Toxines not found in geonetwork.thesaurus.local.theme.odatis_variables.',
+            'Warning / Keyword /Biologie marine/Phytoplancton not found in geonetwork.thesaurus.local.theme.odatis_variables.',
             'Warning / Keyword /Biologie marine/Zooplancton not found in geonetwork.thesaurus.local.theme.odatis_variables.',
+            "Warning / Keyword /Physique de l'Océan/Température not found in geonetwork.thesaurus.local.theme.odatis_variables.",
+            "Warning / Keyword /Physique de l'Océan/Salinité not found in geonetwork.thesaurus.local.theme.odatis_variables.",
+            'Warning / Keyword /Biogéochimie marine/Oxygène dissous not found in geonetwork.thesaurus.local.theme.odatis_variables.',
+            'Warning / Keyword /Biologie marine/Organismes pathogènes not found in geonetwork.thesaurus.local.theme.odatis_variables.',
+            'Warning / Keyword /Biologie marine/Organismes marins tropicaux not found in geonetwork.thesaurus.local.theme.odatis_variables.',
+            'Warning / Keyword /Biologie marine/Matière en suspension not found in geonetwork.thesaurus.local.theme.odatis_variables.',
+            'Warning / Keyword /Biogéochimie marine/Nutriments (sels nutritifs) not found in geonetwork.thesaurus.local.theme.odatis_variables.',
+            'Warning / Keyword /Biologie marine/Habitats benthiques not found in geonetwork.thesaurus.local.theme.odatis_variables.',
             'Warning / Keyword /Etat du Milieu/Biogéochimie not found in geonetwork.thesaurus.local.theme.simm.thematiques.',
             'Warning / Keyword /Etat du Milieu/Pollutions not found in geonetwork.thesaurus.local.theme.simm.thematiques.',
-            "Warning / Field resourceTemporalDateRange /\n                Lower range bound '\n                  1974-01-01T00:00:00\n                  \n                ' can not be\n                greater than upper bound ''.\n                Date range not indexed.",
+            'Warning / Keyword /Etat du Milieu/Littoral not found in geonetwork.thesaurus.local.theme.simm.thematiques.',
+            'Warning / Keyword /Etat du Milieu/Habitats not found in geonetwork.thesaurus.local.theme.simm.thematiques.',
+            'Warning / Keyword /Etat du Milieu/Espèces not found in geonetwork.thesaurus.local.theme.simm.thematiques.',
+            'Warning / Keyword Brest not found in geonetwork.thesaurus.local.place.oh_ville.',
+            'Warning / Keyword Fort-de-France not found in geonetwork.thesaurus.local.place.oh_ville.',
+            'Warning / Keyword Boulogne-sur-Mer not found in geonetwork.thesaurus.local.place.oh_ville.',
+            'Warning / Keyword Nouméa not found in geonetwork.thesaurus.local.place.oh_ville.',
+            'Warning / Keyword Toulon not found in geonetwork.thesaurus.local.place.oh_ville.',
+            'Warning / Keyword Sète not found in geonetwork.thesaurus.local.place.oh_ville.',
+            'Warning / Keyword La Rochelle not found in geonetwork.thesaurus.local.place.oh_ville.',
           ],
           indexingError: [
             'true',
@@ -588,16 +748,88 @@ export const ES_FIXTURE_FULL_RESPONSE = {
             'true',
             'true',
             'true',
+            'true',
+            'true',
+            'true',
+            'true',
+            'true',
+            'true',
+            'true',
+            'true',
+            'true',
+            'true',
+            'true',
+            'true',
+            'true',
+            'true',
+            'true',
+            'true',
+            'true',
+          ],
+          'th_dcsmm-descripteurNumber': '13',
+          'th_dcsmm-descripteur': [
+            {
+              default: 'D8: Contaminants',
+              langfre: 'D8: Contaminants',
+            },
+            {
+              default: 'D1: Biodiversité',
+              langfre: 'D1: Biodiversité',
+            },
+            {
+              default: 'D7: Changements hydrographiques',
+              langfre: 'D7: Changements hydrographiques',
+            },
+            {
+              default: 'D4: Réseaux trophiques',
+              langfre: 'D4: Réseaux trophiques',
+            },
+            {
+              default: 'D5: Eutrophisation',
+              langfre: 'D5: Eutrophisation',
+            },
+            {
+              default: 'D9: Questions sanitaires',
+              langfre: 'D9: Questions sanitaires',
+            },
+            {
+              default: 'D10: Déchets marins',
+              langfre: 'D10: Déchets marins',
+            },
+            {
+              default: 'D1: Biodiversité - Habitats benthiques',
+              langfre: 'D1: Biodiversité - Habitats benthiques',
+            },
+            {
+              default: 'D1: Biodiversité - Habitats pélagiques',
+              langfre: 'D1: Biodiversité - Habitats pélagiques',
+            },
+            {
+              default: 'D1: Biodiversité - Poissons',
+              langfre: 'D1: Biodiversité - Poissons',
+            },
+            {
+              default: 'D1: Biodiversité - Mammifères',
+              langfre: 'D1: Biodiversité - Mammifères',
+            },
+            {
+              default: 'D1: Biodiversité - Tortues',
+              langfre: 'D1: Biodiversité - Tortues',
+            },
+            {
+              default: 'D1: Biodiversité - Céphalopodes',
+              langfre: 'D1: Biodiversité - Céphalopodes',
+            },
           ],
           th_areaNumber: '1',
           th_area: [{ default: 'National', langfre: 'National' }],
           'th_dcsmm-methodeNumber': '2',
           'th_dcsmm-methode': [
-            { default: 'Observation directe', langfre: 'Observation directe' },
             {
               default: 'Observation par point',
               langfre: 'Observation par point',
             },
+            { default: 'Observation directe', langfre: 'Observation directe' },
           ],
           'th_sextant-themeNumber': '1',
           'th_sextant-theme': [
@@ -626,15 +858,11 @@ export const ES_FIXTURE_FULL_RESPONSE = {
               langfre: 'Dispositifs de surveillance',
             },
           ],
-          th_odatis_variablesNumber: '14',
+          th_odatis_variablesNumber: '15',
           th_odatis_variables: [
             {
               default: '/Biologie marine/Bivalves',
               langfre: '/Biologie marine/Bivalves',
-            },
-            {
-              default: '/Biogéochimie marine/Pigments',
-              langfre: '/Biogéochimie marine/Pigments',
             },
             {
               default:
@@ -643,51 +871,59 @@ export const ES_FIXTURE_FULL_RESPONSE = {
                 '/Biogéochimie marine/Eléments chimiques et contaminants',
             },
             {
-              default: '/Biologie marine/Habitats benthiques',
-              langfre: '/Biologie marine/Habitats benthiques',
+              default: "/Physique de l'Océan/Turbidité",
+              langfre: "/Physique de l'Océan/Turbidité",
             },
             {
-              default: '/Biologie marine/Organismes pathogènes',
-              langfre: '/Biologie marine/Organismes pathogènes',
-            },
-            {
-              default: '/Biologie marine/Phytoplancton',
-              langfre: '/Biologie marine/Phytoplancton',
-            },
-            {
-              default: '/Biogéochimie marine/Nutriments (sels nutritifs)',
-              langfre: '/Biogéochimie marine/Nutriments (sels nutritifs)',
+              default: '/Biogéochimie marine/Pigments',
+              langfre: '/Biogéochimie marine/Pigments',
             },
             {
               default: '/Biologie marine/Toxines',
               langfre: '/Biologie marine/Toxines',
             },
             {
-              default: "/Physique de l'Océan/Turbidité",
-              langfre: "/Physique de l'Océan/Turbidité",
+              default: '/Biologie marine/Phytoplancton',
+              langfre: '/Biologie marine/Phytoplancton',
             },
             {
-              default: '/Biologie marine/Matière en suspension',
-              langfre: '/Biologie marine/Matière en suspension',
-            },
-            {
-              default: '/Biogéochimie marine/Oxygène dissous',
-              langfre: '/Biogéochimie marine/Oxygène dissous',
-            },
-            {
-              default: "/Physique de l'Océan/Salinité",
-              langfre: "/Physique de l'Océan/Salinité",
+              default: '/Biologie marine/Zooplancton',
+              langfre: '/Biologie marine/Zooplancton',
             },
             {
               default: "/Physique de l'Océan/Température",
               langfre: "/Physique de l'Océan/Température",
             },
             {
-              default: '/Biologie marine/Zooplancton',
-              langfre: '/Biologie marine/Zooplancton',
+              default: "/Physique de l'Océan/Salinité",
+              langfre: "/Physique de l'Océan/Salinité",
+            },
+            {
+              default: '/Biogéochimie marine/Oxygène dissous',
+              langfre: '/Biogéochimie marine/Oxygène dissous',
+            },
+            {
+              default: '/Biologie marine/Organismes pathogènes',
+              langfre: '/Biologie marine/Organismes pathogènes',
+            },
+            {
+              default: '/Biologie marine/Organismes marins tropicaux',
+              langfre: '/Biologie marine/Organismes marins tropicaux',
+            },
+            {
+              default: '/Biologie marine/Matière en suspension',
+              langfre: '/Biologie marine/Matière en suspension',
+            },
+            {
+              default: '/Biogéochimie marine/Nutriments (sels nutritifs)',
+              langfre: '/Biogéochimie marine/Nutriments (sels nutritifs)',
+            },
+            {
+              default: '/Biologie marine/Habitats benthiques',
+              langfre: '/Biologie marine/Habitats benthiques',
             },
           ],
-          th_thematiquesNumber: '2',
+          th_thematiquesNumber: '5',
           th_thematiques: [
             {
               default: '/Etat du Milieu/Biogéochimie',
@@ -697,6 +933,37 @@ export const ES_FIXTURE_FULL_RESPONSE = {
               default: '/Etat du Milieu/Pollutions',
               langfre: '/Etat du Milieu/Pollutions',
             },
+            {
+              default: '/Etat du Milieu/Littoral',
+              langfre: '/Etat du Milieu/Littoral',
+            },
+            {
+              default: '/Etat du Milieu/Habitats',
+              langfre: '/Etat du Milieu/Habitats',
+            },
+            {
+              default: '/Etat du Milieu/Espèces',
+              langfre: '/Etat du Milieu/Espèces',
+            },
+          ],
+          th_oh_villeNumber: '7',
+          th_oh_ville: [
+            { default: 'Brest', langfre: 'Brest' },
+            {
+              default: 'Fort-de-France',
+              langfre: 'Fort-de-France',
+            },
+            { default: 'Boulogne-sur-Mer', langfre: 'Boulogne-sur-Mer' },
+            {
+              default: 'Nouméa',
+              langfre: 'Nouméa',
+            },
+            { default: 'Toulon', langfre: 'Toulon' },
+            {
+              default: 'Sète',
+              langfre: 'Sète',
+            },
+            { default: 'La Rochelle', langfre: 'La Rochelle' },
           ],
           allKeywords: {
             geonetworkthesauruslocalthemedcsmmdescripteur: {
@@ -706,25 +973,24 @@ export const ES_FIXTURE_FULL_RESPONSE = {
               link: '',
               keywords: [
                 {
-                  default: 'D5: Eutrophisation',
-                  langfre: 'D5: Eutrophisation',
+                  default: 'D8: Contaminants',
+                  langfre: 'D8: Contaminants',
+                },
+                {
+                  default: 'D1: Biodiversité',
+                  langfre: 'D1: Biodiversité',
+                },
+                {
+                  default: 'D7: Changements hydrographiques',
+                  langfre: 'D7: Changements hydrographiques',
                 },
                 {
                   default: 'D4: Réseaux trophiques',
                   langfre: 'D4: Réseaux trophiques',
                 },
                 {
-                  default: 'D8: Contaminants chimiques',
-                  langfre: 'D8: Contaminants chimiques',
-                },
-                { default: 'D1: Biodiversité', langfre: 'D1: Biodiversité' },
-                {
-                  default: 'D2: Espèces non indigènes',
-                  langfre: 'D2: Espèces non indigènes',
-                },
-                {
-                  default: 'D7: Conditions hydrographiques',
-                  langfre: 'D7: Conditions hydrographiques',
+                  default: 'D5: Eutrophisation',
+                  langfre: 'D5: Eutrophisation',
                 },
                 {
                   default: 'D9: Questions sanitaires',
@@ -733,6 +999,30 @@ export const ES_FIXTURE_FULL_RESPONSE = {
                 {
                   default: 'D10: Déchets marins',
                   langfre: 'D10: Déchets marins',
+                },
+                {
+                  default: 'D1: Biodiversité - Habitats benthiques',
+                  langfre: 'D1: Biodiversité - Habitats benthiques',
+                },
+                {
+                  default: 'D1: Biodiversité - Habitats pélagiques',
+                  langfre: 'D1: Biodiversité - Habitats pélagiques',
+                },
+                {
+                  default: 'D1: Biodiversité - Poissons',
+                  langfre: 'D1: Biodiversité - Poissons',
+                },
+                {
+                  default: 'D1: Biodiversité - Mammifères',
+                  langfre: 'D1: Biodiversité - Mammifères',
+                },
+                {
+                  default: 'D1: Biodiversité - Tortues',
+                  langfre: 'D1: Biodiversité - Tortues',
+                },
+                {
+                  default: 'D1: Biodiversité - Céphalopodes',
+                  langfre: 'D1: Biodiversité - Céphalopodes',
                 },
               ],
             },
@@ -743,12 +1033,12 @@ export const ES_FIXTURE_FULL_RESPONSE = {
               link: '',
               keywords: [
                 {
-                  default: 'Observation directe',
-                  langfre: 'Observation directe',
-                },
-                {
                   default: 'Observation par point',
                   langfre: 'Observation par point',
+                },
+                {
+                  default: 'Observation directe',
+                  langfre: 'Observation directe',
                 },
               ],
             },
@@ -762,6 +1052,30 @@ export const ES_FIXTURE_FULL_RESPONSE = {
                   default: 'Installations de suivi environnemental',
                   langfre: 'Installations de suivi environnemental',
                 },
+              ],
+            },
+            geonetworkthesauruslocalplaceohville: {
+              id: 'geonetwork.thesaurus.local.place.oh_ville',
+              title: 'Ocean Hackathon - Ville',
+              theme: 'place',
+              link: '',
+              keywords: [
+                { default: 'Brest', langfre: 'Brest' },
+                {
+                  default: 'Fort-de-France',
+                  langfre: 'Fort-de-France',
+                },
+                { default: 'Boulogne-sur-Mer', langfre: 'Boulogne-sur-Mer' },
+                {
+                  default: 'Nouméa',
+                  langfre: 'Nouméa',
+                },
+                { default: 'Toulon', langfre: 'Toulon' },
+                {
+                  default: 'Sète',
+                  langfre: 'Sète',
+                },
+                { default: 'La Rochelle', langfre: 'La Rochelle' },
               ],
             },
             geonetworkthesauruslocalplacedcsmmarea: {
@@ -815,6 +1129,18 @@ export const ES_FIXTURE_FULL_RESPONSE = {
                   default: '/Etat du Milieu/Pollutions',
                   langfre: '/Etat du Milieu/Pollutions',
                 },
+                {
+                  default: '/Etat du Milieu/Littoral',
+                  langfre: '/Etat du Milieu/Littoral',
+                },
+                {
+                  default: '/Etat du Milieu/Habitats',
+                  langfre: '/Etat du Milieu/Habitats',
+                },
+                {
+                  default: '/Etat du Milieu/Espèces',
+                  langfre: '/Etat du Milieu/Espèces',
+                },
               ],
             },
             geonetworkthesauruslocalthemetypejeuxdonnee: {
@@ -840,58 +1166,62 @@ export const ES_FIXTURE_FULL_RESPONSE = {
                   langfre: '/Biologie marine/Bivalves',
                 },
                 {
-                  default: '/Biogéochimie marine/Pigments',
-                  langfre: '/Biogéochimie marine/Pigments',
-                },
-                {
                   default:
                     '/Biogéochimie marine/Eléments chimiques et contaminants',
                   langfre:
                     '/Biogéochimie marine/Eléments chimiques et contaminants',
                 },
                 {
-                  default: '/Biologie marine/Habitats benthiques',
-                  langfre: '/Biologie marine/Habitats benthiques',
+                  default: "/Physique de l'Océan/Turbidité",
+                  langfre: "/Physique de l'Océan/Turbidité",
                 },
                 {
-                  default: '/Biologie marine/Organismes pathogènes',
-                  langfre: '/Biologie marine/Organismes pathogènes',
-                },
-                {
-                  default: '/Biologie marine/Phytoplancton',
-                  langfre: '/Biologie marine/Phytoplancton',
-                },
-                {
-                  default: '/Biogéochimie marine/Nutriments (sels nutritifs)',
-                  langfre: '/Biogéochimie marine/Nutriments (sels nutritifs)',
+                  default: '/Biogéochimie marine/Pigments',
+                  langfre: '/Biogéochimie marine/Pigments',
                 },
                 {
                   default: '/Biologie marine/Toxines',
                   langfre: '/Biologie marine/Toxines',
                 },
                 {
-                  default: "/Physique de l'Océan/Turbidité",
-                  langfre: "/Physique de l'Océan/Turbidité",
+                  default: '/Biologie marine/Phytoplancton',
+                  langfre: '/Biologie marine/Phytoplancton',
                 },
                 {
-                  default: '/Biologie marine/Matière en suspension',
-                  langfre: '/Biologie marine/Matière en suspension',
-                },
-                {
-                  default: '/Biogéochimie marine/Oxygène dissous',
-                  langfre: '/Biogéochimie marine/Oxygène dissous',
-                },
-                {
-                  default: "/Physique de l'Océan/Salinité",
-                  langfre: "/Physique de l'Océan/Salinité",
+                  default: '/Biologie marine/Zooplancton',
+                  langfre: '/Biologie marine/Zooplancton',
                 },
                 {
                   default: "/Physique de l'Océan/Température",
                   langfre: "/Physique de l'Océan/Température",
                 },
                 {
-                  default: '/Biologie marine/Zooplancton',
-                  langfre: '/Biologie marine/Zooplancton',
+                  default: "/Physique de l'Océan/Salinité",
+                  langfre: "/Physique de l'Océan/Salinité",
+                },
+                {
+                  default: '/Biogéochimie marine/Oxygène dissous',
+                  langfre: '/Biogéochimie marine/Oxygène dissous',
+                },
+                {
+                  default: '/Biologie marine/Organismes pathogènes',
+                  langfre: '/Biologie marine/Organismes pathogènes',
+                },
+                {
+                  default: '/Biologie marine/Organismes marins tropicaux',
+                  langfre: '/Biologie marine/Organismes marins tropicaux',
+                },
+                {
+                  default: '/Biologie marine/Matière en suspension',
+                  langfre: '/Biologie marine/Matière en suspension',
+                },
+                {
+                  default: '/Biogéochimie marine/Nutriments (sels nutritifs)',
+                  langfre: '/Biogéochimie marine/Nutriments (sels nutritifs)',
+                },
+                {
+                  default: '/Biologie marine/Habitats benthiques',
+                  langfre: '/Biologie marine/Habitats benthiques',
                 },
               ],
             },
@@ -902,41 +1232,43 @@ export const ES_FIXTURE_FULL_RESPONSE = {
                   langfre: 'Lieux de surveillance',
                 },
                 { default: 'Observation', langfre: 'Observation' },
-                { default: 'Surveillance', langfre: 'Surveillance' },
+                {
+                  default: 'Surveillance',
+                  langfre: 'Surveillance',
+                },
                 { default: 'Environnement', langfre: 'Environnement' },
-                { default: 'Littoral', langfre: 'Littoral' },
+                {
+                  default: 'Littoral',
+                  langfre: 'Littoral',
+                },
                 { default: 'Quadrige', langfre: 'Quadrige' },
-                { default: 'DCE', langfre: 'DCE' },
+                {
+                  default: 'DCE',
+                  langfre: 'DCE',
+                },
                 { default: 'DCSMM', langfre: 'DCSMM' },
-                { default: 'OSPAR', langfre: 'OSPAR' },
+                {
+                  default: 'OSPAR',
+                  langfre: 'OSPAR',
+                },
                 { default: 'MEDPOL', langfre: 'MEDPOL' },
+                {
+                  default: 'Données ouvertes',
+                  langfre: 'Données ouvertes',
+                },
+                { default: 'Open Data', langfre: 'Open Data' },
+                { default: 'Surval', langfre: 'Surval' },
               ],
             },
           },
           cl_topic: [{ key: 'oceans', default: 'Océans', langfre: 'Océans' }],
           resolutionScaleDenominator: ['5000'],
-          MD_LegalConstraintsOtherConstraintsObject: [
+          MD_ConstraintsUseLimitationObject: [
             {
-              default:
-                'Proposition de citation : "Quadrige (2019). Surval - Données par paramètre. Ifremer. https://doi.org/10.12770/cf5048f6-5bbf-4e44-ba74-e6f429af51ea", la date du téléchargement des données, la liste des programmes dont les données sont utilisées.',
-              langfre:
-                'Proposition de citation : "Quadrige (2019). Surval - Données par paramètre. Ifremer. https://doi.org/10.12770/cf5048f6-5bbf-4e44-ba74-e6f429af51ea", la date du téléchargement des données, la liste des programmes dont les données sont utilisées.',
+              default: 'Restriction lié à l’exercice du droit moral',
+              langfre: 'Restriction lié à l’exercice du droit moral',
             },
           ],
-          MD_LegalConstraintsUseLimitationObject: [
-            {
-              default:
-                'Données sous Licence ouverte / Open licence : http://www.etalab.gouv.fr/pages/licence-ouverte-open-licence-5899923.html',
-              langfre:
-                'Données sous Licence ouverte / Open licence : http://www.etalab.gouv.fr/pages/licence-ouverte-open-licence-5899923.html',
-            },
-          ],
-          licenseObject: {
-            default:
-              'Proposition de citation : "Quadrige (2019). Surval - Données par paramètre. Ifremer. https://doi.org/10.12770/cf5048f6-5bbf-4e44-ba74-e6f429af51ea", la date du téléchargement des données, la liste des programmes dont les données sont utilisées.',
-            langfre:
-              'Proposition de citation : "Quadrige (2019). Surval - Données par paramètre. Ifremer. https://doi.org/10.12770/cf5048f6-5bbf-4e44-ba74-e6f429af51ea", la date du téléchargement des données, la liste des programmes dont les données sont utilisées.',
-          },
           geom: {
             type: 'Polygon',
             coordinates: [
@@ -950,21 +1282,26 @@ export const ES_FIXTURE_FULL_RESPONSE = {
             ],
           },
           location: '0,0',
+          resourceTemporalExtentDateRange: [
+            { gte: '1974-01-01T00:00:00.000Z' },
+          ],
           coordinateSystem: ['WGS 84 (EPSG:4326)'],
           crsDetails: [
             {
               code: 'WGS 84 (EPSG:4326)',
               codeSpace: 'EPSG',
-              name: '',
+              name: 'WGS 84 (EPSG:4326)',
               url: '',
             },
           ],
-          specificationConformance: {
-            title: 'Inspire specifications',
-            date: '2012-01-16',
-            explanation: 'Non évalué',
-            pass: 'false',
-          },
+          specificationConformance: [
+            {
+              title: 'Inspire specifications',
+              date: '2012-01-16',
+              explanation: 'Non évalué',
+              pass: 'false',
+            },
+          ],
           lineageObject: {
             default:
               'Les données sont bancarisées dans la base de données Quadrige.',
@@ -973,15 +1310,18 @@ export const ES_FIXTURE_FULL_RESPONSE = {
           },
           format: [''],
           linkUrl: [
-            'http://envlit.ifremer.fr/resultats/quadrige',
-            'http://envlit.ifremer.fr/surveillance/presentation',
+            'https://wwz.ifremer.fr/envlit/Quadrige-la-base-de-donnees',
+            'https://wwz.ifremer.fr/envlit/Surveillance-du-littoral',
             'http://archimer.ifremer.fr/doc/00409/52016/',
-            'https://www.ifremer.fr/services/wms/surveillance_littorale',
-            'https://www.ifremer.fr/services/wfs/surveillance_littorale',
-            'https://www.ifremer.fr/services/wps/surval',
-            'https://www.ifremer.fr/services/wms/surveillance_littorale',
-            'https://www.ifremer.fr/services/wfs/surveillance_littorale',
-            'https://www.ifremer.fr/services/wps/surval',
+            'http://www.ifremer.fr/services/wms/surveillance_littorale',
+            'http://www.ifremer.fr/services/wfs/surveillance_littorale',
+            'https://www.ifremer.fr/services/wps3/surval',
+            'http://www.ifremer.fr/services/wms/surveillance_littorale',
+            'http://www.ifremer.fr/services/wfs/surveillance_littorale',
+            'https://www.ifremer.fr/services/wps3/surval',
+            'http://www.ifremer.fr/services/wms/surveillance_littorale',
+            'http://www.ifremer.fr/services/wfs/surveillance_littorale',
+            'https://www.ifremer.fr/services/wps3/surval',
             'https://doi.org/10.12770/cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
           ],
           linkProtocol: [
@@ -994,16 +1334,19 @@ export const ES_FIXTURE_FULL_RESPONSE = {
             'OGC:WMS',
             'OGC:WFS',
             'OGC:WPS',
+            'OGC:WMS',
+            'OGC:WFS',
+            'OGC:WPS',
             'WWW:LINK-1.0-http--metadata-URL',
           ],
           linkUrlProtocolWWWLINK: [
-            'http://envlit.ifremer.fr/resultats/quadrige',
+            'https://wwz.ifremer.fr/envlit/Quadrige-la-base-de-donnees',
             'http://archimer.ifremer.fr/doc/00409/52016/',
           ],
           link: [
             {
               protocol: 'WWW:LINK',
-              url: 'http://envlit.ifremer.fr/resultats/quadrige',
+              url: 'https://wwz.ifremer.fr/envlit/Quadrige-la-base-de-donnees',
               name: 'La base de données Quadrige',
               description: '',
               function: '',
@@ -1012,7 +1355,7 @@ export const ES_FIXTURE_FULL_RESPONSE = {
             },
             {
               protocol: 'WWW:LINK-1.0-http--link',
-              url: 'http://envlit.ifremer.fr/surveillance/presentation',
+              url: 'https://wwz.ifremer.fr/envlit/Surveillance-du-littoral',
               name: 'La surveillance du milieu marin et côtier',
               description: '',
               function: '',
@@ -1031,7 +1374,7 @@ export const ES_FIXTURE_FULL_RESPONSE = {
             },
             {
               protocol: 'OGC:WMS',
-              url: 'https://www.ifremer.fr/services/wms/surveillance_littorale',
+              url: 'http://www.ifremer.fr/services/wms/surveillance_littorale',
               name: 'surval_parametre_point',
               description: 'Lieu de surveillance (point)',
               function: '',
@@ -1040,52 +1383,81 @@ export const ES_FIXTURE_FULL_RESPONSE = {
             },
             {
               protocol: 'OGC:WFS',
-              url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
+              url: 'http://www.ifremer.fr/services/wfs/surveillance_littorale',
               name: 'surval_parametre_point',
               description: 'Lieu de surveillance (point)',
               function: '',
               applicationProfile:
-                '{ "tokenizedFields":{ "PROGRAMME":";", "PARAMETRE":";", "SUPPORT_NIVEAUPRELEVEMENT":";" }, "fields":[ { "name":"PROGRAMME", "label":{ "fr":"Programme de suivi", "en":"Programme de suivi" } },{ "name":"PARAMETRE", "label":{ "fr":"Paramètre", "en":"Paramètre" } },{ "name": "range_Date", "type": "rangeDate", "minField": "DATEMIN", "maxField": "DATEMAX", "label":{ "fr":"Date", "en":"Date" }, "display": "graph" },{ "name":"QUADRIGE_ZONEMARINE", "label":{ "fr":"Zone marine Quadrige", "en":"Zone marine Quadrige" } },{ "name":"DCSMM_SOUS_REGION", "label":{ "fr":"Sous-région marine DCSMM", "en":"Sous-région marine DCSMM" } },{ "name":"DCE_MASSE_EAU", "label":{ "fr":"Masse d’eau DCE", "en":"Masse d’eau DCE" } },{ "name":"SUPPORT_NIVEAUPRELEVEMENT", "label":{ "fr":"Support d’analyse et niveau de prélèvement", "en":"Support d’analyse et niveau de prélèvement" } },{ "name":"LIEU_LIBELLE", "label":{ "fr":"Lieu", "en":"Lieu" } },{ "name":"GRAPHES", "hidden": true, "suffix":"&from=${filtre_range_Date.from}&to=${filtre_range_Date.to}&typeParam=${filtre_PARAMETRE}&support=${filtre_SUPPORT_NIVEAUPRELEVEMENT}" } ], "treeFields": [ "PARAMETRE" ]}',
+                '{\n\t\t\t\t\t\t\t"tokenizedFields":{\n\t\t\t\t\t\t\t   "THEME":";",\n\t\t\t\t\t\t\t\t"PROGRAMME":";",\n\t\t\t\t\t\t\t\t"PARAMETRE":";"\n\t\t\t\t\t\t\t},\t\t\t\n\t\t\t\t\t\t\t"fields":[\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t"name":"THEME",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Thème",\n\t\t\t\t\t\t\t\t\t\t"en":"Thème"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t    "name":"PROGRAMME",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Programme de suivi",\n\t\t\t\t\t\t\t\t\t\t"en":"Programme de suivi"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t\t"name":"PARAMETRE",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Paramètre",\n\t\t\t\t\t\t\t\t\t\t"en":"Paramètre"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t\t"name": "range_Date",\n\t\t\t\t\t\t\t\t\t"type": "rangeDate",\n\t\t\t\t\t\t\t\t\t"minField": "DATEMIN",\n\t\t\t\t\t\t\t\t\t"maxField": "DATEMAX",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Date",\n\t\t\t\t\t\t\t\t\t\t"en":"Date"\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\t"display": "graph"\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t\t"name":"LIEU_LIBELLE",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Lieu",\n\t\t\t\t\t\t\t\t\t\t"en":"Lieu"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t"name":"QUADRIGE_ZONEMARINE",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Zone marine Quadrige",\n\t\t\t\t\t\t\t\t\t\t"en":"Zone marine Quadrige"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t\t"name":"DCSMM_SOUS_REGION",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Sous-région marine DCSMM",\n\t\t\t\t\t\t\t\t\t\t"en":"Sous-région marine DCSMM"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t\t"name":"DCE_MASSE_EAU",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Masse d’eau DCE",\n\t\t\t\t\t\t\t\t\t\t"en":"Masse d’eau DCE"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t\t"name":"GRAPHES", \n\t\t\t\t\t\t\t\t\t"hidden": true,\n\t\t\t\t\t\t\t\t\t"suffix":"from=${filtre_range_Date.from}&to=${filtre_range_Date.to}&typeParam=${filtre_PARAMETRE}"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t"treeFields": [\n\t\t\t\t\t\t\t\t"PARAMETRE"\n\t\t\t\t\t\t\t]}',
               group: 2,
             },
             {
               protocol: 'OGC:WPS',
-              url: 'https://www.ifremer.fr/services/wps/surval',
-              name: 'r:survalextraction',
+              url: 'https://www.ifremer.fr/services/wps3/surval',
+              name: 'r:survalextraction30140',
               description: "Extraction des données d'observation",
               function: '',
               applicationProfile:
-                '{\n                               "inputs":[\n                                  {\n                                     "identifier":"produit_id",\n                                     "defaultValue":"30140",\n                                     "hidden":true\n                                  },\n                                  {\n                                     "identifier":"programme_suivi",\n                                     "linkedWfsFilter":"PROGRAMME",\n                                     "hidden":true,\n                                     "tokenizeWfsFilterValues":true,\n                                     "wfsFilterValuesDelimiter":";"\n                                  },\n                                  {\n                                     "identifier":"parametres",\n                                     "linkedWfsFilter":"PARAMETRE",\n                                     "hidden":true,\n                                     "tokenizeWfsFilterValues":true,\n                                     "wfsFilterValuesDelimiter":";"\n                                  },\n                                  {\n                                     "identifier":"date_min",\n                                     "linkedWfsFilter":"range_Date.from",\n                                     "hidden":true\n                                  },\n                                  {\n                                     "identifier":"date_max",\n                                     "linkedWfsFilter":"range_Date.to",\n                                     "hidden":true\n                                  },\n                                  {\n                                     "identifier":"zone_marine_quadrige",\n                                     "linkedWfsFilter":"QUADRIGE_ZONEMARINE",\n                                     "hidden":true,\n                                     "tokenizeWfsFilterValues":true,\n                                     "wfsFilterValuesDelimiter":";"\n                                  },\n                                  {\n                                     "identifier":"sous_region_marine_dcsmm",\n                                     "linkedWfsFilter":"DCSMM_SOUS_REGION",\n                                     "hidden":true,\n                                     "tokenizeWfsFilterValues":true,\n                                     "wfsFilterValuesDelimiter":";"\n                                  },\n                                  {\n                                     "identifier":"masse_eau_dce",\n                                     "linkedWfsFilter":"DCE_MASSE_EAU",\n                                     "hidden":true,\n                                     "tokenizeWfsFilterValues":true,\n                                     "wfsFilterValuesDelimiter":";"\n                                  },\n                                  {\n                                     "identifier":"supports_niveaux_prelevement",\n                                     "linkedWfsFilter":"SUPPORT_NIVEAUPRELEVEMENT",\n                                     "hidden":true,\n                                     "tokenizeWfsFilterValues":true,\n                                     "wfsFilterValuesDelimiter":";"\n                                  },\n                                  {\n                                     "identifier":"entity_id",\n                                     "hidden":true\n                                  },\n                                  {\n                                     "identifier":"entity_label",\n                                     "linkedWfsFilter":"LIEU_LIBELLE",\n                                     "hidden":true,\n                                     "tokenizeWfsFilterValues":true,\n                                     "wfsFilterValuesDelimiter":";"\n                                  },\n                                  {\n                                     "identifier":"limits",\n                                     "linkedWfsFilter":"geometry",\n                                     "hidden":true\n                                  },\n                                  {\n                                     "identifier":"geometry_type",\n                                     "defaultValue":"POINT",\n                            \t\t "hidden": true\n                                  }                \n                               ]\n                            }',
+                '{\n                           "inputs":[\n                              {\n                                 "identifier":"theme",\n                                 "linkedWfsFilter":"THEME",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\t\t \n                              },      {\n                                 "identifier":"programme_suivi",\n                                 "linkedWfsFilter":"PROGRAMME",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\t\t \n                              },\n                             {\n                               "identifier":"parametres",\n                               "linkedWfsFilter":"PARAMETRE",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\n                             },\n                              {\n                                 "identifier":"date_min",\n                                 "linkedWfsFilter":"range_Date.from",\n                               "hidden": true\n                              },\n                              {\n                                 "identifier":"date_max",\n                                 "linkedWfsFilter":"range_Date.to",\n                               "hidden": true\n                              },\n                              {\n                                 "identifier":"zone_marine_quadrige",\n                                 "linkedWfsFilter":"ZONE_MARINE_QUADRIGE",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\t\t \n                              },\n                              {\n                                 "identifier":"sous_region_marine_dcsmm",\n                                 "linkedWfsFilter":"SOUS_REGION_MARINE_DCSMM",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\t\t \n                              },\n                              {\n                                 "identifier":"masse_eau_dce",\n                                 "linkedWfsFilter":"MASSE_EAU_DCE",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\t\t \n                              },\n                              {\n                                 "identifier":"supports_niveaux_prelevement",\n                               "hidden": true\n                              },\n                              {\n                                 "identifier":"taxon",\n                               "hidden": true\n                              },\n                              {\n                                 "identifier":"taxon_group",\n                               "hidden": true\n                              },      \n                              {\n                                 "identifier":"entity_id",\n                               "hidden": true\t\t \n                              },\n                              {\n                                 "identifier":"entity_label",\n                                 "linkedWfsFilter":"LIEU_LIBELLE",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\t\t \n                              },\t  \n                              {\n                                 "identifier":"limits",\n                                 "linkedWfsFilter":"geometry",\n                               "hidden": true\n                              },\n                              {\n                                 "identifier":"geometry_type",\n                                 "defaultValue":"POINT",\n                               "hidden": true\n                              }      \n                           ]\n                        }',
               group: 2,
             },
             {
               protocol: 'OGC:WMS',
-              url: 'https://www.ifremer.fr/services/wms/surveillance_littorale',
-              name: 'surval_parametre_polygone',
-              description: 'Lieu de surveillance (polygone)',
+              url: 'http://www.ifremer.fr/services/wms/surveillance_littorale',
+              name: 'surval_parametre_ligne',
+              description: 'Lieu de surveillance (ligne)',
               function: '',
               applicationProfile: '',
               group: 3,
             },
             {
               protocol: 'OGC:WFS',
-              url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
-              name: 'surval_parametre_polygone',
-              description: 'Lieu de surveillance (polygone)',
+              url: 'http://www.ifremer.fr/services/wfs/surveillance_littorale',
+              name: 'surval_parametre_ligne',
+              description: 'Lieu de surveillance (ligne)',
               function: '',
               applicationProfile:
-                '{ "tokenizedFields":{ "PROGRAMME":";", "PARAMETRE":";", "SUPPORT_NIVEAUPRELEVEMENT":";" }, "fields":[ { "name":"PROGRAMME", "label":{ "fr":"Programme de suivi", "en":"Programme de suivi" } },{ "name":"PARAMETRE", "label":{ "fr":"Paramètre", "en":"Paramètre" } },{ "name": "range_Date", "type": "rangeDate", "minField": "DATEMIN", "maxField": "DATEMAX", "label":{ "fr":"Date", "en":"Date" }, "display": "graph" },{ "name":"QUADRIGE_ZONEMARINE", "label":{ "fr":"Zone marine Quadrige", "en":"Zone marine Quadrige" } },{ "name":"DCSMM_SOUS_REGION", "label":{ "fr":"Sous-région marine DCSMM", "en":"Sous-région marine DCSMM" } },{ "name":"DCE_MASSE_EAU", "label":{ "fr":"Masse d’eau DCE", "en":"Masse d’eau DCE" } },{ "name":"SUPPORT_NIVEAUPRELEVEMENT", "label":{ "fr":"Support d’analyse et niveau de prélèvement", "en":"Support d’analyse et niveau de prélèvement" } },{ "name":"LIEU_LIBELLE", "label":{ "fr":"Lieu", "en":"Lieu" } },{ "name":"GRAPHES", "hidden": true, "suffix":"&from=${filtre_range_Date.from}&to=${filtre_range_Date.to}&typeParam=${filtre_PARAMETRE}&support=${filtre_SUPPORT_NIVEAUPRELEVEMENT}" } ], "treeFields": [ "PARAMETRE" ]}',
+                '{\n\t\t\t\t\t\t\t"tokenizedFields":{\n\t\t\t\t\t\t\t   "THEME":";",\n\t\t\t\t\t\t\t\t"PROGRAMME":";",\n\t\t\t\t\t\t\t\t"PARAMETRE":";"\n\t\t\t\t\t\t\t},\t\t\t\n\t\t\t\t\t\t\t"fields":[\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t"name":"THEME",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Thème",\n\t\t\t\t\t\t\t\t\t\t"en":"Thème"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t    "name":"PROGRAMME",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Programme de suivi",\n\t\t\t\t\t\t\t\t\t\t"en":"Programme de suivi"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t\t"name":"PARAMETRE",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Paramètre",\n\t\t\t\t\t\t\t\t\t\t"en":"Paramètre"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t\t"name": "range_Date",\n\t\t\t\t\t\t\t\t\t"type": "rangeDate",\n\t\t\t\t\t\t\t\t\t"minField": "DATEMIN",\n\t\t\t\t\t\t\t\t\t"maxField": "DATEMAX",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Date",\n\t\t\t\t\t\t\t\t\t\t"en":"Date"\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\t"display": "graph"\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t\t"name":"LIEU_LIBELLE",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Lieu",\n\t\t\t\t\t\t\t\t\t\t"en":"Lieu"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t"name":"QUADRIGE_ZONEMARINE",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Zone marine Quadrige",\n\t\t\t\t\t\t\t\t\t\t"en":"Zone marine Quadrige"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t\t"name":"DCSMM_SOUS_REGION",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Sous-région marine DCSMM",\n\t\t\t\t\t\t\t\t\t\t"en":"Sous-région marine DCSMM"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t\t"name":"DCE_MASSE_EAU",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Masse d’eau DCE",\n\t\t\t\t\t\t\t\t\t\t"en":"Masse d’eau DCE"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t\t"name":"GRAPHES", \n\t\t\t\t\t\t\t\t\t"hidden": true,\n\t\t\t\t\t\t\t\t\t"suffix":"from=${filtre_range_Date.from}&to=${filtre_range_Date.to}&typeParam=${filtre_PARAMETRE}"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t"treeFields": [\n\t\t\t\t\t\t\t\t"PARAMETRE"\n\t\t\t\t\t\t\t]}',
               group: 3,
             },
             {
               protocol: 'OGC:WPS',
-              url: 'https://www.ifremer.fr/services/wps/surval',
-              name: 'r:survalextraction',
+              url: 'https://www.ifremer.fr/services/wps3/surval',
+              name: 'r:survalextraction30140',
               description: "Extraction des données d'observation",
               function: '',
               applicationProfile:
-                '{\n                               "inputs":[\n                                  {\n                                     "identifier":"produit_id",\n                                     "defaultValue":"30140",\n                                     "hidden":true\n                                  },\n                                  {\n                                     "identifier":"programme_suivi",\n                                     "linkedWfsFilter":"PROGRAMME",\n                                     "hidden":true,\n                                     "tokenizeWfsFilterValues":true,\n                                     "wfsFilterValuesDelimiter":";"\n                                  },\n                                  {\n                                     "identifier":"parametres",\n                                     "linkedWfsFilter":"PARAMETRE",\n                                     "hidden":true,\n                                     "tokenizeWfsFilterValues":true,\n                                     "wfsFilterValuesDelimiter":";"\n                                  },\n                                  {\n                                     "identifier":"date_min",\n                                     "linkedWfsFilter":"range_Date.from",\n                                     "hidden":true\n                                  },\n                                  {\n                                     "identifier":"date_max",\n                                     "linkedWfsFilter":"range_Date.to",\n                                     "hidden":true\n                                  },\n                                  {\n                                     "identifier":"zone_marine_quadrige",\n                                     "linkedWfsFilter":"QUADRIGE_ZONEMARINE",\n                                     "hidden":true,\n                                     "tokenizeWfsFilterValues":true,\n                                     "wfsFilterValuesDelimiter":";"\n                                  },\n                                  {\n                                     "identifier":"sous_region_marine_dcsmm",\n                                     "linkedWfsFilter":"DCSMM_SOUS_REGION",\n                                     "hidden":true,\n                                     "tokenizeWfsFilterValues":true,\n                                     "wfsFilterValuesDelimiter":";"\n                                  },\n                                  {\n                                     "identifier":"masse_eau_dce",\n                                     "linkedWfsFilter":"DCE_MASSE_EAU",\n                                     "hidden":true,\n                                     "tokenizeWfsFilterValues":true,\n                                     "wfsFilterValuesDelimiter":";"\n                                  },\n                                  {\n                                     "identifier":"supports_niveaux_prelevement",\n                                     "linkedWfsFilter":"SUPPORT_NIVEAUPRELEVEMENT",\n                                     "hidden":true,\n                                     "tokenizeWfsFilterValues":true,\n                                     "wfsFilterValuesDelimiter":";"\n                                  },\n                                  {\n                                     "identifier":"entity_id",\n                                     "hidden":true\n                                  },\n                                  {\n                                     "identifier":"entity_label",\n                                     "linkedWfsFilter":"LIEU_LIBELLE",\n                                     "hidden":true,\n                                     "tokenizeWfsFilterValues":true,\n                                     "wfsFilterValuesDelimiter":";"\n                                  },\n                                  {\n                                     "identifier":"limits",\n                                     "linkedWfsFilter":"geometry",\n                                     "hidden":true\n                                  },\n                                  {\n                                     "identifier":"geometry_type",\n                                     "defaultValue":"AREA",\n                            \t\t "hidden": true\n                                  }       \n                               ]\n                            }',
+                '{\n                           "inputs":[\n                              {\n                                 "identifier":"theme",\n                                 "linkedWfsFilter":"THEME",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\t\t \n                              },      {\n                                 "identifier":"programme_suivi",\n                                 "linkedWfsFilter":"PROGRAMME",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\t\t \n                              },\n                             {\n                               "identifier":"parametres",\n                               "linkedWfsFilter":"PARAMETRE",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\n                             },\n                              {\n                                 "identifier":"date_min",\n                                 "linkedWfsFilter":"range_Date.from",\n                               "hidden": true\n                              },\n                              {\n                                 "identifier":"date_max",\n                                 "linkedWfsFilter":"range_Date.to",\n                               "hidden": true\n                              },\n                              {\n                                 "identifier":"zone_marine_quadrige",\n                                 "linkedWfsFilter":"ZONE_MARINE_QUADRIGE",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\t\t \n                              },\n                              {\n                                 "identifier":"sous_region_marine_dcsmm",\n                                 "linkedWfsFilter":"SOUS_REGION_MARINE_DCSMM",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\t\t \n                              },\n                              {\n                                 "identifier":"masse_eau_dce",\n                                 "linkedWfsFilter":"MASSE_EAU_DCE",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\t\t \n                              },\n                              {\n                                 "identifier":"supports_niveaux_prelevement",\n                               "hidden": true\n                              },\n                              {\n                                 "identifier":"taxon",\n                               "hidden": true\n                              },\n                              {\n                                 "identifier":"taxon_group",\n                               "hidden": true\n                              },      \n                              {\n                                 "identifier":"entity_id",\n                               "hidden": true\t\t \n                              },\n                              {\n                                 "identifier":"entity_label",\n                                 "linkedWfsFilter":"LIEU_LIBELLE",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\t\t \n                              },\t  \n                              {\n                                 "identifier":"limits",\n                                 "linkedWfsFilter":"geometry",\n                               "hidden": true\n                              },\n                              {\n                                 "identifier":"geometry_type",\n                                 "defaultValue":"LINE",\n                               "hidden": true\n                              }      \n                           ]\n                        }',
               group: 3,
+            },
+            {
+              protocol: 'OGC:WMS',
+              url: 'http://www.ifremer.fr/services/wms/surveillance_littorale',
+              name: 'surval_parametre_polygone',
+              description: 'Lieu de surveillance (polygone)',
+              function: '',
+              applicationProfile: '',
+              group: 4,
+            },
+            {
+              protocol: 'OGC:WFS',
+              url: 'http://www.ifremer.fr/services/wfs/surveillance_littorale',
+              name: 'surval_parametre_polygone',
+              description: 'Lieu de surveillance (polygone)',
+              function: '',
+              applicationProfile:
+                '{\n\t\t\t\t\t\t\t"tokenizedFields":{\n\t\t\t\t\t\t\t   "THEME":";",\n\t\t\t\t\t\t\t\t"PROGRAMME":";",\n\t\t\t\t\t\t\t\t"PARAMETRE":";"\n\t\t\t\t\t\t\t},\t\t\t\n\t\t\t\t\t\t\t"fields":[\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t"name":"THEME",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Thème",\n\t\t\t\t\t\t\t\t\t\t"en":"Thème"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t    "name":"PROGRAMME",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Programme de suivi",\n\t\t\t\t\t\t\t\t\t\t"en":"Programme de suivi"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t\t"name":"PARAMETRE",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Paramètre",\n\t\t\t\t\t\t\t\t\t\t"en":"Paramètre"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t\t"name": "range_Date",\n\t\t\t\t\t\t\t\t\t"type": "rangeDate",\n\t\t\t\t\t\t\t\t\t"minField": "DATEMIN",\n\t\t\t\t\t\t\t\t\t"maxField": "DATEMAX",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Date",\n\t\t\t\t\t\t\t\t\t\t"en":"Date"\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\t"display": "graph"\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t\t"name":"LIEU_LIBELLE",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Lieu",\n\t\t\t\t\t\t\t\t\t\t"en":"Lieu"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t"name":"QUADRIGE_ZONEMARINE",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Zone marine Quadrige",\n\t\t\t\t\t\t\t\t\t\t"en":"Zone marine Quadrige"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t\t"name":"DCSMM_SOUS_REGION",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Sous-région marine DCSMM",\n\t\t\t\t\t\t\t\t\t\t"en":"Sous-région marine DCSMM"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t\t"name":"DCE_MASSE_EAU",\n\t\t\t\t\t\t\t\t\t"label":{\n\t\t\t\t\t\t\t\t\t\t"fr":"Masse d’eau DCE",\n\t\t\t\t\t\t\t\t\t\t"en":"Masse d’eau DCE"\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t},{\n\t\t\t\t\t\t\t\t\t"name":"GRAPHES", \n\t\t\t\t\t\t\t\t\t"hidden": true,\n\t\t\t\t\t\t\t\t\t"suffix":"from=${filtre_range_Date.from}&to=${filtre_range_Date.to}&typeParam=${filtre_PARAMETRE}"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t"treeFields": [\n\t\t\t\t\t\t\t\t"PARAMETRE"\n\t\t\t\t\t\t\t]}',
+              group: 4,
+            },
+            {
+              protocol: 'OGC:WPS',
+              url: 'https://www.ifremer.fr/services/wps3/surval',
+              name: 'r:survalextraction30140',
+              description: "Extraction des données d'observation",
+              function: '',
+              applicationProfile:
+                '{\n                           "inputs":[\n                              {\n                                 "identifier":"theme",\n                                 "linkedWfsFilter":"THEME",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\t\t \n                              },      {\n                                 "identifier":"programme_suivi",\n                                 "linkedWfsFilter":"PROGRAMME",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\t\t \n                              },\n                             {\n                               "identifier":"parametres",\n                               "linkedWfsFilter":"PARAMETRE",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\n                             },\n                              {\n                                 "identifier":"date_min",\n                                 "linkedWfsFilter":"range_Date.from",\n                               "hidden": true\n                              },\n                              {\n                                 "identifier":"date_max",\n                                 "linkedWfsFilter":"range_Date.to",\n                               "hidden": true\n                              },\n                              {\n                                 "identifier":"zone_marine_quadrige",\n                                 "linkedWfsFilter":"ZONE_MARINE_QUADRIGE",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\t\t \n                              },\n                              {\n                                 "identifier":"sous_region_marine_dcsmm",\n                                 "linkedWfsFilter":"SOUS_REGION_MARINE_DCSMM",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\t\t \n                              },\n                              {\n                                 "identifier":"masse_eau_dce",\n                                 "linkedWfsFilter":"MASSE_EAU_DCE",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\t\t \n                              },\n                              {\n                                 "identifier":"supports_niveaux_prelevement",\n                               "hidden": true\n                              },\n                              {\n                                 "identifier":"taxon",\n                               "hidden": true\n                              },\n                              {\n                                 "identifier":"taxon_group",\n                               "hidden": true\n                              },      \n                              {\n                                 "identifier":"entity_id",\n                               "hidden": true\t\t \n                              },\n                              {\n                                 "identifier":"entity_label",\n                                 "linkedWfsFilter":"LIEU_LIBELLE",\n                               "hidden": true,\n                               "tokenizeWfsFilterValues": true,\n                               "wfsFilterValuesDelimiter": ";"\t\t \n                              },\t  \n                              {\n                                 "identifier":"limits",\n                                 "linkedWfsFilter":"geometry",\n                               "hidden": true\n                              },\n                              {\n                                 "identifier":"geometry_type",\n                                 "defaultValue":"AREA",\n                               "hidden": true\n                              }      \n                           ]\n                        }',
+              group: 4,
             },
             {
               protocol: 'WWW:LINK-1.0-http--metadata-URL',
@@ -1094,42 +1466,45 @@ export const ES_FIXTURE_FULL_RESPONSE = {
               description: 'DOI du jeu de données',
               function: '',
               applicationProfile: '',
-              group: 4,
+              group: 5,
             },
           ],
           linkUrlProtocolWWWLINK10httplink:
-            'http://envlit.ifremer.fr/surveillance/presentation',
+            'https://wwz.ifremer.fr/envlit/Surveillance-du-littoral',
           linkUrlProtocolOGCWMS: [
-            'https://www.ifremer.fr/services/wms/surveillance_littorale',
-            'https://www.ifremer.fr/services/wms/surveillance_littorale',
+            'http://www.ifremer.fr/services/wms/surveillance_littorale',
+            'http://www.ifremer.fr/services/wms/surveillance_littorale',
+            'http://www.ifremer.fr/services/wms/surveillance_littorale',
           ],
           linkUrlProtocolOGCWFS: [
-            'https://www.ifremer.fr/services/wfs/surveillance_littorale',
-            'https://www.ifremer.fr/services/wfs/surveillance_littorale',
+            'http://www.ifremer.fr/services/wfs/surveillance_littorale',
+            'http://www.ifremer.fr/services/wfs/surveillance_littorale',
+            'http://www.ifremer.fr/services/wfs/surveillance_littorale',
           ],
           linkUrlProtocolOGCWPS: [
-            'https://www.ifremer.fr/services/wps/surval',
-            'https://www.ifremer.fr/services/wps/surval',
+            'https://www.ifremer.fr/services/wps3/surval',
+            'https://www.ifremer.fr/services/wps3/surval',
+            'https://www.ifremer.fr/services/wps3/surval',
           ],
           linkUrlProtocolWWWLINK10httpmetadataURL:
             'https://doi.org/10.12770/cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
           recordGroup: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
           isPublishedToAll: 'true',
-          recordOwner: 'admin admin',
+          recordOwner: 'Test ADMIN',
           uuid: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
           displayOrder: '0',
-          popularity: '15',
-          userinfo: 'admin|admin|admin|Administrator',
+          popularity: 2,
+          userinfo: 'testadmin|ADMIN|Test|Administrator',
           record: 'record',
           draft: 'n',
-          changeDate: '2021-04-01T17:38:51.895Z',
-          id: '10420',
-          createDate: '2021-03-31T12:17:38.105Z',
-          owner: '1',
+          changeDate: '2021-10-05T12:48:57.678Z',
+          id: '11700',
+          createDate: '2021-10-05T12:48:57.678Z',
+          owner: '100',
           groupOwner: '2',
-          logo: '/images/logos/cea9bf9f-329a-4583-9092-2dfc7efdcce2.png',
+          logo: '/images/logos/81e8a591-7815-4d2f-a7da-5673192e74c9.png',
           hasxlinks: 'false',
-          groupPublished: ['all', 'sample'],
+          groupPublished: ['sample', 'all'],
           featureOfRecord: 'record',
           extra: 'null',
           documentStandard: 'iso19139',
@@ -1138,7 +1513,7 @@ export const ES_FIXTURE_FULL_RESPONSE = {
           feedbackCount: '0',
           rating: '0',
           isHarvested: 'false',
-          sourceCatalogue: 'cea9bf9f-329a-4583-9092-2dfc7efdcce2',
+          sourceCatalogue: '81e8a591-7815-4d2f-a7da-5673192e74c9',
         },
         edit: false,
         owner: false,
