@@ -127,3 +127,6 @@ export class MainSearchComponent {
 ```
 
 This is required otherwise the URL won't reflect the user actions and will not be in sync with the application state.
+
+Also please note that when using routing **it is assumed that displaying search results and displaying a catalog record
+are mutually exclusive**: triggering a search will close the current record.

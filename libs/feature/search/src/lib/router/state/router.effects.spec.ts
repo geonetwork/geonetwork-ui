@@ -8,6 +8,7 @@ import { Location } from '@angular/common'
 
 import * as fromActions from './router.actions'
 import { RouterGoActionPayload } from './router.actions'
+import * as fromSearchActions from '../../state/actions'
 import * as fromEffects from './router.effects'
 import { Action } from '@ngrx/store'
 import { routerNavigationAction } from '@ngrx/router-store'
@@ -50,7 +51,7 @@ describe('RouterEffects', () => {
     location = TestBed.inject(Location)
   })
 
-  describe('loadMetadata$', () => {
+  describe('navigateToMetadata$', () => {
     it('should dispatch a loadFullMetadata action', () => {
       actions = hot('-a', {
         a: routerNavigationAction({
@@ -71,11 +72,11 @@ describe('RouterEffects', () => {
       const expected = hot('-a', {
         a: MdViewActions.loadFullMetadata({ uuid: 'abcdef' }),
       })
-      expect(effects.loadMetadata$).toBeObservable(expected)
+      expect(effects.navigateToMetadata$).toBeObservable(expected)
     })
   })
 
-  describe('closeMetadata$', () => {
+  describe('navigateToSearch$', () => {
     it('should dispatch a loadFullMetadata action', () => {
       actions = hot('-a', {
         a: routerNavigationAction({
@@ -94,7 +95,19 @@ describe('RouterEffects', () => {
       const expected = hot('-a', {
         a: MdViewActions.close(),
       })
-      expect(effects.closeMetadata$).toBeObservable(expected)
+      expect(effects.navigateToSearch$).toBeObservable(expected)
+    })
+  })
+
+  describe('setSearchFilters$', () => {
+    it('should dispatch a closeMetadata action', () => {
+      actions = hot('-a', {
+        a: new fromSearchActions.SetFilters({ any: 'changed filter' }),
+      })
+      const expected = hot('-a', {
+        a: MdViewActions.close(),
+      })
+      expect(effects.setSearchFilters$).toBeObservable(expected)
     })
   })
 
