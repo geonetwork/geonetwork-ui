@@ -123,7 +123,10 @@ describe('LinkClassifierService', () => {
     })
     describe('for a link to a XLSX file', () => {
       it('returns a download usage', () => {
-        expect(service.getUsagesForLink(dataXlsx)).toEqual([LinkUsage.DOWNLOAD])
+        expect(service.getUsagesForLink(dataXlsx)).toEqual([
+          LinkUsage.DOWNLOAD,
+          LinkUsage.DATA,
+        ])
       })
     })
     describe('for a link to a geojson file', () => {

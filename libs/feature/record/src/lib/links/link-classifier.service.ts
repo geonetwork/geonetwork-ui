@@ -19,7 +19,7 @@ export class LinkClassifierService {
   getUsagesForLink(link: MetadataLink): LinkUsage[] {
     if ('protocol' in link) {
       if (/^WWW:DOWNLOAD/.test(link.protocol)) {
-        const dataFormatsExp = '(geojson|json|csv|wfs)'
+        const dataFormatsExp = '(geojson|json|csv|wfs|xls)'
         if (
           ('format' in link &&
             new RegExp(`${dataFormatsExp}`, 'i').test(link.format)) ||
