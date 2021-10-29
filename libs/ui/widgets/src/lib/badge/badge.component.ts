@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 
 @Component({
   selector: 'gn-ui-badge',
@@ -6,8 +6,4 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
   styleUrls: ['./badge.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BadgeComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class BadgeComponent {}

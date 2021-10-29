@@ -12,8 +12,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { LoadingMaskComponent } from './loading-mask/loading-mask.component'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { PopupAlertComponent } from './popup-alert/popup-alert.component'
-import { MatIconModule } from '@angular/material/icon';
 import { BadgeComponent } from './badge/badge.component'
+import { MatIconModule } from '@angular/material/icon'
 
 @NgModule({
   declarations: [
@@ -41,6 +41,7 @@ import { BadgeComponent } from './badge/badge.component'
     StepBarComponent,
     LoadingMaskComponent,
     PopupAlertComponent,
+    BadgeComponent,
   ],
 })
 export class UiWidgetsModule {}
