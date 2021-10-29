@@ -2,11 +2,15 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { MainSearchComponent } from './main-search.component'
-import { RouterFacade } from '@geonetwork-ui/feature/search'
+import { RouterFacade, SearchFacade } from '@geonetwork-ui/feature/search'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 
 class RouterFacadeMock {
   goToMetadata = jest.fn()
+}
+
+class SearchFacadeMock {
+  setFilters = jest.fn()
 }
 
 describe('MainSearchComponent', () => {
@@ -22,6 +26,10 @@ describe('MainSearchComponent', () => {
         {
           provide: RouterFacade,
           useClass: RouterFacadeMock,
+        },
+        {
+          provide: SearchFacade,
+          useClass: SearchFacadeMock,
         },
       ],
     }).compileComponents()
