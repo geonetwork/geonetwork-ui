@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
 @Component({
   selector: 'gn-ui-card-link',
@@ -6,8 +6,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
   styleUrls: ['./card-link.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CardLinkComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class CardLinkComponent {
+  @Input() linkHref: string
+  @Input() newTab = true
 }
