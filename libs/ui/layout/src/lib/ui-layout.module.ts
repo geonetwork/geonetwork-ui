@@ -7,6 +7,7 @@ import { TableComponent } from './table/table.component'
 import { FigureComponent } from './figure/figure.component'
 import { ScrollingModule } from '@angular/cdk/scrolling'
 import { TableVirtualScrollModule } from 'ng-table-virtual-scroll'
+import { CardLinkComponent } from './card-link/card-link.component'
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { TableVirtualScrollModule } from 'ng-table-virtual-scroll'
     TableVirtualScrollModule,
     ScrollingModule,
   ],
-  declarations: [TableComponent, FigureComponent],
-  exports: [TableComponent, FigureComponent],
+  declarations: [TableComponent, FigureComponent, CardLinkComponent],
+  exports: [TableComponent, FigureComponent, CardLinkComponent],
 })
 export class UiLayoutModule {}
