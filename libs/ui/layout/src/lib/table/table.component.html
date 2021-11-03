@@ -1,4 +1,4 @@
-<div>
+<div class="border border-gray-300 rounded overflow-hidden">
   <cdk-virtual-scroll-viewport
     tvsItemSize="48"
     headerHeight="56"
@@ -30,8 +30,8 @@
       ></tr>
     </table>
   </cdk-virtual-scroll-viewport>
-  <div class="mt-2">
-    <span class="count">{{ count }}</span
-    >&nbsp;<span translate>table.object.count</span>
+  <div class="text-gray-900 border-t border-gray-300 px-4 py-2">
+    <span class="count font-extrabold text-primary">{{ count }}</span
+    >&nbsp;<span translate>table.object.count</span>.
   </div>
 </div>
