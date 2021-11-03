@@ -10,6 +10,7 @@ import { ApisListItemComponent } from './apis-list-item/apis-list-item.component
 import { ApisListComponent } from './apis-list/apis-list.component'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
     MatTooltipModule,
     UiWidgetsModule,
     UiLayoutModule,
+    TranslateModule.forChild(),
   ],
   declarations: [
     MetadataInfoComponent,
