@@ -53,6 +53,7 @@ export const metaReducers: MetaReducer[] = !environment.production
 })
 export class AppModule {
   constructor(translate: TranslateService) {
+    translate.setDefaultLang(getDefaultLang())
     translate.use(getLangFromBrowser() || getDefaultLang())
   }
 }
