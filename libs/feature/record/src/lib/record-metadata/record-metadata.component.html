@@ -5,7 +5,7 @@
   <mat-tab>
     <ng-template mat-tab-label>
       <mat-icon class="mr-3">info</mat-icon>
-      <span translate="">mdview.tab.info</span>
+      <span translate="">record.tab.info</span>
     </ng-template>
     <gn-ui-metadata-info
       class="block mt-4"
@@ -29,7 +29,7 @@
   <mat-tab [disabled]="(displayData$ | async) === false">
     <ng-template mat-tab-label>
       <mat-icon class="mr-3">list</mat-icon>
-      <span translate="">mdview.tab.data</span>
+      <span translate="">record.tab.data</span>
     </ng-template>
     <div class="block mt-4" style="height: 500px" *ngIf="displayData$ | async">
       <gn-ui-data-view-table></gn-ui-data-view-table>
@@ -39,7 +39,7 @@
   <mat-tab [disabled]="(displayMap$ | async) === false">
     <ng-template mat-tab-label>
       <mat-icon class="mr-3">map</mat-icon>
-      <span translate="">mdview.tab.map</span>
+      <span translate="">record.tab.map</span>
     </ng-template>
     <div class="block mt-4" style="height: 500px" *ngIf="displayMap$ | async">
       <gn-ui-data-view-map></gn-ui-data-view-map>
@@ -49,7 +49,7 @@
   <mat-tab [disabled]="(displayDownload$ | async) === false">
     <ng-template mat-tab-label>
       <mat-icon class="mr-3">download</mat-icon>
-      <span translate="">mdview.tab.exports</span>
+      <span translate="">record.tab.exports</span>
     </ng-template>
     <gn-ui-data-downloads class="block mt-4"></gn-ui-data-downloads>
   </mat-tab>
@@ -57,7 +57,7 @@
   <mat-tab [disabled]="(displayApi$ | async) === false">
     <ng-template mat-tab-label>
       <mat-icon class="mr-3">api</mat-icon>
-      <span translate="">mdview.tab.api</span>
+      <span translate="">record.tab.api</span>
     </ng-template>
     <gn-ui-data-apis class="block mt-4"></gn-ui-data-apis>
   </mat-tab>

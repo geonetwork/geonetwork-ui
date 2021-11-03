@@ -22,10 +22,10 @@ export class AppComponent {
     switchMap(([present, loading]) => {
       if (present)
         return this.mdViewFacade.metadata$.pipe(
-          map((md) => `Jeu de donnée > ${md.title}`)
+          map((md) => `Dataset > ${md.title}`)
         )
-      if (loading) return of('Chargement...')
-      return of('Recherche')
+      if (loading) return of('Loading...')
+      return of('Search')
     })
   )
 

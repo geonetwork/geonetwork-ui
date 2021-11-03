@@ -18,6 +18,7 @@ import { RecordMetadataComponent } from './record-metadata/record-metadata.compo
 import { MatTabsModule } from '@angular/material/tabs'
 import { MatIconModule } from '@angular/material/icon'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
     MatTabsModule,
     MatIconModule,
     UiWidgetsModule,
+    TranslateModule,
   ],
   providers: [MdViewFacade],
   exports: [

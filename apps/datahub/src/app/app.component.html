@@ -5,8 +5,10 @@
       <div class="flex my-5">
         <div class="mr-3"></div>
         <div>
-          <h2 class="text-white text-4xl uppercase">Data Hub</h2>
-          <div class="text-white">Catalogue Régional Opendata</div>
+          <h2 class="text-white text-4xl uppercase" translate>
+            datahub.app.title
+          </h2>
+          <div class="text-white" translate>datahub.app.subtitle</div>
         </div>
       </div>
       <div class="py-8">
@@ -24,7 +26,8 @@
           hover:text-primary-lighter hover:underline
         "
         routerLink="search"
-        >Data Hub</a
+        translate
+        >datahub.route.home</a
       >
       > {{ breadcrumb$ | async }}
     </div>
