@@ -120,6 +120,8 @@ To regenerate the clients, update the `spec.yaml` files in the `libs/data-access
 
 ### i18n
 
+#### Usage in apps
+
 Translations are managed by [ngx-translate](https://github.com/ngx-translate/core).
 
 To set up translate service, import the module in your application/lib root module:
@@ -162,9 +164,12 @@ marker('last changed')
 marker('popularity')
 ```
 
-All translated files are stored in applications assets `i18n` folder (eg: apps/search/src/assets/i18n).
+#### How to translate labels
 
-To extract automatically all translations use
+All translated files are stored in the `translations` folder at the root of the project.
+These translation files are then used as assets in the different apps.
+
+To extract all translated labels and add them to the translation files, run the following command:
 
 ```shell script
 npm run i18n:extract
@@ -173,7 +178,20 @@ npm run i18n:extract
 Check all target languages are defined in extraction script
 
 ```shell script
-    "i18n:extract": "ngx-translate-extract --input ./apps/search/src  ./libs --output ./apps/search/src/assets/i18n/{en,fr,da,de,fi,nb,nl,sv}.json --clean --format json"
+"i18n:extract": "ngx-translate-extract -s --fi '  ' --input ./apps ./libs --output ./translations/{en,de,fr,it,es,nl,pt}.json --clean --format json"
 ```
 
 All translation files are merged, unused strings are removed. Don't forget to use `Marker` to add dynamic translations.
+
+The translation files can then be modified and committed accordingly.
+
+#### Utilities
+
+A program is available to merge translation files if necessary, e.g. for manual migrations of translations from one project to
+another.
+
+To run it:
+
+```bash
+node tools/i18n/cli.js merge ./apps/datafeeder/src/assets/i18n/fr.json ./translations/fr.json
+```

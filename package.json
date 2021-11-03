@@ -38,8 +38,7 @@
     "serve:ssr": "node dist/formatter/server/main.js",
     "build:ssr": "ng build --configuration production && ng run formatter:server:production",
     "prerender": "ng run formatter:prerender",
-    "i18n:extract": "ngx-translate-extract -s --fi '  ' --input ./apps/search/src  ./libs ./webcomponents/src --output ./apps/search/src/assets/i18n/en.json --clean --format json",
-    "i18n:datafeeder:extract": "ngx-translate-extract -s --fi '  ' --input ./apps/datafeeder/src  ./libs  --output ./apps/datafeeder/src/assets/i18n/{en,fr}.json --clean --format json"
+    "i18n:extract": "ngx-translate-extract -s --fi '  ' --input ./apps ./libs --output ./translations/{en,de,fr,it,es,nl,pt}.json --clean --format json && npm run format:write"
   },
   "private": true,
   "dependencies": {
@@ -116,6 +115,7 @@
     "@typescript-eslint/eslint-plugin": "4.28.5",
     "@typescript-eslint/parser": "4.28.5",
     "autoprefixer": "^10.2.6",
+    "commander": "^6.2.1",
     "cypress": "^7.3.0",
     "dotenv": "8.2.0",
     "eslint": "7.22.0",
