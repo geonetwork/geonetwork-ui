@@ -7,7 +7,9 @@ import {
   SearchRouterModule,
 } from '@geonetwork-ui/feature/search'
 import {
-  TRANSLATE_GEONETWORK_CONFIG,
+  getDefaultLang,
+  getLangFromBrowser,
+  TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import { EffectsModule } from '@ngrx/effects'
@@ -34,7 +36,7 @@ export const metaReducers: MetaReducer[] = !environment.production
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot(),
     UtilI18nModule,
-    TranslateModule.forRoot(TRANSLATE_GEONETWORK_CONFIG),
+    TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
     FeatureSearchModule,
     SearchRouterModule,
     FeatureRecordModule,
@@ -51,8 +53,6 @@ export const metaReducers: MetaReducer[] = !environment.production
 })
 export class AppModule {
   constructor(translate: TranslateService) {
-    const lang = 'fr'
-    translate.setDefaultLang(lang)
-    translate.use(lang)
+    translate.use(getLangFromBrowser() || getDefaultLang())
   }
 }

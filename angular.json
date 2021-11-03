@@ -186,7 +186,12 @@
             "tsConfig": "apps/datahub/tsconfig.app.json",
             "assets": [
               "apps/datahub/src/favicon.ico",
-              "apps/datahub/src/assets"
+              "apps/datahub/src/assets",
+              {
+                "glob": "*",
+                "input": "translations",
+                "output": "assets/i18n/"
+              }
             ],
             "styles": [
               "apps/datahub/src/styles.css",
