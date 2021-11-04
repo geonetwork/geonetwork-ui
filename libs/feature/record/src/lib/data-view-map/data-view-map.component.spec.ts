@@ -160,12 +160,12 @@ describe('DataViewMapComponent', () => {
           {
             url: 'http://abcd.com/',
             name: 'layer1',
-            protocol: 'OGC:WMS',
+            protocol: 'OGC:WMS--1-3-0',
           },
           {
             url: 'http://abcd.com/',
             name: 'layer2',
-            protocol: 'OGC:WMS',
+            protocol: 'OGC:WMS--1-1-0',
           },
         ])
         mdViewFacade.dataLinks$.next([])
@@ -188,11 +188,11 @@ describe('DataViewMapComponent', () => {
         expect(dropdownComponent.choices).toEqual([
           {
             value: 0,
-            label: 'layer1 (OGC:WMS)',
+            label: 'layer1 (OGC:WMS--1-3-0)',
           },
           {
             value: 1,
-            label: 'layer2 (OGC:WMS)',
+            label: 'layer2 (OGC:WMS--1-1-0)',
           },
         ])
       })
@@ -211,7 +211,7 @@ describe('DataViewMapComponent', () => {
           {
             url: 'http://abcd.com/wfs',
             name: 'featuretype',
-            protocol: 'OGC:WFS',
+            protocol: 'OGC:WFS--2-0-0',
           },
           {
             url: 'http://abcd.com/data.geojson',
@@ -230,7 +230,7 @@ describe('DataViewMapComponent', () => {
           },
           {
             value: 1,
-            label: 'featuretype (OGC:WFS)',
+            label: 'featuretype (OGC:WFS--2-0-0)',
           },
           {
             value: 2,

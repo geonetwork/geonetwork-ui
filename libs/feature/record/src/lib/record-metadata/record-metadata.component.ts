@@ -16,6 +16,12 @@ export class RecordMetadataComponent {
   displayData$ = this.facade.dataLinks$.pipe(
     map((links) => !!links && links.length > 0)
   )
+  displayDownload$ = this.facade.downloadLinks$.pipe(
+    map((links) => !!links && links.length > 0)
+  )
+  displayApi$ = this.facade.apiLinks$.pipe(
+    map((links) => !!links && links.length > 0)
+  )
 
   constructor(
     public facade: MdViewFacade,

@@ -8,9 +8,17 @@ import { DownloadsListItemComponent } from './downloads-list-item/downloads-list
 import { DownloadsListComponent } from './downloads-list/downloads-list.component'
 import { ApisListItemComponent } from './apis-list-item/apis-list-item.component'
 import { ApisListComponent } from './apis-list/apis-list.component'
+import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 
 @NgModule({
-  imports: [CommonModule, MatIconModule, MatTooltipModule],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatTooltipModule,
+    UiWidgetsModule,
+    UiLayoutModule,
+  ],
   declarations: [
     MetadataInfoComponent,
     ContentGhostComponent,

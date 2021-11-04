@@ -1,4 +1,4 @@
-import { MetadataLink } from '../../models'
+import { MetadataContact, MetadataLink } from '../../models'
 
 export type SourceWithUnknownProps = { [key: string]: unknown }
 
@@ -20,10 +20,14 @@ export const selectFallbackFields = <T>(
 export const selectFallback = <T, U>(field: T, fallback: U): T | U =>
   field === null ? fallback : field
 
+export const selectTranslatedValue = <T>(
+  source: SourceWithUnknownProps
+): T | null => selectField(source, 'default')
+
 export const selectTranslatedField = <T>(
   source: SourceWithUnknownProps,
   fieldName: string
-): T | null => selectField(selectField(source, fieldName), 'default')
+): T | null => selectTranslatedValue(selectField(source, fieldName))
 
 export const toDate = (field) => new Date(field)
 
@@ -73,5 +77,23 @@ export const mapLink = (sourceLink: SourceWithUnknownProps): MetadataLink => {
     ...(name !== null && { name }),
     ...(description !== null && { description }),
     ...(protocol !== null && { protocol }),
+  }
+}
+
+export const mapContact = (
+  sourceContact: SourceWithUnknownProps,
+  sourceRecord: SourceWithUnknownProps
+): MetadataContact => {
+  const website = selectField<string>(sourceContact, 'website')
+  const logoUrl = getAsUrl(`/geonetwork${selectField(sourceRecord, 'logo')}`)
+  const address = selectField<string>(sourceContact, 'address')
+  const phone = selectField<string>(sourceContact, 'phone')
+  return {
+    name: selectField<string>(sourceContact, 'organisation'),
+    email: selectField<string>(sourceContact, 'email'),
+    ...(website !== null && { website }),
+    ...(logoUrl !== null && { logoUrl }),
+    ...(address !== null && { address }),
+    ...(phone !== null && { phone }),
   }
 }

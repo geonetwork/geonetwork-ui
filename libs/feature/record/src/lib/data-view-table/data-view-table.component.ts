@@ -74,6 +74,7 @@ export class DataViewTableComponent {
           }
           return readDataset(
             endpoint.getFeatureUrl(link.name, {
+              outputCrs: 'EPSG:4326',
               asJson: true,
             }),
             'geojson'

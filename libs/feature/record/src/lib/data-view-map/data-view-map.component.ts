@@ -89,13 +89,13 @@ export class DataViewMapComponent {
   }
 
   getLayerFromLink(link: MetadataLinkValid): Observable<MapContextLayerModel> {
-    if (link.protocol === 'OGC:WMS') {
+    if (link.protocol.startsWith('OGC:WMS')) {
       return of({
         url: link.url,
         type: MapContextLayerTypeEnum.WMS,
         name: link.name,
       })
-    } else if (link.protocol === 'OGC:WFS') {
+    } else if (link.protocol.startsWith('OGC:WFS')) {
       return fromPromise(
         new WfsEndpoint(link.url).isReady().then((endpoint) => {
           if (!endpoint.supportsJson(link.name)) {

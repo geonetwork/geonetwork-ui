@@ -3,11 +3,13 @@ import {
   getAsArray,
   getAsUrl,
   getFirstValue,
+  mapContact,
   mapLink,
   selectFallback,
   selectFallbackFields,
   selectField,
   selectTranslatedField,
+  selectTranslatedValue,
   SourceWithUnknownProps,
   toDate,
 } from './atomic-operations'
@@ -28,6 +30,10 @@ export class ElasticsearchFieldMapper {
   constructor(private metadataUrlService: MetadataUrlService) {}
 
   protected fields: Record<string, EsFieldMapperFn> = {
+    id: (output, source) => ({
+      ...output,
+      id: selectField(source, 'id'),
+    }),
     uuid: (output, source) => {
       const uuid = selectField<string>(source, 'uuid')
       const metadataUrl = this.metadataUrlService.getUrl(uuid)
@@ -60,22 +66,18 @@ export class ElasticsearchFieldMapper {
         )
       ),
     }),
-    codelist_status_text: (output, source) => ({
+    cl_status: (output, source) => ({
       ...output,
-      updateFrequency: getFirstValue(
-        selectField(source, 'codelist_status_text')
+      updateStatus: selectTranslatedValue(
+        getFirstValue(selectField(source, 'cl_status'))
       ),
     }),
-    logo: (output, source) => ({
+    cl_maintenanceAndUpdateFrequency: (output, source) => ({
       ...output,
-      logoUrl: getAsUrl(`/geonetwork${selectField(source, 'logo')}`),
+      updateFrequency: selectTranslatedValue(
+        getFirstValue(selectField(source, 'cl_maintenanceAndUpdateFrequency'))
+      ),
     }),
-    resourceDate: (output) => output,
-    resourceIdentifier: (output) => output,
-    resourceLanguage: (output) => output,
-    resourceTemporalDateRange: (output) => output,
-    resourceTemporalExtentDateRange: (output) => output,
-    resourceType: (output) => output,
     creationDateForResource: (output, source) => ({
       ...output,
       dataCreatedOn: toDate(
@@ -96,12 +98,33 @@ export class ElasticsearchFieldMapper {
         selectField<SourceWithUnknownProps[]>(source, 'link')
       ).map(mapLink),
     }),
+    contact: (output, source) => ({
+      ...output,
+      contact: mapContact(
+        getFirstValue(selectField(source, 'contact')),
+        source
+      ),
+    }),
+    tag: (output, source) => ({
+      ...output,
+      keywords: getAsArray(
+        selectField<SourceWithUnknownProps[]>(source, 'tag')
+      ).map((tag) => selectTranslatedValue<string>(tag)),
+    }),
+    MD_ConstraintsUseLimitationObject: (output, source) => ({
+      ...output,
+      usageConstraints: selectTranslatedValue(
+        getFirstValue(selectField(source, 'MD_ConstraintsUseLimitationObject'))
+      ),
+    }),
+    lineageObject: (output, source) => ({
+      ...output,
+      lineage: selectTranslatedField(source, 'lineageObject'),
+    }),
+    mainLanguage: (output) => output,
   }
 
-  private genericField = (output, source, fieldName: string) => ({
-    ...output,
-    [fieldName]: selectField(source, fieldName),
-  })
+  private genericField = (output) => output
 
   getMappingFn(fieldName: string) {
     return fieldName in this.fields ? this.fields[fieldName] : this.genericField

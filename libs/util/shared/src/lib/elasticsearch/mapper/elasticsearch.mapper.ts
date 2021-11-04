@@ -21,7 +21,7 @@ export class ElasticsearchMapper {
 
     return Object.keys(_source).reduce(
       (prev, fieldName) =>
-        this.fieldMapper.getMappingFn(fieldName)(prev, _source, fieldName),
+        this.fieldMapper.getMappingFn(fieldName)(prev, _source),
       record
     ) as MetadataRecord
   }

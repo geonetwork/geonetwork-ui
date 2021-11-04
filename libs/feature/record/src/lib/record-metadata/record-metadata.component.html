@@ -1,10 +1,14 @@
-<mat-tab-group (selectedIndexChange)="onTabIndexChange()">
+<mat-tab-group
+  (selectedIndexChange)="onTabIndexChange()"
+  animationDuration="200ms"
+>
   <mat-tab>
     <ng-template mat-tab-label>
       <mat-icon class="mr-3">info</mat-icon>
       <span translate="">mdview.tab.info</span>
     </ng-template>
     <gn-ui-metadata-info
+      class="block mt-4"
       *ngIf="(facade.isPresent$ | async) === false"
       [metadata]="{
         title: 'Loading...'
@@ -13,9 +17,11 @@
     >
     </gn-ui-metadata-info>
     <gn-ui-metadata-info
+      class="block mt-4"
       *ngIf="(facade.isPresent$ | async) === true"
       [metadata]="facade.metadata$ | async"
       [incomplete]="facade.isIncomplete$ | async"
+      [otherLinks]="facade.otherLinks$ | async"
     >
     </gn-ui-metadata-info>
   </mat-tab>
@@ -25,7 +31,7 @@
       <mat-icon class="mr-3">list</mat-icon>
       <span translate="">mdview.tab.data</span>
     </ng-template>
-    <div style="height: 500px" *ngIf="displayData$ | async">
+    <div class="block mt-4" style="height: 500px" *ngIf="displayData$ | async">
       <gn-ui-data-view-table></gn-ui-data-view-table>
     </div>
   </mat-tab>
@@ -35,23 +41,24 @@
       <mat-icon class="mr-3">map</mat-icon>
       <span translate="">mdview.tab.map</span>
     </ng-template>
-    <div style="height: 500px" *ngIf="displayMap$ | async">
+    <div class="block mt-4" style="height: 500px" *ngIf="displayMap$ | async">
       <gn-ui-data-view-map></gn-ui-data-view-map>
     </div>
   </mat-tab>
 
-  <mat-tab>
+  <mat-tab [disabled]="(displayDownload$ | async) === false">
     <ng-template mat-tab-label>
       <mat-icon class="mr-3">download</mat-icon>
       <span translate="">mdview.tab.exports</span>
     </ng-template>
-    <gn-ui-data-downloads></gn-ui-data-downloads>
+    <gn-ui-data-downloads class="block mt-4"></gn-ui-data-downloads>
   </mat-tab>
-  <mat-tab>
+
+  <mat-tab [disabled]="(displayApi$ | async) === false">
     <ng-template mat-tab-label>
       <mat-icon class="mr-3">api</mat-icon>
       <span translate="">mdview.tab.api</span>
     </ng-template>
-    <gn-ui-data-apis></gn-ui-data-apis>
+    <gn-ui-data-apis class="block mt-4"></gn-ui-data-apis>
   </mat-tab>
 </mat-tab-group>
