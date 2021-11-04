@@ -119,6 +119,17 @@ Libraries are organized in the following fashion:
 
 See [the specific README file](apps/webcomponents).
 
+### Internationalization
+
+Every label visible to the user in the different applications must be translated. All labels are identified using keys, for example:
+
+- `table.object.count`
+- `results.layout.selectOne`
+- `datafeeder.summarizePage.illustration`
+
+A repository of _all translations_ is available in the [translations](/translations) folder. **These are the
+translations used in the different applications of the geonetwork-ui project.**
+
 ## To document
 
 - How to specify the GN url to use (currently hardcoded in the dev proxy: https://apps.titellus.net/geonetwork)

@@ -3,13 +3,13 @@
   <gn-ui-loading-mask
     *ngIf="loading"
     class="absolute"
-    message="map.loading.data"
+    [message]="'map.loading.data' | translate"
   ></gn-ui-loading-mask>
   <gn-ui-popup-alert *ngIf="error" icon="error_outline" class="absolute m-2">
     <span translate>{{ error }}</span>
   </gn-ui-popup-alert>
   <gn-ui-dropdown-selector
-    title="available layers"
+    [title]="'map.select.layer' | translate"
     class="absolute m-2"
     [choices]="dropdownChoices$ | async"
     [showTitle]="false"

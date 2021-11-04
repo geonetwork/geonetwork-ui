@@ -20,6 +20,9 @@ import {
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
 import { WfsEndpoint } from '@camptocamp/ogc-client'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('map.wfs.geojson.not.supported')
 
 @Component({
   selector: 'gn-ui-data-view-table',

@@ -1,6 +1,6 @@
 <div class="relative w-full h-full flex flex-col">
   <gn-ui-dropdown-selector
-    title="available data"
+    [title]="'table.select.data' | translate"
     class="m-2 flex-shrink-0"
     [choices]="dropdownChoices$ | async"
     [showTitle]="false"
@@ -16,7 +16,7 @@
   <gn-ui-loading-mask
     *ngIf="loading"
     class="absolute"
-    message="table.loading.data"
+    [message]="'table.loading.data' | translate"
   ></gn-ui-loading-mask>
   <gn-ui-popup-alert *ngIf="error" icon="error_outline" class="absolute m-2">
     <span translate>{{ error }}</span>

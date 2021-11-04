@@ -12,6 +12,7 @@ import { MdViewFacade } from '../state'
 
 import { DataViewTableComponent } from './data-view-table.component'
 import { readDataset } from '@geonetwork-ui/data-fetcher'
+import { TranslateModule } from '@ngx-translate/core'
 
 jest.mock('@camptocamp/ogc-client', () => ({
   WfsEndpoint: class {
@@ -106,7 +107,9 @@ export class MockDropdownSelectorComponent {
   selector: 'gn-ui-loading-mask',
   template: '<div></div>',
 })
-export class MockLoadingMaskComponent {}
+export class MockLoadingMaskComponent {
+  @Input() message
+}
 
 @Component({
   selector: 'gn-ui-popup-alert',
@@ -134,6 +137,7 @@ describe('DataViewTableComponent', () => {
           useClass: MdViewFacadeMock,
         },
       ],
+      imports: [TranslateModule.forRoot()],
     }).compileComponents()
     facade = TestBed.inject(MdViewFacade)
   })
