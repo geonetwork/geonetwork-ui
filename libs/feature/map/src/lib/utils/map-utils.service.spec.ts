@@ -12,6 +12,20 @@ import XYZ from 'ol/source/XYZ'
 
 import { MapUtilsService } from './map-utils.service'
 
+jest.mock('@camptocamp/ogc-client', () => ({
+  WmsEndpoint: class {
+    constructor(private url) {}
+    isReady() {
+      return Promise.resolve({
+        getLayerByName: (name) => ({
+          name,
+          boundingBoxes: { 'EPSG:4326': [1.33, 48.81, 4.3, 51.1] },
+        }),
+      })
+    }
+  },
+}))
+
 const wmsTileLayer = new TileLayer({
   source: new TileWMS({
     url: 'url',
@@ -139,6 +153,36 @@ describe('MapUtilsService', () => {
     })
     it('with no layer', () => {
       expect(map.getLayers().getArray().length).toBe(0)
+    })
+  })
+
+  describe('#getLayerExtent', () => {
+    it('gets extent for geojson layer (files and WFS)', (done) => {
+      const layer = {
+        type: 'geojson',
+        data: FEATURE_COLLECTION_POLYGON_FIXTURE_4326,
+      }
+      service.getLayerExtent(layer).subscribe((extent) => {
+        expect(extent).toEqual([
+          -571959.6817241046, 5065908.545923665, 1064128.2009725596,
+          6636971.049871371,
+        ])
+        done()
+      })
+    })
+    it('gets extent for WMS layer', (done) => {
+      const layer = {
+        type: 'wms',
+        name: 'mock',
+        url: 'http://mock/wms',
+      }
+      service.getLayerExtent(layer).subscribe((extent) => {
+        expect(extent).toEqual([
+          148054.92275505388, 6242683.64671384, 478673.81041107635,
+          6639001.66376131,
+        ])
+        done()
+      })
     })
   })
 })
