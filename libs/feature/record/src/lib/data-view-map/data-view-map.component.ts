@@ -4,6 +4,7 @@ import {
   MapContextLayerModel,
   MapContextLayerTypeEnum,
   MapContextModel,
+  MapUtilsService,
 } from '@geonetwork-ui/feature/map'
 import { MdViewFacade } from '../state/mdview.facade'
 import { fromLonLat } from 'ol/proj'
@@ -14,7 +15,13 @@ import {
   of,
   throwError,
 } from 'rxjs'
-import { catchError, finalize, map, switchMap } from 'rxjs/operators'
+import {
+  catchError,
+  distinctUntilChanged,
+  finalize,
+  map,
+  switchMap,
+} from 'rxjs/operators'
 import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
 import { readDataset } from '@geonetwork-ui/data-fetcher'
 import { fromPromise } from 'rxjs/internal-compatibility'
@@ -49,7 +56,7 @@ export class DataViewMapComponent {
 
   currentLayers$ = combineLatest([
     this.compatibleMapLinks$,
-    this.selectedLinkIndex$,
+    this.selectedLinkIndex$.pipe(distinctUntilChanged()),
   ]).pipe(
     map(([links, index]) => links[index]),
     switchMap((link) => {
@@ -69,20 +76,38 @@ export class DataViewMapComponent {
     })
   )
 
-  mapContext$ = this.currentLayers$.pipe(
-    map(
-      (layers) =>
-        ({
-          layers,
-          view: {
-            center: fromLonLat([2.1, 46.8], 'EPSG:3857'),
-            zoom: 5,
-          },
-        } as MapContextModel)
+  mapExtent$ = this.currentLayers$.pipe(
+    switchMap((layers) =>
+      this.mapUtils.getLayerExtent(layers[1]).pipe(
+        catchError((e) => {
+          this.error = e.message
+          return of(undefined)
+        })
+      )
     )
   )
 
-  constructor(private mdViewFacade: MdViewFacade) {}
+  mapContext$ = combineLatest([this.currentLayers$, this.mapExtent$]).pipe(
+    map(([layers, extent]) =>
+      extent
+        ? ({
+            layers,
+            extent,
+          } as MapContextModel)
+        : ({
+            layers,
+            view: {
+              center: fromLonLat([2.1, 46.8], 'EPSG:3857'),
+              zoom: 5,
+            },
+          } as MapContextModel)
+    )
+  )
+
+  constructor(
+    private mdViewFacade: MdViewFacade,
+    private mapUtils: MapUtilsService
+  ) {}
 
   getBackgroundLayer(): MapContextLayerModel {
     return MAP_CTX_LAYER_XYZ_FIXTURE

@@ -7,10 +7,10 @@ import {
   tick,
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { MapContextModel } from '@geonetwork-ui/feature/map'
+import { MapContextModel, MapUtilsService } from '@geonetwork-ui/feature/map'
 import { MdViewFacade } from '../state/mdview.facade'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
-import { Subject } from 'rxjs'
+import { of, Subject } from 'rxjs'
 import { DataViewMapComponent } from './data-view-map.component'
 
 jest.mock('@camptocamp/ogc-client', () => ({
@@ -39,6 +39,10 @@ jest.mock('@geonetwork-ui/data-fetcher', () => ({
 class MdViewFacadeMock {
   mapApiLinks$ = new Subject()
   dataLinks$ = new Subject()
+}
+
+class MapUtilsServiceMock {
+  getLayerExtent = jest.fn().mockReturnValue(of(undefined))
 }
 
 const SAMPLE_GEOJSON = {
@@ -103,6 +107,10 @@ describe('DataViewMapComponent', () => {
         {
           provide: MdViewFacade,
           useClass: MdViewFacadeMock,
+        },
+        {
+          provide: MapUtilsService,
+          useClass: MapUtilsServiceMock,
         },
       ],
     }).compileComponents()
