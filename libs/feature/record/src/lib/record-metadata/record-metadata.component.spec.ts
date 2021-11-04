@@ -10,6 +10,7 @@ import {
 import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/ui/search'
 import { BehaviorSubject, Subject } from 'rxjs'
 import { RecordMetadataComponent } from './record-metadata.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 class MdViewFacadeMock {
   isPresent$ = new BehaviorSubject(false)
@@ -29,7 +30,7 @@ describe('RecordMetadataComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [RecordMetadataComponent],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [UiElementsModule],
+      imports: [UiElementsModule, TranslateModule.forRoot()],
       providers: [
         {
           provide: MdViewFacade,
