@@ -12,27 +12,6 @@ import { Component, Input } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import * as utils from '../links/link-utils'
 
-jest.spyOn(utils, 'getLinksWithWfsFormats').mockImplementation((link) =>
-  Promise.resolve([
-    {
-      ...link,
-      format: 'geojson',
-    },
-    {
-      ...link,
-      format: 'geojson',
-    },
-    {
-      ...link,
-      format: 'csv',
-    },
-    {
-      ...link,
-      format: 'gml',
-    },
-  ])
-)
-
 class MdViewFacadeMock {
   downloadLinks$ = new Subject()
 }
@@ -45,6 +24,12 @@ export class MockDownloadsListComponent {
   @Input() links: MetadataLink[]
 }
 
+@Component({
+  selector: 'gn-ui-popup-alert',
+  template: '<div></div>',
+})
+export class MockPopupAlertComponent {}
+
 describe('DataDownloadsComponent', () => {
   let component: DataDownloadsComponent
   let fixture: ComponentFixture<DataDownloadsComponent>
@@ -52,7 +37,11 @@ describe('DataDownloadsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DataDownloadsComponent, MockDownloadsListComponent],
+      declarations: [
+        DataDownloadsComponent,
+        MockDownloadsListComponent,
+        MockPopupAlertComponent,
+      ],
       providers: [
         {
           provide: MdViewFacade,
@@ -61,6 +50,27 @@ describe('DataDownloadsComponent', () => {
       ],
     }).compileComponents()
     facade = TestBed.inject(MdViewFacade)
+
+    jest.spyOn(utils, 'getLinksWithWfsFormats').mockImplementation((link) =>
+      Promise.resolve([
+        {
+          ...link,
+          format: 'geojson',
+        },
+        {
+          ...link,
+          format: 'geojson',
+        },
+        {
+          ...link,
+          format: 'csv',
+        },
+        {
+          ...link,
+          format: 'gml',
+        },
+      ])
+    )
   })
 
   beforeEach(() => {
@@ -80,6 +90,49 @@ describe('DataDownloadsComponent', () => {
       downloadsListComponent = fixture.debugElement.query(
         By.directive(MockDownloadsListComponent)
       ).componentInstance
+    })
+
+    describe('when the WFS service fails', () => {
+      beforeEach(fakeAsync(() => {
+        jest
+          .spyOn(utils, 'getLinksWithWfsFormats')
+          .mockImplementation(() =>
+            Promise.reject(new Error('Something bad happened'))
+          )
+        facade.downloadLinks$.next([
+          {
+            description: 'Lieu de surveillance (point)',
+            name: 'surval_parametre_point.csv',
+            protocol: 'WWW:DOWNLOAD',
+            url: 'https://www.ifremer.fr/surval_parametre_point.csv',
+          },
+          {
+            description: 'Lieu de surveillance (ligne)',
+            name: 'surval_parametre_ligne',
+            protocol: 'OGC:WFS',
+            url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
+          },
+        ])
+        tick()
+        fixture.detectChanges()
+      }))
+      it('emits the other links', () => {
+        expect(downloadsListComponent.links).toEqual([
+          {
+            description: 'Lieu de surveillance (point)',
+            name: 'surval_parametre_point.csv',
+            format: 'csv',
+            protocol: 'WWW:DOWNLOAD',
+            url: 'https://www.ifremer.fr/surval_parametre_point.csv',
+          },
+        ])
+      })
+      it('shows an error', () => {
+        const popup = fixture.debugElement.query(
+          By.directive(MockPopupAlertComponent)
+        )
+        expect(popup).toBeTruthy()
+      })
     })
 
     describe('with no link compatible with DOWNLOAD usage', () => {

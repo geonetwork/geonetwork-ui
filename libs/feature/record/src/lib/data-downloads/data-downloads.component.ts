@@ -18,6 +18,8 @@ import {
 export class DataDownloadsComponent {
   constructor(public facade: MdViewFacade) {}
 
+  error: string = null
+
   links$ = this.facade.downloadLinks$.pipe(
     switchMap((links) => {
       const wfsLinks = links.filter((link) => /^OGC:WFS/.test(link.protocol))
@@ -35,8 +37,17 @@ export class DataDownloadsComponent {
               }
         )
 
+      this.error = null
+
       return combineLatest(
-        wfsLinks.map((link) => from(getLinksWithWfsFormats(link)))
+        wfsLinks.map((link) =>
+          from(
+            getLinksWithWfsFormats(link).catch((e) => {
+              this.error = e.message
+              return []
+            })
+          )
+        )
       ).pipe(
         map(
           (wfsDownloadLinks) =>
