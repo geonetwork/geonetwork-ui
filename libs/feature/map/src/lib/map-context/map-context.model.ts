@@ -10,6 +10,7 @@ export enum MapContextLayerTypeEnum {
 export interface MapContextModel {
   layers: MapContextLayerModel[]
   view?: MapContextViewModel
+  extent?: MapContextExtentModel
 }
 
 export interface MapContextLayerModel {
@@ -20,6 +21,7 @@ export interface MapContextLayerModel {
 }
 
 export interface MapContextViewModel {
-  center: [number, number]
+  center: [number, number] //expressed in map projection (EPSG:3857)
   zoom: number
 }
+export type MapContextExtentModel = [number, number, number, number] //expressed in map projection (EPSG:3857)

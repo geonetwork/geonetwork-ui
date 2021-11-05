@@ -10,8 +10,13 @@ import ImageWMS from 'ol/source/ImageWMS'
 import TileWMS from 'ol/source/TileWMS'
 import Layer from 'ol/layer/Layer'
 import VectorSource from 'ol/source/Vector'
-import { Observable } from 'rxjs'
+import { from, Observable, of } from 'rxjs'
+import { fromPromise } from 'rxjs/internal-compatibility'
 import { map } from 'rxjs/operators'
+import { fromLonLat } from 'ol/proj'
+import { MapContextLayerModel } from '../..'
+import { extend, Extent } from 'ol/extent'
+import { WmsEndpoint } from '@camptocamp/ogc-client'
 
 const FEATURE_PROJECTION = 'EPSG:3857'
 const DATA_PROJECTION = 'EPSG:4326'
@@ -103,5 +108,39 @@ export class MapUtilsService {
     } else {
       return []
     }
+  }
+
+  getLayerExtent(layer: MapContextLayerModel): Observable<Extent> {
+    if (
+      layer &&
+      layer.type === 'geojson' &&
+      layer.data.features[0] &&
+      layer.data.features[0].geometry
+    ) {
+      let extent = []
+      const features = new GeoJSON().readFeatures(layer.data)
+      if (!features[0]) return of(undefined)
+      extent = features[0].getGeometry().getExtent()
+      features.forEach((feature) => {
+        extent = extend(extent, feature.getGeometry().getExtent())
+      })
+      return of(this.extentFromLonLat(extent))
+    } else if (layer && layer.type === 'wms') {
+      return from(
+        new WmsEndpoint(layer.url).isReady().then((endpoint) => {
+          const wmsLayer = endpoint.getLayerByName(layer.name)
+          return this.extentFromLonLat(wmsLayer.boundingBoxes['EPSG:4326'])
+        })
+      ) as Observable<Extent>
+    } else {
+      return of(undefined)
+    }
+  }
+
+  extentFromLonLat(extent: Extent) {
+    return [
+      ...fromLonLat([extent[0], extent[1]], 'EPSG:3857'),
+      ...fromLonLat([extent[2], extent[3]], 'EPSG:3857'),
+    ]
   }
 }
