@@ -75,6 +75,7 @@
   "datahub.app.subtitle": "Regional Data Catalogue",
   "datahub.app.title": "Data Hub",
   "datahub.route.home": "Data hub",
+  "downloads.wfs.error": "Download options from the WFS service could not be fetched",
   "dropFile": "drop file",
   "facets.block.title.OrgForResource": "Organisation",
   "facets.block.title.availableInServices": "Available for",
