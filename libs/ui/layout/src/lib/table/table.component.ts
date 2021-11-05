@@ -39,7 +39,7 @@ export class TableComponent implements AfterViewInit {
   @Input() activeId: TableItemId
   @Output() selected = new EventEmitter<any>()
 
-  @ViewChild(MatSort) sort: MatSort
+  @ViewChild(MatSort, { static: true }) sort: MatSort
   properties: string[]
   dataSource: MatTableDataSource<any>
   headerHeight: number
