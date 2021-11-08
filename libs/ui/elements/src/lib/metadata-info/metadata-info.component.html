@@ -10,27 +10,34 @@
         ghostClass="h-32"
         [showContent]="fieldReady('abstract')"
       >
-        <p class="whitespace-pre-line">{{ metadata.abstract }}</p>
+        <p
+          class="whitespace-pre-line"
+          [innerHTML]="metadata.abstract | safe: 'html'"
+        ></p>
       </gn-ui-content-ghost>
     </div>
 
-    <p class="mb-4 font-medium text-primary" translate>
-      record.metadata.keywords
-    </p>
-    <div class="mb-4">
-      <gn-ui-badge
-        class="inline-block mr-2 mb-2"
-        *ngFor="let keyword of metadata.keywords"
-        >{{ keyword }}</gn-ui-badge
-      >
-    </div>
+    <ng-container *ngIf="metadata.keywords">
+      <p class="mb-4 font-medium text-primary" translate>
+        record.metadata.keywords
+      </p>
+      <div class="mb-4">
+        <gn-ui-badge
+          class="inline-block mr-2 mb-2"
+          *ngFor="let keyword of metadata.keywords"
+          >{{ keyword }}</gn-ui-badge
+        >
+      </div>
+    </ng-container>
 
-    <p class="mb-4 font-medium text-primary" translate>
-      record.metadata.origin
-    </p>
-    <p class="mb-4 whitespace-pre-line">
-      {{ metadata.lineage }}
-    </p>
+    <ng-container *ngIf="metadata.lineage">
+      <p class="mb-4 font-medium text-primary" translate>
+        record.metadata.origin
+      </p>
+      <p class="mb-4 whitespace-pre-line">
+        {{ metadata.lineage }}
+      </p>
+    </ng-container>
     <div
       class="
         py-4
@@ -43,26 +50,30 @@
         text-gray-800
       "
     >
-      <div class="border-b border-gray-300">
+      <div class="border-b border-gray-300" *ngIf="metadata.updatedOn">
         <p translate>record.metadata.updatedOn</p>
         <p class="text-primary my-2">
           {{ metadata.updatedOn && metadata.updatedOn.toLocaleString() }}
         </p>
       </div>
-      <div class="border-b border-gray-300">
+      <div class="border-b border-gray-300" *ngIf="metadata.updateFrequency">
         <p translate>record.metadata.updateFrequency</p>
         <p class="text-primary my-2">{{ metadata.updateFrequency }}</p>
       </div>
-      <div>
+      <div *ngIf="metadata.updateStatus">
         <p translate>record.metadata.updateStatus</p>
         <p class="text-primary my-2">{{ metadata.updateStatus }}</p>
       </div>
     </div>
 
-    <p class="mb-4 font-medium text-primary" translate>record.metadata.usage</p>
-    <p class="mb-4 whitespace-pre-line">
-      {{ metadata.usageConstraints }}
-    </p>
+    <ng-container *ngIf="metadata.usageConstraints">
+      <p class="mb-4 font-medium text-primary" translate>
+        record.metadata.usage
+      </p>
+      <p class="mb-4 whitespace-pre-line">
+        {{ metadata.usageConstraints }}
+      </p>
+    </ng-container>
   </div>
 
   <div *ngIf="metadata.contact">

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { MetadataInfoComponent } from './metadata-info.component'
 import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
 import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/ui/search'
@@ -10,7 +11,7 @@ describe('MetadataInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
+      imports: [TranslateModule.forRoot(), UtilSharedModule],
       declarations: [MetadataInfoComponent, ContentGhostComponent],
     }).compileComponents()
   })
