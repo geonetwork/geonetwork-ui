@@ -8,7 +8,6 @@ import { Location } from '@angular/common'
 
 import * as fromActions from './router.actions'
 import { RouterGoActionPayload } from './router.actions'
-import * as fromSearchActions from '../../state/actions'
 import * as fromEffects from './router.effects'
 import { Action } from '@ngrx/store'
 import { routerNavigationAction } from '@ngrx/router-store'
@@ -96,18 +95,6 @@ describe('RouterEffects', () => {
         a: MdViewActions.close(),
       })
       expect(effects.navigateToSearch$).toBeObservable(expected)
-    })
-  })
-
-  describe('setSearchFilters$', () => {
-    it('should dispatch a closeMetadata action', () => {
-      actions = hot('-a', {
-        a: new fromSearchActions.SetFilters({ any: 'changed filter' }),
-      })
-      const expected = hot('-a', {
-        a: MdViewActions.close(),
-      })
-      expect(effects.setSearchFilters$).toBeObservable(expected)
     })
   })
 
