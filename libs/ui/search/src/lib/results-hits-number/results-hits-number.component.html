@@ -1,6 +1,6 @@
 <div *ngIf="!loading" class="w-full pl-4 text-gray-700">
   <ng-container *ngIf="hits">
-    <span translate="" [translateParams]="{ hits: hits.value }"
+    <span translate [translateParams]="{ hits: hits.value }"
       >results.records.hits.found</span
     >
     <p

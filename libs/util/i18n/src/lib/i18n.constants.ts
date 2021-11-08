@@ -70,6 +70,10 @@ export function getDefaultLang() {
 }
 
 export const TRANSLATE_DEFAULT_CONFIG = {
+  compiler: {
+    provide: TranslateCompiler,
+    useClass: TranslateMessageFormatCompiler,
+  },
   loader: {
     provide: TranslateLoader,
     useFactory: HttpLoaderFactory,
