@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { MetadataInfoComponent } from './metadata-info/metadata-info.component'
 import { ContentGhostComponent } from './content-ghost/content-ghost.component'
 import { DownloadsListItemComponent } from './downloads-list-item/downloads-list-item.component'
@@ -20,6 +21,7 @@ import { TranslateModule } from '@ngx-translate/core'
     UiWidgetsModule,
     UiLayoutModule,
     TranslateModule.forChild(),
+    UtilSharedModule,
   ],
   declarations: [
     MetadataInfoComponent,
