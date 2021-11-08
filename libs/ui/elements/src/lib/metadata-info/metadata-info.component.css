@@ -1,0 +1,4 @@
+/* Use a standard link style for description, since it can contain html */
+.md-description ::ng-deep a {
+  @apply underline text-blue-600 hover:text-blue-800;
+}

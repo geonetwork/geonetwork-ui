@@ -8,6 +8,7 @@ import { FigureComponent } from './figure/figure.component'
 import { ScrollingModule } from '@angular/cdk/scrolling'
 import { TableVirtualScrollModule } from 'ng-table-virtual-scroll'
 import { CardLinkComponent } from './card-link/card-link.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { CardLinkComponent } from './card-link/card-link.component'
     MatIconModule,
     TableVirtualScrollModule,
     ScrollingModule,
+    TranslateModule.forChild(),
   ],
   declarations: [TableComponent, FigureComponent, CardLinkComponent],
   exports: [TableComponent, FigureComponent, CardLinkComponent],

@@ -75,7 +75,7 @@ export class DataDownloadsComponent {
           ...wfsDownloadLinks,
           ...esriRestLinks,
         ]),
-        startWith(otherLinks)
+        startWith([...otherLinks, ...esriRestLinks])
       )
     })
   )

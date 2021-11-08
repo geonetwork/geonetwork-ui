@@ -2,10 +2,9 @@ import { Location } from '@angular/common'
 import { Injectable } from '@angular/core'
 import { ActivatedRouteSnapshot, Router } from '@angular/router'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { map, tap } from 'rxjs/operators'
+import { tap } from 'rxjs/operators'
 
 import * as RouterActions from './router.actions'
-import * as SearchActions from '../../state/actions'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
 import { navigation } from '@nrwl/angular'
 import { MetadataRouteComponent, SearchRouteComponent } from '../constants'
@@ -56,17 +55,6 @@ export class RouterEffects {
       navigation(SearchRouteComponent, {
         run: () => MdViewActions.close(),
       })
-    )
-  )
-
-  /**
-   * This effect will close the metadata when new search filters
-   * are entered, thus triggering a new search
-   */
-  setSearchFilters$ = createEffect(() =>
-    this._actions$.pipe(
-      ofType(SearchActions.SET_FILTERS),
-      map(() => MdViewActions.close())
     )
   )
 

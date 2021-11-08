@@ -37,7 +37,8 @@ export const LANG_2_TO_3_MAPPER = Object.entries(LANG_3_TO_2_MAPPER).reduce(
 // default: fallback on default lang if translated labels are empty
 export class CustomTranslateHttpLoader extends TranslateHttpLoader {
   getTranslation(lang: string) {
-    return super.getTranslation(lang).pipe(map(this.transform))
+    const baseLang = lang.substr(0, 2) // removing the right part of e.g. en_EN
+    return super.getTranslation(baseLang).pipe(map(this.transform))
   }
 
   private transform(translations) {
@@ -70,6 +71,10 @@ export function getDefaultLang() {
 }
 
 export const TRANSLATE_DEFAULT_CONFIG = {
+  compiler: {
+    provide: TranslateCompiler,
+    useClass: TranslateMessageFormatCompiler,
+  },
   loader: {
     provide: TranslateLoader,
     useFactory: HttpLoaderFactory,
