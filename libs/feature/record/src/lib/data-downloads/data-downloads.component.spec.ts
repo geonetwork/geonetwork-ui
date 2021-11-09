@@ -168,6 +168,14 @@ describe('DataDownloadsComponent', () => {
           },
           {
             protocol: 'ESRI:REST',
+            name: 'mes_hdf',
+            format: 'arcgis geoservices rest api',
+            description: 'ArcGIS GeoService Wfs',
+            mediaType: 'application/json',
+            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/WFSServer/0',
+          },
+          {
+            protocol: 'ESRI:REST',
             name: 'mes_hdf_journalier_poll_princ',
             format: 'arcgis geoservices rest api',
             description: 'ArcGIS GeoService',
@@ -207,6 +215,22 @@ describe('DataDownloadsComponent', () => {
             format: 'WFS:csv',
             protocol: 'OGC:WFS',
             url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
+          },
+          {
+            protocol: 'ESRI:REST',
+            name: 'mes_hdf',
+            format: 'WFS:geojson',
+            description: 'ArcGIS GeoService Wfs',
+            mediaType: 'application/json',
+            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/WFSServer/0',
+          },
+          {
+            protocol: 'ESRI:REST',
+            name: 'mes_hdf',
+            format: 'WFS:csv',
+            description: 'ArcGIS GeoService Wfs',
+            mediaType: 'application/json',
+            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/WFSServer/0',
           },
           {
             protocol: 'ESRI:REST',

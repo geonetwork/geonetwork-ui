@@ -69,7 +69,7 @@ export class DataViewTableComponent {
   constructor(private mdViewFacade: MdViewFacade) {}
 
   fetchData(link: MetadataLinkValid): Observable<{ id: string | number }[]> {
-    if (link.protocol === 'OGC:WFS') {
+    if (link.protocol.startsWith('OGC:WFS')) {
       return fromPromise(
         new WfsEndpoint(link.url).isReady().then((endpoint) => {
           if (!endpoint.supportsJson(link.name)) {

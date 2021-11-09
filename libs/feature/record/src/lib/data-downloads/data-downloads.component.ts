@@ -22,9 +22,16 @@ export class DataDownloadsComponent {
 
   links$ = this.facade.downloadLinks$.pipe(
     switchMap((links) => {
-      const wfsLinks = links.filter((link) => /^OGC:WFS/.test(link.protocol))
+      const wfsLinks = links.filter(
+        (link) =>
+          /^OGC:WFS/.test(link.protocol) ||
+          (/^ESRI:REST/.test(link.protocol) && /WFSServer/.test(link.url))
+      )
       const esriRestLinks = links
-        .filter((link) => /^ESRI:REST/.test(link.protocol))
+        .filter(
+          (link) =>
+            /^ESRI:REST/.test(link.protocol) && /FeatureServer/.test(link.url)
+        )
         .flatMap((link) => getLinksWithEsriRestFormats(link))
       const otherLinks = links
         .filter((link) => !/^OGC:WFS|ESRI:REST/.test(link.protocol))
