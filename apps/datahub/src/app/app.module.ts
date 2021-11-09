@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core'
+import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
@@ -14,6 +15,7 @@ import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
+import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
@@ -48,6 +50,8 @@ export const metaReducers: MetaReducer[] = !environment.production
     SearchRouterModule,
     FeatureRecordModule,
     UiSearchModule,
+    UtilSharedModule,
+    MatIconModule,
   ],
   providers: [
     { provide: RESULTS_LAYOUT_CONFIG, useValue: DATAHUB_RESULTS_LAYOUT_CONFIG },
