@@ -23,8 +23,9 @@ export class MainSearchComponent implements OnInit {
         take(1),
         map((config) => config.mods.search.facetConfig),
         tap((aggregationsConfig) => {
-          this.searchFacade.setConfigAggregations(aggregationsConfig)
-          this.searchFacade.requestMoreResults()
+          this.searchFacade
+            .setConfigAggregations(aggregationsConfig)
+            .requestMoreResults()
         })
       )
       .subscribe()
