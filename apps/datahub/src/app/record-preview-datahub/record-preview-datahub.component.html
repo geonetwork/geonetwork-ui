@@ -11,19 +11,15 @@
       />
     </div>
   </div>
-  <div class="content flex-grow mx-2 flex flex-col justify-between">
-    <div class="py-2 text-primary font-medium text-xl">
+  <div class="content flex-grow mx-2 flex flex-col justify-between min-w-0">
+    <div
+      class="py-2 text-primary font-medium text-xl truncate"
+      [title]="record.title"
+    >
       {{ record.title }}
     </div>
     <div
-      class="
-        flex-grow
-        abstract
-        text-gray-700 text-sm
-        leading-relaxed
-        mb-3
-        line-clamp-5
-      "
+      class="flex-grow abstract text-gray-700 leading-relaxed mb-3 line-clamp-3"
     >
       {{ abstract }}
     </div>
@@ -40,4 +36,5 @@
       >
     </div>
   </div>
+  <div class="favorite flex-shrink-0"></div>
 </div>
