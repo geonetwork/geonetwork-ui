@@ -15,7 +15,7 @@ import { SearchFacade } from '../state/search.facade'
   styleUrls: ['./results-list.container.component.css'],
 })
 export class ResultsListContainerComponent implements OnInit {
-  @Input() layout: ResultsListLayout = ResultsListLayout.CARD
+  @Input() layout: ResultsListLayout
   @Input() scrollableOptions: InfiniteScrollModel = {}
   @Output() mdSelect = new EventEmitter<MetadataRecord>()
 
@@ -29,7 +29,9 @@ export class ResultsListContainerComponent implements OnInit {
       ...InfiniteScrollOptionsDefault,
       ...this.scrollableOptions,
     }
-    this.facade.setResultsLayout(this.layout)
+    if (this.layout) {
+      this.facade.setResultsLayout(this.layout)
+    }
 
     this.scrollDisable$ = of(this.scrollableConfig.disabled).pipe(
       mergeMap((disabled) =>

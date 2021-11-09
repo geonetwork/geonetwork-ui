@@ -22,13 +22,13 @@ export const RESULTS_LAYOUT_CONFIG =
   new InjectionToken<ResultsLayoutConfigModel>('results-layout.config')
 
 export const DEFAULT_RESULTS_LAYOUT_CONFIG: ResultsLayoutConfigModel = {
-  [ResultsListLayout.LIST]: new ResultsLayoutConfigItem(
-    RecordPreviewListComponent
-  ),
   [ResultsListLayout.CARD]: new ResultsLayoutConfigItem(
     RecordPreviewCardComponent,
-    '',
+    'h-24',
     'grid md:grid-cols-2 lg:grid-cols-4 gap-4 p-4'
+  ),
+  [ResultsListLayout.LIST]: new ResultsLayoutConfigItem(
+    RecordPreviewListComponent
   ),
   [ResultsListLayout.TEXT]: new ResultsLayoutConfigItem(
     RecordPreviewTextComponent

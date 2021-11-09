@@ -49,6 +49,7 @@ describe('ResultsListContainerComponent', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(ResultsListContainerComponent)
       component = fixture.componentInstance
+      component.layout = ResultsListLayout.CARD
       de = fixture.debugElement
       items = de.queryAll(By.directive(ResultsListMockComponent))
       fixture.detectChanges()

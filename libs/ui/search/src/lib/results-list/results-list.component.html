@@ -1,35 +1,16 @@
-<ng-container [ngSwitch]="layout">
-  <ng-container
-    *ngSwitchCase="layoutEnum.CARD"
-    [ngTemplateOutlet]="block"
-  ></ng-container>
-  <div *ngSwitchCase="layoutEnum.LIST" class="gap-4 p-4">
-    <div class="pb-4" *ngFor="let record of records">
-      <gn-ui-record-preview-list
+<ng-container>
+  <div [ngClass]="layoutConfig.containerClass">
+    <div [ngClass]="layoutConfig.itemClass" *ngFor="let record of records">
+      <gn-ui-results-list-item
         [record]="record"
+        [layout]="layout"
         (mdSelect)="mdSelect.emit($event)"
-      ></gn-ui-record-preview-list>
+      ></gn-ui-results-list-item>
     </div>
   </div>
-  <div *ngSwitchCase="layoutEnum.TITLE" class="gap-4 p-4">
-    <div class="pb-4" *ngFor="let record of records">
-      <gn-ui-record-preview-title
-        [record]="record"
-        (mdSelect)="mdSelect.emit($event)"
-      ></gn-ui-record-preview-title>
-    </div>
-  </div>
-  <div *ngSwitchCase="layoutEnum.TEXT" class="gap-4 p-4">
-    <gn-ui-record-preview-text
-      style="height: 24rem"
-      *ngFor="let record of records"
-      [record]="record"
-      (mdSelect)="mdSelect.emit($event)"
-    ></gn-ui-record-preview-text>
-  </div>
-  <ng-container *ngSwitchDefault [ngTemplateOutlet]="block"></ng-container>
 </ng-container>
 
+<!--
 <ng-template #block>
   <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
     <gn-ui-record-preview-card
@@ -41,5 +22,6 @@
     ></gn-ui-record-preview-card>
   </div>
 </ng-template>
+-->
 
 <div *ngIf="loading" class="p-4"><span translate>search.loading</span>...</div>
