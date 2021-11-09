@@ -100,6 +100,11 @@ export const LINK_FIXTURES = {
     name: 'myrestlayer',
     url: 'https://my.esri.server/FeatureServer',
   },
+  geodataRestWfs: {
+    protocol: 'ESRI:REST',
+    name: 'mywfsrestlayer',
+    url: 'https://my.esri.server/WFSServer',
+  },
   maplayerRest: {
     protocol: 'ESRI:REST',
     name: 'myotherrestlayer',
