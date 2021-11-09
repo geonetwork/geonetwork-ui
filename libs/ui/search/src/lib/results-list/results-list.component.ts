@@ -6,7 +6,10 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { MetadataRecord, ResultsListLayout } from '@geonetwork-ui/util/shared'
+import {
+  MetadataRecord,
+  ResultsListLayoutEnum,
+} from '@geonetwork-ui/util/shared'
 import {
   RESULTS_LAYOUT_CONFIG,
   ResultsLayoutConfigItem,
@@ -22,9 +25,9 @@ import {
 export class ResultsListComponent {
   @Input() records: MetadataRecord[]
   @Input() loading: boolean
-  @Input() layout: ResultsListLayout = ResultsListLayout.CARD
+  @Input() layout: ResultsListLayoutEnum = ResultsListLayoutEnum.CARD
   @Output() mdSelect = new EventEmitter<MetadataRecord>()
-  layoutEnum = ResultsListLayout
+  layoutEnum = ResultsListLayoutEnum
 
   get layoutConfig(): Partial<ResultsLayoutConfigItem> {
     return this.resultsLayoutConfig[this.layout] || {}

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import {
-  ResultsListLayout,
+  ResultsListLayoutEnum,
   SearchFilters,
   RequestFields,
   StateConfigFilters,
@@ -39,7 +39,7 @@ import {
 @Injectable()
 export class SearchFacade {
   results$: Observable<any>
-  layout$: Observable<ResultsListLayout>
+  layout$: Observable<ResultsListLayoutEnum>
   isLoading$: Observable<boolean>
   isEndOfResults$: Observable<boolean>
   searchFilters$: Observable<SearchFilters>
@@ -95,7 +95,7 @@ export class SearchFacade {
     return this
   }
 
-  setResultsLayout(layout: ResultsListLayout): SearchFacade {
+  setResultsLayout(layout: ResultsListLayoutEnum): SearchFacade {
     this.store.dispatch(new SetResultsLayout(layout, this.searchId))
     return this
   }

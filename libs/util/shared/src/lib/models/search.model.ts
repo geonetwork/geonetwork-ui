@@ -54,7 +54,7 @@ export interface RecordMetric {
   recordCount: number
 }
 
-export enum ResultsListLayout {
+export enum ResultsListLayoutEnum {
   CARD = 'CARD',
   LIST = 'LIST',
   TEXT = 'TEXT',

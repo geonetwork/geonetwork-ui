@@ -3,7 +3,7 @@ import {
   InfiniteScrollModel,
   InfiniteScrollOptionsDefault,
   MetadataRecord,
-  ResultsListLayout,
+  ResultsListLayoutEnum,
 } from '@geonetwork-ui/util/shared'
 import { iif, Observable, of } from 'rxjs'
 import { distinctUntilChanged, mergeMap } from 'rxjs/operators'
@@ -15,7 +15,7 @@ import { SearchFacade } from '../state/search.facade'
   styleUrls: ['./results-list.container.component.css'],
 })
 export class ResultsListContainerComponent implements OnInit {
-  @Input() layout: ResultsListLayout
+  @Input() layout: ResultsListLayoutEnum
   @Input() scrollableOptions: InfiniteScrollModel = {}
   @Output() mdSelect = new EventEmitter<MetadataRecord>()
 

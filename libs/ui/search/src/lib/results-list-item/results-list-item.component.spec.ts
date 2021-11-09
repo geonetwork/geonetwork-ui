@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { ResultsListLayout } from '@geonetwork-ui/util/shared'
+import { ResultsListLayoutEnum } from '@geonetwork-ui/util/shared'
 import { RecordPreviewCardComponent } from '../record-preview-card/record-preview-card.component'
 import { RecordPreviewTextComponent } from '../record-preview-text/record-preview-text.component'
 import {
@@ -29,7 +29,7 @@ describe('ResultsListItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ResultsListItemComponent)
     component = fixture.componentInstance
-    component.layout = ResultsListLayout.CARD
+    component.layout = ResultsListLayoutEnum.CARD
     component.record = {
       id: '139',
       uuid: 'd2f30aa4-867e-40b9-9c37-3cb21f541008',
@@ -57,7 +57,7 @@ describe('ResultsListItemComponent', () => {
     })
     describe('after layout change', () => {
       beforeEach(() => {
-        component.layout = ResultsListLayout.TEXT
+        component.layout = ResultsListLayoutEnum.TEXT
         fixture.detectChanges()
         component.ngOnChanges()
       })

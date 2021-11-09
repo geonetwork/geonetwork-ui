@@ -1,7 +1,7 @@
 import {
   EsRequestAggTermPatch,
   MetadataRecord,
-  ResultsListLayout,
+  ResultsListLayoutEnum,
   SearchFilters,
   RequestFields,
   StateConfigFilters,
@@ -120,7 +120,7 @@ export class Scroll extends AbstractAction implements Action {
 export class SetResultsLayout extends AbstractAction implements Action {
   readonly type = SET_RESULTS_LAYOUT
 
-  constructor(public resultsLayout: ResultsListLayout, id?: string) {
+  constructor(public resultsLayout: ResultsListLayoutEnum, id?: string) {
     super(id)
   }
 }

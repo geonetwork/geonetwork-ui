@@ -3,7 +3,7 @@ import {
   ES_FIXTURE_AGGS_RESPONSE,
   ES_FIXTURE_AGGS_RESPONSE_MORE,
   RESULTS_PAGE_SIZE,
-  ResultsListLayout,
+  ResultsListLayoutEnum,
 } from '@geonetwork-ui/util/shared'
 import { DEFAULT_SEARCH_KEY } from './actions'
 import * as fromActions from './actions'
@@ -173,9 +173,11 @@ describe('Search Reducer', () => {
 
   describe('Set result layout action', () => {
     it('should set result layout', () => {
-      const action = new fromActions.SetResultsLayout(ResultsListLayout.CARD)
+      const action = new fromActions.SetResultsLayout(
+        ResultsListLayoutEnum.CARD
+      )
       const state = reducerSearch(initialStateSearch, action)
-      expect(state.resultsLayout).toEqual(ResultsListLayout.CARD)
+      expect(state.resultsLayout).toEqual(ResultsListLayoutEnum.CARD)
     })
   })
 

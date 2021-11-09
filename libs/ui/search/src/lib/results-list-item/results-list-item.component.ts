@@ -11,7 +11,10 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core'
-import { MetadataRecord, ResultsListLayout } from '@geonetwork-ui/util/shared'
+import {
+  MetadataRecord,
+  ResultsListLayoutEnum,
+} from '@geonetwork-ui/util/shared'
 import { RecordPreviewComponent } from '../record-preview/record-preview.component'
 import {
   RESULTS_LAYOUT_CONFIG,
@@ -25,7 +28,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResultsListItemComponent implements OnChanges, AfterViewInit {
-  @Input() layout: ResultsListLayout
+  @Input() layout: ResultsListLayoutEnum
   @Input() record: MetadataRecord
   @Output() mdSelect = new EventEmitter<MetadataRecord>()
   initialized = false

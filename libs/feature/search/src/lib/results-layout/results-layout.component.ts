@@ -3,7 +3,7 @@ import {
   RESULTS_LAYOUT_CONFIG,
   ResultsLayoutConfigModel,
 } from '@geonetwork-ui/ui/search'
-import { ResultsListLayout } from '@geonetwork-ui/util/shared'
+import { ResultsListLayoutEnum } from '@geonetwork-ui/util/shared'
 import { SearchFacade } from '../state/search.facade'
 
 @Component({
@@ -24,7 +24,7 @@ export class ResultsLayoutComponent {
     private resultsLayoutConfig: ResultsLayoutConfigModel
   ) {}
 
-  change(layout: ResultsListLayout) {
+  change(layout: ResultsListLayoutEnum) {
     this.searchFacade.setResultsLayout(layout)
   }
 }
