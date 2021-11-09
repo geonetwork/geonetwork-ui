@@ -2,9 +2,9 @@ import {
   RequestFields,
   MetadataRecord,
   RESULTS_PAGE_SIZE,
-  ResultsListLayoutEnum,
   SearchFilters,
   StateConfigFilters,
+  ResultsListLayout,
 } from '@geonetwork-ui/util/shared'
 import * as fromActions from './actions'
 import { DEFAULT_SEARCH_KEY } from './actions'
@@ -34,7 +34,7 @@ export interface SearchStateSearch {
     records: MetadataRecord[]
     aggregations: any
   }
-  resultsLayout?: ResultsListLayoutEnum
+  resultsLayout?: ResultsListLayout
   loadingMore: boolean
 }
 

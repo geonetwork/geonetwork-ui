@@ -10,7 +10,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core'
 import {
-  ResultsListLayout,
+  ResultsListLayoutEnum,
   SearchFilters,
   StateConfigFilters,
 } from '@geonetwork-ui/util/shared'
@@ -35,7 +35,7 @@ export class GnResultsListComponent
   @Input() secondaryColor = '#767676'
   @Input() mainColor = '#1a1a1a'
   @Input() backgroundColor = '#cecece'
-  @Input() layout: ResultsListLayout = ResultsListLayout.CARD
+  @Input() layout: ResultsListLayoutEnum = ResultsListLayoutEnum.CARD
   @Input() size = 10
   @Input() query: string
   @Input() filter: string
