@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
+import { ElasticsearchMapper } from '../mapper'
 import {
-  ElasticsearchMapper,
   ElasticsearchService,
   EsSearchResponse,
 } from '@geonetwork-ui/util/shared'

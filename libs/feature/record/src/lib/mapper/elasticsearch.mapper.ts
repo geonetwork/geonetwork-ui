@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { MetadataRecord } from '../../models'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { ElasticsearchFieldMapper } from './elasticsearch.field.mapper'
 
 @Injectable({

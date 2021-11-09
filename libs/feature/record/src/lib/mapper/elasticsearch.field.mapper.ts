@@ -13,8 +13,7 @@ import {
   SourceWithUnknownProps,
   toDate,
 } from './atomic-operations'
-import { MetadataUrlService } from '../../services'
-import { MetadataRecord } from '../../models'
+import { MetadataUrlService, MetadataRecord } from '@geonetwork-ui/util/shared'
 
 type ESResponseSource = SourceWithUnknownProps
 
@@ -97,6 +96,12 @@ export class ElasticsearchFieldMapper {
       links: getAsArray(
         selectField<SourceWithUnknownProps[]>(source, 'link')
       ).map(mapLink),
+    }),
+    linkProtocol: (output, source) => ({
+      ...output,
+      linkProtocols: getAsArray(
+        selectField<SourceWithUnknownProps[]>(source, 'linkProtocol')
+      ),
     }),
     contact: (output, source) => ({
       ...output,

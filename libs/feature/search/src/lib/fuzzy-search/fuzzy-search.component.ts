@@ -6,9 +6,9 @@ import {
   ViewChild,
 } from '@angular/core'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
+import { ElasticsearchMapper } from '@geonetwork-ui/feature/record'
 import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
 import {
-  ElasticsearchMapper,
   ElasticsearchService,
   EsSearchResponse,
 } from '@geonetwork-ui/util/shared'
