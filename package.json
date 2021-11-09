@@ -63,6 +63,7 @@
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
     "@nrwl/angular": "12.6.5",
+    "@tailwindcss/line-clamp": "^0.2.2",
     "angular-mydatepicker": "^0.11.3",
     "chroma-js": "^2.1.2",
     "document-register-element": "^1.14.10",
@@ -77,6 +78,7 @@
     "ol": "^6.6.1",
     "papaparse": "^5.3.1",
     "rxjs": "~6.6.0",
+    "tailwindcss": "^2.1.4",
     "tslib": "^2.0.0",
     "whatwg-fetch": "^3.6.2",
     "xlsx": "^0.17.3",
@@ -131,7 +133,6 @@
     "ngx-translate-testing": "^5.1.0",
     "postcss": "^8.3.4",
     "prettier": "2.3.2",
-    "tailwindcss": "^2.1.4",
     "ts-jest": "27.0.3",
     "ts-node": "~9.1.1",
     "typescript": "4.3.5"

@@ -53,5 +53,5 @@ module.exports = {
     visibility: ['responsive', 'group-hover'],
     opacity: ['disabled'],
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/line-clamp')],
 }
