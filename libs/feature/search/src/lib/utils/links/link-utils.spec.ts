@@ -3,8 +3,28 @@ import {
   DownloadFormatType,
   checkFileFormat,
   getLinksWithEsriRestFormats,
+  getLinksWithWfsFormats,
 } from './link-utils'
 import { LINK_FIXTURES } from './link.fixtures'
+
+jest.mock('@camptocamp/ogc-client', () => ({
+  WfsEndpoint: class {
+    constructor(private url) {}
+    isReady() {
+      return Promise.resolve({
+        getFeatureUrl: () => this.url + '?GetFeature',
+        getFeatureTypeSummary: (name) => {
+          return name !== 'NOT_A_LAYER_NAME'
+            ? {
+                name,
+                outputFormats: ['geojson', 'csv'],
+              }
+            : null
+        },
+      })
+    }
+  },
+}))
 
 describe('link utils', () => {
   describe('#getDownloadFormat', () => {
@@ -157,5 +177,65 @@ describe('link utils', () => {
           },
         ])
       })
+    }),
+    describe('#getLinksWithWfsFormats', () => {
+      it('returns links with formats for WFS links with protocol OGC:WFS', async () => {
+        await expect(
+          getLinksWithWfsFormats({
+            description: 'Lieu de surveillance (ligne)',
+            name: 'surval_parametre_ligne',
+            protocol: 'OGC:WFS',
+            url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
+          })
+        ).resolves.toEqual([
+          {
+            description: 'Lieu de surveillance (ligne)',
+            format: 'geojson',
+            name: 'surval_parametre_ligne',
+            protocol: 'OGC:WFS',
+            url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale?GetFeature',
+          },
+          {
+            description: 'Lieu de surveillance (ligne)',
+            format: 'csv',
+            name: 'surval_parametre_ligne',
+            protocol: 'OGC:WFS',
+            url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale?GetFeature',
+          },
+        ])
+      }),
+        it('returns links with formats for WFS links with protocol ESRI:REST', async () => {
+          await expect(
+            getLinksWithWfsFormats({
+              protocol: 'ESRI:REST',
+              name: 'myrestlayer',
+              format: 'arcgis geoservices rest api',
+              url: 'https://my.esri.server/WFSServer',
+            })
+          ).resolves.toEqual([
+            {
+              protocol: 'ESRI:REST',
+              name: 'myrestlayer',
+              format: 'geojson',
+              url: 'https://my.esri.server/WFSServer?GetFeature',
+            },
+            {
+              protocol: 'ESRI:REST',
+              name: 'myrestlayer',
+              format: 'csv',
+              url: 'https://my.esri.server/WFSServer?GetFeature',
+            },
+          ])
+        }),
+        it('returns null for WFS links where name does not match layer name', async () => {
+          await expect(
+            getLinksWithWfsFormats({
+              protocol: 'ESRI:REST',
+              name: 'NOT_A_LAYER_NAME',
+              format: 'arcgis geoservices rest api',
+              url: 'https://my.other.esri.server/WFSServer',
+            })
+          ).rejects.toEqual(new Error('downloads.wfs.featuretype.not.found'))
+        })
     })
 })

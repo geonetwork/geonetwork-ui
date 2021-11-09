@@ -76,6 +76,7 @@
   "datahub.app.title": "Data Hub",
   "datahub.route.home": "Data hub",
   "downloads.wfs.error": "Les options de téléchargement ne peuvent être obtenues depuis le service WFS",
+  "downloads.wfs.featuretype.not.found": "La couche n'a pas été retrouvée",
   "dropFile": "Faites glisser votre fichier",
   "facets.block.title.OrgForResource": "Organisation",
   "facets.block.title.availableInServices": "Disponible pour",

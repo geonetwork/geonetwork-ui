@@ -1,5 +1,8 @@
 import { MetadataLink, MetadataLinkValid } from '@geonetwork-ui/util/shared'
 import { WfsEndpoint } from '@camptocamp/ogc-client'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('downloads.wfs.featuretype.not.found')
 
 export enum DownloadFormatType {
   WFS = 'WFS',
@@ -49,11 +52,15 @@ export function getLinksWithWfsFormats(
 ): Promise<MetadataLinkValid[]> {
   return new WfsEndpoint(link.url).isReady().then((endpoint) => {
     const featureType = endpoint.getFeatureTypeSummary(link.name)
-    return featureType.outputFormats.map((format) => ({
-      ...link,
-      url: endpoint.getFeatureUrl(featureType.name, { outputFormat: format }),
-      format: format,
-    }))
+    if (featureType) {
+      return featureType.outputFormats.map((format) => ({
+        ...link,
+        url: endpoint.getFeatureUrl(featureType.name, { outputFormat: format }),
+        format: format,
+      }))
+    } else {
+      throw new Error('downloads.wfs.featuretype.not.found')
+    }
   })
 }
 

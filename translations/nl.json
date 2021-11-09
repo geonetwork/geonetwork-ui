@@ -76,6 +76,7 @@
   "datahub.app.title": "",
   "datahub.route.home": "",
   "downloads.wfs.error": "",
+  "downloads.wfs.featuretype.not.found": "",
   "dropFile": "",
   "facets.block.title.OrgForResource": "",
   "facets.block.title.availableInServices": "",
