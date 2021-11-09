@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
+import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
 import {
   FeatureSearchModule,
   SearchRouterModule,
 } from '@geonetwork-ui/feature/search'
+import { RESULTS_LAYOUT_CONFIG, UiSearchModule } from '@geonetwork-ui/ui/search'
 import {
   getDefaultLang,
   getLangFromBrowser,
@@ -20,15 +22,20 @@ import { storeFreeze } from 'ngrx-store-freeze'
 import { environment } from '../environments/environment'
 
 import { AppComponent } from './app.component'
+import { DATAHUB_RESULTS_LAYOUT_CONFIG } from './app.config'
 import { MainSearchComponent } from './main-search/main-search.component'
-import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
+import { RecordPreviewDatahubComponent } from './record-preview-datahub/record-preview-datahub.component'
 
 export const metaReducers: MetaReducer[] = !environment.production
   ? [storeFreeze]
   : []
 
 @NgModule({
-  declarations: [AppComponent, MainSearchComponent],
+  declarations: [
+    AppComponent,
+    MainSearchComponent,
+    RecordPreviewDatahubComponent,
+  ],
   imports: [
     BrowserModule,
     RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
@@ -40,8 +47,10 @@ export const metaReducers: MetaReducer[] = !environment.production
     FeatureSearchModule,
     SearchRouterModule,
     FeatureRecordModule,
+    UiSearchModule,
   ],
   providers: [
+    { provide: RESULTS_LAYOUT_CONFIG, useValue: DATAHUB_RESULTS_LAYOUT_CONFIG },
     {
       provide: Configuration,
       useValue: new Configuration({

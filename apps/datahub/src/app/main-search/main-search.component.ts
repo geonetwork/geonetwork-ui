@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { RouterFacade, SearchFacade } from '@geonetwork-ui/feature/search'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataRecord, ResultsListLayout } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-main-search',
@@ -15,9 +15,11 @@ export class MainSearchComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.searchFacade.setFilters({
-      any: '',
-    })
+    this.searchFacade
+      .setFilters({
+        any: '',
+      })
+      .setResultsLayout(ResultsListLayout.DATAHUB)
   }
 
   onMetadataSelection(metadata: MetadataRecord): void {
