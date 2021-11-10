@@ -192,7 +192,7 @@ describe('ElasticsearchMapper', () => {
           expect(summary.hasDownloads).toBeUndefined()
         })
         it('hasMaps is false', () => {
-          expect(summary.hasDownloads).toBeUndefined()
+          expect(summary.hasMaps).toBeUndefined()
         })
       })
       describe('unknwown protocols', () => {
