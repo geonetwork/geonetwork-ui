@@ -36,24 +36,20 @@ describe('ElasticsearchMapper', () => {
       expect(summary).toEqual([
         {
           abstract: 'The grid is based on proposal ',
-          downloadable: false,
           id: '12456',
           metadataUrl: 'url',
           thumbnailUrl: 'data:image/png;base64,',
           title: 'EEA reference grid for Germany (10km), May 2013',
           uuid: '20e9e1a1-83c1-4f13-89ef-c19767d6ee18f',
-          viewable: false,
         },
         {
           abstract: 'Reference layer of the rivers sensitive areas, ',
-          downloadable: false,
           id: '12442',
           metadataUrl: 'url',
           thumbnailUrl: 'data:image/png;base64,',
           title:
             'Urban Waste Water Treatment Directive, Sensitive areas - rivers reported under UWWTD data call 2015, Nov. 2017',
           uuid: '5b35f06e-8c6b-4907-b8f4-39541d170360',
-          viewable: false,
         },
       ])
     })
@@ -321,8 +317,6 @@ describe('ElasticsearchMapper', () => {
             'https://sextant.ifremer.fr/geonetwork/srv/api/records/cf5048f6-5bbf-4e44-ba74-e6f429af51ea/attachments/parametres.gif',
           title: 'Surval - Données par paramètre',
           uuid: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
-          viewable: true,
-          downloadable: true,
           contact: {
             name: 'Ifremer',
             email: 'q2suppor@ifremer.fr',
