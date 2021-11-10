@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core'
 import {
-  ResultsListLayoutEnum,
-  SearchFilters,
   RequestFields,
+  SearchFilters,
   StateConfigFilters,
-  ResultsListLayout,
 } from '@geonetwork-ui/util/shared'
 import { select, Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
@@ -40,7 +38,7 @@ import {
 @Injectable()
 export class SearchFacade {
   results$: Observable<any>
-  layout$: Observable<ResultsListLayout>
+  layout$: Observable<string>
   isLoading$: Observable<boolean>
   isEndOfResults$: Observable<boolean>
   searchFilters$: Observable<SearchFilters>
@@ -96,7 +94,7 @@ export class SearchFacade {
     return this
   }
 
-  setResultsLayout(layout: ResultsListLayout): SearchFacade {
+  setResultsLayout(layout: string): SearchFacade {
     this.store.dispatch(new SetResultsLayout(layout, this.searchId))
     return this
   }

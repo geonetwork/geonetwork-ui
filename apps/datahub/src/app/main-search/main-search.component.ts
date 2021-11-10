@@ -1,9 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { RouterFacade, SearchFacade } from '@geonetwork-ui/feature/search'
-import {
-  MetadataRecord,
-  ResultsListLayoutEnum,
-} from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-main-search',
