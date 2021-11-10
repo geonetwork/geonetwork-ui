@@ -15,9 +15,11 @@ export class MainSearchComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.searchFacade.setFilters({
-      any: '',
-    })
+    this.searchFacade
+      .setFilters({
+        any: '',
+      })
+      .setResultsLayout('DATAHUB')
   }
 
   onMetadataSelection(metadata: MetadataRecord): void {

@@ -6,15 +6,10 @@ import {
   Input,
   OnChanges,
   OnInit,
-  SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core'
-import {
-  ResultsListLayout,
-  SearchFilters,
-  StateConfigFilters,
-} from '@geonetwork-ui/util/shared'
 import { SearchFacade, SearchStateParams } from '@geonetwork-ui/feature/search'
+import { SearchFilters, StateConfigFilters } from '@geonetwork-ui/util/shared'
 import { BaseComponent } from '../base.component'
 
 @Component({
@@ -35,7 +30,7 @@ export class GnResultsListComponent
   @Input() secondaryColor = '#767676'
   @Input() mainColor = '#1a1a1a'
   @Input() backgroundColor = '#cecece'
-  @Input() layout: ResultsListLayout = ResultsListLayout.CARD
+  @Input() layout = 'CARD'
   @Input() size = 10
   @Input() query: string
   @Input() filter: string

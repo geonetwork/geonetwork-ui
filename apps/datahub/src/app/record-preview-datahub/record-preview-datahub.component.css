@@ -1,0 +1,10 @@
+.record-item {
+  height: 10.5em;
+  cursor: pointer;
+}
+.publisher {
+  width: 13rem;
+}
+.favorite {
+  width: 5rem;
+}

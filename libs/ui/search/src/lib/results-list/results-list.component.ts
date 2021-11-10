@@ -1,11 +1,17 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
+  Inject,
   Input,
   Output,
-  EventEmitter,
 } from '@angular/core'
-import { MetadataRecord, ResultsListLayout } from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import {
+  RESULTS_LAYOUT_CONFIG,
+  ResultsLayoutConfigItem,
+  ResultsLayoutConfigModel,
+} from './results-layout.config'
 
 @Component({
   selector: 'gn-ui-results-list',
@@ -16,7 +22,14 @@ import { MetadataRecord, ResultsListLayout } from '@geonetwork-ui/util/shared'
 export class ResultsListComponent {
   @Input() records: MetadataRecord[]
   @Input() loading: boolean
-  @Input() layout: ResultsListLayout = ResultsListLayout.CARD
+  @Input() layout = 'CARD'
   @Output() mdSelect = new EventEmitter<MetadataRecord>()
-  layoutEnum = ResultsListLayout
+
+  get layoutConfig(): Partial<ResultsLayoutConfigItem> {
+    return this.resultsLayoutConfig[this.layout] || {}
+  }
+  constructor(
+    @Inject(RESULTS_LAYOUT_CONFIG)
+    private resultsLayoutConfig: ResultsLayoutConfigModel
+  ) {}
 }

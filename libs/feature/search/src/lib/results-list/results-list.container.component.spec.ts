@@ -1,7 +1,7 @@
 import { Component, DebugElement, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { MetadataRecord, ResultsListLayout } from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { ResultsListContainerComponent } from './results-list.container.component'
@@ -13,7 +13,7 @@ import { ResultsListContainerComponent } from './results-list.container.componen
 class ResultsListMockComponent {
   @Input() records: MetadataRecord[]
   @Input() loading: boolean
-  @Input() layout: ResultsListLayout = ResultsListLayout.CARD
+  @Input() layout = 'CARD'
 }
 
 const isEndOfResultsSubject = new BehaviorSubject(false)
@@ -49,6 +49,7 @@ describe('ResultsListContainerComponent', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(ResultsListContainerComponent)
       component = fixture.componentInstance
+      component.layout = 'CARD'
       de = fixture.debugElement
       items = de.queryAll(By.directive(ResultsListMockComponent))
       fixture.detectChanges()

@@ -10,7 +10,8 @@ class RouterFacadeMock {
 }
 
 class SearchFacadeMock {
-  setFilters = jest.fn()
+  setFilters = jest.fn(() => this)
+  setResultsLayout = jest.fn(() => this)
 }
 
 describe('MainSearchComponent', () => {

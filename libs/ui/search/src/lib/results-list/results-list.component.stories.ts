@@ -1,6 +1,7 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular'
+import { DEFAULT_RESULTS_LAYOUT_CONFIG } from './results-layout.config'
 import { ResultsListComponent } from './results-list.component'
-import { ResultsListLayout, UtilSharedModule } from '@geonetwork-ui/util/shared'
+import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { RECORDS_SUMMARY_FIXTURE } from '../facets/fixtures'
 import { RecordPreviewListComponent } from '../record-preview-list/record-preview-list.component'
 import { RecordPreviewCardComponent } from '../record-preview-card/record-preview-card.component'
@@ -43,11 +44,11 @@ export const Primary = Template.bind({})
 Primary.args = {
   records: RECORDS_SUMMARY_FIXTURE,
   loading: false,
-  layout: ResultsListLayout.CARD,
+  layout: 'CARD',
 }
 Primary.argTypes = {
   layout: {
     control: 'radio',
-    options: Object.values(ResultsListLayout),
+    options: Object.keys(DEFAULT_RESULTS_LAYOUT_CONFIG),
   },
 }

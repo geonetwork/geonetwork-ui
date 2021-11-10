@@ -1,6 +1,6 @@
 import { Meta, moduleMetadata, Story } from '@storybook/angular'
+import { DEFAULT_RESULTS_LAYOUT_CONFIG } from '@geonetwork-ui/ui/search'
 import { GnResultsListComponent } from './gn-results-list.component'
-import { ResultsListLayout } from '@geonetwork-ui/util/shared'
 import { WebcomponentsModule } from '../../webcomponents.module'
 
 export default {
@@ -17,7 +17,7 @@ export default {
     },
     layout: {
       control: 'radio',
-      options: Object.values(ResultsListLayout),
+      options: Object.keys(DEFAULT_RESULTS_LAYOUT_CONFIG),
     },
     primaryColor: { control: 'color' },
     secondaryColor: { control: 'color' },
@@ -48,23 +48,23 @@ const defaultArgs = {
 export const AsList = Template.bind({})
 AsList.args = {
   ...defaultArgs,
-  layout: ResultsListLayout.LIST,
+  layout: 'LIST',
 }
 
 export const AsCard = Template.bind({})
 AsCard.args = {
   ...defaultArgs,
-  layout: ResultsListLayout.CARD,
+  layout: 'CARD',
 }
 
 export const AsText = Template.bind({})
 AsText.args = {
   ...defaultArgs,
-  layout: ResultsListLayout.TEXT,
+  layout: 'TEXT',
 }
 
 export const AsTitle = Template.bind({})
 AsTitle.args = {
   ...defaultArgs,
-  layout: ResultsListLayout.TITLE,
+  layout: 'TITLE',
 }

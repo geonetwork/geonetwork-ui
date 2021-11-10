@@ -1,0 +1,40 @@
+<div class="flex record-item">
+  <div class="publisher flex-shrink-0 mx-6 flex">
+    <div
+      *ngIf="record.thumbnailUrl"
+      class="overflow-hidden border border-gray-500 rounded-lg w-full"
+    >
+      <img
+        class="relative h-full w-full object-cover object-left-top"
+        [src]="record.thumbnailUrl | safe: 'url'"
+        alt="thumbnail"
+      />
+    </div>
+  </div>
+  <div class="content flex-grow mx-2 flex flex-col justify-between min-w-0">
+    <div
+      class="py-2 text-primary font-medium text-xl truncate"
+      [title]="record.title"
+    >
+      {{ record.title }}
+    </div>
+    <div
+      class="flex-grow abstract text-gray-700 leading-relaxed mb-3 line-clamp-3"
+    >
+      {{ abstract }}
+    </div>
+    <div class="links">
+      <mat-icon
+        *ngIf="record.downloadable"
+        class="material-icons-outlined text-gray-200 mr-4"
+        >cloud_download</mat-icon
+      >
+      <mat-icon
+        *ngIf="record.viewable"
+        class="material-icons-outlined text-gray-200 mr-4"
+        >map</mat-icon
+      >
+    </div>
+  </div>
+  <div class="favorite flex-shrink-0"></div>
+</div>

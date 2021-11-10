@@ -1,9 +1,8 @@
 import {
   EsRequestAggTermPatch,
   MetadataRecord,
-  ResultsListLayout,
-  SearchFilters,
   RequestFields,
+  SearchFilters,
   StateConfigFilters,
 } from '@geonetwork-ui/util/shared'
 import { Action } from '@ngrx/store'
@@ -120,7 +119,7 @@ export class Scroll extends AbstractAction implements Action {
 export class SetResultsLayout extends AbstractAction implements Action {
   readonly type = SET_RESULTS_LAYOUT
 
-  constructor(public resultsLayout: ResultsListLayout, id?: string) {
+  constructor(public resultsLayout: string, id?: string) {
     super(id)
   }
 }

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core'
 import {
-  ResultsListLayout,
-  SearchFilters,
   RequestFields,
+  SearchFilters,
   StateConfigFilters,
 } from '@geonetwork-ui/util/shared'
 import { select, Store } from '@ngrx/store'
@@ -39,7 +38,7 @@ import {
 @Injectable()
 export class SearchFacade {
   results$: Observable<any>
-  layout$: Observable<ResultsListLayout>
+  layout$: Observable<string>
   isLoading$: Observable<boolean>
   isEndOfResults$: Observable<boolean>
   searchFilters$: Observable<SearchFilters>
@@ -69,58 +68,71 @@ export class SearchFacade {
     )
   }
 
-  setConfigAggregations(config: any): void {
+  setConfigAggregations(config: any): SearchFacade {
     this.store.dispatch(new SetConfigAggregations(config, this.searchId))
+    return this
   }
-  setConfigRequestFields(fields: RequestFields): void {
+  setConfigRequestFields(fields: RequestFields): SearchFacade {
     this.store.dispatch(new SetConfigRequestFields(fields, this.searchId))
+    return this
   }
 
-  setConfigFilters(filters: StateConfigFilters): void {
+  setConfigFilters(filters: StateConfigFilters): SearchFacade {
     this.store.dispatch(new SetConfigFilters(filters, this.searchId))
+    return this
   }
 
-  requestMoreResults(): void {
+  requestMoreResults(): SearchFacade {
     this.store.dispatch(new RequestMoreResults(this.searchId))
+    return this
   }
 
-  requestMoreOnAggregation(key: string, increment: number): void {
+  requestMoreOnAggregation(key: string, increment: number): SearchFacade {
     this.store.dispatch(
       new RequestMoreOnAggregation(key, increment, this.searchId)
     )
+    return this
   }
 
-  setResultsLayout(layout: ResultsListLayout): void {
+  setResultsLayout(layout: string): SearchFacade {
     this.store.dispatch(new SetResultsLayout(layout, this.searchId))
+    return this
   }
 
-  setFilters(filters: SearchFilters): void {
+  setFilters(filters: SearchFilters): SearchFacade {
     this.store.dispatch(new SetFilters(filters, this.searchId))
+    return this
   }
 
-  updateFilters(filters: SearchFilters): void {
+  updateFilters(filters: SearchFilters): SearchFacade {
     this.store.dispatch(new UpdateFilters(filters, this.searchId))
+    return this
   }
 
-  setSearch(params: SearchStateParams): void {
+  setSearch(params: SearchStateParams): SearchFacade {
     this.store.dispatch(new SetSearch(params, this.searchId))
+    return this
   }
 
-  setIncludeOnAggregation(key: string, include: string): void {
+  setIncludeOnAggregation(key: string, include: string): SearchFacade {
     this.store.dispatch(
       new SetIncludeOnAggregation(key, include, this.searchId)
     )
+    return this
   }
 
-  setPagination(from: number, size: number): void {
+  setPagination(from: number, size: number): SearchFacade {
     this.store.dispatch(new SetPagination(from, size, this.searchId))
+    return this
   }
 
-  paginate(delta: number): void {
+  paginate(delta: number): SearchFacade {
     this.store.dispatch(new Paginate(delta, this.searchId))
+    return this
   }
 
-  scroll(): void {
+  scroll(): SearchFacade {
     this.store.dispatch(new Scroll(this.searchId))
+    return this
   }
 }

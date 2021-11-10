@@ -10,12 +10,17 @@ import { RecordPreviewListComponent } from './record-preview-list/record-preview
 import { RecordPreviewTextComponent } from './record-preview-text/record-preview-text.component'
 import { RecordPreviewTitleComponent } from './record-preview-title/record-preview-title.component'
 import { ResultsHitsNumberComponent } from './results-hits-number/results-hits-number.component'
+import {
+  DEFAULT_RESULTS_LAYOUT_CONFIG,
+  RESULTS_LAYOUT_CONFIG,
+} from './results-list/results-layout.config'
 import { ResultsListComponent } from './results-list/results-list.component'
 import { RecordPreviewComponent } from './record-preview/record-preview.component'
 import { RecordThumbnailComponent } from './record-thumbnail/record-thumbnail.component'
 import { TagInputModule } from 'ngx-chips'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { ResultsListItemComponent } from './results-list-item/results-list-item.component'
 
 @NgModule({
   declarations: [
@@ -28,6 +33,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
     RecordThumbnailComponent,
     ResultsListComponent,
     ResultsHitsNumberComponent,
+    ResultsListItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +57,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
     FacetsModule,
     RecordPreviewComponent,
     ResultsHitsNumberComponent,
+  ],
+  providers: [
+    { provide: RESULTS_LAYOUT_CONFIG, useValue: DEFAULT_RESULTS_LAYOUT_CONFIG },
   ],
 })
 export class UiSearchModule {}

@@ -1,5 +1,8 @@
-import { Component } from '@angular/core'
-import { ResultsListLayout } from '@geonetwork-ui/util/shared'
+import { Component, Inject } from '@angular/core'
+import {
+  RESULTS_LAYOUT_CONFIG,
+  ResultsLayoutConfigModel,
+} from '@geonetwork-ui/ui/search'
 import { SearchFacade } from '../state/search.facade'
 
 @Component({
@@ -7,16 +10,20 @@ import { SearchFacade } from '../state/search.facade'
   templateUrl: './results-layout.component.html',
 })
 export class ResultsLayoutComponent {
-  choices = Object.values(ResultsListLayout).map((v) => {
+  choices = Object.keys(this.resultsLayoutConfig).map((v) => {
     return {
       label: v,
       value: v,
     }
   })
 
-  constructor(public searchFacade: SearchFacade) {}
+  constructor(
+    public searchFacade: SearchFacade,
+    @Inject(RESULTS_LAYOUT_CONFIG)
+    private resultsLayoutConfig: ResultsLayoutConfigModel
+  ) {}
 
-  change(layout: ResultsListLayout) {
+  change(layout: string) {
     this.searchFacade.setResultsLayout(layout)
   }
 }
