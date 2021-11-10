@@ -14,6 +14,7 @@ export const ES_SOURCE_SUMMARY = [
   'overview',
   'logo',
   'codelist_status_text',
+  'linkProtocol',
 ]
 
 export const ES_SOURCE_BRIEF = [
