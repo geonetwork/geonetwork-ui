@@ -7,7 +7,7 @@ import { RecordPreviewDatahubComponent } from './record-preview-datahub/record-p
 export const DATAHUB_RESULTS_LAYOUT_CONFIG: ResultsLayoutConfigModel = {
   DATAHUB: new ResultsLayoutConfigItem(
     RecordPreviewDatahubComponent,
-    'py-4',
+    'py-7',
     '',
     'grid grid-cols-1 divide-y divide-gray-500'
   ),
