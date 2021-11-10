@@ -186,6 +186,45 @@ describe('ElasticsearchMapper', () => {
       })
     })
 
+    describe('link protocols', () => {
+      let summary
+      describe('no protocols', () => {
+        beforeEach(() => {
+          summary = service.toRecord(hit)
+        })
+        it('hasDownloads is false', () => {
+          expect(summary.hasDownloads).toBeUndefined()
+        })
+        it('hasMaps is false', () => {
+          expect(summary.hasDownloads).toBeUndefined()
+        })
+      })
+      describe('unknwown protocols', () => {
+        beforeEach(() => {
+          hit._source.linkProtocol = ['MY-PROTOCOL']
+          summary = service.toRecord(hit)
+        })
+        it('hasDownloads is false', () => {
+          expect(summary.hasDownloads).toBe(false)
+        })
+        it('hasMaps is false', () => {
+          expect(summary.hasMaps).toBe(false)
+        })
+      })
+      describe('map and downloads protocol', () => {
+        beforeEach(() => {
+          hit._source.linkProtocol = ['OGC:WMS', 'WWW:DOWNLOAD:1.0']
+          summary = service.toRecord(hit)
+        })
+        it('hasDownloads is false', () => {
+          expect(summary.hasDownloads).toBe(true)
+        })
+        it('hasMaps is false', () => {
+          expect(summary.hasMaps).toBe(true)
+        })
+      })
+    })
+
     describe('full record', () => {
       it('builds a complete record object', () => {
         const record = service.toRecord(ES_FIXTURE_FULL_RESPONSE.hits.hits[0])

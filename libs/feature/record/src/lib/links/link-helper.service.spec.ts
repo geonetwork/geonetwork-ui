@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing'
-import { LinkClassifierService, LinkUsage } from './link-classifier.service'
 import {
   RECORDS_FULL_FIXTURE,
   RECORDS_SUMMARY_FIXTURE,
@@ -9,6 +8,7 @@ import {
   MetadataRecord,
   RECORD_LINK_FIXTURE_WMS,
 } from '@geonetwork-ui/util/shared'
+import { LinkClassifierService, LinkUsage } from './link-classifier.service'
 
 import { LinkHelperService } from './link-helper.service'
 
@@ -173,6 +173,65 @@ describe('LinkHelperService', () => {
       })
       it('returns false', () => {
         expect(result).toBe(false)
+      })
+    })
+  })
+
+  describe('#protocols', () => {
+    describe('#hasDownloadProtocols', () => {
+      beforeEach(() => {
+        linkUsage = []
+      })
+      it('calls #getUsagesForLink', () => {
+        jest.clearAllMocks()
+        service.hasDownloadProtocols([])
+        expect(linkClassifierMock.getUsagesForLink).not.toHaveBeenCalled()
+        jest.clearAllMocks()
+        service.hasDownloadProtocols(['OGC:WMS', 'WWW:DOWNLOAD'])
+        expect(linkClassifierMock.getUsagesForLink).toHaveBeenCalledTimes(2)
+        jest.clearAllMocks()
+        service.hasDownloadProtocols(['WWW:DOWNLOAD'])
+        expect(linkClassifierMock.getUsagesForLink).toHaveBeenCalledTimes(1)
+        jest.clearAllMocks()
+      })
+      it('calls #hasMapApiProtocols', () => {
+        jest.clearAllMocks()
+        service.hasMapApiProtocols([])
+        expect(linkClassifierMock.getUsagesForLink).not.toHaveBeenCalled()
+        jest.clearAllMocks()
+        service.hasDownloadProtocols(['OGC:WMS', 'WWW:DOWNLOAD'])
+        expect(linkClassifierMock.getUsagesForLink).toHaveBeenCalledTimes(2)
+        jest.clearAllMocks()
+        service.hasDownloadProtocols(['WWW:DOWNLOAD'])
+        expect(linkClassifierMock.getUsagesForLink).toHaveBeenCalledTimes(1)
+        jest.clearAllMocks()
+      })
+    })
+
+    describe('no matching usages', () => {
+      beforeEach(() => {
+        linkUsage = [LinkUsage.DATA]
+      })
+      it('hasDownloadProtocols is false', () => {
+        expect(service.hasDownloadProtocols(['ESRI:REST'])).toBe(false)
+      })
+      it('hasMapApiProtocols is false', () => {
+        expect(service.hasMapApiProtocols(['ESRI:REST'])).toBe(false)
+      })
+    })
+    describe('has map and download protocols', () => {
+      beforeEach(() => {
+        linkUsage = [LinkUsage.MAPAPI, LinkUsage.DOWNLOAD]
+      })
+      it('hasDownloadProtocols is true', () => {
+        expect(service.hasDownloadProtocols(['OGC:WMS', 'WWW:DOWNLOAD'])).toBe(
+          true
+        )
+      })
+      it('hasMapApiProtocols is true', () => {
+        expect(service.hasMapApiProtocols(['OGC:WMS', 'WWW:DOWNLOAD'])).toBe(
+          true
+        )
       })
     })
   })
