@@ -1,6 +1,10 @@
 <ng-container>
   <div [ngClass]="layoutConfig.containerClass">
-    <div [ngClass]="layoutConfig.itemClass" *ngFor="let record of records">
+    <div
+      [ngClass]="layoutConfig.itemClass"
+      [style]="layoutConfig.itemStyle"
+      *ngFor="let record of records"
+    >
       <gn-ui-results-list-item
         [record]="record"
         [layout]="layout"

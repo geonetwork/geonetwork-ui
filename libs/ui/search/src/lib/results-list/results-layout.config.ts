@@ -13,6 +13,7 @@ export class ResultsLayoutConfigItem {
   constructor(
     public component: Type<RecordPreviewComponent>,
     public itemClass: string = DEFAULT_ITEM_CLS,
+    public itemStyle: string = '',
     public containerClass: string = DEFAULT_CONTAINER_CLS
   ) {}
 }
@@ -24,7 +25,8 @@ export const RESULTS_LAYOUT_CONFIG =
 export const DEFAULT_RESULTS_LAYOUT_CONFIG: ResultsLayoutConfigModel = {
   [ResultsListLayoutEnum.CARD]: new ResultsLayoutConfigItem(
     RecordPreviewCardComponent,
-    'h-24',
+    '',
+    'height: 24em;',
     'grid md:grid-cols-2 lg:grid-cols-4 gap-4 p-4'
   ),
   [ResultsListLayoutEnum.LIST]: new ResultsLayoutConfigItem(
