@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { map, startWith, switchMap } from 'rxjs/operators'
-import { MdViewFacade } from '../state'
-import { combineLatest, from } from 'rxjs'
 import {
   DownloadFormatType,
   getDownloadFormat,
   getLinksWithEsriRestFormats,
   getLinksWithWfsFormats,
-} from '../links/link-utils'
+} from '@geonetwork-ui/feature/search'
+import { map, startWith, switchMap } from 'rxjs/operators'
+import { MdViewFacade } from '../state'
+import { combineLatest, from } from 'rxjs'
 
 @Component({
   selector: 'gn-ui-data-downloads',

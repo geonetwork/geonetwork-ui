@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing'
 import { AuthService } from '@geonetwork-ui/feature/auth'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
-import { ElasticsearchMapper } from '@geonetwork-ui/feature/record'
+import { ElasticsearchMapper } from '../utils/mapper'
 import {
   ClearPagination,
   DEFAULT_SEARCH_KEY,

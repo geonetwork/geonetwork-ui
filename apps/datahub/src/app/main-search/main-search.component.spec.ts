@@ -1,8 +1,9 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { RouterFacade } from '@geonetwork-ui/feature/router'
 
 import { MainSearchComponent } from './main-search.component'
-import { RouterFacade, SearchFacade } from '@geonetwork-ui/feature/search'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 
 class RouterFacadeMock {

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core'
+import { LinkHelperService } from '@geonetwork-ui/feature/search'
 import { MetadataLinkValid, MetadataRecord } from '@geonetwork-ui/util/shared'
 
 import { select, Store } from '@ngrx/store'
 import { filter, map } from 'rxjs/operators'
-import { LinkHelperService } from '../links/link-helper.service'
 
 import * as MdViewActions from './mdview.actions'
 import * as MdViewSelectors from './mdview.selectors'
