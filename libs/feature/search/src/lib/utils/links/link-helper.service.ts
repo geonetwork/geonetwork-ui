@@ -11,6 +11,24 @@ export class LinkHelperService {
   hasLinks(record: MetadataRecord): boolean {
     return 'links' in record
   }
+  hasDownloadProtocols(protocols: string[]): boolean {
+    return protocols
+      .map((protocol) => {
+        return { protocol }
+      })
+      .some((link: Partial<MetadataLink>) =>
+        this.isDownloadLink(link as MetadataLink)
+      )
+  }
+  hasMapApiProtocols(protocols: string[]): boolean {
+    return protocols
+      .map((protocol) => {
+        return { protocol }
+      })
+      .some((link: Partial<MetadataLink>) =>
+        this.isMapApiLink(link as MetadataLink)
+      )
+  }
   isValidLink(link: MetadataLink): boolean {
     return !('invalid' in link)
   }

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
-import { RouterFacade, SearchFacade } from '@geonetwork-ui/feature/search'
+import { RouterFacade } from '@geonetwork-ui/feature/router'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 
 @Component({

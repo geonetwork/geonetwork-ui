@@ -1,16 +1,13 @@
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { ElasticsearchService } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
+import { ElasticsearchMapper } from '../utils/mapper'
 
 import { FuzzySearchComponent } from './fuzzy-search.component'
-import {
-  ElasticsearchMapper,
-  ElasticsearchService,
-} from '@geonetwork-ui/util/shared'
-import { RouterFacade } from '../router'
 
 const searchFacadeMock = {
   setFilters: jest.fn(),
@@ -79,10 +76,6 @@ describe('FuzzySearchComponent', () => {
           provide: SearchApiService,
           useValue: searchServiceMock,
         },
-        {
-          provide: RouterFacade,
-          useClass: RouterFacadeMock,
-        },
       ],
       imports: [UiInputsModule, TranslateModule.forRoot()],
     }).compileComponents()
@@ -116,13 +109,5 @@ describe('FuzzySearchComponent', () => {
     it('changes the search filters', () => {
       expect(searchFacadeMock.setFilters).toHaveBeenCalledWith({ any: 'blarg' })
     })
-    it('navigates to the search route (if router enabled)', inject(
-      [RouterFacade],
-      (routerFacade) => {
-        expect(routerFacade.go).toHaveBeenCalledWith({
-          path: 'search',
-        })
-      }
-    ))
   })
 })

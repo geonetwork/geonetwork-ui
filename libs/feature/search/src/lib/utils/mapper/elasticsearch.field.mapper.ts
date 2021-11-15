@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core'
+import { LinkHelperService } from '../links/link-helper.service'
 import {
   getAsArray,
   getAsUrl,
@@ -13,8 +14,7 @@ import {
   SourceWithUnknownProps,
   toDate,
 } from './atomic-operations'
-import { MetadataUrlService } from '../../services'
-import { MetadataRecord } from '../../models'
+import { MetadataUrlService, MetadataRecord } from '@geonetwork-ui/util/shared'
 
 type ESResponseSource = SourceWithUnknownProps
 
@@ -27,7 +27,10 @@ type EsFieldMapperFn = (
   providedIn: 'root',
 })
 export class ElasticsearchFieldMapper {
-  constructor(private metadataUrlService: MetadataUrlService) {}
+  constructor(
+    private metadataUrlService: MetadataUrlService,
+    private linkHelper: LinkHelperService
+  ) {}
 
   protected fields: Record<string, EsFieldMapperFn> = {
     id: (output, source) => ({
@@ -98,6 +101,16 @@ export class ElasticsearchFieldMapper {
         selectField<SourceWithUnknownProps[]>(source, 'link')
       ).map(mapLink),
     }),
+    linkProtocol: (output, source) => {
+      const protocols = getAsArray(
+        selectField<SourceWithUnknownProps[]>(source, 'linkProtocol')
+      )
+      return {
+        ...output,
+        hasDownloads: this.linkHelper.hasDownloadProtocols(protocols),
+        hasMaps: this.linkHelper.hasMapApiProtocols(protocols),
+      }
+    },
     contact: (output, source) => ({
       ...output,
       contact: mapContact(

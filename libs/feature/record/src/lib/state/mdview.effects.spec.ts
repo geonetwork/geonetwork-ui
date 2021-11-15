@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
+import { ElasticsearchMapper } from '@geonetwork-ui/feature/search'
 import {
-  ElasticsearchMapper,
   ElasticsearchService,
   MetadataRecord,
 } from '@geonetwork-ui/util/shared'

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { MetadataRecord } from '../../models'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { ElasticsearchFieldMapper } from './elasticsearch.field.mapper'
 
 @Injectable({
@@ -14,10 +14,7 @@ export class ElasticsearchMapper {
 
   toRecord(hit) {
     const { _source } = hit
-    const record: Partial<MetadataRecord> = {
-      viewable: hit.view,
-      downloadable: hit.download,
-    }
+    const record: Partial<MetadataRecord> = {}
 
     return Object.keys(_source).reduce(
       (prev, fieldName) =>

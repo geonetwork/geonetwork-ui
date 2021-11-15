@@ -10,7 +10,7 @@ import { DataDownloadsComponent } from './data-downloads.component'
 import { MetadataLink } from '@geonetwork-ui/util/shared'
 import { Component, Input } from '@angular/core'
 import { By } from '@angular/platform-browser'
-import * as utils from '../links/link-utils'
+import * as utils from '@geonetwork-ui/feature/search'
 
 class MdViewFacadeMock {
   downloadLinks$ = new Subject()

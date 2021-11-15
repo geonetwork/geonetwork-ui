@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core'
+import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core'
+import { ResultsLayoutConfigModel } from '@geonetwork-ui/ui/search'
 import { RouterFacade } from './state'
 import { RouterModule, Routes } from '@angular/router'
 import {
@@ -26,6 +27,13 @@ const ROUTES: Routes = [
   },
 ]
 
+export interface RouterConfigModel {
+  searchStateId: string
+}
+export const ROUTER_CONFIG = new InjectionToken<RouterConfigModel>(
+  'router.config'
+)
+
 @NgModule({
   imports: [
     RouterModule.forChild(ROUTES),
@@ -38,4 +46,13 @@ const ROUTES: Routes = [
   ],
   providers: [RouterFacade],
 })
-export class SearchRouterModule {}
+export class DefaultRouterModule {
+  static forRoot(
+    config: RouterConfigModel
+  ): ModuleWithProviders<DefaultRouterModule> {
+    return {
+      ngModule: DefaultRouterModule,
+      providers: [{ provide: ROUTER_CONFIG, useValue: config }],
+    }
+  }
+}

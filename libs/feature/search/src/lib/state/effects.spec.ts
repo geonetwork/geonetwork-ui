@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing'
 import { AuthService } from '@geonetwork-ui/feature/auth'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
+import { ElasticsearchMapper } from '../utils/mapper'
 import {
   ClearPagination,
   DEFAULT_SEARCH_KEY,
@@ -29,10 +30,7 @@ import {
 import { SearchEffects } from './effects'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
-import {
-  ElasticsearchMapper,
-  ES_FIXTURE_AGGS_REQUEST,
-} from '@geonetwork-ui/util/shared'
+import { ES_FIXTURE_AGGS_REQUEST } from '@geonetwork-ui/util/shared'
 
 const initialStateSearchMock = initialState[DEFAULT_SEARCH_KEY]
 const initialStateMock = {

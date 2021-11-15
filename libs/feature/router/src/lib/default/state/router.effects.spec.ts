@@ -1,18 +1,20 @@
+import { Location } from '@angular/common'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
+import { MdViewActions } from '@geonetwork-ui/feature/record'
+import { RequestMoreResults } from '@geonetwork-ui/feature/search'
 import { provideMockActions } from '@ngrx/effects/testing'
+import { routerNavigationAction } from '@ngrx/router-store'
+import { Action } from '@ngrx/store'
 import { hot } from 'jasmine-marbles'
 import { Observable } from 'rxjs'
-import { Location } from '@angular/common'
+import { MetadataRouteComponent, SearchRouteComponent } from '../constants'
+import { ROUTER_CONFIG } from '../router.module'
 
 import * as fromActions from './router.actions'
-import { RouterGoActionPayload } from './router.actions'
+import { goAction, RouterGoActionPayload } from './router.actions'
 import * as fromEffects from './router.effects'
-import { Action } from '@ngrx/store'
-import { routerNavigationAction } from '@ngrx/router-store'
-import { MdViewActions } from '@geonetwork-ui/feature/record'
-import { MetadataRouteComponent, SearchRouteComponent } from '../constants'
 
 describe('RouterEffects', () => {
   let router: Router
@@ -41,6 +43,12 @@ describe('RouterEffects', () => {
         {
           provide: Location,
           useValue: LocationMock,
+        },
+        {
+          provide: ROUTER_CONFIG,
+          useValue: {
+            searchStateId: 'main',
+          },
         },
       ],
     })
@@ -133,6 +141,42 @@ describe('RouterEffects', () => {
 
       effects.navigate$.subscribe(() => {
         expect(location.forward).toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe('search$', () => {
+    let searchStateId
+    describe('when RequestMore on config search', () => {
+      beforeEach(() => {
+        searchStateId = 'main'
+      })
+      it('moves to search route', () => {
+        actions = hot('-a', { a: new RequestMoreResults(searchStateId) })
+
+        const expected = hot('-b', {
+          b: goAction({
+            path: 'search',
+          }),
+        })
+
+        expect(effects.search$).toBeObservable(expected)
+      })
+    })
+    describe('when RequestMore on another search', () => {
+      beforeEach(() => {
+        searchStateId = 'extra'
+      })
+      it('does nothing', () => {
+        actions = hot('-a', { a: new RequestMoreResults(searchStateId) })
+
+        const expected = hot('-b', {
+          b: goAction({
+            path: 'search',
+          }),
+        })
+
+        expect(effects.search$).not.toBeObservable(expected)
       })
     })
   })

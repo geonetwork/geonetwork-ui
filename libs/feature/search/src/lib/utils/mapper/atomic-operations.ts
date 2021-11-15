@@ -1,4 +1,4 @@
-import { MetadataContact, MetadataLink } from '../../models'
+import { MetadataContact, MetadataLink } from '@geonetwork-ui/util/shared'
 
 export type SourceWithUnknownProps = { [key: string]: unknown }
 

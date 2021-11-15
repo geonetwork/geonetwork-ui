@@ -21,10 +21,10 @@ export class RecordPreviewComponent implements OnInit, OnDestroy {
   subscription = new Subscription()
 
   get isViewable() {
-    return this.record.viewable
+    return this.record.hasMaps
   }
   get isDownloadable() {
-    return this.record.downloadable
+    return this.record.hasDownloads
   }
 
   constructor(protected elementRef: ElementRef) {}
