@@ -38,4 +38,4 @@ const ROUTES: Routes = [
   ],
   providers: [RouterFacade],
 })
-export class SearchRouterModule {}
+export class DefaultRouterModule {}
