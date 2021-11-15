@@ -32,7 +32,10 @@ You'll need manual configuration to make the application running:
 
 ### Generate a library
 
-Run `ng g @nrwl/angular:lib my-lib` to generate a library.
+Run `ng g @nrwl/angular:lib my-lib` to generate a library. 
+
+You should create your library into a folder (`ui`, `feature` ...) 
+eg `nx g @nrwl/angular:lib router --directory=feature`, the name of the library will be `feature-router` in `angular.json` file.
 
 > You can also use any of the plugins above to generate libraries as well.
 
