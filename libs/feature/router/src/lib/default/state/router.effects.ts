@@ -1,20 +1,26 @@
 import { Location } from '@angular/common'
-import { Injectable } from '@angular/core'
+import { Inject, Injectable } from '@angular/core'
 import { ActivatedRouteSnapshot, Router } from '@angular/router'
-import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { tap } from 'rxjs/operators'
-
-import * as RouterActions from './router.actions'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
+import {
+  REQUEST_MORE_RESULTS,
+  RequestMoreResults,
+} from '@geonetwork-ui/feature/search'
+import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { navigation } from '@nrwl/angular'
+import { filter, map, tap } from 'rxjs/operators'
 import { MetadataRouteComponent, SearchRouteComponent } from '../constants'
+import { ROUTER_CONFIG, RouterConfigModel } from '../router.module'
+import * as RouterActions from './router.actions'
+import { goAction } from './router.actions'
 
 @Injectable()
 export class RouterEffects {
   constructor(
     private _actions$: Actions,
     private _router: Router,
-    private _location: Location
+    private _location: Location,
+    @Inject(ROUTER_CONFIG) private routerConfig: RouterConfigModel
   ) {}
 
   navigate$ = createEffect(
@@ -55,6 +61,25 @@ export class RouterEffects {
       navigation(SearchRouteComponent, {
         run: () => MdViewActions.close(),
       })
+    )
+  )
+
+  /**
+   * This effect will navigate to the search page when a new
+   * search is launched
+   */
+  search$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(REQUEST_MORE_RESULTS),
+      filter(
+        (action: RequestMoreResults) =>
+          action.id === this.routerConfig.searchStateId
+      ),
+      map((action) =>
+        goAction({
+          path: 'search',
+        })
+      )
     )
   )
 
