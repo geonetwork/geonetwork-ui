@@ -24,8 +24,8 @@ export interface MetadataRecord {
   metadataUrl: string
   abstract?: string
   thumbnailUrl?: string
-  downloadable?: boolean
-  viewable?: boolean
+  hasDownloads?: boolean
+  hasMaps?: boolean
   updateStatus?: string
   updateFrequency?: string
   links?: MetadataLink[]
