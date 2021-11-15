@@ -24,9 +24,10 @@
           truncate
           no-underline
           hover:text-primary-lighter hover:underline
+          cursor-pointer
         "
-        routerLink="search"
         translate
+        (click)="resetSearch()"
         >datahub.route.home</a
       >
       > {{ breadcrumb$ | async }}
