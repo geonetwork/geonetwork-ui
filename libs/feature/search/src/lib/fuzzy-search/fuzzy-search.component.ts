@@ -7,6 +7,7 @@ import {
 } from '@angular/core'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { ElasticsearchMapper } from '@geonetwork-ui/feature/record'
+import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
 import {
   ElasticsearchService,
@@ -14,7 +15,6 @@ import {
 } from '@geonetwork-ui/util/shared'
 import { map, switchMap } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
-import { RouterFacade } from '../router'
 
 @Component({
   selector: 'gn-ui-fuzzy-search',

@@ -4,10 +4,8 @@ import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
-import {
-  FeatureSearchModule,
-  SearchRouterModule,
-} from '@geonetwork-ui/feature/search'
+import { SearchRouterModule } from '@geonetwork-ui/feature/router'
+import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { RESULTS_LAYOUT_CONFIG, UiSearchModule } from '@geonetwork-ui/ui/search'
 import {
   getDefaultLang,

@@ -8,7 +8,7 @@ import { SearchFacade } from '../state/search.facade'
 
 import { FuzzySearchComponent } from './fuzzy-search.component'
 import { ElasticsearchService } from '@geonetwork-ui/util/shared'
-import { RouterFacade } from '../router'
+import { RouterFacade } from '@geonetwork-ui/feature/router'
 
 const searchFacadeMock = {
   setFilters: jest.fn(),
