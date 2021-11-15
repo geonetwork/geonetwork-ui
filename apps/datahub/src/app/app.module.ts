@@ -45,7 +45,9 @@ export const metaReducers: MetaReducer[] = !environment.production
     UtilI18nModule,
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
     FeatureSearchModule,
-    DefaultRouterModule,
+    DefaultRouterModule.forRoot({
+      searchStateId: 'mainSearch',
+    }),
     FeatureRecordModule,
     UiSearchModule,
     UtilSharedModule,
