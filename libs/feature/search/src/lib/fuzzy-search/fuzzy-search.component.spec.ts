@@ -8,7 +8,6 @@ import { SearchFacade } from '../state/search.facade'
 
 import { FuzzySearchComponent } from './fuzzy-search.component'
 import { ElasticsearchService } from '@geonetwork-ui/util/shared'
-import { RouterFacade } from '@geonetwork-ui/feature/router'
 
 const searchFacadeMock = {
   setFilters: jest.fn(),
@@ -77,10 +76,6 @@ describe('FuzzySearchComponent', () => {
           provide: SearchApiService,
           useValue: searchServiceMock,
         },
-        {
-          provide: RouterFacade,
-          useClass: RouterFacadeMock,
-        },
       ],
       imports: [UiInputsModule, TranslateModule.forRoot()],
     }).compileComponents()
@@ -114,13 +109,5 @@ describe('FuzzySearchComponent', () => {
     it('changes the search filters', () => {
       expect(searchFacadeMock.setFilters).toHaveBeenCalledWith({ any: 'blarg' })
     })
-    it('navigates to the search route (if router enabled)', inject(
-      [RouterFacade],
-      (routerFacade) => {
-        expect(routerFacade.go).toHaveBeenCalledWith({
-          path: 'search',
-        })
-      }
-    ))
   })
 })

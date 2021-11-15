@@ -2,12 +2,10 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  Optional,
   ViewChild,
 } from '@angular/core'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { ElasticsearchMapper } from '@geonetwork-ui/feature/record'
-import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
 import {
   ElasticsearchService,
@@ -29,8 +27,7 @@ export class FuzzySearchComponent implements AfterViewInit {
     private searchFacade: SearchFacade,
     private searchService: SearchApiService,
     private esMapper: ElasticsearchMapper,
-    private esService: ElasticsearchService,
-    @Optional() private routerFacade: RouterFacade
+    private esService: ElasticsearchService
   ) {}
 
   ngAfterViewInit(): void {
@@ -54,10 +51,5 @@ export class FuzzySearchComponent implements AfterViewInit {
 
   handleSearchTextChange(newValue: string) {
     this.searchFacade.setFilters({ any: newValue })
-    if (this.routerFacade) {
-      this.routerFacade.go({
-        path: 'search',
-      })
-    }
   }
 }
