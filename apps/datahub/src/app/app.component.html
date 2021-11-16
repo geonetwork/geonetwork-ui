@@ -12,7 +12,10 @@
         </div>
       </div>
       <div class="py-8">
-        <gn-ui-fuzzy-search></gn-ui-fuzzy-search>
+        <gn-ui-fuzzy-search
+          [displayWithFn]="autocompleteDisplayWithFn"
+          (itemSelected)="onFuzzySearchSelection($event)"
+        ></gn-ui-fuzzy-search>
       </div>
     </div>
   </div>
