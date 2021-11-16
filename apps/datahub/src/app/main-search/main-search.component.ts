@@ -26,4 +26,8 @@ export class MainSearchComponent implements OnInit {
   onMetadataSelection(metadata: MetadataRecord): void {
     this.searchRouter.goToMetadata(metadata)
   }
+
+  resetSearch(): void {
+    this.searchFacade.setFilters({})
+  }
 }
