@@ -58,10 +58,13 @@ $ nx run datahub:docker-build --tag=geonetwork-ui/datahub
 
 This will build a docker image with the tag `geonetwork-ui/datahub:latest`.
 
-To run it on the 8080 port with a custom GN4 API url, use:
+To run it on the 8080 port with a custom GN4 API url and proxy path, use:
 
 ```bash
-$ docker run -p 8080:80 -e GN4_API_URL=https://gn4.custom/geonetwork/srv/api geonetwork-ui/datahub
+$ docker run -p 8080:80 \
+             -e GN4_API_URL=https://gn4.custom/geonetwork/srv/api \
+             -e PROXY_PATH=/proxy?url= \
+             geonetwork-ui/datahub
 ```
 
 The application will be available on http://localhost:8080/datahub/.
