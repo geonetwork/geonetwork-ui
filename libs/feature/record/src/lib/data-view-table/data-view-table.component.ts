@@ -50,7 +50,7 @@ export class DataViewTableComponent {
   error = null
 
   tableData$ = combineLatest([
-    this.mdViewFacade.dataLinks$.pipe(tap(console.log)), // FIXME: this should not emit the same links twice
+    this.mdViewFacade.dataLinks$,
     this.selectedLinkIndex$.pipe(distinctUntilChanged()),
   ]).pipe(
     map(([links, index]) => links[index]),
