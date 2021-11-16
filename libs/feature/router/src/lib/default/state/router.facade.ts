@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core'
+import { MdViewActions } from '@geonetwork-ui/feature/record'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { RouterReducerState } from '@ngrx/router-store'
 import { select, Store } from '@ngrx/store'
+import { filter, take } from 'rxjs/operators'
 import {
   backAction,
   forwardAction,
@@ -12,9 +16,6 @@ import {
   selectRouteParams,
   selectUrl,
 } from './router.selectors'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
-import { RouterReducerState } from '@ngrx/router-store'
-import { MdViewActions } from '@geonetwork-ui/feature/record'
 
 @Injectable()
 export class RouterFacade {
@@ -26,14 +27,21 @@ export class RouterFacade {
   constructor(private store: Store<RouterReducerState>) {}
 
   goToMetadata(metadata: MetadataRecord) {
-    this.store.dispatch(
-      goAction({
-        path: `metadata/${metadata.uuid}`,
+    this.pathParams$
+      .pipe(
+        take(1),
+        filter((params) => params.metadataUuid !== metadata.uuid)
+      )
+      .subscribe(() => {
+        this.store.dispatch(
+          goAction({
+            path: `metadata/${metadata.uuid}`,
+          })
+        )
+        this.store.dispatch(
+          MdViewActions.setIncompleteMetadata({ incomplete: metadata })
+        )
       })
-    )
-    this.store.dispatch(
-      MdViewActions.setIncompleteMetadata({ incomplete: metadata })
-    )
   }
 
   go(payload: RouterGoActionPayload) {
