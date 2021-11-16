@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core'
 import { readDataset } from '@geonetwork-ui/data-fetcher'
-import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { MetadataLinkValid, ProxyService } from '@geonetwork-ui/util/shared'
 import {
   BehaviorSubject,
   combineLatest,
@@ -72,29 +72,32 @@ export class DataViewTableComponent {
 
   constructor(
     private mdViewFacade: MdViewFacade,
-    private linkHelper: LinkHelperService
+    private linkHelper: LinkHelperService,
+    private proxy: ProxyService
   ) {}
 
   fetchData(link: MetadataLinkValid): Observable<{ id: string | number }[]> {
     if (this.linkHelper.isWfsLink(link)) {
       return fromPromise(
-        new WfsEndpoint(link.url).isReady().then((endpoint) => {
-          if (!endpoint.supportsJson(link.name)) {
-            throw new Error('map.wfs.geojson.not.supported')
-          }
-          return readDataset(
-            endpoint.getFeatureUrl(link.name, {
-              outputCrs: 'EPSG:4326',
-              asJson: true,
-            }),
-            'geojson'
-          ).then((features) =>
-            features.map((f) => ({
-              id: f.id,
-              ...f.properties,
-            }))
-          )
-        })
+        new WfsEndpoint(this.proxy.getProxiedUrl(link.url))
+          .isReady()
+          .then((endpoint) => {
+            if (!endpoint.supportsJson(link.name)) {
+              throw new Error('map.wfs.geojson.not.supported')
+            }
+            return readDataset(
+              endpoint.getFeatureUrl(link.name, {
+                outputCrs: 'EPSG:4326',
+                asJson: true,
+              }),
+              'geojson'
+            ).then((features) =>
+              features.map((f) => ({
+                id: f.id,
+                ...f.properties,
+              }))
+            )
+          })
       )
     } else if (this.linkHelper.hasProtocolDownload(link)) {
       return fromPromise(
