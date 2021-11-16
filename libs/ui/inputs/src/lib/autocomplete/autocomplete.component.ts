@@ -20,6 +20,8 @@ import {
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
 import { FormControl } from '@angular/forms'
 
+export type AutcompleteItem = unknown
+
 @Component({
   selector: 'gn-ui-autocomplete',
   templateUrl: './autocomplete.component.html',
@@ -28,19 +30,23 @@ import { FormControl } from '@angular/forms'
 })
 export class AutocompleteComponent implements OnInit {
   @Input() placeholder: string
-  @Input() action: (value: string) => Observable<string[]>
-  @Output() changed = new EventEmitter<string>()
+  @Input() action: (value: string) => Observable<AutcompleteItem[]>
+  @Output() itemSelected = new EventEmitter<AutcompleteItem>()
+  @Output() inputSubmited = new EventEmitter<string>()
   @ViewChild(MatAutocompleteTrigger) triggerRef: MatAutocompleteTrigger
   @ViewChild('searchInput') inputRef: ElementRef<HTMLInputElement>
 
   searching: boolean
-  suggestions$: Observable<string[]>
+  suggestions$: Observable<AutcompleteItem[]>
   control = new FormControl()
+
+  @Input() itemToStringFn: (AutcompleteItem) => string = (item) => item
+  @Input() displayWithFn: (AutcompleteItem) => string = (item) => item
 
   ngOnInit(): void {
     this.suggestions$ = this.control.valueChanges.pipe(
       filter((value) => value.length > 2),
-      debounceTime(200),
+      debounceTime(400),
       distinctUntilChanged(),
       tap(() => (this.searching = true)),
       switchMap((value) => this.action(value)),
@@ -48,13 +54,16 @@ export class AutocompleteComponent implements OnInit {
     )
   }
 
-  handleSelection(selected: string) {
-    this.changed.emit(selected)
-  }
-
   clear(): void {
     this.inputRef.nativeElement.value = ''
     this.inputRef.nativeElement.focus()
     this.triggerRef.closePanel()
+  }
+
+  handleEnter(value: string) {
+    this.inputSubmited.emit(value)
+  }
+  handleSelection(item: AutcompleteItem) {
+    this.itemSelected.emit(item)
   }
 }

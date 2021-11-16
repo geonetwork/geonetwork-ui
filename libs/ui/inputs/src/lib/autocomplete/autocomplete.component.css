@@ -2,3 +2,7 @@
   right: 7px;
   top: 7px;
 }
+
+.mat-option.mat-active {
+  background-color: var(--color-primary-lightest);
+}
