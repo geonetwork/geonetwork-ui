@@ -1,42 +1,55 @@
-<a href="{{ link.url }}" target="_blank">
-  <div
-    class="
-      p-2
-      rounded
-      flex flex-row
-      items-center
-      relative
-      cursor-pointer
-      hover:bg-background hover:border-gray-200
-      border border-gray-100
-      hover:shadow-sm
-    "
-    (click)="openUrl()"
-  >
+<div
+  class="
+    root
+    flex
+    justify-between
+    shadow-primary-light
+    hover:shadow-primary
+    px-6
+    py-4
+    mx-6
+  "
+>
+  <div class="flex-grow-1">
     <div
-      class="
-        h-8
-        w-8
-        rounded-full
-        bg-opacity-50 bg-gray-900
-        flex-shrink-0
-        text-white text-lg text-center
-        min-w-min
-        pr-2
-        pl-2
-      "
-      style="background-color: {{ color }}"
+      class="text-primary font-medium text-xl capitalize truncate"
+      [title]="link.name"
     >
-      {{ link.format }}
+      {{ link.name }}
     </div>
-    <span class="px-3 truncate text-sm text-main label flex-grow flex-shrink">{{
-      link.name
-    }}</span>
-    <div
-      class="text-gray-600 text-sm border-gray-300 px-3 flex-shrink-0"
-      style="min-width: 4rem"
-    >
-      <mat-icon class="align-middle">download</mat-icon>
+    <div>
+      <span
+        class="
+          badge
+          inline-flex
+          items-center
+          justify-center
+          px-2
+          py-1
+          text-xs
+          leading-none
+          text-white
+          rounded
+          capitalize
+        "
+        [style.background]="color"
+        >{{ link.format }}</span
+      >
     </div>
   </div>
-</a>
+  <div class="flex-shrink-0 w-12 flex flex-col justify-center">
+    <a href="{{ link.url }}" target="_blank">
+      <mat-icon
+        class="
+          align-middle
+          download-icon
+          text-3xl
+          material-icons-outlined
+          text-gray-200
+          mr-4
+        "
+        >cloud_download</mat-icon
+      >
+    </a>
+  </div>
+</div>

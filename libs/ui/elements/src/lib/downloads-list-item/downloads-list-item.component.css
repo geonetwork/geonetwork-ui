@@ -1,0 +1,6 @@
+.root:hover .download-icon {
+  color: var(--color-secondary);
+}
+.root:not(:hover) .badge {
+  background-color: var(--color-primary-lightest) !important;
+}
