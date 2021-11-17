@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { ColorService, MetadataRecord } from '@geonetwork-ui/util/shared'
 import { combineLatest, of } from 'rxjs'
 import { map, switchMap } from 'rxjs/operators'
@@ -33,15 +34,23 @@ export class AppComponent {
   )
   autocompleteDisplayWithFn = () => ''
 
-  constructor(private mdViewFacade: MdViewFacade) {
+  constructor(
+    private mdViewFacade: MdViewFacade,
+    private searchRouter: RouterFacade
+  ) {
     ColorService.applyCssVariables('#093564', '#c2e9dc', '#212029', '#fdfbff')
   }
 
-  resetSearch() {
+  onFuzzySearchSelection(record: MetadataRecord) {
+    this.searchRouter.goToMetadata(record)
+  }
+
+  onBCDatahubClick() {
+    this.searchRouter.goToSearch()
     this.searchComponent.resetSearch()
   }
 
-  onFuzzySearchSelection(record: MetadataRecord) {
-    this.searchComponent.onMetadataSelection(record)
+  onFuzzySearchSubmission() {
+    this.searchRouter.goToSearch()
   }
 }

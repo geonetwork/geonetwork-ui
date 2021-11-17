@@ -15,6 +15,7 @@
         <gn-ui-fuzzy-search
           [displayWithFn]="autocompleteDisplayWithFn"
           (itemSelected)="onFuzzySearchSelection($event)"
+          (inputSubmited)="onFuzzySearchSubmission()"
         ></gn-ui-fuzzy-search>
       </div>
     </div>
@@ -30,7 +31,7 @@
           cursor-pointer
         "
         translate
-        (click)="resetSearch()"
+        (click)="onBCDatahubClick()"
         >datahub.route.home</a
       >
       > {{ breadcrumb$ | async }}
