@@ -35,6 +35,7 @@ describe('LinkClassifierService', () => {
         expect(service.getUsagesForLink(LINK_FIXTURES.geodataRest)).toEqual([
           LinkUsage.API,
           LinkUsage.DOWNLOAD,
+          LinkUsage.DATA,
         ])
       })
     })

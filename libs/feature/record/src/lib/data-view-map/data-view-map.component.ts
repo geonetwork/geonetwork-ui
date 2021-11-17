@@ -26,6 +26,7 @@ import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
 import { readDataset } from '@geonetwork-ui/data-fetcher'
 import { fromPromise } from 'rxjs/internal-compatibility'
 import { WfsEndpoint } from '@camptocamp/ogc-client'
+import { getEsriRestDataUrl } from '@geonetwork-ui/feature/search'
 
 @Component({
   selector: 'gn-ui-data-view-map',
@@ -144,6 +145,20 @@ export class DataViewMapComponent {
     } else if (link.protocol.startsWith('WWW:DOWNLOAD')) {
       return fromPromise(
         readDataset(link.url, 'geojson').then((features) => ({
+          type: MapContextLayerTypeEnum.GEOJSON,
+          data: {
+            type: 'FeatureCollection',
+            features,
+          },
+        }))
+      )
+    } else if (
+      /^ESRI:REST/.test(link.protocol) &&
+      /FeatureServer/.test(link.url)
+    ) {
+      const url = getEsriRestDataUrl(link, 'geojson')
+      return fromPromise(
+        readDataset(url, 'geojson').then((features) => ({
           type: MapContextLayerTypeEnum.GEOJSON,
           data: {
             type: 'FeatureCollection',

@@ -36,12 +36,20 @@
     </div>
   </mat-tab>
 
-  <mat-tab [disabled]="(displayMap$ | async) === false">
+  <mat-tab
+    [disabled]="
+      (displayMap$ | async) === false && (displayData$ | async) === false
+    "
+  >
     <ng-template mat-tab-label>
       <mat-icon class="mr-3">map</mat-icon>
       <span translate>record.tab.map</span>
     </ng-template>
-    <div class="block mt-4" style="height: 500px" *ngIf="displayMap$ | async">
+    <div
+      class="block mt-4"
+      style="height: 500px"
+      *ngIf="(displayMap$ | async) || (displayData$ | async)"
+    >
       <gn-ui-data-view-map></gn-ui-data-view-map>
     </div>
   </mat-tab>

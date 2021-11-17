@@ -21,6 +21,7 @@ import {
 import { MdViewFacade } from '../state'
 import { WfsEndpoint } from '@camptocamp/ogc-client'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { getEsriRestDataUrl } from '@geonetwork-ui/feature/search'
 
 marker('map.wfs.geojson.not.supported')
 
@@ -92,6 +93,19 @@ export class DataViewTableComponent {
     } else if (link.protocol.startsWith('WWW:DOWNLOAD')) {
       return fromPromise(
         readDataset(link.url).then((features) =>
+          features.map((f) => ({
+            id: f.id,
+            ...f.properties,
+          }))
+        )
+      )
+    } else if (
+      /^ESRI:REST/.test(link.protocol) &&
+      /FeatureServer/.test(link.url)
+    ) {
+      const url = getEsriRestDataUrl(link, 'geojson')
+      return fromPromise(
+        readDataset(url, 'geojson').then((features) =>
           features.map((f) => ({
             id: f.id,
             ...f.properties,
