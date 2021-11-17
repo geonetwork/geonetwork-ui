@@ -19,6 +19,7 @@ export function getDownloadFormat(
     gpkg: ['gpkg', 'geopackage'],
     excel: ['xls', 'xlsx', 'ms-excel', 'openxmlformats-officedocument'],
     pdf: ['pdf'],
+    jpg: ['jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp'],
     zip: ['zip'],
   }
   for (const format in formats) {
