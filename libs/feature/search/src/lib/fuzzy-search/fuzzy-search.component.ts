@@ -27,6 +27,7 @@ import { ElasticsearchMapper } from '../utils/mapper'
 export class FuzzySearchComponent implements AfterViewInit {
   @ViewChild(AutocompleteComponent) autocomplete: AutocompleteComponent
   @Output() itemSelected = new EventEmitter<MetadataRecord>()
+  @Output() inputSubmited = new EventEmitter<string>()
   @Input() displayWithFn: (MetadataRecord) => string = (record) => record?.title
   itemToStringFn = (record: MetadataRecord) => record?.title
 
@@ -70,5 +71,6 @@ export class FuzzySearchComponent implements AfterViewInit {
 
   handleInputSubmission(any: string) {
     this.searchFacade.setFilters({ any })
+    this.inputSubmited.emit(any)
   }
 }
