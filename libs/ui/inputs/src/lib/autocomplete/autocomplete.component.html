@@ -29,7 +29,7 @@
 </div>
 <mat-autocomplete
   #auto="matAutocomplete"
-  (optionSelected)="handleSelection($event.option.value)"
+  (optionSelected)="handleSelection($event)"
   [displayWith]="displayWithFn"
 >
   <mat-option
