@@ -38,6 +38,14 @@ describe('LinkClassifierService', () => {
         ])
       })
     })
+    describe('for a ESRI REST WFS service link', () => {
+      it('returns download and API usage', () => {
+        expect(service.getUsagesForLink(LINK_FIXTURES.geodataRestWfs)).toEqual([
+          LinkUsage.API,
+          LinkUsage.DOWNLOAD,
+        ])
+      })
+    })
     describe('for a ESRI REST map service link', () => {
       it('returns no usage', () => {
         expect(service.getUsagesForLink(LINK_FIXTURES.maplayerRest)).toEqual([])
