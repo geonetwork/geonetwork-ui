@@ -121,7 +121,10 @@ export class DataViewMapComponent {
         type: MapContextLayerTypeEnum.WMS,
         name: link.name,
       })
-    } else if (link.protocol.startsWith('OGC:WFS')) {
+    } else if (
+      link.protocol.startsWith('OGC:WFS') ||
+      (/^ESRI:REST/.test(link.protocol) && /WFSServer/.test(link.url))
+    ) {
       return fromPromise(
         new WfsEndpoint(link.url).isReady().then((endpoint) => {
           if (!endpoint.supportsJson(link.name)) {
