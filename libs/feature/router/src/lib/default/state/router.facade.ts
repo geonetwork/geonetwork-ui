@@ -33,15 +33,19 @@ export class RouterFacade {
         filter((params) => params.metadataUuid !== metadata.uuid)
       )
       .subscribe(() => {
-        this.store.dispatch(
-          goAction({
-            path: `metadata/${metadata.uuid}`,
-          })
-        )
+        this.go({
+          path: `metadata/${metadata.uuid}`,
+        })
         this.store.dispatch(
           MdViewActions.setIncompleteMetadata({ incomplete: metadata })
         )
       })
+  }
+
+  goToSearch() {
+    this.go({
+      path: `search/`,
+    })
   }
 
   go(payload: RouterGoActionPayload) {
