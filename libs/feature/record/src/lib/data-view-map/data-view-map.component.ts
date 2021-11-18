@@ -26,7 +26,10 @@ import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
 import { readDataset } from '@geonetwork-ui/data-fetcher'
 import { fromPromise } from 'rxjs/internal-compatibility'
 import { WfsEndpoint } from '@camptocamp/ogc-client'
-import { getEsriRestDataUrl } from '@geonetwork-ui/feature/search'
+import {
+  getEsriRestDataUrl,
+  LinkHelperService,
+} from '@geonetwork-ui/feature/search'
 
 @Component({
   selector: 'gn-ui-data-view-map',
@@ -107,7 +110,8 @@ export class DataViewMapComponent {
 
   constructor(
     private mdViewFacade: MdViewFacade,
-    private mapUtils: MapUtilsService
+    private mapUtils: MapUtilsService,
+    private linkHelper: LinkHelperService
   ) {}
 
   getBackgroundLayer(): MapContextLayerModel {
@@ -115,16 +119,13 @@ export class DataViewMapComponent {
   }
 
   getLayerFromLink(link: MetadataLinkValid): Observable<MapContextLayerModel> {
-    if (link.protocol.startsWith('OGC:WMS')) {
+    if (this.linkHelper.isWmsLink(link)) {
       return of({
         url: link.url,
         type: MapContextLayerTypeEnum.WMS,
         name: link.name,
       })
-    } else if (
-      link.protocol.startsWith('OGC:WFS') ||
-      (/^ESRI:REST/.test(link.protocol) && /WFSServer/.test(link.url))
-    ) {
+    } else if (this.linkHelper.isWfsLink(link)) {
       return fromPromise(
         new WfsEndpoint(link.url).isReady().then((endpoint) => {
           if (!endpoint.supportsJson(link.name)) {
@@ -145,7 +146,7 @@ export class DataViewMapComponent {
           }))
         })
       )
-    } else if (link.protocol.startsWith('WWW:DOWNLOAD')) {
+    } else if (this.linkHelper.hasProtocolDownload(link)) {
       return fromPromise(
         readDataset(link.url, 'geojson').then((features) => ({
           type: MapContextLayerTypeEnum.GEOJSON,
@@ -155,10 +156,7 @@ export class DataViewMapComponent {
           },
         }))
       )
-    } else if (
-      /^ESRI:REST/.test(link.protocol) &&
-      /FeatureServer/.test(link.url)
-    ) {
+    } else if (this.linkHelper.isEsriRestFeatureServer(link)) {
       const url = getEsriRestDataUrl(link, 'geojson')
       return fromPromise(
         readDataset(url, 'geojson').then((features) => ({

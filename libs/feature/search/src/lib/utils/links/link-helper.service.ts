@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core'
-import { MetadataLink, MetadataRecord } from '@geonetwork-ui/util/shared'
+import {
+  MetadataLink,
+  MetadataLinkValid,
+  MetadataRecord,
+} from '@geonetwork-ui/util/shared'
 import { LinkClassifierService, LinkUsage } from './link-classifier.service'
 
 @Injectable({
@@ -55,5 +59,20 @@ export class LinkHelperService {
   }
   isOtherLink(link: MetadataLink): boolean {
     return this.linkClassifier.getUsagesForLink(link).length === 0
+  }
+  isWmsLink(link: MetadataLinkValid): boolean {
+    return /^OGC:WMS/.test(link.protocol)
+  }
+  isWfsLink(link: MetadataLinkValid): boolean {
+    return (
+      /^OGC:WFS/.test(link.protocol) ||
+      (/^ESRI:REST/.test(link.protocol) && /WFSServer/.test(link.url))
+    )
+  }
+  isEsriRestFeatureServer(link: MetadataLinkValid): boolean {
+    return /^ESRI:REST/.test(link.protocol) && /FeatureServer/.test(link.url)
+  }
+  hasProtocolDownload(link: MetadataLinkValid): boolean {
+    return /^WWW:DOWNLOAD/.test(link.protocol)
   }
 }

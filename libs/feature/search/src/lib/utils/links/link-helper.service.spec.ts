@@ -11,6 +11,7 @@ import {
 import { LinkClassifierService, LinkUsage } from './link-classifier.service'
 
 import { LinkHelperService } from './link-helper.service'
+import { LINK_FIXTURES } from './link.fixtures'
 
 let linkUsage: LinkUsage[]
 const linkClassifierMock = {
@@ -233,6 +234,45 @@ describe('LinkHelperService', () => {
           true
         )
       })
+    })
+  })
+  describe('#isWmsLink', () => {
+    it('returns true for a WMS link', () => {
+      expect(service.isWmsLink(LINK_FIXTURES.geodataWms)).toBeTruthy()
+    })
+    it('returns false for a WFS link', () => {
+      expect(service.isWmsLink(LINK_FIXTURES.geodataWfs)).toBeFalsy()
+    })
+  })
+  describe('#isWfsLink', () => {
+    it('returns true for a WFS link', () => {
+      expect(service.isWfsLink(LINK_FIXTURES.geodataWfs)).toBeTruthy()
+    })
+    it('returns true for a ESRI WFS link', () => {
+      expect(service.isWfsLink(LINK_FIXTURES.geodataRestWfs)).toBeTruthy()
+    })
+    it('returns false for a WFS link', () => {
+      expect(service.isWfsLink(LINK_FIXTURES.geodataWms)).toBeFalsy()
+    })
+  })
+  describe('#isEsriRestFeatureServer', () => {
+    it('returns true for a ESRI:REST FeatureServer link', () => {
+      expect(
+        service.isEsriRestFeatureServer(LINK_FIXTURES.geodataRest)
+      ).toBeTruthy()
+    })
+    it('returns false for a ESRI:REST WFSServer link', () => {
+      expect(
+        service.isEsriRestFeatureServer(LINK_FIXTURES.geodataRestWfs)
+      ).toBeFalsy()
+    })
+  })
+  describe('#hasProtocolDownload', () => {
+    it('returns true for a CSV link', () => {
+      expect(service.hasProtocolDownload(LINK_FIXTURES.dataCsv)).toBeTruthy()
+    })
+    it('returns false for a WFS link', () => {
+      expect(service.hasProtocolDownload(LINK_FIXTURES.geodataWfs)).toBeFalsy()
     })
   })
 })
