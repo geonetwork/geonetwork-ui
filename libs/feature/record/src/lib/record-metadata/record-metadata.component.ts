@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { MapManagerService } from '@geonetwork-ui/feature/map'
 import { MdViewFacade } from '../state/mdview.facade'
 import { map } from 'rxjs/operators'
+import { combineLatest } from 'rxjs'
 
 @Component({
   selector: 'gn-ui-record-metadata',
@@ -10,8 +11,15 @@ import { map } from 'rxjs/operators'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecordMetadataComponent {
-  displayMap$ = this.facade.mapApiLinks$.pipe(
-    map((links) => !!links && links.length > 0)
+  displayMap$ = combineLatest([
+    this.facade.mapApiLinks$,
+    this.facade.dataLinks$,
+  ]).pipe(
+    map(
+      ([mapLinks, dataLinks]) =>
+        (!!mapLinks && mapLinks.length > 0) ||
+        (!!dataLinks && dataLinks.length > 0)
+    )
   )
   displayData$ = this.facade.dataLinks$.pipe(
     map((links) => !!links && links.length > 0)
