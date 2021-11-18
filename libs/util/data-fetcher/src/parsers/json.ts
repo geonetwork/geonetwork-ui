@@ -13,16 +13,21 @@ export function parseJson(text: string): Feature[] {
 }
 
 export function jsonToGeojsonFeature(object: { [key: string]: any }): Feature {
-  const { id, properties } = Object.keys(object).reduce(
-    (prev, curr) =>
-      curr.toLowerCase().endsWith('id')
-        ? {
-            ...prev,
-            id: object[curr],
-          }
-        : { ...prev, properties: { ...prev.properties, [curr]: object[curr] } },
-    { id: undefined, properties: {} }
-  )
+  const { id, properties } = Object.keys(object)
+    .map((property) => (property ? property : 'unknown')) //prevent empty strings
+    .reduce(
+      (prev, curr) =>
+        curr.toLowerCase().endsWith('id')
+          ? {
+              ...prev,
+              id: object[curr],
+            }
+          : {
+              ...prev,
+              properties: { ...prev.properties, [curr]: object[curr] },
+            },
+      { id: undefined, properties: {} }
+    )
   return {
     type: 'Feature',
     geometry: null,

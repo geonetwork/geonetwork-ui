@@ -1,4 +1,4 @@
-import { parseJson } from './json'
+import { jsonToGeojsonFeature, parseJson } from './json'
 
 describe('parseJson', () => {
   describe('valid JSON with id', () => {
@@ -109,6 +109,29 @@ describe('parseJson', () => {
       ],
       "nom_dep": "ARIEGE",`)
       ).toThrowError('Unexpected end')
+    })
+  })
+  describe('empty string column name', () => {
+    it('is renamed to unknown', () => {
+      expect(
+        jsonToGeojsonFeature({
+          '': '',
+          code_region: '76',
+          nom_region: 'OCCITANIE',
+          geo_point_2d: [42.9178728416, 1.17961253606],
+          nom_dep: 'ARIEGE',
+        })
+      ).toEqual({
+        geometry: null,
+        properties: {
+          unknown: undefined,
+          code_region: '76',
+          nom_region: 'OCCITANIE',
+          geo_point_2d: [42.9178728416, 1.17961253606],
+          nom_dep: 'ARIEGE',
+        },
+        type: 'Feature',
+      })
     })
   })
 })
