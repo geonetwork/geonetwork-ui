@@ -1,6 +1,6 @@
 module.exports = {
   '/geonetwork': {
-    target: 'https://apps.titellus.net',
+    target: 'https://dev.geo2france.fr',
     secure: true,
     logLevel: 'debug',
     changeOrigin: true,

@@ -5,6 +5,8 @@
 html,
 body {
   height: 100%;
+  --catalog-title-size: 48px;
+  --font-title-family: DMSerifDisplay;
 }
 body {
   margin: 0;
@@ -22,4 +24,8 @@ html {
 }
 .container-lg {
   max-width: 1024px;
+}
+
+.font-title {
+  font-family: var(--font-title-family);
 }

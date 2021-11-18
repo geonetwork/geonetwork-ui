@@ -173,7 +173,7 @@
       "projectType": "application",
       "root": "apps/datahub",
       "sourceRoot": "apps/datahub/src",
-      "prefix": "gn-ui",
+      "prefix": "datahub",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",

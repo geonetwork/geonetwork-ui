@@ -6,6 +6,7 @@ import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
 import { DefaultRouterModule } from '@geonetwork-ui/feature/router'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
+import { UiCatalogModule } from '@geonetwork-ui/ui/catalog'
 import { RESULTS_LAYOUT_CONFIG, UiSearchModule } from '@geonetwork-ui/ui/search'
 import {
   getDefaultLang,
@@ -25,6 +26,9 @@ import { AppComponent } from './app.component'
 import { DATAHUB_RESULTS_LAYOUT_CONFIG } from './app.config'
 import { MainSearchComponent } from './main-search/main-search.component'
 import { RecordPreviewDatahubComponent } from './record-preview-datahub/record-preview-datahub.component'
+import { CatalogTitleComponent } from './header/catalog-title/catalog-title.component'
+import { HeaderComponent } from './header/header/header.component'
+import { HeaderBadgeButtonComponent } from './header/header-badge-button/header-badge-button.component'
 
 export const metaReducers: MetaReducer[] = !environment.production
   ? [storeFreeze]
@@ -35,6 +39,9 @@ export const metaReducers: MetaReducer[] = !environment.production
     AppComponent,
     MainSearchComponent,
     RecordPreviewDatahubComponent,
+    CatalogTitleComponent,
+    HeaderComponent,
+    HeaderBadgeButtonComponent,
   ],
   imports: [
     BrowserModule,

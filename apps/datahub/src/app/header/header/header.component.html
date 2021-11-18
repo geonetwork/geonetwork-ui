@@ -1,0 +1,29 @@
+<div class="bg-green-300 pt-32">
+  <div class="container-md mx-auto">
+    <div class="flex font-title py-2">
+      <datahub-catalog-title></datahub-catalog-title>
+    </div>
+    <div class="py-6">
+      <gn-ui-fuzzy-search
+        [displayWithFn]="autocompleteDisplayWithFn"
+        (itemSelected)="onFuzzySearchSelection($event)"
+        (inputSubmited)="onFuzzySearchSubmission()"
+      ></gn-ui-fuzzy-search>
+    </div>
+    <div class="flex">
+      <datahub-header-badge-button
+        icon="star"
+        label="datahub.header.myfavorites"
+      ></datahub-header-badge-button>
+      <datahub-header-badge-button
+        class="mx-3"
+        label="datahub.header.connex"
+      ></datahub-header-badge-button>
+    </div>
+    <div class="tabs flex justify-between py-4 mt-16 font-medium">
+      <div class="uppercase text-white">Fil d'activité</div>
+      <div class="uppercase text-primary">Jeux de données</div>
+      <div class="uppercase text-white">Organisations</div>
+    </div>
+  </div>
+</div>
