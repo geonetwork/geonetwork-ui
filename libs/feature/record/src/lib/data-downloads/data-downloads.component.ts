@@ -4,6 +4,7 @@ import {
   getDownloadFormat,
   getLinksWithEsriRestFormats,
   getLinksWithWfsFormats,
+  LinkHelperService,
 } from '@geonetwork-ui/feature/search'
 import { map, startWith, switchMap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
@@ -16,22 +17,18 @@ import { combineLatest, from } from 'rxjs'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataDownloadsComponent {
-  constructor(public facade: MdViewFacade) {}
+  constructor(
+    public facade: MdViewFacade,
+    private linkHelper: LinkHelperService
+  ) {}
 
   error: string = null
 
   links$ = this.facade.downloadLinks$.pipe(
     switchMap((links) => {
-      const wfsLinks = links.filter(
-        (link) =>
-          /^OGC:WFS/.test(link.protocol) ||
-          (/^ESRI:REST/.test(link.protocol) && /WFSServer/.test(link.url))
-      )
+      const wfsLinks = links.filter((link) => this.linkHelper.isWfsLink(link))
       const esriRestLinks = links
-        .filter(
-          (link) =>
-            /^ESRI:REST/.test(link.protocol) && /FeatureServer/.test(link.url)
-        )
+        .filter((link) => this.linkHelper.isEsriRestFeatureServer(link))
         .flatMap((link) => getLinksWithEsriRestFormats(link))
       const otherLinks = links
         .filter((link) => !/^OGC:WFS|ESRI:REST/.test(link.protocol))

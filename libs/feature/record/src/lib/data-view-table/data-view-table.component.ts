@@ -21,6 +21,10 @@ import {
 import { MdViewFacade } from '../state'
 import { WfsEndpoint } from '@camptocamp/ogc-client'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import {
+  getEsriRestDataUrl,
+  LinkHelperService,
+} from '@geonetwork-ui/feature/search'
 
 marker('map.wfs.geojson.not.supported')
 
@@ -66,10 +70,13 @@ export class DataViewTableComponent {
     shareReplay(1)
   )
 
-  constructor(private mdViewFacade: MdViewFacade) {}
+  constructor(
+    private mdViewFacade: MdViewFacade,
+    private linkHelper: LinkHelperService
+  ) {}
 
   fetchData(link: MetadataLinkValid): Observable<{ id: string | number }[]> {
-    if (link.protocol.startsWith('OGC:WFS')) {
+    if (this.linkHelper.isWfsLink(link)) {
       return fromPromise(
         new WfsEndpoint(link.url).isReady().then((endpoint) => {
           if (!endpoint.supportsJson(link.name)) {
@@ -89,9 +96,19 @@ export class DataViewTableComponent {
           )
         })
       )
-    } else if (link.protocol.startsWith('WWW:DOWNLOAD')) {
+    } else if (this.linkHelper.hasProtocolDownload(link)) {
       return fromPromise(
         readDataset(link.url).then((features) =>
+          features.map((f) => ({
+            id: f.id,
+            ...f.properties,
+          }))
+        )
+      )
+    } else if (this.linkHelper.isEsriRestFeatureServer(link)) {
+      const url = getEsriRestDataUrl(link, 'geojson')
+      return fromPromise(
+        readDataset(url, 'geojson').then((features) =>
           features.map((f) => ({
             id: f.id,
             ...f.properties,

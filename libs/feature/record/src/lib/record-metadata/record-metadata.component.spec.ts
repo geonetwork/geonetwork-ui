@@ -82,9 +82,11 @@ describe('RecordMetadataComponent', () => {
   })
   describe('Map', () => {
     let mapTab
-    describe('when no MAPAPI link', () => {
+    describe('when no MAPAPI and no DATA link', () => {
       beforeEach(() => {
         facade.mapApiLinks$.next(null)
+        fixture.detectChanges()
+        facade.dataLinks$.next(null)
         fixture.detectChanges()
         mapTab = fixture.debugElement.queryAll(By.css('mat-tab'))[2]
       })

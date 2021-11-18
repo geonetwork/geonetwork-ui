@@ -4,6 +4,7 @@ import {
   checkFileFormat,
   getLinksWithEsriRestFormats,
   getLinksWithWfsFormats,
+  getEsriRestDataUrl,
 } from './link-utils'
 import { LINK_FIXTURES } from './link.fixtures'
 
@@ -176,6 +177,23 @@ describe('link utils', () => {
             url: 'https://my.esri.server/FeatureServer/query?f=geojson&where=1=1&outFields=*',
           },
         ])
+      })
+    }),
+    describe('#getEsriRestDataUrl', () => {
+      it('returns data url for ESRI:REST FeatureServer in requested format', () => {
+        expect(
+          getEsriRestDataUrl(
+            {
+              protocol: 'ESRI:REST',
+              name: 'myrestlayer',
+              format: 'arcgis geoservices rest api',
+              url: 'https://my.esri.server/FeatureServer',
+            },
+            'geojson'
+          )
+        ).toEqual(
+          'https://my.esri.server/FeatureServer/query?f=geojson&where=1=1&outFields=*'
+        )
       })
     }),
     describe('#getLinksWithWfsFormats', () => {
