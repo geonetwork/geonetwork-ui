@@ -19,6 +19,23 @@ export class LinkClassifierService {
   getUsagesForLink(link: MetadataLink): LinkUsage[] {
     if ('protocol' in link) {
       if (/^WWW:DOWNLOAD/.test(link.protocol)) {
+        // mime types in protocol
+        const matches = link.protocol.match(/^WWW:DOWNLOAD:(.+\/.+)$/)
+        if (matches !== null) {
+          const mimeType = matches[1]
+          switch (mimeType) {
+            case 'application/json':
+            case 'application/geo+json':
+            case 'application/vnd.geo+json':
+            case 'text/csv':
+            case 'application/csv':
+            case 'application/vnd.ms-excel':
+            case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+              return [LinkUsage.DOWNLOAD, LinkUsage.DATA]
+          }
+        }
+
+        // fallback: look for extension
         const dataFormatsExp = '(geojson|json|csv|wfs|xls)'
         if (
           ('format' in link &&
@@ -30,6 +47,7 @@ export class LinkClassifierService {
         ) {
           return [LinkUsage.DOWNLOAD, LinkUsage.DATA]
         }
+
         return [LinkUsage.DOWNLOAD]
       }
       if (/^OGC:WFS/.test(link.protocol))

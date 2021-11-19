@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import {
   ComponentFixture,
   fakeAsync,
@@ -13,6 +13,7 @@ import { MdViewFacade } from '../state'
 import { DataViewTableComponent } from './data-view-table.component'
 import { readDataset } from '@geonetwork-ui/data-fetcher'
 import { TranslateModule } from '@ngx-translate/core'
+import { ProxyService } from '@geonetwork-ui/util/shared'
 
 jest.mock('@camptocamp/ogc-client', () => ({
   WfsEndpoint: class {
@@ -40,6 +41,7 @@ jest.mock('@geonetwork-ui/data-fetcher', () => ({
           : reject(new Error('data loading error'))
       })
   ),
+  SupportedTypes: ['csv', 'geojson', 'json', 'excel'],
 }))
 
 const SAMPLE_GEOJSON = {
@@ -83,13 +85,20 @@ class MdViewFacadeMock {
   dataLinks$ = new Subject()
 }
 
+let proxyPath
+class ProxyServiceMock {
+  getProxiedUrl(url) {
+    return proxyPath ? proxyPath + url : url
+  }
+}
+
 @Component({
   selector: 'gn-ui-table',
   template: '<div></div>',
 })
 export class MockTableComponent {
   @Input() data: []
-  @Input() activeId: TableItemId
+  @Input() activeId
   @Output() selected = new EventEmitter<number>()
 }
 
@@ -123,6 +132,8 @@ describe('DataViewTableComponent', () => {
   let facade
 
   beforeEach(async () => {
+    proxyPath = null
+    jest.clearAllMocks()
     await TestBed.configureTestingModule({
       declarations: [
         DataViewTableComponent,
@@ -135,6 +146,10 @@ describe('DataViewTableComponent', () => {
         {
           provide: MdViewFacade,
           useClass: MdViewFacadeMock,
+        },
+        {
+          provide: ProxyService,
+          useClass: ProxyServiceMock,
         },
       ],
       imports: [TranslateModule.forRoot()],
@@ -187,7 +202,8 @@ describe('DataViewTableComponent', () => {
 
       it('loads the data from the first available link', () => {
         expect(readDataset).toHaveBeenCalledWith(
-          'https://test.org/some_file_name.csv'
+          'https://test.org/some_file_name.csv',
+          'csv'
         )
       })
     })
@@ -231,7 +247,8 @@ describe('DataViewTableComponent', () => {
         })
         it('loads data from selected link', () => {
           expect(readDataset).toHaveBeenCalledWith(
-            'https://test.org/some_file_name.geojson'
+            'https://test.org/some_file_name.geojson',
+            'geojson'
           )
         })
         it('displays mocked data in the table', () => {
@@ -260,6 +277,20 @@ describe('DataViewTableComponent', () => {
     }))
     it('shows an error warning', () => {
       expect(component.error).toEqual('data loading error')
+    })
+  })
+
+  describe('when setting a proxy path', () => {
+    beforeEach(() => {
+      proxyPath = 'http://my.proxy/?url='
+      facade.dataLinks$.next(DATALINKS_FIXTURE)
+      fixture.detectChanges()
+    })
+    it('loads the data using the proxy', () => {
+      expect(readDataset).toHaveBeenCalledWith(
+        'http://my.proxy/?url=https://test.org/some_file_name.csv',
+        'csv'
+      )
     })
   })
 })

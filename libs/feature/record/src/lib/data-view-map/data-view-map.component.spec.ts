@@ -13,6 +13,8 @@ import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import { of, Subject } from 'rxjs'
 import { DataViewMapComponent } from './data-view-map.component'
 import { TranslateModule } from '@ngx-translate/core'
+import { ProxyService } from '@geonetwork-ui/util/shared'
+import { readDataset } from '@geonetwork-ui/data-fetcher'
 
 jest.mock('@camptocamp/ogc-client', () => ({
   WfsEndpoint: class {
@@ -29,12 +31,14 @@ jest.mock('@camptocamp/ogc-client', () => ({
 
 // mock a 100ms delay before serving the geojson file
 jest.mock('@geonetwork-ui/data-fetcher', () => ({
-  readDataset: (url) =>
-    new Promise((resolve, reject) => {
-      url.indexOf('error') === -1
-        ? setTimeout(() => resolve(SAMPLE_GEOJSON.features), 100)
-        : reject(new Error('data loading error'))
-    }),
+  readDataset: jest.fn(
+    (url) =>
+      new Promise((resolve, reject) => {
+        url.indexOf('error') === -1
+          ? setTimeout(() => resolve(SAMPLE_GEOJSON.features), 100)
+          : reject(new Error('data loading error'))
+      })
+  ),
 }))
 
 class MdViewFacadeMock {
@@ -44,6 +48,13 @@ class MdViewFacadeMock {
 
 class MapUtilsServiceMock {
   getLayerExtent = jest.fn().mockReturnValue(of(undefined))
+}
+
+let proxyPath
+class ProxyServiceMock {
+  getProxiedUrl(url) {
+    return proxyPath ? proxyPath + url : url
+  }
 }
 
 const SAMPLE_GEOJSON = {
@@ -98,6 +109,8 @@ describe('DataViewMapComponent', () => {
   let mdViewFacade
 
   beforeEach(async () => {
+    proxyPath = null
+    jest.clearAllMocks()
     await TestBed.configureTestingModule({
       declarations: [
         DataViewMapComponent,
@@ -114,6 +127,10 @@ describe('DataViewMapComponent', () => {
         {
           provide: MapUtilsService,
           useClass: MapUtilsServiceMock,
+        },
+        {
+          provide: ProxyService,
+          useClass: ProxyServiceMock,
         },
       ],
       imports: [TranslateModule.forRoot()],
@@ -438,6 +455,27 @@ describe('DataViewMapComponent', () => {
           view: expect.any(Object),
         })
       })
+    })
+  })
+
+  describe('when setting a proxy path', () => {
+    beforeEach(() => {
+      proxyPath = 'http://my.proxy/?url='
+      mdViewFacade.mapApiLinks$.next([])
+      mdViewFacade.dataLinks$.next([
+        {
+          url: 'http://abcd.com/data.geojson',
+          name: 'data.geojson',
+          protocol: 'WWW:DOWNLOAD',
+          format: 'geojson',
+        },
+      ])
+    })
+    it('loads the data using the proxy', () => {
+      expect(readDataset).toHaveBeenCalledWith(
+        'http://my.proxy/?url=http://abcd.com/data.geojson',
+        'geojson'
+      )
     })
   })
 })

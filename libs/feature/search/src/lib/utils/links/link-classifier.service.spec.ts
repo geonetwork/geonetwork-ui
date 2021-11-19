@@ -77,6 +77,13 @@ describe('LinkClassifierService', () => {
         ])
       })
     })
+    describe('for a link to a geojson with mimetype in the protocol', () => {
+      it('returns download and data usage', () => {
+        expect(
+          service.getUsagesForLink(LINK_FIXTURES.geodataJsonWithMimeType)
+        ).toEqual([LinkUsage.DOWNLOAD, LinkUsage.DATA])
+      })
+    })
     describe('for a link to a simple page', () => {
       it('returns null', () => {
         expect(service.getUsagesForLink(LINK_FIXTURES.readmeLink)).toEqual([])
