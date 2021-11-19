@@ -221,7 +221,7 @@ describe('ElasticsearchService', () => {
               ],
             },
           },
-          _source: ['uuid', 'id', 'title', 'resourceTitleObject'],
+          _source: ['id', 'title', 'resourceTitleObject', 'uuid'],
         })
       })
     })

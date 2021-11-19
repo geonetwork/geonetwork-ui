@@ -12,7 +12,11 @@
         </div>
       </div>
       <div class="py-8">
-        <gn-ui-fuzzy-search></gn-ui-fuzzy-search>
+        <gn-ui-fuzzy-search
+          [displayWithFn]="autocompleteDisplayWithFn"
+          (itemSelected)="onFuzzySearchSelection($event)"
+          (inputSubmited)="onFuzzySearchSubmission()"
+        ></gn-ui-fuzzy-search>
       </div>
     </div>
   </div>
@@ -27,7 +31,7 @@
           cursor-pointer
         "
         translate
-        (click)="resetSearch()"
+        (click)="onBCDatahubClick()"
         >datahub.route.home</a
       >
       > {{ breadcrumb$ | async }}

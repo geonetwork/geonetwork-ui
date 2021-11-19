@@ -114,6 +114,10 @@ export class ElasticsearchService {
         const template = config.mods.search.autocompleteConfig
         return {
           ...template,
+          _source: [
+            ...template._source.filter((source) => source !== 'uuid'),
+            'uuid',
+          ],
           query: {
             ...template.query,
             bool: {

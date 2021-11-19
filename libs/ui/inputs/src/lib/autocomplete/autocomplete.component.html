@@ -2,11 +2,20 @@
   <input
     #searchInput
     type="text"
-    class="appearance-none border border-gray-300 p-2 leading-tight rounded w-full text-gray-700 focus:border-primary"
+    class="
+      appearance-none
+      border border-gray-300
+      p-2
+      leading-tight
+      rounded
+      w-full
+      text-gray-700
+      focus:border-primary
+    "
     [placeholder]="placeholder"
     [formControl]="control"
     [matAutocomplete]="auto"
-    (keyup.enter)="handleSelection($event.target.value)"
+    (keyup.enter)="handleEnter($event.target.value)"
   />
   <button
     class="text-primary hover:text-primary-lighter absolute clear-btn"
@@ -20,13 +29,14 @@
 </div>
 <mat-autocomplete
   #auto="matAutocomplete"
-  (optionSelected)="handleSelection($event.option.value)"
+  (optionSelected)="handleSelection($event)"
+  [displayWith]="displayWithFn"
 >
   <mat-option
     *ngFor="let suggestion of suggestions$ | async"
     [value]="suggestion"
     class="p-2 text-sm text-primary-lighter"
   >
-    {{ suggestion }}
+    {{ itemToStringFn(suggestion) }}
   </mat-option>
 </mat-autocomplete>
