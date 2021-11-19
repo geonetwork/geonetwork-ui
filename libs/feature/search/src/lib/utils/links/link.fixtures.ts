@@ -57,6 +57,12 @@ export const LINK_FIXTURES = {
     name: 'dataset.geojson',
     url: 'http://my.server/files/geographic/dataset.geojson',
   },
+  geodataJsonWithMimeType: {
+    protocol: 'WWW:DOWNLOAD:application/vnd.geo+json',
+    description: 'Geographic data in GeoJSON format',
+    name: 'dataset.geojson',
+    url: 'http://my.server/files/geographic/dataset',
+  },
   geodataKml: {
     protocol: 'WWW:DOWNLOAD',
     description: 'Geographic data in KML format',
