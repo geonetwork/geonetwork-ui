@@ -13,7 +13,7 @@ import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
+import { PROXY_PATH, UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
@@ -60,6 +60,10 @@ export const metaReducers: MetaReducer[] = !environment.production
       useValue: new Configuration({
         basePath: environment.API_BASE_PATH,
       }),
+    },
+    {
+      provide: PROXY_PATH,
+      useValue: environment.PROXY_PATH,
     },
   ],
   bootstrap: [AppComponent],

@@ -17,6 +17,7 @@ import { fromLonLat } from 'ol/proj'
 import { MapContextLayerModel } from '../..'
 import { extend, Extent } from 'ol/extent'
 import { WmsEndpoint } from '@camptocamp/ogc-client'
+import { ProxyService } from '@geonetwork-ui/util/shared'
 
 const FEATURE_PROJECTION = 'EPSG:3857'
 const DATA_PROJECTION = 'EPSG:4326'
@@ -25,7 +26,7 @@ const DATA_PROJECTION = 'EPSG:4326'
   providedIn: 'root',
 })
 export class MapUtilsService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private proxy: ProxyService) {}
 
   createEmptyMap(): Map {
     const map = new Map({
@@ -127,10 +128,12 @@ export class MapUtilsService {
       return of(this.extentFromLonLat(extent))
     } else if (layer && layer.type === 'wms') {
       return from(
-        new WmsEndpoint(layer.url).isReady().then((endpoint) => {
-          const wmsLayer = endpoint.getLayerByName(layer.name)
-          return this.extentFromLonLat(wmsLayer.boundingBoxes['EPSG:4326'])
-        })
+        new WmsEndpoint(this.proxy.getProxiedUrl(layer.url))
+          .isReady()
+          .then((endpoint) => {
+            const wmsLayer = endpoint.getLayerByName(layer.name)
+            return this.extentFromLonLat(wmsLayer.boundingBoxes['EPSG:4326'])
+          })
       ) as Observable<Extent>
     } else {
       return of(undefined)

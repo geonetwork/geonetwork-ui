@@ -22,7 +22,7 @@ import {
   map,
   switchMap,
 } from 'rxjs/operators'
-import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { MetadataLinkValid, ProxyService } from '@geonetwork-ui/util/shared'
 import { readDataset } from '@geonetwork-ui/data-fetcher'
 import { fromPromise } from 'rxjs/internal-compatibility'
 import { WfsEndpoint } from '@camptocamp/ogc-client'
@@ -111,7 +111,8 @@ export class DataViewMapComponent {
   constructor(
     private mdViewFacade: MdViewFacade,
     private mapUtils: MapUtilsService,
-    private linkHelper: LinkHelperService
+    private linkHelper: LinkHelperService,
+    private proxy: ProxyService
   ) {}
 
   getBackgroundLayer(): MapContextLayerModel {
@@ -127,24 +128,26 @@ export class DataViewMapComponent {
       })
     } else if (this.linkHelper.isWfsLink(link)) {
       return fromPromise(
-        new WfsEndpoint(link.url).isReady().then((endpoint) => {
-          if (!endpoint.supportsJson(link.name)) {
-            throw new Error('map.wfs.geojson.not.supported')
-          }
-          return readDataset(
-            endpoint.getFeatureUrl(link.name, {
-              asJson: true,
-              outputCrs: 'EPSG:4326',
-            }),
-            'geojson'
-          ).then((features) => ({
-            type: MapContextLayerTypeEnum.GEOJSON,
-            data: {
-              type: 'FeatureCollection',
-              features,
-            },
-          }))
-        })
+        new WfsEndpoint(this.proxy.getProxiedUrl(link.url))
+          .isReady()
+          .then((endpoint) => {
+            if (!endpoint.supportsJson(link.name)) {
+              throw new Error('map.wfs.geojson.not.supported')
+            }
+            return readDataset(
+              endpoint.getFeatureUrl(link.name, {
+                asJson: true,
+                outputCrs: 'EPSG:4326',
+              }),
+              'geojson'
+            ).then((features) => ({
+              type: MapContextLayerTypeEnum.GEOJSON,
+              data: {
+                type: 'FeatureCollection',
+                features,
+              },
+            }))
+          })
       )
     } else if (this.linkHelper.hasProtocolDownload(link)) {
       return fromPromise(
