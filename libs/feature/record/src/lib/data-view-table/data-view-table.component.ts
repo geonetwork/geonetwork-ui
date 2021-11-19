@@ -86,10 +86,12 @@ export class DataViewTableComponent {
               throw new Error('map.wfs.geojson.not.supported')
             }
             return readDataset(
-              endpoint.getFeatureUrl(link.name, {
-                outputCrs: 'EPSG:4326',
-                asJson: true,
-              }),
+              this.proxy.getProxiedUrl(
+                endpoint.getFeatureUrl(link.name, {
+                  outputCrs: 'EPSG:4326',
+                  asJson: true,
+                })
+              ),
               'geojson'
             ).then((features) =>
               features.map((f) => ({
@@ -101,7 +103,7 @@ export class DataViewTableComponent {
       )
     } else if (this.linkHelper.hasProtocolDownload(link)) {
       return fromPromise(
-        readDataset(link.url).then((features) =>
+        readDataset(this.proxy.getProxiedUrl(link.url)).then((features) =>
           features.map((f) => ({
             id: f.id,
             ...f.properties,
@@ -111,7 +113,7 @@ export class DataViewTableComponent {
     } else if (this.linkHelper.isEsriRestFeatureServer(link)) {
       const url = getEsriRestDataUrl(link, 'geojson')
       return fromPromise(
-        readDataset(url, 'geojson').then((features) =>
+        readDataset(this.proxy.getProxiedUrl(url), 'geojson').then((features) =>
           features.map((f) => ({
             id: f.id,
             ...f.properties,

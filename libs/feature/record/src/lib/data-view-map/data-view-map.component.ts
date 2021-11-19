@@ -135,10 +135,12 @@ export class DataViewMapComponent {
               throw new Error('map.wfs.geojson.not.supported')
             }
             return readDataset(
-              endpoint.getFeatureUrl(link.name, {
-                asJson: true,
-                outputCrs: 'EPSG:4326',
-              }),
+              this.proxy.getProxiedUrl(
+                endpoint.getFeatureUrl(link.name, {
+                  asJson: true,
+                  outputCrs: 'EPSG:4326',
+                })
+              ),
               'geojson'
             ).then((features) => ({
               type: MapContextLayerTypeEnum.GEOJSON,
@@ -151,24 +153,28 @@ export class DataViewMapComponent {
       )
     } else if (this.linkHelper.hasProtocolDownload(link)) {
       return fromPromise(
-        readDataset(link.url, 'geojson').then((features) => ({
-          type: MapContextLayerTypeEnum.GEOJSON,
-          data: {
-            type: 'FeatureCollection',
-            features,
-          },
-        }))
+        readDataset(this.proxy.getProxiedUrl(link.url), 'geojson').then(
+          (features) => ({
+            type: MapContextLayerTypeEnum.GEOJSON,
+            data: {
+              type: 'FeatureCollection',
+              features,
+            },
+          })
+        )
       )
     } else if (this.linkHelper.isEsriRestFeatureServer(link)) {
       const url = getEsriRestDataUrl(link, 'geojson')
       return fromPromise(
-        readDataset(url, 'geojson').then((features) => ({
-          type: MapContextLayerTypeEnum.GEOJSON,
-          data: {
-            type: 'FeatureCollection',
-            features,
-          },
-        }))
+        readDataset(this.proxy.getProxiedUrl(url), 'geojson').then(
+          (features) => ({
+            type: MapContextLayerTypeEnum.GEOJSON,
+            data: {
+              type: 'FeatureCollection',
+              features,
+            },
+          })
+        )
       )
     }
     return throwError('protocol not supported')
