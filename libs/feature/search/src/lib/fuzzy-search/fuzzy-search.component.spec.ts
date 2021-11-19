@@ -110,11 +110,16 @@ describe('FuzzySearchComponent', () => {
   })
 
   describe('search enter key press', () => {
+    let outputValue
     beforeEach(() => {
+      component.inputSubmited.subscribe((event) => (outputValue = event))
       component.handleInputSubmission('blarg')
     })
     it('changes the search filters', () => {
       expect(searchFacadeMock.setFilters).toHaveBeenCalledWith({ any: 'blarg' })
+    })
+    it('emits inputSubmited event', () => {
+      expect(outputValue).toEqual('blarg')
     })
   })
 
