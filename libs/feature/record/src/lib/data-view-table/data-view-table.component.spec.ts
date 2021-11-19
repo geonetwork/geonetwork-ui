@@ -41,6 +41,7 @@ jest.mock('@geonetwork-ui/data-fetcher', () => ({
           : reject(new Error('data loading error'))
       })
   ),
+  SupportedTypes: ['csv', 'geojson', 'json', 'excel'],
 }))
 
 const SAMPLE_GEOJSON = {
@@ -201,7 +202,8 @@ describe('DataViewTableComponent', () => {
 
       it('loads the data from the first available link', () => {
         expect(readDataset).toHaveBeenCalledWith(
-          'https://test.org/some_file_name.csv'
+          'https://test.org/some_file_name.csv',
+          'csv'
         )
       })
     })
@@ -245,7 +247,8 @@ describe('DataViewTableComponent', () => {
         })
         it('loads data from selected link', () => {
           expect(readDataset).toHaveBeenCalledWith(
-            'https://test.org/some_file_name.geojson'
+            'https://test.org/some_file_name.geojson',
+            'geojson'
           )
         })
         it('displays mocked data in the table', () => {
@@ -285,7 +288,8 @@ describe('DataViewTableComponent', () => {
     })
     it('loads the data using the proxy', () => {
       expect(readDataset).toHaveBeenCalledWith(
-        'http://my.proxy/?url=https://test.org/some_file_name.csv'
+        'http://my.proxy/?url=https://test.org/some_file_name.csv',
+        'csv'
       )
     })
   })

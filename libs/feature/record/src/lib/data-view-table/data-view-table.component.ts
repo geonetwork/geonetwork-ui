@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { readDataset } from '@geonetwork-ui/data-fetcher'
 import { MetadataLinkValid, ProxyService } from '@geonetwork-ui/util/shared'
 import {
@@ -11,20 +11,22 @@ import {
 import { fromPromise } from 'rxjs/internal-compatibility'
 import {
   catchError,
+  distinctUntilChanged,
   finalize,
   map,
-  switchMap,
-  tap,
-  distinctUntilChanged,
   shareReplay,
+  switchMap,
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
 import { WfsEndpoint } from '@camptocamp/ogc-client'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
+  DownloadFormatType,
+  getDownloadFormat,
   getEsriRestDataUrl,
   LinkHelperService,
 } from '@geonetwork-ui/feature/search'
+import { SupportedType, SupportedTypes } from '@geonetwork-ui/data-fetcher'
 
 marker('map.wfs.geojson.not.supported')
 
@@ -102,12 +104,18 @@ export class DataViewTableComponent {
           })
       )
     } else if (this.linkHelper.hasProtocolDownload(link)) {
+      const format = getDownloadFormat(link, DownloadFormatType.FILE)
+      const supportedType =
+        SupportedTypes.indexOf(format as any) > -1
+          ? (format as SupportedType)
+          : undefined
       return fromPromise(
-        readDataset(this.proxy.getProxiedUrl(link.url)).then((features) =>
-          features.map((f) => ({
-            id: f.id,
-            ...f.properties,
-          }))
+        readDataset(this.proxy.getProxiedUrl(link.url), supportedType).then(
+          (features) =>
+            features.map((f) => ({
+              id: f.id,
+              ...f.properties,
+            }))
         )
       )
     } else if (this.linkHelper.isEsriRestFeatureServer(link)) {
