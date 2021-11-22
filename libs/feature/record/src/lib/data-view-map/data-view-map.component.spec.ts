@@ -5,12 +5,13 @@ import {
   flush,
   TestBed,
   tick,
+  inject,
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { MapContextModel, MapUtilsService } from '@geonetwork-ui/feature/map'
 import { MdViewFacade } from '../state/mdview.facade'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
-import { of, Subject } from 'rxjs'
+import { Subject, Observable } from 'rxjs'
 import { DataViewMapComponent } from './data-view-map.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { ProxyService } from '@geonetwork-ui/util/shared'
@@ -47,7 +48,16 @@ class MdViewFacadeMock {
 }
 
 class MapUtilsServiceMock {
-  getLayerExtent = jest.fn().mockReturnValue(of(undefined))
+  getLayerExtent = jest.fn(function () {
+    return new Observable((observer) => {
+      this._observer = observer
+      if (this._returnImmediately) {
+        this._observer.next(null)
+      }
+    })
+  })
+  _returnImmediately = true
+  _observer = null
 }
 
 let proxyPath
@@ -425,7 +435,8 @@ describe('DataViewMapComponent', () => {
     })
 
     describe('when selecting a layer', () => {
-      beforeEach(() => {
+      beforeEach(inject([MapUtilsService], (mapUtils) => {
+        mapUtils._returnImmediately = false
         mdViewFacade.mapApiLinks$.next([
           {
             url: 'http://abcd.com/',
@@ -441,18 +452,65 @@ describe('DataViewMapComponent', () => {
         mdViewFacade.dataLinks$.next([])
         dropdownComponent.selectValue.emit(1)
         fixture.detectChanges()
+      }))
+      describe('while extent is not ready', () => {
+        it('does not emit a map context', () => {
+          expect(mapComponent.context).toBeFalsy()
+        })
       })
-      it('emits a new map context with the selected layer', () => {
-        expect(mapComponent.context).toEqual({
-          layers: [
+      describe('when extent is received', () => {
+        beforeEach(inject([MapUtilsService], (mapUtils) => {
+          mapUtils._observer.next([-100, -200, 100, 200])
+          fixture.detectChanges()
+        }))
+        it('emits a new map context with the selected layer and the computed extent', () => {
+          expect(mapComponent.context).toEqual({
+            layers: [
+              component.getBackgroundLayer(),
+              {
+                url: 'http://abcd.com/',
+                name: 'layer2',
+                type: 'wms',
+              },
+            ],
+            extent: [-100, -200, 100, 200],
+          })
+        })
+      })
+      describe('when extent computation fails', () => {
+        beforeEach(inject([MapUtilsService], (mapUtils) => {
+          mapUtils._observer.error('extent computation failed')
+          fixture.detectChanges()
+        }))
+        it('emits a new map context with the selected layer and a default view', () => {
+          expect(mapComponent.context).toEqual({
+            layers: [
+              component.getBackgroundLayer(),
+              {
+                url: 'http://abcd.com/',
+                name: 'layer2',
+                type: 'wms',
+              },
+            ],
+            view: expect.any(Object),
+          })
+        })
+      })
+      describe('selecting another layer, while extent is not ready', () => {
+        beforeEach(inject([MapUtilsService], (mapUtils) => {
+          mapUtils._observer.next([-10, -20, 10, 20])
+          dropdownComponent.selectValue.emit(0)
+          fixture.detectChanges()
+        }))
+        it('does not emit another map context', () => {
+          expect(mapComponent.context.layers).toEqual([
             component.getBackgroundLayer(),
             {
               url: 'http://abcd.com/',
               name: 'layer2',
               type: 'wms',
             },
-          ],
-          view: expect.any(Object),
+          ])
         })
       })
     })

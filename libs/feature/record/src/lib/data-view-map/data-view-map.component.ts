@@ -80,31 +80,28 @@ export class DataViewMapComponent {
     })
   )
 
-  mapExtent$ = this.currentLayers$.pipe(
+  mapContext$ = this.currentLayers$.pipe(
     switchMap((layers) =>
       this.mapUtils.getLayerExtent(layers[1]).pipe(
-        catchError((e) => {
-          this.error = e.message
+        catchError((error) => {
+          console.warn(error) // FIXME: report this to the user somehow
           return of(undefined)
-        })
+        }),
+        map((extent) =>
+          extent
+            ? ({
+                layers,
+                extent,
+              } as MapContextModel)
+            : ({
+                layers,
+                view: {
+                  center: fromLonLat([2.1, 46.8], 'EPSG:3857'),
+                  zoom: 5,
+                },
+              } as MapContextModel)
+        )
       )
-    )
-  )
-
-  mapContext$ = combineLatest([this.currentLayers$, this.mapExtent$]).pipe(
-    map(([layers, extent]) =>
-      extent
-        ? ({
-            layers,
-            extent,
-          } as MapContextModel)
-        : ({
-            layers,
-            view: {
-              center: fromLonLat([2.1, 46.8], 'EPSG:3857'),
-              zoom: 5,
-            },
-          } as MapContextModel)
     )
   )
 
