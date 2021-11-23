@@ -67,6 +67,16 @@ describe('link utils', () => {
         ).toEqual('shp')
       })
     })
+    describe('for a shapefile link withe MimeType', () => {
+      it('returns shp format', () => {
+        expect(
+          getDownloadFormat(
+            LINK_FIXTURES.geodataShpWithMimeType,
+            DownloadFormatType.FILE
+          )
+        ).toEqual('shp')
+      })
+    })
     describe('for a kml FILE link', () => {
       it('returns kml format', () => {
         expect(

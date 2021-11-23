@@ -27,6 +27,8 @@ export function getDownloadFormat(
         case 'text/csv':
         case 'application/csv':
           return 'csv'
+        case 'x-gis/x-shapefile':
+          return 'shp'
         case 'application/vnd.ms-excel':
         case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
           return 'excel'
