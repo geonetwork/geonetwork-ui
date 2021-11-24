@@ -6,6 +6,7 @@ import {
   OnChanges,
   Output,
 } from '@angular/core'
+import { MapUtilsService } from '../../utils/map-utils.service'
 import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
 
@@ -30,14 +31,33 @@ export class MapContextComponent implements OnChanges {
   constructor(
     private service: MapContextService,
     private featureInfo: FeatureInfoService,
-    private manager: MapManagerService
+    private manager: MapManagerService,
+    private utils: MapUtilsService
   ) {
     this.map = manager.map
   }
 
   ngOnChanges() {
     if (this.context) {
-      this.service.resetMapFromContext(this.map, this.context)
+      if (this.context.extent) {
+        if (!this.map.getSize()) {
+          this.map.once('change:size', () => {
+            this.updateContextByExtent()
+          })
+        } else {
+          this.updateContextByExtent()
+        }
+      } else {
+        this.service.resetMapFromContext(this.map, this.context)
+      }
     }
+  }
+
+  private updateContextByExtent() {
+    this.context.view = this.utils.getViewFromExtent(
+      this.context.extent,
+      this.map
+    )
+    this.service.resetMapFromContext(this.map, this.context)
   }
 }
