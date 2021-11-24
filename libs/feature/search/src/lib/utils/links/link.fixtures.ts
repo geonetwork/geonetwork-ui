@@ -81,6 +81,12 @@ export const LINK_FIXTURES = {
     name: 'dataset.shp',
     url: 'http://my.server/files/geographic/dataset.zip',
   },
+  geodataShpWithMimeType: {
+    protocol: 'WWW:DOWNLOAD:x-gis/x-shapefile',
+    description: 'Geographic data in shapefile format',
+    name: 'dataset',
+    url: 'http://my.server/files/geographic/dataset.zip',
+  },
   geodataWms: {
     protocol: 'OGC:WMS',
     name: 'mylayer',
