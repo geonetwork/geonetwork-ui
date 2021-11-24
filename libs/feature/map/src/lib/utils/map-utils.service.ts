@@ -11,11 +11,11 @@ import TileWMS from 'ol/source/TileWMS'
 import Layer from 'ol/layer/Layer'
 import VectorSource from 'ol/source/Vector'
 import { from, Observable, of } from 'rxjs'
-import { fromPromise } from 'rxjs/internal-compatibility'
 import { map } from 'rxjs/operators'
 import { fromLonLat } from 'ol/proj'
-import { MapContextLayerModel } from '../..'
-import { extend, Extent } from 'ol/extent'
+import { MapContextLayerModel, MapContextViewModel } from '../..'
+import { extend, Extent, getCenter } from 'ol/extent'
+import View from 'ol/View'
 import { WmsEndpoint } from '@camptocamp/ogc-client'
 import { ProxyService } from '@geonetwork-ui/util/shared'
 
@@ -138,6 +138,15 @@ export class MapUtilsService {
     } else {
       return of(undefined)
     }
+  }
+
+  getViewFromExtent(extent: Extent, map: Map): MapContextViewModel {
+    const center = getCenter(extent)
+    const resolution = map
+      .getView()
+      .getResolutionForExtent(extent, map.getSize())
+    const zoom = map.getView().getZoomForResolution(resolution)
+    return { center, zoom }
   }
 
   extentFromLonLat(extent: Extent) {
