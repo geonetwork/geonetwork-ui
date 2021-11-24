@@ -29,9 +29,6 @@ export class MapContextService {
     }
     map.getLayers().clear()
     mapContext.layers.forEach((layer) => map.addLayer(this.createLayer(layer)))
-    if (mapContext.extent) {
-      map.getView().fit(mapContext.extent)
-    }
     return map
   }
 
