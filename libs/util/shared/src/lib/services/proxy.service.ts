@@ -16,7 +16,7 @@ export class ProxyService {
   getProxiedUrl(url: string): string {
     if (!this.proxyPath) return url
     return new URL(
-      `${this.proxyPath}${url}`,
+      `${this.proxyPath}${encodeURIComponent(url)}`,
       window.location.toString()
     ).toString()
   }
