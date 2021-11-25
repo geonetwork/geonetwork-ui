@@ -5,12 +5,11 @@
 html,
 body {
   height: 100%;
-  --catalog-title-size: 48px;
-  --font-title-family: DMSerifDisplay;
+  --font-family-title: DMSerifDisplay;
+  --font-main-title: Roboto, 'Helvetica Neue', sans-serif;
 }
 body {
   margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 html {
   overflow-y: scroll;
@@ -24,8 +23,4 @@ html {
 }
 .container-lg {
   max-width: 1024px;
-}
-
-.font-title {
-  font-family: var(--font-title-family);
 }
