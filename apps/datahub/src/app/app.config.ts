@@ -12,10 +12,3 @@ export const DATAHUB_RESULTS_LAYOUT_CONFIG: ResultsLayoutConfigModel = {
     'grid grid-cols-1 divide-y divide-gray-500'
   ),
 }
-
-export const APPLICATION_CONFIG = {
-  catalogTitleHtml: `
-      <div><span class="text-white">Toutes les <span class="text-primary">données</span></div> 
-      <div><span class="text-primary">publiques </span><span class="text-white">des Hauts de France</span></div>
-      `,
-}

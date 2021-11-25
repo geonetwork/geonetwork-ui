@@ -76,7 +76,7 @@
   "datahub.header.lastRecords": "les plus récentes",
   "datahub.header.myfavorites": "mes favoris",
   "datahub.header.popularRecords": "les plus appréciées",
-  "datahub.route.home": "Data hub",
+  "datahub.header.title": "",
   "downloads.wfs.error": "Les options de téléchargement ne peuvent être obtenues depuis le service WFS",
   "downloads.wfs.featuretype.not.found": "La couche n'a pas été retrouvée",
   "dropFile": "Faites glisser votre fichier",
