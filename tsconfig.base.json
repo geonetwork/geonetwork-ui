@@ -40,6 +40,7 @@
       "@geonetwork-ui/ui/map": ["libs/ui/map/src/index.ts"],
       "@geonetwork-ui/ui/search": ["libs/ui/search/src/index.ts"],
       "@geonetwork-ui/ui/widgets": ["libs/ui/widgets/src/index.ts"],
+      "@geonetwork-ui/util/app-config": ["libs/util/app-config/src/index.ts"],
       "@geonetwork-ui/util/i18n": ["libs/util/i18n/src/index.ts"],
       "@geonetwork-ui/util/shared": ["libs/util/shared/src/index.ts"]
     },

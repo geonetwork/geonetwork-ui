@@ -61,13 +61,14 @@ export const metaReducers: MetaReducer[] = !environment.production
     { provide: RESULTS_LAYOUT_CONFIG, useValue: DATAHUB_RESULTS_LAYOUT_CONFIG },
     {
       provide: Configuration,
-      useValue: new Configuration({
-        basePath: environment.API_BASE_PATH,
-      }),
+      useFactory: () =>
+        new Configuration({
+          basePath: window['env']['apiUrl'],
+        }),
     },
     {
       provide: PROXY_PATH,
-      useValue: environment.PROXY_PATH,
+      useFactory: () => window['env']['proxyPath'],
     },
   ],
   bootstrap: [AppComponent],

@@ -104,6 +104,9 @@
     "ui-widgets": {
       "tags": []
     },
+    "util-app-config": {
+      "tags": []
+    },
     "util-data-fetcher": {
       "tags": []
     },
