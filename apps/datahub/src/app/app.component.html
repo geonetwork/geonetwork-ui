@@ -3,23 +3,6 @@
     <datahub-header></datahub-header>
   </header>
   <main>
-    <div class="border-b border-gray-300">
-      <div class="container-lg mx-auto py-4">
-        <a
-          class="
-            text-primary
-            truncate
-            no-underline
-            hover:text-primary-lighter hover:underline
-            cursor-pointer
-          "
-          translate
-          (click)="resetSearch()"
-          >datahub.route.home</a
-        >
-        > {{ breadcrumb$ | async }}
-      </div>
-    </div>
     <div class="container-lg mx-auto py-4">
       <datahub-main-search
         [ngClass]="{ hidden: (isRecordOpened$ | async) }"
