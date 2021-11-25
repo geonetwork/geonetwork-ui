@@ -35,7 +35,7 @@ describe('ProxyService', () => {
       })
       it('applies the proxy', () => {
         expect(service.getProxiedUrl('http://anotherhost/abcd')).toEqual(
-          `https://proxy.org/abc?url=http://anotherhost/abcd`
+          `https://proxy.org/abc?url=http%3A%2F%2Fanotherhost%2Fabcd`
         )
       })
     })
@@ -46,7 +46,7 @@ describe('ProxyService', () => {
       })
       it('applies the proxy and return a fully qualified url', () => {
         expect(service.getProxiedUrl('http://anotherhost/abcd')).toEqual(
-          `http://myhost:1234/proxy?http://anotherhost/abcd`
+          `http://myhost:1234/proxy?http%3A%2F%2Fanotherhost%2Fabcd`
         )
       })
     })
