@@ -1,3 +1,8 @@
+import {
+  TRANSLATE_DEFAULT_CONFIG,
+  UtilI18nModule,
+} from '@geonetwork-ui/util/i18n'
+import { TranslateModule } from '@ngx-translate/core'
 import { Meta, moduleMetadata, Story } from '@storybook/angular'
 import { MetadataInfoComponent } from './metadata-info.component'
 import { UiElementsModule } from '../ui-elements.module'
@@ -8,7 +13,11 @@ export default {
   component: MetadataInfoComponent,
   decorators: [
     moduleMetadata({
-      imports: [UiElementsModule],
+      imports: [
+        UiElementsModule,
+        UtilI18nModule,
+        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+      ],
     }),
   ],
 } as Meta<MetadataInfoComponent>

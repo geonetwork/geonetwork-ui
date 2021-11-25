@@ -1,4 +1,9 @@
 import {
+  TRANSLATE_DEFAULT_CONFIG,
+  UtilI18nModule,
+} from '@geonetwork-ui/util/i18n'
+import { TranslateModule } from '@ngx-translate/core'
+import {
   moduleMetadata,
   Story,
   Meta,
@@ -13,7 +18,12 @@ export default {
   component: ApisListComponent,
   decorators: [
     moduleMetadata({
-      imports: [UiElementsModule, BrowserAnimationsModule],
+      imports: [
+        UiElementsModule,
+        BrowserAnimationsModule,
+        UtilI18nModule,
+        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+      ],
     }),
     componentWrapperDecorator(
       (story) => `<div style="max-width: 800px">${story}</div>`
