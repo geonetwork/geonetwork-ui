@@ -26,7 +26,7 @@ describe('LinkClassifierService', () => {
         expect(service.getUsagesForLink(LINK_FIXTURES.geodataWfs)).toEqual([
           LinkUsage.API,
           LinkUsage.DOWNLOAD,
-          LinkUsage.DATA,
+          LinkUsage.GEODATA,
         ])
       })
     })
@@ -35,7 +35,7 @@ describe('LinkClassifierService', () => {
         expect(service.getUsagesForLink(LINK_FIXTURES.geodataRest)).toEqual([
           LinkUsage.API,
           LinkUsage.DOWNLOAD,
-          LinkUsage.DATA,
+          LinkUsage.GEODATA,
         ])
       })
     })
@@ -44,7 +44,7 @@ describe('LinkClassifierService', () => {
         expect(service.getUsagesForLink(LINK_FIXTURES.geodataRestWfs)).toEqual([
           LinkUsage.API,
           LinkUsage.DOWNLOAD,
-          LinkUsage.DATA,
+          LinkUsage.GEODATA,
         ])
       })
     })
@@ -73,7 +73,7 @@ describe('LinkClassifierService', () => {
       it('returns download and data usage', () => {
         expect(service.getUsagesForLink(LINK_FIXTURES.geodataJson)).toEqual([
           LinkUsage.DOWNLOAD,
-          LinkUsage.DATA,
+          LinkUsage.GEODATA,
         ])
       })
     })
@@ -81,7 +81,7 @@ describe('LinkClassifierService', () => {
       it('returns download and data usage', () => {
         expect(
           service.getUsagesForLink(LINK_FIXTURES.geodataJsonWithMimeType)
-        ).toEqual([LinkUsage.DOWNLOAD, LinkUsage.DATA])
+        ).toEqual([LinkUsage.DOWNLOAD, LinkUsage.GEODATA])
       })
     })
     describe('for a link to a simple page', () => {

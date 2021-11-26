@@ -57,6 +57,9 @@ export class MdViewFacade {
   dataLinks$ = this.validLinks$.pipe(
     map((links) => links.filter((link) => this.helper.isDataLink(link)))
   )
+  geoDataLinks$ = this.validLinks$.pipe(
+    map((links) => links.filter((link) => this.helper.isGeoDataLink(link)))
+  )
   otherLinks$ = this.validLinks$.pipe(
     map((links) => links.filter((link) => this.helper.isOtherLink(link)))
   )
