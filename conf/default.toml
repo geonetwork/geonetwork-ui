@@ -18,8 +18,9 @@ primary_color = "#093564"
 secondary_color = "#c2e9dc"
 main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
-main_font = 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"'
-title_font = 'ui-serif, Georgia, Cambria, "Times New Roman", Times, serif'
+# custom fonts are optional
+#main_font = "My Custom Font", fallback-font
+#title_font = "My Custom Title Font", fallback-font-title
 
 # To override translations in a specific language, use a 'translations.xx' section where 'xx' is a language code.
 # Language codes are expressed in ISO 639-1 codes, see https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes

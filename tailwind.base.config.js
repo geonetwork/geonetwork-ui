@@ -52,9 +52,11 @@ module.exports = {
         'primary-light': '0 0 44px 0 rgba(5, 31, 156, 0.09)',
       },
       fontFamily: {
-        sans: 'var(--font-family-main)',
-        serif: 'var(--font-family-title)',
-        title: 'var(--font-family-title)', // alias for serif
+        sans: 'var(--font-family-main, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")',
+        serif:
+          'var(--font-family-title, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif)',
+        title:
+          'var(--font-family-title, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif)', // alias for serif
         mono: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
       },
     },

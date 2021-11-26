@@ -94,15 +94,8 @@ export function loadAppConfig() {
 
       const themeCheck = checkKeys(
         theme || {},
-        [
-          'primary_color',
-          'secondary_color',
-          'main_color',
-          'background_color',
-          'main_font',
-          'title_font',
-        ],
-        []
+        ['primary_color', 'secondary_color', 'main_color', 'background_color'],
+        ['main_font', 'title_font']
       )
       if (themeCheck.missing.length) {
         errors.push(`In the [theme] section: ${themeCheck.missing.join(', ')}`)
