@@ -43,7 +43,7 @@ jest.mock('@geonetwork-ui/data-fetcher', () => ({
 
 class MdViewFacadeMock {
   mapApiLinks$ = new Subject()
-  dataLinks$ = new Subject()
+  geoDataLinks$ = new Subject()
 }
 
 class MapUtilsServiceMock {
@@ -161,10 +161,10 @@ describe('DataViewMapComponent', () => {
       ).componentInstance
     })
 
-    describe('with no link compatible with MAP_API or DATA usage', () => {
+    describe('with no link compatible with MAP_API or GEODATA usage', () => {
       beforeEach(() => {
         mdViewFacade.mapApiLinks$.next([])
-        mdViewFacade.dataLinks$.next([])
+        mdViewFacade.geoDataLinks$.next([])
         fixture.detectChanges()
       })
       it('emits a map context with only the base layer', () => {
@@ -197,7 +197,7 @@ describe('DataViewMapComponent', () => {
             protocol: 'OGC:WMS--1-1-0',
           },
         ])
-        mdViewFacade.dataLinks$.next([])
+        mdViewFacade.geoDataLinks$.next([])
         fixture.detectChanges()
       })
       it('emits a map context with the base layer and the first compatible link', () => {
@@ -227,7 +227,7 @@ describe('DataViewMapComponent', () => {
       })
     })
 
-    describe('with links compatible with MAP_API and DATA usage', () => {
+    describe('with links compatible with MAP_API and GEODATA usage', () => {
       beforeEach(() => {
         mdViewFacade.mapApiLinks$.next([
           {
@@ -236,7 +236,7 @@ describe('DataViewMapComponent', () => {
             protocol: 'OGC:WMS',
           },
         ])
-        mdViewFacade.dataLinks$.next([
+        mdViewFacade.geoDataLinks$.next([
           {
             url: 'http://abcd.com/wfs',
             name: 'featuretype',
@@ -272,7 +272,7 @@ describe('DataViewMapComponent', () => {
     describe('with a link using WFS protocol', () => {
       beforeEach(fakeAsync(() => {
         mdViewFacade.mapApiLinks$.next([])
-        mdViewFacade.dataLinks$.next([
+        mdViewFacade.geoDataLinks$.next([
           {
             url: 'http://abcd.com/wfs',
             name: 'featuretype',
@@ -299,7 +299,7 @@ describe('DataViewMapComponent', () => {
     describe('with a link using WFS which returns an error', () => {
       beforeEach(fakeAsync(() => {
         mdViewFacade.mapApiLinks$.next([])
-        mdViewFacade.dataLinks$.next([
+        mdViewFacade.geoDataLinks$.next([
           {
             url: 'http://abcd.com/wfs/error',
             name: 'featuretype',
@@ -318,7 +318,7 @@ describe('DataViewMapComponent', () => {
     describe('with a link using WFS protocol not supporting geojson', () => {
       beforeEach(fakeAsync(() => {
         mdViewFacade.mapApiLinks$.next([])
-        mdViewFacade.dataLinks$.next([
+        mdViewFacade.geoDataLinks$.next([
           {
             url: 'http://abcd.com/wfs/nojson',
             name: 'featuretype',
@@ -337,7 +337,7 @@ describe('DataViewMapComponent', () => {
     describe('with a link using DOWNLOAD protocol', () => {
       beforeEach(fakeAsync(() => {
         mdViewFacade.mapApiLinks$.next([])
-        mdViewFacade.dataLinks$.next([
+        mdViewFacade.geoDataLinks$.next([
           {
             url: 'http://abcd.com/data.geojson',
             name: 'data.geojson',
@@ -383,7 +383,7 @@ describe('DataViewMapComponent', () => {
     describe('when receiving several metadata records', () => {
       beforeEach(() => {
         mdViewFacade.mapApiLinks$.next([])
-        mdViewFacade.dataLinks$.next([
+        mdViewFacade.geoDataLinks$.next([
           {
             url: 'http://abcd.com/data.geojson',
             name: 'data.geojson',
@@ -398,7 +398,7 @@ describe('DataViewMapComponent', () => {
             protocol: 'OGC:WMS',
           },
         ])
-        mdViewFacade.dataLinks$.next([])
+        mdViewFacade.geoDataLinks$.next([])
         fixture.detectChanges()
       })
       it('emits a map context with the link from the last record', () => {
@@ -438,7 +438,7 @@ describe('DataViewMapComponent', () => {
             protocol: 'OGC:WMS',
           },
         ])
-        mdViewFacade.dataLinks$.next([])
+        mdViewFacade.geoDataLinks$.next([])
         dropdownComponent.selectValue.emit(1)
         fixture.detectChanges()
       })
@@ -462,7 +462,7 @@ describe('DataViewMapComponent', () => {
     beforeEach(() => {
       proxyPath = 'http://my.proxy/?url='
       mdViewFacade.mapApiLinks$.next([])
-      mdViewFacade.dataLinks$.next([
+      mdViewFacade.geoDataLinks$.next([
         {
           url: 'http://abcd.com/data.geojson',
           name: 'data.geojson',

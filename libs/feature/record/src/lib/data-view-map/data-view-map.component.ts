@@ -40,8 +40,10 @@ import {
 export class DataViewMapComponent {
   compatibleMapLinks$ = combineLatest([
     this.mdViewFacade.mapApiLinks$,
-    this.mdViewFacade.dataLinks$,
-  ]).pipe(map(([mapApiLinks, dataLinks]) => [...mapApiLinks, ...dataLinks]))
+    this.mdViewFacade.geoDataLinks$,
+  ]).pipe(
+    map(([mapApiLinks, geoDataLinks]) => [...mapApiLinks, ...geoDataLinks])
+  )
 
   dropdownChoices$ = this.compatibleMapLinks$.pipe(
     map((links) =>
