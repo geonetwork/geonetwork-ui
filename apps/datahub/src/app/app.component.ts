@@ -1,6 +1,5 @@
 import { Component } from '@angular/core'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { ColorService } from '@geonetwork-ui/util/shared'
 import { combineLatest } from 'rxjs'
 import { map } from 'rxjs/operators'
 
@@ -17,7 +16,5 @@ export class AppComponent {
   isRecordOpened$ = this.isPresentOrLoading$.pipe(
     map(([present, loading]) => present || loading)
   )
-  constructor(private mdViewFacade: MdViewFacade) {
-    ColorService.applyCssVariables('#0f4395', '#c2e9dc', '#212029', '#fdfbff')
-  }
+  constructor(private mdViewFacade: MdViewFacade) {}
 }

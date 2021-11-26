@@ -17,9 +17,7 @@ marker('datahub.header.popularRecords')
 export class HeaderComponent {
   autocompleteDisplayWithFn = () => ''
 
-  constructor(private searchRouter: RouterFacade) {
-    ColorService.applyCssVariables('#0f4395', '#c2e9dc', '#212029', '#fdfbff')
-  }
+  constructor(private searchRouter: RouterFacade) {}
 
   onFuzzySearchSelection(record: MetadataRecord) {
     this.searchRouter.goToMetadata(record)
