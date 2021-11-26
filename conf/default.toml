@@ -31,11 +31,11 @@ background_color = "#fdfbff"
 # [translations.fr]
 # "results.sortBy.dateStamp" = "Dernière fois que quelqu'un a modifié quelque chose"
 #
-# Note that translations _can_ contain HTML markup, including inline CSS:
-# "search.header.text" = """
+# Note that translation keys ending with ".html" _can_ contain HTML markup, including inline CSS:
+# "catalog.welcome.html" = """
 # Welcome to <span class="text-primary">Organization</span>'s<br>
 # wonderful <span style="font-size: 1.2em;">data catalogue</span>
 # """
 
 [translations.en]
-"datahub.header.title" = '<div class="text-white">Toutes les <span class="text-primary">données<br>publiques</span> de mon organisation</div>'
+"datahub.header.title.html" = '<div class="text-white">Toutes les <span class="text-primary">données<br>publiques</span> de mon organisation</div>'

@@ -92,7 +92,7 @@
   "records": "records",
   "results.layout.selectOne": "",
   "results.records.hits.found": "",
-  "results.records.hits.found=0.help": "",
+  "results.records.hits.empty.help.html": "",
   "results.sortBy.dateStamp": "",
   "results.sortBy.popularity": "",
   "results.sortBy.relevancy": "",

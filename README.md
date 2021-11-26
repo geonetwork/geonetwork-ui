@@ -146,9 +146,12 @@ Every label visible to the user in the different applications must be translated
 - `table.object.count`
 - `results.layout.selectOne`
 - `datafeeder.summarizePage.illustration`
+- `catalog.title.welcome.html`
 
 A repository of _all translations_ is available in the [translations](translations) folder. **These are the
 translations used in the different applications of the geonetwork-ui project.**
+
+> Please note that **only the translations whose key end in `.html`** can accept HTML markup.
 
 ## To document
 

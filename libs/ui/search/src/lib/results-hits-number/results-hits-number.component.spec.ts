@@ -21,7 +21,7 @@ describe('ResultsHitsNumberComponent', () => {
           en: {
             'results.records.hits.found':
               '{hits, plural, =0{No documents match the specified search.} one{} other{{hits} records found.}}',
-            'results.records.hits.found=0.help':
+            'results.records.hits.empty.help.html':
               "Suggestions: <ul class='list-disc list-inside'><li>Try other words</li><li>Specify fewer words</li></ul>",
           },
         })
