@@ -4,7 +4,7 @@ import chroma from 'chroma-js'
 @Injectable({
   providedIn: 'root',
 })
-export class ColorService {
+export class ThemeService {
   static getColor(name: string) {
     return document.documentElement.style.getPropertyValue(`--color-${name}`)
   }

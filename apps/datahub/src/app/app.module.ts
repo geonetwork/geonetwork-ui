@@ -17,7 +17,7 @@ import {
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import {
-  ColorService,
+  ThemeService,
   PROXY_PATH,
   UtilSharedModule,
 } from '@geonetwork-ui/util/shared'
@@ -85,7 +85,7 @@ export class AppModule {
   constructor(translate: TranslateService) {
     translate.setDefaultLang(getDefaultLang())
     translate.use(getLangFromBrowser() || getDefaultLang())
-    ColorService.applyCssVariables(
+    ThemeService.applyCssVariables(
       getThemeConfig().PRIMARY_COLOR,
       getThemeConfig().SECONDARY_COLOR,
       getThemeConfig().MAIN_COLOR,

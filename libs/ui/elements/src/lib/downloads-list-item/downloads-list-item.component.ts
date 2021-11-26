@@ -6,7 +6,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core'
-import { ColorService, MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { ThemeService, MetadataLinkValid } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-downloads-list-item',
@@ -20,7 +20,7 @@ export class DownloadsListItemComponent implements OnInit {
   color: string
 
   ngOnInit(): void {
-    this.color = ColorService.generateLabelColor(this.link.format, 0.6, 0.5)
+    this.color = ThemeService.generateLabelColor(this.link.format, 0.6, 0.5)
   }
 
   openUrl() {

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { ColorService, MetadataRecord } from '@geonetwork-ui/util/shared'
+import { ThemeService, MetadataRecord } from '@geonetwork-ui/util/shared'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 
 marker('datahub.header.myfavorites')

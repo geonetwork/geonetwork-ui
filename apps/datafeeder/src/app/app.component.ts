@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ColorService } from '@geonetwork-ui/util/shared'
+import { ThemeService } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-root',
@@ -10,6 +10,6 @@ export class AppComponent implements OnInit {
   title = 'datafeeder'
 
   ngOnInit() {
-    ColorService.applyCssVariables('#1EA9D5', '#EF7749', '#2E353A', '#fff')
+    ThemeService.applyCssVariables('#1EA9D5', '#EF7749', '#2E353A', '#fff')
   }
 }
