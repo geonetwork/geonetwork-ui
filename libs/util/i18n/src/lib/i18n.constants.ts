@@ -5,6 +5,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
 import { Gn4TranslateLoader } from './gn4.translate.loader'
 import { map } from 'rxjs/operators'
+import { FileTranslateLoader } from './file.translate.loader'
 
 export const DEFAULT_LANG = 'en'
 
@@ -33,29 +34,8 @@ export const LANG_2_TO_3_MAPPER = Object.entries(LANG_3_TO_2_MAPPER).reduce(
   {}
 )
 
-// allows different behaviours depending on the intention
-// default: fallback on default lang if translated labels are empty
-export class CustomTranslateHttpLoader extends TranslateHttpLoader {
-  getTranslation(lang: string) {
-    const baseLang = lang.substr(0, 2) // removing the right part of e.g. en_EN
-    return super.getTranslation(baseLang).pipe(map(this.transform))
-  }
-
-  private transform(translations) {
-    // filter out empty keys: this should let us fallback on the default lang or
-    // untranslated key, instead of having a blank space
-    return Object.keys(translations).reduce(
-      (prev, curr) =>
-        translations[curr].trim().length
-          ? { ...prev, [curr]: translations[curr] }
-          : prev,
-      {}
-    )
-  }
-}
-
 export function HttpLoaderFactory(http: HttpClient) {
-  return new CustomTranslateHttpLoader(http, './assets/i18n/')
+  return new FileTranslateLoader(http, './assets/i18n/')
 }
 
 export function getLangFromHtml() {
