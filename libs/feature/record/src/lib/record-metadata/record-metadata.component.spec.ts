@@ -116,4 +116,39 @@ describe('RecordMetadataComponent', () => {
       })
     })
   })
+  describe('Table', () => {
+    let tableTab
+    describe('when no DATA and no GEODATA link', () => {
+      beforeEach(() => {
+        facade.dataLinks$.next(null)
+        fixture.detectChanges()
+        facade.geoDataLinks$.next(null)
+        fixture.detectChanges()
+        tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
+      })
+      it('table tab is disabled', () => {
+        expect(tableTab.nativeNode.disabled).toBe(true)
+      })
+    })
+    describe('when a DATA link present', () => {
+      beforeEach(() => {
+        facade.dataLinks$.next(['link'])
+        fixture.detectChanges()
+        tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
+      })
+      it('table tab is enabled', () => {
+        expect(tableTab.nativeNode.disabled).toBe(false)
+      })
+    })
+    describe('when a GEODATA link present', () => {
+      beforeEach(() => {
+        facade.geoDataLinks$.next(['link'])
+        fixture.detectChanges()
+        tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
+      })
+      it('table tab is enabled', () => {
+        expect(tableTab.nativeNode.disabled).toBe(false)
+      })
+    })
+  })
 })

@@ -66,6 +66,8 @@ const DATALINKS_FIXTURE = [
     protocol: 'WWW:DOWNLOAD',
     url: 'https://test.org/some_file_name.csv',
   },
+]
+const GEODATALINKS_FIXTURE = [
   {
     description: 'Geojson file',
     name: 'some_file_name.geojson',
@@ -83,6 +85,7 @@ const DATALINKS_FIXTURE = [
 
 class MdViewFacadeMock {
   dataLinks$ = new Subject()
+  geoDataLinks$ = new Subject()
 }
 
 let proxyPath
@@ -180,6 +183,7 @@ describe('DataViewTableComponent', () => {
     describe('when component is rendered', () => {
       beforeEach(() => {
         facade.dataLinks$.next(DATALINKS_FIXTURE)
+        facade.geoDataLinks$.next(GEODATALINKS_FIXTURE)
         fixture.detectChanges()
       })
 
@@ -211,6 +215,7 @@ describe('DataViewTableComponent', () => {
     describe('during data loading', () => {
       beforeEach(fakeAsync(() => {
         facade.dataLinks$.next(DATALINKS_FIXTURE)
+        facade.geoDataLinks$.next([])
         tick(50)
         fixture.detectChanges()
         flush()
@@ -224,6 +229,7 @@ describe('DataViewTableComponent', () => {
     describe('when data is loaded', () => {
       beforeEach(fakeAsync(() => {
         facade.dataLinks$.next(DATALINKS_FIXTURE)
+        facade.geoDataLinks$.next(GEODATALINKS_FIXTURE)
         tick(200)
         fixture.detectChanges()
         flush()
@@ -264,7 +270,8 @@ describe('DataViewTableComponent', () => {
   })
   describe('error when loading data', () => {
     beforeEach(fakeAsync(() => {
-      facade.dataLinks$.next([
+      facade.dataLinks$.next([])
+      facade.geoDataLinks$.next([
         {
           url: 'http://abcd.com/wfs/error',
           name: 'featuretype',
@@ -284,6 +291,7 @@ describe('DataViewTableComponent', () => {
     beforeEach(() => {
       proxyPath = 'http://my.proxy/?url='
       facade.dataLinks$.next(DATALINKS_FIXTURE)
+      facade.geoDataLinks$.next([])
       fixture.detectChanges()
     })
     it('loads the data using the proxy', () => {
