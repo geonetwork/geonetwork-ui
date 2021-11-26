@@ -58,6 +58,8 @@ function checkKeys(
   }
 }
 
+let appConfigLoaded = false
+
 export function loadAppConfig() {
   return fetch('assets/configuration/default.toml')
     .then((resp) => {
@@ -125,7 +127,13 @@ ${warnings.join('\n')}`)
         MAIN_FONT: theme.main_font,
       }
       customTranslations = translations || {}
+
+      appConfigLoaded = true
     })
+}
+
+export function isConfigLoaded() {
+  return appConfigLoaded
 }
 
 export function _reset() {

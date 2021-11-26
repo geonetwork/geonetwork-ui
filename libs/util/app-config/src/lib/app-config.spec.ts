@@ -6,6 +6,7 @@ import {
   getThemeConfig,
   loadAppConfig,
 } from './app-config'
+import { CONFIG_WITH_TRANSLATIONS } from './fixtures'
 
 const CONFIG_MALFORMED = `
 {
@@ -37,28 +38,7 @@ title_font = 'serif'
 another_color = 'red'
 `
 
-const CONFIG_OK = `
-[global]
-geonetwork4_api_url = "/geonetwork/srv/api"
-proxy_path = "/proxy/?url="
-
-[theme]
-primary_color = "#093564"
-secondary_color = "#c2e9dc"
-main_color = "#212029" # All-purpose text color
-background_color = "#fdfbff"
-main_font = 'sans-serif'
-title_font = 'serif'
-
-[translations.en]
-"my.first.key" = 'First label.'
-"my.second.key" = """
-Second label,
-on two lines."""
-
-[translations.de]
-"my.first.key" = 'Erste Etikett.'
-`
+const CONFIG_OK = CONFIG_WITH_TRANSLATIONS
 
 describe('app config utils', () => {
   beforeEach(() => {
@@ -177,7 +157,7 @@ describe('app config utils', () => {
         })
       })
       it('returns an empty object if no translation defined', () => {
-        expect(getCustomTranslations('fr')).toEqual({})
+        expect(getCustomTranslations('nl')).toEqual({})
       })
     })
   })

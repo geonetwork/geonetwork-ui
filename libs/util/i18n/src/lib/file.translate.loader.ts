@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core'
 import { map } from 'rxjs/operators'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import {
+  getCustomTranslations,
+  isConfigLoaded,
+} from '@geonetwork-ui/util/app-config'
 
 /**
  * This loader will rely on JSON files in the app assets, as well as an app config
@@ -13,7 +17,15 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 export class FileTranslateLoader extends TranslateHttpLoader {
   getTranslation(lang: string) {
     const baseLang = lang.substr(0, 2) // removing the right part of e.g. en_EN
-    return super.getTranslation(baseLang).pipe(map(this.transform))
+    return super.getTranslation(baseLang).pipe(
+      map(this.transform),
+      map((translations) => {
+        if (isConfigLoaded()) {
+          return { ...translations, ...getCustomTranslations(baseLang) }
+        }
+        return translations
+      })
+    )
   }
 
   private transform(translations) {
