@@ -89,7 +89,9 @@ export class AppModule {
       getThemeConfig().PRIMARY_COLOR,
       getThemeConfig().SECONDARY_COLOR,
       getThemeConfig().MAIN_COLOR,
-      getThemeConfig().BACKGROUND_COLOR
+      getThemeConfig().BACKGROUND_COLOR,
+      getThemeConfig().MAIN_FONT,
+      getThemeConfig().TITLE_FONT
     )
   }
 }
