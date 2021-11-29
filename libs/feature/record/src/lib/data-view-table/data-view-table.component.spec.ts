@@ -288,17 +288,39 @@ describe('DataViewTableComponent', () => {
   })
 
   describe('when setting a proxy path', () => {
-    beforeEach(() => {
-      proxyPath = 'http://my.proxy/?url='
-      facade.dataLinks$.next(DATALINKS_FIXTURE)
-      facade.geoDataLinks$.next([])
-      fixture.detectChanges()
+    describe('file', () => {
+      beforeEach(() => {
+        proxyPath = 'http://my.proxy/?url='
+        facade.dataLinks$.next(DATALINKS_FIXTURE)
+        facade.geoDataLinks$.next([])
+        fixture.detectChanges()
+      })
+      it('loads the data using the proxy', () => {
+        expect(readDataset).toHaveBeenCalledWith(
+          'http://my.proxy/?url=https://test.org/some_file_name.csv',
+          'csv'
+        )
+      })
     })
-    it('loads the data using the proxy', () => {
-      expect(readDataset).toHaveBeenCalledWith(
-        'http://my.proxy/?url=https://test.org/some_file_name.csv',
-        'csv'
-      )
+    describe('WFS', () => {
+      let dropDownComponent: MockDropdownSelectorComponent
+
+      beforeEach(() => {
+        dropDownComponent = fixture.debugElement.query(
+          By.directive(MockDropdownSelectorComponent)
+        ).componentInstance
+        proxyPath = 'http://my.proxy/?url='
+        facade.dataLinks$.next(GEODATALINKS_FIXTURE)
+        facade.geoDataLinks$.next([])
+        dropDownComponent.selectValue.emit(1)
+        fixture.detectChanges()
+      })
+      it('loads the data using the proxy', () => {
+        expect(readDataset).toHaveBeenCalledWith(
+          'http://my.proxy/?url=https://test.org/wfs?GetFeature',
+          'geojson'
+        )
+      })
     })
   })
 })

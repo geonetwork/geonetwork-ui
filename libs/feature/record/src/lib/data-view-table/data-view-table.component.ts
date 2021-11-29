@@ -92,12 +92,10 @@ export class DataViewTableComponent {
               throw new Error('map.wfs.geojson.not.supported')
             }
             return readDataset(
-              this.proxy.getProxiedUrl(
-                endpoint.getFeatureUrl(link.name, {
-                  outputCrs: 'EPSG:4326',
-                  asJson: true,
-                })
-              ),
+              endpoint.getFeatureUrl(link.name, {
+                outputCrs: 'EPSG:4326',
+                asJson: true,
+              }),
               'geojson'
             ).then((features) =>
               features.map((f) => ({
