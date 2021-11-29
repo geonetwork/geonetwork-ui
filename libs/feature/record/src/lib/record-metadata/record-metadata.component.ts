@@ -13,16 +13,23 @@ import { combineLatest } from 'rxjs'
 export class RecordMetadataComponent {
   displayMap$ = combineLatest([
     this.facade.mapApiLinks$,
-    this.facade.dataLinks$,
+    this.facade.geoDataLinks$,
   ]).pipe(
     map(
-      ([mapLinks, dataLinks]) =>
+      ([mapLinks, geoDataLinks]) =>
         (!!mapLinks && mapLinks.length > 0) ||
-        (!!dataLinks && dataLinks.length > 0)
+        (!!geoDataLinks && geoDataLinks.length > 0)
     )
   )
-  displayData$ = this.facade.dataLinks$.pipe(
-    map((links) => !!links && links.length > 0)
+  displayData$ = combineLatest([
+    this.facade.dataLinks$,
+    this.facade.geoDataLinks$,
+  ]).pipe(
+    map(
+      ([dataLinks, geoDataLinks]) =>
+        (!!dataLinks && dataLinks.length > 0) ||
+        (!!geoDataLinks && geoDataLinks.length > 0)
+    )
   )
   displayDownload$ = this.facade.downloadLinks$.pipe(
     map((links) => !!links && links.length > 0)

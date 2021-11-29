@@ -57,6 +57,11 @@ export class LinkHelperService {
       this.linkClassifier.getUsagesForLink(link).indexOf(LinkUsage.DATA) > -1
     )
   }
+  isGeoDataLink(link: MetadataLink): boolean {
+    return (
+      this.linkClassifier.getUsagesForLink(link).indexOf(LinkUsage.GEODATA) > -1
+    )
+  }
   isOtherLink(link: MetadataLink): boolean {
     return this.linkClassifier.getUsagesForLink(link).length === 0
   }

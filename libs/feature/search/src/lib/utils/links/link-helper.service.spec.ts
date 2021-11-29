@@ -75,8 +75,31 @@ describe('LinkHelperService', () => {
     })
     describe('with link usages', () => {
       beforeEach(() => {
-        linkUsage = [LinkUsage.DOWNLOAD]
-        result = service.isDownloadLink(link)
+        linkUsage = [LinkUsage.DATA]
+        result = service.isDataLink(link)
+      })
+      it('returns true', () => {
+        expect(result).toBe(true)
+      })
+    })
+  })
+  describe('#isGeoDataLink', () => {
+    describe('empty link usages', () => {
+      beforeEach(() => {
+        linkUsage = []
+        result = service.isGeoDataLink(link)
+      })
+      it('calls #getUsagesForLink', () => {
+        expect(linkClassifierMock.getUsagesForLink).toHaveBeenCalledWith(link)
+      })
+      it('returns false', () => {
+        expect(result).toBe(false)
+      })
+    })
+    describe('with link usages', () => {
+      beforeEach(() => {
+        linkUsage = [LinkUsage.GEODATA]
+        result = service.isGeoDataLink(link)
       })
       it('returns true', () => {
         expect(result).toBe(true)

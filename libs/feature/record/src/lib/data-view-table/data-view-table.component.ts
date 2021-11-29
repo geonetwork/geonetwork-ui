@@ -38,7 +38,11 @@ marker('map.wfs.geojson.not.supported')
 })
 export class DataViewTableComponent {
   selectionId = 0
-  dropdownChoices$ = this.mdViewFacade.dataLinks$.pipe(
+  compatibleDataLinks$ = combineLatest([
+    this.mdViewFacade.dataLinks$,
+    this.mdViewFacade.geoDataLinks$,
+  ]).pipe(map(([dataLinks, geoDataLinks]) => [...dataLinks, ...geoDataLinks]))
+  dropdownChoices$ = this.compatibleDataLinks$.pipe(
     map((links) =>
       links.map((link, index) => ({
         label: link.description || link.name,
@@ -52,7 +56,7 @@ export class DataViewTableComponent {
   error = null
 
   tableData$ = combineLatest([
-    this.mdViewFacade.dataLinks$,
+    this.compatibleDataLinks$,
     this.selectedLinkIndex$.pipe(distinctUntilChanged()),
   ]).pipe(
     map(([links, index]) => links[index]),

@@ -17,6 +17,7 @@ class MdViewFacadeMock {
   metadata$ = new BehaviorSubject(RECORDS_SUMMARY_FIXTURE[0])
   mapApiLinks$ = new Subject()
   dataLinks$ = new Subject()
+  geoDataLinks$ = new Subject()
   downloadLinks$ = new Subject()
   apiLinks$ = new Subject()
 }
@@ -82,11 +83,11 @@ describe('RecordMetadataComponent', () => {
   })
   describe('Map', () => {
     let mapTab
-    describe('when no MAPAPI and no DATA link', () => {
+    describe('when no MAPAPI and no GEODATA link', () => {
       beforeEach(() => {
         facade.mapApiLinks$.next(null)
         fixture.detectChanges()
-        facade.dataLinks$.next(null)
+        facade.geoDataLinks$.next(null)
         fixture.detectChanges()
         mapTab = fixture.debugElement.queryAll(By.css('mat-tab'))[2]
       })
@@ -102,6 +103,51 @@ describe('RecordMetadataComponent', () => {
       })
       it('map tab is enabled', () => {
         expect(mapTab.nativeNode.disabled).toBe(false)
+      })
+    })
+    describe('when a GEODATA link present', () => {
+      beforeEach(() => {
+        facade.geoDataLinks$.next(['link'])
+        fixture.detectChanges()
+        mapTab = fixture.debugElement.queryAll(By.css('mat-tab'))[2]
+      })
+      it('map tab is enabled', () => {
+        expect(mapTab.nativeNode.disabled).toBe(false)
+      })
+    })
+  })
+  describe('Table', () => {
+    let tableTab
+    describe('when no DATA and no GEODATA link', () => {
+      beforeEach(() => {
+        facade.dataLinks$.next(null)
+        fixture.detectChanges()
+        facade.geoDataLinks$.next(null)
+        fixture.detectChanges()
+        tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
+      })
+      it('table tab is disabled', () => {
+        expect(tableTab.nativeNode.disabled).toBe(true)
+      })
+    })
+    describe('when a DATA link present', () => {
+      beforeEach(() => {
+        facade.dataLinks$.next(['link'])
+        fixture.detectChanges()
+        tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
+      })
+      it('table tab is enabled', () => {
+        expect(tableTab.nativeNode.disabled).toBe(false)
+      })
+    })
+    describe('when a GEODATA link present', () => {
+      beforeEach(() => {
+        facade.geoDataLinks$.next(['link'])
+        fixture.detectChanges()
+        tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
+      })
+      it('table tab is enabled', () => {
+        expect(tableTab.nativeNode.disabled).toBe(false)
       })
     })
   })
