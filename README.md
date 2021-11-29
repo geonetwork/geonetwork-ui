@@ -78,6 +78,12 @@ The GeoNetwork UI project was generated using [Nx](https://nx.dev) and is compos
 - **applications** using said components in the `apps` folder
 - **web components** using also said components in the `apps/webcomponents` folder
 
+Other directories include:
+
+- **conf**: configuration-related files
+- **translations**: contains the translations of all keys used in GeoNetwork UI
+- **tools**: various tools & utils for docker, internationalization etc.
+
 ### Libraries
 
 Libraries are organized in the following fashion:
@@ -119,6 +125,20 @@ Libraries are organized in the following fashion:
 
 See [the specific README file](apps/webcomponents).
 
+### Application Configuration
+
+GeoNetwork UI provides a standard way of configuring applications using the [conf/default.toml](conf/default.toml) file.
+
+This file can be used to:
+
+- customize the URL used to reach the GeoNetwork 4 API
+- customize the theme used in the application (colors, fonts...)
+- define custom translations for the different languages
+
+Please refer to the embedded comments in the file for more information.
+
+> Note: as of now, only the Datahub application relies on this file
+
 ### Internationalization
 
 Every label visible to the user in the different applications must be translated. All labels are identified using keys, for example:
@@ -126,9 +146,12 @@ Every label visible to the user in the different applications must be translated
 - `table.object.count`
 - `results.layout.selectOne`
 - `datafeeder.summarizePage.illustration`
+- `catalog.title.welcome.html`
 
-A repository of _all translations_ is available in the [translations](/translations) folder. **These are the
+A repository of _all translations_ is available in the [translations](translations) folder. **These are the
 translations used in the different applications of the geonetwork-ui project.**
+
+> Please note that **only the translations whose key end in `.html`** can accept HTML markup.
 
 ## To document
 

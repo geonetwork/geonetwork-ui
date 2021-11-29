@@ -4,7 +4,7 @@ import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 
 @Component({
-  selector: 'gn-ui-main-search',
+  selector: 'datahub-main-search',
   templateUrl: './main-search.component.html',
   styleUrls: ['./main-search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

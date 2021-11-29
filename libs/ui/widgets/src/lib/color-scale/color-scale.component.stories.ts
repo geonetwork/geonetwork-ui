@@ -1,6 +1,6 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular'
 import { ColorScaleComponent } from './color-scale.component'
-import { ColorService } from '@geonetwork-ui/util/shared'
+import { ThemeService } from '@geonetwork-ui/util/shared'
 
 export default {
   title: 'Widgets/ColorScaleComponent',
@@ -13,7 +13,7 @@ export default {
 } as Meta<ColorScaleComponent>
 
 const Template: Story<ColorScaleComponent> = (args: ColorScaleComponent) => {
-  ColorService.applyCssVariables(
+  ThemeService.applyCssVariables(
     args['Primary Color'],
     args['Secondary Color'],
     args['Main Color'],

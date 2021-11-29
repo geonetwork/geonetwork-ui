@@ -1,47 +1,14 @@
-<header></header>
-<main gnUiSearchStateContainer="mainSearch">
-  <div class="bg-primary px-4">
-    <div class="container-md mx-auto py-4">
-      <div class="flex my-5">
-        <div class="mr-3"></div>
-        <div>
-          <h2 class="text-white text-4xl uppercase" translate>
-            datahub.app.title
-          </h2>
-          <div class="text-white" translate>datahub.app.subtitle</div>
-        </div>
-      </div>
-      <div class="py-8">
-        <gn-ui-fuzzy-search
-          [displayWithFn]="autocompleteDisplayWithFn"
-          (itemSelected)="onFuzzySearchSelection($event)"
-          (inputSubmited)="onFuzzySearchSubmission()"
-        ></gn-ui-fuzzy-search>
-      </div>
-    </div>
-  </div>
-  <div class="border-b border-gray-300">
+<div gnUiSearchStateContainer="mainSearch">
+  <header>
+    <datahub-header></datahub-header>
+  </header>
+  <main>
     <div class="container-lg mx-auto py-4">
-      <a
-        class="
-          text-primary
-          truncate
-          no-underline
-          hover:text-primary-lighter hover:underline
-          cursor-pointer
-        "
-        translate
-        (click)="onBCDatahubClick()"
-        >datahub.route.home</a
-      >
-      > {{ breadcrumb$ | async }}
+      <datahub-main-search
+        [ngClass]="{ hidden: (isRecordOpened$ | async) }"
+      ></datahub-main-search>
+      <gn-ui-record-metadata *ngIf="isRecordOpened$ | async">
+      </gn-ui-record-metadata>
     </div>
-  </div>
-  <div class="container-lg mx-auto py-4">
-    <gn-ui-main-search
-      [ngClass]="{ hidden: (isRecordOpened$ | async) }"
-    ></gn-ui-main-search>
-    <gn-ui-record-metadata *ngIf="isRecordOpened$ | async">
-    </gn-ui-record-metadata>
-  </div>
-</main>
+  </main>
+</div>

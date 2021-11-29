@@ -3,7 +3,10 @@ import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
-import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
+import {
+  FeatureRecordModule,
+  MdViewFacade,
+} from '@geonetwork-ui/feature/record'
 import { DefaultRouterModule } from '@geonetwork-ui/feature/router'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { RESULTS_LAYOUT_CONFIG, UiSearchModule } from '@geonetwork-ui/ui/search'
@@ -13,7 +16,11 @@ import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
-import { PROXY_PATH, UtilSharedModule } from '@geonetwork-ui/util/shared'
+import {
+  ThemeService,
+  PROXY_PATH,
+  UtilSharedModule,
+} from '@geonetwork-ui/util/shared'
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
@@ -25,6 +32,9 @@ import { AppComponent } from './app.component'
 import { DATAHUB_RESULTS_LAYOUT_CONFIG } from './app.config'
 import { MainSearchComponent } from './main-search/main-search.component'
 import { RecordPreviewDatahubComponent } from './record-preview-datahub/record-preview-datahub.component'
+import { HeaderComponent } from './header/header/header.component'
+import { HeaderBadgeButtonComponent } from './header/header-badge-button/header-badge-button.component'
+import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 
 export const metaReducers: MetaReducer[] = !environment.production
   ? [storeFreeze]
@@ -35,6 +45,8 @@ export const metaReducers: MetaReducer[] = !environment.production
     AppComponent,
     MainSearchComponent,
     RecordPreviewDatahubComponent,
+    HeaderComponent,
+    HeaderBadgeButtonComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,13 +69,14 @@ export const metaReducers: MetaReducer[] = !environment.production
     { provide: RESULTS_LAYOUT_CONFIG, useValue: DATAHUB_RESULTS_LAYOUT_CONFIG },
     {
       provide: Configuration,
-      useValue: new Configuration({
-        basePath: environment.API_BASE_PATH,
-      }),
+      useFactory: () =>
+        new Configuration({
+          basePath: getGlobalConfig().GN4_API_URL,
+        }),
     },
     {
       provide: PROXY_PATH,
-      useValue: environment.PROXY_PATH,
+      useFactory: () => getGlobalConfig().PROXY_PATH,
     },
   ],
   bootstrap: [AppComponent],
@@ -72,5 +85,13 @@ export class AppModule {
   constructor(translate: TranslateService) {
     translate.setDefaultLang(getDefaultLang())
     translate.use(getLangFromBrowser() || getDefaultLang())
+    ThemeService.applyCssVariables(
+      getThemeConfig().PRIMARY_COLOR,
+      getThemeConfig().SECONDARY_COLOR,
+      getThemeConfig().MAIN_COLOR,
+      getThemeConfig().BACKGROUND_COLOR,
+      getThemeConfig().MAIN_FONT,
+      getThemeConfig().TITLE_FONT
+    )
   }
 }

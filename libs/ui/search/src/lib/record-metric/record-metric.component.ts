@@ -4,7 +4,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core'
-import { ColorService } from '@geonetwork-ui/util/shared'
+import { ThemeService } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-record-metric',
@@ -20,6 +20,6 @@ export class RecordMetricComponent implements OnInit {
   color: string
 
   ngOnInit(): void {
-    this.color = ColorService.generateLabelColor(this.label, 0.6, 0.5)
+    this.color = ThemeService.generateLabelColor(this.label, 0.6, 0.5)
   }
 }

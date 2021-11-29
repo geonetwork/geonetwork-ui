@@ -173,7 +173,7 @@
       "projectType": "application",
       "root": "apps/datahub",
       "sourceRoot": "apps/datahub/src",
-      "prefix": "gn-ui",
+      "prefix": "datahub",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -191,6 +191,11 @@
                 "glob": "*",
                 "input": "translations",
                 "output": "assets/i18n/"
+              },
+              {
+                "glob": "*",
+                "input": "conf",
+                "output": "assets/configuration/"
               }
             ],
             "styles": [
@@ -950,6 +955,27 @@
               "libs/ui/widgets/src/**/*.ts",
               "libs/ui/widgets/src/**/*.html"
             ]
+          }
+        }
+      }
+    },
+    "util-app-config": {
+      "root": "libs/util/app-config",
+      "sourceRoot": "libs/util/app-config/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/util/app-config/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/util/app-config"],
+          "options": {
+            "jestConfig": "libs/util/app-config/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }

@@ -1,5 +1,5 @@
 import { Component, Injector, Input, OnChanges } from '@angular/core'
-import { ColorService } from '@geonetwork-ui/util/shared'
+import { ThemeService } from '@geonetwork-ui/util/shared'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { TranslateService } from '@ngx-translate/core'
@@ -31,7 +31,7 @@ export class BaseComponent implements OnChanges {
     if (!this.isInitialized) {
       apiConfiguration.basePath = this.apiUrl
       this.translate.reloadLang(this.translate.currentLang)
-      ColorService.applyCssVariables(
+      ThemeService.applyCssVariables(
         this.primaryColor,
         this.secondaryColor,
         this.mainColor,

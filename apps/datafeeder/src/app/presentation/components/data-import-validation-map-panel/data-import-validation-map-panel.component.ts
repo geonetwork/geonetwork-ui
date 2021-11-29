@@ -9,7 +9,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core'
-import { ColorService } from '@geonetwork-ui/util/shared'
+import { ThemeService } from '@geonetwork-ui/util/shared'
 import type { Feature } from 'geojson'
 import { asArray, asString } from 'ol/color'
 import { isEmpty } from 'ol/extent'
@@ -118,7 +118,7 @@ export class DataImportValidationMapPanelComponent
 
   getSecondaryColor(opacity: number = 1) {
     const secondaryColor =
-      ColorService.getColor('secondary') || DEFAULT_PRIMARY_COLOR
+      ThemeService.getColor('secondary') || DEFAULT_PRIMARY_COLOR
     const [r, g, b] = Array.from(asArray(secondaryColor))
 
     return asString([r, g, b, opacity])

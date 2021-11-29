@@ -22,13 +22,105 @@ You'll need manual configuration to make the application running:
 
 - Update the root `tsconfig.json` of your application by setting
 
-```js
-  "angularCompilerOptions": {
-    "strictTemplates": false
-  }
-```
+  ```js
+    "angularCompilerOptions": {
+      "strictTemplates": false
+    }
+  ```
 
 - Add `postcss.config.js` and `tailwind.config.js` at the root of your project if you want to use TailwindCSS.
+
+- If you want to an **application configuration**, follow the following steps:
+
+  1. Add the config file as asset for the application in `angular.json`:
+
+  ```json
+  "architect": {
+    "build": {
+      ...
+      "options": {
+        ...
+        "assets": [
+          ...
+          {
+            "glob": "*",
+            "input": "conf",
+            "output": "assets/configuration/"
+          }
+        ],
+  ```
+
+  2. Load app config before bootstrapping the Angular app in `main.ts`:
+
+  ```ts
+  // ...
+  import { loadAppConfig } from '@geonetwork-ui/util/app-config'
+
+  // chain config load and app bootstrap
+  loadAppConfig()
+    .then(() => {
+      platformBrowserDynamic()
+        .bootstrapModule(AppModule)
+        .catch((err) => console.error(err))
+    })
+    .catch(console.error)
+  ```
+
+  3. Add a `preload` link for the config file to gain some boot time:
+
+  ```html
+    <link rel="preload" href="assets/configuration/default.toml" as="fetch" />
+  </head>
+  <body>
+  ```
+
+  > Note that the config file is _always_ available at this path
+
+  4. Use the config using functions in `@geonetwork-ui/util/app-config`:
+
+  ```ts
+  // ...
+  import {
+    getGlobalConfig,
+    getThemeConfig,
+  } from '@geonetwork-ui/util/app-config'
+
+  @NgModule({
+    // ...
+    // provide API url and proxy path
+    providers: [
+      {
+        provide: Configuration,
+        useFactory: () =>
+          new Configuration({
+            basePath: getGlobalConfig().GN4_API_URL,
+          }),
+      },
+      {
+        provide: PROXY_PATH,
+        useFactory: () => getGlobalConfig().PROXY_PATH,
+      },
+      // ...
+    ],
+  })
+  export class AppModule {
+    constructor() {
+      // ...
+      // apply css variables using ThemeService
+      ThemeService.applyCssVariables(
+        getThemeConfig().PRIMARY_COLOR,
+        getThemeConfig().SECONDARY_COLOR,
+        getThemeConfig().MAIN_COLOR,
+        getThemeConfig().BACKGROUND_COLOR,
+        getThemeConfig().MAIN_FONT,
+        getThemeConfig().TITLE_FONT
+      )
+    }
+  }
+  ```
+
+Please note that the app configuration is available to be used anywhere else in the application in a synchronous
+way since it was loaded beforehand.
 
 ### Generate a library
 

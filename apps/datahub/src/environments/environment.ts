@@ -4,8 +4,6 @@
 
 export const environment = {
   production: false,
-  API_BASE_PATH: window['env']['apiUrl'],
-  PROXY_PATH: window['env']['proxyPath'],
 }
 
 /*

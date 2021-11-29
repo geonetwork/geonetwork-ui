@@ -6,7 +6,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core'
-import { ColorService, MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { ThemeService, MetadataLinkValid } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-apis-list-item',
@@ -20,7 +20,7 @@ export class ApisListItemComponent implements OnInit {
   color: string
 
   ngOnInit(): void {
-    this.color = ColorService.generateLabelColor(this.link.protocol, 0.6, 0.5)
+    this.color = ThemeService.generateLabelColor(this.link.protocol, 0.6, 0.5)
   }
 
   copyUrl() {
