@@ -1,5 +1,56 @@
 <div
   class="
+    block
+    h-full
+    py-3
+    px-4
+    bg-white
+    rounded
+    border-gray-300
+    hover:border-primary hover:text-primary
+    filter
+    shadow-primary-light
+    hover:shadow-primary
+    overflow-hidden
+  "
+>
+  <div class="font-title text-primary font-medium text-xl">
+    {{ link.name || link.description }}
+  </div>
+  <div class="flex justify-between">
+    <span
+      class="
+        badge
+        inline-flex
+        items-center
+        justify-center
+        px-2
+        py-1
+        text-xs
+        leading-none
+        text-white
+        rounded
+        capitalize
+      "
+      [style.background]="color"
+      >{{ link.protocol }}</span
+    >
+    <button
+      (click)="copyUrl()"
+      class="cursor-pointer"
+      mat-raised-button
+      matTooltip="Copier l'url"
+      matTooltipPosition="above"
+    >
+      <mat-icon class="align-middle copy-icon text-gray-200"
+        >content_copy</mat-icon
+      >
+    </button>
+  </div>
+</div>
+
+<div
+  class="
     p-2
     rounded
     flex flex-row
