@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatIconModule } from '@angular/material/icon'
-import { ApisListItemComponent } from './apis-list-item.component'
+import { ApiCardComponent } from './api-card.component'
 
-describe('ApisListItemComponent', () => {
-  let component: ApisListItemComponent
-  let fixture: ComponentFixture<ApisListItemComponent>
+describe('ApiCardComponent', () => {
+  let component: ApiCardComponent
+  let fixture: ComponentFixture<ApiCardComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ApisListItemComponent],
+      declarations: [ApiCardComponent],
       imports: [MatIconModule],
     }).compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ApisListItemComponent)
+    fixture = TestBed.createComponent(ApiCardComponent)
     component = fixture.componentInstance
     component.link = {
       protocol: 'OGC:WFS',

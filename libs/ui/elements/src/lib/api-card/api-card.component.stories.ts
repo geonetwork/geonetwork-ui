@@ -9,13 +9,13 @@ import {
   Meta,
   componentWrapperDecorator,
 } from '@storybook/angular'
-import { ApisListItemComponent } from './apis-list-item.component'
+import { ApiCardComponent } from './api-card.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiElementsModule } from '../ui-elements.module'
 
 export default {
-  title: 'Elements/ApisListItemComponent',
-  component: ApisListItemComponent,
+  title: 'Elements/ApiCardComponent',
+  component: ApiCardComponent,
   decorators: [
     moduleMetadata({
       imports: [
@@ -29,12 +29,10 @@ export default {
       (story) => `<div style="max-width: 800px">${story}</div>`
     ),
   ],
-} as Meta<ApisListItemComponent>
+} as Meta<ApiCardComponent>
 
-const Template: Story<ApisListItemComponent> = (
-  args: ApisListItemComponent
-) => ({
-  component: ApisListItemComponent,
+const Template: Story<ApiCardComponent> = (args: ApiCardComponent) => ({
+  component: ApiCardComponent,
   props: args,
 })
 

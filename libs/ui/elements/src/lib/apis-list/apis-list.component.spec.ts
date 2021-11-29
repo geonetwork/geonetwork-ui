@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { ApisListComponent } from './apis-list.component'
-import { ApisListItemComponent } from '../apis-list-item/apis-list-item.component'
+import { ApiCardComponent } from '../api-card/api-card.component'
 import { MatIconModule } from '@angular/material/icon'
 
 describe('ApisListComponent', () => {
@@ -25,7 +25,7 @@ describe('ApisListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ApisListComponent, ApisListItemComponent],
+      declarations: [ApisListComponent, ApiCardComponent],
       imports: [MatIconModule],
     }).compileComponents()
   })

@@ -7,7 +7,7 @@ import { MetadataInfoComponent } from './metadata-info/metadata-info.component'
 import { ContentGhostComponent } from './content-ghost/content-ghost.component'
 import { DownloadsListItemComponent } from './downloads-list-item/downloads-list-item.component'
 import { DownloadsListComponent } from './downloads-list/downloads-list.component'
-import { ApisListItemComponent } from './apis-list-item/apis-list-item.component'
+import { ApiCardComponent } from './api-card/api-card.component'
 import { ApisListComponent } from './apis-list/apis-list.component'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
@@ -28,7 +28,7 @@ import { TranslateModule } from '@ngx-translate/core'
     ContentGhostComponent,
     DownloadsListItemComponent,
     DownloadsListComponent,
-    ApisListItemComponent,
+    ApiCardComponent,
     ApisListComponent,
   ],
   exports: [
@@ -36,7 +36,7 @@ import { TranslateModule } from '@ngx-translate/core'
     ContentGhostComponent,
     DownloadsListItemComponent,
     DownloadsListComponent,
-    ApisListItemComponent,
+    ApiCardComponent,
     ApisListComponent,
   ],
 })
