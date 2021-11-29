@@ -42,7 +42,7 @@ export const Primary = Template.bind({})
 Primary.args = {
   link: {
     protocol: 'OGC:WFS',
-    name: 'Allroads',
+    name: "Scot en cours d'élaboration ou de révision",
     description: 'A file that contains all roads',
     url: 'https//roads.com/wfs',
   },
