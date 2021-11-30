@@ -37,30 +37,23 @@ export class LinkHelperService {
     return !('invalid' in link)
   }
   isApiLink(link: MetadataLink): boolean {
-    return (
-      this.linkClassifier.getUsagesForLink(link).indexOf(LinkUsage.API) > -1
-    )
+    return this.linkClassifier.getUsagesForLink(link).includes(LinkUsage.API)
   }
   isMapApiLink(link: MetadataLink): boolean {
-    return (
-      this.linkClassifier.getUsagesForLink(link).indexOf(LinkUsage.MAPAPI) > -1
-    )
+    return this.linkClassifier.getUsagesForLink(link).includes(LinkUsage.MAPAPI)
   }
   isDownloadLink(link: MetadataLink): boolean {
-    return (
-      this.linkClassifier.getUsagesForLink(link).indexOf(LinkUsage.DOWNLOAD) >
-      -1
-    )
+    return this.linkClassifier
+      .getUsagesForLink(link)
+      .includes(LinkUsage.DOWNLOAD)
   }
   isDataLink(link: MetadataLink): boolean {
-    return (
-      this.linkClassifier.getUsagesForLink(link).indexOf(LinkUsage.DATA) > -1
-    )
+    return this.linkClassifier.getUsagesForLink(link).includes(LinkUsage.DATA)
   }
   isGeoDataLink(link: MetadataLink): boolean {
-    return (
-      this.linkClassifier.getUsagesForLink(link).indexOf(LinkUsage.GEODATA) > -1
-    )
+    return this.linkClassifier
+      .getUsagesForLink(link)
+      .includes(LinkUsage.GEODATA)
   }
   isOtherLink(link: MetadataLink): boolean {
     return this.linkClassifier.getUsagesForLink(link).length === 0
