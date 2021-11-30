@@ -9,6 +9,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling'
 import { TableVirtualScrollModule } from 'ng-table-virtual-scroll'
 import { CardLinkComponent } from './card-link/card-link.component'
 import { TranslateModule } from '@ngx-translate/core'
+import { ExpandablePanelComponent } from './expandable-panel/expandable-panel.component'
 
 @NgModule({
   imports: [
@@ -20,7 +21,17 @@ import { TranslateModule } from '@ngx-translate/core'
     ScrollingModule,
     TranslateModule.forChild(),
   ],
-  declarations: [TableComponent, FigureComponent, CardLinkComponent],
-  exports: [TableComponent, FigureComponent, CardLinkComponent],
+  declarations: [
+    TableComponent,
+    FigureComponent,
+    CardLinkComponent,
+    ExpandablePanelComponent,
+  ],
+  exports: [
+    TableComponent,
+    FigureComponent,
+    CardLinkComponent,
+    ExpandablePanelComponent,
+  ],
 })
 export class UiLayoutModule {}
