@@ -201,6 +201,30 @@ describe('LinkHelperService', () => {
     })
   })
 
+  describe('#isLandingPage', () => {
+    describe('LANDINGPAGE usage', () => {
+      beforeEach(() => {
+        linkUsage = [LinkUsage.LANDINGPAGE]
+        result = service.isLandingPage(link)
+      })
+      it('calls #getUsagesForLink', () => {
+        expect(linkClassifierMock.getUsagesForLink).toHaveBeenCalledWith(link)
+      })
+      it('returns true', () => {
+        expect(result).toBe(true)
+      })
+    })
+    describe('no MAP usage', () => {
+      beforeEach(() => {
+        linkUsage = [LinkUsage.MAPAPI]
+        result = service.isLandingPage(link)
+      })
+      it('returns false', () => {
+        expect(result).toBe(false)
+      })
+    })
+  })
+
   describe('#protocols', () => {
     describe('#hasDownloadProtocols', () => {
       beforeEach(() => {

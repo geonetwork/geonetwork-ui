@@ -74,6 +74,11 @@ export class LinkHelperService {
       (/^ESRI:REST/.test(link.protocol) && /WFSServer/.test(link.url))
     )
   }
+  isLandingPage(link: MetadataLink): boolean {
+    return this.linkClassifier
+      .getUsagesForLink(link)
+      .includes(LinkUsage.LANDINGPAGE)
+  }
   isEsriRestFeatureServer(link: MetadataLinkValid): boolean {
     return /^ESRI:REST/.test(link.protocol) && /FeatureServer/.test(link.url)
   }
