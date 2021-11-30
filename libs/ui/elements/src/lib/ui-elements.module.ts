@@ -13,6 +13,7 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { TranslateModule } from '@ngx-translate/core'
 import { LinkCardComponent } from './link-card/link-card.component'
+import { RelatedRecordCardComponent } from './related-record-card/related-record-card.component'
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { LinkCardComponent } from './link-card/link-card.component'
     ApiCardComponent,
     ApisListComponent,
     LinkCardComponent,
+    RelatedRecordCardComponent,
   ],
   exports: [
     MetadataInfoComponent,
@@ -41,6 +43,7 @@ import { LinkCardComponent } from './link-card/link-card.component'
     ApiCardComponent,
     ApisListComponent,
     LinkCardComponent,
+    RelatedRecordCardComponent,
   ],
 })
 export class UiElementsModule {}
