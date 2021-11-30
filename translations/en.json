@@ -99,8 +99,6 @@
   "previous": "previous",
   "record.action.download": "Download",
   "record.action.view": "View",
-  "record.api.name": "Name",
-  "record.api.url": "Url",
   "record.metadata.contact": "Contact",
   "record.metadata.description": "Description",
   "record.metadata.keywords": "Keywords",
@@ -128,5 +126,7 @@
   "search.loading": "Loading ...",
   "table.loading.data": "Loading data...",
   "table.object.count": "objects in this dataset",
-  "table.select.data": "Select the dataset to display"
+  "table.select.data": "Select the dataset to display",
+  "tooltip.url.copy": "Copy URL",
+  "tooltip.url.open": "Open URL"
 }

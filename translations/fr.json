@@ -99,8 +99,6 @@
   "previous": "précédent",
   "record.action.download": "Télécharger",
   "record.action.view": "Voir",
-  "record.api.name": "Nom",
-  "record.api.url": "Url",
   "record.metadata.contact": "Contact",
   "record.metadata.description": "À propos",
   "record.metadata.keywords": "Mots clés",
@@ -128,5 +126,7 @@
   "search.loading": "Chargement...",
   "table.loading.data": "Chargement des données...",
   "table.object.count": "enregistrements dans ce jeu de données",
-  "table.select.data": "Choisir le jeu de données à afficher"
+  "table.select.data": "Choisir le jeu de données à afficher",
+  "tooltip.url.copy": "Copier l'URL",
+  "tooltip.url.open": "Ouvrir l'URL"
 }

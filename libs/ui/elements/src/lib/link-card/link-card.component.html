@@ -24,7 +24,7 @@
     target="_blank"
     class="cursor-pointer"
     mat-raised-button
-    matTooltip="Ouvrir l'url"
+    [matTooltip]="'tooltip.url.open' | translate"
     matTooltipPosition="above"
   >
     <mat-icon class="align-middle text-gray-200">open_in_new</mat-icon>

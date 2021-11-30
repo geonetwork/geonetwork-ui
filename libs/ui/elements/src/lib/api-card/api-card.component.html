@@ -40,7 +40,7 @@
       (click)="copyUrl()"
       class="cursor-pointer"
       mat-raised-button
-      matTooltip="Copier l'url"
+      [matTooltip]="'tooltip.url.copy' | translate"
       matTooltipPosition="above"
     >
       <mat-icon class="align-middle copy-icon text-gray-200"
