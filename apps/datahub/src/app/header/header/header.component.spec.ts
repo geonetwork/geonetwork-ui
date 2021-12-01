@@ -1,15 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
 
 import { HeaderComponent } from './header.component'
 import { RouterTestingModule } from '@angular/router/testing'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
-import { UtilI18nModule } from '@geonetwork-ui/util/i18n'
 import { TranslateModule } from '@ngx-translate/core'
 
 class RouterFacadeMock {
   goToMetadata = jest.fn()
 }
+class SearchFacadeMock {}
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent
@@ -24,6 +25,10 @@ describe('HeaderComponent', () => {
         {
           provide: RouterFacade,
           useClass: RouterFacadeMock,
+        },
+        {
+          provide: SearchFacade,
+          useClass: SearchFacadeMock,
         },
       ],
     }).compileComponents()

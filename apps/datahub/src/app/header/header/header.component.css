@@ -2,8 +2,10 @@
   font-size: 18px;
   font-weight: 500;
   border-radius: 8px;
-  box-shadow: 0 0 24px 0 rgba(21, 40, 184, 0.09);
-  border: none;
+}
+
+.header {
+  background-image: url('/assets/img/header_bg.jpg');
 }
 
 ::ng-deep .mat-autocomplete-panel {
