@@ -54,3 +54,17 @@ Notice how the `GN4_API_URL` and `PROXY_PATH` variables are used to override any
 **This override will happen everytime the docker container is started.**
 
 The application will be available on http://localhost:8080/datahub/.
+
+### Specifying a custom configuration file
+
+If the `GN4_API_URL` and `PROXY_PATH` environment variables are not enough and you want to specify a full configuration file,
+you can do so like this:
+
+```bash
+# this assumes a custom `default.toml` file is located in the /home/user/custom-conf directory:
+$ docker run -p 8080:80 \
+             -v /home/user/custom-conf:/conf \
+             geonetwork-ui/datahub
+```
+
+If a `default.toml` file is found in the `/conf` folder of the app container at startup, it will be used instead of the default one.
