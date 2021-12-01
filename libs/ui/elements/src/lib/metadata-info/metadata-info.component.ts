@@ -11,6 +11,7 @@ export class MetadataInfoComponent {
   @Input() metadata: MetadataRecord
   @Input() incomplete: boolean
   @Input() otherLinks: MetadataLinkValid[]
+  @Input() landingPages: MetadataLinkValid[]
 
   fieldReady(propName: string) {
     return !this.incomplete || propName in this.metadata

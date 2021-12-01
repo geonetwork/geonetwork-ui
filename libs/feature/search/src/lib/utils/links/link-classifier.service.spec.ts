@@ -89,5 +89,12 @@ describe('LinkClassifierService', () => {
         expect(service.getUsagesForLink(LINK_FIXTURES.readmeLink)).toEqual([])
       })
     })
+    describe('for a landing page', () => {
+      it('returns landingpage usage', () => {
+        expect(service.getUsagesForLink(LINK_FIXTURES.landingPage)).toEqual([
+          LinkUsage.LANDINGPAGE,
+        ])
+      })
+    })
   })
 })

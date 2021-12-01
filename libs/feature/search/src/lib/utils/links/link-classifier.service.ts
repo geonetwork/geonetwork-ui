@@ -7,7 +7,10 @@ export enum LinkUsage {
   DOWNLOAD = 'download',
   DATA = 'data',
   GEODATA = 'geodata',
+  LANDINGPAGE = 'landingpage',
 }
+
+const LANDINGPAGE_LINK_PROTOCOL = 'WWW:LINK:LANDING_PAGE'
 
 @Injectable({
   providedIn: 'root',
@@ -58,6 +61,9 @@ export class LinkClassifierService {
         return [LinkUsage.API, LinkUsage.MAPAPI]
       if (/^OGC:WMTS/.test(link.protocol))
         return [LinkUsage.API, LinkUsage.MAPAPI]
+      if (link.protocol === LANDINGPAGE_LINK_PROTOCOL) {
+        return [LinkUsage.LANDINGPAGE]
+      }
     }
     return []
   }

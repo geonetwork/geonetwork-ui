@@ -122,4 +122,9 @@ export const LINK_FIXTURES = {
     name: 'myotherrestlayer',
     url: 'https://my.esri.server/MapServer',
   },
+  landingPage: {
+    protocol: 'WWW:LINK:LANDING_PAGE',
+    name: 'landingpage link',
+    url: 'https://landing.page',
+  },
 }

@@ -37,30 +37,23 @@ export class LinkHelperService {
     return !('invalid' in link)
   }
   isApiLink(link: MetadataLink): boolean {
-    return (
-      this.linkClassifier.getUsagesForLink(link).indexOf(LinkUsage.API) > -1
-    )
+    return this.linkClassifier.getUsagesForLink(link).includes(LinkUsage.API)
   }
   isMapApiLink(link: MetadataLink): boolean {
-    return (
-      this.linkClassifier.getUsagesForLink(link).indexOf(LinkUsage.MAPAPI) > -1
-    )
+    return this.linkClassifier.getUsagesForLink(link).includes(LinkUsage.MAPAPI)
   }
   isDownloadLink(link: MetadataLink): boolean {
-    return (
-      this.linkClassifier.getUsagesForLink(link).indexOf(LinkUsage.DOWNLOAD) >
-      -1
-    )
+    return this.linkClassifier
+      .getUsagesForLink(link)
+      .includes(LinkUsage.DOWNLOAD)
   }
   isDataLink(link: MetadataLink): boolean {
-    return (
-      this.linkClassifier.getUsagesForLink(link).indexOf(LinkUsage.DATA) > -1
-    )
+    return this.linkClassifier.getUsagesForLink(link).includes(LinkUsage.DATA)
   }
   isGeoDataLink(link: MetadataLink): boolean {
-    return (
-      this.linkClassifier.getUsagesForLink(link).indexOf(LinkUsage.GEODATA) > -1
-    )
+    return this.linkClassifier
+      .getUsagesForLink(link)
+      .includes(LinkUsage.GEODATA)
   }
   isOtherLink(link: MetadataLink): boolean {
     return this.linkClassifier.getUsagesForLink(link).length === 0
@@ -73,6 +66,11 @@ export class LinkHelperService {
       /^OGC:WFS/.test(link.protocol) ||
       (/^ESRI:REST/.test(link.protocol) && /WFSServer/.test(link.url))
     )
+  }
+  isLandingPage(link: MetadataLink): boolean {
+    return this.linkClassifier
+      .getUsagesForLink(link)
+      .includes(LinkUsage.LANDINGPAGE)
   }
   isEsriRestFeatureServer(link: MetadataLinkValid): boolean {
     return /^ESRI:REST/.test(link.protocol) && /FeatureServer/.test(link.url)
