@@ -1,16 +1,17 @@
-<div class="bg-green-300 pt-32">
+<div class="header pt-24">
   <div class="container-md mx-auto">
     <div
-      class="flex font-title py-2 text-6xl"
+      class="flex font-title py-2 text-5xl"
       [innerHTML]="'datahub.header.title.html' | translate"
     ></div>
-    <div class="py-6">
+    <div class="py-8">
       <gn-ui-fuzzy-search
         [displayWithFn]="autocompleteDisplayWithFn"
         (itemSelected)="onFuzzySearchSelection($event)"
         (inputSubmited)="onFuzzySearchSubmission()"
       ></gn-ui-fuzzy-search>
     </div>
+    <!--
     <div class="flex">
       <datahub-header-badge-button
         icon="star"
@@ -21,10 +22,22 @@
         label="datahub.header.connex"
       ></datahub-header-badge-button>
     </div>
-    <div class="tabs flex justify-between py-4 mt-16 font-medium">
-      <div class="uppercase text-white">Fil d'activité</div>
-      <div class="uppercase text-primary">Jeux de données</div>
-      <div class="uppercase text-white">Organisations</div>
+-->
+    <div class="tabs flex justify-center py-4 mt-12 font-medium">
+      <!--      <div class="uppercase text-white">Fil d'activité</div>-->
+      <div
+        class="
+          uppercase
+          text-primary
+          hover:text-primary-lighter hover:underline
+          cursor-pointer
+        "
+        (click)="onDatasetClick()"
+        translate=""
+      >
+        datasets
+      </div>
+      <!--      <div class="uppercase text-white">Organisations</div>-->
     </div>
   </div>
 </div>
