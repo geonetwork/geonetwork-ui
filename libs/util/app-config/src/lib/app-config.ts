@@ -21,8 +21,9 @@ interface ThemeConfig {
   SECONDARY_COLOR: string
   MAIN_COLOR: string
   BACKGROUND_COLOR: string
-  MAIN_FONT: string
-  TITLE_FONT: string
+  MAIN_FONT?: string
+  TITLE_FONT?: string
+  FONTS_STYLESHEET_URL?: string
 }
 let themeConfig: ThemeConfig = null
 
@@ -97,7 +98,7 @@ export function loadAppConfig() {
       const themeCheck = checkKeys(
         theme || {},
         ['primary_color', 'secondary_color', 'main_color', 'background_color'],
-        ['main_font', 'title_font']
+        ['main_font', 'title_font', 'fonts_stylesheet_url']
       )
       if (themeCheck.missing.length) {
         errors.push(`In the [theme] section: ${themeCheck.missing.join(', ')}`)
@@ -125,6 +126,7 @@ ${warnings.join('\n')}`)
         BACKGROUND_COLOR: theme.background_color,
         TITLE_FONT: theme.title_font,
         MAIN_FONT: theme.main_font,
+        FONTS_STYLESHEET_URL: theme.fonts_stylesheet_url,
       }
       customTranslations = translations || {}
 

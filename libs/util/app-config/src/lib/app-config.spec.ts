@@ -143,6 +143,8 @@ describe('app config utils', () => {
           PRIMARY_COLOR: '#093564',
           SECONDARY_COLOR: '#c2e9dc',
           TITLE_FONT: 'serif',
+          FONTS_STYLESHEET_URL:
+            'https://fonts.googleapis.com/css2?family=Open+Sans',
         })
       })
     })

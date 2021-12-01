@@ -16,7 +16,8 @@ export class ThemeService {
     mainColor: string,
     backgroundColor: string,
     mainFont?: string,
-    titleFont?: string
+    titleFont?: string,
+    fontsStylesheetUrl?: string
   ) {
     const applyColor = (name: string, color) => {
       document.documentElement.style.setProperty(`--color-${name}`, color.css())
@@ -80,6 +81,14 @@ export class ThemeService {
         `--font-family-title`,
         titleFont
       )
+    }
+
+    if (fontsStylesheetUrl) {
+      const link = document.createElement('link')
+      link.href = fontsStylesheetUrl
+      link.rel = 'stylesheet'
+      link.type = 'text/css'
+      document.head.append(link)
     }
   }
 

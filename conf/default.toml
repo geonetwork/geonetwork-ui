@@ -23,6 +23,7 @@ main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
 # main_font = "My Custom Font", fallback-font
 # title_font = "My Custom Title Font", fallback-font-title
+# fonts_stylesheet_url = "https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Permanent+Marker&display=swap"
 
 ### TRANSLATIONS
 

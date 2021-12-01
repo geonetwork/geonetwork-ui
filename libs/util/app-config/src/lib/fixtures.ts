@@ -10,6 +10,7 @@ main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
 main_font = 'sans-serif'
 title_font = 'serif'
+fonts_stylesheet_url = "https://fonts.googleapis.com/css2?family=Open+Sans"
 
 [translations.en]
 "my.first.key" = 'First label.'
