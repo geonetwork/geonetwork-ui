@@ -5,6 +5,7 @@
 html,
 body {
   height: 100%;
+  color: var(--color-main);
 }
 body {
   margin: 0;
