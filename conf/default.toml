@@ -14,7 +14,7 @@ proxy_path = ""
 #  - for color: https://developer.mozilla.org/en-US/docs/Web/CSS/color
 #  - for font families: https://developer.mozilla.org/en-US/docs/Web/CSS/font-family
 [theme]
-primary_color = "#093564"
+primary_color = "#0f4395"
 secondary_color = "#c2e9dc"
 main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
