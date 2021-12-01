@@ -45,7 +45,7 @@ describe('ExpandablePanelComponent', () => {
         component.collapsed = true
         fixture.detectChanges()
       })
-      it('updates the collapsed property', () => {
+      it('hides content', () => {
         const el = fixture.debugElement.query(By.css('.content'))
         expect(el).toBeFalsy()
       })
@@ -55,7 +55,7 @@ describe('ExpandablePanelComponent', () => {
         component.collapsed = false
         fixture.detectChanges()
       })
-      it('updates the collapsed property', () => {
+      it('shows content', () => {
         const el = fixture.debugElement.query(By.css('.content'))
         expect(el).toBeTruthy()
       })
