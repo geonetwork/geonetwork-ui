@@ -36,17 +36,12 @@ background_color = "#fdfbff"
 # [translations.fr]
 # "results.sortBy.dateStamp" = "Dernière fois que quelqu'un a modifié quelque chose"
 #
-# Note 1:
+# Note:
 #   translation keys ending with ".html" _can_ contain HTML markup, including inline CSS:
 #     "catalog.welcome.html" = """
 #     Welcome to <span class="text-primary">Organization</span>'s<br>
 #     wonderful <span style="font-size: 1.2em;">data catalogue</span>
 #     """
-#
-# Note 2:
-#   translation keys _have_ to be written in quotes:
-#     "results.sortBy": OK
-#     results.sortBy: not OK
 
 [translations.en]
-"datahub.header.title.html" = '<div class="text-white">Toutes les <span class="text-primary">données<br>publiques</span> de mon organisation</div>'
+datahub.header.title.html = '<div class="text-white">Toutes les <span class="text-primary">données<br>publiques</span> de mon organisation</div>'

@@ -77,7 +77,7 @@ export function loadAppConfig() {
         )
       }
 
-      const { global, theme, translations } = parsed
+      const { global, theme, translations: translationsNested } = parsed
       const errors = []
       const warnings = []
 
@@ -114,6 +114,22 @@ ${errors.join('\n')}`)
       else if (warnings.length)
         console.warn(`One or more unexpected settings were encountered in the configuration file.
 ${warnings.join('\n')}`)
+
+      // will flatten nested objects using dotted properties
+      const flatten = (base, obj, isFirst) =>
+        Object.keys(obj).reduce((prev, curr) => {
+          const path = base ? `${base}.${curr}` : curr
+          const val = obj[curr]
+          if (isFirst) return { ...prev, [path]: flatten('', val, false) }
+          else if (typeof val === 'object')
+            return { ...prev, ...flatten(path, val, false) }
+          else return { ...prev, [path]: val }
+        }, {})
+
+      // flatten translations by language
+      const translations = translationsNested
+        ? flatten('', translationsNested, true)
+        : {}
 
       globalConfig = {
         GN4_API_URL: global.geonetwork4_api_url,

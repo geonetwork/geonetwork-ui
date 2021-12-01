@@ -157,6 +157,10 @@ describe('app config utils', () => {
         expect(getCustomTranslations('de')).toEqual({
           'my.first.key': 'Erste Etikett.',
         })
+        expect(getCustomTranslations('fr')).toEqual({
+          'my.sample.text': 'Un bon exemple de texte.',
+          'my.quoted.text': 'du texte entre guillements.',
+        })
       })
       it('returns an empty object if no translation defined', () => {
         expect(getCustomTranslations('nl')).toEqual({})

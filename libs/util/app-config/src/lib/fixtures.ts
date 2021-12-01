@@ -19,8 +19,9 @@ Second label,
 on two lines."""
 
 [translations.de]
-"my.first.key" = 'Erste Etikett.'
+my.first.key = 'Erste Etikett.'
 
 [translations.fr]
-"my.sample.text" = "Un bon exemple de texte."
+my.sample.text = "Un bon exemple de texte."
+"my.quoted.text" = 'du texte entre guillements.'
 `

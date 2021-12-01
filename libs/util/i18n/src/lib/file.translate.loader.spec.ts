@@ -76,6 +76,7 @@ describe('FileTranslateLoader', () => {
         expect(translations).toEqual({
           'second.label': 'Deuxième libellé.',
           'my.sample.text': 'Un bon exemple de texte.',
+          'my.quoted.text': 'du texte entre guillements.',
         })
       })
     })
