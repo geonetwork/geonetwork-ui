@@ -1,5 +1,7 @@
-# Common configuration for all GeoNetwork-UI applications
+# GeoNetwork-UI configuration
 # Note: this file's syntax is TOML (https://toml.io/)
+
+### GLOBAL SETTINGS
 
 [global]
 # This URL (relative or absolute) must point to the API endpoint of a GeoNetwork4 instance
@@ -9,7 +11,8 @@ geonetwork4_api_url = "/geonetwork/srv/api"
 # This is an optional parameter: leave empty to disable proxy usage
 proxy_path = ""
 
-# Theme parameters, used to customize appearance
+### VISUAL THEME
+
 # All parameters are expressed in CSS format, see:
 #  - for color: https://developer.mozilla.org/en-US/docs/Web/CSS/color
 #  - for font families: https://developer.mozilla.org/en-US/docs/Web/CSS/font-family
@@ -18,24 +21,31 @@ primary_color = "#0f4395"
 secondary_color = "#c2e9dc"
 main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
-# custom fonts are optional
-#main_font = "My Custom Font", fallback-font
-#title_font = "My Custom Title Font", fallback-font-title
+# main_font = "My Custom Font", fallback-font
+# title_font = "My Custom Title Font", fallback-font-title
+
+### TRANSLATIONS
 
 # To override translations in a specific language, use a 'translations.xx' section where 'xx' is a language code.
 # Language codes are expressed in ISO 639-1 codes, see https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
-#
 # Example:
+#
 # [translations.en]
 # "results.sortBy.dateStamp" = "Last time someone changed something"
 # [translations.fr]
 # "results.sortBy.dateStamp" = "Dernière fois que quelqu'un a modifié quelque chose"
 #
-# Note that translation keys ending with ".html" _can_ contain HTML markup, including inline CSS:
-# "catalog.welcome.html" = """
-# Welcome to <span class="text-primary">Organization</span>'s<br>
-# wonderful <span style="font-size: 1.2em;">data catalogue</span>
-# """
+# Note 1:
+#   translation keys ending with ".html" _can_ contain HTML markup, including inline CSS:
+#     "catalog.welcome.html" = """
+#     Welcome to <span class="text-primary">Organization</span>'s<br>
+#     wonderful <span style="font-size: 1.2em;">data catalogue</span>
+#     """
+#
+# Note 2:
+#   translation keys _have_ to be written in quotes:
+#     "results.sortBy": OK
+#     results.sortBy: not OK
 
 [translations.en]
 "datahub.header.title.html" = '<div class="text-white">Toutes les <span class="text-primary">données<br>publiques</span> de mon organisation</div>'
