@@ -31,7 +31,7 @@ export class HeaderComponent {
     this.searchRouter.goToSearch()
   }
 
-  onDatasetClick(): void {
+  onDatasetsClick(): void {
     this.searchRouter.goToSearch()
     this.resetSearch()
   }
