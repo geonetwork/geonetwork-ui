@@ -4,10 +4,6 @@
   border-radius: 8px;
 }
 
-.header {
-  background-image: url('/assets/img/header_bg.jpg');
-}
-
 ::ng-deep .mat-autocomplete-panel {
   margin-top: 10px;
   border-radius: 8px;
