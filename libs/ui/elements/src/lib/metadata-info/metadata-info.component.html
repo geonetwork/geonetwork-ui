@@ -37,43 +37,43 @@
       <p class="mb-4 whitespace-pre-line">
         {{ metadata.lineage }}
       </p>
-    </ng-container>
-    <div
-      class="
-        py-4
-        px-6
-        mb-6
-        rounded
-        bg-gray-100
-        grid grid-cols-2 grid-rows-2
-        gap-6
-        text-gray-800
-      "
+      <div
+        class="
+          py-4
+          px-6
+          mb-6
+          rounded
+          bg-gray-100
+          grid grid-cols-2 grid-rows-2
+          gap-6
+          text-gray-800
+        "
+      >
+        <div class="border-b border-gray-300" *ngIf="metadata.updatedOn">
+          <p translate>record.metadata.updatedOn</p>
+          <p class="text-primary my-2">
+            {{ metadata.updatedOn && metadata.updatedOn.toLocaleString() }}
+          </p>
+        </div>
+        <div class="border-b border-gray-300" *ngIf="metadata.updateFrequency">
+          <p translate>record.metadata.updateFrequency</p>
+          <p class="text-primary my-2">{{ metadata.updateFrequency }}</p>
+        </div>
+        <div *ngIf="metadata.updateStatus">
+          <p translate>record.metadata.updateStatus</p>
+          <p class="text-primary my-2">{{ metadata.updateStatus }}</p>
+        </div>
+      </div>
+    </gn-ui-expandable-panel>
+    <gn-ui-expandable-panel
+      *ngIf="metadata.usageConstraints"
+      [title]="'record.metadata.usage' | translate"
     >
-      <div class="border-b border-gray-300" *ngIf="metadata.updatedOn">
-        <p translate>record.metadata.updatedOn</p>
-        <p class="text-primary my-2">
-          {{ metadata.updatedOn && metadata.updatedOn.toLocaleString() }}
-        </p>
-      </div>
-      <div class="border-b border-gray-300" *ngIf="metadata.updateFrequency">
-        <p translate>record.metadata.updateFrequency</p>
-        <p class="text-primary my-2">{{ metadata.updateFrequency }}</p>
-      </div>
-      <div *ngIf="metadata.updateStatus">
-        <p translate>record.metadata.updateStatus</p>
-        <p class="text-primary my-2">{{ metadata.updateStatus }}</p>
-      </div>
-    </div>
-
-    <ng-container *ngIf="metadata.usageConstraints">
-      <p class="mb-4 font-medium text-primary" translate>
-        record.metadata.usage
-      </p>
       <p class="mb-4 whitespace-pre-line">
         {{ metadata.usageConstraints }}
       </p>
-    </ng-container>
+    </gn-ui-expandable-panel>
+    <!--FIXME: add details panel with landingPages-->
   </div>
 
   <div *ngIf="metadata.contact">
