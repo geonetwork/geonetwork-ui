@@ -1,6 +1,11 @@
 <div gnUiSearchStateContainer="mainSearch">
   <header>
-    <datahub-header></datahub-header>
+    <datahub-header
+      [ngClass]="{ hidden: (isRecordOpened$ | async) }"
+    ></datahub-header>
+    <div *ngIf="isRecordOpened$ | async">
+      <datahub-header-record></datahub-header-record>
+    </div>
   </header>
   <main>
     <div class="container-lg mx-auto py-4">

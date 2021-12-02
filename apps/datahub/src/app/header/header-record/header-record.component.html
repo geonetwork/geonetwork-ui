@@ -1,0 +1,10 @@
+<div id="header-image" class="bg-secondary-lighter pt-16 w-full h-56">
+  <div class="mx-auto">
+    <div
+      class="font-title py-2 text-3xl text-center"
+      *ngIf="(mdViewFacade.isPresent$ | async) === true"
+    >
+      {{ (mdViewFacade.metadata$ | async).title }}
+    </div>
+  </div>
+</div>

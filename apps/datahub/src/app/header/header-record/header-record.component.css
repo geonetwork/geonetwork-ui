@@ -1,0 +1,4 @@
+/*FIXME: get url from TOML file*/
+#header-image {
+  background-image: url('/assets/bg_small.png');
+}
