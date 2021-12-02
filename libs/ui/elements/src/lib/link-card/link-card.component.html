@@ -1,0 +1,32 @@
+<div
+  class="
+    block
+    h-full
+    max-w-xs
+    py-6
+    px-5
+    bg-white
+    rounded
+    border-gray-300
+    filter
+    shadow-primary-light
+    overflow-hidden
+  "
+>
+  <p class="font-title font-medium text-xl break-words pb-1">
+    {{ link.name }}
+  </p>
+  <p class="font-medium text-sm break-words pb-4">
+    {{ link.description }}
+  </p>
+  <a
+    [href]="link.url"
+    target="_blank"
+    class="cursor-pointer"
+    mat-raised-button
+    [matTooltip]="'tooltip.url.open' | translate"
+    matTooltipPosition="above"
+  >
+    <mat-icon class="align-middle text-gray-200">open_in_new</mat-icon>
+  </a>
+</div>

@@ -9,12 +9,12 @@ import {
 import { ThemeService, MetadataLinkValid } from '@geonetwork-ui/util/shared'
 
 @Component({
-  selector: 'gn-ui-apis-list-item',
-  templateUrl: './apis-list-item.component.html',
-  styleUrls: ['./apis-list-item.component.css'],
+  selector: 'gn-ui-api-card',
+  templateUrl: './api-card.component.html',
+  styleUrls: ['./api-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ApisListItemComponent implements OnInit {
+export class ApiCardComponent implements OnInit {
   @Input() link: MetadataLinkValid
   @Output() apiUrl = new EventEmitter<string>()
   color: string

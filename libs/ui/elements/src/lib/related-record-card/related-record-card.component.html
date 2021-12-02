@@ -1,0 +1,22 @@
+<div class="max-w-xs overflow-hidden rounded-lg shadow-lg">
+  <img
+    class="object-cover w-full h-52"
+    [src]="record.thumbnailUrl"
+    [alt]="record.title"
+  />
+  <div class="px-5 pt-4 pb-6">
+    <h4 class="max-h-20 mb-5 text-xl overflow-ellipsis overflow-hidden">
+      {{ record.title }}
+    </h4>
+    <a
+      [href]="record.metadataUrl"
+      target="_blank"
+      class="cursor-pointer"
+      mat-raised-button
+      [matTooltip]="'tooltip.url.open' | translate"
+      matTooltipPosition="above"
+    >
+      <mat-icon class="align-middle text-secondary">open_in_new</mat-icon>
+    </a>
+  </div>
+</div>

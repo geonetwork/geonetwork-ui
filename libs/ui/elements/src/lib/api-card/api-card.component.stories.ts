@@ -1,30 +1,38 @@
 import {
+  TRANSLATE_DEFAULT_CONFIG,
+  UtilI18nModule,
+} from '@geonetwork-ui/util/i18n'
+import { TranslateModule } from '@ngx-translate/core'
+import {
   moduleMetadata,
   Story,
   Meta,
   componentWrapperDecorator,
 } from '@storybook/angular'
-import { ApisListItemComponent } from './apis-list-item.component'
+import { ApiCardComponent } from './api-card.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiElementsModule } from '../ui-elements.module'
 
 export default {
-  title: 'Elements/ApisListItemComponent',
-  component: ApisListItemComponent,
+  title: 'Elements/ApiCardComponent',
+  component: ApiCardComponent,
   decorators: [
     moduleMetadata({
-      imports: [UiElementsModule, BrowserAnimationsModule],
+      imports: [
+        UiElementsModule,
+        BrowserAnimationsModule,
+        UtilI18nModule,
+        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+      ],
     }),
     componentWrapperDecorator(
       (story) => `<div style="max-width: 800px">${story}</div>`
     ),
   ],
-} as Meta<ApisListItemComponent>
+} as Meta<ApiCardComponent>
 
-const Template: Story<ApisListItemComponent> = (
-  args: ApisListItemComponent
-) => ({
-  component: ApisListItemComponent,
+const Template: Story<ApiCardComponent> = (args: ApiCardComponent) => ({
+  component: ApiCardComponent,
   props: args,
 })
 
@@ -32,7 +40,7 @@ export const Primary = Template.bind({})
 Primary.args = {
   link: {
     protocol: 'OGC:WFS',
-    name: 'Allroads',
+    name: "Scot en cours d'élaboration ou de révision",
     description: 'A file that contains all roads',
     url: 'https//roads.com/wfs',
   },

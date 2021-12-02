@@ -1,0 +1,51 @@
+<div
+  class="
+    block
+    h-full
+    max-w-xs
+    py-5
+    px-7
+    bg-white
+    rounded
+    border-gray-300
+    bg-gray-100
+    hover:border-primary hover:bg-white
+    filter
+    hover:shadow-primary-light
+    overflow-hidden
+  "
+>
+  <div class="font-title font-medium text-xl break-words pb-5">
+    {{ link.name || link.description }}
+  </div>
+  <div class="flex justify-between">
+    <span
+      class="
+        badge
+        inline-flex
+        items-center
+        justify-center
+        px-2
+        py-1
+        text-xs
+        leading-none
+        text-white
+        rounded
+        capitalize
+      "
+      [style.background]="color"
+      >{{ link.protocol }}</span
+    >
+    <button
+      (click)="copyUrl()"
+      class="cursor-pointer"
+      mat-raised-button
+      [matTooltip]="'tooltip.url.copy' | translate"
+      matTooltipPosition="above"
+    >
+      <mat-icon class="align-middle copy-icon text-gray-200"
+        >content_copy</mat-icon
+      >
+    </button>
+  </div>
+</div>

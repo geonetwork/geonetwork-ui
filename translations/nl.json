@@ -99,8 +99,6 @@
   "previous": "",
   "record.action.download": "",
   "record.action.view": "",
-  "record.api.name": "",
-  "record.api.url": "",
   "record.metadata.contact": "",
   "record.metadata.description": "",
   "record.metadata.keywords": "",
@@ -128,5 +126,7 @@
   "search.loading": "",
   "table.loading.data": "",
   "table.object.count": "",
-  "table.select.data": ""
+  "table.select.data": "",
+  "tooltip.url.copy": "",
+  "tooltip.url.open": ""
 }
