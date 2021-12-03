@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatIconModule } from '@angular/material/icon'
-import { DownloadsListItemComponent } from './downloads-list-item.component'
+import { DownloadItemComponent } from './download-item.component'
 
 describe('DownloadsListItemComponent', () => {
-  let component: DownloadsListItemComponent
-  let fixture: ComponentFixture<DownloadsListItemComponent>
+  let component: DownloadItemComponent
+  let fixture: ComponentFixture<DownloadItemComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DownloadsListItemComponent],
+      declarations: [DownloadItemComponent],
       imports: [MatIconModule],
     }).compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DownloadsListItemComponent)
+    fixture = TestBed.createComponent(DownloadItemComponent)
     component = fixture.componentInstance
     component.link = {
       protocol: 'WWW:DOWNLOAD',

@@ -17,11 +17,11 @@ class MdViewFacadeMock {
 }
 
 @Component({
-  selector: 'gn-ui-downloads-list',
+  selector: 'gn-ui-download-item',
   template: '<div></div>',
 })
-export class MockDownloadsListComponent {
-  @Input() links: MetadataLink[]
+export class MockDownloadsListItemComponent {
+  @Input() link: MetadataLink
 }
 
 @Component({
@@ -39,7 +39,7 @@ describe('DataDownloadsComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         DataDownloadsComponent,
-        MockDownloadsListComponent,
+        MockDownloadsListItemComponent,
         MockPopupAlertComponent,
       ],
       providers: [
@@ -84,14 +84,6 @@ describe('DataDownloadsComponent', () => {
   })
 
   describe('download links', () => {
-    let downloadsListComponent: MockDownloadsListComponent
-
-    beforeEach(() => {
-      downloadsListComponent = fixture.debugElement.query(
-        By.directive(MockDownloadsListComponent)
-      ).componentInstance
-    })
-
     describe('when the WFS service fails', () => {
       beforeEach(fakeAsync(() => {
         jest
@@ -117,15 +109,17 @@ describe('DataDownloadsComponent', () => {
         fixture.detectChanges()
       }))
       it('emits the other links', () => {
-        expect(downloadsListComponent.links).toEqual([
-          {
-            description: 'Lieu de surveillance (point)',
-            name: 'surval_parametre_point.csv',
-            format: 'csv',
-            protocol: 'WWW:DOWNLOAD',
-            url: 'https://www.ifremer.fr/surval_parametre_point.csv',
-          },
-        ])
+        component.links$.subscribe((links: MetadataLink[]) => {
+          expect(links).toEqual([
+            {
+              description: 'Lieu de surveillance (point)',
+              name: 'surval_parametre_point.csv',
+              format: 'csv',
+              protocol: 'WWW:DOWNLOAD',
+              url: 'https://www.ifremer.fr/surval_parametre_point.csv',
+            },
+          ])
+        })
       })
       it('shows an error', () => {
         const popup = fixture.debugElement.query(
@@ -141,7 +135,9 @@ describe('DataDownloadsComponent', () => {
         fixture.detectChanges()
       })
       it('emits no links', () => {
-        expect(downloadsListComponent.links).toEqual([])
+        component.links$.subscribe((links: MetadataLink[]) => {
+          expect(links).toEqual([])
+        })
       })
     })
 
@@ -187,68 +183,70 @@ describe('DataDownloadsComponent', () => {
         fixture.detectChanges()
       }))
       it('emits download links once per format', () => {
-        expect(downloadsListComponent.links).toEqual([
-          {
-            description: 'Lieu de surveillance (point)',
-            name: 'surval_parametre_point.csv',
-            format: 'csv',
-            protocol: 'WWW:DOWNLOAD',
-            url: 'https://www.ifremer.fr/surval_parametre_point.csv',
-          },
-          {
-            description: 'Lieu de surveillance (polygone)',
-            name: 'surval_parametre_polygone.geojson',
-            format: 'geojson',
-            protocol: 'WWW:DOWNLOAD',
-            url: 'https://www.ifremer.fr/surval_parametre_polygone.geojson',
-          },
-          {
-            description: 'Lieu de surveillance (ligne)',
-            name: 'surval_parametre_ligne',
-            format: 'WFS:geojson',
-            protocol: 'OGC:WFS',
-            url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
-          },
-          {
-            description: 'Lieu de surveillance (ligne)',
-            name: 'surval_parametre_ligne',
-            format: 'WFS:csv',
-            protocol: 'OGC:WFS',
-            url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
-          },
-          {
-            protocol: 'ESRI:REST',
-            name: 'mes_hdf',
-            format: 'WFS:geojson',
-            description: 'ArcGIS GeoService Wfs',
-            mediaType: 'application/json',
-            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/WFSServer/0',
-          },
-          {
-            protocol: 'ESRI:REST',
-            name: 'mes_hdf',
-            format: 'WFS:csv',
-            description: 'ArcGIS GeoService Wfs',
-            mediaType: 'application/json',
-            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/WFSServer/0',
-          },
-          {
-            protocol: 'ESRI:REST',
-            name: 'mes_hdf_journalier_poll_princ',
-            format: 'REST:json',
-            description: 'ArcGIS GeoService',
-            mediaType: 'application/json',
-            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf_journalier_poll_princ/FeatureServer/0/query?f=json&where=1=1&outFields=*',
-          },
-          {
-            protocol: 'ESRI:REST',
-            name: 'mes_hdf_journalier_poll_princ',
-            format: 'REST:geojson',
-            description: 'ArcGIS GeoService',
-            mediaType: 'application/json',
-            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf_journalier_poll_princ/FeatureServer/0/query?f=geojson&where=1=1&outFields=*',
-          },
-        ])
+        component.links$.subscribe((links: MetadataLink[]) => {
+          expect(links).toEqual([
+            {
+              description: 'Lieu de surveillance (point)',
+              name: 'surval_parametre_point.csv',
+              format: 'csv',
+              protocol: 'WWW:DOWNLOAD',
+              url: 'https://www.ifremer.fr/surval_parametre_point.csv',
+            },
+            {
+              description: 'Lieu de surveillance (polygone)',
+              name: 'surval_parametre_polygone.geojson',
+              format: 'geojson',
+              protocol: 'WWW:DOWNLOAD',
+              url: 'https://www.ifremer.fr/surval_parametre_polygone.geojson',
+            },
+            {
+              description: 'Lieu de surveillance (ligne)',
+              name: 'surval_parametre_ligne',
+              format: 'WFS:geojson',
+              protocol: 'OGC:WFS',
+              url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
+            },
+            {
+              description: 'Lieu de surveillance (ligne)',
+              name: 'surval_parametre_ligne',
+              format: 'WFS:csv',
+              protocol: 'OGC:WFS',
+              url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
+            },
+            {
+              protocol: 'ESRI:REST',
+              name: 'mes_hdf',
+              format: 'WFS:geojson',
+              description: 'ArcGIS GeoService Wfs',
+              mediaType: 'application/json',
+              url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/WFSServer/0',
+            },
+            {
+              protocol: 'ESRI:REST',
+              name: 'mes_hdf',
+              format: 'WFS:csv',
+              description: 'ArcGIS GeoService Wfs',
+              mediaType: 'application/json',
+              url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/WFSServer/0',
+            },
+            {
+              protocol: 'ESRI:REST',
+              name: 'mes_hdf_journalier_poll_princ',
+              format: 'REST:json',
+              description: 'ArcGIS GeoService',
+              mediaType: 'application/json',
+              url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf_journalier_poll_princ/FeatureServer/0/query?f=json&where=1=1&outFields=*',
+            },
+            {
+              protocol: 'ESRI:REST',
+              name: 'mes_hdf_journalier_poll_princ',
+              format: 'REST:geojson',
+              description: 'ArcGIS GeoService',
+              mediaType: 'application/json',
+              url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf_journalier_poll_princ/FeatureServer/0/query?f=geojson&where=1=1&outFields=*',
+            },
+          ])
+        })
       })
     })
   })

@@ -4,13 +4,13 @@ import {
   Meta,
   componentWrapperDecorator,
 } from '@storybook/angular'
-import { DownloadsListItemComponent } from './downloads-list-item.component'
+import { DownloadItemComponent } from './download-item.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiElementsModule } from '../ui-elements.module'
 
 export default {
   title: 'Elements/DownloadsListItemComponent',
-  component: DownloadsListItemComponent,
+  component: DownloadItemComponent,
   decorators: [
     moduleMetadata({
       imports: [UiElementsModule, BrowserAnimationsModule],
@@ -19,12 +19,12 @@ export default {
       (story) => `<div style="max-width: 800px">${story}</div>`
     ),
   ],
-} as Meta<DownloadsListItemComponent>
+} as Meta<DownloadItemComponent>
 
-const Template: Story<DownloadsListItemComponent> = (
-  args: DownloadsListItemComponent
+const Template: Story<DownloadItemComponent> = (
+  args: DownloadItemComponent
 ) => ({
-  component: DownloadsListItemComponent,
+  component: DownloadItemComponent,
   props: args,
 })
 
