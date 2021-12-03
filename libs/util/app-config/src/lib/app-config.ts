@@ -21,8 +21,9 @@ interface ThemeConfig {
   SECONDARY_COLOR: string
   MAIN_COLOR: string
   BACKGROUND_COLOR: string
-  MAIN_FONT: string
-  TITLE_FONT: string
+  MAIN_FONT?: string
+  TITLE_FONT?: string
+  FONTS_STYLESHEET_URL?: string
 }
 let themeConfig: ThemeConfig = null
 
@@ -76,7 +77,7 @@ export function loadAppConfig() {
         )
       }
 
-      const { global, theme, translations } = parsed
+      const { global, theme, translations: translationsNested } = parsed
       const errors = []
       const warnings = []
 
@@ -97,7 +98,7 @@ export function loadAppConfig() {
       const themeCheck = checkKeys(
         theme || {},
         ['primary_color', 'secondary_color', 'main_color', 'background_color'],
-        ['main_font', 'title_font']
+        ['main_font', 'title_font', 'fonts_stylesheet_url']
       )
       if (themeCheck.missing.length) {
         errors.push(`In the [theme] section: ${themeCheck.missing.join(', ')}`)
@@ -114,6 +115,22 @@ ${errors.join('\n')}`)
         console.warn(`One or more unexpected settings were encountered in the configuration file.
 ${warnings.join('\n')}`)
 
+      // will flatten nested objects using dotted properties
+      const flatten = (base, obj, isFirst) =>
+        Object.keys(obj).reduce((prev, curr) => {
+          const path = base ? `${base}.${curr}` : curr
+          const val = obj[curr]
+          if (isFirst) return { ...prev, [path]: flatten('', val, false) }
+          else if (typeof val === 'object')
+            return { ...prev, ...flatten(path, val, false) }
+          else return { ...prev, [path]: val }
+        }, {})
+
+      // flatten translations by language
+      const translations = translationsNested
+        ? flatten('', translationsNested, true)
+        : {}
+
       globalConfig = {
         GN4_API_URL: global.geonetwork4_api_url,
         PROXY_PATH: global.proxy_path,
@@ -125,6 +142,7 @@ ${warnings.join('\n')}`)
         BACKGROUND_COLOR: theme.background_color,
         TITLE_FONT: theme.title_font,
         MAIN_FONT: theme.main_font,
+        FONTS_STYLESHEET_URL: theme.fonts_stylesheet_url,
       }
       customTranslations = translations || {}
 

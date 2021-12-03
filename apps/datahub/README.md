@@ -16,11 +16,7 @@ will run `datahub` as an Angular application available on localhost:4200.
 
 ## Configuration
 
-### API url
-
-By default it uses GN4 API `/geonetwork/srv/api`.
-
-You can override this URL with the ENV variable `${GN4_API_URL}`.
+See the [main README section for more info](../../README.md#application-configuration).
 
 ### Proxy
 
@@ -29,24 +25,11 @@ CORS limitations).
 
 By default it is disabled in order not to hide those issues to the user.
 
-You can specify a custom proxy path using the ENV variable `${PROXY_PATH}`. The proxy is disabled when
+You can specify a custom proxy path using the `proxy_path` setting in the `[global]` section of the app configuration file. The proxy is disabled when
 no path is defined.
 
 Please note that during development a proxy is provided by webpack on the `/dev-proxy?` url path. **It is
 not used by default in the Datahub app, you will have to set it up yourself.**
-
-### Applying configuration
-
-Once you have set up the above parameters using environment variables, you can then automatically
-generate an `assets/env.js` file using the following commands from the app directory:
-
-```
-# Set environment variable
-export GN4_API_URL="https://my.gn4.instance/geonetwork/srv/api"
-export PROXY_PATH="https://my.gn4.instance/proxy?url="
-# Replace variables in env.js
-envsubst < src/assets/env.template.js > src/assets/env.js
-```
 
 ## Using with Docker
 
@@ -67,4 +50,21 @@ $ docker run -p 8080:80 \
              geonetwork-ui/datahub
 ```
 
+Notice how the `GN4_API_URL` and `PROXY_PATH` variables are used to override any values present in the app configuration file.
+**This override will happen everytime the docker container is started.**
+
 The application will be available on http://localhost:8080/datahub/.
+
+### Specifying a custom configuration file
+
+If the `GN4_API_URL` and `PROXY_PATH` environment variables are not enough and you want to specify a full configuration file,
+you can do so like this:
+
+```bash
+# this assumes a file named `default.toml` is located in the /home/user/custom-conf directory:
+$ docker run -p 8080:80 \
+             -v /home/user/custom-conf:/conf \
+             geonetwork-ui/datahub
+```
+
+If a file named `default.toml` is found in the `/conf` folder _of the app container_ at startup, it will be used by the application.

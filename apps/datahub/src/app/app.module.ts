@@ -91,7 +91,8 @@ export class AppModule {
       getThemeConfig().MAIN_COLOR,
       getThemeConfig().BACKGROUND_COLOR,
       getThemeConfig().MAIN_FONT,
-      getThemeConfig().TITLE_FONT
+      getThemeConfig().TITLE_FONT,
+      getThemeConfig().FONTS_STYLESHEET_URL
     )
   }
 }
