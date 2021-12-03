@@ -61,10 +61,10 @@ If the `GN4_API_URL` and `PROXY_PATH` environment variables are not enough and y
 you can do so like this:
 
 ```bash
-# this assumes a custom `default.toml` file is located in the /home/user/custom-conf directory:
+# this assumes a file named `default.toml` is located in the /home/user/custom-conf directory:
 $ docker run -p 8080:80 \
              -v /home/user/custom-conf:/conf \
              geonetwork-ui/datahub
 ```
 
-If a `default.toml` file is found in the `/conf` folder of the app container at startup, it will be used instead of the default one.
+If a file named `default.toml` is found in the `/conf` folder _of the app container_ at startup, it will be used by the application.

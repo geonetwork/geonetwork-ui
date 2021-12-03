@@ -32,13 +32,13 @@ background_color = "#fdfbff"
 # Example:
 #
 # [translations.en]
-# "results.sortBy.dateStamp" = "Last time someone changed something"
+# results.sortBy.dateStamp = "Last time someone changed something"
 # [translations.fr]
-# "results.sortBy.dateStamp" = "Dernière fois que quelqu'un a modifié quelque chose"
+# results.sortBy.dateStamp = "Dernière fois que quelqu'un a modifié quelque chose"
 #
 # Note:
 #   translation keys ending with ".html" _can_ contain HTML markup, including inline CSS:
-#     "catalog.welcome.html" = """
+#     catalog.welcome.html = """
 #     Welcome to <span class="text-primary">Organization</span>'s<br>
 #     wonderful <span style="font-size: 1.2em;">data catalogue</span>
 #     """
