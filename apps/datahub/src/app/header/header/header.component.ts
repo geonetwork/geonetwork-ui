@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { ThemeService, MetadataRecord } from '@geonetwork-ui/util/shared'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
 
 marker('datahub.header.myfavorites')
 marker('datahub.header.connex')
@@ -17,7 +18,10 @@ marker('datahub.header.popularRecords')
 export class HeaderComponent {
   autocompleteDisplayWithFn = () => ''
 
-  constructor(private searchRouter: RouterFacade) {}
+  constructor(
+    private searchRouter: RouterFacade,
+    private searchFacade: SearchFacade
+  ) {}
 
   onFuzzySearchSelection(record: MetadataRecord) {
     this.searchRouter.goToMetadata(record)
@@ -25,5 +29,14 @@ export class HeaderComponent {
 
   onFuzzySearchSubmission() {
     this.searchRouter.goToSearch()
+  }
+
+  onDatasetsClick(): void {
+    this.searchRouter.goToSearch()
+    this.resetSearch()
+  }
+
+  private resetSearch(): void {
+    this.searchFacade.setFilters({})
   }
 }

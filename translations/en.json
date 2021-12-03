@@ -77,6 +77,7 @@
   "datahub.header.myfavorites": "My favorites",
   "datahub.header.popularRecords": "The most popular",
   "datahub.header.title.html": "<div class=\"text-white\">Find all my organization's<br><span class=\"text-primary\">open data</span>.</div>",
+  "datasets": "datasets",
   "downloads.wfs.error": "Download options from the WFS service could not be fetched",
   "downloads.wfs.featuretype.not.found": "The layer was not found",
   "dropFile": "drop file",

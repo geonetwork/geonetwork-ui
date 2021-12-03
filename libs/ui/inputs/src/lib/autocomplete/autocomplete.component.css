@@ -2,7 +2,9 @@
   right: 7px;
   top: 7px;
 }
-
+input {
+  padding: 1.05em;
+}
 .mat-option.mat-active {
   background-color: var(--color-primary-lightest);
 }
