@@ -21,6 +21,7 @@ class MdViewFacadeMock {
   downloadLinks$ = new BehaviorSubject([])
   apiLinks$ = new BehaviorSubject([])
   otherLinks$ = new BehaviorSubject([])
+  related$ = new BehaviorSubject(null)
 }
 
 @Component({
@@ -53,6 +54,12 @@ export class MockDataOtherlinksComponent {}
 })
 export class MockDataApisComponent {}
 
+@Component({
+  selector: 'gn-ui-related-records',
+  template: '<div></div>',
+})
+export class MockRelatedComponent {}
+
 describe('RecordMetadataComponent', () => {
   let component: RecordMetadataComponent
   let fixture: ComponentFixture<RecordMetadataComponent>
@@ -67,6 +74,7 @@ describe('RecordMetadataComponent', () => {
         MockDataDownloadsComponent,
         MockDataOtherlinksComponent,
         MockDataApisComponent,
+        MockRelatedComponent,
       ],
       schemas: [NO_ERRORS_SCHEMA],
       imports: [UiElementsModule, TranslateModule.forRoot()],
@@ -303,6 +311,33 @@ describe('RecordMetadataComponent', () => {
       })
       it('API component renders', () => {
         expect(apiComponent).toBeTruthy()
+      })
+    })
+  })
+
+  describe('related records', () => {
+    let relatedComponent
+    describe('when no related records', () => {
+      beforeEach(() => {
+        fixture.detectChanges()
+        relatedComponent = fixture.debugElement.query(
+          By.directive(MockRelatedComponent)
+        )
+      })
+      it('Related component does not render', () => {
+        expect(relatedComponent).toBeFalsy()
+      })
+    })
+    describe('when related records', () => {
+      beforeEach(() => {
+        facade.related$.next([{ title: 'title' }])
+        fixture.detectChanges()
+        relatedComponent = fixture.debugElement.query(
+          By.directive(MockRelatedComponent)
+        )
+      })
+      it('Related component renders', () => {
+        expect(relatedComponent).toBeTruthy()
       })
     })
   })
