@@ -1,6 +1,7 @@
 <div class="w-64 overflow-hidden rounded-lg shadow-lg bg-white">
-  <div class="object-cover w-full h-52 bg-gray-100">
+  <div class="h-52 bg-gray-100">
     <img
+      class="h-52 w-full object-cover"
       *ngIf="record.thumbnailUrl"
       [src]="record.thumbnailUrl | safe: 'url'"
       [alt]="record.title"

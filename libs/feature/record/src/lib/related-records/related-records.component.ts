@@ -12,9 +12,6 @@ import { MetadataRecord } from '@geonetwork-ui/util/shared'
   styleUrls: ['./related-records.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RelatedRecordsComponent implements OnInit {
+export class RelatedRecordsComponent {
   @Input() records: MetadataRecord[]
-  constructor() {}
-
-  ngOnInit(): void {}
 }

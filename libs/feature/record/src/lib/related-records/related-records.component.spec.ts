@@ -1,25 +1,24 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { RelatedRecordsComponent } from './related-records.component';
+import { RelatedRecordsComponent } from './related-records.component'
 
 describe('RelatedRecordsComponent', () => {
-  let component: RelatedRecordsComponent;
-  let fixture: ComponentFixture<RelatedRecordsComponent>;
+  let component: RelatedRecordsComponent
+  let fixture: ComponentFixture<RelatedRecordsComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RelatedRecordsComponent ]
-    })
-    .compileComponents();
-  });
+      declarations: [RelatedRecordsComponent],
+    }).compileComponents()
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RelatedRecordsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(RelatedRecordsComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})
