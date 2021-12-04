@@ -2,3 +2,7 @@
 #header-image {
   background-image: url('/assets/bg_small.png');
 }
+
+button:hover .tooltip {
+  display: inline;
+}

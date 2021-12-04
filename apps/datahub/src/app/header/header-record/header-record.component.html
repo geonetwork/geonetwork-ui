@@ -1,7 +1,26 @@
-<div id="header-image" class="pt-16 w-full pb-24">
-  <div class="container-md mx-auto">
+<div id="header-image" class="record-header w-full">
+  <div class="container-lg mx-auto relative pt-16 pb-24">
+    <div class="absolute" style="top: 1em">
+      <button
+        class="
+          items-center
+          justify-center
+          p-1
+          bg-primary-opacity-25
+          text-white
+          rounded
+        "
+        (click)="back()"
+      >
+        <mat-icon class="align-middle">navigate_before</mat-icon>
+        <span class="tooltip align-middle mx-2 hidden" translate=""
+          >datahub.search.back</span
+        >
+      </button>
+    </div>
+
     <div
-      class="font-title py-2 text-3xl text-center px-5"
+      class="font-title py-2 text-3xl text-center px-5 mx-32"
       *ngIf="(mdViewFacade.isPresent$ | async) === true"
     >
       {{ (mdViewFacade.metadata$ | async).title }}
