@@ -243,4 +243,56 @@ describe('ElasticsearchService', () => {
       })
     })
   })
+
+  describe('#getRelatedRecordPayload', () => {
+    let payload
+    beforeEach(() => {
+      payload = service.getRelatedRecordPayload('record title', 4)
+    })
+    it('returns ES payload', () => {
+      expect(payload).toEqual({
+        _source: [
+          'uuid',
+          'id',
+          'title',
+          'resource*',
+          'resourceTitleObject',
+          'resourceAbstractObject',
+          'overview',
+          'logo',
+          'codelist_status_text',
+          'linkProtocol',
+        ],
+        query: {
+          bool: {
+            must: [
+              {
+                more_like_this: {
+                  fields: [
+                    'resourceTitleObject.default',
+                    'resourceAbstractObject.default',
+                    'tag.raw',
+                  ],
+                  like: 'record title',
+                  max_query_terms: 12,
+                  min_term_freq: 1,
+                },
+              },
+              {
+                terms: {
+                  isTemplate: ['n'],
+                },
+              },
+              {
+                terms: {
+                  draft: ['n', 'e'],
+                },
+              },
+            ],
+          },
+        },
+        size: 4,
+      })
+    })
+  })
 })
