@@ -44,7 +44,7 @@ export class MdViewEffects {
       switchMap(({ full }) =>
         this.searchService.search(
           'bucket',
-          JSON.stringify(this.esService.getRelatedRecordPaylod(full.title, 3))
+          JSON.stringify(this.esService.getRelatedRecordPayload(full.title, 3))
         )
       ),
       map((response: EsSearchResponse) => {

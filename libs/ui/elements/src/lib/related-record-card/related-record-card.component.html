@@ -1,9 +1,11 @@
-<div class="w-64 overflow-hidden rounded-lg shadow-lg">
-  <img
-    class="object-cover w-full h-52"
-    [src]="record.thumbnailUrl"
-    [alt]="record.title"
-  />
+<div class="w-64 overflow-hidden rounded-lg shadow-lg bg-white">
+  <div class="object-cover w-full h-52 bg-gray-100">
+    <img
+      *ngIf="record.thumbnailUrl"
+      [src]="record.thumbnailUrl | safe: 'url'"
+      [alt]="record.title"
+    />
+  </div>
   <div class="px-5 pt-4 pb-6">
     <h4 class="max-h-20 mb-5 text-xl overflow-ellipsis overflow-hidden">
       {{ record.title }}
