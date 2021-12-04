@@ -57,7 +57,7 @@
   <div class="bg-gray-100 pt-12 h-96 overflow-visible">
     <div class="container-lg mx-auto">
       <div *ngIf="(displayMap$ | async) || (displayData$ | async)">
-        <p class="text-2xl font-medium my-4" translate>
+        <p class="text-3xl font-medium my-4 font-title" translate>
           record.section.preview
         </p>
         <mat-tab-group
@@ -96,7 +96,7 @@
 
 <div id="access" class="container-lg mx-auto">
   <div *ngIf="displayDownload$ | async">
-    <p class="text-2xl font-medium mt-12 mb-4" translate>
+    <p class="font-title text-3xl font-medium mt-12 mb-4" translate>
       record.section.download
     </p>
     <gn-ui-data-downloads class="block mt-4"></gn-ui-data-downloads>
@@ -105,14 +105,22 @@
 
 <div id="links" class="container-lg mx-auto">
   <div *ngIf="displayOtherLinks | async">
-    <p class="text-2xl font-medium mt-12 mb-4" translate>
+    <p
+      class="font-title text-3xl font-medium mt-12 mb-4 text-primary"
+      translate
+    >
       record.section.links
     </p>
     <gn-ui-data-otherlinks class="block mt-4"></gn-ui-data-otherlinks>
   </div>
 
   <div *ngIf="displayApi$ | async">
-    <p class="text-2xl font-medium mt-12 mb-4" translate>record.section.api</p>
+    <p
+      class="font-title text-3xl font-medium mt-12 mb-4 text-primary"
+      translate
+    >
+      record.section.api
+    </p>
     <gn-ui-data-apis class="block mt-4"></gn-ui-data-apis>
   </div>
   <!--FIXME: add related md record cards-->
