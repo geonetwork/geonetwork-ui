@@ -32,6 +32,7 @@ const esMapperMock = {
 }
 const esServiceMock = {
   getMetadataByIdPayload: jest.fn,
+  getRelatedRecordPaylod: jest.fn,
 }
 
 describe('StationsEffects', () => {
@@ -87,6 +88,39 @@ describe('StationsEffects', () => {
           a: MdViewActions.loadFullFailure({ error: 'api' }),
         })
         expect(effects.loadFull$).toBeObservable(expected)
+      })
+    })
+  })
+
+  describe('loadRelatedRecords$', () => {
+    describe('when load full success', () => {
+      beforeEach(() => {
+        searchServiceMock.search = jest.fn(() =>
+          of({ hits: { hits: [] }, aggregations: { abc: {} } })
+        )
+      })
+      it('dispatch setRelated', () => {
+        actions = hot('-a-|', {
+          a: MdViewActions.loadFullSuccess({ full }),
+        })
+        const expected = hot('-a-|', {
+          a: MdViewActions.setRelated({ related: [full] }),
+        })
+        expect(effects.loadRelatedRecords$).toBeObservable(expected)
+      })
+    })
+    describe('when api fails', () => {
+      beforeEach(() => {
+        searchServiceMock.search = jest.fn(() => throwError('api'))
+      })
+      it('dispatch loadFullFailure', () => {
+        actions = hot('-a-|', {
+          a: MdViewActions.loadFullSuccess({ full }),
+        })
+        const expected = hot('-(a|)', {
+          a: MdViewActions.setRelated({ related: null }),
+        })
+        expect(effects.loadRelatedRecords$).toBeObservable(expected)
       })
     })
   })

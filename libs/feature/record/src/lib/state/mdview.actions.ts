@@ -21,4 +21,9 @@ export const loadFullFailure = createAction(
   props<{ error: string }>()
 )
 
+export const setRelated = createAction(
+  '[Metadata view] Set related records',
+  props<{ related: MetadataRecord[] }>()
+)
+
 export const close = createAction('[Metadata view] close')
