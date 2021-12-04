@@ -79,7 +79,7 @@
     "ol": "^6.6.1",
     "papaparse": "^5.3.1",
     "rxjs": "~6.6.0",
-    "tailwindcss": "^2.1.4",
+    "tailwindcss": "^2.2.19",
     "tslib": "^2.0.0",
     "whatwg-fetch": "^3.6.2",
     "xlsx": "^0.17.3",
