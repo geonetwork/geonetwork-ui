@@ -1,5 +1,7 @@
 <div
   class="
+    container-lg
+    mx-auto
     bg-primary
     flex
     space-x-8
@@ -31,7 +33,7 @@
   </button>
 </div>
 
-<div id="about">
+<div id="about" class="container-lg mx-auto mb-16">
   <gn-ui-metadata-info
     class="block"
     *ngIf="(facade.isPresent$ | async) === false"
@@ -51,42 +53,48 @@
   </gn-ui-metadata-info>
 </div>
 
-<div id="preview">
-  <div *ngIf="(displayMap$ | async) || (displayData$ | async)">
-    <p class="text-2xl font-medium my-4" translate>record.section.preview</p>
-    <mat-tab-group
-      (selectedIndexChange)="onTabIndexChange()"
-      animationDuration="200ms"
-    >
-      <mat-tab [disabled]="(displayMap$ | async) === false">
-        <ng-template mat-tab-label>
-          <span translate>record.tab.map</span>
-        </ng-template>
-        <div
-          class="block mt-4"
-          style="height: 500px"
-          *ngIf="displayMap$ | async"
+<div id="preview" style="height: 680px">
+  <div class="bg-gray-100 pt-12 h-96 overflow-visible">
+    <div class="container-lg mx-auto">
+      <div *ngIf="(displayMap$ | async) || (displayData$ | async)">
+        <p class="text-2xl font-medium my-4" translate>
+          record.section.preview
+        </p>
+        <mat-tab-group
+          (selectedIndexChange)="onTabIndexChange()"
+          animationDuration="200ms"
         >
-          <gn-ui-data-view-map></gn-ui-data-view-map>
-        </div>
-      </mat-tab>
-      <mat-tab [disabled]="(displayData$ | async) === false">
-        <ng-template mat-tab-label>
-          <span translate>record.tab.data</span>
-        </ng-template>
-        <div
-          class="block mt-4"
-          style="height: 500px"
-          *ngIf="displayData$ | async"
-        >
-          <gn-ui-data-view-table></gn-ui-data-view-table>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
+          <mat-tab [disabled]="(displayMap$ | async) === false">
+            <ng-template mat-tab-label>
+              <span translate>record.tab.map</span>
+            </ng-template>
+            <div
+              class="block mt-4"
+              style="height: 500px"
+              *ngIf="displayMap$ | async"
+            >
+              <gn-ui-data-view-map></gn-ui-data-view-map>
+            </div>
+          </mat-tab>
+          <mat-tab [disabled]="(displayData$ | async) === false">
+            <ng-template mat-tab-label>
+              <span translate>record.tab.data</span>
+            </ng-template>
+            <div
+              class="block mt-4"
+              style="height: 500px"
+              *ngIf="displayData$ | async"
+            >
+              <gn-ui-data-view-table></gn-ui-data-view-table>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
   </div>
 </div>
 
-<div id="access">
+<div id="access" class="container-lg mx-auto">
   <div *ngIf="displayDownload$ | async">
     <p class="text-2xl font-medium mt-12 mb-4" translate>
       record.section.download
@@ -95,7 +103,7 @@
   </div>
 </div>
 
-<div id="links">
+<div id="links" class="container-lg mx-auto">
   <div *ngIf="displayOtherLinks | async">
     <p class="text-2xl font-medium mt-12 mb-4" translate>
       record.section.links
