@@ -93,5 +93,10 @@ export class AppModule {
       getThemeConfig().TITLE_FONT,
       getThemeConfig().FONTS_STYLESHEET_URL
     )
+    ThemeService.generateBgOpacityClasses(
+      'primary',
+      getThemeConfig().PRIMARY_COLOR,
+      [25]
+    )
   }
 }
