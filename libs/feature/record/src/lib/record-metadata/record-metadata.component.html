@@ -53,10 +53,14 @@
   </gn-ui-metadata-info>
 </div>
 
-<div id="preview" style="height: 680px">
+<div
+  id="preview"
+  style="height: 680px"
+  *ngIf="(displayMap$ | async) || (displayData$ | async)"
+>
   <div class="bg-gray-100 pt-12 h-96 overflow-visible">
     <div class="container-lg mx-auto">
-      <div *ngIf="(displayMap$ | async) || (displayData$ | async)">
+      <div>
         <p class="text-3xl font-medium my-4 font-title" translate>
           record.section.preview
         </p>
