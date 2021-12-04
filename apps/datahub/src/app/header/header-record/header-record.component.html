@@ -1,7 +1,7 @@
-<div id="header-image" class="bg-secondary-lighter pt-16 w-full h-56">
-  <div class="mx-auto">
+<div id="header-image" class="pt-16 w-full pb-24">
+  <div class="container-md mx-auto">
     <div
-      class="font-title py-2 text-3xl text-center"
+      class="font-title py-2 text-3xl text-center px-5"
       *ngIf="(mdViewFacade.isPresent$ | async) === true"
     >
       {{ (mdViewFacade.metadata$ | async).title }}
