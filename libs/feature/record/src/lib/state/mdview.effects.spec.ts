@@ -32,7 +32,7 @@ const esMapperMock = {
 }
 const esServiceMock = {
   getMetadataByIdPayload: jest.fn,
-  getRelatedRecordPaylod: jest.fn,
+  getRelatedRecordPayload: jest.fn,
 }
 
 describe('StationsEffects', () => {
