@@ -20,10 +20,10 @@
     </div>
 
     <div
+      *ngIf="metadata"
       class="font-title py-2 text-3xl text-center px-5 mx-32"
-      *ngIf="(mdViewFacade.isPresent$ | async) === true"
     >
-      {{ (mdViewFacade.metadata$ | async).title }}
+      {{ metadata.title }}
     </div>
   </div>
 </div>

@@ -4,7 +4,9 @@
       [ngClass]="{ hidden: (isRecordOpened$ | async) }"
     ></datahub-header>
     <div *ngIf="isRecordOpened$ | async">
-      <datahub-header-record></datahub-header-record>
+      <datahub-header-record
+        [metadata]="mdViewFacade.metadata$ | async"
+      ></datahub-header-record>
     </div>
   </header>
   <main class="py-4">
@@ -14,8 +16,7 @@
     >
       <datahub-main-search></datahub-main-search>
     </div>
-    <div *ngIf="isRecordOpened$ | async">
-      <gn-ui-record-metadata> </gn-ui-record-metadata>
-    </div>
+    <gn-ui-record-metadata *ngIf="isRecordOpened$ | async">
+    </gn-ui-record-metadata>
   </main>
 </div>

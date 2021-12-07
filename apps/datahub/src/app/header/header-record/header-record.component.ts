@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core'
-import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'datahub-header-record',
@@ -9,10 +9,9 @@ import { RouterFacade } from '@geonetwork-ui/feature/router'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderRecordComponent {
-  constructor(
-    public mdViewFacade: MdViewFacade,
-    private searchRouter: RouterFacade
-  ) {}
+  @Input() metadata: MetadataRecord
+
+  constructor(private searchRouter: RouterFacade) {}
   back() {
     this.searchRouter.back()
   }
