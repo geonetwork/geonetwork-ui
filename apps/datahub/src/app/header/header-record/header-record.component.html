@@ -1,22 +1,12 @@
 <div class="header w-full">
   <div class="container-lg mx-auto relative pt-16 pb-24">
     <div class="absolute" style="top: 1em">
-      <button
-        class="
-          items-center
-          justify-center
-          p-1
-          bg-primary-opacity-25
-          text-white
-          rounded
-        "
+      <gn-ui-navigation-button
         (click)="back()"
+        [label]="'datahub.search.back' | translate"
+        [icon]="'navigate_before'"
       >
-        <mat-icon class="align-middle">navigate_before</mat-icon>
-        <span class="tooltip align-middle mx-2 hidden" translate=""
-          >datahub.search.back</span
-        >
-      </button>
+      </gn-ui-navigation-button>
     </div>
 
     <div

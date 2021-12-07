@@ -33,6 +33,7 @@ import { HeaderComponent } from './header/header/header.component'
 import { HeaderBadgeButtonComponent } from './header/header-badge-button/header-badge-button.component'
 import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { HeaderRecordComponent } from './header/header-record/header-record.component'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 
 export const metaReducers: MetaReducer[] = !environment.production
   ? [storeFreeze]
@@ -63,6 +64,7 @@ export const metaReducers: MetaReducer[] = !environment.production
     UiSearchModule,
     UtilSharedModule,
     MatIconModule,
+    UiInputsModule,
   ],
   providers: [
     { provide: RESULTS_LAYOUT_CONFIG, useValue: DATAHUB_RESULTS_LAYOUT_CONFIG },

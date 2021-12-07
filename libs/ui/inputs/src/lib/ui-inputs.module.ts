@@ -17,6 +17,7 @@ import { TextAreaComponent } from './text-area/text-area.component'
 import { TextInputComponent } from './text-input/text-input.component'
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { MatIconModule } from '@angular/material/icon'
+import { NavigationButtonComponent } from './navigation-button/navigation-button.component'
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { MatIconModule } from '@angular/material/icon'
     TextAreaComponent,
     ChipsInputComponent,
     DatepickerComponent,
+    NavigationButtonComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +53,7 @@ import { MatIconModule } from '@angular/material/icon'
     TextAreaComponent,
     ChipsInputComponent,
     DatepickerComponent,
+    NavigationButtonComponent,
   ],
 })
 export class UiInputsModule {}
