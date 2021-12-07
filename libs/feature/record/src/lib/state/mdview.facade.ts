@@ -34,6 +34,8 @@ export class MdViewFacade {
     filter((error) => error !== null)
   )
 
+  related$ = this.store.pipe(select(MdViewSelectors.getRelated))
+
   allLinks$ = this.metadata$.pipe(
     map((record) => (this.helper.hasLinks(record) ? record.links : []))
   )

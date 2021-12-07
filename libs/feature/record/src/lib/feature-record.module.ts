@@ -20,6 +20,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { TranslateModule } from '@ngx-translate/core'
 import { DataOtherlinksComponent } from './data-otherlinks/data-otherlinks.component'
+import { RelatedRecordsComponent } from './related-records/related-records.component'
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { DataOtherlinksComponent } from './data-otherlinks/data-otherlinks.compo
     DataDownloadsComponent,
     DataApisComponent,
     DataOtherlinksComponent,
+    RelatedRecordsComponent,
   ],
   imports: [
     CommonModule,

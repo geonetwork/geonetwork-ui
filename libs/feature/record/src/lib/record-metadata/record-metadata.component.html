@@ -124,3 +124,21 @@
   </div>
   <!--FIXME: add related md record cards-->
 </div>
+
+<div id="related-records" *ngIf="facade.related$ | async">
+  <div>
+    <div class="h-48 overflow-visible">
+      <div class="container-lg mx-auto">
+        <p class="font-title text-3xl font-medium mt-12 mb-4" translate>
+          record.section.related
+        </p>
+        <gn-ui-related-records
+          [records]="facade.related$ | async"
+        ></gn-ui-related-records>
+      </div>
+    </div>
+  </div>
+  <div class="bg-primary">
+    <div class="container-lg mx-auto h-96"></div>
+  </div>
+</div>

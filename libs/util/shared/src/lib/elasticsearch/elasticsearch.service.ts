@@ -9,6 +9,7 @@ import {
   StateConfigFilters,
 } from '../models'
 import { BootstrapService } from '../services'
+import { ES_SOURCE_SUMMARY } from './constant'
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +46,45 @@ export class ElasticsearchService {
           values: [uuid],
         },
       },
+    }
+  }
+
+  getRelatedRecordPayload(
+    title: string,
+    size: number = 6,
+    _source = ES_SOURCE_SUMMARY
+  ): EsSearchParams {
+    return {
+      query: {
+        bool: {
+          must: [
+            {
+              more_like_this: {
+                fields: [
+                  'resourceTitleObject.default',
+                  'resourceAbstractObject.default',
+                  'tag.raw',
+                ],
+                like: title,
+                min_term_freq: 1,
+                max_query_terms: 12,
+              },
+            },
+            {
+              terms: {
+                isTemplate: ['n'],
+              },
+            },
+            {
+              terms: {
+                draft: ['n', 'e'],
+              },
+            },
+          ],
+        },
+      },
+      size,
+      _source,
     }
   }
 

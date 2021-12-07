@@ -8,6 +8,7 @@ export interface MdViewState {
   loadingFull: boolean
   error: string | null
   metadata?: MetadataRecord
+  related?: MetadataRecord[]
 }
 
 export const initialMdviewState: MdViewState = {
@@ -35,9 +36,13 @@ const mdViewReducer = createReducer(
     error,
     loadingFull: false,
   })),
+  on(MdViewActions.setRelated, (state, { related }) => ({
+    ...state,
+    related,
+  })),
   on(MdViewActions.close, (state) => {
     // eslint-disable-next-line
-    const { metadata, ...stateWithoutMd } = state
+    const { metadata, related, ...stateWithoutMd } = state
     return stateWithoutMd
   })
 )

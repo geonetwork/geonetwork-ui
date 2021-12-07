@@ -13,6 +13,6 @@ export class HeaderRecordComponent {
 
   constructor(private searchRouter: RouterFacade) {}
   back() {
-    this.searchRouter.back()
+    this.searchRouter.goToSearch()
   }
 }
