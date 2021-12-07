@@ -23,12 +23,7 @@
   <button (click)="scrollTo('access')" class="uppercase text-white" translate>
     record.section.access
   </button>
-  <button
-    (click)="scrollTo('links')"
-    href="#links"
-    class="uppercase text-white"
-    translate
-  >
+  <button (click)="scrollTo('links')" class="uppercase text-white" translate>
     record.section.links
   </button>
 </div>
@@ -120,7 +115,7 @@
 
   <div *ngIf="displayApi$ | async">
     <p
-      class="font-title text-3xl font-medium mt-12 mb-4 text-primary"
+      class="font-title text-3xl font-medium mt-12 mb-4 text-secondary"
       translate
     >
       record.section.api

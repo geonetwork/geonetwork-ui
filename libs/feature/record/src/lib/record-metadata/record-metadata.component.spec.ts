@@ -121,14 +121,12 @@ describe('RecordMetadataComponent', () => {
   })
 
   describe('Preview', () => {
-    let preview
     describe('when no MAPAPI, GEODATA nor DATA link', () => {
       beforeEach(() => {
         fixture.detectChanges()
-        preview = fixture.debugElement.query(By.css('#preview'))
       })
       it('does not render preview content', () => {
-        expect(preview.nativeNode.children.length).toBe(0)
+        expect(fixture.debugElement.query(By.css('#preview'))).toBeFalsy()
       })
     })
   })
