@@ -1,8 +1,6 @@
 <div class="grid grid-cols-3 gap-6">
   <div class="col-span-2">
-    <p class="text-2xl font-medium text-primary my-6">{{ metadata.title }}</p>
-
-    <p class="text-lg font-medium mb-4" translate>
+    <p class="text-3xl font-medium mb-4 font-title" translate>
       record.metadata.description
     </p>
     <div class="mb-6 md-description">
@@ -30,50 +28,50 @@
       </div>
     </ng-container>
 
-    <ng-container *ngIf="metadata.lineage">
-      <p class="mb-4 font-medium text-primary" translate>
-        record.metadata.origin
-      </p>
+    <gn-ui-expandable-panel
+      *ngIf="metadata.lineage"
+      [title]="'record.metadata.origin' | translate"
+    >
       <p class="mb-4 whitespace-pre-line">
         {{ metadata.lineage }}
       </p>
-    </ng-container>
-    <div
-      class="
-        py-4
-        px-6
-        mb-6
-        rounded
-        bg-gray-100
-        grid grid-cols-2 grid-rows-2
-        gap-6
-        text-gray-800
-      "
+      <div
+        class="
+          py-4
+          px-6
+          mb-6
+          rounded
+          bg-gray-100
+          grid grid-cols-2 grid-rows-2
+          gap-6
+          text-gray-800
+        "
+      >
+        <div class="border-b border-gray-300" *ngIf="metadata.updatedOn">
+          <p translate>record.metadata.updatedOn</p>
+          <p class="text-primary my-2">
+            {{ metadata.updatedOn && metadata.updatedOn.toLocaleString() }}
+          </p>
+        </div>
+        <div class="border-b border-gray-300" *ngIf="metadata.updateFrequency">
+          <p translate>record.metadata.updateFrequency</p>
+          <p class="text-primary my-2">{{ metadata.updateFrequency }}</p>
+        </div>
+        <div *ngIf="metadata.updateStatus">
+          <p translate>record.metadata.updateStatus</p>
+          <p class="text-primary my-2">{{ metadata.updateStatus }}</p>
+        </div>
+      </div>
+    </gn-ui-expandable-panel>
+    <gn-ui-expandable-panel
+      *ngIf="metadata.usageConstraints"
+      [title]="'record.metadata.usage' | translate"
     >
-      <div class="border-b border-gray-300" *ngIf="metadata.updatedOn">
-        <p translate>record.metadata.updatedOn</p>
-        <p class="text-primary my-2">
-          {{ metadata.updatedOn && metadata.updatedOn.toLocaleString() }}
-        </p>
-      </div>
-      <div class="border-b border-gray-300" *ngIf="metadata.updateFrequency">
-        <p translate>record.metadata.updateFrequency</p>
-        <p class="text-primary my-2">{{ metadata.updateFrequency }}</p>
-      </div>
-      <div *ngIf="metadata.updateStatus">
-        <p translate>record.metadata.updateStatus</p>
-        <p class="text-primary my-2">{{ metadata.updateStatus }}</p>
-      </div>
-    </div>
-
-    <ng-container *ngIf="metadata.usageConstraints">
-      <p class="mb-4 font-medium text-primary" translate>
-        record.metadata.usage
-      </p>
       <p class="mb-4 whitespace-pre-line">
         {{ metadata.usageConstraints }}
       </p>
-    </ng-container>
+    </gn-ui-expandable-panel>
+    <!--FIXME: add details panel with landingPages-->
   </div>
 
   <div *ngIf="metadata.contact">
@@ -85,35 +83,5 @@
     <p class="text-gray-600 mb-4">
       <a [href]="metadata.contact.website">{{ metadata.contact.website }}</a>
     </p>
-  </div>
-</div>
-
-<div *ngIf="otherLinks && otherLinks.length">
-  <p class="mb-4 font-medium text-primary" translate>
-    record.metadata.otherLinks
-  </p>
-  <div
-    class="
-      mb-4
-      pl-2
-      flex flex-row
-      items-stretch
-      overflow-x-auto overflow-y-visible
-    "
-  >
-    <gn-ui-card-link
-      *ngFor="let link of otherLinks"
-      class="flex-shrink-0 mr-4 my-2"
-      [linkHref]="link.url"
-      [title]="link.description || link.name"
-    >
-      <div class="flex flex-col h-40 w-64">
-        <p class="mb-2 text-lg font-medium">{{ link.name }}</p>
-        <p class="mb-3 flex-grow overflow-hidden">
-          {{ link.description }}
-        </p>
-        <mat-icon class="opacity-40">ios_share</mat-icon>
-      </div>
-    </gn-ui-card-link>
   </div>
 </div>

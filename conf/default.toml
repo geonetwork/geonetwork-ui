@@ -18,7 +18,7 @@ proxy_path = ""
 #  - for font families: https://developer.mozilla.org/en-US/docs/Web/CSS/font-family
 [theme]
 primary_color = "#0f4395"
-secondary_color = "#c2e9dc"
+secondary_color = "#8bc832"
 main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
 # main_font = "My Custom Font", fallback-font

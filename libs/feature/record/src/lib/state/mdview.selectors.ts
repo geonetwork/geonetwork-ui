@@ -25,3 +25,7 @@ export const getMetadataError = createSelector(
   getMdViewState,
   (state: MdViewState) => state.error
 )
+export const getRelated = createSelector(
+  getMdViewState,
+  (state: MdViewState) => state.related
+)

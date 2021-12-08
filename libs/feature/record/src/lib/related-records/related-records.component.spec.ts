@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { CardLinkComponent } from './card-link.component'
+import { RelatedRecordsComponent } from './related-records.component'
 
-describe('CardLinkComponent', () => {
-  let component: CardLinkComponent
-  let fixture: ComponentFixture<CardLinkComponent>
+describe('RelatedRecordsComponent', () => {
+  let component: RelatedRecordsComponent
+  let fixture: ComponentFixture<RelatedRecordsComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CardLinkComponent],
+      declarations: [RelatedRecordsComponent],
     }).compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CardLinkComponent)
+    fixture = TestBed.createComponent(RelatedRecordsComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

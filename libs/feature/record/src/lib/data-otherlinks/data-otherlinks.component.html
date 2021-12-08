@@ -1,0 +1,7 @@
+<div class="mb-4 pl-2 grid grid-cols-3 gap-6">
+  <gn-ui-link-card
+    *ngFor="let link of facade.otherLinks$ | async"
+    [link]="link"
+  >
+  </gn-ui-link-card>
+</div>

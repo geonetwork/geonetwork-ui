@@ -2,6 +2,13 @@ import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/ui/search'
 import * as MdViewActions from './mdview.actions'
 import { initialMdviewState, reducer } from './mdview.reducer'
 
+const relatedRecord = {
+  title: 'title',
+  id: 'id',
+  uuid: 'uuid',
+  metadataUrl: 'url',
+}
+
 describe('MdView Reducer', () => {
   describe('undefined action', () => {
     it('should return the default state', () => {
@@ -78,6 +85,21 @@ describe('MdView Reducer', () => {
       })
     })
   })
+  describe('setRelated', () => {
+    let action
+    beforeEach(() => {
+      action = MdViewActions.setRelated({
+        related: [relatedRecord],
+      })
+    })
+    it('set related records', () => {
+      const state = reducer({ ...initialMdviewState }, action)
+      expect(state).toEqual({
+        ...initialMdviewState,
+        related: [relatedRecord],
+      })
+    })
+  })
   describe('close', () => {
     let action
     beforeEach(() => {
@@ -87,6 +109,7 @@ describe('MdView Reducer', () => {
       const state = reducer(
         {
           ...initialMdviewState,
+          related: [relatedRecord],
           loadingFull: false,
           metadata: RECORDS_SUMMARY_FIXTURE[0],
         },

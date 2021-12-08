@@ -1,14 +1,22 @@
 <div gnUiSearchStateContainer="mainSearch">
   <header>
-    <datahub-header></datahub-header>
-  </header>
-  <main>
-    <div class="container-lg mx-auto py-4">
-      <datahub-main-search
-        [ngClass]="{ hidden: (isRecordOpened$ | async) }"
-      ></datahub-main-search>
-      <gn-ui-record-metadata *ngIf="isRecordOpened$ | async">
-      </gn-ui-record-metadata>
+    <datahub-header
+      [ngClass]="{ hidden: (isRecordOpened$ | async) }"
+    ></datahub-header>
+    <div *ngIf="isRecordOpened$ | async">
+      <datahub-header-record
+        [metadata]="mdViewFacade.metadata$ | async"
+      ></datahub-header-record>
     </div>
+  </header>
+  <main class="py-4">
+    <div
+      class="container-lg mx-auto"
+      [ngClass]="{ hidden: (isRecordOpened$ | async) }"
+    >
+      <datahub-main-search></datahub-main-search>
+    </div>
+    <gn-ui-record-metadata *ngIf="isRecordOpened$ | async">
+    </gn-ui-record-metadata>
   </main>
 </div>

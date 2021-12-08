@@ -66,6 +66,48 @@ describe('ThemeService', () => {
       })
     })
   })
+  describe('#generateBgOpacityClasses', () => {
+    let cssRules, firstRule
+    describe('default opacities', () => {
+      beforeEach(() => {
+        ThemeService.generateBgOpacityClasses('primary', 'red')
+        cssRules =
+          document.styleSheets[document.styleSheets.length - 1].cssRules
+        firstRule = cssRules[0]
+      })
+      it('generates one rule per opacity value', () => {
+        expect(cssRules.length).toEqual(4)
+      })
+      it('generates .bg-{name}-opacity-{value} class name', () => {
+        expect(firstRule.selectorText).toEqual('.bg-primary-opacity-0')
+      })
+      it('the rules has a background-color with opacity', () => {
+        expect(firstRule.style['background-color']).toEqual('rgba(255,0,0,0)')
+        expect(cssRules[1].style['background-color']).toEqual(
+          'rgba(255,0,0,0.25)'
+        )
+      })
+    })
+    describe('given opacities', () => {
+      beforeEach(() => {
+        ThemeService.generateBgOpacityClasses('primary', 'red', [75])
+        cssRules =
+          document.styleSheets[document.styleSheets.length - 1].cssRules
+        firstRule = cssRules[0]
+      })
+      it('generates 1 css rule', () => {
+        expect(cssRules.length).toEqual(1)
+      })
+      it('generates .bg-primary-opacity-75 class name', () => {
+        expect(firstRule.selectorText).toEqual('.bg-primary-opacity-75')
+      })
+      it('the rules has a background-color with opacity', () => {
+        expect(firstRule.style['background-color']).toEqual(
+          'rgba(255,0,0,0.75)'
+        )
+      })
+    })
+  })
 
   describe('#generateLabelColor', () => {
     it('generates different color for different labels', () => {

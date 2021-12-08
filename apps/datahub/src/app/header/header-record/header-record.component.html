@@ -1,0 +1,19 @@
+<div class="header w-full">
+  <div class="container-lg mx-auto relative pt-16 pb-24">
+    <div class="absolute" style="top: 1em">
+      <gn-ui-navigation-button
+        (click)="back()"
+        [label]="'datahub.search.back' | translate"
+        [icon]="'navigate_before'"
+      >
+      </gn-ui-navigation-button>
+    </div>
+
+    <div
+      *ngIf="metadata"
+      class="font-title py-2 text-3xl text-center px-5 mx-32"
+    >
+      {{ metadata.title }}
+    </div>
+  </div>
+</div>

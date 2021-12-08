@@ -31,6 +31,7 @@ export class MapUtilsService {
   createEmptyMap(): Map {
     const map = new Map({
       controls: [],
+      interactions: [],
       pixelRatio: 1,
     })
     return map

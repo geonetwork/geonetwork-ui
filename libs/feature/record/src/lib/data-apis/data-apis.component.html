@@ -1,0 +1,16 @@
+<div
+  class="
+    mb-4
+    pl-2
+    flex flex-row
+    items-stretch
+    overflow-x-auto overflow-y-visible
+  "
+>
+  <gn-ui-api-card
+    *ngFor="let link of facade.apiLinks$ | async"
+    class="flex-shrink-0 mr-4 my-2"
+    [link]="link"
+  >
+  </gn-ui-api-card>
+</div>

@@ -1,5 +1,12 @@
 import * as MdViewSelectors from './mdview.selectors'
 
+const relatedRecord = {
+  title: 'title',
+  id: 'id',
+  uuid: 'uuid',
+  metadataUrl: 'url',
+}
+
 describe('MdView Selectors', () => {
   let state
 
@@ -82,6 +89,15 @@ describe('MdView Selectors', () => {
           error: null,
         })
         expect(results).toBe(null)
+      })
+    })
+    describe('getRelated', () => {
+      it('returns related records', () => {
+        const results = MdViewSelectors.getRelated.projector({
+          ...state,
+          related: [relatedRecord],
+        })
+        expect(results).toEqual([relatedRecord])
       })
     })
   })

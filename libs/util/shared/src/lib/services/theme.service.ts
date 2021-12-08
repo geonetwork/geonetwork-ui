@@ -10,6 +10,22 @@ export class ThemeService {
     return document.documentElement.style.getPropertyValue(`--color-${name}`)
   }
 
+  static generateBgOpacityClasses(
+    colorName,
+    colorValue,
+    opacities = [0, 25, 50, 75]
+  ) {
+    const color = chroma(colorValue)
+    const styleElement = document.createElement('style')
+    styleElement.innerHTML = opacities.reduce((cssRules, opacity) => {
+      cssRules += `.bg-${colorName}-opacity-${opacity}{background-color:${color
+        .alpha(opacity / 100)
+        .css()};}`
+      return cssRules
+    }, '')
+    document.getElementsByTagName('head')[0].appendChild(styleElement)
+  }
+
   static applyCssVariables(
     primaryColor: string,
     secondaryColor: string,

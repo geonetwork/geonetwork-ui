@@ -10,7 +10,6 @@ import { MetadataLinkValid, MetadataRecord } from '@geonetwork-ui/util/shared'
 export class MetadataInfoComponent {
   @Input() metadata: MetadataRecord
   @Input() incomplete: boolean
-  @Input() otherLinks: MetadataLinkValid[]
   @Input() landingPages: MetadataLinkValid[]
 
   fieldReady(propName: string) {

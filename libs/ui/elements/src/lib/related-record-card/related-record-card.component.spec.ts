@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatIconModule } from '@angular/material/icon'
+import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { TranslateModule } from '@ngx-translate/core'
 import { RelatedRecordCardComponent } from './related-record-card.component'
 
@@ -10,7 +11,7 @@ describe('RelatedRecordCardComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [RelatedRecordCardComponent],
-      imports: [MatIconModule, TranslateModule.forRoot()],
+      imports: [MatIconModule, UiSearchModule, TranslateModule.forRoot()],
     }).compileComponents()
   })
 

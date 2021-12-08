@@ -1,65 +1,144 @@
-<mat-tab-group
-  (selectedIndexChange)="onTabIndexChange()"
-  animationDuration="200ms"
+<div
+  class="
+    container-lg
+    mx-auto
+    bg-primary
+    flex
+    space-x-8
+    justify-between
+    py-4
+    px-20
+    font-medium
+    rounded-lg
+    transform
+    -translate-y-14
+  "
 >
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon class="mr-3">info</mat-icon>
-      <span translate>record.tab.info</span>
-    </ng-template>
-    <gn-ui-metadata-info
-      class="block mt-4"
-      *ngIf="(facade.isPresent$ | async) === false"
-      [metadata]="{
-        title: 'Loading...'
-      }"
-      [incomplete]="true"
-    >
-    </gn-ui-metadata-info>
-    <gn-ui-metadata-info
-      class="block mt-4"
-      *ngIf="(facade.isPresent$ | async) === true"
-      [metadata]="facade.metadata$ | async"
-      [incomplete]="facade.isIncomplete$ | async"
-      [otherLinks]="facade.otherLinks$ | async"
-      [landingPages]="facade.landingPageLinks$ | async"
-    >
-    </gn-ui-metadata-info>
-  </mat-tab>
+  <button (click)="scrollTo('about')" class="uppercase text-white" translate>
+    record.section.about
+  </button>
+  <button (click)="scrollTo('preview')" class="uppercase text-white" translate>
+    record.section.preview
+  </button>
+  <button (click)="scrollTo('access')" class="uppercase text-white" translate>
+    record.section.access
+  </button>
+  <button (click)="scrollTo('links')" class="uppercase text-white" translate>
+    record.section.links
+  </button>
+</div>
 
-  <mat-tab [disabled]="(displayData$ | async) === false">
-    <ng-template mat-tab-label>
-      <mat-icon class="mr-3">list</mat-icon>
-      <span translate>record.tab.data</span>
-    </ng-template>
-    <div class="block mt-4" style="height: 500px" *ngIf="displayData$ | async">
-      <gn-ui-data-view-table></gn-ui-data-view-table>
+<div id="about" class="container-lg mx-auto mb-16">
+  <gn-ui-metadata-info
+    class="block"
+    *ngIf="(facade.isPresent$ | async) === false"
+    [metadata]="{
+      title: 'Loading...'
+    }"
+    [incomplete]="true"
+  >
+  </gn-ui-metadata-info>
+  <gn-ui-metadata-info
+    class="block"
+    *ngIf="(facade.isPresent$ | async) === true"
+    [metadata]="facade.metadata$ | async"
+    [incomplete]="facade.isIncomplete$ | async"
+    [landingPages]="facade.landingPageLinks$ | async"
+  >
+  </gn-ui-metadata-info>
+</div>
+
+<div
+  id="preview"
+  style="height: 680px"
+  *ngIf="(displayMap$ | async) || (displayData$ | async)"
+>
+  <div class="bg-gray-100 pt-12 h-96 overflow-visible">
+    <div class="container-lg mx-auto">
+      <div>
+        <p class="text-3xl font-medium my-4 font-title" translate>
+          record.section.preview
+        </p>
+        <mat-tab-group
+          (selectedIndexChange)="onTabIndexChange()"
+          animationDuration="200ms"
+        >
+          <mat-tab [disabled]="(displayMap$ | async) === false">
+            <ng-template mat-tab-label>
+              <span translate>record.tab.map</span>
+            </ng-template>
+            <div
+              class="block mt-4"
+              style="height: 500px"
+              *ngIf="displayMap$ | async"
+            >
+              <gn-ui-data-view-map></gn-ui-data-view-map>
+            </div>
+          </mat-tab>
+          <mat-tab [disabled]="(displayData$ | async) === false">
+            <ng-template mat-tab-label>
+              <span translate>record.tab.data</span>
+            </ng-template>
+            <div
+              class="block mt-4"
+              style="height: 500px"
+              *ngIf="displayData$ | async"
+            >
+              <gn-ui-data-view-table></gn-ui-data-view-table>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
     </div>
-  </mat-tab>
+  </div>
+</div>
 
-  <mat-tab [disabled]="(displayMap$ | async) === false">
-    <ng-template mat-tab-label>
-      <mat-icon class="mr-3">map</mat-icon>
-      <span translate>record.tab.map</span>
-    </ng-template>
-    <div class="block mt-4" style="height: 500px" *ngIf="displayMap$ | async">
-      <gn-ui-data-view-map></gn-ui-data-view-map>
-    </div>
-  </mat-tab>
-
-  <mat-tab [disabled]="(displayDownload$ | async) === false">
-    <ng-template mat-tab-label>
-      <mat-icon class="mr-3">download</mat-icon>
-      <span translate>record.tab.exports</span>
-    </ng-template>
+<div id="access" class="container-lg mx-auto">
+  <div *ngIf="displayDownload$ | async">
+    <p class="font-title text-3xl font-medium mt-12 mb-4" translate>
+      record.section.download
+    </p>
     <gn-ui-data-downloads class="block mt-4"></gn-ui-data-downloads>
-  </mat-tab>
+  </div>
+</div>
 
-  <mat-tab [disabled]="(displayApi$ | async) === false">
-    <ng-template mat-tab-label>
-      <mat-icon class="mr-3">api</mat-icon>
-      <span translate>record.tab.api</span>
-    </ng-template>
+<div id="links" class="container-lg mx-auto">
+  <div *ngIf="displayOtherLinks | async">
+    <p
+      class="font-title text-3xl font-medium mt-12 mb-4 text-primary"
+      translate
+    >
+      record.section.links
+    </p>
+    <gn-ui-data-otherlinks class="block mt-4"></gn-ui-data-otherlinks>
+  </div>
+
+  <div *ngIf="displayApi$ | async">
+    <p
+      class="font-title text-3xl font-medium mt-12 mb-4 text-secondary"
+      translate
+    >
+      record.section.api
+    </p>
     <gn-ui-data-apis class="block mt-4"></gn-ui-data-apis>
-  </mat-tab>
-</mat-tab-group>
+  </div>
+  <!--FIXME: add related md record cards-->
+</div>
+
+<div id="related-records" *ngIf="facade.related$ | async">
+  <div>
+    <div class="h-48 overflow-visible">
+      <div class="container-lg mx-auto">
+        <p class="font-title text-3xl font-medium mt-12 mb-4" translate>
+          record.section.related
+        </p>
+        <gn-ui-related-records
+          [records]="facade.related$ | async"
+        ></gn-ui-related-records>
+      </div>
+    </div>
+  </div>
+  <div class="bg-primary">
+    <div class="container-lg mx-auto h-96"></div>
+  </div>
+</div>

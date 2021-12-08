@@ -4,6 +4,7 @@ import { ElasticsearchMapper } from '@geonetwork-ui/feature/search'
 import {
   ElasticsearchService,
   EsSearchResponse,
+  MetadataRecord,
 } from '@geonetwork-ui/util/shared'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { of } from 'rxjs'
@@ -34,6 +35,23 @@ export class MdViewEffects {
         return MdViewActions.loadFullSuccess({ full })
       }),
       catchError((error) => of(MdViewActions.loadFullFailure({ error })))
+    )
+  )
+
+  loadRelatedRecords$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MdViewActions.loadFullSuccess),
+      switchMap(({ full }) =>
+        this.searchService.search(
+          'bucket',
+          JSON.stringify(this.esService.getRelatedRecordPayload(full.title, 3))
+        )
+      ),
+      map((response: EsSearchResponse) => {
+        const related = this.esMapper.toRecords(response)
+        return MdViewActions.setRelated({ related })
+      }),
+      catchError((error) => of(MdViewActions.setRelated({ related: null })))
     )
   )
 }

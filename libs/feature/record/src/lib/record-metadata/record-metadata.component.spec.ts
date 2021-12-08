@@ -1,4 +1,4 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core'
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { MapManagerService } from '@geonetwork-ui/feature/map'
@@ -8,19 +8,57 @@ import {
   UiElementsModule,
 } from '@geonetwork-ui/ui/elements'
 import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/ui/search'
-import { BehaviorSubject, Subject } from 'rxjs'
+import { BehaviorSubject } from 'rxjs'
 import { RecordMetadataComponent } from './record-metadata.component'
 import { TranslateModule } from '@ngx-translate/core'
 
 class MdViewFacadeMock {
   isPresent$ = new BehaviorSubject(false)
   metadata$ = new BehaviorSubject(RECORDS_SUMMARY_FIXTURE[0])
-  mapApiLinks$ = new Subject()
-  dataLinks$ = new Subject()
-  geoDataLinks$ = new Subject()
-  downloadLinks$ = new Subject()
-  apiLinks$ = new Subject()
+  mapApiLinks$ = new BehaviorSubject([])
+  dataLinks$ = new BehaviorSubject([])
+  geoDataLinks$ = new BehaviorSubject([])
+  downloadLinks$ = new BehaviorSubject([])
+  apiLinks$ = new BehaviorSubject([])
+  otherLinks$ = new BehaviorSubject([])
+  related$ = new BehaviorSubject(null)
 }
+
+@Component({
+  selector: 'gn-ui-data-view-map',
+  template: '<div></div>',
+})
+export class MockDataMapComponent {}
+
+@Component({
+  selector: 'gn-ui-data-view-table',
+  template: '<div></div>',
+})
+export class MockDataTableComponent {}
+
+@Component({
+  selector: 'gn-ui-data-downloads',
+  template: '<div></div>',
+})
+export class MockDataDownloadsComponent {}
+
+@Component({
+  selector: 'gn-ui-data-otherlinks',
+  template: '<div></div>',
+})
+export class MockDataOtherlinksComponent {}
+
+@Component({
+  selector: 'gn-ui-data-apis',
+  template: '<div></div>',
+})
+export class MockDataApisComponent {}
+
+@Component({
+  selector: 'gn-ui-related-records',
+  template: '<div></div>',
+})
+export class MockRelatedComponent {}
 
 describe('RecordMetadataComponent', () => {
   let component: RecordMetadataComponent
@@ -29,7 +67,15 @@ describe('RecordMetadataComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecordMetadataComponent],
+      declarations: [
+        RecordMetadataComponent,
+        MockDataMapComponent,
+        MockDataTableComponent,
+        MockDataDownloadsComponent,
+        MockDataOtherlinksComponent,
+        MockDataApisComponent,
+        MockRelatedComponent,
+      ],
       schemas: [NO_ERRORS_SCHEMA],
       imports: [UiElementsModule, TranslateModule.forRoot()],
       providers: [
@@ -81,53 +127,82 @@ describe('RecordMetadataComponent', () => {
       expect(dumb.incomplete).toBeTruthy()
     })
   })
+
+  describe('Preview', () => {
+    describe('when no MAPAPI, GEODATA nor DATA link', () => {
+      beforeEach(() => {
+        fixture.detectChanges()
+      })
+      it('does not render preview content', () => {
+        expect(fixture.debugElement.query(By.css('#preview'))).toBeFalsy()
+      })
+    })
+  })
   describe('Map', () => {
     let mapTab
-    describe('when no MAPAPI and no GEODATA link', () => {
+    describe('when DATA link, but no MAPAPI and no GEODATA link', () => {
       beforeEach(() => {
-        facade.mapApiLinks$.next(null)
+        facade.dataLinks$.next(['link'])
         fixture.detectChanges()
-        facade.geoDataLinks$.next(null)
-        fixture.detectChanges()
-        mapTab = fixture.debugElement.queryAll(By.css('mat-tab'))[2]
+        mapTab = fixture.debugElement.queryAll(By.css('mat-tab'))[0]
       })
-      it('map tab is disabled', () => {
+      it('renders preview, map tab is disabled', () => {
         expect(mapTab.nativeNode.disabled).toBe(true)
+      })
+      it('does not render map component', () => {
+        expect(
+          fixture.debugElement.query(By.directive(MockDataMapComponent))
+        ).toBeFalsy()
       })
     })
     describe('when a MAPAPI link present', () => {
       beforeEach(() => {
         facade.mapApiLinks$.next(['link'])
         fixture.detectChanges()
-        mapTab = fixture.debugElement.queryAll(By.css('mat-tab'))[2]
+        mapTab = fixture.debugElement.queryAll(By.css('mat-tab'))[0]
       })
-      it('map tab is enabled', () => {
+      it('renders preview, map tab is enabled', () => {
         expect(mapTab.nativeNode.disabled).toBe(false)
+      })
+      it('renders map component', () => {
+        expect(
+          fixture.debugElement.query(By.directive(MockDataMapComponent))
+        ).toBeTruthy()
       })
     })
     describe('when a GEODATA link present', () => {
       beforeEach(() => {
         facade.geoDataLinks$.next(['link'])
         fixture.detectChanges()
-        mapTab = fixture.debugElement.queryAll(By.css('mat-tab'))[2]
+        mapTab = fixture.debugElement.queryAll(By.css('mat-tab'))[0]
       })
-      it('map tab is enabled', () => {
+      it('renders preview, map tab is enabled', () => {
         expect(mapTab.nativeNode.disabled).toBe(false)
+      })
+      it('renders map component', () => {
+        expect(
+          fixture.debugElement.query(By.directive(MockDataMapComponent))
+        ).toBeTruthy()
       })
     })
   })
   describe('Table', () => {
     let tableTab
-    describe('when no DATA and no GEODATA link', () => {
+    describe('when MAPAPI link, but no DATA and no GEODATA link', () => {
       beforeEach(() => {
+        facade.mapApiLinks$.next(['link'])
         facade.dataLinks$.next(null)
-        fixture.detectChanges()
         facade.geoDataLinks$.next(null)
         fixture.detectChanges()
         tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
       })
-      it('table tab is disabled', () => {
+      it('renders preview, table tab is disabled', () => {
         expect(tableTab.nativeNode.disabled).toBe(true)
+      })
+      it('does not render table component', () => {
+        expect(
+          fixture.debugElement.query(By.directive(MockDataTableComponent))
+        ).toBeFalsy()
       })
     })
     describe('when a DATA link present', () => {
@@ -136,8 +211,13 @@ describe('RecordMetadataComponent', () => {
         fixture.detectChanges()
         tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
       })
-      it('table tab is enabled', () => {
+      it('renders preview, table tab is enabled', () => {
         expect(tableTab.nativeNode.disabled).toBe(false)
+      })
+      it('renders table component', () => {
+        expect(
+          fixture.debugElement.query(By.directive(MockDataTableComponent))
+        ).toBeTruthy()
       })
     })
     describe('when a GEODATA link present', () => {
@@ -146,8 +226,118 @@ describe('RecordMetadataComponent', () => {
         fixture.detectChanges()
         tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
       })
-      it('table tab is enabled', () => {
+      it('renders preview, table tab is enabled', () => {
         expect(tableTab.nativeNode.disabled).toBe(false)
+      })
+      it('renders table component', () => {
+        expect(
+          fixture.debugElement.query(By.directive(MockDataTableComponent))
+        ).toBeTruthy()
+      })
+    })
+  })
+  describe('Downloads', () => {
+    let downloadsComponent
+    describe('when no DOWNLOAD link', () => {
+      beforeEach(() => {
+        fixture.detectChanges()
+        downloadsComponent = fixture.debugElement.query(
+          By.directive(MockDataDownloadsComponent)
+        )
+      })
+      it('download component does not render', () => {
+        expect(downloadsComponent).toBeFalsy()
+      })
+    })
+    describe('when DOWNLOAD link', () => {
+      beforeEach(() => {
+        facade.downloadLinks$.next(['link'])
+        fixture.detectChanges()
+        downloadsComponent = fixture.debugElement.query(
+          By.directive(MockDataDownloadsComponent)
+        )
+      })
+      it('download component renders', () => {
+        expect(downloadsComponent).toBeTruthy()
+      })
+    })
+  })
+  describe('Otherlinks', () => {
+    let otherLinksComponent
+    describe('when no OTHER link', () => {
+      beforeEach(() => {
+        fixture.detectChanges()
+        otherLinksComponent = fixture.debugElement.query(
+          By.directive(MockDataOtherlinksComponent)
+        )
+      })
+      it('otherlink component does not render', () => {
+        expect(otherLinksComponent).toBeFalsy()
+      })
+    })
+    describe('when OTHER link', () => {
+      beforeEach(() => {
+        facade.otherLinks$.next(['link'])
+        fixture.detectChanges()
+        otherLinksComponent = fixture.debugElement.query(
+          By.directive(MockDataOtherlinksComponent)
+        )
+      })
+      it('otherlink component renders', () => {
+        expect(otherLinksComponent).toBeTruthy()
+      })
+    })
+  })
+  describe('API', () => {
+    let apiComponent
+    describe('when no API link', () => {
+      beforeEach(() => {
+        fixture.detectChanges()
+        apiComponent = fixture.debugElement.query(
+          By.directive(MockDataApisComponent)
+        )
+      })
+      it('API component does not render', () => {
+        expect(apiComponent).toBeFalsy()
+      })
+    })
+    describe('when API link', () => {
+      beforeEach(() => {
+        facade.apiLinks$.next(['link'])
+        fixture.detectChanges()
+        apiComponent = fixture.debugElement.query(
+          By.directive(MockDataApisComponent)
+        )
+      })
+      it('API component renders', () => {
+        expect(apiComponent).toBeTruthy()
+      })
+    })
+  })
+
+  describe('related records', () => {
+    let relatedComponent
+    describe('when no related records', () => {
+      beforeEach(() => {
+        fixture.detectChanges()
+        relatedComponent = fixture.debugElement.query(
+          By.directive(MockRelatedComponent)
+        )
+      })
+      it('Related component does not render', () => {
+        expect(relatedComponent).toBeFalsy()
+      })
+    })
+    describe('when related records', () => {
+      beforeEach(() => {
+        facade.related$.next([{ title: 'title' }])
+        fixture.detectChanges()
+        relatedComponent = fixture.debugElement.query(
+          By.directive(MockRelatedComponent)
+        )
+      })
+      it('Related component renders', () => {
+        expect(relatedComponent).toBeTruthy()
       })
     })
   })

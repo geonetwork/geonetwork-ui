@@ -17,8 +17,7 @@ export class RecordMetadataComponent {
   ]).pipe(
     map(
       ([mapLinks, geoDataLinks]) =>
-        (!!mapLinks && mapLinks.length > 0) ||
-        (!!geoDataLinks && geoDataLinks.length > 0)
+        mapLinks?.length > 0 || geoDataLinks?.length > 0
     )
   )
   displayData$ = combineLatest([
@@ -27,15 +26,15 @@ export class RecordMetadataComponent {
   ]).pipe(
     map(
       ([dataLinks, geoDataLinks]) =>
-        (!!dataLinks && dataLinks.length > 0) ||
-        (!!geoDataLinks && geoDataLinks.length > 0)
+        dataLinks?.length > 0 || geoDataLinks?.length > 0
     )
   )
   displayDownload$ = this.facade.downloadLinks$.pipe(
-    map((links) => !!links && links.length > 0)
+    map((links) => links?.length > 0)
   )
-  displayApi$ = this.facade.apiLinks$.pipe(
-    map((links) => !!links && links.length > 0)
+  displayApi$ = this.facade.apiLinks$.pipe(map((links) => links?.length > 0))
+  displayOtherLinks = this.facade.otherLinks$.pipe(
+    map((links) => links?.length > 0)
   )
 
   constructor(
@@ -47,5 +46,12 @@ export class RecordMetadataComponent {
     setTimeout(() => {
       window.dispatchEvent(new Event('resize'))
     }, 0)
+  }
+
+  scrollTo(id: string) {
+    document.getElementById(id).scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    })
   }
 }
