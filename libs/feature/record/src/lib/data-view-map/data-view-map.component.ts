@@ -134,12 +134,10 @@ export class DataViewMapComponent {
               throw new Error('map.wfs.geojson.not.supported')
             }
             return readDataset(
-              this.proxy.getProxiedUrl(
-                endpoint.getFeatureUrl(link.name, {
-                  asJson: true,
-                  outputCrs: 'EPSG:4326',
-                })
-              ),
+              endpoint.getFeatureUrl(link.name, {
+                asJson: true,
+                outputCrs: 'EPSG:4326',
+              }),
               'geojson'
             ).then((features) => ({
               type: MapContextLayerTypeEnum.GEOJSON,
