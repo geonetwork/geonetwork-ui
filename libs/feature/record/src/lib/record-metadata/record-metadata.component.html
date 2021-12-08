@@ -6,12 +6,12 @@
     flex
     space-x-8
     justify-between
-    py-4
+    py-5
     px-20
-    font-medium
+    text-sm
     rounded-lg
     transform
-    -translate-y-14
+    -translate-y-10
   "
 >
   <button (click)="scrollTo('about')" class="uppercase text-white" translate>
@@ -59,19 +59,19 @@
   >
     <div class="container-lg mx-auto">
       <div>
-        <p class="text-3xl font-medium my-4 font-title" translate>
+        <div class="text-title font-title transform translate-y-10" translate>
           record.section.preview
-        </p>
+        </div>
         <mat-tab-group
           (selectedIndexChange)="onTabIndexChange()"
           animationDuration="200ms"
         >
           <mat-tab [disabled]="(displayMap$ | async) === false">
             <ng-template mat-tab-label>
-              <span translate>record.tab.map</span>
+              <span class="uppercase text-sm" translate>record.tab.map</span>
             </ng-template>
             <div
-              class="block mt-4"
+              class="block mt-10"
               style="height: 500px"
               *ngIf="displayMap$ | async"
             >
@@ -80,10 +80,10 @@
           </mat-tab>
           <mat-tab [disabled]="(displayData$ | async) === false">
             <ng-template mat-tab-label>
-              <span translate>record.tab.data</span>
+              <span class="uppercase text-sm" translate>record.tab.data</span>
             </ng-template>
             <div
-              class="block mt-4"
+              class="block mt-10"
               style="height: 500px"
               *ngIf="displayData$ | async"
             >
@@ -101,7 +101,7 @@
     <p class="font-title text-3xl font-medium mt-12 mb-4" translate>
       record.section.download
     </p>
-    <gn-ui-data-downloads class="block mt-4"></gn-ui-data-downloads>
+    <gn-ui-data-downloads class="block mt-5"></gn-ui-data-downloads>
   </div>
 </div>
 
@@ -113,17 +113,17 @@
     >
       record.section.links
     </p>
-    <gn-ui-data-otherlinks class="block mt-4"></gn-ui-data-otherlinks>
+    <gn-ui-data-otherlinks class="block mt-5"></gn-ui-data-otherlinks>
   </div>
 
   <div *ngIf="displayApi$ | async">
     <p
-      class="font-title text-3xl font-medium mt-12 mb-4 text-secondary"
+      class="font-title text-3xl font-medium mt-12 mb-6 text-secondary"
       translate
     >
       record.section.api
     </p>
-    <gn-ui-data-apis class="block mt-4"></gn-ui-data-apis>
+    <gn-ui-data-apis class="block mt-6"></gn-ui-data-apis>
   </div>
   <!--FIXME: add related md record cards-->
 </div>
@@ -132,7 +132,7 @@
   <div>
     <div class="h-48 overflow-visible">
       <div class="container-lg mx-auto">
-        <p class="font-title text-3xl font-medium mt-12 mb-4" translate>
+        <p class="font-title text-3xl font-medium mt-10 mb-4" translate>
           record.section.related
         </p>
         <gn-ui-related-records
