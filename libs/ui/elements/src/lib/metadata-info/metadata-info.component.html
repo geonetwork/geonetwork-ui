@@ -1,27 +1,27 @@
 <div class="grid grid-cols-3 gap-6">
   <div class="col-span-2">
-    <p class="text-3xl font-medium mb-4 font-title" translate>
+    <p class="text-title mb-6 font-title" translate>
       record.metadata.description
     </p>
-    <div class="mb-6 md-description">
+    <div class="mb-4 md-description pr-16">
       <gn-ui-content-ghost
         ghostClass="h-32"
         [showContent]="fieldReady('abstract')"
       >
         <p
-          class="whitespace-pre-line"
+          class="whitespace-pre-line break-words"
           [innerHTML]="metadata.abstract | safe: 'html'"
         ></p>
       </gn-ui-content-ghost>
     </div>
 
     <ng-container *ngIf="metadata.keywords">
-      <p class="mb-4 font-medium text-primary" translate>
+      <p class="mb-3 font-medium text-primary text-sm" translate>
         record.metadata.keywords
       </p>
-      <div class="mb-4">
+      <div class="mb-16">
         <gn-ui-badge
-          class="inline-block mr-2 mb-2"
+          class="inline-block mr-2 mb-2 lowercase"
           *ngFor="let keyword of metadata.keywords"
           >{{ keyword }}</gn-ui-badge
         >
@@ -32,14 +32,13 @@
       *ngIf="metadata.lineage"
       [title]="'record.metadata.origin' | translate"
     >
-      <p class="mb-4 whitespace-pre-line">
+      <p class="mb-5 pt-4 whitespace-pre-line">
         {{ metadata.lineage }}
       </p>
       <div
         class="
           py-4
           px-6
-          mb-6
           rounded
           bg-gray-100
           grid grid-cols-2 grid-rows-2
@@ -48,18 +47,22 @@
         "
       >
         <div class="border-b border-gray-300" *ngIf="metadata.updatedOn">
-          <p translate>record.metadata.updatedOn</p>
-          <p class="text-primary my-2">
+          <p class="text-sm" translate>record.metadata.updatedOn</p>
+          <p class="text-primary font-medium my-2">
             {{ metadata.updatedOn && metadata.updatedOn.toLocaleString() }}
           </p>
         </div>
         <div class="border-b border-gray-300" *ngIf="metadata.updateFrequency">
-          <p translate>record.metadata.updateFrequency</p>
-          <p class="text-primary my-2">{{ metadata.updateFrequency }}</p>
+          <p class="text-sm" translate>record.metadata.updateFrequency</p>
+          <p class="text-primary font-medium my-2">
+            {{ metadata.updateFrequency }}
+          </p>
         </div>
         <div *ngIf="metadata.updateStatus">
-          <p translate>record.metadata.updateStatus</p>
-          <p class="text-primary my-2">{{ metadata.updateStatus }}</p>
+          <p class="text-sm" translate>record.metadata.updateStatus</p>
+          <p class="text-primary font-medium my-2">
+            {{ metadata.updateStatus }}
+          </p>
         </div>
       </div>
     </gn-ui-expandable-panel>
@@ -67,19 +70,21 @@
       *ngIf="metadata.usageConstraints"
       [title]="'record.metadata.usage' | translate"
     >
-      <p class="mb-4 whitespace-pre-line">
-        {{ metadata.usageConstraints }}
-      </p>
+      <div class="py-4 px-6 rounded bg-gray-100 text-gray-800">
+        <gn-ui-badge class="inline-block mr-2">{{
+          metadata.usageConstraints
+        }}</gn-ui-badge>
+      </div>
     </gn-ui-expandable-panel>
     <!--FIXME: add details panel with landingPages-->
   </div>
 
   <div *ngIf="metadata.contact">
-    <p class="text-gray-600 my-6 uppercase" translate>
+    <p class="text-gray-600 text-xs mb-3 uppercase" translate>
       record.metadata.contact
     </p>
-    <p class="text-primary text-lg mb-2">{{ metadata.contact.name }}</p>
-    <p class="text-gray-600 mb-2">{{ metadata.contact.email }}</p>
+    <p class="text-primary text-title-md mb-1">{{ metadata.contact.name }}</p>
+    <p class="text-gray-600 text-sm mb-2">{{ metadata.contact.email }}</p>
     <p class="text-gray-600 mb-4">
       <a [href]="metadata.contact.website">{{ metadata.contact.website }}</a>
     </p>
