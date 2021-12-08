@@ -303,16 +303,10 @@ describe('DataViewTableComponent', () => {
       })
     })
     describe('WFS', () => {
-      let dropDownComponent: MockDropdownSelectorComponent
-
       beforeEach(() => {
-        dropDownComponent = fixture.debugElement.query(
-          By.directive(MockDropdownSelectorComponent)
-        ).componentInstance
         proxyPath = 'http://my.proxy/?url='
-        facade.dataLinks$.next(GEODATALINKS_FIXTURE)
+        facade.dataLinks$.next(GEODATALINKS_FIXTURE.slice(1))
         facade.geoDataLinks$.next([])
-        dropDownComponent.selectValue.emit(1)
         fixture.detectChanges()
       })
       it('loads the data using the proxy', () => {

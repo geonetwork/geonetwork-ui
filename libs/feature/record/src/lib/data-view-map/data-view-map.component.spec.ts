@@ -517,23 +517,45 @@ describe('DataViewMapComponent', () => {
   })
 
   describe('when setting a proxy path', () => {
-    beforeEach(() => {
-      proxyPath = 'http://my.proxy/?url='
-      mdViewFacade.mapApiLinks$.next([])
-      mdViewFacade.geoDataLinks$.next([
-        {
-          url: 'http://abcd.com/data.geojson',
-          name: 'data.geojson',
-          protocol: 'WWW:DOWNLOAD',
-          format: 'geojson',
-        },
-      ])
+    describe('file', () => {
+      beforeEach(() => {
+        proxyPath = 'http://my.proxy/?url='
+        mdViewFacade.mapApiLinks$.next([])
+        mdViewFacade.geoDataLinks$.next([
+          {
+            url: 'http://abcd.com/data.geojson',
+            name: 'data.geojson',
+            protocol: 'WWW:DOWNLOAD',
+            format: 'geojson',
+          },
+        ])
+      })
+      it('loads the data using the proxy', () => {
+        expect(readDataset).toHaveBeenCalledWith(
+          'http://my.proxy/?url=http://abcd.com/data.geojson',
+          'geojson'
+        )
+      })
     })
-    it('loads the data using the proxy', () => {
-      expect(readDataset).toHaveBeenCalledWith(
-        'http://my.proxy/?url=http://abcd.com/data.geojson',
-        'geojson'
-      )
+
+    describe('WFS', () => {
+      beforeEach(() => {
+        proxyPath = 'http://my.proxy/?url='
+        mdViewFacade.mapApiLinks$.next([])
+        mdViewFacade.geoDataLinks$.next([
+          {
+            url: 'http://abcd.com/wfs',
+            name: 'feature-type',
+            protocol: 'OGC:WFS',
+          },
+        ])
+      })
+      it('loads the data using the proxy', () => {
+        expect(readDataset).toHaveBeenCalledWith(
+          'http://my.proxy/?url=http://abcd.com/wfs?GetFeature',
+          'geojson'
+        )
+      })
     })
   })
 })
