@@ -6,13 +6,12 @@
     shadow-primary-light
     hover:shadow-primary
     px-6
-    py-4
-    mx-6
+    py-5
   "
 >
   <div class="flex-grow-1">
     <div
-      class="font-medium text-xl capitalize truncate font-title"
+      class="font-medium text-title-md capitalize truncate font-title"
       [title]="link.name"
     >
       {{ link.name }}
@@ -26,13 +25,12 @@
           justify-center
           px-2
           py-1
-          text-xs
+          text-title-sm
           leading-none
           text-white
           rounded
           capitalize
         "
-        [style.background]="color"
         >{{ link.format }}</span
       >
     </div>
