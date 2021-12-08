@@ -1,7 +1,7 @@
 <div
   class="
-    block
-    h-full
+    relative
+    h-40
     w-80
     py-6
     px-5
@@ -13,20 +13,22 @@
     overflow-hidden
   "
 >
-  <p class="font-title font-medium text-xl break-words pb-1">
+  <p class="font-title font-medium text-title-md break-words pb-1">
     {{ link.name }}
   </p>
-  <p class="font-medium text-sm break-words pb-4">
+  <p class="font-medium text-sm break-words">
     {{ link.description }}
   </p>
-  <a
-    [href]="link.url"
-    target="_blank"
-    class="cursor-pointer"
-    mat-raised-button
-    [matTooltip]="'tooltip.url.open' | translate"
-    matTooltipPosition="above"
-  >
-    <mat-icon class="align-middle text-gray-200">open_in_new</mat-icon>
-  </a>
+  <div class="absolute" style="bottom: 0.5rem">
+    <a
+      [href]="link.url"
+      target="_blank"
+      class="cursor-pointer"
+      mat-raised-button
+      [matTooltip]="'tooltip.url.open' | translate"
+      matTooltipPosition="above"
+    >
+      <mat-icon class="text-gray-200">open_in_new</mat-icon>
+    </a>
+  </div>
 </div>
