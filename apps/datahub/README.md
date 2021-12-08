@@ -68,3 +68,15 @@ $ docker run -p 8080:80 \
 ```
 
 If a file named `default.toml` is found in the `/conf` folder _of the app container_ at startup, it will be used by the application.
+
+You can specify a different directory to look for the `default.toml` file using the `CONFIG_DIRECTORY_OVERRIDE` env variable, like so:
+
+```bash
+# this assumes a file named `default.toml` is located in the /home/user/custom-conf directory:
+$ docker run -p 8080:80 \
+             -v /home/user/custom-conf:/some/random/path \
+             -e CONFIG_DIRECTORY_OVERRIDE=/some/random/path \
+             geonetwork-ui/datahub
+```
+
+This can be useful when dealing with existing volumes having their own directory structure.
