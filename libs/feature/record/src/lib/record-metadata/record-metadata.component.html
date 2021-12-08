@@ -50,10 +50,13 @@
 
 <div
   id="preview"
-  style="height: 680px"
+  style="height: 648px"
   *ngIf="(displayMap$ | async) || (displayData$ | async)"
 >
-  <div class="bg-gray-100 pt-12 h-96 overflow-visible">
+  <div
+    class="bg-primary-opacity-10 pt-5 overflow-visible"
+    style="height: 512px"
+  >
     <div class="container-lg mx-auto">
       <div>
         <p class="text-3xl font-medium my-4 font-title" translate>
