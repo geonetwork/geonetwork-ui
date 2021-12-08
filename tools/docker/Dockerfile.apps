@@ -5,8 +5,9 @@ FROM nginx:1.21.4-alpine
 
 ARG APP_NAME="search"
 ENV APP_NAME=${APP_NAME}
-ENV GN4_API_URL "https://localhost/geonetwork/srv/api"
+ENV GN4_API_URL ""
 ENV PROXY_PATH ""
+ENV CONFIG_DIRECTORY_OVERRIDE ""
 
 COPY dist/apps/${APP_NAME} /usr/share/nginx/html/${APP_NAME}
 COPY tools/docker/docker-entrypoint.sh /

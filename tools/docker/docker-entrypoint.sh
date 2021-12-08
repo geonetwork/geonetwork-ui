@@ -2,13 +2,15 @@
 
 CONFIG_FILE_PATH=assets/configuration/
 CONFIG_FILE_NAME=default.toml
+CONFIG_OVERRIDE_FILE_PATH=${CONFIG_DIRECTORY_OVERRIDE:-/conf}/${CONFIG_FILE_NAME}
 
-# copy the conf file from /conf if present
-if [ -f "/conf/${CONFIG_FILE_NAME}" ]
+# copy the conf file from $CONFIG_DIRECTORY_OVERRIDE (defaults to /conf) if present
+if [ -f "${CONFIG_OVERRIDE_FILE_PATH}" ]
 then
-  cp /conf/${CONFIG_FILE_NAME} /usr/share/nginx/html/${APP_NAME}/${CONFIG_FILE_PATH}${CONFIG_FILE_NAME}
-  echo "[INFO] Copied custom configuration file located in /conf/${CONFIG_FILE_NAME}"
+  cp ${CONFIG_OVERRIDE_FILE_PATH} /usr/share/nginx/html/${APP_NAME}/${CONFIG_FILE_PATH}${CONFIG_FILE_NAME}
+  echo "[INFO] Copied custom configuration file located at ${CONFIG_OVERRIDE_FILE_PATH}"
 else
+  echo "[INFO] No custom configuration file found at ${CONFIG_OVERRIDE_FILE_PATH}"
   # Modify the GN4 url and proxy path based on env variables (if defined)
   if [ ! -z "${GN4_API_URL}" ]
   then
