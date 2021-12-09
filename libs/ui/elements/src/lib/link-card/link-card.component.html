@@ -1,25 +1,30 @@
 <div
   class="
-    relative
+    flex flex-col
+    justify-between
+    root
     h-40
     w-80
-    py-6
+    py-5
     px-5
     bg-white
     rounded
     border-gray-300
     filter
     shadow-primary-light
+    hover:shadow-primary
     overflow-hidden
   "
 >
-  <p class="font-title font-medium text-title-md break-words pb-1">
-    {{ link.name }}
-  </p>
-  <p class="font-medium text-sm break-words">
-    {{ link.description }}
-  </p>
-  <div class="absolute" style="bottom: 0.5rem">
+  <div class="max-h-24 overflow-hidden overflow-ellipsis">
+    <p class="font-title font-medium text-title-md break-words pb-1">
+      {{ link.name }}
+    </p>
+    <p class="font-medium text-sm break-words">
+      {{ link.description }}
+    </p>
+  </div>
+  <div>
     <a
       [href]="link.url"
       target="_blank"
@@ -28,7 +33,9 @@
       [matTooltip]="'tooltip.url.open' | translate"
       matTooltipPosition="above"
     >
-      <mat-icon class="text-gray-200">open_in_new</mat-icon>
+      <mat-icon class="align-middle text-gray-200 open-icon"
+        >open_in_new</mat-icon
+      >
     </a>
   </div>
 </div>
