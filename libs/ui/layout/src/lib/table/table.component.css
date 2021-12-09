@@ -24,3 +24,7 @@ tr {
 .active .mat-cell {
   color: var(--color-primary);
 }
+
+.mat-table {
+  font-family: var(--font-family-main);
+}
