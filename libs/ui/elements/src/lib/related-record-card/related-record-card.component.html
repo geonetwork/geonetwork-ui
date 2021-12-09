@@ -5,7 +5,7 @@
       [thumbnailUrl]="record.thumbnailUrl"
     ></gn-ui-record-thumbnail>
   </div>
-  <div class="relative h-44 px-5 pt-4 pb-6">
+  <div class="flex flex-col justify-between h-44 px-5 pt-4 pb-6">
     <h4
       class="
         max-h-24
@@ -16,7 +16,7 @@
     >
       {{ record.title }}
     </h4>
-    <div class="absolute" style="bottom: 1rem">
+    <div>
       <a
         [href]="record.metadataUrl"
         target="_blank"
