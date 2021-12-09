@@ -1,10 +1,11 @@
 <div
   class="
-    relative
-    block
+    flex flex-col
+    justify-between
     h-40
     w-72
-    py-5
+    pt-5
+    pb-6
     px-7
     bg-white
     rounded
@@ -28,8 +29,8 @@
   >
     {{ link.name || link.description }}
   </div>
-  <div class="absolute w-56" style="bottom: 1.5rem">
-    <div class="flex justify-between">
+  <div class="">
+    <div class="flex flex-row justify-between">
       <span
         class="
           badge
