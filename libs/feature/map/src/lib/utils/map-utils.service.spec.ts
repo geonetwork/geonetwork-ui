@@ -11,16 +11,22 @@ import TileWMS from 'ol/source/TileWMS'
 import XYZ from 'ol/source/XYZ'
 
 import { MapUtilsService } from './map-utils.service'
+import { readFirst } from '@nrwl/angular/testing'
 
 jest.mock('@camptocamp/ogc-client', () => ({
   WmsEndpoint: class {
     constructor(private url) {}
     isReady() {
       return Promise.resolve({
-        getLayerByName: (name) => ({
-          name,
-          boundingBoxes: { 'EPSG:4326': [1.33, 48.81, 4.3, 51.1] },
-        }),
+        getLayerByName: (name) => {
+          if (this.url.indexOf('error') > -1) {
+            throw new Error('Something went wrong')
+          }
+          return {
+            name,
+            boundingBoxes: { 'EPSG:4326': [1.33, 48.81, 4.3, 51.1] },
+          }
+        },
       })
     }
   },
@@ -157,37 +163,61 @@ describe('MapUtilsService', () => {
   })
 
   describe('#getLayerExtent', () => {
-    it('gets extent for geojson layer (files and WFS)', (done) => {
-      const layer = {
-        type: 'geojson',
-        data: FEATURE_COLLECTION_POLYGON_FIXTURE_4326,
-      }
-      service.getLayerExtent(layer).subscribe((extent) => {
+    describe('geojson layer', () => {
+      let layer
+      beforeEach(() => {
+        layer = {
+          type: 'geojson',
+          data: FEATURE_COLLECTION_POLYGON_FIXTURE_4326,
+        }
+      })
+      it('returns an observable emitting the aggregated extent', async () => {
+        const extent = await readFirst(service.getLayerExtent(layer))
         expect(extent).toEqual([
           -571959.6817241046, 5065908.545923665, 1064128.2009725596,
           6636971.049871371,
         ])
-        done()
       })
     })
-    it('gets extent for WMS layer', (done) => {
-      const layer = {
-        type: 'wms',
-        name: 'mock',
-        url: 'http://mock/wms',
-      }
-      service.getLayerExtent(layer).subscribe((extent) => {
-        expect(extent).toEqual([
-          148054.92275505388, 6242683.64671384, 478673.81041107635,
-          6639001.66376131,
-        ])
-        done()
+    describe('WMS layer', () => {
+      let layer
+      describe('extent available in capabilities', () => {
+        beforeEach(() => {
+          layer = {
+            type: 'wms',
+            name: 'mock',
+            url: 'http://mock/wms',
+          }
+        })
+        it('returns an observable emitting the advertised extent', async () => {
+          const extent = await readFirst(service.getLayerExtent(layer))
+          expect(extent).toEqual([
+            148054.92275505388, 6242683.64671384, 478673.81041107635,
+            6639001.66376131,
+          ])
+        })
+      })
+      describe('extent not available in capabilities', () => {
+        beforeEach(() => {
+          layer = {
+            type: 'wms',
+            name: 'mock',
+            url: 'http://error/wms',
+          }
+        })
+        it('returns an observable that errors with a translatable error', async () => {
+          try {
+            await readFirst(service.getLayerExtent(layer))
+          } catch (e) {
+            expect(e.message).toEqual('Something went wrong')
+          }
+        })
       })
     })
   })
   describe('#getViewFromExtent', () => {
     const extent = [0, 0, 100, 100]
-    const map = new Map()
+    const map = new Map({})
     map.setSize([100, 100])
     it('gets view for map from extent', () => {
       expect(service.getViewFromExtent(extent, map)).toEqual({

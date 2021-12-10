@@ -10,12 +10,11 @@ import ImageWMS from 'ol/source/ImageWMS'
 import TileWMS from 'ol/source/TileWMS'
 import Layer from 'ol/layer/Layer'
 import VectorSource from 'ol/source/Vector'
-import { from, Observable, of } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { from, Observable, of, throwError } from 'rxjs'
+import { catchError, map } from 'rxjs/operators'
 import { fromLonLat } from 'ol/proj'
 import { MapContextLayerModel, MapContextViewModel } from '../..'
 import { extend, Extent, getCenter } from 'ol/extent'
-import View from 'ol/View'
 import { WmsEndpoint } from '@camptocamp/ogc-client'
 import { ProxyService } from '@geonetwork-ui/util/shared'
 
@@ -119,23 +118,29 @@ export class MapUtilsService {
       layer.data.features[0] &&
       layer.data.features[0].geometry
     ) {
-      let extent = []
-      const features = new GeoJSON().readFeatures(layer.data)
-      if (!features[0]) return of(undefined)
-      extent = features[0].getGeometry().getExtent()
-      features.forEach((feature) => {
-        extent = extend(extent, feature.getGeometry().getExtent())
-      })
-      return of(this.extentFromLonLat(extent))
+      return of(layer.data).pipe(
+        map((layerData) =>
+          new GeoJSON()
+            .readFeatures(layerData)
+            .map((feature) => feature.getGeometry())
+            .filter((geom) => !!geom)
+            .reduce(
+              (prev, curr) =>
+                prev ? extend(prev, curr.getExtent()) : curr.getExtent(),
+              null
+            )
+        ),
+        map(this.extentFromLonLat)
+      )
     } else if (layer && layer.type === 'wms') {
       return from(
         new WmsEndpoint(this.proxy.getProxiedUrl(layer.url))
           .isReady()
-          .then((endpoint) => {
-            const wmsLayer = endpoint.getLayerByName(layer.name)
-            return this.extentFromLonLat(wmsLayer.boundingBoxes['EPSG:4326'])
-          })
-      ) as Observable<Extent>
+          .then((endpoint) => endpoint.getLayerByName(layer.name))
+      ).pipe(
+        map((layer: any) => layer.boundingBoxes['EPSG:4326']),
+        map(this.extentFromLonLat)
+      )
     } else {
       return of(undefined)
     }
@@ -150,7 +155,7 @@ export class MapUtilsService {
     return { center, zoom }
   }
 
-  extentFromLonLat(extent: Extent) {
+  extentFromLonLat(extent: Extent): Extent {
     return [
       ...fromLonLat([extent[0], extent[1]], 'EPSG:3857'),
       ...fromLonLat([extent[2], extent[3]], 'EPSG:3857'),
