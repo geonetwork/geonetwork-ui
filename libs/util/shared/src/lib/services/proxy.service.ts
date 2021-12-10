@@ -15,6 +15,11 @@ export class ProxyService {
    */
   getProxiedUrl(url: string): string {
     if (!this.proxyPath) return url
+    const proxyUrl = new URL(
+      this.proxyPath,
+      window.location.toString()
+    ).toString()
+    if (url.indexOf(proxyUrl) === 0) return url
     return new URL(
       `${this.proxyPath}${encodeURIComponent(url)}`,
       window.location.toString()

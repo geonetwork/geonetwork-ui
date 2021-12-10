@@ -69,6 +69,7 @@ export function checkFileFormat(link: MetadataLink, format: string): boolean {
   )
 }
 
+// FIXME: migrate logic to data.service in @geonetwork-ui/feature-record instead
 export function getLinksWithWfsFormats(
   link: MetadataLinkValid
 ): Promise<MetadataLinkValid[]> {
@@ -86,6 +87,7 @@ export function getLinksWithWfsFormats(
   })
 }
 
+// FIXME: migrate logic to data.service in @geonetwork-ui/feature-record instead
 export function getLinksWithEsriRestFormats(
   link: MetadataLinkValid
 ): MetadataLinkValid[] {
@@ -97,6 +99,7 @@ export function getLinksWithEsriRestFormats(
   }))
 }
 
+// FIXME: use data.service in @geonetwork-ui/feature-record instead
 export function getEsriRestDataUrl(
   link: MetadataLinkValid,
   format: string
