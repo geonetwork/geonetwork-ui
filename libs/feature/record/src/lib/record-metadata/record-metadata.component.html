@@ -151,10 +151,9 @@
     </p>
     <gn-ui-data-apis class="block mt-6"></gn-ui-data-apis>
   </div>
-  <!--FIXME: add related md record cards-->
 </div>
 
-<div id="related-records" *ngIf="facade.related$ | async">
+<div id="related-records" *ngIf="displayRelated$ | async">
   <div>
     <div class="h-48 overflow-visible">
       <div class="container-lg mx-auto">

@@ -319,6 +319,7 @@ describe('RecordMetadataComponent', () => {
     let relatedComponent
     describe('when no related records', () => {
       beforeEach(() => {
+        facade.related$.next([])
         fixture.detectChanges()
         relatedComponent = fixture.debugElement.query(
           By.directive(MockRelatedComponent)
