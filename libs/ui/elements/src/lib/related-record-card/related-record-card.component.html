@@ -18,8 +18,7 @@
     </h4>
     <div>
       <a
-        [href]="record.metadataUrl"
-        target="_blank"
+        [routerLink]="['/metadata', record.uuid]"
         class="cursor-pointer"
         mat-raised-button
         [matTooltip]="'tooltip.url.open' | translate"
