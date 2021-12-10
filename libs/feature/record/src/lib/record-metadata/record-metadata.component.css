@@ -10,3 +10,8 @@
 .tracking-wider {
   letter-spacing: 0.88px;
 }
+
+button:disabled {
+  color: var(--color-gray-300);
+  cursor: default;
+}

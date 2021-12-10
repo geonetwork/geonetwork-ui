@@ -23,6 +23,9 @@
     record.section.about
   </button>
   <button
+    [disabled]="
+      (displayMap$ | async) === false && (displayData$ | async) === false
+    "
     (click)="scrollTo('preview')"
     class="uppercase font-medium tracking-wider"
     translate
@@ -30,6 +33,7 @@
     record.section.preview
   </button>
   <button
+    [disabled]="(displayDownload$ | async) === false"
     (click)="scrollTo('access')"
     class="uppercase font-medium tracking-wider"
     translate
@@ -37,6 +41,11 @@
     record.section.access
   </button>
   <button
+    [disabled]="
+      (displayOtherLinks | async) === false &&
+      (displayApi$ | async) === false &&
+      (displayRelated$ | async) === false
+    "
     (click)="scrollTo('links')"
     class="uppercase font-medium tracking-wider"
     translate
