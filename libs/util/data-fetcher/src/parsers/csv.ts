@@ -3,9 +3,23 @@ import type { Feature } from 'geojson'
 import { jsonToGeojsonFeature } from './json'
 
 export function parseCsv(text: string): Feature[] {
+  // first parse the header to guess the delimiter
+  // note that we do that to not rely on Papaparse logic for guessing delimiter
+  let delimiter
+  try {
+    const header = text.split('\n')[0]
+    const result = Papa.parse(header, {
+      header: false,
+    })
+    delimiter = result.meta.delimiter
+  } catch (e) {
+    throw new Error('CSV parsing failed: the delimiter could not be guessed')
+  }
+
   const parsed = Papa.parse(text, {
     header: true,
     skipEmptyLines: true,
+    delimiter,
   })
   if (parsed.errors.length) {
     throw new Error(
