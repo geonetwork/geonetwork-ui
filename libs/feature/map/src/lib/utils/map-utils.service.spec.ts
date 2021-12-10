@@ -179,6 +179,28 @@ describe('MapUtilsService', () => {
         ])
       })
     })
+    describe('geojson layer with invalid geometry', () => {
+      let layer
+      beforeEach(() => {
+        layer = {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: [
+              {
+                type: 'Feature',
+                geometry: { type: 'Point', coordinates: [NaN, NaN] },
+                properties: { code: '02', nom: 'Aisne' },
+              },
+            ],
+          },
+        }
+      })
+      it('returns an observable emitting null', async () => {
+        const extent = await readFirst(service.getLayerExtent(layer))
+        expect(extent).toEqual(null)
+      })
+    })
     describe('WMS layer', () => {
       let layer
       describe('extent available in capabilities', () => {

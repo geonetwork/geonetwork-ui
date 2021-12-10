@@ -10,11 +10,11 @@ import ImageWMS from 'ol/source/ImageWMS'
 import TileWMS from 'ol/source/TileWMS'
 import Layer from 'ol/layer/Layer'
 import VectorSource from 'ol/source/Vector'
-import { from, Observable, of, throwError } from 'rxjs'
-import { catchError, map } from 'rxjs/operators'
+import { from, Observable, of } from 'rxjs'
+import { map } from 'rxjs/operators'
 import { fromLonLat } from 'ol/proj'
 import { MapContextLayerModel, MapContextViewModel } from '../..'
-import { extend, Extent, getCenter } from 'ol/extent'
+import { extend, Extent, getCenter, isEmpty } from 'ol/extent'
 import { WmsEndpoint } from '@camptocamp/ogc-client'
 import { ProxyService } from '@geonetwork-ui/util/shared'
 
@@ -111,14 +111,18 @@ export class MapUtilsService {
     }
   }
 
-  getLayerExtent(layer: MapContextLayerModel): Observable<Extent> {
+  /**
+   * Will emit `null` if no extent could be computed
+   */
+  getLayerExtent(layer: MapContextLayerModel): Observable<Extent | null> {
+    let geographicExtent: Observable<Extent>
     if (
       layer &&
       layer.type === 'geojson' &&
       layer.data.features[0] &&
       layer.data.features[0].geometry
     ) {
-      return of(layer.data).pipe(
+      geographicExtent = of(layer.data).pipe(
         map((layerData) =>
           new GeoJSON()
             .readFeatures(layerData)
@@ -129,21 +133,26 @@ export class MapUtilsService {
                 prev ? extend(prev, curr.getExtent()) : curr.getExtent(),
               null
             )
-        ),
-        map(this.extentFromLonLat)
+        )
       )
     } else if (layer && layer.type === 'wms') {
-      return from(
+      geographicExtent = from(
         new WmsEndpoint(this.proxy.getProxiedUrl(layer.url))
           .isReady()
           .then((endpoint) => endpoint.getLayerByName(layer.name))
       ).pipe(
-        map((layer: any) => layer.boundingBoxes['EPSG:4326']),
-        map(this.extentFromLonLat)
+        map((layer: any) => layer.boundingBoxes['EPSG:4326']) // eslint-disable-line -- ogc-client lacks typing here
       )
     } else {
-      return of(undefined)
+      return of(null)
     }
+    return geographicExtent.pipe(
+      map((extent) => [
+        ...fromLonLat([extent[0], extent[1]], 'EPSG:3857'),
+        ...fromLonLat([extent[2], extent[3]], 'EPSG:3857'),
+      ]),
+      map((extent) => (isEmpty(extent) ? null : extent))
+    )
   }
 
   getViewFromExtent(extent: Extent, map: Map): MapContextViewModel {
@@ -153,12 +162,5 @@ export class MapUtilsService {
       .getResolutionForExtent(extent, map.getSize())
     const zoom = map.getView().getZoomForResolution(resolution)
     return { center, zoom }
-  }
-
-  extentFromLonLat(extent: Extent): Extent {
-    return [
-      ...fromLonLat([extent[0], extent[1]], 'EPSG:3857'),
-      ...fromLonLat([extent[2], extent[3]], 'EPSG:3857'),
-    ]
   }
 }
