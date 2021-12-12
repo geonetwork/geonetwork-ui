@@ -98,7 +98,8 @@ describe('DataDownloadsComponent', () => {
   })
 
   describe('download links', () => {
-    describe('when the WFS service fails', () => {
+    // disable error handling in UI
+    describe.skip('when the WFS service fails', () => {
       beforeEach(fakeAsync(() => {
         facade.downloadLinks$.next([
           {
