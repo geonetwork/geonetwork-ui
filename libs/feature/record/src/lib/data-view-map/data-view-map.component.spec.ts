@@ -1,46 +1,21 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import {
   ComponentFixture,
+  discardPeriodicTasks,
   fakeAsync,
-  flush,
+  inject,
   TestBed,
   tick,
-  inject,
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { MapContextModel, MapUtilsService } from '@geonetwork-ui/feature/map'
 import { MdViewFacade } from '../state/mdview.facade'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
-import { Subject, Observable } from 'rxjs'
+import { Observable, of, Subject, throwError } from 'rxjs'
 import { DataViewMapComponent } from './data-view-map.component'
 import { TranslateModule } from '@ngx-translate/core'
-import { ProxyService } from '@geonetwork-ui/util/shared'
-import { readDataset } from '@geonetwork-ui/data-fetcher'
-
-jest.mock('@camptocamp/ogc-client', () => ({
-  WfsEndpoint: class {
-    constructor(private url) {}
-    isReady() {
-      return Promise.resolve({
-        getFeatureUrl: () => this.url + '?GetFeature',
-        getServiceInfo: () => ({}),
-        supportsJson: () => this.url.indexOf('nojson') === -1,
-      })
-    }
-  },
-}))
-
-// mock a 100ms delay before serving the geojson file
-jest.mock('@geonetwork-ui/data-fetcher', () => ({
-  readDataset: jest.fn(
-    (url) =>
-      new Promise((resolve, reject) => {
-        url.indexOf('error') === -1
-          ? setTimeout(() => resolve(SAMPLE_GEOJSON.features), 100)
-          : reject(new Error('data loading error'))
-      })
-  ),
-}))
+import { DataService } from '../service/data.service'
+import { delay } from 'rxjs/operators'
 
 class MdViewFacadeMock {
   mapApiLinks$ = new Subject()
@@ -60,13 +35,6 @@ class MapUtilsServiceMock {
   _observer = null
 }
 
-let proxyPath
-class ProxyServiceMock {
-  getProxiedUrl(url) {
-    return proxyPath ? proxyPath + url : url
-  }
-}
-
 const SAMPLE_GEOJSON = {
   type: 'FeatureCollection',
   features: [
@@ -79,6 +47,16 @@ const SAMPLE_GEOJSON = {
       geometry: {},
     },
   ],
+}
+
+class DataServiceMock {
+  getGeoJsonDownloadUrlFromWfs = jest.fn((url) => of(url + '?download'))
+  getGeoJsonDownloadUrlFromEsriRest = jest.fn((url) => of(url + '?download'))
+  readGeoJsonDataset = jest.fn((url) =>
+    url.indexOf('error') > -1
+      ? throwError(new Error('data loading error'))
+      : of(SAMPLE_GEOJSON).pipe(delay(100))
+  )
 }
 
 @Component({
@@ -119,8 +97,6 @@ describe('DataViewMapComponent', () => {
   let mdViewFacade
 
   beforeEach(async () => {
-    proxyPath = null
-    jest.clearAllMocks()
     await TestBed.configureTestingModule({
       declarations: [
         DataViewMapComponent,
@@ -139,8 +115,8 @@ describe('DataViewMapComponent', () => {
           useClass: MapUtilsServiceMock,
         },
         {
-          provide: ProxyService,
-          useClass: ProxyServiceMock,
+          provide: DataService,
+          useClass: DataServiceMock,
         },
       ],
       imports: [TranslateModule.forRoot()],
@@ -292,7 +268,7 @@ describe('DataViewMapComponent', () => {
         tick(200)
         fixture.detectChanges()
       }))
-      it('emits a map context with the base layer and the downloaded data from WFS', fakeAsync(() => {
+      it('emits a map context with the base layer and the downloaded data from WFS', () => {
         expect(mapComponent.context).toEqual({
           layers: [
             component.getBackgroundLayer(),
@@ -303,11 +279,38 @@ describe('DataViewMapComponent', () => {
           ],
           view: expect.any(Object),
         })
+      })
+    })
+
+    describe('with a link using ESRI:REST protocol', () => {
+      beforeEach(fakeAsync(() => {
+        mdViewFacade.mapApiLinks$.next([])
+        mdViewFacade.geoDataLinks$.next([
+          {
+            protocol: 'ESRI:REST',
+            name: 'mes_hdf',
+            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/WFSServer/0',
+          },
+        ])
+        tick(200)
+        fixture.detectChanges()
       }))
+      it('emits a map context with the base layer and the downloaded data from WFS', () => {
+        expect(mapComponent.context).toEqual({
+          layers: [
+            component.getBackgroundLayer(),
+            {
+              type: 'geojson',
+              data: SAMPLE_GEOJSON,
+            },
+          ],
+          view: expect.any(Object),
+        })
+      })
     })
 
     describe('with a link using WFS which returns an error', () => {
-      beforeEach(fakeAsync(() => {
+      beforeEach(() => {
         mdViewFacade.mapApiLinks$.next([])
         mdViewFacade.geoDataLinks$.next([
           {
@@ -316,78 +319,71 @@ describe('DataViewMapComponent', () => {
             protocol: 'OGC:WFS',
           },
         ])
-        tick()
-        fixture.detectChanges()
-        flush()
-      }))
+      })
       it('shows an error', () => {
         expect(component.error).toEqual('data loading error')
       })
     })
 
-    describe('with a link using WFS protocol not supporting geojson', () => {
-      beforeEach(fakeAsync(() => {
-        mdViewFacade.mapApiLinks$.next([])
-        mdViewFacade.geoDataLinks$.next([
-          {
-            url: 'http://abcd.com/wfs/nojson',
-            name: 'featuretype',
-            protocol: 'OGC:WFS',
-          },
-        ])
-        tick()
-        fixture.detectChanges()
-        flush()
-      }))
-      it('shows an error', () => {
-        expect(component.error).toEqual('map.wfs.geojson.not.supported')
-      })
-    })
-
     describe('with a link using DOWNLOAD protocol', () => {
-      beforeEach(fakeAsync(() => {
-        mdViewFacade.mapApiLinks$.next([])
-        mdViewFacade.geoDataLinks$.next([
-          {
-            url: 'http://abcd.com/data.geojson',
-            name: 'data.geojson',
-            protocol: 'WWW:DOWNLOAD--https',
-            format: 'geojson',
-          },
-        ])
-        fixture.detectChanges()
-        tick(50)
-        flush()
-      }))
-      it('does not emit immediately a map context', () => {
-        expect(mapComponent.context).toBe(null)
-      })
-      it('shows a loading indicator', () => {
-        expect(
-          fixture.debugElement.query(By.directive(MockLoadingMaskComponent))
-        ).toBeTruthy()
-      })
-      it('emits a map context after loading with the base layer and the downloaded data', fakeAsync(() => {
-        tick(200)
-        fixture.detectChanges()
-        expect(mapComponent.context).toEqual({
-          layers: [
-            component.getBackgroundLayer(),
+      describe('during download', () => {
+        beforeEach(fakeAsync(() => {
+          mdViewFacade.mapApiLinks$.next([])
+          mdViewFacade.geoDataLinks$.next([
             {
-              type: 'geojson',
-              data: SAMPLE_GEOJSON,
+              url: 'http://abcd.com/data.geojson',
+              name: 'data.geojson',
+              protocol: 'WWW:DOWNLOAD--https',
+              format: 'geojson',
             },
-          ],
-          view: expect.any(Object),
+          ])
+          fixture.detectChanges()
+          tick(50)
+          discardPeriodicTasks()
+        }))
+        it('does not emit immediately a map context', () => {
+          expect(mapComponent.context).toBe(null)
         })
-      }))
-      it('does not show a loading indicator after loading', fakeAsync(() => {
-        tick(200)
-        fixture.detectChanges()
-        expect(
-          fixture.debugElement.query(By.directive(MockLoadingMaskComponent))
-        ).toBeFalsy()
-      }))
+        it('shows a loading indicator', () => {
+          expect(
+            fixture.debugElement.query(By.directive(MockLoadingMaskComponent))
+          ).toBeTruthy()
+        })
+      })
+      describe('after download', () => {
+        beforeEach(fakeAsync(() => {
+          mdViewFacade.mapApiLinks$.next([])
+          mdViewFacade.geoDataLinks$.next([
+            {
+              url: 'http://abcd.com/data.geojson',
+              name: 'data.geojson',
+              protocol: 'WWW:DOWNLOAD--https',
+              format: 'geojson',
+            },
+          ])
+          fixture.detectChanges()
+          tick(200)
+        }))
+        it('emits a map context after loading with the base layer and the downloaded data', () => {
+          fixture.detectChanges()
+          expect(mapComponent.context).toEqual({
+            layers: [
+              component.getBackgroundLayer(),
+              {
+                type: 'geojson',
+                data: SAMPLE_GEOJSON,
+              },
+            ],
+            view: expect.any(Object),
+          })
+        })
+        it('does not show a loading indicator', () => {
+          fixture.detectChanges()
+          expect(
+            fixture.debugElement.query(By.directive(MockLoadingMaskComponent))
+          ).toBeFalsy()
+        })
+      })
     })
 
     describe('when receiving several metadata records', () => {
@@ -512,49 +508,6 @@ describe('DataViewMapComponent', () => {
             },
           ])
         })
-      })
-    })
-  })
-
-  describe('when setting a proxy path', () => {
-    describe('file', () => {
-      beforeEach(() => {
-        proxyPath = 'http://my.proxy/?url='
-        mdViewFacade.mapApiLinks$.next([])
-        mdViewFacade.geoDataLinks$.next([
-          {
-            url: 'http://abcd.com/data.geojson',
-            name: 'data.geojson',
-            protocol: 'WWW:DOWNLOAD',
-            format: 'geojson',
-          },
-        ])
-      })
-      it('loads the data using the proxy', () => {
-        expect(readDataset).toHaveBeenCalledWith(
-          'http://my.proxy/?url=http://abcd.com/data.geojson',
-          'geojson'
-        )
-      })
-    })
-
-    describe('WFS', () => {
-      beforeEach(() => {
-        proxyPath = 'http://my.proxy/?url='
-        mdViewFacade.mapApiLinks$.next([])
-        mdViewFacade.geoDataLinks$.next([
-          {
-            url: 'http://abcd.com/wfs',
-            name: 'feature-type',
-            protocol: 'OGC:WFS',
-          },
-        ])
-      })
-      it('loads the data using the proxy', () => {
-        expect(readDataset).toHaveBeenCalledWith(
-          'http://my.proxy/?url=http://abcd.com/wfs?GetFeature',
-          'geojson'
-        )
       })
     })
   })
