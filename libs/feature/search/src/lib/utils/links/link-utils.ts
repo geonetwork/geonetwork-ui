@@ -1,5 +1,4 @@
-import { MetadataLink, MetadataLinkValid } from '@geonetwork-ui/util/shared'
-import { WfsEndpoint } from '@camptocamp/ogc-client'
+import { MetadataLink } from '@geonetwork-ui/util/shared'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 marker('downloads.wfs.featuretype.not.found')
@@ -67,42 +66,4 @@ export function checkFileFormat(link: MetadataLink, format: string): boolean {
     ('name' in link && new RegExp(`[./]${format}`, 'i').test(link.name)) ||
     ('url' in link && new RegExp(`[./]${format}`, 'i').test(link.url))
   )
-}
-
-// FIXME: migrate logic to data.service in @geonetwork-ui/feature-record instead
-export function getLinksWithWfsFormats(
-  link: MetadataLinkValid
-): Promise<MetadataLinkValid[]> {
-  return new WfsEndpoint(link.url).isReady().then((endpoint) => {
-    const featureType = endpoint.getFeatureTypeSummary(link.name)
-    if (featureType) {
-      return featureType.outputFormats.map((format) => ({
-        ...link,
-        url: endpoint.getFeatureUrl(featureType.name, { outputFormat: format }),
-        format: format,
-      }))
-    } else {
-      throw new Error('downloads.wfs.featuretype.not.found')
-    }
-  })
-}
-
-// FIXME: migrate logic to data.service in @geonetwork-ui/feature-record instead
-export function getLinksWithEsriRestFormats(
-  link: MetadataLinkValid
-): MetadataLinkValid[] {
-  const formats = ['json', 'geojson']
-  return formats.map((format) => ({
-    ...link,
-    url: getEsriRestDataUrl(link, format),
-    format: `REST:${format}`,
-  }))
-}
-
-// FIXME: use data.service in @geonetwork-ui/feature-record instead
-export function getEsriRestDataUrl(
-  link: MetadataLinkValid,
-  format: string
-): string {
-  return `${link.url}/query?f=${format}&where=1=1&outFields=*`
 }
