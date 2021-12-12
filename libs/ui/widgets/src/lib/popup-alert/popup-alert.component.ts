@@ -16,6 +16,7 @@ import {
 })
 export class PopupAlertComponent implements OnInit {
   @Input() icon: string
+  @Input() type: 'danger' | 'warning' | 'info' = 'info'
   @Input() position: 'top' | 'bottom' = 'top'
   @ViewChild('content') content: ElementRef
   expanded = false
