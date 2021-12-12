@@ -78,8 +78,11 @@
   "datahub.header.popularRecords": "",
   "datahub.header.title.html": "",
   "datahub.search.back": "",
+  "dataset.error.http": "",
+  "dataset.error.network": "",
+  "dataset.error.parse": "",
+  "dataset.error.unknown": "",
   "datasets": "",
-  "downloads.wfs.error": "",
   "downloads.wfs.featuretype.not.found": "",
   "dropFile": "",
   "facets.block.title.OrgForResource": "",
@@ -95,7 +98,6 @@
   "facets.block.title.th_regions_tree.default": "",
   "map.loading.data": "",
   "map.select.layer": "",
-  "map.wfs.geojson.not.supported": "",
   "nav.back": "",
   "next": "",
   "previous": "",
@@ -133,5 +135,10 @@
   "table.object.count": "",
   "table.select.data": "",
   "tooltip.url.copy": "",
-  "tooltip.url.open": ""
+  "tooltip.url.open": "",
+  "wfs.featuretype.notfound": "",
+  "wfs.geojson.notsupported": "",
+  "wfs.unreachable.cors": "",
+  "wfs.unreachable.http": "",
+  "wfs.unreachable.unknown": ""
 }
