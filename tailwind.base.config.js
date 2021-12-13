@@ -59,6 +59,16 @@ module.exports = {
           'var(--font-family-title, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif)', // alias for serif
         mono: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
       },
+      fontSize: {
+        13: '13px',
+        21: [
+          '21px',
+          {
+            lineHeight: '25px',
+          },
+        ],
+        28: '28px',
+      },
     },
   },
   variants: {

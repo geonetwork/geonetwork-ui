@@ -27,19 +27,3 @@ html {
 .container-lg {
   max-width: 1024px;
 }
-.text-title-xl {
-  font-size: 48px;
-  line-height: normal;
-}
-.text-title {
-  font-size: 28px;
-  line-height: normal;
-}
-.text-title-md {
-  font-size: 21px;
-  line-height: 25px;
-}
-.text-title-sm {
-  font-size: 13px;
-  font-weight: 500;
-}
