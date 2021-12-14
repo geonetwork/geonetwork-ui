@@ -90,6 +90,7 @@
         </div>
         <mat-tab-group
           (selectedIndexChange)="onTabIndexChange()"
+          [selectedIndex]="(displayMap$ | async) ? 0 : 1"
           animationDuration="200ms"
         >
           <mat-tab [disabled]="(displayMap$ | async) === false">
