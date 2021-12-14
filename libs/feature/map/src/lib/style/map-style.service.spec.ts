@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing'
-import { getThemeConfig } from '@geonetwork-ui/util/app-config'
+import { getThemeConfig, isConfigLoaded } from '@geonetwork-ui/util/app-config'
 import chroma from 'chroma-js'
 import Style from 'ol/style/Style'
 
@@ -9,6 +9,7 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
     PRIMARY_COLOR: 'blue',
   }),
+  isConfigLoaded: jest.fn(() => true),
 }))
 
 describe('MapStyleService', () => {

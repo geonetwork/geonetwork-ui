@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { getThemeConfig } from '@geonetwork-ui/util/app-config'
+import { getThemeConfig, isConfigLoaded } from '@geonetwork-ui/util/app-config'
 import chroma from 'chroma-js'
 import { Fill, Stroke, Style } from 'ol/style'
 import CircleStyle from 'ol/style/Circle'
@@ -15,11 +15,10 @@ export interface CreateStyleOptions {
 })
 export class MapStyleService {
   createDefaultStyle(options: CreateStyleOptions = {}) {
-    const {
-      color = getThemeConfig().PRIMARY_COLOR,
-      width = 2,
-      radius = 7,
-    } = options
+    const defaultColor = isConfigLoaded()
+      ? getThemeConfig().PRIMARY_COLOR
+      : 'blue'
+    const { color = defaultColor, width = 2, radius = 7 } = options
     const fill = new Fill({
       color,
     })
