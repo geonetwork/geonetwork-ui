@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  NO_ERRORS_SCHEMA,
+  Output,
+} from '@angular/core'
 import {
   ComponentFixture,
   discardPeriodicTasks,
@@ -8,7 +15,17 @@ import {
   tick,
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { MapContextModel, MapUtilsService } from '@geonetwork-ui/feature/map'
+import {
+  FeatureInfoService,
+  MapContextModel,
+  MapManagerService,
+  MapStyleService,
+  MapUtilsService,
+} from '@geonetwork-ui/feature/map'
+import GeoJSON from 'ol/format/GeoJSON'
+import VectorLayer from 'ol/layer/Vector'
+import VectorSource from 'ol/source/Vector'
+import { Style } from 'ol/style'
 import { MdViewFacade } from '../state/mdview.facade'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import { Observable, of, Subject, throwError } from 'rxjs'
@@ -16,6 +33,7 @@ import { DataViewMapComponent } from './data-view-map.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { DataService } from '../service/data.service'
 import { delay } from 'rxjs/operators'
+import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared'
 
 class MdViewFacadeMock {
   mapApiLinks$ = new Subject()
@@ -57,6 +75,22 @@ class DataServiceMock {
       ? throwError(new Error('data loading error'))
       : of(SAMPLE_GEOJSON).pipe(delay(100))
   )
+}
+jest.mock('@geonetwork-ui/util/app-config', () => ({
+  getThemeConfig: () => ({
+    PRIMARY_COLOR: 'blue',
+  }),
+  isConfigLoaded: jest.fn(() => true),
+}))
+
+const mapStyleServiceMock = {
+  createDefaultStyle: jest.fn(() => [new Style()]),
+}
+const mapManagerMock = {}
+
+const featureInfoServiceMock = {
+  handleFeatureInfo: jest.fn(),
+  features$: new Subject(),
 }
 
 @Component({
@@ -105,6 +139,7 @@ describe('DataViewMapComponent', () => {
         MockLoadingMaskComponent,
         MockPopupAlertComponent,
       ],
+      schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
           provide: MdViewFacade,
@@ -117,6 +152,18 @@ describe('DataViewMapComponent', () => {
         {
           provide: DataService,
           useClass: DataServiceMock,
+        },
+        {
+          provide: MapStyleService,
+          useValue: mapStyleServiceMock,
+        },
+        {
+          provide: MapManagerService,
+          useValue: mapManagerMock,
+        },
+        {
+          provide: FeatureInfoService,
+          useValue: featureInfoServiceMock,
         },
       ],
       imports: [TranslateModule.forRoot()],
@@ -508,6 +555,64 @@ describe('DataViewMapComponent', () => {
             },
           ])
         })
+      })
+    })
+  })
+
+  const vectorLayer = new VectorLayer({
+    source: new VectorSource({
+      features: new GeoJSON().readFeatures(
+        FEATURE_COLLECTION_POINT_FIXTURE_4326,
+        {
+          featureProjection: 'EPSG:3857',
+          dataProjection: 'EPSG:4326',
+        }
+      ),
+    }),
+  })
+  const selectionFeatures = [
+    vectorLayer
+      .getSource()
+      .getFeatures()
+      .find((feature) => feature.getId() === 2),
+  ]
+
+  describe('feature info', () => {
+    it('creates selection style', () => {
+      expect(mapStyleServiceMock.createDefaultStyle).toHaveBeenCalled()
+      expect(component['selectionStyle']).toBeTruthy()
+    })
+    describe('#onMapFeatureSelect', () => {
+      beforeEach(() => {
+        const changeDetectorRef =
+          fixture.debugElement.injector.get(ChangeDetectorRef)
+        jest.spyOn(changeDetectorRef.constructor.prototype, 'detectChanges')
+        jest.spyOn(component, 'resetSelection')
+        featureInfoServiceMock.features$.next(selectionFeatures)
+      })
+      it('reset the selection first', () => {
+        expect(component.resetSelection).toHaveBeenCalled()
+      })
+      it('set the selection', () => {
+        expect(component.selection).toBe(selectionFeatures[0])
+      })
+      it('change detection applied', () => {
+        expect(component['changeRef'].detectChanges).toHaveBeenCalled()
+      })
+      it('set feature style', () => {
+        expect(component.selection.getStyle()).toBe(component['selectionStyle'])
+      })
+    })
+    describe('#resetSelection', () => {
+      beforeEach(() => {
+        component.selection = selectionFeatures[0]
+        component.resetSelection()
+      })
+      it('reset the style of the feature', () => {
+        expect(selectionFeatures[0].getStyle()).toBeNull()
+      })
+      it('remove the selection', () => {
+        expect(component.selection).toBeFalsy()
       })
     })
   })
