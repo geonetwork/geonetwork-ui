@@ -6,24 +6,50 @@
     flex
     space-x-8
     justify-between
-    py-4
+    py-5
     px-20
-    font-medium
+    text-sm
     rounded-lg
     transform
-    -translate-y-14
+    -translate-y-10
+    text-white
   "
 >
-  <button (click)="scrollTo('about')" class="uppercase text-white" translate>
+  <button
+    (click)="scrollTo('about')"
+    class="uppercase font-medium tracking-wider"
+    translate
+  >
     record.section.about
   </button>
-  <button (click)="scrollTo('preview')" class="uppercase text-white" translate>
+  <button
+    [disabled]="
+      (displayMap$ | async) === false && (displayData$ | async) === false
+    "
+    (click)="scrollTo('preview')"
+    class="uppercase font-medium tracking-wider"
+    translate
+  >
     record.section.preview
   </button>
-  <button (click)="scrollTo('access')" class="uppercase text-white" translate>
+  <button
+    [disabled]="(displayDownload$ | async) === false"
+    (click)="scrollTo('access')"
+    class="uppercase font-medium tracking-wider"
+    translate
+  >
     record.section.access
   </button>
-  <button (click)="scrollTo('links')" class="uppercase text-white" translate>
+  <button
+    [disabled]="
+      (displayOtherLinks | async) === false &&
+      (displayApi$ | async) === false &&
+      (displayRelated$ | async) === false
+    "
+    (click)="scrollTo('links')"
+    class="uppercase font-medium tracking-wider"
+    translate
+  >
     record.section.links
   </button>
 </div>
@@ -50,25 +76,29 @@
 
 <div
   id="preview"
-  style="height: 680px"
+  style="height: 648px"
   *ngIf="(displayMap$ | async) || (displayData$ | async)"
 >
-  <div class="bg-gray-100 pt-12 h-96 overflow-visible">
+  <div
+    class="bg-primary-opacity-10 pt-5 overflow-visible"
+    style="height: 512px"
+  >
     <div class="container-lg mx-auto">
       <div>
-        <p class="text-3xl font-medium my-4 font-title" translate>
+        <div class="text-28 font-title transform translate-y-10" translate>
           record.section.preview
-        </p>
+        </div>
         <mat-tab-group
           (selectedIndexChange)="onTabIndexChange()"
+          [selectedIndex]="(displayMap$ | async) ? 0 : 1"
           animationDuration="200ms"
         >
           <mat-tab [disabled]="(displayMap$ | async) === false">
             <ng-template mat-tab-label>
-              <span translate>record.tab.map</span>
+              <span class="uppercase text-sm" translate>record.tab.map</span>
             </ng-template>
             <div
-              class="block mt-4"
+              class="block mt-10"
               style="height: 500px"
               *ngIf="displayMap$ | async"
             >
@@ -77,10 +107,10 @@
           </mat-tab>
           <mat-tab [disabled]="(displayData$ | async) === false">
             <ng-template mat-tab-label>
-              <span translate>record.tab.data</span>
+              <span class="uppercase text-sm" translate>record.tab.data</span>
             </ng-template>
             <div
-              class="block mt-4"
+              class="block mt-10"
               style="height: 500px"
               *ngIf="displayData$ | async"
             >
@@ -95,41 +125,37 @@
 
 <div id="access" class="container-lg mx-auto">
   <div *ngIf="displayDownload$ | async">
-    <p class="font-title text-3xl font-medium mt-12 mb-4" translate>
+    <p class="font-title text-28 font-medium mt-12 mb-4" translate>
       record.section.download
     </p>
-    <gn-ui-data-downloads class="block mt-4"></gn-ui-data-downloads>
+    <gn-ui-data-downloads class="block mt-5"></gn-ui-data-downloads>
   </div>
 </div>
 
 <div id="links" class="container-lg mx-auto">
   <div *ngIf="displayOtherLinks | async">
-    <p
-      class="font-title text-3xl font-medium mt-12 mb-4 text-primary"
-      translate
-    >
+    <p class="font-title text-28 font-medium mt-12 mb-4 text-primary" translate>
       record.section.links
     </p>
-    <gn-ui-data-otherlinks class="block mt-4"></gn-ui-data-otherlinks>
+    <gn-ui-data-otherlinks class="block mt-5"></gn-ui-data-otherlinks>
   </div>
 
   <div *ngIf="displayApi$ | async">
     <p
-      class="font-title text-3xl font-medium mt-12 mb-4 text-secondary"
+      class="font-title text-28 font-medium mt-12 mb-6 text-secondary"
       translate
     >
       record.section.api
     </p>
-    <gn-ui-data-apis class="block mt-4"></gn-ui-data-apis>
+    <gn-ui-data-apis class="block mt-6"></gn-ui-data-apis>
   </div>
-  <!--FIXME: add related md record cards-->
 </div>
 
-<div id="related-records" *ngIf="facade.related$ | async">
+<div id="related-records" *ngIf="displayRelated$ | async">
   <div>
     <div class="h-48 overflow-visible">
       <div class="container-lg mx-auto">
-        <p class="font-title text-3xl font-medium mt-12 mb-4" translate>
+        <p class="font-title text-28 font-medium mt-10 mb-4" translate>
           record.section.related
         </p>
         <gn-ui-related-records

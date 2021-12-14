@@ -36,6 +36,9 @@ export class RecordMetadataComponent {
   displayOtherLinks = this.facade.otherLinks$.pipe(
     map((links) => links?.length > 0)
   )
+  displayRelated$ = this.facade.related$.pipe(
+    map((records) => records?.length > 0)
+  )
 
   constructor(
     public facade: MdViewFacade,

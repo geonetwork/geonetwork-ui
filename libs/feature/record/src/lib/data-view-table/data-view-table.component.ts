@@ -57,15 +57,17 @@ export class DataViewTableComponent {
     switchMap((link) => {
       this.loading = true
       this.error = null
-      return this.fetchData(link).pipe(
-        catchError((error) => {
-          this.error = error.message
-          return of([])
-        }),
-        finalize(() => {
-          this.loading = false
-        })
-      )
+      return link
+        ? this.fetchData(link).pipe(
+            catchError((error) => {
+              this.error = error.message
+              return of([])
+            }),
+            finalize(() => {
+              this.loading = false
+            })
+          )
+        : of([])
     }),
     shareReplay(1)
   )

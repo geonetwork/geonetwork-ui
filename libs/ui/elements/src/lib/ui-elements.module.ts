@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { RouterModule } from '@angular/router'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
@@ -24,6 +25,7 @@ import { UiSearchModule } from '@geonetwork-ui/ui/search'
     TranslateModule.forChild(),
     UtilSharedModule,
     UiSearchModule,
+    RouterModule,
   ],
   declarations: [
     MetadataInfoComponent,

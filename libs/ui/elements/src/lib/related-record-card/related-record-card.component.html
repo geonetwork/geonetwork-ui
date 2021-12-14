@@ -1,23 +1,24 @@
-<div class="w-64 overflow-hidden rounded-lg shadow-lg bg-white">
+<div class="w-72 h-96 overflow-hidden rounded-lg shadow-lg bg-white">
   <div class="h-52 bg-gray-100">
     <gn-ui-record-thumbnail
       class="h-52 w-full object-cover"
       [thumbnailUrl]="record.thumbnailUrl"
     ></gn-ui-record-thumbnail>
   </div>
-  <div class="px-5 pt-4 pb-6">
-    <h4 class="max-h-20 mb-5 text-xl overflow-ellipsis overflow-hidden">
+  <div class="flex flex-col justify-between h-44 px-5 pt-4 pb-6">
+    <h4 class="max-h-24 font-title text-21 overflow-ellipsis overflow-hidden">
       {{ record.title }}
     </h4>
-    <a
-      [href]="record.metadataUrl"
-      target="_blank"
-      class="cursor-pointer"
-      mat-raised-button
-      [matTooltip]="'tooltip.url.open' | translate"
-      matTooltipPosition="above"
-    >
-      <mat-icon class="align-middle text-secondary">open_in_new</mat-icon>
-    </a>
+    <div>
+      <a
+        [routerLink]="['/metadata', record.uuid]"
+        class="cursor-pointer"
+        mat-raised-button
+        [matTooltip]="'tooltip.url.open' | translate"
+        matTooltipPosition="above"
+      >
+        <mat-icon class="align-middle text-secondary">open_in_new</mat-icon>
+      </a>
+    </div>
   </div>
 </div>

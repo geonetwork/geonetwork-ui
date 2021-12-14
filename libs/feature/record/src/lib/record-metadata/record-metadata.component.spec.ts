@@ -140,14 +140,19 @@ describe('RecordMetadataComponent', () => {
   })
   describe('Map', () => {
     let mapTab
+    let tabGroup
     describe('when DATA link, but no MAPAPI and no GEODATA link', () => {
       beforeEach(() => {
         facade.dataLinks$.next(['link'])
         fixture.detectChanges()
         mapTab = fixture.debugElement.queryAll(By.css('mat-tab'))[0]
+        tabGroup = fixture.debugElement.queryAll(By.css('mat-tab-group'))[0]
       })
       it('renders preview, map tab is disabled', () => {
         expect(mapTab.nativeNode.disabled).toBe(true)
+      })
+      it('renders preview, table tab is selected', () => {
+        expect(tabGroup.nativeNode.selectedIndex).toBe(1)
       })
       it('does not render map component', () => {
         expect(
@@ -188,6 +193,7 @@ describe('RecordMetadataComponent', () => {
   })
   describe('Table', () => {
     let tableTab
+    let tabGroup
     describe('when MAPAPI link, but no DATA and no GEODATA link', () => {
       beforeEach(() => {
         facade.mapApiLinks$.next(['link'])
@@ -195,9 +201,13 @@ describe('RecordMetadataComponent', () => {
         facade.geoDataLinks$.next(null)
         fixture.detectChanges()
         tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
+        tabGroup = fixture.debugElement.queryAll(By.css('mat-tab-group'))[0]
       })
       it('renders preview, table tab is disabled', () => {
         expect(tableTab.nativeNode.disabled).toBe(true)
+      })
+      it('renders preview, map tab is selected', () => {
+        expect(tabGroup.nativeNode.selectedIndex).toBe(0)
       })
       it('does not render table component', () => {
         expect(
@@ -319,6 +329,7 @@ describe('RecordMetadataComponent', () => {
     let relatedComponent
     describe('when no related records', () => {
       beforeEach(() => {
+        facade.related$.next([])
         fixture.detectChanges()
         relatedComponent = fixture.debugElement.query(
           By.directive(MockRelatedComponent)

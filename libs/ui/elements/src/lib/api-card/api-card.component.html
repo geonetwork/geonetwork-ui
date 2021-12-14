@@ -1,9 +1,11 @@
 <div
   class="
-    block
-    h-full
-    w-64
-    py-5
+    flex flex-col
+    justify-between
+    h-40
+    w-72
+    pt-5
+    pb-6
     px-7
     bg-white
     rounded
@@ -15,37 +17,48 @@
     overflow-hidden
   "
 >
-  <div class="font-title font-medium text-xl break-words pb-5">
+  <div
+    class="
+      font-title font-medium
+      text-21
+      overflow-ellipsis overflow-hidden
+      break-words
+      pb-5
+    "
+    style="height: 4.5rem"
+  >
     {{ link.name || link.description }}
   </div>
-  <div class="flex justify-between">
-    <span
-      class="
-        badge
-        inline-flex
-        items-center
-        justify-center
-        px-2
-        py-1
-        text-xs
-        leading-none
-        text-white
-        rounded
-        capitalize
-      "
-      [style.background]="color"
-      >{{ link.protocol }}</span
-    >
-    <button
-      (click)="copyUrl()"
-      class="cursor-pointer"
-      mat-raised-button
-      [matTooltip]="'tooltip.url.copy' | translate"
-      matTooltipPosition="above"
-    >
-      <mat-icon class="align-middle copy-icon text-gray-200"
-        >content_copy</mat-icon
+  <div class="">
+    <div class="flex flex-row justify-between">
+      <span
+        class="
+          badge
+          inline-flex
+          items-center
+          justify-center
+          px-2
+          py-1
+          text-13
+          font-medium
+          leading-none
+          text-white
+          rounded
+          capitalize
+        "
+        >{{ link.protocol }}</span
       >
-    </button>
+      <button
+        (click)="copyUrl()"
+        class="cursor-pointer"
+        mat-raised-button
+        [matTooltip]="'tooltip.url.copy' | translate"
+        matTooltipPosition="above"
+      >
+        <mat-icon class="align-middle copy-icon text-gray-200"
+          >content_copy</mat-icon
+        >
+      </button>
+    </div>
   </div>
 </div>

@@ -1,8 +1,8 @@
 <div
-  class="flex align-middle title border-b border-gray-100 cursor-pointer mb-4"
+  class="flex align-middle title border-b border-gray-100 cursor-pointer pt-2.5"
   (click)="toggle()"
 >
-  <div class="flex-grow font-bold">
+  <div class="flex-grow font-medium text-sm">
     {{ title }}
   </div>
   <div class="w-8 opacity-25 text-primary icon">
@@ -10,6 +10,6 @@
     <mat-icon *ngIf="!collapsed">remove</mat-icon>
   </div>
 </div>
-<div *ngIf="!collapsed" class="content pt-3">
+<div *ngIf="!collapsed" class="content">
   <ng-content></ng-content>
 </div>

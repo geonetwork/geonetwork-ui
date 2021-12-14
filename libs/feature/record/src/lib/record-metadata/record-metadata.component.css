@@ -1,5 +1,20 @@
 ::ng-deep .mat-tab-label,
 ::ng-deep .mat-tab-link {
   font-family: var(--font-family-main);
-  font-size: 16px;
+}
+::ng-deep mat-tab-header {
+  margin-left: 8rem;
+  border-bottom: 0px !important;
+}
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
+  background-color: var(--color-primary);
+}
+
+.tracking-wider {
+  letter-spacing: 0.88px;
+}
+
+button:disabled {
+  color: var(--color-gray-300);
+  cursor: default;
 }

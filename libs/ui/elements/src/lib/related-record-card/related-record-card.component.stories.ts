@@ -12,6 +12,8 @@ import {
 import { RelatedRecordCardComponent } from './related-record-card.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiElementsModule } from '../ui-elements.module'
+import { RouterModule } from '@angular/router'
+import { APP_BASE_HREF } from '@angular/common'
 
 export default {
   title: 'Elements/RelatedRecordCardComponent',
@@ -23,7 +25,9 @@ export default {
         BrowserAnimationsModule,
         UtilI18nModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+        RouterModule.forRoot([]),
       ],
+      providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
     componentWrapperDecorator(
       (story) => `<div style="max-width: 800px">${story}</div>`

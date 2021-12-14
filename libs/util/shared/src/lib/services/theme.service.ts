@@ -13,7 +13,7 @@ export class ThemeService {
   static generateBgOpacityClasses(
     colorName,
     colorValue,
-    opacities = [0, 25, 50, 75]
+    opacities = [0, 10, 25, 50, 75]
   ) {
     const color = chroma(colorValue)
     const styleElement = document.createElement('style')

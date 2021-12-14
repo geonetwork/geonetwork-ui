@@ -9,9 +9,9 @@
       ></datahub-header-record>
     </div>
   </header>
-  <main class="py-4">
+  <main>
     <div
-      class="container-lg mx-auto"
+      class="container-lg mx-auto py-4"
       [ngClass]="{ hidden: (isRecordOpened$ | async) }"
     >
       <datahub-main-search></datahub-main-search>
