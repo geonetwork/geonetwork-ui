@@ -2,13 +2,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import {
   DownloadFormatType,
   getDownloadFormat,
-  getLinksWithEsriRestFormats,
-  getLinksWithWfsFormats,
   LinkHelperService,
 } from '@geonetwork-ui/feature/search'
-import { map, startWith, switchMap } from 'rxjs/operators'
+import { catchError, map, startWith, switchMap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
-import { combineLatest, from } from 'rxjs'
+import { combineLatest } from 'rxjs'
+import { DataService } from '../service/data.service'
 
 @Component({
   selector: 'gn-ui-data-downloads',
@@ -19,7 +18,8 @@ import { combineLatest, from } from 'rxjs'
 export class DataDownloadsComponent {
   constructor(
     public facade: MdViewFacade,
-    private linkHelper: LinkHelperService
+    private linkHelper: LinkHelperService,
+    private dataService: DataService
   ) {}
 
   error: string = null
@@ -28,8 +28,8 @@ export class DataDownloadsComponent {
     switchMap((links) => {
       const wfsLinks = links.filter((link) => this.linkHelper.isWfsLink(link))
       const esriRestLinks = links
-        .filter((link) => this.linkHelper.isEsriRestFeatureServer(link))
-        .flatMap((link) => getLinksWithEsriRestFormats(link))
+        .filter(this.linkHelper.isEsriRestFeatureServer)
+        .flatMap(this.dataService.getDownloadLinksFromEsriRest)
       const otherLinks = links
         .filter((link) => !/^OGC:WFS|ESRI:REST/.test(link.protocol))
         .map((link) =>
@@ -44,15 +44,12 @@ export class DataDownloadsComponent {
       this.error = null
 
       return combineLatest(
-        wfsLinks.map((link) =>
-          from(
-            getLinksWithWfsFormats(link).catch((e) => {
-              this.error = e.message
-              return []
-            })
-          )
-        )
+        wfsLinks.map((link) => this.dataService.getDownloadLinksFromWfs(link))
       ).pipe(
+        catchError((e) => {
+          this.error = e.message
+          return []
+        }),
         map(
           (wfsDownloadLinks) =>
             wfsDownloadLinks.reduce((prev, curr) => [...prev, ...curr]),

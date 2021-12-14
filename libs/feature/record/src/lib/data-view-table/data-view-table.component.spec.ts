@@ -1,48 +1,19 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import {
   ComponentFixture,
+  discardPeriodicTasks,
   fakeAsync,
-  flush,
   TestBed,
   tick,
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { Subject } from 'rxjs'
+import { of, Subject, throwError } from 'rxjs'
 import { MdViewFacade } from '../state'
 
 import { DataViewTableComponent } from './data-view-table.component'
-import { readDataset } from '@geonetwork-ui/data-fetcher'
 import { TranslateModule } from '@ngx-translate/core'
-import { ProxyService } from '@geonetwork-ui/util/shared'
-
-jest.mock('@camptocamp/ogc-client', () => ({
-  WfsEndpoint: class {
-    constructor(private url) {}
-    isReady() {
-      return Promise.resolve({
-        getFeatureUrl: () => this.url + '?GetFeature',
-        getFeatureTypeSummary: () => ({
-          name: 'MockName',
-          outputFormats: ['geojson', 'csv'],
-        }),
-        supportsJson: () => true,
-      })
-    }
-  },
-}))
-
-// mock a 100ms delay before serving the file
-jest.mock('@geonetwork-ui/data-fetcher', () => ({
-  readDataset: jest.fn(
-    (url) =>
-      new Promise((resolve, reject) => {
-        url.indexOf('error') === -1
-          ? setTimeout(() => resolve(SAMPLE_GEOJSON.features), 100)
-          : reject(new Error('data loading error'))
-      })
-  ),
-  SupportedTypes: ['csv', 'geojson', 'json', 'excel'],
-}))
+import { delay } from 'rxjs/operators'
+import { DataService } from '../service/data.service'
 
 const SAMPLE_GEOJSON = {
   type: 'FeatureCollection',
@@ -88,11 +59,15 @@ class MdViewFacadeMock {
   geoDataLinks$ = new Subject()
 }
 
-let proxyPath
-class ProxyServiceMock {
-  getProxiedUrl(url) {
-    return proxyPath ? proxyPath + url : url
-  }
+class DataServiceMock {
+  getGeoJsonDownloadUrlFromWfs = jest.fn((url) => of(url + '?download'))
+  getGeoJsonDownloadUrlFromEsriRest = jest.fn((url) => of(url + '?download'))
+  readDataset = jest.fn(() => of(SAMPLE_GEOJSON).pipe(delay(100)))
+  readGeoJsonDataset = jest.fn((url) =>
+    url.indexOf('error') > -1
+      ? throwError(new Error('data loading error'))
+      : of(SAMPLE_GEOJSON).pipe(delay(100))
+  )
 }
 
 @Component({
@@ -133,10 +108,9 @@ describe('DataViewTableComponent', () => {
   let component: DataViewTableComponent
   let fixture: ComponentFixture<DataViewTableComponent>
   let facade
+  let dataService: DataService
 
   beforeEach(async () => {
-    proxyPath = null
-    jest.clearAllMocks()
     await TestBed.configureTestingModule({
       declarations: [
         DataViewTableComponent,
@@ -151,13 +125,14 @@ describe('DataViewTableComponent', () => {
           useClass: MdViewFacadeMock,
         },
         {
-          provide: ProxyService,
-          useClass: ProxyServiceMock,
+          provide: DataService,
+          useClass: DataServiceMock,
         },
       ],
       imports: [TranslateModule.forRoot()],
     }).compileComponents()
     facade = TestBed.inject(MdViewFacade)
+    dataService = TestBed.inject(DataService)
   })
 
   beforeEach(() => {
@@ -205,7 +180,7 @@ describe('DataViewTableComponent', () => {
       })
 
       it('loads the data from the first available link', () => {
-        expect(readDataset).toHaveBeenCalledWith(
+        expect(dataService.readDataset).toHaveBeenCalledWith(
           'https://test.org/some_file_name.csv',
           'csv'
         )
@@ -216,9 +191,9 @@ describe('DataViewTableComponent', () => {
       beforeEach(fakeAsync(() => {
         facade.dataLinks$.next(DATALINKS_FIXTURE)
         facade.geoDataLinks$.next([])
-        tick(50)
         fixture.detectChanges()
-        flush()
+        tick(50)
+        discardPeriodicTasks()
       }))
       it('shows a loading indicator', () => {
         expect(
@@ -232,7 +207,6 @@ describe('DataViewTableComponent', () => {
         facade.geoDataLinks$.next(GEODATALINKS_FIXTURE)
         tick(200)
         fixture.detectChanges()
-        flush()
 
         tableComponent = fixture.debugElement.query(
           By.directive(MockTableComponent)
@@ -252,7 +226,7 @@ describe('DataViewTableComponent', () => {
           dropDownComponent.selectValue.emit(1)
         })
         it('loads data from selected link', () => {
-          expect(readDataset).toHaveBeenCalledWith(
+          expect(dataService.readDataset).toHaveBeenCalledWith(
             'https://test.org/some_file_name.geojson',
             'geojson'
           )
@@ -269,7 +243,7 @@ describe('DataViewTableComponent', () => {
     })
   })
   describe('error when loading data', () => {
-    beforeEach(fakeAsync(() => {
+    beforeEach(() => {
       facade.dataLinks$.next([])
       facade.geoDataLinks$.next([
         {
@@ -278,43 +252,9 @@ describe('DataViewTableComponent', () => {
           protocol: 'OGC:WFS',
         },
       ])
-      tick()
-      fixture.detectChanges()
-      flush()
-    }))
+    })
     it('shows an error warning', () => {
       expect(component.error).toEqual('data loading error')
-    })
-  })
-
-  describe('when setting a proxy path', () => {
-    describe('file', () => {
-      beforeEach(() => {
-        proxyPath = 'http://my.proxy/?url='
-        facade.dataLinks$.next(DATALINKS_FIXTURE)
-        facade.geoDataLinks$.next([])
-        fixture.detectChanges()
-      })
-      it('loads the data using the proxy', () => {
-        expect(readDataset).toHaveBeenCalledWith(
-          'http://my.proxy/?url=https://test.org/some_file_name.csv',
-          'csv'
-        )
-      })
-    })
-    describe('WFS', () => {
-      beforeEach(() => {
-        proxyPath = 'http://my.proxy/?url='
-        facade.dataLinks$.next(GEODATALINKS_FIXTURE.slice(1))
-        facade.geoDataLinks$.next([])
-        fixture.detectChanges()
-      })
-      it('loads the data using the proxy', () => {
-        expect(readDataset).toHaveBeenCalledWith(
-          'http://my.proxy/?url=https://test.org/wfs?GetFeature',
-          'geojson'
-        )
-      })
     })
   })
 })

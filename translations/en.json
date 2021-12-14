@@ -78,8 +78,11 @@
   "datahub.header.popularRecords": "The most popular",
   "datahub.header.title.html": "<div class=\"text-white\">Find all my organization's<br><span class=\"text-primary\">open data</span>.</div>",
   "datahub.search.back": "Back to results",
+  "dataset.error.http": "The data could not be loaded because of an HTTP error",
+  "dataset.error.network": "The data could not be loaded because of a network error or CORS limitations",
+  "dataset.error.parse": "The data was loaded but could not be parsed",
+  "dataset.error.unknown": "The data cannot be displayed",
   "datasets": "datasets",
-  "downloads.wfs.error": "Download options from the WFS service could not be fetched",
   "downloads.wfs.featuretype.not.found": "The layer was not found",
   "dropFile": "drop file",
   "facets.block.title.OrgForResource": "Organisation",
@@ -95,7 +98,6 @@
   "facets.block.title.th_regions_tree.default": "Regions",
   "map.loading.data": "Loading map data...",
   "map.select.layer": "Select the layer to display",
-  "map.wfs.geojson.not.supported": "This WFS service does not support the GeoJSON format",
   "nav.back": "Back",
   "next": "next",
   "previous": "previous",
@@ -133,5 +135,10 @@
   "table.object.count": "objects in this dataset",
   "table.select.data": "Select the dataset to display",
   "tooltip.url.copy": "Copy URL",
-  "tooltip.url.open": "Open URL"
+  "tooltip.url.open": "Open URL",
+  "wfs.featuretype.notfound": "No matching feature type was found in the WFS service",
+  "wfs.geojson.notsupported": "This WFS service does not support the GeoJSON format",
+  "wfs.unreachable.cors": "The WFS service could not be reached because of CORS limitations",
+  "wfs.unreachable.http": "The WFS service returned an HTTP error",
+  "wfs.unreachable.unknown": "The WFS service could not be reached"
 }

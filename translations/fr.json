@@ -78,8 +78,11 @@
   "datahub.header.popularRecords": "les plus appréciées",
   "datahub.header.title.html": "<div class=\"text-white\">Toutes les <span class=\"text-primary\">données<br>publiques</span> de mon organisation</div>",
   "datahub.search.back": "Retour aux résultats",
+  "dataset.error.http": "Le chargement des données a échoué en raison d'une erreur HTTP",
+  "dataset.error.network": "Le chargement des données a échoué en raison d'une erreur réseau ou de limitations CORS",
+  "dataset.error.parse": "Les données ont été chargées mais leur décodage a échoué",
+  "dataset.error.unknown": "Les données ne peuvent être affichées",
   "datasets": "jeux de données",
-  "downloads.wfs.error": "Les options de téléchargement ne peuvent être obtenues depuis le service WFS",
   "downloads.wfs.featuretype.not.found": "La couche n'a pas été retrouvée",
   "dropFile": "Faites glisser votre fichier",
   "facets.block.title.OrgForResource": "Organisation",
@@ -95,7 +98,6 @@
   "facets.block.title.th_regions_tree.default": "Régions",
   "map.loading.data": "Chargement des données...",
   "map.select.layer": "Choisir la couche à afficher",
-  "map.wfs.geojson.not.supported": "Le service WFS ne supporte pas le format GeoJSON",
   "nav.back": "Retour",
   "next": "suivant",
   "previous": "précédent",
@@ -133,5 +135,10 @@
   "table.object.count": "enregistrements dans ce jeu de données",
   "table.select.data": "Choisir le jeu de données à afficher",
   "tooltip.url.copy": "Copier l'URL",
-  "tooltip.url.open": "Ouvrir l'URL"
+  "tooltip.url.open": "Ouvrir l'URL",
+  "wfs.featuretype.notfound": "La classe d'objet n'a pas été trouvée dans le service WFS",
+  "wfs.geojson.notsupported": "Le service WFS ne supporte pas le format GeoJSON",
+  "wfs.unreachable.cors": "Le service WFS n'est pas accessible en raison de limitations CORS",
+  "wfs.unreachable.http": "Le service WFS a retourné une erreur HTTP",
+  "wfs.unreachable.unknown": "Le service WFS n'est pas accessible"
 }

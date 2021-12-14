@@ -1,6 +1,7 @@
 <div class="pb-4" *ngFor="let link of links$ | async">
   <gn-ui-download-item [link]="link"></gn-ui-download-item>
 </div>
-<gn-ui-popup-alert *ngIf="error" icon="error_outline" class="block h-32 mt-2">
-  <span translate>downloads.wfs.error</span>: <span translate>{{ error }}</span>
-</gn-ui-popup-alert>
+<!-- disable error report for now (until considered useful) -->
+<!--<gn-ui-popup-alert *ngIf="error" icon="error_outline" class="block h-32 mt-2">-->
+<!--  <span translate>downloads.wfs.error</span>: <span translate>{{ error }}</span>-->
+<!--</gn-ui-popup-alert>-->

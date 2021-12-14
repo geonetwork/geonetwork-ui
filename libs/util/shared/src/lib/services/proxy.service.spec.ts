@@ -38,6 +38,10 @@ describe('ProxyService', () => {
           `https://proxy.org/abc?url=http%3A%2F%2Fanotherhost%2Fabcd`
         )
       })
+      it('does not apply the proxy twice', () => {
+        const proxied = service.getProxiedUrl('http://anotherhost/abcd')
+        expect(service.getProxiedUrl(proxied)).toEqual(proxied)
+      })
     })
     describe('with a relative value for PROXY_PATH', () => {
       beforeEach(() => {
@@ -48,6 +52,10 @@ describe('ProxyService', () => {
         expect(service.getProxiedUrl('http://anotherhost/abcd')).toEqual(
           `http://myhost:1234/proxy?http%3A%2F%2Fanotherhost%2Fabcd`
         )
+      })
+      it('does not apply the proxy twice', () => {
+        const proxied = service.getProxiedUrl('http://anotherhost/abcd')
+        expect(service.getProxiedUrl(proxied)).toEqual(proxied)
       })
     })
     describe('without a value for PROXY_PATH', () => {

@@ -26,6 +26,10 @@ export default {
       control: 'radio',
       options: ['top', 'bottom'],
     },
+    type: {
+      control: 'select',
+      options: ['info', 'warning', 'danger'],
+    },
   },
 } as Meta<PopupAlertComponent>
 
@@ -45,4 +49,5 @@ Primary.args = {
   content:
     'Something went wrong during a task that was probably too complicated, you should probably <a href="https://www.google.com">look for answers</a> and come back!',
   position: 'top',
+  type: 'info',
 }

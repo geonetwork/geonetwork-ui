@@ -22,14 +22,9 @@ import {
   map,
   switchMap,
 } from 'rxjs/operators'
-import { MetadataLinkValid, ProxyService } from '@geonetwork-ui/util/shared'
-import { readDataset } from '@geonetwork-ui/data-fetcher'
-import { fromPromise } from 'rxjs/internal-compatibility'
-import { WfsEndpoint } from '@camptocamp/ogc-client'
-import {
-  getEsriRestDataUrl,
-  LinkHelperService,
-} from '@geonetwork-ui/feature/search'
+import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { LinkHelperService } from '@geonetwork-ui/feature/search'
+import { DataService } from '../service/data.service'
 
 @Component({
   selector: 'gn-ui-data-view-map',
@@ -111,7 +106,7 @@ export class DataViewMapComponent {
     private mdViewFacade: MdViewFacade,
     private mapUtils: MapUtilsService,
     private linkHelper: LinkHelperService,
-    private proxy: ProxyService
+    private dataService: DataService
   ) {}
 
   getBackgroundLayer(): MapContextLayerModel {
@@ -126,52 +121,29 @@ export class DataViewMapComponent {
         name: link.name,
       })
     } else if (this.linkHelper.isWfsLink(link)) {
-      return fromPromise(
-        new WfsEndpoint(this.proxy.getProxiedUrl(link.url))
-          .isReady()
-          .then((endpoint) => {
-            if (!endpoint.supportsJson(link.name)) {
-              throw new Error('map.wfs.geojson.not.supported')
-            }
-            return readDataset(
-              endpoint.getFeatureUrl(link.name, {
-                asJson: true,
-                outputCrs: 'EPSG:4326',
-              }),
-              'geojson'
-            ).then((features) => ({
-              type: MapContextLayerTypeEnum.GEOJSON,
-              data: {
-                type: 'FeatureCollection',
-                features,
-              },
-            }))
-          })
-      )
-    } else if (this.linkHelper.hasProtocolDownload(link)) {
-      return fromPromise(
-        readDataset(this.proxy.getProxiedUrl(link.url), 'geojson').then(
-          (features) => ({
+      return this.dataService
+        .getGeoJsonDownloadUrlFromWfs(link.url, link.name)
+        .pipe(
+          switchMap((url) => this.dataService.readGeoJsonDataset(url)),
+          map((data) => ({
             type: MapContextLayerTypeEnum.GEOJSON,
-            data: {
-              type: 'FeatureCollection',
-              features,
-            },
-          })
+            data,
+          }))
         )
+    } else if (this.linkHelper.hasProtocolDownload(link)) {
+      return this.dataService.readGeoJsonDataset(link.url).pipe(
+        map((data) => ({
+          type: MapContextLayerTypeEnum.GEOJSON,
+          data,
+        }))
       )
     } else if (this.linkHelper.isEsriRestFeatureServer(link)) {
-      const url = getEsriRestDataUrl(link, 'geojson')
-      return fromPromise(
-        readDataset(this.proxy.getProxiedUrl(url), 'geojson').then(
-          (features) => ({
-            type: MapContextLayerTypeEnum.GEOJSON,
-            data: {
-              type: 'FeatureCollection',
-              features,
-            },
-          })
-        )
+      const url = this.dataService.getGeoJsonDownloadUrlFromEsriRest(link.url)
+      return this.dataService.readGeoJsonDataset(url).pipe(
+        map((data) => ({
+          type: MapContextLayerTypeEnum.GEOJSON,
+          data,
+        }))
       )
     }
     return throwError('protocol not supported')
