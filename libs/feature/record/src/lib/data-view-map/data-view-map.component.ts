@@ -152,8 +152,8 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
     this.selection = features?.length > 0 && features[0]
     if (this.selection) {
       this.selection.setStyle(this.selectionStyle)
-      this.changeRef.detectChanges()
     }
+    this.changeRef.detectChanges()
   }
 
   resetSelection(): void {
