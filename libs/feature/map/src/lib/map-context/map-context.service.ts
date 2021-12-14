@@ -22,7 +22,6 @@ import GeoJSON from 'ol/format/GeoJSON'
   providedIn: 'root',
 })
 export class MapContextService {
-  private style = this.styleService.createDefaultStyle()
   constructor(
     private mapUtils: MapUtilsService,
     private styleService: MapStyleService
@@ -39,7 +38,7 @@ export class MapContextService {
 
   createLayer(layerModel: MapContextLayerModel): Layer {
     const { type, url, name } = layerModel
-    const style = this.style
+    const style = this.styleService.styles.default
     switch (type) {
       case MapContextLayerTypeEnum.XYZ:
         return new TileLayer({

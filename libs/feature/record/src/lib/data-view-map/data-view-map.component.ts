@@ -15,12 +15,11 @@ import {
   MapUtilsService,
 } from '@geonetwork-ui/feature/map'
 import { LinkHelperService } from '@geonetwork-ui/feature/search'
-import { getThemeConfig, isConfigLoaded } from '@geonetwork-ui/util/app-config'
 import { MetadataLinkValid, ProxyService } from '@geonetwork-ui/util/shared'
 import { Feature } from 'ol'
 import { Geometry } from 'ol/geom'
 import { fromLonLat } from 'ol/proj'
-import Style from 'ol/style/Style'
+import { StyleLike } from 'ol/style/Style'
 import {
   BehaviorSubject,
   combineLatest,
@@ -48,7 +47,7 @@ import { MdViewFacade } from '../state/mdview.facade'
 export class DataViewMapComponent implements OnInit, OnDestroy {
   selection: Feature<Geometry>
   private subscription = new Subscription()
-  private selectionStyle: Style[]
+  private selectionStyle: StyleLike
 
   compatibleMapLinks$ = combineLatest([
     this.mdViewFacade.mapApiLinks$,
@@ -135,10 +134,7 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.selectionStyle = this.styleService.createDefaultStyle({
-      color: isConfigLoaded() ? getThemeConfig().SECONDARY_COLOR : 'red',
-      width: 3,
-    })
+    this.selectionStyle = this.styleService.styles.defaultHL
     this.featureInfo.handleFeatureInfo()
     this.subscription.add(
       this.featureInfo.features$.subscribe((features) => {
