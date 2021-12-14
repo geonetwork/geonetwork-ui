@@ -6,6 +6,9 @@
   margin-left: 8rem;
   border-bottom: 0px !important;
 }
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
+  background-color: var(--color-primary);
+}
 
 .tracking-wider {
   letter-spacing: 0.88px;
