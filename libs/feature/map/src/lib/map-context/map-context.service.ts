@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core'
+import { MapStyleService } from '../style/map-style.service'
 import {
   MapContextLayerModel,
   MapContextLayerTypeEnum,
@@ -21,7 +22,11 @@ import GeoJSON from 'ol/format/GeoJSON'
   providedIn: 'root',
 })
 export class MapContextService {
-  constructor(private mapUtils: MapUtilsService) {}
+  private style = this.styleService.createDefaultStyle()
+  constructor(
+    private mapUtils: MapUtilsService,
+    private styleService: MapStyleService
+  ) {}
 
   resetMapFromContext(map: Map, mapContext: MapContextModel): Map {
     if (mapContext.view) {
@@ -34,6 +39,7 @@ export class MapContextService {
 
   createLayer(layerModel: MapContextLayerModel): Layer {
     const { type, url, name } = layerModel
+    const style = this.style
     switch (type) {
       case MapContextLayerTypeEnum.XYZ:
         return new TileLayer({
@@ -59,6 +65,7 @@ export class MapContextService {
             },
             strategy: bboxStrategy,
           }),
+          style,
         })
       case MapContextLayerTypeEnum.GEOJSON: {
         const { data } = layerModel
@@ -67,6 +74,7 @@ export class MapContextService {
           source: new VectorSource({
             features,
           }),
+          style,
         })
       }
     }

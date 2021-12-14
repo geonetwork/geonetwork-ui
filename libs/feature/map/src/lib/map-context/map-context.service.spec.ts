@@ -6,7 +6,9 @@ import Map from 'ol/Map'
 import TileWMS from 'ol/source/TileWMS'
 import VectorSource from 'ol/source/Vector'
 import XYZ from 'ol/source/XYZ'
+import { Style } from 'ol/style'
 import View from 'ol/View'
+import { MapStyleService } from '../style/map-style.service'
 import {
   MAP_CTX_FIXTURE,
   MAP_CTX_LAYER_GEOJSON_FIXTURE,
@@ -17,12 +19,21 @@ import {
 
 import { MapContextService } from './map-context.service'
 
+const mapStyleServiceMock = {
+  createDefaultStyle: jest.fn(() => new Style()),
+}
 describe('MapContextService', () => {
   let service: MapContextService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
+      providers: [
+        {
+          provide: MapStyleService,
+          useValue: mapStyleServiceMock,
+        },
+      ],
     })
     service = TestBed.inject(MapContextService)
   })

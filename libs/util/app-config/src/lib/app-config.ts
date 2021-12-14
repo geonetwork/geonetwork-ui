@@ -3,7 +3,7 @@ import * as TOML from '@ltd/j-toml'
 const MISSING_CONFIG_ERROR = `Application configuration was not initialized correctly.
 This error might show up in case of an invalid/malformed configuration file. 
 
-Note: make sure that you have called \`loadAppConfig\` from '@geonetwork-ui/util-app-config' before starting the Angular application.`
+Note: make sure that you have called \`loadAppConfig\` from '@geonetwork-ui/util/app-config' before starting the Angular application.`
 
 interface GlobalConfig {
   GN4_API_URL: string
