@@ -1,28 +1,25 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { RouterFacade } from '@geonetwork-ui/feature/router'
-
-import { MainSearchComponent } from './main-search.component'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
+
+import { SearchHeaderComponent } from './search-header.component'
+import { RouterTestingModule } from '@angular/router/testing'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
+import { RouterFacade } from '@geonetwork-ui/feature/router'
+import { TranslateModule } from '@ngx-translate/core'
 
 class RouterFacadeMock {
   goToMetadata = jest.fn()
 }
+class SearchFacadeMock {}
 
-class SearchFacadeMock {
-  setFilters = jest.fn(() => this)
-  setResultsLayout = jest.fn(() => this)
-}
-
-describe('MainSearchComponent', () => {
-  let component: MainSearchComponent
-  let fixture: ComponentFixture<MainSearchComponent>
+describe('HeaderComponent', () => {
+  let component: SearchHeaderComponent
+  let fixture: ComponentFixture<SearchHeaderComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MainSearchComponent],
-      imports: [UiLayoutModule],
+      imports: [RouterTestingModule, TranslateModule.forRoot()],
+      declarations: [SearchHeaderComponent],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
@@ -38,7 +35,7 @@ describe('MainSearchComponent', () => {
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MainSearchComponent)
+    fixture = TestBed.createComponent(SearchHeaderComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

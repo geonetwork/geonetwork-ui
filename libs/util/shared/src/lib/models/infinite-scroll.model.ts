@@ -3,6 +3,8 @@ export interface InfiniteScrollModel {
   upDistance?: number
   throttle?: number
   disabled?: boolean
+  fromRoot?: boolean
+  container?: string | HTMLElement
 }
 
 export const InfiniteScrollOptionsDefault = {

@@ -15,6 +15,6 @@
 }
 
 button:disabled {
-  color: var(--color-gray-300);
+  opacity: 0.6;
   cursor: default;
 }

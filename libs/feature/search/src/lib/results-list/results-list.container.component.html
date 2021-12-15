@@ -4,6 +4,8 @@
   [infiniteScrollDistance]="scrollableConfig.distance"
   [infiniteScrollUpDistance]="scrollableConfig.upDistance"
   [infiniteScrollThrottle]="scrollableConfig.throttle"
+  [infiniteScrollContainer]="scrollableConfig.container"
+  [fromRoot]="scrollableConfig.fromRoot"
   [infiniteScrollDisabled]="scrollDisable$ | async"
   (scrolled)="onScrollDown()"
 >

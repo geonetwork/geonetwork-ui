@@ -1,19 +1,24 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { InfiniteScrollModel, MetadataRecord } from '@geonetwork-ui/util/shared'
 
 @Component({
-  selector: 'datahub-main-search',
-  templateUrl: './main-search.component.html',
-  styleUrls: ['./main-search.component.scss'],
+  selector: 'datahub-search-page',
+  templateUrl: './search-page.component.html',
+  styleUrls: ['./search-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainSearchComponent implements OnInit {
+export class SearchPageComponent implements OnInit {
   constructor(
     private searchRouter: RouterFacade,
     private searchFacade: SearchFacade
   ) {}
+
+  scrollableOptions: InfiniteScrollModel = {
+    container: '#search-page',
+    fromRoot: true,
+  }
 
   ngOnInit() {
     this.searchFacade
