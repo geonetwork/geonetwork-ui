@@ -16,6 +16,8 @@ import {
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import {
+  DEFAULT_STYLE_FIXTURE,
+  DEFAULT_STYLE_HL_FIXTURE,
   FeatureInfoService,
   MapContextModel,
   MapManagerService,
@@ -76,15 +78,13 @@ class DataServiceMock {
       : of(SAMPLE_GEOJSON).pipe(delay(100))
   )
 }
-jest.mock('@geonetwork-ui/util/app-config', () => ({
-  getThemeConfig: () => ({
-    PRIMARY_COLOR: 'blue',
-  }),
-  isConfigLoaded: jest.fn(() => true),
-}))
 
 const mapStyleServiceMock = {
   createDefaultStyle: jest.fn(() => [new Style()]),
+  styles: {
+    default: DEFAULT_STYLE_FIXTURE,
+    defaultHL: DEFAULT_STYLE_HL_FIXTURE,
+  },
 }
 const mapManagerMock = {}
 
@@ -579,7 +579,6 @@ describe('DataViewMapComponent', () => {
 
   describe('feature info', () => {
     it('creates selection style', () => {
-      expect(mapStyleServiceMock.createDefaultStyle).toHaveBeenCalled()
       expect(component['selectionStyle']).toBeTruthy()
     })
     describe('#onMapFeatureSelect', () => {

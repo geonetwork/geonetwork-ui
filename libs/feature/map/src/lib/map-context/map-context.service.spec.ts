@@ -8,6 +8,10 @@ import VectorSource from 'ol/source/Vector'
 import XYZ from 'ol/source/XYZ'
 import { Style } from 'ol/style'
 import View from 'ol/View'
+import {
+  DEFAULT_STYLE_FIXTURE,
+  DEFAULT_STYLE_HL_FIXTURE,
+} from '../style/map-style.fixtures'
 import { MapStyleService } from '../style/map-style.service'
 import {
   MAP_CTX_FIXTURE,
@@ -21,6 +25,10 @@ import { MapContextService } from './map-context.service'
 
 const mapStyleServiceMock = {
   createDefaultStyle: jest.fn(() => new Style()),
+  styles: {
+    default: DEFAULT_STYLE_FIXTURE,
+    defaultHL: DEFAULT_STYLE_HL_FIXTURE,
+  },
 }
 describe('MapContextService', () => {
   let service: MapContextService
