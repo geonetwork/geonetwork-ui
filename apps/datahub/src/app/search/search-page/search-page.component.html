@@ -1,0 +1,13 @@
+<header>
+  <datahub-search-header></datahub-search-header>
+</header>
+<main>
+  <div class="container-lg mx-auto py-4">
+    <div>
+      <gn-ui-results-hits></gn-ui-results-hits>
+      <gn-ui-results-list-container
+        (mdSelect)="onMetadataSelection($event)"
+      ></gn-ui-results-list-container>
+    </div>
+  </div>
+</main>

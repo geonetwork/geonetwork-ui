@@ -10,12 +10,12 @@ marker('datahub.header.lastRecords')
 marker('datahub.header.popularRecords')
 
 @Component({
-  selector: 'datahub-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
+  selector: 'datahub-search-header',
+  templateUrl: './search-header.component.html',
+  styleUrls: ['./search-header.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent {
+export class SearchHeaderComponent {
   autocompleteDisplayWithFn = () => ''
 
   constructor(

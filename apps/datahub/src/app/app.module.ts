@@ -27,13 +27,14 @@ import { environment } from '../environments/environment'
 
 import { AppComponent } from './app.component'
 import { DATAHUB_RESULTS_LAYOUT_CONFIG } from './app.config'
-import { MainSearchComponent } from './main-search/main-search.component'
-import { RecordPreviewDatahubComponent } from './record-preview-datahub/record-preview-datahub.component'
-import { HeaderComponent } from './header/header/header.component'
-import { HeaderBadgeButtonComponent } from './header/header-badge-button/header-badge-button.component'
+import { RecordPreviewDatahubComponent } from './search/record-preview-datahub/record-preview-datahub.component'
+import { HeaderBadgeButtonComponent } from './record/header-badge-button/header-badge-button.component'
 import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
-import { HeaderRecordComponent } from './header/header-record/header-record.component'
+import { HeaderRecordComponent } from './record/header-record/header-record.component'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { SearchHeaderComponent } from './search/search-header/search-header.component'
+import { SearchPageComponent } from './search/search-page/search-page.component'
+import { RecordPageComponent } from './record/record-page/record-page.component'
 
 export const metaReducers: MetaReducer[] = !environment.production
   ? [storeFreeze]
@@ -42,11 +43,12 @@ export const metaReducers: MetaReducer[] = !environment.production
 @NgModule({
   declarations: [
     AppComponent,
-    MainSearchComponent,
+    SearchPageComponent,
     RecordPreviewDatahubComponent,
-    HeaderComponent,
+    SearchHeaderComponent,
     HeaderBadgeButtonComponent,
     HeaderRecordComponent,
+    RecordPageComponent,
   ],
   imports: [
     BrowserModule,
