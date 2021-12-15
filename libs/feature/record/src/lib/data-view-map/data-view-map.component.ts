@@ -160,7 +160,14 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
   }
 
   getBackgroundLayer(): MapContextLayerModel {
-    return MAP_CTX_LAYER_XYZ_FIXTURE
+    return {
+      type: MapContextLayerTypeEnum.XYZ,
+      urls: [
+        `https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
+        `https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
+        `https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
+      ],
+    }
   }
 
   getLayerFromLink(link: MetadataLinkValid): Observable<MapContextLayerModel> {
