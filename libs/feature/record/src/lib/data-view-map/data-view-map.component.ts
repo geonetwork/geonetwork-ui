@@ -1,18 +1,31 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core'
+import {
+  FeatureInfoService,
   MAP_CTX_LAYER_XYZ_FIXTURE,
   MapContextLayerModel,
   MapContextLayerTypeEnum,
   MapContextModel,
+  MapStyleService,
   MapUtilsService,
 } from '@geonetwork-ui/feature/map'
-import { MdViewFacade } from '../state/mdview.facade'
+import { LinkHelperService } from '@geonetwork-ui/feature/search'
+import { MetadataLinkValid, ProxyService } from '@geonetwork-ui/util/shared'
+import { Feature } from 'ol'
+import { Geometry } from 'ol/geom'
 import { fromLonLat } from 'ol/proj'
+import { StyleLike } from 'ol/style/Style'
 import {
   BehaviorSubject,
   combineLatest,
   Observable,
   of,
+  Subscription,
   throwError,
 } from 'rxjs'
 import {
@@ -22,9 +35,8 @@ import {
   map,
   switchMap,
 } from 'rxjs/operators'
-import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
-import { LinkHelperService } from '@geonetwork-ui/feature/search'
 import { DataService } from '../service/data.service'
+import { MdViewFacade } from '../state/mdview.facade'
 
 @Component({
   selector: 'gn-ui-data-view-map',
@@ -32,7 +44,11 @@ import { DataService } from '../service/data.service'
   styleUrls: ['./data-view-map.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataViewMapComponent {
+export class DataViewMapComponent implements OnInit, OnDestroy {
+  selection: Feature<Geometry>
+  private subscription = new Subscription()
+  private selectionStyle: StyleLike
+
   compatibleMapLinks$ = combineLatest([
     this.mdViewFacade.mapApiLinks$,
     this.mdViewFacade.geoDataLinks$,
@@ -106,8 +122,42 @@ export class DataViewMapComponent {
     private mdViewFacade: MdViewFacade,
     private mapUtils: MapUtilsService,
     private linkHelper: LinkHelperService,
-    private dataService: DataService
+    private dataService: DataService,
+    private proxy: ProxyService,
+    private featureInfo: FeatureInfoService,
+    private changeRef: ChangeDetectorRef,
+    private styleService: MapStyleService
   ) {}
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe()
+  }
+
+  ngOnInit(): void {
+    this.selectionStyle = this.styleService.styles.defaultHL
+    this.featureInfo.handleFeatureInfo()
+    this.subscription.add(
+      this.featureInfo.features$.subscribe((features) => {
+        this.onMapFeatureSelect(features)
+      })
+    )
+  }
+
+  onMapFeatureSelect(features: Feature<Geometry>[]): void {
+    this.resetSelection()
+    this.selection = features?.length > 0 && features[0]
+    if (this.selection) {
+      this.selection.setStyle(this.selectionStyle)
+    }
+    this.changeRef.detectChanges()
+  }
+
+  resetSelection(): void {
+    if (this.selection) {
+      this.selection.setStyle(null)
+    }
+    this.selection = null
+  }
 
   getBackgroundLayer(): MapContextLayerModel {
     return MAP_CTX_LAYER_XYZ_FIXTURE

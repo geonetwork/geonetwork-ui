@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ApiModule } from '@geonetwork-ui/data-access/gn4'
+import { UiMapModule } from '@geonetwork-ui/ui/map'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
@@ -39,6 +40,7 @@ import { RelatedRecordsComponent } from './related-records/related-records.compo
     EffectsModule.forFeature([MdViewEffects]),
     UiLayoutModule,
     FeatureMapModule,
+    UiMapModule,
     UiInputsModule,
     UiElementsModule,
     MatTabsModule,

@@ -17,3 +17,8 @@ gn-ui-popup-alert {
   left: 0;
   right: 0;
 }
+
+.feature-info {
+  top: 1em;
+  right: 1em;
+}

@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing'
 import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 import chroma from 'chroma-js'
+import CircleStyle from 'ol/style/Circle'
 import Style from 'ol/style/Style'
 
 import { MapStyleService } from './map-style.service'
@@ -8,7 +9,9 @@ import { MapStyleService } from './map-style.service'
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
     PRIMARY_COLOR: 'blue',
+    SECONDARY_COLOR: 'red',
   }),
+  isConfigLoaded: jest.fn(() => true),
 }))
 
 describe('MapStyleService', () => {
@@ -23,21 +26,18 @@ describe('MapStyleService', () => {
     expect(service).toBeTruthy()
   })
 
-  describe('#createDefaultStyle', () => {
+  describe('#createStyle', () => {
     describe('when options are given', () => {
-      let styles, style, circle, stroke, fill
+      let style, circle, stroke, fill
       beforeEach(() => {
         const options = {
           color: 'red',
           width: 5,
           radius: 2,
         }
-        styles = service.createDefaultStyle(options)
-        style = styles[0]
+        style = service.createStyle(options)
       })
-      it('creates an array of 1 style', () => {
-        expect(styles).toBeInstanceOf(Array)
-        expect(styles.length).toBe(1)
+      it('creates 1 style', () => {
         expect(style).toBeInstanceOf(Style)
       })
       describe('creates a circle', () => {
@@ -76,10 +76,9 @@ describe('MapStyleService', () => {
       })
     })
     describe('when no option is given', () => {
-      let styles, style
+      let style
       beforeEach(() => {
-        styles = service.createDefaultStyle()
-        style = styles[0]
+        style = service.createStyle()
       })
       it('uses default width (2)', () => {
         expect(style.getImage().getStroke().getWidth()).toBe(2)
@@ -94,6 +93,59 @@ describe('MapStyleService', () => {
         )
         expect(style.getImage().getFill().getColor()).toBe('blue')
         expect(style.getFill().getColor()).toBe('rgba(0,0,255,0.25)')
+      })
+      it('set the default style of the service', () => {
+        expect(service.styles.default).toEqual(style)
+      })
+    })
+  })
+
+  describe('#createHLFromStyle', () => {
+    describe('when options are given', () => {
+      let style, styleHL, circle, stroke, fill
+      beforeEach(() => {
+        style = service.createStyle()
+        styleHL = service.createHLFromStyle(style, 'black')
+        circle = styleHL.getImage() as CircleStyle
+      })
+      it('creates 1 style', () => {
+        expect(styleHL).toBeInstanceOf(Style)
+      })
+      describe('overrides source style properties', () => {
+        it('has radius + 1', () => {
+          expect(circle.getRadius()).toBe(8)
+        })
+        it('changes the fill color', () => {
+          expect(circle.getFill().getColor()).toBe('black')
+          expect(styleHL.getFill().getColor()).toBe('rgba(0,0,0,0.25)')
+        })
+        it('has width + 1', () => {
+          expect(circle.getStroke().getWidth()).toBe(3)
+        })
+        it('set zIndex', () => {
+          expect(style.getZIndex()).toBe(10)
+        })
+      })
+    })
+  })
+  describe('default styles', () => {
+    describe('when options are given', () => {
+      let style, styleHL, circle, stroke, fill
+      beforeEach(() => {
+        style = service.createStyle()
+        styleHL = service.createHLFromStyle(style, 'black')
+        circle = styleHL.getImage() as CircleStyle
+      })
+      it('set default style with PRIMARY color', () => {
+        expect(service.styles.default).toEqual(service.createStyle())
+      })
+      it('set default highlight style with SECONDARY color', () => {
+        expect(service.styles.defaultHL).toEqual(
+          service.createHLFromStyle(
+            service.createStyle(),
+            getThemeConfig().SECONDARY_COLOR
+          )
+        )
       })
     })
   })
