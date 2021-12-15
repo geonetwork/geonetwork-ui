@@ -16,6 +16,7 @@ export interface MapContextModel {
 export interface MapContextLayerModel {
   type: MapContextLayerTypeEnum
   url?: string
+  urls?: string[]
   name?: string
   data?: FeatureCollection
 }

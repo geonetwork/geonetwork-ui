@@ -37,13 +37,14 @@ export class MapContextService {
   }
 
   createLayer(layerModel: MapContextLayerModel): Layer {
-    const { type, url, name } = layerModel
+    const { type, url, urls, name } = layerModel
     const style = this.styleService.styles.default
     switch (type) {
       case MapContextLayerTypeEnum.XYZ:
         return new TileLayer({
           source: new XYZ({
             url,
+            urls,
           }),
         })
       case MapContextLayerTypeEnum.WMS:
