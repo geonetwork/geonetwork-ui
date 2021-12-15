@@ -6,6 +6,7 @@
     <div>
       <gn-ui-results-hits></gn-ui-results-hits>
       <gn-ui-results-list-container
+        [scrollableOptions]="scrollableOptions"
         (mdSelect)="onMetadataSelection($event)"
       ></gn-ui-results-list-container>
     </div>
