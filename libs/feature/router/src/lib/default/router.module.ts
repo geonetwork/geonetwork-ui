@@ -22,7 +22,7 @@ const ROUTES: Routes = [
     component: SearchRouteComponent,
   },
   {
-    path: 'metadata/:metadataUuid',
+    path: 'dataset/:metadataUuid',
     component: MetadataRouteComponent,
   },
 ]

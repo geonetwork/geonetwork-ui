@@ -34,7 +34,7 @@ export class RouterFacade {
       )
       .subscribe(() => {
         this.go({
-          path: `metadata/${metadata.uuid}`,
+          path: `dataset/${metadata.uuid}`,
         })
         this.store.dispatch(
           MdViewActions.setIncompleteMetadata({ incomplete: metadata })
