@@ -51,6 +51,7 @@ export class ElasticsearchService {
 
   getRelatedRecordPayload(
     title: string,
+    uuid: string,
     size: number = 6,
     _source = ES_SOURCE_SUMMARY
   ): EsSearchParams {
@@ -81,6 +82,7 @@ export class ElasticsearchService {
               },
             },
           ],
+          must_not: [{ wildcard: { uuid: uuid } }],
         },
       },
       size,

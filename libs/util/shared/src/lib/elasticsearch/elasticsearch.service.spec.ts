@@ -247,7 +247,7 @@ describe('ElasticsearchService', () => {
   describe('#getRelatedRecordPayload', () => {
     let payload
     beforeEach(() => {
-      payload = service.getRelatedRecordPayload('record title', 4)
+      payload = service.getRelatedRecordPayload('record title', 'some-uuid', 4)
     })
     it('returns ES payload', () => {
       expect(payload).toEqual({
@@ -289,6 +289,7 @@ describe('ElasticsearchService', () => {
                 },
               },
             ],
+            must_not: [{ wildcard: { uuid: 'some-uuid' } }],
           },
         },
         size: 4,
