@@ -6,7 +6,11 @@
   >
     <datahub-search-page></datahub-search-page>
   </div>
-  <div class="h-screen overflow-auto" *ngIf="isRecordOpened$ | async">
+  <div
+    id="record-page"
+    class="h-screen overflow-auto"
+    *ngIf="isRecordOpened$ | async"
+  >
     <datahub-record-page></datahub-record-page>
   </div>
 </div>
