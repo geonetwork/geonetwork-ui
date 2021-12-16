@@ -6,7 +6,7 @@
     [showTitle]="false"
     (selectValue)="selectLinkToDisplay($event)"
   ></gn-ui-dropdown-selector>
-  <div class="relative">
+  <div class="relative h-full">
     <gn-ui-table
       *ngIf="tableData$ | async"
       class="overflow-auto flex-grow"
