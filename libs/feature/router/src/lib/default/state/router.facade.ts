@@ -4,6 +4,7 @@ import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { RouterReducerState } from '@ngrx/router-store'
 import { select, Store } from '@ngrx/store'
 import { filter, take } from 'rxjs/operators'
+import { ROUTER_ROUTE_DATASET, ROUTER_ROUTE_SEARCH } from '../constants'
 import {
   backAction,
   forwardAction,
@@ -34,7 +35,7 @@ export class RouterFacade {
       )
       .subscribe(() => {
         this.go({
-          path: `dataset/${metadata.uuid}`,
+          path: `${ROUTER_ROUTE_DATASET}/${metadata.uuid}`,
         })
         this.store.dispatch(
           MdViewActions.setIncompleteMetadata({ incomplete: metadata })
@@ -44,7 +45,7 @@ export class RouterFacade {
 
   goToSearch() {
     this.go({
-      path: `search/`,
+      path: `${ROUTER_ROUTE_SEARCH}/`,
     })
   }
 
