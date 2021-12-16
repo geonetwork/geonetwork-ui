@@ -28,8 +28,8 @@ export class DataDownloadsComponent {
     switchMap((links) => {
       const wfsLinks = links.filter((link) => this.linkHelper.isWfsLink(link))
       const esriRestLinks = links
-        .filter(this.linkHelper.isEsriRestFeatureServer)
-        .flatMap(this.dataService.getDownloadLinksFromEsriRest)
+        .filter((link) => this.linkHelper.isEsriRestFeatureServer(link))
+        .flatMap((link) => this.dataService.getDownloadLinksFromEsriRest(link))
       const otherLinks = links
         .filter((link) => !/^OGC:WFS|ESRI:REST/.test(link.protocol))
         .map((link) =>
