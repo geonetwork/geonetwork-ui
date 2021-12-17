@@ -1,12 +1,18 @@
-import { NgModule } from '@angular/core'
+import { DOCUMENT } from '@angular/common'
+import { Inject, NgModule } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
-import { RouterModule } from '@angular/router'
+import { Event, Router, RouterModule, Scroll } from '@angular/router'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
-import { DefaultRouterModule } from '@geonetwork-ui/feature/router'
+import {
+  DefaultRouterModule,
+  ROUTER_ROUTE_DATASET,
+} from '@geonetwork-ui/feature/router'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { RESULTS_LAYOUT_CONFIG, UiSearchModule } from '@geonetwork-ui/ui/search'
+import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import {
   getDefaultLang,
   getLangFromBrowser,
@@ -14,8 +20,8 @@ import {
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import {
-  ThemeService,
   PROXY_PATH,
+  ThemeService,
   UtilSharedModule,
 } from '@geonetwork-ui/util/shared'
 import { EffectsModule } from '@ngrx/effects'
@@ -23,18 +29,17 @@ import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { storeFreeze } from 'ngrx-store-freeze'
+import { filter } from 'rxjs/operators'
 import { environment } from '../environments/environment'
 
 import { AppComponent } from './app.component'
 import { DATAHUB_RESULTS_LAYOUT_CONFIG } from './app.config'
-import { RecordPreviewDatahubComponent } from './search/record-preview-datahub/record-preview-datahub.component'
 import { HeaderBadgeButtonComponent } from './record/header-badge-button/header-badge-button.component'
-import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { HeaderRecordComponent } from './record/header-record/header-record.component'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { RecordPageComponent } from './record/record-page/record-page.component'
+import { RecordPreviewDatahubComponent } from './search/record-preview-datahub/record-preview-datahub.component'
 import { SearchHeaderComponent } from './search/search-header/search-header.component'
 import { SearchPageComponent } from './search/search-page/search-page.component'
-import { RecordPageComponent } from './record/record-page/record-page.component'
 
 export const metaReducers: MetaReducer[] = !environment.production
   ? [storeFreeze]
@@ -54,7 +59,6 @@ export const metaReducers: MetaReducer[] = !environment.production
     BrowserModule,
     RouterModule.forRoot([], {
       initialNavigation: 'enabledBlocking',
-      scrollPositionRestoration: 'enabled',
     }),
     StoreModule.forRoot({}, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
@@ -88,7 +92,11 @@ export const metaReducers: MetaReducer[] = !environment.production
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(translate: TranslateService) {
+  constructor(
+    translate: TranslateService,
+    router: Router,
+    @Inject(DOCUMENT) private document: Document
+  ) {
     translate.setDefaultLang(getDefaultLang())
     translate.use(getLangFromBrowser() || getDefaultLang())
     ThemeService.applyCssVariables(
@@ -105,5 +113,22 @@ export class AppModule {
       getThemeConfig().PRIMARY_COLOR,
       [10, 25]
     )
+
+    router.events
+      .pipe(filter((e: Event): e is Scroll => e instanceof Scroll))
+      .subscribe((e) => {
+        if (e.position) {
+          // backward navigation
+        } else {
+          if (e.routerEvent.url.startsWith(`/${ROUTER_ROUTE_DATASET}`)) {
+            const recordPageElement = document.getElementById('record-page')
+            if (recordPageElement) {
+              recordPageElement.scrollTo({
+                top: 0,
+              })
+            }
+          }
+        }
+      })
   }
 }

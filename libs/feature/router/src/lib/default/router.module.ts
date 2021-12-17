@@ -1,28 +1,29 @@
 import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core'
-import { ResultsLayoutConfigModel } from '@geonetwork-ui/ui/search'
-import { RouterFacade } from './state'
 import { RouterModule, Routes } from '@angular/router'
+import { EffectsModule } from '@ngrx/effects'
 import {
   DefaultRouterStateSerializer,
   routerReducer,
   StoreRouterConnectingModule,
 } from '@ngrx/router-store'
-import { RouterEffects } from './state/router.effects'
-import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import {
   MetadataRouteComponent,
+  ROUTER_ROUTE_DATASET,
+  ROUTER_ROUTE_SEARCH,
   ROUTER_STATE_KEY,
   SearchRouteComponent,
 } from './constants'
+import { RouterFacade } from './state'
+import { RouterEffects } from './state/router.effects'
 
 const ROUTES: Routes = [
   {
-    path: 'search',
+    path: ROUTER_ROUTE_SEARCH,
     component: SearchRouteComponent,
   },
   {
-    path: 'dataset/:metadataUuid',
+    path: `${ROUTER_ROUTE_DATASET}/:metadataUuid`,
     component: MetadataRouteComponent,
   },
 ]
