@@ -1,4 +1,7 @@
-<div class="w-72 h-96 overflow-hidden rounded-lg shadow-lg bg-white">
+<div
+  class="w-72 h-96 overflow-hidden rounded-lg shadow-lg bg-white cursor-pointer"
+  [routerLink]="['/dataset', record.uuid]"
+>
   <div class="h-52 bg-gray-100">
     <gn-ui-record-thumbnail
       class="h-52 w-full object-cover"
@@ -10,15 +13,13 @@
       {{ record.title }}
     </h4>
     <div>
-      <a
-        [routerLink]="['/dataset', record.uuid]"
-        class="cursor-pointer"
+      <button
         mat-raised-button
         [matTooltip]="'tooltip.url.open' | translate"
         matTooltipPosition="above"
       >
         <mat-icon class="align-middle text-secondary">open_in_new</mat-icon>
-      </a>
+      </button>
     </div>
   </div>
 </div>
