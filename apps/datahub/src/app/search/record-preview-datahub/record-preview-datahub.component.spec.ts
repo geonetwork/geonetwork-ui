@@ -1,3 +1,4 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 
@@ -11,6 +12,7 @@ describe('RecordPreviewDatahubComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [RecordPreviewDatahubComponent],
       imports: [UtilSharedModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents()
   })
 

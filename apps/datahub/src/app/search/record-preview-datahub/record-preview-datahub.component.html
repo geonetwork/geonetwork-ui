@@ -1,14 +1,13 @@
 <div class="flex record-item">
   <div class="publisher flex-shrink-0 mx-6 flex">
     <div
-      *ngIf="record.thumbnailUrl"
-      class="overflow-hidden border border-gray-500 rounded-lg w-full"
+      class="overflow-hidden bg-gray-100 rounded-lg w-full"
+      [class]="record.thumbnailUrl ? 'border border-gray-500' : ''"
     >
-      <img
+      <gn-ui-record-thumbnail
         class="relative h-full w-full object-cover object-left-top"
-        [src]="record.thumbnailUrl | safe: 'url'"
-        alt="thumbnail"
-      />
+        [thumbnailUrl]="record.thumbnailUrl"
+      ></gn-ui-record-thumbnail>
     </div>
   </div>
   <div class="content flex-grow mx-2 flex flex-col justify-between min-w-0">
