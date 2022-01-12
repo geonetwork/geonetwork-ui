@@ -614,5 +614,15 @@ describe('DataViewMapComponent', () => {
         expect(component.selection).toBeFalsy()
       })
     })
+    describe('changing the map context', () => {
+      beforeEach(() => {
+        jest.spyOn(component, 'resetSelection')
+        mdViewFacade.geoDataLinks$.next([])
+        mdViewFacade.mapApiLinks$.next([])
+      })
+      it('resets selection', () => {
+        expect(component.resetSelection).toHaveBeenCalled()
+      })
+    })
   })
 })

@@ -34,6 +34,7 @@ import {
   finalize,
   map,
   switchMap,
+  tap,
 } from 'rxjs/operators'
 import { DataService } from '../service/data.service'
 import { MdViewFacade } from '../state/mdview.facade'
@@ -113,7 +114,8 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
                   zoom: 5,
                 },
               } as MapContextModel)
-        )
+        ),
+        tap(() => this.resetSelection())
       )
     )
   )

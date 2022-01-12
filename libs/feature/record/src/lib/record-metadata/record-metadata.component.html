@@ -20,7 +20,7 @@
     class="uppercase font-medium tracking-wider"
     translate
   >
-    record.section.about
+    record.metadata.about
   </button>
   <button
     [disabled]="
@@ -30,7 +30,7 @@
     class="uppercase font-medium tracking-wider"
     translate
   >
-    record.section.preview
+    record.metadata.preview
   </button>
   <button
     [disabled]="(displayDownload$ | async) === false"
@@ -38,7 +38,7 @@
     class="uppercase font-medium tracking-wider"
     translate
   >
-    record.section.access
+    record.metadata.access
   </button>
   <button
     [disabled]="
@@ -50,7 +50,7 @@
     class="uppercase font-medium tracking-wider"
     translate
   >
-    record.section.links
+    record.metadata.links
   </button>
 </div>
 
@@ -86,7 +86,7 @@
     <div class="container-lg mx-auto">
       <div>
         <div class="text-28 font-title transform translate-y-10" translate>
-          record.section.preview
+          record.metadata.preview
         </div>
         <mat-tab-group
           (selectedIndexChange)="onTabIndexChange()"
@@ -125,28 +125,16 @@
 
 <div id="access" class="container-lg mx-auto">
   <div *ngIf="displayDownload$ | async">
-    <p class="font-title text-28 font-medium mt-12 mb-4" translate>
-      record.section.download
-    </p>
     <gn-ui-data-downloads class="block mt-5"></gn-ui-data-downloads>
   </div>
 </div>
 
 <div id="links" class="container-lg mx-auto">
   <div *ngIf="displayOtherLinks | async">
-    <p class="font-title text-28 font-medium mt-12 mb-4 text-primary" translate>
-      record.section.links
-    </p>
     <gn-ui-data-otherlinks class="block mt-5"></gn-ui-data-otherlinks>
   </div>
 
   <div *ngIf="displayApi$ | async">
-    <p
-      class="font-title text-28 font-medium mt-12 mb-6 text-secondary"
-      translate
-    >
-      record.section.api
-    </p>
     <gn-ui-data-apis class="block mt-6"></gn-ui-data-apis>
   </div>
 </div>
@@ -155,9 +143,6 @@
   <div>
     <div class="h-48 overflow-visible">
       <div class="container-lg mx-auto">
-        <p class="font-title text-28 font-medium mt-10 mb-4" translate>
-          record.section.related
-        </p>
         <gn-ui-related-records
           [records]="facade.related$ | async"
         ></gn-ui-related-records>
