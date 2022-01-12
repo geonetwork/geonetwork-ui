@@ -31,7 +31,21 @@ no path is defined.
 Please note that during development a proxy is provided by webpack on the `/dev-proxy?` url path. **It is
 not used by default in the Datahub app, you will have to set it up yourself.**
 
-## Using with Docker
+## Building without Docker
+
+Before building, remember to edit the configuration file in `conf/default.toml` to fit your deployment. It indicates the `geonetwork4_api_url` and an optional `proxy_path` to use.
+
+You can build the datahub app using the geonetwork-ui build command:
+
+```shell script
+npm run build -- datahub --prod
+```
+
+The build artifact will be stored in the `dist/apps/datahub` directory, that can be deployed on a common webserver. Use the `--prod` flag for a production build.
+
+The build also includes the app configuration file (`dist/apps/datahub/assets/configuration`). Do not modify the configuration file here, as it is overwritten on each build.
+
+## Building with Docker
 
 You can build a docker image of the Datahub application like so:
 
