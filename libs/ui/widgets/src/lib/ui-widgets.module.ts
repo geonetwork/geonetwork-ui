@@ -14,6 +14,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { PopupAlertComponent } from './popup-alert/popup-alert.component'
 import { BadgeComponent } from './badge/badge.component'
 import { MatIconModule } from '@angular/material/icon'
+import { SpinningLoaderComponent } from './spinning-loader/spinning-loader.component'
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { MatIconModule } from '@angular/material/icon'
     LoadingMaskComponent,
     PopupAlertComponent,
     BadgeComponent,
+    SpinningLoaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +44,7 @@ import { MatIconModule } from '@angular/material/icon'
     LoadingMaskComponent,
     PopupAlertComponent,
     BadgeComponent,
+    SpinningLoaderComponent,
   ],
 })
 export class UiWidgetsModule {}

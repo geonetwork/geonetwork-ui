@@ -21,6 +21,7 @@ import { TagInputModule } from 'ngx-chips'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ResultsListItemComponent } from './results-list-item/results-list-item.component'
+import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ResultsListItemComponent } from './results-list-item/results-list-item.
     ReactiveFormsModule,
     TagInputModule,
     UtilSharedModule,
+    UiWidgetsModule,
   ],
   exports: [
     RecordPreviewListComponent,
