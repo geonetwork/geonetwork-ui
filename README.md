@@ -132,6 +132,7 @@ GeoNetwork UI provides a standard way of configuring applications using the [con
 This file can be used to:
 
 - customize the URL used to reach the GeoNetwork 4 API
+- indicate an optional proxy path to the application
 - customize the theme used in the application (colors, fonts...)
 - define custom translations for the different languages
 
