@@ -131,7 +131,6 @@
   "results.sortBy.relevancy": "Relevancy",
   "search.field.any.placeholder": "Search datasets, services and maps ...",
   "search.field.sortBy": "Sort by",
-  "search.loading": "Loading ...",
   "table.loading.data": "Loading data...",
   "table.object.count": "objects in this dataset",
   "table.select.data": "Select the dataset to display",
