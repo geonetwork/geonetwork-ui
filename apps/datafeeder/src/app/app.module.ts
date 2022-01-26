@@ -10,8 +10,8 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { UploadDataComponent } from './presentation/components/upload-data/upload-data.component'
 import {
+  getDefaultLang,
   getLangFromBrowser,
-  getLangFromHtml,
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
@@ -86,7 +86,6 @@ export function apiConfigurationFactory() {
 })
 export class AppModule {
   constructor(translate: TranslateService) {
-    document.documentElement.lang = getLangFromBrowser()
-    translate.use(getLangFromHtml() || 'fr')
+    translate.use(getLangFromBrowser() || getDefaultLang())
   }
 }
