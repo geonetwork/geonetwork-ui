@@ -85,7 +85,7 @@ describe('ElasticsearchService', () => {
   })
 
   describe('#buildPayloadQuery', () => {
-    it('return OR separated query', () => {
+    it('return AND separated query', () => {
       const query = service['buildPayloadQuery'](
         {
           'tag.default': {
@@ -103,6 +103,11 @@ describe('ElasticsearchService', () => {
             {
               query_string: {
                 query: '(*) AND (tag.default:"world" tag.default:"vector")',
+              },
+            },
+            {
+              terms: {
+                isTemplate: ['n'],
               },
             },
           ],
@@ -198,19 +203,25 @@ describe('ElasticsearchService', () => {
           .buildAutocompletePayload('blarg')
           .toPromise()
         expect(payload).toEqual({
+          _source: ['id', 'title', 'resourceTitleObject', 'uuid'],
           query: {
             bool: {
               must: [
                 {
+                  terms: {
+                    isTemplate: ['n'],
+                  },
+                },
+                {
                   multi_match: {
-                    query: 'blarg',
-                    type: 'bool_prefix',
                     fields: [
                       'resourceTitleObject.*',
                       'resourceAbstractObject.*',
                       'tag',
                       'resourceIdentifier',
                     ],
+                    query: 'blarg',
+                    type: 'bool_prefix',
                   },
                 },
                 {
@@ -221,7 +232,6 @@ describe('ElasticsearchService', () => {
               ],
             },
           },
-          _source: ['id', 'title', 'resourceTitleObject', 'uuid'],
         })
       })
     })
@@ -294,6 +304,34 @@ describe('ElasticsearchService', () => {
         },
         size: 4,
       })
+    })
+  })
+
+  describe('#addTemplateClause', () => {
+    let payload
+    it('when array of templates', () => {
+      payload = service.addTemplateClause(['n', 's'])
+      expect(payload).toEqual({
+        terms: {
+          isTemplate: ['n', 's'],
+        },
+      })
+    })
+    it('when single template', () => {
+      payload = service.addTemplateClause('n')
+      expect(payload).toEqual({
+        terms: {
+          isTemplate: ['n'],
+        },
+      })
+    })
+    it('when undefined', () => {
+      payload = service.addTemplateClause(undefined)
+      expect(payload).toEqual({})
+    })
+    it('when empty array', () => {
+      payload = service.addTemplateClause([])
+      expect(payload).toEqual({})
     })
   })
 })
