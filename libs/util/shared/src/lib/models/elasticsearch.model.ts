@@ -33,5 +33,5 @@ export interface EsSearchParams {
 
 export type EsSearchResponse = any
 
-export type EsTemplateValues = 'y' | 'n' | 's'
+export type EsTemplateValues = 'y' | 'n' | 's' | 't'
 export type EsTemplateType = EsTemplateValues | EsTemplateValues[]
