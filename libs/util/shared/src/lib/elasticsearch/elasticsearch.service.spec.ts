@@ -86,34 +86,70 @@ describe('ElasticsearchService', () => {
   })
 
   describe('#buildPayloadQuery', () => {
-    it('return AND separated query', () => {
-      const query = service['buildPayloadQuery'](
-        {
-          'tag.default': {
-            world: true,
-            vector: true,
+    let any, searchFilters, querystring
+    describe('when any', () => {
+      beforeEach(() => {
+        any = 'river'
+      })
+      it('set multilingual + title boost query', () => {
+        searchFilters = {}
+        querystring = service['buildPayloadQuery'](
+          {
+            ...searchFilters,
+            any,
           },
-          any: '',
-        },
-        {}
-      )
-      expect(query).toEqual({
-        bool: {
-          filter: [],
-          must: [
-            {
-              query_string: {
-                fields: ES_QUERY_STRING_FIELDS,
-                query: '(*) AND (tag.default:"world" tag.default:"vector")',
+          {}
+        )
+        expect(querystring).toEqual({
+          bool: {
+            filter: [],
+            must: [
+              {
+                terms: {
+                  isTemplate: ['n'],
+                },
               },
-            },
-            {
-              terms: {
-                isTemplate: ['n'],
+              {
+                query_string: {
+                  fields: ES_QUERY_STRING_FIELDS,
+                  query:
+                    'any.\\*:(river) any.common:(river) resourceTitleObject.\\*:(river)^2',
+                },
               },
+            ],
+          },
+        })
+      })
+      describe('when search filters', () => {
+        it('merge any and filters with AND operation', () => {
+          searchFilters = { 'tag.default': { world: true, vector: true } }
+          querystring = service['buildPayloadQuery'](
+            {
+              ...searchFilters,
+              any,
             },
-          ],
-        },
+            {}
+          )
+          expect(querystring).toEqual({
+            bool: {
+              filter: [],
+              must: [
+                {
+                  terms: {
+                    isTemplate: ['n'],
+                  },
+                },
+                {
+                  query_string: {
+                    fields: ES_QUERY_STRING_FIELDS,
+                    query:
+                      'any.\\*:(river) any.common:(river) resourceTitleObject.\\*:(river)^2 AND (tag.default:"world" tag.default:"vector")',
+                  },
+                },
+              ],
+            },
+          })
+        })
       })
     })
   })

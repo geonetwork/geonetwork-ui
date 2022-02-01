@@ -104,26 +104,43 @@ export class ElasticsearchService {
       : undefined
   }
 
+  private injectLangInQueryString(querystring: string, lang: string) {
+    const queryLang = lang ? `lang${lang}` : '\\*'
+    return querystring.replace(/\$\{searchLang\}/g, queryLang)
+  }
+
   private buildPayloadQuery(
     { any, ...fieldSearchFilters }: SearchFilters,
     configFilters: StateConfigFilters
   ) {
     const queryFilters = this.stateFiltersToQueryString(fieldSearchFilters)
-    const queryAny = `(${any || '*'})`
-    const query =
-      queryAny + (queryFilters.length > 0 ? ` AND ${queryFilters}` : '')
+    //TODO: take it from config ?
+    const querystringPattern =
+      'any.${searchLang}:(${any}) any.common:(${any}) resourceTitleObject.${searchLang}:(${any})^2'
+    const lang = null
+
+    const must: any[] = [this.addTemplateClause('n')]
+    const querystringTokens = []
+    if (any) {
+      const escapeAny = this.escapeSpecialCharacters(any)
+      querystringTokens.push(
+        this.injectLangInQueryString(querystringPattern, lang).replace(
+          /\$\{any\}/g,
+          escapeAny
+        )
+      )
+    }
+    if (queryFilters.length > 0) {
+      querystringTokens.push(queryFilters)
+    }
+    if (querystringTokens.length > 0) {
+      const query = querystringTokens.join(' AND ')
+      must.push({ query_string: { query, fields: ES_QUERY_STRING_FIELDS } })
+    }
 
     return {
       bool: {
-        must: [
-          {
-            query_string: {
-              query,
-              fields: ES_QUERY_STRING_FIELDS,
-            },
-          },
-          this.addTemplateClause('n'),
-        ],
+        must,
         filter: this.buildPayloadFilter(configFilters),
       },
     }
