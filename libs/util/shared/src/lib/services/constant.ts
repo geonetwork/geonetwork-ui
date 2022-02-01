@@ -88,7 +88,9 @@ export const DEFAULT_UI_CONFIG = {
       paginationInfo: {
         hitsPerPage: 30,
       },
-      queryBase: 'any:(${any}) resourceTitleObject.default:(${any})^2',
+      queryBase:
+        'any.${searchLang}:(${any}) any.common:(${any}) resourceTitleObject.${searchLang}:(${any})^2',
+      queryTitle: 'resourceTitleObject.${searchLang}:(${any})',
       exactMatchToggle: true,
       scoreConfig: {
         boost: '5',
@@ -130,8 +132,8 @@ export const DEFAULT_UI_CONFIG = {
                   query: '',
                   type: 'bool_prefix',
                   fields: [
-                    'resourceTitleObject.*',
-                    'resourceAbstractObject.*',
+                    'resourceTitleObject.${searchLang}',
+                    'resourceAbstractObject.${searchLang}',
                     'tag',
                     'resourceIdentifier',
                   ],

@@ -188,6 +188,7 @@ export class ElasticsearchService {
   }
 
   buildAutocompletePayload(query: string): Observable<EsSearchParams> {
+    const lang = undefined
     return this.uiConf.pipe(
       map((config) => {
         const template = config.mods.search.autocompleteConfig
@@ -206,6 +207,9 @@ export class ElasticsearchService {
                 {
                   multi_match: {
                     ...template.query.bool.must[0].multi_match,
+                    fields: template.query.bool.must[0].multi_match.fields.map(
+                      (field) => this.injectLangInQueryString(field, lang)
+                    ),
                     query,
                   },
                 },
@@ -312,7 +316,7 @@ export class ElasticsearchService {
 
   private escapeSpecialCharacters(querystring) {
     return querystring.replace(
-      /(\+|-|&&|\|\||!|\{|\}|\[|\]\^|\~|\?|:|\\{1}|\(|\))/g,
+      /(\+|-|&&|\|\||!|\{|\}|\[|\]\^|~|\?|:|\\{1}|\(|\))/g,
       '\\$1'
     )
   }

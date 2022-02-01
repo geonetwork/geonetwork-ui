@@ -218,8 +218,8 @@ describe('ElasticsearchService', () => {
                     query: '',
                     type: 'bool_prefix',
                     fields: [
-                      'resourceTitleObject.*',
-                      'resourceAbstractObject.*',
+                      'resourceTitleObject.${searchLang}',
+                      'resourceAbstractObject.${searchLang}',
                       'tag',
                       'resourceIdentifier',
                     ],
@@ -253,8 +253,8 @@ describe('ElasticsearchService', () => {
                 {
                   multi_match: {
                     fields: [
-                      'resourceTitleObject.*',
-                      'resourceAbstractObject.*',
+                      'resourceTitleObject.\\*',
+                      'resourceAbstractObject.\\*',
                       'tag',
                       'resourceIdentifier',
                     ],
