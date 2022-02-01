@@ -305,4 +305,11 @@ export class ElasticsearchService {
     }
     return queryString
   }
+
+  private escapeSpecialCharacters(querystring) {
+    return querystring.replace(
+      /(\+|-|&&|\|\||!|\{|\}|\[|\]\^|\~|\?|:|\\{1}|\(|\))/g,
+      '\\$1'
+    )
+  }
 }
