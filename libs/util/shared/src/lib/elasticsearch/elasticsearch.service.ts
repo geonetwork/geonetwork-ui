@@ -3,6 +3,7 @@ import { Observable } from 'rxjs'
 import { map, take } from 'rxjs/operators'
 import {
   EsSearchParams,
+  EsTemplateType,
   RequestFields,
   SearchFilters,
   SortParams,
@@ -113,7 +114,7 @@ export class ElasticsearchService {
 
     return {
       bool: {
-        must: [{ query_string: { query } }],
+        must: [{ query_string: { query } }, this.addTemplateClause('n')],
         filter: this.buildPayloadFilter(configFilters),
       },
     }
@@ -150,6 +151,16 @@ export class ElasticsearchService {
     }
   }
 
+  addTemplateClause(value: EsTemplateType) {
+    return !value || value.length <= 0
+      ? {}
+      : {
+          terms: {
+            isTemplate: [...value],
+          },
+        }
+  }
+
   buildAutocompletePayload(query: string): Observable<EsSearchParams> {
     return this.uiConf.pipe(
       map((config) => {
@@ -165,6 +176,7 @@ export class ElasticsearchService {
             bool: {
               ...template.query.bool,
               must: [
+                this.addTemplateClause('n'),
                 {
                   multi_match: {
                     ...template.query.bool.must[0].multi_match,
