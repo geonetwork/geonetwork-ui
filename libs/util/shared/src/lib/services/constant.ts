@@ -143,8 +143,6 @@ export const DEFAULT_UI_CONFIG = {
           },
         },
         _source: ['resourceTitleObject'],
-        from: 0,
-        size: 20,
       },
       moreLikeThisConfig: {
         more_like_this: {
