@@ -204,16 +204,17 @@ export const DEFAULT_UI_CONFIG = {
             include: '[^^]+^?[^^]+',
           },
         },
-        'th_httpinspireeceuropaeumetadatacodelistPriorityDatasetPriorityDataset_tree.default': {
-          terms: {
-            field:
-              'th_httpinspireeceuropaeumetadatacodelistPriorityDatasetPriorityDataset_tree.default',
-            size: 100,
-            order: {
-              _key: 'asc',
+        'th_httpinspireeceuropaeumetadatacodelistPriorityDatasetPriorityDataset_tree.default':
+          {
+            terms: {
+              field:
+                'th_httpinspireeceuropaeumetadatacodelistPriorityDatasetPriorityDataset_tree.default',
+              size: 100,
+              order: {
+                _key: 'asc',
+              },
             },
           },
-        },
         'tag.default': {
           terms: {
             field: 'tag.default',

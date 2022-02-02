@@ -104,8 +104,13 @@ export class ElasticsearchService {
       : undefined
   }
 
-  private injectLangInQueryString(querystring: string, lang: string) {
-    const queryLang = lang ? `lang${lang}` : '\\*'
+  private injectLangInQueryString(
+    querystring: string,
+    lang: string,
+    escape = false
+  ) {
+    const escapeChar = escape ? '\\' : ''
+    const queryLang = lang ? `lang${lang}` : `${escapeChar}*`
     return querystring.replace(/\$\{searchLang\}/g, queryLang)
   }
 
@@ -124,7 +129,7 @@ export class ElasticsearchService {
     if (any) {
       const escapeAny = this.escapeSpecialCharacters(any)
       querystringTokens.push(
-        this.injectLangInQueryString(querystringPattern, lang).replace(
+        this.injectLangInQueryString(querystringPattern, lang, true).replace(
           /\$\{any\}/g,
           escapeAny
         )

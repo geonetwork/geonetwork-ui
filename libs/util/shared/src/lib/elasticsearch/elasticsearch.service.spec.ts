@@ -253,8 +253,8 @@ describe('ElasticsearchService', () => {
                 {
                   multi_match: {
                     fields: [
-                      'resourceTitleObject.\\*',
-                      'resourceAbstractObject.\\*',
+                      'resourceTitleObject.*',
+                      'resourceAbstractObject.*',
                       'tag',
                       'resourceIdentifier',
                     ],
