@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'
+import { LangService } from '@geonetwork-ui/util/i18n'
 import { WizardService } from '../../services/wizard.service'
 import { TranslateService } from '@ngx-translate/core'
 
@@ -28,7 +29,7 @@ export class WizardSummarizeComponent {
 
   get createdDate() {
     const time = this.wizardService.getWizardFieldData('datepicker')
-    const locale = this.translateService.currentLang
+    const locale = this.lang.iso2
 
     return new Date(Number(time)).toLocaleDateString(locale, {
       year: 'numeric',
@@ -54,6 +55,6 @@ export class WizardSummarizeComponent {
 
   constructor(
     private wizardService: WizardService,
-    private translateService: TranslateService
+    private lang: LangService
   ) {}
 }

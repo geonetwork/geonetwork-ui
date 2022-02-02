@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core'
-import { TranslateService } from '@ngx-translate/core'
 import { WizardFieldModel } from '../models/wizard-field.model'
 
 @Injectable({
@@ -12,7 +11,6 @@ export class WizardService {
   private id: string
   private storageKey: string
   configuration: WizardFieldModel[][]
-  constructor(private translateService: TranslateService) {}
 
   initialize(
     id: string,

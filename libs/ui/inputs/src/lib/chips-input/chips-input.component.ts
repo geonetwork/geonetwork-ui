@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core'
-import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n'
-import { TranslateService } from '@ngx-translate/core'
+import { LangService } from '@geonetwork-ui/util/i18n'
 import { Observable, of, Subject, Subscription } from 'rxjs'
 import { distinctUntilChanged, map, shareReplay, tap } from 'rxjs/operators'
 
@@ -45,16 +44,16 @@ export class ChipsInputComponent implements OnInit, OnDestroy {
       }
       const url = this.url(text)
 
-      const lang = LANG_2_TO_3_MAPPER[this.translate.currentLang]
+      const iso3 = this.lang.iso3
       return this.http
-        .get<any>(url.replace('${lang}', lang))
-        .pipe(map((item) => item.map((i) => i.values[lang])))
+        .get<any>(url.replace('${lang}', iso3))
+        .pipe(map((item) => item.map((i) => i.values[iso3])))
     } else {
       return of(this.autocompleteItems || [])
     }
   }
 
-  constructor(private http: HttpClient, private translate: TranslateService) {
+  constructor(private http: HttpClient, private lang: LangService) {
     this.rawChange = new Subject<Items[]>()
     this.itemsChange = this.rawChange.pipe(distinctUntilChanged())
     this.subscription = new Subscription()

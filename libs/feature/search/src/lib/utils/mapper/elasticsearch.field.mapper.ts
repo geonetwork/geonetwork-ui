@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core'
+import { LangService } from '@geonetwork-ui/util/i18n'
+import { TranslateService } from '@ngx-translate/core'
 import { LinkHelperService } from '../links/link-helper.service'
 import {
   getAsArray,
