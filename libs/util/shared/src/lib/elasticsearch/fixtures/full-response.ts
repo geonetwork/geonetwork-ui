@@ -125,6 +125,7 @@ export const ES_FIXTURE_FULL_RESPONSE = {
           resourceTitleObject: {
             default: 'Surval - Données par paramètre',
             langfre: 'Surval - Données par paramètre',
+            langeng: 'Surval - Data by parameter',
           },
           creationDateForResource: ['2012-01-01T00:00:00.000Z'],
           creationYearForResource: '2012',

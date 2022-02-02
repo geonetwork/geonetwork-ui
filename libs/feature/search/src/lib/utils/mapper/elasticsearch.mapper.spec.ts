@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing'
+import { LangService } from '@geonetwork-ui/util/i18n'
 import { ElasticsearchMapper } from './elasticsearch.mapper'
 import {
   hitsOnly,
@@ -11,6 +12,9 @@ const metadataUrlServiceMock = {
   translate: undefined,
   getUrl: () => 'url',
 }
+const langServiceMock = {
+  index: 'langfre',
+}
 describe('ElasticsearchMapper', () => {
   let service: ElasticsearchMapper
 
@@ -20,6 +24,10 @@ describe('ElasticsearchMapper', () => {
         {
           provide: MetadataUrlService,
           useValue: metadataUrlServiceMock,
+        },
+        {
+          provide: LangService,
+          useValue: langServiceMock,
         },
       ],
     })
@@ -31,15 +39,15 @@ describe('ElasticsearchMapper', () => {
   })
 
   describe('#toRecords', () => {
-    it('Output records', () => {
+    it('Output translated records', () => {
       const summary = service.toRecords(hitsOnly)
       expect(summary).toEqual([
         {
-          abstract: 'The grid is based on proposal ',
+          abstract: 'Description ',
           id: '12456',
           metadataUrl: 'url',
           thumbnailUrl: 'data:image/png;base64,',
-          title: 'EEA reference grid for Germany (10km), May 2013',
+          title: 'Titre FR',
           uuid: '20e9e1a1-83c1-4f13-89ef-c19767d6ee18f',
         },
         {

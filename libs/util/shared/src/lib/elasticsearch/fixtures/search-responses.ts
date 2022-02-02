@@ -96,6 +96,7 @@ export const hitsOnly: unknown = {
           resourceAbstractObject: {
             default: 'The grid is based on proposal ',
             langeng: 'The grid is based on proposal ',
+            langfre: 'Description ',
           },
           resourceTemporalDateRange: [
             {
@@ -110,6 +111,7 @@ export const hitsOnly: unknown = {
           resourceTitleObject: {
             default: 'EEA reference grid for Germany (10km), May 2013',
             langeng: 'EEA reference grid for Germany (10km), May 2013',
+            langfre: 'Titre FR',
           },
           logo: '/images/logos/e6826118-7280-4638-b1f9-d898e9efe281.png',
           id: '12456',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { LangService } from '@geonetwork-ui/util/i18n'
-import { TranslateService } from '@ngx-translate/core'
+import { MetadataRecord, MetadataUrlService } from '@geonetwork-ui/util/shared'
 import { LinkHelperService } from '../links/link-helper.service'
 import {
   getAsArray,
@@ -16,7 +16,6 @@ import {
   SourceWithUnknownProps,
   toDate,
 } from './atomic-operations'
-import { MetadataUrlService, MetadataRecord } from '@geonetwork-ui/util/shared'
 
 type ESResponseSource = SourceWithUnknownProps
 
@@ -31,7 +30,8 @@ type EsFieldMapperFn = (
 export class ElasticsearchFieldMapper {
   constructor(
     private metadataUrlService: MetadataUrlService,
-    private linkHelper: LinkHelperService
+    private linkHelper: LinkHelperService,
+    private lang: LangService
   ) {}
 
   protected fields: Record<string, EsFieldMapperFn> = {
@@ -47,14 +47,14 @@ export class ElasticsearchFieldMapper {
     resourceTitleObject: (output, source) => ({
       ...output,
       title: selectFallback(
-        selectTranslatedField(source, 'resourceTitleObject'),
+        this.selectTranslatedField(source, 'resourceTitleObject'),
         'no title'
       ),
     }),
     resourceAbstractObject: (output, source) => ({
       ...output,
       abstract: selectFallback(
-        selectTranslatedField(source, 'resourceAbstractObject'),
+        this.selectTranslatedField(source, 'resourceAbstractObject'),
         'no title'
       ),
     }),
@@ -73,13 +73,13 @@ export class ElasticsearchFieldMapper {
     }),
     cl_status: (output, source) => ({
       ...output,
-      updateStatus: selectTranslatedValue(
+      updateStatus: this.selectTranslatedValue(
         getFirstValue(selectField(source, 'cl_status'))
       ),
     }),
     cl_maintenanceAndUpdateFrequency: (output, source) => ({
       ...output,
-      updateFrequency: selectTranslatedValue(
+      updateFrequency: this.selectTranslatedValue(
         getFirstValue(selectField(source, 'cl_maintenanceAndUpdateFrequency'))
       ),
     }),
@@ -124,23 +124,32 @@ export class ElasticsearchFieldMapper {
       ...output,
       keywords: getAsArray(
         selectField<SourceWithUnknownProps[]>(source, 'tag')
-      ).map((tag) => selectTranslatedValue<string>(tag)),
+      ).map((tag) => this.selectTranslatedValue<string>(tag)),
     }),
     MD_ConstraintsUseLimitationObject: (output, source) => ({
       ...output,
-      usageConstraints: selectTranslatedValue(
+      usageConstraints: this.selectTranslatedValue(
         getFirstValue(selectField(source, 'MD_ConstraintsUseLimitationObject'))
       ),
     }),
     lineageObject: (output, source) => ({
       ...output,
-      lineage: selectTranslatedField(source, 'lineageObject'),
+      lineage: this.selectTranslatedField(source, 'lineageObject'),
     }),
     mainLanguage: (output) => output,
   }
 
   private genericField = (output) => output
 
+  selectTranslatedField<T>(
+    source: SourceWithUnknownProps,
+    fieldName: string
+  ): T | null {
+    return selectTranslatedField(source, fieldName, this.lang.index)
+  }
+  selectTranslatedValue<T>(source: SourceWithUnknownProps): T | null {
+    return selectTranslatedValue(source, this.lang.index)
+  }
   getMappingFn(fieldName: string) {
     return fieldName in this.fields ? this.fields[fieldName] : this.genericField
   }
