@@ -68,6 +68,8 @@ export const metaReducers: MetaReducer[] = !environment.production
     FeatureSearchModule,
     DefaultRouterModule.forRoot({
       searchStateId: 'mainSearch',
+      searchRouteComponent: SearchPageComponent,
+      recordRouteComponent: RecordPageComponent,
     }),
     FeatureRecordModule,
     UiSearchModule,

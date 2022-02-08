@@ -1,5 +1,9 @@
-import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core'
-import { RouterModule, Routes } from '@angular/router'
+import {
+  InjectionToken,
+  ModuleWithProviders,
+  NgModule,
+  Type,
+} from '@angular/core'
 import { EffectsModule } from '@ngrx/effects'
 import {
   DefaultRouterStateSerializer,
@@ -7,29 +11,15 @@ import {
   StoreRouterConnectingModule,
 } from '@ngrx/router-store'
 import { StoreModule } from '@ngrx/store'
-import {
-  MetadataRouteComponent,
-  ROUTER_ROUTE_DATASET,
-  ROUTER_ROUTE_SEARCH,
-  ROUTER_STATE_KEY,
-  SearchRouteComponent,
-} from './constants'
+import { ROUTER_STATE_KEY } from './constants'
+import { RouterInitService } from './router-init.service'
 import { RouterFacade } from './state'
 import { RouterEffects } from './state/router.effects'
 
-const ROUTES: Routes = [
-  {
-    path: ROUTER_ROUTE_SEARCH,
-    component: SearchRouteComponent,
-  },
-  {
-    path: `${ROUTER_ROUTE_DATASET}/:metadataUuid`,
-    component: MetadataRouteComponent,
-  },
-]
-
 export interface RouterConfigModel {
   searchStateId: string
+  searchRouteComponent: Type<any>
+  recordRouteComponent: Type<any>
 }
 export const ROUTER_CONFIG = new InjectionToken<RouterConfigModel>(
   'router.config'
@@ -37,7 +27,6 @@ export const ROUTER_CONFIG = new InjectionToken<RouterConfigModel>(
 
 @NgModule({
   imports: [
-    RouterModule.forChild(ROUTES),
     StoreModule.forFeature(ROUTER_STATE_KEY, routerReducer),
     StoreRouterConnectingModule.forRoot({
       stateKey: ROUTER_STATE_KEY,
@@ -48,6 +37,10 @@ export const ROUTER_CONFIG = new InjectionToken<RouterConfigModel>(
   providers: [RouterFacade],
 })
 export class DefaultRouterModule {
+  constructor(private routerInit: RouterInitService) {
+    this.routerInit.initRoutes()
+  }
+
   static forRoot(
     config: RouterConfigModel
   ): ModuleWithProviders<DefaultRouterModule> {
