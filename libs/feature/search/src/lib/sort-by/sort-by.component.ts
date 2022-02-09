@@ -33,7 +33,9 @@ export class SortByComponent {
     if (typeof criteria === 'string') {
       this.facade.setSortBy(criteria)
     } else {
-      throw new Error(`Unexpected value received: ${criteria}`)
+      throw new Error(
+        `Unexpected SortBy value received: ${JSON.stringify(criteria)}`
+      )
     }
   }
 }
