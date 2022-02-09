@@ -1,6 +1,7 @@
 module.exports = {
+  mode: 'jit',
   purge: {
-    enabled: process.env.TAILWIND_MODE === 'build',
+    enabled: true,
   },
   darkMode: false, // or 'media' or 'class',
   theme: {
