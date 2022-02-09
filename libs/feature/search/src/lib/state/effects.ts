@@ -157,7 +157,9 @@ export class SearchEffects {
     return updateTermAction$.pipe(
       switchMap((action) =>
         this.authService.authReady().pipe(
-          withLatestFrom(this.store$.pipe(select(getSearchStateSearch))),
+          withLatestFrom(
+            this.store$.pipe(select(getSearchStateSearch, action.id))
+          ),
           switchMap(([, state]) =>
             this.searchService.search(
               'bucket',
