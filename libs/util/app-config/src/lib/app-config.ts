@@ -83,7 +83,7 @@ export function loadAppConfig() {
       let parsed
       try {
         parsed = TOML.parse(conf, { joiner: '\n', bigint: false }) as any
-      } catch (e) {
+      } catch (e: any) {
         throw new Error(
           `An error occurred when parsing the configuration file: ${e.message}`
         )
