@@ -1,10 +1,14 @@
-import { NgModule } from '@angular/core'
+import { DOCUMENT } from '@angular/common'
+import { Inject, NgModule } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
-import { RouterModule } from '@angular/router'
+import { Event, Router, RouterModule, Scroll } from '@angular/router'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
-import { DefaultRouterModule } from '@geonetwork-ui/feature/router'
+import {
+  DefaultRouterModule,
+  ROUTER_ROUTE_DATASET,
+} from '@geonetwork-ui/feature/router'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { RESULTS_LAYOUT_CONFIG, UiSearchModule } from '@geonetwork-ui/ui/search'
@@ -24,6 +28,7 @@ import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { filter } from 'rxjs/operators'
 import { environment } from '../environments/environment'
 
 import { AppComponent } from './app.component'

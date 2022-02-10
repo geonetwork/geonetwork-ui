@@ -8,7 +8,7 @@ export interface InfiniteScrollModel {
 }
 
 export const InfiniteScrollOptionsDefault = {
-  distance: 1,
+  distance: 2,
   upDistance: 2,
   throttle: 300,
   disabled: false,
