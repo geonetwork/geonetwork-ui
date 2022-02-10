@@ -3,7 +3,7 @@ import { MdViewActions } from '@geonetwork-ui/feature/record'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { RouterReducerState } from '@ngrx/router-store'
 import { select, Store } from '@ngrx/store'
-import { filter, take } from 'rxjs/operators'
+import { filter, pluck, take } from 'rxjs/operators'
 import { ROUTER_ROUTE_DATASET, ROUTER_ROUTE_SEARCH } from '../constants'
 import {
   backAction,
@@ -24,6 +24,11 @@ export class RouterFacade {
   queryParams$ = this.store.pipe(select(selectQueryParams))
   pathParams$ = this.store.pipe(select(selectRouteParams))
   fullUrl$ = this.store.pipe(select(selectUrl))
+
+  anySearch$ = this.queryParams$.pipe(
+    filter((params) => !!params.q),
+    pluck('q')
+  )
 
   constructor(private store: Store<RouterReducerState>) {}
 
