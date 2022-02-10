@@ -43,15 +43,14 @@ export class AutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatAutocompleteTrigger) triggerRef: MatAutocompleteTrigger
   @ViewChild(MatAutocomplete) autocomplete: MatAutocomplete
   @ViewChild('searchInput') inputRef: ElementRef<HTMLInputElement>
-  selectionSubject = new ReplaySubject<MatAutocompleteSelectedEvent>(1)
 
   searching: boolean
   suggestions$: Observable<AutcompleteItem[]>
   control = new FormControl()
   subscription = new Subscription()
   cancelEnter = true
+  selectionSubject = new ReplaySubject<MatAutocompleteSelectedEvent>(1)
 
-  @Input() itemToStringFn: (AutcompleteItem) => string = (item) => item
   @Input() displayWithFn: (AutcompleteItem) => string = (item) => item
 
   ngOnInit(): void {
