@@ -4,6 +4,7 @@ import {
   NgModule,
   Type,
 } from '@angular/core'
+import { RouteReuseStrategy } from '@angular/router'
 import { EffectsModule } from '@ngrx/effects'
 import {
   DefaultRouterStateSerializer,
@@ -13,6 +14,7 @@ import {
 import { StoreModule } from '@ngrx/store'
 import { ROUTER_STATE_KEY } from './constants'
 import { RouterInitService } from './router-init.service'
+import { SearchRouteReuseStrategy } from './SearchRouteReuseStrategy'
 import { RouterFacade } from './state'
 import { RouterEffects } from './state/router.effects'
 
@@ -34,7 +36,13 @@ export const ROUTER_CONFIG = new InjectionToken<RouterConfigModel>(
     }),
     EffectsModule.forFeature([RouterEffects]),
   ],
-  providers: [RouterFacade],
+  providers: [
+    RouterFacade,
+    {
+      provide: RouteReuseStrategy,
+      useClass: SearchRouteReuseStrategy,
+    },
+  ],
 })
 export class DefaultRouterModule {
   constructor(private routerInit: RouterInitService) {
