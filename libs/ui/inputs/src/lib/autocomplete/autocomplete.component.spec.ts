@@ -147,6 +147,39 @@ describe('AutocompleteComponent', () => {
     })
   })
 
+  describe('#handleSelection', () => {
+    let selectionEmitted
+    const selectionEvent: any = {
+      option: {
+        value: 'first',
+      },
+    }
+    describe('when true', () => {
+      beforeEach(() => {
+        component.clearOnSelection = true
+        component.itemSelected.subscribe((event) => (selectionEmitted = event))
+        fixture.detectChanges()
+        component.handleSelection(selectionEvent)
+      })
+      it('set cancelEnter to true', () => {
+        expect(component.cancelEnter).toBe(true)
+      })
+      it('emits selection event', () => {
+        expect(selectionEmitted).toEqual('first')
+      })
+      describe('if clear on selection', () => {
+        it('set input value to last entered text', () => {
+          component.control.setValue('second')
+          component.handleSelection(selectionEvent)
+          expect(component.inputRef.nativeElement.value).toEqual('second')
+          component.control.setValue({ title: 'third' })
+          component.handleSelection(selectionEvent)
+          expect(component.inputRef.nativeElement.value).toEqual('second')
+        })
+      })
+    })
+  })
+
   afterEach(() => {
     jest.clearAllTimers()
   })
