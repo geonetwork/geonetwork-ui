@@ -48,9 +48,10 @@ export class RouterFacade {
       })
   }
 
-  goToSearch() {
+  goToSearch(q?: string) {
     this.go({
       path: `${ROUTER_ROUTE_SEARCH}/`,
+      ...(q && { query: { q } }),
     })
   }
 
