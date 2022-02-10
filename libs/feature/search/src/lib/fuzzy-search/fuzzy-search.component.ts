@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
@@ -8,7 +7,10 @@ import {
   ViewChild,
 } from '@angular/core'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
-import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  AutcompleteItem,
+  AutocompleteComponent,
+} from '@geonetwork-ui/ui/inputs'
 import {
   ElasticsearchService,
   EsSearchResponse,
@@ -24,12 +26,27 @@ import { ElasticsearchMapper } from '../utils/mapper'
   styleUrls: ['./fuzzy-search.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FuzzySearchComponent implements AfterViewInit {
+export class FuzzySearchComponent {
+  @Input() initialValue?: MetadataRecord
   @ViewChild(AutocompleteComponent) autocomplete: AutocompleteComponent
   @Output() itemSelected = new EventEmitter<MetadataRecord>()
   @Output() inputSubmited = new EventEmitter<string>()
-  @Input() displayWithFn: (MetadataRecord) => string = (record) => record?.title
-  itemToStringFn = (record: MetadataRecord) => record?.title
+  displayWithFn: (MetadataRecord) => string = (record) => record?.title
+
+  autoCompleteAction = (query) =>
+    this.esService
+      .buildAutocompletePayload(query)
+      .pipe(
+        switchMap((payload) =>
+          this.searchService
+            .search('bucket', JSON.stringify(payload))
+            .pipe(
+              map((response: EsSearchResponse) =>
+                this.esMapper.toRecords(response)
+              )
+            )
+        )
+      )
 
   constructor(
     private searchFacade: SearchFacade,
@@ -38,34 +55,18 @@ export class FuzzySearchComponent implements AfterViewInit {
     private esService: ElasticsearchService
   ) {}
 
-  ngAfterViewInit(): void {
-    this.autocomplete.action = (query) =>
-      this.esService
-        .buildAutocompletePayload(query)
-        .pipe(
-          switchMap((payload) =>
-            this.searchService
-              .search('bucket', JSON.stringify(payload))
-              .pipe(
-                map((response: EsSearchResponse) =>
-                  this.esMapper.toRecords(response)
-                )
-              )
-          )
-        )
-  }
-
   /**
    * Emit the event if the parent component has subscribed to it, so it
    * can define the correct behavior. If no component is listening to that
    * event, then apply the default behavior
    * @param item
    */
-  handleItemSelection(item: MetadataRecord) {
+  handleItemSelection(item: AutcompleteItem) {
+    const record = item as MetadataRecord
     if (this.itemSelected.observers.length > 0) {
-      this.itemSelected.emit(item)
+      this.itemSelected.emit(record)
     } else {
-      this.searchFacade.setFilters({ any: item.title })
+      this.searchFacade.setFilters({ any: record.title })
     }
   }
 

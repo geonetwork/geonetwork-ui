@@ -33,7 +33,7 @@ describe('ResultsListContainerComponent', () => {
   let items: DebugElement[]
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [ResultsListContainerComponent, ResultsListMockComponent],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
