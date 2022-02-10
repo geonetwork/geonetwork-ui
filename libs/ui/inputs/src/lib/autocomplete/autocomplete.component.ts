@@ -38,6 +38,7 @@ export type AutcompleteItem = unknown
 export class AutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() placeholder: string
   @Input() action: (value: string) => Observable<AutcompleteItem[]>
+  @Input() initialValue?: AutcompleteItem
   @Output() itemSelected = new EventEmitter<AutcompleteItem>()
   @Output() inputSubmited = new EventEmitter<string>()
   @ViewChild(MatAutocompleteTrigger) triggerRef: MatAutocompleteTrigger
@@ -67,6 +68,7 @@ export class AutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
         this.cancelEnter = false
       }
     })
+    this.initInput(this.initialValue)
   }
 
   ngAfterViewInit(): void {
@@ -75,6 +77,13 @@ export class AutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe()
+  }
+
+  initInput(value: AutcompleteItem) {
+    if (value) {
+      this.control.setValue(value)
+    }
+    this.inputSubmited.emit(this.displayWithFn(value) || '')
   }
 
   clear(): void {
