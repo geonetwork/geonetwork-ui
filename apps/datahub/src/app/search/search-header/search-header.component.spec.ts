@@ -14,7 +14,7 @@ class RouterFacadeMock {
   anySearch$ = new BehaviorSubject('scot')
 }
 class SearchFacadeMock {}
-
+/* eslint-disable */
 @Component({
   selector: 'gn-ui-fuzzy-search',
   template: '',
@@ -22,6 +22,7 @@ class SearchFacadeMock {}
 class FuzzySearchComponentMock {
   @Input() initialValue?: MetadataRecord
 }
+/* eslint-enable */
 
 describe('HeaderComponent', () => {
   let component: SearchHeaderComponent
