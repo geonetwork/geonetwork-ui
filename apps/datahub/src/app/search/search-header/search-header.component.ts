@@ -3,6 +3,7 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { map, take } from 'rxjs/operators'
 
 marker('datahub.header.myfavorites')
 marker('datahub.header.connex')
@@ -16,23 +17,26 @@ marker('datahub.header.popularRecords')
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchHeaderComponent {
-  autocompleteDisplayWithFn = () => ''
+  searchInputRouteValue$ = this.routerFacade.anySearch$.pipe(
+    take(1),
+    map((any) => ({ title: any }))
+  )
 
   constructor(
-    private searchRouter: RouterFacade,
+    private routerFacade: RouterFacade,
     private searchFacade: SearchFacade
   ) {}
 
   onFuzzySearchSelection(record: MetadataRecord) {
-    this.searchRouter.goToMetadata(record)
+    this.routerFacade.goToMetadata(record)
   }
 
-  onFuzzySearchSubmission() {
-    this.searchRouter.goToSearch()
+  onFuzzySearchSubmission(any: string) {
+    this.routerFacade.goToSearch(any)
   }
 
   onDatasetsClick(): void {
-    this.searchRouter.goToSearch()
+    this.routerFacade.goToSearch()
     this.resetSearch()
   }
 

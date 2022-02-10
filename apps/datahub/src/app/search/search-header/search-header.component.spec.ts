@@ -1,16 +1,27 @@
+import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { By } from '@angular/platform-browser'
+import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { TranslateModule } from '@ngx-translate/core'
+import { BehaviorSubject } from 'rxjs'
 
 import { SearchHeaderComponent } from './search-header.component'
-import { RouterTestingModule } from '@angular/router/testing'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { RouterFacade } from '@geonetwork-ui/feature/router'
-import { TranslateModule } from '@ngx-translate/core'
 
 class RouterFacadeMock {
   goToMetadata = jest.fn()
+  anySearch$ = new BehaviorSubject('scot')
 }
 class SearchFacadeMock {}
+
+@Component({
+  selector: 'gn-ui-fuzzy-search',
+  template: '',
+})
+class FuzzySearchComponentMock {
+  @Input() initialValue?: MetadataRecord
+}
 
 describe('HeaderComponent', () => {
   let component: SearchHeaderComponent
@@ -18,8 +29,8 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, TranslateModule.forRoot()],
-      declarations: [SearchHeaderComponent],
+      imports: [TranslateModule.forRoot()],
+      declarations: [SearchHeaderComponent, FuzzySearchComponentMock],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
@@ -42,5 +53,14 @@ describe('HeaderComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  describe('search route paramter', () => {
+    it('passed to fuzzy search as AutoComplete item object', () => {
+      const fuzzyCpt = fixture.debugElement.query(
+        By.directive(FuzzySearchComponentMock)
+      ).componentInstance
+      expect(fuzzyCpt.initialValue).toEqual({ title: 'scot' })
+    })
   })
 })
