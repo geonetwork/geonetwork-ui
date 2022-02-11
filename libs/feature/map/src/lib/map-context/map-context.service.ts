@@ -17,6 +17,7 @@ import VectorSource from 'ol/source/Vector'
 import { MapUtilsService } from '../utils/map-utils.service'
 import { bbox as bboxStrategy } from 'ol/loadingstrategy'
 import GeoJSON from 'ol/format/GeoJSON'
+import { MapConfig } from '@geonetwork-ui/util/app-config'
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,14 @@ export class MapContextService {
     private styleService: MapStyleService
   ) {}
 
-  resetMapFromContext(map: Map, mapContext: MapContextModel): Map {
+  resetMapFromContext(
+    map: Map,
+    mapContext: MapContextModel,
+    mapConfig?: MapConfig
+  ): Map {
+    if (mapConfig) {
+      mapContext = this.mergeMapConfigWithContext(mapContext, mapConfig)
+    }
     if (mapContext.view) {
       map.setView(this.createView(mapContext.view))
     }
@@ -81,12 +89,28 @@ export class MapContextService {
   }
 
   createView(viewModel: MapContextViewModel): View {
-    const { center, zoom } = viewModel
+    const { center, zoom, maxZoom } = viewModel
     return new View({
       center,
       zoom,
-      multiWorld: true,
+      maxZoom,
+      multiWorld: false,
       constrainResolution: true,
     })
+  }
+
+  mergeMapConfigWithContext(
+    mapContext: MapContextModel,
+    mapConfig: MapConfig
+  ): MapContextModel {
+    return {
+      ...mapContext,
+      view: {
+        ...mapContext.view,
+        ...(mapConfig.MAX_ZOOM && {
+          maxZoom: mapConfig.MAX_ZOOM,
+        }),
+      },
+    }
   }
 }

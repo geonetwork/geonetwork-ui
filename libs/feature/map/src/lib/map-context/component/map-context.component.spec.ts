@@ -77,13 +77,15 @@ describe('MapContextComponent', () => {
   describe('with initial value', () => {
     beforeEach(() => {
       component.context = MAP_CTX_FIXTURE
+      component.mapConfig = MAP_CONFIG_FIXTURE
       fixture.detectChanges()
       component.ngOnChanges({})
     })
     it('reset the map from context', () => {
       expect(mapContextService.resetMapFromContext).toHaveBeenCalledWith(
         expect.any(OpenLayersMapMock),
-        MAP_CTX_FIXTURE
+        MAP_CTX_FIXTURE,
+        MAP_CONFIG_FIXTURE
       )
     })
   })
@@ -102,6 +104,7 @@ describe('MapContextComponent', () => {
   describe('no initial value, two values afterwards', () => {
     beforeEach(() => {
       component.context = null
+      component.mapConfig = MAP_CONFIG_FIXTURE
       fixture.detectChanges()
       component.ngOnChanges({})
       component.context = { ...MAP_CTX_FIXTURE }
@@ -112,7 +115,8 @@ describe('MapContextComponent', () => {
     it('reset the map from context twice', () => {
       expect(mapContextService.resetMapFromContext).toHaveBeenCalledWith(
         expect.any(OpenLayersMapMock),
-        MAP_CTX_FIXTURE
+        MAP_CTX_FIXTURE,
+        MAP_CONFIG_FIXTURE
       )
       expect(mapContextService.resetMapFromContext).toHaveBeenCalledTimes(2)
     })
@@ -145,6 +149,7 @@ describe('MapContextComponent', () => {
       describe('after change detection and when map has a size', () => {
         beforeEach(() => {
           component.context = MAP_CTX_EXTENT
+          component.mapConfig = MAP_CONFIG_FIXTURE
           component.ngOnChanges({ context: MAP_CTX_EXTENT })
           resizeCallBack()
         })

@@ -16,6 +16,16 @@ export function getGlobalConfig(): GlobalConfig {
   return globalConfig
 }
 
+export interface MapConfig {
+  MAX_ZOOM?: number
+}
+let mapConfig: MapConfig = null
+
+export function getMapConfig(): MapConfig {
+  if (mapConfig === null) throw new Error(MISSING_CONFIG_ERROR)
+  return mapConfig
+}
+
 interface ThemeConfig {
   PRIMARY_COLOR: string
   SECONDARY_COLOR: string
@@ -70,14 +80,14 @@ export function loadAppConfig() {
     .then((conf) => {
       let parsed
       try {
-        parsed = TOML.parse(conf, { joiner: '\n' }) as any
+        parsed = TOML.parse(conf, { joiner: '\n', bigint: false }) as any
       } catch (e) {
         throw new Error(
           `An error occurred when parsing the configuration file: ${e.message}`
         )
       }
 
-      const { global, theme, translations: translationsNested } = parsed
+      const { global, map, theme, translations: translationsNested } = parsed
       const errors = []
       const warnings = []
 
@@ -92,6 +102,15 @@ export function loadAppConfig() {
       } else if (globalCheck.unrecognized.length) {
         warnings.push(
           `In the [global] section: ${globalCheck.unrecognized.join(', ')}`
+        )
+      }
+
+      const mapCheck = checkKeys(map || {}, [], ['max_zoom'])
+      if (mapCheck.missing.length) {
+        errors.push(`In the [map] section: ${mapCheck.missing.join(', ')}`)
+      } else if (mapCheck.unrecognized.length) {
+        warnings.push(
+          `In the [map] section: ${mapCheck.unrecognized.join(', ')}`
         )
       }
 
@@ -135,6 +154,11 @@ ${warnings.join('\n')}`)
         GN4_API_URL: global.geonetwork4_api_url,
         PROXY_PATH: global.proxy_path,
       }
+      mapConfig = map
+        ? {
+            MAX_ZOOM: map.max_zoom,
+          }
+        : {}
       themeConfig = {
         PRIMARY_COLOR: theme.primary_color,
         SECONDARY_COLOR: theme.secondary_color,

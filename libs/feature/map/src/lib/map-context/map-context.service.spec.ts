@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { TestBed } from '@angular/core/testing'
+import { MAP_CONFIG_FIXTURE } from '@geonetwork-ui/util/app-config'
 import TileLayer from 'ol/layer/Tile'
 import VectorLayer from 'ol/layer/Vector'
 import Map from 'ol/Map'
@@ -136,28 +137,42 @@ describe('MapContextService', () => {
       expect(center).toEqual(viewModel.center)
     })
     it('set zoom', () => {
-      const center = view.getZoom()
-      expect(center).toEqual(viewModel.zoom)
+      const zoom = view.getZoom()
+      expect(zoom).toEqual(viewModel.zoom)
     })
   })
   describe('#resetMapFromContext', () => {
-    const map = new Map({})
-    const mapContext = MAP_CTX_FIXTURE
-    beforeEach(() => {
-      service.resetMapFromContext(map, mapContext)
+    describe('without config', () => {
+      const map = new Map({})
+      const mapContext = MAP_CTX_FIXTURE
+      beforeEach(() => {
+        service.resetMapFromContext(map, mapContext)
+      })
+      it('create a map', () => {
+        expect(map).toBeTruthy()
+        expect(map).toBeInstanceOf(Map)
+      })
+      it('add layers', () => {
+        const layers = map.getLayers().getArray()
+        expect(layers.length).toEqual(3)
+      })
+      it('set view', () => {
+        const view = map.getView()
+        expect(view).toBeTruthy()
+        expect(view).toBeInstanceOf(View)
+      })
     })
-    it('create a map', () => {
-      expect(map).toBeTruthy()
-      expect(map).toBeInstanceOf(Map)
-    })
-    it('add layers', () => {
-      const layers = map.getLayers().getArray()
-      expect(layers.length).toEqual(3)
-    })
-    it('set view', () => {
-      const view = map.getView()
-      expect(view).toBeTruthy()
-      expect(view).toBeInstanceOf(View)
+    describe('with config', () => {
+      const map = new Map({})
+      const mapContext = MAP_CTX_FIXTURE
+      const mapConfig = MAP_CONFIG_FIXTURE
+      beforeEach(() => {
+        service.resetMapFromContext(map, mapContext, mapConfig)
+      })
+      it('set maxZoom', () => {
+        const maxZoom = map.getView().getMaxZoom()
+        expect(maxZoom).toBe(10)
+      })
     })
   })
 })

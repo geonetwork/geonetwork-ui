@@ -11,6 +11,10 @@ geonetwork4_api_url = "/geonetwork/srv/api"
 # This is an optional parameter: leave empty to disable proxy usage
 proxy_path = ""
 
+### MAP SETTINGS
+[map]
+max_zoom = 10
+
 ### VISUAL THEME
 
 # All parameters are expressed in CSS format, see:

@@ -24,5 +24,6 @@ export interface MapContextLayerModel {
 export interface MapContextViewModel {
   center: number[] //expressed in map projection (EPSG:3857)
   zoom: number
+  maxZoom?: number
 }
 export type MapContextExtentModel = number[] //expressed in map projection (EPSG:3857)

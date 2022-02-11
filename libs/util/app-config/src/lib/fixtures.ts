@@ -3,6 +3,9 @@ export const CONFIG_WITH_TRANSLATIONS = `
 geonetwork4_api_url = "/geonetwork/srv/api"
 proxy_path = "/proxy/?url="
 
+[map]
+max_zoom = 10
+
 [theme]
 primary_color = "#093564"
 secondary_color = "#c2e9dc"
@@ -25,3 +28,7 @@ my.first.key = 'Erste Etikett.'
 my.sample.text = "Un bon exemple de texte."
 "my.quoted.text" = 'du texte entre guillements.'
 `
+
+export const MAP_CONFIG_FIXTURE = {
+  MAX_ZOOM: 10,
+}
