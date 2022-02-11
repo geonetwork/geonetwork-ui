@@ -15,11 +15,11 @@ import {
 } from '../style/map-style.fixtures'
 import { MapStyleService } from '../style/map-style.service'
 import {
+  MAP_CTX_EXTENT_FIXTURE,
   MAP_CTX_FIXTURE,
   MAP_CTX_LAYER_GEOJSON_FIXTURE,
   MAP_CTX_LAYER_WMS_FIXTURE,
   MAP_CTX_LAYER_XYZ_FIXTURE,
-  MAP_CTX_VIEW_FIXTURE,
 } from './map-context.fixtures'
 
 import { MapContextService } from './map-context.service'
@@ -123,22 +123,46 @@ describe('MapContextService', () => {
   })
 
   describe('#createView', () => {
-    let view
-    const viewModel = MAP_CTX_VIEW_FIXTURE
-    beforeEach(() => {
-      view = service.createView(viewModel)
+    describe('from viewModel', () => {
+      let view
+      const contextModel = MAP_CTX_FIXTURE
+      beforeEach(() => {
+        view = service.createView(contextModel)
+      })
+      it('create a view', () => {
+        expect(view).toBeTruthy()
+        expect(view).toBeInstanceOf(View)
+      })
+      it('set center', () => {
+        const center = view.getCenter()
+        expect(center).toEqual(contextModel.view.center)
+      })
+      it('set zoom', () => {
+        const zoom = view.getZoom()
+        expect(zoom).toEqual(contextModel.view.zoom)
+      })
     })
-    it('create a view', () => {
-      expect(view).toBeTruthy()
-      expect(view).toBeInstanceOf(View)
-    })
-    it('set center', () => {
-      const center = view.getCenter()
-      expect(center).toEqual(viewModel.center)
-    })
-    it('set zoom', () => {
-      const zoom = view.getZoom()
-      expect(zoom).toEqual(viewModel.zoom)
+    describe('from extentModel', () => {
+      let view
+      const contextModel = MAP_CTX_FIXTURE
+      contextModel.extent = MAP_CTX_EXTENT_FIXTURE
+      const map = new Map({})
+      map.setSize([100, 100])
+      beforeEach(() => {
+        view = service.createView(contextModel, map)
+      })
+      it('create a view', () => {
+        expect(view).toBeTruthy()
+        expect(view).toBeInstanceOf(View)
+      })
+      it('set center', () => {
+        const center = view.getCenter()
+        expect(center).toEqual([324027.04834895337, 6438563.654151043])
+      })
+      it('set zoom', () => {
+        const zoom = view.getZoom()
+        expect(zoom).toEqual(5)
+      })
     })
   })
   describe('#resetMapFromContext', () => {

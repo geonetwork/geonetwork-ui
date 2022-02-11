@@ -4,6 +4,7 @@ import {
   MapContextLayerTypeEnum,
   MapContextModel,
   MapContextViewModel,
+  MapContextExtentModel,
 } from '../map-context/map-context.model'
 
 export const MAP_CTX_LAYER_XYZ_FIXTURE: MapContextLayerModel = {
@@ -33,3 +34,7 @@ export const MAP_CTX_FIXTURE: MapContextModel = {
   ],
   view: MAP_CTX_VIEW_FIXTURE,
 }
+
+export const MAP_CTX_EXTENT_FIXTURE: MapContextExtentModel = [
+  171083.69713494915, 6246047.945419401, 476970.39956295764, 6631079.362882684,
+]

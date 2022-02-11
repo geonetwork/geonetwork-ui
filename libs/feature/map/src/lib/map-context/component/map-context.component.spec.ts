@@ -3,21 +3,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MapManagerService } from '../../manager/map-manager.service'
 import { MAP_CTX_FIXTURE } from '../map-context.fixtures'
 import { MapContextService } from '../map-context.service'
-import { MapUtilsService } from '../../utils/map-utils.service'
 
 import { MapContextComponent } from './map-context.component'
+import { MAP_CONFIG_FIXTURE } from '@geonetwork-ui/util/app-config'
+import { HttpClientModule } from '@angular/common/http'
 
 class MapContextServiceMock {
   resetMapFromContext = jest.fn()
 }
 
-const COMPUTED_VIEW = {
-  center: [3, 4],
-  zoom: 10,
-}
-class MapUtilsServiceMock {
-  getViewFromExtent = () => COMPUTED_VIEW
-}
 let resizeCallBack
 class OpenLayersMapMock {
   _size = undefined
@@ -46,14 +40,11 @@ describe('MapContextComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [MapContextComponent],
       schemas: [NO_ERRORS_SCHEMA],
+      imports: [HttpClientModule],
       providers: [
         {
           provide: MapContextService,
           useClass: MapContextServiceMock,
-        },
-        {
-          provide: MapUtilsService,
-          useClass: MapUtilsServiceMock,
         },
         {
           provide: MapManagerService,
@@ -156,10 +147,8 @@ describe('MapContextComponent', () => {
         it('resets the map with a view computed from extent', () => {
           expect(mapContextService.resetMapFromContext).toHaveBeenCalledWith(
             expect.any(OpenLayersMapMock),
-            {
-              ...MAP_CTX_EXTENT,
-              view: COMPUTED_VIEW,
-            }
+            MAP_CTX_EXTENT,
+            MAP_CONFIG_FIXTURE
           )
         })
       })
