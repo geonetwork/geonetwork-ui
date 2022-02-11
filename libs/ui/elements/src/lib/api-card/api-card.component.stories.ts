@@ -46,7 +46,7 @@ Primary.args = {
   },
 }
 Primary.argTypes = {
-  exportUrl: {
-    action: 'exportUrl',
+  apiUrl: {
+    action: 'apiUrl',
   },
 }

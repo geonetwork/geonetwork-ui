@@ -1,9 +1,12 @@
+import { HttpClientModule } from '@angular/common/http'
+import { TranslateModule } from '@ngx-translate/core'
 import {
   moduleMetadata,
   Story,
   Meta,
   componentWrapperDecorator,
 } from '@storybook/angular'
+import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
 import { TableComponent } from './table.component'
 import { UiLayoutModule } from '../ui-layout.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -13,7 +16,12 @@ export default {
   component: TableComponent,
   decorators: [
     moduleMetadata({
-      imports: [UiLayoutModule, BrowserAnimationsModule],
+      imports: [
+        UiLayoutModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+      ],
     }),
     componentWrapperDecorator(
       (story) => `<div style="max-width: 700px">${story}</div>`

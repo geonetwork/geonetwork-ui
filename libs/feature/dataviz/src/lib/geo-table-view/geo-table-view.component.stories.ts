@@ -3,7 +3,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FeatureMapModule } from '@geonetwork-ui/feature/map'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { UiMapModule } from '@geonetwork-ui/ui/map'
+import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
 import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared'
+import { TranslateModule } from '@ngx-translate/core'
 import {
   componentWrapperDecorator,
   Meta,
@@ -23,6 +25,7 @@ export default {
         UiLayoutModule,
         FeatureMapModule,
         BrowserAnimationsModule,
+        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
       ],
     }),
     componentWrapperDecorator(

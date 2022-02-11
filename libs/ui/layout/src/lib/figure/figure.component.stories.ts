@@ -33,6 +33,6 @@ export const Primary = Template.bind({})
 Primary.args = {
   title: 'Average population in European countries',
   icon: 'group',
-  figure: 1020500,
+  figure: '1020500',
   unit: 'hab.',
 }

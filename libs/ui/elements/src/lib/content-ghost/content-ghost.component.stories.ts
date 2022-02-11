@@ -13,11 +13,13 @@ export default {
 
 type Args = ContentGhostComponent & { content: string }
 
+const content = 'My content'
+
 const Template: Story<ContentGhostComponent> = (args: Args) => ({
   component: ContentGhostComponent,
   props: args,
   template: `<div class="border border-gray-500 overflow-auto p-2" style="resize: both; width: 600px; height: 250px">
-    <gn-ui-content-ghost [showContent]="showContent">{{content}}</gn-ui-content-ghost>
+    <gn-ui-content-ghost [showContent]="showContent">${content}</gn-ui-content-ghost>
   </div>`,
 })
 
@@ -25,5 +27,4 @@ export const Primary = Template.bind({})
 Primary.args = {
   showContent: false,
   ghostClass: 'h-full',
-  content: 'My content',
 }
