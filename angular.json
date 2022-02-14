@@ -1,50 +1,21 @@
 {
   "version": 1,
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
-  "defaultProject": "search",
-  "schematics": {
-    "@nrwl/angular": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      },
-      "storybook-configuration": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/angular:application": {
-      "style": "css",
-      "linter": "eslint",
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "style": "css",
-      "linter": "eslint",
-      "unitTestRunner": "jest"
-    },
-    "@nrwl/angular:component": {
-      "style": "css"
-    }
-  },
   "projects": {
     "data-access-datafeeder": {
       "projectType": "library",
       "root": "libs/data-access/datafeeder",
       "sourceRoot": "libs/data-access/datafeeder/src",
       "prefix": "gn-ui",
-      "architect": {}
+      "architect": {},
+      "tags": []
     },
     "data-access-gn4": {
       "projectType": "library",
       "root": "libs/data-access/gn4",
       "sourceRoot": "libs/data-access/gn4/src",
       "prefix": "gn-ui",
-      "architect": {}
+      "architect": {},
+      "tags": []
     },
     "datafeeder": {
       "projectType": "application",
@@ -136,7 +107,8 @@
               "apps/datafeeder/src/**/*.ts",
               "apps/datafeeder/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -146,7 +118,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "datafeeder-e2e": {
       "root": "apps/datafeeder-e2e",
@@ -170,9 +143,12 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["apps/datafeeder-e2e/**/*.{js,ts}"]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": [],
+      "implicitDependencies": ["datafeeder"]
     },
     "datahub": {
       "projectType": "application",
@@ -269,7 +245,8 @@
               "apps/datahub/src/**/*.ts",
               "apps/datahub/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -292,7 +269,8 @@
             "parallel": false
           }
         }
-      }
+      },
+      "tags": []
     },
     "datahub-e2e": {
       "root": "apps/datahub-e2e",
@@ -316,9 +294,12 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["apps/datahub-e2e/**/*.{js,ts}"]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": [],
+      "implicitDependencies": ["datahub"]
     },
     "demo": {
       "projectType": "application",
@@ -400,7 +381,8 @@
               "apps/demo/src/**/*.ts",
               "apps/demo/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -417,7 +399,8 @@
             "port": 4400,
             "config": {
               "configFolder": "apps/demo/.storybook"
-            }
+            },
+            "projectBuildConfig": "demo"
           },
           "configurations": {
             "ci": {
@@ -433,7 +416,8 @@
             "outputPath": "dist/storybook/demo",
             "config": {
               "configFolder": "apps/demo/.storybook"
-            }
+            },
+            "projectBuildConfig": "demo"
           },
           "configurations": {
             "ci": {
@@ -441,7 +425,8 @@
             }
           }
         }
-      }
+      },
+      "tags": []
     },
     "demo-e2e": {
       "root": "apps/demo-e2e",
@@ -465,9 +450,12 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["apps/demo-e2e/**/*.{js,ts}"]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": [],
+      "implicitDependencies": ["demo"]
     },
     "feature-auth": {
       "projectType": "library",
@@ -490,9 +478,11 @@
               "libs/feature/auth/src/**/*.ts",
               "libs/feature/auth/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": []
     },
     "feature-catalog": {
       "projectType": "library",
@@ -515,9 +505,11 @@
               "libs/feature/catalog/src/**/*.ts",
               "libs/feature/catalog/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": []
     },
     "feature-dataviz": {
       "projectType": "library",
@@ -540,9 +532,11 @@
               "libs/feature/dataviz/src/**/*.ts",
               "libs/feature/dataviz/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": []
     },
     "feature-editor": {
       "projectType": "library",
@@ -565,9 +559,11 @@
               "libs/feature/editor/src/**/*.ts",
               "libs/feature/editor/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": []
     },
     "feature-map": {
       "projectType": "library",
@@ -590,9 +586,11 @@
               "libs/feature/map/src/**/*.ts",
               "libs/feature/map/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": []
     },
     "feature-record": {
       "projectType": "library",
@@ -615,9 +613,11 @@
               "libs/feature/record/src/**/*.ts",
               "libs/feature/record/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": []
     },
     "feature-router": {
       "projectType": "library",
@@ -640,9 +640,11 @@
               "libs/feature/router/src/**/*.ts",
               "libs/feature/router/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": []
     },
     "feature-search": {
       "projectType": "library",
@@ -665,9 +667,11 @@
               "libs/feature/search/src/**/*.ts",
               "libs/feature/search/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": []
     },
     "search": {
       "projectType": "application",
@@ -751,7 +755,8 @@
               "apps/search/src/**/*.ts",
               "apps/search/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -761,7 +766,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "search-e2e": {
       "root": "apps/search-e2e",
@@ -785,9 +791,12 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["apps/search-e2e/**/*.{js,ts}"]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": [],
+      "implicitDependencies": ["search"]
     },
     "ui-catalog": {
       "projectType": "library",
@@ -810,9 +819,11 @@
               "libs/ui/catalog/src/**/*.ts",
               "libs/ui/catalog/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": []
     },
     "ui-elements": {
       "projectType": "library",
@@ -835,9 +846,11 @@
               "libs/ui/elements/src/**/*.ts",
               "libs/ui/elements/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": []
     },
     "ui-inputs": {
       "projectType": "library",
@@ -860,9 +873,11 @@
               "libs/ui/inputs/src/**/*.ts",
               "libs/ui/inputs/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": []
     },
     "ui-layout": {
       "projectType": "library",
@@ -885,9 +900,11 @@
               "libs/ui/layout/src/**/*.ts",
               "libs/ui/layout/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": []
     },
     "ui-map": {
       "projectType": "library",
@@ -910,9 +927,11 @@
               "libs/ui/map/src/**/*.ts",
               "libs/ui/map/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": []
     },
     "ui-search": {
       "projectType": "library",
@@ -935,9 +954,11 @@
               "libs/ui/search/src/**/*.ts",
               "libs/ui/search/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": []
     },
     "ui-widgets": {
       "projectType": "library",
@@ -960,9 +981,11 @@
               "libs/ui/widgets/src/**/*.ts",
               "libs/ui/widgets/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": []
     },
     "util-app-config": {
       "root": "libs/util/app-config",
@@ -973,7 +996,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/util/app-config/**/*.ts"]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -983,7 +1007,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "util-data-fetcher": {
       "root": "libs/util/data-fetcher",
@@ -1005,7 +1030,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["libs/util/data-fetcher/**/*.ts"]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -1015,7 +1041,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "util-i18n": {
       "projectType": "library",
@@ -1038,9 +1065,11 @@
               "libs/util/i18n/src/**/*.ts",
               "libs/util/i18n/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": []
     },
     "util-shared": {
       "projectType": "library",
@@ -1063,9 +1092,11 @@
               "libs/util/shared/src/**/*.ts",
               "libs/util/shared/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": []
     },
     "webcomponents": {
       "projectType": "application",
@@ -1151,7 +1182,8 @@
               "apps/webcomponents/src/**/*.ts",
               "apps/webcomponents/src/**/*.html"
             ]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -1168,7 +1200,8 @@
             "port": 4400,
             "config": {
               "configFolder": "apps/webcomponents/.storybook"
-            }
+            },
+            "projectBuildConfig": "webcomponents"
           },
           "configurations": {
             "ci": {
@@ -1184,7 +1217,8 @@
             "outputPath": "dist/storybook/webcomponents",
             "config": {
               "configFolder": "apps/webcomponents/.storybook"
-            }
+            },
+            "projectBuildConfig": "webcomponents"
           },
           "configurations": {
             "ci": {
@@ -1192,7 +1226,8 @@
             }
           }
         }
-      }
+      },
+      "tags": []
     },
     "webcomponents-e2e": {
       "root": "apps/webcomponents-e2e",
@@ -1216,9 +1251,12 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["apps/webcomponents-e2e/**/*.{js,ts}"]
-          }
+          },
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": [],
+      "implicitDependencies": ["webcomponents"]
     }
   }
 }

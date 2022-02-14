@@ -1,10 +1,24 @@
+import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { By } from '@angular/platform-browser'
+import { SearchFacade } from '../state/search.facade'
 import { TranslateModule } from '@ngx-translate/core'
-import { initialState, reducer, SEARCH_FEATURE_KEY } from '../state/reducer'
+import { BehaviorSubject } from 'rxjs'
 import { SortByComponent } from './sort-by.component'
-import { EffectsModule } from '@ngrx/effects'
-import { StoreModule } from '@ngrx/store'
+
+const sortBySubject = new BehaviorSubject('title')
+const facadeMock = {
+  sortBy$: sortBySubject,
+  setSortBy: jest.fn(),
+}
+@Component({
+  selector: 'gn-ui-dropdown-selector',
+  template: '<div></div>',
+})
+export class MockDropdownSelectorComponent {
+  @Input() choices: unknown[]
+  @Input() selected: any
+}
 
 describe('SortByComponent', () => {
   let component: SortByComponent
@@ -12,15 +26,14 @@ describe('SortByComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SortByComponent],
-      imports: [
-        UiInputsModule,
-        EffectsModule.forRoot(),
-        TranslateModule.forRoot(),
-        StoreModule.forRoot({}),
-        StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
-          initialState,
-        }),
+      declarations: [SortByComponent, MockDropdownSelectorComponent],
+      imports: [TranslateModule.forRoot()],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        {
+          provide: SearchFacade,
+          useValue: facadeMock,
+        },
       ],
     }).compileComponents()
   })
@@ -33,5 +46,44 @@ describe('SortByComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+  describe('dropwdown value', () => {
+    let dropDownComponent: MockDropdownSelectorComponent
+    beforeEach(() => {
+      dropDownComponent = fixture.debugElement.query(
+        By.directive(MockDropdownSelectorComponent)
+      ).componentInstance
+    })
+    it('choices from component', () => {
+      expect(dropDownComponent.choices).toEqual(component.choices)
+    })
+    it('initialized with state value', () => {
+      expect(dropDownComponent.selected).toEqual('title')
+    })
+    it('updated from state', () => {
+      sortBySubject.next('_score')
+      fixture.detectChanges()
+      expect(dropDownComponent.selected).toEqual('_score')
+    })
+  })
+  describe('#changeSortBy', () => {
+    let sort
+    describe('when sort is a string', () => {
+      beforeEach(() => {
+        sort = '_score'
+        component.changeSortBy(sort)
+      })
+      it('dispatch search action', () => {
+        expect(facadeMock.setSortBy).toHaveBeenCalledWith(sort)
+      })
+    })
+    describe('when sort is not a string', () => {
+      beforeEach(() => {
+        sort = { title: 'desc' }
+      })
+      it('dispatch search action', () => {
+        expect(() => component.changeSortBy(sort)).toThrowError()
+      })
+    })
   })
 })

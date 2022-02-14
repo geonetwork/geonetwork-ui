@@ -1,9 +1,6 @@
 import { Component } from '@angular/core'
-import { select, Store } from '@ngrx/store'
-import { SetSortBy } from '../state/actions'
-import { SearchState } from '../state/reducer'
-import { getSearchSortBy } from '../state/selectors'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { SearchFacade } from '../state/search.facade'
 
 marker('results.sortBy.relevancy')
 marker('results.sortBy.dateStamp')
@@ -28,15 +25,17 @@ export class SortByComponent {
       value: 'popularity',
     },
   ]
-  currentSortBy$ = this.store.pipe(select(getSearchSortBy))
+  currentSortBy$ = this.facade.sortBy$
 
-  constructor(private store: Store<SearchState>) {}
+  constructor(private facade: SearchFacade) {}
 
   changeSortBy(criteria: any) {
     if (typeof criteria === 'string') {
-      this.store.dispatch(new SetSortBy(criteria))
+      this.facade.setSortBy(criteria)
     } else {
-      throw new Error(`Unexpected value received: ${criteria}`)
+      throw new Error(
+        `Unexpected SortBy value received: ${JSON.stringify(criteria)}`
+      )
     }
   }
 }

@@ -30,7 +30,10 @@ Primary.args = {
   actionResult: ['Hello', 'world'],
 }
 Primary.argTypes = {
-  changed: {
-    action: 'changed',
+  itemSelected: {
+    action: 'itemSelected',
+  },
+  inputSubmited: {
+    action: 'inputSubmited',
   },
 }

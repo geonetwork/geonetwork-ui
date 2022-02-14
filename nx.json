@@ -20,108 +20,9 @@
           "test",
           "e2e",
           "build-storybook"
-        ]
+        ],
+        "parallel": 1
       }
-    }
-  },
-  "projects": {
-    "data-access-datafeeder": {
-      "tags": []
-    },
-    "data-access-gn4": {
-      "tags": []
-    },
-    "datafeeder": {
-      "tags": []
-    },
-    "datafeeder-e2e": {
-      "tags": [],
-      "implicitDependencies": ["datafeeder"]
-    },
-    "datahub": {
-      "tags": []
-    },
-    "datahub-e2e": {
-      "tags": [],
-      "implicitDependencies": ["datahub"]
-    },
-    "demo": {
-      "tags": []
-    },
-    "demo-e2e": {
-      "tags": [],
-      "implicitDependencies": ["demo"]
-    },
-    "feature-auth": {
-      "tags": []
-    },
-    "feature-catalog": {
-      "tags": []
-    },
-    "feature-dataviz": {
-      "tags": []
-    },
-    "feature-editor": {
-      "tags": []
-    },
-    "feature-map": {
-      "tags": []
-    },
-    "feature-record": {
-      "tags": []
-    },
-    "feature-router": {
-      "tags": []
-    },
-    "feature-search": {
-      "tags": []
-    },
-    "search": {
-      "tags": []
-    },
-    "search-e2e": {
-      "tags": [],
-      "implicitDependencies": ["search"]
-    },
-    "ui-catalog": {
-      "tags": []
-    },
-    "ui-elements": {
-      "tags": []
-    },
-    "ui-inputs": {
-      "tags": []
-    },
-    "ui-layout": {
-      "tags": []
-    },
-    "ui-map": {
-      "tags": []
-    },
-    "ui-search": {
-      "tags": []
-    },
-    "ui-widgets": {
-      "tags": []
-    },
-    "util-app-config": {
-      "tags": []
-    },
-    "util-data-fetcher": {
-      "tags": []
-    },
-    "util-i18n": {
-      "tags": []
-    },
-    "util-shared": {
-      "tags": []
-    },
-    "webcomponents": {
-      "tags": []
-    },
-    "webcomponents-e2e": {
-      "tags": [],
-      "implicitDependencies": ["webcomponents"]
     }
   },
   "targetDependencies": {
@@ -131,5 +32,35 @@
         "projects": "dependencies"
       }
     ]
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "search",
+  "generators": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "css",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "css"
+    }
   }
 }

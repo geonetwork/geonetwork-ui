@@ -8,12 +8,12 @@ import {
 
 import { provideMockActions } from '@ngrx/effects/testing'
 import { provideMockStore } from '@ngrx/store/testing'
-import { hot } from '@nrwl/angular/testing'
 
 import { Observable, of, throwError } from 'rxjs'
 
 import * as MdViewActions from './mdview.actions'
 import { MdViewEffects } from './mdview.effects'
+import { hot } from 'jasmine-marbles'
 
 const full = {
   uuid: '1231321321',

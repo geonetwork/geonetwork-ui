@@ -21,6 +21,7 @@ import {
   SetPagination,
   SetResultsLayout,
   SetSearch,
+  SetSortBy,
   UpdateFilters,
 } from './actions'
 import { SearchState, SearchStateParams } from './reducer'
@@ -32,6 +33,7 @@ import {
   getSearchResultsHits,
   getSearchResultsLayout,
   getSearchResultsLoading,
+  getSearchSortBy,
   isEndOfResults,
 } from './selectors'
 
@@ -39,6 +41,7 @@ import {
 export class SearchFacade {
   results$: Observable<any>
   layout$: Observable<string>
+  sortBy$: Observable<string>
   isLoading$: Observable<boolean>
   isEndOfResults$: Observable<boolean>
   searchFilters$: Observable<SearchFilters>
@@ -66,6 +69,7 @@ export class SearchFacade {
     this.resultsAggregations$ = this.store.pipe(
       select(getSearchResultsAggregations, searchId)
     )
+    this.sortBy$ = this.store.pipe(select(getSearchSortBy, searchId))
   }
 
   setConfigAggregations(config: any): SearchFacade {
@@ -133,6 +137,11 @@ export class SearchFacade {
 
   scroll(): SearchFacade {
     this.store.dispatch(new Scroll(this.searchId))
+    return this
+  }
+
+  setSortBy(sortBy: string) {
+    this.store.dispatch(new SetSortBy(sortBy, this.searchId))
     return this
   }
 }

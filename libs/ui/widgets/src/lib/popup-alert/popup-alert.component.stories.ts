@@ -35,19 +35,20 @@ export default {
 
 type PopupAlertComponentWithContent = PopupAlertComponent & { content: string }
 
+const content =
+  'Something went wrong during a task that was probably too complicated, you should probably <a href="https://www.google.com">look for answers</a> and come back!'
+
 const Template: Story<PopupAlertComponentWithContent> = (
   args: PopupAlertComponentWithContent
 ) => ({
   component: PopupAlertComponent,
   props: args,
-  template: `<gn-ui-popup-alert [icon]='icon' [position]='position'>${args.content}</gn-ui-popup-alert>`,
+  template: `<gn-ui-popup-alert [icon]='icon' [position]='position'>${content}</gn-ui-popup-alert>`,
 })
 
 export const Primary = Template.bind({})
 Primary.args = {
   icon: 'error_outline',
-  content:
-    'Something went wrong during a task that was probably too complicated, you should probably <a href="https://www.google.com">look for answers</a> and come back!',
   position: 'top',
   type: 'info',
 }

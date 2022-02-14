@@ -2,12 +2,12 @@ import { TestBed } from '@angular/core/testing'
 import { MockStore, provideMockStore } from '@ngrx/store/testing'
 import { initialMdviewState, MD_VIEW_FEATURE_STATE_KEY } from './mdview.reducer'
 import { MdViewFacade } from './mdview.facade'
-import { hot } from '@nrwl/angular/testing'
 import {
   RECORDS_FULL_FIXTURE,
   RECORDS_SUMMARY_FIXTURE,
 } from '@geonetwork-ui/ui/search'
 import * as MdViewActions from './mdview.actions'
+import { hot } from 'jasmine-marbles'
 
 describe('MdViewFacade', () => {
   let store: MockStore

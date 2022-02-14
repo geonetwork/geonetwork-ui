@@ -119,7 +119,7 @@ export function readDataset(
               case 'excel':
                 return parseExcel(await response.arrayBuffer())
             }
-          } catch (e) {
+          } catch (e: any) {
             throw FetchError.parsingFailed(e.message)
           }
           throw new Error('Not implemented')

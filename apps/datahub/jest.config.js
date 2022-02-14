@@ -11,7 +11,7 @@ module.exports = {
   },
   coverageDirectory: '../../coverage/apps/datahub',
   transform: {
-    '^.+\\.(ts|js|html)$': 'jest-preset-angular',
+    '^.+.(ts|mjs|js|html)$': 'jest-preset-angular',
   },
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
