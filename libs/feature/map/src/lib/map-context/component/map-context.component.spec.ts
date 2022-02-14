@@ -3,21 +3,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MapManagerService } from '../../manager/map-manager.service'
 import { MAP_CTX_FIXTURE } from '../map-context.fixtures'
 import { MapContextService } from '../map-context.service'
-import { MapUtilsService } from '../../utils/map-utils.service'
 
 import { MapContextComponent } from './map-context.component'
+import { MAP_CONFIG_FIXTURE } from '@geonetwork-ui/util/app-config'
+import { HttpClientModule } from '@angular/common/http'
 
 class MapContextServiceMock {
   resetMapFromContext = jest.fn()
 }
 
-const COMPUTED_VIEW = {
-  center: [3, 4],
-  zoom: 10,
-}
-class MapUtilsServiceMock {
-  getViewFromExtent = () => COMPUTED_VIEW
-}
 let resizeCallBack
 class OpenLayersMapMock {
   _size = undefined
@@ -46,14 +40,11 @@ describe('MapContextComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [MapContextComponent],
       schemas: [NO_ERRORS_SCHEMA],
+      imports: [HttpClientModule],
       providers: [
         {
           provide: MapContextService,
           useClass: MapContextServiceMock,
-        },
-        {
-          provide: MapUtilsService,
-          useClass: MapUtilsServiceMock,
         },
         {
           provide: MapManagerService,
@@ -77,13 +68,15 @@ describe('MapContextComponent', () => {
   describe('with initial value', () => {
     beforeEach(() => {
       component.context = MAP_CTX_FIXTURE
+      component.mapConfig = MAP_CONFIG_FIXTURE
       fixture.detectChanges()
       component.ngOnChanges({})
     })
     it('reset the map from context', () => {
       expect(mapContextService.resetMapFromContext).toHaveBeenCalledWith(
         expect.any(OpenLayersMapMock),
-        MAP_CTX_FIXTURE
+        MAP_CTX_FIXTURE,
+        MAP_CONFIG_FIXTURE
       )
     })
   })
@@ -102,6 +95,7 @@ describe('MapContextComponent', () => {
   describe('no initial value, two values afterwards', () => {
     beforeEach(() => {
       component.context = null
+      component.mapConfig = MAP_CONFIG_FIXTURE
       fixture.detectChanges()
       component.ngOnChanges({})
       component.context = { ...MAP_CTX_FIXTURE }
@@ -112,7 +106,8 @@ describe('MapContextComponent', () => {
     it('reset the map from context twice', () => {
       expect(mapContextService.resetMapFromContext).toHaveBeenCalledWith(
         expect.any(OpenLayersMapMock),
-        MAP_CTX_FIXTURE
+        MAP_CTX_FIXTURE,
+        MAP_CONFIG_FIXTURE
       )
       expect(mapContextService.resetMapFromContext).toHaveBeenCalledTimes(2)
     })
@@ -120,8 +115,9 @@ describe('MapContextComponent', () => {
   describe('mapContext with extent', () => {
     const MAP_CTX_EXTENT = {
       ...MAP_CTX_FIXTURE,
-      view: undefined,
-      extent: [-100, -200, 300, 400],
+      view: {
+        extent: [-100, -200, 300, 400],
+      },
     }
 
     describe('initial context is provided', () => {
@@ -145,16 +141,15 @@ describe('MapContextComponent', () => {
       describe('after change detection and when map has a size', () => {
         beforeEach(() => {
           component.context = MAP_CTX_EXTENT
+          component.mapConfig = MAP_CONFIG_FIXTURE
           component.ngOnChanges({ context: MAP_CTX_EXTENT })
           resizeCallBack()
         })
         it('resets the map with a view computed from extent', () => {
           expect(mapContextService.resetMapFromContext).toHaveBeenCalledWith(
             expect.any(OpenLayersMapMock),
-            {
-              ...MAP_CTX_EXTENT,
-              view: COMPUTED_VIEW,
-            }
+            MAP_CTX_EXTENT,
+            MAP_CONFIG_FIXTURE
           )
         })
       })

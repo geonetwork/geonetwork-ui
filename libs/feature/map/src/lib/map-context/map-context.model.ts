@@ -1,4 +1,6 @@
 import type { FeatureCollection } from 'geojson'
+import { Coordinate } from 'ol/coordinate'
+import type { Extent } from 'ol/extent'
 
 export enum MapContextLayerTypeEnum {
   XYZ = 'xyz',
@@ -10,7 +12,6 @@ export enum MapContextLayerTypeEnum {
 export interface MapContextModel {
   layers: MapContextLayerModel[]
   view?: MapContextViewModel
-  extent?: MapContextExtentModel
 }
 
 export interface MapContextLayerModel {
@@ -22,7 +23,9 @@ export interface MapContextLayerModel {
 }
 
 export interface MapContextViewModel {
-  center: number[] //expressed in map projection (EPSG:3857)
-  zoom: number
+  center?: Coordinate //expressed in map projection (EPSG:3857)
+  zoom?: number
+  extent?: Extent //expressed in map projection (EPSG:3857)
+  maxZoom?: number
+  maxExtent?: Extent //expressed in map projection (EPSG:3857)
 }
-export type MapContextExtentModel = number[] //expressed in map projection (EPSG:3857)

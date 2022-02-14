@@ -7,7 +7,6 @@ import {
 } from '@angular/core'
 import {
   FeatureInfoService,
-  MAP_CTX_LAYER_XYZ_FIXTURE,
   MapContextLayerModel,
   MapContextLayerTypeEnum,
   MapContextModel,
@@ -15,6 +14,7 @@ import {
   MapUtilsService,
 } from '@geonetwork-ui/feature/map'
 import { LinkHelperService } from '@geonetwork-ui/feature/search'
+import { getMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 import { MetadataLinkValid, ProxyService } from '@geonetwork-ui/util/shared'
 import { Feature } from 'ol'
 import { Geometry } from 'ol/geom'
@@ -46,6 +46,7 @@ import { MdViewFacade } from '../state/mdview.facade'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataViewMapComponent implements OnInit, OnDestroy {
+  mapConfig: MapConfig = getMapConfig()
   selection: Feature<Geometry>
   private subscription = new Subscription()
   private selectionStyle: StyleLike
@@ -105,7 +106,9 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
           extent
             ? ({
                 layers,
-                extent,
+                view: {
+                  extent,
+                },
               } as MapContextModel)
             : ({
                 layers,

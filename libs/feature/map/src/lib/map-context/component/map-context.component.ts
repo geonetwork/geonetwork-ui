@@ -15,6 +15,7 @@ import { FeatureInfoService } from '../../feature-info/feature-info.service'
 import { MapManagerService } from '../../manager/map-manager.service'
 import { MapContextModel } from '../map-context.model'
 import { MapContextService } from '../map-context.service'
+import { MapConfig } from '@geonetwork-ui/util/app-config'
 
 @Component({
   selector: 'gn-ui-map-context',
@@ -24,6 +25,7 @@ import { MapContextService } from '../map-context.service'
 })
 export class MapContextComponent implements OnChanges {
   @Input() context: MapContextModel
+  @Input() mapConfig: MapConfig
   @Output() featureClicked = new EventEmitter<Feature<Geometry>[]>()
 
   map: Map
@@ -38,26 +40,18 @@ export class MapContextComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    if (this.context) {
-      if (this.context.extent) {
-        if (!this.map.getSize()) {
-          this.map.once('change:size', () => {
-            this.updateContextByExtent()
-          })
-        } else {
-          this.updateContextByExtent()
-        }
+    if (this.context?.view) {
+      if (this.context.view.extent && !this.map.getSize()) {
+        this.map.once('change:size', () => {
+          this.service.resetMapFromContext(
+            this.map,
+            this.context,
+            this.mapConfig
+          )
+        })
       } else {
-        this.service.resetMapFromContext(this.map, this.context)
+        this.service.resetMapFromContext(this.map, this.context, this.mapConfig)
       }
     }
-  }
-
-  private updateContextByExtent() {
-    this.context.view = this.utils.getViewFromExtent(
-      this.context.extent,
-      this.map
-    )
-    this.service.resetMapFromContext(this.map, this.context)
   }
 }

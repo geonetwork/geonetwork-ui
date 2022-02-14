@@ -9,7 +9,10 @@
     overflow-hidden
   "
 >
-  <gn-ui-map-context [context]="mapContext$ | async"></gn-ui-map-context>
+  <gn-ui-map-context
+    [context]="mapContext$ | async"
+    [mapConfig]="mapConfig"
+  ></gn-ui-map-context>
   <div
     class="
       feature-info

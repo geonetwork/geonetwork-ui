@@ -17,6 +17,7 @@ import VectorSource from 'ol/source/Vector'
 import { MapUtilsService } from '../utils/map-utils.service'
 import { bbox as bboxStrategy } from 'ol/loadingstrategy'
 import GeoJSON from 'ol/format/GeoJSON'
+import { MapConfig } from '@geonetwork-ui/util/app-config'
 
 @Injectable({
   providedIn: 'root',
@@ -27,9 +28,16 @@ export class MapContextService {
     private styleService: MapStyleService
   ) {}
 
-  resetMapFromContext(map: Map, mapContext: MapContextModel): Map {
+  resetMapFromContext(
+    map: Map,
+    mapContext: MapContextModel,
+    mapConfig?: MapConfig
+  ): Map {
+    if (mapConfig) {
+      mapContext = this.mergeMapConfigWithContext(mapContext, mapConfig)
+    }
     if (mapContext.view) {
-      map.setView(this.createView(mapContext.view))
+      map.setView(this.createView(mapContext.view, map))
     }
     map.getLayers().clear()
     mapContext.layers.forEach((layer) => map.addLayer(this.createLayer(layer)))
@@ -80,13 +88,40 @@ export class MapContextService {
     }
   }
 
-  createView(viewModel: MapContextViewModel): View {
-    const { center, zoom } = viewModel
+  createView(viewModel: MapContextViewModel, map?: Map): View {
+    if (viewModel.extent && map) {
+      const { center, zoom } = this.mapUtils.getViewFromExtent(
+        viewModel.extent,
+        map
+      )
+      viewModel = { ...viewModel, center, zoom }
+    }
+    const { center, zoom, maxZoom, maxExtent } = viewModel
     return new View({
       center,
       zoom,
-      multiWorld: true,
+      maxZoom,
+      extent: maxExtent,
+      multiWorld: false,
       constrainResolution: true,
     })
+  }
+
+  mergeMapConfigWithContext(
+    mapContext: MapContextModel,
+    mapConfig: MapConfig
+  ): MapContextModel {
+    return {
+      ...mapContext,
+      view: {
+        ...mapContext.view,
+        ...(mapConfig.MAX_ZOOM && {
+          maxZoom: mapConfig.MAX_ZOOM,
+        }),
+        ...(mapConfig.MAX_EXTENT && {
+          maxExtent: mapConfig.MAX_EXTENT,
+        }),
+      },
+    }
   }
 }

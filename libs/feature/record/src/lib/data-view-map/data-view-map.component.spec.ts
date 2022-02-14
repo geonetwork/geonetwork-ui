@@ -36,6 +36,13 @@ import { TranslateModule } from '@ngx-translate/core'
 import { DataService } from '../service/data.service'
 import { delay } from 'rxjs/operators'
 import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared'
+import { MapConfig } from '@geonetwork-ui/util/app-config'
+
+const mapConfigMock = { MAX_ZOOM: 10 }
+jest.mock('@geonetwork-ui/util/app-config', () => ({
+  getMapConfig: () => mapConfigMock,
+  isConfigLoaded: jest.fn(() => true),
+}))
 
 class MdViewFacadeMock {
   mapApiLinks$ = new Subject()
@@ -99,6 +106,7 @@ const featureInfoServiceMock = {
 })
 export class MockMapContextComponent {
   @Input() context: MapContextModel
+  @Input() mapConfig: MapConfig
 }
 
 @Component({
@@ -205,6 +213,9 @@ describe('DataViewMapComponent', () => {
           layers: [component.getBackgroundLayer()],
           view: expect.any(Object),
         })
+      })
+      it('emits map config (mocked)', () => {
+        expect(mapComponent.mapConfig).toEqual(mapConfigMock)
       })
       it('provides a placeholder value to the dropdown', () => {
         expect(dropdownComponent.choices).toEqual([
@@ -516,7 +527,9 @@ describe('DataViewMapComponent', () => {
                 type: 'wms',
               },
             ],
-            extent: [-100, -200, 100, 200],
+            view: {
+              extent: [-100, -200, 100, 200],
+            },
           })
         })
       })

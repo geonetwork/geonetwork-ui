@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { TestBed } from '@angular/core/testing'
+import { MAP_CONFIG_FIXTURE } from '@geonetwork-ui/util/app-config'
 import TileLayer from 'ol/layer/Tile'
 import VectorLayer from 'ol/layer/Vector'
 import Map from 'ol/Map'
@@ -14,11 +15,11 @@ import {
 } from '../style/map-style.fixtures'
 import { MapStyleService } from '../style/map-style.service'
 import {
+  MAP_CTX_EXTENT_FIXTURE,
   MAP_CTX_FIXTURE,
   MAP_CTX_LAYER_GEOJSON_FIXTURE,
   MAP_CTX_LAYER_WMS_FIXTURE,
   MAP_CTX_LAYER_XYZ_FIXTURE,
-  MAP_CTX_VIEW_FIXTURE,
 } from './map-context.fixtures'
 
 import { MapContextService } from './map-context.service'
@@ -122,42 +123,80 @@ describe('MapContextService', () => {
   })
 
   describe('#createView', () => {
-    let view
-    const viewModel = MAP_CTX_VIEW_FIXTURE
-    beforeEach(() => {
-      view = service.createView(viewModel)
+    describe('from center and zoom', () => {
+      let view
+      const contextModel = MAP_CTX_FIXTURE
+      beforeEach(() => {
+        view = service.createView(contextModel.view)
+      })
+      it('create a view', () => {
+        expect(view).toBeTruthy()
+        expect(view).toBeInstanceOf(View)
+      })
+      it('set center', () => {
+        const center = view.getCenter()
+        expect(center).toEqual(contextModel.view.center)
+      })
+      it('set zoom', () => {
+        const zoom = view.getZoom()
+        expect(zoom).toEqual(contextModel.view.zoom)
+      })
     })
-    it('create a view', () => {
-      expect(view).toBeTruthy()
-      expect(view).toBeInstanceOf(View)
-    })
-    it('set center', () => {
-      const center = view.getCenter()
-      expect(center).toEqual(viewModel.center)
-    })
-    it('set zoom', () => {
-      const center = view.getZoom()
-      expect(center).toEqual(viewModel.zoom)
+    describe('from extent', () => {
+      let view
+      const contextModel = MAP_CTX_FIXTURE
+      contextModel.view.extent = MAP_CTX_EXTENT_FIXTURE
+      const map = new Map({})
+      map.setSize([100, 100])
+      beforeEach(() => {
+        view = service.createView(contextModel.view, map)
+      })
+      it('create a view', () => {
+        expect(view).toBeTruthy()
+        expect(view).toBeInstanceOf(View)
+      })
+      it('set center', () => {
+        const center = view.getCenter()
+        expect(center).toEqual([324027.04834895337, 6438563.654151043])
+      })
+      it('set zoom', () => {
+        const zoom = view.getZoom()
+        expect(zoom).toEqual(5)
+      })
     })
   })
   describe('#resetMapFromContext', () => {
-    const map = new Map({})
-    const mapContext = MAP_CTX_FIXTURE
-    beforeEach(() => {
-      service.resetMapFromContext(map, mapContext)
+    describe('without config', () => {
+      const map = new Map({})
+      const mapContext = MAP_CTX_FIXTURE
+      beforeEach(() => {
+        service.resetMapFromContext(map, mapContext)
+      })
+      it('create a map', () => {
+        expect(map).toBeTruthy()
+        expect(map).toBeInstanceOf(Map)
+      })
+      it('add layers', () => {
+        const layers = map.getLayers().getArray()
+        expect(layers.length).toEqual(3)
+      })
+      it('set view', () => {
+        const view = map.getView()
+        expect(view).toBeTruthy()
+        expect(view).toBeInstanceOf(View)
+      })
     })
-    it('create a map', () => {
-      expect(map).toBeTruthy()
-      expect(map).toBeInstanceOf(Map)
-    })
-    it('add layers', () => {
-      const layers = map.getLayers().getArray()
-      expect(layers.length).toEqual(3)
-    })
-    it('set view', () => {
-      const view = map.getView()
-      expect(view).toBeTruthy()
-      expect(view).toBeInstanceOf(View)
+    describe('with config', () => {
+      const map = new Map({})
+      const mapContext = MAP_CTX_FIXTURE
+      const mapConfig = MAP_CONFIG_FIXTURE
+      beforeEach(() => {
+        service.resetMapFromContext(map, mapContext, mapConfig)
+      })
+      it('set maxZoom', () => {
+        const maxZoom = map.getView().getMaxZoom()
+        expect(maxZoom).toBe(10)
+      })
     })
   })
 })

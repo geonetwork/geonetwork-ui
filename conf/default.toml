@@ -11,6 +11,14 @@ geonetwork4_api_url = "/geonetwork/srv/api"
 # This is an optional parameter: leave empty to disable proxy usage
 proxy_path = ""
 
+### MAP SETTINGS
+# The map section allows to override default settings of the map view.
+# Example:
+#
+# [map]
+# max_zoom = 10
+# max_extent = [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855]
+
 ### VISUAL THEME
 
 # All parameters are expressed in CSS format, see:
