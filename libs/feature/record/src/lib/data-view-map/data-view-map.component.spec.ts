@@ -527,7 +527,9 @@ describe('DataViewMapComponent', () => {
                 type: 'wms',
               },
             ],
-            extent: [-100, -200, 100, 200],
+            view: {
+              extent: [-100, -200, 100, 200],
+            },
           })
         })
       })

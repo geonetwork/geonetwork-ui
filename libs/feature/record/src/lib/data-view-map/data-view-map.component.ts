@@ -106,7 +106,9 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
           extent
             ? ({
                 layers,
-                extent,
+                view: {
+                  extent,
+                },
               } as MapContextModel)
             : ({
                 layers,

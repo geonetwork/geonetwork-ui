@@ -115,8 +115,9 @@ describe('MapContextComponent', () => {
   describe('mapContext with extent', () => {
     const MAP_CTX_EXTENT = {
       ...MAP_CTX_FIXTURE,
-      view: undefined,
-      extent: [-100, -200, 300, 400],
+      view: {
+        extent: [-100, -200, 300, 400],
+      },
     }
 
     describe('initial context is provided', () => {

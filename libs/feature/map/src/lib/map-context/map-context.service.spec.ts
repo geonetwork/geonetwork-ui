@@ -123,11 +123,11 @@ describe('MapContextService', () => {
   })
 
   describe('#createView', () => {
-    describe('from viewModel', () => {
+    describe('from center and zoom', () => {
       let view
       const contextModel = MAP_CTX_FIXTURE
       beforeEach(() => {
-        view = service.createView(contextModel)
+        view = service.createView(contextModel.view)
       })
       it('create a view', () => {
         expect(view).toBeTruthy()
@@ -142,14 +142,14 @@ describe('MapContextService', () => {
         expect(zoom).toEqual(contextModel.view.zoom)
       })
     })
-    describe('from extentModel', () => {
+    describe('from extent', () => {
       let view
       const contextModel = MAP_CTX_FIXTURE
-      contextModel.extent = MAP_CTX_EXTENT_FIXTURE
+      contextModel.view.extent = MAP_CTX_EXTENT_FIXTURE
       const map = new Map({})
       map.setSize([100, 100])
       beforeEach(() => {
-        view = service.createView(contextModel, map)
+        view = service.createView(contextModel.view, map)
       })
       it('create a view', () => {
         expect(view).toBeTruthy()

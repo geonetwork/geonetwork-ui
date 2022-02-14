@@ -40,8 +40,8 @@ export class MapContextComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    if (this.context) {
-      if (this.context.extent && !this.map.getSize()) {
+    if (this.context?.view) {
+      if (this.context.view.extent && !this.map.getSize()) {
         this.map.once('change:size', () => {
           this.service.resetMapFromContext(
             this.map,

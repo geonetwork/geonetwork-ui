@@ -4,6 +4,7 @@ import {
   MapContextLayerModel,
   MapContextLayerTypeEnum,
   MapContextModel,
+  MapContextViewModel,
 } from './map-context.model'
 import Map from 'ol/Map'
 import View from 'ol/View'
@@ -36,7 +37,7 @@ export class MapContextService {
       mapContext = this.mergeMapConfigWithContext(mapContext, mapConfig)
     }
     if (mapContext.view) {
-      map.setView(this.createView(mapContext, map))
+      map.setView(this.createView(mapContext.view, map))
     }
     map.getLayers().clear()
     mapContext.layers.forEach((layer) => map.addLayer(this.createLayer(layer)))
@@ -87,15 +88,15 @@ export class MapContextService {
     }
   }
 
-  createView(context: MapContextModel, map?: Map): View {
-    if (context.extent && map) {
+  createView(viewModel: MapContextViewModel, map?: Map): View {
+    if (viewModel.extent && map) {
       const { center, zoom } = this.mapUtils.getViewFromExtent(
-        context.extent,
+        viewModel.extent,
         map
       )
-      context.view = { ...context.view, center, zoom }
+      viewModel = { ...viewModel, center, zoom }
     }
-    const { center, zoom, maxZoom } = context.view
+    const { center, zoom, maxZoom } = viewModel
     return new View({
       center,
       zoom,
