@@ -21,11 +21,7 @@ export class SearchPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.searchFacade
-      .setFilters({
-        any: '',
-      })
-      .setResultsLayout('DATAHUB')
+    this.searchFacade.setResultsLayout('DATAHUB')
   }
 
   onMetadataSelection(metadata: MetadataRecord): void {

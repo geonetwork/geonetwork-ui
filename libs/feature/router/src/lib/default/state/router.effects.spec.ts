@@ -1,5 +1,6 @@
 import { Location } from '@angular/common'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { Component } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
@@ -8,13 +9,20 @@ import { routerNavigationAction } from '@ngrx/router-store'
 import { Action } from '@ngrx/store'
 import { hot } from 'jasmine-marbles'
 import { Observable } from 'rxjs'
-import { MetadataRouteComponent, SearchRouteComponent } from '../constants'
 import { ROUTER_CONFIG } from '../router.module'
 
 import * as fromActions from './router.actions'
 import { RouterGoActionPayload } from './router.actions'
 import * as fromEffects from './router.effects'
 
+class SearchRouteComponent extends Component {}
+class MetadataRouteComponent extends Component {}
+
+const routerConfigMock = {
+  searchStateId: 'main',
+  searchRouteComponent: SearchRouteComponent,
+  recordRouteComponent: MetadataRouteComponent,
+}
 describe('RouterEffects', () => {
   let router: Router
   let location: Location
@@ -45,9 +53,7 @@ describe('RouterEffects', () => {
         },
         {
           provide: ROUTER_CONFIG,
-          useValue: {
-            searchStateId: 'main',
-          },
+          useValue: routerConfigMock,
         },
       ],
     })

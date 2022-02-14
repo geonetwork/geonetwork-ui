@@ -1,14 +1,16 @@
-<header>
-  <datahub-search-header></datahub-search-header>
-</header>
-<main>
-  <div class="container-lg mx-auto py-4">
-    <div>
-      <gn-ui-results-hits></gn-ui-results-hits>
-      <gn-ui-results-list-container
-        [scrollableOptions]="scrollableOptions"
-        (mdSelect)="onMetadataSelection($event)"
-      ></gn-ui-results-list-container>
+<div id="search-page" class="h-screen overflow-auto">
+  <header>
+    <datahub-search-header></datahub-search-header>
+  </header>
+  <main>
+    <div class="container-lg mx-auto py-4">
+      <div>
+        <gn-ui-results-hits></gn-ui-results-hits>
+        <gn-ui-results-list-container
+          [scrollableOptions]="scrollableOptions"
+          (mdSelect)="onMetadataSelection($event)"
+        ></gn-ui-results-list-container>
+      </div>
     </div>
-  </div>
-</main>
+  </main>
+</div>

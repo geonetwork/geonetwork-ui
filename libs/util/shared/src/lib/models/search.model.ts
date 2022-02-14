@@ -54,4 +54,4 @@ export interface RecordMetric {
   recordCount: number
 }
 
-export const RESULTS_PAGE_SIZE = 20
+export const RESULTS_PAGE_SIZE = 10

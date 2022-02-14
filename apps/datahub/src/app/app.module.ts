@@ -28,7 +28,6 @@ import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { storeFreeze } from 'ngrx-store-freeze'
 import { filter } from 'rxjs/operators'
 import { environment } from '../environments/environment'
 
@@ -41,9 +40,8 @@ import { RecordPreviewDatahubComponent } from './search/record-preview-datahub/r
 import { SearchHeaderComponent } from './search/search-header/search-header.component'
 import { SearchPageComponent } from './search/search-page/search-page.component'
 
-export const metaReducers: MetaReducer[] = !environment.production
-  ? [storeFreeze]
-  : []
+export const metaReducers: MetaReducer[] = !environment.production ? [] : []
+// https://github.com/nrwl/nx/issues/191
 
 @NgModule({
   declarations: [
@@ -60,7 +58,16 @@ export const metaReducers: MetaReducer[] = !environment.production
     RouterModule.forRoot([], {
       initialNavigation: 'enabledBlocking',
     }),
-    StoreModule.forRoot({}, { metaReducers }),
+    StoreModule.forRoot(
+      {},
+      {
+        metaReducers,
+        runtimeChecks: {
+          strictStateImmutability: false,
+          strictActionImmutability: false,
+        },
+      }
+    ),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot(),
     UtilI18nModule,
@@ -68,6 +75,8 @@ export const metaReducers: MetaReducer[] = !environment.production
     FeatureSearchModule,
     DefaultRouterModule.forRoot({
       searchStateId: 'mainSearch',
+      searchRouteComponent: SearchPageComponent,
+      recordRouteComponent: RecordPageComponent,
     }),
     FeatureRecordModule,
     UiSearchModule,

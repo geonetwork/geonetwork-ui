@@ -1,16 +1,3 @@
 <div gnUiSearchStateContainer="mainSearch">
-  <div
-    id="search-page"
-    class="h-screen overflow-auto"
-    [ngClass]="{ hidden: (isRecordOpened$ | async) }"
-  >
-    <datahub-search-page></datahub-search-page>
-  </div>
-  <div
-    id="record-page"
-    class="h-screen overflow-auto"
-    *ngIf="isRecordOpened$ | async"
-  >
-    <datahub-record-page></datahub-record-page>
-  </div>
+  <router-outlet></router-outlet>
 </div>

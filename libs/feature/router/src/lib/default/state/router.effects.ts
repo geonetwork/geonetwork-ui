@@ -5,7 +5,6 @@ import { MdViewActions } from '@geonetwork-ui/feature/record'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { navigation } from '@nrwl/angular'
 import { tap } from 'rxjs/operators'
-import { MetadataRouteComponent, SearchRouteComponent } from '../constants'
 import { ROUTER_CONFIG, RouterConfigModel } from '../router.module'
 import * as RouterActions from './router.actions'
 
@@ -35,7 +34,7 @@ export class RouterEffects {
    */
   navigateToMetadata$ = createEffect(() =>
     this._actions$.pipe(
-      navigation(MetadataRouteComponent, {
+      navigation(this.routerConfig.recordRouteComponent, {
         run: (activatedRouteSnapshot: ActivatedRouteSnapshot) =>
           MdViewActions.loadFullMetadata({
             uuid: activatedRouteSnapshot.params.metadataUuid,
@@ -53,7 +52,7 @@ export class RouterEffects {
    */
   navigateToSearch$ = createEffect(() =>
     this._actions$.pipe(
-      navigation(SearchRouteComponent, {
+      navigation(this.routerConfig.searchRouteComponent, {
         run: () => MdViewActions.close(),
       })
     )

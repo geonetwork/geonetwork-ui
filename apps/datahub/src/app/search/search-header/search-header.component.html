@@ -6,9 +6,9 @@
     ></div>
     <div class="py-8">
       <gn-ui-fuzzy-search
-        [displayWithFn]="autocompleteDisplayWithFn"
         (itemSelected)="onFuzzySearchSelection($event)"
-        (inputSubmited)="onFuzzySearchSubmission()"
+        (inputSubmited)="onFuzzySearchSubmission($event)"
+        [initialValue]="searchInputRouteValue$ | async"
       ></gn-ui-fuzzy-search>
     </div>
     <!--

@@ -16,12 +16,13 @@ import {
   MatAutocompleteSelectedEvent,
   MatAutocompleteTrigger,
 } from '@angular/material/autocomplete'
-import { Observable, ReplaySubject, Subscription } from 'rxjs'
+import { BehaviorSubject, Observable, ReplaySubject, Subscription } from 'rxjs'
 import {
   debounceTime,
   distinctUntilChanged,
   filter,
   finalize,
+  first,
   switchMap,
   take,
   tap,
@@ -38,20 +39,22 @@ export type AutcompleteItem = unknown
 export class AutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() placeholder: string
   @Input() action: (value: string) => Observable<AutcompleteItem[]>
+  @Input() initialValue?: AutcompleteItem
+  @Input() clearOnSelection = false
   @Output() itemSelected = new EventEmitter<AutcompleteItem>()
   @Output() inputSubmited = new EventEmitter<string>()
   @ViewChild(MatAutocompleteTrigger) triggerRef: MatAutocompleteTrigger
   @ViewChild(MatAutocomplete) autocomplete: MatAutocomplete
   @ViewChild('searchInput') inputRef: ElementRef<HTMLInputElement>
-  selectionSubject = new ReplaySubject<MatAutocompleteSelectedEvent>(1)
 
   searching: boolean
   suggestions$: Observable<AutcompleteItem[]>
   control = new FormControl()
   subscription = new Subscription()
   cancelEnter = true
+  selectionSubject = new ReplaySubject<MatAutocompleteSelectedEvent>(1)
+  lastInputValue$ = new ReplaySubject<string>(1)
 
-  @Input() itemToStringFn: (AutcompleteItem) => string = (item) => item
   @Input() displayWithFn: (AutcompleteItem) => string = (item) => item
 
   ngOnInit(): void {
@@ -68,6 +71,11 @@ export class AutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
         this.cancelEnter = false
       }
     })
+    this.control.valueChanges
+      .pipe(filter((value) => typeof value === 'string'))
+      .subscribe(this.lastInputValue$)
+
+    this.initInput(this.initialValue)
   }
 
   ngAfterViewInit(): void {
@@ -76,6 +84,13 @@ export class AutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe()
+  }
+
+  initInput(value: AutcompleteItem) {
+    if (value) {
+      this.control.setValue(value)
+    }
+    this.inputSubmited.emit(this.displayWithFn(value) || '')
   }
 
   clear(): void {
@@ -96,5 +111,10 @@ export class AutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
   handleSelection(event: MatAutocompleteSelectedEvent) {
     this.cancelEnter = true
     this.itemSelected.emit(event.option.value)
+    if (this.clearOnSelection) {
+      this.lastInputValue$.pipe(first()).subscribe((any) => {
+        this.inputRef.nativeElement.value = any
+      })
+    }
   }
 }

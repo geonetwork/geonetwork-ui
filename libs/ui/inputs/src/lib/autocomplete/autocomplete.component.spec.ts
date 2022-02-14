@@ -1,11 +1,12 @@
+import { ChangeDetectionStrategy } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-
-import { AutocompleteComponent } from './autocomplete.component'
-import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { ReactiveFormsModule } from '@angular/forms'
+import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { MatIconModule } from '@angular/material/icon'
 import { By } from '@angular/platform-browser'
 import { of } from 'rxjs'
+
+import { AutocompleteComponent } from './autocomplete.component'
 
 describe('AutocompleteComponent', () => {
   let component: AutocompleteComponent
@@ -15,7 +16,11 @@ describe('AutocompleteComponent', () => {
     await TestBed.configureTestingModule({
       imports: [MatAutocompleteModule, ReactiveFormsModule, MatIconModule],
       declarations: [AutocompleteComponent],
-    }).compileComponents()
+    })
+      .overrideComponent(AutocompleteComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents()
   })
 
   beforeEach(() => {
@@ -108,6 +113,69 @@ describe('AutocompleteComponent', () => {
       it('closes the autocomplete panel', () => {
         button.nativeElement.click()
         expect(component.triggerRef.closePanel).toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe('initial value', () => {
+    let anyEmitted
+    describe('when set', () => {
+      beforeEach(() => {
+        component.initialValue = { title: 'hello' }
+        component.displayWithFn = (item) => item.title
+        component.inputSubmited.subscribe((event) => (anyEmitted = event))
+        fixture.detectChanges()
+      })
+      it('set control value', () => {
+        expect(component.control.value).toEqual({ title: 'hello' })
+      })
+      it('emits any string', () => {
+        expect(anyEmitted).toEqual('hello')
+      })
+    })
+    describe('when not set', () => {
+      beforeEach(() => {
+        component.inputSubmited.subscribe((event) => (anyEmitted = event))
+        fixture.detectChanges()
+      })
+      it('does not set control value', () => {
+        expect(component.control.value).toEqual(null)
+      })
+      it('emits empty string', () => {
+        expect(anyEmitted).toEqual('')
+      })
+    })
+  })
+
+  describe('#handleSelection', () => {
+    let selectionEmitted
+    const selectionEvent: any = {
+      option: {
+        value: 'first',
+      },
+    }
+    describe('when true', () => {
+      beforeEach(() => {
+        component.clearOnSelection = true
+        component.itemSelected.subscribe((event) => (selectionEmitted = event))
+        fixture.detectChanges()
+        component.handleSelection(selectionEvent)
+      })
+      it('set cancelEnter to true', () => {
+        expect(component.cancelEnter).toBe(true)
+      })
+      it('emits selection event', () => {
+        expect(selectionEmitted).toEqual('first')
+      })
+      describe('if clear on selection', () => {
+        it('set input value to last entered text', () => {
+          component.control.setValue('second')
+          component.handleSelection(selectionEvent)
+          expect(component.inputRef.nativeElement.value).toEqual('second')
+          component.control.setValue({ title: 'third' })
+          component.handleSelection(selectionEvent)
+          expect(component.inputRef.nativeElement.value).toEqual('second')
+        })
       })
     })
   })
