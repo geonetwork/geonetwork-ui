@@ -7,5 +7,5 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BadgeComponent {
-  @Input() clickable = false
+  @Input() clickable? = false
 }

@@ -1,19 +1,28 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular'
+import {
+  componentWrapperDecorator,
+  Meta,
+  moduleMetadata,
+  Story,
+} from '@storybook/angular'
 import { BadgeComponent } from './badge.component'
 
 export default {
   title: 'Widgets/BadgeComponent',
   component: BadgeComponent,
   decorators: [
+    componentWrapperDecorator(BadgeComponent),
     moduleMetadata({
       imports: [],
     }),
   ],
 } as Meta<BadgeComponent>
 
-type BadgeComponentWithContent = { content: string }
-
-const Template: Story<BadgeComponentWithContent> = (args: BadgeComponent) => ({
+interface BadgeComponentContent extends Partial<BadgeComponent> {
+  content: string
+}
+const Template: Story<BadgeComponentContent> = (
+  args: BadgeComponentContent
+) => ({
   component: BadgeComponent,
   props: args,
   template: '<gn-ui-badge>{{content}}</gn-ui-badge>',
@@ -21,5 +30,6 @@ const Template: Story<BadgeComponentWithContent> = (args: BadgeComponent) => ({
 
 export const Primary = Template.bind({})
 Primary.args = {
-  content: 'My badge!',
+  clickable: true,
+  content: 'My custom badge',
 }
