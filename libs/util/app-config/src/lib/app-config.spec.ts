@@ -31,6 +31,7 @@ another_path = '/whatever'
 
 [map]
 max_zoom = 10
+max_extent = [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855]
 
 [theme]
 primary_color = "#093564"
@@ -142,6 +143,9 @@ describe('app config utils', () => {
       it('returns the map config', () => {
         expect(getMapConfig()).toEqual({
           MAX_ZOOM: 10,
+          MAX_EXTENT: [
+            -418263.418776, 5251529.591305, 961272.067714, 6706890.609855,
+          ],
         })
       })
     })

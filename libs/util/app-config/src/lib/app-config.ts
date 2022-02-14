@@ -1,4 +1,5 @@
 import * as TOML from '@ltd/j-toml'
+import { Extent } from 'ol/extent'
 
 const MISSING_CONFIG_ERROR = `Application configuration was not initialized correctly.
 This error might show up in case of an invalid/malformed configuration file. 
@@ -18,6 +19,7 @@ export function getGlobalConfig(): GlobalConfig {
 
 export interface MapConfig {
   MAX_ZOOM?: number
+  MAX_EXTENT?: Extent
 }
 let mapConfig: MapConfig = null
 
@@ -105,7 +107,7 @@ export function loadAppConfig() {
         )
       }
 
-      const mapCheck = checkKeys(map || {}, [], ['max_zoom'])
+      const mapCheck = checkKeys(map || {}, [], ['max_zoom', 'max_extent'])
       if (mapCheck.missing.length) {
         errors.push(`In the [map] section: ${mapCheck.missing.join(', ')}`)
       } else if (mapCheck.unrecognized.length) {
@@ -157,6 +159,7 @@ ${warnings.join('\n')}`)
       mapConfig = map
         ? {
             MAX_ZOOM: map.max_zoom,
+            MAX_EXTENT: map.max_extent,
           }
         : {}
       themeConfig = {

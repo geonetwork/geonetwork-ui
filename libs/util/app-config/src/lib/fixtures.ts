@@ -5,6 +5,7 @@ proxy_path = "/proxy/?url="
 
 [map]
 max_zoom = 10
+max_extent = [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855]
 
 [theme]
 primary_color = "#093564"
@@ -31,4 +32,5 @@ my.sample.text = "Un bon exemple de texte."
 
 export const MAP_CONFIG_FIXTURE = {
   MAX_ZOOM: 10,
+  MAX_EXTENT: [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855],
 }

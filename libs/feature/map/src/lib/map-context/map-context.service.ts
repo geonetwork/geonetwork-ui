@@ -96,11 +96,12 @@ export class MapContextService {
       )
       viewModel = { ...viewModel, center, zoom }
     }
-    const { center, zoom, maxZoom } = viewModel
+    const { center, zoom, maxZoom, maxExtent } = viewModel
     return new View({
       center,
       zoom,
       maxZoom,
+      extent: maxExtent,
       multiWorld: false,
       constrainResolution: true,
     })
@@ -116,6 +117,9 @@ export class MapContextService {
         ...mapContext.view,
         ...(mapConfig.MAX_ZOOM && {
           maxZoom: mapConfig.MAX_ZOOM,
+        }),
+        ...(mapConfig.MAX_EXTENT && {
+          maxExtent: mapConfig.MAX_EXTENT,
         }),
       },
     }

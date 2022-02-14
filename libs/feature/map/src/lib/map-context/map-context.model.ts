@@ -27,4 +27,5 @@ export interface MapContextViewModel {
   zoom?: number
   extent?: Extent //expressed in map projection (EPSG:3857)
   maxZoom?: number
+  maxExtent?: Extent //expressed in map projection (EPSG:3857)
 }

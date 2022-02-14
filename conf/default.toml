@@ -14,6 +14,7 @@ proxy_path = ""
 ### MAP SETTINGS
 [map]
 max_zoom = 10
+max_extent = [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855]
 
 ### VISUAL THEME
 
