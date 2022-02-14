@@ -117,14 +117,19 @@ describe('AutocompleteComponent', () => {
     })
   })
 
-  describe('initial value', () => {
+  describe('@Input() value', () => {
     let anyEmitted
     describe('when set', () => {
       beforeEach(() => {
-        component.initialValue = { title: 'hello' }
-        component.displayWithFn = (item) => item.title
+        const simpleChanges: any = {
+          value: {
+            previousValue: undefined,
+            currentValue: { title: 'hello' },
+          },
+        }
+        component.displayWithFn = (item) => item?.title
         component.inputSubmited.subscribe((event) => (anyEmitted = event))
-        fixture.detectChanges()
+        component.ngOnChanges(simpleChanges)
       })
       it('set control value', () => {
         expect(component.control.value).toEqual({ title: 'hello' })
@@ -133,10 +138,56 @@ describe('AutocompleteComponent', () => {
         expect(anyEmitted).toEqual('hello')
       })
     })
-    describe('when not set', () => {
+    describe('when changed', () => {
+      beforeEach(() => {
+        const simpleChanges: any = {
+          value: {
+            previousValue: { title: 'hello' },
+            currentValue: { title: 'good bye' },
+          },
+        }
+        component.displayWithFn = (item) => item?.title
+        component.inputSubmited.subscribe((event) => (anyEmitted = event))
+        component.ngOnChanges(simpleChanges)
+      })
+      it('set control value', () => {
+        expect(component.control.value).toEqual({ title: 'good bye' })
+      })
+      it('emits any string', () => {
+        expect(anyEmitted).toEqual('good bye')
+      })
+    })
+    describe('when ref changed but same text', () => {
+      let anyEmitted
+      beforeEach(() => {
+        const simpleChanges: any = {
+          value: {
+            previousValue: { title: 'good bye' },
+            currentValue: { title: 'good bye' },
+          },
+        }
+        component.displayWithFn = (item) => item?.title
+        component.inputSubmited.subscribe((event) => (anyEmitted = event))
+        component.ngOnChanges(simpleChanges)
+      })
+      it('does not set control value', () => {
+        expect(component.control.value).toBeNull()
+      })
+      it('does not emit any value', () => {
+        expect(anyEmitted).toBeUndefined()
+      })
+    })
+    describe('when not set on init (firstChange == true)', () => {
       beforeEach(() => {
         component.inputSubmited.subscribe((event) => (anyEmitted = event))
-        fixture.detectChanges()
+        const simpleChanges: any = {
+          value: {
+            firstChange: true,
+            previousValue: undefined,
+            currentValue: null,
+          },
+        }
+        component.ngOnChanges(simpleChanges)
       })
       it('does not set control value', () => {
         expect(component.control.value).toEqual(null)
