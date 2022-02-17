@@ -38,7 +38,23 @@ import { delay } from 'rxjs/operators'
 import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
 
-const mapConfigMock = { MAX_ZOOM: 10 }
+const mapConfigMock = {
+  MAX_ZOOM: 10,
+  MAX_EXTENT: [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855],
+  USE_BASEMAP_FROM_LAYERS: false,
+  CUSTOMLAYERS: [
+    {
+      TYPE: 'wms',
+      URL: 'https://some-wms-server',
+      NAME: 'some_layername',
+    },
+    {
+      TYPE: 'wfs',
+      URL: 'https://some-wfs-server',
+      NAME: 'some_layername',
+    },
+  ],
+}
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getMapConfig: () => mapConfigMock,
   isConfigLoaded: jest.fn(() => true),
@@ -208,9 +224,9 @@ describe('DataViewMapComponent', () => {
         mdViewFacade.geoDataLinks$.next([])
         fixture.detectChanges()
       })
-      it('emits a map context with only the base layer', () => {
+      it('emits a map context with no layer', () => {
         expect(mapComponent.context).toEqual({
-          layers: [component.getBackgroundLayer()],
+          layers: [],
           view: expect.any(Object),
         })
       })
@@ -244,10 +260,9 @@ describe('DataViewMapComponent', () => {
         mdViewFacade.geoDataLinks$.next([])
         fixture.detectChanges()
       })
-      it('emits a map context with the base layer and the first compatible link', () => {
+      it('emits a map context with the first compatible link', () => {
         expect(mapComponent.context).toEqual({
           layers: [
-            component.getBackgroundLayer(),
             {
               url: 'http://abcd.com/',
               name: 'layer1',
@@ -326,10 +341,9 @@ describe('DataViewMapComponent', () => {
         tick(200)
         fixture.detectChanges()
       }))
-      it('emits a map context with the base layer and the downloaded data from WFS', () => {
+      it('emits a map context with the downloaded data from WFS', () => {
         expect(mapComponent.context).toEqual({
           layers: [
-            component.getBackgroundLayer(),
             {
               type: 'geojson',
               data: SAMPLE_GEOJSON,
@@ -353,10 +367,9 @@ describe('DataViewMapComponent', () => {
         tick(200)
         fixture.detectChanges()
       }))
-      it('emits a map context with the base layer and the downloaded data from WFS', () => {
+      it('emits a map context with the the downloaded data from WFS', () => {
         expect(mapComponent.context).toEqual({
           layers: [
-            component.getBackgroundLayer(),
             {
               type: 'geojson',
               data: SAMPLE_GEOJSON,
@@ -422,11 +435,10 @@ describe('DataViewMapComponent', () => {
           fixture.detectChanges()
           tick(200)
         }))
-        it('emits a map context after loading with the base layer and the downloaded data', () => {
+        it('emits a map context after loading with the downloaded data', () => {
           fixture.detectChanges()
           expect(mapComponent.context).toEqual({
             layers: [
-              component.getBackgroundLayer(),
               {
                 type: 'geojson',
                 data: SAMPLE_GEOJSON,
@@ -468,7 +480,6 @@ describe('DataViewMapComponent', () => {
       it('emits a map context with the link from the last record', () => {
         expect(mapComponent.context).toEqual({
           layers: [
-            component.getBackgroundLayer(),
             {
               url: 'http://abcd.com/',
               name: 'layer',
@@ -520,7 +531,6 @@ describe('DataViewMapComponent', () => {
         it('emits a new map context with the selected layer and the computed extent', () => {
           expect(mapComponent.context).toEqual({
             layers: [
-              component.getBackgroundLayer(),
               {
                 url: 'http://abcd.com/',
                 name: 'layer2',
@@ -541,7 +551,6 @@ describe('DataViewMapComponent', () => {
         it('emits a new map context with the selected layer and a default view', () => {
           expect(mapComponent.context).toEqual({
             layers: [
-              component.getBackgroundLayer(),
               {
                 url: 'http://abcd.com/',
                 name: 'layer2',
@@ -560,7 +569,6 @@ describe('DataViewMapComponent', () => {
         }))
         it('does not emit another map context', () => {
           expect(mapComponent.context.layers).toEqual([
-            component.getBackgroundLayer(),
             {
               url: 'http://abcd.com/',
               name: 'layer2',
