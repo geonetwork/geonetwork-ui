@@ -17,7 +17,16 @@ import VectorSource from 'ol/source/Vector'
 import { MapUtilsService } from '../utils/map-utils.service'
 import { bbox as bboxStrategy } from 'ol/loadingstrategy'
 import GeoJSON from 'ol/format/GeoJSON'
-import { MapConfig } from '@geonetwork-ui/util/app-config'
+import { LayerConfig, MapConfig } from '@geonetwork-ui/util/app-config'
+
+export const DEFAULT_BASELAYER_CONTEXT: MapContextLayerModel = {
+  type: MapContextLayerTypeEnum.XYZ,
+  urls: [
+    `https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
+    `https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
+    `https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
+  ],
+}
 
 @Injectable({
   providedIn: 'root',
@@ -122,6 +131,29 @@ export class MapContextService {
           maxExtent: mapConfig.MAX_EXTENT,
         }),
       },
+      layers: [
+        ...(mapConfig.USE_BASEMAP_FROM_LAYERS
+          ? []
+          : [DEFAULT_BASELAYER_CONTEXT]),
+        ...(mapConfig.LAYERS
+          ? this.getLayersContextFromConfig(mapConfig.LAYERS)
+          : []),
+        ...mapContext.layers,
+      ],
     }
+  }
+
+  getLayersContextFromConfig(
+    layersConfig: LayerConfig[]
+  ): MapContextLayerModel[] {
+    const layersModel: MapContextLayerModel[] = []
+    layersConfig.forEach((layerConfig) => {
+      layersModel.push({
+        type: MapContextLayerTypeEnum[layerConfig.TYPE.toUpperCase()],
+        url: layerConfig.URL,
+        name: layerConfig.NAME,
+      })
+    })
+    return layersModel
   }
 }
