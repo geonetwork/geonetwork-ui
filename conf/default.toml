@@ -15,9 +15,27 @@ proxy_path = ""
 # The map section allows to override default settings of the map view.
 # Example:
 #
-# [map]
+[map]
 # max_zoom = 10
 # max_extent = [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855]
+# use_basemap_from_layers = false
+# 
+# Layers (basemaps, overlays, masks) can be added to the map view with three properties:
+# - type (mandatory): Indicates the layer type. Possible values are 'xyz', 'wms', 'wfs'.
+# - url (mandatory): Layer endpoint URL.
+# - name: Mandatory for 'wms', 'wfs' types where it indicates the layer name.
+# Layer order in the config is the same as in the map, the first one being the bottom one.
+# If you want to override the default basemap with the first layer of your config set use_basemap_from_layers = true (default: false)
+# Each layer is defined in its own [[layers]] section.
+# Example:
+# [[layers]]
+# type = "xyz"
+# url = "https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
+# [[layers]]
+# type = "wfs"
+# url = "https://www.geo2france.fr/geoserver/cr_hdf/ows"
+# name = "masque_hdf_ign_carto_latin1"
+#
 
 ### VISUAL THEME
 

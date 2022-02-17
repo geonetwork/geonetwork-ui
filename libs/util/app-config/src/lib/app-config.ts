@@ -17,9 +17,16 @@ export function getGlobalConfig(): GlobalConfig {
   return globalConfig
 }
 
+export interface LayerConfig {
+  TYPE: 'xyz' | 'wms' | 'wfs'
+  URL: string
+  NAME?: string
+}
 export interface MapConfig {
   MAX_ZOOM?: number
   MAX_EXTENT?: Extent
+  USE_BASEMAP_FROM_LAYERS?: boolean
+  LAYERS?: LayerConfig[]
 }
 let mapConfig: MapConfig = null
 
@@ -88,8 +95,13 @@ export function loadAppConfig() {
           `An error occurred when parsing the configuration file: ${e.message}`
         )
       }
-
-      const { global, map, theme, translations: translationsNested } = parsed
+      const {
+        global,
+        map,
+        layers,
+        theme,
+        translations: translationsNested,
+      } = parsed
       const errors = []
       const warnings = []
 
@@ -107,13 +119,49 @@ export function loadAppConfig() {
         )
       }
 
-      const mapCheck = checkKeys(map || {}, [], ['max_zoom', 'max_extent'])
+      const mapCheck = checkKeys(
+        map || {},
+        [],
+        ['max_zoom', 'max_extent', 'baselayer', 'use_basemap_from_layers']
+      )
       if (mapCheck.missing.length) {
         errors.push(`In the [map] section: ${mapCheck.missing.join(', ')}`)
       } else if (mapCheck.unrecognized.length) {
         warnings.push(
           `In the [map] section: ${mapCheck.unrecognized.join(', ')}`
         )
+      }
+
+      let layersCheck = { missing: [], unrecognized: [] }
+      if (layers) {
+        layers.forEach((layer) => {
+          const { missing, unrecognized } = checkKeys(
+            layer || {},
+            ['type', 'url'],
+            ['name']
+          )
+          layersCheck = {
+            missing: [
+              ...layersCheck.missing,
+              ...(missing.length ? [missing] : []),
+            ],
+            unrecognized: [
+              ...layersCheck.unrecognized,
+              ...(unrecognized.length ? [unrecognized] : []),
+            ],
+          }
+        })
+        if (layersCheck.missing.length) {
+          errors.push(
+            `In some [layers] definition: ${layersCheck.missing.join(', ')}`
+          )
+        } else if (layersCheck.unrecognized.length) {
+          warnings.push(
+            `In some [layers] definition: ${layersCheck.unrecognized.join(
+              ', '
+            )}`
+          )
+        }
       }
 
       const themeCheck = checkKeys(
@@ -156,10 +204,24 @@ ${warnings.join('\n')}`)
         GN4_API_URL: global.geonetwork4_api_url,
         PROXY_PATH: global.proxy_path,
       }
+      const layersConfig: LayerConfig[] = []
+      if (layers) {
+        layers.forEach((layerConfig) => {
+          layersConfig.push({
+            TYPE: layerConfig.type,
+            URL: layerConfig.url,
+            NAME: layerConfig.name,
+          })
+        })
+      }
       mapConfig = map
         ? {
             MAX_ZOOM: map.max_zoom,
             MAX_EXTENT: map.max_extent,
+            USE_BASEMAP_FROM_LAYERS: map.use_basemap_from_layers,
+            ...(layersConfig.length && {
+              LAYERS: layersConfig,
+            }),
           }
         : {}
       themeConfig = {

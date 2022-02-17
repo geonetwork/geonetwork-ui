@@ -32,6 +32,17 @@ another_path = '/whatever'
 [map]
 max_zoom = 10
 max_extent = [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855]
+use_basemap_from_layers = false
+another_zoom = 15
+[[layers]]
+type = "wms"
+url = "https://www.geo2france.fr/geoserver/cr_hdf/ows"
+name = "masque_hdf_ign_carto_latin1"
+[[layers]]
+type = "wfs"
+url = "https://www.geo2france.fr/geoserver/cr_hdf/ows"
+name = "masque_hdf_ign_carto_latin1"
+another_layer = "wrong layer definition"
 
 [theme]
 primary_color = "#093564"
@@ -145,6 +156,19 @@ describe('app config utils', () => {
           MAX_ZOOM: 10,
           MAX_EXTENT: [
             -418263.418776, 5251529.591305, 961272.067714, 6706890.609855,
+          ],
+          USE_BASEMAP_FROM_LAYERS: false,
+          LAYERS: [
+            {
+              TYPE: 'wms',
+              URL: 'https://www.geo2france.fr/geoserver/cr_hdf/ows',
+              NAME: 'masque_hdf_ign_carto_latin1',
+            },
+            {
+              TYPE: 'wfs',
+              URL: 'https://www.geo2france.fr/geoserver/cr_hdf/ows',
+              NAME: 'masque_hdf_ign_carto_latin1',
+            },
           ],
         })
       })
