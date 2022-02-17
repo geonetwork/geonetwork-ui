@@ -27,7 +27,7 @@ import { ElasticsearchMapper } from '../utils/mapper'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FuzzySearchComponent {
-  @Input() initialValue?: MetadataRecord
+  @Input() value?: MetadataRecord
   @ViewChild(AutocompleteComponent) autocomplete: AutocompleteComponent
   @Output() itemSelected = new EventEmitter<MetadataRecord>()
   @Output() inputSubmited = new EventEmitter<string>()

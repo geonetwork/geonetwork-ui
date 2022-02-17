@@ -1,15 +1,7 @@
 <div
-  class="
-    inline-block
-    bg-black
-    opacity-70
-    py-1.5
-    px-3
-    rounded
-    font-medium
-    text-gray-50 text-sm
-    leading-none
-  "
+  class="inline-block bg-black opacity-70 py-1.5 px-3 rounded font-medium text-gray-50 text-sm leading-none"
+  [class.hover:bg-gray-800]="clickable"
+  [class.cursor-pointer]="clickable"
 >
   <ng-content></ng-content>
 </div>

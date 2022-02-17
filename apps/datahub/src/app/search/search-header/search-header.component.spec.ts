@@ -9,9 +9,9 @@ import { BehaviorSubject } from 'rxjs'
 
 import { SearchHeaderComponent } from './search-header.component'
 
-class RouterFacadeMock {
-  goToMetadata = jest.fn()
-  anySearch$ = new BehaviorSubject('scot')
+const routerFacadeMock = {
+  goToMetadata: jest.fn(),
+  anySearch$: new BehaviorSubject('scot'),
 }
 class SearchFacadeMock {}
 /* eslint-disable */
@@ -20,7 +20,7 @@ class SearchFacadeMock {}
   template: '',
 })
 class FuzzySearchComponentMock {
-  @Input() initialValue?: MetadataRecord
+  @Input() value?: MetadataRecord
 }
 /* eslint-enable */
 
@@ -36,7 +36,7 @@ describe('HeaderComponent', () => {
       providers: [
         {
           provide: RouterFacade,
-          useClass: RouterFacadeMock,
+          useValue: routerFacadeMock,
         },
         {
           provide: SearchFacade,
@@ -61,7 +61,16 @@ describe('HeaderComponent', () => {
       const fuzzyCpt = fixture.debugElement.query(
         By.directive(FuzzySearchComponentMock)
       ).componentInstance
-      expect(fuzzyCpt.initialValue).toEqual({ title: 'scot' })
+      expect(fuzzyCpt.value).toEqual({ title: 'scot' })
+    })
+    it('value is changed on route update', () => {
+      routerFacadeMock.anySearch$.next('river')
+      const fuzzyCpt = fixture.debugElement.query(
+        By.directive(FuzzySearchComponentMock)
+      ).componentInstance
+      fixture.detectChanges()
+
+      expect(fuzzyCpt.value).toEqual({ title: 'river' })
     })
   })
 })

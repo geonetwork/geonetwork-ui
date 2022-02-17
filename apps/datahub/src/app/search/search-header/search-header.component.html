@@ -8,7 +8,7 @@
       <gn-ui-fuzzy-search
         (itemSelected)="onFuzzySearchSelection($event)"
         (inputSubmited)="onFuzzySearchSubmission($event)"
-        [initialValue]="searchInputRouteValue$ | async"
+        [value]="searchInputRouteValue$ | async"
       ></gn-ui-fuzzy-search>
     </div>
     <!--
@@ -26,12 +26,7 @@
     <div class="tabs flex justify-center py-4 mt-12 font-medium">
       <!--      <div class="uppercase text-white">Fil d'activité</div>-->
       <div
-        class="
-          uppercase
-          text-primary
-          hover:text-primary-lighter hover:underline
-          cursor-pointer
-        "
+        class="uppercase text-primary hover:text-primary-lighter hover:underline cursor-pointer"
         (click)="onDatasetsClick()"
         translate=""
       >

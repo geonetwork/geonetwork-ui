@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
 @Component({
   selector: 'gn-ui-badge',
@@ -6,4 +6,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   styleUrls: ['./badge.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BadgeComponent {}
+export class BadgeComponent {
+  @Input() clickable? = false
+}

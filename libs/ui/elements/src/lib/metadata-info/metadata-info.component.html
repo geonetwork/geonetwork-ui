@@ -20,6 +20,9 @@
       <div class="mb-16">
         <gn-ui-badge
           class="inline-block mr-2 mb-2 lowercase"
+          [routerLink]="['/search']"
+          [queryParams]="{ q: keyword }"
+          [clickable]="true"
           *ngFor="let keyword of metadata.keywords"
           >{{ keyword }}</gn-ui-badge
         >
@@ -34,15 +37,7 @@
         {{ metadata.lineage }}
       </p>
       <div
-        class="
-          py-4
-          px-6
-          rounded
-          bg-gray-100
-          grid grid-cols-2 grid-rows-2
-          gap-6
-          text-gray-800
-        "
+        class="py-4 px-6 rounded bg-gray-100 grid grid-cols-2 grid-rows-2 gap-6 text-gray-800"
       >
         <div class="border-b border-gray-300" *ngIf="metadata.updatedOn">
           <p class="text-sm" translate>record.metadata.updatedOn</p>

@@ -5,9 +5,11 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core'
 import { FormControl } from '@angular/forms'
@@ -16,7 +18,7 @@ import {
   MatAutocompleteSelectedEvent,
   MatAutocompleteTrigger,
 } from '@angular/material/autocomplete'
-import { BehaviorSubject, Observable, ReplaySubject, Subscription } from 'rxjs'
+import { Observable, ReplaySubject, Subscription } from 'rxjs'
 import {
   debounceTime,
   distinctUntilChanged,
@@ -36,10 +38,12 @@ export type AutcompleteItem = unknown
   styleUrls: ['./autocomplete.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AutocompleteComponent
+  implements OnInit, AfterViewInit, OnDestroy, OnChanges
+{
   @Input() placeholder: string
   @Input() action: (value: string) => Observable<AutcompleteItem[]>
-  @Input() initialValue?: AutcompleteItem
+  @Input() value?: AutcompleteItem
   @Input() clearOnSelection = false
   @Output() itemSelected = new EventEmitter<AutcompleteItem>()
   @Output() inputSubmited = new EventEmitter<string>()
@@ -56,6 +60,17 @@ export class AutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
   lastInputValue$ = new ReplaySubject<string>(1)
 
   @Input() displayWithFn: (AutcompleteItem) => string = (item) => item
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const { value } = changes
+    if (value) {
+      const previousTextValue = this.displayWithFn(value.previousValue)
+      const currentTextValue = this.displayWithFn(value.currentValue)
+      if (value.firstChange || previousTextValue !== currentTextValue) {
+        this.updateInputValue(value.currentValue)
+      }
+    }
+  }
 
   ngOnInit(): void {
     this.suggestions$ = this.control.valueChanges.pipe(
@@ -74,8 +89,6 @@ export class AutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
     this.control.valueChanges
       .pipe(filter((value) => typeof value === 'string'))
       .subscribe(this.lastInputValue$)
-
-    this.initInput(this.initialValue)
   }
 
   ngAfterViewInit(): void {
@@ -86,7 +99,7 @@ export class AutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscription.unsubscribe()
   }
 
-  initInput(value: AutcompleteItem) {
+  updateInputValue(value: AutcompleteItem) {
     if (value) {
       this.control.setValue(value)
     }

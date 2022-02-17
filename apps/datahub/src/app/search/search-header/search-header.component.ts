@@ -3,7 +3,7 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
-import { map, take } from 'rxjs/operators'
+import { map } from 'rxjs/operators'
 
 marker('datahub.header.myfavorites')
 marker('datahub.header.connex')
@@ -18,7 +18,6 @@ marker('datahub.header.popularRecords')
 })
 export class SearchHeaderComponent {
   searchInputRouteValue$ = this.routerFacade.anySearch$.pipe(
-    take(1),
     map((any) => ({ title: any }))
   )
 
