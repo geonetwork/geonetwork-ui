@@ -80,15 +80,15 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
     map(([links, index]) => links[index]),
     switchMap((link) => {
       if (!link) {
-        return of([this.getBackgroundLayer()])
+        return of([])
       }
       this.loading = true
       this.error = null
       return this.getLayerFromLink(link).pipe(
-        map((layer) => [this.getBackgroundLayer(), layer]),
+        map((layer) => [layer]),
         catchError((e) => {
           this.error = e.message
-          return of([this.getBackgroundLayer()])
+          return of([])
         }),
         finalize(() => (this.loading = false))
       )
@@ -97,7 +97,7 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
 
   mapContext$ = this.currentLayers$.pipe(
     switchMap((layers) =>
-      this.mapUtils.getLayerExtent(layers[1]).pipe(
+      this.mapUtils.getLayerExtent(layers[0]).pipe(
         catchError((error) => {
           console.warn(error) // FIXME: report this to the user somehow
           return of(undefined)
@@ -162,17 +162,6 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
       this.selection.setStyle(null)
     }
     this.selection = null
-  }
-
-  getBackgroundLayer(): MapContextLayerModel {
-    return {
-      type: MapContextLayerTypeEnum.XYZ,
-      urls: [
-        `https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
-        `https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
-        `https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
-      ],
-    }
   }
 
   getLayerFromLink(link: MetadataLinkValid): Observable<MapContextLayerModel> {

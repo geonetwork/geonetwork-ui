@@ -22,7 +22,10 @@ import {
   MAP_CTX_LAYER_XYZ_FIXTURE,
 } from './map-context.fixtures'
 
-import { MapContextService } from './map-context.service'
+import {
+  DEFAULT_BASELAYER_CONTEXT,
+  MapContextService,
+} from './map-context.service'
 
 const mapStyleServiceMock = {
   createDefaultStyle: jest.fn(() => new Style()),
@@ -191,11 +194,68 @@ describe('MapContextService', () => {
       const mapContext = MAP_CTX_FIXTURE
       const mapConfig = MAP_CONFIG_FIXTURE
       beforeEach(() => {
+        mapConfig.DO_NOT_USE_DEFAULT_BASEMAP = true
         service.resetMapFromContext(map, mapContext, mapConfig)
       })
       it('set maxZoom', () => {
         const maxZoom = map.getView().getMaxZoom()
         expect(maxZoom).toBe(10)
+      })
+      it('set first layer as baselayer', () => {
+        const baselayerUrls = map.getLayers().item(0).getSource().getUrls()
+        expect(baselayerUrls).toEqual(['https://some-basemap-server'])
+      })
+      it('add one WMS layer from config on top of baselayer', () => {
+        const layerWMSUrl = map.getLayers().item(1).getSource().getUrls()[0]
+        expect(layerWMSUrl).toEqual('https://some-wms-server')
+      })
+      it('add one WFS layer from config on top of baselayer', () => {
+        const layerWFSSource = map.getLayers().item(2).getSource()
+        expect(layerWFSSource).toBeInstanceOf(VectorSource)
+      })
+    })
+    describe('with config, but keeping default basemap', () => {
+      const map = new Map({})
+      const mapContext = MAP_CTX_FIXTURE
+      const mapConfig = MAP_CONFIG_FIXTURE
+      beforeEach(() => {
+        mapConfig.DO_NOT_USE_DEFAULT_BASEMAP = false
+        service.resetMapFromContext(map, mapContext, mapConfig)
+      })
+      it('set first layer as baselayer', () => {
+        const baselayerUrls = map.getLayers().item(0).getSource().getUrls()
+        expect(baselayerUrls).toEqual(DEFAULT_BASELAYER_CONTEXT.urls)
+      })
+    })
+  })
+  describe('#mergeMapConfigWithContext', () => {
+    const mapContext = MAP_CTX_FIXTURE
+    const mapConfig = MAP_CONFIG_FIXTURE
+    beforeEach(() => {
+      mapConfig.DO_NOT_USE_DEFAULT_BASEMAP = true
+    })
+    it('merges mapconfig into existing mapcontext', () => {
+      const mergedMapContext = service.mergeMapConfigWithContext(
+        mapContext,
+        mapConfig
+      )
+      const layersContext = service.getLayersContextFromConfig(
+        MAP_CONFIG_FIXTURE.MAP_LAYERS
+      )
+
+      expect(mergedMapContext).toEqual({
+        ...MAP_CTX_FIXTURE,
+        view: {
+          ...MAP_CTX_FIXTURE.view,
+          maxZoom: MAP_CONFIG_FIXTURE.MAX_ZOOM,
+          maxExtent: MAP_CONFIG_FIXTURE.MAX_EXTENT,
+        },
+        layers: [
+          layersContext[0],
+          layersContext[1],
+          layersContext[2],
+          ...MAP_CTX_FIXTURE.layers,
+        ],
       })
     })
   })

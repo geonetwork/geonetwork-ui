@@ -32,6 +32,17 @@ another_path = '/whatever'
 [map]
 max_zoom = 10
 max_extent = [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855]
+do_not_use_default_basemap = false
+another_zoom = 15
+[[map_layer]]
+type = "wms"
+url = "https://www.geo2france.fr/geoserver/cr_hdf/ows"
+name = "masque_hdf_ign_carto_latin1"
+[[map_layer]]
+type = "wfs"
+url = "https://www.geo2france.fr/geoserver/cr_hdf/ows"
+name = "masque_hdf_ign_carto_latin1"
+another_layer = "wrong layer definition"
 
 [theme]
 primary_color = "#093564"
@@ -139,16 +150,6 @@ describe('app config utils', () => {
         })
       })
     })
-    describe('getMapConfig', () => {
-      it('returns the map config', () => {
-        expect(getMapConfig()).toEqual({
-          MAX_ZOOM: 10,
-          MAX_EXTENT: [
-            -418263.418776, 5251529.591305, 961272.067714, 6706890.609855,
-          ],
-        })
-      })
-    })
     describe('getThemeConfig', () => {
       it('returns the theme config', () => {
         expect(getThemeConfig()).toEqual({
@@ -179,6 +180,85 @@ describe('app config utils', () => {
       })
       it('returns an empty object if no translation defined', () => {
         expect(getCustomTranslations('nl')).toEqual({})
+      })
+    })
+  })
+
+  describe('getMapConfig', () => {
+    const baseConfig = `
+    [global]
+    geonetwork4_api_url = "/geonetwork/srv/api"
+    [theme]
+    primary_color = "#093564"
+    secondary_color = "#c2e9dc"
+    main_color = "#212029" # All-purpose text color
+    background_color = "#fdfbff"
+`
+
+    describe('when all properties are present', () => {
+      beforeEach(async () => {
+        fetchMock.get(
+          'end:default.toml',
+          () =>
+            baseConfig +
+            `
+            [map]
+            max_zoom = 10
+            max_extent = [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855]
+            do_not_use_default_basemap = true
+            [[map_layer]]
+            type = "wms"
+            url = "https://www.geo2france.fr/geoserver/cr_hdf/ows"
+            name = "masque_hdf_ign_carto_latin1"
+            [[map_layer]]
+            type = "wfs"
+            url = "https://www.geo2france.fr/geoserver/cr_hdf/ows"
+            name = "masque_hdf_ign_carto_latin1"`
+        )
+        await loadAppConfig()
+      })
+
+      it('returns the map config', () => {
+        expect(getMapConfig()).toEqual({
+          MAX_ZOOM: 10,
+          MAX_EXTENT: [
+            -418263.418776, 5251529.591305, 961272.067714, 6706890.609855,
+          ],
+          DO_NOT_USE_DEFAULT_BASEMAP: true,
+          MAP_LAYERS: [
+            {
+              TYPE: 'wms',
+              URL: 'https://www.geo2france.fr/geoserver/cr_hdf/ows',
+              NAME: 'masque_hdf_ign_carto_latin1',
+            },
+            {
+              TYPE: 'wfs',
+              URL: 'https://www.geo2france.fr/geoserver/cr_hdf/ows',
+              NAME: 'masque_hdf_ign_carto_latin1',
+            },
+          ],
+        })
+      })
+    })
+    describe('when all properties are missing', () => {
+      beforeEach(async () => {
+        fetchMock.get(
+          'end:default.toml',
+          () =>
+            baseConfig +
+            `
+            [map]`
+        )
+        await loadAppConfig()
+      })
+
+      it('returns the map config', () => {
+        expect(getMapConfig()).toEqual({
+          MAX_ZOOM: undefined,
+          MAX_EXTENT: undefined,
+          DO_NOT_USE_DEFAULT_BASEMAP: false,
+          MAP_LAYERS: [],
+        })
       })
     })
   })

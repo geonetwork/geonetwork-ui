@@ -1,5 +1,4 @@
 import * as TOML from '@ltd/j-toml'
-import { Extent } from 'ol/extent'
 
 const MISSING_CONFIG_ERROR = `Application configuration was not initialized correctly.
 This error might show up in case of an invalid/malformed configuration file. 
@@ -17,9 +16,16 @@ export function getGlobalConfig(): GlobalConfig {
   return globalConfig
 }
 
+export interface LayerConfig {
+  TYPE: 'xyz' | 'wms' | 'wfs'
+  URL: string
+  NAME?: string
+}
 export interface MapConfig {
   MAX_ZOOM?: number
-  MAX_EXTENT?: Extent
+  MAX_EXTENT?: [number, number, number, number] // Expressed as [minx, miny, maxx, maxy]
+  DO_NOT_USE_DEFAULT_BASEMAP: boolean
+  MAP_LAYERS: LayerConfig[]
 }
 let mapConfig: MapConfig = null
 
@@ -88,8 +94,13 @@ export function loadAppConfig() {
           `An error occurred when parsing the configuration file: ${e.message}`
         )
       }
-
-      const { global, map, theme, translations: translationsNested } = parsed
+      const {
+        global,
+        map,
+        map_layer,
+        theme,
+        translations: translationsNested,
+      } = parsed
       const errors = []
       const warnings = []
 
@@ -107,13 +118,51 @@ export function loadAppConfig() {
         )
       }
 
-      const mapCheck = checkKeys(map || {}, [], ['max_zoom', 'max_extent'])
+      const mapCheck = checkKeys(
+        map || {},
+        [],
+        ['max_zoom', 'max_extent', 'baselayer', 'do_not_use_default_basemap']
+      )
       if (mapCheck.missing.length) {
         errors.push(`In the [map] section: ${mapCheck.missing.join(', ')}`)
       } else if (mapCheck.unrecognized.length) {
         warnings.push(
           `In the [map] section: ${mapCheck.unrecognized.join(', ')}`
         )
+      }
+
+      let layersCheck = { missing: [], unrecognized: [] }
+      if (map_layer) {
+        map_layer.forEach((layer) => {
+          const { missing, unrecognized } = checkKeys(
+            layer || {},
+            ['type', 'url'],
+            ['name']
+          )
+          layersCheck = {
+            missing: [
+              ...layersCheck.missing,
+              ...(missing.length ? [missing] : []),
+            ],
+            unrecognized: [
+              ...layersCheck.unrecognized,
+              ...(unrecognized.length ? [unrecognized] : []),
+            ],
+          }
+        })
+        if (layersCheck.missing.length) {
+          errors.push(
+            `In one of the [map_layer] definitions: ${layersCheck.missing.join(
+              ', '
+            )}`
+          )
+        } else if (layersCheck.unrecognized.length) {
+          warnings.push(
+            `In one of the [map_layer] definitions: ${layersCheck.unrecognized.join(
+              ', '
+            )}`
+          )
+        }
       }
 
       const themeCheck = checkKeys(
@@ -156,12 +205,22 @@ ${warnings.join('\n')}`)
         GN4_API_URL: global.geonetwork4_api_url,
         PROXY_PATH: global.proxy_path,
       }
-      mapConfig = map
-        ? {
-            MAX_ZOOM: map.max_zoom,
-            MAX_EXTENT: map.max_extent,
-          }
-        : {}
+      const layersConfig: LayerConfig[] = []
+      if (map_layer) {
+        map_layer.forEach((layerConfig) => {
+          layersConfig.push({
+            TYPE: layerConfig.type,
+            URL: layerConfig.url,
+            NAME: layerConfig.name,
+          })
+        })
+      }
+      mapConfig = {
+        MAX_ZOOM: map.max_zoom,
+        MAX_EXTENT: map.max_extent,
+        DO_NOT_USE_DEFAULT_BASEMAP: !!map.do_not_use_default_basemap,
+        MAP_LAYERS: layersConfig,
+      }
       themeConfig = {
         PRIMARY_COLOR: theme.primary_color,
         SECONDARY_COLOR: theme.secondary_color,
