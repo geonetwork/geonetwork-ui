@@ -132,11 +132,11 @@ export class MapContextService {
         }),
       },
       layers: [
-        ...(mapConfig.USE_BASEMAP_FROM_LAYERS
+        ...(mapConfig.DO_NOT_USE_DEFAULT_BASEMAP
           ? []
           : [DEFAULT_BASELAYER_CONTEXT]),
-        ...(mapConfig.LAYERS
-          ? this.getLayersContextFromConfig(mapConfig.LAYERS)
+        ...(mapConfig.MAP_LAYERS
+          ? this.getLayersContextFromConfig(mapConfig.MAP_LAYERS)
           : []),
         ...mapContext.layers,
       ],

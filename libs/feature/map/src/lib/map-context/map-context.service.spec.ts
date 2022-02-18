@@ -194,7 +194,7 @@ describe('MapContextService', () => {
       const mapContext = MAP_CTX_FIXTURE
       const mapConfig = MAP_CONFIG_FIXTURE
       beforeEach(() => {
-        mapConfig.USE_BASEMAP_FROM_LAYERS = true
+        mapConfig.DO_NOT_USE_DEFAULT_BASEMAP = true
         service.resetMapFromContext(map, mapContext, mapConfig)
       })
       it('set maxZoom', () => {
@@ -219,7 +219,7 @@ describe('MapContextService', () => {
       const mapContext = MAP_CTX_FIXTURE
       const mapConfig = MAP_CONFIG_FIXTURE
       beforeEach(() => {
-        mapConfig.USE_BASEMAP_FROM_LAYERS = false
+        mapConfig.DO_NOT_USE_DEFAULT_BASEMAP = false
         service.resetMapFromContext(map, mapContext, mapConfig)
       })
       it('set first layer as baselayer', () => {
@@ -232,7 +232,7 @@ describe('MapContextService', () => {
     const mapContext = MAP_CTX_FIXTURE
     const mapConfig = MAP_CONFIG_FIXTURE
     beforeEach(() => {
-      mapConfig.USE_BASEMAP_FROM_LAYERS = true
+      mapConfig.DO_NOT_USE_DEFAULT_BASEMAP = true
     })
     it('merges mapconfig into existing mapcontext', () => {
       const mergedMapContext = service.mergeMapConfigWithContext(
@@ -240,7 +240,7 @@ describe('MapContextService', () => {
         mapConfig
       )
       const layersContext = service.getLayersContextFromConfig(
-        MAP_CONFIG_FIXTURE.LAYERS
+        MAP_CONFIG_FIXTURE.MAP_LAYERS
       )
 
       expect(mergedMapContext).toEqual({

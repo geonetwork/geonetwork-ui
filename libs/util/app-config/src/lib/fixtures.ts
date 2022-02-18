@@ -6,12 +6,12 @@ proxy_path = "/proxy/?url="
 [map]
 max_zoom = 10
 max_extent = [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855]
-use_basemap_from_layers = false
-[[layers]]
+do_not_use_default_basemap = false
+[[map_layer]]
 type = "wms"
 url = "https://www.geo2france.fr/geoserver/cr_hdf/ows"
 name = "masque_hdf_ign_carto_latin1"
-[[layers]]
+[[map_layer]]
 type = "wfs"
 url = "https://www.geo2france.fr/geoserver/cr_hdf/ows"
 name = "masque_hdf_ign_carto_latin1"
@@ -42,8 +42,8 @@ my.sample.text = "Un bon exemple de texte."
 export const MAP_CONFIG_FIXTURE = {
   MAX_ZOOM: 10,
   MAX_EXTENT: [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855],
-  USE_BASEMAP_FROM_LAYERS: false,
-  LAYERS: [
+  DO_NOT_USE_DEFAULT_BASEMAP: false,
+  MAP_LAYERS: [
     {
       TYPE: 'xyz',
       URL: 'https://some-basemap-server',

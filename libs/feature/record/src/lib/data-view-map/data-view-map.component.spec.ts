@@ -41,8 +41,8 @@ import { MapConfig } from '@geonetwork-ui/util/app-config'
 const mapConfigMock = {
   MAX_ZOOM: 10,
   MAX_EXTENT: [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855],
-  USE_BASEMAP_FROM_LAYERS: false,
-  CUSTOMLAYERS: [
+  DO_NOT_USE_DEFAULT_BASEMAP: false,
+  MAP_LAYERS: [
     {
       TYPE: 'wms',
       URL: 'https://some-wms-server',

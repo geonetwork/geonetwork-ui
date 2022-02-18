@@ -1,5 +1,4 @@
 import * as TOML from '@ltd/j-toml'
-import { Extent } from 'ol/extent'
 
 const MISSING_CONFIG_ERROR = `Application configuration was not initialized correctly.
 This error might show up in case of an invalid/malformed configuration file. 
@@ -24,9 +23,9 @@ export interface LayerConfig {
 }
 export interface MapConfig {
   MAX_ZOOM?: number
-  MAX_EXTENT?: Extent
-  USE_BASEMAP_FROM_LAYERS?: boolean
-  LAYERS?: LayerConfig[]
+  MAX_EXTENT?: [number, number, number, number] // Expressed as [minx, miny, maxx, maxy]
+  DO_NOT_USE_DEFAULT_BASEMAP: boolean
+  MAP_LAYERS: LayerConfig[]
 }
 let mapConfig: MapConfig = null
 
@@ -98,7 +97,7 @@ export function loadAppConfig() {
       const {
         global,
         map,
-        layers,
+        map_layer,
         theme,
         translations: translationsNested,
       } = parsed
@@ -122,7 +121,7 @@ export function loadAppConfig() {
       const mapCheck = checkKeys(
         map || {},
         [],
-        ['max_zoom', 'max_extent', 'baselayer', 'use_basemap_from_layers']
+        ['max_zoom', 'max_extent', 'baselayer', 'do_not_use_default_basemap']
       )
       if (mapCheck.missing.length) {
         errors.push(`In the [map] section: ${mapCheck.missing.join(', ')}`)
@@ -133,8 +132,8 @@ export function loadAppConfig() {
       }
 
       let layersCheck = { missing: [], unrecognized: [] }
-      if (layers) {
-        layers.forEach((layer) => {
+      if (map_layer) {
+        map_layer.forEach((layer) => {
           const { missing, unrecognized } = checkKeys(
             layer || {},
             ['type', 'url'],
@@ -153,11 +152,13 @@ export function loadAppConfig() {
         })
         if (layersCheck.missing.length) {
           errors.push(
-            `In some [layers] definition: ${layersCheck.missing.join(', ')}`
+            `In one of the [map_layer] definitions: ${layersCheck.missing.join(
+              ', '
+            )}`
           )
         } else if (layersCheck.unrecognized.length) {
           warnings.push(
-            `In some [layers] definition: ${layersCheck.unrecognized.join(
+            `In one of the [map_layer] definitions: ${layersCheck.unrecognized.join(
               ', '
             )}`
           )
@@ -205,8 +206,8 @@ ${warnings.join('\n')}`)
         PROXY_PATH: global.proxy_path,
       }
       const layersConfig: LayerConfig[] = []
-      if (layers) {
-        layers.forEach((layerConfig) => {
+      if (map_layer) {
+        map_layer.forEach((layerConfig) => {
           layersConfig.push({
             TYPE: layerConfig.type,
             URL: layerConfig.url,
@@ -214,16 +215,12 @@ ${warnings.join('\n')}`)
           })
         })
       }
-      mapConfig = map
-        ? {
-            MAX_ZOOM: map.max_zoom,
-            MAX_EXTENT: map.max_extent,
-            USE_BASEMAP_FROM_LAYERS: map.use_basemap_from_layers,
-            ...(layersConfig.length && {
-              LAYERS: layersConfig,
-            }),
-          }
-        : {}
+      mapConfig = {
+        MAX_ZOOM: map.max_zoom,
+        MAX_EXTENT: map.max_extent,
+        DO_NOT_USE_DEFAULT_BASEMAP: !!map.do_not_use_default_basemap,
+        MAP_LAYERS: layersConfig,
+      }
       themeConfig = {
         PRIMARY_COLOR: theme.primary_color,
         SECONDARY_COLOR: theme.secondary_color,

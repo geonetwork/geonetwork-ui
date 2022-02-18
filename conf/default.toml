@@ -12,30 +12,34 @@ geonetwork4_api_url = "/geonetwork/srv/api"
 proxy_path = ""
 
 ### MAP SETTINGS
-# The map section allows to override default settings of the map view.
-# Example:
-#
+
+# The map section allows to customize how maps are configured.
 [map]
+# Optional; Will limit the possibility to zoom in past a certain zoom level
 # max_zoom = 10
+
+# Optional; will limit the possibility to pan or zoom out outside of an extent
+# Expressed in the map view projection (EPSG:3857)
 # max_extent = [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855]
-# use_basemap_from_layers = false
-# 
-# Layers (basemaps, overlays, masks) can be added to the map view with three properties:
+
+# Optional; if true, the default basemap will not be added to the map.
+# Use [[map_layer]] sections to define your own custom layers (see below)
+# do_not_use_default_basemap = false
+
+# One or several layers (as background or overlay) can be added to the map with the following properties:
 # - type (mandatory): Indicates the layer type. Possible values are 'xyz', 'wms', 'wfs'.
 # - url (mandatory): Layer endpoint URL.
-# - name: Mandatory for 'wms', 'wfs' types where it indicates the layer name.
+# - name: Mandatory for 'wms', 'wfs' types where it indicates the layer name or feature type.
 # Layer order in the config is the same as in the map, the first one being the bottom one.
-# If you want to override the default basemap with the first layer of your config set use_basemap_from_layers = true (default: false)
-# Each layer is defined in its own [[layers]] section.
+# Each layer is defined in its own [[map_layer]] section.
 # Example:
-# [[layers]]
+# [[map_layer]]
 # type = "xyz"
 # url = "https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
-# [[layers]]
+# [[map_layer]]
 # type = "wfs"
 # url = "https://www.geo2france.fr/geoserver/cr_hdf/ows"
 # name = "masque_hdf_ign_carto_latin1"
-#
 
 ### VISUAL THEME
 
