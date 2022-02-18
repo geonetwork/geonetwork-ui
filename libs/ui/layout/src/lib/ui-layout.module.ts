@@ -9,6 +9,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling'
 import { TableVirtualScrollModule } from 'ng-table-virtual-scroll'
 import { TranslateModule } from '@ngx-translate/core'
 import { ExpandablePanelComponent } from './expandable-panel/expandable-panel.component'
+import { StickyHeaderComponent } from './sticky-header/sticky-header.component'
 
 @NgModule({
   imports: [
@@ -20,7 +21,17 @@ import { ExpandablePanelComponent } from './expandable-panel/expandable-panel.co
     ScrollingModule,
     TranslateModule.forChild(),
   ],
-  declarations: [TableComponent, FigureComponent, ExpandablePanelComponent],
-  exports: [TableComponent, FigureComponent, ExpandablePanelComponent],
+  declarations: [
+    TableComponent,
+    FigureComponent,
+    ExpandablePanelComponent,
+    StickyHeaderComponent,
+  ],
+  exports: [
+    TableComponent,
+    FigureComponent,
+    ExpandablePanelComponent,
+    StickyHeaderComponent,
+  ],
 })
 export class UiLayoutModule {}
