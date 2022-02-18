@@ -27,3 +27,11 @@ export const ElasticSearchSources = {
   [ElasticsearchMetadataModels.SUMMARY]: ES_SOURCE_SUMMARY,
   [ElasticsearchMetadataModels.BRIEF]: ES_SOURCE_BRIEF,
 }
+
+export const ES_QUERY_STRING_FIELDS = [
+  'resourceTitleObject.*^5',
+  'tag.*^4',
+  'resourceAbstractObject.*^3',
+  'lineageObject.*^2',
+  'any',
+]

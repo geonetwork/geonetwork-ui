@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { map, take } from 'rxjs/operators'
+import { ES_QUERY_STRING_FIELDS } from './constant'
 import {
   EsSearchParams,
   EsTemplateType,
@@ -114,7 +115,15 @@ export class ElasticsearchService {
 
     return {
       bool: {
-        must: [{ query_string: { query } }, this.addTemplateClause('n')],
+        must: [
+          {
+            query_string: {
+              query,
+              fields: ES_QUERY_STRING_FIELDS,
+            },
+          },
+          this.addTemplateClause('n'),
+        ],
         filter: this.buildPayloadFilter(configFilters),
       },
     }
