@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
@@ -18,6 +18,8 @@ marker('datahub.header.popularRecords')
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchHeaderComponent {
+  @Input() expandRatio: number
+
   searchInputRouteValue$ = this.routerFacade.anySearch$.pipe(
     map((any) => ({ title: any }))
   )
