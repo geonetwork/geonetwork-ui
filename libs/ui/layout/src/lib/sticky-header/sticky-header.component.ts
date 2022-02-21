@@ -22,6 +22,7 @@ import { throttleTime } from 'rxjs/operators'
  * but will also shrink down to a minimum height when scrolling.
  * The ratio between minimum and nominal height is stored in the shrinkRatio
  * property, and can be used to change e.g. the opacity or size of child elements.
+ * This component renders at z-index: 50 by default.
  * The first parent element with an overflow of `scroll` or `overflow` is considered
  * for scroll events.
  */
