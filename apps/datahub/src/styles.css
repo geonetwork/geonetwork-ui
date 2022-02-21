@@ -14,10 +14,6 @@ html {
   overflow-y: scroll;
 }
 
-.header {
-  background-image: url('assets/img/header_bg.webp');
-}
-
 .container-sm {
   max-width: 640px;
 }

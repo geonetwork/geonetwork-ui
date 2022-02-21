@@ -4,6 +4,7 @@ import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { map } from 'rxjs/operators'
+import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 
 marker('datahub.header.myfavorites')
 marker('datahub.header.connex')
@@ -20,6 +21,7 @@ export class SearchHeaderComponent {
   searchInputRouteValue$ = this.routerFacade.anySearch$.pipe(
     map((any) => ({ title: any }))
   )
+  backgroundCss = getThemeConfig().HEADER_BACKGROUND
 
   constructor(
     private routerFacade: RouterFacade,

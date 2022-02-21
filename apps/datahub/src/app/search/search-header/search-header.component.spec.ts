@@ -9,6 +9,12 @@ import { BehaviorSubject } from 'rxjs'
 
 import { SearchHeaderComponent } from './search-header.component'
 
+jest.mock('@geonetwork-ui/util/app-config', () => ({
+  getThemeConfig: () => ({
+    HEADER_BACKGROUND: 'red',
+  }),
+}))
+
 const routerFacadeMock = {
   goToMetadata: jest.fn(),
   anySearch$: new BehaviorSubject('scot'),
