@@ -65,7 +65,6 @@ module.exports = {
             lineHeight: '25px',
           },
         ],
-        28: '28px',
       },
     },
   },

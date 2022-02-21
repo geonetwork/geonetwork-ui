@@ -1,6 +1,16 @@
-<div class="w-full" [style.background]="backgroundCss">
-  <div class="container-lg mx-auto relative pt-16 pb-24">
-    <div class="absolute" style="top: 1em">
+<header class="w-full h-full" [style.background]="backgroundCss">
+  <div
+    class="h-full container-lg mx-auto flex flex-col justify-center relative"
+  >
+    <div
+      *ngIf="metadata"
+      class="font-title text-center px-2 mx-48 text-[28px] mb-[41px]"
+      [style.transform]="'scale(' + (0.85 + 0.15 * expandRatio) + ')'"
+    >
+      {{ metadata.title }}
+    </div>
+
+    <div class="absolute" style="top: 20px">
       <gn-ui-navigation-button
         (click)="back()"
         [label]="'datahub.search.back' | translate"
@@ -10,10 +20,37 @@
     </div>
 
     <div
-      *ngIf="metadata"
-      class="font-title py-2 text-28 text-center px-2 mx-48"
+      class="absolute bg-primary flex space-x-8 justify-between py-5 px-20 text-sm rounded-lg text-white"
+      style="left: 0; right: 0; bottom: -20px"
     >
-      {{ metadata.title }}
+      <button
+        (click)="scrollTo('about')"
+        class="uppercase font-medium tracking-wider"
+        translate
+      >
+        record.metadata.about
+      </button>
+      <button
+        (click)="scrollTo('preview')"
+        class="uppercase font-medium tracking-wider"
+        translate
+      >
+        record.metadata.preview
+      </button>
+      <button
+        (click)="scrollTo('access')"
+        class="uppercase font-medium tracking-wider"
+        translate
+      >
+        record.metadata.access
+      </button>
+      <button
+        (click)="scrollTo('links')"
+        class="uppercase font-medium tracking-wider"
+        translate
+      >
+        record.metadata.links
+      </button>
     </div>
   </div>
-</div>
+</header>

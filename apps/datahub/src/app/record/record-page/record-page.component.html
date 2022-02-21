@@ -1,6 +1,11 @@
 <div class="h-screen overflow-auto">
-  <datahub-header-record
-    [metadata]="mdViewFacade.metadata$ | async"
-  ></datahub-header-record>
-  <gn-ui-record-metadata> </gn-ui-record-metadata>
+  <gn-ui-sticky-header [fullHeightPx]="231" [minHeightPx]="112">
+    <ng-template let-expandRatio>
+      <datahub-header-record
+        [metadata]="mdViewFacade.metadata$ | async"
+        [expandRatio]="expandRatio"
+      ></datahub-header-record>
+    </ng-template>
+  </gn-ui-sticky-header>
+  <gn-ui-record-metadata></gn-ui-record-metadata>
 </div>
