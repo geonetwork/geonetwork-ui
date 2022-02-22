@@ -26,11 +26,4 @@ export class HeaderRecordComponent {
       .pipe(first())
       .subscribe((filters) => this.searchRouter.goToSearch(filters?.any))
   }
-
-  scrollTo(id: string) {
-    document.getElementById(id).scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    })
-  }
 }
