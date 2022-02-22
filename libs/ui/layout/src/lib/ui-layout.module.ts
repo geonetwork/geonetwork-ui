@@ -10,6 +10,7 @@ import { TableVirtualScrollModule } from 'ng-table-virtual-scroll'
 import { TranslateModule } from '@ngx-translate/core'
 import { ExpandablePanelComponent } from './expandable-panel/expandable-panel.component'
 import { StickyHeaderComponent } from './sticky-header/sticky-header.component'
+import { AnchorLinkDirective } from './anchor-link/anchor-link.directive'
 
 @NgModule({
   imports: [
@@ -26,12 +27,14 @@ import { StickyHeaderComponent } from './sticky-header/sticky-header.component'
     FigureComponent,
     ExpandablePanelComponent,
     StickyHeaderComponent,
+    AnchorLinkDirective,
   ],
   exports: [
     TableComponent,
     FigureComponent,
     ExpandablePanelComponent,
     StickyHeaderComponent,
+    AnchorLinkDirective,
   ],
 })
 export class UiLayoutModule {}
