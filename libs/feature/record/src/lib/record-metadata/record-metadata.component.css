@@ -13,8 +13,3 @@
 .tracking-wider {
   letter-spacing: 0.88px;
 }
-
-button:disabled {
-  opacity: 0.6;
-  cursor: default;
-}

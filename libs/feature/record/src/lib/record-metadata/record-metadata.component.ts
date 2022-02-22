@@ -50,11 +50,4 @@ export class RecordMetadataComponent {
       window.dispatchEvent(new Event('resize'))
     }, 0)
   }
-
-  scrollTo(id: string) {
-    document.getElementById(id).scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    })
-  }
 }
