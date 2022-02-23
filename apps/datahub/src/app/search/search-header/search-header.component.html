@@ -1,10 +1,12 @@
-<div class="header pt-24">
-  <div class="container-md mx-auto">
-    <div
-      class="flex font-title py-2 text-48"
-      [innerHTML]="'datahub.header.title.html' | translate"
-    ></div>
-    <div class="py-8">
+<header class="h-full" [style.background]="backgroundCss">
+  <div class="container-md h-full mx-auto flex flex-col justify-center">
+    <div class="py-8 relative" [style.margin-top]="expandRatio * 97 + 'px'">
+      <div
+        class="font-title text-[48px] leading-[58px] absolute w-full"
+        [style.bottom]="'100%'"
+        [style.opacity]="expandRatio"
+        [innerHTML]="'datahub.header.title.html' | translate"
+      ></div>
       <gn-ui-fuzzy-search
         (itemSelected)="onFuzzySearchSelection($event)"
         (inputSubmited)="onFuzzySearchSubmission($event)"
@@ -23,7 +25,12 @@
       ></datahub-header-badge-button>
     </div>
 -->
-    <div class="tabs flex justify-center py-4 mt-12 font-medium">
+    <div
+      class="tabs flex justify-center py-4 mt-12 font-medium absolute"
+      style="bottom: 0; left: 0; right: 0"
+      [style.opacity]="expandRatio"
+      [style.visibility]="expandRatio > 0 ? 'visible' : 'hidden'"
+    >
       <!--      <div class="uppercase text-white">Fil d'activité</div>-->
       <div
         class="uppercase text-primary hover:text-primary-lighter hover:underline cursor-pointer"
@@ -35,4 +42,4 @@
       <!--      <div class="uppercase text-white">Organisations</div>-->
     </div>
   </div>
-</div>
+</header>

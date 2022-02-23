@@ -1,60 +1,4 @@
-<div
-  class="
-    container-lg
-    mx-auto
-    bg-primary
-    flex
-    space-x-8
-    justify-between
-    py-5
-    px-20
-    text-sm
-    rounded-lg
-    transform
-    -translate-y-10
-    text-white
-  "
->
-  <button
-    (click)="scrollTo('about')"
-    class="uppercase font-medium tracking-wider"
-    translate
-  >
-    record.metadata.about
-  </button>
-  <button
-    [disabled]="
-      (displayMap$ | async) === false && (displayData$ | async) === false
-    "
-    (click)="scrollTo('preview')"
-    class="uppercase font-medium tracking-wider"
-    translate
-  >
-    record.metadata.preview
-  </button>
-  <button
-    [disabled]="(displayDownload$ | async) === false"
-    (click)="scrollTo('access')"
-    class="uppercase font-medium tracking-wider"
-    translate
-  >
-    record.metadata.access
-  </button>
-  <button
-    [disabled]="
-      (displayOtherLinks | async) === false &&
-      (displayApi$ | async) === false &&
-      (displayRelated$ | async) === false
-    "
-    (click)="scrollTo('links')"
-    class="uppercase font-medium tracking-wider"
-    translate
-  >
-    record.metadata.links
-  </button>
-</div>
-
-<div id="about" class="container-lg mx-auto mb-16">
+<div id="about" class="container-lg mx-auto mb-16" style="margin-top: 60px">
   <gn-ui-metadata-info
     class="block"
     *ngIf="(facade.isPresent$ | async) === false"
@@ -85,7 +29,7 @@
   >
     <div class="container-lg mx-auto">
       <div>
-        <div class="text-28 font-title transform translate-y-10" translate>
+        <div class="text-[28px] font-title transform translate-y-10" translate>
           record.metadata.preview
         </div>
         <mat-tab-group

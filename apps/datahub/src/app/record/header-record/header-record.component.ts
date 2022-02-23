@@ -3,6 +3,7 @@ import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { first } from 'rxjs/operators'
+import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 
 @Component({
   selector: 'datahub-header-record',
@@ -12,11 +13,14 @@ import { first } from 'rxjs/operators'
 })
 export class HeaderRecordComponent {
   @Input() metadata: MetadataRecord
+  @Input() expandRatio: number
+  backgroundCss = getThemeConfig().HEADER_BACKGROUND
 
   constructor(
     private searchRouter: RouterFacade,
     private searchFacade: SearchFacade
   ) {}
+
   back() {
     this.searchFacade.searchFilters$
       .pipe(first())

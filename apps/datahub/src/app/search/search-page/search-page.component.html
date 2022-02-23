@@ -1,7 +1,11 @@
 <div id="search-page" class="h-screen overflow-auto">
-  <header>
-    <datahub-search-header></datahub-search-header>
-  </header>
+  <gn-ui-sticky-header [fullHeightPx]="560" [minHeightPx]="125">
+    <ng-template let-expandRatio>
+      <datahub-search-header
+        [expandRatio]="expandRatio"
+      ></datahub-search-header>
+    </ng-template>
+  </gn-ui-sticky-header>
   <main>
     <div class="container-lg mx-auto py-4">
       <div>

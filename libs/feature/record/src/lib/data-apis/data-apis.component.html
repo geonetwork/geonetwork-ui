@@ -1,14 +1,11 @@
-<p class="font-title text-28 font-medium mt-12 mb-6 text-secondary" translate>
+<p
+  class="font-title text-[28px] font-medium mt-12 mb-6 text-secondary"
+  translate
+>
   record.metadata.api
 </p>
 <div
-  class="
-    mb-4
-    pl-2
-    flex flex-row
-    items-stretch
-    overflow-x-auto overflow-y-visible
-  "
+  class="mb-4 pl-2 flex flex-row items-stretch overflow-x-auto overflow-y-visible"
 >
   <gn-ui-api-card
     *ngFor="let link of facade.apiLinks$ | async"

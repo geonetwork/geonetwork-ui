@@ -21,6 +21,7 @@ primary_color = "#093564"
 secondary_color = "#c2e9dc"
 main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
+header_background = 'teal'
 main_font = 'sans-serif'
 title_font = 'serif'
 fonts_stylesheet_url = "https://fonts.googleapis.com/css2?family=Open+Sans"

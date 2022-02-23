@@ -39,6 +39,7 @@ interface ThemeConfig {
   SECONDARY_COLOR: string
   MAIN_COLOR: string
   BACKGROUND_COLOR: string
+  HEADER_BACKGROUND: string
   MAIN_FONT?: string
   TITLE_FONT?: string
   FONTS_STYLESHEET_URL?: string
@@ -167,7 +168,13 @@ export function loadAppConfig() {
 
       const themeCheck = checkKeys(
         theme || {},
-        ['primary_color', 'secondary_color', 'main_color', 'background_color'],
+        [
+          'primary_color',
+          'secondary_color',
+          'main_color',
+          'background_color',
+          'header_background',
+        ],
         ['main_font', 'title_font', 'fonts_stylesheet_url']
       )
       if (themeCheck.missing.length) {
@@ -226,6 +233,7 @@ ${warnings.join('\n')}`)
         SECONDARY_COLOR: theme.secondary_color,
         MAIN_COLOR: theme.main_color,
         BACKGROUND_COLOR: theme.background_color,
+        HEADER_BACKGROUND: theme.header_background,
         TITLE_FONT: theme.title_font,
         MAIN_FONT: theme.main_font,
         FONTS_STYLESHEET_URL: theme.fonts_stylesheet_url,

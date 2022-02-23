@@ -39,6 +39,7 @@ import { RecordPageComponent } from './record/record-page/record-page.component'
 import { RecordPreviewDatahubComponent } from './search/record-preview-datahub/record-preview-datahub.component'
 import { SearchHeaderComponent } from './search/search-header/search-header.component'
 import { SearchPageComponent } from './search/search-page/search-page.component'
+import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
@@ -83,6 +84,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     UtilSharedModule,
     MatIconModule,
     UiInputsModule,
+    UiLayoutModule,
   ],
   providers: [
     { provide: RESULTS_LAYOUT_CONFIG, useValue: DATAHUB_RESULTS_LAYOUT_CONFIG },

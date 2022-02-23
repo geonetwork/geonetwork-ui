@@ -7,6 +7,12 @@ import { BehaviorSubject } from 'rxjs'
 
 import { HeaderRecordComponent } from './header-record.component'
 
+jest.mock('@geonetwork-ui/util/app-config', () => ({
+  getThemeConfig: () => ({
+    HEADER_BACKGROUND: 'red',
+  }),
+}))
+
 const routerFacadeMock = {
   goToSearch: jest.fn(),
 }

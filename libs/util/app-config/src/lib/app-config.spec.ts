@@ -49,6 +49,7 @@ primary_color = "#093564"
 secondary_color = "#c2e9dc"
 main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
+header_background = 'teal'
 main_font = 'sans-serif'
 title_font = 'serif'
 another_color = 'red'
@@ -161,6 +162,7 @@ describe('app config utils', () => {
           TITLE_FONT: 'serif',
           FONTS_STYLESHEET_URL:
             'https://fonts.googleapis.com/css2?family=Open+Sans',
+          HEADER_BACKGROUND: 'teal',
         })
       })
     })
@@ -193,6 +195,7 @@ describe('app config utils', () => {
     secondary_color = "#c2e9dc"
     main_color = "#212029" # All-purpose text color
     background_color = "#fdfbff"
+    header_background = 'blue'
 `
 
     describe('when all properties are present', () => {

@@ -46,11 +46,17 @@ proxy_path = ""
 # All parameters are expressed in CSS format, see:
 #  - for color: https://developer.mozilla.org/en-US/docs/Web/CSS/color
 #  - for font families: https://developer.mozilla.org/en-US/docs/Web/CSS/font-family
+#  - for background: https://developer.mozilla.org/en-US/docs/Web/CSS/background
 [theme]
 primary_color = "#0f4395"
 secondary_color = "#8bc832"
 main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
+
+# This mandatory parameter indicates which background should be used for the main header
+header_background = "center / cover url('assets/img/default_header_bg.webp')"
+
+# These optional parameters allow changing fonts used in the app
 # main_font = "'My Custom Font', fallback-font"
 # title_font = "'My Custom Title Font', fallback-font-title"
 # fonts_stylesheet_url = "https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Permanent+Marker&display=swap"
