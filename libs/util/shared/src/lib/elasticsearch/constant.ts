@@ -29,9 +29,9 @@ export const ElasticSearchSources = {
 }
 
 export const ES_QUERY_STRING_FIELDS = [
-  'resourceTitleObject.*^5',
-  'tag.*^4',
-  'resourceAbstractObject.*^3',
+  'resourceTitleObject.*^10',
+  'tag.*^6',
+  'resourceAbstractObject.*^4',
   'lineageObject.*^2',
   'any.*',
 ]

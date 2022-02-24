@@ -112,8 +112,7 @@ describe('ElasticsearchService', () => {
               {
                 query_string: {
                   fields: ES_QUERY_STRING_FIELDS,
-                  query:
-                    'any.\\*:(river) any.common:(river) resourceTitleObject.\\*:(river)^2',
+                  query: 'river',
                 },
               },
             ],
@@ -143,7 +142,7 @@ describe('ElasticsearchService', () => {
                   query_string: {
                     fields: ES_QUERY_STRING_FIELDS,
                     query:
-                      'any.\\*:(river) any.common:(river) resourceTitleObject.\\*:(river)^2 AND (tag.default:"world" tag.default:"vector")',
+                      'river AND (tag.default:"world" tag.default:"vector")',
                   },
                 },
               ],

@@ -120,8 +120,7 @@ export class ElasticsearchService {
   ) {
     const queryFilters = this.stateFiltersToQueryString(fieldSearchFilters)
     //TODO: take it from config ?
-    const querystringPattern =
-      'any.${searchLang}:(${any}) any.common:(${any}) resourceTitleObject.${searchLang}:(${any})^2'
+    const querystringPattern = any
     const lang = null
 
     const must: any[] = [this.addTemplateClause('n')]
