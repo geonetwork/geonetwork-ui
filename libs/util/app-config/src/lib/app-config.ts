@@ -134,6 +134,10 @@ export function loadAppConfig() {
           : ({
               MAX_ZOOM: parsedMapSection.max_zoom,
               MAX_EXTENT: parsedMapSection.max_extent,
+              EXTERNAL_VIEWER_URL_TEMPLATE:
+                parsedMapSection.external_viewer_url_template,
+              EXTERNAL_VIEWER_OPEN_NEW_TAB:
+                parsedMapSection.external_viewer_open_new_tab,
               DO_NOT_USE_DEFAULT_BASEMAP:
                 !!parsedMapSection.do_not_use_default_basemap,
               MAP_LAYERS: parsedLayersSections.map(
