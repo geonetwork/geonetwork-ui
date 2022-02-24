@@ -29,6 +29,8 @@ export interface LayerConfig {
 export interface MapConfig {
   MAX_ZOOM?: number
   MAX_EXTENT?: [number, number, number, number] // Expressed as [minx, miny, maxx, maxy]
+  EXTERNAL_VIEWER_URL_TEMPLATE?: string
+  EXTERNAL_VIEWER_OPEN_NEW_TAB?: string
   DO_NOT_USE_DEFAULT_BASEMAP: boolean
   MAP_LAYERS: LayerConfig[]
 }
@@ -115,7 +117,14 @@ export function loadAppConfig() {
         parsed,
         'map',
         [],
-        ['max_zoom', 'max_extent', 'baselayer', 'do_not_use_default_basemap'],
+        [
+          'max_zoom',
+          'max_extent',
+          'baselayer',
+          'do_not_use_default_basemap',
+          'external_viewer_url_template',
+          'external_viewer_open_new_tab',
+        ],
         warnings,
         errors
       )

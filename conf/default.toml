@@ -22,6 +22,21 @@ proxy_path = ""
 # Expressed in the map view projection (EPSG:3857)
 # max_extent = [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855]
 
+# Optional; URL template enabling to open map layers in an external viewer; if set, displays a button next to the map's layer drop down
+# The template must include the following placeholders, which allow the datahub to inject the correct values when adding a layer to a viewer:
+# ${service_url}: URL of the OWS
+# ${service_type}: Type of the OWS; currently supported WMS, WFS
+# ${layer_name}: Name of the layer
+# Be careful to use englobing single quotes, if your template syntax includes JSON (with double quotes)
+# Examples:
+# mapfishapp template:
+# external_viewer_url_template = 'https://dev.geo2france.fr/mapfishapp/?owsurl=${service_url}&layername=${layer_name}&owstype=${service_type}Layer'
+# mapstore template
+# external_viewer_url_template = 'https://dev.geo2france.fr/mapstore/#/?actions=[{"type":"CATALOG:ADD_LAYERS_FROM_CATALOGS","layers":["${layer_name}"],"sources":[{"url":"${service_url}","type":"${service_type}"}]}]'
+
+# Optional; if true, opens external viewer in new tab (default false)
+# external_viewer_open_new_tab = false
+
 # Optional; if true, the default basemap will not be added to the map.
 # Use [[map_layer]] sections to define your own custom layers (see below)
 # do_not_use_default_basemap = false

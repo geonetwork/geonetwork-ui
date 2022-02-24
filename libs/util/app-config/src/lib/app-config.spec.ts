@@ -33,6 +33,8 @@ another_path = '/whatever'
 max_zoom = 10
 max_extent = [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855]
 do_not_use_default_basemap = false
+external_viewer_url_template = 'https://example.com/myviewer?'
+external_viewer_open_new_tab = true
 another_zoom = 15
 [[map_layer]]
 type = "wms"
@@ -209,6 +211,8 @@ describe('app config utils', () => {
             max_zoom = 10
             max_extent = [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855]
             do_not_use_default_basemap = true
+            external_viewer_url_template = 'https://example.com/myviewer?'
+            external_viewer_open_new_tab = true
             [[map_layer]]
             type = "wms"
             url = "https://www.geo2france.fr/geoserver/cr_hdf/ows"
@@ -228,6 +232,8 @@ describe('app config utils', () => {
             -418263.418776, 5251529.591305, 961272.067714, 6706890.609855,
           ],
           DO_NOT_USE_DEFAULT_BASEMAP: true,
+          EXTERNAL_VIEWER_URL_TEMPLATE: 'https://example.com/myviewer?',
+          EXTERNAL_VIEWER_OPEN_NEW_TAB: true,
           MAP_LAYERS: [
             {
               TYPE: 'wms',
@@ -259,6 +265,8 @@ describe('app config utils', () => {
         expect(getMapConfig()).toEqual({
           MAX_ZOOM: undefined,
           MAX_EXTENT: undefined,
+          EXTERNAL_VIEWER_URL_TEMPLATE: undefined,
+          EXTERNAL_VIEWER_OPEN_NEW_TAB: undefined,
           DO_NOT_USE_DEFAULT_BASEMAP: false,
           MAP_LAYERS: [],
         })
