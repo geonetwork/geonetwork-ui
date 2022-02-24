@@ -1,5 +1,6 @@
 import { ElasticsearchService } from './elasticsearch.service'
 import { Observable } from 'rxjs'
+import { ES_QUERY_STRING_FIELDS } from './constant'
 
 let autocompleteConfig
 
@@ -102,6 +103,7 @@ describe('ElasticsearchService', () => {
           must: [
             {
               query_string: {
+                fields: ES_QUERY_STRING_FIELDS,
                 query: '(*) AND (tag.default:"world" tag.default:"vector")',
               },
             },
