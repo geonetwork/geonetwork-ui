@@ -106,7 +106,7 @@ describe('app config utils', () => {
     describe('loadAppConfig', () => {
       it('throws an error', async () => {
         await expect(loadAppConfig()).rejects.toThrow(
-          /(?=.*mandatory settings were missing)(?=.*geonetwork4_api_url)(?=.*main_color)/s
+          /(?=.*\[global] section is missing)(?=.*\[map] section is missing)(?=.*main_color)/s
         )
       })
     })
