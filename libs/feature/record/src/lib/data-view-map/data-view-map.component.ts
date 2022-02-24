@@ -73,11 +73,12 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
   loading = false
   error = null
 
-  currentLayers$ = combineLatest([
+  selectedLink$ = combineLatest([
     this.compatibleMapLinks$,
     this.selectedLinkIndex$.pipe(distinctUntilChanged()),
-  ]).pipe(
-    map(([links, index]) => links[index]),
+  ]).pipe(map(([links, index]) => links[index]))
+
+  currentLayers$ = this.selectedLink$.pipe(
     switchMap((link) => {
       if (!link) {
         return of([])

@@ -103,6 +103,7 @@
   "previous": "précédent",
   "record.action.download": "Télécharger",
   "record.action.view": "Voir",
+  "record.externalViewer.open": "Ouvrir dans visualiseur",
   "record.metadata.about": "À propos",
   "record.metadata.access": "Accès",
   "record.metadata.api": "API",

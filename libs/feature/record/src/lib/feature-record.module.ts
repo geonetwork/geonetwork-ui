@@ -22,6 +22,7 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { TranslateModule } from '@ngx-translate/core'
 import { DataOtherlinksComponent } from './data-otherlinks/data-otherlinks.component'
 import { RelatedRecordsComponent } from './related-records/related-records.component'
+import { ExternalViewerButtonComponent } from './external-viewer-button/external-viewer-button.component'
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { RelatedRecordsComponent } from './related-records/related-records.compo
     DataApisComponent,
     DataOtherlinksComponent,
     RelatedRecordsComponent,
+    ExternalViewerButtonComponent,
   ],
   imports: [
     CommonModule,

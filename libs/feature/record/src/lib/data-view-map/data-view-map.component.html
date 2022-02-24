@@ -33,11 +33,18 @@
   >
     <span translate>{{ error }}</span>
   </gn-ui-popup-alert>
-  <gn-ui-dropdown-selector
-    [title]="'map.select.layer' | translate"
-    class="absolute m-2"
-    [choices]="dropdownChoices$ | async"
-    [showTitle]="false"
-    (selectValue)="selectLinkToDisplay($event)"
-  ></gn-ui-dropdown-selector>
+  <div class="absolute flex w-full" style="bottom: 0">
+    <gn-ui-dropdown-selector
+      class="flex-grow m-2"
+      [title]="'map.select.layer' | translate"
+      [choices]="dropdownChoices$ | async"
+      [showTitle]="false"
+      (selectValue)="selectLinkToDisplay($event)"
+    ></gn-ui-dropdown-selector>
+    <gn-ui-external-viewer-button
+      [link]="selectedLink$ | async"
+      [mapConfig]="mapConfig"
+    >
+    </gn-ui-external-viewer-button>
+  </div>
 </div>
