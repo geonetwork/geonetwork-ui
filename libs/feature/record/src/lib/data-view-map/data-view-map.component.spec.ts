@@ -35,13 +35,19 @@ import { DataViewMapComponent } from './data-view-map.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { DataService } from '../service/data.service'
 import { delay } from 'rxjs/operators'
-import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared'
+import {
+  FEATURE_COLLECTION_POINT_FIXTURE_4326,
+  MetadataLinkValid,
+} from '@geonetwork-ui/util/shared'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
 
 const mapConfigMock = {
   MAX_ZOOM: 10,
   MAX_EXTENT: [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855],
   DO_NOT_USE_DEFAULT_BASEMAP: false,
+  EXTERNAL_VIEWER_URL_TEMPLATE:
+    'https://example.com/myviewer?layer=${layer_name}&url=${service_url}&type=${service_type}',
+  EXTERNAL_VIEWER_OPEN_NEW_TAB: true,
   MAP_LAYERS: [
     {
       TYPE: 'wms',
@@ -136,6 +142,15 @@ export class MockDropdownSelectorComponent {
 }
 
 @Component({
+  selector: 'gn-ui-external-viewer-button',
+  template: '<div></div>',
+})
+export class MockExternalViewerButtonComponent {
+  @Input() link: MetadataLinkValid
+  @Input() mapConfig: MapConfig
+}
+
+@Component({
   selector: 'gn-ui-loading-mask',
   template: '<div></div>',
 })
@@ -160,6 +175,7 @@ describe('DataViewMapComponent', () => {
         DataViewMapComponent,
         MockMapContextComponent,
         MockDropdownSelectorComponent,
+        MockExternalViewerButtonComponent,
         MockLoadingMaskComponent,
         MockPopupAlertComponent,
       ],
@@ -208,6 +224,7 @@ describe('DataViewMapComponent', () => {
   describe('map layers', () => {
     let mapComponent: MockMapContextComponent
     let dropdownComponent: DropdownSelectorComponent
+    let externalViewerButtonComponent: MockExternalViewerButtonComponent
 
     beforeEach(() => {
       mapComponent = fixture.debugElement.query(
@@ -215,6 +232,9 @@ describe('DataViewMapComponent', () => {
       ).componentInstance
       dropdownComponent = fixture.debugElement.query(
         By.directive(MockDropdownSelectorComponent)
+      ).componentInstance
+      externalViewerButtonComponent = fixture.debugElement.query(
+        By.directive(MockExternalViewerButtonComponent)
       ).componentInstance
     })
 
@@ -230,8 +250,14 @@ describe('DataViewMapComponent', () => {
           view: expect.any(Object),
         })
       })
-      it('emits map config (mocked)', () => {
+      it('emits map config to map component', () => {
         expect(mapComponent.mapConfig).toEqual(mapConfigMock)
+      })
+      it('emits map config to external viewer component', () => {
+        expect(externalViewerButtonComponent.mapConfig).toEqual(mapConfigMock)
+      })
+      it('emits no link to external viewer component', () => {
+        expect(externalViewerButtonComponent.link).toEqual(undefined)
       })
       it('provides a placeholder value to the dropdown', () => {
         expect(dropdownComponent.choices).toEqual([
@@ -284,6 +310,13 @@ describe('DataViewMapComponent', () => {
           },
         ])
       })
+      it('provides first (selected) link to the external viewer component', () => {
+        expect(externalViewerButtonComponent.link).toEqual({
+          url: 'http://abcd.com/',
+          name: 'layer1',
+          protocol: 'OGC:WMS--1-3-0',
+        })
+      })
     })
 
     describe('with links compatible with MAP_API and GEODATA usage', () => {
@@ -325,6 +358,13 @@ describe('DataViewMapComponent', () => {
             label: 'data.geojson (WWW:DOWNLOAD)',
           },
         ])
+      })
+      it('provides first (selected) link to the external viewer component', () => {
+        expect(externalViewerButtonComponent.link).toEqual({
+          url: 'http://abcd.com/',
+          name: 'layer1',
+          protocol: 'OGC:WMS',
+        })
       })
     })
 
@@ -497,6 +537,13 @@ describe('DataViewMapComponent', () => {
           },
         ])
       })
+      it('provides first (selected) link to the external viewer component', () => {
+        expect(externalViewerButtonComponent.link).toEqual({
+          url: 'http://abcd.com/',
+          name: 'layer',
+          protocol: 'OGC:WMS',
+        })
+      })
     })
 
     describe('when selecting a layer', () => {
@@ -542,6 +589,13 @@ describe('DataViewMapComponent', () => {
             },
           })
         })
+        it('provides selected link to the external viewer component', () => {
+          expect(externalViewerButtonComponent.link).toEqual({
+            url: 'http://abcd.com/',
+            name: 'layer2',
+            protocol: 'OGC:WMS',
+          })
+        })
       })
       describe('when extent computation fails', () => {
         beforeEach(inject([MapUtilsService], (mapUtils) => {
@@ -558,6 +612,13 @@ describe('DataViewMapComponent', () => {
               },
             ],
             view: expect.any(Object),
+          })
+        })
+        it('provides selected link to the external viewer component', () => {
+          expect(externalViewerButtonComponent.link).toEqual({
+            url: 'http://abcd.com/',
+            name: 'layer2',
+            protocol: 'OGC:WMS',
           })
         })
       })
