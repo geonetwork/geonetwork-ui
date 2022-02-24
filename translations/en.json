@@ -103,6 +103,7 @@
   "previous": "previous",
   "record.action.download": "Download",
   "record.action.view": "View",
+  "record.externalViewer.open": "Open in map viewer",
   "record.metadata.about": "About",
   "record.metadata.access": "Access",
   "record.metadata.api": "API",
