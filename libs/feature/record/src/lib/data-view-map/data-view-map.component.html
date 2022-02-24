@@ -1,28 +1,12 @@
 <div
-  class="
-    relative
-    w-full
-    h-full
-    bg-white
-    border border-gray-500
-    rounded-lg
-    overflow-hidden
-  "
+  class="relative w-full h-full bg-white border border-gray-500 rounded-lg overflow-hidden"
 >
   <gn-ui-map-context
     [context]="mapContext$ | async"
     [mapConfig]="mapConfig"
   ></gn-ui-map-context>
   <div
-    class="
-      feature-info
-      p-3
-      bg-white
-      absolute
-      overflow-y-auto overflow-x-hidden
-      max-h-72
-      w-56
-    "
+    class="feature-info p-3 bg-white absolute overflow-y-auto overflow-x-hidden max-h-72 w-56"
     [class.hidden]="!selection"
   >
     <button
