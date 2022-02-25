@@ -99,7 +99,9 @@ export class StickyHeaderComponent
         this.minHeightPx,
         this.fullHeightPx - offsetTop
       )
-      this.innerContainer.nativeElement.style.height = newHeightPx + 'px'
+      this.innerContainer.nativeElement.style.transform = `translate(0, ${
+        newHeightPx - this.fullHeightPx
+      }px)`
       this.expandRatio =
         (newHeightPx - this.minHeightPx) /
         (this.fullHeightPx - this.minHeightPx)

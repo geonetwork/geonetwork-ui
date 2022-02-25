@@ -1,9 +1,12 @@
 <header class="h-full" [style.background]="backgroundCss">
   <div class="container-md h-full mx-auto flex flex-col justify-center">
-    <div class="py-8 relative" [style.margin-top]="expandRatio * 97 + 'px'">
+    <div
+      class="py-8 relative"
+      [style.transform]="'translate(0, ' + (1 - expandRatio) * 216 + 'px)'"
+    >
       <div
         class="font-title text-[48px] leading-[58px] absolute w-full"
-        [style.bottom]="'100%'"
+        style="bottom: 100%"
         [style.opacity]="expandRatio"
         [innerHTML]="'datahub.header.title.html' | translate"
       ></div>
@@ -29,7 +32,6 @@
       class="tabs flex justify-center py-4 mt-12 font-medium absolute"
       style="bottom: 0; left: 0; right: 0"
       [style.opacity]="expandRatio"
-      [style.visibility]="expandRatio > 0 ? 'visible' : 'hidden'"
     >
       <!--      <div class="uppercase text-white">Fil d'activité</div>-->
       <div

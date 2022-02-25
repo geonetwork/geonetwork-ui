@@ -75,7 +75,7 @@ describe('StickyHeaderComponent', () => {
         tick(20)
       }))
       it('sets height between full and min height', () => {
-        expect(headerEl.style.height).toBe('250px')
+        expect(headerEl.style.transform).toBe('translate(0, -50px)')
       })
       it('sets opacity using expandRatio', () => {
         expect(contentEl.style.opacity).toBe('0.75')
@@ -88,7 +88,7 @@ describe('StickyHeaderComponent', () => {
         tick(20)
       }))
       it('sets height at min height', () => {
-        expect(headerEl.style.height).toBe('100px')
+        expect(headerEl.style.transform).toBe('translate(0, -200px)')
       })
       it('sets opacity using expandRatio', () => {
         expect(contentEl.style.opacity).toBe('0')
