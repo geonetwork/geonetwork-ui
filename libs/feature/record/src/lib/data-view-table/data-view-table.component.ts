@@ -17,7 +17,7 @@ import {
   switchMap,
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
-import { getFileFormat } from '@geonetwork-ui/feature/search'
+import { getFileFormat, LinkHelperService } from '@geonetwork-ui/feature/search'
 import { DataService } from '../service/data.service'
 
 @Component({
@@ -35,7 +35,7 @@ export class DataViewTableComponent {
   dropdownChoices$ = this.compatibleDataLinks$.pipe(
     map((links) =>
       links.map((link, index) => ({
-        label: link.description || link.name,
+        label: this.linkHelper.getLinkLabel(link),
         value: index,
       }))
     )

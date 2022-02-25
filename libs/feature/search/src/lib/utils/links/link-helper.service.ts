@@ -5,6 +5,7 @@ import {
   MetadataRecord,
 } from '@geonetwork-ui/util/shared'
 import { LinkClassifierService, LinkUsage } from './link-classifier.service'
+import { getFileFormat } from './link-utils'
 
 @Injectable({
   providedIn: 'root',
@@ -77,5 +78,14 @@ export class LinkHelperService {
   }
   hasProtocolDownload(link: MetadataLinkValid): boolean {
     return /^WWW:DOWNLOAD/.test(link.protocol)
+  }
+
+  getLinkLabel(link: MetadataLinkValid): string {
+    let source = getFileFormat(link)
+    if (this.isWmsLink(link)) source = 'WMS'
+    if (this.isWfsLink(link)) source = 'WFS'
+    if (this.isEsriRestFeatureServer(link)) source = 'REST'
+    source = source ? `(${source})` : ''
+    return `${link.label} ${source}`
   }
 }

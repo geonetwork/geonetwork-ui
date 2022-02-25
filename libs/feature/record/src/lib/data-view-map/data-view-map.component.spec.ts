@@ -304,11 +304,11 @@ describe('DataViewMapComponent', () => {
         expect(dropdownComponent.choices).toEqual([
           {
             value: 0,
-            label: 'layer1 (OGC:WMS--1-3-0)',
+            label: 'layer1 (WMS)',
           },
           {
             value: 1,
-            label: 'layer2 (OGC:WMS--1-1-0)',
+            label: 'layer2 (WMS)',
           },
         ])
       })
@@ -353,15 +353,15 @@ describe('DataViewMapComponent', () => {
         expect(dropdownComponent.choices).toEqual([
           {
             value: 0,
-            label: 'layer1 (OGC:WMS)',
+            label: 'layer1 (WMS)',
           },
           {
             value: 1,
-            label: 'featuretype (OGC:WFS--2-0-0)',
+            label: 'featuretype (WFS)',
           },
           {
             value: 2,
-            label: 'data.geojson (WWW:DOWNLOAD)',
+            label: 'data.geojson (geojson)',
           },
         ])
       })
@@ -542,7 +542,7 @@ describe('DataViewMapComponent', () => {
         expect(dropdownComponent.choices).toEqual([
           {
             value: 0,
-            label: 'layer (OGC:WMS)',
+            label: 'layer (WMS)',
           },
         ])
       })

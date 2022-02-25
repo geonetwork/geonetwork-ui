@@ -168,15 +168,15 @@ describe('DataViewTableComponent', () => {
       it('shows the dropdown with the same number of entries', () => {
         expect(dropDownComponent.choices).toEqual([
           {
-            label: 'CSV file',
+            label: 'CSV file (csv)',
             value: 0,
           },
           {
-            label: 'Geojson file',
+            label: 'Geojson file (geojson)',
             value: 1,
           },
           {
-            label: 'Service WFS',
+            label: 'Service WFS (WFS)',
             value: 2,
           },
         ])

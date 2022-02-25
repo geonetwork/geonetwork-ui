@@ -322,4 +322,50 @@ describe('LinkHelperService', () => {
       expect(service.hasProtocolDownload(LINK_FIXTURES.geodataWfs)).toBeFalsy()
     })
   })
+  describe('#getLinkLabel', () => {
+    it('returns label for WMS link', () => {
+      expect(
+        service.getLinkLabel({
+          description: 'A mapping service',
+          label: 'A mapping service',
+          name: 'some_layer',
+          protocol: 'OGC:WMS',
+          url: 'http://example.com/service',
+        })
+      ).toEqual('A mapping service (WMS)')
+    })
+    it('returns label for WFS link', () => {
+      expect(
+        service.getLinkLabel({
+          description: 'A feature service',
+          label: 'A feature service',
+          name: 'some_layer',
+          protocol: 'OGC:WFS',
+          url: 'http://example.com/service',
+        })
+      ).toEqual('A feature service (WFS)')
+    })
+    it('returns label for REST link', () => {
+      expect(
+        service.getLinkLabel({
+          description: 'An esri feature service',
+          label: 'An esri feature service',
+          name: 'some_layer',
+          protocol: 'ESRI:REST',
+          url: 'http://example.com/FeatureServer',
+        })
+      ).toEqual('An esri feature service (REST)')
+    })
+    it('returns label for a file link from format', () => {
+      expect(
+        service.getLinkLabel({
+          name: 'Cities',
+          label: 'Cities',
+          format: 'geojson',
+          protocol: 'WWW:DOWNLOAD',
+          url: 'http://example.com/data',
+        })
+      ).toEqual('Cities (geojson)')
+    })
+  })
 })
