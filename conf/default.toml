@@ -69,7 +69,7 @@ main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
 
 # This mandatory parameter indicates which background should be used for the main header
-header_background = "center / cover url('assets/img/default_header_bg.webp')"
+header_background = "center url('assets/img/default_header_bg.webp')"
 
 # This optional parameter allows to override the fallback image that should be used for thumbnails, 
 # if the metadata record has no thumbnail image url or it is broken.
