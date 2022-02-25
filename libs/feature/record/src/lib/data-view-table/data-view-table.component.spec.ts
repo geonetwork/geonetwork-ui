@@ -31,6 +31,7 @@ const SAMPLE_GEOJSON = {
 
 const DATALINKS_FIXTURE = [
   {
+    label: 'CSV file',
     description: 'CSV file',
     name: 'some_file_name.csv',
     format: 'csv',
@@ -40,6 +41,7 @@ const DATALINKS_FIXTURE = [
 ]
 const GEODATALINKS_FIXTURE = [
   {
+    label: 'Geojson file',
     description: 'Geojson file',
     name: 'some_file_name.geojson',
     format: 'geojson',
@@ -47,6 +49,7 @@ const GEODATALINKS_FIXTURE = [
     url: 'https://test.org/some_file_name.geojson',
   },
   {
+    label: 'Service WFS',
     description: 'Service WFS',
     name: 'abc:featureType',
     protocol: 'OGC:WFS',

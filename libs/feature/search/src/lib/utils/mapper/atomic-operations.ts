@@ -71,11 +71,13 @@ export const mapLink = (sourceLink: SourceWithUnknownProps): MetadataLink => {
       ? url.match(filenameRegex)[1]
       : sourceName
   const description = selectField<string>(sourceLink, 'description')
+  const label = description || name
   const protocol = selectField<string>(sourceLink, 'protocol')
   return {
     url,
     ...(name !== null && { name }),
     ...(description !== null && { description }),
+    ...(label !== null && { label }),
     ...(protocol !== null && { protocol }),
   }
 }
