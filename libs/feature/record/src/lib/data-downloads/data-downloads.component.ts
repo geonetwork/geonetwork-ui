@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import {
-  DownloadFormatType,
-  getDownloadFormat,
+  getFileFormat,
+  getWfsFormat,
   LinkHelperService,
 } from '@geonetwork-ui/feature/search'
 import { catchError, map, startWith, switchMap } from 'rxjs/operators'
@@ -37,7 +37,7 @@ export class DataDownloadsComponent {
             ? link
             : {
                 ...link,
-                format: getDownloadFormat(link, DownloadFormatType.FILE),
+                format: getFileFormat(link),
               }
         )
 
@@ -59,9 +59,9 @@ export class DataDownloadsComponent {
           wfsDownloadLinks
             .map((link) => ({
               ...link,
-              format: getDownloadFormat(link, DownloadFormatType.WFS),
+              format: getWfsFormat(link),
             }))
-            .filter((link) => link.format !== 'unknown')
+            .filter((link) => link.format)
             .filter(
               (link, i, links) =>
                 links.findIndex(
