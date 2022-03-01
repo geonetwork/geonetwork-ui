@@ -35,4 +35,7 @@ describe('RecordPageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
   })
+  it('has id="record-page" at root for related records scroll', () => {
+    expect(fixture.nativeElement.children[0].id).toBe('record-page')
+  })
 })
