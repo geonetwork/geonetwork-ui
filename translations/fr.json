@@ -83,6 +83,7 @@
   "dataset.error.parse": "Les données ont été chargées mais leur décodage a échoué",
   "dataset.error.unknown": "Les données ne peuvent être affichées",
   "datasets": "jeux de données",
+  "downloads.format.unknown": "inconnu",
   "downloads.wfs.featuretype.not.found": "La couche n'a pas été retrouvée",
   "dropFile": "Faites glisser votre fichier",
   "facets.block.title.OrgForResource": "Organisation",
