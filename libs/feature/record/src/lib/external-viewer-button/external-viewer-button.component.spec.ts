@@ -55,7 +55,7 @@ describe('ExternalViewerButtonComponent', () => {
     beforeEach(() => {
       component.mapConfig = MAP_CONFIG_FIXTURE
       component.link = {
-        url: 'http://example.com/',
+        url: 'http://example.com/ows?service=wms&request=getcapabilities',
         name: 'layername',
         protocol: 'OGC:WMS',
       }
@@ -93,7 +93,7 @@ describe('ExternalViewerButtonComponent', () => {
       })
       it('opens window in new tab with URL including WMS link params', () => {
         expect(openMock).toHaveBeenCalledWith(
-          'https://example.com/myviewer?url=http://example.com/&name=layername&type=wms',
+          'https://example.com/myviewer?url=http%3A%2F%2Fexample.com%2Fows%3Fservice%3Dwms%26request%3Dgetcapabilities&name=layername&type=wms',
           '_blank'
         )
       })
