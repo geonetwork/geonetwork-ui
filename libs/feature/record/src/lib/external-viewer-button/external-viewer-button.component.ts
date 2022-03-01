@@ -38,7 +38,7 @@ export class ExternalViewerButtonComponent {
     const templateUrl = this.mapConfig.EXTERNAL_VIEWER_URL_TEMPLATE
     const url = templateUrl
       .replace('${layer_name}', `${this.link.name}`)
-      .replace('${service_url}', `${this.link.url}`)
+      .replace('${service_url}', `${encodeURIComponent(this.link.url)}`)
       .replace('${service_type}', `${this.supportedLinkLayerType}`)
     window
       .open(
