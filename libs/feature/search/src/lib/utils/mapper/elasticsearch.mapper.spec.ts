@@ -41,6 +41,7 @@ describe('ElasticsearchMapper', () => {
           thumbnailUrl: 'data:image/png;base64,',
           title: 'EEA reference grid for Germany (10km), May 2013',
           uuid: '20e9e1a1-83c1-4f13-89ef-c19767d6ee18f',
+          catalog: '6731be1e-6533-44e0-9b8a-580b45e36e80',
         },
         {
           abstract: 'Reference layer of the rivers sensitive areas, ',
@@ -50,6 +51,7 @@ describe('ElasticsearchMapper', () => {
           title:
             'Urban Waste Water Treatment Directive, Sensitive areas - rivers reported under UWWTD data call 2015, Nov. 2017',
           uuid: '5b35f06e-8c6b-4907-b8f4-39541d170360',
+          catalog: '6731be1e-6533-44e0-9b8a-580b45e36e80',
         },
       ])
     })
