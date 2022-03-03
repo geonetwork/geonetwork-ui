@@ -84,17 +84,26 @@
       </div>
     </gn-ui-expandable-panel>
   </div>
-
-  <div *ngIf="metadata.contact">
-    <p class="text-gray-600 text-xs mb-3 uppercase" translate>
-      record.metadata.contact
-    </p>
-    <p class="text-primary font-title text-21 mb-1">
-      {{ metadata.contact.name }}
-    </p>
-    <p class="text-gray-600 text-sm mb-2">{{ metadata.contact.email }}</p>
-    <p class="text-gray-600 mb-4">
-      <a [href]="metadata.contact.website">{{ metadata.contact.website }}</a>
-    </p>
+  <div>
+    <div *ngIf="metadata.contact" class="mb-12">
+      <p class="text-gray-600 text-xs mb-3 uppercase" translate>
+        record.metadata.contact
+      </p>
+      <p class="text-primary font-title text-21 mb-1">
+        {{ metadata.contact.name }}
+      </p>
+      <p class="text-gray-600 text-sm mb-2">{{ metadata.contact.email }}</p>
+      <p class="text-gray-600 mb-4">
+        <a [href]="metadata.contact.website">{{ metadata.contact.website }}</a>
+      </p>
+    </div>
+    <div *ngIf="metadata.catalog">
+      <p class="text-gray-600 text-xs mb-3 uppercase" translate>
+        record.metadata.catalog
+      </p>
+      <p class="text-primary font-title text-21 mb-1">
+        {{ metadata.catalog }}
+      </p>
+    </div>
   </div>
 </div>
