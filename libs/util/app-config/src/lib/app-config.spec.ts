@@ -51,6 +51,7 @@ primary_color = "#093564"
 secondary_color = "#c2e9dc"
 main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
+thumbnail_placeholder = 'assets/img/placeholder.svg'
 header_background = 'teal'
 main_font = 'sans-serif'
 title_font = 'serif'
@@ -165,6 +166,7 @@ describe('app config utils', () => {
           FONTS_STYLESHEET_URL:
             'https://fonts.googleapis.com/css2?family=Open+Sans',
           HEADER_BACKGROUND: 'teal',
+          THUMBNAIL_PLACEHOLDER: 'assets/img/placeholder.svg',
         })
       })
     })
@@ -198,6 +200,7 @@ describe('app config utils', () => {
     main_color = "#212029" # All-purpose text color
     background_color = "#fdfbff"
     header_background = 'blue'
+    thumbnail_placeholder = 'assets/img/placeholder.svg'
 `
 
     describe('when all properties are present', () => {

@@ -47,6 +47,7 @@ interface ThemeConfig {
   MAIN_COLOR: string
   BACKGROUND_COLOR: string
   HEADER_BACKGROUND: string
+  THUMBNAIL_PLACEHOLDER: string
   MAIN_FONT?: string
   TITLE_FONT?: string
   FONTS_STYLESHEET_URL?: string
@@ -159,6 +160,7 @@ export function loadAppConfig() {
           'main_color',
           'background_color',
           'header_background',
+          'thumbnail_placeholder',
         ],
         ['main_font', 'title_font', 'fonts_stylesheet_url'],
         warnings,
@@ -172,6 +174,7 @@ export function loadAppConfig() {
               SECONDARY_COLOR: parsedThemeSection.secondary_color,
               MAIN_COLOR: parsedThemeSection.main_color,
               BACKGROUND_COLOR: parsedThemeSection.background_color,
+              THUMBNAIL_PLACEHOLDER: parsedThemeSection.thumbnail_placeholder,
               HEADER_BACKGROUND: parsedThemeSection.header_background,
               TITLE_FONT: parsedThemeSection.title_font,
               MAIN_FONT: parsedThemeSection.main_font,
