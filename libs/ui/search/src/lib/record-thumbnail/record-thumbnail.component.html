@@ -15,9 +15,10 @@
     />
   </svg>
   <img
-    *ngIf="thumbnailUrl"
-    class="relative h-full w-full object-cover object-left-top"
-    [src]="thumbnailUrl | safe: 'url'"
-    alt="thumbnail"
+    *ngIf="imgUrl"
+    class="relative h-full w-full object-left-top"
+    [src]="imgUrl | safe: 'url'"
+    [placeholder]="placeholderUrl"
+    gnUiImage
   />
 </div>
