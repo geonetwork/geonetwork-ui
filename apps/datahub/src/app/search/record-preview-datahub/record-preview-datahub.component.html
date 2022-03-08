@@ -36,8 +36,11 @@
           >map</mat-icon
         >
       </div>
-      <div class="basis-1/2 text-gray-400 line-clamp-3">
-        {{ record.catalog }}
+      <div
+        *ngIf="source$ | async as source"
+        class="basis-1/2 text-gray-400 line-clamp-3"
+      >
+        {{ source.name }}
       </div>
     </div>
   </div>

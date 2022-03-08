@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core'
+import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { LinkHelperService } from '@geonetwork-ui/feature/search'
 import { MetadataLinkValid, MetadataRecord } from '@geonetwork-ui/util/shared'
 
 import { select, Store } from '@ngrx/store'
-import { filter, map } from 'rxjs/operators'
+import { filter, map, switchMap, tap } from 'rxjs/operators'
 
 import * as MdViewActions from './mdview.actions'
 import * as MdViewSelectors from './mdview.selectors'
@@ -35,6 +36,10 @@ export class MdViewFacade {
   )
 
   related$ = this.store.pipe(select(MdViewSelectors.getRelated))
+
+  source$ = this.metadata$.pipe(
+    switchMap((record) => this.sources.getSource(record.catalog))
+  )
 
   allLinks$ = this.metadata$.pipe(
     map((record) => (this.helper.hasLinks(record) ? record.links : []))
@@ -69,7 +74,11 @@ export class MdViewFacade {
     map((links) => links.filter((link) => this.helper.isOtherLink(link)))
   )
 
-  constructor(private store: Store, private helper: LinkHelperService) {}
+  constructor(
+    private store: Store,
+    private helper: LinkHelperService,
+    private sources: SourcesService
+  ) {}
 
   /**
    * This will show an incomplete record (e.g. from a search result) as a preview

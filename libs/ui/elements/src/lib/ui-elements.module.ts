@@ -14,6 +14,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { LinkCardComponent } from './link-card/link-card.component'
 import { RelatedRecordCardComponent } from './related-record-card/related-record-card.component'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
+import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { UiSearchModule } from '@geonetwork-ui/ui/search'
     UtilSharedModule,
     UiSearchModule,
     RouterModule,
+    FeatureCatalogModule,
   ],
   declarations: [
     MetadataInfoComponent,
