@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { SourcesApiService } from '@geonetwork-ui/data-access/gn4'
 import { Observable } from 'rxjs'
-import { map, share, tap } from 'rxjs/operators'
+import { map, share } from 'rxjs/operators'
 import { CatalogSource } from './sources.model'
 
 @Injectable({
@@ -11,7 +11,6 @@ export class SourcesService {
   $sources: Observable<Array<CatalogSource>> = this.sourcesApiService
     .getSources1()
     .pipe(share())
-  //FIXME: do not repeat requests
 
   constructor(private sourcesApiService: SourcesApiService) {}
 
