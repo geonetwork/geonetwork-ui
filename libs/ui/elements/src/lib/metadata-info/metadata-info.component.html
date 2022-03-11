@@ -1,109 +1,80 @@
-<div class="grid grid-cols-3 gap-6">
-  <div class="col-span-2">
-    <p class="text-[28px] mb-6 font-title" translate>record.metadata.about</p>
-    <div class="mb-4 md-description pr-16">
-      <gn-ui-content-ghost
-        ghostClass="h-32"
-        [showContent]="fieldReady('abstract')"
-      >
-        <p
-          class="whitespace-pre-line break-words"
-          [innerHTML]="metadata.abstract | safe: 'html'"
-        ></p>
-      </gn-ui-content-ghost>
-    </div>
-
-    <ng-container *ngIf="metadata.keywords">
-      <p class="mb-3 font-medium text-primary text-sm" translate>
-        record.metadata.keywords
-      </p>
-      <div class="mb-16">
-        <gn-ui-badge
-          class="inline-block mr-2 mb-2 lowercase"
-          [routerLink]="['/search']"
-          [queryParams]="{ q: keyword }"
-          [clickable]="true"
-          *ngFor="let keyword of metadata.keywords"
-          >{{ keyword }}</gn-ui-badge
-        >
-      </div>
-    </ng-container>
-
-    <gn-ui-expandable-panel
-      *ngIf="metadata.lineage"
-      [title]="'record.metadata.origin' | translate"
-    >
-      <p class="mb-5 pt-4 whitespace-pre-line">
-        {{ metadata.lineage }}
-      </p>
-      <div
-        class="py-4 px-6 rounded bg-gray-100 grid grid-cols-2 grid-rows-2 gap-6 text-gray-800"
-      >
-        <div class="border-b border-gray-300" *ngIf="metadata.updatedOn">
-          <p class="text-sm" translate>record.metadata.updatedOn</p>
-          <p class="text-primary font-medium my-2">
-            {{ metadata.updatedOn && metadata.updatedOn.toLocaleString() }}
-          </p>
-        </div>
-        <div class="border-b border-gray-300" *ngIf="metadata.updateFrequency">
-          <p class="text-sm" translate>record.metadata.updateFrequency</p>
-          <p class="text-primary font-medium my-2">
-            {{ metadata.updateFrequency }}
-          </p>
-        </div>
-        <div *ngIf="metadata.updateStatus">
-          <p class="text-sm" translate>record.metadata.updateStatus</p>
-          <p class="text-primary font-medium my-2">
-            {{ metadata.updateStatus }}
-          </p>
-        </div>
-      </div>
-    </gn-ui-expandable-panel>
-    <gn-ui-expandable-panel
-      *ngIf="metadata.usageConstraints"
-      [title]="'record.metadata.usage' | translate"
-    >
-      <div class="py-4 px-6 rounded bg-gray-100 text-gray-800">
-        <gn-ui-badge class="inline-block mr-2">{{
-          metadata.usageConstraints
-        }}</gn-ui-badge>
-      </div>
-    </gn-ui-expandable-panel>
-    <gn-ui-expandable-panel
-      *ngIf="landingPages && landingPages.length > 0"
-      [title]="'record.metadata.details' | translate"
-    >
-      <div class="py-5 px-5 rounded bg-gray-100 text-gray-800">
-        <p class="text-sm" translate>record.metadata.sheet</p>
-        <a [href]="landingPages[0].url" target="_blank">
-          <mat-icon class="inline-block align-bottom pt-1.5 text-xs text-black"
-            >open_in_new</mat-icon
-          >
-          <span class="text-primary">{{ landingPages[0].url }}</span>
-        </a>
-      </div>
-    </gn-ui-expandable-panel>
-  </div>
-  <div>
-    <div *ngIf="metadata.contact" class="mb-12">
-      <p class="text-gray-600 text-xs mb-3 uppercase" translate>
-        record.metadata.contact
-      </p>
-      <p class="text-primary font-title text-21 mb-1">
-        {{ metadata.contact.name }}
-      </p>
-      <p class="text-gray-600 text-sm mb-2">{{ metadata.contact.email }}</p>
-      <p class="text-gray-600 mb-4">
-        <a [href]="metadata.contact.website">{{ metadata.contact.website }}</a>
-      </p>
-    </div>
-    <div *ngIf="source">
-      <p class="text-gray-600 text-xs mb-3 uppercase" translate>
-        record.metadata.catalog
-      </p>
-      <p class="text-primary font-title text-21 mb-1">
-        {{ source.name }}
-      </p>
-    </div>
-  </div>
+<p class="text-[28px] mb-6 font-title" translate>record.metadata.about</p>
+<div class="mb-4 md-description pr-16">
+  <gn-ui-content-ghost ghostClass="h-32" [showContent]="fieldReady('abstract')">
+    <p
+      class="whitespace-pre-line break-words"
+      [innerHTML]="metadata.abstract | safe: 'html'"
+    ></p>
+  </gn-ui-content-ghost>
 </div>
+
+<ng-container *ngIf="metadata.keywords">
+  <p class="mb-3 font-medium text-primary text-sm" translate>
+    record.metadata.keywords
+  </p>
+  <div class="mb-16">
+    <gn-ui-badge
+      class="inline-block mr-2 mb-2 lowercase"
+      [routerLink]="['/search']"
+      [queryParams]="{ q: keyword }"
+      [clickable]="true"
+      *ngFor="let keyword of metadata.keywords"
+      >{{ keyword }}</gn-ui-badge
+    >
+  </div>
+</ng-container>
+
+<gn-ui-expandable-panel
+  *ngIf="metadata.lineage"
+  [title]="'record.metadata.origin' | translate"
+>
+  <p class="mb-5 pt-4 whitespace-pre-line">
+    {{ metadata.lineage }}
+  </p>
+  <div
+    class="py-4 px-6 rounded bg-gray-100 grid grid-cols-2 grid-rows-2 gap-6 text-gray-800"
+  >
+    <div class="border-b border-gray-300" *ngIf="metadata.updatedOn">
+      <p class="text-sm" translate>record.metadata.updatedOn</p>
+      <p class="text-primary font-medium my-2">
+        {{ metadata.updatedOn && metadata.updatedOn.toLocaleString() }}
+      </p>
+    </div>
+    <div class="border-b border-gray-300" *ngIf="metadata.updateFrequency">
+      <p class="text-sm" translate>record.metadata.updateFrequency</p>
+      <p class="text-primary font-medium my-2">
+        {{ metadata.updateFrequency }}
+      </p>
+    </div>
+    <div *ngIf="metadata.updateStatus">
+      <p class="text-sm" translate>record.metadata.updateStatus</p>
+      <p class="text-primary font-medium my-2">
+        {{ metadata.updateStatus }}
+      </p>
+    </div>
+  </div>
+</gn-ui-expandable-panel>
+<gn-ui-expandable-panel
+  *ngIf="metadata.usageConstraints"
+  [title]="'record.metadata.usage' | translate"
+>
+  <div class="py-4 px-6 rounded bg-gray-100 text-gray-800">
+    <gn-ui-badge class="inline-block mr-2">{{
+      metadata.usageConstraints
+    }}</gn-ui-badge>
+  </div>
+</gn-ui-expandable-panel>
+<gn-ui-expandable-panel
+  *ngIf="landingPages && landingPages.length > 0"
+  [title]="'record.metadata.details' | translate"
+>
+  <div class="py-5 px-5 rounded bg-gray-100 text-gray-800">
+    <p class="text-sm" translate>record.metadata.sheet</p>
+    <a [href]="landingPages[0].url" target="_blank">
+      <mat-icon class="inline-block align-bottom pt-1.5 text-xs text-black"
+        >open_in_new</mat-icon
+      >
+      <span class="text-primary">{{ landingPages[0].url }}</span>
+    </a>
+  </div>
+</gn-ui-expandable-panel>
