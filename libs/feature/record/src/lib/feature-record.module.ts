@@ -23,6 +23,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { DataOtherlinksComponent } from './data-otherlinks/data-otherlinks.component'
 import { RelatedRecordsComponent } from './related-records/related-records.component'
 import { ExternalViewerButtonComponent } from './external-viewer-button/external-viewer-button.component'
+import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { ExternalViewerButtonComponent } from './external-viewer-button/external
     EffectsModule.forFeature([MdViewEffects]),
     UiLayoutModule,
     FeatureMapModule,
+    FeatureCatalogModule,
     UiMapModule,
     UiInputsModule,
     UiElementsModule,

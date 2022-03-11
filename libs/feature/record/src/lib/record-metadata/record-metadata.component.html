@@ -1,22 +1,41 @@
 <div id="about" class="container-lg mx-auto mb-16" style="margin-top: 60px">
-  <gn-ui-metadata-info
-    class="block"
-    *ngIf="(facade.isPresent$ | async) === false"
-    [metadata]="{
-      title: 'Loading...'
-    }"
-    [incomplete]="true"
-  >
-  </gn-ui-metadata-info>
-  <gn-ui-metadata-info
-    class="block"
-    *ngIf="(facade.isPresent$ | async) === true"
-    [metadata]="facade.metadata$ | async"
-    [source]="facade.source$ | async"
-    [incomplete]="facade.isIncomplete$ | async"
-    [landingPages]="facade.landingPageLinks$ | async"
-  >
-  </gn-ui-metadata-info>
+  <div class="grid grid-cols-3 gap-6">
+    <div class="col-span-2">
+      <gn-ui-metadata-info
+        class="block"
+        *ngIf="(facade.isPresent$ | async) === false"
+        [metadata]="{
+          title: 'Loading...'
+        }"
+        [incomplete]="true"
+      >
+      </gn-ui-metadata-info>
+      <gn-ui-metadata-info
+        class="block"
+        *ngIf="(facade.isPresent$ | async) === true"
+        [metadata]="facade.metadata$ | async"
+        [incomplete]="facade.isIncomplete$ | async"
+        [landingPages]="facade.landingPageLinks$ | async"
+      >
+      </gn-ui-metadata-info>
+    </div>
+    <div>
+      <gn-ui-metadata-contact
+        *ngIf="(facade.isPresent$ | async) === true"
+        [metadata]="facade.metadata$ | async"
+      ></gn-ui-metadata-contact>
+      <div *ngIf="(facade.isPresent$ | async) === true">
+        <p class="text-gray-600 text-xs mb-3 uppercase" translate>
+          record.metadata.catalog
+        </p>
+        <p class="text-primary font-title text-21 mb-1">
+          <gn-ui-source-label
+            [catalogUuid]="(facade.metadata$ | async).catalog"
+          ></gn-ui-source-label>
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div
