@@ -118,12 +118,9 @@ export class ElasticsearchFieldMapper {
         source
       ),
     }),
-    //FIXME:
-    // - replace by field that contains the catalog name
-    // - use selectTranslatedField
     sourceCatalogue: (output, source) => ({
       ...output,
-      catalog: selectFallback(
+      catalogUuid: selectFallback(
         selectField(source, 'sourceCatalogue'),
         'no title'
       ),

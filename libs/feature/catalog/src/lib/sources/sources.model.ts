@@ -1,26 +1,24 @@
 export interface CatalogSource {
-  label: CatalogSourceLabel
+  label: Record<Iso3Langs, string>
   name: string
   type: string
   uuid: string
 }
-
-export interface CatalogSourceLabel {
-  ara: string
-  cat: string
-  chi: string
-  dut: string
-  eng: string
-  fin: string
-  fre: string
-  ger: string
-  ita: string
-  nor: string
-  pol: string
-  por: string
-  rus: string
-  slo: string
-  spa: string
-  tur: string
-  vie: string
-}
+export type Iso3Langs =
+  | 'ara'
+  | 'cat'
+  | 'chi'
+  | 'dut'
+  | 'eng'
+  | 'fin'
+  | 'fre'
+  | 'ger'
+  | 'ita'
+  | 'nor'
+  | 'pol'
+  | 'por'
+  | 'rus'
+  | 'slo'
+  | 'spa'
+  | 'tur'
+  | 'vie'
