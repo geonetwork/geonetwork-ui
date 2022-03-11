@@ -36,12 +36,10 @@
           >map</mat-icon
         >
       </div>
-      <div
-        *ngIf="source$ | async as source"
+      <gn-ui-source-label
         class="basis-1/2 text-gray-400 line-clamp-3"
-      >
-        {{ source.name }}
-      </div>
+        [catalogUuid]="record.catalog"
+      ></gn-ui-source-label>
     </div>
   </div>
   <div class="favorite flex-shrink-0"></div>

@@ -7,9 +7,8 @@ import {
   OnDestroy,
   ElementRef,
 } from '@angular/core'
-import { CatalogSource, SourcesService } from '@geonetwork-ui/feature/catalog'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
-import { fromEvent, Observable, Subscription } from 'rxjs'
+import { fromEvent, Subscription } from 'rxjs'
 
 @Component({
   selector: 'gn-ui-record-preview',
@@ -20,7 +19,6 @@ export class RecordPreviewComponent implements OnInit, OnDestroy {
   @Input() linkTarget = '_blank'
   @Output() mdSelect = new EventEmitter<MetadataRecord>()
   subscription = new Subscription()
-  source$: Observable<CatalogSource>
 
   get isViewable() {
     return this.record.hasMaps
@@ -29,13 +27,9 @@ export class RecordPreviewComponent implements OnInit, OnDestroy {
     return this.record.hasDownloads
   }
 
-  constructor(
-    protected elementRef: ElementRef,
-    protected sources: SourcesService
-  ) {}
+  constructor(protected elementRef: ElementRef) {}
 
   ngOnInit(): void {
-    this.source$ = this.sources.getSource(this.record.catalog)
     this.subscription.add(
       fromEvent(this.elementRef.nativeElement, 'click').subscribe(
         (event: Event) => {
