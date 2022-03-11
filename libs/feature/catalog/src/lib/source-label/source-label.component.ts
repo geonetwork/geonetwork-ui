@@ -1,6 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
-import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n'
-import { TranslateService } from '@ngx-translate/core'
+import { LangService } from '@geonetwork-ui/util/i18n'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { CatalogSource } from '../sources/sources.model'
@@ -17,16 +16,11 @@ export class SourceLabelComponent {
   @Input() set catalogUuid(uuid: string) {
     this.sourceLabel$ = this.sourcesService
       .getSource(uuid)
-      .pipe(
-        map(
-          (source) =>
-            source.label[LANG_2_TO_3_MAPPER[this.translateService.currentLang]]
-        )
-      )
+      .pipe(map((source) => source.label[this.langService.iso3]))
   }
 
   constructor(
     private sourcesService: SourcesService,
-    private translateService: TranslateService
+    private langService: LangService
   ) {}
 }
