@@ -2,7 +2,7 @@ import {
   getFileFormat,
   getWfsFormat,
   checkFileFormat,
-  checkMimeType,
+  mimeTypeToFormat,
 } from './link-utils'
 import { LINK_FIXTURES } from './link.fixtures'
 
@@ -172,26 +172,26 @@ describe('link utils', () => {
       })
     })
   })
-  describe('#checkMimeType', () => {
+  describe('#mimeTypeToFormat', () => {
     it('returns json for mimetype', () => {
-      expect(checkMimeType('application/json')).toEqual('json')
+      expect(mimeTypeToFormat('application/json')).toEqual('json')
     })
     it('returns geojson for mimetype', () => {
-      const geojson1 = checkMimeType('application/geo+json')
-      const geojson2 = checkMimeType('application/vnd.geo+json')
+      const geojson1 = mimeTypeToFormat('application/geo+json')
+      const geojson2 = mimeTypeToFormat('application/vnd.geo+json')
       expect([geojson1, geojson2]).toEqual(['geojson', 'geojson'])
     })
     it('returns csv for mimetype', () => {
-      const csv1 = checkMimeType('text/csv')
-      const csv2 = checkMimeType('application/csv')
+      const csv1 = mimeTypeToFormat('text/csv')
+      const csv2 = mimeTypeToFormat('application/csv')
       expect([csv1, csv2]).toEqual(['csv', 'csv'])
     })
     it('returns shp for mimetype', () => {
-      expect(checkMimeType('x-gis/x-shapefile')).toEqual('shp')
+      expect(mimeTypeToFormat('x-gis/x-shapefile')).toEqual('shp')
     })
     it('returns excel for mimetype', () => {
-      const excel1 = checkMimeType('application/vnd.ms-excel')
-      const excel2 = checkMimeType(
+      const excel1 = mimeTypeToFormat('application/vnd.ms-excel')
+      const excel2 = mimeTypeToFormat(
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       )
       expect([excel1, excel2]).toEqual(['excel', 'excel'])

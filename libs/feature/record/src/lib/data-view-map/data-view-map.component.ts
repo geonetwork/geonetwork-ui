@@ -62,7 +62,7 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
     map((links) =>
       links.length
         ? links.map((link, index) => ({
-            label: this.linkHelper.getLinkLabel(link),
+            label: this.linkHelper.getLinkLabelWithFormat(link),
             value: index,
           }))
         : [{ label: 'No preview layer', value: 0 }]

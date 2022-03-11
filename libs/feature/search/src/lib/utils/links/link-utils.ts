@@ -16,17 +16,16 @@ const FORMATS = {
   zip: ['zip'],
 }
 
-export function getWfsFormat(link: MetadataLinkValid): string {
+export function getWfsFormat(link: MetadataLinkValid): string | void {
   for (const format in FORMATS) {
     for (const alias of FORMATS[format]) {
       if ('format' in link && new RegExp(`${alias}`, 'i').test(link.format))
         return `WFS:${format}`
     }
   }
-  return undefined
 }
 
-export function getFileFormat(link: MetadataLinkValid): string {
+export function getFileFormat(link: MetadataLinkValid): string | void {
   if (link.format) {
     return link.format
   }
@@ -34,8 +33,7 @@ export function getFileFormat(link: MetadataLinkValid): string {
     // mime types in protocol
     const matches = link.protocol.match(/^WWW:DOWNLOAD:(.+\/.+)$/)
     if (matches !== null) {
-      const mimeType = checkMimeType(matches[1])
-      if (mimeType) return mimeType
+      return mimeTypeToFormat(matches[1])
     }
   }
   for (const format in FORMATS) {
@@ -43,10 +41,9 @@ export function getFileFormat(link: MetadataLinkValid): string {
       if (checkFileFormat(link, alias)) return format
     }
   }
-  return undefined
 }
 
-export function checkMimeType(mimeType: string) {
+export function mimeTypeToFormat(mimeType: string): string | void {
   switch (mimeType) {
     case 'application/json':
       return 'json'
@@ -62,7 +59,6 @@ export function checkMimeType(mimeType: string) {
     case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
       return 'excel'
   }
-  return undefined
 }
 
 export function checkFileFormat(

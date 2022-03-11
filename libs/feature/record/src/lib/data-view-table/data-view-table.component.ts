@@ -35,7 +35,7 @@ export class DataViewTableComponent {
   dropdownChoices$ = this.compatibleDataLinks$.pipe(
     map((links) =>
       links.map((link, index) => ({
-        label: this.linkHelper.getLinkLabel(link),
+        label: this.linkHelper.getLinkLabelWithFormat(link),
         value: index,
       }))
     )

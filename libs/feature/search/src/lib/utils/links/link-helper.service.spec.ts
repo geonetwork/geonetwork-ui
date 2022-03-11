@@ -322,10 +322,10 @@ describe('LinkHelperService', () => {
       expect(service.hasProtocolDownload(LINK_FIXTURES.geodataWfs)).toBeFalsy()
     })
   })
-  describe('#getLinkLabel', () => {
+  describe('#getLinkLabelWithFormat', () => {
     it('returns label for WMS link', () => {
       expect(
-        service.getLinkLabel({
+        service.getLinkLabelWithFormat({
           description: 'A mapping service',
           label: 'A mapping service',
           name: 'some_layer',
@@ -336,7 +336,7 @@ describe('LinkHelperService', () => {
     })
     it('returns label for WFS link', () => {
       expect(
-        service.getLinkLabel({
+        service.getLinkLabelWithFormat({
           description: 'A feature service',
           label: 'A feature service',
           name: 'some_layer',
@@ -347,7 +347,7 @@ describe('LinkHelperService', () => {
     })
     it('returns label for REST link', () => {
       expect(
-        service.getLinkLabel({
+        service.getLinkLabelWithFormat({
           description: 'An esri feature service',
           label: 'An esri feature service',
           name: 'some_layer',
@@ -358,7 +358,7 @@ describe('LinkHelperService', () => {
     })
     it('returns label for a file link from format', () => {
       expect(
-        service.getLinkLabel({
+        service.getLinkLabelWithFormat({
           name: 'Cities',
           label: 'Cities',
           format: 'geojson',

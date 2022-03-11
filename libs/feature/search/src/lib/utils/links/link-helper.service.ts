@@ -80,12 +80,18 @@ export class LinkHelperService {
     return /^WWW:DOWNLOAD/.test(link.protocol)
   }
 
-  getLinkLabel(link: MetadataLinkValid): string {
-    let source = getFileFormat(link)
-    if (this.isWmsLink(link)) source = 'WMS'
-    if (this.isWfsLink(link)) source = 'WFS'
-    if (this.isEsriRestFeatureServer(link)) source = 'REST'
-    source = source ? `(${source})` : ''
-    return `${link.label} ${source}`
+  getLinkLabelWithFormat(link: MetadataLinkValid): string {
+    let format
+    if (this.isWmsLink(link)) {
+      format = 'WMS'
+    } else if (this.isWfsLink(link)) {
+      format = 'WFS'
+    } else if (this.isEsriRestFeatureServer(link)) {
+      format = 'REST'
+    } else {
+      format = getFileFormat(link)
+    }
+    format = format ? `(${format})` : ''
+    return `${link.label} ${format}`
   }
 }
