@@ -3,7 +3,7 @@
     *ngIf="imgUrl"
     class="relative h-full w-full object-left-top"
     [src]="imgUrl | safe: 'url'"
-    [placeholder]="placeholderUrl"
-    gnUiImage
+    [fallbackUrl]="placeholderUrl"
+    gnUiImageFallback
   />
 </div>

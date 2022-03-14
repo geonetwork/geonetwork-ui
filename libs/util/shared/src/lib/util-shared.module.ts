@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core'
 import { SafePipe } from './pipes/SafePipe'
 import { CommonModule } from '@angular/common'
-import { ImageDirective } from './image.directive'
+import { ImageFallbackDirective } from './image-fallback.directive'
 
 @NgModule({
-  declarations: [SafePipe, ImageDirective],
+  declarations: [SafePipe, ImageFallbackDirective],
   imports: [CommonModule],
-  exports: [SafePipe, ImageDirective],
+  exports: [SafePipe, ImageFallbackDirective],
 })
 export class UtilSharedModule {}
