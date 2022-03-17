@@ -11,6 +11,7 @@ export const RECORDS_SUMMARY_FIXTURE = [
     updateFrequency: 'Final',
     viewable: true,
     downloadable: true,
+    catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
   },
   {
     id: '139',
@@ -25,6 +26,7 @@ export const RECORDS_SUMMARY_FIXTURE = [
     updateFrequency: 'Final',
     viewable: true,
     downloadable: true,
+    catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
   },
   {
     id: '139',
@@ -38,6 +40,7 @@ export const RECORDS_SUMMARY_FIXTURE = [
     updateFrequency: 'Final',
     viewable: true,
     downloadable: true,
+    catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
   },
   {
     id: '139',
@@ -51,6 +54,7 @@ export const RECORDS_SUMMARY_FIXTURE = [
     updateFrequency: 'Final',
     viewable: true,
     downloadable: true,
+    catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
   },
 ]
 
@@ -133,5 +137,13 @@ export const RECORDS_FULL_FIXTURE = [
     uuid: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
     viewable: true,
     downloadable: true,
+    contact: {
+      name: 'Ifremer',
+      email: 'q2suppor@ifremer.fr',
+      website: 'https://www.ifremer.fr',
+      logoUrl:
+        'http://localhost/geonetwork/images/logos/81e8a591-7815-4d2f-a7da-5673192e74c9.png',
+    },
+    catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
   },
 ]
