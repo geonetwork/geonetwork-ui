@@ -1,20 +1,21 @@
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core'
+import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { MapManagerService } from '@geonetwork-ui/feature/map'
 import { MdViewFacade } from '../state/mdview.facade'
 import {
   MetadataInfoComponent,
+  MetadataContactComponent,
   UiElementsModule,
 } from '@geonetwork-ui/ui/elements'
-import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/ui/search'
+import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/ui/search'
 import { BehaviorSubject } from 'rxjs'
 import { RecordMetadataComponent } from './record-metadata.component'
 import { TranslateModule } from '@ngx-translate/core'
 
 class MdViewFacadeMock {
   isPresent$ = new BehaviorSubject(false)
-  metadata$ = new BehaviorSubject(RECORDS_SUMMARY_FIXTURE[0])
+  metadata$ = new BehaviorSubject(RECORDS_FULL_FIXTURE[0])
   mapApiLinks$ = new BehaviorSubject([])
   dataLinks$ = new BehaviorSubject([])
   geoDataLinks$ = new BehaviorSubject([])
@@ -24,6 +25,13 @@ class MdViewFacadeMock {
   related$ = new BehaviorSubject(null)
 }
 
+@Component({
+  selector: 'gn-ui-source-label',
+  template: '<div></div>',
+})
+export class MockSourceLabelComponent {
+  @Input() catalogUuid: string
+}
 @Component({
   selector: 'gn-ui-data-view-map',
   template: '<div></div>',
@@ -69,6 +77,7 @@ describe('RecordMetadataComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         RecordMetadataComponent,
+        MockSourceLabelComponent,
         MockDataMapComponent,
         MockDataTableComponent,
         MockDataDownloadsComponent,
@@ -102,29 +111,59 @@ describe('RecordMetadataComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('if metadata present', () => {
+  describe('about', () => {
+    let metadataInfo: MetadataInfoComponent
+    let metadataContact: MetadataContactComponent
+    let sourceLabel: MockSourceLabelComponent
+
     beforeEach(() => {
       facade.isPresent$.next(true)
       fixture.detectChanges()
-    })
-    it('shows the full metadata', () => {
-      const dumb = fixture.debugElement.query(
+      metadataInfo = fixture.debugElement.query(
         By.directive(MetadataInfoComponent)
       ).componentInstance
-      expect(dumb.metadata).toHaveProperty('abstract')
-    })
-  })
-  describe('if metadata not present', () => {
-    beforeEach(() => {
-      facade.isPresent$.next(false)
-      fixture.detectChanges()
-    })
-    it('shows a placeholder', () => {
-      const dumb = fixture.debugElement.query(
-        By.directive(MetadataInfoComponent)
+      metadataContact = fixture.debugElement.query(
+        By.directive(MetadataContactComponent)
       ).componentInstance
-      expect(dumb.metadata).not.toHaveProperty('abstract')
-      expect(dumb.incomplete).toBeTruthy()
+      sourceLabel = fixture.debugElement.query(
+        By.directive(MockSourceLabelComponent)
+      ).componentInstance
+    })
+    describe('if metadata present', () => {
+      it('shows the full metadata', () => {
+        expect(metadataInfo.metadata).toHaveProperty('abstract')
+      })
+      it('shows the metadata contact', () => {
+        expect(metadataContact.metadata).toHaveProperty('contact')
+      })
+      it('shows the metadata catalog', () => {
+        expect(sourceLabel.catalogUuid).toEqual(
+          RECORDS_FULL_FIXTURE[0].catalogUuid
+        )
+      })
+    })
+    describe('if metadata not present', () => {
+      beforeEach(() => {
+        facade.isPresent$.next(false)
+        fixture.detectChanges()
+        metadataInfo = fixture.debugElement.query(
+          By.directive(MetadataInfoComponent)
+        ).componentInstance
+      })
+      it('shows a placeholder', () => {
+        expect(metadataInfo.metadata).not.toHaveProperty('abstract')
+        expect(metadataInfo.incomplete).toBeTruthy()
+      })
+      it('does not display the metadata contact component', () => {
+        expect(
+          fixture.debugElement.query(By.directive(MetadataContactComponent))
+        ).toBeFalsy()
+      })
+      it('does not display the metadata catalog component', () => {
+        expect(
+          fixture.debugElement.query(By.directive(MockSourceLabelComponent))
+        ).toBeFalsy()
+      })
     })
   })
 
