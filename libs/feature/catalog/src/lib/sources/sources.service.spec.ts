@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing'
 import { HttpClientModule } from '@angular/common/http'
 import { SourcesService } from './sources.service'
 import { TranslateModule } from '@ngx-translate/core'
-import { readFirst } from '@nrwl/angular/testing'
 import { SourcesApiService } from '@geonetwork-ui/data-access/gn4'
 import { SOURCES_FIXTURE } from './sources.fixture'
 import { Observable } from 'rxjs'
@@ -36,30 +35,34 @@ describe('SourcesService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy()
   })
-  describe('setting empty source uuid', () => {
+  describe('getting label with empty source uuid', () => {
+    let sourceLabel
     beforeEach(() => {
-      service.setSourceUuid('')
+      service.getSourceLabel('').subscribe((label) => (sourceLabel = label))
     })
-    it('should set source label to undefined', async () => {
-      const sourceLabel = await readFirst(service.sourceLabel$)
-      expect(sourceLabel).toBe(undefined)
+    it('should get source label undefined', () => {
+      expect(sourceLabel).toBeUndefined()
     })
   })
-  describe('setting source uuid to value NOT present in catalog', () => {
+  describe('getting source label with uuid NOT present in catalog', () => {
+    let sourceLabel
     beforeEach(() => {
-      service.setSourceUuid('12345c40-5ba9-41a8-80e7-510576221cbc')
+      service
+        .getSourceLabel('12345c40-5ba9-41a8-80e7-510576221cbc')
+        .subscribe((label) => (sourceLabel = label))
     })
-    it('should set source label to undefined', async () => {
-      const sourceLabel = await readFirst(service.sourceLabel$)
-      expect(sourceLabel).toBe(undefined)
+    it('should get source label undefined', () => {
+      expect(sourceLabel).toBeUndefined()
     })
   })
-  describe('setting source uuid to value present in catalog', () => {
+  describe('getting source label with uuid present in catalog', () => {
+    let sourceLabel
     beforeEach(() => {
-      service.setSourceUuid('77992c40-5ba9-41a8-80e7-510576221cbc')
+      service
+        .getSourceLabel('77992c40-5ba9-41a8-80e7-510576221cbc')
+        .subscribe((label) => (sourceLabel = label))
     })
-    it('should retrieve source label for uuid', async () => {
-      const sourceLabel = await readFirst(service.sourceLabel$)
+    it('should get source label for uuid', () => {
       expect(sourceLabel).toBe('Agence ORE')
     })
   })
