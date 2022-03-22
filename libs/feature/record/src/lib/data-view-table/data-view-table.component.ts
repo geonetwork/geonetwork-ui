@@ -17,11 +17,7 @@ import {
   switchMap,
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
-import {
-  DownloadFormatType,
-  getDownloadFormat,
-  LinkHelperService,
-} from '@geonetwork-ui/feature/search'
+import { getFileFormat, LinkHelperService } from '@geonetwork-ui/feature/search'
 import { DataService } from '../service/data.service'
 
 @Component({
@@ -39,7 +35,7 @@ export class DataViewTableComponent {
   dropdownChoices$ = this.compatibleDataLinks$.pipe(
     map((links) =>
       links.map((link, index) => ({
-        label: link.description || link.name,
+        label: this.linkHelper.getLinkLabelWithFormat(link),
         value: index,
       }))
     )
@@ -95,7 +91,7 @@ export class DataViewTableComponent {
           )
         )
     } else if (this.linkHelper.hasProtocolDownload(link)) {
-      const format = getDownloadFormat(link, DownloadFormatType.FILE)
+      const format = getFileFormat(link)
       const supportedType =
         SupportedTypes.indexOf(format as any) > -1
           ? (format as SupportedType)

@@ -275,11 +275,13 @@ describe('DataViewMapComponent', () => {
           {
             url: 'http://abcd.com/',
             name: 'layer1',
+            label: 'layer1',
             protocol: 'OGC:WMS--1-3-0',
           },
           {
             url: 'http://abcd.com/',
             name: 'layer2',
+            label: 'layer2',
             protocol: 'OGC:WMS--1-1-0',
           },
         ])
@@ -302,17 +304,18 @@ describe('DataViewMapComponent', () => {
         expect(dropdownComponent.choices).toEqual([
           {
             value: 0,
-            label: 'layer1 (OGC:WMS--1-3-0)',
+            label: 'layer1 (WMS)',
           },
           {
             value: 1,
-            label: 'layer2 (OGC:WMS--1-1-0)',
+            label: 'layer2 (WMS)',
           },
         ])
       })
       it('provides first (selected) link to the external viewer component', () => {
         expect(externalViewerButtonComponent.link).toEqual({
           url: 'http://abcd.com/',
+          label: 'layer1',
           name: 'layer1',
           protocol: 'OGC:WMS--1-3-0',
         })
@@ -325,6 +328,7 @@ describe('DataViewMapComponent', () => {
           {
             url: 'http://abcd.com/',
             name: 'layer1',
+            label: 'layer1',
             protocol: 'OGC:WMS',
           },
         ])
@@ -332,11 +336,13 @@ describe('DataViewMapComponent', () => {
           {
             url: 'http://abcd.com/wfs',
             name: 'featuretype',
+            label: 'featuretype',
             protocol: 'OGC:WFS--2-0-0',
           },
           {
             url: 'http://abcd.com/data.geojson',
             name: 'data.geojson',
+            label: 'data.geojson',
             protocol: 'WWW:DOWNLOAD',
             format: 'geojson',
           },
@@ -347,15 +353,15 @@ describe('DataViewMapComponent', () => {
         expect(dropdownComponent.choices).toEqual([
           {
             value: 0,
-            label: 'layer1 (OGC:WMS)',
+            label: 'layer1 (WMS)',
           },
           {
             value: 1,
-            label: 'featuretype (OGC:WFS--2-0-0)',
+            label: 'featuretype (WFS)',
           },
           {
             value: 2,
-            label: 'data.geojson (WWW:DOWNLOAD)',
+            label: 'data.geojson (geojson)',
           },
         ])
       })
@@ -363,6 +369,7 @@ describe('DataViewMapComponent', () => {
         expect(externalViewerButtonComponent.link).toEqual({
           url: 'http://abcd.com/',
           name: 'layer1',
+          label: 'layer1',
           protocol: 'OGC:WMS',
         })
       })
@@ -503,6 +510,7 @@ describe('DataViewMapComponent', () => {
           {
             url: 'http://abcd.com/data.geojson',
             name: 'data.geojson',
+            label: 'data.geojson',
             protocol: 'WWW:DOWNLOAD',
             format: 'geojson',
           },
@@ -511,6 +519,7 @@ describe('DataViewMapComponent', () => {
           {
             url: 'http://abcd.com/',
             name: 'layer',
+            label: 'layer',
             protocol: 'OGC:WMS',
           },
         ])
@@ -533,7 +542,7 @@ describe('DataViewMapComponent', () => {
         expect(dropdownComponent.choices).toEqual([
           {
             value: 0,
-            label: 'layer (OGC:WMS)',
+            label: 'layer (WMS)',
           },
         ])
       })
@@ -541,6 +550,7 @@ describe('DataViewMapComponent', () => {
         expect(externalViewerButtonComponent.link).toEqual({
           url: 'http://abcd.com/',
           name: 'layer',
+          label: 'layer',
           protocol: 'OGC:WMS',
         })
       })

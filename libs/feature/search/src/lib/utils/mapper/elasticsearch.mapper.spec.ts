@@ -91,12 +91,13 @@ describe('ElasticsearchMapper', () => {
             },
           ]
         })
-        it('parses as a valid link', () => {
+        it('parses as a valid link, uses name as label', () => {
           const summary = service.toRecord(hit)
           expect(summary.links).toEqual([
             {
               protocol: 'MY-PROTOCOL',
               name: 'my data layer',
+              label: 'my data layer',
               url: 'https://my.website/services/data/',
             },
           ])
@@ -111,11 +112,12 @@ describe('ElasticsearchMapper', () => {
             },
           ]
         })
-        it('parses as a valid link', () => {
+        it('parses as a valid link, uses description as label', () => {
           const summary = service.toRecord(hit)
           expect(summary.links).toEqual([
             {
               description: 'Download this file!',
+              label: 'Download this file!',
               url: 'https://my.website/services/static/data.csv',
               name: 'data.csv',
             },

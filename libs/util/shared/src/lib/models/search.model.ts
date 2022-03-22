@@ -46,6 +46,7 @@ export interface MetadataLinkValid {
   protocol?: string
   format?: string
   description?: string
+  label?: string
 }
 export type MetadataLink = MetadataLinkValid | { invalid: true; reason: string }
 

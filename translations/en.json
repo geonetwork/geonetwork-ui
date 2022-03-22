@@ -83,6 +83,7 @@
   "dataset.error.parse": "The data was loaded but could not be parsed",
   "dataset.error.unknown": "The data cannot be displayed",
   "datasets": "datasets",
+  "downloads.format.unknown": "unknown",
   "downloads.wfs.featuretype.not.found": "The layer was not found",
   "dropFile": "drop file",
   "facets.block.title.OrgForResource": "Organisation",
