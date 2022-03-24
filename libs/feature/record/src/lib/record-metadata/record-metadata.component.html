@@ -2,9 +2,7 @@
   <gn-ui-metadata-info
     class="block"
     *ngIf="(facade.isPresent$ | async) === false"
-    [metadata]="{
-      title: 'Loading...'
-    }"
+    [metadata]="{}"
     [incomplete]="true"
   >
   </gn-ui-metadata-info>
@@ -25,16 +23,11 @@
       <gn-ui-metadata-contact
         [metadata]="facade.metadata$ | async"
       ></gn-ui-metadata-contact>
-      <div>
-        <p class="text-gray-600 text-xs mb-3 uppercase" translate>
-          record.metadata.catalog
-        </p>
-        <p class="text-primary font-title text-21 mb-1">
-          <gn-ui-source-label
-            [catalogUuid]="(facade.metadata$ | async).catalogUuid"
-          ></gn-ui-source-label>
-        </p>
-      </div>
+      <gn-ui-metadata-catalog>
+        <gn-ui-source-label
+          [catalogUuid]="(facade.metadata$ | async).catalogUuid"
+        ></gn-ui-source-label>
+      </gn-ui-metadata-catalog>
     </div>
   </div>
 </div>
