@@ -36,6 +36,7 @@ export interface MetadataRecord {
   lineage?: string
   keywords?: string[]
   contact?: MetadataContact
+  catalogUuid?: string
   usageConstraints?: string
 }
 

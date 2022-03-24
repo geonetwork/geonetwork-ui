@@ -40,6 +40,7 @@ import { RecordPreviewDatahubComponent } from './search/record-preview-datahub/r
 import { SearchHeaderComponent } from './search/search-header/search-header.component'
 import { SearchPageComponent } from './search/search-page/search-page.component'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
+import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
@@ -80,6 +81,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
       recordRouteComponent: RecordPageComponent,
     }),
     FeatureRecordModule,
+    FeatureCatalogModule,
     UiSearchModule,
     UtilSharedModule,
     MatIconModule,

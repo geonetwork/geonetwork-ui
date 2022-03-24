@@ -14,6 +14,8 @@ import { TranslateModule } from '@ngx-translate/core'
 import { LinkCardComponent } from './link-card/link-card.component'
 import { RelatedRecordCardComponent } from './related-record-card/related-record-card.component'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
+import { MetadataContactComponent } from './metadata-contact/metadata-contact.component'
+import { MetadataCatalogComponent } from './metadata-catalog/metadata-catalog.component'
 
 @NgModule({
   imports: [
@@ -34,6 +36,8 @@ import { UiSearchModule } from '@geonetwork-ui/ui/search'
     ApiCardComponent,
     LinkCardComponent,
     RelatedRecordCardComponent,
+    MetadataContactComponent,
+    MetadataCatalogComponent,
   ],
   exports: [
     MetadataInfoComponent,
@@ -42,6 +46,8 @@ import { UiSearchModule } from '@geonetwork-ui/ui/search'
     ApiCardComponent,
     LinkCardComponent,
     RelatedRecordCardComponent,
+    MetadataContactComponent,
+    MetadataCatalogComponent,
   ],
 })
 export class UiElementsModule {}

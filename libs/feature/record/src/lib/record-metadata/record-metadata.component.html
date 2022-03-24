@@ -2,22 +2,35 @@
   <gn-ui-metadata-info
     class="block"
     *ngIf="(facade.isPresent$ | async) === false"
-    [metadata]="{
-      title: 'Loading...'
-    }"
+    [metadata]="{}"
     [incomplete]="true"
   >
   </gn-ui-metadata-info>
-  <gn-ui-metadata-info
-    class="block"
+  <div
     *ngIf="(facade.isPresent$ | async) === true"
-    [metadata]="facade.metadata$ | async"
-    [incomplete]="facade.isIncomplete$ | async"
-    [landingPages]="facade.landingPageLinks$ | async"
+    class="grid grid-cols-3 gap-6"
   >
-  </gn-ui-metadata-info>
+    <div class="col-span-2">
+      <gn-ui-metadata-info
+        class="block"
+        [metadata]="facade.metadata$ | async"
+        [incomplete]="facade.isIncomplete$ | async"
+        [landingPages]="facade.landingPageLinks$ | async"
+      >
+      </gn-ui-metadata-info>
+    </div>
+    <div>
+      <gn-ui-metadata-contact
+        [metadata]="facade.metadata$ | async"
+      ></gn-ui-metadata-contact>
+      <gn-ui-metadata-catalog>
+        <gn-ui-source-label
+          [catalogUuid]="(facade.metadata$ | async).catalogUuid"
+        ></gn-ui-source-label>
+      </gn-ui-metadata-catalog>
+    </div>
+  </div>
 </div>
-
 <div
   id="preview"
   style="height: 648px"

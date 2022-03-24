@@ -23,17 +23,23 @@
     >
       {{ abstract }}
     </div>
-    <div class="links" style="height: 2rem">
-      <mat-icon
-        *ngIf="isDownloadable"
-        class="material-icons-outlined text-gray-200 mr-4"
-        >cloud_download</mat-icon
-      >
-      <mat-icon
-        *ngIf="isViewable"
-        class="material-icons-outlined text-gray-200 mr-4"
-        >map</mat-icon
-      >
+    <div class="links flex flex-row justify-between" style="height: 2rem">
+      <div class="basis-1/2">
+        <mat-icon
+          *ngIf="isDownloadable"
+          class="material-icons-outlined text-gray-200 mr-4"
+          >cloud_download</mat-icon
+        >
+        <mat-icon
+          *ngIf="isViewable"
+          class="material-icons-outlined text-gray-200 mr-4"
+          >map</mat-icon
+        >
+      </div>
+      <gn-ui-source-label
+        class="basis-1/2 text-gray-400 line-clamp-3"
+        [catalogUuid]="record.catalogUuid"
+      ></gn-ui-source-label>
     </div>
   </div>
   <div class="favorite flex-shrink-0"></div>

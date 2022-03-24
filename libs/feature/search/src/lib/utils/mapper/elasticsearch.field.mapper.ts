@@ -118,6 +118,13 @@ export class ElasticsearchFieldMapper {
         source
       ),
     }),
+    sourceCatalogue: (output, source) => ({
+      ...output,
+      catalogUuid: selectFallback(
+        selectField(source, 'sourceCatalogue'),
+        'no title'
+      ),
+    }),
     tag: (output, source) => ({
       ...output,
       keywords: getAsArray(
