@@ -23,6 +23,7 @@ primary_color = "#093564"
 secondary_color = "#c2e9dc"
 main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
+thumbnail_placeholder = 'assets/img/placeholder.svg'
 header_background = 'teal'
 main_font = 'sans-serif'
 title_font = 'serif'

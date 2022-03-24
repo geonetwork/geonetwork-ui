@@ -4,6 +4,12 @@ import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { TranslateModule } from '@ngx-translate/core'
 import { RelatedRecordCardComponent } from './related-record-card.component'
 
+jest.mock('@geonetwork-ui/util/app-config', () => ({
+  getThemeConfig: jest.fn(() => ({
+    THUMBNAIL_PLACEHOLDER: 'assets/img/placeholder.svg',
+  })),
+  isConfigLoaded: jest.fn(() => true),
+}))
 describe('RelatedRecordCardComponent', () => {
   let component: RelatedRecordCardComponent
   let fixture: ComponentFixture<RelatedRecordCardComponent>
