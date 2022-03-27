@@ -9,6 +9,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { ElasticsearchMapper } from '../utils/mapper'
+import { SearchService } from '../utils/service/search.service'
 
 import { FuzzySearchComponent } from './fuzzy-search.component'
 
@@ -16,7 +17,7 @@ const searchFacadeMock = {
   setFilters: jest.fn(),
 }
 
-const searchServiceMock = {
+const searchApiServiceMock = {
   configuration: {
     basePath: '/api',
   },
@@ -46,6 +47,9 @@ const searchServiceMock = {
   ),
 }
 
+const searchServiceMock = {
+  updateSearch: jest.fn(),
+}
 const esServiceMock = {
   buildAutocompletePayload: jest.fn(() => of({ fakeQuery: '' })),
 }
@@ -78,6 +82,10 @@ describe('FuzzySearchComponent', () => {
         },
         {
           provide: SearchApiService,
+          useValue: searchApiServiceMock,
+        },
+        {
+          provide: SearchService,
           useValue: searchServiceMock,
         },
       ],
@@ -111,15 +119,26 @@ describe('FuzzySearchComponent', () => {
 
   describe('search enter key press', () => {
     let outputValue
-    beforeEach(() => {
-      component.inputSubmited.subscribe((event) => (outputValue = event))
-      component.handleInputSubmission('blarg')
+    describe('when no output defined', () => {
+      beforeEach(() => {
+        component.handleInputSubmission('blarg')
+      })
+      it('updates the search filters', () => {
+        expect(searchServiceMock.updateSearch).toHaveBeenCalledWith({
+          any: 'blarg',
+        })
+      })
     })
-    it('changes the search filters', () => {
-      expect(searchFacadeMock.setFilters).toHaveBeenCalledWith({ any: 'blarg' })
-    })
-    it('emits inputSubmited event', () => {
-      expect(outputValue).toEqual('blarg')
+    describe('when output is defined', () => {
+      beforeEach(() => {
+        component.inputSubmited.subscribe((event) => (outputValue = event))
+        component.handleInputSubmission('blarg')
+      })
+      it('updates the search filters as well', () => {
+        expect(searchServiceMock.updateSearch).toHaveBeenCalledWith({
+          any: 'blarg',
+        })
+      })
     })
   })
 

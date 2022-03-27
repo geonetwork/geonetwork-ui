@@ -19,6 +19,7 @@ import {
 import { map, switchMap } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { ElasticsearchMapper } from '../utils/mapper'
+import { SearchService } from '../utils/service/search.service'
 
 @Component({
   selector: 'gn-ui-fuzzy-search',
@@ -38,7 +39,7 @@ export class FuzzySearchComponent {
       .buildAutocompletePayload(query)
       .pipe(
         switchMap((payload) =>
-          this.searchService
+          this.searchApiService
             .search('bucket', JSON.stringify(payload))
             .pipe(
               map((response: EsSearchResponse) =>
@@ -50,7 +51,8 @@ export class FuzzySearchComponent {
 
   constructor(
     private searchFacade: SearchFacade,
-    private searchService: SearchApiService,
+    private searchApiService: SearchApiService,
+    private searchService: SearchService,
     private esMapper: ElasticsearchMapper,
     private esService: ElasticsearchService
   ) {}
@@ -71,7 +73,6 @@ export class FuzzySearchComponent {
   }
 
   handleInputSubmission(any: string) {
-    this.searchFacade.setFilters({ any })
-    this.inputSubmited.emit(any)
+    this.searchService.updateSearch({ any })
   }
 }
