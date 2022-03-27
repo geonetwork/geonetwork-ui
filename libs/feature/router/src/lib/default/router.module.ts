@@ -13,6 +13,7 @@ import {
 } from '@ngrx/router-store'
 import { StoreModule } from '@ngrx/store'
 import { ROUTER_STATE_KEY } from './constants'
+import { SearchRouterContainerDirective } from './container/search-router.container.directive'
 import { RouterInitService } from './router-init.service'
 import { SearchRouteReuseStrategy } from './SearchRouteReuseStrategy'
 import { RouterFacade } from './state'
@@ -28,6 +29,8 @@ export const ROUTER_CONFIG = new InjectionToken<RouterConfigModel>(
 )
 
 @NgModule({
+  declarations: [SearchRouterContainerDirective],
+  exports: [SearchRouterContainerDirective],
   imports: [
     StoreModule.forFeature(ROUTER_STATE_KEY, routerReducer),
     StoreRouterConnectingModule.forRoot({
