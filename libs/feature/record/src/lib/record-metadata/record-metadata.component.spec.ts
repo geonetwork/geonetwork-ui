@@ -1,17 +1,20 @@
-import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core'
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
+import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { MapManagerService } from '@geonetwork-ui/feature/map'
-import { MdViewFacade } from '../state/mdview.facade'
+import { SearchService } from '@geonetwork-ui/feature/search'
 import {
-  MetadataInfoComponent,
+  MetadataCatalogComponent,
   MetadataContactComponent,
+  MetadataInfoComponent,
   UiElementsModule,
 } from '@geonetwork-ui/ui/elements'
 import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/ui/search'
-import { BehaviorSubject } from 'rxjs'
-import { RecordMetadataComponent } from './record-metadata.component'
 import { TranslateModule } from '@ngx-translate/core'
+import { BehaviorSubject, of } from 'rxjs'
+import { MdViewFacade } from '../state/mdview.facade'
+import { RecordMetadataComponent } from './record-metadata.component'
 
 class MdViewFacadeMock {
   isPresent$ = new BehaviorSubject(false)
@@ -25,13 +28,14 @@ class MdViewFacadeMock {
   related$ = new BehaviorSubject(null)
 }
 
-@Component({
-  selector: 'gn-ui-source-label',
-  template: '<div></div>',
-})
-export class MockSourceLabelComponent {
-  @Input() catalogUuid: string
+const searchServiceMock = {
+  setSearch: jest.fn(),
+  updateSearch: jest.fn(),
 }
+const sourcesServiceMock = {
+  getSourceLabel: jest.fn(() => of('catalog label')),
+}
+
 @Component({
   selector: 'gn-ui-data-view-map',
   template: '<div></div>',
@@ -77,7 +81,6 @@ describe('RecordMetadataComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         RecordMetadataComponent,
-        MockSourceLabelComponent,
         MockDataMapComponent,
         MockDataTableComponent,
         MockDataDownloadsComponent,
@@ -95,6 +98,14 @@ describe('RecordMetadataComponent', () => {
         {
           provide: MapManagerService,
           useValue: {},
+        },
+        {
+          provide: SearchService,
+          useValue: searchServiceMock,
+        },
+        {
+          provide: SourcesService,
+          useValue: sourcesServiceMock,
         },
       ],
     }).compileComponents()
@@ -114,7 +125,7 @@ describe('RecordMetadataComponent', () => {
   describe('about', () => {
     let metadataInfo: MetadataInfoComponent
     let metadataContact: MetadataContactComponent
-    let sourceLabel: MockSourceLabelComponent
+    let catalogComponent: MetadataCatalogComponent
 
     beforeEach(() => {
       facade.isPresent$.next(true)
@@ -125,8 +136,8 @@ describe('RecordMetadataComponent', () => {
       metadataContact = fixture.debugElement.query(
         By.directive(MetadataContactComponent)
       ).componentInstance
-      sourceLabel = fixture.debugElement.query(
-        By.directive(MockSourceLabelComponent)
+      catalogComponent = fixture.debugElement.query(
+        By.directive(MetadataCatalogComponent)
       ).componentInstance
     })
     describe('if metadata present', () => {
@@ -137,9 +148,10 @@ describe('RecordMetadataComponent', () => {
         expect(metadataContact.metadata).toHaveProperty('contact')
       })
       it('shows the metadata catalog', () => {
-        expect(sourceLabel.catalogUuid).toEqual(
+        expect(sourcesServiceMock.getSourceLabel).toBeCalledWith(
           RECORDS_FULL_FIXTURE[0].catalogUuid
         )
+        expect(catalogComponent.sourceLabel).toEqual('catalog label')
       })
     })
     describe('if metadata not present', () => {
@@ -161,7 +173,7 @@ describe('RecordMetadataComponent', () => {
       })
       it('does not display the metadata catalog component', () => {
         expect(
-          fixture.debugElement.query(By.directive(MockSourceLabelComponent))
+          fixture.debugElement.query(By.directive(MetadataCatalogComponent))
         ).toBeFalsy()
       })
     })
@@ -388,6 +400,25 @@ describe('RecordMetadataComponent', () => {
       })
       it('Related component renders', () => {
         expect(relatedComponent).toBeTruthy()
+      })
+    })
+  })
+
+  describe('#onInfoKeywordClick', () => {
+    it('call searchService for any', () => {
+      component.onInfoKeywordClick('any')
+      expect(searchServiceMock.updateSearch).toHaveBeenCalledWith({
+        any: 'any',
+      })
+    })
+  })
+  describe('#onContactClick', () => {
+    it('call update search for Org', () => {
+      component.onContactClick('orgname')
+      expect(searchServiceMock.updateSearch).toHaveBeenCalledWith({
+        Org: {
+          orgname: true,
+        },
       })
     })
   })

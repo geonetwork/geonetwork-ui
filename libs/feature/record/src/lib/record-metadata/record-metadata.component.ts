@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { MapManagerService } from '@geonetwork-ui/feature/map'
-import { MdViewFacade } from '../state/mdview.facade'
-import { map } from 'rxjs/operators'
+import { SourcesService } from '@geonetwork-ui/feature/catalog'
+import { SearchService } from '@geonetwork-ui/feature/search'
 import { combineLatest } from 'rxjs'
+import { filter, map, mergeMap, pluck } from 'rxjs/operators'
+import { MdViewFacade } from '../state/mdview.facade'
 
 @Component({
   selector: 'gn-ui-record-metadata',
@@ -40,14 +41,28 @@ export class RecordMetadataComponent {
     map((records) => records?.length > 0)
   )
 
+  sourceLabel$ = this.facade.metadata$.pipe(
+    pluck('catalogUuid'),
+    filter((uuid) => !!uuid),
+    mergeMap((uuid) => this.sourceService.getSourceLabel(uuid))
+  )
+
   constructor(
     public facade: MdViewFacade,
-    private mapManager: MapManagerService
+    private searchService: SearchService,
+    private sourceService: SourcesService
   ) {}
 
   onTabIndexChange(): void {
     setTimeout(() => {
       window.dispatchEvent(new Event('resize'))
     }, 0)
+  }
+
+  onInfoKeywordClick(keyword: string) {
+    this.searchService.updateSearch({ any: keyword })
+  }
+  onContactClick(contactOrgName: string) {
+    this.searchService.updateSearch({ Org: { [contactOrgName]: true } })
   }
 }
