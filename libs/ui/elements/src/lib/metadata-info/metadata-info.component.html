@@ -15,8 +15,7 @@
   <div class="mb-16">
     <gn-ui-badge
       class="inline-block mr-2 mb-2 lowercase"
-      [routerLink]="['/search']"
-      [queryParams]="{ q: keyword }"
+      (click)="onKeywordClick(keyword)"
       [clickable]="true"
       *ngFor="let keyword of metadata.keywords"
       >{{ keyword }}</gn-ui-badge
