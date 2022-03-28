@@ -4,16 +4,18 @@ import { Component } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
+import { SetFilters } from '@geonetwork-ui/feature/search'
 import { provideMockActions } from '@ngrx/effects/testing'
 import { routerNavigationAction } from '@ngrx/router-store'
 import { Action } from '@ngrx/store'
 import { hot } from 'jasmine-marbles'
-import { Observable } from 'rxjs'
+import { BehaviorSubject, Observable } from 'rxjs'
 import { ROUTER_CONFIG } from '../router.module'
 
 import * as fromActions from './router.actions'
 import { RouterGoActionPayload } from './router.actions'
 import * as fromEffects from './router.effects'
+import { RouterFacade } from './router.facade'
 
 class SearchRouteComponent extends Component {}
 class MetadataRouteComponent extends Component {}
@@ -23,6 +25,11 @@ const routerConfigMock = {
   searchRouteComponent: SearchRouteComponent,
   recordRouteComponent: MetadataRouteComponent,
 }
+
+const routerFacadeMock = {
+  searchParams$: new BehaviorSubject({ q: 'any' }),
+}
+
 describe('RouterEffects', () => {
   let router: Router
   let location: Location
@@ -54,6 +61,10 @@ describe('RouterEffects', () => {
         {
           provide: ROUTER_CONFIG,
           useValue: routerConfigMock,
+        },
+        {
+          provide: RouterFacade,
+          useValue: routerFacadeMock,
         },
       ],
     })
@@ -147,6 +158,17 @@ describe('RouterEffects', () => {
       effects.navigate$.subscribe(() => {
         expect(location.forward).toHaveBeenCalled()
       })
+    })
+  })
+
+  describe('navigateWithFieldSearch$', () => {
+    it('should call location forward', () => {
+      actions = hot('-a', { a: routerFacadeMock.searchParams$ })
+
+      const expected = hot('a', {
+        a: new SetFilters({ any: 'any' }, 'main'),
+      })
+      expect(effects.navigateWithFieldSearch$).toBeObservable(expected)
     })
   })
 })

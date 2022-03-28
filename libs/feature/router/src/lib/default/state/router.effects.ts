@@ -2,11 +2,14 @@ import { Location } from '@angular/common'
 import { Inject, Injectable } from '@angular/core'
 import { ActivatedRouteSnapshot, Router } from '@angular/router'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
+import { SetFilters } from '@geonetwork-ui/feature/search'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { navigation } from '@nrwl/angular'
-import { tap } from 'rxjs/operators'
+import { map, tap } from 'rxjs/operators'
+import { routeParamsToState } from '../router.mapper'
 import { ROUTER_CONFIG, RouterConfigModel } from '../router.module'
 import * as RouterActions from './router.actions'
+import { RouterFacade } from './router.facade'
 
 @Injectable()
 export class RouterEffects {
@@ -14,6 +17,7 @@ export class RouterEffects {
     private _actions$: Actions,
     private _router: Router,
     private _location: Location,
+    private facade: RouterFacade,
     @Inject(ROUTER_CONFIG) private routerConfig: RouterConfigModel
   ) {}
 
@@ -21,11 +25,26 @@ export class RouterEffects {
     () =>
       this._actions$.pipe(
         ofType(RouterActions.goAction),
-        tap(({ path, query: queryParams }) => {
-          this._router.navigate([path], { queryParams })
+        tap(({ path, query: queryParams, queryParamsHandling }) => {
+          this._router.navigate([path], {
+            queryParams,
+            queryParamsHandling,
+          })
         })
       ),
     { dispatch: false }
+  )
+
+  navigateWithFieldSearch$ = createEffect(() =>
+    this.facade.searchParams$.pipe(
+      map(
+        (filters) =>
+          new SetFilters(
+            routeParamsToState(filters),
+            this.routerConfig.searchStateId
+          )
+      )
+    )
   )
 
   /**
