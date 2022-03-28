@@ -36,10 +36,6 @@ export class SearchHeaderComponent {
     this.routerFacade.goToMetadata(record)
   }
 
-  onFuzzySearchSubmission(any: string) {
-    this.routerFacade.goToSearch(any)
-  }
-
   onDatasetsClick(): void {
     this.searchService.setSearch({})
   }
