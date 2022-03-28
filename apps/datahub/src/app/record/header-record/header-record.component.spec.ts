@@ -1,9 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { RouterFacade } from '@geonetwork-ui/feature/router'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { SearchService } from '@geonetwork-ui/feature/search'
 import { TranslateModule } from '@ngx-translate/core'
-import { BehaviorSubject } from 'rxjs'
 
 import { HeaderRecordComponent } from './header-record.component'
 
@@ -13,13 +11,9 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
   }),
 }))
 
-const routerFacadeMock = {
-  goToSearch: jest.fn(),
+const searchServiceMock = {
+  updateSearch: jest.fn(),
 }
-const searchFacadeMock = {
-  searchFilters$: new BehaviorSubject({ any: 'scot' }),
-}
-
 describe('HeaderRecordComponent', () => {
   let component: HeaderRecordComponent
   let fixture: ComponentFixture<HeaderRecordComponent>
@@ -29,13 +23,7 @@ describe('HeaderRecordComponent', () => {
       declarations: [HeaderRecordComponent],
       imports: [TranslateModule.forRoot()],
       schemas: [NO_ERRORS_SCHEMA],
-      providers: [
-        { provide: SearchFacade, useValue: searchFacadeMock },
-        {
-          provide: RouterFacade,
-          useValue: routerFacadeMock,
-        },
-      ],
+      providers: [{ provide: SearchService, useValue: searchServiceMock }],
     }).compileComponents()
   })
 
@@ -50,9 +38,9 @@ describe('HeaderRecordComponent', () => {
   })
 
   describe('#back', () => {
-    it('router route to serach with any filter', () => {
+    it('searchFilter updateSearch', () => {
       component.back()
-      expect(routerFacadeMock.goToSearch).toHaveBeenCalledWith('scot')
+      expect(searchServiceMock.updateSearch).toHaveBeenCalledWith({})
     })
   })
 })

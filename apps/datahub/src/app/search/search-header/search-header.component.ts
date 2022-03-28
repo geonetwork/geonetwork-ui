@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { SearchService } from '@geonetwork-ui/feature/search'
+import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { map } from 'rxjs/operators'
-import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 
 marker('datahub.header.myfavorites')
 marker('datahub.header.connex')
@@ -29,7 +29,7 @@ export class SearchHeaderComponent {
 
   constructor(
     private routerFacade: RouterFacade,
-    private searchFacade: SearchFacade
+    private searchService: SearchService
   ) {}
 
   onFuzzySearchSelection(record: MetadataRecord) {
@@ -41,11 +41,6 @@ export class SearchHeaderComponent {
   }
 
   onDatasetsClick(): void {
-    this.routerFacade.goToSearch()
-    this.resetSearch()
-  }
-
-  private resetSearch(): void {
-    this.searchFacade.setFilters({})
+    this.searchService.setSearch({})
   }
 }
