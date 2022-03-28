@@ -66,7 +66,7 @@ export class AutocompleteComponent
     if (value) {
       const previousTextValue = this.displayWithFn(value.previousValue)
       const currentTextValue = this.displayWithFn(value.currentValue)
-      if (value.firstChange || previousTextValue !== currentTextValue) {
+      if (previousTextValue !== currentTextValue) {
         this.updateInputValue(value.currentValue)
       }
     }
@@ -103,7 +103,6 @@ export class AutocompleteComponent
     if (value) {
       this.control.setValue(value)
     }
-    this.inputSubmited.emit(this.displayWithFn(value) || '')
   }
 
   clear(): void {
