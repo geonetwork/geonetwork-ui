@@ -2,7 +2,6 @@ import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
-import { SearchService } from '@geonetwork-ui/feature/search'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject } from 'rxjs'
@@ -18,9 +17,6 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
 const routerFacadeMock = {
   goToMetadata: jest.fn(),
   anySearch$: new BehaviorSubject('scot'),
-}
-const searchServiceMock = {
-  updateSearch: jest.fn(),
 }
 /* eslint-disable */
 @Component({
@@ -45,10 +41,6 @@ describe('HeaderComponent', () => {
         {
           provide: RouterFacade,
           useValue: routerFacadeMock,
-        },
-        {
-          provide: SearchService,
-          useValue: searchServiceMock,
         },
       ],
     }).compileComponents()

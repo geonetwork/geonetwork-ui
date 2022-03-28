@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
-import { SearchService } from '@geonetwork-ui/feature/search'
 import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { map } from 'rxjs/operators'
@@ -27,16 +26,9 @@ export class SearchHeaderComponent {
     getThemeConfig().HEADER_BACKGROUND ||
     "center url('assets/img/default_header_bg.webp')"
 
-  constructor(
-    private routerFacade: RouterFacade,
-    private searchService: SearchService
-  ) {}
+  constructor(private routerFacade: RouterFacade) {}
 
   onFuzzySearchSelection(record: MetadataRecord) {
     this.routerFacade.goToMetadata(record)
-  }
-
-  onDatasetsClick(): void {
-    this.searchService.setSearch({})
   }
 }
