@@ -13,8 +13,9 @@ import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 })
 export class HeaderRecordComponent {
   @Input() metadata: MetadataRecord
-  @Input() expandRatio: number
-  backgroundCss = getThemeConfig().HEADER_BACKGROUND
+  backgroundCss =
+    getThemeConfig().HEADER_BACKGROUND ||
+    "center url('assets/img/default_header_bg.webp')"
 
   constructor(
     private searchRouter: RouterFacade,

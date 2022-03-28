@@ -154,18 +154,13 @@ export function loadAppConfig() {
       const parsedThemeSection = parseConfigSection(
         parsed,
         'theme',
-        [
-          'primary_color',
-          'secondary_color',
-          'main_color',
-          'background_color',
-          'header_background',
-        ],
+        ['primary_color', 'secondary_color', 'main_color', 'background_color'],
         [
           'main_font',
           'title_font',
           'fonts_stylesheet_url',
           'thumbnail_placeholder',
+          'header_background',
         ],
         warnings,
         errors

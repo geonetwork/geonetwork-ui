@@ -32,7 +32,6 @@
   </div>
 </div>
 <div
-  id="preview"
   style="height: 648px"
   *ngIf="(displayMap$ | async) || (displayData$ | async)"
 >
@@ -42,7 +41,11 @@
   >
     <div class="container-lg mx-auto">
       <div>
-        <div class="text-[28px] font-title transform translate-y-10" translate>
+        <div
+          class="text-[28px] font-title transform translate-y-10"
+          translate
+          id="preview"
+        >
           record.metadata.preview
         </div>
         <mat-tab-group

@@ -7,7 +7,7 @@
   <div
     #innerContainer
     class="relative pointer-events-auto"
-    style="transition: height 0.03s ease"
+    [style.height]="fullHeightPx + 'px'"
   >
     <ng-container
       [ngTemplateOutlet]="template"
