@@ -44,7 +44,7 @@ export function getLangFromHtml() {
   return lang.substr(0, 2)
 }
 export function getLangFromBrowser() {
-  return navigator.language
+  return navigator.language.substr(0, 2)
 }
 export function getDefaultLang() {
   return getLangFromHtml() || 'en'
