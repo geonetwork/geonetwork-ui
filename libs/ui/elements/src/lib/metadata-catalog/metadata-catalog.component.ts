@@ -6,4 +6,6 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
   styleUrls: ['./metadata-catalog.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MetadataCatalogComponent {}
+export class MetadataCatalogComponent {
+  @Input() sourceLabel: string
+}
