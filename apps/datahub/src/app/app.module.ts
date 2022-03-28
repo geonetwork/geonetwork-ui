@@ -41,6 +41,7 @@ import { SearchHeaderComponent } from './search/search-header/search-header.comp
 import { SearchPageComponent } from './search/search-page/search-page.component'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
+import { SearchSummaryComponent } from './search/search-summary/search-summary.component'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
@@ -54,6 +55,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     HeaderBadgeButtonComponent,
     HeaderRecordComponent,
     RecordPageComponent,
+    SearchSummaryComponent,
   ],
   imports: [
     BrowserModule,
