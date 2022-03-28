@@ -20,7 +20,6 @@ import {
   selectCurrentRoute,
   selectQueryParams,
   selectRouteParams,
-  selectUrl,
 } from './router.selectors'
 
 @Injectable()
@@ -63,10 +62,18 @@ export class RouterFacade {
       })
   }
 
-  goToSearch(q?: string) {
+  updateSearch(query?: SearchRouteParams) {
     this.go({
       path: `${ROUTER_ROUTE_SEARCH}/`,
-      ...(q && { query: { q } }),
+      ...(query && { query }),
+      queryParamsHandling: 'merge',
+    })
+  }
+
+  setSearch(query?: SearchRouteParams) {
+    this.go({
+      path: `${ROUTER_ROUTE_SEARCH}/`,
+      ...(query && { query }),
     })
   }
 
