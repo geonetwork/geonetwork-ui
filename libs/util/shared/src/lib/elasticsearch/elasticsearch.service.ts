@@ -116,12 +116,25 @@ export class ElasticsearchService {
     return {
       bool: {
         must: [
-          {
-            query_string: {
-              query,
-              fields: ES_QUERY_STRING_FIELDS,
-            },
-          },
+          ...(any
+            ? [
+                {
+                  query_string: {
+                    query: any,
+                    fields: ES_QUERY_STRING_FIELDS,
+                  },
+                },
+              ]
+            : []),
+          ...(queryFilters
+            ? [
+                {
+                  query_string: {
+                    query: queryFilters,
+                  },
+                },
+              ]
+            : []),
           this.addTemplateClause('n'),
         ],
         filter: this.buildPayloadFilter(configFilters),
