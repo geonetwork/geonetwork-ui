@@ -7,6 +7,7 @@ A defaut router is implemented to manage the search state and the record view st
 
 - `/search` to be on search result page
 - `/search?q=island` search for `any=island`
+- `/search?publisher=island` search for `Org=island`
 - `/dataset/cf5048f6-5bbf-4e44-ba74-e6f429af51ea` to be on the details of the record page.
 
 ## Principle
@@ -37,21 +38,51 @@ navigateToMetadata$ = createEffect(() =>
 )
 ```
 
-2. On a dispatch of an external `RequestMoreResult` action, the router changes the route to `/search`
+2. On a route change to new search filters, it forwards those filters to the search state
 
 ```ts
-search$ = createEffect(() =>
-  this._actions$.pipe(
-    ofType(REQUEST_MORE_RESULTS),
-    filter(
-      (action: RequestMoreResults) =>
-        action.id === this.routerConfig.searchStateId
-    ),
-    map((action) =>
-      goAction({
-        path: 'search',
-      })
+navigateWithFieldSearch$ = createEffect(() =>
+  this.facade.searchParams$.pipe(
+    map(
+      (filters) =>
+        new SetFilters(
+          routeParamsToState(filters),
+          this.routerConfig.searchStateId
+        )
     )
   )
 )
+```
+
+## Search
+
+A service `SearchService` is introduced to create an abstraction on search interactions.
+By default `SearchService` searches through the search state.
+
+If you use the router in your application, all search commands should go through the router instead
+of the search state. The router effect mentioned above is responsible to forward route search filters to the search state.
+
+You need to provide the `RouterSearchService` as an implementation of `SearchService`, which is done by default in `gnUiSearchRouterContainer` directive.
+
+```js
+{
+  provide: SearchService,
+  useClass: RouterSearchService,
+}
+```
+
+Load `gnUiSearchRouterContainer` directive at the root of your application DOM to initiate the search state facade and to use the `RouterSearchService`.
+
+The mapping between search state and router state is done via a mapping object. You must update it to handle other keys.
+
+```js
+export enum ROUTE_PARAMS {
+  ANY = 'q',
+  PUBLISHER = 'publisher',
+}
+export type SearchRouteParams = Partial<Record<ROUTE_PARAMS, string>>
+export const ROUTE_PARAMS_MAPPING: SearchRouteParams = {
+  [ROUTE_PARAMS.ANY]: 'any',
+  [ROUTE_PARAMS.PUBLISHER]: 'Org',
+}
 ```
