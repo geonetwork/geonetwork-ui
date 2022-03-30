@@ -1,5 +1,5 @@
 <div id="search-page" class="h-screen overflow-auto">
-  <gn-ui-sticky-header [fullHeightPx]="560" [minHeightPx]="125">
+  <gn-ui-sticky-header [fullHeightPx]="560" [minHeightPx]="90">
     <ng-template let-expandRatio>
       <datahub-search-header
         [expandRatio]="expandRatio"
@@ -8,8 +8,10 @@
   </gn-ui-sticky-header>
   <main>
     <div class="container-lg mx-auto py-4">
+      <div class="p-7 my-8 shadow-primary-light rounded-2xl">
+        <datahub-search-summary></datahub-search-summary>
+      </div>
       <div>
-        <gn-ui-results-hits></gn-ui-results-hits>
         <gn-ui-results-list-container
           [scrollableOptions]="scrollableOptions"
           (mdSelect)="onMetadataSelection($event)"

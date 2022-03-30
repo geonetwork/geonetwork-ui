@@ -2,7 +2,10 @@
   <p class="text-gray-600 text-xs mb-3 uppercase" translate>
     record.metadata.contact
   </p>
-  <p class="text-primary font-title text-21 mb-1">
+  <p
+    class="text-primary font-title text-21 mb-1 cursor-pointer hover:text-primary-darker"
+    (click)="onContactClick()"
+  >
     {{ metadata.contact.name }}
   </p>
   <p class="text-gray-600 text-sm mb-2">{{ metadata.contact.email }}</p>

@@ -1,0 +1,7 @@
+<div>
+  <gn-ui-results-hits></gn-ui-results-hits>
+</div>
+<div class="mt-4" *ngIf="publisher$ | async as publisher">
+  <div translate="">datahub.search.org</div>
+  <div class="font-title text-primary text-21">{{ publisher }}</div>
+</div>

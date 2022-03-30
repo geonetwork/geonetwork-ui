@@ -1,9 +1,7 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
-import { RouterFacade } from '@geonetwork-ui/feature/router'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
-import { first } from 'rxjs/operators'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { SearchService } from '@geonetwork-ui/feature/search'
 import { getThemeConfig } from '@geonetwork-ui/util/app-config'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'datahub-header-record',
@@ -17,14 +15,9 @@ export class HeaderRecordComponent {
     getThemeConfig().HEADER_BACKGROUND ||
     "center url('assets/img/default_header_bg.webp')"
 
-  constructor(
-    private searchRouter: RouterFacade,
-    private searchFacade: SearchFacade
-  ) {}
+  constructor(private searchService: SearchService) {}
 
   back() {
-    this.searchFacade.searchFilters$
-      .pipe(first())
-      .subscribe((filters) => this.searchRouter.goToSearch(filters?.any))
+    this.searchService.updateSearch({})
   }
 }

@@ -1,4 +1,10 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  EventEmitter,
+  Output,
+} from '@angular/core'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 
 @Component({
@@ -9,4 +15,9 @@ import { MetadataRecord } from '@geonetwork-ui/util/shared'
 })
 export class MetadataContactComponent {
   @Input() metadata: MetadataRecord
+  @Output() contact = new EventEmitter<string>()
+
+  onContactClick() {
+    this.contact.emit(this.metadata.contact.name)
+  }
 }

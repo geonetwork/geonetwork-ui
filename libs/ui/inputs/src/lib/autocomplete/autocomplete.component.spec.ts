@@ -134,9 +134,6 @@ describe('AutocompleteComponent', () => {
       it('set control value', () => {
         expect(component.control.value).toEqual({ title: 'hello' })
       })
-      it('emits any string', () => {
-        expect(anyEmitted).toEqual('hello')
-      })
     })
     describe('when changed', () => {
       beforeEach(() => {
@@ -152,9 +149,6 @@ describe('AutocompleteComponent', () => {
       })
       it('set control value', () => {
         expect(component.control.value).toEqual({ title: 'good bye' })
-      })
-      it('emits any string', () => {
-        expect(anyEmitted).toEqual('good bye')
       })
     })
     describe('when ref changed but same text', () => {
@@ -191,9 +185,6 @@ describe('AutocompleteComponent', () => {
       })
       it('does not set control value', () => {
         expect(component.control.value).toEqual(null)
-      })
-      it('emits empty string', () => {
-        expect(anyEmitted).toEqual('')
       })
     })
   })

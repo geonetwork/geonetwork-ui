@@ -3,6 +3,11 @@ export interface SearchFilters {
   [x: string]: any
 }
 
+type SearchFiltersFields = {
+  [key: string]: SearchFiltersFields | SearchFiltersFieldsLeaf
+}
+type SearchFiltersFieldsLeaf = Record<string, boolean>
+
 export interface StateConfigFilters {
   custom?: SearchFilters
   elastic?: any

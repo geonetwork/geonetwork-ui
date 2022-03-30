@@ -86,14 +86,13 @@ describe('ElasticsearchService', () => {
   })
 
   describe('#buildPayloadQuery', () => {
-    it('return AND separated query', () => {
+    it('add any and other fields query_strings', () => {
       const query = service['buildPayloadQuery'](
         {
-          'tag.default': {
+          Org: {
             world: true,
-            vector: true,
           },
-          any: '',
+          any: 'hello',
         },
         {}
       )
@@ -103,8 +102,19 @@ describe('ElasticsearchService', () => {
           must: [
             {
               query_string: {
-                fields: ES_QUERY_STRING_FIELDS,
-                query: '(*) AND (tag.default:"world" tag.default:"vector")',
+                fields: [
+                  'resourceTitleObject.*^5',
+                  'tag.*^4',
+                  'resourceAbstractObject.*^3',
+                  'lineageObject.*^2',
+                  'any',
+                ],
+                query: 'hello',
+              },
+            },
+            {
+              query_string: {
+                query: '(Org:"world")',
               },
             },
             {

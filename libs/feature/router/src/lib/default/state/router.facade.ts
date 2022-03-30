@@ -3,8 +3,13 @@ import { MdViewActions } from '@geonetwork-ui/feature/record'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { RouterReducerState } from '@ngrx/router-store'
 import { select, Store } from '@ngrx/store'
-import { filter, pluck, take } from 'rxjs/operators'
-import { ROUTER_ROUTE_DATASET, ROUTER_ROUTE_SEARCH } from '../constants'
+import { distinctUntilChanged, filter, map, pluck, take } from 'rxjs/operators'
+import {
+  ROUTE_PARAMS,
+  ROUTER_ROUTE_DATASET,
+  ROUTER_ROUTE_SEARCH,
+  SearchRouteParams,
+} from '../constants'
 import {
   backAction,
   forwardAction,
@@ -15,7 +20,6 @@ import {
   selectCurrentRoute,
   selectQueryParams,
   selectRouteParams,
-  selectUrl,
 } from './router.selectors'
 
 @Injectable()
@@ -23,14 +27,24 @@ export class RouterFacade {
   currentRoute$ = this.store.pipe(select(selectCurrentRoute))
   queryParams$ = this.store.pipe(select(selectQueryParams))
   pathParams$ = this.store.pipe(select(selectRouteParams))
-  fullUrl$ = this.store.pipe(select(selectUrl))
 
   anySearch$ = this.queryParams$.pipe(
-    filter((params) => !!params.q),
-    pluck('q')
+    filter((params) =>
+      Object.prototype.hasOwnProperty.call(params, ROUTE_PARAMS.ANY)
+    ),
+    pluck(ROUTE_PARAMS.ANY)
   )
 
-  constructor(private store: Store<RouterReducerState>) {}
+  searchParams$ = this.currentRoute$.pipe(
+    filter((route) => !!route),
+    filter((route) => route.url[0]?.path.startsWith(ROUTER_ROUTE_SEARCH)),
+    map((route) => route.queryParams),
+    distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
+  )
+
+  constructor(private store: Store<RouterReducerState>) {
+    console.log('routerFacade')
+  }
 
   goToMetadata(metadata: MetadataRecord) {
     this.pathParams$
@@ -48,10 +62,18 @@ export class RouterFacade {
       })
   }
 
-  goToSearch(q?: string) {
+  updateSearch(query?: SearchRouteParams) {
     this.go({
       path: `${ROUTER_ROUTE_SEARCH}/`,
-      ...(q && { query: { q } }),
+      ...(query && { query }),
+      queryParamsHandling: 'merge',
+    })
+  }
+
+  setSearch(query?: SearchRouteParams) {
+    this.go({
+      path: `${ROUTER_ROUTE_SEARCH}/`,
+      ...(query && { query }),
     })
   }
 

@@ -16,17 +16,16 @@
         [metadata]="facade.metadata$ | async"
         [incomplete]="facade.isIncomplete$ | async"
         [landingPages]="facade.landingPageLinks$ | async"
+        (keyword)="onInfoKeywordClick($event)"
       >
       </gn-ui-metadata-info>
     </div>
     <div>
       <gn-ui-metadata-contact
+        (contact)="onContactClick($event)"
         [metadata]="facade.metadata$ | async"
       ></gn-ui-metadata-contact>
-      <gn-ui-metadata-catalog>
-        <gn-ui-source-label
-          [catalogUuid]="(facade.metadata$ | async).catalogUuid"
-        ></gn-ui-source-label>
+      <gn-ui-metadata-catalog [sourceLabel]="sourceLabel$ | async">
       </gn-ui-metadata-catalog>
     </div>
   </div>

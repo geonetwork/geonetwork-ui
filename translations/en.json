@@ -78,6 +78,7 @@
   "datahub.header.popularRecords": "The most popular",
   "datahub.header.title.html": "<div class=\"text-white\">Find all my organization's<br><span class=\"text-primary\">open data</span>.</div>",
   "datahub.search.back": "Back to results",
+  "datahub.search.org": "Open data published by :",
   "dataset.error.http": "The data could not be loaded because of an HTTP error",
   "dataset.error.network": "The data could not be loaded because of a network error or CORS limitations",
   "dataset.error.parse": "The data was loaded but could not be parsed",
