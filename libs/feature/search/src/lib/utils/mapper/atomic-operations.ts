@@ -91,7 +91,8 @@ export const mapContact = (
   const address = selectField<string>(sourceContact, 'address')
   const phone = selectField<string>(sourceContact, 'phone')
   return {
-    name: selectField<string>(sourceContact, 'organisation'),
+    name: selectField<string>(sourceContact, 'individual'),
+    organisation: selectField<string>(sourceContact, 'organisation'),
     email: selectField<string>(sourceContact, 'email'),
     ...(website !== null && { website }),
     ...(logoUrl !== null && { logoUrl }),

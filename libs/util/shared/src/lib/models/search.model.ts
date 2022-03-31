@@ -14,7 +14,8 @@ export interface StateConfigFilters {
 }
 
 export interface MetadataContact {
-  name: string
+  name?: string
+  organisation?: string
   email: string
   website?: string
   logoUrl?: string

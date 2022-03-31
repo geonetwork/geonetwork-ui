@@ -322,7 +322,8 @@ describe('ElasticsearchMapper', () => {
           title: 'Surval - Données par paramètre',
           uuid: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
           contact: {
-            name: 'Ifremer',
+            name: "Cellule d'administration Quadrige",
+            organisation: 'Ifremer',
             email: 'q2suppor@ifremer.fr',
             website: 'https://www.ifremer.fr',
             logoUrl:
