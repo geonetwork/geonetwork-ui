@@ -21,6 +21,9 @@
       {{ abstract }}
     </div>
     <div class="links flex flex-row justify-between" style="height: 2rem">
+      <div class="text-gray-400">
+        {{ record.contact?.organisation }}
+      </div>
       <div class="basis-1/2">
         <mat-icon
           *ngIf="isDownloadable"
@@ -33,10 +36,6 @@
           >map</mat-icon
         >
       </div>
-      <gn-ui-source-label
-        class="basis-1/2 text-gray-400 line-clamp-3"
-        [catalogUuid]="record.catalogUuid"
-      ></gn-ui-source-label>
     </div>
   </div>
   <div class="favorite flex-shrink-0"></div>

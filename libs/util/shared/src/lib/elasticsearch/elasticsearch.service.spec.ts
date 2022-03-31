@@ -284,7 +284,7 @@ describe('ElasticsearchService', () => {
           'logo',
           'codelist_status_text',
           'linkProtocol',
-          'sourceCatalogue',
+          'contact.organisation',
         ],
         query: {
           bool: {
