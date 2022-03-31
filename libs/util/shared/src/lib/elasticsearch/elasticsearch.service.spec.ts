@@ -108,6 +108,7 @@ describe('ElasticsearchService', () => {
                   'resourceAbstractObject.*^3',
                   'lineageObject.*^2',
                   'any',
+                  'uuid',
                 ],
                 query: 'hello',
               },
