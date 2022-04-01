@@ -18,6 +18,6 @@ export class MetadataContactComponent {
   @Output() contact = new EventEmitter<string>()
 
   onContactClick() {
-    this.contact.emit(this.metadata.contact.name)
+    this.contact.emit(this.metadata.contact.organisation)
   }
 }

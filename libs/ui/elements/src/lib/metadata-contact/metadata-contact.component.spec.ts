@@ -19,6 +19,7 @@ describe('MetadataContactComponent', () => {
     component.metadata = {
       contact: {
         name: 'john',
+        organisation: 'Worldcop',
         email: 'john@world.co',
         website: 'https://john.world.co',
       },
@@ -37,7 +38,7 @@ describe('MetadataContactComponent', () => {
     it('emit contact click with contact name', () => {
       const el = fixture.debugElement.queryAll(By.css('p'))[1].nativeElement
       el.click()
-      expect(component.contact.emit).toHaveBeenCalledWith('john')
+      expect(component.contact.emit).toHaveBeenCalledWith('Worldcop')
     })
   })
   describe('content', () => {
@@ -46,7 +47,7 @@ describe('MetadataContactComponent', () => {
       ps = fixture.debugElement.queryAll(By.css('p'))
     })
     it('displays the contact name', () => {
-      expect(ps[1].nativeElement.innerHTML).toBe(' john ')
+      expect(ps[1].nativeElement.innerHTML).toBe(' Worldcop ')
     })
     it('displays the contact email', () => {
       expect(ps[2].nativeElement.innerHTML).toBe('john@world.co')

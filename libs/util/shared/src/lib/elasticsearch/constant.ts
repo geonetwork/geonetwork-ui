@@ -15,7 +15,7 @@ export const ES_SOURCE_SUMMARY = [
   'logo',
   'codelist_status_text',
   'linkProtocol',
-  'sourceCatalogue',
+  'contact.organisation',
 ]
 
 export const ES_SOURCE_BRIEF = [
@@ -35,4 +35,5 @@ export const ES_QUERY_STRING_FIELDS = [
   'resourceAbstractObject.*^3',
   'lineageObject.*^2',
   'any',
+  'uuid',
 ]

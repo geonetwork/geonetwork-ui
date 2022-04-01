@@ -108,6 +108,7 @@ describe('ElasticsearchService', () => {
                   'resourceAbstractObject.*^3',
                   'lineageObject.*^2',
                   'any',
+                  'uuid',
                 ],
                 query: 'hello',
               },
@@ -284,7 +285,7 @@ describe('ElasticsearchService', () => {
           'logo',
           'codelist_status_text',
           'linkProtocol',
-          'sourceCatalogue',
+          'contact.organisation',
         ],
         query: {
           bool: {
