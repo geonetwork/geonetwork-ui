@@ -14,9 +14,9 @@ import TileWMS from 'ol/source/TileWMS'
 import TileLayer from 'ol/layer/Tile'
 import XYZ from 'ol/source/XYZ'
 import VectorSource from 'ol/source/Vector'
+import GeoJSON from 'ol/format/GeoJSON'
 import { MapUtilsService } from '../utils/map-utils.service'
 import { bbox as bboxStrategy } from 'ol/loadingstrategy'
-import GeoJSON from 'ol/format/GeoJSON'
 import { LayerConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 
 export const DEFAULT_BASELAYER_CONTEXT: MapContextLayerModel = {
@@ -85,14 +85,33 @@ export class MapContextService {
           style,
         })
       case MapContextLayerTypeEnum.GEOJSON: {
-        const { data } = layerModel
-        const features = this.mapUtils.readFeatureCollection(data)
-        return new VectorLayer({
-          source: new VectorSource({
-            features,
-          }),
-          style,
-        })
+        const { url, data } = layerModel
+        if (url) {
+          return new VectorLayer({
+            source: new VectorSource({
+              format: new GeoJSON(),
+              url,
+            }),
+            style,
+          })
+        } else {
+          let geojson = data
+          if (typeof data === 'string') {
+            try {
+              geojson = JSON.parse(data)
+            } catch (e) {
+              console.warn('A layer could not be created', layerModel, e)
+              geojson = { type: 'FeatureCollection', features: [] }
+            }
+          }
+          const features = this.mapUtils.readFeatureCollection(geojson)
+          return new VectorLayer({
+            source: new VectorSource({
+              features,
+            }),
+            style,
+          })
+        }
       }
     }
   }
