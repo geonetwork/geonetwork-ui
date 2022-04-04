@@ -118,6 +118,8 @@ export class MapUtilsService {
     if (
       layer &&
       layer.type === 'geojson' &&
+      'data' in layer &&
+      typeof layer.data === 'object' &&
       layer.data.features[0] &&
       layer.data.features[0].geometry
     ) {

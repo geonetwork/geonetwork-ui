@@ -18,6 +18,7 @@ import GeoJSON from 'ol/format/GeoJSON'
 import { MapUtilsService } from '../utils/map-utils.service'
 import { bbox as bboxStrategy } from 'ol/loadingstrategy'
 import { LayerConfig, MapConfig } from '@geonetwork-ui/util/app-config'
+import { FeatureCollection } from 'geojson'
 
 export const DEFAULT_BASELAYER_CONTEXT: MapContextLayerModel = {
   type: MapContextLayerTypeEnum.XYZ,
@@ -54,21 +55,21 @@ export class MapContextService {
   }
 
   createLayer(layerModel: MapContextLayerModel): Layer {
-    const { type, url, urls, name } = layerModel
+    const { type } = layerModel
     const style = this.styleService.styles.default
     switch (type) {
       case MapContextLayerTypeEnum.XYZ:
         return new TileLayer({
           source: new XYZ({
-            url,
-            urls,
+            url: 'url' in layerModel ? layerModel.url : undefined,
+            urls: 'urls' in layerModel ? layerModel.urls : undefined,
           }),
         })
       case MapContextLayerTypeEnum.WMS:
         return new TileLayer({
           source: new TileWMS({
-            url,
-            params: { LAYERS: name },
+            url: layerModel.url,
+            params: { LAYERS: layerModel.name },
           }),
         })
       case MapContextLayerTypeEnum.WFS:
@@ -76,35 +77,38 @@ export class MapContextService {
           source: new VectorSource({
             format: new GeoJSON(),
             url: function (extent) {
-              return `${url}?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json&typename=${name}&srsname=EPSG:3857&bbox=${extent.join(
-                ','
-              )},EPSG:3857`
+              return `${
+                layerModel.url
+              }?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json&typename=${
+                layerModel.name
+              }&srsname=EPSG:3857&bbox=${extent.join(',')},EPSG:3857`
             },
             strategy: bboxStrategy,
           }),
           style,
         })
       case MapContextLayerTypeEnum.GEOJSON: {
-        const { url, data } = layerModel
-        if (url) {
+        if ('url' in layerModel) {
           return new VectorLayer({
             source: new VectorSource({
               format: new GeoJSON(),
-              url,
+              url: layerModel.url,
             }),
             style,
           })
         } else {
-          let geojson = data
-          if (typeof data === 'string') {
+          let geojson = layerModel.data
+          if (typeof geojson === 'string') {
             try {
-              geojson = JSON.parse(data)
+              geojson = JSON.parse(geojson)
             } catch (e) {
               console.warn('A layer could not be created', layerModel, e)
               geojson = { type: 'FeatureCollection', features: [] }
             }
           }
-          const features = this.mapUtils.readFeatureCollection(geojson)
+          const features = this.mapUtils.readFeatureCollection(
+            geojson as FeatureCollection
+          )
           return new VectorLayer({
             source: new VectorSource({
               features,
@@ -113,6 +117,8 @@ export class MapContextService {
           })
         }
       }
+      default:
+        throw new Error(`Unrecognized layer type: ${layerModel.type}`)
     }
   }
 

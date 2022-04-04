@@ -14,13 +14,31 @@ export interface MapContextModel {
   view?: MapContextViewModel
 }
 
-export interface MapContextLayerModel {
-  type: MapContextLayerTypeEnum
-  url?: string
-  urls?: string[]
-  name?: string
-  data?: FeatureCollection
+interface MapContextLayerWmsModel {
+  type: 'wms'
+  url: string
+  name: string
 }
+
+interface MapContextLayerWfsModel {
+  type: 'wfs'
+  url: string
+  name: string
+}
+
+type MapContextLayerXyzModel = {
+  type: 'xyz'
+} & ({ url: string } | { urls: string[] })
+
+type MapContextLayerGeojsonModel = {
+  type: 'geojson'
+} & ({ url: string } | { data: FeatureCollection | string })
+
+export type MapContextLayerModel =
+  | MapContextLayerWmsModel
+  | MapContextLayerWfsModel
+  | MapContextLayerXyzModel
+  | MapContextLayerGeojsonModel
 
 export interface MapContextViewModel {
   center?: Coordinate //expressed in map projection (EPSG:3857)
