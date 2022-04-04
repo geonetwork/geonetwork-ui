@@ -307,8 +307,8 @@ describe('MapContextService', () => {
         mapContext,
         mapConfig
       )
-      const layersContext = service.getLayersContextFromConfig(
-        MAP_CONFIG_FIXTURE.MAP_LAYERS
+      const layersContext = MAP_CONFIG_FIXTURE.MAP_LAYERS.map(
+        service.getContextLayerFromConfig
       )
 
       expect(mergedMapContext).toEqual({

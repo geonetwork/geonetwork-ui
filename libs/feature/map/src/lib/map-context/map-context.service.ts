@@ -160,25 +160,38 @@ export class MapContextService {
         ...(mapConfig.DO_NOT_USE_DEFAULT_BASEMAP
           ? []
           : [DEFAULT_BASELAYER_CONTEXT]),
-        ...(mapConfig.MAP_LAYERS
-          ? this.getLayersContextFromConfig(mapConfig.MAP_LAYERS)
-          : []),
+        ...mapConfig.MAP_LAYERS.map(this.getContextLayerFromConfig),
         ...mapContext.layers,
       ],
     }
   }
 
-  getLayersContextFromConfig(
-    layersConfig: LayerConfig[]
-  ): MapContextLayerModel[] {
-    const layersModel: MapContextLayerModel[] = []
-    layersConfig.forEach((layerConfig) => {
-      layersModel.push({
-        type: MapContextLayerTypeEnum[layerConfig.TYPE.toUpperCase()],
-        url: layerConfig.URL,
-        name: layerConfig.NAME,
-      })
-    })
-    return layersModel
+  getContextLayerFromConfig(config: LayerConfig): MapContextLayerModel {
+    switch (config.TYPE) {
+      case 'wms':
+        return {
+          type: 'wms',
+          url: config.URL,
+          name: config.NAME,
+        }
+      case 'wfs':
+        return {
+          type: 'wfs',
+          url: config.URL,
+          name: config.NAME,
+        }
+      case 'xyz':
+        return {
+          type: config.TYPE,
+          url: config.URL,
+          name: config.NAME,
+        }
+      case 'geojson':
+        return {
+          type: config.TYPE,
+          ...(config.DATA && { data: config.DATA }),
+          ...(config.URL && { url: config.URL }),
+        }
+    }
   }
 }

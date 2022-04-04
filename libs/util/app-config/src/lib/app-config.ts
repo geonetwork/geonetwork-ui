@@ -22,9 +22,10 @@ export function getGlobalConfig(): GlobalConfig {
 }
 
 export interface LayerConfig {
-  TYPE: 'xyz' | 'wms' | 'wfs'
-  URL: string
+  TYPE: 'xyz' | 'wms' | 'wfs' | 'geojson'
+  URL?: string
   NAME?: string
+  DATA?: string
 }
 export interface MapConfig {
   MAX_ZOOM?: number
@@ -109,8 +110,8 @@ export function loadAppConfig() {
       const parsedLayersSections = parseMultiConfigSection(
         parsed,
         'map_layer',
-        ['type', 'url'],
-        ['name'],
+        ['type'],
+        ['name', 'url', 'data'],
         warnings,
         errors
       )
@@ -147,6 +148,7 @@ export function loadAppConfig() {
                     TYPE: map_layer.type,
                     URL: map_layer.url,
                     NAME: map_layer.name,
+                    DATA: map_layer.data,
                   } as LayerConfig)
               ),
             } as MapConfig)
