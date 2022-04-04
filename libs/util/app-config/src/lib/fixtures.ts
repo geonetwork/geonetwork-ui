@@ -1,3 +1,5 @@
+import { MapConfig } from './app-config'
+
 export const CONFIG_WITH_TRANSLATIONS = `
 [global]
 geonetwork4_api_url = "/geonetwork/srv/api"
@@ -43,7 +45,7 @@ my.sample.text = "Un bon exemple de texte."
 "my.quoted.text" = 'du texte entre guillements.'
 `
 
-export const MAP_CONFIG_FIXTURE = {
+export const MAP_CONFIG_FIXTURE: MapConfig = {
   MAX_ZOOM: 10,
   MAX_EXTENT: [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855],
   DO_NOT_USE_DEFAULT_BASEMAP: false,

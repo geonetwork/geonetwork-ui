@@ -31,7 +31,7 @@ export interface MapConfig {
   MAX_ZOOM?: number
   MAX_EXTENT?: [number, number, number, number] // Expressed as [minx, miny, maxx, maxy]
   EXTERNAL_VIEWER_URL_TEMPLATE?: string
-  EXTERNAL_VIEWER_OPEN_NEW_TAB?: string
+  EXTERNAL_VIEWER_OPEN_NEW_TAB?: boolean
   DO_NOT_USE_DEFAULT_BASEMAP: boolean
   MAP_LAYERS: LayerConfig[]
 }
