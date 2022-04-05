@@ -7,7 +7,7 @@ import {
   getThemeConfig,
   loadAppConfig,
 } from './app-config'
-import { CONFIG_WITH_TRANSLATIONS } from './fixtures'
+import { CONFIG_MINIMAL, CONFIG_WITH_TRANSLATIONS } from './fixtures'
 
 const CONFIG_MALFORMED = `
 {
@@ -273,6 +273,27 @@ describe('app config utils', () => {
           DO_NOT_USE_DEFAULT_BASEMAP: false,
           MAP_LAYERS: [],
         })
+      })
+    })
+  })
+
+  describe('default theme values', () => {
+    beforeEach(async () => {
+      fetchMock.get('end:default.toml', () => CONFIG_MINIMAL)
+      await loadAppConfig()
+    })
+    describe('thumbnail placeholder', () => {
+      it('uses the default value', () => {
+        expect(getThemeConfig().THUMBNAIL_PLACEHOLDER).toEqual(
+          'assets/img/thumb_placeholder.webp'
+        )
+      })
+    })
+    describe('header background', () => {
+      it('uses the default value', () => {
+        expect(getThemeConfig().HEADER_BACKGROUND).toEqual(
+          'var(--color-gray-500)'
+        )
       })
     })
   })

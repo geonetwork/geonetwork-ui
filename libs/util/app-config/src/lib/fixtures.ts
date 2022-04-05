@@ -45,6 +45,20 @@ my.sample.text = "Un bon exemple de texte."
 "my.quoted.text" = 'du texte entre guillements.'
 `
 
+export const CONFIG_MINIMAL = `
+[global]
+geonetwork4_api_url = "/geonetwork/srv/api"
+proxy_path = "/proxy/?url="
+
+[map]
+
+[theme]
+primary_color = "#093564"
+secondary_color = "#c2e9dc"
+main_color = "#212029" # All-purpose text color
+background_color = "#fdfbff"
+`
+
 export const MAP_CONFIG_FIXTURE: MapConfig = {
   MAX_ZOOM: 10,
   MAX_EXTENT: [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855],
