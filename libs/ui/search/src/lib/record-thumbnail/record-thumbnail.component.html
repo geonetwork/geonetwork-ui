@@ -1,7 +1,7 @@
 <div class="h-full w-full relative flex-shrink-0 overflow-hidden">
   <img
     *ngIf="imgUrl"
-    class="relative h-full w-full object-left-top"
+    class="relative h-full w-full object-cover object-center"
     [src]="imgUrl | safe: 'url'"
     [fallbackUrl]="placeholderUrl"
     gnUiImageFallback
