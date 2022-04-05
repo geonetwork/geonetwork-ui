@@ -1,7 +1,10 @@
-<p class="font-title text-[28px] font-medium mt-12 mb-4 text-primary" translate>
+<p
+  class="font-title text-[28px] font-medium mt-8 mb-6 text-primary text-center sm:mt-12 sm:mb-4 sm:text-left"
+  translate
+>
   record.metadata.links
 </p>
-<div class="mb-4 grid grid-cols-3 gap-6">
+<div class="grid gap-2 grid-cols-1 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
   <gn-ui-link-card
     *ngFor="let link of facade.otherLinks$ | async"
     [link]="link"

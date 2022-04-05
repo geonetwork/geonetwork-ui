@@ -1,5 +1,7 @@
-<p class="text-[28px] mb-6 font-title" translate>record.metadata.about</p>
-<div class="mb-4 md-description pr-16">
+<p class="text-[28px] text-center mb-6 font-title sm:text-left" translate>
+  record.metadata.about
+</p>
+<div class="mb-6 md-description sm:mb-4 sm:pr-16">
   <gn-ui-content-ghost ghostClass="h-32" [showContent]="fieldReady('abstract')">
     <p
       class="whitespace-pre-line break-words"
@@ -12,7 +14,7 @@
   <p class="mb-3 font-medium text-primary text-sm" translate>
     record.metadata.keywords
   </p>
-  <div class="mb-16">
+  <div class="mb-9 sm:mb-16">
     <gn-ui-badge
       class="inline-block mr-2 mb-2 lowercase"
       (click)="onKeywordClick(keyword)"
@@ -27,7 +29,7 @@
   *ngIf="metadata.lineage"
   [title]="'record.metadata.origin' | translate"
 >
-  <p class="mb-5 pt-4 whitespace-pre-line">
+  <p class="mb-5 pt-4 whitespace-pre-line break-words">
     {{ metadata.lineage }}
   </p>
   <div

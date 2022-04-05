@@ -1,7 +1,10 @@
-<p class="font-title text-[28px] font-medium mt-10 mb-4" translate>
+<p
+  class="font-title text-[28px] font-medium mt-6 sm:mt-10 mb-4 text-center sm:text-left"
+  translate
+>
   record.metadata.related
 </p>
-<div class="mb-4 pl-2 flex flex-wrap justify-start gap-6">
+<div class="mb-4 flex flex-wrap gap-6 justify-center sm:justify-start">
   <gn-ui-related-record-card *ngFor="let record of records" [record]="record">
   </gn-ui-related-record-card>
 </div>
