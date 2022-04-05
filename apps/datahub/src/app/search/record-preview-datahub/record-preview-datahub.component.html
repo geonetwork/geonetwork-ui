@@ -1,7 +1,7 @@
-<div class="flex record-item">
-  <div class="publisher flex-shrink-0 mx-6 flex">
+<div class="flex cursor-pointer flex-wrap sm:flex-nowrap">
+  <div class="flex-shrink-0 w-full sm:w-52">
     <div
-      class="overflow-hidden bg-gray-100 rounded-lg w-full border border-gray-500"
+      class="overflow-hidden bg-gray-100 rounded-lg w-full border border-gray-300 h-36"
     >
       <gn-ui-record-thumbnail
         class="relative h-full w-full object-cover object-left-top"
@@ -9,34 +9,35 @@
       ></gn-ui-record-thumbnail>
     </div>
   </div>
-  <div class="content flex-grow mx-2 flex flex-col justify-between min-w-0">
+  <div
+    class="content flex-grow grid grid-cols-1 auto-rows-min justify-between min-w-0 pr-6 sm:pl-6 sm:pr-12 sm:grid-cols-2"
+  >
     <div
-      class="py-2 font-title text-21 truncate"
+      class="order-1 mb-3 mt-5 font-title text-21 line-clamp-2 sm:line-clamp-1 sm:col-span-2 sm:mt-2"
       style="font-size: 21px"
       [title]="record.title"
     >
       {{ record.title }}
     </div>
-    <div class="flex-grow abstract leading-relaxed mb-3 line-clamp-3">
+    <div
+      class="order-3 flex-grow abstract mt-4 mb-5 h-36 sm:mb-2 sm:h-[4.5rem] line-clamp-6 sm:line-clamp-3 sm:col-span-2 sm:order-2 sm:mt-0"
+    >
       {{ abstract }}
     </div>
-    <div class="links flex flex-row justify-between" style="height: 2rem">
-      <div class="text-gray-400">
-        {{ record.contact?.organisation }}
-      </div>
-      <div class="basis-1/2">
-        <mat-icon
-          *ngIf="isDownloadable"
-          class="material-icons-outlined text-gray-200 mr-4"
-          >cloud_download</mat-icon
-        >
-        <mat-icon
-          *ngIf="isViewable"
-          class="material-icons-outlined text-gray-200 mr-4"
-          >map</mat-icon
-        >
-      </div>
+    <div class="order-2 text-gray-400 sm:order-3 sm:row-end-4 uppercase">
+      {{ record.contact?.organisation }}
+    </div>
+    <div class="order-4 basis-1/2 flex flex-row sm:row-end-4 sm:justify-end">
+      <mat-icon
+        *ngIf="isDownloadable"
+        class="material-icons-outlined text-gray-200 mr-4"
+        >cloud_download</mat-icon
+      >
+      <mat-icon
+        *ngIf="isViewable"
+        class="material-icons-outlined text-gray-200 mr-4"
+        >map</mat-icon
+      >
     </div>
   </div>
-  <div class="favorite flex-shrink-0"></div>
 </div>
