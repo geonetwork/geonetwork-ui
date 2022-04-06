@@ -9,6 +9,7 @@ import VectorSource from 'ol/source/Vector'
 import XYZ from 'ol/source/XYZ'
 import { Style } from 'ol/style'
 import View from 'ol/View'
+import GeoJSON from 'ol/format/GeoJSON'
 import {
   DEFAULT_STYLE_FIXTURE,
   DEFAULT_STYLE_HL_FIXTURE,
@@ -18,6 +19,7 @@ import {
   MAP_CTX_EXTENT_FIXTURE,
   MAP_CTX_FIXTURE,
   MAP_CTX_LAYER_GEOJSON_FIXTURE,
+  MAP_CTX_LAYER_GEOJSON_REMOTE_FIXTURE,
   MAP_CTX_LAYER_WMS_FIXTURE,
   MAP_CTX_LAYER_XYZ_FIXTURE,
 } from './map-context.fixtures'
@@ -105,22 +107,88 @@ describe('MapContextService', () => {
     })
 
     describe('GEOJSON', () => {
-      beforeEach(() => {
-        layerModel = MAP_CTX_LAYER_GEOJSON_FIXTURE
-        layer = service.createLayer(layerModel)
+      describe('with inline data', () => {
+        beforeEach(() => {
+          layerModel = MAP_CTX_LAYER_GEOJSON_FIXTURE
+          layer = service.createLayer(layerModel)
+        })
+        it('create a VectorLayer', () => {
+          expect(layer).toBeTruthy()
+          expect(layer).toBeInstanceOf(VectorLayer)
+        })
+        it('create a VectorSource source', () => {
+          const source = layer.getSource()
+          expect(source).toBeInstanceOf(VectorSource)
+        })
+        it('add features', () => {
+          const source = layer.getSource()
+          const features = source.getFeatures()
+          expect(features.length).toBe(layerModel.data.features.length)
+        })
       })
-      it('create a VectorLayer', () => {
-        expect(layer).toBeTruthy()
-        expect(layer).toBeInstanceOf(VectorLayer)
+      describe('with inline data as string', () => {
+        beforeEach(() => {
+          layerModel = { ...MAP_CTX_LAYER_GEOJSON_FIXTURE }
+          layerModel.data = JSON.stringify(layerModel.data)
+          layer = service.createLayer(layerModel)
+        })
+        it('create a VectorLayer', () => {
+          expect(layer).toBeTruthy()
+          expect(layer).toBeInstanceOf(VectorLayer)
+        })
+        it('create a VectorSource source', () => {
+          const source = layer.getSource()
+          expect(source).toBeInstanceOf(VectorSource)
+        })
+        it('add features', () => {
+          const source = layer.getSource()
+          const features = source.getFeatures()
+          expect(features.length).toBe(
+            MAP_CTX_LAYER_GEOJSON_FIXTURE.data.features.length
+          )
+        })
       })
-      it('create a VectorSource source', () => {
-        const source = layer.getSource()
-        expect(source).toBeInstanceOf(VectorSource)
+      describe('with invalid inline data as string', () => {
+        beforeEach(() => {
+          const spy = jest.spyOn(global.console, 'warn')
+          spy.mockClear()
+          layerModel = { ...MAP_CTX_LAYER_GEOJSON_FIXTURE, data: 'blargz' }
+          layer = service.createLayer(layerModel)
+        })
+        it('create a VectorLayer', () => {
+          expect(layer).toBeTruthy()
+          expect(layer).toBeInstanceOf(VectorLayer)
+        })
+        it('outputs error in the console', () => {
+          expect(global.console.warn).toHaveBeenCalled()
+        })
+        it('create an empty VectorSource source', () => {
+          const source = layer.getSource()
+          expect(source).toBeInstanceOf(VectorSource)
+          expect(source.getFeatures().length).toBe(0)
+        })
       })
-      it('add features', () => {
-        const source = layer.getSource()
-        const features = source.getFeatures()
-        expect(features.length).toBe(layerModel.data.features.length)
+      describe('with remote file url', () => {
+        beforeEach(() => {
+          layerModel = MAP_CTX_LAYER_GEOJSON_REMOTE_FIXTURE
+          layer = service.createLayer(layerModel)
+        })
+        it('create a VectorLayer', () => {
+          expect(layer).toBeTruthy()
+          expect(layer).toBeInstanceOf(VectorLayer)
+        })
+        it('create a VectorSource source', () => {
+          const source = layer.getSource()
+          expect(source).toBeInstanceOf(VectorSource)
+        })
+        it('sets the format as GeoJSON', () => {
+          const source = layer.getSource()
+          expect(source.getFormat()).toBeInstanceOf(GeoJSON)
+        })
+        it('set the url to point to the file', () => {
+          const source = layer.getSource()
+          expect(source.getUrl()).toBe(layerModel.url)
+        })
       })
     })
   })
@@ -239,8 +307,8 @@ describe('MapContextService', () => {
         mapContext,
         mapConfig
       )
-      const layersContext = service.getLayersContextFromConfig(
-        MAP_CONFIG_FIXTURE.MAP_LAYERS
+      const layersContext = MAP_CONFIG_FIXTURE.MAP_LAYERS.map(
+        service.getContextLayerFromConfig
       )
 
       expect(mergedMapContext).toEqual({

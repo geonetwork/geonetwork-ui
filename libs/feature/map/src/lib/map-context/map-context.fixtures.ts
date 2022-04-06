@@ -20,6 +20,10 @@ export const MAP_CTX_LAYER_GEOJSON_FIXTURE: MapContextLayerModel = {
   type: MapContextLayerTypeEnum.GEOJSON,
   data: FEATURE_COLLECTION_POLYGON_FIXTURE_4326,
 }
+export const MAP_CTX_LAYER_GEOJSON_REMOTE_FIXTURE: MapContextLayerModel = {
+  type: MapContextLayerTypeEnum.GEOJSON,
+  url: 'https://my.host.com/data/regions.json',
+}
 
 export const MAP_CTX_VIEW_FIXTURE: MapContextViewModel = {
   center: [7.75, 48.6],

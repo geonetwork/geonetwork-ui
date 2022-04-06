@@ -42,9 +42,10 @@ proxy_path = ""
 # do_not_use_default_basemap = false
 
 # One or several layers (as background or overlay) can be added to the map with the following properties:
-# - type (mandatory): Indicates the layer type. Possible values are 'xyz', 'wms', 'wfs'.
-# - url (mandatory): Layer endpoint URL.
-# - name: Mandatory for 'wms', 'wfs' types where it indicates the layer name or feature type.
+# - type (mandatory): Indicates the layer type. Possible values are 'xyz', 'wms', 'wfs', 'geojson'.
+# - url (mandatory for 'xyz', 'wms' and 'wfs' types): Layer endpoint URL.
+# - name (mandatory for 'wms' and 'wfs' types): indicates the layer name or feature type.
+# - data (for 'geojson' type only): inline GeoJSON data as string
 # Layer order in the config is the same as in the map, the first one being the bottom one.
 # Each layer is defined in its own [[map_layer]] section.
 # Example:
@@ -55,6 +56,14 @@ proxy_path = ""
 # type = "wfs"
 # url = "https://www.geo2france.fr/geoserver/cr_hdf/ows"
 # name = "masque_hdf_ign_carto_latin1"
+# [[map_layer]]
+# type = "geojson"
+# data = """
+# {
+#   "type": "FeatureCollection",
+#   "features": [{"type": "Feature", "geometry": {"type": "Point", "coordinates": [125.6, 10.1]}}]
+# }
+# """
 
 ### VISUAL THEME
 
