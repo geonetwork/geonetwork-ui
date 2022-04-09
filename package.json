@@ -70,7 +70,7 @@
     "document-register-element": "^1.14.10",
     "express": "^4.17.1",
     "messageformat": "^2.3.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "ng-table-virtual-scroll": "^1.4.0",
     "ngx-chips": "^2.2.2",
     "ngx-dropzone": "^3.0.0",
