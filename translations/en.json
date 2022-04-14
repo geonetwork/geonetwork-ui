@@ -76,7 +76,7 @@
   "datahub.header.lastRecords": "The latest",
   "datahub.header.myfavorites": "My favorites",
   "datahub.header.popularRecords": "The most popular",
-  "datahub.header.title.html": "<div class=\"text-white\">Find all my organization's<br><span class=\"text-primary\">open data</span>.</div>",
+  "datahub.header.title.html": "<div class=\"text-white\">Discover open<br> data from my Organization</div>",
   "datahub.search.back": "Back to results",
   "dataset.error.http": "The data could not be loaded because of an HTTP error",
   "dataset.error.network": "The data could not be loaded because of a network error or CORS limitations",
