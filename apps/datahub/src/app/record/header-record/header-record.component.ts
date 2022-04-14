@@ -11,9 +11,7 @@ import { MetadataRecord } from '@geonetwork-ui/util/shared'
 })
 export class HeaderRecordComponent {
   @Input() metadata: MetadataRecord
-  backgroundCss =
-    getThemeConfig().HEADER_BACKGROUND ||
-    "center url('assets/img/default_header_bg.webp')"
+  backgroundCss = getThemeConfig().HEADER_BACKGROUND
 
   constructor(private searchService: SearchService) {}
 

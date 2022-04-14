@@ -82,7 +82,6 @@ background_color = "#fdfbff"
 
 # This optional parameter allows to override the fallback image that should be used for thumbnails, 
 # if the metadata record has no thumbnail image url or it is broken.
-# If param is not indicated 'assets/img/fallback.webp' is used.
 # thumbnail_placeholder = 'assets/img/my_custom_placeholder.png'
 
 # These optional parameters allow changing fonts used in the app

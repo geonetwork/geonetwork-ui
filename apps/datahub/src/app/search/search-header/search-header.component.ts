@@ -22,9 +22,7 @@ export class SearchHeaderComponent {
   searchInputRouteValue$ = this.routerFacade.anySearch$.pipe(
     map((any) => ({ title: any }))
   )
-  backgroundCss =
-    getThemeConfig().HEADER_BACKGROUND ||
-    "center url('assets/img/default_header_bg.webp')"
+  backgroundCss = getThemeConfig().HEADER_BACKGROUND
 
   constructor(private routerFacade: RouterFacade) {}
 

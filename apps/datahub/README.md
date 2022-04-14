@@ -94,3 +94,21 @@ $ docker run -p 8080:80 \
 ```
 
 This can be useful when dealing with existing volumes having their own directory structure.
+
+### Adding custom assets to the docker container
+
+Any file found in the `/assets` folder _of the app container_ at startup will be copied along with the other assets already present. Existing assets with conflicting names will be
+replaced. Directory structure in the `/assets` folder will be preserved.
+
+For each image file present in the copied assets, a [preload link](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preload) will be created in the `index.html` file of the application. This will help reducing the
+time to first significant draw for new visitors, especially for header backgrounds and the like.
+
+You can specify a different directory to look for the custom assets using the `ASSETS_DIRECTORY_OVERRIDE` env variable, like so:
+
+```bash
+# custom assets are located in the /home/user/my-assets directory:
+$ docker run -p 8080:80 \
+             -v /home/user/my-assets:/some/random/path \
+             -e ASSETS_DIRECTORY_OVERRIDE=/some/random/path \
+             geonetwork-ui/datahub
+```

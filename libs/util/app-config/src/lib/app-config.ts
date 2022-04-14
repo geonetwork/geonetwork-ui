@@ -177,8 +177,9 @@ export function loadAppConfig() {
               BACKGROUND_COLOR: parsedThemeSection.background_color,
               THUMBNAIL_PLACEHOLDER:
                 parsedThemeSection.thumbnail_placeholder ||
-                'assets/img/fallback.webp',
-              HEADER_BACKGROUND: parsedThemeSection.header_background,
+                'assets/img/thumb_placeholder.webp',
+              HEADER_BACKGROUND:
+                parsedThemeSection.header_background || 'var(--color-gray-500)',
               TITLE_FONT: parsedThemeSection.title_font,
               MAIN_FONT: parsedThemeSection.main_font,
               FONTS_STYLESHEET_URL: parsedThemeSection.fonts_stylesheet_url,
