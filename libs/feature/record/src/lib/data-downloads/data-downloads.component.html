@@ -1,11 +1,11 @@
 <p
   *ngIf="(links$ | async) && (links$ | async).length > 0"
-  class="font-title text-[28px] font-medium mt-12 mb-4"
+  class="font-title text-[28px] font-medium mt-8 mb-6 text-center sm:mt-12 sm:mb-4 sm:text-left"
   translate
 >
   record.metadata.download
 </p>
-<div class="mb-3" *ngFor="let link of links$ | async">
+<div class="mb-2 sm:mb-3" *ngFor="let link of links$ | async">
   <gn-ui-download-item [link]="link"></gn-ui-download-item>
 </div>
 <!-- disable error report for now (until considered useful) -->

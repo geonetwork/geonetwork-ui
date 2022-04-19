@@ -1,15 +1,15 @@
 <p
-  class="font-title text-[28px] font-medium mt-12 mb-6 text-secondary"
+  class="font-title text-[28px] font-medium mt-8 mb-2 text-secondary text-center sm:mt-12 sm:mb-4 sm:text-left"
   translate
 >
   record.metadata.api
 </p>
 <div
-  class="mb-4 pl-2 flex flex-row items-stretch overflow-x-auto overflow-y-visible"
+  class="mb-4 justify-center flex flex-row flex-wrap sm:justify-start md:flex-nowrap md:items-stretch md:overflow-x-auto md:overflow-y-visible"
 >
   <gn-ui-api-card
     *ngFor="let link of facade.apiLinks$ | async"
-    class="flex-shrink-0 mr-4 my-2"
+    class="shrink w-80 my-2 sm:mr-4"
     [link]="link"
   >
   </gn-ui-api-card>

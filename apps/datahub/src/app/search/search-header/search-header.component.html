@@ -1,11 +1,11 @@
-<header class="h-full" [style.background]="backgroundCss">
+<header class="h-full px-5" [style.background]="backgroundCss">
   <div class="container-lg h-full mx-auto flex flex-col justify-center">
     <div
       class="py-8 relative"
       [style.transform]="'translate(0, ' + (1 - expandRatio) * 234 + 'px)'"
     >
       <div
-        class="font-title text-[48px] leading-[58px] absolute w-full"
+        class="font-title text-[30px] absolute w-full sm:text-[48px] sm:leading-[58px]"
         style="bottom: 100%"
         [style.opacity]="expandRatio"
         [innerHTML]="'datahub.header.title.html' | translate"

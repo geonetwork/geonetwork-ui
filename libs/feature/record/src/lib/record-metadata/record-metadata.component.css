@@ -1,15 +1,29 @@
 ::ng-deep .mat-tab-label,
 ::ng-deep .mat-tab-link {
   font-family: var(--font-family-main);
+  letter-spacing: 0.88px;
 }
 ::ng-deep mat-tab-header {
-  margin-left: 8rem;
   border-bottom: 0px !important;
+}
+::ng-deep .mat-ink-bar {
+  display: none;
 }
 ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
   background-color: var(--color-primary);
 }
-
+@media only screen and (min-width: 640px) {
+  ::ng-deep mat-tab-header {
+    margin-left: 8rem;
+  }
+}
+@media only screen and (max-width: 639px) {
+  ::ng-deep .mat-tab-label {
+    padding: 0px !important;
+    margin-right: 24px;
+    justify-content: left !important;
+  }
+}
 .tracking-wider {
   letter-spacing: 0.88px;
 }

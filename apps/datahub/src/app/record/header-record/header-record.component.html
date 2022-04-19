@@ -4,7 +4,7 @@
   >
     <div
       *ngIf="metadata"
-      class="font-title text-center px-2 mx-48 text-[28px] mb-[41px]"
+      class="font-title text-center px-2 text-[28px] mb-[41px] line-clamp-4 sm:mx-48"
     >
       {{ metadata.title }}
     </div>
@@ -21,39 +21,8 @@
 </header>
 
 <div
-  class="container-lg mx-auto bg-primary flex space-x-8 justify-between py-5 px-20 text-sm rounded-lg text-white sticky z-20 mt-[-40px]"
+  class="container-lg mt-[-40px] z-20 sticky lg:mx-auto"
   style="left: 0; right: 0; top: 10px"
 >
-  <button
-    gnUiAnchorLink="about"
-    gnUiAnchorLinkDisabledClass="cursor-default opacity-60"
-    class="uppercase font-medium tracking-wider"
-    translate
-  >
-    record.metadata.about
-  </button>
-  <button
-    gnUiAnchorLink="preview"
-    gnUiAnchorLinkDisabledClass="cursor-default opacity-60"
-    class="uppercase font-medium tracking-wider"
-    translate
-  >
-    record.metadata.preview
-  </button>
-  <button
-    gnUiAnchorLink="access"
-    gnUiAnchorLinkDisabledClass="cursor-default opacity-60"
-    class="uppercase font-medium tracking-wider"
-    translate
-  >
-    record.metadata.download
-  </button>
-  <button
-    gnUiAnchorLink="links"
-    gnUiAnchorLinkDisabledClass="cursor-default opacity-60"
-    class="uppercase font-medium tracking-wider"
-    translate
-  >
-    record.metadata.links
-  </button>
+  <datahub-navigation-bar></datahub-navigation-bar>
 </div>

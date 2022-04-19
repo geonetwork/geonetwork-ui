@@ -1,6 +1,9 @@
-<div id="about" class="container-lg mx-auto mb-16" style="margin-top: 60px">
+<div
+  id="about"
+  class="container-lg px-4 mb-9 mt-8 sm:mb-16 sm:mt-10 lg:mx-auto"
+>
   <gn-ui-metadata-info
-    class="block"
+    class="sm:block"
     *ngIf="(facade.isPresent$ | async) === false"
     [metadata]="{}"
     [incomplete]="true"
@@ -8,11 +11,11 @@
   </gn-ui-metadata-info>
   <div
     *ngIf="(facade.isPresent$ | async) === true"
-    class="grid grid-cols-3 gap-6"
+    class="grid gap-8 grid-cols-1 sm:gap-6 sm:grid-cols-3"
   >
-    <div class="col-span-2">
+    <div class="sm:col-span-2">
       <gn-ui-metadata-info
-        class="block"
+        class="sm:block"
         [metadata]="facade.metadata$ | async"
         [incomplete]="facade.isIncomplete$ | async"
         [landingPages]="facade.landingPageLinks$ | async"
@@ -35,13 +38,13 @@
   *ngIf="(displayMap$ | async) || (displayData$ | async)"
 >
   <div
-    class="bg-primary-opacity-10 pt-5 overflow-visible"
+    class="bg-primary-opacity-10 pt-8 overflow-visible sm:pt-5"
     style="height: 512px"
   >
-    <div class="container-lg mx-auto">
+    <div class="container-lg px-4 lg:mx-auto">
       <div>
         <div
-          class="text-[28px] font-title transform translate-y-10"
+          class="text-[28px] font-title transform sm:translate-y-10"
           translate
           id="preview"
         >
@@ -57,7 +60,7 @@
               <span class="uppercase text-sm" translate>record.tab.map</span>
             </ng-template>
             <div
-              class="block mt-10"
+              class="block mt-6 sm:mt-10"
               style="height: 500px"
               *ngIf="displayMap$ | async"
             >
@@ -82,13 +85,13 @@
   </div>
 </div>
 
-<div id="access" class="container-lg mx-auto">
+<div id="access" class="container-lg px-4 lg:mx-auto">
   <div *ngIf="displayDownload$ | async">
     <gn-ui-data-downloads class="block mt-5"></gn-ui-data-downloads>
   </div>
 </div>
 
-<div id="links" class="container-lg mx-auto">
+<div id="links" class="container-lg px-4 lg:mx-auto">
   <div *ngIf="displayOtherLinks | async">
     <gn-ui-data-otherlinks class="block mt-5"></gn-ui-data-otherlinks>
   </div>
@@ -101,7 +104,7 @@
 <div id="related-records" *ngIf="displayRelated$ | async">
   <div>
     <div class="h-48 overflow-visible">
-      <div class="container-lg mx-auto">
+      <div class="container-lg px-4 lg:mx-auto">
         <gn-ui-related-records
           [records]="facade.related$ | async"
         ></gn-ui-related-records>
@@ -109,6 +112,6 @@
     </div>
   </div>
   <div class="bg-primary">
-    <div class="container-lg mx-auto h-96"></div>
+    <div class="container-lg mx-auto h-[1096px] sm:h-96"></div>
   </div>
 </div>
