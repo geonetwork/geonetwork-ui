@@ -9,6 +9,7 @@ describe('RouterMapper', () => {
         Org: {
           'org sample': true,
         },
+        keyword: {},
       }
     })
     it('transform to route object', () => {
