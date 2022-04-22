@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { map, pluck } from 'rxjs/operators'
 
 @Component({
@@ -13,5 +13,14 @@ export class SearchSummaryComponent {
     pluck('Org'),
     map((orgState) => orgState && Object.keys(orgState)[0])
   )
-  constructor(private searchFacade: SearchFacade) {}
+  constructor(
+    private searchFacade: SearchFacade,
+    private searchService: SearchService
+  ) {}
+
+  removeOrg() {
+    this.searchService.updateSearch({
+      Org: {},
+    })
+  }
 }
