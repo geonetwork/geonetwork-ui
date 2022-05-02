@@ -9,29 +9,15 @@ import Map from 'ol/Map'
 import ImageWMS from 'ol/source/ImageWMS'
 import TileWMS from 'ol/source/TileWMS'
 import XYZ from 'ol/source/XYZ'
+import { of } from 'rxjs'
+import { MapUtilsWMSService } from './map-utils-wms.service'
 
 import { MapUtilsService } from './map-utils.service'
 import { readFirst } from '@nrwl/angular/testing'
 
-jest.mock('@camptocamp/ogc-client', () => ({
-  WmsEndpoint: class {
-    constructor(private url) {}
-    isReady() {
-      return Promise.resolve({
-        getLayerByName: (name) => {
-          if (this.url.indexOf('error') > -1) {
-            throw new Error('Something went wrong')
-          }
-          return {
-            name,
-            boundingBoxes: { 'EPSG:4326': [1.33, 48.81, 4.3, 51.1] },
-          }
-        },
-      })
-    }
-  },
-}))
-
+const wmsUtilsMock = {
+  getLayerLonLatBBox: jest.fn(() => of([1.33, 48.81, 4.3, 51.1])),
+}
 const wmsTileLayer = new TileLayer({
   source: new TileWMS({
     url: 'url',
@@ -57,6 +43,12 @@ describe('MapUtilsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
+      providers: [
+        {
+          provide: MapUtilsWMSService,
+          useValue: wmsUtilsMock,
+        },
+      ],
     })
     service = TestBed.inject(MapUtilsService)
   })
@@ -217,22 +209,6 @@ describe('MapUtilsService', () => {
             148054.92275505388, 6242683.64671384, 478673.81041107635,
             6639001.66376131,
           ])
-        })
-      })
-      describe('extent not available in capabilities', () => {
-        beforeEach(() => {
-          layer = {
-            type: 'wms',
-            name: 'mock',
-            url: 'http://error/wms',
-          }
-        })
-        it('returns an observable that errors with a translatable error', async () => {
-          try {
-            await readFirst(service.getLayerExtent(layer))
-          } catch (e) {
-            expect(e.message).toEqual('Something went wrong')
-          }
         })
       })
     })

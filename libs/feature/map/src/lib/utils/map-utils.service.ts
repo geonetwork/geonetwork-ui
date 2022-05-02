@@ -1,22 +1,21 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import type { FeatureCollection } from 'geojson'
+import { extend, Extent, getCenter, isEmpty } from 'ol/extent'
 import OlFeature from 'ol/Feature'
 import GeoJSON from 'ol/format/GeoJSON'
 import { Geometry } from 'ol/geom'
+import Layer from 'ol/layer/Layer'
 import Map from 'ol/Map'
+import { fromLonLat } from 'ol/proj'
 import { Source } from 'ol/source'
 import ImageWMS from 'ol/source/ImageWMS'
 import TileWMS from 'ol/source/TileWMS'
-import Layer from 'ol/layer/Layer'
 import VectorSource from 'ol/source/Vector'
-import { from, Observable, of } from 'rxjs'
+import { Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { fromLonLat } from 'ol/proj'
 import { MapContextLayerModel, MapContextViewModel } from '../..'
-import { extend, Extent, getCenter, isEmpty } from 'ol/extent'
-import { WmsEndpoint } from '@camptocamp/ogc-client'
-import { ProxyService } from '@geonetwork-ui/util/shared'
+import { MapUtilsWMSService } from './map-utils-wms.service'
 
 const FEATURE_PROJECTION = 'EPSG:3857'
 const DATA_PROJECTION = 'EPSG:4326'
@@ -25,7 +24,7 @@ const DATA_PROJECTION = 'EPSG:4326'
   providedIn: 'root',
 })
 export class MapUtilsService {
-  constructor(private http: HttpClient, private proxy: ProxyService) {}
+  constructor(private http: HttpClient, private wmsUtils: MapUtilsWMSService) {}
 
   createEmptyMap(): Map {
     const map = new Map({
@@ -137,13 +136,7 @@ export class MapUtilsService {
         )
       )
     } else if (layer && layer.type === 'wms') {
-      geographicExtent = from(
-        new WmsEndpoint(this.proxy.getProxiedUrl(layer.url))
-          .isReady()
-          .then((endpoint) => endpoint.getLayerByName(layer.name))
-      ).pipe(
-        map((layer: any) => layer.boundingBoxes['EPSG:4326']) // eslint-disable-line -- ogc-client lacks typing here
-      )
+      geographicExtent = this.wmsUtils.getLayerLonLatBBox(layer)
     } else {
       return of(null)
     }
