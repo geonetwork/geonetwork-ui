@@ -42,9 +42,7 @@ export class RouterFacade {
     distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
   )
 
-  constructor(private store: Store<RouterReducerState>) {
-    console.log('routerFacade')
-  }
+  constructor(private store: Store<RouterReducerState>) {}
 
   goToMetadata(metadata: MetadataRecord) {
     this.pathParams$
