@@ -14,7 +14,7 @@ export interface MapContextModel {
   view?: MapContextViewModel
 }
 
-interface MapContextLayerWmsModel {
+export interface MapContextLayerWmsModel {
   type: 'wms'
   url: string
   name: string
