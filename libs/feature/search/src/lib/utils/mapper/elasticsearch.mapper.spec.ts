@@ -325,7 +325,7 @@ describe('ElasticsearchMapper', () => {
             name: "Cellule d'administration Quadrige",
             organisation: 'Ifremer',
             email: 'q2suppor@ifremer.fr',
-            website: 'https://www.ifremer.fr',
+            website: 'https://www.ifremer.fr/',
             logoUrl:
               'http://localhost/geonetwork/images/logos/81e8a591-7815-4d2f-a7da-5673192e74c9.png',
           },
