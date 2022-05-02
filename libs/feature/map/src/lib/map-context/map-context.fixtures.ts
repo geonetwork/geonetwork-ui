@@ -1,6 +1,7 @@
 import { FEATURE_COLLECTION_POLYGON_FIXTURE_4326 } from '@geonetwork-ui/util/shared'
 import { Extent } from 'ol/extent'
 import {
+  MapContextLayerGeojsonModel,
   MapContextLayerModel,
   MapContextLayerTypeEnum,
   MapContextModel,
@@ -16,14 +17,15 @@ export const MAP_CTX_LAYER_WMS_FIXTURE: MapContextLayerModel = {
   url: 'https://www.geograndest.fr/geoserver/region-grand-est/ows?',
   name: 'commune_actuelle_3857',
 }
-export const MAP_CTX_LAYER_GEOJSON_FIXTURE: MapContextLayerModel = {
+export const MAP_CTX_LAYER_GEOJSON_FIXTURE: MapContextLayerGeojsonModel = {
   type: MapContextLayerTypeEnum.GEOJSON,
   data: FEATURE_COLLECTION_POLYGON_FIXTURE_4326,
 }
-export const MAP_CTX_LAYER_GEOJSON_REMOTE_FIXTURE: MapContextLayerModel = {
-  type: MapContextLayerTypeEnum.GEOJSON,
-  url: 'https://my.host.com/data/regions.json',
-}
+export const MAP_CTX_LAYER_GEOJSON_REMOTE_FIXTURE: MapContextLayerGeojsonModel =
+  {
+    type: MapContextLayerTypeEnum.GEOJSON,
+    url: 'https://my.host.com/data/regions.json',
+  }
 
 export const MAP_CTX_VIEW_FIXTURE: MapContextViewModel = {
   center: [7.75, 48.6],
