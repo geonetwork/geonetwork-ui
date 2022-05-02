@@ -189,8 +189,7 @@ export class MapContextService {
       case 'geojson':
         return {
           type: config.TYPE,
-          ...(config.DATA && { data: config.DATA }),
-          ...(config.URL && { url: config.URL }),
+          ...(config.DATA ? { data: config.DATA } : { url: config.URL }),
         }
     }
   }
