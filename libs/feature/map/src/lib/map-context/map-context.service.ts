@@ -3,6 +3,7 @@ import { MapStyleService } from '../style/map-style.service'
 import {
   MapContextLayerModel,
   MapContextLayerTypeEnum,
+  MapContextLayerXyzModel,
   MapContextModel,
   MapContextViewModel,
 } from './map-context.model'
@@ -20,7 +21,7 @@ import { bbox as bboxStrategy } from 'ol/loadingstrategy'
 import { LayerConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 import { FeatureCollection } from 'geojson'
 
-export const DEFAULT_BASELAYER_CONTEXT: MapContextLayerModel = {
+export const DEFAULT_BASELAYER_CONTEXT: MapContextLayerXyzModel = {
   type: MapContextLayerTypeEnum.XYZ,
   urls: [
     `https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
@@ -123,15 +124,8 @@ export class MapContextService {
   }
 
   createView(viewModel: MapContextViewModel, map?: Map): View {
-    if (viewModel.extent && map) {
-      const { center, zoom } = this.mapUtils.getViewFromExtent(
-        viewModel.extent,
-        map
-      )
-      viewModel = { ...viewModel, center, zoom }
-    }
     const { center, zoom, maxZoom, maxExtent } = viewModel
-    return new View({
+    const view = new View({
       center,
       zoom,
       maxZoom,
@@ -139,6 +133,12 @@ export class MapContextService {
       multiWorld: false,
       constrainResolution: true,
     })
+    if (viewModel.extent && map) {
+      view.fit(viewModel.extent, {
+        size: map.getSize(),
+      })
+    }
+    return view
   }
 
   mergeMapConfigWithContext(
