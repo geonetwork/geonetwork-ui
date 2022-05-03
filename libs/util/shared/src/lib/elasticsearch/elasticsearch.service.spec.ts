@@ -1,6 +1,5 @@
-import { ElasticsearchService } from './elasticsearch.service'
 import { Observable } from 'rxjs'
-import { ES_QUERY_STRING_FIELDS } from './constant'
+import { ElasticsearchService } from './elasticsearch.service'
 
 let autocompleteConfig
 
@@ -125,6 +124,23 @@ describe('ElasticsearchService', () => {
             },
           ],
         },
+      })
+    })
+    describe('any has special characters', () => {
+      let query
+      beforeEach(() => {
+        const any = 'scot (){?[ / test'
+        query = service['buildPayloadQuery'](
+          {
+            any,
+          },
+          {}
+        )
+      })
+      it('escapes special char', () => {
+        expect(query.bool.must[0].query_string.query).toEqual(
+          `scot \\(\\)\\{\\?\\[ \\/ test`
+        )
       })
     })
   })
