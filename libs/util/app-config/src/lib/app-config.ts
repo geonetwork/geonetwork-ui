@@ -179,10 +179,14 @@ export function loadAppConfig() {
                 parsedThemeSection.thumbnail_placeholder ||
                 'assets/img/thumb_placeholder.webp',
               HEADER_BACKGROUND:
-                parsedThemeSection.header_background || 'var(--color-gray-500)',
-              TITLE_FONT: parsedThemeSection.title_font,
-              MAIN_FONT: parsedThemeSection.main_font,
-              FONTS_STYLESHEET_URL: parsedThemeSection.fonts_stylesheet_url,
+                parsedThemeSection.header_background ||
+                `center /cover url('assets/img/header_bg.webp')`,
+              TITLE_FONT:
+                parsedThemeSection.title_font || "'Readex Pro', sans-serif",
+              MAIN_FONT: parsedThemeSection.main_font || "'Rubik', sans-serif",
+              FONTS_STYLESHEET_URL:
+                parsedThemeSection.fonts_stylesheet_url ||
+                'https://fonts.googleapis.com/css2?family=Readex+Pro&family=Rubik&display=swap',
             } as ThemeConfig)
 
       customTranslations = parseTranslationsConfigSection(
