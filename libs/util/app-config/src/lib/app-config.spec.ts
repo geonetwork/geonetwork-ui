@@ -292,8 +292,18 @@ describe('app config utils', () => {
     describe('header background', () => {
       it('uses the default value', () => {
         expect(getThemeConfig().HEADER_BACKGROUND).toEqual(
-          'var(--color-gray-500)'
+          "center /cover url('assets/img/header_bg.webp')"
         )
+      })
+    })
+    describe('main font', () => {
+      it('uses the default value', () => {
+        expect(getThemeConfig().MAIN_FONT).toEqual("'Rubik', sans-serif")
+      })
+    })
+    describe('title font', () => {
+      it('uses the default value', () => {
+        expect(getThemeConfig().TITLE_FONT).toEqual("'Readex Pro', sans-serif")
       })
     })
   })

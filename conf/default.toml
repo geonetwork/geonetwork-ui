@@ -72,13 +72,13 @@ proxy_path = ""
 #  - for font families: https://developer.mozilla.org/en-US/docs/Web/CSS/font-family
 #  - for background: https://developer.mozilla.org/en-US/docs/Web/CSS/background
 [theme]
-primary_color = "#0f4395"
-secondary_color = "#8bc832"
+primary_color = "#c82850"
+secondary_color = "#001638"
 main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
 
 # This optional parameter indicates which background should be used for the main header
-# header_background = "center url('assets/img/default_header_bg.webp')"
+# header_background = "center /cover url('assets/img/header_bg.webp')" or "var(--color-gray-500)"
 
 # This optional parameter allows to override the fallback image that should be used for thumbnails, 
 # if the metadata record has no thumbnail image url or it is broken.
@@ -106,6 +106,3 @@ background_color = "#fdfbff"
 #     Welcome to <span class="text-primary">Organization</span>'s<br>
 #     wonderful <span style="font-size: 1.2em;">data catalogue</span>
 #     """
-
-[translations.en]
-datahub.header.title.html = '<div class="text-white">Toutes les <span class="text-primary">données<br>publiques</span> de mon organisation</div>'
