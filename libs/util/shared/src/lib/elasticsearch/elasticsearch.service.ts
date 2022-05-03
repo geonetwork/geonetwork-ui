@@ -121,6 +121,7 @@ export class ElasticsearchService {
                 {
                   query_string: {
                     query: this.escapeSpecialCharacters(any),
+                    default_operator: 'AND',
                     fields: ES_QUERY_STRING_FIELDS,
                   },
                 },
