@@ -20,7 +20,8 @@ export class ProxyService {
     const proxyUrl = new URL(this.proxyPath, current.toString()).toString()
     if (
       current.hostname === urlObj.hostname &&
-      current.protocol === urlObj.protocol
+      current.protocol === urlObj.protocol &&
+      current.port === urlObj.port
     ) {
       return url
     }
