@@ -1,6 +1,8 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { TestBed } from '@angular/core/testing'
 import { MAP_CONFIG_FIXTURE } from '@geonetwork-ui/util/app-config'
+import { FeatureCollection } from 'geojson'
+import { Geometry } from 'ol/geom'
 import TileLayer from 'ol/layer/Tile'
 import VectorLayer from 'ol/layer/Vector'
 import Map from 'ol/Map'
@@ -144,7 +146,8 @@ describe('MapContextService', () => {
           const source = layer.getSource()
           const features = source.getFeatures()
           expect(features.length).toBe(
-            MAP_CTX_LAYER_GEOJSON_FIXTURE.data.features.length
+            (MAP_CTX_LAYER_GEOJSON_FIXTURE.data as FeatureCollection).features
+              .length
           )
         })
       })
@@ -270,15 +273,21 @@ describe('MapContextService', () => {
         expect(maxZoom).toBe(10)
       })
       it('set first layer as baselayer', () => {
-        const baselayerUrls = map.getLayers().item(0).getSource().getUrls()
+        const baselayerUrls = (map.getLayers().item(0) as TileLayer<XYZ>)
+          .getSource()
+          .getUrls()
         expect(baselayerUrls).toEqual(['https://some-basemap-server'])
       })
       it('add one WMS layer from config on top of baselayer', () => {
-        const layerWMSUrl = map.getLayers().item(1).getSource().getUrls()[0]
+        const layerWMSUrl = (map.getLayers().item(1) as TileLayer<TileWMS>)
+          .getSource()
+          .getUrls()[0]
         expect(layerWMSUrl).toEqual('https://some-wms-server')
       })
       it('add one WFS layer from config on top of baselayer', () => {
-        const layerWFSSource = map.getLayers().item(2).getSource()
+        const layerWFSSource = (
+          map.getLayers().item(2) as VectorLayer<VectorSource<Geometry>>
+        ).getSource()
         expect(layerWFSSource).toBeInstanceOf(VectorSource)
       })
     })
@@ -291,7 +300,9 @@ describe('MapContextService', () => {
         service.resetMapFromContext(map, mapContext, mapConfig)
       })
       it('set first layer as baselayer', () => {
-        const baselayerUrls = map.getLayers().item(0).getSource().getUrls()
+        const baselayerUrls = (map.getLayers().item(0) as TileLayer<XYZ>)
+          .getSource()
+          .getUrls()
         expect(baselayerUrls).toEqual(DEFAULT_BASELAYER_CONTEXT.urls)
       })
     })

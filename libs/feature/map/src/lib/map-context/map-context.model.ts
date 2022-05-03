@@ -14,7 +14,7 @@ export interface MapContextModel {
   view?: MapContextViewModel
 }
 
-interface MapContextLayerWmsModel {
+export interface MapContextLayerWmsModel {
   type: 'wms'
   url: string
   name: string
@@ -26,13 +26,35 @@ interface MapContextLayerWfsModel {
   name: string
 }
 
-type MapContextLayerXyzModel = {
+interface LayerXyzModel {
   type: 'xyz'
-} & ({ url: string } | { urls: string[] })
+}
+interface LayerXyzModelWithUrl extends LayerXyzModel {
+  url: string
+  urls?: never
+}
+interface LayerXyzModelWithUrls extends LayerXyzModel {
+  urls: string[]
+  url?: never
+}
+export type MapContextLayerXyzModel =
+  | LayerXyzModelWithUrl
+  | LayerXyzModelWithUrls
 
-type MapContextLayerGeojsonModel = {
+interface LayerGeojson {
   type: 'geojson'
-} & ({ url: string } | { data: FeatureCollection | string })
+}
+interface LayerGeojsonWithUrl extends LayerGeojson {
+  url: string
+  data?: never
+}
+interface LayerGeojsonWithData extends LayerGeojson {
+  data: FeatureCollection | string
+  url?: never
+}
+export type MapContextLayerGeojsonModel =
+  | LayerGeojsonWithUrl
+  | LayerGeojsonWithData
 
 export type MapContextLayerModel =
   | MapContextLayerWmsModel
