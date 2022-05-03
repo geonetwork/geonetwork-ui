@@ -120,7 +120,7 @@ export class ElasticsearchService {
             ? [
                 {
                   query_string: {
-                    query: any,
+                    query: this.escapeSpecialCharacters(any),
                     fields: ES_QUERY_STRING_FIELDS,
                   },
                 },
@@ -304,5 +304,12 @@ export class ElasticsearchService {
       queryString += '-' + indexKey + ':"' + nodeName + '"'
     }
     return queryString
+  }
+
+  private escapeSpecialCharacters(querystring) {
+    return querystring.replace(
+      /(\+|-|\/|&&|\|\||!|\{|\}|\[|\]\^|~|\?|:|\\{1}|\(|\))/g,
+      '\\$1'
+    )
   }
 }
