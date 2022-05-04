@@ -77,8 +77,11 @@ secondary_color = "#001638"
 main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
 
-# This optional parameter indicates which background should be used for the main header
+# These optional parameters indicate which background should be used for the main header and the text color used 
+# on top of the background. The color should be chosen to contrast well with the background (defaults to white).
+# Note: The search header does not use the header_foreground_color as it allows futher customisation via HTML.
 # header_background = "center /cover url('assets/img/header_bg.webp')" or "var(--color-gray-500)"
+# header_foreground_color = 'white'
 
 # This optional parameter allows to override the fallback image that should be used for thumbnails, 
 # if the metadata record has no thumbnail image url or it is broken.

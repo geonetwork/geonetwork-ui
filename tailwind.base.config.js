@@ -19,6 +19,7 @@ module.exports = {
         'secondary-darker': 'var(--color-secondary-darker)',
         'secondary-darkest': 'var(--color-secondary-darkest)',
         main: 'var(--color-main)',
+        title: 'black',
         background: 'var(--color-background)',
         gray: {
           100: 'var(--color-gray-100)',

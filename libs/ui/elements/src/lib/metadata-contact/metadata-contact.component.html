@@ -1,5 +1,5 @@
 <div *ngIf="metadata.contact" class="mb-6 sm:mb-12">
-  <p class="text-gray-600 text-xs mb-3 uppercase" translate>
+  <p class="text-gray-700 text-xs mb-3 uppercase" translate>
     record.metadata.contact
   </p>
   <p
@@ -8,8 +8,8 @@
   >
     {{ metadata.contact.organisation }}
   </p>
-  <p class="text-gray-600 text-sm mb-2">{{ metadata.contact.email }}</p>
-  <p *ngIf="metadata.contact.website" class="text-gray-600 mb-4">
+  <p class="text-gray-700 text-sm mb-2">{{ metadata.contact.email }}</p>
+  <p *ngIf="metadata.contact.website" class="text-gray-700 mb-4">
     <a [href]="metadata.contact.website">{{ metadata.contact.website }}</a>
   </p>
 </div>

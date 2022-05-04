@@ -27,6 +27,7 @@ main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
 thumbnail_placeholder = 'assets/img/placeholder.svg'
 header_background = 'teal'
+header_foreground_color = "#872e2e"
 main_font = 'sans-serif'
 title_font = 'serif'
 fonts_stylesheet_url = "https://fonts.googleapis.com/css2?family=Open+Sans"
