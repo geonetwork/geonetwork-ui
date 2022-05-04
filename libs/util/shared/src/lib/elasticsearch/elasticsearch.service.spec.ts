@@ -101,6 +101,7 @@ describe('ElasticsearchService', () => {
           must: [
             {
               query_string: {
+                default_operator: 'AND',
                 fields: [
                   'resourceTitleObject.*^5',
                   'tag.*^4',
