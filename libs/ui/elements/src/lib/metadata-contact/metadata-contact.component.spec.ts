@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 
@@ -10,6 +11,7 @@ describe('MetadataContactComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [MetadataContactComponent],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   })
 
@@ -36,7 +38,9 @@ describe('MetadataContactComponent', () => {
       jest.spyOn(component.contact, 'emit')
     })
     it('emit contact click with contact name', () => {
-      const el = fixture.debugElement.queryAll(By.css('p'))[1].nativeElement
+      const el = fixture.debugElement.query(
+        By.css('.text-primary.font-title')
+      ).nativeElement
       el.click()
       expect(component.contact.emit).toHaveBeenCalledWith('Worldcop')
     })
@@ -47,15 +51,18 @@ describe('MetadataContactComponent', () => {
       ps = fixture.debugElement.queryAll(By.css('p'))
     })
     it('displays the contact name', () => {
-      expect(ps[1].nativeElement.innerHTML).toBe(' Worldcop ')
+      const el = fixture.debugElement.query(
+        By.css('.text-primary.font-title')
+      ).nativeElement
+      expect(el.innerHTML).toBe(' Worldcop ')
     })
     it('displays the contact email', () => {
-      expect(ps[2].nativeElement.innerHTML).toBe('john@world.co')
+      expect(ps[1].nativeElement.innerHTML).toBe('john@world.co')
     })
     it('displays a link to the contact website', () => {
-      const a = ps[3].children[0]
-      expect(a.name).toBe('a')
-      expect(a.nativeElement.innerHTML).toBe('https://john.world.co')
+      const a = fixture.debugElement.query(By.css('a'))
+      expect(a.attributes.href).toBe('https://john.world.co')
+      expect(a.attributes.target).toBe('_blank')
     })
   })
 })
