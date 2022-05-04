@@ -25,7 +25,7 @@
       {{ abstract }}
     </div>
     <div
-      class="order-2 text-gray-400 uppercase sm:truncate sm:order-3 sm:row-end-4 sm:col-span-8 md:col-span-9"
+      class="order-2 text-primary opacity-25 uppercase sm:truncate sm:order-3 sm:row-end-4 sm:col-span-8 md:col-span-9"
     >
       {{ record.contact?.organisation }}
     </div>
@@ -34,12 +34,12 @@
     >
       <mat-icon
         *ngIf="isDownloadable"
-        class="material-icons-outlined text-gray-200 mr-4"
+        class="material-icons-outlined text-primary opacity-25 mr-4"
         >cloud_download</mat-icon
       >
       <mat-icon
         *ngIf="isViewable"
-        class="material-icons-outlined text-gray-200 mr-4"
+        class="material-icons-outlined text-primary opacity-25 mr-4"
         >map</mat-icon
       >
     </div>

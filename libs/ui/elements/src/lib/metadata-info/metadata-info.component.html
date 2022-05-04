@@ -36,7 +36,7 @@
     {{ metadata.lineage }}
   </p>
   <div
-    class="py-4 px-6 rounded bg-gray-100 grid grid-cols-2 grid-rows-2 gap-6 text-gray-800"
+    class="py-4 px-6 rounded bg-gray-100 grid grid-cols-2 grid-rows-2 gap-6 text-gray-700"
   >
     <div class="border-b border-gray-300" *ngIf="metadata.updatedOn">
       <p class="text-sm" translate>record.metadata.updatedOn</p>
@@ -62,7 +62,7 @@
   *ngIf="metadata.usageConstraints"
   [title]="'record.metadata.usage' | translate"
 >
-  <div class="py-4 px-6 rounded bg-gray-100 text-gray-800">
+  <div class="py-4 px-6 rounded bg-gray-100 text-gray-700">
     <gn-ui-badge class="inline-block mr-2">{{
       metadata.usageConstraints
     }}</gn-ui-badge>
@@ -72,7 +72,7 @@
   *ngIf="landingPages && landingPages.length > 0"
   [title]="'record.metadata.details' | translate"
 >
-  <div class="py-5 px-5 rounded bg-gray-100 text-gray-800">
+  <div class="py-5 px-5 rounded bg-gray-100 text-gray-700">
     <p class="text-sm" translate>record.metadata.sheet</p>
     <a [href]="landingPages[0].url" target="_blank">
       <mat-icon class="inline-block align-bottom pt-1.5 text-xs text-black"

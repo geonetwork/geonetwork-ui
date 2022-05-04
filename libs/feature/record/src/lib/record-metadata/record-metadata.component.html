@@ -57,7 +57,9 @@
         >
           <mat-tab [disabled]="(displayMap$ | async) === false">
             <ng-template mat-tab-label>
-              <span class="uppercase text-sm" translate>record.tab.map</span>
+              <span class="uppercase text-sm text-primary opacity-75" translate
+                >record.tab.map</span
+              >
             </ng-template>
             <div
               class="block mt-6 sm:mt-10"
@@ -69,7 +71,9 @@
           </mat-tab>
           <mat-tab [disabled]="(displayData$ | async) === false">
             <ng-template mat-tab-label>
-              <span class="uppercase text-sm" translate>record.tab.data</span>
+              <span class="uppercase text-sm text-primary opacity-75" translate
+                >record.tab.data</span
+              >
             </ng-template>
             <div
               class="block mt-10"
