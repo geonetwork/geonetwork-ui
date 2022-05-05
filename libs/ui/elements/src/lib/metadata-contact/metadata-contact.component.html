@@ -2,14 +2,21 @@
   <p class="text-gray-700 text-xs mb-3 uppercase" translate>
     record.metadata.contact
   </p>
-  <p
-    class="text-primary font-title text-21 mb-1 cursor-pointer hover:text-primary-darker"
-    (click)="onContactClick()"
-  >
-    {{ metadata.contact.organisation }}
-  </p>
+  <div class="flex mb-1">
+    <div
+      class="text-primary font-title text-21 mr-2 cursor-pointer hover:opacity-50"
+      (click)="onContactClick()"
+    >
+      {{ metadata.contact.organisation }}
+    </div>
+    <div *ngIf="metadata.contact.website">
+      <a [href]="metadata.contact.website" target="_blank"
+        ><mat-icon
+          class="text-primary opacity-25 cursor-pointer hover:opacity-75 transition-all"
+          >open_in_new</mat-icon
+        ></a
+      >
+    </div>
+  </div>
   <p class="text-gray-700 text-sm mb-2">{{ metadata.contact.email }}</p>
-  <p *ngIf="metadata.contact.website" class="text-gray-700 mb-4">
-    <a [href]="metadata.contact.website">{{ metadata.contact.website }}</a>
-  </p>
 </div>
