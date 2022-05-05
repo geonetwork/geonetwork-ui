@@ -34,6 +34,6 @@ export const ES_QUERY_STRING_FIELDS = [
   'tag.*^4',
   'resourceAbstractObject.*^3',
   'lineageObject.*^2',
-  'any',
+  'any.*',
   'uuid',
 ]
