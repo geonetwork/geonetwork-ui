@@ -106,6 +106,11 @@ describe('MapContextService', () => {
         expect(urls.length).toBe(1)
         expect(urls[0]).toEqual(layerModel.url)
       })
+      it('set WMS gutter of 20px', () => {
+        const source = layer.getSource()
+        const gutter = source.gutter_
+        expect(gutter).toBe(20)
+      })
     })
 
     describe('GEOJSON', () => {
