@@ -71,6 +71,7 @@ export class MapContextService {
           source: new TileWMS({
             url: layerModel.url,
             params: { LAYERS: layerModel.name },
+            gutter: 20,
           }),
         })
       case MapContextLayerTypeEnum.WFS:
