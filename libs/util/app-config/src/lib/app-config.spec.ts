@@ -27,6 +27,7 @@ const CONFIG_UNRECOGNIZED_KEYS = `
 [global]
 geonetwork4_api_url = "/geonetwork/srv/api"
 proxy_path = "/proxy/?url="
+metadata_language = "fre"
 another_path = '/whatever'
 
 [map]
@@ -138,6 +139,7 @@ describe('app config utils', () => {
         expect(getGlobalConfig()).toEqual({
           GN4_API_URL: '/geonetwork/srv/api',
           PROXY_PATH: '/proxy/?url=',
+          METADATA_LANGUAGE: 'fre',
         })
       })
     })
@@ -152,6 +154,7 @@ describe('app config utils', () => {
         expect(getGlobalConfig()).toEqual({
           GN4_API_URL: '/geonetwork/srv/api',
           PROXY_PATH: '/proxy/?url=',
+          METADATA_LANGUAGE: 'fre',
         })
       })
     })

@@ -4,6 +4,7 @@ export const CONFIG_WITH_TRANSLATIONS = `
 [global]
 geonetwork4_api_url = "/geonetwork/srv/api"
 proxy_path = "/proxy/?url="
+metadata_language = "fre"
 
 [map]
 max_zoom = 10
