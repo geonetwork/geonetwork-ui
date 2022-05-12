@@ -1,22 +1,14 @@
-import { Observable } from 'rxjs'
 import { ElasticsearchService } from './elasticsearch.service'
 
-let autocompleteConfig
-
-class MockBootstrapService {
-  uiConfReady(): Observable<any> {
-    return new Observable((observer) => {
-      observer.next({
-        mods: {
-          search: {
-            autocompleteConfig,
-          },
-        },
-      })
-      observer.complete()
-    })
-  }
+const globalConfigMock = {
+  GN4_API_URL: 'http://my.geonetwork.api',
+  PROXY_PATH: '/proxy?',
+  METADATA_LANGUAGE: 'fre',
 }
+jest.mock('@geonetwork-ui/util/app-config', () => ({
+  getGlobalConfig: () => globalConfigMock,
+  isConfigLoaded: jest.fn(() => true),
+}))
 
 describe('ElasticsearchService', () => {
   let service: ElasticsearchService
@@ -103,11 +95,11 @@ describe('ElasticsearchService', () => {
               query_string: {
                 default_operator: 'AND',
                 fields: [
-                  'resourceTitleObject.*^5',
-                  'tag.*^4',
-                  'resourceAbstractObject.*^3',
-                  'lineageObject.*^2',
-                  'any.*',
+                  'resourceTitleObject.langfre^5',
+                  'tag.langfre^4',
+                  'resourceAbstractObject.langfre^3',
+                  'lineageObject.langfre^2',
+                  'any.langfre',
                   'uuid',
                 ],
                 query: 'hello',

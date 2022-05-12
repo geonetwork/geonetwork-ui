@@ -12,6 +12,7 @@ import {
 } from '../models'
 import { BootstrapService } from '../services'
 import { ES_SOURCE_SUMMARY } from './constant'
+import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,7 @@ export class ElasticsearchService {
   constructor(private bootstrap: BootstrapService) {}
 
   uiConf = this.bootstrap.uiConfReady('srv').pipe(take(1))
+  metadataLang = getGlobalConfig().METADATA_LANGUAGE
 
   getSearchRequestBody(
     aggregations: any,
@@ -104,14 +106,21 @@ export class ElasticsearchService {
       : undefined
   }
 
+  private injectLangInQueryStringFields(
+    queryStringFields: string[],
+    lang: string
+  ) {
+    const queryLang = lang ? `lang${lang}` : `*`
+    return queryStringFields.map((field) => {
+      return field.replace(/\$\{searchLang\}/g, queryLang)
+    })
+  }
+
   private buildPayloadQuery(
     { any, ...fieldSearchFilters }: SearchFilters,
     configFilters: StateConfigFilters
   ) {
     const queryFilters = this.stateFiltersToQueryString(fieldSearchFilters)
-    const queryAny = `(${any || '*'})`
-    const query =
-      queryAny + (queryFilters.length > 0 ? ` AND ${queryFilters}` : '')
 
     return {
       bool: {
@@ -122,7 +131,10 @@ export class ElasticsearchService {
                   query_string: {
                     query: this.escapeSpecialCharacters(any),
                     default_operator: 'AND',
-                    fields: ES_QUERY_STRING_FIELDS,
+                    fields: this.injectLangInQueryStringFields(
+                      ES_QUERY_STRING_FIELDS,
+                      this.metadataLang
+                    ),
                   },
                 },
               ]
