@@ -32,6 +32,16 @@ import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { ES_FIXTURE_AGGS_REQUEST } from '@geonetwork-ui/util/shared'
 
+const globalConfigMock = {
+  GN4_API_URL: 'http://my.geonetwork.api',
+  PROXY_PATH: '/proxy?',
+  METADATA_LANGUAGE: 'fre',
+}
+jest.mock('@geonetwork-ui/util/app-config', () => ({
+  getGlobalConfig: () => globalConfigMock,
+  isConfigLoaded: jest.fn(() => true),
+}))
+
 const initialStateSearchMock = initialState[DEFAULT_SEARCH_KEY]
 const initialStateMock = {
   ...initialState,
