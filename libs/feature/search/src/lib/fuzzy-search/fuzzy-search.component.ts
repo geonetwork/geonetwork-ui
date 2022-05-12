@@ -35,18 +35,13 @@ export class FuzzySearchComponent {
   displayWithFn: (MetadataRecord) => string = (record) => record?.title
 
   autoCompleteAction = (query) =>
-    this.esService
-      .buildAutocompletePayload(query)
+    this.searchApiService
+      .search(
+        'bucket',
+        JSON.stringify(this.esService.buildAutocompletePayload(query))
+      )
       .pipe(
-        switchMap((payload) =>
-          this.searchApiService
-            .search('bucket', JSON.stringify(payload))
-            .pipe(
-              map((response: EsSearchResponse) =>
-                this.esMapper.toRecords(response)
-              )
-            )
-        )
+        map((response: EsSearchResponse) => this.esMapper.toRecords(response))
       )
 
   constructor(

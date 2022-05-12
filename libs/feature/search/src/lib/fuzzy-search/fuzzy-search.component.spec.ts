@@ -51,7 +51,7 @@ const searchServiceMock = {
   updateSearch: jest.fn(),
 }
 const esServiceMock = {
-  buildAutocompletePayload: jest.fn(() => of({ fakeQuery: '' })),
+  buildAutocompletePayload: jest.fn(() => ({ fakeQuery: '' })),
 }
 const elasticsearchMapperMock = {
   toRecords: jest.fn(() => [

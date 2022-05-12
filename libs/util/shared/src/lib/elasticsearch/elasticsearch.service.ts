@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
-import { map, take } from 'rxjs/operators'
 import { ES_QUERY_STRING_FIELDS } from './constant'
 import {
   EsSearchParams,
@@ -10,7 +8,6 @@ import {
   SortParams,
   StateConfigFilters,
 } from '../models'
-import { BootstrapService } from '../services'
 import { ES_SOURCE_SUMMARY } from './constant'
 import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
 
@@ -18,9 +15,6 @@ import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
   providedIn: 'root',
 })
 export class ElasticsearchService {
-  constructor(private bootstrap: BootstrapService) {}
-
-  uiConf = this.bootstrap.uiConfReady('srv').pipe(take(1))
   metadataLang = getGlobalConfig().METADATA_LANGUAGE
 
   getSearchRequestBody(
@@ -196,37 +190,59 @@ export class ElasticsearchService {
         }
   }
 
-  buildAutocompletePayload(query: string): Observable<EsSearchParams> {
-    return this.uiConf.pipe(
-      map((config) => {
-        const template = config.mods.search.autocompleteConfig
-        return {
-          ...template,
-          _source: [
-            ...template._source.filter((source) => source !== 'uuid'),
-            'uuid',
-          ],
-          query: {
-            ...template.query,
-            bool: {
-              ...template.query.bool,
-              must: [
-                this.addTemplateClause('n'),
-                {
-                  multi_match: {
-                    ...template.query.bool.must[0].multi_match,
-                    query,
-                  },
-                },
-                ...template.query.bool.must.filter(
-                  (clause) => !('multi_match' in clause)
-                ),
-              ],
+  buildAutocompletePayload(query: string): EsSearchParams {
+    const autocompleteConfig = {
+      query: {
+        bool: {
+          must: [
+            {
+              multi_match: {
+                query: '',
+                type: 'bool_prefix',
+                fields: [
+                  'resourceTitleObject.${searchLang}',
+                  'resourceAbstractObject.${searchLang}',
+                  'tag',
+                  'resourceIdentifier',
+                ],
+              },
             },
-          },
-        }
-      })
-    )
+          ],
+        },
+      },
+      _source: ['resourceTitleObject'],
+      from: 0,
+      size: 20,
+    }
+    return {
+      ...autocompleteConfig,
+      _source: [
+        ...autocompleteConfig._source.filter((source) => source !== 'uuid'),
+        'uuid',
+      ],
+      query: {
+        ...autocompleteConfig.query,
+        bool: {
+          ...autocompleteConfig.query.bool,
+          must: [
+            this.addTemplateClause('n'),
+            {
+              multi_match: {
+                ...autocompleteConfig.query.bool.must[0].multi_match,
+                fields: this.injectLangInQueryStringFields(
+                  autocompleteConfig.query.bool.must[0].multi_match.fields,
+                  this.metadataLang
+                ),
+                query,
+              },
+            },
+            ...autocompleteConfig.query.bool.must.filter(
+              (clause) => !('multi_match' in clause)
+            ),
+          ],
+        },
+      },
+    }
   }
 
   combineQueryGroups(queryGroups) {

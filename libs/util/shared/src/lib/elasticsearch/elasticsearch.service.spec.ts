@@ -15,7 +15,7 @@ describe('ElasticsearchService', () => {
   let searchFilters
 
   beforeEach(() => {
-    service = new ElasticsearchService(new MockBootstrapService() as any)
+    service = new ElasticsearchService()
   })
 
   it('should be created', () => {
@@ -192,40 +192,10 @@ describe('ElasticsearchService', () => {
 
   describe('#buildAutocompletePayload', () => {
     describe('given an autocomplete config', () => {
-      beforeEach(() => {
-        autocompleteConfig = {
-          query: {
-            bool: {
-              must: [
-                {
-                  multi_match: {
-                    query: '',
-                    type: 'bool_prefix',
-                    fields: [
-                      'resourceTitleObject.*',
-                      'resourceAbstractObject.*',
-                      'tag',
-                      'resourceIdentifier',
-                    ],
-                  },
-                },
-                {
-                  terms: {
-                    isTemplate: ['n'],
-                  },
-                },
-              ],
-            },
-          },
-          _source: ['uuid', 'id', 'title', 'resourceTitleObject'],
-        }
-      })
-      it('returns the search payload', async () => {
-        const payload = await service
-          .buildAutocompletePayload('blarg')
-          .toPromise()
+      it('returns the search payload', () => {
+        const payload = service.buildAutocompletePayload('blarg')
         expect(payload).toEqual({
-          _source: ['id', 'title', 'resourceTitleObject', 'uuid'],
+          _source: ['resourceTitleObject', 'uuid'],
           query: {
             bool: {
               must: [
@@ -237,8 +207,8 @@ describe('ElasticsearchService', () => {
                 {
                   multi_match: {
                     fields: [
-                      'resourceTitleObject.*',
-                      'resourceAbstractObject.*',
+                      'resourceTitleObject.langfre',
+                      'resourceAbstractObject.langfre',
                       'tag',
                       'resourceIdentifier',
                     ],
@@ -246,14 +216,11 @@ describe('ElasticsearchService', () => {
                     type: 'bool_prefix',
                   },
                 },
-                {
-                  terms: {
-                    isTemplate: ['n'],
-                  },
-                },
               ],
             },
           },
+          from: 0,
+          size: 20,
         })
       })
     })
