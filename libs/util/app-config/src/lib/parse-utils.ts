@@ -1,3 +1,5 @@
+import { LANGUAGE_CODES_ISO_3 } from './constants'
+
 const flatten = (
   base: string,
   obj: Record<string, unknown>,
@@ -120,4 +122,21 @@ export function parseMultiConfigSection(
     return null
   }
   return result
+}
+
+export function checkMetadataLanguage(
+  parsedConfigSection: any,
+  outErrors: string[]
+) {
+  if (
+    LANGUAGE_CODES_ISO_3.indexOf(
+      parsedConfigSection.metadata_language.toLowerCase()
+    ) === -1
+  ) {
+    outErrors.push(
+      'In the [global] section: metadata_language is not in ISO 639-2/B format'
+    )
+    return null
+  }
+  return parsedConfigSection
 }

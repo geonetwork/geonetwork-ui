@@ -1,5 +1,6 @@
 import * as TOML from '@ltd/j-toml'
 import {
+  checkMetadataLanguage,
   parseConfigSection,
   parseMultiConfigSection,
   parseTranslationsConfigSection,
@@ -93,7 +94,7 @@ export function loadAppConfig() {
       const errors = []
       const warnings = []
 
-      const parsedGlobalSection = parseConfigSection(
+      let parsedGlobalSection = parseConfigSection(
         parsed,
         'global',
         ['geonetwork4_api_url'],
@@ -101,6 +102,9 @@ export function loadAppConfig() {
         warnings,
         errors
       )
+      if (parsedGlobalSection.metadata_language) {
+        parsedGlobalSection = checkMetadataLanguage(parsedGlobalSection, errors)
+      }
       globalConfig =
         parsedGlobalSection === null
           ? null

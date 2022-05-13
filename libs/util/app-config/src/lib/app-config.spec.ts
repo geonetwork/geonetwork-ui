@@ -23,6 +23,13 @@ background_color = "#fdfbff"
 main_font = 'sans-serif'
 `
 
+const CONFIG_WRONG_LANGUAGE_CODE = `
+[global]
+geonetwork4_api_url = "/geonetwork/srv/api"
+proxy_path = "/proxy/?url="
+metadata_language = "fra"
+`
+
 const CONFIG_UNRECOGNIZED_KEYS = `
 [global]
 geonetwork4_api_url = "/geonetwork/srv/api"
@@ -112,6 +119,24 @@ describe('app config utils', () => {
       it('throws an error', async () => {
         await expect(loadAppConfig()).rejects.toThrow(
           /(?=.*\[global] section is missing)(?=.*\[map] section is missing)(?=.*main_color)/s
+        )
+      })
+    })
+    describe('getGlobalConfig', () => {
+      it('throws an error', async () => {
+        await loadAppConfig().catch(() => {}) // eslint-disable-line
+        expect(() => getGlobalConfig()).toThrowError('not initialized')
+      })
+    })
+  })
+  describe('when the metadata_language key has a wrong value', () => {
+    beforeEach(() => {
+      fetchMock.get('end:default.toml', () => CONFIG_WRONG_LANGUAGE_CODE)
+    })
+    describe('loadAppConfig', () => {
+      it('throws an error', async () => {
+        await expect(loadAppConfig()).rejects.toThrow(
+          'In the [global] section: metadata_language is not in ISO 639-2/B format'
         )
       })
     })
