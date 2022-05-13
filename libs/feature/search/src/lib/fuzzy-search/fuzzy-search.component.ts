@@ -16,7 +16,7 @@ import {
   EsSearchResponse,
   MetadataRecord,
 } from '@geonetwork-ui/util/shared'
-import { map, switchMap } from 'rxjs/operators'
+import { map } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { ElasticsearchMapper } from '../utils/mapper'
 import { SearchService } from '../utils/service/search.service'

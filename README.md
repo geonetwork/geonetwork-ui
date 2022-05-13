@@ -133,12 +133,15 @@ This file can be used to:
 
 - customize the URL used to reach the GeoNetwork 4 API
 - indicate an optional proxy path to the application
+- indicate a metadata language to be used when searching
 - customize the theme used in the application (colors, fonts...)
 - define custom translations for the different languages
 
 Please refer to the embedded comments in the file for more information.
 
 > Note: as of now, only the Datahub application relies on this file
+
+**Important**: In order for the search to be efficient, please indicate the `metadata_language` of the queried catalog.
 
 ### Internationalization
 

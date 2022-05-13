@@ -191,57 +191,32 @@ export class ElasticsearchService {
   }
 
   buildAutocompletePayload(query: string): EsSearchParams {
-    const autocompleteConfig = {
-      query: {
-        bool: {
-          must: [
-            {
-              multi_match: {
-                query: '',
-                type: 'bool_prefix',
-                fields: [
-                  'resourceTitleObject.${searchLang}',
-                  'resourceAbstractObject.${searchLang}',
-                  'tag',
-                  'resourceIdentifier',
-                ],
-              },
-            },
-          ],
-        },
-      },
-      _source: ['resourceTitleObject'],
-      from: 0,
-      size: 20,
-    }
     return {
-      ...autocompleteConfig,
-      _source: [
-        ...autocompleteConfig._source.filter((source) => source !== 'uuid'),
-        'uuid',
-      ],
       query: {
-        ...autocompleteConfig.query,
         bool: {
-          ...autocompleteConfig.query.bool,
           must: [
             this.addTemplateClause('n'),
             {
               multi_match: {
-                ...autocompleteConfig.query.bool.must[0].multi_match,
+                query,
+                type: 'bool_prefix',
                 fields: this.injectLangInQueryStringFields(
-                  autocompleteConfig.query.bool.must[0].multi_match.fields,
+                  [
+                    'resourceTitleObject.${searchLang}',
+                    'resourceAbstractObject.${searchLang}',
+                    'tag',
+                    'resourceIdentifier',
+                  ],
                   this.metadataLang
                 ),
-                query,
               },
             },
-            ...autocompleteConfig.query.bool.must.filter(
-              (clause) => !('multi_match' in clause)
-            ),
           ],
         },
       },
+      _source: ['resourceTitleObject', 'uuid'],
+      from: 0,
+      size: 20,
     }
   }
 

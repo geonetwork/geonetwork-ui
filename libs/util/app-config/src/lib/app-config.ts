@@ -107,7 +107,11 @@ export function loadAppConfig() {
           : ({
               GN4_API_URL: parsedGlobalSection.geonetwork4_api_url,
               PROXY_PATH: parsedGlobalSection.proxy_path,
-              METADATA_LANGUAGE: parsedGlobalSection.metadata_language,
+              METADATA_LANGUAGE: parsedGlobalSection.metadata_language
+                ? (
+                    parsedGlobalSection.metadata_language as string
+                  ).toLowerCase()
+                : undefined,
             } as GlobalConfig)
 
       const parsedLayersSections = parseMultiConfigSection(
