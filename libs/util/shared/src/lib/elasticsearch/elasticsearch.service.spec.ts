@@ -1,29 +1,21 @@
-import { Observable } from 'rxjs'
 import { ElasticsearchService } from './elasticsearch.service'
 
-let autocompleteConfig
-
-class MockBootstrapService {
-  uiConfReady(): Observable<any> {
-    return new Observable((observer) => {
-      observer.next({
-        mods: {
-          search: {
-            autocompleteConfig,
-          },
-        },
-      })
-      observer.complete()
-    })
-  }
+const globalConfigMock = {
+  GN4_API_URL: 'http://my.geonetwork.api',
+  PROXY_PATH: '/proxy?',
+  METADATA_LANGUAGE: 'fre',
 }
+jest.mock('@geonetwork-ui/util/app-config', () => ({
+  getGlobalConfig: () => globalConfigMock,
+  isConfigLoaded: jest.fn(() => true),
+}))
 
 describe('ElasticsearchService', () => {
   let service: ElasticsearchService
   let searchFilters
 
   beforeEach(() => {
-    service = new ElasticsearchService(new MockBootstrapService() as any)
+    service = new ElasticsearchService()
   })
 
   it('should be created', () => {
@@ -103,11 +95,11 @@ describe('ElasticsearchService', () => {
               query_string: {
                 default_operator: 'AND',
                 fields: [
-                  'resourceTitleObject.*^5',
-                  'tag.*^4',
-                  'resourceAbstractObject.*^3',
-                  'lineageObject.*^2',
-                  'any.*',
+                  'resourceTitleObject.langfre^5',
+                  'tag.langfre^4',
+                  'resourceAbstractObject.langfre^3',
+                  'lineageObject.langfre^2',
+                  'any.langfre',
                   'uuid',
                 ],
                 query: 'hello',
@@ -200,40 +192,10 @@ describe('ElasticsearchService', () => {
 
   describe('#buildAutocompletePayload', () => {
     describe('given an autocomplete config', () => {
-      beforeEach(() => {
-        autocompleteConfig = {
-          query: {
-            bool: {
-              must: [
-                {
-                  multi_match: {
-                    query: '',
-                    type: 'bool_prefix',
-                    fields: [
-                      'resourceTitleObject.*',
-                      'resourceAbstractObject.*',
-                      'tag',
-                      'resourceIdentifier',
-                    ],
-                  },
-                },
-                {
-                  terms: {
-                    isTemplate: ['n'],
-                  },
-                },
-              ],
-            },
-          },
-          _source: ['uuid', 'id', 'title', 'resourceTitleObject'],
-        }
-      })
-      it('returns the search payload', async () => {
-        const payload = await service
-          .buildAutocompletePayload('blarg')
-          .toPromise()
+      it('returns the search payload', () => {
+        const payload = service.buildAutocompletePayload('blarg')
         expect(payload).toEqual({
-          _source: ['id', 'title', 'resourceTitleObject', 'uuid'],
+          _source: ['resourceTitleObject', 'uuid'],
           query: {
             bool: {
               must: [
@@ -245,8 +207,8 @@ describe('ElasticsearchService', () => {
                 {
                   multi_match: {
                     fields: [
-                      'resourceTitleObject.*',
-                      'resourceAbstractObject.*',
+                      'resourceTitleObject.langfre',
+                      'resourceAbstractObject.langfre',
                       'tag',
                       'resourceIdentifier',
                     ],
@@ -254,14 +216,11 @@ describe('ElasticsearchService', () => {
                     type: 'bool_prefix',
                   },
                 },
-                {
-                  terms: {
-                    isTemplate: ['n'],
-                  },
-                },
               ],
             },
           },
+          from: 0,
+          size: 20,
         })
       })
     })

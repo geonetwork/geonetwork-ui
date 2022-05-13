@@ -13,6 +13,7 @@ Note: make sure that you have called \`loadAppConfig\` from '@geonetwork-ui/util
 interface GlobalConfig {
   GN4_API_URL: string
   PROXY_PATH?: string
+  METADATA_LANGUAGE?: string
 }
 let globalConfig: GlobalConfig = null
 
@@ -96,7 +97,7 @@ export function loadAppConfig() {
         parsed,
         'global',
         ['geonetwork4_api_url'],
-        ['proxy_path'],
+        ['proxy_path', 'metadata_language'],
         warnings,
         errors
       )
@@ -106,6 +107,11 @@ export function loadAppConfig() {
           : ({
               GN4_API_URL: parsedGlobalSection.geonetwork4_api_url,
               PROXY_PATH: parsedGlobalSection.proxy_path,
+              METADATA_LANGUAGE: parsedGlobalSection.metadata_language
+                ? (
+                    parsedGlobalSection.metadata_language as string
+                  ).toLowerCase()
+                : undefined,
             } as GlobalConfig)
 
       const parsedLayersSections = parseMultiConfigSection(

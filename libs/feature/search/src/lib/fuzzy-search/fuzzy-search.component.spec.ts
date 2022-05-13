@@ -51,7 +51,7 @@ const searchServiceMock = {
   updateSearch: jest.fn(),
 }
 const esServiceMock = {
-  buildAutocompletePayload: jest.fn(() => of({ fakeQuery: '' })),
+  buildAutocompletePayload: jest.fn(() => ({ fakeQuery: '' })),
 }
 const elasticsearchMapperMock = {
   toRecords: jest.fn(() => [
@@ -131,7 +131,6 @@ describe('FuzzySearchComponent', () => {
     })
     describe('when output is defined', () => {
       beforeEach(() => {
-        component.inputSubmited.subscribe((event) => (outputValue = event))
         component.handleInputSubmission('blarg')
       })
       it('updates the search filters as well', () => {

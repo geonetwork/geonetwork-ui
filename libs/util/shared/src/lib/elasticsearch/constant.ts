@@ -30,10 +30,10 @@ export const ElasticSearchSources = {
 }
 
 export const ES_QUERY_STRING_FIELDS = [
-  'resourceTitleObject.*^5',
-  'tag.*^4',
-  'resourceAbstractObject.*^3',
-  'lineageObject.*^2',
-  'any.*',
+  'resourceTitleObject.${searchLang}^5',
+  'tag.${searchLang}^4',
+  'resourceAbstractObject.${searchLang}^3',
+  'lineageObject.${searchLang}^2',
+  'any.${searchLang}',
   'uuid',
 ]
