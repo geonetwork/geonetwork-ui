@@ -102,8 +102,11 @@ export function loadAppConfig() {
         warnings,
         errors
       )
-      if (parsedGlobalSection.metadata_language) {
-        parsedGlobalSection = checkMetadataLanguage(parsedGlobalSection, errors)
+      if (parsedGlobalSection?.metadata_language) {
+        parsedGlobalSection = checkMetadataLanguage(
+          parsedGlobalSection,
+          warnings
+        )
       }
       globalConfig =
         parsedGlobalSection === null
