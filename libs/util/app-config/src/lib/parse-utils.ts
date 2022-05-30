@@ -134,7 +134,7 @@ export function checkMetadataLanguage(
     ) === -1
   ) {
     outErrors.push(
-      'In the [global] section: metadata_language is not in ISO 639-2/B format'
+      `In the [global] section: metadata_language = "${parsedConfigSection.metadata_language}" is not in ISO 639-2/B format`
     )
     return null
   }
