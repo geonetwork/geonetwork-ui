@@ -20,6 +20,7 @@ import { MapUtilsService } from '../utils/map-utils.service'
 import { bbox as bboxStrategy } from 'ol/loadingstrategy'
 import { LayerConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 import { FeatureCollection } from 'geojson'
+import { fromLonLat } from 'ol/proj'
 
 export const DEFAULT_BASELAYER_CONTEXT: MapContextLayerXyzModel = {
   type: MapContextLayerTypeEnum.XYZ,
@@ -28,6 +29,11 @@ export const DEFAULT_BASELAYER_CONTEXT: MapContextLayerXyzModel = {
     `https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
     `https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
   ],
+}
+
+export const DEFAULT_VIEW: MapContextViewModel = {
+  center: fromLonLat([2.1, 46.8], 'EPSG:3857'),
+  zoom: 5,
 }
 
 @Injectable({
@@ -47,9 +53,13 @@ export class MapContextService {
     if (mapConfig) {
       mapContext = this.mergeMapConfigWithContext(mapContext, mapConfig)
     }
-    if (mapContext.view) {
-      map.setView(this.createView(mapContext.view, map))
+    if (
+      !mapContext.view?.extent &&
+      (!mapContext.view?.center || !mapContext.view?.zoom)
+    ) {
+      mapContext.view = this.getFallbackView(mapConfig)
     }
+    map.setView(this.createView(mapContext.view, map))
     map.getLayers().clear()
     mapContext.layers.forEach((layer) => map.addLayer(this.createLayer(layer)))
     return map
@@ -165,6 +175,12 @@ export class MapContextService {
         ...mapContext.layers,
       ],
     }
+  }
+
+  getFallbackView(mapConfig: MapConfig): MapContextViewModel {
+    return mapConfig?.MAX_EXTENT
+      ? { extent: mapConfig.MAX_EXTENT }
+      : DEFAULT_VIEW
   }
 
   getContextLayerFromConfig(config: LayerConfig): MapContextLayerModel {

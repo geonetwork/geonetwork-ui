@@ -609,7 +609,7 @@ describe('DataViewMapComponent', () => {
       })
       describe('when extent computation fails', () => {
         beforeEach(inject([MapUtilsService], (mapUtils) => {
-          mapUtils._observer.error('extent computation failed')
+          mapUtils._observer.next(null)
           fixture.detectChanges()
         }))
         it('emits a new map context with the selected layer and a default view', () => {
@@ -621,7 +621,7 @@ describe('DataViewMapComponent', () => {
                 type: 'wms',
               },
             ],
-            view: expect.any(Object),
+            view: { extent: null },
           })
         })
         it('provides selected link to the external viewer component', () => {
