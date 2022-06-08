@@ -62,6 +62,9 @@ export class LinkHelperService {
   isWmsLink(link: MetadataLinkValid): boolean {
     return /^OGC:WMS/.test(link.protocol)
   }
+  isWmtsLink(link: MetadataLinkValid): boolean {
+    return /^OGC:WMTS/.test(link.protocol)
+  }
   isWfsLink(link: MetadataLinkValid): boolean {
     return (
       /^OGC:WFS/.test(link.protocol) ||
@@ -84,6 +87,8 @@ export class LinkHelperService {
     let format
     if (this.isWmsLink(link)) {
       format = 'WMS'
+    } else if (this.isWmtsLink(link)) {
+      format = 'WMTS'
     } else if (this.isWfsLink(link)) {
       format = 'WFS'
     } else if (this.isEsriRestFeatureServer(link)) {

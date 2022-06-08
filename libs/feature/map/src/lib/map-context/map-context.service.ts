@@ -21,6 +21,7 @@ import { bbox as bboxStrategy } from 'ol/loadingstrategy'
 import { LayerConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 import { FeatureCollection } from 'geojson'
 import { fromLonLat } from 'ol/proj'
+import { WMTS } from 'ol/source'
 
 export const DEFAULT_BASELAYER_CONTEXT: MapContextLayerXyzModel = {
   type: MapContextLayerTypeEnum.XYZ,
@@ -83,6 +84,10 @@ export class MapContextService {
             params: { LAYERS: layerModel.name },
             gutter: 20,
           }),
+        })
+      case MapContextLayerTypeEnum.WMTS:
+        return new TileLayer({
+          source: new WMTS(layerModel.options),
         })
       case MapContextLayerTypeEnum.WFS:
         return new VectorLayer({

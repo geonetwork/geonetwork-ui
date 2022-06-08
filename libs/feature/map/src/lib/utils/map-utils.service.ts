@@ -12,7 +12,9 @@ import { Source } from 'ol/source'
 import ImageWMS from 'ol/source/ImageWMS'
 import TileWMS from 'ol/source/TileWMS'
 import VectorSource from 'ol/source/Vector'
-import { Observable, of } from 'rxjs'
+import { optionsFromCapabilities, Options } from 'ol/source/WMTS'
+import WMTSCapabilities from 'ol/format/WMTSCapabilities'
+import { from, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { MapContextLayerModel, MapContextViewModel } from '../..'
 import { MapUtilsWMSService } from './map-utils-wms.service'
@@ -137,6 +139,8 @@ export class MapUtilsService {
       )
     } else if (layer && layer.type === 'wms') {
       geographicExtent = this.wmsUtils.getLayerLonLatBBox(layer)
+    } else if (layer && layer.type === 'wmts') {
+      return of(layer.options.tileGrid.getExtent())
     } else {
       return of(null)
     }
@@ -156,5 +160,21 @@ export class MapUtilsService {
       .getResolutionForExtent(extent, map.getSize())
     const zoom = map.getView().getZoomForResolution(resolution)
     return { center, zoom }
+  }
+
+  getWmtsOptionsFromCapabilities(link): Observable<Options> {
+    return from(
+      fetch(link.url)
+        .then(function (response) {
+          return response.text()
+        })
+        .then(function (text) {
+          const result = new WMTSCapabilities().read(text)
+          return optionsFromCapabilities(result, {
+            layer: link.name,
+            matrixSet: 'EPSG:3857',
+          })
+        })
+    )
   }
 }

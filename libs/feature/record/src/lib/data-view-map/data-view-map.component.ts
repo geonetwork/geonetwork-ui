@@ -165,6 +165,15 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
         type: MapContextLayerTypeEnum.WMS,
         name: link.name,
       })
+    } else if (this.linkHelper.isWmtsLink(link)) {
+      return this.mapUtils.getWmtsOptionsFromCapabilities(link).pipe(
+        map((options) => ({
+          url: link.url,
+          type: MapContextLayerTypeEnum.WMTS,
+          name: link.name,
+          options: options,
+        }))
+      )
     } else if (this.linkHelper.isWfsLink(link)) {
       return this.dataService
         .getGeoJsonDownloadUrlFromWfs(link.url, link.name)
