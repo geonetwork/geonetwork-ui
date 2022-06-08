@@ -315,10 +315,16 @@ describe('MapContextService', () => {
     describe('uses default fallback view (without config)', () => {
       let view
       const map = new Map({})
-      const mapContext = MAP_CTX_FIXTURE
-      mapContext.view.extent = null
-      mapContext.view.center = null
-      mapContext.view.zoom = null
+      const mapContext = {
+        extent: null,
+        center: null,
+        zoom: null,
+        layers: [
+          MAP_CTX_LAYER_XYZ_FIXTURE,
+          MAP_CTX_LAYER_WMS_FIXTURE,
+          MAP_CTX_LAYER_GEOJSON_FIXTURE,
+        ],
+      }
       beforeEach(() => {
         service.resetMapFromContext(map, mapContext)
       })
@@ -348,10 +354,12 @@ describe('MapContextService', () => {
       let view
       const map = new Map({})
       const mapConfig = MAP_CONFIG_FIXTURE
-      const mapContext = MAP_CTX_FIXTURE
-      mapContext.view.extent = null
-      mapContext.view.center = null
-      mapContext.view.zoom = null
+      const mapContext = {
+        extent: null,
+        center: null,
+        zoom: null,
+        layers: [],
+      }
       beforeEach(() => {
         service.resetMapFromContext(map, mapContext, mapConfig)
       })
@@ -361,7 +369,8 @@ describe('MapContextService', () => {
       })
       it('add layers', () => {
         const layers = map.getLayers().getArray()
-        expect(layers.length).toEqual(3)
+        console.log(layers)
+        expect(layers.length).toEqual(4)
       })
       it('set view', () => {
         view = map.getView()

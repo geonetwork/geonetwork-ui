@@ -32,8 +32,8 @@ export const DEFAULT_BASELAYER_CONTEXT: MapContextLayerXyzModel = {
 }
 
 export const DEFAULT_VIEW: MapContextViewModel = {
-  center: fromLonLat([2.1, 46.8], 'EPSG:3857'),
-  zoom: 5,
+  center: fromLonLat([0, 15], 'EPSG:3857'),
+  zoom: 2,
 }
 
 @Injectable({
