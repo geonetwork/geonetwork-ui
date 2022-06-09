@@ -28,6 +28,7 @@ import {
 
 import {
   DEFAULT_BASELAYER_CONTEXT,
+  DEFAULT_VIEW,
   MapContextService,
 } from './map-context.service'
 
@@ -309,6 +310,80 @@ describe('MapContextService', () => {
           .getSource()
           .getUrls()
         expect(baselayerUrls).toEqual(DEFAULT_BASELAYER_CONTEXT.urls)
+      })
+    })
+    describe('uses default fallback view (without config)', () => {
+      let view
+      const map = new Map({})
+      const mapContext = {
+        extent: null,
+        center: null,
+        zoom: null,
+        layers: [
+          MAP_CTX_LAYER_XYZ_FIXTURE,
+          MAP_CTX_LAYER_WMS_FIXTURE,
+          MAP_CTX_LAYER_GEOJSON_FIXTURE,
+        ],
+      }
+      beforeEach(() => {
+        service.resetMapFromContext(map, mapContext)
+      })
+      it('create a map', () => {
+        expect(map).toBeTruthy()
+        expect(map).toBeInstanceOf(Map)
+      })
+      it('add layers', () => {
+        const layers = map.getLayers().getArray()
+        expect(layers.length).toEqual(3)
+      })
+      it('set view', () => {
+        view = map.getView()
+        expect(view).toBeTruthy()
+        expect(view).toBeInstanceOf(View)
+      })
+      it('set center', () => {
+        const center = view.getCenter()
+        expect(center).toEqual(DEFAULT_VIEW.center)
+      })
+      it('set zoom', () => {
+        const zoom = view.getZoom()
+        expect(zoom).toEqual(DEFAULT_VIEW.zoom)
+      })
+    })
+    describe('uses fallback view from config', () => {
+      let view
+      const map = new Map({})
+      const mapConfig = MAP_CONFIG_FIXTURE
+      const mapContext = {
+        extent: null,
+        center: null,
+        zoom: null,
+        layers: [],
+      }
+      beforeEach(() => {
+        service.resetMapFromContext(map, mapContext, mapConfig)
+      })
+      it('create a map', () => {
+        expect(map).toBeTruthy()
+        expect(map).toBeInstanceOf(Map)
+      })
+      it('add layers', () => {
+        const layers = map.getLayers().getArray()
+        console.log(layers)
+        expect(layers.length).toEqual(4)
+      })
+      it('set view', () => {
+        view = map.getView()
+        expect(view).toBeTruthy()
+        expect(view).toBeInstanceOf(View)
+      })
+      it('set center', () => {
+        const center = view.getCenter()
+        expect(center).toEqual([271504.324469, 5979210.100579999])
+      })
+      it('set zoom', () => {
+        const zoom = view.getZoom()
+        expect(zoom).toEqual(3)
       })
     })
   })

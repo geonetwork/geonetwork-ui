@@ -103,21 +103,14 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
           console.warn(error) // FIXME: report this to the user somehow
           return of(undefined)
         }),
-        map((extent) =>
-          extent
-            ? ({
-                layers,
-                view: {
-                  extent,
-                },
-              } as MapContextModel)
-            : ({
-                layers,
-                view: {
-                  center: fromLonLat([2.1, 46.8], 'EPSG:3857'),
-                  zoom: 5,
-                },
-              } as MapContextModel)
+        map(
+          (extent) =>
+            ({
+              layers,
+              view: {
+                extent,
+              },
+            } as MapContextModel)
         ),
         tap(() => this.resetSelection())
       )

@@ -607,6 +607,33 @@ describe('DataViewMapComponent', () => {
           })
         })
       })
+      describe('when extent could not be determined', () => {
+        beforeEach(inject([MapUtilsService], (mapUtils) => {
+          mapUtils._observer.next(null)
+          fixture.detectChanges()
+        }))
+        it('emits a new map context with the selected layer and extent null', () => {
+          expect(mapComponent.context).toEqual({
+            layers: [
+              {
+                url: 'http://abcd.com/',
+                name: 'layer2',
+                type: 'wms',
+              },
+            ],
+            view: {
+              extent: null,
+            },
+          })
+        })
+        it('provides selected link to the external viewer component', () => {
+          expect(externalViewerButtonComponent.link).toEqual({
+            url: 'http://abcd.com/',
+            name: 'layer2',
+            protocol: 'OGC:WMS',
+          })
+        })
+      })
       describe('when extent computation fails', () => {
         beforeEach(inject([MapUtilsService], (mapUtils) => {
           mapUtils._observer.error('extent computation failed')
@@ -621,7 +648,7 @@ describe('DataViewMapComponent', () => {
                 type: 'wms',
               },
             ],
-            view: expect.any(Object),
+            view: { extent: undefined },
           })
         })
         it('provides selected link to the external viewer component', () => {
