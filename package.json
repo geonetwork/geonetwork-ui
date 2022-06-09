@@ -1,6 +1,10 @@
 {
   "name": "geonetwork-ui",
   "version": "0.0.0",
+  "engines": {
+    "node": "^16.15.0",
+    "npm": "^8.5.5"
+  },
   "scripts": {
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main",
