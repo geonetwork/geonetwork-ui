@@ -108,6 +108,12 @@ export const LINK_FIXTURES = {
     label: 'mylayer',
     url: 'https://my.ogc.server/wms',
   },
+  geodataWmts: {
+    protocol: 'OGC:WMTS',
+    name: 'mylayer',
+    label: 'mylayer',
+    url: 'https://my.ogc.server/wmts',
+  },
   geodataWfs: {
     protocol: 'OGC:WFS',
     name: 'mylayer',
