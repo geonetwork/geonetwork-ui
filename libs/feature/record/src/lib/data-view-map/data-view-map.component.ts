@@ -168,9 +168,7 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
     } else if (this.linkHelper.isWmtsLink(link)) {
       return this.mapUtils.getWmtsOptionsFromCapabilities(link).pipe(
         map((options) => ({
-          url: link.url,
           type: MapContextLayerTypeEnum.WMTS,
-          name: link.name,
           options: options,
         }))
       )

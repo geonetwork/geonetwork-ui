@@ -24,8 +24,6 @@ export interface MapContextLayerWmsModel {
 
 export interface MapContextLayerWmtsModel {
   type: 'wmts'
-  url: string
-  name: string
   options: Options
 }
 
