@@ -291,6 +291,14 @@ describe('LinkHelperService', () => {
       expect(service.isWmsLink(LINK_FIXTURES.geodataWfs)).toBeFalsy()
     })
   })
+  describe('#isWmtsLink', () => {
+    it('returns true for a WMTS link', () => {
+      expect(service.isWmtsLink(LINK_FIXTURES.geodataWmts)).toBeTruthy()
+    })
+    it('returns false for a WMS link', () => {
+      expect(service.isWmtsLink(LINK_FIXTURES.geodataWms)).toBeFalsy()
+    })
+  })
   describe('#isWfsLink', () => {
     it('returns true for a WFS link', () => {
       expect(service.isWfsLink(LINK_FIXTURES.geodataWfs)).toBeTruthy()

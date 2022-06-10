@@ -80,6 +80,11 @@ class MapUtilsServiceMock {
       }
     })
   })
+  getWmtsOptionsFromCapabilities = jest.fn(function () {
+    return new Observable((observer) => {
+      observer.next(null)
+    })
+  })
   _returnImmediately = true
   _observer = null
 }
@@ -394,6 +399,32 @@ describe('DataViewMapComponent', () => {
             {
               type: 'geojson',
               data: SAMPLE_GEOJSON,
+            },
+          ],
+          view: expect.any(Object),
+        })
+      })
+    })
+
+    describe('with a link using WMTS protocol', () => {
+      beforeEach(fakeAsync(() => {
+        mdViewFacade.mapApiLinks$.next([
+          {
+            url: 'http://abcd.com/wmts',
+            name: 'orthophoto',
+            protocol: 'OGC:WMTS',
+          },
+        ])
+        mdViewFacade.geoDataLinks$.next([])
+        tick(200)
+        fixture.detectChanges()
+      }))
+      it('emits a map context with the downloaded data from WFS', () => {
+        expect(mapComponent.context).toEqual({
+          layers: [
+            {
+              type: 'wmts',
+              options: expect.any(Object),
             },
           ],
           view: expect.any(Object),
