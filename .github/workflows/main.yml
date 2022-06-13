@@ -32,6 +32,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v2
+        with:
+          main-branch-name: 'master'
+
       - name: Cache node modules
         uses: actions/cache@v1
         env:
@@ -44,20 +49,12 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Install
-        run: npm ci
-
-      - name: Lint
-        run: npm run affected:lint
-
-      - name: Check formatting
-        run: npm run format:check
-
-      - name: Unit tests
-        run: npm run affected:test
-
-      - name: Attempt production build
-        run: npm run affected:build
+      - run: npm ci
+      - run: npx nx workspace-lint
+      - run: npx nx format:check --base=$NX_BASE --head=$NX_HEAD
+      - run: npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=lint --parallel=3
+      - run: npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=test --parallel=3 --ci --code-coverage
+      - run: npx nx affected --target=build --parallel=3
 
   gh-pages:
     runs-on: ubuntu-latest
@@ -69,6 +66,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
       - name: Cache node modules
         uses: actions/cache@v1
