@@ -23,6 +23,21 @@ background_color = "#fdfbff"
 main_font = 'sans-serif'
 `
 
+const CONFIG_WRONG_LANGUAGE_CODE = `
+[global]
+geonetwork4_api_url = "/geonetwork/srv/api"
+proxy_path = "/proxy/?url="
+metadata_language = "fra"
+
+[map]
+
+[theme]
+primary_color = "#093564"
+secondary_color = "#c2e9dc"
+main_color = "#212029" # All-purpose text color
+background_color = "#fdfbff"
+`
+
 const CONFIG_UNRECOGNIZED_KEYS = `
 [global]
 geonetwork4_api_url = "/geonetwork/srv/api"
@@ -119,6 +134,28 @@ describe('app config utils', () => {
       it('throws an error', async () => {
         await loadAppConfig().catch(() => {}) // eslint-disable-line
         expect(() => getGlobalConfig()).toThrowError('not initialized')
+      })
+    })
+  })
+  describe('when the metadata_language key has a wrong value', () => {
+    beforeEach(async () => {
+      fetchMock.get('end:default.toml', () => CONFIG_WRONG_LANGUAGE_CODE)
+      await loadAppConfig()
+    })
+    describe('loadAppConfig', () => {
+      it('logs a warning', () => {
+        expect(console.warn).toHaveBeenCalledWith(
+          expect.stringMatching(/(?=.*metadata_language = "fra")/)
+        )
+      })
+    })
+    describe('getGlobalConfig', () => {
+      it('returns the global config', () => {
+        expect(getGlobalConfig()).toEqual({
+          GN4_API_URL: '/geonetwork/srv/api',
+          PROXY_PATH: '/proxy/?url=',
+          METADATA_LANGUAGE: 'fra',
+        })
       })
     })
   })
