@@ -457,6 +457,124 @@
       "tags": [],
       "implicitDependencies": ["demo"]
     },
+    "editor": {
+      "projectType": "application",
+      "root": "apps/editor",
+      "sourceRoot": "apps/editor/src",
+      "prefix": "geonetwork-ui",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/editor",
+            "index": "apps/editor/src/index.html",
+            "main": "apps/editor/src/main.ts",
+            "polyfills": "apps/editor/src/polyfills.ts",
+            "tsConfig": "apps/editor/tsconfig.app.json",
+            "assets": ["apps/editor/src/favicon.ico", "apps/editor/src/assets"],
+            "styles": ["apps/editor/src/styles.css"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/editor/src/environments/environment.ts",
+                  "with": "apps/editor/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "editor:build:production"
+            },
+            "development": {
+              "browserTarget": "editor:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "editor:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/editor/src/**/*.ts",
+              "apps/editor/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/editor"],
+          "options": {
+            "jestConfig": "apps/editor/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "editor-e2e": {
+      "root": "apps/editor-e2e",
+      "sourceRoot": "apps/editor-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/editor-e2e/cypress.json",
+            "devServerTarget": "editor:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "editor:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/editor-e2e/**/*.{js,ts}"]
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": ["editor"]
+    },
     "feature-auth": {
       "projectType": "library",
       "root": "libs/feature/auth",
