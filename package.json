@@ -65,6 +65,7 @@
     "@ltd/j-toml": "^1.24.0",
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
+    "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^7.0.0",
     "@nestjs/typeorm": "^7.1.5",
     "@ngrx/router-store": "13.0.2",

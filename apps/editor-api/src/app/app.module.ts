@@ -3,8 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-import { RecordEntity } from './record/record.entity'
-import { RecordModule } from './record/record.module'
+import { OrganisationsModule } from './organisations/organisations.module'
+import { RecordsModule } from './records/records.module'
 
 @Module({
   imports: [
@@ -23,7 +23,8 @@ import { RecordModule } from './record/record.module'
         migrationsDir: 'orm/migration',
       },
     }),
-    RecordModule,
+    OrganisationsModule,
+    RecordsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
