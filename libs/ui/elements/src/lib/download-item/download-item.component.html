@@ -1,5 +1,5 @@
 <div
-  class="root flex justify-between shadow-primary-light hover:shadow-primary px-6 py-5"
+  class="root flex justify-between shadow-primary-light hover:shadow-primary px-6 py-5 cursor-pointer"
 >
   <div class="flex-grow-1 overflow-hidden">
     <div
@@ -11,6 +11,7 @@
     <div class="pt-1">
       <span
         class="badge inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded capitalize"
+        [style.background-color]="color"
         >{{ link.format || ('downloads.format.unknown' | translate) }}</span
       >
     </div>
@@ -18,9 +19,10 @@
   <div class="flex-shrink-0 w-12 flex flex-col justify-center">
     <a href="{{ link.url }}" target="_blank">
       <mat-icon
-        class="align-middle download-icon text-3xl material-icons-outlined text-gray-200 mr-4"
-        >cloud_download</mat-icon
+        class="align-middle download-icon text-3xl material-icons-outlined text-gray-200 mr-4 hover:drop-shadow-md hover:text-green-500"
       >
+        cloud_download
+      </mat-icon>
     </a>
   </div>
 </div>
