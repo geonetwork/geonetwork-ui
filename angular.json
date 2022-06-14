@@ -556,7 +556,7 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@nrwl/node:webpack",
+          "builder": "@nrwl/node:build",
           "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/editor-api",
@@ -579,7 +579,7 @@
           }
         },
         "serve": {
-          "builder": "@nrwl/node:node",
+          "builder": "@nrwl/node:execute",
           "options": {
             "buildTarget": "editor-api:build"
           }
