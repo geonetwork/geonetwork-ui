@@ -3,11 +3,13 @@ import {
   getFileFormat,
   getWfsFormat,
   LinkHelperService,
+  sortPriority,
 } from '@geonetwork-ui/feature/search'
-import { catchError, map, startWith, switchMap } from 'rxjs/operators'
-import { MdViewFacade } from '../state'
-import { combineLatest } from 'rxjs'
+import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { combineLatest, of } from 'rxjs'
+import { catchError, map, switchMap } from 'rxjs/operators'
 import { DataService } from '../service/data.service'
+import { MdViewFacade } from '../state'
 
 @Component({
   selector: 'gn-ui-data-downloads',
@@ -46,10 +48,7 @@ export class DataDownloadsComponent {
       return combineLatest(
         wfsLinks.map((link) => this.dataService.getDownloadLinksFromWfs(link))
       ).pipe(
-        catchError((e) => {
-          this.error = e.message
-          return []
-        }),
+        // flaten array
         map(
           (wfsDownloadLinks) =>
             wfsDownloadLinks.reduce((prev, curr) => [...prev, ...curr]),
@@ -62,6 +61,7 @@ export class DataDownloadsComponent {
               format: getWfsFormat(link),
             }))
             .filter((link) => link.format)
+            // remove duplicates
             .filter(
               (link, i, links) =>
                 links.findIndex(
@@ -76,7 +76,17 @@ export class DataDownloadsComponent {
           ...wfsDownloadLinks,
           ...esriRestLinks,
         ]),
-        startWith([...otherLinks, ...esriRestLinks])
+        catchError((e) => {
+          this.error = e.message
+          return of([...otherLinks, ...esriRestLinks])
+        }),
+        map((allLinks) =>
+          allLinks.sort(
+            (a: MetadataLinkValid, b: MetadataLinkValid): number => {
+              return sortPriority(b) - sortPriority(a)
+            }
+          )
+        )
       )
     })
   )

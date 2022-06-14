@@ -72,9 +72,21 @@ export const FORMATS = {
   },
 }
 
-export function getWfsFormat(link: MetadataLinkValid): string | void {
+export function sortPriority(link: MetadataLinkValid): number {
   for (const format in FORMATS) {
-    for (const alias of FORMATS[format]) {
+    for (const ext of FORMATS[format].extensions) {
+      if ('format' in link && new RegExp(`${ext}`, 'i').test(link.format)) {
+        if (FORMATS[format].priority === 0) return 0
+        return Object.keys(FORMATS).length - FORMATS[format].priority
+      }
+    }
+  }
+  return 0
+}
+
+export function getWfsFormat(link: MetadataLinkValid): string {
+  for (const format in FORMATS) {
+    for (const alias of FORMATS[format].extensions) {
       if ('format' in link && new RegExp(`${alias}`, 'i').test(link.format))
         return `WFS:${format}`
     }
