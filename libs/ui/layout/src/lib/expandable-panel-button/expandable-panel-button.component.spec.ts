@@ -1,25 +1,24 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ExpandablePanelButtonComponent } from './expandable-panel-button.component';
+import { ExpandablePanelButtonComponent } from './expandable-panel-button.component'
 
 describe('ExpandablePanelButtonComponent', () => {
-  let component: ExpandablePanelButtonComponent;
-  let fixture: ComponentFixture<ExpandablePanelButtonComponent>;
+  let component: ExpandablePanelButtonComponent
+  let fixture: ComponentFixture<ExpandablePanelButtonComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ExpandablePanelButtonComponent ]
-    })
-    .compileComponents();
-  });
+      declarations: [ExpandablePanelButtonComponent],
+    }).compileComponents()
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ExpandablePanelButtonComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(ExpandablePanelButtonComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

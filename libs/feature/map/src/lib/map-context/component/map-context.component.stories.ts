@@ -1,7 +1,12 @@
 import { HttpClientModule } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiMapModule } from '@geonetwork-ui/ui/map'
-import { componentWrapperDecorator, Meta, moduleMetadata, Story } from '@storybook/angular'
+import {
+  componentWrapperDecorator,
+  Meta,
+  moduleMetadata,
+  Story,
+} from '@storybook/angular'
 import {
   MAP_CTX_LAYER_GEOJSON_FIXTURE,
   MAP_CTX_LAYER_WMS_FIXTURE,

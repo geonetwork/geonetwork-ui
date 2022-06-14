@@ -141,7 +141,9 @@ export class MapContextService {
 
   createView(viewModel: MapContextViewModel, map?: Map): View {
     const { center: centerInViewProj, zoom, maxZoom, maxExtent } = viewModel
-    const center = centerInViewProj ? fromLonLat(centerInViewProj, 'EPSG:3857') : [0,0]
+    const center = centerInViewProj
+      ? fromLonLat(centerInViewProj, 'EPSG:3857')
+      : [0, 0]
     const view = new View({
       center,
       zoom,
