@@ -1,19 +1,29 @@
 import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
 import { CreateOrganisationDto } from './dto/create-organisation.dto'
 import { UpdateOrganisationDto } from './dto/update-organisation.dto'
+import { OrganisationEntity } from './entities/organisation.entity'
 
 @Injectable()
 export class OrganisationsService {
-  create(createOrganisationDto: CreateOrganisationDto) {
-    return 'This action adds a new organisation'
+  constructor(
+    @InjectRepository(OrganisationEntity)
+    readonly repo: Repository<OrganisationEntity>
+  ) {}
+
+  create(
+    createOrganisationDto: CreateOrganisationDto
+  ): Promise<OrganisationEntity> {
+    return this.repo.save(createOrganisationDto)
   }
 
   findAll() {
-    return `This action returns all organisations`
+    return this.repo.find()
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} organisation`
+    return this.repo.findOne(id)
   }
 
   update(id: number, updateOrganisationDto: UpdateOrganisationDto) {
