@@ -519,7 +519,10 @@
               "browserTarget": "editor:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "proxyConfig": "apps/editor/proxy.conf.json"
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -541,6 +544,58 @@
           "outputs": ["coverage/apps/editor"],
           "options": {
             "jestConfig": "apps/editor/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "editor-api": {
+      "root": "apps/editor-api",
+      "sourceRoot": "apps/editor-api/src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:webpack",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/editor-api",
+            "main": "apps/editor-api/src/main.ts",
+            "tsConfig": "apps/editor-api/tsconfig.app.json",
+            "assets": ["apps/editor-api/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/editor-api/src/environments/environment.ts",
+                  "with": "apps/editor-api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:node",
+          "options": {
+            "buildTarget": "editor-api:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/editor-api/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/editor-api"],
+          "options": {
+            "jestConfig": "apps/editor-api/jest.config.ts",
             "passWithNoTests": true
           }
         }
