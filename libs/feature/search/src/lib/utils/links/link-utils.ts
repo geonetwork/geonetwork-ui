@@ -3,17 +3,73 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 marker('downloads.wfs.featuretype.not.found')
 
-const FORMATS = {
-  csv: ['csv'],
-  geojson: ['geojson'],
-  json: ['json'],
-  shp: ['shp', 'shape', 'zipped-shapefile'],
-  kml: ['kml', 'kmz'],
-  gpkg: ['gpkg', 'geopackage'],
-  excel: ['xls', 'xlsx', 'ms-excel', 'openxmlformats-officedocument'],
-  pdf: ['pdf'],
-  jpg: ['jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp'],
-  zip: ['zip'],
+export const FORMATS = {
+  csv: {
+    extensions: ['csv'],
+    priority: 1,
+    color: '#559d7f',
+    mimeTypes: ['text/csv'],
+  },
+  geojson: {
+    extensions: ['geojson'],
+    priority: 3,
+    color: '#1e5180',
+    mimeTypes: ['application/geo+json', 'application/vnd.geo+json'],
+  },
+  json: {
+    extensions: ['json'],
+    priority: 3,
+    color: '#1e5180',
+    mimeTypes: ['application/json'],
+  },
+  shp: {
+    extensions: ['shp', 'shape', 'zipped-shapefile'],
+    priority: 4,
+    color: '#328556',
+    mimeTypes: ['x-gis/x-shapefile'],
+  },
+  kml: {
+    extensions: ['kml', 'kmz'],
+    priority: 5,
+    color: '#348009',
+    mimeTypes: [
+      'application/vnd.google-earth.kml+xml',
+      'application/vnd.google-earth.kmz',
+    ],
+  },
+  gpkg: {
+    extensions: ['gpkg', 'geopackage'],
+    priority: 0,
+    color: '#fdsfds',
+    mimeTypes: ['application/geopackage+sqlite3'],
+  },
+  excel: {
+    extensions: ['xls', 'xlsx', 'ms-excel', 'openxmlformats-officedocument'],
+    priority: 2,
+    color: '#fdsfds',
+    mimeTypes: [
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    ],
+  },
+  pdf: {
+    extensions: ['pdf'],
+    priority: 0,
+    color: '#fdsfds',
+    mimeTypes: ['application/vnd.ms-excel'],
+  },
+  jpg: {
+    extensions: ['jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp'],
+    priority: 0,
+    color: '#fdsfds',
+    mimeTypes: ['image/jpg'],
+  },
+  zip: {
+    extensions: ['zip'],
+    priority: 0,
+    color: '#fdsfds',
+    mimeTypes: ['application/zip'],
+  },
 }
 
 export function getWfsFormat(link: MetadataLinkValid): string | void {
