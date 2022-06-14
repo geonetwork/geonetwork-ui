@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core'
-import { from, Observable, throwError } from 'rxjs'
-import { WfsEndpoint } from '@camptocamp/ogc-client'
-import { MetadataLinkValid, ProxyService } from '@geonetwork-ui/util/shared'
-import { catchError, map, pluck, tap } from 'rxjs/operators'
-import type { FeatureCollection } from 'geojson'
-import { readDataset, SupportedType } from '@geonetwork-ui/data-fetcher'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { WfsEndpoint } from '@camptocamp/ogc-client'
+import { readDataset, SupportedType } from '@geonetwork-ui/data-fetcher'
+import { MetadataLinkValid, ProxyService } from '@geonetwork-ui/util/shared'
+import type { FeatureCollection } from 'geojson'
+import { from, Observable, throwError } from 'rxjs'
+import { catchError, map, tap } from 'rxjs/operators'
 
 marker('wfs.unreachable.cors')
 marker('wfs.unreachable.http')
