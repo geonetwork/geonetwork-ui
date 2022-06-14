@@ -3,6 +3,9 @@ import {
   getWfsFormat,
   checkFileFormat,
   mimeTypeToFormat,
+  getBadgeColor,
+  sortPriority,
+  FORMATS,
 } from './link-utils'
 import { LINK_FIXTURES } from './link.fixtures'
 
@@ -136,6 +139,41 @@ describe('link utils', () => {
           url: 'http://example.com/service',
         })
       ).toEqual('WFS:geojson')
+    })
+  })
+  describe('#getBadgeColor for format', () => {
+    it('returns #1e5180', () => {
+      expect(getBadgeColor('json')).toEqual('#1e5180')
+    })
+    it('returns #559d7f', () => {
+      expect(getBadgeColor('csv')).toEqual('#559d7f')
+    })
+  })
+  describe('#sortPriority from formats object', () => {
+    const nFormats = Object.keys(FORMATS).length
+    it(`returns ${nFormats - 1}`, () => {
+      expect(
+        sortPriority({
+          protocol: 'WWW:DOWNLOAD',
+          description: 'Data in CSV format',
+          label: 'Data in CSV format',
+          format: 'csv',
+          name: 'abc.csv',
+          url: 'http://my.server/files/abc.csv',
+        })
+      ).toEqual(nFormats - 1)
+    })
+    it(`returns ${nFormats - 5}`, () => {
+      expect(
+        sortPriority({
+          protocol: 'WWW:DOWNLOAD',
+          description: 'Data in KML format',
+          label: 'Data in KML format',
+          format: 'kml',
+          name: 'abc.kml',
+          url: 'http://my.server/files/abc.kml',
+        })
+      ).toEqual(nFormats - 5)
     })
   })
   describe('#checkFileFormat', () => {
