@@ -213,15 +213,4 @@ describe('MapUtilsService', () => {
       })
     })
   })
-  describe('#getViewFromExtent', () => {
-    const extent = [0, 0, 100, 100]
-    const map = new Map({})
-    map.setSize([100, 100])
-    it('gets view for map from extent', () => {
-      expect(service.getViewFromExtent(extent, map)).toEqual({
-        center: [50, 50],
-        zoom: 17.256199785269995,
-      })
-    })
-  })
 })

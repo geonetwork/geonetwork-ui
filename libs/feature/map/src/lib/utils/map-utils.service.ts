@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import type { FeatureCollection } from 'geojson'
-import { extend, Extent, getCenter, isEmpty } from 'ol/extent'
+import { extend, Extent, isEmpty } from 'ol/extent'
 import OlFeature from 'ol/Feature'
 import GeoJSON from 'ol/format/GeoJSON'
 import { Geometry } from 'ol/geom'
@@ -12,11 +12,11 @@ import { Source } from 'ol/source'
 import ImageWMS from 'ol/source/ImageWMS'
 import TileWMS from 'ol/source/TileWMS'
 import VectorSource from 'ol/source/Vector'
-import { optionsFromCapabilities, Options } from 'ol/source/WMTS'
+import { Options, optionsFromCapabilities } from 'ol/source/WMTS'
 import WMTSCapabilities from 'ol/format/WMTSCapabilities'
 import { from, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { MapContextLayerModel, MapContextViewModel } from '../..'
+import { MapContextLayerModel } from '../..'
 import { MapUtilsWMSService } from './map-utils-wms.service'
 import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
 
@@ -152,15 +152,6 @@ export class MapUtilsService {
       ]),
       map((extent) => (isEmpty(extent) ? null : extent))
     )
-  }
-
-  getViewFromExtent(extent: Extent, map: Map): MapContextViewModel {
-    const center = getCenter(extent)
-    const resolution = map
-      .getView()
-      .getResolutionForExtent(extent, map.getSize())
-    const zoom = map.getView().getZoomForResolution(resolution)
-    return { center, zoom }
   }
 
   getWmtsOptionsFromCapabilities(link: MetadataLinkValid): Observable<Options> {

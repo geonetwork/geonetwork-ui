@@ -71,9 +71,9 @@ export type MapContextLayerModel =
   | MapContextLayerGeojsonModel
 
 export interface MapContextViewModel {
-  center?: Coordinate //expressed in map projection (EPSG:3857)
+  center?: Coordinate // expressed in long/lat (EPSG:4326)
   zoom?: number
-  extent?: Extent //expressed in map projection (EPSG:3857)
+  extent?: Extent // expressed in long/lat (EPSG:4326)
   maxZoom?: number
-  maxExtent?: Extent //expressed in map projection (EPSG:3857)
+  maxExtent?: Extent // expressed in long/lat (EPSG:4326)
 }
