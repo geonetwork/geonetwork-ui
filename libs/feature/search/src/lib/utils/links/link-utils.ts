@@ -91,6 +91,7 @@ export function getWfsFormat(link: MetadataLinkValid): string {
         return `WFS:${format}`
     }
   }
+  return undefined
 }
 
 export function getFileFormat(link: MetadataLinkValid): string | void {
@@ -105,28 +106,19 @@ export function getFileFormat(link: MetadataLinkValid): string | void {
     }
   }
   for (const format in FORMATS) {
-    for (const alias of FORMATS[format]) {
+    for (const alias of FORMATS[format].extensions) {
       if (checkFileFormat(link, alias)) return format
     }
   }
 }
 
-export function mimeTypeToFormat(mimeType: string): string | void {
-  switch (mimeType) {
-    case 'application/json':
-      return 'json'
-    case 'application/geo+json':
-    case 'application/vnd.geo+json':
-      return 'geojson'
-    case 'text/csv':
-    case 'application/csv':
-      return 'csv'
-    case 'x-gis/x-shapefile':
-      return 'shp'
-    case 'application/vnd.ms-excel':
-    case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-      return 'excel'
+export function mimeTypeToFormat(mimeType: string): string {
+  for (const format in FORMATS) {
+    for (const mt of FORMATS[format].mimeTypes) {
+      if (new RegExp(`${mt}`, 'i').test(mimeType)) return format
+    }
   }
+  return 'unknown'
 }
 
 export function checkFileFormat(
@@ -137,4 +129,14 @@ export function checkFileFormat(
     ('name' in link && new RegExp(`[./]${format}`, 'i').test(link.name)) ||
     ('url' in link && new RegExp(`[./]${format}`, 'i').test(link.url))
   )
+}
+
+export function getBadgeColor(linkFormat: string): string | void {
+  for (const format in FORMATS) {
+    for (const alias of FORMATS[format].extensions) {
+      if (new RegExp(`${alias}`, 'i').test(linkFormat))
+        return FORMATS[format].color
+    }
+  }
+  return 'var(--color-primary)' // Default color ?
 }
