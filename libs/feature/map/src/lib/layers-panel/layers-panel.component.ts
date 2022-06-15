@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
 
 @Component({
   selector: 'gn-ui-layers-panel',
@@ -6,8 +6,4 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
   styleUrls: ['./layers-panel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LayersPanelComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class LayersPanelComponent {}

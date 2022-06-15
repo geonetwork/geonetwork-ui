@@ -5,7 +5,19 @@ import { AppComponent } from './app.component'
 import { FeatureMapModule } from '@geonetwork-ui/feature/map'
 import { ThemeService } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
-import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
+import {
+  TRANSLATE_DEFAULT_CONFIG,
+  UtilI18nModule,
+} from '@geonetwork-ui/util/i18n'
+import { MetaReducer, StoreModule } from '@ngrx/store'
+import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+import { EffectsModule } from '@ngrx/effects'
+import { storeFreeze } from 'ngrx-store-freeze'
+import { environment } from '../environments/environment'
+
+export const metaReducers: MetaReducer<any>[] = !environment.production
+  ? [storeFreeze]
+  : []
 
 @NgModule({
   declarations: [AppComponent],
@@ -13,6 +25,10 @@ import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
     BrowserModule,
     FeatureMapModule,
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+    UtilI18nModule,
+    StoreModule.forRoot({}, { metaReducers }),
+    StoreDevtoolsModule.instrument(),
+    EffectsModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

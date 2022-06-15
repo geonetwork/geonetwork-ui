@@ -10,14 +10,22 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatTabsModule } from '@angular/material/tabs'
 import { TranslateModule } from '@ngx-translate/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { AddLayerFromCatalogComponent } from './add-layer-from-catalog/add-layer-from-catalog.component'
+import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 
 @NgModule({
   declarations: [
     MapContextComponent,
     MapInstanceDirective,
     LayersPanelComponent,
+    AddLayerFromCatalogComponent,
   ],
-  exports: [MapContextComponent, MapInstanceDirective, LayersPanelComponent],
+  exports: [
+    MapContextComponent,
+    MapInstanceDirective,
+    LayersPanelComponent,
+    AddLayerFromCatalogComponent,
+  ],
   imports: [
     CommonModule,
     UiMapModule,
@@ -25,7 +33,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
     MatIconModule,
     MatTabsModule,
     TranslateModule,
-    BrowserAnimationsModule,
+    FeatureSearchModule,
   ],
   providers: [
     {

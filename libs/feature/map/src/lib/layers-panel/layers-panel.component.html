@@ -8,16 +8,18 @@
   <gn-ui-expandable-panel-button [titleTemplate]="addLayerTitle">
     <mat-tab-group animationDuration="200ms">
       <mat-tab [label]="'map.add.layer.catalog' | translate">
-        <div class="block">Add from catalog</div>
+        <div class="p-3">
+          <gn-ui-add-layer-from-catalog></gn-ui-add-layer-from-catalog>
+        </div>
       </mat-tab>
       <mat-tab [label]="'map.add.layer.wms' | translate">
-        <div class="block">Add from WMS</div>
+        <div class="p-3">Add from WMS</div>
       </mat-tab>
       <mat-tab [label]="'map.add.layer.wfs' | translate">
-        <div class="block">Add from WFS</div>
+        <div class="p-3">Add from WFS</div>
       </mat-tab>
       <mat-tab [label]="'map.add.layer.file' | translate">
-        <div class="block">Add from file</div>
+        <div class="p-3">Add from file</div>
       </mat-tab>
     </mat-tab-group>
   </gn-ui-expandable-panel-button>
