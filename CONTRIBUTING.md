@@ -171,7 +171,7 @@ ng test (lib_name)
 ng test --test-match=/data/dev/gn/ui/libs/common/src/lib/services/bootstrap.service.spec.ts
 ```
 
-Run `nx affected:test` to execute the unit tests affected by a change.
+Run `npm test` to execute the unit tests affected by a change.
 
 ### Running end-to-end tests
 
@@ -199,9 +199,9 @@ You can set up the correct _Working Directory_ once for all by putting the corre
 
 All contributed code must pass the lint & format checks.
 
-To run the lint step, use `npm run lint`.
+To run the lint step, use `npm run lint` for affected code, or `npm run lint` for all code.
 
-To check whether your code is formatted properly, use `npm run format:check`.
+To check whether your code is formatted properly, use `npm run format`.
 
 If you want Prettier to run on all the code and make sure everything is formatted, run `npm run format:write`.
 **This should be done before committing.** The recommended way is to set up your IDE to run Prettier automatically on save.

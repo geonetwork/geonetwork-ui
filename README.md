@@ -17,7 +17,7 @@ or using [docker](https://github.com/geonetwork/docker-geonetwork/tree/master/4.
 
 Run `npm install` to fetch all dependencies of the project.
 
-Run `ng serve app-search` to start the search app in a dev server.
+Run `npm start` to start the datahub app in a dev server.
 
 Once started the application is available at `http://localhost:4200/`.
 
@@ -61,13 +61,21 @@ The build artifacts will be stored in the `dist/` directory. Use the `--prod` fl
 
 ### Tests
 
-Run `npm test` to execute the unit tests via Jest.
+Run `npm test` to execute the affected unit tests via Jest.
+Affected code is compared to origin/master.
 
-You can test a specific lib or app or file with
+You can test
+
+- affected code
+- all modules
+- specific lib or app
+- specific test suite
 
 ```shell script
-npm test -- (lib_name)
-npm test -- --test-match=/data/dev/gn/ui/libs/common/src/lib/services/bootstrap.service.spec.ts
+npm run test
+npm run test:all
+ng test (lib_name)
+ng test --test-match=/data/dev/gn/ui/libs/common/src/lib/services/bootstrap.service.spec.ts
 ```
 
 ## Project structure
