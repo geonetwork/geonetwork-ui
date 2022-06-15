@@ -9,14 +9,33 @@
     (keyup.enter)="handleEnter($event.target.value)"
   />
   <button
-    class="text-primary hover:text-primary-lighter absolute clear-btn"
+    type="button"
+    class="text-primary-lightest hover:text-primary hover:bg-gray-50 absolute transition-all duration-100 clear-btn"
     *ngIf="searchInput.value"
-    matSuffix
     aria-label="Clear"
     (click)="clear()"
   >
     <mat-icon>close</mat-icon>
   </button>
+  <button
+    type="button"
+    class="text-primary hover:text-primary-darkest hover:bg-gray-100 border-gray-300 hover:border-gray-500 absolute transition-all duration-100 search-btn rounded-r"
+    aria-label="Trigger search"
+    (click)="handleClickSearch()"
+  >
+    <mat-icon>search</mat-icon>
+  </button>
+  <gn-ui-popup-alert
+    *ngIf="error"
+    class="absolute mt-2 w-full"
+    style="top: 100%; left: 0"
+    icon="error_outline"
+    position="top"
+    type="warning"
+  >
+    <span translate>search.autocomplete.error</span>
+    {{ error }}
+  </gn-ui-popup-alert>
 </div>
 <mat-autocomplete
   #auto="matAutocomplete"
@@ -26,7 +45,7 @@
   <mat-option
     *ngFor="let suggestion of suggestions$ | async"
     [value]="suggestion"
-    class="p-2 text-sm text-primary-lighter"
+    class="p-2 text-sm text-primary-lighter suggestion"
   >
     {{ displayWithFn(suggestion) }}
   </mat-option>

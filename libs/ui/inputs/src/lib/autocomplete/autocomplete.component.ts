@@ -18,8 +18,9 @@ import {
   MatAutocompleteSelectedEvent,
   MatAutocompleteTrigger,
 } from '@angular/material/autocomplete'
-import { Observable, ReplaySubject, Subscription } from 'rxjs'
+import { Observable, of, ReplaySubject, Subscription } from 'rxjs'
 import {
+  catchError,
   debounceTime,
   distinctUntilChanged,
   filter,
@@ -30,7 +31,7 @@ import {
   tap,
 } from 'rxjs/operators'
 
-export type AutcompleteItem = unknown
+export type AutocompleteItem = unknown
 
 @Component({
   selector: 'gn-ui-autocomplete',
@@ -42,24 +43,25 @@ export class AutocompleteComponent
   implements OnInit, AfterViewInit, OnDestroy, OnChanges
 {
   @Input() placeholder: string
-  @Input() action: (value: string) => Observable<AutcompleteItem[]>
-  @Input() value?: AutcompleteItem
+  @Input() action: (value: string) => Observable<AutocompleteItem[]>
+  @Input() value?: AutocompleteItem
   @Input() clearOnSelection = false
-  @Output() itemSelected = new EventEmitter<AutcompleteItem>()
-  @Output() inputSubmited = new EventEmitter<string>()
+  @Output() itemSelected = new EventEmitter<AutocompleteItem>()
+  @Output() inputSubmitted = new EventEmitter<string>()
   @ViewChild(MatAutocompleteTrigger) triggerRef: MatAutocompleteTrigger
   @ViewChild(MatAutocomplete) autocomplete: MatAutocomplete
   @ViewChild('searchInput') inputRef: ElementRef<HTMLInputElement>
 
   searching: boolean
-  suggestions$: Observable<AutcompleteItem[]>
+  suggestions$: Observable<AutocompleteItem[]>
   control = new FormControl()
   subscription = new Subscription()
   cancelEnter = true
   selectionSubject = new ReplaySubject<MatAutocompleteSelectedEvent>(1)
   lastInputValue$ = new ReplaySubject<string>(1)
+  error: string | null = null
 
-  @Input() displayWithFn: (AutcompleteItem) => string = (item) => item
+  @Input() displayWithFn: (AutocompleteItem) => string = (item) => item
 
   ngOnChanges(changes: SimpleChanges): void {
     const { value } = changes
@@ -74,11 +76,16 @@ export class AutocompleteComponent
 
   ngOnInit(): void {
     this.suggestions$ = this.control.valueChanges.pipe(
+      tap(() => (this.error = null)),
       filter((value) => value.length > 2),
       debounceTime(400),
       distinctUntilChanged(),
       tap(() => (this.searching = true)),
       switchMap((value) => this.action(value)),
+      catchError((error: Error) => {
+        this.error = error.message
+        return of([])
+      }),
       finalize(() => (this.searching = false))
     )
     this.subscription = this.control.valueChanges.subscribe((any) => {
@@ -99,7 +106,7 @@ export class AutocompleteComponent
     this.subscription.unsubscribe()
   }
 
-  updateInputValue(value: AutcompleteItem) {
+  updateInputValue(value: AutocompleteItem) {
     if (value) {
       this.control.setValue(value)
     }
@@ -116,10 +123,16 @@ export class AutocompleteComponent
 
   handleEnter(any: string) {
     if (!this.cancelEnter) {
-      this.inputSubmited.emit(any)
+      this.inputSubmitted.emit(any)
       this.triggerRef.closePanel()
     }
   }
+
+  handleClickSearch() {
+    this.inputSubmitted.emit(this.inputRef.nativeElement.value)
+    this.triggerRef.closePanel()
+  }
+
   handleSelection(event: MatAutocompleteSelectedEvent) {
     this.cancelEnter = true
     this.itemSelected.emit(event.option.value)
