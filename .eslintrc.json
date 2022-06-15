@@ -12,9 +12,37 @@
             "enforceBuildableLibDependency": true,
             "allow": [],
             "depConstraints": [
+              // shared lib should not depend on anything else (bottom of the tree)
+//              {
+//                "sourceTag": "scope:shared",
+//                "onlyDependOnLibsWithTags": []
+//              },
+              // feature libs (e.g. smart components & state) should depend on other libs
+              // and not include app-config (which should only be used by apps)
               {
-                "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
+                "sourceTag": "type:feature",
+                "onlyDependOnLibsWithTags": ["type:feature", "type:data-access", "type:ui", "type:util"],
+                "bannedExternalImports": ["*app-config"]
+              },
+              // data-access libs should only depend on data-access libs
+              {
+                "sourceTag": "type:data-access",
+                "onlyDependOnLibsWithTags": ["type:data-access"]
+              },
+              // ui libs should only depend on ui libs and shared & i18n utils
+              {
+                "sourceTag": "type:ui",
+                "onlyDependOnLibsWithTags": ["type:ui", "scope:i18n", "scope:shared"]
+              },
+              // util libs should only depend on util and data-access libs
+              {
+                "sourceTag": "type:util",
+                "onlyDependOnLibsWithTags": ["type:util", "type:data-access"]
+              },
+              // apps should depend on all kind of libs
+              {
+                "sourceTag": "type:app",
+                "onlyDependOnLibsWithTags": ["type:feature", "type:data-access", "type:ui", "type:util"]
               }
             ]
           }

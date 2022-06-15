@@ -7,7 +7,7 @@
       "sourceRoot": "libs/data-access/datafeeder/src",
       "prefix": "gn-ui",
       "architect": {},
-      "tags": []
+      "tags": ["type:data-access"]
     },
     "data-access-gn4": {
       "projectType": "library",
@@ -15,7 +15,7 @@
       "sourceRoot": "libs/data-access/gn4/src",
       "prefix": "gn-ui",
       "architect": {},
-      "tags": []
+      "tags": ["type:data-access"]
     },
     "datafeeder": {
       "projectType": "application",
@@ -119,7 +119,7 @@
           }
         }
       },
-      "tags": []
+      "tags": ["type:app"]
     },
     "datafeeder-e2e": {
       "root": "apps/datafeeder-e2e",
@@ -270,7 +270,7 @@
           }
         }
       },
-      "tags": []
+      "tags": ["type:app"]
     },
     "datahub-e2e": {
       "root": "apps/datahub-e2e",
@@ -426,7 +426,7 @@
           }
         }
       },
-      "tags": []
+      "tags": ["type:app"]
     },
     "demo-e2e": {
       "root": "apps/demo-e2e",
@@ -482,7 +482,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:feature"]
     },
     "feature-catalog": {
       "projectType": "library",
@@ -509,7 +509,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:feature"]
     },
     "feature-dataviz": {
       "projectType": "library",
@@ -536,7 +536,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:feature"]
     },
     "feature-editor": {
       "projectType": "library",
@@ -563,7 +563,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:feature"]
     },
     "feature-map": {
       "projectType": "library",
@@ -590,7 +590,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:feature"]
     },
     "feature-record": {
       "projectType": "library",
@@ -617,7 +617,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:feature"]
     },
     "feature-router": {
       "projectType": "library",
@@ -644,7 +644,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:feature"]
     },
     "feature-search": {
       "projectType": "library",
@@ -671,7 +671,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:feature"]
     },
     "map-viewer": {
       "projectType": "application",
@@ -768,7 +768,7 @@
           }
         }
       },
-      "tags": []
+      "tags": ["type:app"]
     },
     "map-viewer-e2e": {
       "root": "apps/map-viewer-e2e",
@@ -892,7 +892,7 @@
           }
         }
       },
-      "tags": []
+      "tags": ["type:app"]
     },
     "search-e2e": {
       "root": "apps/search-e2e",
@@ -948,7 +948,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:ui"]
     },
     "ui-elements": {
       "projectType": "library",
@@ -975,7 +975,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:ui"]
     },
     "ui-inputs": {
       "projectType": "library",
@@ -1002,7 +1002,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:ui"]
     },
     "ui-layout": {
       "projectType": "library",
@@ -1029,7 +1029,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:ui"]
     },
     "ui-map": {
       "projectType": "library",
@@ -1056,7 +1056,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:ui"]
     },
     "ui-search": {
       "projectType": "library",
@@ -1083,7 +1083,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:ui"]
     },
     "ui-widgets": {
       "projectType": "library",
@@ -1110,7 +1110,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:ui"]
     },
     "util-app-config": {
       "root": "libs/util/app-config",
@@ -1133,7 +1133,7 @@
           }
         }
       },
-      "tags": []
+      "tags": ["type:util", "scope:app-config"]
     },
     "util-data-fetcher": {
       "root": "libs/util/data-fetcher",
@@ -1167,7 +1167,7 @@
           }
         }
       },
-      "tags": []
+      "tags": ["type:util"]
     },
     "util-i18n": {
       "projectType": "library",
@@ -1194,7 +1194,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:util", "scope:i18n"]
     },
     "util-shared": {
       "projectType": "library",
@@ -1221,7 +1221,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:util", "scope:shared"]
     },
     "webcomponents": {
       "projectType": "application",
@@ -1352,7 +1352,7 @@
           }
         }
       },
-      "tags": []
+      "tags": ["type:app"]
     },
     "webcomponents-e2e": {
       "root": "apps/webcomponents-e2e",
