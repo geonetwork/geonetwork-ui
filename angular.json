@@ -690,7 +690,12 @@
             "tsConfig": "apps/map-viewer/tsconfig.app.json",
             "assets": [
               "apps/map-viewer/src/favicon.ico",
-              "apps/map-viewer/src/assets"
+              "apps/map-viewer/src/assets",
+              {
+                "glob": "*",
+                "input": "translations",
+                "output": "assets/i18n/"
+              }
             ],
             "styles": [
               "apps/map-viewer/src/styles.css",

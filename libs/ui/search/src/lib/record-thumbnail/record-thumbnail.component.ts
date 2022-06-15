@@ -1,5 +1,15 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { getThemeConfig } from '@geonetwork-ui/util/app-config'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  InjectionToken,
+  Input,
+  Optional,
+} from '@angular/core'
+
+export const THUMBNAIL_PLACEHOLDER = new InjectionToken<string>(
+  'thumbnail-placeholder'
+)
 
 @Component({
   selector: 'gn-ui-record-thumbnail',
@@ -11,5 +21,11 @@ export class RecordThumbnailComponent {
     this.imgUrl = url || this.placeholderUrl
   }
   imgUrl: string
-  placeholderUrl = getThemeConfig().THUMBNAIL_PLACEHOLDER
+  placeholderUrl =
+    this.optionalPlaceholderUrl || 'assets/img/thumb_placeholder.webp'
+  constructor(
+    @Optional()
+    @Inject(THUMBNAIL_PLACEHOLDER)
+    private optionalPlaceholderUrl: string
+  ) {}
 }

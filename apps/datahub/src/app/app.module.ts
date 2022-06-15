@@ -20,6 +20,7 @@ import {
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import {
+  METADATA_LANGUAGE,
   PROXY_PATH,
   ThemeService,
   UtilSharedModule,
@@ -43,6 +44,7 @@ import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import { SearchSummaryComponent } from './search/search-summary/search-summary.component'
 import { NavigationBarComponent } from './record/navigation-bar/navigation-bar.component'
+import { THUMBNAIL_PLACEHOLDER } from '@geonetwork-ui/ui/search'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
@@ -105,6 +107,14 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
       provide: PROXY_PATH,
       useFactory: () => getGlobalConfig().PROXY_PATH,
     },
+    {
+      provide: METADATA_LANGUAGE,
+      useFactory: () => getGlobalConfig().METADATA_LANGUAGE,
+    },
+    {
+      provide: THUMBNAIL_PLACEHOLDER,
+      useFactory: () => getThemeConfig().THUMBNAIL_PLACEHOLDER,
+    },
   ],
   bootstrap: [AppComponent],
 })
@@ -121,9 +131,10 @@ export class AppModule {
       getThemeConfig().SECONDARY_COLOR,
       getThemeConfig().MAIN_COLOR,
       getThemeConfig().BACKGROUND_COLOR,
-      getThemeConfig().MAIN_FONT,
-      getThemeConfig().TITLE_FONT,
-      getThemeConfig().FONTS_STYLESHEET_URL
+      getThemeConfig().MAIN_FONT || "'Rubik', sans-serif",
+      getThemeConfig().TITLE_FONT || "'Readex Pro', sans-serif",
+      getThemeConfig().FONTS_STYLESHEET_URL ||
+        'https://fonts.googleapis.com/css2?family=Readex+Pro&family=Rubik&display=swap'
     )
     ThemeService.generateBgOpacityClasses(
       'primary',

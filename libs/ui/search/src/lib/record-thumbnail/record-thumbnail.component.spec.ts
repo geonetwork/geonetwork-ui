@@ -2,15 +2,7 @@ import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
-
 import { RecordThumbnailComponent } from './record-thumbnail.component'
-
-jest.mock('@geonetwork-ui/util/app-config', () => ({
-  getThemeConfig: jest.fn(() => ({
-    THUMBNAIL_PLACEHOLDER: 'assets/img/placeholder.svg',
-  })),
-  isConfigLoaded: jest.fn(() => true),
-}))
 
 describe('RecordThumbnailComponent', () => {
   let component: RecordThumbnailComponent
@@ -70,12 +62,12 @@ describe('RecordThumbnailComponent', () => {
     const placeholderUrl = 'assets/img/placeholder.svg'
     let img
     beforeEach(() => {
-      component.thumbnailUrl = undefined
       component.placeholderUrl = placeholderUrl
+      component.thumbnailUrl = undefined
       fixture.detectChanges()
       img = de.query(By.css('img'))
     })
-    it('is diplayed, with placeholder src', () => {
+    it('is displayed, with placeholder src', () => {
       expect(img.nativeElement.getAttribute('src')).toEqual(placeholderUrl)
     })
   })
