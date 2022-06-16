@@ -1261,12 +1261,12 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "12kb",
-                  "maximumError": "16kb"
+                  "maximumError": "256kb"
                 }
               ],
               "fileReplacements": [
