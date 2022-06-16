@@ -1,16 +1,4 @@
-::ng-deep gn-ui-fuzzy-search input.mat-autocomplete-trigger {
-  font-size: 18px;
-  font-weight: 500;
-  border-radius: 8px;
-}
-
 ::ng-deep .mat-autocomplete-panel {
   margin-top: 10px;
   border-radius: 8px;
-}
-
-::ng-deep gn-ui-fuzzy-search .clear-btn {
-  right: 24px !important;
-  top: 18px !important;
-  color: var(--color-gray-400);
 }
