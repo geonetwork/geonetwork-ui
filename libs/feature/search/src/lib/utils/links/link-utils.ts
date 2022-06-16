@@ -8,7 +8,7 @@ export const FORMATS = {
     extensions: ['csv'],
     priority: 1,
     color: '#559d7f',
-    mimeTypes: ['text/csv'],
+    mimeTypes: ['text/csv', 'application/csv'],
   },
   geojson: {
     extensions: ['geojson'],
@@ -115,7 +115,7 @@ export function getFileFormat(link: MetadataLinkValid): string | void {
 export function mimeTypeToFormat(mimeType: string): string {
   for (const format in FORMATS) {
     for (const mt of FORMATS[format].mimeTypes) {
-      if (new RegExp(`${mt}`, 'i').test(mimeType)) return format
+      if (mimeType === mt) return format
     }
   }
   return undefined
