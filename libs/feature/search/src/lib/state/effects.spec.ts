@@ -3,10 +3,21 @@ import { AuthService } from '@geonetwork-ui/feature/auth'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { ElasticsearchMapper } from '../utils/mapper'
 import {
+  AddResults,
   ClearPagination,
+  ClearResults,
   DEFAULT_SEARCH_KEY,
+  PatchResultsAggregations,
+  RequestMoreOnAggregation,
+  RequestMoreResults,
   Scroll,
+  SetFilters,
   SetIncludeOnAggregation,
+  SetResultsAggregations,
+  SetResultsHits,
+  SetSearch,
+  SetSortBy,
+  UpdateFilters,
   UpdateRequestAggregationTerm,
 } from './actions'
 import { EffectsModule } from '@ngrx/effects'
@@ -14,64 +25,44 @@ import { provideMockActions } from '@ngrx/effects/testing'
 import { StoreModule } from '@ngrx/store'
 import { hot } from 'jasmine-marbles'
 import { Observable, of } from 'rxjs'
-import {
-  AddResults,
-  ClearResults,
-  PatchResultsAggregations,
-  RequestMoreOnAggregation,
-  RequestMoreResults,
-  SetFilters,
-  SetResultsAggregations,
-  SetResultsHits,
-  SetSearch,
-  SetSortBy,
-  UpdateFilters,
-} from './actions'
 import { SearchEffects } from './effects'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { ES_FIXTURE_AGGS_REQUEST } from '@geonetwork-ui/util/shared'
+import {
+  ES_FIXTURE_AGGS_REQUEST,
+  simpleWithAgg,
+} from '@geonetwork-ui/util/shared'
 
-const globalConfigMock = {
-  GN4_API_URL: 'http://my.geonetwork.api',
-  PROXY_PATH: '/proxy?',
-  METADATA_LANGUAGE: 'fre',
-}
-jest.mock('@geonetwork-ui/util/app-config', () => ({
-  getGlobalConfig: () => globalConfigMock,
-  isConfigLoaded: jest.fn(() => true),
-}))
-
-const initialStateSearchMock = initialState[DEFAULT_SEARCH_KEY]
-const initialStateMock = {
+const defaultSearchState = initialState[DEFAULT_SEARCH_KEY]
+const stateWithSearches = {
   ...initialState,
   [DEFAULT_SEARCH_KEY]: {
-    ...initialStateSearchMock,
+    ...defaultSearchState,
     config: {
-      ...initialStateSearchMock.config,
+      ...defaultSearchState.config,
       aggregations: ES_FIXTURE_AGGS_REQUEST,
     },
   },
   main: {
-    ...initialStateSearchMock,
+    ...defaultSearchState,
     config: {
-      ...initialStateSearchMock.config,
+      ...defaultSearchState.config,
       aggregations: {},
     },
   },
 }
 
-const searchServiceMock = {
-  search: () => of({ hits: { hits: [] }, aggregations: { abc: {} } }), // TODO: use a fixture here
-  configuration: {
+class SearchServiceMock {
+  configuration = {
     basePath: 'http://geonetwork/srv/api',
-  },
+  }
+  search = () => of(simpleWithAgg)
 }
-const authServiceMock = {
-  authReady: () => of(true),
+class AuthServiceMock {
+  authReady = () => of(true)
 }
-const esMapperMock = {
-  toRecords: () => [],
+class EsMapperMock {
+  toRecords = () => []
 }
 
 describe('Effects', () => {
@@ -84,7 +75,7 @@ describe('Effects', () => {
         EffectsModule.forRoot(),
         StoreModule.forRoot({}),
         StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
-          initialState: initialStateMock,
+          initialState: stateWithSearches,
         }),
         HttpClientTestingModule,
       ],
@@ -93,15 +84,15 @@ describe('Effects', () => {
         SearchEffects,
         {
           provide: SearchApiService,
-          useValue: searchServiceMock,
+          useClass: SearchServiceMock,
         },
         {
           provide: AuthService,
-          useValue: authServiceMock,
+          useClass: AuthServiceMock,
         },
         {
           provide: ElasticsearchMapper,
-          useValue: esMapperMock,
+          useClass: EsMapperMock,
         },
       ],
     })
