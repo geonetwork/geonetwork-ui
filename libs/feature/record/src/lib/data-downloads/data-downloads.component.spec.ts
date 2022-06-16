@@ -8,7 +8,7 @@ import { BehaviorSubject, of, throwError } from 'rxjs'
 import { MdViewFacade } from '../state'
 import { DataDownloadsComponent } from './data-downloads.component'
 import { MetadataLink } from '@geonetwork-ui/util/shared'
-import { Component, Input } from '@angular/core'
+import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { DataService } from '../service/data.service'
 
@@ -85,6 +85,7 @@ describe('DataDownloadsComponent', () => {
           useClass: DataServiceMock,
         },
       ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
     facade = TestBed.inject(MdViewFacade)
   })
@@ -204,62 +205,62 @@ describe('DataDownloadsComponent', () => {
         expect(downloadLinks).toEqual([
           {
             description: 'Lieu de surveillance (point)',
-            name: 'surval_parametre_point.csv',
             format: 'csv',
+            name: 'surval_parametre_point.csv',
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/surval_parametre_point.csv',
           },
           {
+            description: 'Lieu de surveillance (ligne)',
+            format: 'WFS:csv',
+            name: 'surval_parametre_ligne',
+            protocol: 'OGC:WFS',
+            url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
+          },
+          {
+            description: 'ArcGIS GeoService Wfs',
+            format: 'WFS:csv',
+            mediaType: 'application/json',
+            name: 'mes_hdf',
+            protocol: 'ESRI:REST',
+            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/WFSServer/0',
+          },
+          {
             description: 'Lieu de surveillance (polygone)',
-            name: 'surval_parametre_polygone.geojson',
             format: 'geojson',
+            name: 'surval_parametre_polygone.geojson',
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/surval_parametre_polygone.geojson',
           },
           {
             description: 'Lieu de surveillance (ligne)',
-            name: 'surval_parametre_ligne',
             format: 'WFS:geojson',
+            name: 'surval_parametre_ligne',
             protocol: 'OGC:WFS',
             url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
           },
           {
-            description: 'Lieu de surveillance (ligne)',
-            name: 'surval_parametre_ligne',
-            format: 'WFS:csv',
-            protocol: 'OGC:WFS',
-            url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
-          },
-          {
-            protocol: 'ESRI:REST',
-            name: 'mes_hdf',
+            description: 'ArcGIS GeoService Wfs',
             format: 'WFS:geojson',
-            description: 'ArcGIS GeoService Wfs',
             mediaType: 'application/json',
-            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/WFSServer/0',
-          },
-          {
-            protocol: 'ESRI:REST',
             name: 'mes_hdf',
-            format: 'WFS:csv',
-            description: 'ArcGIS GeoService Wfs',
-            mediaType: 'application/json',
+            protocol: 'ESRI:REST',
             url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/WFSServer/0',
           },
           {
-            protocol: 'ESRI:REST',
-            name: 'mes_hdf_journalier_poll_princ',
-            format: 'REST:json',
             description: 'ArcGIS GeoService',
+            format: 'REST:json',
             mediaType: 'application/json',
+            name: 'mes_hdf_journalier_poll_princ',
+            protocol: 'ESRI:REST',
             url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf_journalier_poll_princ/FeatureServer/0/query?f=json&where=1=1&outFields=*',
           },
           {
-            protocol: 'ESRI:REST',
-            name: 'mes_hdf_journalier_poll_princ',
-            format: 'REST:geojson',
             description: 'ArcGIS GeoService',
+            format: 'REST:geojson',
             mediaType: 'application/json',
+            name: 'mes_hdf_journalier_poll_princ',
+            protocol: 'ESRI:REST',
             url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf_journalier_poll_princ/FeatureServer/0/query?f=geojson&where=1=1&outFields=*',
           },
         ])
