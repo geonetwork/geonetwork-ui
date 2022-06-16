@@ -744,7 +744,8 @@
               "browserTarget": "map-viewer:build:production"
             },
             "development": {
-              "browserTarget": "map-viewer:build:development"
+              "browserTarget": "map-viewer:build:development",
+              "proxyConfig": "proxy-config.js"
             }
           },
           "defaultConfiguration": "development"
