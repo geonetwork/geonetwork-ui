@@ -4,6 +4,7 @@ import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { ElasticsearchMapper } from '../utils/mapper'
 import {
   AddResults,
+  ClearError,
   ClearPagination,
   ClearResults,
   DEFAULT_SEARCH_KEY,
@@ -11,6 +12,7 @@ import {
   RequestMoreOnAggregation,
   RequestMoreResults,
   Scroll,
+  SetError,
   SetFilters,
   SetIncludeOnAggregation,
   SetResultsAggregations,
@@ -24,7 +26,7 @@ import { EffectsModule } from '@ngrx/effects'
 import { provideMockActions } from '@ngrx/effects/testing'
 import { StoreModule } from '@ngrx/store'
 import { hot } from 'jasmine-marbles'
-import { Observable, of } from 'rxjs'
+import { Observable, of, throwError } from 'rxjs'
 import { SearchEffects } from './effects'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
@@ -32,6 +34,8 @@ import {
   ES_FIXTURE_AGGS_REQUEST,
   simpleWithAgg,
 } from '@geonetwork-ui/util/shared'
+import { SearchService } from '@geonetwork-ui/feature/search'
+import { HttpErrorResponse } from '@angular/common/http'
 
 const defaultSearchState = initialState[DEFAULT_SEARCH_KEY]
 const stateWithSearches = {
@@ -163,24 +167,65 @@ describe('Effects', () => {
   describe('loadResults$', () => {
     it('load new results on requestMoreResults action', () => {
       actions$ = hot('-a-', { a: new RequestMoreResults() })
-      const expected = hot('-(bcd)-', {
+      const expected = hot('-(bcde)-', {
         b: new AddResults([]),
         c: new SetResultsAggregations({ abc: {} }),
         d: new SetResultsHits(undefined),
+        e: new ClearError(),
       })
-
       expect(effects.loadResults$).toBeObservable(expected)
     })
 
     it('propagate action search id', () => {
       actions$ = hot('-a-', { a: new RequestMoreResults('main') })
-      const expected = hot('-(bcd)-', {
+      const expected = hot('-(bcde)-', {
         b: new AddResults([], 'main'),
         c: new SetResultsAggregations({ abc: {} }, 'main'),
         d: new SetResultsHits(undefined, 'main'),
+        e: new ClearError('main'),
       })
-
       expect(effects.loadResults$).toBeObservable(expected)
+    })
+
+    describe('when search fails with HTTP error', () => {
+      beforeEach(() => {
+        const searchService = TestBed.inject(SearchApiService)
+        searchService.search = () =>
+          throwError(
+            new HttpErrorResponse({
+              status: 401,
+            })
+          )
+      })
+      it('stores the error', () => {
+        actions$ = hot('-a-', { a: new RequestMoreResults() })
+        const expected = hot('-b-', {
+          b: new SetError(401, expect.stringContaining('401')),
+        })
+        expect(effects.loadResults$).toBeObservable(expected)
+      })
+      it('stores the error and propagates search id', () => {
+        actions$ = hot('-a-', { a: new RequestMoreResults('main') })
+        const expected = hot('-b-', {
+          b: new SetError(401, expect.stringContaining('401'), 'main'),
+        })
+        expect(effects.loadResults$).toBeObservable(expected)
+      })
+    })
+
+    describe('when search fails with unspecified error', () => {
+      beforeEach(() => {
+        const searchService = TestBed.inject(SearchApiService)
+        searchService.search = () =>
+          throwError(new Error('probably CORS related'))
+      })
+      it('stores the error with a 0 code and propagates search id', () => {
+        actions$ = hot('-a-', { a: new RequestMoreResults('main') })
+        const expected = hot('-b-', {
+          b: new SetError(0, 'probably CORS related', 'main'),
+        })
+        expect(effects.loadResults$).toBeObservable(expected)
+      })
     })
   })
 

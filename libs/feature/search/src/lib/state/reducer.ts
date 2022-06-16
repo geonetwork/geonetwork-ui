@@ -284,6 +284,7 @@ export function reducerSearch(
       return {
         ...state,
         error: { code, message },
+        loadingMore: false,
       }
     }
 

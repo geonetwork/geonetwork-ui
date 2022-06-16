@@ -9,9 +9,16 @@ import {
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
 import { of } from 'rxjs'
-import { switchMap, map, withLatestFrom, mergeMap } from 'rxjs/operators'
+import {
+  switchMap,
+  map,
+  withLatestFrom,
+  mergeMap,
+  catchError,
+} from 'rxjs/operators'
 import {
   AddResults,
+  ClearError,
   ClearPagination,
   ClearResults,
   PAGINATE,
@@ -27,6 +34,7 @@ import {
   SET_PAGINATION,
   SET_SEARCH,
   SET_SORT_BY,
+  SetError,
   SetIncludeOnAggregation,
   SetResultsAggregations,
   SetResultsHits,
@@ -36,6 +44,7 @@ import {
 } from './actions'
 import { SearchState } from './reducer'
 import { getSearchStateSearch } from './selectors'
+import { HttpErrorResponse } from '@angular/common/http'
 
 @Injectable()
 export class SearchEffects {
@@ -108,7 +117,15 @@ export class SearchEffects {
               new AddResults(records, action.id),
               new SetResultsAggregations(aggregations, action.id),
               new SetResultsHits(response.hits.total, action.id),
+              new ClearError(action.id),
             ]
+          }),
+          catchError((error: HttpErrorResponse | Error) => {
+            if ('status' in error) {
+              return of(new SetError(error.status, error.message, action.id))
+            } else {
+              return of(new SetError(0, error.message, action.id))
+            }
           })
         )
       ) // wait for auth to be known
