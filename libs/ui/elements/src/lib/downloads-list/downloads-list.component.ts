@@ -1,4 +1,9 @@
-import { Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core'
 import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
 import { getBadgeColor, LinkHelperService } from '@geonetwork-ui/feature/search'
 import { TranslateService } from '@ngx-translate/core'
@@ -7,8 +12,9 @@ import { TranslateService } from '@ngx-translate/core'
   selector: 'gn-ui-downloads-list',
   templateUrl: './downloads-list.component.html',
   styleUrls: ['./downloads-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DownloadsListComponent {
+export class DownloadsListComponent implements OnInit {
   constructor(
     private linkHelper: LinkHelperService,
     private translateService: TranslateService
@@ -17,12 +23,12 @@ export class DownloadsListComponent {
   @Input() links: MetadataLinkValid[]
 
   filterParam: string = ''
-  filterFormats: string[] = ['csv', 'excel', 'json', 'shapefile']
+  filterFormats: string[] = ['all', 'csv', 'excel', 'json', 'shp', 'others']
   activeFilterFormats: string[] = ['all']
 
   processedLinks: MetadataLinkValid[] = []
   filteredLinks: MetadataLinkValid[] = []
-  filterButtons: Object[]
+  filterButtons: FilterButton[]
 
   toggleFilterFormat(format: string): void {
     if (format === 'all') {
@@ -39,13 +45,18 @@ export class DownloadsListComponent {
     return this.activeFilterFormats.includes(filter)
   }
 
-  ngOnChanges(): void {
+  getFilterFormatTitle(format: string) {
+    if (format === 'all' || format === 'others') {
+      return this.translateService.instant(`datahub.search.filter.${format}`)
+    }
+    return format
+  }
+
+  ngOnInit(): void {
     this.processedLinks = this.formatLinks(this.links)
     this.processedLinks = this.assignColor(this.processedLinks)
     this.processedLinks = this.isGeneratedFromWfs(this.processedLinks)
     this.filteredLinks = this.filterLinks(this.processedLinks)
-
-    console.log(this.filteredLinks)
 
     this.filterButtons = this.filterFormats.map((format) => {
       return {
@@ -75,13 +86,13 @@ export class DownloadsListComponent {
     if (this.activeFilterFormats.includes('others')) {
       others = links.filter((link) => {
         let isOther = true
-        for (let format of this.filterFormats) {
+        for (const format of this.filterFormats) {
           if (format === link.format) isOther = false
         }
         return isOther
       })
     }
-    let filteredLinks = links.filter((link: MetadataLinkValid) => {
+    const filteredLinks = links.filter((link: MetadataLinkValid) => {
       return this.activeFilterFormats.includes(link.format)
     })
     return [...filteredLinks, ...others]
@@ -101,11 +112,16 @@ export class DownloadsListComponent {
       if (!this.linkHelper.isWfsLink(link)) return link
       return {
         ...link,
-        name: this.translateService.instant(
-          'datahub.search.filter.generatedByWfs',
-          { name: link.label }
-        ),
+        name: `${link.label} (${this.translateService.instant(
+          'datahub.search.filter.generatedByWfs'
+        )})`,
+        isWfs: true,
       }
     })
   }
+}
+
+export type FilterButton = {
+  format: string
+  color: string | void
 }

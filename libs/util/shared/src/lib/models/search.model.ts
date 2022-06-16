@@ -54,6 +54,7 @@ export interface MetadataLinkValid {
   format?: string
   description?: string
   label?: string
+  isWfs?: boolean
 }
 export type MetadataLink = MetadataLinkValid | { invalid: true; reason: string }
 

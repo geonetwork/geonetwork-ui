@@ -80,7 +80,7 @@
   "datahub.search.back": "",
   "datahub.search.filter.all": "",
   "datahub.search.filter.others": "",
-  "datahub.search.filter.generatedByWfs": "{name}",
+  "datahub.search.filter.generatedByWfs": "name",
   "dataset.error.http": "",
   "dataset.error.network": "",
   "dataset.error.parse": "",

@@ -1,9 +1,11 @@
-<div
+<a
+  href="{{ link.url }}"
+  target="_blank"
   class="root flex justify-between shadow-primary-light hover:shadow-primary px-6 py-5 cursor-pointer"
 >
   <div class="flex-grow-1 overflow-hidden">
     <div
-      class="text-21 text-black capitalize truncate font-title max-w-4xl"
+      class="text-21 text-black uppercase truncate font-title max-w-4xl"
       [title]="link.name"
     >
       {{ link.name }}
@@ -14,15 +16,19 @@
         [style.background-color]="color"
         >{{ link.format || ('downloads.format.unknown' | translate) }}</span
       >
+      <span
+        class="pl-2 inline-flex items-center"
+        *ngIf="link.isWfs"
+        translate=""
+        >datahub.search.filter.generatedByWfs</span
+      >
     </div>
   </div>
   <div class="flex-shrink-0 w-12 flex flex-col justify-center">
-    <a href="{{ link.url }}" target="_blank">
-      <mat-icon
-        class="align-middle download-icon text-3xl material-icons-outlined text-gray-200 mr-4 hover:drop-shadow-md hover:text-green-500"
-      >
-        cloud_download
-      </mat-icon>
-    </a>
+    <mat-icon
+      class="align-middle download-icon text-3xl material-icons-outlined text-gray-200 mr-4 hover:drop-shadow-md hover:text-green-500"
+    >
+      cloud_download
+    </mat-icon>
   </div>
-</div>
+</a>

@@ -9,26 +9,10 @@
     <span
       class="bg-gray-200 ml-6 cursor-pointer p-2 rounded"
       (click)="toggleFilterFormat($event.target.value)"
-      [style.opacity]="isFilterActive('all') ? '100%' : '33%'"
-      [value]="'all'"
-      translate
-      >datahub.search.filter.all</span
-    >
-    <span
-      class="bg-gray-200 ml-6 cursor-pointer p-2 rounded"
-      (click)="toggleFilterFormat($event.target.value)"
       [style.opacity]="isFilterActive(format) ? '100%' : '33%'"
       [value]="format"
       *ngFor="let format of filterFormats"
-      >{{ format }}</span
-    >
-    <span
-      class="bg-gray-200 ml-6 cursor-pointer p-2 rounded"
-      (click)="toggleFilterFormat($event.target.value)"
-      [style.opacity]="isFilterActive('others') ? '100%' : '33%'"
-      [value]="'others'"
-      translate
-      >datahub.search.filter.others</span
+      >{{ getFilterFormatTitle(format) }}</span
     >
   </div>
 </div>

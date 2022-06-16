@@ -40,13 +40,13 @@ export const FORMATS = {
   gpkg: {
     extensions: ['gpkg', 'geopackage'],
     priority: 0,
-    color: '#fdsfds',
+    color: 'var(--color-primary)',
     mimeTypes: ['application/geopackage+sqlite3'],
   },
   excel: {
     extensions: ['xls', 'xlsx', 'ms-excel', 'openxmlformats-officedocument'],
     priority: 2,
-    color: '#fdsfds',
+    color: 'var(--color-primary)',
     mimeTypes: [
       'application/vnd.ms-excel',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -55,19 +55,19 @@ export const FORMATS = {
   pdf: {
     extensions: ['pdf'],
     priority: 0,
-    color: '#fdsfds',
+    color: 'var(--color-primary)',
     mimeTypes: ['application/vnd.ms-excel'],
   },
   jpg: {
     extensions: ['jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp'],
     priority: 0,
-    color: '#fdsfds',
+    color: 'var(--color-primary)',
     mimeTypes: ['image/jpg'],
   },
   zip: {
     extensions: ['zip'],
     priority: 0,
-    color: '#fdsfds',
+    color: 'var(--color-primary)',
     mimeTypes: ['application/zip'],
   },
 }
@@ -118,7 +118,7 @@ export function mimeTypeToFormat(mimeType: string): string {
       if (new RegExp(`${mt}`, 'i').test(mimeType)) return format
     }
   }
-  return 'unknown'
+  return undefined
 }
 
 export function checkFileFormat(
