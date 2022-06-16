@@ -24,8 +24,9 @@ import {
   SetSortBy,
   UpdateFilters,
 } from './actions'
-import { SearchState, SearchStateParams } from './reducer'
+import { SearchError, SearchState, SearchStateParams } from './reducer'
 import {
+  getError,
   getSearchConfigAggregations,
   getSearchFilters,
   getSearchResults,
@@ -48,6 +49,7 @@ export class SearchFacade {
   configAggregations$: Observable<any>
   resultsAggregations$: Observable<any>
   resultsHits$: Observable<any>
+  error$: Observable<SearchError>
 
   searchId: string
 
@@ -70,6 +72,7 @@ export class SearchFacade {
       select(getSearchResultsAggregations, searchId)
     )
     this.sortBy$ = this.store.pipe(select(getSearchSortBy, searchId))
+    this.error$ = this.store.pipe(select(getError, searchId))
   }
 
   setConfigAggregations(config: any): SearchFacade {

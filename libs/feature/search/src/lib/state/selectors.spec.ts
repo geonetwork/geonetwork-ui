@@ -141,4 +141,20 @@ describe('Search Selectors', () => {
       expect(result).toEqual(aggregations)
     })
   })
+
+  describe('getError', () => {
+    it('should return the error', () => {
+      const result = fromSelectors.getError.projector({
+        ...initialStateSearch,
+        error: {
+          code: 501,
+          message: 'Unauthorized',
+        },
+      })
+      expect(result).toEqual({
+        code: 501,
+        message: 'Unauthorized',
+      })
+    })
+  })
 })

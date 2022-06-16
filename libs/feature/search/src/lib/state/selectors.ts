@@ -2,9 +2,8 @@ import { createFeatureSelector, createSelector } from '@ngrx/store'
 import { DEFAULT_SEARCH_KEY } from './actions'
 import { SEARCH_FEATURE_KEY, SearchState, SearchStateSearch } from './reducer'
 
-export const getSearchState = createFeatureSelector<SearchState>(
-  SEARCH_FEATURE_KEY
-)
+export const getSearchState =
+  createFeatureSelector<SearchState>(SEARCH_FEATURE_KEY)
 
 export const getSearchStateSearch = createSelector(
   getSearchState,
@@ -59,4 +58,9 @@ export const isEndOfResults = createSelector(
       state.params.from + state.params.size >= state.results.hits.value
     )
   }
+)
+
+export const getError = createSelector(
+  getSearchStateSearch,
+  (state: SearchStateSearch) => state.error
 )
