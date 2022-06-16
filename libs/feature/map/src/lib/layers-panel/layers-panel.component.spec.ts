@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { LayersPanelComponent } from './layers-panel.component'
+import { UtilI18nModule } from '@geonetwork-ui/util/i18n'
+import { TranslateModule } from '@ngx-translate/core'
+import { MatIconModule } from '@angular/material/icon'
 
 describe('LayersPanelComponent', () => {
   let component: LayersPanelComponent
@@ -8,6 +11,7 @@ describe('LayersPanelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [UtilI18nModule, TranslateModule.forRoot(), MatIconModule],
       declarations: [LayersPanelComponent],
     }).compileComponents()
   })
