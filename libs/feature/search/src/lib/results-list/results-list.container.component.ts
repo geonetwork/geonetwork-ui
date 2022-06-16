@@ -7,7 +7,7 @@ import {
 import { iif, Observable, of } from 'rxjs'
 import { distinctUntilChanged, filter, map, mergeMap } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
-import { SearchError } from '@geonetwork-ui/feature/search'
+import { SearchError } from '../state/reducer'
 import { ErrorType } from '@geonetwork-ui/ui/elements'
 
 @Component({

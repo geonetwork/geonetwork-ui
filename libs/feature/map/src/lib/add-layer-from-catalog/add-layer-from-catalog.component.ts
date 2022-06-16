@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 
 @Component({
   selector: 'gn-ui-add-layer-from-catalog',
@@ -6,8 +6,4 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
   styleUrls: ['./add-layer-from-catalog.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddLayerFromCatalogComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class AddLayerFromCatalogComponent {}

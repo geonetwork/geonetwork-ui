@@ -14,7 +14,7 @@ import {
 } from '@geonetwork-ui/util/i18n'
 import { TranslateModule } from '@ngx-translate/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import { UiElementsModule } from '../ui-elements.module'
 
 export default {
   title: 'Elements/SearchResultsErrorComponent',

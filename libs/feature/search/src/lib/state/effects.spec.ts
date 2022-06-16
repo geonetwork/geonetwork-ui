@@ -34,7 +34,6 @@ import {
   ES_FIXTURE_AGGS_REQUEST,
   simpleWithAgg,
 } from '@geonetwork-ui/util/shared'
-import { SearchService } from '@geonetwork-ui/feature/search'
 import { HttpErrorResponse } from '@angular/common/http'
 
 const defaultSearchState = initialState[DEFAULT_SEARCH_KEY]
