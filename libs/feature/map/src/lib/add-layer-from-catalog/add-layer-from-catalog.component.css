@@ -1,0 +1,3 @@
+::ng-deep .mat-tab-body-wrapper {
+  flex-grow: 1;
+}

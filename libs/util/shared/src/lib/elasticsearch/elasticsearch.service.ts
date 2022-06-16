@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core'
-import { ES_QUERY_STRING_FIELDS } from './constant'
+import { Inject, Injectable, InjectionToken, Optional } from '@angular/core'
+import { ES_QUERY_STRING_FIELDS, ES_SOURCE_SUMMARY } from './constant'
 import {
   EsSearchParams,
   EsTemplateType,
@@ -8,14 +8,16 @@ import {
   SortParams,
   StateConfigFilters,
 } from '../models'
-import { ES_SOURCE_SUMMARY } from './constant'
-import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
+
+export const METADATA_LANGUAGE = new InjectionToken<string>('metadata-language')
 
 @Injectable({
   providedIn: 'root',
 })
 export class ElasticsearchService {
-  metadataLang = getGlobalConfig().METADATA_LANGUAGE
+  constructor(
+    @Optional() @Inject(METADATA_LANGUAGE) private metadataLang: string
+  ) {}
 
   getSearchRequestBody(
     aggregations: any,

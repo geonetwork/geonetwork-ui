@@ -8,7 +8,7 @@ import {
 } from '@angular/core'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import {
-  AutcompleteItem,
+  AutocompleteItem,
   AutocompleteComponent,
 } from '@geonetwork-ui/ui/inputs'
 import {
@@ -58,7 +58,7 @@ export class FuzzySearchComponent {
    * event, then apply the default behavior
    * @param item
    */
-  handleItemSelection(item: AutcompleteItem) {
+  handleItemSelection(item: AutocompleteItem) {
     const record = item as MetadataRecord
     if (this.itemSelected.observers.length > 0) {
       this.itemSelected.emit(record)

@@ -4,6 +4,7 @@ import { ElasticsearchMapper } from '@geonetwork-ui/feature/search'
 import {
   ElasticsearchService,
   MetadataRecord,
+  simpleWithAgg,
 } from '@geonetwork-ui/util/shared'
 
 import { provideMockActions } from '@ngrx/effects/testing'
@@ -22,7 +23,7 @@ const full = {
 } as MetadataRecord
 
 const searchServiceMock = {
-  search: () => of({ hits: { hits: [] }, aggregations: { abc: {} } }),
+  search: () => of(simpleWithAgg),
   configuration: {
     basePath: 'http://geonetwork/srv/api',
   },
@@ -95,9 +96,7 @@ describe('StationsEffects', () => {
   describe('loadRelatedRecords$', () => {
     describe('when load full success', () => {
       beforeEach(() => {
-        searchServiceMock.search = jest.fn(() =>
-          of({ hits: { hits: [] }, aggregations: { abc: {} } })
-        )
+        searchServiceMock.search = jest.fn(() => of(simpleWithAgg))
       })
       it('dispatch setRelated', () => {
         actions = hot('-a-|', {

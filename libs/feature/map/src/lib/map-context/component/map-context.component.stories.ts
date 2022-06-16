@@ -7,7 +7,6 @@ import {
   moduleMetadata,
   Story,
 } from '@storybook/angular'
-import { fromLonLat } from 'ol/proj'
 import {
   MAP_CTX_LAYER_GEOJSON_FIXTURE,
   MAP_CTX_LAYER_WMS_FIXTURE,
@@ -38,7 +37,7 @@ WMS.args = {
   context: {
     layers: [MAP_CTX_LAYER_XYZ_FIXTURE, MAP_CTX_LAYER_WMS_FIXTURE],
     view: {
-      center: fromLonLat([7.75, 48.6], 'EPSG:3857') as [number, number],
+      center: [7.75, 48.6],
       zoom: 4,
     },
   },
@@ -49,7 +48,7 @@ GEOJSON.args = {
   context: {
     layers: [MAP_CTX_LAYER_XYZ_FIXTURE, MAP_CTX_LAYER_GEOJSON_FIXTURE],
     view: {
-      center: fromLonLat([7.75, 48.6], 'EPSG:3857') as [number, number],
+      center: [7.75, 48.6],
       zoom: 4,
     },
   },

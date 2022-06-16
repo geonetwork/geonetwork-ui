@@ -1,21 +1,11 @@
 import { ElasticsearchService } from './elasticsearch.service'
 
-const globalConfigMock = {
-  GN4_API_URL: 'http://my.geonetwork.api',
-  PROXY_PATH: '/proxy?',
-  METADATA_LANGUAGE: 'fre',
-}
-jest.mock('@geonetwork-ui/util/app-config', () => ({
-  getGlobalConfig: () => globalConfigMock,
-  isConfigLoaded: jest.fn(() => true),
-}))
-
 describe('ElasticsearchService', () => {
   let service: ElasticsearchService
   let searchFilters
 
   beforeEach(() => {
-    service = new ElasticsearchService()
+    service = new ElasticsearchService('fre')
   })
 
   it('should be created', () => {

@@ -33,7 +33,7 @@ export const DEFAULT_BASELAYER_CONTEXT: MapContextLayerXyzModel = {
 }
 
 export const DEFAULT_VIEW: MapContextViewModel = {
-  center: fromLonLat([0, 15], 'EPSG:3857'),
+  center: [0, 15],
   zoom: 2,
 }
 
@@ -140,7 +140,10 @@ export class MapContextService {
   }
 
   createView(viewModel: MapContextViewModel, map?: Map): View {
-    const { center, zoom, maxZoom, maxExtent } = viewModel
+    const { center: centerInViewProj, zoom, maxZoom, maxExtent } = viewModel
+    const center = centerInViewProj
+      ? fromLonLat(centerInViewProj, 'EPSG:3857')
+      : [0, 0]
     const view = new View({
       center,
       zoom,

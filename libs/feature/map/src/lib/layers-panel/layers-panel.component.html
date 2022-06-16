@@ -1,0 +1,31 @@
+<div
+  class="bg-white rounded shadow shadow-lg relative h-full w-[400px] overflow-hidden"
+>
+  <div class="p-3 border-b border-gray-300 flex items-center">
+    <mat-icon class="mr-2">layers</mat-icon>
+    <span translate>map.layers.list</span>
+  </div>
+  <gn-ui-expandable-panel-button [titleTemplate]="addLayerTitle">
+    <mat-tab-group animationDuration="200ms" class="h-full">
+      <mat-tab [label]="'map.add.layer.catalog' | translate">
+        <div class="p-3">
+          <gn-ui-add-layer-from-catalog></gn-ui-add-layer-from-catalog>
+        </div>
+      </mat-tab>
+      <mat-tab [label]="'map.add.layer.wms' | translate" bodyClass="h-full">
+        <div class="p-3 h-full">Add from WMS</div>
+      </mat-tab>
+      <mat-tab [label]="'map.add.layer.wfs' | translate" bodyClass="h-full">
+        <div class="p-3 h-full">Add from WFS</div>
+      </mat-tab>
+      <mat-tab [label]="'map.add.layer.file' | translate" bodyClass="h-full">
+        <div class="p-3 h-full">Add from file</div>
+      </mat-tab>
+    </mat-tab-group>
+  </gn-ui-expandable-panel-button>
+</div>
+
+<ng-template #addLayerTitle>
+  <mat-icon class="mr-4">add_circle</mat-icon>
+  <span translate>map.add.layer</span>
+</ng-template>

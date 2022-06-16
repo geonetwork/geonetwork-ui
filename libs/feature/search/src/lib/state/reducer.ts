@@ -18,6 +18,11 @@ export interface SearchStateParams {
   from?: number
 }
 
+export type SearchError = {
+  code: number
+  message: string
+} | null
+
 export interface SearchStateSearch {
   config: {
     aggregations?: any
@@ -35,6 +40,7 @@ export interface SearchStateSearch {
   }
   resultsLayout?: string
   loadingMore: boolean
+  error: SearchError
 }
 
 export type SearchState = { [key: string]: SearchStateSearch }
@@ -56,6 +62,7 @@ export const initSearch = (): SearchStateSearch => {
       aggregations: {},
     },
     loadingMore: false,
+    error: null,
   }
 }
 
@@ -269,6 +276,22 @@ export function reducerSearch(
           ...state.results,
           aggregations: clone,
         },
+      }
+    }
+
+    case fromActions.SET_ERROR: {
+      const { code, message } = action
+      return {
+        ...state,
+        error: { code, message },
+        loadingMore: false,
+      }
+    }
+
+    case fromActions.CLEAR_ERROR: {
+      return {
+        ...state,
+        error: null,
       }
     }
   }

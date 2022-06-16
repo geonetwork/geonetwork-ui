@@ -5,8 +5,10 @@ import {
   MetadataRecord,
 } from '@geonetwork-ui/util/shared'
 import { iif, Observable, of } from 'rxjs'
-import { distinctUntilChanged, mergeMap } from 'rxjs/operators'
+import { distinctUntilChanged, filter, map, mergeMap } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
+import { SearchError } from '../state/reducer'
+import { ErrorType } from '@geonetwork-ui/ui/elements'
 
 @Component({
   selector: 'gn-ui-results-list-container',
@@ -20,6 +22,12 @@ export class ResultsListContainerComponent implements OnInit {
 
   scrollDisable$: Observable<boolean>
   scrollableConfig: InfiniteScrollModel
+
+  error$: Observable<SearchError>
+  errorCode$: Observable<number>
+  errorMessage$: Observable<string>
+
+  errorTypes = ErrorType
 
   constructor(public facade: SearchFacade) {}
 
@@ -37,6 +45,16 @@ export class ResultsListContainerComponent implements OnInit {
         iif(() => !!disabled, of(true), this.facade.isEndOfResults$)
       ),
       distinctUntilChanged()
+    )
+
+    this.error$ = this.facade.error$
+    this.errorCode$ = this.error$.pipe(
+      filter((error) => error !== null),
+      map((error) => error.code)
+    )
+    this.errorMessage$ = this.error$.pipe(
+      filter((error) => error !== null),
+      map((error) => error.message)
     )
   }
 

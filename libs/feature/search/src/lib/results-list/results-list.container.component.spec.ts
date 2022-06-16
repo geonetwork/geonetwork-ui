@@ -24,6 +24,7 @@ const searchFacadeMock = {
   layout$: of('CARD'),
   setResultsLayout: jest.fn(),
   scroll: jest.fn(),
+  error$: of(null),
 }
 
 describe('ResultsListContainerComponent', () => {
@@ -51,8 +52,8 @@ describe('ResultsListContainerComponent', () => {
       component = fixture.componentInstance
       component.layout = 'CARD'
       de = fixture.debugElement
-      items = de.queryAll(By.directive(ResultsListMockComponent))
       fixture.detectChanges()
+      items = de.queryAll(By.directive(ResultsListMockComponent))
     })
 
     it('should create', () => {

@@ -214,3 +214,8 @@ export const hitsOnly: unknown = {
     ],
   },
 }
+
+export const simpleWithAgg = {
+  hits: { hits: [] },
+  aggregations: { abc: {} },
+}

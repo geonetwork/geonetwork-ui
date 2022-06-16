@@ -18,6 +18,7 @@ import { ResultsHitsContainerComponent } from './results-hits-number/results-hit
 import { SearchStateContainerDirective } from './state/container/search-state.container.directive'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { NgModule } from '@angular/core'
+import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { NgModule } from '@angular/core'
     HttpClientXsrfModule,
     UiSearchModule,
     UiInputsModule,
+    UiElementsModule,
     ApiModule,
     FacetsModule,
     InfiniteScrollModule,

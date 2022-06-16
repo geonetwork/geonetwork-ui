@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { ExpandablePanelComponent } from './expandable-panel/expandable-panel.component'
 import { StickyHeaderComponent } from './sticky-header/sticky-header.component'
 import { AnchorLinkDirective } from './anchor-link/anchor-link.directive'
+import { ExpandablePanelButtonComponent } from './expandable-panel-button/expandable-panel-button.component'
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { AnchorLinkDirective } from './anchor-link/anchor-link.directive'
     ExpandablePanelComponent,
     StickyHeaderComponent,
     AnchorLinkDirective,
+    ExpandablePanelButtonComponent,
   ],
   exports: [
     TableComponent,
@@ -35,6 +37,7 @@ import { AnchorLinkDirective } from './anchor-link/anchor-link.directive'
     ExpandablePanelComponent,
     StickyHeaderComponent,
     AnchorLinkDirective,
+    ExpandablePanelButtonComponent,
   ],
 })
 export class UiLayoutModule {}

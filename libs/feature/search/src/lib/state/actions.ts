@@ -33,6 +33,8 @@ export const SET_INCLUDE_ON_AGGREGATION = '[Search] Set term include'
 export const UPDATE_REQUEST_AGGREGATION_TERM =
   '[Search] Update request aggregation term'
 export const PATCH_RESULTS_AGGREGATIONS = '[Search] Patch Results Aggregations'
+export const SET_ERROR = '[Search] Set Error'
+export const CLEAR_ERROR = '[Search] Clear Error'
 
 export const DEFAULT_SEARCH_KEY = 'default'
 
@@ -213,6 +215,22 @@ export class PatchResultsAggregations extends AbstractAction implements Action {
   }
 }
 
+export class SetError extends AbstractAction implements Action {
+  readonly type = SET_ERROR
+
+  constructor(public code: number, public message: string, id?: string) {
+    super(id)
+  }
+}
+
+export class ClearError extends AbstractAction implements Action {
+  readonly type = CLEAR_ERROR
+
+  constructor(id?: string) {
+    super(id)
+  }
+}
+
 export type SearchActions =
   | AddSearch
   | SetConfigFilters
@@ -236,3 +254,5 @@ export type SearchActions =
   | SetIncludeOnAggregation
   | UpdateRequestAggregationTerm
   | PatchResultsAggregations
+  | SetError
+  | ClearError

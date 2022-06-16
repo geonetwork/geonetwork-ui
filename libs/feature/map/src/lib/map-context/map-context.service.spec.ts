@@ -215,7 +215,7 @@ describe('MapContextService', () => {
       })
       it('set center', () => {
         const center = view.getCenter()
-        expect(center).toEqual(contextModel.view.center)
+        expect(center).toEqual([862726.0536478702, 6207260.308175252])
       })
       it('set zoom', () => {
         const zoom = view.getZoom()
@@ -343,7 +343,7 @@ describe('MapContextService', () => {
       })
       it('set center', () => {
         const center = view.getCenter()
-        expect(center).toEqual(DEFAULT_VIEW.center)
+        expect(center).toEqual([0, 1689200.1396078935])
       })
       it('set zoom', () => {
         const zoom = view.getZoom()

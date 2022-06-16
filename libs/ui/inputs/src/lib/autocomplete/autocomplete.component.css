@@ -1,10 +1,28 @@
 .clear-btn {
-  right: 7px;
-  top: 7px;
+  width: 3.5em;
+  height: 100%;
+  right: 3.5em;
+  top: 0;
+  bottom: 0;
+}
+.search-btn {
+  width: 3.5em;
+  height: 100%;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-left-width: 0.1em;
+}
+mat-icon {
+  width: 100%;
+  height: 100%;
+  padding: 0.65em;
+  font-size: 1.5em;
 }
 input {
+  height: 3.5em;
   padding: 1.05em;
 }
-.mat-option.mat-active {
+.mat-option.suggestion.mat-active {
   background-color: var(--color-primary-lightest);
 }

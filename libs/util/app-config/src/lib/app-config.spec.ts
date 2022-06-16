@@ -318,35 +318,4 @@ describe('app config utils', () => {
       })
     })
   })
-
-  describe('default theme values', () => {
-    beforeEach(async () => {
-      fetchMock.get('end:default.toml', () => CONFIG_MINIMAL)
-      await loadAppConfig()
-    })
-    describe('thumbnail placeholder', () => {
-      it('uses the default value', () => {
-        expect(getThemeConfig().THUMBNAIL_PLACEHOLDER).toEqual(
-          'assets/img/thumb_placeholder.webp'
-        )
-      })
-    })
-    describe('header background', () => {
-      it('uses the default value', () => {
-        expect(getThemeConfig().HEADER_BACKGROUND).toEqual(
-          "center /cover url('assets/img/header_bg.webp')"
-        )
-      })
-    })
-    describe('main font', () => {
-      it('uses the default value', () => {
-        expect(getThemeConfig().MAIN_FONT).toEqual("'Rubik', sans-serif")
-      })
-    })
-    describe('title font', () => {
-      it('uses the default value', () => {
-        expect(getThemeConfig().TITLE_FONT).toEqual("'Readex Pro', sans-serif")
-      })
-    })
-  })
 })

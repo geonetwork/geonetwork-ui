@@ -191,19 +191,12 @@ export function loadAppConfig() {
               MAIN_COLOR: parsedThemeSection.main_color,
               BACKGROUND_COLOR: parsedThemeSection.background_color,
               HEADER_FOREGROUND_COLOR:
-                parsedThemeSection.header_foreground_color || '#ffffff',
-              THUMBNAIL_PLACEHOLDER:
-                parsedThemeSection.thumbnail_placeholder ||
-                'assets/img/thumb_placeholder.webp',
-              HEADER_BACKGROUND:
-                parsedThemeSection.header_background ||
-                `center /cover url('assets/img/header_bg.webp')`,
-              TITLE_FONT:
-                parsedThemeSection.title_font || "'Readex Pro', sans-serif",
-              MAIN_FONT: parsedThemeSection.main_font || "'Rubik', sans-serif",
-              FONTS_STYLESHEET_URL:
-                parsedThemeSection.fonts_stylesheet_url ||
-                'https://fonts.googleapis.com/css2?family=Readex+Pro&family=Rubik&display=swap',
+                parsedThemeSection.header_foreground_color,
+              THUMBNAIL_PLACEHOLDER: parsedThemeSection.thumbnail_placeholder,
+              HEADER_BACKGROUND: parsedThemeSection.header_background,
+              TITLE_FONT: parsedThemeSection.title_font,
+              MAIN_FONT: parsedThemeSection.main_font,
+              FONTS_STYLESHEET_URL: parsedThemeSection.fonts_stylesheet_url,
             } as ThemeConfig)
 
       customTranslations = parseTranslationsConfigSection(

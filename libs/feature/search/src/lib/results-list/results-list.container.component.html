@@ -1,4 +1,5 @@
 <div
+  *ngIf="(error$ | async) === null"
   class="search-results"
   infinite-scroll
   [infiniteScrollDistance]="scrollableConfig.distance"
@@ -15,4 +16,16 @@
     [layout]="facade.layout$ | async"
     (mdSelect)="onMetadataSelection($event)"
   ></gn-ui-results-list>
+</div>
+
+<div class="p-4 w-80 m-auto text-[13px]">
+  <gn-ui-search-results-error
+    *ngIf="(errorCode$ | async) === 0"
+    [type]="errorTypes.COULD_NOT_REACH_API"
+  ></gn-ui-search-results-error>
+  <gn-ui-search-results-error
+    *ngIf="(error$ | async) !== null && (errorCode$ | async) !== 0"
+    [type]="errorTypes.RECEIVED_ERROR"
+    [error]="errorMessage$ | async"
+  ></gn-ui-search-results-error>
 </div>

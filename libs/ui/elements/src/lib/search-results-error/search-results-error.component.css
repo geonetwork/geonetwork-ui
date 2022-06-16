@@ -1,0 +1,19 @@
+mat-icon {
+  width: auto;
+  height: auto;
+}
+mat-icon.face {
+  font-size: 3em;
+}
+mat-icon.question-mark1 {
+  position: absolute;
+  bottom: 1.1em;
+  left: calc(50% + 0.7em);
+  font-size: 1.7em;
+}
+mat-icon.question-mark2 {
+  position: absolute;
+  bottom: 1.6em;
+  left: calc(50% + 1.6em);
+  font-size: 1.4em;
+}

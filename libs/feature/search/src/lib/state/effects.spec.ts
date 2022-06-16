@@ -3,75 +3,69 @@ import { AuthService } from '@geonetwork-ui/feature/auth'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { ElasticsearchMapper } from '../utils/mapper'
 import {
+  AddResults,
+  ClearError,
   ClearPagination,
+  ClearResults,
   DEFAULT_SEARCH_KEY,
+  PatchResultsAggregations,
+  RequestMoreOnAggregation,
+  RequestMoreResults,
   Scroll,
+  SetError,
+  SetFilters,
   SetIncludeOnAggregation,
+  SetResultsAggregations,
+  SetResultsHits,
+  SetSearch,
+  SetSortBy,
+  UpdateFilters,
   UpdateRequestAggregationTerm,
 } from './actions'
 import { EffectsModule } from '@ngrx/effects'
 import { provideMockActions } from '@ngrx/effects/testing'
 import { StoreModule } from '@ngrx/store'
 import { hot } from 'jasmine-marbles'
-import { Observable, of } from 'rxjs'
-import {
-  AddResults,
-  ClearResults,
-  PatchResultsAggregations,
-  RequestMoreOnAggregation,
-  RequestMoreResults,
-  SetFilters,
-  SetResultsAggregations,
-  SetResultsHits,
-  SetSearch,
-  SetSortBy,
-  UpdateFilters,
-} from './actions'
+import { Observable, of, throwError } from 'rxjs'
 import { SearchEffects } from './effects'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { ES_FIXTURE_AGGS_REQUEST } from '@geonetwork-ui/util/shared'
+import {
+  ES_FIXTURE_AGGS_REQUEST,
+  simpleWithAgg,
+} from '@geonetwork-ui/util/shared'
+import { HttpErrorResponse } from '@angular/common/http'
 
-const globalConfigMock = {
-  GN4_API_URL: 'http://my.geonetwork.api',
-  PROXY_PATH: '/proxy?',
-  METADATA_LANGUAGE: 'fre',
-}
-jest.mock('@geonetwork-ui/util/app-config', () => ({
-  getGlobalConfig: () => globalConfigMock,
-  isConfigLoaded: jest.fn(() => true),
-}))
-
-const initialStateSearchMock = initialState[DEFAULT_SEARCH_KEY]
-const initialStateMock = {
+const defaultSearchState = initialState[DEFAULT_SEARCH_KEY]
+const stateWithSearches = {
   ...initialState,
   [DEFAULT_SEARCH_KEY]: {
-    ...initialStateSearchMock,
+    ...defaultSearchState,
     config: {
-      ...initialStateSearchMock.config,
+      ...defaultSearchState.config,
       aggregations: ES_FIXTURE_AGGS_REQUEST,
     },
   },
   main: {
-    ...initialStateSearchMock,
+    ...defaultSearchState,
     config: {
-      ...initialStateSearchMock.config,
+      ...defaultSearchState.config,
       aggregations: {},
     },
   },
 }
 
-const searchServiceMock = {
-  search: () => of({ hits: { hits: [] }, aggregations: { abc: {} } }), // TODO: use a fixture here
-  configuration: {
+class SearchServiceMock {
+  configuration = {
     basePath: 'http://geonetwork/srv/api',
-  },
+  }
+  search = () => of(simpleWithAgg)
 }
-const authServiceMock = {
-  authReady: () => of(true),
+class AuthServiceMock {
+  authReady = () => of(true)
 }
-const esMapperMock = {
-  toRecords: () => [],
+class EsMapperMock {
+  toRecords = () => []
 }
 
 describe('Effects', () => {
@@ -84,7 +78,7 @@ describe('Effects', () => {
         EffectsModule.forRoot(),
         StoreModule.forRoot({}),
         StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
-          initialState: initialStateMock,
+          initialState: stateWithSearches,
         }),
         HttpClientTestingModule,
       ],
@@ -93,15 +87,15 @@ describe('Effects', () => {
         SearchEffects,
         {
           provide: SearchApiService,
-          useValue: searchServiceMock,
+          useClass: SearchServiceMock,
         },
         {
           provide: AuthService,
-          useValue: authServiceMock,
+          useClass: AuthServiceMock,
         },
         {
           provide: ElasticsearchMapper,
-          useValue: esMapperMock,
+          useClass: EsMapperMock,
         },
       ],
     })
@@ -172,24 +166,65 @@ describe('Effects', () => {
   describe('loadResults$', () => {
     it('load new results on requestMoreResults action', () => {
       actions$ = hot('-a-', { a: new RequestMoreResults() })
-      const expected = hot('-(bcd)-', {
+      const expected = hot('-(bcde)-', {
         b: new AddResults([]),
         c: new SetResultsAggregations({ abc: {} }),
         d: new SetResultsHits(undefined),
+        e: new ClearError(),
       })
-
       expect(effects.loadResults$).toBeObservable(expected)
     })
 
     it('propagate action search id', () => {
       actions$ = hot('-a-', { a: new RequestMoreResults('main') })
-      const expected = hot('-(bcd)-', {
+      const expected = hot('-(bcde)-', {
         b: new AddResults([], 'main'),
         c: new SetResultsAggregations({ abc: {} }, 'main'),
         d: new SetResultsHits(undefined, 'main'),
+        e: new ClearError('main'),
       })
-
       expect(effects.loadResults$).toBeObservable(expected)
+    })
+
+    describe('when search fails with HTTP error', () => {
+      beforeEach(() => {
+        const searchService = TestBed.inject(SearchApiService)
+        searchService.search = () =>
+          throwError(
+            new HttpErrorResponse({
+              status: 401,
+            })
+          )
+      })
+      it('stores the error', () => {
+        actions$ = hot('-a-', { a: new RequestMoreResults() })
+        const expected = hot('-b-', {
+          b: new SetError(401, expect.stringContaining('401')),
+        })
+        expect(effects.loadResults$).toBeObservable(expected)
+      })
+      it('stores the error and propagates search id', () => {
+        actions$ = hot('-a-', { a: new RequestMoreResults('main') })
+        const expected = hot('-b-', {
+          b: new SetError(401, expect.stringContaining('401'), 'main'),
+        })
+        expect(effects.loadResults$).toBeObservable(expected)
+      })
+    })
+
+    describe('when search fails with unspecified error', () => {
+      beforeEach(() => {
+        const searchService = TestBed.inject(SearchApiService)
+        searchService.search = () =>
+          throwError(new Error('probably CORS related'))
+      })
+      it('stores the error with a 0 code and propagates search id', () => {
+        actions$ = hot('-a-', { a: new RequestMoreResults('main') })
+        const expected = hot('-b-', {
+          b: new SetError(0, 'probably CORS related', 'main'),
+        })
+        expect(effects.loadResults$).toBeObservable(expected)
+      })
     })
   })
 

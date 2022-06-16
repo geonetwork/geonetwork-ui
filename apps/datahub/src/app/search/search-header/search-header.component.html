@@ -11,6 +11,7 @@
         [innerHTML]="'datahub.header.title.html' | translate"
       ></div>
       <gn-ui-fuzzy-search
+        class="text-[18px]"
         (itemSelected)="onFuzzySearchSelection($event)"
         [value]="searchInputRouteValue$ | async"
       ></gn-ui-fuzzy-search>

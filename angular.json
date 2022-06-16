@@ -7,7 +7,7 @@
       "sourceRoot": "libs/data-access/datafeeder/src",
       "prefix": "gn-ui",
       "architect": {},
-      "tags": []
+      "tags": ["type:data-access"]
     },
     "data-access-gn4": {
       "projectType": "library",
@@ -15,7 +15,7 @@
       "sourceRoot": "libs/data-access/gn4/src",
       "prefix": "gn-ui",
       "architect": {},
-      "tags": []
+      "tags": ["type:data-access"]
     },
     "datafeeder": {
       "projectType": "application",
@@ -119,7 +119,7 @@
           }
         }
       },
-      "tags": []
+      "tags": ["type:app"]
     },
     "datafeeder-e2e": {
       "root": "apps/datafeeder-e2e",
@@ -270,7 +270,7 @@
           }
         }
       },
-      "tags": []
+      "tags": ["type:app"]
     },
     "datahub-e2e": {
       "root": "apps/datahub-e2e",
@@ -426,7 +426,7 @@
           }
         }
       },
-      "tags": []
+      "tags": ["type:app"]
     },
     "demo-e2e": {
       "root": "apps/demo-e2e",
@@ -482,7 +482,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:feature"]
     },
     "feature-catalog": {
       "projectType": "library",
@@ -509,7 +509,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:feature"]
     },
     "feature-dataviz": {
       "projectType": "library",
@@ -536,7 +536,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:feature"]
     },
     "feature-editor": {
       "projectType": "library",
@@ -563,7 +563,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:feature"]
     },
     "feature-map": {
       "projectType": "library",
@@ -590,7 +590,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:feature"]
     },
     "feature-record": {
       "projectType": "library",
@@ -617,7 +617,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:feature"]
     },
     "feature-router": {
       "projectType": "library",
@@ -644,7 +644,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:feature"]
     },
     "feature-search": {
       "projectType": "library",
@@ -671,7 +671,138 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:feature"]
+    },
+    "map-viewer": {
+      "projectType": "application",
+      "root": "apps/map-viewer",
+      "sourceRoot": "apps/map-viewer/src",
+      "prefix": "map-viewer",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/map-viewer",
+            "index": "apps/map-viewer/src/index.html",
+            "main": "apps/map-viewer/src/main.ts",
+            "polyfills": "apps/map-viewer/src/polyfills.ts",
+            "tsConfig": "apps/map-viewer/tsconfig.app.json",
+            "assets": [
+              "apps/map-viewer/src/favicon.ico",
+              "apps/map-viewer/src/assets",
+              {
+                "glob": "*",
+                "input": "translations",
+                "output": "assets/i18n/"
+              }
+            ],
+            "styles": [
+              "apps/map-viewer/src/styles.css",
+              "node_modules/ol/ol.css",
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "1mb",
+                  "maximumError": "8mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/map-viewer/src/environments/environment.ts",
+                  "with": "apps/map-viewer/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "map-viewer:build:production"
+            },
+            "development": {
+              "browserTarget": "map-viewer:build:development",
+              "proxyConfig": "proxy-config.js"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "map-viewer:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/map-viewer/src/**/*.ts",
+              "apps/map-viewer/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/map-viewer"],
+          "options": {
+            "jestConfig": "apps/map-viewer/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": ["type:app"]
+    },
+    "map-viewer-e2e": {
+      "root": "apps/map-viewer-e2e",
+      "sourceRoot": "apps/map-viewer-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/map-viewer-e2e/cypress.json",
+            "devServerTarget": "map-viewer:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "map-viewer:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/map-viewer-e2e/**/*.{js,ts}"]
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": ["map-viewer"]
     },
     "search": {
       "projectType": "application",
@@ -767,7 +898,7 @@
           }
         }
       },
-      "tags": []
+      "tags": ["type:app"]
     },
     "search-e2e": {
       "root": "apps/search-e2e",
@@ -823,7 +954,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:ui"]
     },
     "ui-elements": {
       "projectType": "library",
@@ -850,7 +981,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:ui"]
     },
     "ui-inputs": {
       "projectType": "library",
@@ -877,7 +1008,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:ui"]
     },
     "ui-layout": {
       "projectType": "library",
@@ -904,7 +1035,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:ui"]
     },
     "ui-map": {
       "projectType": "library",
@@ -931,7 +1062,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:ui"]
     },
     "ui-search": {
       "projectType": "library",
@@ -958,7 +1089,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:ui"]
     },
     "ui-widgets": {
       "projectType": "library",
@@ -985,7 +1116,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:ui"]
     },
     "util-app-config": {
       "root": "libs/util/app-config",
@@ -1008,7 +1139,7 @@
           }
         }
       },
-      "tags": []
+      "tags": ["type:util", "scope:app-config"]
     },
     "util-data-fetcher": {
       "root": "libs/util/data-fetcher",
@@ -1042,7 +1173,7 @@
           }
         }
       },
-      "tags": []
+      "tags": ["type:util"]
     },
     "util-i18n": {
       "projectType": "library",
@@ -1069,7 +1200,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:util", "scope:i18n"]
     },
     "util-shared": {
       "projectType": "library",
@@ -1096,7 +1227,7 @@
           "outputs": ["{options.outputFile}"]
         }
       },
-      "tags": []
+      "tags": ["type:util", "scope:shared"]
     },
     "webcomponents": {
       "projectType": "application",
@@ -1130,12 +1261,12 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "12kb",
-                  "maximumError": "16kb"
+                  "maximumError": "256kb"
                 }
               ],
               "fileReplacements": [
@@ -1227,7 +1358,7 @@
           }
         }
       },
-      "tags": []
+      "tags": ["type:app"]
     },
     "webcomponents-e2e": {
       "root": "apps/webcomponents-e2e",

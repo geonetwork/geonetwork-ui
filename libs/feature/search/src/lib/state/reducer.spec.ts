@@ -375,4 +375,40 @@ describe('Search Reducer', () => {
       )
     })
   })
+
+  describe('SetError action', () => {
+    it('should store the error and stop loading', () => {
+      const action = new fromActions.SetError(404, 'Not found')
+      const state = reducerSearch(
+        {
+          ...initialStateSearch,
+          loadingMore: true,
+          error: null,
+        },
+        action
+      )
+      expect(state.error).toEqual({
+        code: 404,
+        message: 'Not found',
+      })
+      expect(state.loadingMore).toBeFalsy()
+    })
+  })
+
+  describe('ClearError action', () => {
+    it('should clear the error', () => {
+      const action = new fromActions.ClearError()
+      const state = reducerSearch(
+        {
+          ...initialStateSearch,
+          error: {
+            code: 404,
+            message: 'Not found',
+          },
+        },
+        action
+      )
+      expect(state.error).toEqual(null)
+    })
+  })
 })
