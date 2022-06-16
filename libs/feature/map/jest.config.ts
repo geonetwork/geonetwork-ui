@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'util-shared',
+/* eslint-disable */
+export default {
+  displayName: 'feature-map',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -9,7 +10,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../../coverage/libs/util/shared',
+  coverageDirectory: '../../../coverage/libs/feature/map',
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
     'jest-preset-angular/build/serializers/ng-snapshot',

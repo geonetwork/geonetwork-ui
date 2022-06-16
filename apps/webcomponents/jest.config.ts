@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'map-viewer',
+/* eslint-disable */
+export default {
+  displayName: 'webcomponents',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -9,9 +10,9 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/apps/map-viewer',
+  coverageDirectory: '../../coverage/apps/webcomponents',
   transform: {
-    '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
+    '^.+.(ts|mjs|js|html)$': 'jest-preset-angular',
   },
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',

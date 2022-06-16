@@ -2,6 +2,7 @@
   "version": 1,
   "projects": {
     "data-access-datafeeder": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/data-access/datafeeder",
       "sourceRoot": "libs/data-access/datafeeder/src",
@@ -10,6 +11,7 @@
       "tags": ["type:data-access"]
     },
     "data-access-gn4": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/data-access/gn4",
       "sourceRoot": "libs/data-access/gn4/src",
@@ -18,6 +20,7 @@
       "tags": ["type:data-access"]
     },
     "datafeeder": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "application",
       "root": "apps/datafeeder",
       "sourceRoot": "apps/datafeeder/src",
@@ -114,7 +117,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/datafeeder"],
           "options": {
-            "jestConfig": "apps/datafeeder/jest.config.js",
+            "jestConfig": "apps/datafeeder/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -122,6 +125,7 @@
       "tags": ["type:app"]
     },
     "datafeeder-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/datafeeder-e2e",
       "sourceRoot": "apps/datafeeder-e2e/src",
       "projectType": "application",
@@ -151,6 +155,7 @@
       "implicitDependencies": ["datafeeder"]
     },
     "datahub": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "application",
       "root": "apps/datahub",
       "sourceRoot": "apps/datahub/src",
@@ -252,7 +257,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/datahub"],
           "options": {
-            "jestConfig": "apps/datahub/jest.config.js",
+            "jestConfig": "apps/datahub/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -273,6 +278,7 @@
       "tags": ["type:app"]
     },
     "datahub-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/datahub-e2e",
       "sourceRoot": "apps/datahub-e2e/src",
       "projectType": "application",
@@ -302,6 +308,7 @@
       "implicitDependencies": ["datahub"]
     },
     "demo": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "application",
       "root": "apps/demo",
       "sourceRoot": "apps/demo/src",
@@ -388,19 +395,17 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/demo"],
           "options": {
-            "jestConfig": "apps/demo/jest.config.js",
+            "jestConfig": "apps/demo/jest.config.ts",
             "passWithNoTests": true
           }
         },
         "storybook": {
-          "builder": "@nrwl/storybook:storybook",
+          "builder": "@storybook/angular:start-storybook",
           "options": {
-            "uiFramework": "@storybook/angular",
             "port": 4400,
-            "config": {
-              "configFolder": "apps/demo/.storybook"
-            },
-            "projectBuildConfig": "demo"
+            "configDir": "apps/demo/.storybook",
+            "browserTarget": "demo:build",
+            "compodoc": false
           },
           "configurations": {
             "ci": {
@@ -409,15 +414,13 @@
           }
         },
         "build-storybook": {
-          "builder": "@nrwl/storybook:build",
+          "builder": "@storybook/angular:build-storybook",
           "outputs": ["{options.outputPath}"],
           "options": {
-            "uiFramework": "@storybook/angular",
-            "outputPath": "dist/storybook/demo",
-            "config": {
-              "configFolder": "apps/demo/.storybook"
-            },
-            "projectBuildConfig": "demo"
+            "outputDir": "dist/storybook/demo",
+            "configDir": "apps/demo/.storybook",
+            "browserTarget": "demo:build",
+            "compodoc": false
           },
           "configurations": {
             "ci": {
@@ -429,6 +432,7 @@
       "tags": ["type:app"]
     },
     "demo-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/demo-e2e",
       "sourceRoot": "apps/demo-e2e/src",
       "projectType": "application",
@@ -458,6 +462,7 @@
       "implicitDependencies": ["demo"]
     },
     "feature-auth": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/feature/auth",
       "sourceRoot": "libs/feature/auth/src",
@@ -467,7 +472,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/feature/auth"],
           "options": {
-            "jestConfig": "libs/feature/auth/jest.config.js",
+            "jestConfig": "libs/feature/auth/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -485,6 +490,7 @@
       "tags": ["type:feature"]
     },
     "feature-catalog": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/feature/catalog",
       "sourceRoot": "libs/feature/catalog/src",
@@ -494,7 +500,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/feature/catalog"],
           "options": {
-            "jestConfig": "libs/feature/catalog/jest.config.js",
+            "jestConfig": "libs/feature/catalog/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -512,6 +518,7 @@
       "tags": ["type:feature"]
     },
     "feature-dataviz": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/feature/dataviz",
       "sourceRoot": "libs/feature/dataviz/src",
@@ -521,7 +528,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/feature/dataviz"],
           "options": {
-            "jestConfig": "libs/feature/dataviz/jest.config.js",
+            "jestConfig": "libs/feature/dataviz/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -539,6 +546,7 @@
       "tags": ["type:feature"]
     },
     "feature-editor": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/feature/editor",
       "sourceRoot": "libs/feature/editor/src",
@@ -548,7 +556,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/feature/editor"],
           "options": {
-            "jestConfig": "libs/feature/editor/jest.config.js",
+            "jestConfig": "libs/feature/editor/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -566,6 +574,7 @@
       "tags": ["type:feature"]
     },
     "feature-map": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/feature/map",
       "sourceRoot": "libs/feature/map/src",
@@ -575,7 +584,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/feature/map"],
           "options": {
-            "jestConfig": "libs/feature/map/jest.config.js",
+            "jestConfig": "libs/feature/map/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -593,6 +602,7 @@
       "tags": ["type:feature"]
     },
     "feature-record": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/feature/record",
       "sourceRoot": "libs/feature/record/src",
@@ -602,7 +612,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/feature/record"],
           "options": {
-            "jestConfig": "libs/feature/record/jest.config.js",
+            "jestConfig": "libs/feature/record/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -620,6 +630,7 @@
       "tags": ["type:feature"]
     },
     "feature-router": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/feature/router",
       "sourceRoot": "libs/feature/router/src",
@@ -629,7 +640,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/feature/router"],
           "options": {
-            "jestConfig": "libs/feature/router/jest.config.js",
+            "jestConfig": "libs/feature/router/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -647,6 +658,7 @@
       "tags": ["type:feature"]
     },
     "feature-search": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/feature/search",
       "sourceRoot": "libs/feature/search/src",
@@ -656,7 +668,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/feature/search"],
           "options": {
-            "jestConfig": "libs/feature/search/jest.config.js",
+            "jestConfig": "libs/feature/search/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -674,6 +686,7 @@
       "tags": ["type:feature"]
     },
     "map-viewer": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "application",
       "root": "apps/map-viewer",
       "sourceRoot": "apps/map-viewer/src",
@@ -769,7 +782,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/map-viewer"],
           "options": {
-            "jestConfig": "apps/map-viewer/jest.config.js",
+            "jestConfig": "apps/map-viewer/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -777,6 +790,7 @@
       "tags": ["type:app"]
     },
     "map-viewer-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/map-viewer-e2e",
       "sourceRoot": "apps/map-viewer-e2e/src",
       "projectType": "application",
@@ -805,6 +819,7 @@
       "implicitDependencies": ["map-viewer"]
     },
     "search": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "application",
       "root": "apps/search",
       "sourceRoot": "apps/search/src",
@@ -893,7 +908,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/search"],
           "options": {
-            "jestConfig": "apps/search/jest.config.js",
+            "jestConfig": "apps/search/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -901,6 +916,7 @@
       "tags": ["type:app"]
     },
     "search-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/search-e2e",
       "sourceRoot": "apps/search-e2e/src",
       "projectType": "application",
@@ -930,6 +946,7 @@
       "implicitDependencies": ["search"]
     },
     "ui-catalog": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/ui/catalog",
       "sourceRoot": "libs/ui/catalog/src",
@@ -939,7 +956,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ui/catalog"],
           "options": {
-            "jestConfig": "libs/ui/catalog/jest.config.js",
+            "jestConfig": "libs/ui/catalog/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -957,6 +974,7 @@
       "tags": ["type:ui"]
     },
     "ui-elements": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/ui/elements",
       "sourceRoot": "libs/ui/elements/src",
@@ -966,7 +984,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ui/elements"],
           "options": {
-            "jestConfig": "libs/ui/elements/jest.config.js",
+            "jestConfig": "libs/ui/elements/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -984,6 +1002,7 @@
       "tags": ["type:ui"]
     },
     "ui-inputs": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/ui/inputs",
       "sourceRoot": "libs/ui/inputs/src",
@@ -993,7 +1012,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ui/inputs"],
           "options": {
-            "jestConfig": "libs/ui/inputs/jest.config.js",
+            "jestConfig": "libs/ui/inputs/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -1011,6 +1030,7 @@
       "tags": ["type:ui"]
     },
     "ui-layout": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/ui/layout",
       "sourceRoot": "libs/ui/layout/src",
@@ -1020,7 +1040,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ui/layout"],
           "options": {
-            "jestConfig": "libs/ui/layout/jest.config.js",
+            "jestConfig": "libs/ui/layout/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -1038,6 +1058,7 @@
       "tags": ["type:ui"]
     },
     "ui-map": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/ui/map",
       "sourceRoot": "libs/ui/map/src",
@@ -1047,7 +1068,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ui/map"],
           "options": {
-            "jestConfig": "libs/ui/map/jest.config.js",
+            "jestConfig": "libs/ui/map/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -1065,6 +1086,7 @@
       "tags": ["type:ui"]
     },
     "ui-search": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/ui/search",
       "sourceRoot": "libs/ui/search/src",
@@ -1074,7 +1096,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ui/search"],
           "options": {
-            "jestConfig": "libs/ui/search/jest.config.js",
+            "jestConfig": "libs/ui/search/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -1092,6 +1114,7 @@
       "tags": ["type:ui"]
     },
     "ui-widgets": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/ui/widgets",
       "sourceRoot": "libs/ui/widgets/src",
@@ -1101,7 +1124,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/ui/widgets"],
           "options": {
-            "jestConfig": "libs/ui/widgets/jest.config.js",
+            "jestConfig": "libs/ui/widgets/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -1119,6 +1142,7 @@
       "tags": ["type:ui"]
     },
     "util-app-config": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "root": "libs/util/app-config",
       "sourceRoot": "libs/util/app-config/src",
       "projectType": "library",
@@ -1134,7 +1158,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/util/app-config"],
           "options": {
-            "jestConfig": "libs/util/app-config/jest.config.js",
+            "jestConfig": "libs/util/app-config/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -1142,12 +1166,13 @@
       "tags": ["type:util", "scope:app-config"]
     },
     "util-data-fetcher": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "root": "libs/util/data-fetcher",
       "sourceRoot": "libs/util/data-fetcher/src",
       "projectType": "library",
       "architect": {
         "build": {
-          "builder": "@nrwl/node:package",
+          "builder": "@nrwl/js:tsc",
           "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/libs/util/data-fetcher",
@@ -1168,7 +1193,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/util/data-fetcher"],
           "options": {
-            "jestConfig": "libs/util/data-fetcher/jest.config.js",
+            "jestConfig": "libs/util/data-fetcher/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -1176,6 +1201,7 @@
       "tags": ["type:util"]
     },
     "util-i18n": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/util/i18n",
       "sourceRoot": "libs/util/i18n/src",
@@ -1185,7 +1211,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/util/i18n"],
           "options": {
-            "jestConfig": "libs/util/i18n/jest.config.js",
+            "jestConfig": "libs/util/i18n/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -1203,6 +1229,7 @@
       "tags": ["type:util", "scope:i18n"]
     },
     "util-shared": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "library",
       "root": "libs/util/shared",
       "sourceRoot": "libs/util/shared/src",
@@ -1212,7 +1239,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/util/shared"],
           "options": {
-            "jestConfig": "libs/util/shared/jest.config.js",
+            "jestConfig": "libs/util/shared/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -1230,6 +1257,7 @@
       "tags": ["type:util", "scope:shared"]
     },
     "webcomponents": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "application",
       "root": "apps/webcomponents",
       "sourceRoot": "apps/webcomponents/src",
@@ -1320,19 +1348,17 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/webcomponents"],
           "options": {
-            "jestConfig": "apps/webcomponents/jest.config.js",
+            "jestConfig": "apps/webcomponents/jest.config.ts",
             "passWithNoTests": true
           }
         },
         "storybook": {
-          "builder": "@nrwl/storybook:storybook",
+          "builder": "@storybook/angular:start-storybook",
           "options": {
-            "uiFramework": "@storybook/angular",
             "port": 4400,
-            "config": {
-              "configFolder": "apps/webcomponents/.storybook"
-            },
-            "projectBuildConfig": "webcomponents"
+            "configDir": "apps/webcomponents/.storybook",
+            "browserTarget": "webcomponents:build",
+            "compodoc": false
           },
           "configurations": {
             "ci": {
@@ -1341,15 +1367,13 @@
           }
         },
         "build-storybook": {
-          "builder": "@nrwl/storybook:build",
+          "builder": "@storybook/angular:build-storybook",
           "outputs": ["{options.outputPath}"],
           "options": {
-            "uiFramework": "@storybook/angular",
-            "outputPath": "dist/storybook/webcomponents",
-            "config": {
-              "configFolder": "apps/webcomponents/.storybook"
-            },
-            "projectBuildConfig": "webcomponents"
+            "outputDir": "dist/storybook/webcomponents",
+            "configDir": "apps/webcomponents/.storybook",
+            "browserTarget": "webcomponents:build",
+            "compodoc": false
           },
           "configurations": {
             "ci": {
@@ -1361,6 +1385,7 @@
       "tags": ["type:app"]
     },
     "webcomponents-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/webcomponents-e2e",
       "sourceRoot": "apps/webcomponents-e2e/src",
       "projectType": "application",

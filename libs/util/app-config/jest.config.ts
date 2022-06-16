@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'util-data-fetcher',
+/* eslint-disable */
+export default {
+  displayName: 'util-app-config',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -12,5 +13,5 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../../coverage/libs/util/data-fetcher',
+  coverageDirectory: '../../../coverage/libs/util/app-config',
 }

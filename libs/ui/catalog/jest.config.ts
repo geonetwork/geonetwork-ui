@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'feature-map',
+/* eslint-disable */
+export default {
+  displayName: 'ui-catalog',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -9,7 +10,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../../coverage/libs/feature/map',
+  coverageDirectory: '../../../coverage/libs/ui/catalog',
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
     'jest-preset-angular/build/serializers/ng-snapshot',

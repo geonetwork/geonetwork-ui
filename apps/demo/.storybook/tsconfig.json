@@ -6,7 +6,8 @@
   "exclude": [
     "../**/*.spec.ts",
     "../**/*.test.ts",
-    "../../../libs/**/*.spec.ts"
+    "../../../libs/**/*.spec.ts",
+    "jest.config.ts"
   ],
   "include": ["../src/**/*", "*.js", "../../../libs/**/*"]
 }

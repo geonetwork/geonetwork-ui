@@ -12,7 +12,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core'
-import { FormControl } from '@angular/forms'
+import { UntypedFormControl } from '@angular/forms'
 import {
   MatAutocomplete,
   MatAutocompleteSelectedEvent,
@@ -54,7 +54,7 @@ export class AutocompleteComponent
 
   searching: boolean
   suggestions$: Observable<AutocompleteItem[]>
-  control = new FormControl()
+  control = new UntypedFormControl()
   subscription = new Subscription()
   cancelEnter = true
   selectionSubject = new ReplaySubject<MatAutocompleteSelectedEvent>(1)

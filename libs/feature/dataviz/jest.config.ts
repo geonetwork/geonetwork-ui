@@ -1,6 +1,7 @@
-module.exports = {
-  displayName: 'demo',
-  preset: '../../jest.preset.js',
+/* eslint-disable */
+export default {
+  displayName: 'feature-dataviz',
+  preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
@@ -9,7 +10,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/apps/demo',
+  coverageDirectory: '../../../coverage/libs/feature/dataviz',
   transform: {
     '^.+.(ts|mjs|js|html)$': 'jest-preset-angular',
   },

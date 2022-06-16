@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'feature-catalog',
+/* eslint-disable */
+export default {
+  displayName: 'ui-widgets',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -9,7 +10,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../../coverage/libs/feature/catalog',
+  coverageDirectory: '../../../coverage/libs/ui/widgets',
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
     'jest-preset-angular/build/serializers/ng-snapshot',

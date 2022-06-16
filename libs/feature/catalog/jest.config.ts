@@ -1,6 +1,7 @@
-module.exports = {
-  displayName: 'datafeeder',
-  preset: '../../jest.preset.js',
+/* eslint-disable */
+export default {
+  displayName: 'feature-catalog',
+  preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
@@ -8,11 +9,8 @@ module.exports = {
       tsconfig: '<rootDir>/tsconfig.spec.json',
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
-    env: {
-      apiUrl: '/datafeeder',
-    },
   },
-  coverageDirectory: '../../coverage/apps/datafeeder',
+  coverageDirectory: '../../../coverage/libs/feature/catalog',
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
     'jest-preset-angular/build/serializers/ng-snapshot',
