@@ -1,0 +1,19 @@
+<div
+  class="p-[1.7em] bg-red-50 text-red-800 text-[1.5em] text-center rounded-lg"
+>
+  <div *ngIf="type === types.COULD_NOT_REACH_API">
+    <div class="relative opacity-40">
+      <mat-icon class="face">face</mat-icon>
+      <mat-icon class="question-mark1">question_mark</mat-icon>
+      <mat-icon class="question-mark2">question_mark</mat-icon>
+    </div>
+    <div translate>search.error.couldNotReachApi</div>
+  </div>
+  <div *ngIf="type === types.RECEIVED_ERROR">
+    <div class="relative opacity-40">
+      <mat-icon class="face">mood_bad</mat-icon>
+    </div>
+    <div translate>search.error.receivedError</div>
+    <div *ngIf="error">{{ error }}</div>
+  </div>
+</div>

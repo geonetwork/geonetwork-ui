@@ -16,6 +16,7 @@ import { RelatedRecordCardComponent } from './related-record-card/related-record
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { MetadataContactComponent } from './metadata-contact/metadata-contact.component'
 import { MetadataCatalogComponent } from './metadata-catalog/metadata-catalog.component'
+import { SearchResultsErrorComponent } from './search-results-error/search-results-error.component'
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { MetadataCatalogComponent } from './metadata-catalog/metadata-catalog.co
     RelatedRecordCardComponent,
     MetadataContactComponent,
     MetadataCatalogComponent,
+    SearchResultsErrorComponent,
   ],
   exports: [
     MetadataInfoComponent,
@@ -48,6 +50,7 @@ import { MetadataCatalogComponent } from './metadata-catalog/metadata-catalog.co
     RelatedRecordCardComponent,
     MetadataContactComponent,
     MetadataCatalogComponent,
+    SearchResultsErrorComponent,
   ],
 })
 export class UiElementsModule {}
