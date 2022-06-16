@@ -199,7 +199,7 @@ You can set up the correct _Working Directory_ once for all by putting the corre
 
 All contributed code must pass the lint & format checks.
 
-To run the lint step, use `npm run lint` for affected code, or `npm run lint` for all code.
+To run the lint step, use `npm run lint` for affected code, or `npm run lint:all` for all code.
 
 To check whether your code is formatted properly, use `npm run format`.
 
