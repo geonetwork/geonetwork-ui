@@ -1,0 +1,122 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/datahub/src",
+  "prefix": "datahub",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/datahub",
+        "index": "apps/datahub/src/index.html",
+        "main": "apps/datahub/src/main.ts",
+        "polyfills": "apps/datahub/src/polyfills.ts",
+        "tsConfig": "apps/datahub/tsconfig.app.json",
+        "assets": [
+          "apps/datahub/src/favicon.ico",
+          "apps/datahub/src/assets",
+          {
+            "glob": "*",
+            "input": "translations",
+            "output": "assets/i18n/"
+          },
+          {
+            "glob": "*",
+            "input": "conf",
+            "output": "assets/configuration/"
+          }
+        ],
+        "styles": [
+          "apps/datahub/src/styles.css",
+          "node_modules/ol/ol.css",
+          "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+        ],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "10kb",
+              "maximumError": "20kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/datahub/src/environments/environment.ts",
+              "with": "apps/datahub/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "datahub:build:production"
+        },
+        "development": {
+          "browserTarget": "datahub:build:development",
+          "proxyConfig": "proxy-config.js"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "datahub:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/datahub/src/**/*.ts",
+          "apps/datahub/src/**/*.html"
+        ]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/datahub"],
+      "options": {
+        "jestConfig": "apps/datahub/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "docker-build": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "nx build datahub --base-href='/datahub/'",
+            "forwardAllArgs": false
+          },
+          "docker build --build-arg APP_NAME=datahub -f ./tools/docker/Dockerfile.apps . -t {args.tag}"
+        ],
+        "parallel": false
+      }
+    }
+  },
+  "tags": ["type:app"]
+}

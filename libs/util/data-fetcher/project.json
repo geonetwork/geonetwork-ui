@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/util/data-fetcher/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/util/data-fetcher",
+        "tsConfig": "libs/util/data-fetcher/tsconfig.lib.json",
+        "packageJson": "libs/util/data-fetcher/package.json",
+        "main": "libs/util/data-fetcher/src/index.ts",
+        "assets": ["libs/util/data-fetcher/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/util/data-fetcher/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/util/data-fetcher"],
+      "options": {
+        "jestConfig": "libs/util/data-fetcher/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["type:util"]
+}
