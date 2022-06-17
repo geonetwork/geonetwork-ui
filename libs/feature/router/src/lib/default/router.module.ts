@@ -7,7 +7,7 @@ import {
 import { RouteReuseStrategy } from '@angular/router'
 import { EffectsModule } from '@ngrx/effects'
 import {
-  DefaultRouterStateSerializer,
+  FullRouterStateSerializer,
   routerReducer,
   StoreRouterConnectingModule,
 } from '@ngrx/router-store'
@@ -35,7 +35,7 @@ export const ROUTER_CONFIG = new InjectionToken<RouterConfigModel>(
     StoreModule.forFeature(ROUTER_STATE_KEY, routerReducer),
     StoreRouterConnectingModule.forRoot({
       stateKey: ROUTER_STATE_KEY,
-      serializer: DefaultRouterStateSerializer,
+      serializer: FullRouterStateSerializer,
     }),
     EffectsModule.forFeature([RouterEffects]),
   ],
