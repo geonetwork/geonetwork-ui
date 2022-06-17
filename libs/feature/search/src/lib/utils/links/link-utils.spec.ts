@@ -159,7 +159,7 @@ describe('link utils', () => {
           label: 'Data in CSV format',
           format: 'csv',
           name: 'abc.csv',
-          url: 'http://my.server/files/abc.csv',
+          url: 'https://my.server/files/abc.csv',
         })
       ).toEqual(nFormats - 1)
     })
@@ -171,7 +171,7 @@ describe('link utils', () => {
           label: 'Data in KML format',
           format: 'kml',
           name: 'abc.kml',
-          url: 'http://my.server/files/abc.kml',
+          url: 'https://my.server/files/abc.kml',
         })
       ).toEqual(nFormats - 5)
     })

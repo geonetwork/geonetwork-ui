@@ -22,7 +22,7 @@ export class DownloadsListComponent implements OnInit {
 
   @Input() links: MetadataLinkValid[]
 
-  filterParam: string = ''
+  filterParam = ''
   filterFormats: string[] = ['all', 'csv', 'excel', 'json', 'shp', 'others']
   activeFilterFormats: string[] = ['all']
 
