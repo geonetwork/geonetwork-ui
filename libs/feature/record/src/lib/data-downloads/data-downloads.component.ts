@@ -46,7 +46,11 @@ export class DataDownloadsComponent {
       this.error = null
 
       return combineLatest(
-        wfsLinks.map((link) => this.dataService.getDownloadLinksFromWfs(link))
+        wfsLinks.length > 0
+          ? wfsLinks.map((link) =>
+              this.dataService.getDownloadLinksFromWfs(link)
+            )
+          : [of([])]
       ).pipe(
         // flaten array
         map(

@@ -266,5 +266,77 @@ describe('DataDownloadsComponent', () => {
         ])
       }))
     })
+    describe('with sorted links', () => {
+      beforeEach(() => {
+        facade.downloadLinks$.next([
+          {
+            description: 'KML Data',
+            name: 'abc.kml',
+            format: 'kml',
+            protocol: 'WWW:DOWNLOAD',
+            url: 'https://www.ifremer.fr/data.kml',
+          },
+          {
+            description: 'Lieu de surveillance (point)',
+            name: 'surval_parametre_point.csv',
+            format: 'csv',
+            protocol: 'WWW:DOWNLOAD',
+            url: 'https://www.ifremer.fr/surval_parametre_point.csv',
+          },
+          {
+            description: 'pdf file',
+            name: 'abc.pdf',
+            format: 'pdf',
+            protocol: 'WWW:DOWNLOAD',
+            url: 'https://www.ifremer.fr/file.pdf',
+          },
+          {
+            description: 'Lieu de surveillance (polygone)',
+            name: 'surval_parametre_polygone.geojson',
+            format: 'geojson',
+            protocol: 'WWW:DOWNLOAD',
+            url: 'https://www.ifremer.fr/surval_parametre_polygone.geojson',
+          },
+        ])
+        fixture.detectChanges()
+      })
+      it('sorts links', fakeAsync(() => {
+        let downloadLinks = []
+        component.links$.subscribe((links: MetadataLink[]) => {
+          downloadLinks = links
+        })
+        tick(200)
+        expect(downloadLinks).toEqual([
+          {
+            description: 'Lieu de surveillance (point)',
+            name: 'surval_parametre_point.csv',
+            format: 'csv',
+            protocol: 'WWW:DOWNLOAD',
+            url: 'https://www.ifremer.fr/surval_parametre_point.csv',
+          },
+          {
+            description: 'Lieu de surveillance (polygone)',
+            name: 'surval_parametre_polygone.geojson',
+            format: 'geojson',
+            protocol: 'WWW:DOWNLOAD',
+            url: 'https://www.ifremer.fr/surval_parametre_polygone.geojson',
+          },
+          {
+            description: 'KML Data',
+            name: 'abc.kml',
+            format: 'kml',
+            protocol: 'WWW:DOWNLOAD',
+            url: 'https://www.ifremer.fr/data.kml',
+          },
+          {
+            description: 'pdf file',
+            name: 'abc.pdf',
+            format: 'pdf',
+            protocol: 'WWW:DOWNLOAD',
+            url: 'https://www.ifremer.fr/file.pdf',
+          },
+        ])
+      }))
+    })
   })
 })
