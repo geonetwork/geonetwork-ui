@@ -112,9 +112,6 @@ export class DownloadsListComponent implements OnInit {
       if (!this.linkHelper.isWfsLink(link)) return link
       return {
         ...link,
-        name: `${link.label} (${this.translateService.instant(
-          'datahub.search.filter.generatedByWfs'
-        )})`,
         isWfs: true,
       }
     })

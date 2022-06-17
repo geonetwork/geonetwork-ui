@@ -8,7 +8,7 @@
       class="text-21 text-black uppercase truncate font-title max-w-4xl"
       [title]="link.name"
     >
-      {{ link.name }}
+      {{ link.label }}
     </div>
     <div class="pt-1">
       <span
@@ -17,7 +17,7 @@
         >{{ link.format || ('downloads.format.unknown' | translate) }}</span
       >
       <span
-        class="pl-2 inline-flex items-center"
+        class="pl-2 inline-flex items-center text-gray-800"
         *ngIf="link.isWfs"
         translate=""
         >datahub.search.filter.generatedByWfs</span
