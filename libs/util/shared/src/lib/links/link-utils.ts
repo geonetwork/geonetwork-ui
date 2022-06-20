@@ -1,5 +1,5 @@
-import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { MetadataLinkValid } from '../models'
 
 marker('downloads.wfs.featuretype.not.found')
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { MetadataLink } from '@geonetwork-ui/util/shared'
+import { MetadataLink } from '../models'
 
 export enum LinkUsage {
   API = 'api',

@@ -1,13 +1,6 @@
 import { TestBed } from '@angular/core/testing'
-import {
-  RECORDS_FULL_FIXTURE,
-  RECORDS_SUMMARY_FIXTURE,
-} from '@geonetwork-ui/ui/search'
-import {
-  MetadataLink,
-  MetadataRecord,
-  RECORD_LINK_FIXTURE_WMS,
-} from '@geonetwork-ui/util/shared'
+import { RECORD_LINK_FIXTURE_WMS } from '../fixtures'
+import { MetadataLink, MetadataRecord } from '../models'
 import { LinkClassifierService, LinkUsage } from './link-classifier.service'
 
 import { LinkHelperService } from './link-helper.service'
