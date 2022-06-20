@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatIconModule } from '@angular/material/icon'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
@@ -17,6 +18,7 @@ describe('RelatedRecordCardComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [RelatedRecordCardComponent],
+      schemas: [NO_ERRORS_SCHEMA],
       imports: [MatIconModule, UiSearchModule, TranslateModule.forRoot()],
     }).compileComponents()
   })

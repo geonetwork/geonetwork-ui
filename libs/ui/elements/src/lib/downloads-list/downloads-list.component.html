@@ -1,0 +1,21 @@
+<div class="flex justify-between" *ngIf="links && links.length > 0">
+  <p
+    class="font-title text-[28px] text-title font-medium mt-8 mb-6 text-center sm:mt-12 sm:mb-4 sm:text-left"
+    translate
+  >
+    record.metadata.download
+  </p>
+  <div class="mt-8 mb-6 sm:mt-12 sm:mb-3">
+    <span
+      [class.opacity-100]="isFilterActive(format)"
+      class="bg-gray-200 ml-6 cursor-pointer p-2 rounded opacity-50 text-sm"
+      (click)="toggleFilterFormat($event.target.value)"
+      [value]="format"
+      *ngFor="let format of filterFormats"
+      >{{ getFilterFormatTitle(format) }}</span
+    >
+  </div>
+</div>
+<div class="mb-2 sm:mb-3" *ngFor="let link of filteredLinks">
+  <gn-ui-download-item [link]="link" [color]="link.color"></gn-ui-download-item>
+</div>

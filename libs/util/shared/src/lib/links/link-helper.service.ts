@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core'
-import {
-  MetadataLink,
-  MetadataLinkValid,
-  MetadataRecord,
-} from '@geonetwork-ui/util/shared'
+import { MetadataLink, MetadataLinkValid, MetadataRecord } from '../models'
 import { LinkClassifierService, LinkUsage } from './link-classifier.service'
 import { getFileFormat } from './link-utils'
 

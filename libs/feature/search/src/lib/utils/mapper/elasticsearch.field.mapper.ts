@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { LinkHelperService } from '../links/link-helper.service'
+import { LinkHelperService } from '@geonetwork-ui/util/shared'
 import {
   getAsArray,
   getAsUrl,

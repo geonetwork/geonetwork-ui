@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { LinkHelperService } from '@geonetwork-ui/feature/search'
+import { LinkHelperService } from '@geonetwork-ui/util/shared'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
 import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
 

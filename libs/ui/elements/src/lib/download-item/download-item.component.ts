@@ -15,6 +15,7 @@ import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
 })
 export class DownloadItemComponent {
   @Input() link: MetadataLinkValid
+  @Input() color: string
   @Output() exportUrl = new EventEmitter<string>()
 
   openUrl() {

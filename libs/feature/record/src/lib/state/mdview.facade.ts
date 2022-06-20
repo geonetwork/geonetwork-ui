@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { LinkHelperService } from '@geonetwork-ui/feature/search'
+import { LinkHelperService } from '@geonetwork-ui/util/shared'
 import { MetadataLinkValid, MetadataRecord } from '@geonetwork-ui/util/shared'
 
 import { select, Store } from '@ngrx/store'

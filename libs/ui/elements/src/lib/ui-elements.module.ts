@@ -7,6 +7,7 @@ import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { MetadataInfoComponent } from './metadata-info/metadata-info.component'
 import { ContentGhostComponent } from './content-ghost/content-ghost.component'
 import { DownloadItemComponent } from './download-item/download-item.component'
+import { DownloadsListComponent } from './downloads-list/downloads-list.component'
 import { ApiCardComponent } from './api-card/api-card.component'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
@@ -34,6 +35,7 @@ import { SearchResultsErrorComponent } from './search-results-error/search-resul
     MetadataInfoComponent,
     ContentGhostComponent,
     DownloadItemComponent,
+    DownloadsListComponent,
     ApiCardComponent,
     LinkCardComponent,
     RelatedRecordCardComponent,
@@ -45,6 +47,7 @@ import { SearchResultsErrorComponent } from './search-results-error/search-resul
     MetadataInfoComponent,
     ContentGhostComponent,
     DownloadItemComponent,
+    DownloadsListComponent,
     ApiCardComponent,
     LinkCardComponent,
     RelatedRecordCardComponent,

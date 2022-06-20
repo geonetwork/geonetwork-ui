@@ -17,7 +17,7 @@ import {
   switchMap,
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
-import { getFileFormat, LinkHelperService } from '@geonetwork-ui/feature/search'
+import { getFileFormat, LinkHelperService } from '@geonetwork-ui/util/shared'
 import { DataService } from '../service/data.service'
 
 @Component({

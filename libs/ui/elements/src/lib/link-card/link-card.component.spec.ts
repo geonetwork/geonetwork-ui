@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatIconModule } from '@angular/material/icon'
 import { TranslateModule } from '@ngx-translate/core'
@@ -11,6 +12,7 @@ describe('LinkCardComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [LinkCardComponent],
+      schemas: [NO_ERRORS_SCHEMA],
       imports: [MatIconModule, TranslateModule.forRoot()],
     }).compileComponents()
   })

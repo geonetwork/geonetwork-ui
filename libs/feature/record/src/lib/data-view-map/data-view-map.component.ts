@@ -13,7 +13,7 @@ import {
   MapStyleService,
   MapUtilsService,
 } from '@geonetwork-ui/feature/map'
-import { LinkHelperService } from '@geonetwork-ui/feature/search'
+import { LinkHelperService } from '@geonetwork-ui/util/shared'
 import { getMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 import { MetadataLinkValid, ProxyService } from '@geonetwork-ui/util/shared'
 import { Feature } from 'ol'
