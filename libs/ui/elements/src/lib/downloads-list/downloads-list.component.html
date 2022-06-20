@@ -5,11 +5,11 @@
   >
     record.metadata.download
   </p>
-  <div class="mt-8 mb-6 sm:mt-12 sm:mb-">
+  <div class="mt-8 mb-6 sm:mt-12 sm:mb-3">
     <span
-      class="bg-gray-200 ml-6 cursor-pointer p-2 rounded"
+      [class.opacity-100]="isFilterActive(format)"
+      class="bg-gray-200 ml-6 cursor-pointer p-2 rounded opacity-50 text-sm"
       (click)="toggleFilterFormat($event.target.value)"
-      [style.opacity]="isFilterActive(format) ? '100%' : '33%'"
       [value]="format"
       *ngFor="let format of filterFormats"
       >{{ getFilterFormatTitle(format) }}</span

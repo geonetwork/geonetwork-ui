@@ -1,3 +1,7 @@
+.root:hover .download-icon {
+  color: var(--color-secondary);
+}
+
 .root:not(:hover) .badge {
   opacity: 0.7 !important;
 }
