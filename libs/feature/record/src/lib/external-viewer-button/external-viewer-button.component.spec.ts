@@ -15,7 +15,7 @@ class LinkHelperServiceMock {
   selector: 'gn-ui-button',
   template: '<div></div>',
 })
-export class MockButtonComponent { }
+export class MockButtonComponent {}
 
 describe('ExternalViewerButtonComponent', () => {
   let component: ExternalViewerButtonComponent

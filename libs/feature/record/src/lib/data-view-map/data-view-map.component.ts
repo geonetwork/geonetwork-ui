@@ -62,9 +62,9 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
     map((links) =>
       links.length
         ? links.map((link, index) => ({
-          label: this.linkHelper.getLinkLabelWithFormat(link),
-          value: index,
-        }))
+            label: this.linkHelper.getLinkLabelWithFormat(link),
+            value: index,
+          }))
         : [{ label: 'No preview layer', value: 0 }]
     )
   )
@@ -105,12 +105,12 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
         }),
         map(
           (extent) =>
-          ({
-            layers,
-            view: {
-              extent,
-            },
-          } as MapContextModel)
+            ({
+              layers,
+              view: {
+                extent,
+              },
+            } as MapContextModel)
         ),
         tap(() => this.resetSelection())
       )
@@ -126,7 +126,7 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
     private featureInfo: FeatureInfoService,
     private changeRef: ChangeDetectorRef,
     private styleService: MapStyleService
-  ) { }
+  ) {}
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe()

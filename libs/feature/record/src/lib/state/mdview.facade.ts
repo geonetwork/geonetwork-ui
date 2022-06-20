@@ -69,7 +69,7 @@ export class MdViewFacade {
     map((links) => links.filter((link) => this.helper.isOtherLink(link)))
   )
 
-  constructor(private store: Store, private helper: LinkHelperService) { }
+  constructor(private store: Store, private helper: LinkHelperService) {}
 
   /**
    * This will show an incomplete record (e.g. from a search result) as a preview

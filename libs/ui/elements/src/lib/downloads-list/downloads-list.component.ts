@@ -18,7 +18,7 @@ export class DownloadsListComponent implements OnInit {
   constructor(
     private linkHelper: LinkHelperService,
     private translateService: TranslateService
-  ) { }
+  ) {}
 
   @Input() links: MetadataLinkValid[]
 

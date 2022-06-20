@@ -30,7 +30,7 @@ export class ElasticsearchFieldMapper {
   constructor(
     private metadataUrlService: MetadataUrlService,
     private linkHelper: LinkHelperService
-  ) { }
+  ) {}
 
   protected fields: Record<string, EsFieldMapperFn> = {
     id: (output, source) => ({

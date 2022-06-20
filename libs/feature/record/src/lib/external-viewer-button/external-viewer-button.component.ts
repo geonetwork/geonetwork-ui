@@ -28,11 +28,11 @@ export class ExternalViewerButtonComponent {
     return this.linkHelper.isWmsLink(this.link)
       ? 'wms'
       : this.linkHelper.isWfsLink(this.link)
-        ? 'wfs'
-        : null
+      ? 'wfs'
+      : null
   }
 
-  constructor(private linkHelper: LinkHelperService) { }
+  constructor(private linkHelper: LinkHelperService) {}
 
   openInExternalViewer() {
     const templateUrl = this.mapConfig.EXTERNAL_VIEWER_URL_TEMPLATE

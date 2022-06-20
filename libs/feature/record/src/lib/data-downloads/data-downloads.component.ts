@@ -22,7 +22,7 @@ export class DataDownloadsComponent {
     public facade: MdViewFacade,
     private linkHelper: LinkHelperService,
     private dataService: DataService
-  ) { }
+  ) {}
 
   error: string = null
 
@@ -38,9 +38,9 @@ export class DataDownloadsComponent {
           'format' in link
             ? link
             : {
-              ...link,
-              format: getFileFormat(link),
-            }
+                ...link,
+                format: getFileFormat(link),
+              }
         )
 
       this.error = null
