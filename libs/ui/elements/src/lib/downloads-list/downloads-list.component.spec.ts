@@ -1,6 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { LinkHelperService } from '@geonetwork-ui/feature/search'
+import { LinkHelperService } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 
 import { DownloadsListComponent } from './downloads-list.component'

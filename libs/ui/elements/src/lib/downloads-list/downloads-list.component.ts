@@ -5,7 +5,7 @@ import {
   OnInit,
 } from '@angular/core'
 import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
-import { getBadgeColor, LinkHelperService } from '@geonetwork-ui/feature/search'
+import { getBadgeColor, LinkHelperService } from '@geonetwork-ui/util/shared'
 import { TranslateService } from '@ngx-translate/core'
 
 @Component({
@@ -18,7 +18,7 @@ export class DownloadsListComponent implements OnInit {
   constructor(
     private linkHelper: LinkHelperService,
     private translateService: TranslateService
-  ) {}
+  ) { }
 
   @Input() links: MetadataLinkValid[]
 

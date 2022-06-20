@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { LinkHelperService } from '@geonetwork-ui/feature/search'
+import { LinkHelperService } from '@geonetwork-ui/util/shared'
 import { MAP_CONFIG_FIXTURE } from '@geonetwork-ui/util/app-config'
 
 import { ExternalViewerButtonComponent } from './external-viewer-button.component'
@@ -15,7 +15,7 @@ class LinkHelperServiceMock {
   selector: 'gn-ui-button',
   template: '<div></div>',
 })
-export class MockButtonComponent {}
+export class MockButtonComponent { }
 
 describe('ExternalViewerButtonComponent', () => {
   let component: ExternalViewerButtonComponent

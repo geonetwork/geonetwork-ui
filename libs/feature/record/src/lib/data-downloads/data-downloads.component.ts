@@ -4,7 +4,7 @@ import {
   getWfsFormat,
   LinkHelperService,
   sortPriority,
-} from '@geonetwork-ui/feature/search'
+} from '@geonetwork-ui/util/shared'
 import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
 import { combineLatest, of } from 'rxjs'
 import { catchError, map, switchMap } from 'rxjs/operators'
@@ -22,7 +22,7 @@ export class DataDownloadsComponent {
     public facade: MdViewFacade,
     private linkHelper: LinkHelperService,
     private dataService: DataService
-  ) {}
+  ) { }
 
   error: string = null
 
@@ -38,9 +38,9 @@ export class DataDownloadsComponent {
           'format' in link
             ? link
             : {
-                ...link,
-                format: getFileFormat(link),
-              }
+              ...link,
+              format: getFileFormat(link),
+            }
         )
 
       this.error = null

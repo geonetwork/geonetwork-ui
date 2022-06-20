@@ -17,7 +17,7 @@ import {
   switchMap,
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
-import { getFileFormat, LinkHelperService } from '@geonetwork-ui/feature/search'
+import { getFileFormat, LinkHelperService } from '@geonetwork-ui/util/shared'
 import { DataService } from '../service/data.service'
 
 @Component({
@@ -55,14 +55,14 @@ export class DataViewTableComponent {
       this.error = null
       return link
         ? this.fetchData(link).pipe(
-            catchError((error) => {
-              this.error = error.message
-              return of([])
-            }),
-            finalize(() => {
-              this.loading = false
-            })
-          )
+          catchError((error) => {
+            this.error = error.message
+            return of([])
+          }),
+          finalize(() => {
+            this.loading = false
+          })
+        )
         : of([])
     }),
     shareReplay(1)
@@ -72,7 +72,7 @@ export class DataViewTableComponent {
     private mdViewFacade: MdViewFacade,
     private linkHelper: LinkHelperService,
     private dataService: DataService
-  ) {}
+  ) { }
 
   fetchData(link: MetadataLinkValid): Observable<{ id: string | number }[]> {
     if (this.linkHelper.isWfsLink(link)) {

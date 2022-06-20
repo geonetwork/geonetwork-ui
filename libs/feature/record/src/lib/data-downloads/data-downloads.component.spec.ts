@@ -21,19 +21,19 @@ class DataServiceMock {
     link.url.indexOf('error') > -1
       ? throwError(new Error('would not fetch links'))
       : of([
-          {
-            ...link,
-            format: 'geojson',
-          },
-          {
-            ...link,
-            format: 'csv',
-          },
-          {
-            ...link,
-            format: 'gml',
-          },
-        ])
+        {
+          ...link,
+          format: 'geojson',
+        },
+        {
+          ...link,
+          format: 'csv',
+        },
+        {
+          ...link,
+          format: 'gml',
+        },
+      ])
   )
   getDownloadLinksFromEsriRest = jest.fn((link) => [
     {
@@ -61,7 +61,7 @@ export class MockDownloadsListItemComponent {
   selector: 'gn-ui-popup-alert',
   template: '<div></div>',
 })
-export class MockPopupAlertComponent {}
+export class MockPopupAlertComponent { }
 
 describe('DataDownloadsComponent', () => {
   let component: DataDownloadsComponent

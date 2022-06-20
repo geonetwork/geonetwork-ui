@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { LinkHelperService } from '@geonetwork-ui/feature/search'
+import { LinkHelperService } from '@geonetwork-ui/util/shared'
 import { MetadataLinkValid, MetadataRecord } from '@geonetwork-ui/util/shared'
 
 import { select, Store } from '@ngrx/store'
@@ -69,7 +69,7 @@ export class MdViewFacade {
     map((links) => links.filter((link) => this.helper.isOtherLink(link)))
   )
 
-  constructor(private store: Store, private helper: LinkHelperService) {}
+  constructor(private store: Store, private helper: LinkHelperService) { }
 
   /**
    * This will show an incomplete record (e.g. from a search result) as a preview

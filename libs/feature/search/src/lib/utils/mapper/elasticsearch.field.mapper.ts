@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { LinkHelperService } from '../links/link-helper.service'
+import { LinkHelperService } from '@geonetwork-ui/util/shared'
 import {
   getAsArray,
   getAsUrl,
@@ -30,7 +30,7 @@ export class ElasticsearchFieldMapper {
   constructor(
     private metadataUrlService: MetadataUrlService,
     private linkHelper: LinkHelperService
-  ) {}
+  ) { }
 
   protected fields: Record<string, EsFieldMapperFn> = {
     id: (output, source) => ({
