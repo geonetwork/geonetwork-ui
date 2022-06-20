@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing'
-import { RECORD_LINK_FIXTURE_WMS } from '../fixtures'
+import { RECORDS_FULL_FIXTURE } from '../fixtures'
+import { RECORD_LINK_FIXTURE_WMS, RECORDS_SUMMARY_FIXTURE } from '../fixtures'
 import { MetadataLink, MetadataRecord } from '../models'
 import { LinkClassifierService, LinkUsage } from './link-classifier.service'
 

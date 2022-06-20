@@ -1,4 +1,4 @@
-import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/ui/search'
+import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/util/shared'
 import * as MdViewActions from './mdview.actions'
 import { initialMdviewState, reducer } from './mdview.reducer'
 
