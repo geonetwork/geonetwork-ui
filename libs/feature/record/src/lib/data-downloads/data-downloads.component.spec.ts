@@ -297,6 +297,13 @@ describe('DataDownloadsComponent', () => {
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/surval_parametre_polygone.geojson',
           },
+          {
+            description: 'excel data',
+            name: 'data.xls',
+            format: 'Excel',
+            protocol: 'WWW:DOWNLOAD',
+            url: 'https://www.ifremer.fr/data.excel',
+          },
         ])
         fixture.detectChanges()
       })
@@ -313,6 +320,13 @@ describe('DataDownloadsComponent', () => {
             format: 'csv',
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/surval_parametre_point.csv',
+          },
+          {
+            description: 'excel data',
+            name: 'data.xls',
+            format: 'Excel',
+            protocol: 'WWW:DOWNLOAD',
+            url: 'https://www.ifremer.fr/data.excel',
           },
           {
             description: 'Lieu de surveillance (polygone)',
