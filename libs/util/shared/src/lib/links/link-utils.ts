@@ -11,7 +11,13 @@ export const FORMATS = {
     mimeTypes: ['text/csv', 'application/csv'],
   },
   excel: {
-    extensions: ['xls', 'xlsx', 'ms-excel', 'openxmlformats-officedocument'],
+    extensions: [
+      'excel',
+      'xls',
+      'xlsx',
+      'ms-excel',
+      'openxmlformats-officedocument',
+    ],
     priority: 2,
     color: '#0f4395',
     mimeTypes: [
@@ -62,7 +68,7 @@ export const FORMATS = {
     extensions: ['pdf'],
     priority: 8,
     color: '#db544a',
-    mimeTypes: ['application/vnd.ms-excel'],
+    mimeTypes: ['application/pdf'],
   },
   jpg: {
     extensions: ['jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp'],
