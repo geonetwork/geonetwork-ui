@@ -10,9 +10,19 @@ There are also many [community plugins](https://nx.dev/nx-community) you could a
 
 ## Workspace operations
 
+### Get started
+
+To have more flexibility using Nx tools, you should install Nx CLI.
+
+```shell
+npm i -g @nrwl/cli
+```
+
+This will make the `Nx` command available on your system.
+
 ### Generate an application
 
-Run `ng g @nrwl/angular:app my-app` to generate an application.
+Run `nx g @nrwl/angular:app my-app` to generate an application.
 
 > You can use any of the plugins above to generate applications as well.
 
