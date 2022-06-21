@@ -25,21 +25,21 @@
       {{ abstract }}
     </div>
     <div
-      class="order-2 text-primary opacity-25 uppercase sm:truncate sm:order-3 sm:row-end-4 sm:col-span-8 md:col-span-9"
+      class="order-2 text-primary opacity-25 uppercase sm:truncate sm:order-3 sm:row-end-4 sm:col-span-8 lg:col-span-9"
     >
       {{ record.contact?.organisation }}
     </div>
     <div
-      class="order-4 basis-1/2 flex flex-row sm:row-end-4 sm:justify-end sm:col-span-2 md:col-span-1"
+      class="order-4 basis-1/2 flex flex-row sm:row-end-4 sm:justify-end sm:col-span-2 lg:col-span-1"
     >
       <mat-icon
         *ngIf="isDownloadable"
-        class="material-icons-outlined text-primary opacity-25 mr-4"
+        class="material-icons-outlined text-primary opacity-25 mx-1"
         >cloud_download</mat-icon
       >
       <mat-icon
         *ngIf="isViewable"
-        class="material-icons-outlined text-primary opacity-25 mr-4"
+        class="material-icons-outlined text-primary opacity-25 mx-1"
         >map</mat-icon
       >
     </div>
