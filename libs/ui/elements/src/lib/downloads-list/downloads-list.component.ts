@@ -54,6 +54,7 @@ export class DownloadsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.processedLinks = this.formatLinks(this.links)
+    console.log(this.processedLinks)
     this.processedLinks = this.assignColor(this.processedLinks)
     this.processedLinks = this.isGeneratedFromWfs(this.processedLinks)
     this.filteredLinks = this.filterLinks(this.processedLinks)
@@ -70,7 +71,7 @@ export class DownloadsListComponent implements OnInit {
     return links.map((link) => {
       return {
         ...link,
-        format: link.format.split(':').at(-1),
+        format: link.format ? link.format.split(':').at(-1) : '',
       }
     })
   }
