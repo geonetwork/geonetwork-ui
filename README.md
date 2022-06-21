@@ -32,7 +32,6 @@ You can start it with `npm run storybook`.
 
 You can either try complete applications or showcases of components using the following links:
 
-- [Datahub app](https://geonetwork.github.io/geonetwork-ui/master/apps/datahub/)
 - [Storybook of UI components](https://geonetwork.github.io/geonetwork-ui/master/storybook/demo/)
 - [Storybook of Web components](https://geonetwork.github.io/geonetwork-ui/master/storybook-wc/)
 - [Demo](https://geonetwork.github.io/geonetwork-ui/master/demo/) _(not functional yet, WIP)_

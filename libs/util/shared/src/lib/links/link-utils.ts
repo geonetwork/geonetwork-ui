@@ -10,6 +10,15 @@ export const FORMATS = {
     color: '#559d7f',
     mimeTypes: ['text/csv', 'application/csv'],
   },
+  excel: {
+    extensions: ['xls', 'xlsx', 'ms-excel', 'openxmlformats-officedocument'],
+    priority: 2,
+    color: '#0f4395',
+    mimeTypes: [
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    ],
+  },
   geojson: {
     extensions: ['geojson'],
     priority: 3,
@@ -39,36 +48,27 @@ export const FORMATS = {
   },
   gpkg: {
     extensions: ['gpkg', 'geopackage'],
-    priority: 0,
-    color: 'var(--color-primary)',
+    priority: 6,
+    color: '#ea79ba',
     mimeTypes: ['application/geopackage+sqlite3'],
   },
-  excel: {
-    extensions: ['xls', 'xlsx', 'ms-excel', 'openxmlformats-officedocument'],
-    priority: 2,
-    color: 'var(--color-primary)',
-    mimeTypes: [
-      'application/vnd.ms-excel',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    ],
+  zip: {
+    extensions: ['zip'],
+    priority: 7,
+    color: '#f2bb3a',
+    mimeTypes: ['application/zip'],
   },
   pdf: {
     extensions: ['pdf'],
-    priority: 0,
-    color: 'var(--color-primary)',
+    priority: 8,
+    color: '#db544a',
     mimeTypes: ['application/vnd.ms-excel'],
   },
   jpg: {
     extensions: ['jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp'],
-    priority: 0,
-    color: 'var(--color-primary)',
+    priority: 8,
+    color: '#673ab7',
     mimeTypes: ['image/jpg'],
-  },
-  zip: {
-    extensions: ['zip'],
-    priority: 0,
-    color: 'var(--color-primary)',
-    mimeTypes: ['application/zip'],
   },
 }
 
@@ -138,5 +138,5 @@ export function getBadgeColor(linkFormat: string): string | void {
         return FORMATS[format].color
     }
   }
-  return 'var(--color-primary)' // Default color ?
+  return 'var(--color-gray-700)' // Default color ?
 }

@@ -1,8 +1,10 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular'
 import { RecordPreviewListComponent } from './record-preview-list.component'
-import { RECORDS_SUMMARY_FIXTURE } from '../facets/fixtures'
 import { RecordThumbnailComponent } from '../record-thumbnail/record-thumbnail.component'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
+import {
+  RECORDS_SUMMARY_FIXTURE,
+  UtilSharedModule,
+} from '@geonetwork-ui/util/shared'
 
 export default {
   title: 'Search/RecordPreviewListComponent',
