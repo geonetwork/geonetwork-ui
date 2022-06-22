@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { RouterFacade } from '@geonetwork-ui/feature/router'
+import {
+  RouterFacade,
+  ROUTER_ROUTE_SEARCH,
+} from '@geonetwork-ui/feature/router'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
@@ -9,7 +12,6 @@ import {
   ROUTER_ROUTE_HOME,
   ROUTER_ROUTE_NEWS,
   ROUTER_ROUTE_ORGANISATION,
-  ROUTER_ROUTE_SEARCH,
 } from '../../router/constants'
 
 marker('datahub.header.myfavorites')
