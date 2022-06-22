@@ -6,7 +6,7 @@ import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject } from 'rxjs'
 
-import { SearchHeaderComponent } from './search-header.component'
+import { HomeHeaderComponent } from './home-header.component'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
@@ -29,13 +29,13 @@ class FuzzySearchComponentMock {
 /* eslint-enable */
 
 describe('HeaderComponent', () => {
-  let component: SearchHeaderComponent
-  let fixture: ComponentFixture<SearchHeaderComponent>
+  let component: HomeHeaderComponent
+  let fixture: ComponentFixture<HomeHeaderComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-      declarations: [SearchHeaderComponent, FuzzySearchComponentMock],
+      declarations: [HomeHeaderComponent, FuzzySearchComponentMock],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
@@ -47,7 +47,7 @@ describe('HeaderComponent', () => {
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SearchHeaderComponent)
+    fixture = TestBed.createComponent(HomeHeaderComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

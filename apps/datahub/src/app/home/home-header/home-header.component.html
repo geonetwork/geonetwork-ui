@@ -29,21 +29,24 @@
     </div>
 -->
     <div
-      class="tabs flex justify-center py-4 mt-12 font-medium absolute"
+      class="tabs flex justify-between py-4 mt-12 font-medium absolute"
       style="bottom: 0; left: 0; right: 0"
       [style.opacity]="expandRatio"
     >
-      <!--      <div class="uppercase text-white">Fil d'activité</div>-->
-      <!--
+      <div class="uppercase text-white hover:text-primary-lighter hover:underline cursor-pointer" 
+        [class]="(currentRoute$ | async) === 'news' ? 'text-primary' : 'text-white'" 
+        (click)="onNewsClick()">Fil d'activité</div>
       <div
-        class="uppercase text-primary hover:text-primary-lighter hover:underline cursor-pointer"
+        class="uppercase hover:text-primary-lighter hover:underline cursor-pointer"
+        [class]="(currentRoute$ | async) === 'search' ? 'text-primary' : 'text-white'" 
         (click)="onDatasetsClick()"
         translate=""
       >
         datasets
       </div>
--->
-      <!--      <div class="uppercase text-white">Organisations</div>-->
+      <div class="uppercase text-white hover:text-primary-lighter hover:underline cursor-pointer"
+      [class]="(currentRoute$ | async) === 'organisations' ? 'text-primary' : 'text-white'" 
+        (click)="onOrganisationsClick()">Organisations</div>
     </div>
   </div>
 </header>
