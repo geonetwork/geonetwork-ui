@@ -156,4 +156,11 @@ export const LINK_FIXTURES = {
     label: 'landingpage link',
     url: 'https://landing.page',
   },
+  unknownFormat: {
+    protocol: 'WWW:DOWNLOAD-1.0-http--download',
+    format: undefined,
+    name: 'Vue HTML des métadonnées sur internet',
+    label: 'Vue HTML des métadonnées sur internet',
+    url: 'http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/fr-120066022-jdd-199fd14c-2abb-4c14-b0f8-6c8d92e7b480',
+  },
 }
