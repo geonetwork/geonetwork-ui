@@ -1,0 +1,10 @@
+<div id="home-page" class="h-screen overflow-y-scroll">
+  <gn-ui-sticky-header [fullHeightPx]="560" [minHeightPx]="90">
+    <ng-template let-expandRatio>
+      <datahub-home-header [expandRatio]="expandRatio"></datahub-home-header>
+    </ng-template>
+  </gn-ui-sticky-header>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+</div>
