@@ -7,6 +7,7 @@ import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
 import {
   DefaultRouterModule,
+  RouterInitService,
   ROUTER_ROUTE_DATASET,
 } from '@geonetwork-ui/feature/router'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
@@ -37,14 +38,19 @@ import { DATAHUB_RESULTS_LAYOUT_CONFIG } from './app.config'
 import { HeaderBadgeButtonComponent } from './record/header-badge-button/header-badge-button.component'
 import { HeaderRecordComponent } from './record/header-record/header-record.component'
 import { RecordPageComponent } from './record/record-page/record-page.component'
-import { RecordPreviewDatahubComponent } from './search/record-preview-datahub/record-preview-datahub.component'
-import { SearchHeaderComponent } from './search/search-header/search-header.component'
-import { SearchPageComponent } from './search/search-page/search-page.component'
+import { RecordPreviewDatahubComponent } from './home/search/record-preview-datahub/record-preview-datahub.component'
+import { HomeHeaderComponent } from './home/home-header/home-header.component'
+import { HomePageComponent } from './home/home-page/home-page.component'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
-import { SearchSummaryComponent } from './search/search-summary/search-summary.component'
+import { SearchSummaryComponent } from './home/search/search-summary/search-summary.component'
 import { NavigationBarComponent } from './record/navigation-bar/navigation-bar.component'
 import { THUMBNAIL_PLACEHOLDER } from '@geonetwork-ui/ui/search'
+import { NewsPageComponent } from './home/news-page/news-page.component'
+import { DatahubRouterInitServiceService } from './router/datahub-router-init-service.service'
+import { OrganisationsPageComponent } from './home/organisations-page/organisations-page.component'
+import { SearchPageComponent } from './home/search/search-page/search-page.component'
+// import { DATAHUB_ROUTER_CONFIG } from './router/constants'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
@@ -52,14 +58,17 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 @NgModule({
   declarations: [
     AppComponent,
-    SearchPageComponent,
+    HomePageComponent,
     RecordPreviewDatahubComponent,
-    SearchHeaderComponent,
+    HomeHeaderComponent,
     HeaderBadgeButtonComponent,
     HeaderRecordComponent,
     RecordPageComponent,
     SearchSummaryComponent,
     NavigationBarComponent,
+    NewsPageComponent,
+    OrganisationsPageComponent,
+    SearchPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,7 +92,10 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     FeatureSearchModule,
     DefaultRouterModule.forRoot({
       searchStateId: 'mainSearch',
+      homeRouteComponent: HomePageComponent,
+      newsRouteComponent: NewsPageComponent,
       searchRouteComponent: SearchPageComponent,
+      organisationsRouteComponent: OrganisationsPageComponent,
       recordRouteComponent: RecordPageComponent,
     }),
     FeatureRecordModule,
@@ -96,6 +108,8 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   ],
   providers: [
     { provide: RESULTS_LAYOUT_CONFIG, useValue: DATAHUB_RESULTS_LAYOUT_CONFIG },
+    { provide: RouterInitService, useClass: DatahubRouterInitServiceService },
+    // { provide: ROUTER_CONFIG, useValue: DATAHUB_ROUTER_CONFIG },
     {
       provide: Configuration,
       useFactory: () =>
