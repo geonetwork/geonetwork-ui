@@ -1,5 +1,5 @@
 import { LinkClassifierService, LinkUsage } from './link-classifier.service'
-import { LINK_FIXTURES } from './link.fixtures'
+import { LINK_FIXTURES } from '../fixtures/link.fixtures'
 
 describe('LinkClassifierService', () => {
   let service: LinkClassifierService

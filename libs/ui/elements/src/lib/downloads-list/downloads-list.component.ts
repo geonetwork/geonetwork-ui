@@ -53,24 +53,14 @@ export class DownloadsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.processedLinks = this.formatLinks(this.links)
-    this.processedLinks = this.assignColor(this.processedLinks)
-    this.processedLinks = this.isGeneratedFromWfs(this.processedLinks)
+    this.processedLinks = this.assignColor(this.links)
+    this.processedLinks = this.formatWfs(this.processedLinks)
     this.filteredLinks = this.filterLinks(this.processedLinks)
 
     this.filterButtons = this.filterFormats.map((format) => {
       return {
         format: format,
         color: getBadgeColor(format),
-      }
-    })
-  }
-
-  formatLinks(links) {
-    return links.map((link) => {
-      return {
-        ...link,
-        format: link.format ? link.format.split(':').at(-1) : '',
       }
     })
   }
@@ -107,13 +97,18 @@ export class DownloadsListComponent implements OnInit {
     })
   }
 
-  isGeneratedFromWfs(links: MetadataLinkValid[]) {
+  formatWfs(links: MetadataLinkValid[]) {
     return links.map((link) => {
-      if (!this.linkHelper.isWfsLink(link)) return link
-      return {
-        ...link,
-        isWfs: true,
+      if (this.linkHelper.isWfsLink(link)) {
+        const { format = '' } = link
+        const tokens = format.split(':')
+        link = {
+          ...link,
+          isWfs: true,
+          format: tokens[tokens.length - 1],
+        }
       }
+      return link
     })
   }
 }

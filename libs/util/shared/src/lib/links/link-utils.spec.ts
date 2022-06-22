@@ -7,7 +7,7 @@ import {
   sortPriority,
   FORMATS,
 } from './link-utils'
-import { LINK_FIXTURES } from './link.fixtures'
+import { LINK_FIXTURES } from '../fixtures/link.fixtures'
 
 jest.mock('@camptocamp/ogc-client', () => ({
   WfsEndpoint: class {

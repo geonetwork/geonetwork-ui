@@ -5,7 +5,7 @@ import { MetadataLink, MetadataRecord } from '../models'
 import { LinkClassifierService, LinkUsage } from './link-classifier.service'
 
 import { LinkHelperService } from './link-helper.service'
-import { LINK_FIXTURES } from './link.fixtures'
+import { LINK_FIXTURES } from '../fixtures/link.fixtures'
 
 let linkUsage: LinkUsage[]
 const linkClassifierMock = {
