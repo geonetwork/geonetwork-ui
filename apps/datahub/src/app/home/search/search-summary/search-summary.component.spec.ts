@@ -7,10 +7,10 @@ import { BehaviorSubject } from 'rxjs'
 import { SearchSummaryComponent } from './search-summary.component'
 
 const state = { Org: { mel: true } }
-const searchFacadeMock: any = {
+const searchFacadeMock = {
   searchFilters$: new BehaviorSubject(state),
 }
-const searchServiceMock: any = {
+const searchServiceMock = {
   updateSearch: jest.fn(),
 }
 describe('SearchSummaryComponent', () => {

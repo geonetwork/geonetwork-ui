@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 
 @Component({
   selector: 'datahub-news-page',
@@ -6,8 +6,4 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
   styleUrls: ['./news-page.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NewsPageComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class NewsPageComponent {}
