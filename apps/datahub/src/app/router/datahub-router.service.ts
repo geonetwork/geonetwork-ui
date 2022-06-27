@@ -18,7 +18,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class DatahubRouterInitServiceService {
+export class DatahubRouterService {
   constructor(private router: Router) {}
 
   initRoutes() {

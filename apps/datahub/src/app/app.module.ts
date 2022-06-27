@@ -7,7 +7,7 @@ import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
 import {
   DefaultRouterModule,
-  RouterInitService,
+  RouterService,
   ROUTER_ROUTE_DATASET,
 } from '@geonetwork-ui/feature/router'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
@@ -47,7 +47,7 @@ import { SearchSummaryComponent } from './home/search/search-summary/search-summ
 import { NavigationBarComponent } from './record/navigation-bar/navigation-bar.component'
 import { THUMBNAIL_PLACEHOLDER } from '@geonetwork-ui/ui/search'
 import { NewsPageComponent } from './home/news-page/news-page.component'
-import { DatahubRouterInitServiceService } from './router/datahub-router-init-service.service'
+import { DatahubRouterService } from './router/datahub-router.service'
 import { OrganisationsPageComponent } from './home/organisations-page/organisations-page.component'
 import { SearchPageComponent } from './home/search/search-page/search-page.component'
 
@@ -104,7 +104,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   ],
   providers: [
     { provide: RESULTS_LAYOUT_CONFIG, useValue: DATAHUB_RESULTS_LAYOUT_CONFIG },
-    { provide: RouterInitService, useClass: DatahubRouterInitServiceService },
+    { provide: RouterService, useClass: DatahubRouterService },
     {
       provide: Configuration,
       useFactory: () =>

@@ -5,13 +5,13 @@ import {
   ROUTER_ROUTE_DATASET,
   ROUTER_ROUTE_SEARCH,
   RouterConfigModel,
-} from './'
+} from '.'
 import { Router, Routes } from '@angular/router'
 
 @Injectable({
   providedIn: 'root',
 })
-export class RouterInitService {
+export class RouterService {
   constructor(
     @Inject(ROUTER_CONFIG) private routerConfig: RouterConfigModel,
     private router: Router

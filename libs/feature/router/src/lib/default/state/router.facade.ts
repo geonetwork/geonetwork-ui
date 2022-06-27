@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
-import { RouterInitService } from '../router-init.service'
+import { RouterService } from '../router.service'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { RouterReducerState } from '@ngrx/router-store'
 import { select, Store } from '@ngrx/store'
@@ -45,7 +45,7 @@ export class RouterFacade {
 
   constructor(
     private store: Store<RouterReducerState>,
-    private routerService: RouterInitService
+    private routerService: RouterService
   ) {}
 
   goToMetadata(metadata: MetadataRecord) {

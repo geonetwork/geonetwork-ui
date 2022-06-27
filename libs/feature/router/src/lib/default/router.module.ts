@@ -14,7 +14,7 @@ import {
 import { StoreModule } from '@ngrx/store'
 import { ROUTER_STATE_KEY } from './constants'
 import { SearchRouterContainerDirective } from './container/search-router.container.directive'
-import { RouterInitService } from './router-init.service'
+import { RouterService } from './router.service'
 import { SearchRouteReuseStrategy } from './SearchRouteReuseStrategy'
 import { RouterFacade } from './state'
 import { RouterEffects } from './state/router.effects'
@@ -48,8 +48,8 @@ export const ROUTER_CONFIG = new InjectionToken<RouterConfigModel>(
   ],
 })
 export class DefaultRouterModule {
-  constructor(private routerInit: RouterInitService) {
-    this.routerInit.initRoutes()
+  constructor(private routerService: RouterService) {
+    this.routerService.initRoutes()
   }
 
   static forRoot(

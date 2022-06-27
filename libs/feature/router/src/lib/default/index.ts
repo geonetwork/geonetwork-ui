@@ -1,5 +1,5 @@
 export * from './router.module'
 export * from './constants'
 export * from './state'
-export * from './router-init.service'
+export * from './router.service'
 export * from './router.mapper'
