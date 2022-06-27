@@ -34,6 +34,11 @@ export class DatahubRouterService {
       },
       {
         path: ROUTER_ROUTE_HOME,
+        redirectTo: `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_SEARCH}`,
+        pathMatch: 'full',
+      },
+      {
+        path: ROUTER_ROUTE_HOME,
         component: HomePageComponent,
         children: [
           {
