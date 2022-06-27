@@ -4,7 +4,7 @@ import {
   RouterFacade,
   ROUTER_ROUTE_SEARCH,
 } from '@geonetwork-ui/feature/router'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { SearchService } from '@geonetwork-ui/feature/search'
 import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { map } from 'rxjs/operators'
@@ -40,7 +40,7 @@ export class HomeHeaderComponent {
 
   constructor(
     public routerFacade: RouterFacade,
-    private searchFacade: SearchFacade
+    private searchService: SearchService
   ) {}
 
   onFuzzySearchSelection(record: MetadataRecord) {
@@ -49,24 +49,18 @@ export class HomeHeaderComponent {
 
   onNewsClick(): void {
     this.routerFacade.go({ path: `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_NEWS}` })
-    this.resetSearch()
   }
 
   onDatasetsClick(): void {
     this.routerFacade.go({
       path: `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_SEARCH}`,
     })
-    this.resetSearch()
+    this.searchService.updateSearch({})
   }
 
   onOrganisationsClick(): void {
     this.routerFacade.go({
       path: `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_ORGANISATION}`,
     })
-    this.resetSearch()
-  }
-
-  private resetSearch(): void {
-    this.searchFacade.setFilters({})
   }
 }
