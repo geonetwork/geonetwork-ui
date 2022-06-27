@@ -50,7 +50,6 @@ import { NewsPageComponent } from './home/news-page/news-page.component'
 import { DatahubRouterInitServiceService } from './router/datahub-router-init-service.service'
 import { OrganisationsPageComponent } from './home/organisations-page/organisations-page.component'
 import { SearchPageComponent } from './home/search/search-page/search-page.component'
-// import { DATAHUB_ROUTER_CONFIG } from './router/constants'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
@@ -92,10 +91,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     FeatureSearchModule,
     DefaultRouterModule.forRoot({
       searchStateId: 'mainSearch',
-      homeRouteComponent: HomePageComponent,
-      newsRouteComponent: NewsPageComponent,
       searchRouteComponent: SearchPageComponent,
-      organisationsRouteComponent: OrganisationsPageComponent,
       recordRouteComponent: RecordPageComponent,
     }),
     FeatureRecordModule,
@@ -109,7 +105,6 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   providers: [
     { provide: RESULTS_LAYOUT_CONFIG, useValue: DATAHUB_RESULTS_LAYOUT_CONFIG },
     { provide: RouterInitService, useClass: DatahubRouterInitServiceService },
-    // { provide: ROUTER_CONFIG, useValue: DATAHUB_ROUTER_CONFIG },
     {
       provide: Configuration,
       useFactory: () =>
