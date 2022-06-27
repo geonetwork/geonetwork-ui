@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
+import { RouterInitService } from '../router-init.service'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { RouterReducerState } from '@ngrx/router-store'
 import { select, Store } from '@ngrx/store'
@@ -42,7 +43,10 @@ export class RouterFacade {
     distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
   )
 
-  constructor(private store: Store<RouterReducerState>) {}
+  constructor(
+    private store: Store<RouterReducerState>,
+    private routerService: RouterInitService
+  ) {}
 
   goToMetadata(metadata: MetadataRecord) {
     this.pathParams$
@@ -62,7 +66,7 @@ export class RouterFacade {
 
   updateSearch(query?: SearchRouteParams) {
     this.go({
-      path: `${ROUTER_ROUTE_SEARCH}/`,
+      path: this.routerService.getSearchRoute(),
       ...(query && { query }),
       queryParamsHandling: 'merge',
     })
@@ -70,7 +74,7 @@ export class RouterFacade {
 
   setSearch(query?: SearchRouteParams) {
     this.go({
-      path: `${ROUTER_ROUTE_SEARCH}/`,
+      path: this.routerService.getSearchRoute(),
       ...(query && { query }),
     })
   }

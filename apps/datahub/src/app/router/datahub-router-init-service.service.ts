@@ -56,4 +56,8 @@ export class DatahubRouterInitServiceService {
       },
     ]
   }
+
+  getSearchRoute(): string {
+    return `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_SEARCH}`
+  }
 }

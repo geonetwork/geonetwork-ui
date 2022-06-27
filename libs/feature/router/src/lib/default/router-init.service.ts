@@ -34,4 +34,8 @@ export class RouterInitService {
       },
     ]
   }
+
+  getSearchRoute(): string {
+    return ROUTER_ROUTE_SEARCH
+  }
 }
