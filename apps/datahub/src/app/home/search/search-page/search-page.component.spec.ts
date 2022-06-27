@@ -5,14 +5,15 @@ import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchPageComponent } from './search-page.component'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
+import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/util/shared'
 
-class RouterFacadeMock {
-  goToMetadata = jest.fn()
+const RouterFacadeMock = {
+  goToMetadata: jest.fn(),
 }
 
-class SearchFacadeMock {
-  setFilters = jest.fn(() => this)
-  setResultsLayout = jest.fn(() => this)
+const SearchFacadeMock = {
+  setFilters: jest.fn(() => this),
+  setResultsLayout: jest.fn(() => this),
 }
 
 describe('MainSearchComponent', () => {
@@ -27,11 +28,11 @@ describe('MainSearchComponent', () => {
       providers: [
         {
           provide: RouterFacade,
-          useClass: RouterFacadeMock,
+          useValue: RouterFacadeMock,
         },
         {
           provide: SearchFacade,
-          useClass: SearchFacadeMock,
+          useValue: SearchFacadeMock,
         },
       ],
     }).compileComponents()
@@ -45,5 +46,18 @@ describe('MainSearchComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  it('should setResultsLayout to DATAHUB', () => {
+    expect(SearchFacadeMock.setResultsLayout).toHaveBeenCalledWith('DATAHUB')
+  })
+
+  describe('navigate to metadata record', () => {
+    it('calls searchRouter goToMetdata with md record', () => {
+      component.onMetadataSelection(RECORDS_SUMMARY_FIXTURE[0])
+      expect(RouterFacadeMock.goToMetadata).toHaveBeenCalledWith(
+        RECORDS_SUMMARY_FIXTURE[0]
+      )
+    })
   })
 })

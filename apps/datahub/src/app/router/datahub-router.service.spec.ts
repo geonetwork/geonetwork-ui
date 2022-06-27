@@ -1,16 +1,74 @@
 import { TestBed } from '@angular/core/testing'
+import { Router } from '@angular/router'
+import { HomePageComponent } from '../home/home-page/home-page.component'
+import { NewsPageComponent } from '../home/news-page/news-page.component'
+import { OrganisationsPageComponent } from '../home/organisations-page/organisations-page.component'
+import { SearchPageComponent } from '../home/search/search-page/search-page.component'
+import { RecordPageComponent } from '../record/record-page/record-page.component'
 
 import { DatahubRouterService } from './datahub-router.service'
 
-describe('DatahubRouterInitServiceService', () => {
+const RouterMock = {
+  resetConfig: jest.fn(),
+}
+
+const expectedRoutes = [
+  {
+    path: '',
+    redirectTo: 'home/search',
+    pathMatch: 'full',
+  },
+  {
+    path: 'home',
+    redirectTo: 'home/search',
+    pathMatch: 'full',
+  },
+  {
+    path: 'home',
+    component: HomePageComponent,
+    children: [
+      {
+        path: 'news',
+        component: NewsPageComponent,
+      },
+      {
+        path: 'search',
+        component: SearchPageComponent,
+      },
+      {
+        path: 'organisations',
+        component: OrganisationsPageComponent,
+      },
+    ],
+  },
+  {
+    path: `dataset/:metadataUuid`,
+    component: RecordPageComponent,
+  },
+]
+describe('DatahubRouterService', () => {
   let service: DatahubRouterService
 
   beforeEach(() => {
-    TestBed.configureTestingModule({})
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: Router,
+          useValue: RouterMock,
+        },
+      ],
+    })
     service = TestBed.inject(DatahubRouterService)
   })
 
   it('should be created', () => {
     expect(service).toBeTruthy()
+  })
+  it('build routes', () => {
+    expect(service.buildRoutes()).toEqual(expectedRoutes)
+  })
+  it('reset config', () => {
+    service.initRoutes()
+    expect(RouterMock.resetConfig).toHaveBeenCalledWith(expectedRoutes)
   })
 })
