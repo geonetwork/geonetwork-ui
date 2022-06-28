@@ -18,6 +18,7 @@ import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { MetadataContactComponent } from './metadata-contact/metadata-contact.component'
 import { MetadataCatalogComponent } from './metadata-catalog/metadata-catalog.component'
 import { SearchResultsErrorComponent } from './search-results-error/search-results-error.component'
+import { PaginationComponent } from './pagination/pagination.component'
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { SearchResultsErrorComponent } from './search-results-error/search-resul
     MetadataContactComponent,
     MetadataCatalogComponent,
     SearchResultsErrorComponent,
+    PaginationComponent,
   ],
   exports: [
     MetadataInfoComponent,
@@ -54,6 +56,7 @@ import { SearchResultsErrorComponent } from './search-results-error/search-resul
     MetadataContactComponent,
     MetadataCatalogComponent,
     SearchResultsErrorComponent,
+    PaginationComponent,
   ],
 })
 export class UiElementsModule {}

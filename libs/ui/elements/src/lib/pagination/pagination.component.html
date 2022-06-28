@@ -1,0 +1,40 @@
+<div class="h-24 flex justify-center items-center">
+  <button
+    (click)="nextPage()"
+    [disabled]="currentPage === nPages"
+    class="uppercase text-white flex justify-center items-center p-3 rounded-lg mr-8 cursor-pointer h-14 mr-12 bg-[#8cc630] disabled:bg-gray-100 disabled:cursor-default"
+    translate
+  >
+    datahub.search.nextPage
+  </button>
+  <div class="flex items-center" translate>
+    <span class="m-3" translate> datahub.search.page </span>
+    <span class="border border-gray-300 rounded py-1 px-5 mr-3">{{
+      currentPage
+    }}</span>
+    <span class="mr-3" translate> datahub.search.pageOn </span>
+    <span class="mr-3">{{ nPages }}</span>
+  </div>
+
+  <mat-icon class="mr-3 flex" style="display: flex">
+    <button
+      (click)="previousPage()"
+      id="navigate_previous"
+      class="text-2xl disabled:opacity-50 disabled:cursor-default flex items-center"
+      [disabled]="currentPage === 1"
+    >
+      navigate_before
+    </button>
+  </mat-icon>
+
+  <mat-icon style="display: flex">
+    <button
+      (click)="nextPage()"
+      id="navigate_next"
+      class="text-2xl disabled:opacity-50 disabled:cursor-default flex items-center"
+      [disabled]="currentPage === nPages"
+    >
+      navigate_next
+    </button>
+  </mat-icon>
+</div>
