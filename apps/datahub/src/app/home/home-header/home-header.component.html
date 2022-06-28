@@ -36,7 +36,7 @@
       <div
         class="uppercase truncate text-white hover:text-primary-lighter hover:underline cursor-pointer"
         routerLinkActive="text-primary"
-        routerLink="{{ ROUTE_NEWS }}"
+        [routerLink]="ROUTE_NEWS"
         translate=""
       >
         datahub.header.news
@@ -44,7 +44,7 @@
       <div
         class="uppercase truncate text-white hover:text-primary-lighter hover:underline cursor-pointer"
         routerLinkActive="text-primary"
-        routerLink="{{ ROUTE_SEARCH }}"
+        [routerLink]="ROUTE_SEARCH"
         (click)="updateSearch()"
         translate=""
       >
@@ -53,7 +53,7 @@
       <div
         class="uppercase truncate text-white hover:text-primary-lighter hover:underline cursor-pointer"
         routerLinkActive="text-primary"
-        routerLink="{{ ROUTE_ORGANISATIONS }}"
+        [routerLink]="ROUTE_ORGANISATIONS"
         translate=""
       >
         datahub.header.organisations
