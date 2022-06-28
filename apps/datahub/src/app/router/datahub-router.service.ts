@@ -40,18 +40,30 @@ export class DatahubRouterService {
       {
         path: ROUTER_ROUTE_HOME,
         component: HomePageComponent,
+        data: {
+          shouldDetach: true,
+        },
         children: [
           {
             path: ROUTER_ROUTE_NEWS,
             component: NewsPageComponent,
+            data: {
+              shouldDetach: true,
+            },
           },
           {
             path: ROUTER_ROUTE_SEARCH,
             component: SearchPageComponent,
+            data: {
+              shouldDetach: true,
+            },
           },
           {
             path: ROUTER_ROUTE_ORGANISATIONS,
             component: OrganisationsPageComponent,
+            data: {
+              shouldDetach: true,
+            },
           },
         ],
       },

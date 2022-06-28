@@ -26,18 +26,30 @@ const expectedRoutes = [
   {
     path: 'home',
     component: HomePageComponent,
+    data: {
+      shouldDetach: true,
+    },
     children: [
       {
         path: 'news',
         component: NewsPageComponent,
+        data: {
+          shouldDetach: true,
+        },
       },
       {
         path: 'search',
         component: SearchPageComponent,
+        data: {
+          shouldDetach: true,
+        },
       },
       {
         path: 'organisations',
         component: OrganisationsPageComponent,
+        data: {
+          shouldDetach: true,
+        },
       },
     ],
   },
