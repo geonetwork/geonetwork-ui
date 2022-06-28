@@ -1,15 +1,14 @@
 import {
-  RouteReuseStrategy,
   ActivatedRouteSnapshot,
   DetachedRouteHandle,
+  RouteReuseStrategy,
 } from '@angular/router'
-import { ROUTER_ROUTE_SEARCH } from './constants'
 
 export class SearchRouteReuseStrategy implements RouteReuseStrategy {
   private storedRoutes = new Map<string, DetachedRouteHandle>()
 
   shouldDetach(route: ActivatedRouteSnapshot): boolean {
-    return route.routeConfig.path === ROUTER_ROUTE_SEARCH
+    return route.data.shouldDetach === true
   }
 
   store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {

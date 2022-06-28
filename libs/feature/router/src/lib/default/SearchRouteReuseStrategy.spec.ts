@@ -13,20 +13,26 @@ describe('SearchRouteReuseStrategy', () => {
       routeConfig: {
         path: 'search',
       },
+      data: {
+        shouldDetach: true,
+      },
     }
   })
 
   describe('#shouldDetach', () => {
-    describe('when route is `search`', () => {
+    describe('when route has shouldDetach = true', () => {
       it('returns true', () => {
         expect(reuseStrategy.shouldDetach(route)).toBe(true)
       })
     })
-    describe('when route is `dataset`', () => {
+    describe('when route is shouldDetach is undefined', () => {
       beforeEach(() => {
         route = {
           routeConfig: {
             path: 'dataset',
+          },
+          data: {
+            shouldDetach: false,
           },
         }
       })

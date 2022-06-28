@@ -31,6 +31,9 @@ const expectedRoutes = [
       name: 'searchRoute',
     },
     path: 'search',
+    data: {
+      shouldDetach: true,
+    },
   },
   {
     component: {

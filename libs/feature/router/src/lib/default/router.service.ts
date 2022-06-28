@@ -26,6 +26,9 @@ export class RouterService {
       { path: '', redirectTo: `/${ROUTER_ROUTE_SEARCH}`, pathMatch: 'full' },
       {
         path: ROUTER_ROUTE_SEARCH,
+        data: {
+          shouldDetach: true,
+        },
         component: this.routerConfig.searchRouteComponent,
       },
       {
