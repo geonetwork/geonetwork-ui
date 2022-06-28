@@ -35,32 +35,25 @@
     >
       <div
         class="uppercase truncate text-white hover:text-primary-lighter hover:underline cursor-pointer"
-        [class]="
-          (currentRoute$ | async) === 'news' ? 'text-primary' : 'text-white'
-        "
-        (click)="onNewsClick()"
+        routerLinkActive="text-primary"
+        routerLink="{{ ROUTE_NEWS }}"
         translate=""
       >
         datahub.header.news
       </div>
       <div
-        class="uppercase truncate hover:text-primary-lighter hover:underline cursor-pointer"
-        [class]="
-          (currentRoute$ | async) === 'search' ? 'text-primary' : 'text-white'
-        "
-        (click)="onDatasetsClick()"
+        class="uppercase truncate text-white hover:text-primary-lighter hover:underline cursor-pointer"
+        routerLinkActive="text-primary"
+        routerLink="{{ ROUTE_SEARCH }}"
+        (click)="updateSearch()"
         translate=""
       >
         datahub.header.datasets
       </div>
       <div
         class="uppercase truncate text-white hover:text-primary-lighter hover:underline cursor-pointer"
-        [class]="
-          (currentRoute$ | async) === 'organisations'
-            ? 'text-primary'
-            : 'text-white'
-        "
-        (click)="onOrganisationsClick()"
+        routerLinkActive="text-primary"
+        routerLink="{{ ROUTE_ORGANISATIONS }}"
         translate=""
       >
         datahub.header.organisations

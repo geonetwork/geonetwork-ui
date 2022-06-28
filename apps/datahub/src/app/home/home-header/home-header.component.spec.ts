@@ -1,20 +1,11 @@
 import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import {
-  RouterFacade,
-  ROUTER_ROUTE_SEARCH,
-} from '@geonetwork-ui/feature/router'
+import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject } from 'rxjs'
-import {
-  ROUTER_ROUTE_HOME,
-  ROUTER_ROUTE_NEWS,
-  ROUTER_ROUTE_ORGANISATION,
-} from '../../router/constants'
-
 import { HomeHeaderComponent } from './home-header.component'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
@@ -24,10 +15,8 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
 }))
 
 const routerFacadeMock = {
-  go: jest.fn(),
   goToMetadata: jest.fn(),
   anySearch$: new BehaviorSubject('scot'),
-  currentRoute$: new BehaviorSubject('search'),
 }
 
 const searchServiceMock = {
@@ -93,26 +82,9 @@ describe('HeaderComponent', () => {
     })
   })
   describe('tabs navigation', () => {
-    it('calls routerFacade go with correct route when clicking news', () => {
-      component.onNewsClick()
-      expect(routerFacadeMock.go).toHaveBeenCalledWith({
-        path: `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_NEWS}`,
-      })
-    })
-    it('calls routerFacade go with correct route when clicking organisations', () => {
-      component.onOrganisationsClick()
-      expect(routerFacadeMock.go).toHaveBeenCalledWith({
-        path: `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_ORGANISATION}`,
-      })
-    })
     describe('click datasets tab', () => {
       beforeEach(() => {
-        component.onDatasetsClick()
-      })
-      it('calls routerFacade go with correct route when clicking datasets', () => {
-        expect(routerFacadeMock.go).toHaveBeenCalledWith({
-          path: `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_SEARCH}`,
-        })
+        component.updateSearch()
       })
       it('calls searchService updateSearch with empty object', () => {
         expect(searchServiceMock.updateSearch).toHaveBeenCalledWith({})

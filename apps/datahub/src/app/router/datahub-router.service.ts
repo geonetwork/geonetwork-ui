@@ -12,7 +12,7 @@ import { RecordPageComponent } from '../record/record-page/record-page.component
 import {
   ROUTER_ROUTE_HOME,
   ROUTER_ROUTE_NEWS,
-  ROUTER_ROUTE_ORGANISATION,
+  ROUTER_ROUTE_ORGANISATIONS,
 } from './constants'
 
 @Injectable({
@@ -50,7 +50,7 @@ export class DatahubRouterService {
             component: SearchPageComponent,
           },
           {
-            path: ROUTER_ROUTE_ORGANISATION,
+            path: ROUTER_ROUTE_ORGANISATIONS,
             component: OrganisationsPageComponent,
           },
         ],

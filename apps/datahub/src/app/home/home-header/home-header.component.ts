@@ -9,9 +9,8 @@ import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { map } from 'rxjs/operators'
 import {
-  ROUTER_ROUTE_HOME,
   ROUTER_ROUTE_NEWS,
-  ROUTER_ROUTE_ORGANISATION,
+  ROUTER_ROUTE_ORGANISATIONS,
 } from '../../router/constants'
 
 marker('datahub.header.myfavorites')
@@ -31,12 +30,13 @@ export class HomeHeaderComponent {
   searchInputRouteValue$ = this.routerFacade.anySearch$.pipe(
     map((any) => ({ title: any }))
   )
-  currentRoute$ = this.routerFacade.currentRoute$.pipe(
-    map((route) => route.routeConfig.path)
-  )
   backgroundCss =
     getThemeConfig().HEADER_BACKGROUND ||
     `center /cover url('assets/img/header_bg.webp')`
+
+  ROUTE_NEWS = `${ROUTER_ROUTE_NEWS}`
+  ROUTE_SEARCH = `${ROUTER_ROUTE_SEARCH}`
+  ROUTE_ORGANISATIONS = `${ROUTER_ROUTE_ORGANISATIONS}`
 
   constructor(
     public routerFacade: RouterFacade,
@@ -47,20 +47,7 @@ export class HomeHeaderComponent {
     this.routerFacade.goToMetadata(record)
   }
 
-  onNewsClick(): void {
-    this.routerFacade.go({ path: `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_NEWS}` })
-  }
-
-  onDatasetsClick(): void {
-    this.routerFacade.go({
-      path: `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_SEARCH}`,
-    })
+  updateSearch(): void {
     this.searchService.updateSearch({})
-  }
-
-  onOrganisationsClick(): void {
-    this.routerFacade.go({
-      path: `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_ORGANISATION}`,
-    })
   }
 }
