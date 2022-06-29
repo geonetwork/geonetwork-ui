@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
 import { ROUTER_CONFIG } from './router.module'
 
-import { RouterInitService } from './router-init.service'
+import { RouterService } from './router.service'
 
 const SearchRouteComponent = {
   name: 'searchRoute',
@@ -31,6 +31,9 @@ const expectedRoutes = [
       name: 'searchRoute',
     },
     path: 'search',
+    data: {
+      shouldDetach: true,
+    },
   },
   {
     component: {
@@ -39,8 +42,8 @@ const expectedRoutes = [
     path: 'dataset/:metadataUuid',
   },
 ]
-describe('RouterInitService', () => {
-  let service: RouterInitService
+describe('RouterService', () => {
+  let service: RouterService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -55,7 +58,7 @@ describe('RouterInitService', () => {
         },
       ],
     })
-    service = TestBed.inject(RouterInitService)
+    service = TestBed.inject(RouterService)
   })
 
   it('should be created', () => {

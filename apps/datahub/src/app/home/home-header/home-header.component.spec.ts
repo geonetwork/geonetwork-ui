@@ -2,11 +2,11 @@ import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
+import { SearchService } from '@geonetwork-ui/feature/search'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject } from 'rxjs'
-
-import { SearchHeaderComponent } from './search-header.component'
+import { HomeHeaderComponent } from './home-header.component'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
@@ -17,6 +17,10 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
 const routerFacadeMock = {
   goToMetadata: jest.fn(),
   anySearch$: new BehaviorSubject('scot'),
+}
+
+const searchServiceMock = {
+  updateSearch: jest.fn(),
 }
 /* eslint-disable */
 @Component({
@@ -29,25 +33,29 @@ class FuzzySearchComponentMock {
 /* eslint-enable */
 
 describe('HeaderComponent', () => {
-  let component: SearchHeaderComponent
-  let fixture: ComponentFixture<SearchHeaderComponent>
+  let component: HomeHeaderComponent
+  let fixture: ComponentFixture<HomeHeaderComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-      declarations: [SearchHeaderComponent, FuzzySearchComponentMock],
+      declarations: [HomeHeaderComponent, FuzzySearchComponentMock],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
           provide: RouterFacade,
           useValue: routerFacadeMock,
         },
+        {
+          provide: SearchService,
+          useValue: searchServiceMock,
+        },
       ],
     }).compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SearchHeaderComponent)
+    fixture = TestBed.createComponent(HomeHeaderComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
@@ -56,7 +64,7 @@ describe('HeaderComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('search route paramter', () => {
+  describe('search route parameter', () => {
     it('passed to fuzzy search as AutoComplete item object', () => {
       const fuzzyCpt = fixture.debugElement.query(
         By.directive(FuzzySearchComponentMock)
@@ -71,6 +79,16 @@ describe('HeaderComponent', () => {
       fixture.detectChanges()
 
       expect(fuzzyCpt.value).toEqual({ title: 'river' })
+    })
+  })
+  describe('tabs navigation', () => {
+    describe('click datasets tab', () => {
+      beforeEach(() => {
+        component.updateSearch()
+      })
+      it('calls searchService updateSearch with empty object', () => {
+        expect(searchServiceMock.updateSearch).toHaveBeenCalledWith({})
+      })
     })
   })
 })

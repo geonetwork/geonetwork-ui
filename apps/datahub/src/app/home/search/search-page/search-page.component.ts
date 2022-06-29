@@ -16,7 +16,7 @@ export class SearchPageComponent implements OnInit {
   ) {}
 
   scrollableOptions: InfiniteScrollModel = {
-    container: '#search-page',
+    container: '#home-page',
     fromRoot: true,
   }
 
@@ -26,9 +26,5 @@ export class SearchPageComponent implements OnInit {
 
   onMetadataSelection(metadata: MetadataRecord): void {
     this.searchRouter.goToMetadata(metadata)
-  }
-
-  resetSearch(): void {
-    this.searchFacade.setFilters({})
   }
 }

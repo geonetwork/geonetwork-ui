@@ -2,7 +2,7 @@ import {
   ResultsLayoutConfigItem,
   ResultsLayoutConfigModel,
 } from '@geonetwork-ui/ui/search'
-import { RecordPreviewDatahubComponent } from './search/record-preview-datahub/record-preview-datahub.component'
+import { RecordPreviewDatahubComponent } from './home/search/record-preview-datahub/record-preview-datahub.component'
 
 export const DATAHUB_RESULTS_LAYOUT_CONFIG: ResultsLayoutConfigModel = {
   DATAHUB: new ResultsLayoutConfigItem(
