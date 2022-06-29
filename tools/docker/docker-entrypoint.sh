@@ -47,7 +47,7 @@ if [ -d "${CUSTOM_ASSETS_PATH}" ] && [ "$(ls -A ${CUSTOM_ASSETS_PATH})" ]; then
   for image in ${images}
   do
     echo "[INFO] Adding preload link for ${image}..."
-    sed -i "s@<!--%PRELOAD_LINKS%-->@<!--%PRELOAD_LINKS%-->\n<link rel=\"preload\" href=\"assets/${image}\" as=\"image\" importance=\"high\" crossorigin />@" \
+    sed -i "s@<!--%PRELOAD_LINKS%-->@<!--%PRELOAD_LINKS%-->\n<link rel=\"preload\" href=\"assets/${image}\" as=\"image\" importance=\"high\" />@" \
       ${APP_FILES_PATH}index.html
   done
 else
