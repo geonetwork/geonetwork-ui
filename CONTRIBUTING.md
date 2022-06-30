@@ -157,7 +157,7 @@ You can also generate other kind of Angular objects with `ng generate directive|
 Recommended options to generate a component are CSS-based styling and OnPush changes detection, like so:
 
 ```shell script
-ng g c smart/fuzzy-search --project=lib-search --style=css --changeDetection=OnPush -d
+ng g c smart/fuzzy-search --project=feature-search --style=css --changeDetection=OnPush -d
 ```
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
