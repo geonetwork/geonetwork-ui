@@ -1,4 +1,5 @@
 import { HttpClientModule } from '@angular/common/http'
+import { MatIconModule } from '@angular/material/icon'
 import { TranslateModule } from '@ngx-translate/core'
 import {
   moduleMetadata,
@@ -7,17 +8,20 @@ import {
   componentWrapperDecorator,
 } from '@storybook/angular'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
-import { OrganizationPreviewDatahubComponent } from './organization-preview-datahub.component'
+import { RecordThumbnailComponent } from '../record-thumbnail/record-thumbnail.component'
+import { OrganisationPreviewComponent } from './organisation-preview.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 export default {
-  title: 'Layout/OrganizationPreviewDatahubComponent',
-  component: OrganizationPreviewDatahubComponent,
+  title: 'Search/OrganisationPreviewComponent',
+  component: OrganisationPreviewComponent,
   decorators: [
     moduleMetadata({
+      declarations: [RecordThumbnailComponent],
       imports: [
         BrowserAnimationsModule,
         HttpClientModule,
+        MatIconModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
       ],
     }),
@@ -25,12 +29,12 @@ export default {
       (story) => `<div style="max-width: 700px">${story}</div>`
     ),
   ],
-} as Meta<OrganizationPreviewDatahubComponent>
+} as Meta<OrganisationPreviewComponent>
 
-const Template: Story<OrganizationPreviewDatahubComponent> = (
-  args: OrganizationPreviewDatahubComponent
+const Template: Story<OrganisationPreviewComponent> = (
+  args: OrganisationPreviewComponent
 ) => ({
-  component: OrganizationPreviewDatahubComponent,
+  component: OrganisationPreviewComponent,
   props: args,
 })
 
