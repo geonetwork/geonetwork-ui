@@ -130,6 +130,7 @@
   "record.metadata.updateStatus": "Update Status",
   "record.metadata.updatedOn": "Updated On",
   "record.metadata.usage": "Usage & constraints",
+  "record.metadata.publications": "publications",
   "record.more.details": "Read more",
   "record.tab.data": "Table view",
   "record.tab.map": "Map view",
