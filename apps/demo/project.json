@@ -13,7 +13,15 @@
         "main": "apps/demo/src/main.ts",
         "polyfills": "apps/demo/src/polyfills.ts",
         "tsConfig": "apps/demo/tsconfig.app.json",
-        "assets": ["apps/demo/src/favicon.ico", "apps/demo/src/assets"],
+        "assets": [
+          "apps/demo/src/favicon.ico",
+          "apps/demo/src/assets",
+          {
+            "glob": "*",
+            "input": "translations",
+            "output": "assets/i18n/"
+          }
+        ],
         "styles": [
           "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
           "apps/demo/src/styles.css"
