@@ -50,10 +50,10 @@ The build also includes the app configuration file (`dist/apps/datahub/assets/co
 You can build a docker image of the Datahub application like so:
 
 ```bash
-$ nx run datahub:docker-build --tag=geonetwork-ui/datahub
+$ nx run datahub:docker-build
 ```
 
-This will build a docker image with the tag `geonetwork-ui/datahub:latest`.
+This will build a docker image with the tag `geonetwork-ui/datahub`.
 
 To run it on the 8080 port with a custom GN4 API url and proxy path, use:
 
