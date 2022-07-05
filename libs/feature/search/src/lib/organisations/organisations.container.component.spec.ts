@@ -18,11 +18,11 @@ import { SearchFacade } from '../state/search.facade'
 import { OrganisationsContainerComponent } from './organisations.container.component'
 
 @Component({
-  selector: 'gn-ui-organisations-list',
+  selector: 'gn-ui-organisation-preview',
   template: '<div></div>',
 })
-class OrganisationsListMockComponent {
-  @Input() organisations: Organisation[]
+class OrganisationPreviewMockComponent {
+  @Input() organisation: Organisation
 }
 
 const resultsAggregationsMock = {
@@ -49,7 +49,7 @@ describe('OrganisationsContainerComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         OrganisationsContainerComponent,
-        OrganisationsListMockComponent,
+        OrganisationPreviewMockComponent,
       ],
       providers: [
         {
@@ -76,12 +76,7 @@ describe('OrganisationsContainerComponent', () => {
   })
 
   describe('on component init', () => {
-    let orgListComponent: OrganisationsListMockComponent
-    beforeEach(() => {
-      orgListComponent = de.query(
-        By.directive(OrganisationsListMockComponent)
-      ).componentInstance
-    })
+    let orgPreviewComponents: OrganisationPreviewMockComponent[]
     it('should set aggregations config', () => {
       expect(searchFacadeMock.setConfigAggregations).toHaveBeenCalledWith({
         org: {
@@ -104,25 +99,28 @@ describe('OrganisationsContainerComponent', () => {
         searchFacadeMock.resultsAggregations$.next(resultsAggregationsMock)
         tick(200)
         fixture.detectChanges()
-        orgListComponent = fixture.debugElement.query(
-          By.directive(OrganisationsListMockComponent)
-        ).componentInstance
+        orgPreviewComponents = de.queryAll(
+          By.directive(OrganisationPreviewMockComponent)
+        )
       }))
-      it('should pass filtered organisations to dumb component', () => {
-        expect(orgListComponent.organisations).toEqual([
-          {
-            name: 'My Organisation 1',
-            description: null,
-            logoUrl: null,
-            recordCount: 1,
-          },
-          {
-            name: 'My Organisation 2',
-            description: null,
-            logoUrl: null,
-            recordCount: 3,
-          },
-        ])
+      it('should pass first filtered organisation to first dumb component', () => {
+        expect(orgPreviewComponents[0].componentInstance.organisation).toEqual({
+          name: 'My Organisation 1',
+          description: null,
+          logoUrl: null,
+          recordCount: 1,
+        })
+      })
+      it('should pass second filtered organisation to second dumb component', () => {
+        expect(orgPreviewComponents[1].componentInstance.organisation).toEqual({
+          name: 'My Organisation 2',
+          description: null,
+          logoUrl: null,
+          recordCount: 3,
+        })
+      })
+      it('should not create a third dumb component (since organisation has been filtered)', () => {
+        expect(orgPreviewComponents[2]).toBeFalsy()
       })
     })
   })

@@ -1,6 +1,23 @@
+import { Component, Input } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { MatIconModule } from '@angular/material/icon'
 
 import { OrganisationPreviewComponent } from './organisation-preview.component'
+
+@Component({
+  selector: 'gn-ui-record-thumbnail',
+  template: '<div></div>',
+})
+class RecordThumbnailMockComponent {
+  @Input() thumbnailUrl: string
+}
+
+const organisationMock = {
+  name: 'my org',
+  description: 'not much',
+  logoUrl: 'https://mygreatlogo.org',
+  recordCount: 10,
+}
 
 describe('OrganisationPreviewComponent', () => {
   let component: OrganisationPreviewComponent
@@ -8,11 +25,16 @@ describe('OrganisationPreviewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [OrganisationPreviewComponent],
+      declarations: [
+        OrganisationPreviewComponent,
+        RecordThumbnailMockComponent,
+      ],
+      imports: [MatIconModule],
     }).compileComponents()
 
     fixture = TestBed.createComponent(OrganisationPreviewComponent)
     component = fixture.componentInstance
+    component.organisation = organisationMock
     fixture.detectChanges()
   })
 

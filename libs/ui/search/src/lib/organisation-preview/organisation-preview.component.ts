@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { Organisation } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-organisation-preview',
@@ -7,8 +8,5 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrganisationPreviewComponent {
-  @Input() title: string
-  @Input() description: string
-  @Input() logo: string
-  @Input() nRecords: number
+  @Input() organisation: Organisation
 }
