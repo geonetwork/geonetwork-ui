@@ -9,6 +9,7 @@ rootMain.stories.push(
   ...[
     '../../../libs/**/*.stories.mdx',
     '../../../libs/**/*.stories.@(js|jsx|ts|tsx)',
+    '../../**/*.stories.@(js|jsx|ts|tsx)',
   ]
 )
 

@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core'
+import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { NgxDropzoneModule } from 'ngx-dropzone'
 import { FacetsModule } from './facets/facets.module'
+import { OrganisationPreviewComponent } from './organisation-preview/organisation-preview.component'
 import { RecordMetricComponent } from './record-metric/record-metric.component'
 import { RecordPreviewCardComponent } from './record-preview-card/record-preview-card.component'
 import { RecordPreviewListComponent } from './record-preview-list/record-preview-list.component'
@@ -35,6 +37,7 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
     ResultsListComponent,
     ResultsHitsNumberComponent,
     ResultsListItemComponent,
+    OrganisationPreviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +50,7 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
     TagInputModule,
     UtilSharedModule,
     UiWidgetsModule,
+    MatIconModule,
   ],
   exports: [
     RecordPreviewListComponent,
@@ -59,6 +63,7 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
     FacetsModule,
     RecordPreviewComponent,
     ResultsHitsNumberComponent,
+    OrganisationPreviewComponent,
   ],
   providers: [
     { provide: RESULTS_LAYOUT_CONFIG, useValue: DEFAULT_RESULTS_LAYOUT_CONFIG },
