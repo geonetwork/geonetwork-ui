@@ -11,7 +11,7 @@ import {
   tick,
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { CatalogOrganisation } from '@geonetwork-ui/util/shared'
+import { Organisation } from '@geonetwork-ui/util/shared'
 import { Subject } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 
@@ -22,7 +22,7 @@ import { OrganisationsContainerComponent } from './organisations.container.compo
   template: '<div></div>',
 })
 class OrganisationsListMockComponent {
-  @Input() organisations: CatalogOrganisation[]
+  @Input() organisations: Organisation[]
 }
 
 const resultsAggregationsMock = {
@@ -91,6 +91,7 @@ describe('OrganisationsContainerComponent', () => {
             order: {
               _key: 'asc',
             },
+            exclude: '',
           },
         },
       })
@@ -109,8 +110,18 @@ describe('OrganisationsContainerComponent', () => {
       }))
       it('should pass filtered organisations to dumb component', () => {
         expect(orgListComponent.organisations).toEqual([
-          { name: 'My Organisation 1', description: null, logoUrl: null },
-          { name: 'My Organisation 2', description: null, logoUrl: null },
+          {
+            name: 'My Organisation 1',
+            description: null,
+            logoUrl: null,
+            recordCount: 1,
+          },
+          {
+            name: 'My Organisation 2',
+            description: null,
+            logoUrl: null,
+            recordCount: 3,
+          },
         ])
       })
     })

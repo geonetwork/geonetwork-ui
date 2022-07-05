@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
-import { CatalogOrganisation } from '@geonetwork-ui/util/shared'
+import { Organisation } from '@geonetwork-ui/util/shared'
 import { Observable } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
@@ -12,7 +12,7 @@ import { SearchFacade } from '../state/search.facade'
 })
 export class OrganisationsContainerComponent implements OnInit {
   constructor(private searchfacade: SearchFacade) {}
-  organisations$: Observable<CatalogOrganisation[]>
+  organisations$: Observable<Organisation[]>
 
   ngOnInit(): void {
     this.searchfacade.setConfigAggregations({
@@ -23,6 +23,7 @@ export class OrganisationsContainerComponent implements OnInit {
           order: {
             _key: 'asc',
           },
+          exclude: '',
         },
       },
     })
@@ -37,7 +38,8 @@ export class OrganisationsContainerComponent implements OnInit {
                 name: organisation.key,
                 description: null,
                 logoUrl: null,
-              } as CatalogOrganisation)
+                recordCount: organisation.doc_count,
+              } as Organisation)
           )
           //filter duplicates
           .filter(
