@@ -8,6 +8,7 @@ import {
   componentWrapperDecorator,
 } from '@storybook/angular'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
+import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { RecordThumbnailComponent } from '../record-thumbnail/record-thumbnail.component'
 import { OrganisationPreviewComponent } from './organisation-preview.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -20,6 +21,7 @@ export default {
       declarations: [RecordThumbnailComponent],
       imports: [
         BrowserAnimationsModule,
+        UtilSharedModule,
         HttpClientModule,
         MatIconModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
