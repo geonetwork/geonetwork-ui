@@ -13,6 +13,13 @@ export interface StateConfigFilters {
   elastic?: any
 }
 
+export interface Organisation {
+  name: string
+  description?: string
+  logoUrl?: string
+  recordCount?: number
+}
+
 export interface MetadataContact {
   name?: string
   organisation?: string

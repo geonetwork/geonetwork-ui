@@ -4,20 +4,20 @@
   >
     <gn-ui-record-thumbnail
       class="relative h-full w-full object-cover object-left-top"
-      [thumbnailUrl]="logo"
+      [thumbnailUrl]="organisation.logoUrl"
     ></gn-ui-record-thumbnail>
   </div>
   <div class="px-3 capitalize">
     <span
-      [title]="title"
+      [title]="organisation.name"
       class="mb-3 mt-5 font-title text-21 text-title line-clamp-2 sm:line-clamp-1 sm:mt-2"
     >
-      {{ title }}</span
+      {{ organisation.name }}</span
     >
     <p
       class="abstract mt-4 mb-5 h-36 sm:mb-2 sm:h-[4.5rem] line-clamp-6 sm:line-clamp-3 sm:mt-0"
     >
-      {{ description }}
+      {{ organisation.description }}
     </p>
     <!--
     <button
@@ -30,7 +30,7 @@
 -->
     <div class="text-primary opacity-25 flex leading-6">
       <mat-icon class="text-primary opacity-25 mr-1">folder_open </mat-icon>
-      <span class="mx-1">{{ nRecords }}</span>
+      <span class="mx-1">{{ organisation.recordCount }}</span>
       <span translate>record.metadata.publications</span>
     </div>
   </div>
