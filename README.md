@@ -2,7 +2,9 @@
 
 # GeoNetwork UI
 
-GeoNetwork UI is a library of UI and Web Components to embed your catalogue in third party website or to build custom application on top of it. It relies on the GeoNetwork 4 OpenAPI.
+GeoNetwork UI is a suite of Applications made to provide a modern facade to your GeoNetwork 4 catalog.
+
+It also provides Web Components to embed your catalogue in third party websites. It relies on the GeoNetwork 4 OpenAPI.
 
 The target audience is:
 

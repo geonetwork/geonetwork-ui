@@ -46,4 +46,4 @@ You can build a docker image of the Datahub application like so:
 $ nx run datafeeder:docker-build
 ```
 
-This will build a docker image with the tag `geonetwork-ui/datafeeder`.
+This will build a docker image with the tag `geonetwork/geonetwork-ui-datafeeder`.
