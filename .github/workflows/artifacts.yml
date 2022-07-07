@@ -105,6 +105,7 @@ jobs:
         id: docker-auth
         run: |
           BASE_64_TOKEN=$(echo '{"username":"${{ secrets.DOCKER_HUB_USERNAME }}","password":"${{ secrets.DOCKER_HUB_PASSWORD }}","auth":"","email":"geonetworkbot@geonetwork-opensource.org"}' | base64)
+          echo ::add-mask::${BASE_64_TOKEN}
           echo ::set-output name=DOCKER_AUTH::${BASE_64_TOKEN}
 
       - name: Delete docker images for the given applications and branch
