@@ -108,15 +108,12 @@
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "commands": [
-          {
-            "command": "nx build datahub --base-href='/datahub/'",
-            "forwardAllArgs": false
-          },
-          "docker build --build-arg APP_NAME=datahub -f ./tools/docker/Dockerfile.apps . -t {args.tag}"
+          "nx build datahub --base-href='/datahub/'",
+          "docker build --build-arg APP_NAME=datahub -f ./tools/docker/Dockerfile.apps . -t $(tools/print-docker-tag.sh datahub)"
         ],
         "parallel": false
       }
     }
   },
-  "tags": ["type:app"]
+  "tags": ["type:app", "published"]
 }

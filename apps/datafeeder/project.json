@@ -98,7 +98,17 @@
         "jestConfig": "apps/datafeeder/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "docker-build": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "nx build datafeeder --base-href='/datafeeder/'",
+          "docker build --build-arg APP_NAME=datafeeder -f ./tools/docker/Dockerfile.apps . -t $(tools/print-docker-tag.sh datafeeder)"
+        ],
+        "parallel": false
+      }
     }
   },
-  "tags": ["type:app"]
+  "tags": ["type:app", "published"]
 }

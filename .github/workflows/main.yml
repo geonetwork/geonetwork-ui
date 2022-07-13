@@ -1,4 +1,4 @@
-name: Build
+name: Quality checks and deployment
 env:
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
@@ -11,6 +11,7 @@ on:
 
 jobs:
   lint-test-build:
+    name: Format, lint, test and build code
     runs-on: ubuntu-latest
 
     strategy:
@@ -23,9 +24,6 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-
-      - name: Fetch master for affected code
-        run: git fetch --no-tags --prune --depth=5 origin master
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -63,6 +61,7 @@ jobs:
         run: npx nx affected --target=build --parallel=3
 
   gh-pages:
+    name: Deploy Storybook to GitHub Pages
     runs-on: ubuntu-latest
 
     strategy:

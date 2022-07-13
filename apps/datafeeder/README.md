@@ -37,3 +37,13 @@ envsubst < assets/env.template.js > assets/env.js
 ### Other settings
 
 Other settings are fetched as a second step from the API `/datafeeder/config/frontend`
+
+## Building with Docker
+
+You can build a docker image of the Datafeeder application like so:
+
+```bash
+$ nx run datafeeder:docker-build
+```
+
+This will build a docker image with the tag `geonetwork/geonetwork-ui-datafeeder`.

@@ -1,0 +1,116 @@
+name: Generate release and development artifacts
+
+on:
+  push:
+    # only trigger on branch push, not tags
+    branches:
+      - '*'
+  delete:
+  release:
+    types: [published]
+
+env:
+  # a list of apps to build and publish on releases
+  APP_NAMES: datafeeder,datahub
+
+jobs:
+  build-archive-docker:
+    if: github.event_name != 'delete'
+    name: Build docker images and archives
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.15.0]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v2
+        with:
+          main-branch-name: 'master'
+
+      - name: Cache node modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build all applications and produce archives
+        if: github.event_name == 'release'
+        run: |
+          npx nx run-many --projects=${{ env.APP_NAMES }} --target=build
+          tools/make-archive.sh ${{env.APP_NAMES}}
+
+      - name: Upload archives to release
+        if: github.event_name == 'release'
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: dist/archives/*
+          file_glob: true
+          tag: ${{ github.ref }}
+          overwrite: true
+
+      - name: Build all docker images
+        if: github.event_name == 'release'
+        run: npx nx run-many --projects=${{ env.APP_NAMES }} --target=docker-build
+
+      - name: Build affected docker images
+        if: github.event_name != 'release'
+        run: npx nx affected --target=docker-build
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Push all docker images
+        # list all docker images, keep only the ones in the geonetwork org, and call docker push for each of them
+        run: |
+          docker image ls --format '{{.Repository}}:{{.Tag}}' --filter=reference='geonetwork/*' | \
+          xargs -r -L1 docker push $1
+
+  delete-docker:
+    if: github.event_name == 'delete' && github.ref_type == 'branch'
+    name: Delete docker images for a deleted branch
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.15.0]
+
+    steps:
+      - name: Generate Dockerhub auth
+        id: docker-auth
+        run: |
+          BASE_64_TOKEN=$(echo '{"username":"${{ secrets.DOCKER_HUB_USERNAME }}","password":"${{ secrets.DOCKER_HUB_PASSWORD }}","auth":"","email":"geonetworkbot@geonetwork-opensource.org"}' | base64)
+          echo ::add-mask::${BASE_64_TOKEN}
+          echo ::set-output name=DOCKER_AUTH::${BASE_64_TOKEN}
+
+      - name: Delete docker images for the given applications and branch
+        # first list apps separated by line breaks
+        # then for each do a curl call on Dockerhub API to delete the image
+        run: |
+          echo "${{ env.APP_NAMES }}" | awk -vRS=',' '{print $1}' | \
+          xargs -I{} curl -X DELETE "https://hub.docker.com/v2/repositories/geonetwork/geonetwork-ui-{}/${{ github.ref_name }}/" -H "X-Registry-Auth: ${{steps.docker-auth.outputs.DOCKER_AUTH}}"
