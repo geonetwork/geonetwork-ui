@@ -108,14 +108,13 @@ jobs:
           npx gh-pages --dist dist/ --dest ${{env.BRANCH_NAME}} --remove "${{env.BRANCH_NAME}}/**" --no-history --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
 
       - name: add PR comment
-        uses: unsplash/comment-on-pr@v1.2.0
+        uses: thollander/actions-comment-pull-request@v1
         if: github.event_name == 'pull_request'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: 'GitHub Pages links:
+          message: 'GitHub Pages links:
 
             * UI components storybook: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/demo/
 
             * Web Components storybook: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/webcomponents/'
-          check_for_duplicate_msg: true
+          comment_includes: 'GitHub Pages links:'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
