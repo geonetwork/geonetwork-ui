@@ -59,30 +59,21 @@ export class OrganisationsService {
   getOrganisationsWithGroups(): Observable<Organisation[]> {
     return combineLatest([this.organisations$, this.groups$]).pipe(
       map(([organisations, groups]) =>
-        organisations
-          .map((organisation) => {
-            const group = groups.find(
-              (group) =>
-                (group.label.eng
-                  ? this.normalizeName(group.label.eng)
-                  : this.normalizeName(group.name)) ===
-                this.normalizeName(organisation.key)
-            )
-            return {
-              name: organisation.key,
-              description: group?.description,
-              logoUrl: group?.logo ? `${IMAGE_URL}${group.logo}` : undefined,
-              recordCount: organisation.doc_count,
-            } as Organisation
-          })
-          //filter duplicates
-          .filter(
-            (org, i, orgs) =>
-              orgs.findIndex(
-                (firstOrg) =>
-                  firstOrg.name.toLowerCase() === org.name.toLowerCase()
-              ) === i
+        organisations.map((organisation) => {
+          const group = groups.find(
+            (group) =>
+              (group.label.eng
+                ? this.normalizeName(group.label.eng)
+                : this.normalizeName(group.name)) ===
+              this.normalizeName(organisation.key)
           )
+          return {
+            name: organisation.key,
+            description: group?.description,
+            logoUrl: group?.logo ? `${IMAGE_URL}${group.logo}` : undefined,
+            recordCount: organisation.doc_count,
+          } as Organisation
+        })
       )
     )
   }
