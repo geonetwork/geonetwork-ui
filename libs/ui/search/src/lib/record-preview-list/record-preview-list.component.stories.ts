@@ -1,6 +1,6 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular'
 import { RecordPreviewListComponent } from './record-preview-list.component'
-import { ThumbnailComponent } from '../record-thumbnail/record-thumbnail.component'
+import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import {
   RECORDS_SUMMARY_FIXTURE,
   UtilSharedModule,
@@ -11,8 +11,7 @@ export default {
   component: RecordPreviewListComponent,
   decorators: [
     moduleMetadata({
-      declarations: [ThumbnailComponent],
-      imports: [UtilSharedModule],
+      imports: [UtilSharedModule, UiElementsModule],
     }),
   ],
 } as Meta<RecordPreviewListComponent>
