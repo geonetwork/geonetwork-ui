@@ -12,7 +12,7 @@ import {
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
-import { RecordThumbnailComponent } from '../record-thumbnail/record-thumbnail.component'
+import { ThumbnailComponent } from '../record-thumbnail/record-thumbnail.component'
 import { OrganisationPreviewComponent } from './organisation-preview.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
@@ -21,7 +21,7 @@ export default {
   component: OrganisationPreviewComponent,
   decorators: [
     moduleMetadata({
-      declarations: [RecordThumbnailComponent],
+      declarations: [ThumbnailComponent],
       imports: [
         BrowserAnimationsModule,
         UtilSharedModule,

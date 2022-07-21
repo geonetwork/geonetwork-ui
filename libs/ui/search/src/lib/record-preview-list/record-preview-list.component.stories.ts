@@ -1,6 +1,6 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular'
 import { RecordPreviewListComponent } from './record-preview-list.component'
-import { RecordThumbnailComponent } from '../record-thumbnail/record-thumbnail.component'
+import { ThumbnailComponent } from '../record-thumbnail/record-thumbnail.component'
 import {
   RECORDS_SUMMARY_FIXTURE,
   UtilSharedModule,
@@ -11,7 +11,7 @@ export default {
   component: RecordPreviewListComponent,
   decorators: [
     moduleMetadata({
-      declarations: [RecordThumbnailComponent],
+      declarations: [ThumbnailComponent],
       imports: [UtilSharedModule],
     }),
   ],

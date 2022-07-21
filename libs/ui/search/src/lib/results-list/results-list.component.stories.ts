@@ -9,7 +9,7 @@ import { RecordPreviewListComponent } from '../record-preview-list/record-previe
 import { RecordPreviewCardComponent } from '../record-preview-card/record-preview-card.component'
 import { RecordPreviewTextComponent } from '../record-preview-text/record-preview-text.component'
 import { RecordPreviewTitleComponent } from '../record-preview-title/record-preview-title.component'
-import { RecordThumbnailComponent } from '../record-thumbnail/record-thumbnail.component'
+import { ThumbnailComponent } from '../record-thumbnail/record-thumbnail.component'
 import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
@@ -26,7 +26,7 @@ export default {
         RecordPreviewCardComponent,
         RecordPreviewTextComponent,
         RecordPreviewTitleComponent,
-        RecordThumbnailComponent,
+        ThumbnailComponent,
       ],
       imports: [
         UtilSharedModule,

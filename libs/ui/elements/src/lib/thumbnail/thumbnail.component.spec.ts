@@ -2,26 +2,26 @@ import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
-import { RecordThumbnailComponent } from './record-thumbnail.component'
+import { ThumbnailComponent } from './thumbnail.component'
 
-describe('RecordThumbnailComponent', () => {
-  let component: RecordThumbnailComponent
-  let fixture: ComponentFixture<RecordThumbnailComponent>
+describe('ThumbnailComponent', () => {
+  let component: ThumbnailComponent
+  let fixture: ComponentFixture<ThumbnailComponent>
   let de: DebugElement
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [UtilSharedModule],
-      declarations: [RecordThumbnailComponent],
+      declarations: [ThumbnailComponent],
     })
-      .overrideComponent(RecordThumbnailComponent, {
+      .overrideComponent(ThumbnailComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
       })
       .compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecordThumbnailComponent)
+    fixture = TestBed.createComponent(ThumbnailComponent)
     component = fixture.componentInstance
     de = fixture.debugElement
   })

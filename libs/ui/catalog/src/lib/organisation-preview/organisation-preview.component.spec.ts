@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { OrganisationPreviewComponent } from './organisation-preview.component'
 
 @Component({
-  selector: 'gn-ui-record-thumbnail',
+  selector: 'gn-ui-thumbnail',
   template: '<div></div>',
 })
 class RecordThumbnailMockComponent {

@@ -18,7 +18,7 @@ import { MetadataContactComponent } from './metadata-contact/metadata-contact.co
 import { MetadataCatalogComponent } from './metadata-catalog/metadata-catalog.component'
 import { SearchResultsErrorComponent } from './search-results-error/search-results-error.component'
 import { PaginationComponent } from './pagination/pagination.component'
-import { RecordThumbnailComponent } from './record-thumbnail/record-thumbnail.component'
+import { ThumbnailComponent } from './thumbnail/thumbnail.component'
 
 @NgModule({
   imports: [
@@ -43,7 +43,7 @@ import { RecordThumbnailComponent } from './record-thumbnail/record-thumbnail.co
     MetadataCatalogComponent,
     SearchResultsErrorComponent,
     PaginationComponent,
-    RecordThumbnailComponent,
+    ThumbnailComponent,
   ],
   exports: [
     MetadataInfoComponent,
@@ -57,7 +57,7 @@ import { RecordThumbnailComponent } from './record-thumbnail/record-thumbnail.co
     MetadataCatalogComponent,
     SearchResultsErrorComponent,
     PaginationComponent,
-    RecordThumbnailComponent,
+    ThumbnailComponent,
   ],
 })
 export class UiElementsModule {}

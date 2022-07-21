@@ -12,11 +12,11 @@ export const THUMBNAIL_PLACEHOLDER = new InjectionToken<string>(
 )
 
 @Component({
-  selector: 'gn-ui-record-thumbnail',
-  templateUrl: './record-thumbnail.component.html',
+  selector: 'gn-ui-thumbnail',
+  templateUrl: './thumbnail.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RecordThumbnailComponent {
+export class ThumbnailComponent {
   @Input() set thumbnailUrl(url: string) {
     this.imgUrl = url || this.placeholderUrl
   }
