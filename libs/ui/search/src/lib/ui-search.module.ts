@@ -17,12 +17,12 @@ import {
 } from './results-list/results-layout.config'
 import { ResultsListComponent } from './results-list/results-list.component'
 import { RecordPreviewComponent } from './record-preview/record-preview.component'
-import { RecordThumbnailComponent } from './record-thumbnail/record-thumbnail.component'
 import { TagInputModule } from 'ngx-chips'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ResultsListItemComponent } from './results-list-item/results-list-item.component'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 
 @NgModule({
   declarations: [
@@ -32,7 +32,6 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
     RecordPreviewTextComponent,
     RecordPreviewTitleComponent,
     RecordMetricComponent,
-    RecordThumbnailComponent,
     ResultsListComponent,
     ResultsHitsNumberComponent,
     ResultsListItemComponent,
@@ -48,6 +47,7 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
     TagInputModule,
     UtilSharedModule,
     UiWidgetsModule,
+    UiElementsModule,
     MatIconModule,
   ],
   exports: [
@@ -56,7 +56,6 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
     RecordPreviewTextComponent,
     RecordPreviewTitleComponent,
     RecordMetricComponent,
-    RecordThumbnailComponent,
     ResultsListComponent,
     FacetsModule,
     RecordPreviewComponent,

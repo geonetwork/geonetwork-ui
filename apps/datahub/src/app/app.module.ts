@@ -45,7 +45,10 @@ import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import { SearchSummaryComponent } from './home/search/search-summary/search-summary.component'
 import { NavigationBarComponent } from './record/navigation-bar/navigation-bar.component'
-import { THUMBNAIL_PLACEHOLDER } from '@geonetwork-ui/ui/search'
+import {
+  THUMBNAIL_PLACEHOLDER,
+  UiElementsModule,
+} from '@geonetwork-ui/ui/elements'
 import { NewsPageComponent } from './home/news-page/news-page.component'
 import { DatahubRouterService } from './router/datahub-router.service'
 import { OrganisationsPageComponent } from './home/organisations-page/organisations-page.component'
@@ -101,6 +104,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     MatIconModule,
     UiInputsModule,
     UiLayoutModule,
+    UiElementsModule,
   ],
   providers: [
     { provide: RESULTS_LAYOUT_CONFIG, useValue: DATAHUB_RESULTS_LAYOUT_CONFIG },
