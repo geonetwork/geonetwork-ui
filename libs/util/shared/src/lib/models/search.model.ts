@@ -20,6 +20,11 @@ export interface Organisation {
   recordCount?: number
 }
 
+export interface OrganisationApiModel {
+  key: string
+  doc_count: number
+}
+
 export interface MetadataContact {
   name?: string
   organisation?: string

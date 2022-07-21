@@ -13,5 +13,5 @@ export class OrganisationsComponent {
   constructor(private organisationsService: OrganisationsService) {}
 
   organisations$: Observable<Organisation[]> =
-    this.organisationsService.getOrganisations()
+    this.organisationsService.getOrganisationsWithGroups()
 }
