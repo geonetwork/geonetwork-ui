@@ -87,4 +87,21 @@ describe('OrganisationsService', () => {
       ])
     })
   })
+  describe('#normalizeName', () => {
+    it('should match "ATMO Haut de France" and "ATMO Haut-de-France"', () => {
+      expect(service.normalizeName('ATMO Haut de France')).toEqual(
+        service.normalizeName('ATMO Haut-de-France')
+      )
+    })
+    it('should match "ATMO Haut de France" and "ATMOHautdeFrance"', () => {
+      expect(service.normalizeName('ATMO Haut de France')).toEqual(
+        service.normalizeName('ATMOHautdeFrance')
+      )
+    })
+    it('should NOT match "ATMO Haut de France" and "ATMO HDF"', () => {
+      expect(service.normalizeName('ATMO Haut de France')).not.toEqual(
+        service.normalizeName('ATMO HDF')
+      )
+    })
+  })
 })

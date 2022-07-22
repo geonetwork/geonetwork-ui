@@ -4,16 +4,16 @@ import {
   GroupsApiService,
   SearchApiService,
 } from '@geonetwork-ui/data-access/gn4'
-import {
-  ElasticsearchService,
-  Organisation,
-  OrganisationApiModel,
-} from '@geonetwork-ui/util/shared'
+import { ElasticsearchService, Organisation } from '@geonetwork-ui/util/shared'
 import { combineLatest, Observable } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
 
 const IMAGE_URL = '/geonetwork/images/harvesting/'
 
+interface OrganisationApiModel {
+  key: string
+  doc_count: number
+}
 @Injectable({
   providedIn: 'root',
 })
