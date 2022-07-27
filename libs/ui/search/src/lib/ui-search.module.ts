@@ -5,7 +5,6 @@ import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { NgxDropzoneModule } from 'ngx-dropzone'
 import { FacetsModule } from './facets/facets.module'
-import { OrganisationPreviewComponent } from './organisation-preview/organisation-preview.component'
 import { RecordMetricComponent } from './record-metric/record-metric.component'
 import { RecordPreviewCardComponent } from './record-preview-card/record-preview-card.component'
 import { RecordPreviewListComponent } from './record-preview-list/record-preview-list.component'
@@ -18,12 +17,12 @@ import {
 } from './results-list/results-layout.config'
 import { ResultsListComponent } from './results-list/results-list.component'
 import { RecordPreviewComponent } from './record-preview/record-preview.component'
-import { RecordThumbnailComponent } from './record-thumbnail/record-thumbnail.component'
 import { TagInputModule } from 'ngx-chips'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ResultsListItemComponent } from './results-list-item/results-list-item.component'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 
 @NgModule({
   declarations: [
@@ -33,11 +32,9 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
     RecordPreviewTextComponent,
     RecordPreviewTitleComponent,
     RecordMetricComponent,
-    RecordThumbnailComponent,
     ResultsListComponent,
     ResultsHitsNumberComponent,
     ResultsListItemComponent,
-    OrganisationPreviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +47,7 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
     TagInputModule,
     UtilSharedModule,
     UiWidgetsModule,
+    UiElementsModule,
     MatIconModule,
   ],
   exports: [
@@ -58,12 +56,10 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
     RecordPreviewTextComponent,
     RecordPreviewTitleComponent,
     RecordMetricComponent,
-    RecordThumbnailComponent,
     ResultsListComponent,
     FacetsModule,
     RecordPreviewComponent,
     ResultsHitsNumberComponent,
-    OrganisationPreviewComponent,
   ],
   providers: [
     { provide: RESULTS_LAYOUT_CONFIG, useValue: DEFAULT_RESULTS_LAYOUT_CONFIG },

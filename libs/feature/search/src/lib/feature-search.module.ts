@@ -19,7 +19,6 @@ import { SearchStateContainerDirective } from './state/container/search-state.co
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { NgModule } from '@angular/core'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
-import { OrganisationsContainerComponent } from './organisations/organisations.container.component'
 
 @NgModule({
   declarations: [
@@ -30,7 +29,6 @@ import { OrganisationsContainerComponent } from './organisations/organisations.c
     ResultsListContainerComponent,
     ResultsHitsContainerComponent,
     SearchStateContainerDirective,
-    OrganisationsContainerComponent,
   ],
   imports: [
     CommonModule,
@@ -57,7 +55,6 @@ import { OrganisationsContainerComponent } from './organisations/organisations.c
     ResultsHitsContainerComponent,
     FacetsModule,
     SearchStateContainerDirective,
-    OrganisationsContainerComponent,
   ],
 })
 export class FeatureSearchModule {}

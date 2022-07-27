@@ -14,11 +14,11 @@ import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { TranslateModule } from '@ngx-translate/core'
 import { LinkCardComponent } from './link-card/link-card.component'
 import { RelatedRecordCardComponent } from './related-record-card/related-record-card.component'
-import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { MetadataContactComponent } from './metadata-contact/metadata-contact.component'
 import { MetadataCatalogComponent } from './metadata-catalog/metadata-catalog.component'
 import { SearchResultsErrorComponent } from './search-results-error/search-results-error.component'
 import { PaginationComponent } from './pagination/pagination.component'
+import { ThumbnailComponent } from './thumbnail/thumbnail.component'
 
 @NgModule({
   imports: [
@@ -29,7 +29,6 @@ import { PaginationComponent } from './pagination/pagination.component'
     UiLayoutModule,
     TranslateModule.forChild(),
     UtilSharedModule,
-    UiSearchModule,
     RouterModule,
   ],
   declarations: [
@@ -44,6 +43,7 @@ import { PaginationComponent } from './pagination/pagination.component'
     MetadataCatalogComponent,
     SearchResultsErrorComponent,
     PaginationComponent,
+    ThumbnailComponent,
   ],
   exports: [
     MetadataInfoComponent,
@@ -57,6 +57,7 @@ import { PaginationComponent } from './pagination/pagination.component'
     MetadataCatalogComponent,
     SearchResultsErrorComponent,
     PaginationComponent,
+    ThumbnailComponent,
   ],
 })
 export class UiElementsModule {}

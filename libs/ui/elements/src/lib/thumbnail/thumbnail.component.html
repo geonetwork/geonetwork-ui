@@ -2,6 +2,7 @@
   <img
     *ngIf="imgUrl"
     class="relative h-full w-full object-cover object-center"
+    alt="thumbnail"
     [src]="imgUrl | safe: 'url'"
     [fallbackUrl]="placeholderUrl"
     gnUiImageFallback
