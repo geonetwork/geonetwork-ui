@@ -6,3 +6,9 @@
     [organisation]="organisation"
   ></gn-ui-organisation-preview>
 </div>
+<gn-ui-pagination
+  class="flex justify-end mt-20"
+  [currentPage]="currentPage$ | async"
+  [nPages]="totalPages"
+  (newCurrentPageEvent)="setCurrentPage($event)"
+></gn-ui-pagination>

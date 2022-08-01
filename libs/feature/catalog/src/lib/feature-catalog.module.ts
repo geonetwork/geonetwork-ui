@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common'
 import { SourceLabelComponent } from './source-label/source-label.component'
 import { UtilI18nModule } from '@geonetwork-ui/util/i18n'
 import { OrganisationsComponent } from './organisations/organisations.component'
+import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 
 @NgModule({
   declarations: [
@@ -13,7 +14,13 @@ import { OrganisationsComponent } from './organisations/organisations.component'
     SourceLabelComponent,
     OrganisationsComponent,
   ],
-  imports: [UiCatalogModule, ApiModule, CommonModule, UtilI18nModule],
+  imports: [
+    UiCatalogModule,
+    UiElementsModule,
+    ApiModule,
+    CommonModule,
+    UtilI18nModule,
+  ],
   exports: [SiteTitleComponent, SourceLabelComponent, OrganisationsComponent],
 })
 export class FeatureCatalogModule {}

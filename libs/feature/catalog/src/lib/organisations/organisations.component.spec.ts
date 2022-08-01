@@ -2,14 +2,19 @@ import {
   ChangeDetectionStrategy,
   Component,
   DebugElement,
+  EventEmitter,
   Input,
+  Output,
 } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { Organisation } from '@geonetwork-ui/util/shared'
+import { Organisation, ORGANISATIONS_FIXTURE } from '@geonetwork-ui/util/shared'
 import { of } from 'rxjs'
 
-import { OrganisationsComponent } from './organisations.component'
+import {
+  ITEMS_ON_PAGE,
+  OrganisationsComponent,
+} from './organisations.component'
 import { OrganisationsService } from './organisations.service'
 
 @Component({
@@ -20,23 +25,18 @@ class OrganisationPreviewMockComponent {
   @Input() organisation: Organisation
 }
 
-const organisationsMock = [
-  {
-    name: 'My first mock org',
-    description: 'one org for testing',
-    logoUrl: 'https://my-geonetwork.org/logo1.png',
-    recordCount: 12,
-  },
-  {
-    name: 'My second mock org',
-    description: 'another org for testing',
-    logoUrl: 'https://my-geonetwork.org/logo2.png',
-    recordCount: 15,
-  },
-]
+@Component({
+  selector: 'gn-ui-pagination',
+  template: '<div></div>',
+})
+class PaginationMockComponent {
+  @Input() currentPage: number
+  @Input() nPages: number
+  @Output() newCurrentPageEvent = new EventEmitter<number>()
+}
 
 const organisationsServiceMock = {
-  getOrganisationsWithGroups: jest.fn(() => of(organisationsMock)),
+  getOrganisationsWithGroups: jest.fn(() => of(ORGANISATIONS_FIXTURE)),
 }
 
 describe('OrganisationsComponent', () => {
@@ -46,7 +46,11 @@ describe('OrganisationsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [OrganisationsComponent, OrganisationPreviewMockComponent],
+      declarations: [
+        OrganisationsComponent,
+        OrganisationPreviewMockComponent,
+        PaginationMockComponent,
+      ],
       providers: [
         {
           provide: OrganisationsService,
@@ -71,26 +75,72 @@ describe('OrganisationsComponent', () => {
 
   describe('on component init', () => {
     let orgPreviewComponents: OrganisationPreviewMockComponent[]
+    let paginationComponent: PaginationMockComponent
+    let setCurrentPageSpy
     it('should call getOrganisationsWithGroups', () => {
       expect(
         organisationsServiceMock.getOrganisationsWithGroups
       ).toHaveBeenCalled()
     })
-    describe('pass organisations to ui components', () => {
+    describe('pass organisations to ui preview components', () => {
       beforeEach(() => {
         orgPreviewComponents = de.queryAll(
           By.directive(OrganisationPreviewMockComponent)
         )
       })
-      it('should pass first organisation to first dumb component', () => {
+      it('should pass first organisation to first ui preview component', () => {
         expect(orgPreviewComponents[0].componentInstance.organisation).toEqual(
-          organisationsMock[0]
+          ORGANISATIONS_FIXTURE[0]
         )
       })
-      it('should pass second organisation to second dumb component', () => {
-        expect(orgPreviewComponents[0].componentInstance.organisation).toEqual(
-          organisationsMock[0]
+      it('should pass last organisation on page to last ui preview component', () => {
+        expect(
+          orgPreviewComponents[ITEMS_ON_PAGE - 1].componentInstance.organisation
+        ).toEqual(ORGANISATIONS_FIXTURE[ITEMS_ON_PAGE - 1])
+      })
+    })
+    describe('pass params to ui pagination component', () => {
+      beforeEach(() => {
+        paginationComponent = de.query(By.directive(PaginationMockComponent))
+      })
+      it('should init ui pagination component with currentPage = 1', () => {
+        expect(paginationComponent.componentInstance.currentPage).toEqual(1)
+      })
+      it('should init ui pagination component with correct value for total nPages', () => {
+        expect(paginationComponent.componentInstance.nPages).toEqual(
+          Math.ceil(ORGANISATIONS_FIXTURE.length / ITEMS_ON_PAGE)
         )
+      })
+      describe('navigate to second page (and trigger newCurrentPageEvent output)', () => {
+        beforeEach(() => {
+          setCurrentPageSpy = jest.spyOn(component, 'setCurrentPage')
+          paginationComponent.triggerEventHandler('newCurrentPageEvent', 2)
+          fixture.detectChanges()
+          orgPreviewComponents = de.queryAll(
+            By.directive(OrganisationPreviewMockComponent)
+          )
+          fixture.detectChanges()
+        })
+        afterEach(() => {
+          jest.restoreAllMocks()
+        })
+        it('should call setcurrentPage() with correct value', () => {
+          expect(setCurrentPageSpy).toHaveBeenCalledWith(2)
+        })
+        it('should set currentPage in ui component to correct value', () => {
+          expect(paginationComponent.componentInstance.currentPage).toEqual(2)
+        })
+        it('should pass first organisation of second page to first ui preview component', () => {
+          expect(
+            orgPreviewComponents[0].componentInstance.organisation
+          ).toEqual(ORGANISATIONS_FIXTURE[ITEMS_ON_PAGE])
+        })
+        it('should pass last organisation of second page to last ui preview component', () => {
+          expect(
+            orgPreviewComponents[orgPreviewComponents.length - 1]
+              .componentInstance.organisation
+          ).toEqual(ORGANISATIONS_FIXTURE[ORGANISATIONS_FIXTURE.length - 1])
+        })
       })
     })
   })
