@@ -1,4 +1,9 @@
 <gn-ui-figure
+  [figure]="datasetsCountLabel$ | async"
+  [icon]="'folder_open'"
+  [title]="'catalog.figures.datasets' | translate"
+></gn-ui-figure>
+<gn-ui-figure
   [figure]="organisationsCountLabel$ | async"
   [icon]="'corporate_fare'"
   [title]="'catalog.figures.organisations' | translate"

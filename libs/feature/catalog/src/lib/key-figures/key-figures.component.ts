@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { OrganisationsService } from '../organisations/organisations.service'
@@ -10,7 +11,15 @@ import { OrganisationsService } from '../organisations/organisations.service'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KeyFiguresComponent {
-  constructor(private organisationsService: OrganisationsService) {}
+  constructor(
+    private organisationsService: OrganisationsService,
+    private searchFacade: SearchFacade
+  ) {}
+
+  // FIXME: take resultHits from state present in news tab
+  datasetsCountLabel$: Observable<string> = this.searchFacade.resultsHits$.pipe(
+    map((datasets) => datasets.value)
+  )
 
   organisationsCountLabel$: Observable<string> = this.organisationsService
     .countOrganisations()
