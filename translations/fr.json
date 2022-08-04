@@ -1,4 +1,5 @@
 {
+  "catalog.figures.organisations": "organisations",
   "datafeeder.analysisProgressBar.illustration.fileFormatDetection": "Détection du \n format de fichier",
   "datafeeder.analysisProgressBar.illustration.gatheringDatasetInformation": "Récupération des informations \n sur le jeu de données",
   "datafeeder.analysisProgressBar.illustration.samplingData": "Sampling \n des données",

@@ -56,6 +56,12 @@ export class OrganisationsService {
     private groupsApiService: GroupsApiService
   ) {}
 
+  countOrganisations(): Observable<number> {
+    return this.organisations$.pipe(
+      map((organisations) => organisations.length)
+    )
+  }
+
   getOrganisationsWithGroups(): Observable<Organisation[]> {
     return combineLatest([this.organisations$, this.groups$]).pipe(
       map(([organisations, groups]) =>

@@ -1,4 +1,5 @@
 {
+  "catalog.figures.organisations": "organisations",
   "datafeeder.analysisProgressBar.illustration.fileFormatDetection": "File format \n detection",
   "datafeeder.analysisProgressBar.illustration.gatheringDatasetInformation": "Gathering dataset \n information",
   "datafeeder.analysisProgressBar.illustration.samplingData": "Sampling \n data",
