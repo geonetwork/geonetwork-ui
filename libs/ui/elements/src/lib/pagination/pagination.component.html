@@ -2,17 +2,17 @@
   <button
     (click)="nextPage()"
     [disabled]="currentPage === nPages"
-    class="uppercase text-white flex justify-center items-center p-3 rounded-lg mr-8 cursor-pointer h-14 mr-12 bg-[#8cc630] disabled:bg-gray-100 disabled:cursor-default"
+    class="uppercase text-white justify-center items-center p-3 rounded-lg cursor-pointer h-14 w-44 bg-secondary hidden sm:flex sm:mr-28 disabled:bg-gray-100 disabled:cursor-default"
     translate
   >
-    datahub.search.nextPage
+    pagination.nextPage
   </button>
   <div class="flex items-center" translate>
-    <span class="m-3" translate> datahub.search.page </span>
-    <span class="border border-gray-300 rounded py-1 px-5 mr-3">{{
+    <span class="m-3" translate> pagination.page </span>
+    <span class="border border-gray-300 rounded w-14 py-1 px-5 mr-3">{{
       currentPage
     }}</span>
-    <span class="mr-3" translate> datahub.search.pageOn </span>
+    <span class="mr-3" translate> pagination.pageOf </span>
     <span class="mr-3">{{ nPages }}</span>
   </div>
 
