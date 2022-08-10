@@ -5,15 +5,26 @@ import { OrganisationPreviewComponent } from './organisation-preview/organisatio
 import { TranslateModule } from '@ngx-translate/core'
 import { MatIconModule } from '@angular/material/icon'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import { OrganisationsSortComponent } from './organisations-sort/organisations-sort.component'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 
 @NgModule({
-  declarations: [CatalogTitleComponent, OrganisationPreviewComponent],
+  declarations: [
+    CatalogTitleComponent,
+    OrganisationPreviewComponent,
+    OrganisationsSortComponent,
+  ],
   imports: [
     CommonModule,
     TranslateModule.forChild(),
     UiElementsModule,
+    UiInputsModule,
     MatIconModule,
   ],
-  exports: [CatalogTitleComponent, OrganisationPreviewComponent],
+  exports: [
+    CatalogTitleComponent,
+    OrganisationPreviewComponent,
+    OrganisationsSortComponent,
+  ],
 })
 export class UiCatalogModule {}
