@@ -1,14 +1,16 @@
 <div
-  class="grid grid-cols-6 bg-primary text-white px-3 sm:p-7 sm:mt-4 sm:mb-8 sm:rounded-lg"
+  class="flex flex-wrap sm:flex-nowrap bg-primary text-white px-6 py-7 mt-4 mb-8 rounded-lg"
 >
-  <span class="col-span-4">
+  <span class="flex-grow mb-4 mr-4 sm:mr-16">
     <p translate>organisation.sort.intro</p>
   </span>
-  <span class="col-span-2 flex justify-end">
-    <span class="m-2 opacity-75" translate> organisation.sort.sortBy </span>
+  <span class="flex flex-wrap sm:flex-nowrap sm:flex-shrink-0">
+    <span class="mt-2 mr-2 opacity-75" translate>
+      organisation.sort.sortBy
+    </span>
     <gn-ui-dropdown-selector
       [title]="''"
-      class="flex-shrink-0"
+      class="flex-shrink"
       [choices]="choices"
       [showTitle]="false"
       (selectValue)="selectOrderToDisplay($event)"
