@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { ES_SOURCE_BRIEF } from '@geonetwork-ui/util/shared'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { SearchFacade } from '../state/search.facade'
 import {
+  RecordPreviewFeedComponent,
   RESULTS_LAYOUT_CONFIG,
   ResultsLayoutConfigItem,
 } from '@geonetwork-ui/ui/search'
-import { RecordPreviewTextComponent } from '../../../../../ui/search/src/lib/record-preview-text/record-preview-text.component'
 
 @Component({
   selector: 'gn-ui-last-created',
@@ -16,7 +16,12 @@ import { RecordPreviewTextComponent } from '../../../../../ui/search/src/lib/rec
     {
       provide: RESULTS_LAYOUT_CONFIG,
       useValue: {
-        FEED: new ResultsLayoutConfigItem(RecordPreviewTextComponent), // TODO: use newsfeed component instead
+        FEED: new ResultsLayoutConfigItem(
+          RecordPreviewFeedComponent,
+          'p-0',
+          undefined,
+          'gap-0 p-0'
+        ),
       },
     },
   ],
