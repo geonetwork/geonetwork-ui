@@ -16,9 +16,19 @@ export class OrganisationsComponent {
   constructor(private organisationsService: OrganisationsService) {}
   totalPages: number
   currentPage$ = new BehaviorSubject(1)
+  sortBy$ = new BehaviorSubject('name-asc')
+
+  organisationsSorted$: Observable<Organisation[]> = combineLatest([
+    this.organisationsService.getOrganisationsWithGroups(),
+    this.sortBy$,
+  ]).pipe(
+    map(([organisations, sortBy]) =>
+      this.sortOrganisations(organisations, sortBy)
+    )
+  )
 
   organisations$: Observable<Organisation[]> = combineLatest([
-    this.organisationsService.getOrganisationsWithGroups(),
+    this.organisationsSorted$,
     this.currentPage$,
   ]).pipe(
     tap(
@@ -32,5 +42,26 @@ export class OrganisationsComponent {
 
   protected setCurrentPage(page: number): void {
     this.currentPage$.next(page)
+  }
+
+  protected setSortBy(value: string): void {
+    this.sortBy$.next(value)
+  }
+
+  private sortOrganisations(
+    organisations: Organisation[],
+    sortBy: string
+  ): Organisation[] {
+    const sortValue = sortBy.split('-')
+    const attribute = sortValue[0]
+    const order = sortValue[1]
+    const orderParam = order === 'asc' ? [1, -1] : [-1, 1]
+    return [...organisations].sort((a, b) =>
+      a[`${attribute}`] > b[`${attribute}`]
+        ? orderParam[0]
+        : b[`${attribute}`] > a[`${attribute}`]
+        ? orderParam[1]
+        : 0
+    )
   }
 }

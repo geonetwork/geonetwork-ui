@@ -17,7 +17,7 @@ import { OrganisationPreviewComponent } from './organisation-preview.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 export default {
-  title: 'Search/OrganisationPreviewComponent',
+  title: 'Catalog/OrganisationPreviewComponent',
   component: OrganisationPreviewComponent,
   decorators: [
     moduleMetadata({
