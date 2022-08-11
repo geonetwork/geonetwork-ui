@@ -1,0 +1,51 @@
+<div
+  class="mx-[18px] pl-[18px] pb-[18px] border-solid border-l-2 border-gray-100"
+>
+  <div
+    class="rounded-lg bg-white"
+    style="box-shadow: 0 0 44px 0 rgba(5, 31, 156, 0.09)"
+  >
+    <div
+      class="py-4 px-4 border-b border-gray-300 flex flex-row items-center relative"
+    >
+      <div
+        class="absolute w-3 h-3 bg-secondary rounded-full"
+        style="right: calc(100% + 13.5px)"
+      ></div>
+      <img
+        [src]="record.contact.logoUrl"
+        alt="Organization logo"
+        class="border border-gray-300 rounded-full w-16 h-16 object-contain mr-4"
+      />
+      <div>
+        <p>
+          <a
+            href="#"
+            class="font-bold transition text-primary hover:text-primary-darker"
+          >
+            {{ record.contact.organisation }}
+          </a>
+        </p>
+        <p>a créé ce jdd</p>
+      </div>
+    </div>
+    <div class="pt-5 pb-8 px-10">
+      <h1 class="title-font text-[21px] font-medium mb-3">
+        {{ record.title }}
+      </h1>
+      <p class="text-gray-900 line-clamp-3">{{ record.abstract }}</p>
+      <div class="flex flex-row mt-3" *ngIf="isDownloadable || isViewable">
+        <mat-icon
+          *ngIf="isDownloadable"
+          class="material-icons-outlined text-primary opacity-25 mr-3"
+          >cloud_download</mat-icon
+        >
+        <mat-icon
+          *ngIf="isViewable"
+          class="material-icons-outlined text-primary opacity-25 mr-3"
+          >map</mat-icon
+        >
+      </div>
+    </div>
+  </div>
+</div>

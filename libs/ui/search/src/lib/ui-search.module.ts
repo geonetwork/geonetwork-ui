@@ -36,6 +36,7 @@ import { RecordPreviewFeedComponent } from './record-preview-feed/record-preview
     ResultsListComponent,
     ResultsHitsNumberComponent,
     ResultsListItemComponent,
+    RecordPreviewFeedComponent,
   ],
   imports: [
     BrowserModule,
