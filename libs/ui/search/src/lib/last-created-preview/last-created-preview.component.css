@@ -1,0 +1,13 @@
+.container {
+  height: 20rem;
+  width: 32rem;
+  background-color: #ffffff;
+  box-shadow: 0 0 44px 0 rgba(5, 31, 156, 0.09);
+  border-radius: 8px;
+  margin-bottom: 3rem;
+}
+
+.header {
+  height: 5rem;
+  border-bottom: 1px #d8d8d8 solid;
+}
