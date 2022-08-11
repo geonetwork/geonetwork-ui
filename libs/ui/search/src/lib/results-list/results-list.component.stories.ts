@@ -9,6 +9,7 @@ import { RecordPreviewListComponent } from '../record-preview-list/record-previe
 import { RecordPreviewCardComponent } from '../record-preview-card/record-preview-card.component'
 import { RecordPreviewTextComponent } from '../record-preview-text/record-preview-text.component'
 import { RecordPreviewTitleComponent } from '../record-preview-title/record-preview-title.component'
+import { ResultsListItemComponent } from '../results-list-item/results-list-item.component'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import {
   TRANSLATE_DEFAULT_CONFIG,
@@ -26,6 +27,7 @@ export default {
         RecordPreviewCardComponent,
         RecordPreviewTextComponent,
         RecordPreviewTitleComponent,
+        ResultsListItemComponent,
       ],
       imports: [
         UtilSharedModule,
@@ -37,19 +39,28 @@ export default {
   ],
 } as Meta<ResultsListComponent>
 
-const Template: Story<ResultsListComponent> = (args: ResultsListComponent) => ({
+type ResultsListComponentWithKey = ResultsListComponent & {
+  layoutConfigKey: string
+}
+
+const Template: Story<ResultsListComponentWithKey> = (
+  args: ResultsListComponentWithKey
+) => ({
   component: ResultsListComponent,
-  props: args,
+  props: {
+    ...args,
+    layoutConfig: DEFAULT_RESULTS_LAYOUT_CONFIG[args.layoutConfigKey],
+  },
 })
 
 export const Primary = Template.bind({})
 Primary.args = {
   records: RECORDS_SUMMARY_FIXTURE,
   loading: false,
-  layout: 'CARD',
+  layoutConfigKey: 'CARD',
 }
 Primary.argTypes = {
-  layout: {
+  layoutConfigKey: {
     control: 'radio',
     options: Object.keys(DEFAULT_RESULTS_LAYOUT_CONFIG),
   },
