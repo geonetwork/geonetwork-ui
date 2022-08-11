@@ -1,133 +1,68 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-} from '@angular/core/testing'
-import { By } from '@angular/platform-browser'
-import { BehaviorSubject, Subject } from 'rxjs'
-import { SearchFacade } from '../state/search.facade'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { summaryHits } from '@geonetwork-ui/util/shared'
+import { of } from 'rxjs'
 import { LastCreatedComponent } from './last-created.component'
-
-const resultsMock = new BehaviorSubject([
-  {
-    abstract:
-      '<p>A compliant implementation of WMS plus most of the SLD extension (dynamic styling). Can also generate PDF, SVG, KML, GeoRSS</p>',
-    contact: {
-      name: null,
-      organisation: 'Métropole Européenne de Lille',
-      logoUrl:
-        'http://localhost:4200/geonetwork/images/logos/88d1dad6-ef31-4af8-9adb-031daa0b0965.png',
-    },
-    hasDownloads: false,
-    hasMaps: false,
-    id: '15245017',
-    metadataUrl:
-      '/geonetwork/srv/api/../fre/catalog.search#/metadata/dig-geoserver-ocs2d-wms',
-    title: 'DIG GeoServer OCS2D WMS',
-    uuid: 'dig-geoserver-ocs2d-wms',
-    createdDate: '21/07/2022',
-  },
-  {
-    abstract:
-      '<p>A compliant implementation of WMS plus most of the SLD extension (dynamic styling). Can also generate PDF, SVG, KML, GeoRSS</p>',
-    contact: {
-      name: null,
-      organisation: 'Métropole Européenne de Lille',
-      logoUrl:
-        'http://localhost:4200/geonetwork/images/logos/88d1dad6-ef31-4af8-9adb-031daa0b0965.png',
-    },
-    hasDownloads: false,
-    hasMaps: false,
-    id: '15245017',
-    metadataUrl:
-      '/geonetwork/srv/api/../fre/catalog.search#/metadata/dig-geoserver-ocs2d-wms',
-    title: 'DIG GeoServer OCS2D WMS',
-    uuid: 'dig-geoserver-ocs2d-wms',
-    createdDate: '22/07/2022',
-  },
-])
-
-@Component({
-  selector: 'gn-ui-last-created',
-  template: '<div></div>',
-})
-class LastUpdateMockComponent {
-  @Input() lastUpdate: any
-}
+import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 class SearchFacadeMock {
-  results$ = new Subject()
+  init = jest.fn()
+  results$ = of(summaryHits)
   setPagination = jest.fn()
   setSortBy = jest.fn()
   setConfigRequestFields = jest.fn()
+  setResultsLayout = jest.fn()
 }
 
 describe('LastCreatedComponent', () => {
   let component: LastCreatedComponent
-  let fixture: ComponentFixture<lastCreatedComponent>
-  let searchFacade
+  let fixture: ComponentFixture<LastCreatedComponent>
+  let facade: SearchFacade
   let de
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LastCreatedComponent, LastUpdateMockComponent],
+      declarations: [LastCreatedComponent],
       providers: [
         {
           provide: SearchFacade,
           useClass: SearchFacadeMock,
         },
       ],
-    })
-      .overrideComponent(LastCreatedComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default },
-      })
-      .compileComponents()
-    searchFacade = TestBed.inject(SearchFacade)
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents()
+    facade = TestBed.inject(SearchFacade)
   })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LastCreatedComponent)
     component = fixture.componentInstance
     de = fixture.debugElement
-    fixture.detectChanges()
   })
 
   it('should create', () => {
+    fixture.detectChanges()
     expect(component).toBeTruthy()
   })
 
   describe('get results on init', () => {
-    let lastCreatedComponents: LastUpdateMockComponent[]
-
-    beforeEach(fakeAsync(() => {
-      searchFacade.results$.next(resultsMock)
-      tick(200)
+    beforeEach(() => {
       fixture.detectChanges()
-      lastCreatedComponents = de.queryAll(By.directive(LastUpdateMockComponent))
-    }))
-    it('Should get results sorted by creation date', () => {
-      expect(lastCreatedComponents[0]).toEqual([
-        {
-          abstract:
-            '<p>A compliant implementation of WMS plus most of the SLD extension (dynamic styling). Can also generate PDF, SVG, KML, GeoRSS</p>',
-          contact: {
-            name: null,
-            organisation: 'Métropole Européenne de Lille',
-            logoUrl:
-              'http://localhost:4200/geonetwork/images/logos/88d1dad6-ef31-4af8-9adb-031daa0b0965.png',
-          },
-          hasDownloads: false,
-          hasMaps: false,
-          id: '15245017',
-          metadataUrl:
-            '/geonetwork/srv/api/../fre/catalog.search#/metadata/dig-geoserver-ocs2d-wms',
-          title: 'DIG GeoServer OCS2D WMS',
-          uuid: 'dig-geoserver-ocs2d-wms',
-          createdDate: '22/07/2022',
-        },
-      ])
+    })
+
+    it('Should set the correct params in the facade', () => {
+      expect(facade.init).toHaveBeenCalled()
+      expect(facade.setPagination).toHaveBeenCalledWith(0, 10)
+      expect(facade.setSortBy).toHaveBeenCalledWith('-createDate')
+      expect(facade.setConfigRequestFields).toHaveBeenCalledWith({
+        includes: expect.arrayContaining([
+          'uuid',
+          'id',
+          'title',
+          'createDate',
+          'changeDate',
+        ]),
+      })
     })
   })
 })
