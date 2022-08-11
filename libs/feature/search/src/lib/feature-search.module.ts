@@ -19,6 +19,7 @@ import { SearchStateContainerDirective } from './state/container/search-state.co
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { NgModule } from '@angular/core'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import { LastCreatedComponent } from './last-created/last-created.component'
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { UiElementsModule } from '@geonetwork-ui/ui/elements'
     ResultsListContainerComponent,
     ResultsHitsContainerComponent,
     SearchStateContainerDirective,
+    LastCreatedComponent,
   ],
   imports: [
     CommonModule,
@@ -55,6 +57,7 @@ import { UiElementsModule } from '@geonetwork-ui/ui/elements'
     ResultsHitsContainerComponent,
     FacetsModule,
     SearchStateContainerDirective,
+    LastCreatedComponent,
   ],
 })
-export class FeatureSearchModule {}
+export class FeatureSearchModule { }
