@@ -57,6 +57,11 @@
         {{ record.title }}
       </h1>
       <p class="text-gray-900 line-clamp-3">{{ record.abstract }}</p>
+      <gn-ui-thumbnail
+        *ngIf="record.thumbnailUrl"
+        class="block mt-3 w-full h-[136px] border border-gray-100 rounded-lg overflow-hidden"
+        [thumbnailUrl]="record.thumbnailUrl"
+      ></gn-ui-thumbnail>
       <div class="flex flex-row mt-3" *ngIf="isDownloadable || isViewable">
         <mat-icon
           *ngIf="isDownloadable"
