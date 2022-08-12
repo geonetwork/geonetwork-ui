@@ -6,6 +6,7 @@ import {
 } from '@geonetwork-ui/util/shared'
 import { RecordPreviewFeedComponent } from './record-preview-feed.component'
 import { TranslateModule } from '@ngx-translate/core'
+import { action } from '@storybook/addon-actions'
 
 export default {
   title: 'Search/RecordPreviewFeedComponent',
@@ -21,7 +22,7 @@ const Template: Story<RecordPreviewFeedComponent> = (
   args: RecordPreviewFeedComponent
 ) => ({
   component: RecordPreviewFeedComponent,
-  props: args,
+  props: { ...args, mdSelect: action('mdSelect') },
 })
 
 export const Primary = Template.bind({})

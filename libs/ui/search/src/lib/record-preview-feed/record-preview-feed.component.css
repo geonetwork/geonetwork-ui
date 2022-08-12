@@ -1,0 +1,4 @@
+.record-container:hover .record-header,
+.record-container:hover .record-header-image {
+  border-color: var(--color-primary-lightest);
+}
