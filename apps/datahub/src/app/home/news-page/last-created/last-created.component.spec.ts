@@ -2,8 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { summaryHits } from '@geonetwork-ui/util/shared'
 import { of } from 'rxjs'
 import { LastCreatedComponent } from './last-created.component'
-import { SearchFacade } from '../state/search.facade'
+
 import { NO_ERRORS_SCHEMA } from '@angular/core'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
 
 class SearchFacadeMock {
   init = jest.fn()
