@@ -1,18 +1,18 @@
-import { moduleMetadata, Story, Meta } from '@storybook/angular'
+import { Meta, moduleMetadata, Story } from '@storybook/angular'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import {
   RECORDS_FULL_FIXTURE,
-  RECORDS_SUMMARY_FIXTURE,
   UtilSharedModule,
 } from '@geonetwork-ui/util/shared'
 import { RecordPreviewFeedComponent } from './record-preview-feed.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 export default {
   title: 'Search/RecordPreviewFeedComponent',
   component: RecordPreviewFeedComponent,
   decorators: [
     moduleMetadata({
-      imports: [UtilSharedModule, UiElementsModule],
+      imports: [UtilSharedModule, UiElementsModule, TranslateModule.forRoot()],
     }),
   ],
 } as Meta<RecordPreviewFeedComponent>

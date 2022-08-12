@@ -70,6 +70,7 @@
     "angular-mydatepicker": "^0.11.3",
     "chroma-js": "^2.1.2",
     "document-register-element": "^1.14.10",
+    "duration-relativetimeformat": "^2.0.3",
     "express": "^4.17.1",
     "messageformat": "^2.3.0",
     "moment": "^2.29.4",

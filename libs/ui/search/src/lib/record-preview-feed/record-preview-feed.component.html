@@ -12,21 +12,42 @@
         class="absolute w-3 h-3 bg-secondary rounded-full"
         style="right: calc(100% + 13.5px)"
       ></div>
-      <img
-        [src]="record.contact.logoUrl"
-        alt="Organization logo"
-        class="border border-gray-300 rounded-full w-16 h-16 object-contain mr-4"
-      />
-      <div>
-        <p>
-          <a
-            href="#"
-            class="font-bold transition text-primary hover:text-primary-darker"
+      <div
+        class="border border-gray-300 rounded-full w-16 h-16 object-contain mr-4 overflow-hidden"
+      >
+        <mat-icon
+          *ngIf="hasOnlyPerson"
+          class="text-gray-200"
+          style="width: 42px; height: 42px; font-size: 42px; margin: 10px"
+          >face</mat-icon
+        >
+        <img
+          *ngIf="hasOrganization"
+          [src]="record.contact.logoUrl"
+          alt="Organization logo"
+          class="object-contain w-full h-full"
+        />
+      </div>
+      <div class="flex flex-col overflow-hidden items-start">
+        <a
+          *ngIf="hasOrganization"
+          href="#"
+          class="font-bold transition text-primary hover:text-primary-darker truncate max-w-full"
+        >
+          {{ record.contact.organisation }}
+        </a>
+        <a
+          *ngIf="hasOnlyPerson"
+          href="#"
+          class="font-bold transition text-primary hover:text-primary-darker truncate max-w-full"
+        >
+          {{ record.contact.name }}
+        </a>
+        <p class="text-gray-900">
+          <span translate [translateParams]="{ time }"
+            >record.was.created.time</span
           >
-            {{ record.contact.organisation }}
-          </a>
         </p>
-        <p>a créé ce jdd</p>
       </div>
     </div>
     <div class="pt-5 pb-8 px-10">
