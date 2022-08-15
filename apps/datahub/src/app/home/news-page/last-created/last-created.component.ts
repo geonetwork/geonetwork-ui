@@ -35,11 +35,11 @@ export class LastCreatedComponent {
     private routerFacade: RouterFacade
   ) {
     this.searchFacade.init('newsfeed') // init the search state manually
-    this.searchFacade.setPagination(0, 10)
-    this.searchFacade.setSortBy('-createDate')
     this.searchFacade.setConfigRequestFields({
       includes: [...ES_SOURCE_BRIEF, 'createDate', 'changeDate'],
     })
+    this.searchFacade.setPagination(0, 10)
+    this.searchFacade.setSortBy('-createDate')
     this.searchFacade.setResultsLayout('FEED')
   }
 
