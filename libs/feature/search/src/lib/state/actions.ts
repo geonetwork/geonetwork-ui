@@ -38,7 +38,7 @@ export const CLEAR_ERROR = '[Search] Clear Error'
 
 export const DEFAULT_SEARCH_KEY = 'default'
 
-abstract class AbstractAction {
+export abstract class AbstractAction {
   id?: string
   protected constructor(id?: string) {
     this.id = id || DEFAULT_SEARCH_KEY
