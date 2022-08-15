@@ -5,6 +5,7 @@ import { LastCreatedComponent } from './last-created.component'
 
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { RouterFacade } from '@geonetwork-ui/feature/router'
 
 class SearchFacadeMock {
   init = jest.fn()
@@ -13,6 +14,9 @@ class SearchFacadeMock {
   setSortBy = jest.fn()
   setConfigRequestFields = jest.fn()
   setResultsLayout = jest.fn()
+}
+class RouterFacadeMock {
+  goToMetadata = jest.fn()
 }
 
 describe('LastCreatedComponent', () => {
@@ -28,9 +32,19 @@ describe('LastCreatedComponent', () => {
           provide: SearchFacade,
           useClass: SearchFacadeMock,
         },
+        {
+          provide: RouterFacade,
+          useClass: RouterFacadeMock,
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents()
+    })
+      .overrideComponent(LastCreatedComponent, {
+        set: {
+          providers: [], // remove component providers to be able to run tests
+        },
+      })
+      .compileComponents()
     facade = TestBed.inject(SearchFacade)
   })
 
