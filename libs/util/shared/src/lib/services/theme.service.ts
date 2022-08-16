@@ -51,12 +51,20 @@ export class ThemeService {
       chroma.scale([primaryColor, white]).mode('lab')(0.6)
     )
     applyColor(
+      'primary-white',
+      chroma.scale([primaryColor, white]).mode('lab')(0.85)
+    )
+    applyColor(
       'primary-darker',
       chroma.scale([primaryColor, black]).mode('lab')(0.3)
     )
     applyColor(
       'primary-darkest',
       chroma.scale([primaryColor, black]).mode('lab')(0.6)
+    )
+    applyColor(
+      'primary-black',
+      chroma.scale([primaryColor, black]).mode('lab')(0.85)
     )
     applyColor('secondary', chroma(secondaryColor))
     applyColor(
@@ -68,6 +76,10 @@ export class ThemeService {
       chroma.scale([secondaryColor, white]).mode('lab')(0.6)
     )
     applyColor(
+      'secondary-white',
+      chroma.scale([secondaryColor, white]).mode('lab')(0.85)
+    )
+    applyColor(
       'secondary-darker',
       chroma.scale([secondaryColor, black]).mode('lab')(0.3)
     )
@@ -75,10 +87,15 @@ export class ThemeService {
       'secondary-darkest',
       chroma.scale([secondaryColor, black]).mode('lab')(0.6)
     )
+    applyColor(
+      'secondary-black',
+      chroma.scale([secondaryColor, black]).mode('lab')(0.85)
+    )
     applyColor('main', chroma(mainColor))
     applyColor('background', chroma(backgroundColor))
 
     const scale = chroma.scale([backgroundColor, mainColor]).mode('lrgb')
+    applyColor('gray-50', scale(0.05))
     applyColor('gray-100', scale(0.1))
     applyColor('gray-200', scale(0.2))
     applyColor('gray-300', scale(0.3))

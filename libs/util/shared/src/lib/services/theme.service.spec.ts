@@ -24,6 +24,7 @@ describe('ThemeService', () => {
           '--color-gray-200': 'rgb(228,228,255)',
           '--color-gray-300': 'rgb(213,213,255)',
           '--color-gray-400': 'rgb(198,198,255)',
+          '--color-gray-50': 'rgb(249,249,255)',
           '--color-gray-500': 'rgb(180,180,255)',
           '--color-gray-600': 'rgb(161,161,255)',
           '--color-gray-700': 'rgb(140,140,255)',
@@ -31,15 +32,19 @@ describe('ThemeService', () => {
           '--color-gray-900': 'rgb(81,81,255)',
           '--color-main': 'rgb(0,0,255)',
           '--color-primary': 'rgb(255,0,0)',
+          '--color-primary-black': 'rgb(42,16,5)',
           '--color-primary-darker': 'rgb(173,26,10)',
           '--color-primary-darkest': 'rgb(98,25,12)',
           '--color-primary-lighter': 'rgb(255,115,82)',
           '--color-primary-lightest': 'rgb(255,178,153)',
+          '--color-primary-white': 'rgb(255,226,216)',
           '--color-secondary': 'rgb(0,128,0)',
+          '--color-secondary-black': 'rgb(13,24,7)',
           '--color-secondary-darker': 'rgb(20,89,12)',
           '--color-secondary-darkest': 'rgb(20,52,14)',
           '--color-secondary-lighter': 'rgb(102,166,86)',
           '--color-secondary-lightest': 'rgb(169,204,156)',
+          '--color-secondary-white': 'rgb(223,236,217)',
         })
       })
     })
