@@ -21,7 +21,7 @@ export default {
     }),
     componentWrapperDecorator(
       (story) => `
-<div class="border border-gray-300 p-2" style="width: 300px; resize: both; overflow: auto">
+<div class="border border-gray-300 p-4" style="width: 400px">
   ${story}
 </div>`
     ),

@@ -7,8 +7,13 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FigureComponent {
-  @Input() icon: string
-  @Input() title: string
-  @Input() figure: string
-  @Input() unit: string
+  @Input() icon!: string
+  @Input() title!: string
+  @Input() figure!: string | number
+  @Input() unit?: string
+
+  get hoverTitle() {
+    return `${this.figure.toString()} ${this.unit || ''}
+${this.title}`
+  }
 }

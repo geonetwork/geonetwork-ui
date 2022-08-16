@@ -45,8 +45,31 @@ describe('FigureComponent', () => {
     expect(compiled.querySelector('mat-icon')?.textContent).toContain('group')
   })
   it('icon is primary color', () => {
-    expect(compiled.querySelector('.figure-block')?.className).toContain(
+    expect(compiled.querySelector('mat-icon')?.className).toContain(
       'text-primary'
     )
+  })
+  it('label is main text color', () => {
+    expect(compiled.querySelector('.figure-block')?.className).toContain(
+      'text-main'
+    )
+  })
+  it('has a tooltip containing the information', () => {
+    const title = component.hoverTitle
+    expect(title).toContain(component.title)
+    expect(title).toContain(component.unit)
+    expect(title).toContain(component.figure)
+  })
+
+  describe('without unit', () => {
+    beforeEach(() => {
+      component.unit = undefined
+    })
+    it('does not have undefined in the tooltip', () => {
+      const title = component.hoverTitle
+      expect(title).toContain(component.title)
+      expect(title).toContain(component.figure)
+      expect(title).not.toContain('undefined')
+    })
   })
 })
