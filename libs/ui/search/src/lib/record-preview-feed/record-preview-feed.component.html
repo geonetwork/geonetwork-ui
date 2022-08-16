@@ -1,0 +1,79 @@
+<div
+  class="mx-[18px] pl-[18px] pb-[18px] border-solid border-l-2 border-gray-100"
+>
+  <a
+    class="record-container block rounded-lg bg-white border border-white transition duration-200 hover:bg-gray-50 hover:text-primary hover:border-primary"
+    [href]="record.metadataUrl"
+    [target]="linkTarget"
+    style="box-shadow: 0 0 44px 0 rgba(5, 31, 156, 0.09)"
+  >
+    <div
+      class="record-header py-4 px-4 border-b border-gray-300 flex flex-row items-center relative transition duration-200"
+    >
+      <div
+        class="absolute w-3 h-3 bg-secondary rounded-full"
+        style="right: calc(100% + 14px)"
+      ></div>
+      <div
+        class="record-header-image border border-gray-300 bg-white rounded-full w-16 h-16 object-contain mr-4 overflow-hidden transition duration-200"
+      >
+        <mat-icon
+          *ngIf="!hasLogo"
+          class="text-gray-200"
+          style="width: 42px; height: 42px; font-size: 42px; margin: 10px"
+          >{{ hasOnlyPerson ? 'face' : 'home_work' }}</mat-icon
+        >
+        <img
+          *ngIf="hasLogo"
+          [src]="record.contact.logoUrl"
+          alt="Organization logo"
+          class="object-contain w-full h-full"
+        />
+      </div>
+      <div class="flex flex-col overflow-hidden items-start">
+        <a
+          *ngIf="hasOrganization"
+          href="#"
+          class="font-bold transition duration-200 text-primary hover:text-primary-darker truncate max-w-full"
+        >
+          {{ record.contact.organisation }}
+        </a>
+        <a
+          *ngIf="hasOnlyPerson"
+          href="#"
+          class="font-bold transition duration-200 text-primary hover:text-primary-darker truncate max-w-full"
+        >
+          {{ record.contact.name }}
+        </a>
+        <p class="text-gray-900">
+          <span translate [translateParams]="{ time }"
+            >record.was.created.time</span
+          >
+        </p>
+      </div>
+    </div>
+    <div class="pt-5 pb-5 px-10">
+      <h1 class="title-font text-[21px] font-medium mb-3">
+        {{ record.title }}
+      </h1>
+      <p class="text-gray-900 line-clamp-3">{{ record.abstract }}</p>
+      <gn-ui-thumbnail
+        *ngIf="record.thumbnailUrl"
+        class="block mt-3 w-full h-[136px] border border-gray-100 rounded-lg overflow-hidden"
+        [thumbnailUrl]="record.thumbnailUrl"
+      ></gn-ui-thumbnail>
+      <div class="flex flex-row mt-3" *ngIf="isDownloadable || isViewable">
+        <mat-icon
+          *ngIf="isDownloadable"
+          class="material-icons-outlined text-primary opacity-25 mr-3"
+          >cloud_download</mat-icon
+        >
+        <mat-icon
+          *ngIf="isViewable"
+          class="material-icons-outlined text-primary opacity-25 mr-3"
+          >map</mat-icon
+        >
+      </div>
+    </div>
+  </a>
+</div>

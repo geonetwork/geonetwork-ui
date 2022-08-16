@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core'
 import {
   InfiniteScrollModel,
   InfiniteScrollOptionsDefault,
@@ -9,6 +16,10 @@ import { distinctUntilChanged, filter, map, mergeMap } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchError } from '../state/reducer'
 import { ErrorType } from '@geonetwork-ui/ui/elements'
+import {
+  RESULTS_LAYOUT_CONFIG,
+  ResultsLayoutConfigModel,
+} from '@geonetwork-ui/ui/search'
 
 @Component({
   selector: 'gn-ui-results-list-container',
@@ -20,6 +31,10 @@ export class ResultsListContainerComponent implements OnInit {
   @Input() scrollableOptions: InfiniteScrollModel = {}
   @Output() mdSelect = new EventEmitter<MetadataRecord>()
 
+  layoutConfig$ = this.facade.layout$.pipe(
+    map((layout) => this.resultsLayoutConfig[layout])
+  )
+
   scrollDisable$: Observable<boolean>
   scrollableConfig: InfiniteScrollModel
 
@@ -29,7 +44,11 @@ export class ResultsListContainerComponent implements OnInit {
 
   errorTypes = ErrorType
 
-  constructor(public facade: SearchFacade) {}
+  constructor(
+    public facade: SearchFacade,
+    @Inject(RESULTS_LAYOUT_CONFIG)
+    private resultsLayoutConfig: ResultsLayoutConfigModel
+  ) {}
 
   ngOnInit(): void {
     this.scrollableConfig = {

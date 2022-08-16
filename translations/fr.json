@@ -143,6 +143,7 @@
   "record.more.details": "Détails",
   "record.tab.data": "Vue tableau",
   "record.tab.map": "Vue carte",
+  "record.was.created.time": "a créé ce jeu de données {time}",
   "records": "enregistrements",
   "results.layout.selectOne": "Affichage des résultats",
   "results.records.hits.empty.help.html": "Suggestions : <ul class='list-disc list-inside'><li>Essayez d'autres mots clés</li><li>Cherchez moins de mots</li></ul>",

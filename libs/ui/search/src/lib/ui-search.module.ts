@@ -23,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ResultsListItemComponent } from './results-list-item/results-list-item.component'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import { RecordPreviewFeedComponent } from './record-preview-feed/record-preview-feed.component'
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { UiElementsModule } from '@geonetwork-ui/ui/elements'
     ResultsListComponent,
     ResultsHitsNumberComponent,
     ResultsListItemComponent,
+    RecordPreviewFeedComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +62,7 @@ import { UiElementsModule } from '@geonetwork-ui/ui/elements'
     FacetsModule,
     RecordPreviewComponent,
     ResultsHitsNumberComponent,
+    RecordPreviewFeedComponent,
   ],
   providers: [
     { provide: RESULTS_LAYOUT_CONFIG, useValue: DEFAULT_RESULTS_LAYOUT_CONFIG },

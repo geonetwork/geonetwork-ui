@@ -53,6 +53,7 @@ import { NewsPageComponent } from './home/news-page/news-page.component'
 import { DatahubRouterService } from './router/datahub-router.service'
 import { OrganisationsPageComponent } from './home/organisations-page/organisations-page.component'
 import { SearchPageComponent } from './home/search/search-page/search-page.component'
+import { LastCreatedComponent } from './home/news-page/last-created/last-created.component'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
@@ -71,6 +72,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     NewsPageComponent,
     OrganisationsPageComponent,
     SearchPageComponent,
+    LastCreatedComponent,
   ],
   imports: [
     BrowserModule,

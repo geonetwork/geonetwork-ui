@@ -143,6 +143,7 @@
   "record.more.details": "Read more",
   "record.tab.data": "Table view",
   "record.tab.map": "Map view",
+  "record.was.created.time": "created this dataset {time}",
   "records": "records",
   "results.layout.selectOne": "Results layout",
   "results.records.hits.empty.help.html": "Suggestions: <ul class='list-disc list-inside'><li>Try other words</li><li>Specify fewer words</li></ul>",

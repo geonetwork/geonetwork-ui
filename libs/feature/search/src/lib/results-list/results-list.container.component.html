@@ -13,7 +13,7 @@
   <gn-ui-results-list
     [loading]="facade.isLoading$ | async"
     [records]="facade.results$ | async"
-    [layout]="facade.layout$ | async"
+    [layoutConfig]="layoutConfig$ | async"
     (mdSelect)="onMetadataSelection($event)"
   ></gn-ui-results-list>
 </div>

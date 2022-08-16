@@ -1,6 +1,10 @@
 import { Component, DebugElement, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
+import {
+  RESULTS_LAYOUT_CONFIG,
+  DEFAULT_RESULTS_LAYOUT_CONFIG,
+} from '@geonetwork-ui/ui/search'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
@@ -41,6 +45,10 @@ describe('ResultsListContainerComponent', () => {
         {
           provide: SearchFacade,
           useValue: searchFacadeMock,
+        },
+        {
+          provide: RESULTS_LAYOUT_CONFIG,
+          useValue: DEFAULT_RESULTS_LAYOUT_CONFIG,
         },
       ],
     }).compileComponents()

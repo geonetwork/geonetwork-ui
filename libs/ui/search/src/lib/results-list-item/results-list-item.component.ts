@@ -4,7 +4,6 @@ import {
   Component,
   ComponentFactoryResolver,
   EventEmitter,
-  Inject,
   Input,
   OnChanges,
   Output,
@@ -13,10 +12,7 @@ import {
 } from '@angular/core'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { RecordPreviewComponent } from '../record-preview/record-preview.component'
-import {
-  RESULTS_LAYOUT_CONFIG,
-  ResultsLayoutConfigModel,
-} from '../results-list/results-layout.config'
+import { ResultsLayoutConfigItem } from '../results-list/results-layout.config'
 
 @Component({
   selector: 'gn-ui-results-list-item',
@@ -25,18 +21,14 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResultsListItemComponent implements OnChanges, AfterViewInit {
-  @Input() layout: string
+  @Input() layoutConfig: ResultsLayoutConfigItem
   @Input() record: MetadataRecord
   @Output() mdSelect = new EventEmitter<MetadataRecord>()
   initialized = false
 
   @ViewChild('card', { read: ViewContainerRef }) cardRef: ViewContainerRef
 
-  constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
-    @Inject(RESULTS_LAYOUT_CONFIG)
-    private resultsLayoutConfig: ResultsLayoutConfigModel
-  ) {}
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
   ngAfterViewInit(): void {
     this.initialized = true
@@ -50,7 +42,7 @@ export class ResultsListItemComponent implements OnChanges, AfterViewInit {
   loadComponent() {
     const resolver =
       this.componentFactoryResolver.resolveComponentFactory<RecordPreviewComponent>(
-        this.resultsLayoutConfig[this.layout].component
+        this.layoutConfig.component
       )
     this.cardRef.clear()
     const componentFactory =

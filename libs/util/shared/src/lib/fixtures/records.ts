@@ -1,4 +1,6 @@
-export const RECORDS_SUMMARY_FIXTURE = [
+import { MetadataRecord } from '../models'
+
+export const RECORDS_SUMMARY_FIXTURE: MetadataRecord[] = [
   {
     id: '139',
     uuid: 'd2f30aa4-867e-40b9-9c37-3cb21f541008',
@@ -9,8 +11,8 @@ export const RECORDS_SUMMARY_FIXTURE = [
     thumbnailUrl:
       'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
     updateFrequency: 'Final',
-    viewable: true,
-    downloadable: true,
+    hasMaps: true,
+    hasDownloads: true,
     catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
   },
   {
@@ -24,8 +26,8 @@ export const RECORDS_SUMMARY_FIXTURE = [
     thumbnailUrl:
       'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
     updateFrequency: 'Final',
-    viewable: true,
-    downloadable: true,
+    hasMaps: true,
+    hasDownloads: true,
     catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
   },
   {
@@ -38,8 +40,8 @@ export const RECORDS_SUMMARY_FIXTURE = [
     thumbnailUrl:
       'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
     updateFrequency: 'Final',
-    viewable: true,
-    downloadable: true,
+    hasMaps: true,
+    hasDownloads: true,
     catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
   },
   {
@@ -52,13 +54,13 @@ export const RECORDS_SUMMARY_FIXTURE = [
     thumbnailUrl:
       'https://sextant.ifremer.fr/var/storage/images/_aliases/listitem_thumbnail/medias-ifremer/medias-sextant/accueil/cartes-thematiques/adcp/1595636-3-fre-FR/ADCP.png',
     updateFrequency: 'Final',
-    viewable: true,
-    downloadable: true,
+    hasMaps: true,
+    hasDownloads: true,
     catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
   },
 ]
 
-export const RECORDS_FULL_FIXTURE = [
+export const RECORDS_FULL_FIXTURE: MetadataRecord[] = [
   {
     abstract:
       "Le produit Surval \"Données par paramètre\" met à disposition les données d'observation et de surveillance bancarisées dans Quadrige.\n\nCe produit contient des résultats sur la plupart des paramètres physiques, chimiques et biologiques de description de l'environnement. Les premières données datent par exemple de 1974 pour les paramètres de la qualité générale des eaux et les contaminants, 1987 pour le phytoplancton et les phycotoxines, 1989 pour la microbiologie, du début des années 2000 pour le benthos. \n\nLes données sous moratoire ou les données qualifiées \"Faux\" sont exclues de la diffusion Surval.\nUne donnée validée dans Quadrige aujourd’hui sera disponible dans Surval demain.\n\nL'accès aux données d'observation se réalise par lieu.\nUn lieu de surveillance est un lieu géographique où des observations, des mesures et/ou des prélèvements sont effectués. Il est localisé de façon unique par son emprise cartographique (surface, ligne ou point). Un lieu de mesure peut être utilisé par plusieurs programmes.\n\nAujourd’hui, ce produit met à disposition des données issues d'une sélection de thématiques.\n\nThématiques suivies :\n- Benthos dont récifs coralliens\n- Contaminants chimiques et Écotoxicologie\n- Déchets\n- Microbiologie\n- Phytoplancton et Hydrologie\n- Ressources aquacoles\n- Zooplancton\n- Autres\n\nL'emprise géographique est nationale : la métropole et les départements et régions d'outre-mer (DROM).",
@@ -129,20 +131,20 @@ export const RECORDS_FULL_FIXTURE = [
         url: 'https://doi.org/10.12770/cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
       },
     ],
-    mainLanguage: 'fre',
     metadataUrl: 'url',
     thumbnailUrl:
       'https://sextant.ifremer.fr/geonetwork/srv/api/records/cf5048f6-5bbf-4e44-ba74-e6f429af51ea/attachments/parametres.gif',
     title: 'Surval - Données par paramètre',
     uuid: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
-    viewable: true,
-    downloadable: true,
+    hasMaps: true,
+    hasDownloads: true,
     contact: {
-      name: 'Ifremer',
+      name: 'Jean-Michel',
+      organisation: 'Ifremer',
       email: 'q2suppor@ifremer.fr',
       website: 'https://www.ifremer.fr',
       logoUrl:
-        'http://localhost/geonetwork/images/logos/81e8a591-7815-4d2f-a7da-5673192e74c9.png',
+        'https://ilvo.vlaanderen.be/uploads/images/EUROqCHARM/Logo-Ifremer-RVB-vBlue.jpg',
     },
     catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
   },
