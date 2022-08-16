@@ -22,9 +22,14 @@ export class RecordPreviewFeedComponent extends RecordPreviewComponent {
   get hasOrganization() {
     return this.record.contact && this.record.contact.organisation
   }
+  get hasLogo() {
+    return this.record.contact && this.record.contact.logoUrl
+  }
   get hasOnlyPerson() {
     return (
-      !this.hasOrganization && this.record.contact && this.record.contact.name
+      this.record.contact &&
+      !this.record.contact.organisation &&
+      this.record.contact.name
     )
   }
   get time() {

@@ -18,13 +18,13 @@
         class="record-header-image border border-gray-300 bg-white rounded-full w-16 h-16 object-contain mr-4 overflow-hidden transition duration-200"
       >
         <mat-icon
-          *ngIf="hasOnlyPerson"
+          *ngIf="!hasLogo"
           class="text-gray-200"
           style="width: 42px; height: 42px; font-size: 42px; margin: 10px"
-          >face</mat-icon
+          >{{ hasOnlyPerson ? 'face' : 'home_work' }}</mat-icon
         >
         <img
-          *ngIf="hasOrganization"
+          *ngIf="hasLogo"
           [src]="record.contact.logoUrl"
           alt="Organization logo"
           class="object-contain w-full h-full"
