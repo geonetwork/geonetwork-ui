@@ -10,11 +10,11 @@ import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
 import { of } from 'rxjs'
 import {
-  switchMap,
-  map,
-  withLatestFrom,
-  mergeMap,
   catchError,
+  map,
+  mergeMap,
+  switchMap,
+  withLatestFrom,
 } from 'rxjs/operators'
 import {
   AddResults,
@@ -45,6 +45,7 @@ import {
 import { SearchState } from './reducer'
 import { getSearchStateSearch } from './selectors'
 import { HttpErrorResponse } from '@angular/common/http'
+import { switchMapWithSearchId } from '../utils/operators/search.operator'
 
 @Injectable()
 export class SearchEffects {
@@ -87,9 +88,7 @@ export class SearchEffects {
   loadResults$ = createEffect(() =>
     this.actions$.pipe(
       ofType(REQUEST_MORE_RESULTS),
-      // mergeMap is used because of multiple search concerns
-      // TODO: should implement our own switchMap to filter by searchId
-      mergeMap((action: SearchActions) =>
+      switchMapWithSearchId((action: SearchActions) =>
         this.authService.authReady().pipe(
           withLatestFrom(
             this.store$.pipe(select(getSearchStateSearch, action.id))

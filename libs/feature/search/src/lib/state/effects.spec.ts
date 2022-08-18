@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing'
+import { inject, TestBed } from '@angular/core/testing'
 import { AuthService } from '@geonetwork-ui/feature/auth'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { ElasticsearchMapper } from '../utils/mapper'
@@ -25,7 +25,7 @@ import {
 import { EffectsModule } from '@ngrx/effects'
 import { provideMockActions } from '@ngrx/effects/testing'
 import { StoreModule } from '@ngrx/store'
-import { hot } from 'jasmine-marbles'
+import { hot, getTestScheduler } from 'jasmine-marbles'
 import { Observable, of, throwError } from 'rxjs'
 import { SearchEffects } from './effects'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
@@ -35,6 +35,9 @@ import {
   simpleWithAgg,
 } from '@geonetwork-ui/util/shared'
 import { HttpErrorResponse } from '@angular/common/http'
+import { SearchService } from '../utils/service/search.service'
+import { delay } from 'rxjs/operators'
+import { TestScheduler } from 'rxjs/testing'
 
 const defaultSearchState = initialState[DEFAULT_SEARCH_KEY]
 const stateWithSearches = {
@@ -184,6 +187,30 @@ describe('Effects', () => {
         e: new ClearError('main'),
       })
       expect(effects.loadResults$).toBeObservable(expected)
+    })
+
+    describe('when running multiple searches concurrently', () => {
+      beforeEach(inject([SearchApiService], (searchService) => {
+        searchService.search = () =>
+          of(simpleWithAgg).pipe(delay(10, getTestScheduler()))
+      }))
+      it('cancels requests with the same search id', () => {
+        actions$ = hot('-(aabab)-', {
+          a: new RequestMoreResults('main'),
+          b: new RequestMoreResults(DEFAULT_SEARCH_KEY),
+        })
+        const expected = hot('--(abcdwxyz)-', {
+          a: new AddResults([], 'main'),
+          b: new SetResultsAggregations({ abc: {} }, 'main'),
+          c: new SetResultsHits(undefined, 'main'),
+          d: new ClearError('main'),
+          w: new AddResults([], DEFAULT_SEARCH_KEY),
+          x: new SetResultsAggregations({ abc: {} }, DEFAULT_SEARCH_KEY),
+          y: new SetResultsHits(undefined, DEFAULT_SEARCH_KEY),
+          z: new ClearError(DEFAULT_SEARCH_KEY),
+        })
+        expect(effects.loadResults$).toBeObservable(expected)
+      })
     })
 
     describe('when search fails with HTTP error', () => {
