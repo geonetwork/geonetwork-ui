@@ -82,6 +82,8 @@
   "datahub.header.organisations": "Organisations",
   "datahub.header.popularRecords": "les plus appréciées",
   "datahub.header.title.html": "<div class=\"text-white\">Toutes les données<br>publiques de mon organisation</div>",
+  "datahub.news.feed": "Fil d'activité",
+  "datahub.news.figures": "Quelques chiffres",
   "datahub.search.back": "Retour aux résultats",
   "datahub.search.filter.generatedByWfs": "généré par API (WFS)",
   "dataset.error.http": "Le chargement des données a échoué en raison d'une erreur HTTP",
