@@ -3,7 +3,9 @@
   [title]="hoverTitle"
 >
   <mat-icon
-    class="text-[1.875em] text-primary rounded-full bg-primary-white mr-[0.55em] p-[0.6em] w-[2.2em] h-[2.2em] flex-shrink-0"
+    class="{{ bgClass }} {{
+      textClass
+    }} text-[1.875em] rounded-full mr-[0.55em] p-[0.6em] w-[2.2em] h-[2.2em] flex-shrink-0"
     style="width: 2.2em; height: 2.2em"
   >
     {{ icon }}

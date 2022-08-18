@@ -35,4 +35,12 @@ Primary.args = {
   icon: 'group',
   figure: '1020500',
   unit: 'hab.',
+  color: 'primary',
+}
+
+Primary.argTypes = {
+  color: {
+    control: 'radio',
+    options: ['primary', 'secondary'],
+  },
 }
