@@ -20,13 +20,13 @@ export class ElasticsearchService {
   ) {}
 
   getSearchRequestBody(
-    aggregations: any,
-    size: number,
-    from: number,
-    sortBy: string,
-    requestFields: RequestFields,
-    searchFilters: SearchFilters,
-    configFilters: StateConfigFilters
+    aggregations: any = {},
+    size: number = 0,
+    from: number = 0,
+    sortBy: string = '',
+    requestFields: RequestFields = [],
+    searchFilters: SearchFilters = {},
+    configFilters: StateConfigFilters = {}
   ): EsSearchParams {
     const payload = {
       aggregations,

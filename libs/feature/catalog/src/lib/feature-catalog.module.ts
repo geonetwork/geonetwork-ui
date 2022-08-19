@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common'
 import { SourceLabelComponent } from './source-label/source-label.component'
 import { UtilI18nModule } from '@geonetwork-ui/util/i18n'
 import { OrganisationsComponent } from './organisations/organisations.component'
+import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
+import { TranslateModule } from '@ngx-translate/core'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 
 @NgModule({
@@ -16,10 +18,12 @@ import { UiElementsModule } from '@geonetwork-ui/ui/elements'
   ],
   imports: [
     UiCatalogModule,
-    UiElementsModule,
+    UiLayoutModule,
     ApiModule,
     CommonModule,
     UtilI18nModule,
+    TranslateModule.forChild(),
+    UiElementsModule,
   ],
   exports: [SiteTitleComponent, SourceLabelComponent, OrganisationsComponent],
 })

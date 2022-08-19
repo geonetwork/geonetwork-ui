@@ -17,7 +17,7 @@ export default {
     }),
     componentWrapperDecorator(
       (story) => `
-<div class="border border-gray-300 p-2" style="width: 300px; resize: both; overflow: auto">
+<div class="border border-gray-300 flex items-center justify-center" style="width: 450px; height: 100px; resize: both; overflow: auto">
   ${story}
 </div>`
     ),
@@ -35,4 +35,12 @@ Primary.args = {
   icon: 'group',
   figure: '1020500',
   unit: 'hab.',
+  color: 'primary',
+}
+
+Primary.argTypes = {
+  color: {
+    control: 'radio',
+    options: ['primary', 'secondary'],
+  },
 }

@@ -1,9 +1,20 @@
-<div class="mx-auto text-center">
-  <mat-icon class="text-5xl text-main">{{ icon }}</mat-icon>
-
-  <div class="figure-block text-primary text-3xl">
-    <span class="figure fw-bold mr-2">{{ figure }}</span>
-    <span class="unit text-sm">{{ unit }}</span>
+<div
+  class="flex flex-row justify-center items-center overflow-hidden"
+  [title]="hoverTitle"
+>
+  <mat-icon
+    class="{{ bgClass }} {{
+      textClass
+    }} text-[1.875em] rounded-full mr-[0.55em] p-[0.6em] w-[2.2em] h-[2.2em] flex-shrink-0"
+    style="width: 2.2em; height: 2.2em"
+  >
+    {{ icon }}
+  </mat-icon>
+  <div class="flex-shrink overflow-hidden">
+    <div class="figure-block text-[1.5em] text-main">
+      <span class="figure font-medium mr-[0.3em]">{{ figure }}</span>
+      <span class="unit text-[0.665em]">{{ unit }}</span>
+    </div>
+    <div class="title text-gray-900 truncate">{{ title }}</div>
   </div>
-  <div class="title">{{ title }}</div>
 </div>

@@ -1,4 +1,6 @@
 {
+  "catalog.figures.datasets": "",
+  "catalog.figures.organisations": "",
   "datafeeder.analysisProgressBar.illustration.fileFormatDetection": "",
   "datafeeder.analysisProgressBar.illustration.gatheringDatasetInformation": "",
   "datafeeder.analysisProgressBar.illustration.samplingData": "",
@@ -80,6 +82,8 @@
   "datahub.header.organisations": "",
   "datahub.header.popularRecords": "",
   "datahub.header.title.html": "",
+  "datahub.news.feed": "",
+  "datahub.news.figures": "",
   "datahub.search.back": "",
   "datahub.search.filter.generatedByWfs": "name",
   "dataset.error.http": "",

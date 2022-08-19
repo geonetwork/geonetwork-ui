@@ -1,6 +1,23 @@
-<div class="flex">
-  <div class="flex-1 h-96">
-    <datahub-last-created></datahub-last-created>
+<div class="relative">
+  <div class="backdrop bg-gray-50"></div>
+  <div class="relative pt-[44px] container-lg mx-auto flex">
+    <div class="pr-[61px] overflow-hidden flex-grow">
+      <h2
+        class="text-2xl font-title text-primary leading-7 text-left mb-8"
+        translate
+      >
+        datahub.news.feed
+      </h2>
+      <datahub-last-created></datahub-last-created>
+    </div>
+    <div class="w-[var(--right-col-width)] flex-shrink-0 pl-5">
+      <h2
+        class="text-2xl font-title text-primary leading-7 text-left mb-8"
+        translate
+      >
+        datahub.news.figures
+      </h2>
+      <datahub-key-figures></datahub-key-figures>
+    </div>
   </div>
-  <div class="h-96 w-5/12 bg-[#f5f5f5]"></div>
 </div>

@@ -1,0 +1,18 @@
+<div class="flex flex-col">
+  <gn-ui-figure
+    class="py-[37px] pl-[47px] rounded-lg bg-white mb-5"
+    style="box-shadow: 0 0 44px 0 rgba(5, 31, 156, 0.09)"
+    [figure]="recordsCount$ | async"
+    [icon]="'folder_open'"
+    [title]="'catalog.figures.datasets' | translate"
+    [color]="'secondary'"
+  ></gn-ui-figure>
+  <gn-ui-figure
+    class="py-[37px] pl-[47px] rounded-lg bg-white"
+    style="box-shadow: 0 0 44px 0 rgba(5, 31, 156, 0.09)"
+    [figure]="orgsCount$ | async"
+    [icon]="'corporate_fare'"
+    [title]="'catalog.figures.organisations' | translate"
+    [color]="'secondary'"
+  ></gn-ui-figure>
+</div>
