@@ -3,14 +3,16 @@
   --full-width: 100%;
   --container-width: min(1024px, var(--full-width));
   --right-col-width: 320px;
+  --padding: -20px; /* compensate from router outlet padding */
 }
 
 .backdrop {
   position: absolute;
   height: 100%;
   top: 0;
-  right: 0;
+  right: var(--padding);
   width: calc(
-    var(--right-col-width) + (var(--full-width) - var(--container-width)) / 2
+    var(--right-col-width) - var(--padding) +
+      (var(--full-width) - var(--container-width)) / 2
   );
 }
