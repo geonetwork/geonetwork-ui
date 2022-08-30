@@ -84,6 +84,8 @@ See the [main README section for more info](../../README.md#application-configur
 
 ## Development
 
+> For the following instructions, make sure you are using Node v16+ and that you ran `npm install` before anything else.
+
 Executing:
 
 ```
@@ -107,11 +109,12 @@ not used by default in the Datahub app, you will have to set it up yourself.**
 
 ## Building without Docker
 
-Before building, remember to edit the configuration file in `conf/default.toml` to fit your deployment. It indicates the `geonetwork4_api_url` and an optional `proxy_path` to use.
+Before building, remember to edit the configuration file in [`conf/default.toml`](../../conf/default.toml) to fit your deployment. It indicates the `geonetwork4_api_url` and an optional `proxy_path` to use.
 
 You can build the datahub app using the geonetwork-ui build command:
 
 ```shell script
+npm install
 npm run build -- datahub --prod
 ```
 
@@ -124,7 +127,8 @@ The build also includes the app configuration file (`dist/apps/datahub/assets/co
 You can build a docker image of the Datahub application like so:
 
 ```bash
-$ nx run datahub:docker-build
+npm install
+npx nx run datahub:docker-build
 ```
 
 This will build a docker image with the tag `geonetwork/geonetwork-ui-datahub`.
