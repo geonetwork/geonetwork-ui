@@ -80,6 +80,20 @@ describe('DownloadsListComponent', () => {
       expect(items.length).toBe(3)
     })
   })
+
+  describe('when a list of downloads is empty', () => {
+    let item: DebugElement
+
+    beforeEach(() => {
+      component.links = []
+      fixture.detectChanges()
+      item = de.query(By.directive(DownloadsListComponent))
+    })
+    it('should not display', () => {
+      expect(item).toBeNull()
+    })
+  })
+
   describe('when link format is unknown', () => {
     let items: DebugElement[]
 
