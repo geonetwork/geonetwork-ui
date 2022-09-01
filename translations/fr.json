@@ -82,6 +82,8 @@
   "datahub.header.title.html": "<div class=\"text-white\">Toutes les données<br>publiques de mon organisation</div>",
   "datahub.search.back": "Retour aux résultats",
   "datahub.search.filter.generatedByWfs": "généré par API (WFS)",
+  "datahub.search.filter.all": "Tout",
+  "datahub.search.filter.others": "Autres",
   "dataset.error.http": "Le chargement des données a échoué en raison d'une erreur HTTP",
   "dataset.error.network": "Le chargement des données a échoué en raison d'une erreur réseau ou de limitations CORS",
   "dataset.error.parse": "Les données ont été chargées mais leur décodage a échoué",
