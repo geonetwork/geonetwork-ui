@@ -19,6 +19,8 @@ import { SearchStateContainerDirective } from './state/container/search-state.co
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { NgModule } from '@angular/core'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import { FavoriteStarComponent } from './favorites/favorite-star/favorite-star.component'
+import { MatIconModule } from '@angular/material/icon'
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { UiElementsModule } from '@geonetwork-ui/ui/elements'
     ResultsListContainerComponent,
     ResultsHitsContainerComponent,
     SearchStateContainerDirective,
+    FavoriteStarComponent,
   ],
   imports: [
     CommonModule,
@@ -45,6 +48,7 @@ import { UiElementsModule } from '@geonetwork-ui/ui/elements'
     ApiModule,
     FacetsModule,
     InfiniteScrollModule,
+    MatIconModule,
   ],
   exports: [
     SortByComponent,
@@ -55,6 +59,7 @@ import { UiElementsModule } from '@geonetwork-ui/ui/elements'
     ResultsHitsContainerComponent,
     FacetsModule,
     SearchStateContainerDirective,
+    FavoriteStarComponent,
   ],
 })
 export class FeatureSearchModule {}
