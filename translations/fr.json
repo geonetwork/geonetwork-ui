@@ -104,6 +104,7 @@
   "facets.block.title.tag": "Mots clés",
   "facets.block.title.tag.default": "Tag",
   "facets.block.title.th_regions_tree.default": "Régions",
+  "favorite.not.authenticated": "Vous devez vous authentifier pour ajouter des favoris",
   "map.add.layer": "",
   "map.add.layer.catalog": "",
   "map.add.layer.file": "",
