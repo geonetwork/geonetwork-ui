@@ -10,7 +10,7 @@
     </div>
   </div>
   <div
-    class="content flex-grow grid grid-cols-1 auto-rows-min justify-between min-w-0 pr-6 sm:pl-6 sm:pr-12 sm:grid-cols-10"
+    class="content flex-grow grid grid-cols-1 auto-rows-min justify-between min-w-0 pr-6 sm:pl-6 sm:pr-12 sm:grid-cols-10 relative"
   >
     <div
       class="order-1 mb-3 mt-5 font-title text-21 text-title line-clamp-2 sm:line-clamp-1 sm:col-span-10 sm:mt-2"
@@ -42,5 +42,10 @@
         >map</mat-icon
       >
     </div>
+    <gn-ui-favorite-star
+      class="absolute"
+      style="top: -1.125em; right: 0.4em"
+      [record]="record"
+    ></gn-ui-favorite-star>
   </div>
 </div>
