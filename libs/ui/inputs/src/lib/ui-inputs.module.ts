@@ -20,6 +20,9 @@ import { MatIconModule } from '@angular/material/icon'
 import { NavigationButtonComponent } from './navigation-button/navigation-button.component'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { StarToggleComponent } from './star-toggle/star-toggle.component'
+import { DropdownMultiselectComponent } from './dropdown-multiselect/dropdown-multiselect.component'
+import { OverlayModule } from '@angular/cdk/overlay'
+import { MatCheckboxModule } from '@angular/material/checkbox'
 
 @NgModule({
   declarations: [
@@ -33,6 +36,7 @@ import { StarToggleComponent } from './star-toggle/star-toggle.component'
     DatepickerComponent,
     NavigationButtonComponent,
     StarToggleComponent,
+    DropdownMultiselectComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +51,8 @@ import { StarToggleComponent } from './star-toggle/star-toggle.component'
     MatAutocompleteModule,
     MatIconModule,
     UiWidgetsModule,
+    OverlayModule,
+    MatCheckboxModule,
   ],
   exports: [
     DropdownSelectorComponent,
