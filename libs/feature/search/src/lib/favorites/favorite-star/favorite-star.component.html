@@ -1,0 +1,13 @@
+<div>
+  <span class="align-text-top mr-1.5 favorite-count" *ngIf="hasFavoriteCount">{{
+    favoriteCount
+  }}</span>
+  <gn-ui-star-toggle
+    [toggled]="isFavorite$ | async"
+    (newValue)="toggleFavorite($event)"
+    [disabled]="loading || (isAnonymous$ | async)"
+    [attr.title]="
+      (isAnonymous$ | async) ? ('favorite.not.authenticated' | translate) : null
+    "
+  ></gn-ui-star-toggle>
+</div>

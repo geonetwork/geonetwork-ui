@@ -16,6 +16,7 @@ export const ES_SOURCE_SUMMARY = [
   'codelist_status_text',
   'linkProtocol',
   'contact.organisation',
+  'userSavedCount',
 ]
 
 export const ES_SOURCE_BRIEF = [

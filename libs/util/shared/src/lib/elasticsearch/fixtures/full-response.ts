@@ -1514,6 +1514,7 @@ export const ES_FIXTURE_FULL_RESPONSE = {
           rating: '0',
           isHarvested: 'false',
           sourceCatalogue: '81e8a591-7815-4d2f-a7da-5673192e74c9',
+          userSavedCount: '12',
         },
         edit: false,
         owner: false,

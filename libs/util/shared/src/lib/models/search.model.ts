@@ -51,6 +51,7 @@ export interface MetadataRecord {
   contact?: MetadataContact
   catalogUuid?: string
   usageConstraints?: string
+  favoriteCount?: number
 }
 
 export interface MetadataLinkValid {

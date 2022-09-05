@@ -1,0 +1,28 @@
+mat-icon {
+  width: 1em;
+  height: 1em;
+  font-size: 1.5em;
+}
+
+.star-toggle-overlay {
+  stroke: #f43f5e;
+  stroke-width: 3.5px;
+  stroke-linecap: round;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2.5em;
+  height: 2.5em;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  stroke-dasharray: 5 20;
+  stroke-dashoffset: -15;
+  animation: overlay-dash 0.8s cubic-bezier(0.16, 0.66, 0.44, 0.96) forwards;
+  animation-play-state: paused;
+}
+
+@keyframes overlay-dash {
+  to {
+    stroke-dashoffset: 7;
+  }
+}

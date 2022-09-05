@@ -52,6 +52,7 @@ describe('ElasticsearchMapper', () => {
             'Urban Waste Water Treatment Directive, Sensitive areas - rivers reported under UWWTD data call 2015, Nov. 2017',
           uuid: '5b35f06e-8c6b-4907-b8f4-39541d170360',
           catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
+          favoriteCount: 4,
         },
       ])
     })

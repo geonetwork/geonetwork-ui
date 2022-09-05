@@ -1,0 +1,29 @@
+<div class="inline-block relative align-middle" style="line-height: 0.7em">
+  <button
+    type="button"
+    (click)="toggle($event)"
+    [ngClass]="{
+      'text-secondary': toggled,
+      'text-primary opacity-25': !toggled,
+      'transition hover:scale-125 will-change-transform': !disabled,
+      'cursor-default': disabled
+    }"
+  >
+    <mat-icon>{{ toggled ? 'star' : 'star_outline' }}</mat-icon>
+  </button>
+  <svg
+    #starOverlay
+    class="star-toggle-overlay"
+    width="40px"
+    height="40px"
+    viewBox="-15 -15 30 30"
+  >
+    <g>
+      <path d="M 0,13.229167 V 0" />
+      <path d="M -12.484186,4.0880377 0,0" />
+      <path d="M -7.6784102,-10.70262 0,0" />
+      <path d="M 7.8734079,-10.70262 0,0" />
+      <path d="M 12.679184,4.0880376 0,0" />
+    </g>
+  </svg>
+</div>

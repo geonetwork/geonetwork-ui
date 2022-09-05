@@ -142,6 +142,10 @@ export class ElasticsearchFieldMapper {
       lineage: selectTranslatedField(source, 'lineageObject'),
     }),
     mainLanguage: (output) => output,
+    userSavedCount: (output, source) => ({
+      ...output,
+      favoriteCount: parseInt(selectField(source, 'userSavedCount')),
+    }),
   }
 
   private genericField = (output) => output

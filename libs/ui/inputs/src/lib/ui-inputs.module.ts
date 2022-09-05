@@ -19,6 +19,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { MatIconModule } from '@angular/material/icon'
 import { NavigationButtonComponent } from './navigation-button/navigation-button.component'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { StarToggleComponent } from './star-toggle/star-toggle.component'
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
     ChipsInputComponent,
     DatepickerComponent,
     NavigationButtonComponent,
+    StarToggleComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +58,7 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
     ChipsInputComponent,
     DatepickerComponent,
     NavigationButtonComponent,
+    StarToggleComponent,
   ],
 })
 export class UiInputsModule {}
