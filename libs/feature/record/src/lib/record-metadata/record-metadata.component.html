@@ -27,7 +27,8 @@
       <gn-ui-metadata-contact
         (contact)="onContactClick($event)"
         [metadata]="facade.metadata$ | async"
-      ></gn-ui-metadata-contact>
+      >
+      </gn-ui-metadata-contact>
       <gn-ui-metadata-catalog [sourceLabel]="sourceLabel$ | async">
       </gn-ui-metadata-catalog>
     </div>
@@ -89,10 +90,12 @@
   </div>
 </div>
 
-<div id="access" class="container-lg px-4 lg:mx-auto">
-  <div *ngIf="displayDownload$ | async">
-    <gn-ui-data-downloads class="block mt-5"></gn-ui-data-downloads>
-  </div>
+<div
+  id="access"
+  class="container-lg px-4 lg:mx-auto"
+  *ngIf="displayDownload$ | async"
+>
+  <gn-ui-data-downloads class="block mt-5"></gn-ui-data-downloads>
 </div>
 
 <div id="links" class="container-lg px-4 lg:mx-auto">
