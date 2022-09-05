@@ -86,6 +86,8 @@
   "datahub.news.figures": "",
   "datahub.search.back": "",
   "datahub.search.filter.generatedByWfs": "name",
+  "datahub.search.filter.all": "",
+  "datahub.search.filter.others": "",
   "dataset.error.http": "",
   "dataset.error.network": "",
   "dataset.error.parse": "",
