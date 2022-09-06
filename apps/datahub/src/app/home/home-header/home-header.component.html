@@ -19,6 +19,7 @@
 
     <div class="flex">
       <datahub-header-badge-button
+        *ngIf="(currentRoutePath$ | async) !== ROUTE_NEWS"
         icon="star"
         label="datahub.header.myfavorites"
       ></datahub-header-badge-button>

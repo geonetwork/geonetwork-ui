@@ -43,6 +43,10 @@ export class HomeHeaderComponent {
     private searchService: SearchService
   ) {}
 
+  currentRoutePath$ = this.routerFacade.currentRoute$.pipe(
+    map((route) => route.url[0].path)
+  )
+
   onFuzzySearchSelection(record: MetadataRecord) {
     this.routerFacade.goToMetadata(record)
   }
