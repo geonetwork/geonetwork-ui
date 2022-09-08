@@ -33,7 +33,7 @@ export class DropdownMultiselectComponent {
   @Input() allowSearch = true
   @Output() selectValues = new EventEmitter<unknown[]>()
 
-  private overlayPositions: ConnectedPosition[] = [
+  overlayPositions: ConnectedPosition[] = [
     {
       originX: 'start',
       originY: 'bottom',
@@ -44,15 +44,15 @@ export class DropdownMultiselectComponent {
 
   panelOpen = true
 
-  attach() {}
-  detach() {}
-  handleKeyDown() {}
+  attach() { }
+  detach() { }
+  handleKeyDown() { }
 
   isSelected(choice: Choice) {
     return this.selected.indexOf(choice.value) > -1
   }
-  select(choice: Choice, selected: boolean) {
-    this.selected = selected
+  select(choice: Choice, selected: any) {
+    this.selected = selected.checked
       ? [...this.selected.filter((v) => v !== choice.value), choice.value]
       : this.selected.filter((v) => v !== choice.value)
     this.selectValues.emit(this.selected)

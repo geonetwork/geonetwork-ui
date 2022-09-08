@@ -15,6 +15,11 @@
         (itemSelected)="onFuzzySearchSelection($event)"
         [value]="searchInputRouteValue$ | async"
       ></gn-ui-fuzzy-search>
+      <div>
+        <gn-ui-filter-dropdown [fieldName]="'Org'">
+
+        </gn-ui-filter-dropdown>
+      </div>
       <div class="flex h-0 py-5" [style.opacity]="-0.6 + expandRatio * 2">
         <datahub-header-badge-button
           *ngIf="displayFavoritesBadge$ | async"
@@ -43,21 +48,12 @@
       >
         datahub.header.news
       </div>
-      <div
-        class="uppercase truncate text-white hover:text-primary-lighter hover:underline cursor-pointer"
-        routerLinkActive="text-primary"
-        [routerLink]="ROUTE_SEARCH"
-        (click)="updateSearch()"
-        translate=""
-      >
+      <div class="uppercase truncate text-white hover:text-primary-lighter hover:underline cursor-pointer"
+        routerLinkActive="text-primary" [routerLink]="ROUTE_SEARCH" (click)="updateSearch()" translate="">
         datahub.header.datasets
       </div>
-      <div
-        class="uppercase truncate text-white hover:text-primary-lighter hover:underline cursor-pointer"
-        routerLinkActive="text-primary"
-        [routerLink]="ROUTE_ORGANISATIONS"
-        translate=""
-      >
+      <div class="uppercase truncate text-white hover:text-primary-lighter hover:underline cursor-pointer"
+        routerLinkActive="text-primary" [routerLink]="ROUTE_ORGANISATIONS" translate="">
         datahub.header.organisations
       </div>
     </div>

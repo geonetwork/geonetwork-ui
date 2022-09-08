@@ -62,6 +62,7 @@ import { FilterDropdownComponent } from './filter-dropdown/filter-dropdown.compo
     FacetsModule,
     SearchStateContainerDirective,
     FavoriteStarComponent,
+    FilterDropdownComponent,
   ],
 })
-export class FeatureSearchModule {}
+export class FeatureSearchModule { }

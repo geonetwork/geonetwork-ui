@@ -62,4 +62,14 @@ describe('FilterDropdownComponent', () => {
       })
     })
   })
+  // describe('when no values are selected', () => {
+  //   beforeEach(() => {
+  //     dropdown.selectValues.emit([])
+  //   })
+  //   it('clears the filter on the search facade', () => {
+  //     expect(facade.updateFilters).toHaveBeenCalledWith({
+  //       Org: undefined
+  //     })
+  //   })
+  // })
 })

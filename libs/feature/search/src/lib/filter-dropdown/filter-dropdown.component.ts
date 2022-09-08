@@ -10,9 +10,9 @@ import { SearchFacade } from '../state/search.facade';
 export class FilterDropdownComponent {
   @Input() fieldName: string
 
-  private choices = ['my-org', 'org2', 'blabla']
+  choices = [{ value: 'my-org', label: 'My Org' }, { value: 'org2', label: 'My 2nd Org' }, { value: 'blabla', label: 'Bla bla' }]
 
-  private onSelectedValues(values: unknown[]) {
+  onSelectedValues(values: unknown[]) {
     this.facade.updateFilters({
       [this.fieldName]: values.reduce((acc: Object, val) => {
         return { ...acc, [val.toString()]: true }
