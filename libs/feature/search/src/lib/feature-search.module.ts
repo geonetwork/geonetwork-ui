@@ -21,6 +21,7 @@ import { NgModule } from '@angular/core'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { FavoriteStarComponent } from './favorites/favorite-star/favorite-star.component'
 import { MatIconModule } from '@angular/material/icon'
+import { FilterDropdownComponent } from './filter-dropdown/filter-dropdown.component'
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { MatIconModule } from '@angular/material/icon'
     ResultsHitsContainerComponent,
     SearchStateContainerDirective,
     FavoriteStarComponent,
+    FilterDropdownComponent,
   ],
   imports: [
     CommonModule,

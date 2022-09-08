@@ -65,6 +65,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
     DatepickerComponent,
     NavigationButtonComponent,
     StarToggleComponent,
+    DropdownMultiselectComponent,
   ],
 })
 export class UiInputsModule {}
