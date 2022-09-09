@@ -1,6 +1,6 @@
 {
   "name": "geonetwork-ui",
-  "version": "1.0.0-RC1",
+  "version": "1.0.0-RC2",
   "engines": {
     "node": ">=14.17.0 <=16.15.0"
   },
