@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+} from '@angular/core'
 import { FavoritesService } from '../favorites.service'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { map } from 'rxjs/operators'
@@ -35,7 +40,8 @@ export class FavoriteStarComponent {
 
   constructor(
     private favoritesService: FavoritesService,
-    private authService: AuthService
+    private authService: AuthService,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   toggleFavorite(isFavorite) {
@@ -49,9 +55,11 @@ export class FavoriteStarComponent {
           this.favoriteCount += isFavorite ? 1 : -1
         }
         this.loading = false
+        this.changeDetector.detectChanges()
       },
       error: () => {
         this.loading = false
+        this.changeDetector.detectChanges()
       },
     })
   }
