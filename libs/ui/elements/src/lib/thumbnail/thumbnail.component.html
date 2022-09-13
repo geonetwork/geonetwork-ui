@@ -1,10 +1,9 @@
 <div class="h-full w-full relative flex-shrink-0 overflow-hidden">
   <img
-    *ngIf="imgUrl"
-    class="relative h-full w-full object-cover object-center"
+    #imageElement
+    class="relative h-full w-full object-center"
+    [ngStyle]="{ objectFit: isPlaceholder ? 'scale-down' : 'cover' }"
     alt="thumbnail"
     [src]="imgUrl | safe: 'url'"
-    [fallbackUrl]="placeholderUrl"
-    gnUiImageFallback
   />
 </div>
