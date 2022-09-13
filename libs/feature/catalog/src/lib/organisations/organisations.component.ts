@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { SearchService } from '@geonetwork-ui/feature/search'
 import { Organisation } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
@@ -13,7 +14,10 @@ export const ITEMS_ON_PAGE = 6
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrganisationsComponent {
-  constructor(private organisationsService: OrganisationsService) {}
+  constructor(
+    private organisationsService: OrganisationsService,
+    private searchService: SearchService
+  ) {}
   totalPages: number
   currentPage$ = new BehaviorSubject(1)
   sortBy$ = new BehaviorSubject('name-asc')
@@ -63,5 +67,9 @@ export class OrganisationsComponent {
         ? orderParam[1]
         : 0
     )
+  }
+
+  searchByOrganisation(organisation: Organisation) {
+    this.searchService.updateSearch({ Org: { [organisation.name]: true } })
   }
 }
