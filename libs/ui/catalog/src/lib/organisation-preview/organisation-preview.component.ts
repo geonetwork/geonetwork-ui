@@ -17,7 +17,8 @@ export class OrganisationPreviewComponent {
   @Input() organisation: Organisation
   @Output() clickedOrganisation = new EventEmitter<Organisation>()
 
-  clickOrganisation() {
+  clickOrganisation(event: Event) {
+    event.preventDefault()
     this.clickedOrganisation.emit(this.organisation)
   }
 }
