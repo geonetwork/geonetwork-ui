@@ -30,7 +30,7 @@
       {{ record.contact?.organisation }}
     </div>
     <div
-      class="icons flex flex-row col-start-1 row-start-4 sm:col-start-2 sm:row-start-3 sm:absolute"
+      class="icons flex flex-row col-start-1 row-start-4 sm:col-start-2 sm:row-start-3 sm:absolute sm:right-[0.4em]"
     >
       <mat-icon
         *ngIf="isDownloadable"
@@ -44,7 +44,7 @@
       >
     </div>
     <gn-ui-favorite-star
-      class="text-right col-start-2 row-start-4 sm:absolute sm:col-start-2 sm:row-start-1"
+      class="text-right col-start-2 row-start-4 sm:absolute sm:col-start-2 sm:row-start-1 sm:top-[-1.125em] sm:right-[0.4em]"
       [record]="record"
     ></gn-ui-favorite-star>
   </div>
