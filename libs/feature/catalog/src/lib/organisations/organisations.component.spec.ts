@@ -17,6 +17,7 @@ import {
   OrganisationsComponent,
 } from './organisations.component'
 import { OrganisationsService } from './organisations.service'
+import { SearchService } from '@geonetwork-ui/feature/search'
 
 @Component({
   selector: 'gn-ui-organisations-sort',
@@ -31,6 +32,7 @@ class OrganisationsSortMockComponent {
 })
 class OrganisationPreviewMockComponent {
   @Input() organisation: Organisation
+  @Output() clickedOrganisation = new EventEmitter<Organisation>()
 }
 
 @Component({
@@ -45,6 +47,17 @@ class PaginationMockComponent {
 
 const organisationsServiceMock = {
   getOrganisationsWithGroups: jest.fn(() => of(ORGANISATIONS_FIXTURE)),
+}
+
+const searchServiceMock = {
+  updateSearch: jest.fn(),
+}
+
+const organisationMock = {
+  name: 'My Org',
+  description: 'A good description',
+  logoUrl: 'https://somedomain.org',
+  recordCount: 12,
 }
 
 describe('OrganisationsComponent', () => {
@@ -64,6 +77,10 @@ describe('OrganisationsComponent', () => {
         {
           provide: OrganisationsService,
           useValue: organisationsServiceMock,
+        },
+        {
+          provide: SearchService,
+          useValue: searchServiceMock,
         },
       ],
     })
@@ -87,6 +104,7 @@ describe('OrganisationsComponent', () => {
     let orgPreviewComponents: OrganisationPreviewMockComponent[]
     let paginationComponent: PaginationMockComponent
     let setCurrentPageSpy
+    let clickOrganisationSpy
     let setSortBySpy
     it('should call getOrganisationsWithGroups', () => {
       expect(
@@ -181,6 +199,25 @@ describe('OrganisationsComponent', () => {
         expect(orgPreviewComponents[5].componentInstance.organisation).toEqual(
           ORGANISATIONS_FIXTURE[3]
         )
+      })
+    })
+    describe('click on organisation', () => {
+      beforeEach(() => {
+        clickOrganisationSpy = jest.spyOn(component, 'searchByOrganisation')
+        orgPreviewComponents = de.queryAll(
+          By.directive(OrganisationPreviewMockComponent)
+        )
+        orgPreviewComponents[0].triggerEventHandler(
+          'clickedOrganisation',
+          organisationMock
+        )
+        fixture.detectChanges()
+      })
+      afterEach(() => {
+        jest.restoreAllMocks()
+      })
+      it('should call searchByOrganisation() with correct organisation', () => {
+        expect(clickOrganisationSpy).toHaveBeenCalledWith(organisationMock)
       })
     })
   })

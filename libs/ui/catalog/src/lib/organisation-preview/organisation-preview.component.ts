@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core'
 import { Organisation } from '@geonetwork-ui/util/shared'
 
 @Component({
@@ -9,4 +15,9 @@ import { Organisation } from '@geonetwork-ui/util/shared'
 })
 export class OrganisationPreviewComponent {
   @Input() organisation: Organisation
+  @Output() clickedOrganisation = new EventEmitter<Organisation>()
+
+  clickOrganisation() {
+    this.clickedOrganisation.emit(this.organisation)
+  }
 }
