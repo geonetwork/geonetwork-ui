@@ -1,5 +1,10 @@
 import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { ThumbnailComponent } from './thumbnail.component'
@@ -32,14 +37,19 @@ describe('ThumbnailComponent', () => {
 
   describe('<img> element', () => {
     describe('When no url is given', () => {
-      beforeEach(() => {
+      let img
+      beforeEach(fakeAsync(() => {
         component.thumbnailUrl = undefined
-        component.placeholderUrl = undefined
-      })
+        fixture.detectChanges()
+        img = de.query(By.css('img'))
+        tick(10)
+      }))
 
-      it('is not diplayed', () => {
-        const img = de.query(By.css('img'))
-        expect(img).toBeFalsy()
+      it('is displayed, with a placeholder src', () => {
+        expect(img.nativeElement.src).not.toEqual('')
+      })
+      it('sets object cover to scale-down', () => {
+        expect(img.nativeElement.style.objectFit).toEqual('scale-down')
       })
     })
     describe('When an url is given', () => {
@@ -54,12 +64,15 @@ describe('ThumbnailComponent', () => {
         expect(img).toBeTruthy()
       })
       it('url attribute as url @Input', () => {
-        expect(img.nativeElement.getAttribute('src')).toEqual(url)
+        expect(img.nativeElement.src).toEqual(url)
+      })
+      it('sets object cover to cover', () => {
+        expect(img.nativeElement.style.objectFit).toEqual('cover')
       })
     })
   })
-  describe('When no url is given, but placeholder is set in config', () => {
-    const placeholderUrl = 'assets/img/placeholder.svg'
+  describe('When no url is given and a custom placeholder is provided', () => {
+    const placeholderUrl = 'http://localhost/assets/img/placeholder.svg'
     let img
     beforeEach(() => {
       component.placeholderUrl = placeholderUrl
@@ -67,8 +80,11 @@ describe('ThumbnailComponent', () => {
       fixture.detectChanges()
       img = de.query(By.css('img'))
     })
-    it('is displayed, with placeholder src', () => {
-      expect(img.nativeElement.getAttribute('src')).toEqual(placeholderUrl)
+    it('is displayed, with custom placeholder src', () => {
+      expect(img.nativeElement.src).toEqual(placeholderUrl)
+    })
+    it('sets object cover to scale-down', () => {
+      expect(img.nativeElement.style.objectFit).toEqual('scale-down')
     })
   })
   describe('broken image url', () => {
@@ -80,10 +96,14 @@ describe('ThumbnailComponent', () => {
       component.placeholderUrl = placeholderUrl
       fixture.detectChanges()
       img = de.query(By.css('img'))
-      img.triggerEventHandler('error')
+      img.nativeElement.dispatchEvent(new Event('error'))
+      fixture.detectChanges()
     })
     it('uses placeholder img', () => {
       expect(img.nativeElement.src).toEqual(placeholderUrl)
+    })
+    it('sets object cover to scale-down', () => {
+      expect(img.nativeElement.style.objectFit).toEqual('scale-down')
     })
   })
 })

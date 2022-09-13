@@ -10,26 +10,27 @@
     </div>
   </div>
   <div
-    class="content flex-grow grid grid-cols-1 auto-rows-min justify-between min-w-0 pr-6 sm:pl-6 sm:pr-12 sm:grid-cols-10 relative"
+    class="content grid flex-grow relative sm:pl-6 sm:pr-12"
+    style="grid-template-columns: auto 70px"
   >
     <div
-      class="order-1 mb-3 mt-5 font-title text-21 text-title line-clamp-2 sm:line-clamp-1 sm:col-span-10 sm:mt-2"
+      class="mb-3 mt-5 font-title text-21 text-title line-clamp-2 col-start-1 col-span-2 sm:line-clamp-1 sm:mt-2"
       [title]="record.title"
     >
       {{ record.title }}
     </div>
     <div
-      class="order-3 flex-grow abstract mt-4 mb-5 h-36 sm:mb-2 sm:h-[4.5rem] line-clamp-6 sm:line-clamp-3 sm:col-span-10 sm:order-2 sm:mt-0"
+      class="abstract mt-4 mb-5 h-36 line-clamp-6 col-start-1 col-span-2 row-start-3 sm:mb-2 sm:h-[4.5rem] sm:line-clamp-3 sm:row-start-2 sm:mt-0"
     >
       {{ abstract }}
     </div>
     <div
-      class="order-2 text-primary opacity-25 uppercase sm:truncate sm:order-3 sm:row-end-4 sm:col-span-8 lg:col-span-9"
+      class="text-primary opacity-25 uppercase col-start-1 col-span-2 row-start-2 sm:truncate sm:row-start-3 sm:col-span-1"
     >
       {{ record.contact?.organisation }}
     </div>
     <div
-      class="order-4 basis-1/2 flex flex-row sm:row-end-4 sm:justify-end sm:col-span-2 lg:col-span-1"
+      class="icons flex flex-row col-start-1 row-start-4 sm:col-start-2 sm:row-start-3 sm:absolute sm:right-[0.4em]"
     >
       <mat-icon
         *ngIf="isDownloadable"
@@ -43,8 +44,7 @@
       >
     </div>
     <gn-ui-favorite-star
-      class="absolute"
-      style="top: -1.125em; right: 0.4em"
+      class="text-right col-start-2 row-start-4 sm:absolute sm:col-start-2 sm:row-start-1 sm:top-[-1.125em] sm:right-[0.4em]"
       [record]="record"
     ></gn-ui-favorite-star>
   </div>

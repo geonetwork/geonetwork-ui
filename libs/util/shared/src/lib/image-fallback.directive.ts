@@ -7,7 +7,13 @@ export class ImageFallbackDirective {
   @Input() fallbackUrl: string
   @HostListener('error')
   useFallback() {
-    this.el.nativeElement.src = this.fallbackUrl
+    const fallbackUrl = new URL(
+      this.fallbackUrl,
+      window.location.toString()
+    ).toString()
+    if (this.el.nativeElement.src !== fallbackUrl) {
+      this.el.nativeElement.src = fallbackUrl
+    }
   }
   constructor(private el: ElementRef) {}
 }
