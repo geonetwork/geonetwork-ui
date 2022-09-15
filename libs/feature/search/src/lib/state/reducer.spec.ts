@@ -280,6 +280,27 @@ describe('Search Reducer', () => {
     })
   })
 
+  describe('UpdateConfigAggregations action', () => {
+    it('should augment the aggregations in the config', () => {
+      const payload = { newAgg: { terms: { field: 'abcd' } } }
+      const action = new fromActions.UpdateConfigAggregations(payload)
+      const state = reducerSearch(
+        {
+          ...initialStateSearch,
+          config: {
+            ...initialStateSearch.config,
+            aggregations: { someKey: 'someValue' },
+          },
+        },
+        action
+      )
+      expect(state.config.aggregations).toEqual({
+        someKey: 'someValue',
+        ...payload,
+      })
+    })
+  })
+
   describe('SetConfigRequestFields action', () => {
     it('should replace the _source in the config', () => {
       const payload = { includes: ['title', 'abstract'] }
