@@ -108,7 +108,7 @@
     "@nrwl/node": "14.3.5",
     "@nrwl/storybook": "14.3.5",
     "@nrwl/workspace": "14.3.5",
-    "@openapitools/openapi-generator-cli": "^2.3.3",
+    "@openapitools/openapi-generator-cli": "^2.5.2",
     "@storybook/addon-essentials": "6.5.9",
     "@storybook/angular": "6.5.9",
     "@storybook/builder-webpack5": "6.5.9",
