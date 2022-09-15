@@ -1,5 +1,10 @@
 <div>
-  <gn-ui-dropdown-multiselect [title]="fieldName" [ariaName]="fieldName" [choices]="choices" [selected]="[]"
-    (selectValues)="onSelectedValues($event)">
+  <gn-ui-dropdown-multiselect
+    [title]="fieldName"
+    [ariaName]="fieldName"
+    [choices]="choices$ | async"
+    [selected]="selected$ | async"
+    (selectValues)="onSelectedValues($event)"
+  >
   </gn-ui-dropdown-multiselect>
 </div>

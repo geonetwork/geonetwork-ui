@@ -65,4 +65,4 @@ import { FilterDropdownComponent } from './filter-dropdown/filter-dropdown.compo
     FilterDropdownComponent,
   ],
 })
-export class FeatureSearchModule { }
+export class FeatureSearchModule {}

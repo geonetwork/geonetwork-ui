@@ -1,5 +1,12 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core'
-import { SearchFacade } from '../state/search.facade';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core'
+import { filter, map, startWith, take } from 'rxjs/operators'
+import { SearchFacade } from '../state/search.facade'
+import { SearchService } from '../utils/service/search.service'
 
 @Component({
   selector: 'gn-ui-filter-dropdown',
@@ -7,20 +14,50 @@ import { SearchFacade } from '../state/search.facade';
   styleUrls: ['./filter-dropdown.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FilterDropdownComponent {
+export class FilterDropdownComponent implements OnInit {
   @Input() fieldName: string
 
-  choices = [{ value: 'my-org', label: 'My Org' }, { value: 'org2', label: 'My 2nd Org' }, { value: 'blabla', label: 'Bla bla' }]
+  choices$ = this.searchFacade.resultsAggregations$.pipe(
+    map(
+      (aggs) =>
+        aggs[this.fieldName] &&
+        aggs[this.fieldName].buckets.map((bucket) => ({
+          label: `${bucket.key} (${bucket.doc_count})`,
+          value: bucket.key,
+        }))
+    ),
+    filter((choices) => !!choices),
+    take(1),
+    startWith([]),
+    tap(console.log)
+  )
+  selected$ = this.searchFacade.searchFilters$.pipe(
+    map(
+      (filters) =>
+        filters[this.fieldName] && Object.keys(filters[this.fieldName])
+    ),
+    filter((selected) => !!selected),
+    take(1),
+    startWith([]),
+    tap(console.log)
+  )
 
   onSelectedValues(values: unknown[]) {
-    this.facade.updateFilters({
-      [this.fieldName]: values.reduce((acc: Object, val) => {
+    this.searchService.updateSearch({
+      [this.fieldName]: values.reduce<Record<string, boolean>>((acc, val) => {
         return { ...acc, [val.toString()]: true }
-      }, {})
+      }, {}),
     })
   }
 
+  constructor(
+    private searchFacade: SearchFacade,
+    private searchService: SearchService
+  ) {}
 
-
-  constructor(private facade: SearchFacade) { }
+  ngOnInit() {
+    this.searchFacade.updateConfigAggregations({
+      [this.fieldName]: { terms: { field: this.fieldName, size: 100 } },
+    })
+  }
 }
