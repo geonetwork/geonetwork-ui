@@ -2,6 +2,10 @@
   <div
     class="h-full container-lg mx-auto flex flex-col justify-center relative"
   >
+    <gn-ui-favorite-star
+      [record]="metadata"
+      class="absolute text-background top-[0.85em] right-[0.85em]"
+    ></gn-ui-favorite-star>
     <div
       *ngIf="metadata"
       class="font-title text-center px-2 text-[28px] mb-[41px] line-clamp-4 sm:mx-48"
