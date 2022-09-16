@@ -16,6 +16,7 @@ export interface SearchStateParams {
   sortBy?: string
   size?: number
   from?: number
+  favoritesOnly?: boolean
 }
 
 export type SearchError = {
@@ -55,6 +56,7 @@ export const initSearch = (): SearchStateSearch => {
       filters: {},
       size: RESULTS_PAGE_SIZE,
       from: 0,
+      favoritesOnly: false,
     },
     results: {
       hits: null,
@@ -139,6 +141,15 @@ export function reducerSearch(
         params: {
           ...state.params,
           sortBy: action.sortBy,
+        },
+      }
+    }
+    case fromActions.SET_FAVORITES_ONLY: {
+      return {
+        ...state,
+        params: {
+          ...state.params,
+          favoritesOnly: action.favoritesOnly,
         },
       }
     }

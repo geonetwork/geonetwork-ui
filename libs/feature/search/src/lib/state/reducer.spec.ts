@@ -144,6 +144,14 @@ describe('Search Reducer', () => {
     })
   })
 
+  describe('SetFavoritesOnly action', () => {
+    it('should set favoritsOnly param to true', () => {
+      const action = new fromActions.SetFavoritesOnly(true)
+      const state = reducerSearch(initialStateSearch, action)
+      expect(state.params.favoritesOnly).toEqual(true)
+    })
+  })
+
   describe('SetPagination action', () => {
     it('should set from and size', () => {
       const action = new fromActions.SetPagination(12, 15)
