@@ -1,3 +1,10 @@
+button.enabled {
+  color: var(--star-toggle-enabled-color, var(--color-secondary));
+}
+button.disabled {
+  color: var(--star-toggle-disabled-color, var(--color-primary));
+}
+
 mat-icon {
   width: 1em;
   height: 1em;

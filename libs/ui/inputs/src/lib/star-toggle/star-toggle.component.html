@@ -3,8 +3,8 @@
     type="button"
     (click)="toggle($event)"
     [ngClass]="{
-      'text-secondary': toggled,
-      'text-primary opacity-25': !toggled,
+      enabled: toggled,
+      'disabled opacity-[0.45]': !toggled,
       'transition hover:scale-125 will-change-transform': !disabled,
       'cursor-default': disabled
     }"
