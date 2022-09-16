@@ -1,12 +1,18 @@
 import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { RouterFacade } from '@geonetwork-ui/feature/router'
-import { SearchService } from '@geonetwork-ui/feature/search'
+import { AuthService } from '@geonetwork-ui/feature/auth'
+import {
+  RouterFacade,
+  ROUTER_ROUTE_SEARCH,
+} from '@geonetwork-ui/feature/router'
+import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject } from 'rxjs'
 import { HomeHeaderComponent } from './home-header.component'
+import { readFirst } from '@nrwl/angular/testing'
+import { ROUTER_ROUTE_NEWS } from '../../router/constants'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
@@ -17,10 +23,25 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
 const routerFacadeMock = {
   goToMetadata: jest.fn(),
   anySearch$: new BehaviorSubject('scot'),
+  currentRoute$: new BehaviorSubject({}),
+}
+
+const searchFacadeMock = {
+  setFavoritesOnly: jest.fn(),
 }
 
 const searchServiceMock = {
   updateSearch: jest.fn(),
+}
+
+const authServiceMock = {
+  authReady: jest.fn(
+    () =>
+      new BehaviorSubject({
+        id: 'user-id',
+        name: 'testuser',
+      })
+  ),
 }
 /* eslint-disable */
 @Component({
@@ -47,8 +68,16 @@ describe('HeaderComponent', () => {
           useValue: routerFacadeMock,
         },
         {
+          provide: SearchFacade,
+          useValue: searchFacadeMock,
+        },
+        {
           provide: SearchService,
           useValue: searchServiceMock,
+        },
+        {
+          provide: AuthService,
+          useValue: authServiceMock,
         },
       ],
     }).compileComponents()
@@ -88,6 +117,44 @@ describe('HeaderComponent', () => {
       })
       it('calls searchService updateSearch with empty object', () => {
         expect(searchServiceMock.updateSearch).toHaveBeenCalledWith({})
+      })
+    })
+  })
+  describe('favorites badge', () => {
+    describe('displayFavoritesBadge$', () => {
+      describe('navigate to search route (authenticated)', () => {
+        beforeEach(() => {
+          routerFacadeMock.currentRoute$.next({
+            url: [{ path: ROUTER_ROUTE_SEARCH }],
+          })
+        })
+        it('displays favoriteBadge when authenticated and on search route', async () => {
+          const displayFavoritesBadge = await readFirst(
+            component.displayFavoritesBadge$
+          )
+          expect(displayFavoritesBadge).toEqual(true)
+        })
+      })
+      describe('navigate to news route (authenticated)$', () => {
+        beforeEach(() => {
+          routerFacadeMock.currentRoute$.next({
+            url: [{ path: ROUTER_ROUTE_NEWS }],
+          })
+        })
+        it('does not display favoriteBadge when authenticated and on news route', async () => {
+          const displayFavoritesBadge = await readFirst(
+            component.displayFavoritesBadge$
+          )
+          expect(displayFavoritesBadge).toEqual(false)
+        })
+      })
+    })
+    describe('#listFavorites', () => {
+      beforeEach(() => {
+        component.listFavorites(true)
+      })
+      it('calls searchFacade setFavoritesOnly with correct value', () => {
+        expect(searchFacadeMock.setFavoritesOnly).toHaveBeenCalledWith(true)
       })
     })
   })
