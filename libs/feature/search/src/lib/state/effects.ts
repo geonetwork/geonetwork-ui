@@ -12,8 +12,8 @@ import { of } from 'rxjs'
 import {
   catchError,
   map,
-  mergeMap,
   switchMap,
+  take,
   withLatestFrom,
 } from 'rxjs/operators'
 import {
@@ -41,11 +41,14 @@ import {
   UPDATE_FILTERS,
   UPDATE_REQUEST_AGGREGATION_TERM,
   UpdateRequestAggregationTerm,
+  SET_FAVORITES_ONLY,
+  SetFilters,
 } from './actions'
-import { SearchState } from './reducer'
+import { SearchState, SearchStateSearch } from './reducer'
 import { getSearchStateSearch } from './selectors'
 import { HttpErrorResponse } from '@angular/common/http'
 import { switchMapWithSearchId } from '../utils/operators/search.operator'
+import { FavoritesService } from '../favorites/favorites.service'
 
 @Injectable()
 export class SearchEffects {
@@ -55,7 +58,8 @@ export class SearchEffects {
     private store$: Store<SearchState>,
     private authService: AuthService,
     private esService: ElasticsearchService,
-    private esMapper: ElasticsearchMapper
+    private esMapper: ElasticsearchMapper,
+    private favoritesService: FavoritesService
   ) {}
 
   clearResults$ = createEffect(() =>
@@ -66,7 +70,8 @@ export class SearchEffects {
         UPDATE_FILTERS,
         SET_SEARCH,
         SET_PAGINATION,
-        PAGINATE
+        PAGINATE,
+        SET_FAVORITES_ONLY
       ),
       switchMap((action: SearchActions) =>
         of(
@@ -93,7 +98,18 @@ export class SearchEffects {
           withLatestFrom(
             this.store$.pipe(select(getSearchStateSearch, action.id))
           ),
+          // Note: this could have been integrated in withLatestFrom above but
+          // I could not get this to work (maybe a bug in rxjs?)
           switchMap(([, state]) =>
+            this.favoritesService.myFavoritesUuid$.pipe(
+              take(1),
+              map(
+                (favorites) =>
+                  [state, favorites] as [SearchStateSearch, string[]]
+              )
+            )
+          ),
+          switchMap(([state, favorites]) =>
             this.searchService.search(
               'bucket',
               JSON.stringify(
@@ -104,7 +120,8 @@ export class SearchEffects {
                   state.params.sortBy,
                   state.config.source,
                   state.params.filters,
-                  state.config.filters
+                  state.config.filters,
+                  state.params.favoritesOnly ? favorites : null
                 )
               )
             )
@@ -127,7 +144,7 @@ export class SearchEffects {
             }
           })
         )
-      ) // wait for auth to be known
+      )
     )
   )
 

@@ -13,6 +13,7 @@ import {
   RequestMoreResults,
   Scroll,
   SetError,
+  SetFavoritesOnly,
   SetFilters,
   SetIncludeOnAggregation,
   SetResultsAggregations,
@@ -24,18 +25,21 @@ import {
 } from './actions'
 import { EffectsModule } from '@ngrx/effects'
 import { provideMockActions } from '@ngrx/effects/testing'
-import { StoreModule } from '@ngrx/store'
+import { Store, StoreModule } from '@ngrx/store'
 import { hot, getTestScheduler } from 'jasmine-marbles'
 import { Observable, of, throwError } from 'rxjs'
 import { SearchEffects } from './effects'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import {
+  ElasticsearchService,
   ES_FIXTURE_AGGS_REQUEST,
   simpleWithAgg,
 } from '@geonetwork-ui/util/shared/fixtures'
 import { HttpErrorResponse } from '@angular/common/http'
 import { delay } from 'rxjs/operators'
+import { FavoritesService } from '../favorites/favorites.service'
+import { readFirst } from '@nrwl/angular/testing'
 
 const defaultSearchState = initialState[DEFAULT_SEARCH_KEY]
 const stateWithSearches = {
@@ -68,6 +72,13 @@ class AuthServiceMock {
 class EsMapperMock {
   toRecords = () => []
 }
+class FavoritesServiceMock {
+  myFavoritesUuid$ = of(['fav001', 'fav002', 'fav003'])
+}
+
+class EsServiceMock {
+  getSearchRequestBody = jest.fn()
+}
 
 describe('Effects', () => {
   let effects: SearchEffects
@@ -97,6 +108,14 @@ describe('Effects', () => {
         {
           provide: ElasticsearchMapper,
           useClass: EsMapperMock,
+        },
+        {
+          provide: FavoritesService,
+          useClass: FavoritesServiceMock,
+        },
+        {
+          provide: ElasticsearchService,
+          useClass: EsServiceMock,
         },
       ],
     })
@@ -249,6 +268,42 @@ describe('Effects', () => {
           b: new SetError(0, 'probably CORS related', 'main'),
         })
         expect(effects.loadResults$).toBeObservable(expected)
+      })
+    })
+
+    describe('when asking for favorites only', () => {
+      let esService: ElasticsearchService
+      let store: Store<SearchState>
+      beforeEach(() => {
+        esService = TestBed.inject(ElasticsearchService)
+        store = TestBed.inject(Store)
+        store.dispatch(new SetFavoritesOnly(true, 'main'))
+      })
+      it('requests results', () => {
+        actions$ = hot('-a-', {
+          a: new RequestMoreResults('main'),
+        })
+        const expected = hot('-(abcd)-', {
+          a: new AddResults([], 'main'),
+          b: new SetResultsAggregations({ abc: {} }, 'main'),
+          c: new SetResultsHits(undefined, 'main'),
+          d: new ClearError('main'),
+        })
+        expect(effects.loadResults$).toBeObservable(expected)
+      })
+      it('filter results within a certain set of ids', async () => {
+        actions$ = of(new RequestMoreResults('main'))
+        await readFirst(effects.loadResults$)
+        expect(esService.getSearchRequestBody).toHaveBeenCalledWith(
+          expect.anything(), // FIXME: using an object argument would be better here...
+          expect.anything(),
+          expect.anything(),
+          undefined,
+          expect.anything(),
+          expect.anything(),
+          expect.anything(),
+          ['fav001', 'fav002', 'fav003']
+        )
       })
     })
   })
