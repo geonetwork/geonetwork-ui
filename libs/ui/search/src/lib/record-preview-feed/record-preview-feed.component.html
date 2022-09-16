@@ -52,8 +52,14 @@
         </p>
       </div>
     </div>
-    <div class="pt-5 pb-5 px-10">
-      <h1 class="title-font text-[21px] font-medium mb-3">
+    <div class="pt-5 pb-5 px-10 relative">
+      <div class="absolute top-[0.85em] right-[0.85em]">
+        <ng-container
+          [ngTemplateOutlet]="favoriteTemplate"
+          [ngTemplateOutletContext]="{ $implicit: record }"
+        ></ng-container>
+      </div>
+      <h1 class="title-font text-[21px] font-medium mb-3 pr-8">
         {{ record.title }}
       </h1>
       <p class="text-gray-900 line-clamp-3">{{ record.abstract }}</p>
