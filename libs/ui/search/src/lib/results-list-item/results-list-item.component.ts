@@ -7,6 +7,7 @@ import {
   Input,
   OnChanges,
   Output,
+  TemplateRef,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core'
@@ -23,6 +24,7 @@ import { ResultsLayoutConfigItem } from '../results-list/results-layout.config'
 export class ResultsListItemComponent implements OnChanges, AfterViewInit {
   @Input() layoutConfig: ResultsLayoutConfigItem
   @Input() record: MetadataRecord
+  @Input() favoriteTemplate: TemplateRef<{ $implicit: MetadataRecord }>
   @Output() mdSelect = new EventEmitter<MetadataRecord>()
   initialized = false
 
@@ -48,6 +50,7 @@ export class ResultsListItemComponent implements OnChanges, AfterViewInit {
     const componentFactory =
       this.cardRef.createComponent<RecordPreviewComponent>(resolver)
     componentFactory.instance.record = this.record
+    componentFactory.instance.favoriteTemplate = this.favoriteTemplate
     componentFactory.instance.mdSelect.subscribe((record) =>
       this.mdSelect.emit(record)
     )
