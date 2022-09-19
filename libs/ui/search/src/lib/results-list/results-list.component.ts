@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   Output,
+  TemplateRef,
 } from '@angular/core'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import {
@@ -22,5 +23,6 @@ export class ResultsListComponent {
   @Input() loading: boolean
   @Input() layoutConfig: ResultsLayoutConfigItem =
     DEFAULT_RESULTS_LAYOUT_CONFIG['CARD']
+  @Input() favoriteTemplate: TemplateRef<{ $implicit: MetadataRecord }>
   @Output() mdSelect = new EventEmitter<MetadataRecord>()
 }

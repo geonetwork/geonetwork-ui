@@ -14,6 +14,7 @@
     [loading]="facade.isLoading$ | async"
     [records]="facade.results$ | async"
     [layoutConfig]="layoutConfig$ | async"
+    [favoriteTemplate]="favoriteToggle"
     (mdSelect)="onMetadataSelection($event)"
   ></gn-ui-results-list>
 </div>
@@ -29,3 +30,7 @@
     [error]="errorMessage$ | async"
   ></gn-ui-search-results-error>
 </div>
+
+<ng-template #favoriteToggle let-record>
+  <gn-ui-favorite-star [record]="record"></gn-ui-favorite-star>
+</ng-template>

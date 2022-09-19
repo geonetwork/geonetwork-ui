@@ -31,5 +31,6 @@ export class StarToggleComponent {
       this.newValue.emit(this.toggled)
     }
     event.stopPropagation()
+    event.preventDefault()
   }
 }
