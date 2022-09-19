@@ -134,7 +134,7 @@ export class MapUtilsService {
             .reduce(
               (prev, curr) =>
                 prev ? extend(prev, curr.getExtent()) : curr.getExtent(),
-              null
+              null as Extent
             )
         )
       )
