@@ -55,10 +55,10 @@ And navigate to `http://localhost:4200/`.
 To build a specific application, use:
 
 ```shell script
-npm run build -- (app_name) (--prod)
+npx nx build (app_name)
 ```
 
-The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+The build artifacts will be stored in the `dist/` directory. Note: this always produces a production build.
 
 ### Tests
 
@@ -75,8 +75,8 @@ You can test
 ```shell script
 npm run test
 npm run test:all
-ng test (lib_name)
-ng test --test-match=/data/dev/gn/ui/libs/common/src/lib/services/bootstrap.service.spec.ts
+npx nx test (lib_name)
+npx nx test --test-match=/data/dev/gn/ui/libs/common/src/lib/services/bootstrap.service.spec.ts
 ```
 
 ## Project structure

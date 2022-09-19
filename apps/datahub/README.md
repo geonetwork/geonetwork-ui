@@ -89,10 +89,10 @@ See the [main README section for more info](../../README.md#application-configur
 Executing:
 
 ```
-ng serve datahub
+npx nx serve datahub
 ```
 
-will run `datahub` as an Angular application available on localhost:4200.
+will run `datahub` as an Angular application available on [localhost:4200](http://localhost:4200/).
 
 ### Proxy
 
@@ -115,7 +115,7 @@ You can build the datahub app using the geonetwork-ui build command:
 
 ```shell script
 npm install
-npm run build -- datahub --prod
+npx nx build datahub
 ```
 
 The build artifact will be stored in the `dist/apps/datahub` directory, that can be deployed on a common webserver. Use the `--prod` flag for a production build.
