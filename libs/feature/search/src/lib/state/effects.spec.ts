@@ -78,6 +78,19 @@ class FavoritesServiceMock {
 
 class EsServiceMock {
   getSearchRequestBody = jest.fn()
+  buildMoreOnAggregationPayload = jest.fn(() => ({
+    frame: 10,
+    notification: {
+      kind: 'N',
+      value: {
+        id: 'default',
+        key: 'abc',
+        payload: { abc: {} },
+        type: '[Search] Patch Results Aggregations',
+      },
+      hasValue: true,
+    },
+  }))
 }
 
 describe('Effects', () => {
