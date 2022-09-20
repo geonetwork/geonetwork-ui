@@ -13,8 +13,8 @@ const sampleXls = fs.readFileSync(
 
 describe('parseExcel', () => {
   describe('.xslx file', () => {
-    it('returns an array of geojson features', () => {
-      expect(parseExcel(sampleXlsx)).toEqual([
+    it('returns an array of geojson features', async () => {
+      expect(await parseExcel(sampleXlsx)).toEqual([
         {
           geometry: null,
           id: 24,
@@ -347,8 +347,8 @@ describe('parseExcel', () => {
   })
 
   describe('.xls file', () => {
-    it('returns an array of geojson features', () => {
-      expect(parseExcel(sampleXls)).toEqual([
+    it('returns an array of geojson features', async () => {
+      expect(await parseExcel(sampleXls)).toEqual([
         {
           geometry: null,
           id: 0,
