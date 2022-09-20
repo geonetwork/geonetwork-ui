@@ -4,7 +4,6 @@ import { ElasticsearchMapper } from '@geonetwork-ui/feature/search'
 import {
   ElasticsearchService,
   EsSearchResponse,
-  MetadataRecord,
 } from '@geonetwork-ui/util/shared'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { of } from 'rxjs'

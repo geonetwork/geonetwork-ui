@@ -1,4 +1,4 @@
-import { Feature } from 'ol'
+import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
 
 export const OL_FEATURE_FIXTURE = new Feature()

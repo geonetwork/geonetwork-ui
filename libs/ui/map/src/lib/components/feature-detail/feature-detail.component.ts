@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
-import { Feature } from 'ol'
+import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
 
 const geometryKeys = ['geometry', 'the_geom']

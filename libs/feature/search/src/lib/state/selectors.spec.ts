@@ -4,7 +4,7 @@ import * as fromSelectors from './selectors'
 import {
   ES_FIXTURE_AGGS_REQUEST,
   ES_FIXTURE_AGGS_RESPONSE,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util/shared/fixtures'
 
 const initialStateSearch = initialState[DEFAULT_SEARCH_KEY]
 

@@ -1,4 +1,4 @@
-import { ES_FIXTURE_AGGS_REQUEST } from '@geonetwork-ui/util/shared'
+import { ES_FIXTURE_AGGS_REQUEST } from '@geonetwork-ui/util/shared/fixtures'
 import { Meta, moduleMetadata, Story } from '@storybook/angular'
 import { GnFacetsComponent } from './gn-facets.component'
 import { WebcomponentsModule } from '../../webcomponents.module'

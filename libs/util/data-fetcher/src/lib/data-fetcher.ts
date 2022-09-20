@@ -117,7 +117,7 @@ export function readDataset(
               case 'geojson':
                 return parseGeojson(await response.text())
               case 'excel':
-                return parseExcel(await response.arrayBuffer())
+                return await parseExcel(await response.arrayBuffer())
             }
           } catch (e: any) {
             throw FetchError.parsingFailed(e.message)

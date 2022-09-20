@@ -9,7 +9,8 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { readFirst } from '@nrwl/angular/testing'
 import { By } from '@angular/platform-browser'
-import { Organisation, ORGANISATIONS_FIXTURE } from '@geonetwork-ui/util/shared'
+import { Organisation } from '@geonetwork-ui/util/shared'
+import { ORGANISATIONS_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 import { of } from 'rxjs'
 
 import {

@@ -16,9 +16,8 @@ import {
 import { LinkHelperService } from '@geonetwork-ui/util/shared'
 import { getMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 import { MetadataLinkValid, ProxyService } from '@geonetwork-ui/util/shared'
-import { Feature } from 'ol'
+import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
-import { fromLonLat } from 'ol/proj'
 import { StyleLike } from 'ol/style/Style'
 import {
   BehaviorSubject,

@@ -8,11 +8,10 @@ import {
   defaultMapOptions,
   FEATURE_MAP_OPTIONS,
   FeatureInfoService,
-  MAP_CTX_LAYER_XYZ_FIXTURE,
   MapContextLayerTypeEnum,
   MapManagerService,
 } from '@geonetwork-ui/feature/map'
-import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared'
+import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared/fixtures'
 import { Map } from 'ol'
 import GeoJSON from 'ol/format/GeoJSON'
 import TileLayer from 'ol/layer/Tile'
@@ -106,7 +105,10 @@ describe('GeoTableViewComponent', () => {
     it('map context', () => {
       expect(component.mapContext).toEqual({
         layers: [
-          MAP_CTX_LAYER_XYZ_FIXTURE,
+          {
+            type: MapContextLayerTypeEnum.XYZ,
+            url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          },
           {
             type: MapContextLayerTypeEnum.GEOJSON,
             data: component.data,

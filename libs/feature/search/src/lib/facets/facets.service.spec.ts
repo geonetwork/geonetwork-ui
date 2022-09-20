@@ -1,8 +1,8 @@
+import { AggregationsTypesEnum } from '@geonetwork-ui/util/shared'
 import {
-  AggregationsTypesEnum,
   ES_FIXTURE_AGGS_REQUEST,
   ES_FIXTURE_AGGS_RESPONSE,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util/shared/fixtures'
 import { ModelBlock, ModelItem } from '@geonetwork-ui/ui/search'
 import { SEARCH_STATE_FILTERS_FIXTURE } from '../state/fixtures/search-state.fixtures'
 import { FacetsService } from './facets.service'

@@ -12,7 +12,6 @@ import {
 import {
   FEATURE_MAP_OPTIONS,
   FeatureInfoService,
-  MAP_CTX_LAYER_XYZ_FIXTURE,
   MapContextLayerTypeEnum,
   MapContextModel,
   MapManagerService,
@@ -20,12 +19,13 @@ import {
 } from '@geonetwork-ui/feature/map'
 import {
   TableComponent,
-  TableItemModel,
   TableItemId,
+  TableItemModel,
 } from '@geonetwork-ui/ui/layout'
-import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared'
 import type { FeatureCollection } from 'geojson'
-import { Feature, Map, View } from 'ol'
+import Map from 'ol/Map'
+import View from 'ol/View'
+import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
@@ -39,7 +39,7 @@ import { Subscription } from 'rxjs'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GeoTableViewComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Input() data: FeatureCollection = FEATURE_COLLECTION_POINT_FIXTURE_4326
+  @Input() data: FeatureCollection = { type: 'FeatureCollection', features: [] }
   @ViewChild(TableComponent) uiTable: TableComponent
 
   private map: Map
@@ -113,7 +113,10 @@ export class GeoTableViewComponent implements OnInit, AfterViewInit, OnDestroy {
   private initMapContext(): MapContextModel {
     return {
       layers: [
-        MAP_CTX_LAYER_XYZ_FIXTURE,
+        {
+          type: MapContextLayerTypeEnum.XYZ,
+          url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        },
         {
           type: MapContextLayerTypeEnum.GEOJSON,
           data: this.data,

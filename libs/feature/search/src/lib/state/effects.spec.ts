@@ -33,11 +33,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import {
   ES_FIXTURE_AGGS_REQUEST,
   simpleWithAgg,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util/shared/fixtures'
 import { HttpErrorResponse } from '@angular/common/http'
-import { SearchService } from '../utils/service/search.service'
 import { delay } from 'rxjs/operators'
-import { TestScheduler } from 'rxjs/testing'
 
 const defaultSearchState = initialState[DEFAULT_SEARCH_KEY]
 const stateWithSearches = {

@@ -43,7 +43,7 @@ Other settings are fetched as a second step from the API `/datafeeder/config/fro
 You can build a docker image of the Datafeeder application like so:
 
 ```bash
-$ nx run datafeeder:docker-build
+$ npx nx run datafeeder:docker-build
 ```
 
 This will build a docker image with the tag `geonetwork/geonetwork-ui-datafeeder`.

@@ -50,13 +50,11 @@ export class DataDownloadsComponent {
           ? wfsLinks.map((link) =>
               this.dataService.getDownloadLinksFromWfs(link)
             )
-          : [of([])]
+          : [of([] as MetadataLinkValid[])]
       ).pipe(
-        // flaten array
-        map(
-          (wfsDownloadLinks) =>
-            wfsDownloadLinks.reduce((prev, curr) => [...prev, ...curr]),
-          []
+        // flatten array
+        map((wfsDownloadLinks) =>
+          wfsDownloadLinks.reduce((prev, curr) => [...prev, ...curr], [])
         ),
         map((wfsDownloadLinks) =>
           wfsDownloadLinks
