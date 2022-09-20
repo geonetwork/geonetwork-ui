@@ -35,11 +35,9 @@ import { DataViewMapComponent } from './data-view-map.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { DataService } from '../service/data.service'
 import { delay } from 'rxjs/operators'
-import {
-  FEATURE_COLLECTION_POINT_FIXTURE_4326,
-  MetadataLinkValid,
-} from '@geonetwork-ui/util/shared'
+import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
+import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared/fixtures'
 
 const mapConfigMock = {
   MAX_ZOOM: 10,

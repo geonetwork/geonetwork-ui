@@ -1,4 +1,4 @@
-import { FEATURE_COLLECTION_POLYGON_FIXTURE_4326 } from '@geonetwork-ui/util/shared'
+import { FEATURE_COLLECTION_POLYGON_FIXTURE_4326 } from '@geonetwork-ui/util/shared/fixtures'
 import { Extent } from 'ol/extent'
 import {
   MapContextLayerGeojsonModel,

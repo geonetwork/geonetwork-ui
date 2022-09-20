@@ -1,9 +1,7 @@
 import { Meta, moduleMetadata, Story } from '@storybook/angular'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
-import {
-  RECORDS_FULL_FIXTURE,
-  UtilSharedModule,
-} from '@geonetwork-ui/util/shared'
+import { UtilSharedModule } from '@geonetwork-ui/util/shared'
+import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 import { RecordPreviewFeedComponent } from './record-preview-feed.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { action } from '@storybook/addon-actions'

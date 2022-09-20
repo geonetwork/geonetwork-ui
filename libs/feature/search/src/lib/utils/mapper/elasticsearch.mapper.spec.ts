@@ -1,11 +1,10 @@
 import { TestBed } from '@angular/core/testing'
 import { ElasticsearchMapper } from './elasticsearch.mapper'
+import { MetadataUrlService, MetadataRecord } from '@geonetwork-ui/util/shared'
 import {
   hitsOnly,
   ES_FIXTURE_FULL_RESPONSE,
-  MetadataUrlService,
-  MetadataRecord,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util/shared/fixtures'
 
 const metadataUrlServiceMock = {
   translate: undefined,

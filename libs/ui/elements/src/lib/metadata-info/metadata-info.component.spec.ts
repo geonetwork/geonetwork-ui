@@ -1,8 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import {
-  RECORDS_FULL_FIXTURE,
-  UtilSharedModule,
-} from '@geonetwork-ui/util/shared'
+import { UtilSharedModule } from '@geonetwork-ui/util/shared'
+import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
 import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
 import { MetadataInfoComponent } from './metadata-info.component'

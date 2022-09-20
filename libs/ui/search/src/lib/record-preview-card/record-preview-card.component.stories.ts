@@ -1,10 +1,8 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular'
 import { RecordPreviewCardComponent } from './record-preview-card.component'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
-import {
-  RECORDS_SUMMARY_FIXTURE,
-  UtilSharedModule,
-} from '@geonetwork-ui/util/shared'
+import { UtilSharedModule } from '@geonetwork-ui/util/shared'
+import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 
 export default {
   title: 'Search/RecordPreviewCardComponent',

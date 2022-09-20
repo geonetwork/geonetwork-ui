@@ -2,8 +2,7 @@ import {
   ES_FIXTURE_AGGS_REQUEST,
   ES_FIXTURE_AGGS_RESPONSE,
   ES_FIXTURE_AGGS_RESPONSE_MORE,
-  RESULTS_PAGE_SIZE,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util/shared/fixtures'
 import * as fromActions from './actions'
 import { DEFAULT_SEARCH_KEY } from './actions'
 import {
@@ -12,6 +11,7 @@ import {
   reducerSearch,
   SearchStateParams,
 } from './reducer'
+import { RESULTS_PAGE_SIZE } from '@geonetwork-ui/util/shared'
 
 const initialStateSearch = initialState[DEFAULT_SEARCH_KEY]
 

@@ -10,7 +10,7 @@ import {
   MetadataInfoComponent,
   UiElementsModule,
 } from '@geonetwork-ui/ui/elements'
-import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/util/shared'
+import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject, of } from 'rxjs'
 import { MdViewFacade } from '../state/mdview.facade'
