@@ -17,6 +17,8 @@ The target audience is:
 Install first GeoNetwork 4 [from source](https://geonetwork-opensource.org/manuals/4.0.x/eng/users/install-guide/installing-from-source-code.html#building-running)
 or using [docker](https://github.com/geonetwork/docker-geonetwork/tree/master/4.0.1).
 
+Install [Node](https://nodejs.org/): using an LTS is recommended, the minimum required version is 14.17.0. Using [nvm](https://github.com/nvm-sh/nvm) makes this much simpler.
+
 Run `npm install` to fetch all dependencies of the project.
 
 Run `npm start` to start the datahub app in a dev server.
@@ -45,7 +47,7 @@ You can either try complete applications or showcases of components using the fo
 To run a specific application using a development server, use:
 
 ```shell script
-npm start -- (app_name)
+npx nx serve (app_name)
 ```
 
 And navigate to `http://localhost:4200/`.
