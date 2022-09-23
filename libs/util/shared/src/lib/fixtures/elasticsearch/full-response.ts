@@ -1515,6 +1515,65 @@ export const ES_FIXTURE_FULL_RESPONSE = {
           isHarvested: 'false',
           sourceCatalogue: '81e8a591-7815-4d2f-a7da-5673192e74c9',
           userSavedCount: '12',
+          cl_function: [
+            {
+              key: 'download',
+              default: 'Téléchargement',
+              langfre: 'Téléchargement',
+              link: 'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode',
+            },
+          ],
+          revisionDateForResource: ['2021-12-13T00:00:00.000Z'],
+          revisionYearForResource: '2021',
+          revisionMonthForResource: '2021-12',
+          MD_LegalConstraintsUseLimitationObject: [
+            {
+              default: "Restriction légale d'utilisation à préciser",
+              langfre: "Restriction légale d'utilisation à préciser",
+            },
+          ],
+          MD_LegalConstraintsOtherConstraintsObject: [
+            {
+              default: 'Pas de restriction d’accès public',
+              langfre: 'Pas de restriction d’accès public',
+              link: 'http://inspire.ec.europa.eu/metadatacodelist/LimitationsOnPublicAccess/noLimitations',
+            },
+            {
+              default:
+                'Licence Ouverte version 2.0  https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf',
+              langfre:
+                'Licence Ouverte version 2.0  https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf',
+            },
+          ],
+          licenseObject: [
+            {
+              default: 'Pas de restriction d’accès public',
+              langfre: 'Pas de restriction d’accès public',
+              link: 'http://inspire.ec.europa.eu/metadatacodelist/LimitationsOnPublicAccess/noLimitations',
+            },
+            {
+              default:
+                'Licence Ouverte version 2.0  https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf',
+              langfre:
+                'Licence Ouverte version 2.0  https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf',
+            },
+          ],
+          extentDescriptionObject: [
+            {
+              default: 'Hauts-de-France (Région)',
+              langfre: 'Hauts-de-France (Région)',
+            },
+          ],
+          valid_inspire: '-1',
+          xlink: [
+            'http://www.eionet.europa.eu/gemet/concept/6279',
+            'http://geonetwork-opensource.org/gemet',
+            'https://www.geo2france.fr/geonetwork/srv/api/registries/vocabularies/external.theme.gemet',
+            'http://geonetwork-opensource.org/administrativeAreaFr#REG_32',
+            'https://www.geo2france.fr/catalogue/administrativeEntities',
+            'https://www.geo2france.fr/geonetwork/srv/api/registries/vocabularies/external.place.territoires',
+            'http://inspire.ec.europa.eu/metadatacodelist/LimitationsOnPublicAccess/noLimitations',
+          ],
         },
         edit: false,
         owner: false,

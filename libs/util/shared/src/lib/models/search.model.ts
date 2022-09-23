@@ -50,8 +50,9 @@ export interface MetadataRecord {
   keywords?: string[]
   contact?: MetadataContact
   catalogUuid?: string
-  usageConstraints?: string
+  constraints?: string[]
   favoriteCount?: number
+  isOpenData?: boolean
 }
 
 export interface MetadataLinkValid {

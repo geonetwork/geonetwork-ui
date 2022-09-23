@@ -131,12 +131,26 @@ export class ElasticsearchFieldMapper {
         selectField<SourceWithUnknownProps[]>(source, 'tag')
       ).map((tag) => selectTranslatedValue<string>(tag)),
     }),
-    MD_ConstraintsUseLimitationObject: (output, source) => ({
-      ...output,
-      usageConstraints: selectTranslatedValue(
-        getFirstValue(selectField(source, 'MD_ConstraintsUseLimitationObject'))
+    MD_ConstraintsUseLimitationObject: (output, source) =>
+      this.constraintField('MD_ConstraintsUseLimitationObject', output, source),
+    MD_LegalConstraintsUseLimitationObject: (output, source) =>
+      this.constraintField(
+        'MD_LegalConstraintsUseLimitationObject',
+        output,
+        source
       ),
-    }),
+    MD_LegalConstraintsOtherConstraintsObject: (output, source) =>
+      this.constraintField(
+        'MD_LegalConstraintsOtherConstraintsObject',
+        output,
+        source
+      ),
+    MD_SecurityConstraintsUseLimitationObject: (output, source) =>
+      this.constraintField(
+        'MD_SecurityConstraintsUseLimitationObject',
+        output,
+        source
+      ),
     lineageObject: (output, source) => ({
       ...output,
       lineage: selectTranslatedField(source, 'lineageObject'),
@@ -146,9 +160,21 @@ export class ElasticsearchFieldMapper {
       ...output,
       favoriteCount: parseInt(selectField(source, 'userSavedCount')),
     }),
+    isOpenData: (output, source) => ({
+      ...output,
+      isOpenData: selectField(source, 'isOpenData') !== 'false',
+    }),
   }
 
   private genericField = (output) => output
+
+  private constraintField = (fieldName: string, output, source) => ({
+    ...output,
+    constraints: [
+      ...(output.constraints || []),
+      ...selectField<unknown[]>(source, fieldName).map(selectTranslatedValue),
+    ],
+  })
 
   getMappingFn(fieldName: string) {
     return fieldName in this.fields ? this.fields[fieldName] : this.genericField

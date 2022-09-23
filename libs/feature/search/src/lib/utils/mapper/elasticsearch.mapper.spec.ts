@@ -396,8 +396,14 @@ describe('ElasticsearchMapper', () => {
           ],
           lineage:
             'Les données sont bancarisées dans la base de données Quadrige.',
-          usageConstraints: 'Restriction lié à l’exercice du droit moral',
+          constraints: [
+            'Restriction lié à l’exercice du droit moral',
+            "Restriction légale d'utilisation à préciser",
+            'Pas de restriction d’accès public',
+            'Licence Ouverte version 2.0  https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf',
+          ],
           catalogUuid: '81e8a591-7815-4d2f-a7da-5673192e74c9',
+          isOpenData: true,
         } as MetadataRecord)
       })
     })
