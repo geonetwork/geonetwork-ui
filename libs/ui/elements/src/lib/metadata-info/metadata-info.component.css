@@ -2,3 +2,8 @@
 .md-description ::ng-deep a {
   @apply underline text-blue-600 hover:text-blue-800;
 }
+
+.info-grid > :nth-last-child(n + 3) {
+  padding-bottom: 10px;
+  @apply border-b border-gray-300;
+}
