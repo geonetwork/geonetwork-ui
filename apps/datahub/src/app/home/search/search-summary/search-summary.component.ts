@@ -10,7 +10,7 @@ import { map, pluck } from 'rxjs/operators'
 })
 export class SearchSummaryComponent {
   publisher$ = this.searchFacade.searchFilters$.pipe(
-    pluck('Org'),
+    pluck('OrgForResource'),
     map((orgState) => orgState && Object.keys(orgState)[0])
   )
   constructor(
@@ -20,7 +20,7 @@ export class SearchSummaryComponent {
 
   removeOrg() {
     this.searchService.updateSearch({
-      Org: {},
+      OrgForResource: {},
     })
   }
 }

@@ -1,19 +1,24 @@
 import { BehaviorSubject } from 'rxjs'
 import { RouterSearchService } from './router-search.service'
 
-const state = { Org: { mel: true } }
-const searchFacadeMock: any = {
-  searchFilters$: new BehaviorSubject(state),
+let state = {}
+class SearchFacadeMock {
+  searchFilters$ = new BehaviorSubject(state)
 }
-const routerFacadeMock: any = {
-  setSearch: jest.fn(),
-  updateSearch: jest.fn(),
+class RouterFacadeMock {
+  setSearch = jest.fn()
+  updateSearch = jest.fn()
 }
 describe('RouterSearchService', () => {
   let service: RouterSearchService
+  let routerFacade: RouterFacadeMock
+  let searchFacade: SearchFacadeMock
 
   beforeEach(() => {
-    service = new RouterSearchService(searchFacadeMock, routerFacadeMock)
+    state = { OrgForResource: { mel: true } }
+    routerFacade = new RouterFacadeMock()
+    searchFacade = new SearchFacadeMock()
+    service = new RouterSearchService(searchFacade as any, routerFacade as any)
   })
 
   it('should be created', () => {
@@ -23,12 +28,12 @@ describe('RouterSearchService', () => {
     it('dispatch setSearch with mapped params', () => {
       const state = {
         any: 'any',
-        Org: {
+        OrgForResource: {
           Org: true,
         },
       }
       service.setSearch(state)
-      expect(routerFacadeMock.setSearch).toHaveBeenCalledWith({
+      expect(routerFacade.setSearch).toHaveBeenCalledWith({
         q: 'any',
         publisher: 'Org',
       })
@@ -43,7 +48,7 @@ describe('RouterSearchService', () => {
       service.updateSearch(state)
     })
     it('dispatch updateSearch with merged mapped params', () => {
-      expect(routerFacadeMock.updateSearch).toHaveBeenCalledWith({
+      expect(routerFacade.updateSearch).toHaveBeenCalledWith({
         q: 'any',
         publisher: 'mel',
       })

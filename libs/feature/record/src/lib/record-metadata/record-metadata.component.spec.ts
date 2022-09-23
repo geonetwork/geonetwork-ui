@@ -413,10 +413,10 @@ describe('RecordMetadataComponent', () => {
     })
   })
   describe('#onContactClick', () => {
-    it('call update search for Org', () => {
+    it('call update search for OrgForResource', () => {
       component.onContactClick('orgname')
       expect(searchServiceMock.updateSearch).toHaveBeenCalledWith({
-        Org: {
+        OrgForResource: {
           orgname: true,
         },
       })

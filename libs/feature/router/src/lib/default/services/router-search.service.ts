@@ -23,6 +23,6 @@ export class RouterSearchService implements SearchServiceI {
         map((filters) => ({ ...filters, ...params })),
         map((filters) => stateToRouteParams(filters))
       )
-      .subscribe((filters) => this.facade.updateSearch(filters))
+      .subscribe((params) => this.facade.updateSearch(params))
   }
 }
