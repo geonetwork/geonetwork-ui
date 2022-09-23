@@ -118,6 +118,15 @@ export class ElasticsearchFieldMapper {
         source
       ),
     }),
+    contactForResource: (output, source) => ({
+      ...output,
+      resourceContacts: [
+        ...(output.resourceContacts || []),
+        ...getAsArray(selectField(source, 'contactForResource')).map(
+          (contact) => mapContact(contact, source)
+        ),
+      ],
+    }),
     sourceCatalogue: (output, source) => ({
       ...output,
       catalogUuid: selectFallback(

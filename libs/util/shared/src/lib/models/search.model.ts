@@ -49,6 +49,7 @@ export interface MetadataRecord {
   lineage?: string
   keywords?: string[]
   contact?: MetadataContact
+  resourceContacts?: MetadataContact[]
   catalogUuid?: string
   constraints?: string[]
   favoriteCount?: number

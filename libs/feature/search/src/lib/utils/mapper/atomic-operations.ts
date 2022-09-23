@@ -75,10 +75,10 @@ export const mapLink = (sourceLink: SourceWithUnknownProps): MetadataLink => {
   const protocol = selectField<string>(sourceLink, 'protocol')
   return {
     url,
-    ...(name !== null && { name }),
-    ...(description !== null && { description }),
-    ...(label !== null && { label }),
-    ...(protocol !== null && { protocol }),
+    ...(name && { name }),
+    ...(description && { description }),
+    ...(label && { label }),
+    ...(protocol && { protocol }),
   }
 }
 
@@ -94,9 +94,9 @@ export const mapContact = (
     name: selectField<string>(sourceContact, 'individual'),
     organisation: selectField<string>(sourceContact, 'organisation'),
     email: selectField<string>(sourceContact, 'email'),
-    ...(website !== null && { website }),
-    ...(logoUrl !== null && { logoUrl }),
-    ...(address !== null && { address }),
-    ...(phone !== null && { phone }),
+    ...(website && { website }),
+    ...(logoUrl && { logoUrl }),
+    ...(address && { address }),
+    ...(phone && { phone }),
   }
 }
