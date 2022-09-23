@@ -19,6 +19,10 @@ export class MetadataInfoComponent {
   @Input() landingPages: MetadataLinkValid[]
   @Output() keyword = new EventEmitter<string>()
 
+  get hasUsage() {
+    return 'isOpenData' in this.metadata || this.metadata.constraints?.length
+  }
+
   fieldReady(propName: string) {
     return !this.incomplete || propName in this.metadata
   }

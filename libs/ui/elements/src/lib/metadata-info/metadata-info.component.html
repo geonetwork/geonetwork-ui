@@ -59,13 +59,16 @@
   </div>
 </gn-ui-expandable-panel>
 <gn-ui-expandable-panel
-  *ngIf="metadata.usageConstraints"
+  *ngIf="hasUsage"
   [title]="'record.metadata.usage' | translate"
 >
-  <div class="py-4 px-6 rounded bg-gray-100 text-gray-700">
-    <gn-ui-badge class="inline-block mr-2">{{
-      metadata.usageConstraints
-    }}</gn-ui-badge>
+  <div class="py-4 px-6 rounded bg-gray-100 text-gray-700 flex flex-wrap gap-2">
+    <gn-ui-badge *ngIf="metadata.isOpenData" translate>
+      record.metadata.isOpenData
+    </gn-ui-badge>
+    <span *ngFor="let constraint of metadata.constraints">
+      {{ constraint }}
+    </span>
   </div>
 </gn-ui-expandable-panel>
 <gn-ui-expandable-panel
