@@ -32,7 +32,6 @@ import { SearchEffects } from './effects'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import {
-  ElasticsearchService,
   ES_FIXTURE_AGGS_REQUEST,
   simpleWithAgg,
 } from '@geonetwork-ui/util/shared/fixtures'
@@ -40,6 +39,7 @@ import { HttpErrorResponse } from '@angular/common/http'
 import { delay } from 'rxjs/operators'
 import { FavoritesService } from '../favorites/favorites.service'
 import { readFirst } from '@nrwl/angular/testing'
+import { ElasticsearchService } from '@geonetwork-ui/util/shared'
 
 const defaultSearchState = initialState[DEFAULT_SEARCH_KEY]
 const stateWithSearches = {
@@ -79,17 +79,9 @@ class FavoritesServiceMock {
 class EsServiceMock {
   getSearchRequestBody = jest.fn()
   buildMoreOnAggregationPayload = jest.fn(() => ({
-    frame: 10,
-    notification: {
-      kind: 'N',
-      value: {
-        id: 'default',
-        key: 'abc',
-        payload: { abc: {} },
-        type: '[Search] Patch Results Aggregations',
-      },
-      hasValue: true,
-    },
+    aggregations: {},
+    size: 0,
+    query: {},
   }))
 }
 
