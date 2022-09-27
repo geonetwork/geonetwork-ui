@@ -16,6 +16,7 @@ import {
   SetConfigAggregations,
   SetConfigFilters,
   SetConfigRequestFields,
+  SetFavoritesOnly,
   SetFilters,
   SetIncludeOnAggregation,
   SetPagination,
@@ -27,6 +28,7 @@ import {
 import { SearchError, SearchState, SearchStateParams } from './reducer'
 import {
   getError,
+  getFavoritesOnly,
   getSearchConfigAggregations,
   getSearchFilters,
   getSearchResults,
@@ -49,6 +51,7 @@ export class SearchFacade {
   configAggregations$: Observable<any>
   resultsAggregations$: Observable<any>
   resultsHits$: Observable<any>
+  favoritesOnly$: Observable<boolean>
   error$: Observable<SearchError>
 
   searchId: string
@@ -72,6 +75,7 @@ export class SearchFacade {
       select(getSearchResultsAggregations, searchId)
     )
     this.sortBy$ = this.store.pipe(select(getSearchSortBy, searchId))
+    this.favoritesOnly$ = this.store.pipe(select(getFavoritesOnly, searchId))
     this.error$ = this.store.pipe(select(getError, searchId))
   }
 
@@ -118,6 +122,11 @@ export class SearchFacade {
 
   setSearch(params: SearchStateParams): SearchFacade {
     this.store.dispatch(new SetSearch(params, this.searchId))
+    return this
+  }
+
+  setFavoritesOnly(favoritesOnly: boolean): SearchFacade {
+    this.store.dispatch(new SetFavoritesOnly(favoritesOnly, this.searchId))
     return this
   }
 

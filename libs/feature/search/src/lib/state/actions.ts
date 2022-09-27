@@ -14,6 +14,7 @@ export const SET_FILTERS = '[Search] Set Filters'
 export const SET_CONFIG_FILTERS = '[Search] Set config filters'
 export const UPDATE_FILTERS = '[Search] Update Filters'
 export const SET_SEARCH = '[Search] Set overall search configuration'
+export const SET_FAVORITES_ONLY = '[Search] Favorites Only'
 export const SET_SORT_BY = '[Search] Sort By'
 export const SET_PAGINATION = '[Search] Set pagination'
 export const PAGINATE = '[Search] Paginate'
@@ -82,6 +83,12 @@ export class SetSearch extends AbstractAction implements Action {
   }
 }
 
+export class SetFavoritesOnly extends AbstractAction implements Action {
+  readonly type = SET_FAVORITES_ONLY
+  constructor(public favoritesOnly: boolean, id?: string) {
+    super(id)
+  }
+}
 export class SetSortBy extends AbstractAction implements Action {
   readonly type = SET_SORT_BY
   constructor(public sortBy: string, id?: string) {
@@ -237,6 +244,7 @@ export type SearchActions =
   | SetFilters
   | UpdateFilters
   | SetSearch
+  | SetFavoritesOnly
   | SetSortBy
   | SetPagination
   | Paginate

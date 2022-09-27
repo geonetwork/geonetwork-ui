@@ -1,0 +1,8 @@
+<button
+  class="items-center justify-center px-2 py-1 text-white rounded capitalize"
+  [class]="toggled ? 'bg-primary' : 'bg-primary-opacity-25'"
+  (click)="toggle()"
+>
+  <mat-icon *ngIf="icon" class="align-middle">{{ icon }}</mat-icon>
+  <span class="align-middle px-2">{{ label | translate }}</span>
+</button>

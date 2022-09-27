@@ -142,6 +142,19 @@ describe('Search Selectors', () => {
     })
   })
 
+  describe('getFavoritesOnly', () => {
+    it('should return favoritesOnly value', () => {
+      const result = fromSelectors.getFavoritesOnly.projector({
+        ...initialStateSearch,
+        params: {
+          ...initialStateSearch.params,
+          favoritesOnly: true,
+        },
+      })
+      expect(result).toEqual(true)
+    })
+  })
+
   describe('getError', () => {
     it('should return the error', () => {
       const result = fromSelectors.getError.projector({

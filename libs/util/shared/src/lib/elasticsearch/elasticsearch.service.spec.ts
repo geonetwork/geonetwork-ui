@@ -109,6 +109,54 @@ describe('ElasticsearchService', () => {
         },
       })
     })
+    it('add any and other fields query_strings and limit search payload by ids', () => {
+      const query = service['buildPayloadQuery'](
+        {
+          Org: {
+            world: true,
+          },
+          any: 'hello',
+        },
+        {},
+        ['record-1', 'record-2', 'record-3']
+      )
+      expect(query).toEqual({
+        bool: {
+          filter: [],
+          must: [
+            {
+              query_string: {
+                default_operator: 'AND',
+                fields: [
+                  'resourceTitleObject.langfre^5',
+                  'tag.langfre^4',
+                  'resourceAbstractObject.langfre^3',
+                  'lineageObject.langfre^2',
+                  'any.langfre',
+                  'uuid',
+                ],
+                query: 'hello',
+              },
+            },
+            {
+              query_string: {
+                query: '(Org:"world")',
+              },
+            },
+            {
+              ids: {
+                values: ['record-1', 'record-2', 'record-3'],
+              },
+            },
+            {
+              terms: {
+                isTemplate: ['n'],
+              },
+            },
+          ],
+        },
+      })
+    })
     describe('any has special characters', () => {
       let query
       beforeEach(() => {

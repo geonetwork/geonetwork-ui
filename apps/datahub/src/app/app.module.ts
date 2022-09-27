@@ -35,7 +35,7 @@ import { environment } from '../environments/environment'
 
 import { AppComponent } from './app.component'
 import { DATAHUB_RESULTS_LAYOUT_CONFIG } from './app.config'
-import { HeaderBadgeButtonComponent } from './record/header-badge-button/header-badge-button.component'
+import { HeaderBadgeButtonComponent } from './home/header-badge-button/header-badge-button.component'
 import { HeaderRecordComponent } from './record/header-record/header-record.component'
 import { RecordPageComponent } from './record/record-page/record-page.component'
 import { RecordPreviewDatahubComponent } from './home/search/record-preview-datahub/record-preview-datahub.component'

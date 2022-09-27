@@ -26,14 +26,15 @@ export class ElasticsearchService {
     sortBy: string = '',
     requestFields: RequestFields = [],
     searchFilters: SearchFilters = {},
-    configFilters: StateConfigFilters = {}
+    configFilters: StateConfigFilters = {},
+    uuids?: string[]
   ): EsSearchParams {
     const payload = {
       aggregations,
       from,
       size,
       sort: this.buildPayloadSort(sortBy),
-      query: this.buildPayloadQuery(searchFilters, configFilters),
+      query: this.buildPayloadQuery(searchFilters, configFilters, uuids),
       _source: requestFields,
     }
     return payload
@@ -114,7 +115,8 @@ export class ElasticsearchService {
 
   private buildPayloadQuery(
     { any, ...fieldSearchFilters }: SearchFilters,
-    configFilters: StateConfigFilters
+    configFilters: StateConfigFilters,
+    uuids?: string[]
   ) {
     const queryFilters = this.stateFiltersToQueryString(fieldSearchFilters)
 
@@ -140,6 +142,15 @@ export class ElasticsearchService {
                 {
                   query_string: {
                     query: queryFilters,
+                  },
+                },
+              ]
+            : []),
+          ...(uuids?.length > 0
+            ? [
+                {
+                  ids: {
+                    values: uuids,
                   },
                 },
               ]

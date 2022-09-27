@@ -15,9 +15,11 @@ import {
 export class HeaderBadgeButtonComponent {
   @Input() label: string
   @Input() icon: string
-  @Output() action = new EventEmitter<void>()
+  @Input() toggled: boolean
+  @Output() action = new EventEmitter<boolean>()
 
-  onClick() {
-    this.action.emit()
+  toggle() {
+    this.toggled = !this.toggled
+    this.action.emit(this.toggled)
   }
 }

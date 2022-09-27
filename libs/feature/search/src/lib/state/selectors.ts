@@ -60,6 +60,11 @@ export const isEndOfResults = createSelector(
   }
 )
 
+export const getFavoritesOnly = createSelector(
+  getSearchStateSearch,
+  (state: SearchStateSearch) => state.params.favoritesOnly
+)
+
 export const getError = createSelector(
   getSearchStateSearch,
   (state: SearchStateSearch) => state.error
