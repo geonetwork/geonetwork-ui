@@ -42,7 +42,7 @@ You can either try complete applications or showcases of components using the fo
 
 ## More information
 
-### Running GeoNetwork UI
+### Running GeoNetwork UI applications
 
 To run a specific application using a development server, use:
 
@@ -52,7 +52,7 @@ npx nx serve (app_name)
 
 And navigate to `http://localhost:4200/`.
 
-### Build
+### Build GeoNetwork-UI applications
 
 To build a specific application, use:
 
@@ -61,6 +61,64 @@ npx nx build (app_name)
 ```
 
 The build artifacts will be stored in the `dist/` directory. Note: this always produces a production build.
+
+### A word on authentication
+
+GeoNetwork-UI applications rely on the GeoNetwork authentication mechanism. This means that if the user is authenticated in GeoNetwork, they will have access to authenticated features in the corresponding GeoNetwork-UI apps.
+
+There are a few caveats, depending on the deployment scenario:
+
+#### 1. GeoNetwork and GeoNetwork-UI are deployed on the same host, e.g. https://my.host/geonetwork and https://my.host/datahub
+
+In this scenario, requests from the GeoNetwork-UI app to GeoNetwork are _not_ [cross-origin requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#what_requests_use_cors), so CORS rules do not apply.
+
+GeoNetwork has an XSRF protection by default, which _will_ make authenticated requests fail unless the following is done:
+
+- either make sure that the XSRF cookies sent by GeoNetwork have a `path` value of `/`; this is typically done like so in GeoNetwork:
+
+  ```diff
+  --- a/web/src/main/webapp/WEB-INF/config-security/config-security-core.xml
+  +++ b/web/src/main/webapp/WEB-INF/config-security/config-security-core.xml
+  @@ -361,6 +361,7 @@
+     <bean class="org.fao.geonet.security.web.csrf.CookieCsrfTokenRepository"
+           id="csrfTokenRepository">
+       <property name="cookieHttpOnly" value="false"/>
+  +    <property name="cookiePath" value="/"/>
+     </bean>
+  ```
+
+  Also make sure that the GeoNetwork API URL used the application is _not_ an absolute URL that starts with `http://` or `https://`; for the datahub that could be the following change:
+
+  ```diff
+  --- a/conf/default.toml
+  +++ b/conf/default.toml
+  @@ -5,7 +5,7 @@
+  [global]
+  -geonetwork4_api_url = "https://www.mydomain.net/geonetwork/srv/api"
+  +geonetwork4_api_url = "//www.mydomain.net/geonetwork/srv/api"
+  ```
+
+- or disable the XSRF protection selectively for non-critical endpoints of GeoNetwork, e.g. https://my.host/geonetwork/srv/api/userSelections for marking records as favorites; this is typically done like so in GeoNetwork:
+  ```diff
+  --- a/web/src/main/webapp/WEB-INF/config-security/config-security-core.xml
+  +++ b/web/src/main/webapp/WEB-INF/config-security/config-security-core.xml
+  @@ -374,6 +374,9 @@
+           <value>/[a-zA-Z0-9_\-]+/[a-z]{2,3}/csw!?.*</value>
+           <value>/[a-zA-Z0-9_\-]+/api/search/.*</value>
+           <value>/[a-zA-Z0-9_\-]+/api/site</value>
+  +        <value>/[a-zA-Z0-9_\-]+/api/userselections.*</value>
+         </set>
+       </constructor-arg>
+     </bean>
+  ```
+
+#### 2. GeoNetwork and GeoNetwork-UI are _not_ deployed on the same host, e.g. https://my.host/geonetwork and https://another.org/datahub
+
+In this scenario, even if CORS settings are correctly set up on GeoNetwork side, most authenticated request will probably fail because by default they are not sent with the [`withCredentials: true`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials) option.
+
+As such, **authenticated requests are not yet supported in GeoNetwork-UI in the case of a cross-origin deployment**; non-authenticated requests (e.g. public search) should still work provided CORS settings were correctly set up on the GeoNetwork side (see [CORS resonse headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#the_http_response_headers)).
+
+Lastly, even if authenticated requests were cleared regarding CORS rules, it would still be needed to disable the XSRF mechanism for the endpoints that GeoNetwork-UI relies on; XSRF protections works by making the client read the content of an HTTP cookie, and that is forbidden in a cross-origin context
 
 ### Tests
 
