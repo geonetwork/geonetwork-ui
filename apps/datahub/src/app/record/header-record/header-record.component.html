@@ -5,6 +5,9 @@
     <gn-ui-favorite-star
       [record]="metadata"
       class="absolute text-background top-[0.85em] right-[0.85em]"
+      [style.color]="foregroundColor"
+      [style.--star-toggle-enabled-color]="'var(--color-primary)'"
+      [style.--star-toggle-disabled-color]="foregroundColor"
     ></gn-ui-favorite-star>
     <div
       *ngIf="metadata"
