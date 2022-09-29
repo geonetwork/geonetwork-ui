@@ -10,6 +10,12 @@ on:
   pull_request:
     types: [opened, synchronize]
 
+# Only allow concurrent checks on the master branch to keep history
+# on QA checks
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref_name != 'master' }}
+
 jobs:
   format-lint-test:
     if: github.event.pull_request.draft == false
