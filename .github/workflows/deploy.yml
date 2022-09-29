@@ -1,5 +1,5 @@
 name: Deploy
-run-name: Deployment on GitHub Pages
+run-name: 🚀 Deployment on GitHub Pages
 
 # This workflow runs whenever QA checks completed successfully
 on:
@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.15.0]
+        node-version: [16.17.0]
 
     steps:
       - name: Checkout
@@ -50,9 +50,8 @@ jobs:
 
       - run: echo "::set-env name=BRANCH_NAME::${GITHUB_HEAD_REF:-master}"
 
-      - name: deploy to gh pages
+      - name: Deploy to directory ${{ env.BRANCH_NAME }}
         run: |
-          echo "Deploying to directory: ${{env.BRANCH_NAME}}"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           npx gh-pages --dist dist/ --dest ${{env.BRANCH_NAME}} --remove "${{env.BRANCH_NAME}}/**" --no-history --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"

@@ -1,5 +1,5 @@
 name: Cleanup
-run-name: Cleanup operations for a deleted branch
+run-name: 🧽 Cleanup operations for branch '${{github.ref_name}}'
 
 env:
   # a list of apps to build and publish on releases
@@ -38,9 +38,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: remove directory in gh pages
+      - name: Remove directory ${{github.event.ref}}
         run: |
-          echo "Removing GH pages directory: ${{env.BRANCH_NAME}}"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           touch .empty

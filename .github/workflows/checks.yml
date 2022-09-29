@@ -1,6 +1,8 @@
 name: Checks
-run-name: Quality assurance checks
+run-name: 🩺 Quality assurance checks
 
+# This workflow runs for Pull Requests which are not draft,
+# as well as commits going to the default branch
 on:
   push:
     branches:
@@ -10,6 +12,7 @@ on:
 
 jobs:
   format-lint-test:
+    if: github.event.pull_request.draft == false
     name: Format check, lint, unit tests
     runs-on: ubuntu-latest
 
@@ -62,6 +65,7 @@ jobs:
         run: npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=test --parallel=3 --ci --code-coverage
 
   test-build:
+    if: github.event.pull_request.draft == false
     name: Build affected applications
     runs-on: ubuntu-latest
 
