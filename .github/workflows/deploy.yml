@@ -1,5 +1,5 @@
 name: Deploy
-run-name: 🚀 Deploy to GitHub Pages for 🌱 '${{github.ref_name}}'
+run-name: 🚀 Deploy to GitHub Pages for 🌱 ${{github.ref_name}}
 
 # This workflow runs whenever QA checks completed successfully
 on:
@@ -7,6 +7,10 @@ on:
     workflows: [Checks]
     types:
       - completed
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   gh-pages:
