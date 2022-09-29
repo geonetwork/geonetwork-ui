@@ -16,9 +16,13 @@ import {
 } from '../../router/constants'
 
 marker('datahub.header.myfavorites')
-marker('datahub.header.connex')
 marker('datahub.header.lastRecords')
 marker('datahub.header.popularRecords')
+
+export enum SortByParams {
+  CREATE_DATE = '-createDate',
+  USER_SAVED_COUNT = '-userSavedCount',
+}
 
 @Component({
   selector: 'datahub-home-header',
@@ -39,6 +43,7 @@ export class HomeHeaderComponent {
   ROUTE_NEWS = `${ROUTER_ROUTE_NEWS}`
   ROUTE_SEARCH = `${ROUTER_ROUTE_SEARCH}`
   ROUTE_ORGANISATIONS = `${ROUTER_ROUTE_ORGANISATIONS}`
+  SORT_BY_PARAMS = SortByParams
 
   constructor(
     public routerFacade: RouterFacade,
@@ -61,6 +66,9 @@ export class HomeHeaderComponent {
   ).pipe(
     map(([path, authenticated]) => path === this.ROUTE_SEARCH && authenticated)
   )
+  displaySortBadges$: Observable<boolean> = this.currentRoutePath$.pipe(
+    map((path) => path === this.ROUTE_SEARCH)
+  )
   onFuzzySearchSelection(record: MetadataRecord) {
     this.routerFacade.goToMetadata(record)
   }
@@ -71,5 +79,10 @@ export class HomeHeaderComponent {
 
   listFavorites(toggled: boolean): void {
     this.searchFacade.setFavoritesOnly(toggled)
+  }
+
+  setSortBy(toggled: boolean, param: SortByParams): void {
+    const sortBy = toggled ? param : ''
+    this.searchFacade.setSortBy(sortBy)
   }
 }

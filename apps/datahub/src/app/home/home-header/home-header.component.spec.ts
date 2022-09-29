@@ -10,7 +10,7 @@ import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject } from 'rxjs'
-import { HomeHeaderComponent } from './home-header.component'
+import { HomeHeaderComponent, SortByParams } from './home-header.component'
 import { readFirst } from '@nrwl/angular/testing'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants'
 
@@ -28,20 +28,16 @@ const routerFacadeMock = {
 
 const searchFacadeMock = {
   setFavoritesOnly: jest.fn(),
+  setSortBy: jest.fn(),
 }
 
 const searchServiceMock = {
   updateSearch: jest.fn(),
 }
 
-const authServiceMock = {
-  authReady: jest.fn(
-    () =>
-      new BehaviorSubject({
-        id: 'user-id',
-        name: 'testuser',
-      })
-  ),
+class AuthServiceMock {
+  authReady = jest.fn(() => this._authSubject$)
+  _authSubject$ = new BehaviorSubject({})
 }
 /* eslint-disable */
 @Component({
@@ -56,6 +52,7 @@ class FuzzySearchComponentMock {
 describe('HeaderComponent', () => {
   let component: HomeHeaderComponent
   let fixture: ComponentFixture<HomeHeaderComponent>
+  let authService: AuthService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -77,10 +74,11 @@ describe('HeaderComponent', () => {
         },
         {
           provide: AuthService,
-          useValue: authServiceMock,
+          useClass: AuthServiceMock,
         },
       ],
     }).compileComponents()
+    authService = TestBed.inject(AuthService)
   })
 
   beforeEach(() => {
@@ -124,6 +122,10 @@ describe('HeaderComponent', () => {
     describe('displayFavoritesBadge$', () => {
       describe('navigate to search route (authenticated)', () => {
         beforeEach(() => {
+          ;(authService as any)._authSubject$.next({
+            id: 'user-id',
+            name: 'testuser',
+          })
           routerFacadeMock.currentRoute$.next({
             url: [{ path: ROUTER_ROUTE_SEARCH }],
           })
@@ -135,13 +137,31 @@ describe('HeaderComponent', () => {
           expect(displayFavoritesBadge).toEqual(true)
         })
       })
-      describe('navigate to news route (authenticated)$', () => {
+      describe('navigate to news route (authenticated)', () => {
         beforeEach(() => {
+          ;(authService as any)._authSubject$.next({
+            id: 'user-id',
+            name: 'testuser',
+          })
           routerFacadeMock.currentRoute$.next({
             url: [{ path: ROUTER_ROUTE_NEWS }],
           })
         })
         it('does not display favoriteBadge when authenticated and on news route', async () => {
+          const displayFavoritesBadge = await readFirst(
+            component.displayFavoritesBadge$
+          )
+          expect(displayFavoritesBadge).toEqual(false)
+        })
+      })
+      describe('navigate to search route (NOT authenticated)', () => {
+        beforeEach(() => {
+          ;(authService as any)._authSubject$.next(null)
+          routerFacadeMock.currentRoute$.next({
+            url: [{ path: ROUTER_ROUTE_SEARCH }],
+          })
+        })
+        it('does NOT display favoriteBadge when NOT authenticated and on search route', async () => {
           const displayFavoritesBadge = await readFirst(
             component.displayFavoritesBadge$
           )
@@ -155,6 +175,66 @@ describe('HeaderComponent', () => {
       })
       it('calls searchFacade setFavoritesOnly with correct value', () => {
         expect(searchFacadeMock.setFavoritesOnly).toHaveBeenCalledWith(true)
+      })
+    })
+  })
+  describe('sort badges', () => {
+    describe('display badges', () => {
+      describe('navigate to search route (NOT authenticated)', () => {
+        beforeEach(() => {
+          ;(authService as any)._authSubject$.next(null)
+          routerFacadeMock.currentRoute$.next({
+            url: [{ path: ROUTER_ROUTE_SEARCH }],
+          })
+        })
+        it('displays sort badges when authenticated and on search route', async () => {
+          const displaySortBadges = await readFirst(
+            component.displaySortBadges$
+          )
+          expect(displaySortBadges).toEqual(true)
+        })
+      })
+      describe('navigate to news route (NOT authenticated)', () => {
+        beforeEach(() => {
+          ;(authService as any)._authSubject$.next(null)
+          routerFacadeMock.currentRoute$.next({
+            url: [{ path: ROUTER_ROUTE_NEWS }],
+          })
+        })
+        it('does not display sort badges when authenticated and on news route', async () => {
+          const displaySortBadges = await readFirst(
+            component.displaySortBadges$
+          )
+          expect(displaySortBadges).toEqual(false)
+        })
+      })
+    })
+    describe('#setsortBy CREATE_DATE', () => {
+      beforeEach(() => {
+        component.setSortBy(true, SortByParams.CREATE_DATE)
+      })
+      it('calls searchFacade setSortBy with correct value', () => {
+        expect(searchFacadeMock.setSortBy).toHaveBeenCalledWith(
+          SortByParams.CREATE_DATE
+        )
+      })
+    })
+    describe('#setsortBy empty', () => {
+      beforeEach(() => {
+        component.setSortBy(false, SortByParams.CREATE_DATE)
+      })
+      it('calls searchFacade setSortBy with correct value', () => {
+        expect(searchFacadeMock.setSortBy).toHaveBeenCalledWith('')
+      })
+    })
+    describe('#setsortBy USER_SAVED_COUNT', () => {
+      beforeEach(() => {
+        component.setSortBy(true, SortByParams.USER_SAVED_COUNT)
+      })
+      it('calls searchFacade setSortBy with correct value', () => {
+        expect(searchFacadeMock.setSortBy).toHaveBeenCalledWith(
+          SortByParams.USER_SAVED_COUNT
+        )
       })
     })
   })
