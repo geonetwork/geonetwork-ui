@@ -1,5 +1,5 @@
 name: Cleanup
-run-name: 🧽 Cleanup operations for branch '${{github.ref_name}}'
+run-name: 🧹 Cleanup operations for 🌱 ${{github.ref_name}}
 
 env:
   # a list of apps to build and publish on releases

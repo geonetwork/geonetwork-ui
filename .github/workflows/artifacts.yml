@@ -1,5 +1,5 @@
 name: Artifacts
-run-name: 📦 Generate release and development artifacts ${{ github.event_name == 'release' && format('for 🏷 {0}', github.ref_name) }}
+run-name: 📦 Generate artifacts for ${{ github.event_name == 'release' && '🏷' || '🌱' }} ${{github.ref_name}}
 
 # This workflow runs whenever QA checks completed successfully,
 # and also whenever a tag is pushed
