@@ -1,0 +1,69 @@
+name: Deploy
+run-name: 🚀 Deployment on GitHub Pages
+
+# This workflow runs whenever QA checks completed successfully
+on:
+  workflow_run:
+    workflows: [Checks]
+    types:
+      - completed
+
+jobs:
+  gh-pages:
+    if: github.event.workflow_run.conclusion == 'success'
+    name: Deploy Storybook to GitHub Pages
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.17.0]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache node modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install
+        run: npm ci
+
+      - name: Build storybook
+        run: npm run build:storybook
+
+      - name: Build storybook for web components
+        run: npm run build:storybook-wc
+
+      - run: echo "::set-env name=BRANCH_NAME::${GITHUB_HEAD_REF:-master}"
+
+      - name: Deploy to directory ${{ env.BRANCH_NAME }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          npx gh-pages --dist dist/ --dest ${{env.BRANCH_NAME}} --remove "${{env.BRANCH_NAME}}/**" --no-history --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
+
+      - name: add PR comment
+        uses: thollander/actions-comment-pull-request@v1
+        if: github.event_name == 'pull_request'
+        with:
+          message: 'GitHub Pages links:
+
+            * UI components storybook: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/demo/
+
+            * Web Components storybook: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/webcomponents/'
+          comment_includes: 'GitHub Pages links:'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

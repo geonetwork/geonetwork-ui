@@ -1,24 +1,46 @@
-name: Cleanup deployed storybook
+name: Cleanup
+run-name: 🧽 Cleanup operations for branch '${{github.ref_name}}'
+
 env:
-  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+  # a list of apps to build and publish on releases
+  APP_NAMES: datafeeder,datahub
 
 on:
-  pull_request:
-    types: [closed]
+  delete:
+    branches:
+      - '*'
 
 jobs:
-  storybook-cleanup:
+  docker-cleanup:
+    name: Delete docker images on Dockerhub
     runs-on: ubuntu-latest
+
+    steps:
+      - name: generate Dockerhub auth
+        id: docker-auth
+        run: |
+          BASE_64_TOKEN=$(echo '{"username":"${{ secrets.DOCKER_HUB_USERNAME }}","password":"${{ secrets.DOCKER_HUB_PASSWORD }}","auth":"","email":"geonetworkbot@geonetwork-opensource.org"}' | base64)
+          echo ::add-mask::${BASE_64_TOKEN}
+          echo ::set-output name=DOCKER_AUTH::${BASE_64_TOKEN}
+
+      - name: delete docker images for the given applications and branch
+        # first list apps separated by line breaks
+        # then for each do a curl call on Dockerhub API to delete the image
+        run: |
+          echo "${{ env.APP_NAMES }}" | awk -vRS=',' '{print $1}' | \
+          xargs -I{} curl -X DELETE "https://hub.docker.com/v2/repositories/geonetwork/geonetwork-ui-{}/${{ github.event.ref }}/" -H "X-Registry-Auth: ${{steps.docker-auth.outputs.DOCKER_AUTH}}"
+
+  storybook-cleanup:
+    name: Delete storybook files on Github Pages
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - run: echo "::set-env name=BRANCH_NAME::${GITHUB_HEAD_REF}"
-
-      - name: remove directory in gh pages
+      - name: Remove directory ${{github.event.ref}}
         run: |
-          echo "Removing GH pages directory: ${{env.BRANCH_NAME}}"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           touch .empty
-          npx gh-pages --dist . --src .empty --remove "${{env.BRANCH_NAME}}" --no-history --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
+          npx gh-pages --dist . --src .empty --remove "${{github.event.ref}}" --no-history --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"

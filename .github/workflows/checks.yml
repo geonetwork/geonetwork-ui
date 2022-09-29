@@ -1,7 +1,8 @@
-name: Quality checks and deployment
-env:
-  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+name: Checks
+run-name: 🩺 Quality assurance checks
 
+# This workflow runs for Pull Requests which are not draft,
+# as well as commits going to the default branch
 on:
   push:
     branches:
@@ -9,14 +10,21 @@ on:
   pull_request:
     types: [opened, synchronize]
 
+# Only allow concurrent checks on the master branch to keep history
+# on QA checks
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref_name != 'master' }}
+
 jobs:
-  lint-test-build:
-    name: Format, lint, test and build code
+  format-lint-test:
+    if: github.event.pull_request.draft == false
+    name: Format check, lint, unit tests
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [16.15.0]
+        node-version: [16.17.0]
 
     steps:
       - name: Checkout
@@ -47,35 +55,46 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Install
+      - name: Install dependencies
         run: npm ci
+
       - name: Workspace lint
         run: npx nx workspace-lint
+
       - name: Format check
         run: npx nx format:check --base=$NX_BASE --head=$NX_HEAD
+
       - name: Lint affected --quiet
         run: npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=lint --parallel=3 --quiet
+
       - name: Test affected
         run: npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=test --parallel=3 --ci --code-coverage
-      - name: Build affected
-        run: npx nx affected --target=build --parallel=3
 
-  gh-pages:
-    name: Deploy Storybook to GitHub Pages
+  test-build:
+    if: github.event.pull_request.draft == false
+    name: Build affected applications
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [16.15.0]
+        node-version: [16.17.0]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v2
+        with:
+          main-branch-name: 'master'
 
       - name: Cache node modules
         uses: actions/cache@v1
@@ -89,32 +108,8 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Install
+      - name: Install dependencies
         run: npm ci
 
-      - name: Build storybook
-        run: npm run build:storybook
-
-      - name: Build storybook for web components
-        run: npm run build:storybook-wc
-
-      - run: echo "::set-env name=BRANCH_NAME::${GITHUB_HEAD_REF:-master}"
-
-      - name: deploy to gh pages
-        run: |
-          echo "Deploying to directory: ${{env.BRANCH_NAME}}"
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          npx gh-pages --dist dist/ --dest ${{env.BRANCH_NAME}} --remove "${{env.BRANCH_NAME}}/**" --no-history --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
-
-      - name: add PR comment
-        uses: thollander/actions-comment-pull-request@v1
-        if: github.event_name == 'pull_request'
-        with:
-          message: 'GitHub Pages links:
-
-            * UI components storybook: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/demo/
-
-            * Web Components storybook: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/webcomponents/'
-          comment_includes: 'GitHub Pages links:'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build affected
+        run: npx nx affected --target=build --parallel=3
