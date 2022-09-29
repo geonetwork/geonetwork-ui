@@ -13,11 +13,13 @@
     class="content grid flex-grow relative sm:pl-6 sm:pr-12"
     style="grid-template-columns: auto 70px"
   >
-    <div
-      class="mb-3 mt-5 font-title text-21 text-title line-clamp-2 col-start-1 col-span-2 sm:line-clamp-1 sm:mt-2"
-      [title]="record.title"
-    >
-      {{ record.title }}
+    <div class="mb-3 mt-5 sm:mt-2">
+      <div
+        class="font-title text-21 text-title line-clamp-2 col-start-1 col-span-2 sm:line-clamp-1"
+        [title]="record.title"
+      >
+        {{ record.title }}
+      </div>
     </div>
     <div
       class="abstract mt-4 mb-5 h-36 line-clamp-6 col-start-1 col-span-2 row-start-3 sm:mb-2 sm:h-[4.5rem] sm:line-clamp-3 sm:row-start-2 sm:mt-0"
