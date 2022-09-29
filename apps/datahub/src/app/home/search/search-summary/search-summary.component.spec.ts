@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs'
 
 import { SearchSummaryComponent } from './search-summary.component'
 
-const state = { Org: { mel: true } }
+const state = { OrgForResource: { mel: true } }
 const searchFacadeMock = {
   searchFilters$: new BehaviorSubject(state),
 }
@@ -62,13 +62,15 @@ describe('SearchSummaryComponent', () => {
       closeBtn.nativeElement.click()
     })
     it('removes the Org', () => {
-      expect(searchServiceMock.updateSearch).toHaveBeenCalledWith({ Org: {} })
+      expect(searchServiceMock.updateSearch).toHaveBeenCalledWith({
+        OrgForResource: {},
+      })
     })
   })
 
   describe('when no source', () => {
     beforeEach(() => {
-      searchFacadeMock.searchFilters$.next({})
+      searchFacadeMock.searchFilters$.next({} as any)
       fixture.detectChanges()
     })
     it('hides whole source block', () => {

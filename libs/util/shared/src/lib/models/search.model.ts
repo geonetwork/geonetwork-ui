@@ -49,9 +49,11 @@ export interface MetadataRecord {
   lineage?: string
   keywords?: string[]
   contact?: MetadataContact
+  resourceContacts?: MetadataContact[]
   catalogUuid?: string
-  usageConstraints?: string
+  constraints?: string[]
   favoriteCount?: number
+  isOpenData?: boolean
 }
 
 export interface MetadataLinkValid {

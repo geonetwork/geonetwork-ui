@@ -60,7 +60,7 @@ describe('ElasticsearchMapper', () => {
   describe('#toRecord', () => {
     let hit
     beforeEach(() => {
-      hit = hitsOnly.hits.hits[0]
+      hit = (hitsOnly as any).hits.hits[0]
     })
 
     describe('overview', () => {
@@ -228,7 +228,7 @@ describe('ElasticsearchMapper', () => {
     describe('full record', () => {
       it('builds a complete record object', () => {
         const record = service.toRecord(ES_FIXTURE_FULL_RESPONSE.hits.hits[0])
-        expect(record).toMatchObject({
+        expect(record).toEqual({
           abstract:
             "Le produit Surval \"Données par paramètre\" met à disposition les données d'observation et de surveillance bancarisées dans Quadrige, validées et qui ne sont pas sous moratoire.\n\nCe système d'information contient des résultats sur la plupart des paramètres physiques, chimiques et biologiques de description de l'environnement. Les premières données datent par exemple de 1974 pour les paramètres de la qualité générale des eaux et les contaminants, 1987 pour le phytoplancton et les phycotoxines, 1989 pour la microbiologie, du début des années 2000 pour le benthos. \n\nCe produit contient des résultats sur la plupart des paramètres physiques, chimiques et biologiques de description de l'environnement. Les premières données datent par exemple de 1974 pour les paramètres de la qualité générale des eaux et les contaminants.\n\nLes données sous moratoire ou les données qualifiées \"Faux\" sont exclus de la diffusion Surval. Une donnée validée dans Quadrige aujourd’hui sera disponible dans Surval demain.\n\nL'accès aux données d'observation se fait par lieu. Un lieu de surveillance est un lieu géographique où des observations, des mesures et/ou des prélèvements sont effectués. Il est localisé de façon unique par son emprise cartographique (surface, ligne ou point). Un lieu de mesure peut être utilisé par plusieurs programmes d'observation et de surveillance.\n\nA compter du 29 avril 2021, conformément aux obligations de l’ « Open data », toutes les données validées sans moratoire sont diffusées à J+1 et sans traitement. Ainsi tous les paramètres et tous les programmes Quadrige sont diffusés, et regroupés sous forme de thème :\n- Benthos dont récifs coralliens\n- Contaminants chimiques et Écotoxicologie\n- Déchets\n- Microbiologie\n- Phytoplancton et Hydrologie\n- Ressources aquacoles\n- Zooplancton\n- Autres\nUn thème regroupe un ou plusieurs programmes d'acquisition. Un programme correspond à une mise en œuvre d'un protocole, sur une période et un ensemble de lieux. Chaque programme est placé sous la responsabilité d'un animateur. \n\nPour accompagner le résultat, de nombreuses données sont diffusées (téléchargeables en tant que données d’observation), comme :\n- la description complète du « Paramètre-Support-Fraction-Méthode-Unité »;\n- la description complète des « Passages », « Prélèvements » et « Échantillons »;\n- le niveau de qualification du résultat;\n- une proposition de citation, afin d’identifier tous les organismes contribuant à cette observation.\n\nL'emprise géographique est nationale : la métropole et les départements et régions d'outre-mer (DROM).\n\nL'accès au téléchargement direct du jeu de données complet (~ 220 Mo) en date du 9 juillet 2021 s'effectue par ce lien : https://www.ifremer.fr/sextant_doc/surveillance_littorale/surval/data/surval.zip \nL'accès par la carte permet de configurer des extractions et des graphes de visualisation sur demande (email demandé pour le téléchargement).",
           updatedOn: new Date('2021-10-05T12:48:57.678Z'),
@@ -237,13 +237,13 @@ describe('ElasticsearchMapper', () => {
           id: '11700',
           links: [
             {
-              description: '',
+              label: 'La base de données Quadrige',
               name: 'La base de données Quadrige',
               protocol: 'WWW:LINK',
               url: 'https://wwz.ifremer.fr/envlit/Quadrige-la-base-de-donnees',
             },
             {
-              description: '',
+              label: 'La surveillance du milieu marin et côtier',
               name: 'La surveillance du milieu marin et côtier',
               protocol: 'WWW:LINK-1.0-http--link',
               url: 'https://wwz.ifremer.fr/envlit/Surveillance-du-littoral',
@@ -251,66 +251,78 @@ describe('ElasticsearchMapper', () => {
             {
               description:
                 'Manuel pour l’utilisation des données REPHY. Informations destinées à améliorer la compréhension des fichiers de données REPHY mis à disposition des scientifiques et du public. ODE/VIGIES/17-15. Ifremer, ODE/VIGIES, Coordination REPHY & Cellule Quadrige (2017).',
+              label:
+                'Manuel pour l’utilisation des données REPHY. Informations destinées à améliorer la compréhension des fichiers de données REPHY mis à disposition des scientifiques et du public. ODE/VIGIES/17-15. Ifremer, ODE/VIGIES, Coordination REPHY & Cellule Quadrige (2017).',
               name: 'Manuel pour l’utilisation des données REPHY',
               protocol: 'WWW:LINK',
               url: 'http://archimer.ifremer.fr/doc/00409/52016/',
             },
             {
               description: 'Lieu de surveillance (point)',
+              label: 'Lieu de surveillance (point)',
               name: 'surval_parametre_point',
               protocol: 'OGC:WMS',
               url: 'http://www.ifremer.fr/services/wms/surveillance_littorale',
             },
             {
               description: 'Lieu de surveillance (point)',
+              label: 'Lieu de surveillance (point)',
               name: 'surval_parametre_point',
               protocol: 'OGC:WFS',
               url: 'http://www.ifremer.fr/services/wfs/surveillance_littorale',
             },
             {
               description: "Extraction des données d'observation",
+              label: "Extraction des données d'observation",
               name: 'r:survalextraction30140',
               protocol: 'OGC:WPS',
               url: 'https://www.ifremer.fr/services/wps3/surval',
             },
             {
               description: 'Lieu de surveillance (ligne)',
+              label: 'Lieu de surveillance (ligne)',
               name: 'surval_parametre_ligne',
               protocol: 'OGC:WMS',
               url: 'http://www.ifremer.fr/services/wms/surveillance_littorale',
             },
             {
               description: 'Lieu de surveillance (ligne)',
+              label: 'Lieu de surveillance (ligne)',
               name: 'surval_parametre_ligne',
               protocol: 'OGC:WFS',
               url: 'http://www.ifremer.fr/services/wfs/surveillance_littorale',
             },
             {
               description: "Extraction des données d'observation",
+              label: "Extraction des données d'observation",
               name: 'r:survalextraction30140',
               protocol: 'OGC:WPS',
               url: 'https://www.ifremer.fr/services/wps3/surval',
             },
             {
               description: 'Lieu de surveillance (polygone)',
+              label: 'Lieu de surveillance (polygone)',
               name: 'surval_parametre_polygone',
               protocol: 'OGC:WMS',
               url: 'http://www.ifremer.fr/services/wms/surveillance_littorale',
             },
             {
               description: 'Lieu de surveillance (polygone)',
+              label: 'Lieu de surveillance (polygone)',
               name: 'surval_parametre_polygone',
               protocol: 'OGC:WFS',
               url: 'http://www.ifremer.fr/services/wfs/surveillance_littorale',
             },
             {
               description: "Extraction des données d'observation",
+              label: "Extraction des données d'observation",
               name: 'r:survalextraction30140',
               protocol: 'OGC:WPS',
               url: 'https://www.ifremer.fr/services/wps3/surval',
             },
             {
               description: 'DOI du jeu de données',
+              label: 'DOI du jeu de données',
               name: 'DOI du jeu de données',
               protocol: 'WWW:LINK-1.0-http--metadata-URL',
               url: 'https://doi.org/10.12770/cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
@@ -329,6 +341,29 @@ describe('ElasticsearchMapper', () => {
             logoUrl:
               'http://localhost/geonetwork/images/logos/81e8a591-7815-4d2f-a7da-5673192e74c9.png',
           },
+          resourceContacts: [
+            {
+              email: 'q2_support@ifremer.fr',
+              logoUrl:
+                'http://localhost/geonetwork/images/logos/81e8a591-7815-4d2f-a7da-5673192e74c9.png',
+              name: "Cellule d'Administration Quadrige",
+              organisation: 'Ifremer',
+            },
+            {
+              email: 'q2_support@ifremer.fr',
+              logoUrl:
+                'http://localhost/geonetwork/images/logos/81e8a591-7815-4d2f-a7da-5673192e74c9.png',
+              name: 'Quadrige',
+              organisation: 'Ifremer',
+            },
+            {
+              email: 'q2_support@ifremer.fr',
+              logoUrl:
+                'http://localhost/geonetwork/images/logos/81e8a591-7815-4d2f-a7da-5673192e74c9.png',
+              name: 'Quadrige',
+              organisation: 'Ifremer',
+            },
+          ],
           updateStatus: 'Mise à jour continue',
           updateFrequency: 'Journalière',
           keywords: [
@@ -396,8 +431,17 @@ describe('ElasticsearchMapper', () => {
           ],
           lineage:
             'Les données sont bancarisées dans la base de données Quadrige.',
-          usageConstraints: 'Restriction lié à l’exercice du droit moral',
+          constraints: [
+            'Restriction lié à l’exercice du droit moral',
+            "Restriction légale d'utilisation à préciser",
+            'Pas de restriction d’accès public',
+            'Licence Ouverte version 2.0  https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf',
+          ],
           catalogUuid: '81e8a591-7815-4d2f-a7da-5673192e74c9',
+          isOpenData: true,
+          favoriteCount: 12,
+          hasDownloads: true,
+          hasMaps: true,
         } as MetadataRecord)
       })
     })

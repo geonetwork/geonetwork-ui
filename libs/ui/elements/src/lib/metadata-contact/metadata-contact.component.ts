@@ -17,7 +17,11 @@ export class MetadataContactComponent {
   @Input() metadata: MetadataRecord
   @Output() contact = new EventEmitter<string>()
 
+  get shownContact() {
+    return this.metadata.resourceContacts?.[0]
+  }
+
   onContactClick() {
-    this.contact.emit(this.metadata.contact.organisation)
+    this.contact.emit(this.shownContact.organisation)
   }
 }

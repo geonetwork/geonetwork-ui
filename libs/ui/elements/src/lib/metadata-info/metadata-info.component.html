@@ -36,36 +36,39 @@
     {{ metadata.lineage }}
   </p>
   <div
-    class="py-4 px-6 rounded bg-gray-100 grid grid-cols-2 grid-rows-2 gap-6 text-gray-700"
+    class="py-4 px-6 rounded bg-gray-100 grid grid-cols-2 gap-y-[10px] gap-x-[20px] text-gray-700 info-grid"
   >
-    <div class="border-b border-gray-300" *ngIf="metadata.updatedOn">
+    <div *ngIf="metadata.updatedOn">
       <p class="text-sm" translate>record.metadata.updatedOn</p>
-      <p class="text-primary font-medium my-2">
+      <p class="text-primary font-medium mt-2">
         {{ metadata.updatedOn && metadata.updatedOn.toLocaleString() }}
       </p>
     </div>
-    <div class="border-b border-gray-300" *ngIf="metadata.updateFrequency">
+    <div *ngIf="metadata.updateFrequency">
       <p class="text-sm" translate>record.metadata.updateFrequency</p>
-      <p class="text-primary font-medium my-2">
+      <p class="text-primary font-medium mt-2">
         {{ metadata.updateFrequency }}
       </p>
     </div>
     <div *ngIf="metadata.updateStatus">
       <p class="text-sm" translate>record.metadata.updateStatus</p>
-      <p class="text-primary font-medium my-2">
+      <p class="text-primary font-medium mt-2">
         {{ metadata.updateStatus }}
       </p>
     </div>
   </div>
 </gn-ui-expandable-panel>
 <gn-ui-expandable-panel
-  *ngIf="metadata.usageConstraints"
+  *ngIf="hasUsage"
   [title]="'record.metadata.usage' | translate"
 >
-  <div class="py-4 px-6 rounded bg-gray-100 text-gray-700">
-    <gn-ui-badge class="inline-block mr-2">{{
-      metadata.usageConstraints
-    }}</gn-ui-badge>
+  <div class="py-4 px-6 rounded bg-gray-100 text-gray-700 flex flex-wrap gap-2">
+    <gn-ui-badge *ngIf="metadata.isOpenData" translate>
+      record.metadata.isOpenData
+    </gn-ui-badge>
+    <span *ngFor="let constraint of metadata.constraints">
+      {{ constraint }}
+    </span>
   </div>
 </gn-ui-expandable-panel>
 <gn-ui-expandable-panel

@@ -19,12 +19,20 @@ describe('MetadataContactComponent', () => {
     fixture = TestBed.createComponent(MetadataContactComponent)
     component = fixture.componentInstance
     component.metadata = {
-      contact: {
-        name: 'john',
-        organisation: 'Worldcop',
-        email: 'john@world.co',
-        website: 'https://john.world.co',
-      },
+      resourceContacts: [
+        {
+          name: 'john',
+          organisation: 'Worldcorp',
+          email: 'john@world.co',
+          website: 'https://john.world.co',
+        },
+        {
+          name: 'billy',
+          organisation: 'small corp',
+          email: 'billy@small.co',
+          website: 'https://billy.small.co',
+        },
+      ],
     } as any
     fixture.detectChanges()
   })
@@ -42,7 +50,7 @@ describe('MetadataContactComponent', () => {
         By.css('.text-primary.font-title')
       ).nativeElement
       el.click()
-      expect(component.contact.emit).toHaveBeenCalledWith('Worldcop')
+      expect(component.contact.emit).toHaveBeenCalledWith('Worldcorp')
     })
   })
   describe('content', () => {
@@ -54,7 +62,7 @@ describe('MetadataContactComponent', () => {
       const el = fixture.debugElement.query(
         By.css('.text-primary.font-title')
       ).nativeElement
-      expect(el.innerHTML).toBe(' Worldcop ')
+      expect(el.innerHTML).toBe(' Worldcorp ')
     })
     it('displays the contact email', () => {
       expect(ps[1].nativeElement.innerHTML).toBe('john@world.co')

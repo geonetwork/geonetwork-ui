@@ -28,7 +28,7 @@ export class OrganisationsService {
             org: {
               terms: {
                 size: 1000,
-                field: 'Org',
+                field: 'OrgForResource',
                 order: {
                   _key: 'asc',
                 },

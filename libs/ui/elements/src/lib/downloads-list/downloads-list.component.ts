@@ -7,6 +7,10 @@ import {
 import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
 import { getBadgeColor, LinkHelperService } from '@geonetwork-ui/util/shared'
 import { TranslateService } from '@ngx-translate/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('datahub.search.filter.all')
+marker('datahub.search.filter.others')
 
 @Component({
   selector: 'gn-ui-downloads-list',

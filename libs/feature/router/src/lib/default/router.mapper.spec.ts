@@ -6,7 +6,7 @@ describe('RouterMapper', () => {
     beforeEach(() => {
       state = {
         any: 'scot',
-        Org: {
+        OrgForResource: {
           'org sample': true,
         },
         keyword: {},
@@ -30,7 +30,7 @@ describe('RouterMapper', () => {
     it('transform to route object', () => {
       expect(routeParamsToState(routeParams)).toEqual({
         any: 'scot',
-        Org: {
+        OrgForResource: {
           'org sample': true,
         },
       })

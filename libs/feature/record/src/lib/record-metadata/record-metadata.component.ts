@@ -63,6 +63,8 @@ export class RecordMetadataComponent {
     this.searchService.updateSearch({ any: keyword })
   }
   onContactClick(contactOrgName: string) {
-    this.searchService.updateSearch({ Org: { [contactOrgName]: true } })
+    this.searchService.updateSearch({
+      OrgForResource: { [contactOrgName]: true },
+    })
   }
 }

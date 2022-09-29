@@ -1,4 +1,4 @@
-<div *ngIf="metadata.contact" class="mb-6 sm:mb-12">
+<div *ngIf="shownContact" class="mb-6 sm:mb-12">
   <p class="text-gray-700 text-xs mb-3 uppercase" translate>
     record.metadata.contact
   </p>
@@ -7,10 +7,10 @@
       class="text-primary font-title text-21 mr-2 cursor-pointer hover:opacity-50"
       (click)="onContactClick()"
     >
-      {{ metadata.contact.organisation }}
+      {{ shownContact.organisation }}
     </div>
-    <div *ngIf="metadata.contact.website">
-      <a [href]="metadata.contact.website" target="_blank"
+    <div *ngIf="shownContact.website">
+      <a [href]="shownContact.website" target="_blank"
         ><mat-icon
           class="text-primary opacity-25 cursor-pointer hover:opacity-75 transition-all"
           >open_in_new</mat-icon
@@ -18,5 +18,5 @@
       >
     </div>
   </div>
-  <p class="text-gray-700 text-sm mb-2">{{ metadata.contact.email }}</p>
+  <p class="text-gray-700 text-sm mb-2">{{ shownContact.email }}</p>
 </div>

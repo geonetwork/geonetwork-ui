@@ -10,5 +10,5 @@ export enum ROUTE_PARAMS {
 export type SearchRouteParams = Partial<Record<ROUTE_PARAMS, string>>
 export const ROUTE_PARAMS_MAPPING: SearchRouteParams = {
   [ROUTE_PARAMS.ANY]: 'any',
-  [ROUTE_PARAMS.PUBLISHER]: 'Org',
+  [ROUTE_PARAMS.PUBLISHER]: 'OrgForResource',
 }
