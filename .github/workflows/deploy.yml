@@ -1,66 +1,16 @@
-name: Quality checks and deployment
-env:
-  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+name: Deploy
+run-name: Deployment on GitHub Pages
 
+# This workflow runs whenever QA checks completed successfully
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    types: [opened, synchronize]
+  workflow_run:
+    workflows: [Checks]
+    types:
+      - completed
 
 jobs:
-  lint-test-build:
-    name: Format, lint, test and build code
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16.15.0]
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-          fetch-depth: 0
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v2
-        with:
-          main-branch-name: 'master'
-
-      - name: Cache node modules
-        uses: actions/cache@v1
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-
-      - name: Install
-        run: npm ci
-      - name: Workspace lint
-        run: npx nx workspace-lint
-      - name: Format check
-        run: npx nx format:check --base=$NX_BASE --head=$NX_HEAD
-      - name: Lint affected --quiet
-        run: npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=lint --parallel=3 --quiet
-      - name: Test affected
-        run: npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=test --parallel=3 --ci --code-coverage
-      - name: Build affected
-        run: npx nx affected --target=build --parallel=3
-
   gh-pages:
+    if: github.event.workflow_run.conclusion == 'success'
     name: Deploy Storybook to GitHub Pages
     runs-on: ubuntu-latest
 

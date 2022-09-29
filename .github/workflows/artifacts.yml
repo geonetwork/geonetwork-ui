@@ -1,11 +1,13 @@
-name: Generate release and development artifacts
+name: Artifacts
+run-name: Generate release and development artifacts
 
+# This workflow runs whenever QA checks completed successfully,
+# and also whenever a tag is pushed
 on:
-  push:
-    # only trigger on branch push, not tags
-    branches:
-      - '*'
-  delete:
+  workflow_run:
+    workflows: [Checks]
+    types:
+      - completed
   release:
     types: [published]
 
@@ -15,7 +17,7 @@ env:
 
 jobs:
   build-archive-docker:
-    if: github.event_name != 'delete'
+    if: github.event_name == 'release' || github.event.workflow_run.conclusion == 'success'
     name: Build docker images and archives
     runs-on: ubuntu-latest
 
@@ -90,27 +92,3 @@ jobs:
         run: |
           docker image ls --format '{{.Repository}}:{{.Tag}}' --filter=reference='geonetwork/*' | \
           xargs -r -L1 docker push $1
-
-  delete-docker:
-    if: github.event_name == 'delete' && github.ref_type == 'branch'
-    name: Delete docker images for a deleted branch
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16.15.0]
-
-    steps:
-      - name: Generate Dockerhub auth
-        id: docker-auth
-        run: |
-          BASE_64_TOKEN=$(echo '{"username":"${{ secrets.DOCKER_HUB_USERNAME }}","password":"${{ secrets.DOCKER_HUB_PASSWORD }}","auth":"","email":"geonetworkbot@geonetwork-opensource.org"}' | base64)
-          echo ::add-mask::${BASE_64_TOKEN}
-          echo ::set-output name=DOCKER_AUTH::${BASE_64_TOKEN}
-
-      - name: Delete docker images for the given applications and branch
-        # first list apps separated by line breaks
-        # then for each do a curl call on Dockerhub API to delete the image
-        run: |
-          echo "${{ env.APP_NAMES }}" | awk -vRS=',' '{print $1}' | \
-          xargs -I{} curl -X DELETE "https://hub.docker.com/v2/repositories/geonetwork/geonetwork-ui-{}/${{ github.ref_name }}/" -H "X-Registry-Auth: ${{steps.docker-auth.outputs.DOCKER_AUTH}}"
