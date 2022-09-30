@@ -4,10 +4,7 @@ run-name: ğŸ“¦ Generate artifacts for ${{ github.event_name == 'release' && 'ğŸ
 # This workflow runs whenever QA checks completed successfully,
 # and also whenever a tag is pushed
 on:
-  workflow_run:
-    workflows: [Checks]
-    types:
-      - completed
+  workflow_call:
   release:
     types: [published]
 
@@ -21,7 +18,6 @@ env:
 
 jobs:
   build-archive-docker:
-    if: github.event_name == 'release' || github.event.workflow_run.conclusion == 'success'
     name: Build docker images and archives
     runs-on: ubuntu-latest
 

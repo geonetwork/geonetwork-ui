@@ -113,3 +113,13 @@ jobs:
 
       - name: Build affected
         run: npx nx affected --target=build --parallel=3
+
+  deploy:
+    needs: ['format-lint-test', 'test-build']
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+
+  artifacts:
+    needs: ['format-lint-test', 'test-build']
+    uses: ./.github/workflows/artifacts.yml
+    secrets: inherit
