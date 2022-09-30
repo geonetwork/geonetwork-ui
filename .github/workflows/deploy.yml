@@ -45,8 +45,9 @@ jobs:
       - name: Build storybook
         run: npm run build:storybook
 
-      - name: Build storybook for web components
-        run: npm run build:storybook-wc
+      # FIXME: restore a system for testing web components but faster/lighter than storybook
+      #      - name: Build storybook for web components
+      #        run: npm run build:storybook-wc
 
       - run: echo "::set-env name=BRANCH_NAME::${GITHUB_HEAD_REF:-master}"
 
@@ -62,8 +63,6 @@ jobs:
         with:
           message: 'GitHub Pages links:
 
-            * UI components storybook: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/demo/
-
-            * Web Components storybook: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/webcomponents/'
+            * UI components storybook: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/demo/'
           comment_includes: 'GitHub Pages links:'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
