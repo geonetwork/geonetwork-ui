@@ -16,6 +16,7 @@ export const ES_SOURCE_SUMMARY = [
   'codelist_status_text',
   'linkProtocol',
   'contactForResource.organisation',
+  'contact.organisation',
   'userSavedCount',
 ]
 
@@ -23,6 +24,7 @@ export const ES_SOURCE_BRIEF = [
   ...ES_SOURCE_SUMMARY,
   'resourceTypeObject',
   'Org',
+  'OrgForResource',
 ]
 
 export const ElasticSearchSources = {

@@ -8,7 +8,7 @@ import {
   ElementRef,
   TemplateRef,
 } from '@angular/core'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataContact, MetadataRecord } from '@geonetwork-ui/util/shared'
 import { fromEvent, Subscription } from 'rxjs'
 
 @Component({
@@ -27,6 +27,9 @@ export class RecordPreviewComponent implements OnInit, OnDestroy {
   }
   get isDownloadable() {
     return this.record.hasDownloads
+  }
+  get contact(): MetadataContact {
+    return this.record.resourceContacts?.[0] || this.record.contact
   }
 
   constructor(protected elementRef: ElementRef) {}

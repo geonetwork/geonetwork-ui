@@ -300,6 +300,7 @@ describe('ElasticsearchService', () => {
           'codelist_status_text',
           'linkProtocol',
           'contactForResource.organisation',
+          'contact.organisation',
           'userSavedCount',
         ],
         query: {
