@@ -25,7 +25,7 @@
         >
         <img
           *ngIf="hasLogo"
-          [src]="record.contact.logoUrl"
+          [src]="contact.logoUrl"
           alt="Organization logo"
           class="object-contain w-full h-full"
         />
@@ -36,14 +36,14 @@
           href="#"
           class="font-bold transition duration-200 text-primary hover:text-primary-darker truncate max-w-full"
         >
-          {{ record.contact.organisation }}
+          {{ contact.organisation }}
         </a>
         <a
           *ngIf="hasOnlyPerson"
           href="#"
           class="font-bold transition duration-200 text-primary hover:text-primary-darker truncate max-w-full"
         >
-          {{ record.contact.name }}
+          {{ contact.name }}
         </a>
         <p class="text-gray-900">
           <span translate [translateParams]="{ time }"

@@ -70,6 +70,8 @@ export class OrganisationsComponent {
   }
 
   searchByOrganisation(organisation: Organisation) {
-    this.searchService.updateSearch({ Org: { [organisation.name]: true } })
+    this.searchService.updateSearch({
+      OrgForResource: { [organisation.name]: true },
+    })
   }
 }
