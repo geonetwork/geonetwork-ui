@@ -5,26 +5,43 @@
     <title>Web Component Demo</title>
     <base href="./" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Inter:wght@200;300;400;500;600;700&amp;display=swap"
       rel="stylesheet"
       type="text/css"
     />
     <style>
-      html,
       body {
-        font-family: Roboto;
-        --color-gray-100: #d2ecff;
+      }
+      .container {
+        max-width: 1024px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 3rem;
       }
     </style>
   </head>
   <body>
-    <script src="gn-wc.js"></script>
-    <gn-results-list
-      api-url="https://apps.titellus.net/geonetwork/srv/api"
-      size="5"
-      primary-color="#343e9c"
-      layout="TITLE"
-    ></gn-results-list>
+    <main class="container">
+      <script src="gn-wc.js"></script>
+      <gn-results-list
+        api-url="https://apps.titellus.net/geonetwork/srv/api"
+        size="5"
+        primary-color="#0f4395"
+        secondary-color="#8bc832"
+        main-color="#555"
+        background-color="#fdfbff"
+        main-font="'Inter', sans-serif"
+        title-font="'DM Serif Display', serif"
+        layout="DATAHUB"
+        fixed="true"
+      ></gn-results-list>
+    </main>
   </body>
 </html>
