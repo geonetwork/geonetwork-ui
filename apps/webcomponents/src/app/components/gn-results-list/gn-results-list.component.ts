@@ -24,12 +24,6 @@ export class GnResultsListComponent
   extends BaseComponent
   implements OnInit, OnChanges
 {
-  @Input() apiUrl = '/'
-  @Input() searchId: string
-  @Input() primaryColor = '#9a9a9a'
-  @Input() secondaryColor = '#767676'
-  @Input() mainColor = '#1a1a1a'
-  @Input() backgroundColor = '#cecece'
   @Input() layout = 'CARD'
   @Input() size = 10
   @Input() query: string
