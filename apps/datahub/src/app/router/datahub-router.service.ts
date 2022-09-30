@@ -29,7 +29,7 @@ export class DatahubRouterService {
     return [
       {
         path: '',
-        redirectTo: `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_SEARCH}`,
+        redirectTo: `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_NEWS}`,
         pathMatch: 'full',
       },
       {
