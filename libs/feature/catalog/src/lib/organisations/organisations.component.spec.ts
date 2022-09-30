@@ -46,12 +46,12 @@ class PaginationMockComponent {
   @Output() newCurrentPageEvent = new EventEmitter<number>()
 }
 
-const organisationsServiceMock = {
-  getOrganisationsWithGroups: jest.fn(() => of(ORGANISATIONS_FIXTURE)),
+class OrganisationsServiceMock {
+  getOrganisationsWithGroups = jest.fn(() => of(ORGANISATIONS_FIXTURE))
 }
 
-const searchServiceMock = {
-  updateSearch: jest.fn(),
+class SearchServiceMock {
+  updateSearch = jest.fn()
 }
 
 const organisationMock = {
@@ -65,6 +65,8 @@ describe('OrganisationsComponent', () => {
   let component: OrganisationsComponent
   let fixture: ComponentFixture<OrganisationsComponent>
   let de: DebugElement
+  let organisationsService: OrganisationsService
+  let searchService: SearchService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -77,11 +79,11 @@ describe('OrganisationsComponent', () => {
       providers: [
         {
           provide: OrganisationsService,
-          useValue: organisationsServiceMock,
+          useClass: OrganisationsServiceMock,
         },
         {
           provide: SearchService,
-          useValue: searchServiceMock,
+          useClass: SearchServiceMock,
         },
       ],
     })
@@ -90,6 +92,8 @@ describe('OrganisationsComponent', () => {
       })
       .compileComponents()
 
+    organisationsService = TestBed.inject(OrganisationsService)
+    searchService = TestBed.inject(SearchService)
     fixture = TestBed.createComponent(OrganisationsComponent)
     component = fixture.componentInstance
     de = fixture.debugElement
@@ -101,55 +105,46 @@ describe('OrganisationsComponent', () => {
   })
 
   describe('on component init', () => {
-    let sortComponent: OrganisationsSortMockComponent
     let orgPreviewComponents: OrganisationPreviewMockComponent[]
-    let paginationComponent: PaginationMockComponent
+    let paginationComponentDE: DebugElement
     let setCurrentPageSpy
-    let clickOrganisationSpy
     let setSortBySpy
+    beforeEach(() => {
+      paginationComponentDE = de.query(By.directive(PaginationMockComponent))
+    })
     it('should call getOrganisationsWithGroups', () => {
-      expect(
-        organisationsServiceMock.getOrganisationsWithGroups
-      ).toHaveBeenCalled()
+      expect(organisationsService.getOrganisationsWithGroups).toHaveBeenCalled()
     })
     describe('pass organisations to ui preview components', () => {
       beforeEach(() => {
-        orgPreviewComponents = de.queryAll(
-          By.directive(OrganisationPreviewMockComponent)
-        )
+        orgPreviewComponents = de
+          .queryAll(By.directive(OrganisationPreviewMockComponent))
+          .map((debugElement) => debugElement.componentInstance)
       })
       it('should pass first organisation (sorted by name-asc) to first ui preview component', () => {
-        expect(
-          orgPreviewComponents[0].componentInstance.organisation.name
-        ).toEqual('A Data Org')
+        expect(orgPreviewComponents[0].organisation.name).toEqual('A Data Org')
       })
       it('should pass 6th organisation (sorted by name-asc) on page to 6th ui preview component', () => {
-        expect(
-          orgPreviewComponents[5].componentInstance.organisation.name
-        ).toEqual('F Data Org')
+        expect(orgPreviewComponents[5].organisation.name).toEqual('F Data Org')
       })
     })
     describe('pass params to ui pagination component', () => {
-      beforeEach(() => {
-        paginationComponent = de.query(By.directive(PaginationMockComponent))
-      })
       it('should init ui pagination component with currentPage = 1', () => {
-        expect(paginationComponent.componentInstance.currentPage).toEqual(1)
+        expect(paginationComponentDE.componentInstance.currentPage).toEqual(1)
       })
       it('should init ui pagination component with correct value for total nPages', () => {
-        expect(paginationComponent.componentInstance.nPages).toEqual(
+        expect(paginationComponentDE.componentInstance.nPages).toEqual(
           Math.ceil(ORGANISATIONS_FIXTURE.length / ITEMS_ON_PAGE)
         )
       })
       describe('navigate to second page (and trigger newCurrentPageEvent output)', () => {
         beforeEach(() => {
           setCurrentPageSpy = jest.spyOn(component, 'setCurrentPage')
-          paginationComponent.triggerEventHandler('newCurrentPageEvent', 2)
+          paginationComponentDE.triggerEventHandler('newCurrentPageEvent', 2)
           fixture.detectChanges()
-          orgPreviewComponents = de.queryAll(
-            By.directive(OrganisationPreviewMockComponent)
-          )
-          fixture.detectChanges()
+          orgPreviewComponents = de
+            .queryAll(By.directive(OrganisationPreviewMockComponent))
+            .map((debugElement) => debugElement.componentInstance)
         })
         afterEach(() => {
           jest.restoreAllMocks()
@@ -158,31 +153,31 @@ describe('OrganisationsComponent', () => {
           expect(setCurrentPageSpy).toHaveBeenCalledWith(2)
         })
         it('should set currentPage in ui component to correct value', () => {
-          expect(paginationComponent.componentInstance.currentPage).toEqual(2)
+          expect(paginationComponentDE.componentInstance.currentPage).toEqual(2)
         })
         it('should pass first organisation of second page (sorted by name-asc) to first ui preview component', () => {
-          expect(
-            orgPreviewComponents[0].componentInstance.organisation.name
-          ).toEqual('G Data Org')
+          expect(orgPreviewComponents[0].organisation.name).toEqual(
+            'G Data Org'
+          )
         })
         it('should pass last organisation of second page (sorted by name-asc) to last ui preview component', () => {
           expect(
-            orgPreviewComponents[orgPreviewComponents.length - 1]
-              .componentInstance.organisation.name
+            orgPreviewComponents[orgPreviewComponents.length - 1].organisation
+              .name
           ).toEqual('J Data Org')
         })
       })
     })
     describe('sort by recordCount', () => {
       beforeEach(() => {
-        sortComponent = de.query(By.directive(OrganisationsSortMockComponent))
         setSortBySpy = jest.spyOn(component, 'setSortBy')
-        sortComponent.triggerEventHandler('sortBy', 'recordCount-desc')
+        de.query(
+          By.directive(OrganisationsSortMockComponent)
+        ).triggerEventHandler('sortBy', 'recordCount-desc')
         fixture.detectChanges()
-        orgPreviewComponents = de.queryAll(
-          By.directive(OrganisationPreviewMockComponent)
-        )
-        fixture.detectChanges()
+        orgPreviewComponents = de
+          .queryAll(By.directive(OrganisationPreviewMockComponent))
+          .map((debugElement) => debugElement.componentInstance)
       })
       it('should call setSortBy', () => {
         expect(setSortBySpy).toHaveBeenCalledWith('recordCount-desc')
@@ -192,33 +187,30 @@ describe('OrganisationsComponent', () => {
         expect(organisations[0]).toEqual(ORGANISATIONS_FIXTURE[5])
       })
       it('should pass organsiation with max recordCount to first preview component', () => {
-        expect(orgPreviewComponents[0].componentInstance.organisation).toEqual(
+        expect(orgPreviewComponents[0].organisation).toEqual(
           ORGANISATIONS_FIXTURE[5]
         )
       })
       it('should pass organsiation with 6th highest recordCount to 6th preview component', () => {
-        expect(orgPreviewComponents[5].componentInstance.organisation).toEqual(
+        expect(orgPreviewComponents[5].organisation).toEqual(
           ORGANISATIONS_FIXTURE[3]
         )
       })
     })
     describe('click on organisation', () => {
       beforeEach(() => {
-        clickOrganisationSpy = jest.spyOn(component, 'searchByOrganisation')
-        orgPreviewComponents = de.queryAll(
+        de.query(
           By.directive(OrganisationPreviewMockComponent)
-        )
-        orgPreviewComponents[0].triggerEventHandler(
-          'clickedOrganisation',
-          organisationMock
-        )
+        ).triggerEventHandler('clickedOrganisation', organisationMock)
         fixture.detectChanges()
       })
       afterEach(() => {
         jest.restoreAllMocks()
       })
       it('should call searchByOrganisation() with correct organisation', () => {
-        expect(clickOrganisationSpy).toHaveBeenCalledWith(organisationMock)
+        expect(searchService.updateSearch).toHaveBeenCalledWith({
+          OrgForResource: { [organisationMock.name]: true },
+        })
       })
     })
   })
