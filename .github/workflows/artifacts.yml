@@ -4,10 +4,7 @@ run-name: üì¶ Generate artifacts for ${{ github.event_name == 'release' && 'üè
 # This workflow runs whenever QA checks completed successfully,
 # and also whenever a tag is pushed
 on:
-  workflow_run:
-    workflows: [Checks]
-    types:
-      - completed
+  workflow_call:
   release:
     types: [published]
 
@@ -16,18 +13,14 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  NODE_VERSION: 16.17.0
   # a list of apps to build and publish on releases
   APP_NAMES: datafeeder,datahub
 
 jobs:
   build-archive-docker:
-    if: github.event_name == 'release' || github.event.workflow_run.conclusion == 'success'
     name: Build docker images and archives
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16.17.0]
 
     steps:
       - name: Checkout
@@ -36,10 +29,10 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
