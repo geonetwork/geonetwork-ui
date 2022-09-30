@@ -32,6 +32,7 @@ export class BaseComponent implements OnChanges {
 
   constructor(private injector: Injector) {
     this.facade = injector.get(SearchFacade)
+    this.facade.init(this.searchId)
     this.translate = injector.get(TranslateService)
   }
 
@@ -48,7 +49,6 @@ export class BaseComponent implements OnChanges {
         this.titleFont
       )
       this.isInitialized = true
-      this.facade.init(this.searchId)
     }
   }
 }
