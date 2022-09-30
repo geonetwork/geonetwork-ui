@@ -1,5 +1,7 @@
 name: Checks
 run-name: 🩺 Quality assurance checks
+env:
+  NODE_VERSION: 16.17.0
 
 # This workflow runs for Pull Requests which are not draft,
 # as well as commits going to the default branch
@@ -22,10 +24,6 @@ jobs:
     name: Format check, lint, unit tests
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.17.0]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -33,10 +31,10 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
@@ -75,10 +73,6 @@ jobs:
     name: Build affected applications
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.17.0]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -86,10 +80,10 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2

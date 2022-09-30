@@ -2,6 +2,7 @@ name: Deploy
 run-name: 🚀 Deploy to GitHub Pages for 🌱 ${{github.ref_name}}
 
 env:
+  NODE_VERSION: 16.17.0
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
 # This workflow runs whenever QA checks completed successfully
@@ -17,18 +18,14 @@ jobs:
     name: Deploy Storybook to GitHub Pages
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.17.0]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Cache node modules
         uses: actions/cache@v1
