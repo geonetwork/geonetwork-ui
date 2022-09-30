@@ -7,7 +7,7 @@ A defaut router is implemented to manage the search state and the record view st
 
 - `/search` to be on search result page
 - `/search?q=island` search for `any=island`
-- `/search?publisher=island` search for `Org=island`
+- `/search?publisher=island` search for `OrgForResource=island`
 - `/dataset/cf5048f6-5bbf-4e44-ba74-e6f429af51ea` to be on the details of the record page.
 
 ## Principle
@@ -83,6 +83,6 @@ export enum ROUTE_PARAMS {
 export type SearchRouteParams = Partial<Record<ROUTE_PARAMS, string>>
 export const ROUTE_PARAMS_MAPPING: SearchRouteParams = {
   [ROUTE_PARAMS.ANY]: 'any',
-  [ROUTE_PARAMS.PUBLISHER]: 'Org',
+  [ROUTE_PARAMS.PUBLISHER]: 'OrgForResource',
 }
 ```
