@@ -1,4 +1,10 @@
-import { Component, Injector, Input, OnChanges } from '@angular/core'
+import {
+  Component,
+  Injector,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core'
 import { ThemeService } from '@geonetwork-ui/util/shared'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
@@ -17,6 +23,8 @@ export class BaseComponent implements OnChanges {
   @Input() secondaryColor = '#767676'
   @Input() mainColor = '#1a1a1a'
   @Input() backgroundColor = '#cecece'
+  @Input() mainFont = ''
+  @Input() titleFont = ''
 
   isInitialized = false
   facade: SearchFacade
@@ -35,7 +43,9 @@ export class BaseComponent implements OnChanges {
         this.primaryColor,
         this.secondaryColor,
         this.mainColor,
-        this.backgroundColor
+        this.backgroundColor,
+        this.mainFont,
+        this.titleFont
       )
       this.isInitialized = true
       this.facade.init(this.searchId)
