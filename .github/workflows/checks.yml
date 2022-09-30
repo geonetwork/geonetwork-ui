@@ -10,7 +10,7 @@ on:
     branches:
       - master
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, ready_for_review]
 
 # Only allow concurrent checks on the master branch to keep history
 # on QA checks
