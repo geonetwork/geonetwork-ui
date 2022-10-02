@@ -22,6 +22,8 @@
     "map-viewer-e2e": "apps/map-viewer-e2e",
     "search": "apps/search",
     "search-e2e": "apps/search-e2e",
+    "simple-editor": "apps/simple-editor",
+    "simple-editor-e2e": "apps/simple-editor-e2e",
     "ui-catalog": "libs/ui/catalog",
     "ui-elements": "libs/ui/elements",
     "ui-inputs": "libs/ui/inputs",
