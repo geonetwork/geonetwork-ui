@@ -1,7 +1,7 @@
 {
   "projectType": "application",
   "sourceRoot": "apps/simple-editor/src",
-  "prefix": "geonetwork-ui",
+  "prefix": "gn-ui",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",

@@ -1,0 +1,33 @@
+<div class="p-2">{{ label }}</div>
+<div class="pl-4 pr-1 text-sm bg-green-50">
+  <div
+    *ngFor="let item of fieldValue; let i = index; trackBy: trackBy"
+    class="relative"
+  >
+    <ng-container
+      [ngTemplateOutlet]="itemTemplate"
+      [ngTemplateOutletContext]="{
+        getValue: valueGetterByIndex(i),
+        setValue: valueSetterByIndex(i)
+      }"
+    >
+    </ng-container>
+    <button
+      class="bg-red-500 hover:bg-red-700 text-white py-1 px-3 m-1 mr-0 rounded absolute"
+      style="top: 0; right: 0"
+      type="button"
+      (click)="removeItem(i)"
+    >
+      Delete
+    </button>
+  </div>
+  <div class="p-2">
+    <button
+      class="bg-green-500 hover:bg-green-700 text-white py-1 px-3 rounded"
+      type="button"
+      (click)="addItem()"
+    >
+      Add new item
+    </button>
+  </div>
+</div>

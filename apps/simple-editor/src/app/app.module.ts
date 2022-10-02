@@ -1,13 +1,39 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-
 import { AppComponent } from './app.component'
-import { NxWelcomeComponent } from './nx-welcome.component'
+import { RecordFormComponent } from './components/record-form/record-form.component'
+import { RecordOutputXmlComponent } from './components/record-output-xml/record-output-xml.component'
+import { FormsModule } from '@angular/forms'
+import { StatusComponent } from './components/status/status.component'
+import { ThemeService } from '@geonetwork-ui/util/shared'
+import { RecordFieldSimpleComponent } from './components/record-field-simple/record-field-simple.component'
+import { RecordFieldGroupComponent } from './components/record-field-group/record-field-group.component'
+import { RecordFieldArrayComponent } from './components/record-field-array/record-field-array.component'
 
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent],
-  imports: [BrowserModule],
+  declarations: [
+    AppComponent,
+    RecordFormComponent,
+    RecordOutputXmlComponent,
+    StatusComponent,
+    RecordFieldSimpleComponent,
+    RecordFieldGroupComponent,
+    RecordFieldArrayComponent,
+  ],
+  imports: [BrowserModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    ThemeService.applyCssVariables(
+      '#c82850',
+      '#001638',
+      '#212029',
+      '#fdfbff',
+      "'Rubik', sans-serif",
+      "'Readex Pro', sans-serif",
+      'https://fonts.googleapis.com/css2?family=Readex+Pro&family=Rubik&display=swap'
+    )
+  }
+}

@@ -1,1 +1,20 @@
-<geonetwork-ui-nx-welcome></geonetwork-ui-nx-welcome>
+<div class="grid grid-cols-3 grid-rows-auto auto-rows-min h-full">
+  <div class="col-span-3 flex flex-row items-center">
+    <h1 class="text-[50px] font-bold text-title my-6 mx-10">
+      Simple metadata editor
+    </h1>
+    <gn-ui-status
+      #status
+      class="ml-3 text-gray-800 text-[18px]"
+      (newRecordIso19139)="onRecordOutputReceived($event)"
+    ></gn-ui-status>
+  </div>
+  <gn-ui-record-form
+    class="overflow-auto"
+    (recordChanged)="onRecordChange($event)"
+  ></gn-ui-record-form>
+  <gn-ui-record-output-xml
+    #output
+    class="col-span-2 overflow-auto"
+  ></gn-ui-record-output-xml>
+</div>

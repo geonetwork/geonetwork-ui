@@ -1,0 +1,56 @@
+<label>
+  {{ label }}<br />
+  <button
+    class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 rounded"
+    *ngIf="isMissing"
+    type="button"
+    (click)="addValue()"
+  >
+    Add value
+  </button>
+  <input
+    *ngIf="isSimpleText"
+    type="text"
+    [readonly]="readonly"
+    [ngModel]="fieldValue"
+    (ngModelChange)="fieldValueChange.next($event)"
+    (change)="confirm.emit()"
+  />
+  <input
+    *ngIf="isURL"
+    type="text"
+    [readonly]="readonly"
+    [ngModel]="fieldValue.toString()"
+    (ngModelChange)="fieldValueChange.next(toURL($event))"
+    (change)="confirm.emit()"
+  />
+  <textarea
+    rows="4"
+    *ngIf="isRichText"
+    [readonly]="readonly"
+    [ngModel]="fieldValue"
+    (ngModelChange)="fieldValueChange.next($event)"
+    (change)="confirm.emit()"
+  ></textarea>
+  <input
+    *ngIf="isDate"
+    type="datetime-local"
+    [readonly]="readonly"
+    [ngModel]="fieldValue.toISOString().substring(0, 16)"
+    (ngModelChange)="fieldValueChange.next(toDate($event))"
+    (change)="confirm.emit()"
+  />
+  <select
+    *ngIf="hasOptions"
+    [ngModel]="fieldValue"
+    (ngModelChange)="fieldValueChange.next($event); confirm.emit()"
+  >
+    <option
+      *ngFor="let option of options"
+      [selected]="option === fieldValue"
+      [ngValue]="option"
+    >
+      {{ option }}
+    </option>
+  </select>
+</label>
