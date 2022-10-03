@@ -4,7 +4,7 @@ DIST_DEMO_PATH=dist/demo/
 DIST_WC_PATH=${DIST_DEMO_PATH}webcomponents/
 
 echo '-- Build Geonetwork Web Components'
-nx run webcomponents:build --output-hashing=none --output-path=${DIST_WC_PATH}
+nx run webcomponents:build --output-hashing=none --skip-nx-cache --output-path=${DIST_WC_PATH}
 
 echo '-- Publish html page for Web Component'
 mkdir -p $DIST_WC_PATH
