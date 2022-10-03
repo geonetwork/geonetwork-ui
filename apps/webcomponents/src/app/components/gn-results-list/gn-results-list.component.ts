@@ -9,7 +9,11 @@ import {
   ViewEncapsulation,
 } from '@angular/core'
 import { SearchFacade, SearchStateParams } from '@geonetwork-ui/feature/search'
-import { SearchFilters, StateConfigFilters } from '@geonetwork-ui/util/shared'
+import {
+  MetadataRecord,
+  SearchFilters,
+  StateConfigFilters,
+} from '@geonetwork-ui/util/shared'
 import { BaseComponent } from '../base.component'
 
 @Component({
@@ -28,6 +32,7 @@ export class GnResultsListComponent
   @Input() size = 10
   @Input() query: string
   @Input() filter: string
+  @Input() catalogUrl: string
   scrollDisabled: boolean
   @Input() set fixed(value: string) {
     this.scrollDisabled = value === 'true'
@@ -77,5 +82,12 @@ export class GnResultsListComponent
   ngOnChanges(): void {
     super.ngOnChanges()
     this.setSearch_()
+  }
+
+  onMdClick(metadata: MetadataRecord) {
+    if (this.catalogUrl) {
+      const landingPage = this.catalogUrl.replace(/{uuid}/, metadata.uuid)
+      window.open(landingPage, '_blank').focus()
+    }
   }
 }
