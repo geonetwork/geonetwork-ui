@@ -15,7 +15,7 @@ const RouterMock = {
 const expectedRoutes = [
   {
     path: '',
-    redirectTo: 'home/search',
+    redirectTo: 'home/news',
     pathMatch: 'full',
   },
   {
