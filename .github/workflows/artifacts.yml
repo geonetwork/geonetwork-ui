@@ -26,6 +26,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
+          ref: ${{ github.event_name == 'pull_request' && github.head_ref || '' }} # use the PR head ref if applicable; otherwise keep default behaviour
           persist-credentials: false
           fetch-depth: 0
 
