@@ -1,6 +1,7 @@
-<div
-  class="w-72 h-96 overflow-hidden rounded-lg shadow-primary-light bg-white cursor-pointer"
+<a
+  class="w-72 h-96 overflow-hidden rounded-lg shadow-primary-light bg-white cursor-pointer block"
   [routerLink]="['/dataset', record.uuid]"
+  target="_blank"
 >
   <div class="h-52 bg-gray-100">
     <gn-ui-thumbnail
@@ -24,4 +25,4 @@
       </button>
     </div>
   </div>
-</div>
+</a>
