@@ -63,13 +63,7 @@ export const mapLink = (sourceLink: SourceWithUnknownProps): MetadataLink => {
     }
   }
 
-  const sourceName = selectField<string>(sourceLink, 'name')
-  const sourceNameEmpty = sourceName === null || sourceName === ''
-  const filenameRegex = /\/?([^/]+)$/
-  const name =
-    sourceNameEmpty && filenameRegex.test(url)
-      ? url.match(filenameRegex)[1]
-      : sourceName
+  const name = selectField<string>(sourceLink, 'name')
   const description = selectField<string>(sourceLink, 'description')
   const label = description || name
   const protocol = selectField<string>(sourceLink, 'protocol')

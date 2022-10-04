@@ -430,32 +430,6 @@ describe('DataViewMapComponent', () => {
       })
     })
 
-    describe('with a link using ESRI:REST protocol', () => {
-      beforeEach(fakeAsync(() => {
-        mdViewFacade.mapApiLinks$.next([])
-        mdViewFacade.geoDataLinks$.next([
-          {
-            protocol: 'ESRI:REST',
-            name: 'mes_hdf',
-            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/WFSServer/0',
-          },
-        ])
-        tick(200)
-        fixture.detectChanges()
-      }))
-      it('emits a map context with the the downloaded data from WFS', () => {
-        expect(mapComponent.context).toEqual({
-          layers: [
-            {
-              type: 'geojson',
-              data: SAMPLE_GEOJSON,
-            },
-          ],
-          view: expect.any(Object),
-        })
-      })
-    })
-
     describe('with a link using WFS which returns an error', () => {
       beforeEach(() => {
         mdViewFacade.mapApiLinks$.next([])

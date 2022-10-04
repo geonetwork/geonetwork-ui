@@ -121,7 +121,6 @@ describe('ElasticsearchMapper', () => {
               description: 'Download this file!',
               label: 'Download this file!',
               url: 'https://my.website/services/static/data.csv',
-              name: 'data.csv',
             },
           ])
         })

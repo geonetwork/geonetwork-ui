@@ -53,8 +53,6 @@ export class LinkClassifierService {
       }
       if (/^OGC:WFS/.test(link.protocol))
         return [LinkUsage.API, LinkUsage.DOWNLOAD, LinkUsage.GEODATA]
-      if (/^ESRI:REST/.test(link.protocol) && /WFSServer/.test(link.url))
-        return [LinkUsage.API, LinkUsage.DOWNLOAD, LinkUsage.GEODATA]
       if (/^ESRI:REST/.test(link.protocol) && /FeatureServer/.test(link.url))
         return [LinkUsage.API, LinkUsage.DOWNLOAD, LinkUsage.GEODATA]
       if (/^OGC:WMS/.test(link.protocol))

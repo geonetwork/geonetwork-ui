@@ -139,7 +139,7 @@ export const LINK_FIXTURES = {
     url: 'https://my.esri.server/FeatureServer',
   },
   geodataRestWfs: {
-    protocol: 'ESRI:REST',
+    protocol: 'OGC:WFS',
     name: 'mywfsrestlayer',
     label: 'mywfsrestlayer',
     url: 'https://my.esri.server/WFSServer',
