@@ -46,7 +46,12 @@ export class DataService {
       }),
       // eslint-disable-next-line -- ogc-client lacks typing
       map((endpoint: any) => {
-        const featureType = endpoint.getFeatureTypeSummary(featureTypeName)
+        const featureTypes = endpoint.getFeatureTypes()
+        const featureType = endpoint.getFeatureTypeSummary(
+          featureTypes.length === 1 && !featureTypeName
+            ? featureTypes[0].name
+            : featureTypeName
+        )
         if (!featureType) {
           throw new Error('wfs.featuretype.notfound')
         }
