@@ -63,8 +63,8 @@
   [title]="'record.metadata.usage' | translate"
 >
   <div class="py-4 px-6 rounded bg-gray-100 text-gray-700 flex flex-wrap gap-2">
-    <gn-ui-badge *ngIf="metadata.isOpenData" translate>
-      record.metadata.isOpenData
+    <gn-ui-badge *ngIf="metadata.isOpenData">
+      <span translate>record.metadata.isOpenData</span>
     </gn-ui-badge>
     <span *ngFor="let constraint of metadata.constraints">
       {{ constraint }}
