@@ -3,7 +3,6 @@ import { DataService } from './data.service'
 import { readFirst } from '@nrwl/angular/testing'
 import { readDataset } from '@geonetwork-ui/data-fetcher'
 import { PROXY_PATH } from '@geonetwork-ui/util/shared'
-import { getLinksWithEsriRestFormats } from '@geonetwork-ui/feature/search'
 
 const newEndpointCall = jest.fn()
 
@@ -49,6 +48,26 @@ jest.mock('@camptocamp/ogc-client', () => ({
                 ? ['csv', 'xls']
                 : ['csv', 'xls', 'json'],
           }
+    }
+    getFeatureTypes() {
+      if (this.url.indexOf('unique-feature-type') > -1) {
+        return [
+          {
+            name: 'myOnlyOne',
+          },
+        ]
+      }
+      return [
+        {
+          name: 'ft1',
+        },
+        {
+          name: 'ft2',
+        },
+        {
+          name: 'ft3',
+        },
+      ]
     }
   },
 }))
@@ -244,6 +263,40 @@ describe('DataService', () => {
           ])
         })
       })
+      describe('WFS with only one feature type, no feature type name specified', () => {
+        it('returns a list of links using the only feature type', async () => {
+          const urls = await readFirst(
+            service.getDownloadLinksFromWfs({
+              ...link,
+              url: 'http://unique-feature-type/wfs',
+              name: '',
+            })
+          )
+          expect(urls).toEqual([
+            {
+              description: 'Lieu de surveillance (ligne)',
+              format: 'csv',
+              name: '',
+              protocol: 'OGC:WFS',
+              url: 'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=csv',
+            },
+            {
+              description: 'Lieu de surveillance (ligne)',
+              format: 'xls',
+              name: '',
+              protocol: 'OGC:WFS',
+              url: 'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=xls',
+            },
+            {
+              description: 'Lieu de surveillance (ligne)',
+              format: 'json',
+              name: '',
+              protocol: 'OGC:WFS',
+              url: 'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=json',
+            },
+          ])
+        })
+      })
     })
 
     describe('#getGeoJsonDownloadUrlFromWfs', () => {
@@ -271,7 +324,21 @@ describe('DataService', () => {
           }
         })
       })
+      describe('WFS with only one feature type, no feature type name specified', () => {
+        it('returns one valid link using the only feature type', async () => {
+          const url = await readFirst(
+            service.getGeoJsonDownloadUrlFromWfs(
+              'http://unique-feature-type/wfs',
+              ''
+            )
+          )
+          expect(url).toEqual(
+            'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=geojson'
+          )
+        })
+      })
     })
+
     describe('#getGeoJsonDownloadUrlFromEsriRest', () => {
       it('builds the url using API url', () => {
         expect(

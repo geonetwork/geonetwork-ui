@@ -297,10 +297,7 @@ describe('LinkHelperService', () => {
     it('returns true for a WFS link', () => {
       expect(service.isWfsLink(LINK_FIXTURES.geodataWfs)).toBeTruthy()
     })
-    it('returns true for a ESRI WFS link', () => {
-      expect(service.isWfsLink(LINK_FIXTURES.geodataRestWfs)).toBeTruthy()
-    })
-    it('returns false for a WFS link', () => {
+    it('returns false for a WMS link', () => {
       expect(service.isWfsLink(LINK_FIXTURES.geodataWms)).toBeFalsy()
     })
   })
@@ -310,7 +307,7 @@ describe('LinkHelperService', () => {
         service.isEsriRestFeatureServer(LINK_FIXTURES.geodataRest)
       ).toBeTruthy()
     })
-    it('returns false for a ESRI:REST WFSServer link', () => {
+    it('returns false for a WFS link', () => {
       expect(
         service.isEsriRestFeatureServer(LINK_FIXTURES.geodataRestWfs)
       ).toBeFalsy()

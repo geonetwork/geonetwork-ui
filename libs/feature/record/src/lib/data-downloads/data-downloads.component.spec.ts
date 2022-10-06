@@ -178,7 +178,7 @@ describe('DataDownloadsComponent', () => {
             url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
           },
           {
-            protocol: 'ESRI:REST',
+            protocol: 'OGC:WFS',
             name: 'mes_hdf',
             format: 'arcgis geoservices rest api',
             description: 'ArcGIS GeoService Wfs',
@@ -222,7 +222,7 @@ describe('DataDownloadsComponent', () => {
             format: 'WFS:csv',
             mediaType: 'application/json',
             name: 'mes_hdf',
-            protocol: 'ESRI:REST',
+            protocol: 'OGC:WFS',
             url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/WFSServer/0',
           },
           {
@@ -244,7 +244,7 @@ describe('DataDownloadsComponent', () => {
             format: 'WFS:geojson',
             mediaType: 'application/json',
             name: 'mes_hdf',
-            protocol: 'ESRI:REST',
+            protocol: 'OGC:WFS',
             url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/WFSServer/0',
           },
           {

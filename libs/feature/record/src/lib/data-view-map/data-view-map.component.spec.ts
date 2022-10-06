@@ -103,7 +103,7 @@ const SAMPLE_GEOJSON = {
 
 class DataServiceMock {
   getGeoJsonDownloadUrlFromWfs = jest.fn((url) => of(url + '?download'))
-  getGeoJsonDownloadUrlFromEsriRest = jest.fn((url) => of(url + '?download'))
+  getGeoJsonDownloadUrlFromEsriRest = jest.fn((url) => url + '?download')
   readGeoJsonDataset = jest.fn((url) =>
     url.indexOf('error') > -1
       ? throwError(new Error('data loading error'))
@@ -437,13 +437,13 @@ describe('DataViewMapComponent', () => {
           {
             protocol: 'ESRI:REST',
             name: 'mes_hdf',
-            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/WFSServer/0',
+            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/FeatureServer/0',
           },
         ])
         tick(200)
         fixture.detectChanges()
       }))
-      it('emits a map context with the the downloaded data from WFS', () => {
+      it('emits a map context with the the downloaded data from the ESRI REST API', () => {
         expect(mapComponent.context).toEqual({
           layers: [
             {

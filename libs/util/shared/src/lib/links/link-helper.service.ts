@@ -62,10 +62,7 @@ export class LinkHelperService {
     return /^OGC:WMTS/.test(link.protocol)
   }
   isWfsLink(link: MetadataLinkValid): boolean {
-    return (
-      /^OGC:WFS/.test(link.protocol) ||
-      (/^ESRI:REST/.test(link.protocol) && /WFSServer/.test(link.url))
-    )
+    return /^OGC:WFS/.test(link.protocol)
   }
   isLandingPage(link: MetadataLink): boolean {
     return this.linkClassifier
