@@ -1,7 +1,7 @@
 import { OverlayContainer } from '@angular/cdk/overlay'
 import { Platform } from '@angular/cdk/platform'
 import { CommonModule, DOCUMENT } from '@angular/common'
-import { Inject, Injector, NgModule } from '@angular/core'
+import { Injector, NgModule } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
 import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
@@ -22,8 +22,6 @@ import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { TranslateModule } from '@ngx-translate/core'
-import { DATAHUB_RESULTS_LAYOUT_CONFIG } from '../../../datahub/src/app/app.config'
-import { RecordPreviewDatahubComponent } from '../../../datahub/src/app/home/search/record-preview-datahub/record-preview-datahub.component'
 import { AppComponent } from './app.component'
 import { AppOverlayContainer } from './AppOverlayContainer'
 import { apiConfiguration, BaseComponent } from './components/base.component'
@@ -52,7 +50,6 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     GnFacetsComponent,
     GnResultsListComponent,
     GnAggregatedRecordsComponent,
-    RecordPreviewDatahubComponent,
     GnSearchInputComponent,
   ],
   imports: [
@@ -70,13 +67,6 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     MatIconModule,
   ],
   providers: [
-    {
-      provide: RESULTS_LAYOUT_CONFIG,
-      useValue: {
-        ...DEFAULT_RESULTS_LAYOUT_CONFIG,
-        ...DATAHUB_RESULTS_LAYOUT_CONFIG,
-      },
-    },
     {
       provide: Configuration,
       useValue: apiConfiguration,

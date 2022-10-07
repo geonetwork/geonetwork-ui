@@ -108,7 +108,6 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     UiElementsModule,
   ],
   providers: [
-    { provide: RESULTS_LAYOUT_CONFIG, useValue: DATAHUB_RESULTS_LAYOUT_CONFIG },
     { provide: RouterService, useClass: DatahubRouterService },
     {
       provide: Configuration,

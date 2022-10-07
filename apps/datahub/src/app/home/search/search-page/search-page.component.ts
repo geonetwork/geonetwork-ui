@@ -21,7 +21,7 @@ export class SearchPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.searchFacade.setResultsLayout('DATAHUB')
+    this.searchFacade.setResultsLayout('ROW')
   }
 
   onMetadataSelection(metadata: MetadataRecord): void {
