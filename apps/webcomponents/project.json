@@ -22,11 +22,7 @@
             "output": "assets/i18n/"
           }
         ],
-        "styles": [
-          "apps/datahub/src/styles.css",
-          "node_modules/ol/ol.css",
-          "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
-        ],
+        "styles": [],
         "scripts": [],
         "allowedCommonJsDependencies": [
           "duration-relativetimeformat",
@@ -43,13 +39,13 @@
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "500kb",
-              "maximumError": "2mb"
+              "maximumWarning": "2mb",
+              "maximumError": "10mb"
             },
             {
               "type": "anyComponentStyle",
-              "maximumWarning": "12kb",
-              "maximumError": "256kb"
+              "maximumWarning": "256kb",
+              "maximumError": "1mb"
             }
           ],
           "fileReplacements": [

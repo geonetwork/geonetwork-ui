@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnInit,
   ViewEncapsulation,
 } from '@angular/core'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
@@ -15,6 +14,4 @@ import { BaseComponent } from '../base.component'
   encapsulation: ViewEncapsulation.ShadowDom,
   providers: [SearchFacade, SearchService],
 })
-export class GnSearchInputComponent extends BaseComponent implements OnInit {
-  ngOnInit(): void {}
-}
+export class GnSearchInputComponent extends BaseComponent {}
