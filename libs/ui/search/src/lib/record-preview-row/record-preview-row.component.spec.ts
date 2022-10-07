@@ -2,22 +2,22 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 
-import { RecordPreviewDatahubComponent } from './record-preview-datahub.component'
+import { RecordPreviewRowComponent } from './record-preview-row.component'
 
 describe('RecordPreviewDatahubComponent', () => {
-  let component: RecordPreviewDatahubComponent
-  let fixture: ComponentFixture<RecordPreviewDatahubComponent>
+  let component: RecordPreviewRowComponent
+  let fixture: ComponentFixture<RecordPreviewRowComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecordPreviewDatahubComponent],
+      declarations: [RecordPreviewRowComponent],
       imports: [UtilSharedModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecordPreviewDatahubComponent)
+    fixture = TestBed.createComponent(RecordPreviewRowComponent)
     component = fixture.componentInstance
     component.record = {
       id: '139',

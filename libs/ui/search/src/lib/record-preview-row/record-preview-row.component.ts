@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
-import { RecordPreviewComponent } from '@geonetwork-ui/ui/search'
+import { RecordPreviewComponent } from '../record-preview/record-preview.component'
 import { stripHtml } from '@geonetwork-ui/util/shared'
 
 @Component({
-  selector: 'datahub-record-preview-datahub',
-  templateUrl: './record-preview-datahub.component.html',
-  styleUrls: ['./record-preview-datahub.component.css'],
+  selector: 'gn-ui-record-preview-row',
+  templateUrl: './record-preview-row.component.html',
+  styleUrls: ['./record-preview-row.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RecordPreviewDatahubComponent
+export class RecordPreviewRowComponent
   extends RecordPreviewComponent
   implements OnInit
 {

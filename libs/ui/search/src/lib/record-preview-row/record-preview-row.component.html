@@ -45,9 +45,13 @@
         >map</mat-icon
       >
     </div>
-    <gn-ui-favorite-star
+    <div
       class="text-right col-start-2 row-start-4 sm:absolute sm:col-start-2 sm:row-start-1 sm:top-[-1.125em] sm:right-[0.4em]"
-      [record]="record"
-    ></gn-ui-favorite-star>
+    >
+      <ng-container
+        [ngTemplateOutlet]="favoriteTemplate"
+        [ngTemplateOutletContext]="{ $implicit: record }"
+      ></ng-container>
+    </div>
   </div>
 </div>

@@ -4,14 +4,20 @@ import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
 import { Event, Router, RouterModule, Scroll } from '@angular/router'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
+import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
 import {
   DefaultRouterModule,
-  RouterService,
   ROUTER_ROUTE_DATASET,
+  RouterService,
 } from '@geonetwork-ui/feature/router'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
+import {
+  THUMBNAIL_PLACEHOLDER,
+  UiElementsModule,
+} from '@geonetwork-ui/ui/elements'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { RESULTS_LAYOUT_CONFIG, UiSearchModule } from '@geonetwork-ui/ui/search'
 import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import {
@@ -34,27 +40,19 @@ import { filter } from 'rxjs/operators'
 import { environment } from '../environments/environment'
 
 import { AppComponent } from './app.component'
-import { DATAHUB_RESULTS_LAYOUT_CONFIG } from './app.config'
 import { HeaderBadgeButtonComponent } from './home/header-badge-button/header-badge-button.component'
-import { HeaderRecordComponent } from './record/header-record/header-record.component'
-import { RecordPageComponent } from './record/record-page/record-page.component'
-import { RecordPreviewDatahubComponent } from './home/search/record-preview-datahub/record-preview-datahub.component'
 import { HomeHeaderComponent } from './home/home-header/home-header.component'
 import { HomePageComponent } from './home/home-page/home-page.component'
-import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
-import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
-import { SearchSummaryComponent } from './home/search/search-summary/search-summary.component'
-import { NavigationBarComponent } from './record/navigation-bar/navigation-bar.component'
-import {
-  THUMBNAIL_PLACEHOLDER,
-  UiElementsModule,
-} from '@geonetwork-ui/ui/elements'
+import { KeyFiguresComponent } from './home/news-page/key-figures/key-figures.component'
+import { LastCreatedComponent } from './home/news-page/last-created/last-created.component'
 import { NewsPageComponent } from './home/news-page/news-page.component'
-import { DatahubRouterService } from './router/datahub-router.service'
 import { OrganisationsPageComponent } from './home/organisations-page/organisations-page.component'
 import { SearchPageComponent } from './home/search/search-page/search-page.component'
-import { LastCreatedComponent } from './home/news-page/last-created/last-created.component'
-import { KeyFiguresComponent } from './home/news-page/key-figures/key-figures.component'
+import { SearchSummaryComponent } from './home/search/search-summary/search-summary.component'
+import { HeaderRecordComponent } from './record/header-record/header-record.component'
+import { NavigationBarComponent } from './record/navigation-bar/navigation-bar.component'
+import { RecordPageComponent } from './record/record-page/record-page.component'
+import { DatahubRouterService } from './router/datahub-router.service'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
@@ -63,7 +61,6 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   declarations: [
     AppComponent,
     HomePageComponent,
-    RecordPreviewDatahubComponent,
     HomeHeaderComponent,
     HeaderBadgeButtonComponent,
     HeaderRecordComponent,

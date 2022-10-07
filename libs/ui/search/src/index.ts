@@ -6,3 +6,4 @@ export * from './lib/results-list/results-layout.config'
 export * from './lib/record-preview/record-preview.component'
 
 export * from './lib/record-preview-feed/record-preview-feed.component'
+export * from './lib/record-preview-row/record-preview-row.component'
