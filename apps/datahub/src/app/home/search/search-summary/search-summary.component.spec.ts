@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
+import { SearchFilters } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject } from 'rxjs'
 
 import { SearchSummaryComponent } from './search-summary.component'
 
-const state = { OrgForResource: { mel: true } }
+const state = { OrgForResource: { mel: true } } as SearchFilters
 const searchFacadeMock = {
   searchFilters$: new BehaviorSubject(state),
 }
