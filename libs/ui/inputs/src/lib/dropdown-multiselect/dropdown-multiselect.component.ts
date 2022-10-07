@@ -3,15 +3,13 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
+  ViewChild,
 } from '@angular/core'
 import {
-  // CdkConnectedOverlay,
-  // CdkOverlayOrigin,
+  CdkOverlayOrigin,
   ConnectedPosition,
-  // Overlay,
-  // ScrollStrategy,
+  ScrollStrategyOptions,
 } from '@angular/cdk/overlay'
 
 interface Choice {
@@ -27,12 +25,12 @@ interface Choice {
 })
 export class DropdownMultiselectComponent {
   @Input() title: string
-  @Input() ariaName: string
   @Input() choices: Choice[]
   @Input() selected: unknown[]
   @Input() allowSearch = true
+  @Input() maxRows: number
   @Output() selectValues = new EventEmitter<unknown[]>()
-
+  @ViewChild('overlayOrigin') overlayOrigin: CdkOverlayOrigin
   overlayPositions: ConnectedPosition[] = [
     {
       originX: 'start',
@@ -41,18 +39,52 @@ export class DropdownMultiselectComponent {
       overlayY: 'top',
     },
   ]
+  scrollStrategy = this.scrollStrategies.reposition()
+  overlayOpen = false
+  overlayWidth = 'auto'
+  overlayMaxHeight = 'none'
+  id = `dropdown-multiselect-${Math.floor(Math.random() * 10000)}`
 
-  panelOpen = true
+  get hasSelectedChoices() {
+    return this.selected.length > 0
+  }
 
-  attach() { }
-  detach() { }
-  handleKeyDown() { }
+  constructor(private scrollStrategies: ScrollStrategyOptions) {}
+
+  openOverlay() {
+    this.overlayWidth =
+      this.overlayOrigin.elementRef.nativeElement.getBoundingClientRect()
+        .width + 'px'
+    this.overlayMaxHeight = this.maxRows
+      ? `${this.maxRows * 32.5 + 18}px`
+      : 'none'
+    this.overlayOpen = true
+  }
+  closeOverlay() {
+    this.overlayOpen = false
+  }
+  toggleOverlay() {
+    this.overlayOpen = !this.overlayOpen
+  }
+  handleKeydown(event: KeyboardEvent): void {
+    const keyCode = event.code
+    const isArrowKey =
+      keyCode === 'ArrowDown' ||
+      keyCode === 'ArrowUp' ||
+      keyCode === 'ArrowLeft' ||
+      keyCode === 'ArrowRight'
+    const isOpenKey = keyCode === 'Enter' || keyCode === 'Space'
+    if (isArrowKey || isOpenKey) {
+      event.preventDefault() // prevents the page from scrolling down when pressing space
+      this.toggleOverlay()
+    }
+  }
 
   isSelected(choice: Choice) {
     return this.selected.indexOf(choice.value) > -1
   }
-  select(choice: Choice, selected: any) {
-    this.selected = selected.checked
+  select(choice: Choice, selected: boolean) {
+    this.selected = selected
       ? [...this.selected.filter((v) => v !== choice.value), choice.value]
       : this.selected.filter((v) => v !== choice.value)
     this.selectValues.emit(this.selected)

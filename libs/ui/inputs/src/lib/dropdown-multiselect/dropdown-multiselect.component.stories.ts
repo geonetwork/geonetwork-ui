@@ -58,18 +58,18 @@ const Template: Story<DropdownMultiselectComponent> = (
 export const Primary = Template.bind({})
 Primary.args = {
   title: 'my title',
-  ariaName: 'select-dropdown',
   choices: [
     {
       label: 'My Choice 1',
       value: 'choice1',
     },
     {
-      label: 'My Choice 2',
+      label:
+        'My Choice 2 (very, very, very, very, very, very long text coming up)',
       value: 'choice2',
     },
     {
-      label: 'My Choice 3',
+      label: 'My Choice 3 (very long text coming up)',
       value: { name: 'choice3' },
     },
     {
@@ -83,6 +83,7 @@ Primary.args = {
   ],
   selected: ['choice1'],
   allowSearch: true,
+  maxRows: 4,
 }
 Primary.argTypes = {
   selectValues: {

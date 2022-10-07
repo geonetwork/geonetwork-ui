@@ -1,49 +1,55 @@
-<div
-  [attr.aria-owns]="'todo'"
-  (click)="panelOpen = true"
+<button
+  type="button"
+  class="p-2 pl-4 border border-gray-300 bg-white rounded flex transition-all duration-100 hover:text-primary-darker hover:border-primary-lightest focus:text-primary-darker focus:border-primary-lightest"
+  [title]="title"
+  [attr.aria-owns]="id"
+  (click)="toggleOverlay()"
+  (keydown)="handleKeydown($event)"
   cdkOverlayOrigin
   #overlayOrigin="cdkOverlayOrigin"
 >
-  <span class="">{{ title }}</span>
-  <div>
-    <!-- Use an inline SVG, because it works better than a CSS triangle in high contrast mode. -->
-    <svg viewBox="0 0 24 24" width="24px" height="24px" focusable="false">
-      <path d="M7 10l5 5 5-5z" />
-    </svg>
-  </div>
-</div>
+  <span class="flex-grow truncate font-medium mr-2">
+    {{ title }}
+  </span>
+  <mat-icon class="flex-shrink-0 opacity-[40%]">
+    <ng-container *ngIf="overlayOpen">expand_less</ng-container>
+    <ng-container *ngIf="!overlayOpen">expand_more</ng-container>
+  </mat-icon>
+</button>
 
 <ng-template
   cdkConnectedOverlay
-  cdkConnectedOverlayLockPosition
   cdkConnectedOverlayHasBackdrop
   cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
   [cdkConnectedOverlayOrigin]="overlayOrigin"
-  [cdkConnectedOverlayOpen]="panelOpen"
+  [cdkConnectedOverlayOpen]="overlayOpen"
   [cdkConnectedOverlayPositions]="overlayPositions"
-  [cdkConnectedOverlayWidth]="'400px'"
-  (backdropClick)="panelOpen = false"
-  (attach)="attach()"
-  (detach)="detach()"
+  [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
+  [cdkConnectedOverlayOffsetY]="8"
+  (backdropClick)="closeOverlay()"
+  (attach)="openOverlay()"
+  (detach)="closeOverlay()"
 >
   <div
-    #panel
-    class="bg-white border border-grey-400 p-3 shadow-lg rounded"
+    class="bg-white border border-gray-300 rounded shadow-lg py-2 w-full overflow-x-hidden overflow-y-auto"
+    [style.max-height]="overlayMaxHeight"
+    [style.width]="overlayWidth"
     role="listbox"
     tabindex="-1"
-    [attr.id]="'todo'"
+    [attr.id]="id"
     [attr.aria-multiselectable]="true"
-    [attr.aria-label]="'todo'"
-    [attr.aria-labelledby]="'todo'"
-    (keydown)="handleKeyDown($event)"
+    [attr.aria-label]="title"
   >
     <div *ngFor="let choice of choices">
       <mat-checkbox
-        [aria-label]="'todo'"
+        class="px-5 py-1 w-full text-gray-900 hover:text-primary-darkest hover:bg-gray-50"
+        [aria-label]="choice.label"
         [checked]="isSelected(choice)"
-        (change)="select(choice, $event)"
+        (change)="select(choice, $event.checked)"
       >
-        {{ choice.label }}
+        <span class="ml-[2px] text-[14px] truncate">
+          {{ choice.label }}
+        </span>
       </mat-checkbox>
     </div>
   </div>

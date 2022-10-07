@@ -1,7 +1,6 @@
 <div>
   <gn-ui-dropdown-multiselect
     [title]="fieldName"
-    [ariaName]="fieldName"
     [choices]="choices$ | async"
     [selected]="selected$ | async"
     (selectValues)="onSelectedValues($event)"
