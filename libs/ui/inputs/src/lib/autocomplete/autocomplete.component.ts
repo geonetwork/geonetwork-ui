@@ -114,6 +114,7 @@ export class AutocompleteComponent
 
   clear(): void {
     this.inputRef.nativeElement.value = ''
+    this.inputSubmitted.emit('')
     this.selectionSubject
       .pipe(take(1))
       .subscribe((selection) => selection && selection.option.deselect())

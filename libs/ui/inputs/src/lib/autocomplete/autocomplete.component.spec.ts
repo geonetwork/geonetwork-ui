@@ -100,11 +100,13 @@ describe('AutocompleteComponent', () => {
       })
     })
     describe('when input is not empty', () => {
+      let anyEmitted
       let button
       beforeEach(() => {
         component.inputRef.nativeElement.value = 'blar'
         component.inputRef.nativeElement.dispatchEvent(new InputEvent('input'))
         component.triggerRef.closePanel = jest.fn()
+        component.inputSubmitted.subscribe((event) => (anyEmitted = event))
         fixture.detectChanges()
         button = fixture.debugElement.query(By.css('.clear-btn'))
       })
@@ -122,6 +124,10 @@ describe('AutocompleteComponent', () => {
       it('closes the autocomplete panel', () => {
         button.nativeElement.click()
         expect(component.triggerRef.closePanel).toHaveBeenCalled()
+      })
+      it('clears search result by emitting empty string', () => {
+        button.nativeElement.click()
+        expect(anyEmitted).toEqual('')
       })
     })
   })
