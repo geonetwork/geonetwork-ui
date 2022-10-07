@@ -29,7 +29,6 @@
     "build:storybook": "nx run demo:build-storybook",
     "storybook-wc": "nx run webcomponents:build --output-hashing=none && nx run webcomponents:storybook",
     "build:storybook-wc": "nx run webcomponents:build --output-hashing=none && nx run webcomponents:build-storybook",
-    "build:wc": "nx run webcomponents:build",
     "build:demo": "tools/build/webcomponent/prepare-wc-pages.sh",
     "demo": "tools/build/webcomponent/prepare-wc-pages.sh --serve",
     "generate-api": "tools/generate-api.sh",
