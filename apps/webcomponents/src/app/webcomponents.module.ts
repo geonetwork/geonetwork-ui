@@ -1,5 +1,7 @@
-import { CommonModule } from '@angular/common'
-import { Injector, NgModule } from '@angular/core'
+import { OverlayContainer } from '@angular/cdk/overlay'
+import { Platform } from '@angular/cdk/platform'
+import { CommonModule, DOCUMENT } from '@angular/common'
+import { Inject, Injector, NgModule } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
 import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
@@ -78,6 +80,15 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     {
       provide: Configuration,
       useValue: apiConfiguration,
+    },
+    {
+      provide: OverlayContainer,
+      useFactory: (document: Document, platform: Platform) => {
+        const container = new AppOverlayContainer(document, platform)
+        container.setSelector('gn-search-input')
+        return container
+      },
+      deps: [DOCUMENT, Platform],
     },
   ],
   // bootstrap: [AppComponent],

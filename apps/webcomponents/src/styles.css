@@ -1,7 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import './node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
+
+.app-overlay-container {
+  position: absolute;
+  z-index: 1000;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.app-overlay-container:empty {
+  display: none;
+}
+
 :host {
   font-family: var(--font-family-main);
   color: var(--color-main);
