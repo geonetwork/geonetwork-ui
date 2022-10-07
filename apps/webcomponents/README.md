@@ -1,5 +1,6 @@
 # GeoNetwork UI Web Components
 
+Visit the online [demo page](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
 This directory contains [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) relying on the same code as the full GeoNetwork UI, and which are available for use in third-party apps.
 
 Web Components are published through an Angular application `webcomponents` hosted in `apps/webcomponents/src` folder. It's a common Angular application, the only difference is that all Angular components
@@ -16,19 +17,21 @@ Web Components are made to be easily included in any context, e.g.:
   api-url="https://apps.titellus.net/geonetwork/srv/api"
   size="10"
   layout="TITLE"
-  filters="+tag.default:Soil"
+  filters="soil"
 ></gn-results-list>
 ```
 
 ## Build
 
-All Angular custom elements are served by the same application `webcomponents`
+All Angular custom elements are served by the same application `webcomponents`.
+
+Therefore, there is only one build and one javascript file for any web components `gn-wc.js`.
 
 ```
-npm run build:wc
+npm run build:demo
 ```
 
-You'll find the build files in `webcomponents/dist`
+You'll find the build files in `webcomponents/dist/demo/webcomponents` folder
 
 ## Run
 
@@ -44,8 +47,6 @@ Note that each WebComponent should appear in two stories: one where it is includ
 
 ### Web server
 
-> NOTE: this is currently not functional
-
 To test your Web Component in a real production context
 
 ```shell script
@@ -53,6 +54,8 @@ npm run demo
 ```
 
 **Important:** The components are built in `production` mode.
+
+You can go on http://localhost:8001/ to visit geonetwork-ui demo pages.
 
 You'll be able to test your Web Components on `http://localhost:8001/webcomponents/{name_of_sample_file}`
 
