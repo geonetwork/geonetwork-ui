@@ -1,8 +1,9 @@
 import { OverlayModule } from '@angular/cdk/overlay'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-
 import { DropdownMultiselectComponent } from './dropdown-multiselect.component'
 import { MatIconModule } from '@angular/material/icon'
+import { By } from '@angular/platform-browser'
+import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
 
 describe('DropdownMultiselectComponent', () => {
   let component: DropdownMultiselectComponent
@@ -12,10 +13,16 @@ describe('DropdownMultiselectComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [DropdownMultiselectComponent],
       imports: [OverlayModule, MatIconModule],
-    }).compileComponents()
+    })
+      .overrideComponent(DropdownMultiselectComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents()
 
     fixture = TestBed.createComponent(DropdownMultiselectComponent)
     component = fixture.componentInstance
+    component.choices = []
+    component.selected = []
     fixture.detectChanges()
   })
 
@@ -82,6 +89,31 @@ describe('DropdownMultiselectComponent', () => {
       it('sets the max height according to the max rows input', () => {
         // we don't need the exact measurement, just to make sure it's an actual value
         expect(component.overlayMaxHeight).toBe('none')
+      })
+    })
+  })
+
+  describe('selected choices count', () => {
+    let selectedCountEl: DebugElement
+    describe('if one or more selected choices', () => {
+      beforeEach(() => {
+        component.selected = ['aa', 'bb']
+        fixture.detectChanges()
+        selectedCountEl = fixture.debugElement.query(By.css('.selected-count'))
+      })
+      it('shows the count', () => {
+        expect(selectedCountEl).toBeTruthy()
+        expect(selectedCountEl.nativeElement.textContent.trim()).toEqual('2')
+      })
+    })
+    describe('if no selected choice', () => {
+      beforeEach(() => {
+        component.selected = []
+        fixture.detectChanges()
+        selectedCountEl = fixture.debugElement.query(By.css('.selected-count'))
+      })
+      it('shows the count', () => {
+        expect(selectedCountEl).toBeFalsy()
       })
     })
   })

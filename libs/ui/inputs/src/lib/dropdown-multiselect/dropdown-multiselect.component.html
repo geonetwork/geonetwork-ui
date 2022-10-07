@@ -1,6 +1,6 @@
 <button
   type="button"
-  class="p-2 pl-4 border border-gray-300 bg-white rounded flex transition-all duration-100 hover:text-primary-darker hover:border-primary-lightest focus:text-primary-darker focus:border-primary-lightest"
+  class="p-2 pl-4 border border-gray-300 bg-white rounded flex items-center transition-all duration-100 hover:text-primary-darker hover:border-primary-lightest focus:text-primary-darker focus:border-primary-lightest"
   [title]="title"
   [attr.aria-owns]="id"
   (click)="toggleOverlay()"
@@ -8,9 +8,15 @@
   cdkOverlayOrigin
   #overlayOrigin="cdkOverlayOrigin"
 >
-  <span class="flex-grow truncate font-medium mr-2">
+  <div class="flex-grow text-left truncate font-medium mr-2">
     {{ title }}
-  </span>
+  </div>
+  <div
+    *ngIf="hasSelectedChoices"
+    class="flex-shrink-0 rounded rounded-full bg-primary text-white font-bold text-[13px] w-6 h-6 py-[3px] mr-1 selected-count"
+  >
+    {{ selected.length }}
+  </div>
   <mat-icon class="flex-shrink-0 opacity-[40%]">
     <ng-container *ngIf="overlayOpen">expand_less</ng-container>
     <ng-container *ngIf="!overlayOpen">expand_more</ng-container>

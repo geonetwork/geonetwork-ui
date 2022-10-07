@@ -48,6 +48,9 @@ export class DropdownMultiselectComponent {
   get hasSelectedChoices() {
     return this.selected.length > 0
   }
+  get hasSelectedChoices() {
+    return this.selected.length > 0
+  }
 
   constructor(private scrollStrategies: ScrollStrategyOptions) {}
 
