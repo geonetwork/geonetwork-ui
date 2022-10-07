@@ -1,5 +1,6 @@
 import { InjectionToken, Type } from '@angular/core'
 import { RecordPreviewCardComponent } from '../record-preview-card/record-preview-card.component'
+import { RecordPreviewFeedComponent } from '../record-preview-feed/record-preview-feed.component'
 import { RecordPreviewListComponent } from '../record-preview-list/record-preview-list.component'
 import { RecordPreviewRowComponent } from '../record-preview-row/record-preview-row.component'
 import { RecordPreviewTextComponent } from '../record-preview-text/record-preview-text.component'
@@ -34,6 +35,12 @@ export const DEFAULT_RESULTS_LAYOUT_CONFIG: ResultsLayoutConfigModel = {
     'pt-4 pb-5 sm:py-7',
     '',
     'grid grid-cols-1 divide-y divide-gray-300'
+  ),
+  FEED: new ResultsLayoutConfigItem(
+    RecordPreviewFeedComponent,
+    'p-0',
+    undefined,
+    'gap-0 p-0'
   ),
   LIST: new ResultsLayoutConfigItem(RecordPreviewListComponent),
   TEXT: new ResultsLayoutConfigItem(RecordPreviewTextComponent),

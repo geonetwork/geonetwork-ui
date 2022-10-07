@@ -13,21 +13,6 @@ import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
   templateUrl: './last-created.component.html',
   styleUrls: ['./last-created.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: RESULTS_LAYOUT_CONFIG,
-      useValue: {
-        FEED: new ResultsLayoutConfigItem(
-          RecordPreviewFeedComponent,
-          'p-0',
-          undefined,
-          'gap-0 p-0'
-        ),
-      },
-    },
-    SearchFacade,
-    SearchService,
-  ],
 })
 export class LastCreatedComponent {
   constructor(
