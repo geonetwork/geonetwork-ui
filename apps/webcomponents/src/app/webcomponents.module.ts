@@ -23,15 +23,18 @@ import { TranslateModule } from '@ngx-translate/core'
 import { DATAHUB_RESULTS_LAYOUT_CONFIG } from '../../../datahub/src/app/app.config'
 import { RecordPreviewDatahubComponent } from '../../../datahub/src/app/home/search/record-preview-datahub/record-preview-datahub.component'
 import { AppComponent } from './app.component'
+import { AppOverlayContainer } from './AppOverlayContainer'
 import { apiConfiguration, BaseComponent } from './components/base.component'
 import { GnAggregatedRecordsComponent } from './components/gn-aggregated-records/gn-aggregated-records.component'
 import { GnFacetsComponent } from './components/gn-facets/gn-facets.component'
 import { GnResultsListComponent } from './components/gn-results-list/gn-results-list.component'
+import { GnSearchInputComponent } from './components/gn-search-input/gn-search-input.component'
 
 const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnFacetsComponent, 'gn-facets'],
   [GnResultsListComponent, 'gn-results-list'],
   [GnAggregatedRecordsComponent, 'gn-aggregated-records'],
+  [GnSearchInputComponent, 'gn-search-input'],
 ]
 
 @NgModule({
@@ -48,6 +51,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     GnResultsListComponent,
     GnAggregatedRecordsComponent,
     RecordPreviewDatahubComponent,
+    GnSearchInputComponent,
   ],
   imports: [
     CommonModule,

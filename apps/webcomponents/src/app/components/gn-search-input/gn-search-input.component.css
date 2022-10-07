@@ -1,0 +1,6 @@
+@import '../../../styles.css';
+
+.mat-autocomplete-panel {
+  margin-top: 10px;
+  border-radius: 8px;
+}
