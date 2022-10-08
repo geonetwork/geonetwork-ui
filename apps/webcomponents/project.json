@@ -22,7 +22,7 @@
             "output": "assets/i18n/"
           }
         ],
-        "styles": [],
+        "styles": ["apps/webcomponents/src/styles.css"],
         "scripts": [],
         "allowedCommonJsDependencies": [
           "duration-relativetimeformat",
