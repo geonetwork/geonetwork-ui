@@ -1,19 +1,16 @@
 import { OverlayContainer } from '@angular/cdk/overlay'
 import { Platform } from '@angular/cdk/platform'
 import { CommonModule, DOCUMENT } from '@angular/common'
-import { Injector, NgModule } from '@angular/core'
+import { CUSTOM_ELEMENTS_SCHEMA, Injector, NgModule } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
 import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
+import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import {
-  DEFAULT_RESULTS_LAYOUT_CONFIG,
-  RESULTS_LAYOUT_CONFIG,
-  UiSearchModule,
-} from '@geonetwork-ui/ui/search'
+import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
@@ -29,21 +26,18 @@ import { GnAggregatedRecordsComponent } from './components/gn-aggregated-records
 import { GnFacetsComponent } from './components/gn-facets/gn-facets.component'
 import { GnResultsListComponent } from './components/gn-results-list/gn-results-list.component'
 import { GnSearchInputComponent } from './components/gn-search-input/gn-search-input.component'
+import { GnDatasetPreviewComponent } from './components/gn-dataset-preview/gn-dataset-preview.component'
 
 const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnFacetsComponent, 'gn-facets'],
   [GnResultsListComponent, 'gn-results-list'],
   [GnAggregatedRecordsComponent, 'gn-aggregated-records'],
   [GnSearchInputComponent, 'gn-search-input'],
+  [GnDatasetPreviewComponent, 'gn-dataset-preview'],
 ]
 
 @NgModule({
-  exports: [
-    BaseComponent,
-    GnFacetsComponent,
-    GnResultsListComponent,
-    GnAggregatedRecordsComponent,
-  ],
+  exports: [],
   declarations: [
     AppComponent,
     BaseComponent,
@@ -51,6 +45,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     GnResultsListComponent,
     GnAggregatedRecordsComponent,
     GnSearchInputComponent,
+    GnDatasetPreviewComponent,
   ],
   imports: [
     CommonModule,
@@ -59,6 +54,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     UiSearchModule,
     UiElementsModule,
     FeatureSearchModule,
+    FeatureRecordModule,
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot(),
@@ -81,7 +77,8 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
       deps: [DOCUMENT, Platform],
     },
   ],
-  // bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  bootstrap: [AppComponent],
 })
 export class WebcomponentsModule {
   constructor(private injector: Injector) {
