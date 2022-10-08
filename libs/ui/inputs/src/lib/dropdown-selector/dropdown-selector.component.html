@@ -1,7 +1,7 @@
 <div class="flex flex-row items-center relative">
   <label
     *ngIf="showTitle"
-    class="block uppercase tracking-wide text-gray-800 text-xs font-bold mr-2 whitespace-no-wrap"
+    class="block uppercase tracking-wide text-xs font-bold mr-2 whitespace-no-wrap"
     [attr.for]="id"
   >
     {{ title }}
@@ -9,7 +9,7 @@
   <select
     [id]="id"
     (change)="this.selectValue.emit($event.target.value)"
-    class="block bg-white border border-gray-300 text-gray-800 py-2 px-3 pr-6 rounded leading-tight focus:outline-none focus:border-primary"
+    class="bg-white border border-gray-300 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:border-primary"
     [class.w-full]="!showTitle"
   >
     <option
