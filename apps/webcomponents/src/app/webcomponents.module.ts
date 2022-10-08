@@ -26,14 +26,14 @@ import { GnAggregatedRecordsComponent } from './components/gn-aggregated-records
 import { GnFacetsComponent } from './components/gn-facets/gn-facets.component'
 import { GnResultsListComponent } from './components/gn-results-list/gn-results-list.component'
 import { GnSearchInputComponent } from './components/gn-search-input/gn-search-input.component'
-import { GnDatasetPreviewComponent } from './components/gn-dataset-preview/gn-dataset-preview.component'
+import { GnDatasetViewTableComponent } from './components/gn-dataset-view-table/gn-dataset-view-table.component'
 
 const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnFacetsComponent, 'gn-facets'],
   [GnResultsListComponent, 'gn-results-list'],
   [GnAggregatedRecordsComponent, 'gn-aggregated-records'],
   [GnSearchInputComponent, 'gn-search-input'],
-  [GnDatasetPreviewComponent, 'gn-dataset-preview'],
+  [GnDatasetViewTableComponent, 'gn-dataset-preview'],
 ]
 
 @NgModule({
@@ -45,7 +45,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     GnResultsListComponent,
     GnAggregatedRecordsComponent,
     GnSearchInputComponent,
-    GnDatasetPreviewComponent,
+    GnDatasetViewTableComponent,
   ],
   imports: [
     CommonModule,

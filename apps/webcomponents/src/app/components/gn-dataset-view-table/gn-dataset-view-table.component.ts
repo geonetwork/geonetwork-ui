@@ -11,13 +11,16 @@ import { BaseComponent } from '../base.component'
 
 @Component({
   selector: 'wc-gn-dataset-preview',
-  templateUrl: './gn-dataset-preview.component.html',
-  styleUrls: ['./gn-dataset-preview.component.css'],
+  templateUrl: './gn-dataset-view-table.component.html',
+  styleUrls: ['./gn-dataset-view-table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
   providers: [SearchFacade, SearchService],
 })
-export class GnDatasetPreviewComponent extends BaseComponent implements OnInit {
+export class GnDatasetViewTableComponent
+  extends BaseComponent
+  implements OnInit
+{
   constructor(injector: Injector, private mdViewFacade: MdViewFacade) {
     super(injector)
   }
