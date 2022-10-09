@@ -78,7 +78,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  bootstrap: [AppComponent],
+  // bootstrap: [AppComponent],
 })
 export class WebcomponentsModule {
   constructor(private injector: Injector) {
