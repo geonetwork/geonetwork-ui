@@ -4,12 +4,12 @@
   (click)="toggleCollapsed()"
 >
   <span
-    class="flex-initial truncate font-bold cursor-pointer text-gray-900 group-hover:text-black span-title"
+    class="flex-initial truncate font-bold cursor-pointer group-hover:text-black span-title"
     >{{ 'facets.block.title.' + title | translate }}</span
   >
   <div
     *ngIf="!collapsed"
-    class="flex-shrink-0 cursor-pointer text-gray-900 group-hover:text-black icon-collapse"
+    class="flex-shrink-0 cursor-pointer group-hover:text-black icon-collapse"
     style="min-width: 20px"
   >
     <!-- chevron-down svg -->
@@ -28,7 +28,7 @@
   </div>
   <div
     *ngIf="collapsed"
-    class="flex-shrink-0 cursor-pointer text-gray-900 group-hover:text-black icon-expand"
+    class="flex-shrink-0 cursor-pointer group-hover:text-black icon-expand"
     style="min-width: 20px"
   >
     <!-- chevron-right svg -->
@@ -47,32 +47,34 @@
   </div>
 </div>
 <div [hidden]="collapsed || !hasItems" class="ml-4 collapsible-content">
-  <div
-    *ngIf="canFilter"
-    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500"
-  >
-    <svg
-      class="h-4 w-4 my-2"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
+  <div *ngIf="canFilter" class="relative mt-2">
+    <input
+      type="text"
+      class="w-full rounded border border-1 border-gray-300 input-filter py-1 px-2 pl-8 focus:outline-none focus:border-blue-400"
+      #filterInput
+    />
+    <div
+      class="pointer-events-none absolute flex items-center px-2"
+      style="left: 0px; top: 0px"
     >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
-      />
-    </svg>
+      <svg
+        class="h-4 w-4 my-2"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+        />
+      </svg>
+    </div>
   </div>
-  <input
-    type="text"
-    class="w-full rounded border border-1 border-gray-300 input-filter py-1 px-2 pl-8 focus:outline-none focus:border-blue-400"
-    *ngIf="canFilter"
-    #filterInput
-  />
   <gn-ui-facet-item
+    class="mt-2"
     *ngFor="let item of getItems()"
     [label]="item.value"
     [count]="item.count"
