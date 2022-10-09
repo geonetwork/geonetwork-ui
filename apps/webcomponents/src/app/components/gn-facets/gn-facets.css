@@ -1,7 +1,1 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:host {
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
-}
+@import '../../../styles.css';
