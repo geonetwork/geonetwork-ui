@@ -30,6 +30,12 @@ export class AppOverlayContainer extends OverlayContainer implements OnDestroy {
     if (element !== null) {
       element.appendChild(container)
       this._containerElement = container
+    } else {
+      console.error(
+        'Material CDK Overlay creation failed ! ' +
+          'It can work only with gn-search-input webcomponent. ' +
+          'You have to add an element with id="angular-app-root" (in the shadowDOM) to which the overlay will be appended.'
+      )
     }
   }
 }
