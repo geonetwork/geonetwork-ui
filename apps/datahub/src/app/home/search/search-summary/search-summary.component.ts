@@ -18,6 +18,16 @@ export class SearchSummaryComponent {
     private searchService: SearchService
   ) {}
 
+  isOpen = false
+
+  open() {
+    this.isOpen = true
+  }
+
+  close() {
+    this.isOpen = false
+  }
+
   removeOrg() {
     this.searchService.updateSearch({
       OrgForResource: {},
