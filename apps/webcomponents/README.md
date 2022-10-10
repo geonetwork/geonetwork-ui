@@ -31,7 +31,7 @@ Therefore, there is only one build and one javascript file for any web component
 npm run build:demo
 ```
 
-You'll find the build files in `webcomponents/dist/demo/webcomponents` folder
+You'll find the built files in `webcomponents/dist/demo/webcomponents` folder
 
 ## Run
 
