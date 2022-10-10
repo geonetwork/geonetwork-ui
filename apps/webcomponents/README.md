@@ -55,7 +55,7 @@ npm run demo
 
 **Important:** The components are built in `production` mode.
 
-You can go on http://localhost:8001/ to visit geonetwork-ui demo pages.
+You can go on http://localhost:8001/ to visit GeoNetwork-UI Web Components demo pages.
 
 You'll be able to test your Web Components on `http://localhost:8001/webcomponents/{name_of_sample_file}`
 
