@@ -9,7 +9,11 @@ import {
   ViewEncapsulation,
 } from '@angular/core'
 import { SearchFacade, SearchStateParams } from '@geonetwork-ui/feature/search'
-import { SearchFilters, StateConfigFilters } from '@geonetwork-ui/util/shared'
+import {
+  MetadataRecord,
+  SearchFilters,
+  StateConfigFilters,
+} from '@geonetwork-ui/util/shared'
 import { BaseComponent } from '../base.component'
 
 @Component({
@@ -24,20 +28,15 @@ export class GnResultsListComponent
   extends BaseComponent
   implements OnInit, OnChanges
 {
-  @Input() apiUrl = '/'
-  @Input() searchId: string
-  @Input() primaryColor = '#9a9a9a'
-  @Input() secondaryColor = '#767676'
-  @Input() mainColor = '#1a1a1a'
-  @Input() backgroundColor = '#cecece'
   @Input() layout = 'CARD'
   @Input() size = 10
   @Input() query: string
   @Input() filter: string
-  scrollDisabled: boolean
+  @Input() catalogUrl: string
   @Input() set fixed(value: string) {
     this.scrollDisabled = value === 'true'
   }
+  scrollDisabled: boolean
 
   constructor(injector: Injector, private changeDetector: ChangeDetectorRef) {
     super(injector)
@@ -83,5 +82,12 @@ export class GnResultsListComponent
   ngOnChanges(): void {
     super.ngOnChanges()
     this.setSearch_()
+  }
+
+  onMdClick(metadata: MetadataRecord) {
+    if (this.catalogUrl) {
+      const landingPage = this.catalogUrl.replace(/{uuid}/, metadata.uuid)
+      window.open(landingPage, '_blank').focus()
+    }
   }
 }

@@ -83,6 +83,14 @@ describe('ResultsLayoutComponent', () => {
         label: 'CARD',
         value: 'CARD',
       },
+      {
+        label: 'ROW',
+        value: 'ROW',
+      },
+      {
+        label: 'FEED',
+        value: 'FEED',
+      },
       { label: 'LIST', value: 'LIST' },
       {
         label: 'TEXT',

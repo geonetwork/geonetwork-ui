@@ -2,7 +2,7 @@
   class="flex flex-row items-center group px-1 my-1 hover:bg-gray-100 rounded-sm"
 >
   <label
-    class="flex-grow flex-shrink truncate cursor-pointer text-gray-900 group-hover:text-black"
+    class="flex-grow flex-shrink truncate cursor-pointer group-hover:text-black"
   >
     <input
       type="checkbox"
@@ -11,7 +11,7 @@
       (ngModelChange)="onSelectedChange($event)"
     />
     {{ label | translate }}
-    <span class="text-gray-600 group-hover:text-black">({{ count }})</span>
+    <span class="group-hover:text-black">({{ count }})</span>
   </label>
   <div
     *ngIf="!inverted"

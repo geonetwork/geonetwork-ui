@@ -48,8 +48,8 @@ describe('MainSearchComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  it('should setResultsLayout to DATAHUB', () => {
-    expect(SearchFacadeMock.setResultsLayout).toHaveBeenCalledWith('DATAHUB')
+  it('should setResultsLayout to ROW', () => {
+    expect(SearchFacadeMock.setResultsLayout).toHaveBeenCalledWith('ROW')
   })
 
   describe('navigate to metadata record', () => {

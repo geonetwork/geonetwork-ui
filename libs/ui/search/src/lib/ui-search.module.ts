@@ -8,6 +8,7 @@ import { FacetsModule } from './facets/facets.module'
 import { RecordMetricComponent } from './record-metric/record-metric.component'
 import { RecordPreviewCardComponent } from './record-preview-card/record-preview-card.component'
 import { RecordPreviewListComponent } from './record-preview-list/record-preview-list.component'
+import { RecordPreviewRowComponent } from './record-preview-row/record-preview-row.component'
 import { RecordPreviewTextComponent } from './record-preview-text/record-preview-text.component'
 import { RecordPreviewTitleComponent } from './record-preview-title/record-preview-title.component'
 import { ResultsHitsNumberComponent } from './results-hits-number/results-hits-number.component'
@@ -37,6 +38,7 @@ import { RecordPreviewFeedComponent } from './record-preview-feed/record-preview
     ResultsHitsNumberComponent,
     ResultsListItemComponent,
     RecordPreviewFeedComponent,
+    RecordPreviewRowComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,6 +65,7 @@ import { RecordPreviewFeedComponent } from './record-preview-feed/record-preview
     RecordPreviewComponent,
     ResultsHitsNumberComponent,
     RecordPreviewFeedComponent,
+    RecordPreviewRowComponent,
   ],
   providers: [
     { provide: RESULTS_LAYOUT_CONFIG, useValue: DEFAULT_RESULTS_LAYOUT_CONFIG },

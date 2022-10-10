@@ -5,6 +5,7 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { BaseComponent } from '../base.component'
 
 @Component({
@@ -13,14 +14,10 @@ import { BaseComponent } from '../base.component'
   styleUrls: ['./gn-facets.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
+  providers: [SearchFacade],
 })
 export class GnFacetsComponent extends BaseComponent implements OnInit {
-  @Input() apiUrl = '/'
   @Input() searchId: string
-  @Input() primaryColor = '#9a9a9a'
-  @Input() secondaryColor = '#767676'
-  @Input() mainColor = '#1a1a1a'
-  @Input() backgroundColor = '#cecece'
   @Input() facetConfig = '{}'
 
   ngOnInit(): void {

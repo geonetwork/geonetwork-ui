@@ -152,17 +152,14 @@ describe('DataViewTableComponent', () => {
     let dropDownComponent: MockDropdownSelectorComponent
     let tableComponent: MockTableComponent
 
-    beforeEach(() => {
-      dropDownComponent = fixture.debugElement.query(
-        By.directive(MockDropdownSelectorComponent)
-      ).componentInstance
-    })
-
     describe('when component is rendered', () => {
       beforeEach(() => {
         facade.dataLinks$.next(DATALINKS_FIXTURE)
         facade.geoDataLinks$.next(GEODATALINKS_FIXTURE)
         fixture.detectChanges()
+        dropDownComponent = fixture.debugElement.query(
+          By.directive(MockDropdownSelectorComponent)
+        ).componentInstance
       })
 
       it('shows the dropdown with the same number of entries', () => {
@@ -211,6 +208,10 @@ describe('DataViewTableComponent', () => {
         tick(200)
         fixture.detectChanges()
 
+        dropDownComponent = fixture.debugElement.query(
+          By.directive(MockDropdownSelectorComponent)
+        ).componentInstance
+
         tableComponent = fixture.debugElement.query(
           By.directive(MockTableComponent)
         ).componentInstance
@@ -226,6 +227,9 @@ describe('DataViewTableComponent', () => {
 
       describe('when switching data link', () => {
         beforeEach(() => {
+          dropDownComponent = fixture.debugElement.query(
+            By.directive(MockDropdownSelectorComponent)
+          ).componentInstance
           dropDownComponent.selectValue.emit(1)
         })
         it('loads data from selected link', () => {

@@ -67,12 +67,12 @@
                       ><img
                         class="logoImage"
                         height="80"
-                        src="https://forest.eea.europa.eu/static/media/Logo.9ddbcab0.svg"
+                        src="https://forest.eea.europa.eu/static/media/Logo.820d22dc.svg"
                         alt="Plone Site"
                         title="Plone Site" /><img
                         class="logoImageSm"
                         height="80"
-                        src="https://forest.eea.europa.eu/static/media/Logo-sm.6d9baba6.svg"
+                        src="https://forest.eea.europa.eu/static/media/Logo.820d22dc.svg"
                         alt="Plone Site"
                         title="Plone Site"
                     /></a>
@@ -697,12 +697,15 @@
                 class="header-image"
                 height="280"
                 style="
-                  background-image: url(https://forest.eea.europa.eu/default_header_image/s1.jpg/@@images/76a7a069-88ec-42a7-85f6-5a617d3f65c6.jpeg);
+                  background-image: url(https://forest.eea.europa.eu/topics/forest-and-nature/introduction/@@images/66d83483-03e7-4cd8-bb8a-449db7bbcb26.jpeg);
                 "
                 width="100%"
               />
               <div class="header-image-overlay"></div>
-              <div class="header-image-content"></div>
+              <div class="header-image-content">
+                <h1>Record List</h1>
+                <p>Forest and Nature</p>
+              </div>
             </div>
           </div>
         </div>
@@ -724,6 +727,19 @@
                   class="eight wide computer six wide large screen twelve wide tablet six wide widescreen column"
                 >
                   <div id="page-document" class="ui container">
+                    <h2>Recent datasets</h2>
+                    <gn-results-list
+                      api-url="https://sdi.eea.europa.eu/catalogue/eea/api"
+                      catalog-url="https://sdi.eea.europa.eu/catalogue/eea/fre/catalog.search#/metadata/{uuid}"
+                      layout="TITLE"
+                      size="4"
+                      query="forest"
+                      primary-color="#251"
+                      secondary-color="#c2e9dc"
+                      main-color="#212029"
+                      background-color="#fdfbff"
+                      fixed="true"
+                    ></gn-results-list>
                     <h2 id="4bcqq">Forest Information System for Europe</h2>
                     <p>
                       FISE is an entry point for sharing information with the
@@ -837,18 +853,6 @@
                       status, and is in line with UNSCR 1244(1999) and the ICJ
                       Opinion on the Kosovo Declaration of Independence
                     </p>
-                    <h2>Recent datasets</h2>
-                    <gn-results-list
-                      api-url="https://apps.titellus.net/geonetwork/srv/api"
-                      layout="TITLE"
-                      size="4"
-                      query="forest"
-                      primary-color="#251"
-                      secondary-color="#c2e9dc"
-                      main-color="#212029"
-                      background-color="#fdfbff"
-                      fixed="true"
-                    ></gn-results-list>
                     <h2 id="de61n">Contact us</h2>
                     <p>European Environment Agency (EEA)</p>
                     <br />
