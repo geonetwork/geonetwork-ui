@@ -29,9 +29,6 @@ marker('datahub.header.popularRecords')
 export class HomeHeaderComponent {
   @Input() expandRatio: number
 
-  searchInputRouteValue$ = this.routerFacade.anySearch$.pipe(
-    map((any) => ({ title: any }))
-  )
   backgroundCss =
     getThemeConfig().HEADER_BACKGROUND ||
     `center /cover url('assets/img/header_bg.webp')`

@@ -13,7 +13,6 @@
       <gn-ui-fuzzy-search
         class="text-[18px]"
         (itemSelected)="onFuzzySearchSelection($event)"
-        [value]="searchInputRouteValue$ | async"
       ></gn-ui-fuzzy-search>
       <div class="flex h-0 py-5" [style.opacity]="-0.6 + expandRatio * 2">
         <datahub-header-badge-button
