@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Input,
   Output,
   ViewChild,
 } from '@angular/core'
@@ -28,10 +27,14 @@ import { SearchService } from '../utils/service/search.service'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FuzzySearchComponent {
-  @Input() value?: MetadataRecord
   @ViewChild(AutocompleteComponent) autocomplete: AutocompleteComponent
   @Output() itemSelected = new EventEmitter<MetadataRecord>()
   @Output() inputSubmited = new EventEmitter<string>()
+
+  searchInputValue$ = this.searchFacade.searchFilters$.pipe(
+    map((searchFilter) => ({ title: searchFilter.any }))
+  )
+
   displayWithFn: (MetadataRecord) => string = (record) => record?.title
 
   autoCompleteAction = (query) =>

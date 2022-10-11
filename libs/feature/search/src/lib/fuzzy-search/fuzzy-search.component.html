@@ -4,6 +4,6 @@
   [action]="autoCompleteAction"
   (itemSelected)="handleItemSelection($event)"
   (inputSubmitted)="handleInputSubmission($event)"
-  [value]="value"
+  [value]="searchInputValue$ | async"
   [clearOnSelection]="true"
 ></gn-ui-autocomplete>
