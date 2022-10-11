@@ -75,6 +75,7 @@ export class AutocompleteComponent
   }
 
   ngOnInit(): void {
+    window.addEventListener('scroll', () => this.scrollEvent(), true)
     this.suggestions$ = this.control.valueChanges.pipe(
       tap(() => (this.error = null)),
       filter((value) => value.length > 2),
@@ -96,6 +97,10 @@ export class AutocompleteComponent
     this.control.valueChanges
       .pipe(filter((value) => typeof value === 'string'))
       .subscribe(this.lastInputValue$)
+  }
+
+  scrollEvent(): void {
+    if (this.triggerRef.panelOpen) this.triggerRef.updatePosition()
   }
 
   ngAfterViewInit(): void {
