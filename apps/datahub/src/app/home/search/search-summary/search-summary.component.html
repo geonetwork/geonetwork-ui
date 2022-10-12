@@ -1,81 +1,39 @@
 <div
-  class="px-3 pt-6 sm:p-7 sm:my-8 sm:shadow-primary-light sm:rounded-xl bg-[#1f4191] text-white"
-  [ngClass]="{ 'bg-[#1f4191]': isOpen }"
+  class="px-3 pt-6 sm:p-7 sm:my-8 sm:shadow-primary-light sm:rounded-xl grid grid-cols-3 gap-4"
+  [ngClass]="isOpen ? 'bg-primary text-white' : 'bg-white text-main'"
 >
-  <div class="h-48" *ngIf="isOpen">
-    <div class="flex w-full justify-between h-16">
-      <div class="h-full w-2/4 flex">
-        <h2 class="text-2xl mr-4 flex items-center" translate>
-          search.filters.title
-        </h2>
-        <gn-ui-results-hits
-          class="text-sm w-1/4 text-gray-600 flex items-center"
-        ></gn-ui-results-hits>
-      </div>
-      <div class="h-full flex items-center">
-        <gn-ui-sort-by class="text-white w-1/4"></gn-ui-sort-by>
-      </div>
+  <div class="col-span-2 grid grid-cols-2 gap-4 grid-rows-auto">
+    <div class="col-span-2 flex flex-row items-baseline" *ngIf="isOpen">
+      <h2 class="text-2xl mr-4" translate>search.filters.title</h2>
+      <gn-ui-results-hits class="text-sm opacity-[60%]"></gn-ui-results-hits>
     </div>
-    <div class="h-12 w-full h-32 flex">
-      <div class="h-full w-3/5 flex justify-center items-center flex-wrap">
-        Dropdown components
-        <div class="mt-4" *ngIf="publisher$ | async as publisher">
-          <div translate="">search.filters.active</div>
-          <div
-            class="inline-block bg-primary py-2 px-3 rounded font-medium text-gray-50 text-sm leading-none mt-2"
-          >
-            <div class="flex">
-              <div
-                class="close bg-white bg-opacity-50 text-primary w-4 cursor-pointer h-4 text-xl leading-3 hover:bg-opacity-100 rounded-full text-center transition-all"
-                style="line-height: 14px"
-                (click)="removeOrg()"
-              >
-                ×
-              </div>
-              <div class="publisher ml-3 mt-px flex-grow">{{ publisher }}</div>
-            </div>
-          </div>
-        </div>
-        <!-- <div>
-          <div>
-            <gn-ui-filter-dropdown [fieldName]="'Org'"> </gn-ui-filter-dropdown>
-          </div>
-          <gn-ui-filter-dropdown [fieldName]="'linkProtocol'">
-          </gn-ui-filter-dropdown>
-        </div> -->
-      </div>
-      <div
-        class="h-full w-2/5 text-gray-600 flex justify-end items-end cursor-pointer"
-        (click)="close()"
-        translate
-      >
-        search.filters.minimize
-      </div>
-    </div>
+    <gn-ui-filter-dropdown
+      class="w-full"
+      [fieldName]="'OrgForResource'"
+    ></gn-ui-filter-dropdown>
+    <gn-ui-filter-dropdown
+      class="w-full"
+      [fieldName]="'linkProtocol'"
+    ></gn-ui-filter-dropdown>
   </div>
-  <div class="flex justify-between" *ngIf="!isOpen">
-    <div class="flex">
-      <div
-        class="h-12 w-72 rounded border border-gray-300 mr-4 text-black font-bold flex items-center pl-2"
-      >
-        Organisations
-      </div>
-      <div
-        class="h-12 w-72 rounded border border-gray-300 mr-4 text-black font-bold flex items-center pl-2"
-      >
-        Territoires
-      </div>
-      <div
-        (click)="open()"
-        class="h-12 w-12 rounded border border-gray-300 text-gray-300 flex items-center justify-center text-4xl pb-4 cursor-pointer hover:text-gray-600 hover:border-gray-600"
-      >
-        ...
-      </div>
+  <div class="flex flex-col justify-between">
+    <div
+      class="flex flex-row"
+      [ngClass]="isOpen ? 'justify-end' : 'justify-between'"
+    >
+      <gn-ui-button *ngIf="!isOpen" (click)="open()">...</gn-ui-button>
+      <gn-ui-sort-by class="text-white"></gn-ui-sort-by>
     </div>
-    <div>
-      <div class="h-full flex items-center">
-        <gn-ui-sort-by class="text-white w-1/4"></gn-ui-sort-by>
-      </div>
+    <div class="text-right">
+      <button
+        type="button"
+        *ngIf="isOpen"
+        class="text-white opacity-[60%] hover:opacity-[90%] border-0 bg-transparent"
+        (click)="close()"
+      >
+        <span translate>search.filters.minimize</span>
+        <mat-icon class="ml-1 align-middle leading-none">remove</mat-icon>
+      </button>
     </div>
   </div>
 </div>

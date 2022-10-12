@@ -20,6 +20,7 @@ export class FilterDropdownComponent implements OnInit {
   choices$ = this.searchFacade.resultsAggregations$.pipe(
     map(
       (aggs) =>
+        aggs &&
         aggs[this.fieldName] &&
         aggs[this.fieldName].buckets.map((bucket) => ({
           label: `${bucket.key} (${bucket.doc_count})`,
