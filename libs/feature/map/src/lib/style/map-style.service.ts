@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core'
 import { getThemeConfig, isConfigLoaded } from '@geonetwork-ui/util/app-config'
 import chroma from 'chroma-js'
+import Feature from 'ol/Feature'
 import { Fill, Stroke, Style } from 'ol/style'
 import CircleStyle from 'ol/style/Circle'
-import { StyleLike } from 'ol/style/Style'
+import { StyleFunction, StyleLike } from 'ol/style/Style'
 
 export interface CreateStyleOptions {
   color?: string
@@ -22,7 +23,7 @@ export class MapStyleService {
     defaultHL: this.createDefaultStyleHL(),
   }
 
-  createStyle(options: CreateStyleOptions = {}): Style {
+  createStyle(options: CreateStyleOptions = {}): StyleFunction {
     const defaultColor = isConfigLoaded()
       ? getThemeConfig().PRIMARY_COLOR
       : 'blue'
@@ -34,25 +35,55 @@ export class MapStyleService {
       color: 'white',
       width,
     })
-    return new Style({
-      image: new CircleStyle({
-        fill,
-        stroke,
-        radius,
-      }),
-      fill: new Fill({
-        color: this.computeTransparentFillColor(color),
-      }),
-      stroke,
-    })
+
+    return (feature: Feature | null = null): Style[] | Style => {
+      const geometryType = feature.getGeometry().getType()
+
+      switch (geometryType) {
+        case 'MultiLineString': {
+          return [
+            new Style({
+              stroke: new Stroke({
+                color: 'white',
+                width: 5,
+              }),
+            }),
+            new Style({
+              stroke: new Stroke({
+                color: '#0199fd',
+                width: 3,
+              }),
+            }),
+          ]
+        }
+        default: {
+          return new Style({
+            image: new CircleStyle({
+              fill,
+              stroke,
+              radius,
+            }),
+            fill: new Fill({
+              color: this.computeTransparentFillColor(color),
+            }),
+            stroke,
+          })
+        }
+      }
+    }
   }
 
   private createDefaultStyleHL() {
-    const style = this.createStyle()
+    const styleFunction = this.createStyle()
+    const style = styleFunction(null, 0)
     const defaultColorHL = isConfigLoaded()
       ? getThemeConfig().SECONDARY_COLOR
       : 'red'
-    return this.createHLFromStyle(style, defaultColorHL)
+
+    if (style && !Array.isArray(style)) {
+      return this.createHLFromStyle(style, defaultColorHL)
+    }
+    return this.createHLFromStyle(style[0], defaultColorHL)
   }
 
   createHLFromStyle(style: Style, color): Style {
