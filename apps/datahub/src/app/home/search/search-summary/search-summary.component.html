@@ -1,6 +1,8 @@
 <div
-  class="px-3 pt-6 sm:p-7 sm:my-8 sm:shadow-primary-light sm:rounded-xl grid grid-cols-3 gap-4"
-  [ngClass]="isOpen ? 'bg-primary text-white' : 'bg-white text-main'"
+  class="px-3 pt-6 sm:p-7 sm:my-8 sm:shadow-primary-light sm:rounded-xl grid grid-cols-3 gap-4 transition-[height] duration-100"
+  [ngClass]="
+    isOpen ? 'bg-primary text-white h-[204px]' : 'bg-white text-main h-[98px]'
+  "
 >
   <div class="col-span-2 grid grid-cols-2 gap-4 grid-rows-auto">
     <div class="col-span-2 flex flex-row items-baseline" *ngIf="isOpen">
@@ -14,6 +16,11 @@
     <gn-ui-filter-dropdown
       class="w-full"
       [fieldName]="'linkProtocol'"
+    ></gn-ui-filter-dropdown>
+    <gn-ui-filter-dropdown
+      class="w-full"
+      [ngClass]="isOpen ? 'visible' : 'hidden'"
+      [fieldName]="'resolutionScaleDenominator'"
     ></gn-ui-filter-dropdown>
   </div>
   <div class="flex flex-col justify-between">
