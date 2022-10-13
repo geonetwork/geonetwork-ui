@@ -21,7 +21,9 @@
       class="flex flex-row"
       [ngClass]="isOpen ? 'justify-end' : 'justify-between'"
     >
-      <gn-ui-button *ngIf="!isOpen" (click)="open()">...</gn-ui-button>
+      <gn-ui-button *ngIf="!isOpen" (click)="open()" type="outline"
+        >...</gn-ui-button
+      >
       <gn-ui-sort-by class="text-white"></gn-ui-sort-by>
     </div>
     <div class="text-right">

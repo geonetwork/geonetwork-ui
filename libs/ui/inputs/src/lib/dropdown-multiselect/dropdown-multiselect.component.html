@@ -1,6 +1,6 @@
-<button
-  type="button"
-  class="w-full p-2 pl-4 border border-gray-300 bg-white text-main rounded flex items-center transition-all duration-100 hover:text-primary-darker hover:border-primary-lightest focus:text-primary-darker focus:border-primary-lightest"
+<gn-ui-button
+  type="outline"
+  extraClass="w-full flex flex-row"
   [title]="title"
   [attr.aria-owns]="id"
   (click)="toggleOverlay()"
@@ -21,7 +21,7 @@
     <ng-container *ngIf="overlayOpen">expand_less</ng-container>
     <ng-container *ngIf="!overlayOpen">expand_more</ng-container>
   </mat-icon>
-</button>
+</gn-ui-button>
 
 <ng-template
   cdkConnectedOverlay
