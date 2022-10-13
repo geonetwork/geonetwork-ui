@@ -37,6 +37,14 @@ export class DropdownMultiselectComponent {
       originY: 'bottom',
       overlayX: 'start',
       overlayY: 'top',
+      offsetY: 8,
+    },
+    {
+      originX: 'start',
+      originY: 'top',
+      overlayX: 'start',
+      overlayY: 'bottom',
+      offsetY: -8,
     },
   ]
   scrollStrategy = this.scrollStrategies.reposition()
@@ -48,8 +56,10 @@ export class DropdownMultiselectComponent {
   get hasSelectedChoices() {
     return this.selected.length > 0
   }
-  get hasSelectedChoices() {
-    return this.selected.length > 0
+  get selectedChoices() {
+    return this.choices.filter(
+      (choice) => this.selected.indexOf(choice.value) > -1
+    )
   }
 
   constructor(private scrollStrategies: ScrollStrategyOptions) {}

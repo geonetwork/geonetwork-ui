@@ -31,7 +31,7 @@
   [cdkConnectedOverlayOpen]="overlayOpen"
   [cdkConnectedOverlayPositions]="overlayPositions"
   [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
-  [cdkConnectedOverlayOffsetY]="8"
+  [cdkConnectedOverlayFlexibleDimensions]="true"
   (backdropClick)="closeOverlay()"
   (attach)="openOverlay()"
   (detach)="closeOverlay()"
@@ -46,9 +46,29 @@
     [attr.aria-multiselectable]="true"
     [attr.aria-label]="title"
   >
+    <div
+      *ngIf="allowSearch"
+      class="border border-gray-300 rounded mb-2 mx-2 p-2 min-h-[44px] flex flex-row flex-wrap gap-2"
+    >
+      <button
+        type="button"
+        *ngFor="let selected of selectedChoices"
+        [title]="selected.label"
+        class="max-w-full bg-main text-white rounded pr-[7px] pl-[10px] flex flex-row items-center opacity-[70%] hover:opacity-100 focus:opacity-100 transition-all duration-100"
+        (click)="select(selected, false)"
+      >
+        <span class="text-sm leading-[26px] truncate">{{
+          selected.label
+        }}</span>
+        <span
+          class="ml-1 border rounded-full bg-white text-main h-3 w-3 leading-[12px]"
+          >&times;</span
+        >
+      </button>
+    </div>
     <div *ngFor="let choice of choices">
       <mat-checkbox
-        class="px-5 py-1 w-full text-gray-900 hover:text-primary-darkest hover:bg-gray-50"
+        class="px-5 py-1 w-full text-gray-900 hover:text-primary-darkest hover:bg-gray-50 transition-all duration-100"
         [aria-label]="choice.label"
         [checked]="isSelected(choice)"
         (change)="select(choice, $event.checked)"
