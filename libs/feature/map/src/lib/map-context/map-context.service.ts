@@ -68,7 +68,7 @@ export class MapContextService {
 
   createLayer(layerModel: MapContextLayerModel): Layer {
     const { type } = layerModel
-    const style = this.styleService.styles.default
+    const styleFunction = this.styleService.styles.styleFunction
     switch (type) {
       case MapContextLayerTypeEnum.XYZ:
         return new TileLayer({
@@ -102,7 +102,7 @@ export class MapContextService {
             },
             strategy: bboxStrategy,
           }),
-          style,
+          style: styleFunction,
         })
       case MapContextLayerTypeEnum.GEOJSON: {
         if ('url' in layerModel) {
@@ -111,7 +111,7 @@ export class MapContextService {
               format: new GeoJSON(),
               url: layerModel.url,
             }),
-            style,
+            style: styleFunction,
           })
         } else {
           let geojson = layerModel.data
@@ -130,7 +130,7 @@ export class MapContextService {
             source: new VectorSource({
               features,
             }),
-            style,
+            style: styleFunction,
           })
         }
       }
