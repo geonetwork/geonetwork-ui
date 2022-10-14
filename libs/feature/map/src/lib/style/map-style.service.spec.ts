@@ -130,7 +130,7 @@ describe('MapStyleService', () => {
   })
   describe('default styles', () => {
     describe('when options are given', () => {
-      let style, styleHL, circle, stroke, fill
+      let style, styleHL, circle
       beforeEach(() => {
         style = service.createStyle()
         styleHL = service.createHLFromStyle(style, 'black')
@@ -147,6 +147,16 @@ describe('MapStyleService', () => {
           )
         )
       })
+    })
+  })
+
+  describe('style function', () => {
+    let styleFunction
+    beforeEach(() => {
+      styleFunction = service.createStyleFunction()
+    })
+    it('it returns a function', () => {
+      expect(typeof styleFunction).toBe('function')
     })
   })
 })
