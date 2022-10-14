@@ -21,9 +21,10 @@ export class MapStyleService {
   styles: Record<DefaultStyleKeys, StyleLike> = {
     default: this.createStyle(),
     defaultHL: this.createDefaultStyleHL(),
+    styleFunction: this.createStyleFunction(),
   }
 
-  createStyle(options: CreateStyleOptions = {}): StyleFunction {
+  createStyle(options: CreateStyleOptions = {}): Style {
     const defaultColor = isConfigLoaded()
       ? getThemeConfig().PRIMARY_COLOR
       : 'blue'
@@ -36,8 +37,22 @@ export class MapStyleService {
       width,
     })
 
+    return new Style({
+      image: new CircleStyle({
+        fill,
+        stroke,
+        radius,
+      }),
+      fill: new Fill({
+        color: this.computeTransparentFillColor(color),
+      }),
+      stroke,
+    })
+  }
+
+  createStyleFunction(options: CreateStyleOptions = {}): StyleFunction {
     return (feature: Feature | null = null): Style[] | Style => {
-      const geometryType = feature.getGeometry().getType()
+      const geometryType = feature?.getGeometry()?.getType()
 
       switch (geometryType) {
         case 'MultiLineString': {
@@ -57,36 +72,21 @@ export class MapStyleService {
           ]
         }
         default: {
-          return new Style({
-            image: new CircleStyle({
-              fill,
-              stroke,
-              radius,
-            }),
-            fill: new Fill({
-              color: this.computeTransparentFillColor(color),
-            }),
-            stroke,
-          })
+          return this.createStyle(options)
         }
       }
     }
   }
 
   private createDefaultStyleHL() {
-    const styleFunction = this.createStyle()
-    const style = styleFunction(null, 0)
+    const style = this.createStyle()
     const defaultColorHL = isConfigLoaded()
       ? getThemeConfig().SECONDARY_COLOR
       : 'red'
-
-    if (style && !Array.isArray(style)) {
-      return this.createHLFromStyle(style, defaultColorHL)
-    }
-    return this.createHLFromStyle(style[0], defaultColorHL)
+    return this.createHLFromStyle(style, defaultColorHL)
   }
 
-  createHLFromStyle(style: Style, color): Style {
+  createHLFromStyle(style: Style, color: string): Style {
     const circle = style.getImage() as CircleStyle
     style.getFill().setColor(this.computeTransparentFillColor(color))
     circle.getFill().setColor(color)
