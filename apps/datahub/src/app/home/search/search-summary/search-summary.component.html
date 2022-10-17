@@ -34,7 +34,7 @@
       <gn-ui-button *ngIf="!isOpen" (click)="open()" type="outline"
         >...</gn-ui-button
       >
-      <gn-ui-sort-by class="text-white"></gn-ui-sort-by>
+      <gn-ui-sort-by [ngClass]="{ 'text-white': isOpen }"></gn-ui-sort-by>
     </div>
     <div class="text-right">
       <button
