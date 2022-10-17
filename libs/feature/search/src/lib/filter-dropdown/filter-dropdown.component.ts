@@ -16,6 +16,7 @@ import { SearchService } from '../utils/service/search.service'
 })
 export class FilterDropdownComponent implements OnInit {
   @Input() fieldName: string
+  @Input() title: string
 
   choices$ = this.searchFacade.resultsAggregations$.pipe(
     map(

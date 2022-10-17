@@ -12,15 +12,18 @@
     <gn-ui-filter-dropdown
       class="w-full"
       [fieldName]="'OrgForResource'"
+      [title]="'search.filters.byOrganisation' | translate"
     ></gn-ui-filter-dropdown>
     <gn-ui-filter-dropdown
       class="w-full"
       [fieldName]="'linkProtocol'"
+      [title]="'search.filters.byFormat' | translate"
     ></gn-ui-filter-dropdown>
     <gn-ui-filter-dropdown
       class="w-full"
       [ngClass]="isOpen ? 'visible' : 'hidden'"
       [fieldName]="'resolutionScaleDenominator'"
+      [title]="'search.filters.byResolution' | translate"
     ></gn-ui-filter-dropdown>
   </div>
   <div class="flex flex-col justify-between">

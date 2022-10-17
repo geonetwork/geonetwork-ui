@@ -4,8 +4,8 @@ import { By } from '@angular/platform-browser'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { SearchFilters } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject } from 'rxjs'
-
 import { SearchSummaryComponent } from './search-summary.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 const state = { OrgForResource: { mel: true } } as SearchFilters
 const searchFacadeMock = {
@@ -21,6 +21,7 @@ describe('SearchSummaryComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [SearchSummaryComponent],
+      imports: [TranslateModule.forRoot()],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
@@ -47,36 +48,5 @@ describe('SearchSummaryComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
-  })
-
-  describe('when source', () => {
-    it('displays source', () => {
-      const divOrg = fixture.debugElement.query(By.css('.publisher'))
-      expect(divOrg).toBeTruthy()
-      expect(divOrg.nativeElement.innerHTML).toEqual('mel')
-    })
-  })
-
-  describe('when user click on the close button', () => {
-    beforeEach(() => {
-      const closeBtn = fixture.debugElement.query(By.css('.close'))
-      closeBtn.nativeElement.click()
-    })
-    it('removes the Org', () => {
-      expect(searchServiceMock.updateSearch).toHaveBeenCalledWith({
-        OrgForResource: {},
-      })
-    })
-  })
-
-  describe('when no source', () => {
-    beforeEach(() => {
-      searchFacadeMock.searchFilters$.next({} as any)
-      fixture.detectChanges()
-    })
-    it('hides whole source block', () => {
-      const divOrg = fixture.debugElement.query(By.css('.publisher'))
-      expect(divOrg).toBeFalsy()
-    })
   })
 })
