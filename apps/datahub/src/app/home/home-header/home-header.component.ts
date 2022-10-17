@@ -8,7 +8,6 @@ import {
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
-import { combineLatest, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import {
   ROUTER_ROUTE_NEWS,
@@ -52,23 +51,10 @@ export class HomeHeaderComponent {
     private authService: AuthService
   ) {}
 
-  currentRoutePath$ = this.routerFacade.currentRoute$.pipe(
-    map((route) => route.url[0].path)
-  )
-
   isAuthenticated$ = this.authService
     .authReady()
     .pipe(map((user) => !!user?.id))
 
-  displayFavoritesBadge$: Observable<boolean> = combineLatest(
-    this.currentRoutePath$,
-    this.isAuthenticated$
-  ).pipe(
-    map(([path, authenticated]) => path === this.ROUTE_SEARCH && authenticated)
-  )
-  displaySortBadges$: Observable<boolean> = this.currentRoutePath$.pipe(
-    map((path) => path === this.ROUTE_SEARCH)
-  )
   onFuzzySearchSelection(record: MetadataRecord) {
     this.routerFacade.goToMetadata(record)
   }

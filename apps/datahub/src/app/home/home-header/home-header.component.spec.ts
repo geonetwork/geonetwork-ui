@@ -2,17 +2,13 @@ import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { AuthService } from '@geonetwork-ui/feature/auth'
-import {
-  RouterFacade,
-  ROUTER_ROUTE_SEARCH,
-} from '@geonetwork-ui/feature/router'
+import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject } from 'rxjs'
 import { HomeHeaderComponent, SortByParams } from './home-header.component'
 import { readFirst } from '@nrwl/angular/testing'
-import { ROUTER_ROUTE_NEWS } from '../../router/constants'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
@@ -23,7 +19,6 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
 const routerFacadeMock = {
   goToMetadata: jest.fn(),
   anySearch$: new BehaviorSubject('scot'),
-  currentRoute$: new BehaviorSubject({}),
 }
 
 const searchFacadeMock = {
@@ -119,53 +114,26 @@ describe('HeaderComponent', () => {
     })
   })
   describe('favorites badge', () => {
-    describe('displayFavoritesBadge$', () => {
-      describe('navigate to search route (authenticated)', () => {
+    describe('isAuthenticated$', () => {
+      describe('user is authenticated', () => {
         beforeEach(() => {
           ;(authService as any)._authSubject$.next({
             id: 'user-id',
             name: 'testuser',
           })
-          routerFacadeMock.currentRoute$.next({
-            url: [{ path: ROUTER_ROUTE_SEARCH }],
-          })
         })
-        it('displays favoriteBadge when authenticated and on search route', async () => {
-          const displayFavoritesBadge = await readFirst(
-            component.displayFavoritesBadge$
-          )
-          expect(displayFavoritesBadge).toEqual(true)
+        it('displays favoriteBadge when authenticated', async () => {
+          const isAuthenticated = await readFirst(component.isAuthenticated$)
+          expect(isAuthenticated).toEqual(true)
         })
       })
-      describe('navigate to news route (authenticated)', () => {
-        beforeEach(() => {
-          ;(authService as any)._authSubject$.next({
-            id: 'user-id',
-            name: 'testuser',
-          })
-          routerFacadeMock.currentRoute$.next({
-            url: [{ path: ROUTER_ROUTE_NEWS }],
-          })
-        })
-        it('does not display favoriteBadge when authenticated and on news route', async () => {
-          const displayFavoritesBadge = await readFirst(
-            component.displayFavoritesBadge$
-          )
-          expect(displayFavoritesBadge).toEqual(false)
-        })
-      })
-      describe('navigate to search route (NOT authenticated)', () => {
+      describe('user is NOT authenticated', () => {
         beforeEach(() => {
           ;(authService as any)._authSubject$.next(null)
-          routerFacadeMock.currentRoute$.next({
-            url: [{ path: ROUTER_ROUTE_SEARCH }],
-          })
         })
-        it('does NOT display favoriteBadge when NOT authenticated and on search route', async () => {
-          const displayFavoritesBadge = await readFirst(
-            component.displayFavoritesBadge$
-          )
-          expect(displayFavoritesBadge).toEqual(false)
+        it('does NOT display favoriteBadge when NOT authenticated', async () => {
+          const isAuthenticated = await readFirst(component.isAuthenticated$)
+          expect(isAuthenticated).toEqual(false)
         })
       })
     })
@@ -179,36 +147,6 @@ describe('HeaderComponent', () => {
     })
   })
   describe('sort badges', () => {
-    describe('display badges', () => {
-      describe('navigate to search route (NOT authenticated)', () => {
-        beforeEach(() => {
-          ;(authService as any)._authSubject$.next(null)
-          routerFacadeMock.currentRoute$.next({
-            url: [{ path: ROUTER_ROUTE_SEARCH }],
-          })
-        })
-        it('displays sort badges when authenticated and on search route', async () => {
-          const displaySortBadges = await readFirst(
-            component.displaySortBadges$
-          )
-          expect(displaySortBadges).toEqual(true)
-        })
-      })
-      describe('navigate to news route (NOT authenticated)', () => {
-        beforeEach(() => {
-          ;(authService as any)._authSubject$.next(null)
-          routerFacadeMock.currentRoute$.next({
-            url: [{ path: ROUTER_ROUTE_NEWS }],
-          })
-        })
-        it('does not display sort badges when authenticated and on news route', async () => {
-          const displaySortBadges = await readFirst(
-            component.displaySortBadges$
-          )
-          expect(displaySortBadges).toEqual(false)
-        })
-      })
-    })
     describe('#setsortBy CREATE_DATE', () => {
       beforeEach(() => {
         component.setSortBy(true, SortByParams.CREATE_DATE)
