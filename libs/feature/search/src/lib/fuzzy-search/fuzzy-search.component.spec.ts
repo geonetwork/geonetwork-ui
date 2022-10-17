@@ -1,12 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { By } from '@angular/platform-browser'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { AutocompleteComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import {
   ElasticsearchService,
   MetadataRecord,
 } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
-import { of } from 'rxjs'
+import { BehaviorSubject, of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { ElasticsearchMapper } from '../utils/mapper'
 import { SearchService } from '../utils/service/search.service'
@@ -15,6 +16,7 @@ import { FuzzySearchComponent } from './fuzzy-search.component'
 
 const searchFacadeMock = {
   setFilters: jest.fn(),
+  searchFilters$: new BehaviorSubject({ any: 'scot' }),
 }
 
 const searchApiServiceMock = {
@@ -103,6 +105,37 @@ describe('FuzzySearchComponent', () => {
     expect(component).toBeTruthy()
   })
 
+  describe('search filter parameter', () => {
+    let autocompleteCpt
+    beforeEach(() => {
+      autocompleteCpt = fixture.debugElement.query(
+        By.directive(AutocompleteComponent)
+      ).componentInstance
+    })
+    it('any is passed to autocomplete', () => {
+      expect(autocompleteCpt.value).toEqual({ title: 'scot' })
+    })
+    it('any value is changed on search filter update', () => {
+      searchFacadeMock.searchFilters$.next({ any: 'river' })
+      fixture.detectChanges()
+      expect(autocompleteCpt.value).toEqual({ title: 'river' })
+    })
+    it('object is changed on search filter update, only any is passed', () => {
+      searchFacadeMock.searchFilters$.next({
+        any: 'river',
+        OrgForResource: { ADUGA: true },
+      })
+      fixture.detectChanges()
+      expect(autocompleteCpt.value).toEqual({ title: 'river' })
+    })
+    it('no any is present in search filter, empty object is passed', () => {
+      searchFacadeMock.searchFilters$.next({
+        OrgForResource: { ADUGA: true },
+      })
+      fixture.detectChanges()
+      expect(autocompleteCpt.value).toEqual({})
+    })
+  })
   describe('suggestions loading', () => {
     let emitted
     beforeEach(() => {
