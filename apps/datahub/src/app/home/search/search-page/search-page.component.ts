@@ -16,8 +16,7 @@ export class SearchPageComponent implements OnInit {
   ) {}
 
   scrollableOptions: InfiniteScrollModel = {
-    container: '#home-page',
-    fromRoot: true,
+    scrollWindow: true,
   }
 
   ngOnInit() {
