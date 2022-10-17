@@ -3,8 +3,8 @@
   extraClass="w-full flex flex-row"
   [title]="title"
   [attr.aria-owns]="id"
-  (click)="toggleOverlay()"
-  (keydown)="handleKeydown($event)"
+  (click)="openOverlay()"
+  (keydown)="handleTriggerKeydown($event)"
   cdkOverlayOrigin
   #overlayOrigin="cdkOverlayOrigin"
 >
@@ -33,11 +33,10 @@
   [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
   [cdkConnectedOverlayFlexibleDimensions]="true"
   (backdropClick)="closeOverlay()"
-  (attach)="openOverlay()"
   (detach)="closeOverlay()"
 >
   <div
-    class="bg-white border border-gray-300 rounded shadow-lg py-2 w-full overflow-x-hidden overflow-y-auto"
+    class="bg-white border border-gray-300 rounded shadow-lg py-2 w-full overflow-x-hidden overflow-y-auto overlay-container"
     [style.max-height]="overlayMaxHeight"
     [style.width]="overlayWidth"
     role="listbox"
@@ -45,6 +44,7 @@
     [attr.id]="id"
     [attr.aria-multiselectable]="true"
     [attr.aria-label]="title"
+    (keydown)="handleOverlayKeydown($event)"
   >
     <div
       *ngIf="allowSearch"
@@ -66,17 +66,20 @@
         >
       </button>
     </div>
-    <div *ngFor="let choice of choices">
-      <mat-checkbox
-        class="px-5 py-1 w-full text-gray-900 hover:text-primary-darkest hover:bg-gray-50 transition-all duration-100"
-        [aria-label]="choice.label"
+    <label
+      *ngFor="let choice of choices"
+      class="block px-5 py-1 w-full text-gray-900 cursor-pointer hover:text-primary-darkest hover:bg-gray-50 focus-within:text-primary-darkest focus-within:bg-gray-50 transition-all duration-100"
+    >
+      <input
+        class="w-[18px] h-[18px] align-text-top"
+        type="checkbox"
+        #checkBox
         [checked]="isSelected(choice)"
-        (change)="select(choice, $event.checked)"
-      >
-        <span class="ml-[2px] text-[14px] truncate">
-          {{ choice.label }}
-        </span>
-      </mat-checkbox>
-    </div>
+        (change)="select(choice, $event.target.checked)"
+      />
+      <span class="ml-[8px] text-[14px] truncate">
+        {{ choice.label }}
+      </span>
+    </label>
   </div>
 </ng-template>

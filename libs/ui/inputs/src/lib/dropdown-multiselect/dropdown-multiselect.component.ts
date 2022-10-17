@@ -1,16 +1,21 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   Output,
+  QueryList,
   ViewChild,
+  ViewChildren,
 } from '@angular/core'
 import {
+  CdkConnectedOverlay,
   CdkOverlayOrigin,
   ConnectedPosition,
   ScrollStrategyOptions,
 } from '@angular/cdk/overlay'
+import { take } from 'rxjs/operators'
 
 interface Choice {
   value: unknown
@@ -31,6 +36,9 @@ export class DropdownMultiselectComponent {
   @Input() maxRows: number
   @Output() selectValues = new EventEmitter<unknown[]>()
   @ViewChild('overlayOrigin') overlayOrigin: CdkOverlayOrigin
+  @ViewChild(CdkConnectedOverlay) overlay: CdkConnectedOverlay
+  @ViewChildren('checkBox', { read: ElementRef })
+  checkboxes: QueryList<ElementRef>
   overlayPositions: ConnectedPosition[] = [
     {
       originX: 'start',
@@ -61,6 +69,13 @@ export class DropdownMultiselectComponent {
       (choice) => this.selected.indexOf(choice.value) > -1
     )
   }
+  get focusedIndex(): number | -1 {
+    return this.checkboxes.reduce(
+      (prev, curr, curIndex) =>
+        curr.nativeElement === document.activeElement ? curIndex : prev,
+      -1
+    )
+  }
 
   constructor(private scrollStrategies: ScrollStrategyOptions) {}
 
@@ -72,25 +87,59 @@ export class DropdownMultiselectComponent {
       ? `${this.maxRows * 32.5 + 18}px`
       : 'none'
     this.overlayOpen = true
+    // this will wait for the checkboxes to be referenced and the overlay to be attached
+    return Promise.all([
+      this.overlay.attach.pipe(take(1)).toPromise(),
+      this.checkboxes.changes.pipe(take(1)).toPromise(),
+    ])
   }
   closeOverlay() {
     this.overlayOpen = false
   }
-  toggleOverlay() {
-    this.overlayOpen = !this.overlayOpen
-  }
-  handleKeydown(event: KeyboardEvent): void {
+  async handleTriggerKeydown(event: KeyboardEvent) {
     const keyCode = event.code
-    const isArrowKey =
+    const isOpenKey =
       keyCode === 'ArrowDown' ||
       keyCode === 'ArrowUp' ||
       keyCode === 'ArrowLeft' ||
-      keyCode === 'ArrowRight'
-    const isOpenKey = keyCode === 'Enter' || keyCode === 'Space'
-    if (isArrowKey || isOpenKey) {
-      event.preventDefault() // prevents the page from scrolling down when pressing space
-      this.toggleOverlay()
+      keyCode === 'ArrowRight' ||
+      keyCode === 'Enter' ||
+      keyCode === 'Space'
+    const isCloseKey = keyCode === 'Escape' || isOpenKey
+    if (!this.overlayOpen && isOpenKey) {
+      event.preventDefault()
+      await this.openOverlay()
+      if (keyCode === 'ArrowLeft' || keyCode === 'ArrowUp') this.focusLastItem()
+      else this.focusFirstItem()
+    } else if (this.overlayOpen && isCloseKey) {
+      event.preventDefault()
+      this.closeOverlay()
     }
+  }
+  handleOverlayKeydown(event: KeyboardEvent) {
+    if (!this.overlayOpen) return
+    const keyCode = event.code
+    if (keyCode === 'ArrowDown' || keyCode === 'ArrowRight') {
+      this.shiftItemFocus(1)
+    } else if (keyCode === 'ArrowLeft' || keyCode === 'ArrowUp') {
+      this.shiftItemFocus(-1)
+    } else if (keyCode === 'Escape') {
+      this.closeOverlay()
+    }
+  }
+  focusFirstItem() {
+    this.checkboxes.get(0).nativeElement.focus()
+  }
+  focusLastItem() {
+    this.checkboxes.get(this.checkboxes.length - 1).nativeElement.focus()
+  }
+  shiftItemFocus(shift: number) {
+    const index = this.focusedIndex
+    if (index === -1) return
+    const max = this.checkboxes.length
+    // modulo, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder
+    const newIndex = (((index + shift) % max) + max) % max
+    this.checkboxes.get(newIndex).nativeElement.focus()
   }
 
   isSelected(choice: Choice) {

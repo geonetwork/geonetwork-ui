@@ -1,17 +1,24 @@
-import { OverlayModule } from '@angular/cdk/overlay'
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { OverlayContainer, OverlayModule } from '@angular/cdk/overlay'
+import {
+  ComponentFixture,
+  fakeAsync,
+  flush,
+  TestBed,
+} from '@angular/core/testing'
 import { DropdownMultiselectComponent } from './dropdown-multiselect.component'
 import { MatIconModule } from '@angular/material/icon'
 import { By } from '@angular/platform-browser'
 import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
+import { ButtonComponent } from '../button/button.component'
 
 describe('DropdownMultiselectComponent', () => {
   let component: DropdownMultiselectComponent
   let fixture: ComponentFixture<DropdownMultiselectComponent>
+  let overlayContainerElement: HTMLElement
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DropdownMultiselectComponent],
+      declarations: [DropdownMultiselectComponent, ButtonComponent],
       imports: [OverlayModule, MatIconModule],
     })
       .overrideComponent(DropdownMultiselectComponent, {
@@ -19,6 +26,8 @@ describe('DropdownMultiselectComponent', () => {
       })
       .compileComponents()
 
+    overlayContainerElement =
+      TestBed.inject(OverlayContainer).getContainerElement()
     fixture = TestBed.createComponent(DropdownMultiselectComponent)
     component = fixture.componentInstance
     component.choices = []
@@ -114,6 +123,112 @@ describe('DropdownMultiselectComponent', () => {
       })
       it('shows the count', () => {
         expect(selectedCountEl).toBeFalsy()
+      })
+    })
+  })
+
+  describe('keyboard events', () => {
+    let triggerBtn: HTMLElement
+    const dispatchEvent = fakeAsync((el: HTMLElement, code: string) => {
+      el.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          bubbles: true,
+          cancelable: true,
+          code,
+        })
+      )
+      fixture.detectChanges()
+      flush() // this makes sure that the overlay was updated
+    })
+    const getCheckboxes = () =>
+      component.checkboxes.map((de) => de.nativeElement) as HTMLInputElement[]
+    const getOverlay = () =>
+      document.querySelector('.overlay-container') as HTMLElement
+
+    beforeEach(() => {
+      component.choices = [
+        { label: 'First Choice', value: 'choice1' },
+        { label: 'Second Choice', value: 'choice2' },
+        { label: 'Third Choice', value: 'choice3' },
+      ]
+      triggerBtn = fixture.debugElement.query(
+        By.directive(ButtonComponent)
+      ).nativeElement
+    })
+    describe('when overlay is closed', () => {
+      beforeEach(() => {
+        component.overlayOpen = false
+      })
+      describe('right/down arrow, enter, space', () => {
+        describe('opens the overlay and sets the focus on the first element', () => {
+          it('right', () => {
+            dispatchEvent(triggerBtn, 'ArrowRight')
+            expect(component.overlayOpen).toBe(true)
+            expect(getCheckboxes()[0]).toBe(document.activeElement)
+          })
+          it('down', () => {
+            dispatchEvent(triggerBtn, 'ArrowDown')
+            expect(component.overlayOpen).toBe(true)
+            expect(getCheckboxes()[0]).toBe(document.activeElement)
+          })
+        })
+      })
+      describe('up/left arrow', () => {
+        describe('opens the overlay and sets the focus on the last element', () => {
+          it('up', () => {
+            dispatchEvent(triggerBtn, 'ArrowUp')
+            expect(component.overlayOpen).toBe(true)
+            const checkboxes = getCheckboxes()
+            expect(checkboxes[checkboxes.length - 1]).toBe(
+              document.activeElement
+            )
+          })
+          it('left', () => {
+            dispatchEvent(triggerBtn, 'ArrowLeft')
+            expect(component.overlayOpen).toBe(true)
+            const checkboxes = getCheckboxes()
+            expect(checkboxes[checkboxes.length - 1]).toBe(
+              document.activeElement
+            )
+          })
+        })
+      })
+    })
+    describe('when overlay is open', () => {
+      beforeEach(() => {
+        component.openOverlay()
+        fixture.detectChanges()
+        component.focusFirstItem()
+      })
+      describe('right/down arrow', () => {
+        describe('jumps to next element', () => {
+          it('right', () => {
+            dispatchEvent(getOverlay(), 'ArrowRight')
+            expect(getCheckboxes()[1]).toBe(document.activeElement)
+          })
+          it('down', () => {
+            dispatchEvent(getOverlay(), 'ArrowDown')
+            expect(getCheckboxes()[1]).toBe(document.activeElement)
+          })
+        })
+      })
+      describe('up/left arrow', () => {
+        describe('jump to previous element', () => {
+          it('up', () => {
+            dispatchEvent(getOverlay(), 'ArrowUp')
+            expect(getCheckboxes()[2]).toBe(document.activeElement)
+          })
+          it('left', () => {
+            dispatchEvent(getOverlay(), 'ArrowLeft')
+            expect(getCheckboxes()[2]).toBe(document.activeElement)
+          })
+        })
+      })
+      describe('escape', () => {
+        it('closes overlay', () => {
+          dispatchEvent(getOverlay(), 'Escape')
+          expect(component.overlayOpen).toBe(false)
+        })
       })
     })
   })
