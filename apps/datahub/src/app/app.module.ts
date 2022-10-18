@@ -48,7 +48,7 @@ import { LastCreatedComponent } from './home/news-page/last-created/last-created
 import { NewsPageComponent } from './home/news-page/news-page.component'
 import { OrganisationsPageComponent } from './home/organisations-page/organisations-page.component'
 import { SearchPageComponent } from './home/search/search-page/search-page.component'
-import { SearchSummaryComponent } from './home/search/search-summary/search-summary.component'
+import { SearchFiltersComponent } from './home/search/search-filters/search-filters.component'
 import { HeaderRecordComponent } from './record/header-record/header-record.component'
 import { NavigationBarComponent } from './record/navigation-bar/navigation-bar.component'
 import { RecordPageComponent } from './record/record-page/record-page.component'
@@ -65,7 +65,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     HeaderBadgeButtonComponent,
     HeaderRecordComponent,
     RecordPageComponent,
-    SearchSummaryComponent,
+    SearchFiltersComponent,
     NavigationBarComponent,
     NewsPageComponent,
     OrganisationsPageComponent,

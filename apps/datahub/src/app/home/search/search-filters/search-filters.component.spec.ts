@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { SearchFilters } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject } from 'rxjs'
-import { SearchSummaryComponent } from './search-summary.component'
+import { SearchFiltersComponent } from './search-filters.component'
 import { TranslateModule } from '@ngx-translate/core'
 
 const state = { OrgForResource: { mel: true } } as SearchFilters
@@ -14,13 +14,13 @@ const searchFacadeMock = {
 const searchServiceMock = {
   updateSearch: jest.fn(),
 }
-describe('SearchSummaryComponent', () => {
-  let component: SearchSummaryComponent
-  let fixture: ComponentFixture<SearchSummaryComponent>
+describe('SearchFiltersComponent', () => {
+  let component: SearchFiltersComponent
+  let fixture: ComponentFixture<SearchFiltersComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SearchSummaryComponent],
+      declarations: [SearchFiltersComponent],
       imports: [TranslateModule.forRoot()],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
@@ -34,14 +34,14 @@ describe('SearchSummaryComponent', () => {
         },
       ],
     })
-      .overrideComponent(SearchSummaryComponent, {
+      .overrideComponent(SearchFiltersComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
       })
       .compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SearchSummaryComponent)
+    fixture = TestBed.createComponent(SearchFiltersComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

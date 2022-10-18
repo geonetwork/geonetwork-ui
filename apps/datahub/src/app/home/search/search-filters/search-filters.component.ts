@@ -3,12 +3,12 @@ import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { map, pluck } from 'rxjs/operators'
 
 @Component({
-  selector: 'datahub-search-summary',
-  templateUrl: './search-summary.component.html',
-  styleUrls: ['./search-summary.component.css'],
+  selector: 'datahub-search-filters',
+  templateUrl: './search-filters.component.html',
+  styleUrls: ['./search-filters.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchSummaryComponent {
+export class SearchFiltersComponent {
   publisher$ = this.searchFacade.searchFilters$.pipe(
     pluck('OrgForResource'),
     map((orgState) => orgState && Object.keys(orgState)[0])
