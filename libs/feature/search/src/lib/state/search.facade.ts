@@ -23,6 +23,7 @@ import {
   SetResultsLayout,
   SetSearch,
   SetSortBy,
+  UpdateConfigAggregations,
   UpdateFilters,
 } from './actions'
 import { SearchError, SearchState, SearchStateParams } from './reducer'
@@ -83,6 +84,12 @@ export class SearchFacade {
     this.store.dispatch(new SetConfigAggregations(config, this.searchId))
     return this
   }
+
+  updateConfigAggregations(config: any): SearchFacade {
+    this.store.dispatch(new UpdateConfigAggregations(config, this.searchId))
+    return this
+  }
+
   setConfigRequestFields(fields: RequestFields): SearchFacade {
     this.store.dispatch(new SetConfigRequestFields(fields, this.searchId))
     return this

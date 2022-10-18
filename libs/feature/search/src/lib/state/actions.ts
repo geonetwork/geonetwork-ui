@@ -27,6 +27,7 @@ export const REQUEST_MORE_RESULTS = '[Search] Request More Results'
 export const SET_RESULTS_AGGREGATIONS = '[Search] Set Results Aggregations'
 export const SET_RESULTS_HITS = '[Search] Set Results hits'
 export const SET_CONFIG_AGGREGATIONS = '[Search] Set Config Aggregations'
+export const UPDATE_CONFIG_AGGREGATIONS = '[Search] Update Config Aggregations'
 export const SET_CONFIG_REQUEST_FIELDS = '[Search] Set Config requested fields'
 export const REQUEST_MORE_ON_AGGREGATION =
   '[Search] Request More On Aggregation'
@@ -179,6 +180,13 @@ export class SetConfigAggregations extends AbstractAction implements Action {
   }
 }
 
+export class UpdateConfigAggregations extends AbstractAction implements Action {
+  readonly type = UPDATE_CONFIG_AGGREGATIONS
+  constructor(public payload: any, id?: string) {
+    super(id)
+  }
+}
+
 export class SetConfigRequestFields extends AbstractAction implements Action {
   readonly type = SET_CONFIG_REQUEST_FIELDS
   constructor(public payload: RequestFields, id?: string) {
@@ -257,6 +265,7 @@ export type SearchActions =
   | SetResultsAggregations
   | SetResultsHits
   | SetConfigAggregations
+  | UpdateConfigAggregations
   | SetConfigRequestFields
   | RequestMoreOnAggregation
   | SetIncludeOnAggregation

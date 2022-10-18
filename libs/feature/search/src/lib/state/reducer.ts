@@ -243,6 +243,15 @@ export function reducerSearch(
         },
       }
     }
+    case fromActions.UPDATE_CONFIG_AGGREGATIONS: {
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          aggregations: { ...state.config.aggregations, ...action.payload },
+        },
+      }
+    }
     case fromActions.SET_CONFIG_REQUEST_FIELDS: {
       return {
         ...state,

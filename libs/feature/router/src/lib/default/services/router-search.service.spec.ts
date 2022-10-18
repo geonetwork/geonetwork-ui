@@ -35,7 +35,7 @@ describe('RouterSearchService', () => {
       service.setSearch(state)
       expect(routerFacade.setSearch).toHaveBeenCalledWith({
         q: 'any',
-        publisher: 'Org',
+        publisher: ['Org'],
       })
     })
   })
@@ -50,7 +50,7 @@ describe('RouterSearchService', () => {
     it('dispatch updateSearch with merged mapped params', () => {
       expect(routerFacade.updateSearch).toHaveBeenCalledWith({
         q: 'any',
-        publisher: 'mel',
+        publisher: ['mel'],
       })
     })
   })

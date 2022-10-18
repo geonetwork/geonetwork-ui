@@ -1,0 +1,4 @@
+/* FIXME: this workaround should not be needed, the dropdown component needs to be reworked */
+.bg-primary gn-ui-sort-by::ng-deep label {
+  color: var(--color-background) !important;
+}

@@ -1,0 +1,8 @@
+<gn-ui-dropdown-multiselect
+  class="w-full"
+  [title]="title"
+  [choices]="choices$ | async"
+  [selected]="selected$ | async"
+  (selectValues)="onSelectedValues($event)"
+>
+</gn-ui-dropdown-multiselect>
