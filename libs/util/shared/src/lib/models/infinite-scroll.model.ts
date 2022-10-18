@@ -5,6 +5,7 @@ export interface InfiniteScrollModel {
   disabled?: boolean
   fromRoot?: boolean
   container?: string | HTMLElement
+  scrollWindow?: boolean
 }
 
 export const InfiniteScrollOptionsDefault = {

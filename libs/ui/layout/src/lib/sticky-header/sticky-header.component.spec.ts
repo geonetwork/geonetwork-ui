@@ -53,11 +53,11 @@ describe('StickyHeaderComponent', () => {
 
   describe('size update', () => {
     let headerEl: HTMLElement
-    let containerEl: HTMLElement
+    let window: any
     let contentEl: HTMLElement
     beforeEach(() => {
       headerEl = component.innerContainer.nativeElement
-      containerEl = fixture.nativeElement.children[0]
+      window = global.window
       contentEl = fixture.debugElement.query(By.css('.content')).nativeElement
     })
     describe('at initialization', () => {
@@ -70,8 +70,8 @@ describe('StickyHeaderComponent', () => {
     })
     describe('after partial scroll', () => {
       beforeEach(fakeAsync(() => {
-        containerEl.scrollTop = 50
-        containerEl.dispatchEvent(new Event('scroll'))
+        window.scrollY = 50
+        window.dispatchEvent(new Event('scroll'))
         tick(20)
       }))
       it('sets height between full and min height', () => {
@@ -83,8 +83,8 @@ describe('StickyHeaderComponent', () => {
     })
     describe('after complete scroll', () => {
       beforeEach(fakeAsync(() => {
-        containerEl.scrollTop = 250
-        containerEl.dispatchEvent(new Event('scroll'))
+        window.scrollY = 250
+        window.dispatchEvent(new Event('scroll'))
         tick(20)
       }))
       it('sets height at min height', () => {

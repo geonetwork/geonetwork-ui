@@ -10,9 +10,6 @@ body {
 body {
   margin: 0;
 }
-html {
-  overflow-y: scroll;
-}
 
 .container-sm {
   max-width: 640px;
@@ -22,4 +19,13 @@ html {
 }
 .container-lg {
   max-width: 1024px;
+}
+
+body.record-page-active {
+  scroll-padding-top: 220px;
+}
+@media only screen and (min-width: 640px) {
+  body.record-page-active {
+    scroll-padding-top: 80px;
+  }
 }
