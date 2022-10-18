@@ -42,7 +42,6 @@ export class StickyHeaderComponent
   @ViewChild('outerContainer') outerContainer: ElementRef
   @ViewChild('innerContainer') innerContainer: ElementRef
   placeholderEl: HTMLElement
-  scrollableParent: HTMLElement
   expandRatio: number // 1 means height is full, 0 means height is minimum
   scrollSub: Subscription
   parentScroll: number
@@ -54,7 +53,7 @@ export class StickyHeaderComponent
   ) {}
 
   ngAfterViewInit() {
-    this.scrollSub = fromEvent(this.scrollableParent, 'scroll', {
+    this.scrollSub = fromEvent(window, 'scroll', {
       passive: true,
     })
       .pipe(
@@ -67,7 +66,6 @@ export class StickyHeaderComponent
   }
 
   ngOnInit() {
-    this.scrollableParent = findScrollableParent(this.hostEl.nativeElement)
     this.placeholderEl = document.createElement('div')
     this.placeholderEl.style.position = 'absolute'
     this.placeholderEl.classList.add('sticky-header-placeholder')
@@ -88,8 +86,8 @@ export class StickyHeaderComponent
 
   updateSize() {
     this.zone.runOutsideAngular(() => {
-      if (this.scrollableParent.scrollTop === this.parentScroll) return
-      this.parentScroll = this.scrollableParent.scrollTop
+      if (window.scrollY === this.parentScroll) return
+      this.parentScroll = window.scrollY
 
       const offsetTop = Math.max(
         0,
@@ -108,14 +106,4 @@ export class StickyHeaderComponent
       this.changeDetector.detectChanges()
     })
   }
-}
-
-function findScrollableParent(element: HTMLElement): HTMLElement {
-  const parent = element.parentElement
-  if (!parent) return element
-  const style = getComputedStyle(parent)
-  if (style.overflowY === 'auto' || style.overflowY === 'scroll') {
-    return parent
-  }
-  return findScrollableParent(parent)
 }
