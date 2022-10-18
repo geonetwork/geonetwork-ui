@@ -74,7 +74,6 @@
   "datafeeder.wizard.emptyRequiredValuesMessage": "Please fill mandatory fields",
   "datafeeder.wizardSummarize.createdAt": "Created at",
   "datafeeder.wizardSummarize.scale": "Scale",
-  "datahub.header.connex": "Beside search",
   "datahub.header.datasets": "Datasets",
   "datahub.header.lastRecords": "The latest",
   "datahub.header.myfavorites": "My favorites",

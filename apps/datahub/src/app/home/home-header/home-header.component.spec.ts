@@ -1,16 +1,12 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AuthService } from '@geonetwork-ui/feature/auth'
-import {
-  RouterFacade,
-  ROUTER_ROUTE_SEARCH,
-} from '@geonetwork-ui/feature/router'
+import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject } from 'rxjs'
-import { HomeHeaderComponent } from './home-header.component'
+import { HomeHeaderComponent, SortByParams } from './home-header.component'
 import { readFirst } from '@nrwl/angular/testing'
-import { ROUTER_ROUTE_NEWS } from '../../router/constants'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
@@ -21,30 +17,26 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
 const routerFacadeMock = {
   goToMetadata: jest.fn(),
   anySearch$: new BehaviorSubject('scot'),
-  currentRoute$: new BehaviorSubject({}),
 }
 
 const searchFacadeMock = {
   setFavoritesOnly: jest.fn(),
+  setSortBy: jest.fn(),
 }
 
 const searchServiceMock = {
   updateSearch: jest.fn(),
 }
 
-const authServiceMock = {
-  authReady: jest.fn(
-    () =>
-      new BehaviorSubject({
-        id: 'user-id',
-        name: 'testuser',
-      })
-  ),
+class AuthServiceMock {
+  authReady = jest.fn(() => this._authSubject$)
+  _authSubject$ = new BehaviorSubject({})
 }
 
 describe('HeaderComponent', () => {
   let component: HomeHeaderComponent
   let fixture: ComponentFixture<HomeHeaderComponent>
+  let authService: AuthService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -66,10 +58,11 @@ describe('HeaderComponent', () => {
         },
         {
           provide: AuthService,
-          useValue: authServiceMock,
+          useClass: AuthServiceMock,
         },
       ],
     }).compileComponents()
+    authService = TestBed.inject(AuthService)
   })
 
   beforeEach(() => {
@@ -93,31 +86,26 @@ describe('HeaderComponent', () => {
     })
   })
   describe('favorites badge', () => {
-    describe('displayFavoritesBadge$', () => {
-      describe('navigate to search route (authenticated)', () => {
+    describe('isAuthenticated$', () => {
+      describe('user is authenticated', () => {
         beforeEach(() => {
-          routerFacadeMock.currentRoute$.next({
-            url: [{ path: ROUTER_ROUTE_SEARCH }],
+          ;(authService as any)._authSubject$.next({
+            id: 'user-id',
+            name: 'testuser',
           })
         })
-        it('displays favoriteBadge when authenticated and on search route', async () => {
-          const displayFavoritesBadge = await readFirst(
-            component.displayFavoritesBadge$
-          )
-          expect(displayFavoritesBadge).toEqual(true)
+        it('displays favoriteBadge when authenticated', async () => {
+          const isAuthenticated = await readFirst(component.isAuthenticated$)
+          expect(isAuthenticated).toEqual(true)
         })
       })
-      describe('navigate to news route (authenticated)$', () => {
+      describe('user is NOT authenticated', () => {
         beforeEach(() => {
-          routerFacadeMock.currentRoute$.next({
-            url: [{ path: ROUTER_ROUTE_NEWS }],
-          })
+          ;(authService as any)._authSubject$.next(null)
         })
-        it('does not display favoriteBadge when authenticated and on news route', async () => {
-          const displayFavoritesBadge = await readFirst(
-            component.displayFavoritesBadge$
-          )
-          expect(displayFavoritesBadge).toEqual(false)
+        it('does NOT display favoriteBadge when NOT authenticated', async () => {
+          const isAuthenticated = await readFirst(component.isAuthenticated$)
+          expect(isAuthenticated).toEqual(false)
         })
       })
     })
@@ -127,6 +115,36 @@ describe('HeaderComponent', () => {
       })
       it('calls searchFacade setFavoritesOnly with correct value', () => {
         expect(searchFacadeMock.setFavoritesOnly).toHaveBeenCalledWith(true)
+      })
+    })
+  })
+  describe('sort badges', () => {
+    describe('#setsortBy CREATE_DATE', () => {
+      beforeEach(() => {
+        component.setSortBy(true, SortByParams.CREATE_DATE)
+      })
+      it('calls searchFacade setSortBy with correct value', () => {
+        expect(searchFacadeMock.setSortBy).toHaveBeenCalledWith(
+          SortByParams.CREATE_DATE
+        )
+      })
+    })
+    describe('#setsortBy empty', () => {
+      beforeEach(() => {
+        component.setSortBy(false, SortByParams.CREATE_DATE)
+      })
+      it('calls searchFacade setSortBy with correct value', () => {
+        expect(searchFacadeMock.setSortBy).toHaveBeenCalledWith('')
+      })
+    })
+    describe('#setsortBy USER_SAVED_COUNT', () => {
+      beforeEach(() => {
+        component.setSortBy(true, SortByParams.USER_SAVED_COUNT)
+      })
+      it('calls searchFacade setSortBy with correct value', () => {
+        expect(searchFacadeMock.setSortBy).toHaveBeenCalledWith(
+          SortByParams.USER_SAVED_COUNT
+        )
       })
     })
   })

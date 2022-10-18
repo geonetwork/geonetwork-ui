@@ -8,7 +8,6 @@ import {
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
-import { combineLatest, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import {
   ROUTER_ROUTE_NEWS,
@@ -16,9 +15,13 @@ import {
 } from '../../router/constants'
 
 marker('datahub.header.myfavorites')
-marker('datahub.header.connex')
 marker('datahub.header.lastRecords')
 marker('datahub.header.popularRecords')
+
+export enum SortByParams {
+  CREATE_DATE = '-createDate',
+  USER_SAVED_COUNT = '-userSavedCount',
+}
 
 @Component({
   selector: 'datahub-home-header',
@@ -36,6 +39,7 @@ export class HomeHeaderComponent {
   ROUTE_NEWS = `${ROUTER_ROUTE_NEWS}`
   ROUTE_SEARCH = `${ROUTER_ROUTE_SEARCH}`
   ROUTE_ORGANISATIONS = `${ROUTER_ROUTE_ORGANISATIONS}`
+  SORT_BY_PARAMS = SortByParams
 
   constructor(
     public routerFacade: RouterFacade,
@@ -44,20 +48,10 @@ export class HomeHeaderComponent {
     private authService: AuthService
   ) {}
 
-  currentRoutePath$ = this.routerFacade.currentRoute$.pipe(
-    map((route) => route.url[0].path)
-  )
-
   isAuthenticated$ = this.authService
     .authReady()
     .pipe(map((user) => !!user?.id))
 
-  displayFavoritesBadge$: Observable<boolean> = combineLatest(
-    this.currentRoutePath$,
-    this.isAuthenticated$
-  ).pipe(
-    map(([path, authenticated]) => path === this.ROUTE_SEARCH && authenticated)
-  )
   onFuzzySearchSelection(record: MetadataRecord) {
     this.routerFacade.goToMetadata(record)
   }
@@ -68,5 +62,10 @@ export class HomeHeaderComponent {
 
   listFavorites(toggled: boolean): void {
     this.searchFacade.setFavoritesOnly(toggled)
+  }
+
+  setSortBy(toggled: boolean, param: SortByParams): void {
+    const sortBy = toggled ? param : ''
+    this.searchFacade.setSortBy(sortBy)
   }
 }
