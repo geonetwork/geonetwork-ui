@@ -13,7 +13,7 @@
   </div>
   <div
     *ngIf="hasSelectedChoices"
-    class="flex-shrink-0 rounded rounded-full bg-primary text-white font-bold text-[13px] w-6 h-6 py-[3px] mr-1 selected-count"
+    class="flex-shrink-0 rounded-full bg-primary text-white font-bold text-[13px] w-6 h-6 py-[3px] mr-1 selected-count"
   >
     {{ selected.length }}
   </div>
@@ -61,17 +61,17 @@
           selected.label
         }}</span>
         <span
-          class="ml-1 border rounded-full bg-white text-main h-3 w-3 leading-[12px]"
+          class="ml-1 px-[2.5px] rounded-full bg-white text-main h-[13px] w-[13px] leading-[13px] flex-shrink-0"
           >&times;</span
         >
       </button>
     </div>
     <label
       *ngFor="let choice of choices"
-      class="block px-5 py-1 w-full text-gray-900 cursor-pointer hover:text-primary-darkest hover:bg-gray-50 focus-within:text-primary-darkest focus-within:bg-gray-50 transition-all duration-100"
+      class="flex px-5 py-1 w-full text-gray-900 cursor-pointer hover:text-primary-darkest hover:bg-gray-50 focus-within:text-primary-darkest focus-within:bg-gray-50 transition-all duration-100"
     >
       <input
-        class="w-[18px] h-[18px] align-text-top"
+        class="w-[18px] h-[18px] align-text-top flex-shrink-0"
         type="checkbox"
         #checkBox
         [checked]="isSelected(choice)"
