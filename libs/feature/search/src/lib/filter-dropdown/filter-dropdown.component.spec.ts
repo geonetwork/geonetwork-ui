@@ -117,6 +117,27 @@ describe('FilterDropdownComponent', () => {
         expect(dropdown.choices).toEqual([])
       })
     })
+    describe('a numerical aggregation is available', () => {
+      beforeEach(() => {
+        ;(facade as any).resultsAggregations$.next({
+          Org: {
+            buckets: [
+              { doc_count: 4, key: 1 },
+              { doc_count: 2, key: 2 },
+              { doc_count: 1, key: 3 },
+            ],
+          },
+        })
+        fixture.detectChanges()
+      })
+      it('converts values to string', () => {
+        expect(dropdown.choices).toEqual([
+          { label: '1 (4)', value: '1' },
+          { label: '2 (2)', value: '2' },
+          { label: '3 (1)', value: '3' },
+        ])
+      })
+    })
   })
 
   describe('selected values', () => {

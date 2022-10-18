@@ -25,7 +25,7 @@ export class FilterDropdownComponent implements OnInit {
         aggs[this.fieldName] &&
         aggs[this.fieldName].buckets.map((bucket) => ({
           label: `${bucket.key} (${bucket.doc_count})`,
-          value: bucket.key,
+          value: bucket.key.toString(),
         }))
     ),
     filter((choices) => !!choices),
