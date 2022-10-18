@@ -17,7 +17,7 @@ export default {
     }),
     componentWrapperDecorator(
       (story) =>
-        `<div class="bg-background overflow-y-scroll" style='position: relative; height: 400px'>
+        `<div class="bg-background" style='position: relative; height: 400px'>
   <div style='height: 200vh'>
     <p class='m-4'>
       A top toolbar (this should not stay visible).
@@ -50,9 +50,11 @@ const Template: Story<StickyHeaderComponent> = (
       fullHeightPx='${args.fullHeightPx}'>
       <ng-template let-expandRatio>
         <div class='bg-primary-darker p-8 h-full'>
-          <p class='text-white font-bold' [style.font-size]='22 * (1 + expandRatio) + "px"'>My header</p>
-          <p class='text-white' [style.opacity]='expandRatio * 0.7'>This header should become smaller when scrolling down.</p>
-          <p class='text-white' [style.opacity]='expandRatio * 0.7'>Current expand ratio is {{expandRatio}}</p>
+          <div [style.transform]='"translate(0, " + (1 - expandRatio) * (${args.fullHeightPx} - ${args.minHeightPx} * 0.5 - 50) + "px)"'>
+            <p class='text-white font-bold' [style.font-size]='22 * (1 + expandRatio) + "px"'>My header</p>
+            <p class='text-white' [style.opacity]='expandRatio * 0.7'>This header should become smaller when scrolling down.</p>
+            <p class='text-white' [style.opacity]='expandRatio * 0.7'>Current expand ratio is {{expandRatio}}</p>
+          </div>
         </div>
       </ng-template>
     </gn-ui-sticky-header>`,
