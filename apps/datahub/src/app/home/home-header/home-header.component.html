@@ -1,8 +1,10 @@
 <header class="h-full px-5" [style.background]="backgroundCss">
-  <div class="container-lg h-full mx-auto flex flex-col justify-end">
+  <div
+    class="container-lg h-full mx-auto flex flex-col-reverse justify-between sm:flex-col sm:justify-end"
+  >
     <div
-      class="py-8 relative z-50"
-      [style.transform]="'translate(0, ' + (1 - expandRatio) * 234 + 'px)'"
+      class="py-8 relative z-50 mb-[184px] sm:mb-0"
+      [style.transform]="'translate(0, ' + (1 - expandRatio) * 242 + 'px)'"
     >
       <div
         class="font-title text-[30px] absolute w-full sm:text-[48px] sm:leading-[58px]"
@@ -57,7 +59,7 @@
     </div>
 -->
     <div
-      class="tabs flex justify-between py-4 mt-40 font-medium"
+      class="tabs flex justify-between py-4 sm:mt-32 font-medium"
       style="bottom: 0; left: 0; right: 0"
       [style.opacity]="-0.6 + expandRatio * 5"
     >
