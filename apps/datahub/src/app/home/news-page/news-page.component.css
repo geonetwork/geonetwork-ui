@@ -16,3 +16,14 @@
       (var(--full-width) - var(--container-width)) / 2
   );
 }
+
+@media only screen and (max-width: 640px) {
+  .backdrop {
+    position: absolute;
+    height: 440px;
+    top: 0;
+    left: 0;
+    width: calc(100% + 2.5rem);
+    margin: 0 -1.25rem;
+  }
+}
