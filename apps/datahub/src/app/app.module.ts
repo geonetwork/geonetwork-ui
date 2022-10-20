@@ -53,6 +53,7 @@ import { HeaderRecordComponent } from './record/header-record/header-record.comp
 import { NavigationBarComponent } from './record/navigation-bar/navigation-bar.component'
 import { RecordPageComponent } from './record/record-page/record-page.component'
 import { DatahubRouterService } from './router/datahub-router.service'
+import { NavigationMenuComponent } from './home/navigation-menu/navigation-menu.component'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
@@ -72,6 +73,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     SearchPageComponent,
     LastCreatedComponent,
     KeyFiguresComponent,
+    NavigationMenuComponent,
   ],
   imports: [
     BrowserModule,
