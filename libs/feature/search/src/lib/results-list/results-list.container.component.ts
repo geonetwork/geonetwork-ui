@@ -18,6 +18,7 @@ import { SearchError } from '../state/reducer'
 import { ErrorType } from '@geonetwork-ui/ui/elements'
 import {
   RESULTS_LAYOUT_CONFIG,
+  ResultsLayoutConfigItem,
   ResultsLayoutConfigModel,
 } from '@geonetwork-ui/ui/search'
 
@@ -31,9 +32,7 @@ export class ResultsListContainerComponent implements OnInit {
   @Input() scrollableOptions: InfiniteScrollModel = {}
   @Output() mdSelect = new EventEmitter<MetadataRecord>()
 
-  layoutConfig$ = this.facade.layout$.pipe(
-    map((layout) => this.resultsLayoutConfig[layout])
-  )
+  layoutConfig$: Observable<ResultsLayoutConfigItem>
 
   scrollDisable$: Observable<boolean>
   scrollableConfig: InfiniteScrollModel
@@ -51,6 +50,10 @@ export class ResultsListContainerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.layoutConfig$ = this.facade.layout$.pipe(
+      map((layout) => this.resultsLayoutConfig[layout])
+    )
+
     this.scrollableConfig = {
       ...InfiniteScrollOptionsDefault,
       ...this.scrollableOptions,
