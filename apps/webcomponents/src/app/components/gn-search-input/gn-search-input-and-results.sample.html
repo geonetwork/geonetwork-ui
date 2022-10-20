@@ -23,7 +23,7 @@
       }
       header {
         height: 200px;
-        background-color: #5bd261;
+        background-color: var(--color-secondary);
       }
       .container {
         max-width: 750px;
@@ -49,11 +49,12 @@
         api-url="https://dev.geo2france.fr/geonetwork/srv/api"
         catalog-url="https://dev.geo2france.fr/datahub/dataset/{uuid}"
         layout="ROW"
-        primary-color="#0f4395"
-        secondary-color="#8bc832"
+        primary-color="#251"
+        secondary-color="#c40"
         main-color="#555"
         background-color="#fdfbff"
         main-font="'Inter', sans-serif"
+        filter='{"elastic": [{ "term": { "OrgForResource": "Géo2France" } }]}'
         title-font="'DM Serif Display', serif"
       ></gn-results-list>
     </main>
