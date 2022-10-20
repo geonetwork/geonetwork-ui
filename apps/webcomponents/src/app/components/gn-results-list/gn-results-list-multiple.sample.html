@@ -37,6 +37,12 @@
         background-color: var(--color-primary);
         margin: 30px 16px;
       }
+      .first-list {
+        --color-primary: #c40;
+      }
+      h2 {
+        color: var(--color-primary);
+      }
     </style>
   </head>
   <body>
@@ -52,16 +58,17 @@
           <b><i>search-id</i></b> input
         </p>
       </div>
-
-      <h2>SCOT</h2>
-      <gn-results-list
-        api-url="https://dev.geo2france.fr/geonetwork/srv/api"
-        catalog-url="https://dev.geo2france.fr/datahub/dataset/{uuid}"
-        size="5"
-        layout="TITLE"
-        fixed="true"
-        query="scot"
-      ></gn-results-list>
+      <div class="first-list">
+        <h2>SCoT</h2>
+        <gn-results-list
+          api-url="https://dev.geo2france.fr/geonetwork/srv/api"
+          catalog-url="https://dev.geo2france.fr/datahub/dataset/{uuid}"
+          size="5"
+          layout="TITLE"
+          fixed="true"
+          query="scot"
+        ></gn-results-list>
+      </div>
       <h2>Vélo</h2>
       <gn-results-list
         api-url="https://dev.geo2france.fr/geonetwork/srv/api"
