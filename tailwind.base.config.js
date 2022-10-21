@@ -72,6 +72,9 @@ module.exports = {
           },
         ],
       },
+      opacity: {
+        45: 0.45,
+      },
     },
   },
   variants: {

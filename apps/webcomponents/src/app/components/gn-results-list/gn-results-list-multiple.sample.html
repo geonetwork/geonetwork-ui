@@ -5,8 +5,14 @@
     <title>Web Component Demo</title>
     <base href="./" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Inter:wght@200;300;400;500;600;700&amp;display=swap"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@200;300;400;500;600;700&amp;display=swap"
       rel="stylesheet"
       type="text/css"
     />
@@ -31,6 +37,12 @@
         background-color: var(--color-primary);
         margin: 30px 16px;
       }
+      .first-list {
+        --color-primary: #c40;
+      }
+      h2 {
+        color: var(--color-primary);
+      }
     </style>
   </head>
   <body>
@@ -46,24 +58,27 @@
           <b><i>search-id</i></b> input
         </p>
       </div>
-
-      <h2>Sol</h2>
+      <div class="first-list">
+        <h2>SCoT</h2>
+        <gn-results-list
+          api-url="https://dev.geo2france.fr/geonetwork/srv/api"
+          catalog-url="https://dev.geo2france.fr/datahub/dataset/{uuid}"
+          size="5"
+          layout="TITLE"
+          fixed="true"
+          query="scot"
+        ></gn-results-list>
+      </div>
+      <h2>Vélo</h2>
       <gn-results-list
-        api-url="https://apps.titellus.net/geonetwork/srv/api"
-        size="5"
-        main-font="'Inter', sans-serif"
-        layout="TITLE"
-        fixed="true"
-        query="sol"
-      ></gn-results-list>
-      <h2>Eau</h2>
-      <gn-results-list
-        api-url="https://apps.titellus.net/geonetwork/srv/api"
+        api-url="https://dev.geo2france.fr/geonetwork/srv/api"
+        catalog-url="https://dev.geo2france.fr/datahub/dataset/{uuid}"
         size="5"
         primary-color="#343e9c"
-        search-id="water"
+        main-font="'Roboto', sans-serif"
+        search-id="velo"
         fixed="true"
-        query="eau"
+        query="velo"
         layout="TITLE"
       ></gn-results-list>
     </main>
