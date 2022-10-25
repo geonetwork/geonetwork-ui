@@ -137,7 +137,7 @@ In your angular component, listen to these changes
 This process must follow some rules:
 
 - Don't call api request before the Web Component has initialized `API_BASE_PATH`
-- `ngOnChanges` is called the first time before `ngOnInit`, so put your code in `ngOnchanges` instead.
+- `ngOnChanges` is called the first time before `ngOnInit`, so put your init code in `ngOnchanges` instead.
 - Be sure to trigger the change detection when it is expected, because the Web Component execution (even though it's in an angular custom element) is outside an Angular zone, meaning the change detection is not triggered.
 
 ```typescript
