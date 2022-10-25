@@ -1,7 +1,7 @@
-<div class="flex flex-row items-center relative">
+<div class="flex flex-col items-start sm:flex-row sm:items-center relative">
   <label
     *ngIf="showTitle"
-    class="block uppercase tracking-wide text-xs font-bold mr-2 whitespace-no-wrap"
+    class="block tracking-wide text-sm mb-2 sm:mb-0 sm:mr-2 whitespace-no-wrap"
     [attr.for]="id"
   >
     {{ title }}
