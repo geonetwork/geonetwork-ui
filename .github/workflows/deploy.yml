@@ -45,7 +45,7 @@ jobs:
       - name: Build storybook
         run: npm run build:storybook
 
-      - name: Build demo & web components
+      - name: Build demo & web components test
         run: npm run build:demo
 
       # FIXME: restore a system for testing web components but faster/lighter than storybook
