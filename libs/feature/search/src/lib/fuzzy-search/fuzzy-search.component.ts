@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core'
@@ -15,6 +16,7 @@ import {
   EsSearchResponse,
   MetadataRecord,
 } from '@geonetwork-ui/util/shared'
+import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { ElasticsearchMapper } from '../utils/mapper'
@@ -26,14 +28,11 @@ import { SearchService } from '../utils/service/search.service'
   styleUrls: ['./fuzzy-search.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FuzzySearchComponent {
+export class FuzzySearchComponent implements OnInit {
   @ViewChild(AutocompleteComponent) autocomplete: AutocompleteComponent
   @Output() itemSelected = new EventEmitter<MetadataRecord>()
   @Output() inputSubmited = new EventEmitter<string>()
-
-  searchInputValue$ = this.searchFacade.searchFilters$.pipe(
-    map((searchFilter) => ({ title: searchFilter.any }))
-  )
+  searchInputValue$: Observable<{ title: string }>
 
   displayWithFn: (MetadataRecord) => string = (record) => record?.title
 
@@ -54,6 +53,12 @@ export class FuzzySearchComponent {
     private esMapper: ElasticsearchMapper,
     private esService: ElasticsearchService
   ) {}
+
+  ngOnInit(): void {
+    this.searchInputValue$ = this.searchFacade.searchFilters$.pipe(
+      map((searchFilter) => ({ title: searchFilter.any }))
+    )
+  }
 
   /**
    * Emit the event if the parent component has subscribed to it, so it
