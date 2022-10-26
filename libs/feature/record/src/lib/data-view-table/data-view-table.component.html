@@ -17,14 +17,14 @@
     ></gn-ui-table>
     <gn-ui-loading-mask
       *ngIf="loading"
-      class="absolute"
+      class="absolute inset-0"
       [message]="'table.loading.data' | translate"
     ></gn-ui-loading-mask>
     <gn-ui-popup-alert
       *ngIf="error"
       type="warning"
       icon="error_outline"
-      class="absolute m-2"
+      class="absolute m-2 inset-0"
     >
       <span translate>{{ error }}</span>
     </gn-ui-popup-alert>

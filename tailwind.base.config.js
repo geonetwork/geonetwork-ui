@@ -2,11 +2,11 @@ module.exports = {
   mode: 'jit',
   darkMode: false, // or 'media' or 'class',
   theme: {
-    inset: {
-      '1/10': '10%',
-      '1/2': '50%',
-    },
     extend: {
+      inset: {
+        '1/10': '10%',
+        '1/2': '50%',
+      },
       colors: {
         'primary-white': 'var(--color-primary-white)',
         'primary-lightest': 'var(--color-primary-lightest)',
