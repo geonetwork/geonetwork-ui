@@ -1,12 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { ES_SOURCE_BRIEF, MetadataRecord } from '@geonetwork-ui/util/shared'
-import {
-  RecordPreviewFeedComponent,
-  RESULTS_LAYOUT_CONFIG,
-  ResultsLayoutConfigItem,
-} from '@geonetwork-ui/ui/search'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
-import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
 
 @Component({
   selector: 'datahub-last-created',
@@ -14,12 +9,13 @@ import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
   styleUrls: ['./last-created.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LastCreatedComponent {
+export class LastCreatedComponent implements OnInit {
   constructor(
     private searchFacade: SearchFacade,
     private routerFacade: RouterFacade
-  ) {
-    this.searchFacade.init('newsfeed') // init the search state manually
+  ) {}
+
+  ngOnInit() {
     this.searchFacade.setConfigRequestFields({
       includes: [...ES_SOURCE_BRIEF, 'createDate', 'changeDate'],
     })
