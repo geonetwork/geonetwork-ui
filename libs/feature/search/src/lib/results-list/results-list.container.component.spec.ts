@@ -79,50 +79,8 @@ describe('ResultsListContainerComponent', () => {
     })
 
     it('scroll call facade', () => {
-      component.onScrollDown()
+      component.onShowMore()
       expect(searchFacadeMock.scroll).toHaveBeenCalled()
-    })
-  })
-
-  describe('scrollDisable$', () => {
-    let disabled
-    let subscription
-    describe('when scroll is disabled from input', () => {
-      beforeEach(() => {
-        fixture = TestBed.createComponent(ResultsListContainerComponent)
-        component = fixture.componentInstance
-        component.scrollableOptions = {
-          disabled: true,
-        }
-        fixture.detectChanges()
-        subscription = component.scrollDisable$.subscribe((v) => (disabled = v))
-      })
-      afterEach(() => {
-        subscription.unsubscribe()
-      })
-      it('emits true', () => {
-        expect(disabled).toBe(true)
-      })
-    })
-
-    describe('when scroll is enabled from input', () => {
-      beforeEach(() => {
-        fixture = TestBed.createComponent(ResultsListContainerComponent)
-        component = fixture.componentInstance
-        component.scrollableOptions = {
-          disabled: false,
-        }
-        fixture.detectChanges()
-        subscription = component.scrollDisable$.subscribe((v) => (disabled = v))
-      })
-      afterEach(() => {
-        subscription.unsubscribe()
-      })
-      it('emits isEndOfResults$', () => {
-        expect(disabled).toBe(false)
-        isEndOfResultsSubject.next(true)
-        expect(disabled).toBe(true)
-      })
     })
   })
 })

@@ -75,7 +75,6 @@
     "ng-table-virtual-scroll": "^1.4.0",
     "ngx-chips": "^2.2.2",
     "ngx-dropzone": "^3.0.0",
-    "ngx-infinite-scroll": "^10.0.1",
     "ngx-translate-messageformat-compiler": "~5.1.0",
     "ol": "^6.6.1",
     "papaparse": "^5.3.1",

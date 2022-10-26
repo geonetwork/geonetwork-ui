@@ -1,16 +1,4 @@
-<div
-  *ngIf="(error$ | async) === null"
-  class="search-results"
-  infinite-scroll
-  [infiniteScrollDistance]="scrollableConfig.distance"
-  [infiniteScrollUpDistance]="scrollableConfig.upDistance"
-  [infiniteScrollThrottle]="scrollableConfig.throttle"
-  [infiniteScrollContainer]="scrollableConfig.container"
-  [scrollWindow]="scrollableConfig.scrollWindow"
-  [fromRoot]="scrollableConfig.fromRoot"
-  [infiniteScrollDisabled]="scrollDisable$ | async"
-  (scrolled)="onScrollDown()"
->
+<div *ngIf="(error$ | async) === null" class="search-results relative">
   <gn-ui-results-list
     [loading]="facade.isLoading$ | async"
     [records]="facade.results$ | async"

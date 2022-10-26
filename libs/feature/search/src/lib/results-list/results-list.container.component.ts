@@ -6,13 +6,9 @@ import {
   OnInit,
   Output,
 } from '@angular/core'
-import {
-  InfiniteScrollModel,
-  InfiniteScrollOptionsDefault,
-  MetadataRecord,
-} from '@geonetwork-ui/util/shared'
-import { iif, Observable, of } from 'rxjs'
-import { distinctUntilChanged, filter, map, mergeMap } from 'rxjs/operators'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { Observable } from 'rxjs'
+import { filter, map } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchError } from '../state/reducer'
 import { ErrorType } from '@geonetwork-ui/ui/elements'
@@ -29,13 +25,10 @@ import {
 })
 export class ResultsListContainerComponent implements OnInit {
   @Input() layout: string
-  @Input() scrollableOptions: InfiniteScrollModel = {}
+  @Input() showMore: 'auto' | 'button' = 'auto'
   @Output() mdSelect = new EventEmitter<MetadataRecord>()
 
   layoutConfig$: Observable<ResultsLayoutConfigItem>
-
-  scrollDisable$: Observable<boolean>
-  scrollableConfig: InfiniteScrollModel
 
   error$: Observable<SearchError>
   errorCode$: Observable<number>
@@ -54,20 +47,9 @@ export class ResultsListContainerComponent implements OnInit {
       map((layout) => this.resultsLayoutConfig[layout])
     )
 
-    this.scrollableConfig = {
-      ...InfiniteScrollOptionsDefault,
-      ...this.scrollableOptions,
-    }
     if (this.layout) {
       this.facade.setResultsLayout(this.layout)
     }
-
-    this.scrollDisable$ = of(this.scrollableConfig.disabled).pipe(
-      mergeMap((disabled) =>
-        iif(() => !!disabled, of(true), this.facade.isEndOfResults$)
-      ),
-      distinctUntilChanged()
-    )
 
     this.error$ = this.facade.error$
     this.errorCode$ = this.error$.pipe(
@@ -84,7 +66,7 @@ export class ResultsListContainerComponent implements OnInit {
     this.mdSelect.emit(metadata)
   }
 
-  onScrollDown() {
+  onShowMore() {
     this.facade.scroll()
   }
 }
