@@ -33,10 +33,7 @@ export class GnResultsListComponent
   @Input() query: string
   @Input() filter: string
   @Input() catalogUrl: string
-  @Input() set fixed(value: string) {
-    this.scrollDisabled = value === 'true'
-  }
-  scrollDisabled: boolean
+  @Input() fixed: boolean
 
   constructor(injector: Injector, private changeDetector: ChangeDetectorRef) {
     super(injector)
