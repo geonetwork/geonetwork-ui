@@ -23,6 +23,7 @@ import { StarToggleComponent } from './star-toggle/star-toggle.component'
 import { DropdownMultiselectComponent } from './dropdown-multiselect/dropdown-multiselect.component'
 import { OverlayModule } from '@angular/cdk/overlay'
 import { MatCheckboxModule } from '@angular/material/checkbox'
+import { ViewportIntersectorComponent } from './viewport-intersector/viewport-intersector.component'
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
     NavigationButtonComponent,
     StarToggleComponent,
     DropdownMultiselectComponent,
+    ViewportIntersectorComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +68,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
     NavigationButtonComponent,
     StarToggleComponent,
     DropdownMultiselectComponent,
+    ViewportIntersectorComponent,
   ],
 })
 export class UiInputsModule {}
