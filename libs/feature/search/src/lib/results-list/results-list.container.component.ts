@@ -18,6 +18,8 @@ import {
   ResultsLayoutConfigModel,
 } from '@geonetwork-ui/ui/search'
 
+export type ResultsListShowMoreStrategy = 'auto' | 'button' | 'none'
+
 @Component({
   selector: 'gn-ui-results-list-container',
   templateUrl: './results-list.container.component.html',
@@ -25,7 +27,7 @@ import {
 })
 export class ResultsListContainerComponent implements OnInit {
   @Input() layout: string
-  @Input() showMore: 'auto' | 'button' | 'none' = 'auto'
+  @Input() showMore: ResultsListShowMoreStrategy = 'auto'
   @Output() mdSelect = new EventEmitter<MetadataRecord>()
 
   layoutConfig$: Observable<ResultsLayoutConfigItem>

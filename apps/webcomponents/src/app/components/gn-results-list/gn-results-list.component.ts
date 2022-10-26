@@ -8,7 +8,11 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core'
-import { SearchFacade, SearchStateParams } from '@geonetwork-ui/feature/search'
+import {
+  ResultsListShowMoreStrategy,
+  SearchFacade,
+  SearchStateParams,
+} from '@geonetwork-ui/feature/search'
 import {
   MetadataRecord,
   SearchFilters,
@@ -33,7 +37,7 @@ export class GnResultsListComponent
   @Input() query: string
   @Input() filter: string
   @Input() catalogUrl: string
-  @Input() fixed: boolean
+  @Input() showMore: ResultsListShowMoreStrategy = 'none'
 
   constructor(injector: Injector, private changeDetector: ChangeDetectorRef) {
     super(injector)
