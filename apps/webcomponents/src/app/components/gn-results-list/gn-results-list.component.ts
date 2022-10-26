@@ -29,7 +29,7 @@ export class GnResultsListComponent
   implements OnInit, OnChanges
 {
   @Input() layout = 'CARD'
-  @Input() size = 10
+  @Input() size = '10' // will be converted to number later
   @Input() query: string
   @Input() filter: string
   @Input() catalogUrl: string
@@ -53,7 +53,7 @@ export class GnResultsListComponent
     const filter = this.filter
     const query = this.query
     const searchActionPayload: SearchStateParams = {
-      size: this.size,
+      size: parseInt(this.size),
       from: 0,
       filters: {},
     }

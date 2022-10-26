@@ -39,10 +39,10 @@ const defaultArgs = {
   secondaryColor: '#c2e9dc',
   mainColor: '#212029',
   backgroundColor: '#fdfbff',
-  size: 10,
+  size: '10',
   query: '',
   filter: '',
-  fixed: '',
+  fixed: false,
 }
 
 export const AsList = Template.bind({})
