@@ -2,13 +2,14 @@ import { Component, DebugElement, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import {
-  RESULTS_LAYOUT_CONFIG,
   DEFAULT_RESULTS_LAYOUT_CONFIG,
+  RESULTS_LAYOUT_CONFIG,
 } from '@geonetwork-ui/ui/search'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { ResultsListContainerComponent } from './results-list.container.component'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 
 @Component({
   selector: 'gn-ui-results-list',
@@ -19,32 +20,41 @@ class ResultsListMockComponent {
   @Input() loading: boolean
   @Input() layout = 'CARD'
 }
+@Component({
+  selector: 'gn-ui-viewport-intersector',
+  template: '',
+})
+class ViewportIntersectorMockComponent {}
 
 const isEndOfResultsSubject = new BehaviorSubject(false)
-const searchFacadeMock = {
-  isLoading$: of(true),
-  isEndOfResults$: isEndOfResultsSubject,
-  results$: of(['one']),
-  layout$: of('CARD'),
-  setResultsLayout: jest.fn(),
-  scroll: jest.fn(),
-  error$: of(null),
+class SearchFacadeMock {
+  isLoading$ = new BehaviorSubject(false)
+  isEndOfResults$ = isEndOfResultsSubject
+  results$ = of(['one'])
+  layout$ = of('CARD')
+  setResultsLayout = jest.fn()
+  scroll = jest.fn()
+  error$ = of(null)
 }
 
 describe('ResultsListContainerComponent', () => {
   let component: ResultsListContainerComponent
   let fixture: ComponentFixture<ResultsListContainerComponent>
-  let de: DebugElement
-  let items: DebugElement[]
+  let searchFacade: SearchFacadeMock
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ResultsListContainerComponent, ResultsListMockComponent],
+      declarations: [
+        ResultsListContainerComponent,
+        ResultsListMockComponent,
+        ButtonComponent,
+        ViewportIntersectorMockComponent,
+      ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
           provide: SearchFacade,
-          useValue: searchFacadeMock,
+          useClass: SearchFacadeMock,
         },
         {
           provide: RESULTS_LAYOUT_CONFIG,
@@ -52,16 +62,19 @@ describe('ResultsListContainerComponent', () => {
         },
       ],
     }).compileComponents()
+    fixture = TestBed.createComponent(ResultsListContainerComponent)
+    component = fixture.componentInstance
+    searchFacade = TestBed.inject(SearchFacade) as any
   })
 
   describe('default init', () => {
+    let resultsList: DebugElement
     beforeEach(() => {
-      fixture = TestBed.createComponent(ResultsListContainerComponent)
-      component = fixture.componentInstance
       component.layout = 'CARD'
-      de = fixture.debugElement
       fixture.detectChanges()
-      items = de.queryAll(By.directive(ResultsListMockComponent))
+      resultsList = fixture.debugElement.query(
+        By.directive(ResultsListMockComponent)
+      )
     })
 
     it('should create', () => {
@@ -69,18 +82,70 @@ describe('ResultsListContainerComponent', () => {
     })
 
     it('init list from state', () => {
-      const uiComponent = items[0]
-      expect(uiComponent).toBeTruthy()
-      expect(searchFacadeMock.setResultsLayout).toHaveBeenCalledWith('CARD')
+      expect(resultsList).toBeTruthy()
+      expect(searchFacade.setResultsLayout).toHaveBeenCalledWith('CARD')
 
-      expect(uiComponent.componentInstance.loading).toBe(true)
-      expect(uiComponent.componentInstance.layout).toBe('CARD')
-      expect(uiComponent.componentInstance.records).toEqual(['one'])
+      expect(resultsList.componentInstance.layout).toBe('CARD')
+      expect(resultsList.componentInstance.records).toEqual(['one'])
     })
 
-    it('scroll call facade', () => {
+    it('triggering showMore asks for new results on facade', () => {
       component.onShowMore()
-      expect(searchFacadeMock.scroll).toHaveBeenCalled()
+      expect(searchFacade.scroll).toHaveBeenCalled()
+    })
+
+    describe('results loading', () => {
+      beforeEach(() => {
+        searchFacade.isLoading$.next(true)
+        fixture.detectChanges()
+      })
+      it('shows loading indicator on results', () => {
+        expect(resultsList.componentInstance.loading).toBe(true)
+      })
+    })
+  })
+
+  describe('show-more element', () => {
+    const getShowMoreEl = () => fixture.debugElement.query(By.css('.show-more'))
+    describe('when showMore is auto', () => {
+      beforeEach(() => {
+        component.showMore = 'auto'
+        fixture.detectChanges()
+      })
+      it('show-more element is a viewport intersector', () => {
+        const intersector = getShowMoreEl().query(
+          By.directive(ViewportIntersectorMockComponent)
+        )
+        expect(intersector).toBeTruthy()
+      })
+    })
+    describe('when showMore is button', () => {
+      beforeEach(() => {
+        component.showMore = 'button'
+        fixture.detectChanges()
+      })
+      it('show-more element is button', () => {
+        const button = getShowMoreEl().query(By.directive(ButtonComponent))
+        expect(button).toBeTruthy()
+      })
+    })
+    describe('when showMore is none', () => {
+      beforeEach(() => {
+        component.showMore = 'none'
+        fixture.detectChanges()
+      })
+      it('show-more element is hidden', () => {
+        expect(getShowMoreEl()).toBeFalsy()
+      })
+    })
+    describe('when loading', () => {
+      beforeEach(() => {
+        searchFacade.isLoading$.next(true)
+        fixture.detectChanges()
+      })
+      it('show-more element is hidden', () => {
+        expect(getShowMoreEl()).toBeFalsy()
+      })
     })
   })
 })

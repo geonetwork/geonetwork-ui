@@ -6,6 +6,22 @@
     [favoriteTemplate]="favoriteToggle"
     (mdSelect)="onMetadataSelection($event)"
   ></gn-ui-results-list>
+
+  <ng-container *ngIf="(facade.isLoading$ | async) === false">
+    <div class="show-more" *ngIf="showMore === 'button'">
+      <gn-ui-button type="primary" (click)="onShowMore()">
+        <span translate>results.showMore</span>
+      </gn-ui-button>
+    </div>
+    <div
+      class="show-more absolute left-[0px] bottom-[0px] right-[0px] height-[2px]"
+      *ngIf="showMore === 'auto'"
+    >
+      <gn-ui-viewport-intersector
+        (entersViewport)="onShowMore()"
+      ></gn-ui-viewport-intersector>
+    </div>
+  </ng-container>
 </div>
 
 <div class="p-4 w-80 m-auto text-[13px]">

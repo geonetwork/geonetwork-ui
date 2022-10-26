@@ -25,7 +25,7 @@ import {
 })
 export class ResultsListContainerComponent implements OnInit {
   @Input() layout: string
-  @Input() showMore: 'auto' | 'button' = 'auto'
+  @Input() showMore: 'auto' | 'button' | 'none' = 'auto'
   @Output() mdSelect = new EventEmitter<MetadataRecord>()
 
   layoutConfig$: Observable<ResultsLayoutConfigItem>
