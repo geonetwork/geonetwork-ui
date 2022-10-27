@@ -8,7 +8,11 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core'
-import { SearchFacade, SearchStateParams } from '@geonetwork-ui/feature/search'
+import {
+  ResultsListShowMoreStrategy,
+  SearchFacade,
+  SearchStateParams,
+} from '@geonetwork-ui/feature/search'
 import {
   MetadataRecord,
   SearchFilters,
@@ -29,14 +33,11 @@ export class GnResultsListComponent
   implements OnInit, OnChanges
 {
   @Input() layout = 'CARD'
-  @Input() size = 10
+  @Input() size = '10' // will be converted to number later
   @Input() query: string
   @Input() filter: string
   @Input() catalogUrl: string
-  @Input() set fixed(value: string) {
-    this.scrollDisabled = value === 'true'
-  }
-  scrollDisabled: boolean
+  @Input() showMore: ResultsListShowMoreStrategy = 'none'
 
   constructor(injector: Injector, private changeDetector: ChangeDetectorRef) {
     super(injector)
@@ -56,7 +57,7 @@ export class GnResultsListComponent
     const filter = this.filter
     const query = this.query
     const searchActionPayload: SearchStateParams = {
-      size: this.size,
+      size: parseInt(this.size),
       from: 0,
       filters: {},
     }

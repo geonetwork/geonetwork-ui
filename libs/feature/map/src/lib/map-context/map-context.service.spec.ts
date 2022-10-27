@@ -369,7 +369,6 @@ describe('MapContextService', () => {
       })
       it('add layers', () => {
         const layers = map.getLayers().getArray()
-        console.log(layers)
         expect(layers.length).toEqual(4)
       })
       it('set view', () => {

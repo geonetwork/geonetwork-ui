@@ -1,16 +1,4 @@
-<div
-  *ngIf="(error$ | async) === null"
-  class="search-results"
-  infinite-scroll
-  [infiniteScrollDistance]="scrollableConfig.distance"
-  [infiniteScrollUpDistance]="scrollableConfig.upDistance"
-  [infiniteScrollThrottle]="scrollableConfig.throttle"
-  [infiniteScrollContainer]="scrollableConfig.container"
-  [scrollWindow]="scrollableConfig.scrollWindow"
-  [fromRoot]="scrollableConfig.fromRoot"
-  [infiniteScrollDisabled]="scrollDisable$ | async"
-  (scrolled)="onScrollDown()"
->
+<div *ngIf="(error$ | async) === null" class="search-results relative">
   <gn-ui-results-list
     [loading]="facade.isLoading$ | async"
     [records]="facade.results$ | async"
@@ -18,6 +6,22 @@
     [favoriteTemplate]="favoriteToggle"
     (mdSelect)="onMetadataSelection($event)"
   ></gn-ui-results-list>
+
+  <ng-container *ngIf="(facade.isLoading$ | async) === false">
+    <div class="show-more" *ngIf="showMore === 'button'">
+      <gn-ui-button type="primary" (click)="onShowMore()">
+        <span translate>results.showMore</span>
+      </gn-ui-button>
+    </div>
+    <div
+      class="show-more absolute inset-x-0 bottom-0 h-[2px]"
+      *ngIf="showMore === 'auto'"
+    >
+      <gn-ui-viewport-intersector
+        (entersViewport)="onShowMore()"
+      ></gn-ui-viewport-intersector>
+    </div>
+  </ng-container>
 </div>
 
 <div class="p-4 w-80 m-auto text-[13px]">

@@ -64,7 +64,6 @@ describe('LastCreatedComponent', () => {
     })
 
     it('Should set the correct params in the facade', () => {
-      expect(facade.init).toHaveBeenCalled()
       expect(facade.setPagination).toHaveBeenCalledWith(0, 10)
       expect(facade.setSortBy).toHaveBeenCalledWith('-createDate')
       expect(facade.setConfigRequestFields).toHaveBeenCalledWith({

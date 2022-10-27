@@ -2,6 +2,7 @@ import { Meta, moduleMetadata, Story } from '@storybook/angular'
 import { DEFAULT_RESULTS_LAYOUT_CONFIG } from '@geonetwork-ui/ui/search'
 import { GnResultsListComponent } from './gn-results-list.component'
 import { WebcomponentsModule } from '../../webcomponents.module'
+import { ResultsListShowMoreStrategy } from '@geonetwork-ui/feature/search'
 
 export default {
   title: 'Angular Components/GnResultsListComponent',
@@ -39,10 +40,10 @@ const defaultArgs = {
   secondaryColor: '#c2e9dc',
   mainColor: '#212029',
   backgroundColor: '#fdfbff',
-  size: 10,
+  size: '10',
   query: '',
   filter: '',
-  fixed: '',
+  showMore: 'none' as ResultsListShowMoreStrategy,
 }
 
 export const AsList = Template.bind({})

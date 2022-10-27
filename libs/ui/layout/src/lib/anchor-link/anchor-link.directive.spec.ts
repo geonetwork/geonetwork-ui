@@ -54,7 +54,6 @@ describe('AnchorLinkDirective', () => {
       fixture.detectChanges()
     })
     it('adds the specified enabledClass', () => {
-      console.log(anchorLinkEl.getAttribute('class'))
       expect(anchorLinkEl.className).toBe('my-class is-enabled')
     })
   })

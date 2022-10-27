@@ -5,7 +5,6 @@ import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { TranslateModule } from '@ngx-translate/core'
-import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 import { FacetsModule } from './facets/facets.module'
 import { FuzzySearchComponent } from './fuzzy-search/fuzzy-search.component'
 import { RecordsMetricsComponent } from './records-metrics/records-metrics.component'
@@ -49,7 +48,6 @@ import { FilterDropdownComponent } from './filter-dropdown/filter-dropdown.compo
     UiElementsModule,
     ApiModule,
     FacetsModule,
-    InfiniteScrollModule,
     MatIconModule,
   ],
   exports: [

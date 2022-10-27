@@ -14,8 +14,8 @@ export default {
     }),
     componentWrapperDecorator(
       (story) => `
-<div class="p-3 border border-gray-200 relative overflow-y-scroll" style="height: 400px">
-  <div class='sticky p-3 bg-gray-100' style='top: 0'>
+<div class="p-3 border border-gray-200 relative overflow-y-scroll h-[400px]">
+  <div class='sticky p-3 bg-gray-100 top-0'>
     ${story}
   </div>
   <h3 class='text-xl py-3 font-bold' id='header-1'>First section</h3>

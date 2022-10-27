@@ -60,6 +60,11 @@ export class SearchFacade {
   constructor(private store: Store<SearchState>) {}
 
   init(searchId: string = DEFAULT_SEARCH_KEY): void {
+    if (this.searchId)
+      throw new Error(
+        `This SearchFacade instance was already initialized with the following searchId: ${this.searchId}`
+      )
+
     this.searchId = searchId
     this.store.dispatch(new AddSearch(searchId))
 
