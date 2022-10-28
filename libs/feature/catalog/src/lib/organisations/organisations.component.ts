@@ -77,4 +77,8 @@ export class OrganisationsComponent {
       OrgForResource: { [organisation.name]: true },
     })
   }
+
+  trackByIndex(index: number) {
+    return index
+  }
 }

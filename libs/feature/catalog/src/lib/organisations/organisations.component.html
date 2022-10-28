@@ -5,7 +5,7 @@
   class="grid grid-cols-1 mt-6 mb-20 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3"
 >
   <gn-ui-organisation-preview
-    *ngFor="let organisation of organisations$ | async"
+    *ngFor="let organisation of organisations$ | async; trackBy: trackByIndex"
     [organisation]="organisation"
     (clickedOrganisation)="searchByOrganisation($event)"
   ></gn-ui-organisation-preview>
