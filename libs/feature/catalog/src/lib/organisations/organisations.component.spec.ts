@@ -12,11 +12,7 @@ import { By } from '@angular/platform-browser'
 import { Organisation } from '@geonetwork-ui/util/shared'
 import { ORGANISATIONS_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 import { of } from 'rxjs'
-
-import {
-  ITEMS_ON_PAGE,
-  OrganisationsComponent,
-} from './organisations.component'
+import { OrganisationsComponent } from './organisations.component'
 import { OrganisationsService } from './organisations.service'
 import { SearchService } from '@geonetwork-ui/feature/search'
 
@@ -61,6 +57,8 @@ const organisationMock = {
   recordCount: 12,
 }
 
+const ITEMS_ON_PAGE = 6
+
 describe('OrganisationsComponent', () => {
   let component: OrganisationsComponent
   let fixture: ComponentFixture<OrganisationsComponent>
@@ -96,6 +94,7 @@ describe('OrganisationsComponent', () => {
     searchService = TestBed.inject(SearchService)
     fixture = TestBed.createComponent(OrganisationsComponent)
     component = fixture.componentInstance
+    component.itemsOnPage = ITEMS_ON_PAGE
     de = fixture.debugElement
     fixture.detectChanges()
   })

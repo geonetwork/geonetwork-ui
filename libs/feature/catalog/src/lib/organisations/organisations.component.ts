@@ -1,11 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import { Organisation } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import { OrganisationsService } from './organisations.service'
-
-export const ITEMS_ON_PAGE = 6
 
 @Component({
   selector: 'gn-ui-organisations',
@@ -14,6 +12,8 @@ export const ITEMS_ON_PAGE = 6
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrganisationsComponent {
+  @Input() itemsOnPage = 12
+
   constructor(
     private organisationsService: OrganisationsService,
     private searchService: SearchService
@@ -37,10 +37,13 @@ export class OrganisationsComponent {
   ]).pipe(
     tap(
       ([organisations]) =>
-        (this.totalPages = Math.ceil(organisations.length / ITEMS_ON_PAGE))
+        (this.totalPages = Math.ceil(organisations.length / this.itemsOnPage))
     ),
     map(([organisations, page]) =>
-      organisations.slice((page - 1) * ITEMS_ON_PAGE, page * ITEMS_ON_PAGE)
+      organisations.slice(
+        (page - 1) * this.itemsOnPage,
+        page * this.itemsOnPage
+      )
     )
   )
 
