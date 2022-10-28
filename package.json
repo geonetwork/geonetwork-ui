@@ -68,6 +68,7 @@
     "@tailwindcss/line-clamp": "^0.2.2",
     "angular-mydatepicker": "^0.11.3",
     "chroma-js": "^2.1.2",
+    "date-fns": "^2.29.3",
     "document-register-element": "^1.14.10",
     "duration-relativetimeformat": "^2.0.3",
     "express": "^4.17.1",
