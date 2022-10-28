@@ -187,8 +187,12 @@ Libraries are organized in the following fashion:
    - `data-access-datafeeder` contains an auto-generated API client for the Datafeeder backend
 
 4. Libraries providing common services or shared models are in the `util` folder:
+
    - `util-i18n` for translation and internationalization
    - `util-shared` for shared models and types, test fixtures, app-wide settings etc.
+
+5. Libraries providing low-level functionalities that can be used both in front and backend are in the `api` folder:
+   - `api-metadata-converter` for providing a pivot metadata model and conversion to interoperable formats
 
 #### `webcomponents`: Embeddable webcomponents
 
