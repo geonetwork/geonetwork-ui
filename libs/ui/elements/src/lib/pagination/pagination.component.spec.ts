@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 
 import { PaginationComponent } from './pagination.component'
+import { TranslateModule } from '@ngx-translate/core'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 
 describe('PaginationComponent', () => {
   let component: PaginationComponent
@@ -9,7 +11,8 @@ describe('PaginationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PaginationComponent],
+      declarations: [PaginationComponent, ButtonComponent],
+      imports: [TranslateModule.forRoot()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(PaginationComponent)
@@ -26,14 +29,14 @@ describe('PaginationComponent', () => {
   it('should navigation_next be disabled', () => {
     fixture.detectChanges()
     const isDisabled = fixture.debugElement.query(By.css('#navigate_next'))
-      .nativeElement.disabled
+      .componentInstance.disabled
     expect(isDisabled).toBeTruthy()
   })
 
   it('should navigate_previous be enabled', () => {
     fixture.detectChanges()
     const isDisabled = fixture.debugElement.query(By.css('#navigate_previous'))
-      .nativeElement.disabled
+      .componentInstance.disabled
     expect(isDisabled).toBeFalsy()
   })
 })

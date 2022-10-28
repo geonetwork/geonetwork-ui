@@ -1,40 +1,46 @@
-<div class="h-24 flex justify-center items-center">
-  <button
-    (click)="nextPage()"
-    [disabled]="currentPage === nPages"
-    class="uppercase text-white justify-center items-center p-3 rounded-lg cursor-pointer h-14 w-44 bg-secondary hidden sm:flex sm:mr-28 disabled:bg-gray-100 disabled:cursor-default"
-    translate
+<div class="relative">
+  <div class="sm:absolute sm:inset-0">
+    <gn-ui-button
+      (click)="nextPage()"
+      [type]="'secondary'"
+      [disabled]="currentPage === nPages"
+      extraClass="lg:m-auto !p-[22px]"
+    >
+      <span class="uppercase font-medium tracking-widest" translate
+        >pagination.nextPage</span
+      >
+    </gn-ui-button>
+  </div>
+  <div
+    class="relative flex flex-row justify-start sm:justify-end items-center py-[13px]"
   >
-    pagination.nextPage
-  </button>
-  <div class="flex items-center" translate>
-    <span class="m-3" translate> pagination.page </span>
+    <span class="mr-3 capitalize text-sm text-gray-900" translate
+      >pagination.page</span
+    >
     <span class="border border-gray-300 rounded w-14 py-1 px-5 mr-3">{{
       currentPage
     }}</span>
-    <span class="mr-3" translate> pagination.pageOf </span>
-    <span class="mr-3">{{ nPages }}</span>
-  </div>
-
-  <mat-icon class="mr-3 flex" style="display: flex">
-    <button
+    <span class="mr-3 text-sm text-gray-900"
+      ><span translate>pagination.pageOf</span> {{ nPages }}</span
+    >
+    <gn-ui-button
       (click)="previousPage()"
       id="navigate_previous"
-      class="text-2xl disabled:opacity-50 disabled:cursor-default flex items-center"
+      class="mr-2"
       [disabled]="currentPage === 1"
+      [type]="'light'"
+      extraClass="!p-[3px]"
     >
-      navigate_before
-    </button>
-  </mat-icon>
-
-  <mat-icon style="display: flex">
-    <button
+      <mat-icon>navigate_before</mat-icon>
+    </gn-ui-button>
+    <gn-ui-button
       (click)="nextPage()"
       id="navigate_next"
-      class="text-2xl disabled:opacity-50 disabled:cursor-default flex items-center"
       [disabled]="currentPage === nPages"
+      [type]="'light'"
+      extraClass="!p-[3px]"
     >
-      navigate_next
-    </button>
-  </mat-icon>
+      <mat-icon>navigate_next</mat-icon>
+    </gn-ui-button>
+  </div>
 </div>
