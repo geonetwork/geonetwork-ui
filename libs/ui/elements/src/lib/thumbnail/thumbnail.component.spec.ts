@@ -52,7 +52,7 @@ describe('ThumbnailComponent', () => {
         expect(img.nativeElement.style.objectFit).toEqual('scale-down')
       })
     })
-    describe('When an url is given', () => {
+    describe('When an url is given and no fit is set', () => {
       const url = 'http://test.com/img.png'
       let img
       beforeEach(() => {
@@ -68,6 +68,31 @@ describe('ThumbnailComponent', () => {
       })
       it('sets object cover to cover', () => {
         expect(img.nativeElement.style.objectFit).toEqual('cover')
+      })
+      it('sets img height to 100%', () => {
+        expect(img.nativeElement.classList.contains('h-full')).toBeTruthy()
+      })
+    })
+    describe('When an url is given and fit is set to "contain"', () => {
+      const url = 'http://test.com/img.png'
+      let img
+      beforeEach(() => {
+        component.thumbnailUrl = url
+        component.fit = 'contain'
+        fixture.detectChanges()
+        img = de.query(By.css('img'))
+      })
+      it('is displayed', () => {
+        expect(img).toBeTruthy()
+      })
+      it('url attribute as url @Input', () => {
+        expect(img.nativeElement.src).toEqual(url)
+      })
+      it('sets object cover to contain', () => {
+        expect(img.nativeElement.style.objectFit).toEqual('contain')
+      })
+      it('sets img height to 80%', () => {
+        expect(img.nativeElement.classList.contains('h-4/5')).toBeTruthy()
       })
     })
   })

@@ -10,6 +10,7 @@ import { OrganisationPreviewComponent } from './organisation-preview.component'
 })
 class RecordThumbnailMockComponent {
   @Input() thumbnailUrl: string
+  @Input() fit: string
 }
 
 const organisationMock = {
