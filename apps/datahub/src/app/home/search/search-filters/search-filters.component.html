@@ -67,8 +67,10 @@
         *ngIf="!isOpen"
         (click)="open()"
         type="outline"
-        >...</gn-ui-button
+        extraClass="p-[10px]"
       >
+        <mat-icon>more_horiz</mat-icon>
+      </gn-ui-button>
       <button
         type="button"
         *ngIf="!isOpen"
