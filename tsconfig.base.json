@@ -33,6 +33,9 @@
       "@geonetwork-ui/feature/record": ["libs/feature/record/src/index.ts"],
       "@geonetwork-ui/feature/router": ["libs/feature/router/src/index.ts"],
       "@geonetwork-ui/feature/search": ["libs/feature/search/src/index.ts"],
+      "@geonetwork-ui/metadata-converter": [
+        "libs/api/metadata-converter/src/index.ts"
+      ],
       "@geonetwork-ui/ui/catalog": ["libs/ui/catalog/src/index.ts"],
       "@geonetwork-ui/ui/elements": ["libs/ui/elements/src/index.ts"],
       "@geonetwork-ui/ui/inputs": ["libs/ui/inputs/src/index.ts"],

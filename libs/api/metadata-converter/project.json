@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/metadata-converter/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/api/metadata-converter",
+        "tsConfig": "libs/api/metadata-converter/tsconfig.lib.json",
+        "packageJson": "libs/api/metadata-converter/package.json",
+        "main": "libs/api/metadata-converter/src/index.ts",
+        "assets": ["libs/api/metadata-converter/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/api/metadata-converter/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/api/metadata-converter"],
+      "options": {
+        "jestConfig": "libs/api/metadata-converter/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

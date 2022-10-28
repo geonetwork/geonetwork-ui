@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "api-metadata-converter": "libs/api/metadata-converter",
     "data-access-datafeeder": "libs/data-access/datafeeder",
     "data-access-gn4": "libs/data-access/gn4",
     "datafeeder": "apps/datafeeder",
