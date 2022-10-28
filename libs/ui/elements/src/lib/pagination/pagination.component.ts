@@ -32,19 +32,17 @@ export class PaginationComponent implements OnChanges {
     }
   }
 
-  nextPage() {
-    this.currentPage++
+  setPage(newPage) {
+    this.currentPage = newPage
     this.applyPageBounds()
-    this.emitCurrentPage()
+    this.newCurrentPageEvent.emit(this.currentPage)
+  }
+
+  nextPage() {
+    this.setPage(this.currentPage + 1)
   }
 
   previousPage() {
-    this.currentPage--
-    this.applyPageBounds()
-    this.emitCurrentPage()
-  }
-
-  emitCurrentPage() {
-    this.newCurrentPageEvent.emit(this.currentPage)
+    this.setPage(this.currentPage - 1)
   }
 }

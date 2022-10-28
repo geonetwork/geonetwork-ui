@@ -4,6 +4,8 @@ import { By } from '@angular/platform-browser'
 import { PaginationComponent } from './pagination.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { MatIconModule } from '@angular/material/icon'
+import { FormsModule } from '@angular/forms'
 
 describe('PaginationComponent', () => {
   let component: PaginationComponent
@@ -12,7 +14,7 @@ describe('PaginationComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [PaginationComponent, ButtonComponent],
-      imports: [TranslateModule.forRoot()],
+      imports: [TranslateModule.forRoot(), MatIconModule, FormsModule],
     }).compileComponents()
 
     fixture = TestBed.createComponent(PaginationComponent)

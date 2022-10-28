@@ -17,9 +17,14 @@
     <span class="mr-3 capitalize text-sm text-gray-900" translate
       >pagination.page</span
     >
-    <span class="border border-gray-300 rounded w-14 py-1 px-5 mr-3">{{
-      currentPage
-    }}</span>
+    <input
+      type="number"
+      [ngModel]="currentPage"
+      [min]="1"
+      [max]="nPages"
+      (ngModelChange)="setPage($event)"
+      class="border border-gray-300 rounded w-[54px] h-[34px] pl-[12px] mr-3 text-center"
+    />
     <span class="mr-3 text-sm text-gray-900"
       ><span translate>pagination.pageOf</span> {{ nPages }}</span
     >

@@ -20,6 +20,7 @@ import { SearchResultsErrorComponent } from './search-results-error/search-resul
 import { PaginationComponent } from './pagination/pagination.component'
 import { ThumbnailComponent } from './thumbnail/thumbnail.component'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { FormsModule } from '@angular/forms'
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
     UtilSharedModule,
     RouterModule,
     UiInputsModule,
+    FormsModule,
   ],
   declarations: [
     MetadataInfoComponent,
