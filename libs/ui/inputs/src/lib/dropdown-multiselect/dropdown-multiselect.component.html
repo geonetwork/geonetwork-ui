@@ -3,7 +3,7 @@
   extraClass="w-full p-[10px] pl-[14px]"
   [title]="title"
   [attr.aria-owns]="id"
-  (click)="openOverlay()"
+  (buttonClick)="openOverlay()"
   (keydown)="handleTriggerKeydown($event)"
   cdkOverlayOrigin
   #overlayOrigin="cdkOverlayOrigin"

@@ -1,7 +1,7 @@
 <div class="relative">
   <div class="sm:absolute sm:inset-0">
     <gn-ui-button
-      (click)="nextPage()"
+      (buttonClick)="nextPage()"
       [type]="'secondary'"
       [disabled]="currentPage === nPages"
       extraClass="lg:m-auto !p-[22px]"
@@ -29,7 +29,7 @@
       ><span translate>pagination.pageOf</span> {{ nPages }}</span
     >
     <gn-ui-button
-      (click)="previousPage()"
+      (buttonClick)="previousPage()"
       id="navigate_previous"
       class="mr-2"
       [disabled]="currentPage === 1"
@@ -39,7 +39,7 @@
       <mat-icon>navigate_before</mat-icon>
     </gn-ui-button>
     <gn-ui-button
-      (click)="nextPage()"
+      (buttonClick)="nextPage()"
       id="navigate_next"
       [disabled]="currentPage === nPages"
       [type]="'light'"

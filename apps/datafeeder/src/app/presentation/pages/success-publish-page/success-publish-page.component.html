@@ -15,7 +15,7 @@
           <gn-ui-button
             type="primary"
             extraClass="rounded-full px-20 mb-2"
-            (click)="openGeonetworkLink()"
+            (buttonClick)="openGeonetworkLink()"
             ><span translate class="uppercase text-white font-bold"
               >datafeeder.publishSuccess.geonetworkRecord</span
             ></gn-ui-button
@@ -23,7 +23,7 @@
           <gn-ui-button
             type="primary"
             extraClass="rounded-full px-20"
-            (click)="openGeoserverLink()"
+            (buttonClick)="openGeoserverLink()"
             ><span class="uppercase text-white font-bold" translate
               >datafeeder.publishSuccess.mapViewer</span
             ></gn-ui-button
@@ -33,7 +33,7 @@
         <gn-ui-button
           type="primary"
           extraClass="rounded-full px-20 secondary"
-          (click)="backToHome()"
+          (buttonClick)="backToHome()"
         >
           <span translate class="uppercase font-bold"
             >datafeeder.publishSuccess.uploadAnotherData</span

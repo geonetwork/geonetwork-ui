@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core'
 
 @Component({
   selector: 'gn-ui-button',
@@ -11,6 +17,7 @@ export class ButtonComponent {
     'default'
   @Input() disabled = false
   @Input() extraClass = ''
+  @Output() buttonClick = new EventEmitter<void>()
 
   get classList() {
     return `${this.color} ${this.textColor} ${this.borderColor} ${this.extraClass}`
@@ -57,5 +64,11 @@ export class ButtonComponent {
       case 'light':
         return 'focus:ring-4 focus:ring-gray-300'
     }
+  }
+
+  handleClick(event: Event) {
+    this.buttonClick.emit()
+    event.preventDefault()
+    event.stopPropagation()
   }
 }
