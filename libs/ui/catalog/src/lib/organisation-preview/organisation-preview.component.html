@@ -4,8 +4,9 @@
       class="overflow-hidden bg-gray-100 rounded-lg w-full border border-gray-300 h-36"
     >
       <gn-ui-thumbnail
-        class="relative h-full w-full object-cover object-left-top"
+        class="relative h-full w-full"
         [thumbnailUrl]="organisation.logoUrl"
+        [fit]="'contain'"
       ></gn-ui-thumbnail>
     </div>
     <div class="px-3 pb-2 capitalize">
