@@ -30,11 +30,16 @@ export class ThumbnailComponent implements AfterViewInit, OnDestroy {
     this.imgUrl = url || this.placeholderUrl
     this.isPlaceholder = !url
   }
+  @Input() fit: 'cover' | 'contain' = 'cover'
   @ViewChild('imageElement') imgElement: ElementRef<HTMLImageElement>
   imgUrl: string
   placeholderUrl = this.optionalPlaceholderUrl || DEFAULT_PLACEHOLDER
   isPlaceholder = false
   sub: Subscription
+
+  get objectFit() {
+    return this.isPlaceholder ? 'scale-down' : this.fit
+  }
 
   constructor(
     @Optional()
