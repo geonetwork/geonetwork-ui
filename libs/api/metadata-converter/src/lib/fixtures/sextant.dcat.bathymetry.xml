@@ -1,0 +1,140 @@
+<dcat:CatalogRecord xmlns:adms="http://www.w3.org/ns/adms#" xmlns:dcatap="http://data.europa.eu/r5r/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:vcard="http://www.w3.org/2006/vcard/ns#" xmlns:dct="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:ns14="http://spdx.org/rdf/terms#" xmlns:locn="http://www.w3.org/ns/locn#" xmlns:dcat="http://www.w3.org/ns/dcat#" xmlns:prov="http://www.w3.org/ns/prov#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dct:identifier>370ab490-e8b4-11df-b733-005056987263</dct:identifier>
+    <dct:created>2010-11-05T08:10:55Z</dct:created>
+    <dct:modified>2020-06-03T22:34:05Z</dct:modified>
+    <dct:language rdf:resource="http://publications.europa.eu/resource/authority/language/FRE"/>
+    <foaf:primaryTopic>
+        <dcat:Dataset>
+            <dct:title>MNT de Bathymétrie de la zone du Golo - Campagne Sigolo (réalisé en 2008, résolution 25m)</dct:title>
+            <dct:description>Modèle bathymétrique (MNT) d'une partie de l'édifice sédimentaire sous-marin du Golo, à l'Est du Cap Corse. Les données ont été acquises lors de la campagne océanographique Sigolo en 2008, avec les sondeurs multifaisceaux EM300 et EM1000.
+                Le pas de la grille est de 25m.
+                Produit interne Ifremer.</dct:description>
+            <dct:identifier>FR-330-715-368-00032-IFR_MBAN_SIGOLO_25_01_R</dct:identifier>
+            <dct:created>2009-03-31T22:00:00Z</dct:created>
+            <dct:modified>2020-06-03T22:34:05Z</dct:modified>
+            <dct:language rdf:resource="http://publications.europa.eu/resource/authority/language/FRE"/>
+            <dcat:contactPoint>
+                <vcard:Kind>
+                    <vcard:title>Ifremer - Géosciences Marines</vcard:title>
+                    <vcard:role>custodian</vcard:role>
+                    <vcard:hasEmail>gmcarto@ifremer.fr</vcard:hasEmail>
+                </vcard:Kind>
+            </dcat:contactPoint>
+            <dcat:contactPoint>
+                <vcard:Kind>
+                    <vcard:title>Ifremer - Géosciences Marines</vcard:title>
+                    <vcard:role>processor</vcard:role>
+                    <vcard:hasEmail>gmcarto@ifremer.fr</vcard:hasEmail>
+                </vcard:Kind>
+            </dcat:contactPoint>
+            <dcat:contactPoint>
+                <vcard:Kind>
+                    <vcard:title>Ifremer - Géosciences Marines</vcard:title>
+                    <vcard:role>processor</vcard:role>
+                    <vcard:hasEmail>gmcarto@ifremer.fr</vcard:hasEmail>
+                </vcard:Kind>
+            </dcat:contactPoint>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>/Milieu physique/Bathymétrie/MNT</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Altitude</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>fond marin</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>morphologie sous-marine</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Bathymétrie</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Modèle Numérique de Terrain</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Corse</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Méditerranée</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>France</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Géophysique</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dct:type rdf:resource="dcat:Dataset"/>
+            <dcat:landingPage>
+                <foaf:Document rdf:about="https://sextant.ifremer.fr/geonetwork/api/collections/main/items/370ab490-e8b4-11df-b733-005056987263">
+                    <dct:title>MNT de Bathymétrie de la zone du Golo - Campagne Sigolo (réalisé en 2008, résolution 25m)</dct:title>
+                </foaf:Document>
+            </dcat:landingPage>
+            <dcat:spatialResolutionInMeters>25000</dcat:spatialResolutionInMeters>
+            <dct:spatial>
+                <dct:location>
+                    <locn:geometry>{"coordinates":[[[9.449999,42.283333],[10.033471,42.283333],[10.033471,42.86684],[9.449999,42.86684],[9.449999,42.283333]]],"type":"Polygon"}</locn:geometry>
+                </dct:location>
+            </dct:spatial>
+            <dct:temporal>
+                <dct:periodOfTime>
+                    <dcat:startDate>2008-06-09T13:39:00Z</dcat:startDate>
+                    <dcat:endDate>2008-06-26T13:40:00Z</dcat:endDate>
+                </dct:periodOfTime>
+            </dct:temporal>
+            <prov:wasUsedBy>
+                <prov:Activity>
+                    <prov:used rdf:resource="local:FR-330-715-368-00032-IFR_MBAN_SIGOLO_25_01_R"/>
+                    <prov:qualifiedAssociation>
+                        <prov:hadPlan>
+                            <prov:wasDerivedFrom rdf:parseType="Resource">
+                                <dct:title>INSPIRE</dct:title>
+                            </prov:wasDerivedFrom>
+                        </prov:hadPlan>
+                    </prov:qualifiedAssociation>
+                    <prov:generated>
+                        <rdf:type rdf:about="http://inspire.ec.europa.eu/metadata-codelist/DegreeOfConformity/notConformant"/>
+                    </prov:generated>
+                </prov:Activity>
+            </prov:wasUsedBy>
+            <dcat:distribution>
+                <dcat:Distribution>
+                    <dcat:accessURL>http://wwz.ifremer.fr/drogm/Cartographie</dcat:accessURL>
+                    <dct:title></dct:title>
+                    <dct:description>Cartographie - Géosciences Marines Ifremer</dct:description>
+                    <adms:representationTechnique>
+                        <skos:Concept>
+                            <skos:prefLabel>WWW:LINK</skos:prefLabel>
+                        </skos:Concept>
+                    </adms:representationTechnique>
+                </dcat:Distribution>
+            </dcat:distribution>
+            <dct:accrualPeriodicity rdf:resource="http://publications.europa.eu/resource/authority/frequency/null"/>
+            <dct:provenance>
+                <dct:ProvenanceStatement>
+                    <rdfs:label>Données bathymétriques acquises avec les sondeurs EM300 et EM1000 lors de la campagne Sigolo en 2008.</rdfs:label>
+                </dct:ProvenanceStatement>
+            </dct:provenance>
+        </dcat:Dataset>
+    </foaf:primaryTopic>
+</dcat:CatalogRecord>

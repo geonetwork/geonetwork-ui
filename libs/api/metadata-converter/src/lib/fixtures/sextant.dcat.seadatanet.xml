@@ -1,0 +1,191 @@
+<dcat:CatalogRecord xmlns:adms="http://www.w3.org/ns/adms#" xmlns:dcatap="http://data.europa.eu/r5r/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:vcard="http://www.w3.org/2006/vcard/ns#" xmlns:dct="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:ns14="http://spdx.org/rdf/terms#" xmlns:locn="http://www.w3.org/ns/locn#" xmlns:dcat="http://www.w3.org/ns/dcat#" xmlns:prov="http://www.w3.org/ns/prov#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dct:identifier>98d22ac0-5398-4889-8f8e-8f28273b548b</dct:identifier>
+    <dct:created>2020-11-04T10:07:57Z</dct:created>
+    <dct:modified>2021-01-11T14:55:43Z</dct:modified>
+    <dct:language rdf:resource="http://publications.europa.eu/resource/authority/language/ENG"/>
+    <foaf:primaryTopic>
+        <dcat:Dataset>
+            <dct:title>Global Ocean Climatology - Temperature and Salinity Climatology V2</dct:title>
+            <dct:description>The SDC_GLO_CLIM_TS_V2 product is an improved version of SDC_GLO_CLIM_TS_V1 and contains two different monthly climatologies for temperature and salinity from the World Ocean Data 2018 (WOD-18) database. Along with the basic quality control flags from the WOD-18, an additional quality Control named Nonlinear Quality Control (NQC) is applied. The first climatology, V2_1, considers temperature and salinity profiles from Conductivity Depth Temperature (CTD), Ocean station data (OSD) and Moored buoy data (MRB) along with Profiling Floats (PFL) from 1900 to 2017. The second climatology, V2_2, utilizes only PFL data from 2003 to 2017. V2_1 considers 44 layers from surface to 6000 m while V2_2 only 34 from 0 to 2000 m. The gridded fields are computed using DIVAnd (Data Interpolating Variational Analysis) version 2.3.1.
+
+                For data access, please register at http://www.marine-id.org/.</dct:description>
+            <dct:identifier>98d22ac0-5398-4889-8f8e-8f28273b548b</dct:identifier>
+            <dct:created>2020-11-03T23:00:00Z</dct:created>
+            <dct:modified>2021-01-11T14:55:43Z</dct:modified>
+            <dct:language rdf:resource="http://publications.europa.eu/resource/authority/language/ENG"/>
+            <dcat:contactPoint>
+                <vcard:Kind>
+                    <vcard:title>IFREMER / IDM / SISMER - Scientific Information Systems for the SEA</vcard:title>
+                    <vcard:role>custodian</vcard:role>
+                    <vcard:hasEmail>sismer@ifremer.fr</vcard:hasEmail>
+                </vcard:Kind>
+            </dcat:contactPoint>
+            <dcat:contactPoint>
+                <vcard:Kind>
+                    <vcard:title>University of Bologna, Department of Physics and Astronomy (DIFA)</vcard:title>
+                    <vcard:role>author</vcard:role>
+                    <vcard:hasEmail>kanwal.shahzadi3@unibo.it</vcard:hasEmail>
+                </vcard:Kind>
+            </dcat:contactPoint>
+            <dcat:contactPoint>
+                <vcard:Kind>
+                    <vcard:title>University of Bologna, Department of Physics and Astronomy (DIFA)</vcard:title>
+                    <vcard:role>author</vcard:role>
+                    <vcard:hasEmail>nadia.pinardi@unibo.it</vcard:hasEmail>
+                </vcard:Kind>
+            </dcat:contactPoint>
+            <dcat:contactPoint>
+                <vcard:Kind>
+                    <vcard:title>Euro-Mediterranean Center on Climate Change CMCC</vcard:title>
+                    <vcard:role>author</vcard:role>
+                    <vcard:hasEmail>simona.simoncelli@ingv.it</vcard:hasEmail>
+                </vcard:Kind>
+            </dcat:contactPoint>
+            <dcat:contactPoint>
+                <vcard:Kind>
+                    <vcard:title>University of Bologna, Department of Physics and Astronomy (DIFA)</vcard:title>
+                    <vcard:role>author</vcard:role>
+                    <vcard:hasEmail>marco.zavatarelli@unibo.it</vcard:hasEmail>
+                </vcard:Kind>
+            </dcat:contactPoint>
+            <dcat:contactPoint>
+                <vcard:Kind>
+                    <vcard:title>Istituto Nazionale di Geofisica e Vulcanologia, Sezione di Bologna</vcard:title>
+                    <vcard:role>author</vcard:role>
+                    <vcard:hasEmail>vladyslav.lyubartsev@cmcc.it</vcard:hasEmail>
+                </vcard:Kind>
+            </dcat:contactPoint>
+            <dcat:contactPoint>
+                <vcard:Kind>
+                    <vcard:title>NOAA / Wdc For Oceanography</vcard:title>
+                    <vcard:role>originator</vcard:role>
+                    <vcard:hasEmail>wdca@nodc.noaa.gov</vcard:hasEmail>
+                </vcard:Kind>
+            </dcat:contactPoint>
+            <dcat:contactPoint>
+                <vcard:Kind>
+                    <vcard:title>University of Bologna, Department of Physics and Astronomy (DIFA)</vcard:title>
+                    <vcard:role>resourceProvider</vcard:role>
+                    <vcard:hasEmail>kanwal.shahzadi3@unibo.it</vcard:hasEmail>
+                </vcard:Kind>
+            </dcat:contactPoint>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>/Physical Environment/Climatology</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Oceanographic geographical features</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Temperature of the water column</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Salinity of the water column</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Water body salinity</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>ITS-90 water temperature</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Pacific Ocean</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Arctic Ocean</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Atlantic Ocean</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Indian Ocean</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dcat:theme>
+                <skos:Concept>
+                    <skos:prefLabel>Southern Ocean</skos:prefLabel>
+                </skos:Concept>
+            </dcat:theme>
+            <dct:type rdf:resource="dcat:Dataset"/>
+            <dcat:landingPage>
+                <foaf:Document rdf:about="https://sextant.ifremer.fr/geonetwork/api/collections/main/items/98d22ac0-5398-4889-8f8e-8f28273b548b">
+                    <dct:title>Global Ocean Climatology - Temperature and Salinity Climatology V2</dct:title>
+                </foaf:Document>
+            </dcat:landingPage>
+            <dct:spatial>
+                <dct:location>
+                    <locn:geometry>{"coordinates":[[[-180.0,-90.0],[179.0,-90.0],[179.0,90.0],[-180.0,90.0],[-180.0,-90.0]]],"type":"Polygon"}</locn:geometry>
+                </dct:location>
+            </dct:spatial>
+            <dct:temporal>
+                <dct:periodOfTime>
+                    <dcat:startDate>1899-12-31T23:50:39Z</dcat:startDate>
+                    <dcat:endDate>2017-12-30T23:00:00Z</dcat:endDate>
+                </dct:periodOfTime>
+            </dct:temporal>
+            <dct:temporal>
+                <dct:periodOfTime>
+                    <dcat:startDate>2002-12-31T23:00:00Z</dcat:startDate>
+                    <dcat:endDate>2017-12-30T23:00:00Z</dcat:endDate>
+                </dct:periodOfTime>
+            </dct:temporal>
+            <prov:wasUsedBy>
+                <prov:Activity>
+                    <prov:used rdf:resource="local:98d22ac0-5398-4889-8f8e-8f28273b548b"/>
+                    <prov:qualifiedAssociation>
+                        <prov:hadPlan>
+                            <prov:wasDerivedFrom rdf:parseType="Resource">
+                                <dct:title>COMMISSION REGULATION (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services</dct:title>
+                            </prov:wasDerivedFrom>
+                        </prov:hadPlan>
+                    </prov:qualifiedAssociation>
+                    <prov:generated>
+                        <rdf:type rdf:about="http://inspire.ec.europa.eu/metadata-codelist/DegreeOfConformity/notEvaluated"/>
+                    </prov:generated>
+                </prov:Activity>
+            </prov:wasUsedBy>
+            <dcat:distribution>
+                <dcat:Distribution>
+                    <dcat:accessURL>https://www.ifremer.fr/erddap/info/SDC_GLO_CLIM_TS_V2_2/index.html</dcat:accessURL>
+                    <dct:title>ERDDAP Link</dct:title>
+                    <dct:description>ERDDAP link to climatology V2_2</dct:description>
+                    <adms:representationTechnique>
+                        <skos:Concept>
+                            <skos:prefLabel>WWW:LINK</skos:prefLabel>
+                        </skos:Concept>
+                    </adms:representationTechnique>
+                </dcat:Distribution>
+            </dcat:distribution>
+            <dct:provenance>
+                <dct:ProvenanceStatement>
+                    <rdfs:label>In this product, first the basic WOD quality flags (QF) has been considered. There are three types of QFs in the WOD:
+                        1-Orginator Flag (Oflag)
+                        2-World Ocean database observed value flag (WODf)
+                        3-World Ocean database profile flag (WODpf)
+                        In this analysis, only the observations with WODf flags value “0” (Accepted) and WODpf flag value “0” (Accepted) have been used.
+                        An additional quality control, a nonlinear quality control developed by Shahzadi (2020) has been implemented with the following assumptions:
+                        1- The domain is divided into 5x5 degree boxes, where mean and standard deviations(std) are computed.
+                        2- Data is eliminated outside 2 std in each box and procedure is repeated.</rdfs:label>
+                </dct:ProvenanceStatement>
+            </dct:provenance>
+        </dcat:Dataset>
+    </foaf:primaryTopic>
+</dcat:CatalogRecord>

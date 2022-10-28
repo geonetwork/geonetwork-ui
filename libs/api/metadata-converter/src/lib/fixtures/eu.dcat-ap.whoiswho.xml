@@ -1,0 +1,1083 @@
+<?xml version="1.0"?>
+<rdf:RDF
+        xmlns:edp="https://europeandataportal.eu/voc#"
+        xmlns:dct="http://purl.org/dc/terms/"
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:j.0="http://data.europa.eu/88u/ontology/dcatapop#"
+        xmlns:adms="http://www.w3.org/ns/adms#"
+        xmlns:dqv="http://www.w3.org/ns/dqv#"
+        xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
+        xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+        xmlns:schema="http://schema.org/"
+        xmlns:dcat="http://www.w3.org/ns/dcat#"
+        xmlns:spdx="https://spdx.org/rdf/terms/#"
+        xmlns:foaf="http://xmlns.com/foaf/0.1/">
+    <dcat:CatalogRecord rdf:about="http://data.europa.eu/88u/record/eu-whoiswho-the-official-directory-of-the-european-union">
+        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+        >2021-12-03T11:53:33Z</dct:issued>
+        <edp:transReceived rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+        >2022-02-28T07:11:35Z</edp:transReceived>
+        <edp:originalLanguage>en</edp:originalLanguage>
+        <spdx:checksum>
+            <spdx:Checksum>
+                <spdx:algorithm rdf:resource="https://spdx.org/rdf/terms/#checksumAlgorithm_md5"/>
+                <spdx:checksumValue>a91ddf536c6adb93558eeb52a7fb090e</spdx:checksumValue>
+            </spdx:Checksum>
+        </spdx:checksum>
+        <edp:transStatus rdf:resource="https://europeandataportal.eu/voc#TransCompleted"/>
+        <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+        >2022-04-22T12:16:44Z</dct:modified>
+        <edp:transIssued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+        >2022-02-27T20:16:29Z</edp:transIssued>
+        <dct:creator rdf:resource="http://piveau.io"/>
+        <foaf:primaryTopic>
+            <dcat:Dataset rdf:about="http://data.europa.eu/88u/dataset/eu-whoiswho-the-official-directory-of-the-european-union">
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/5645"/>
+                <dct:description xml:lang="et">EU Whoiswho on elektroonilne kontaktkataloog, kus on kõigis ELi ametlikes keeltes esitatud liidu institutsioonide, asutuste ja ametite organisatsiooniline struktuur.</dct:description>
+                <dct:description xml:lang="el">Το «EU Whoiswho» είναι ένας ηλεκτρονικός κατάλογος ο οποίος περιλαμβάνει τα οργανογράμματα των κοινοτικών οργάνων, υπηρεσιών και οργανισμών σε όλες τις επίσημες γλώσσες της ΕΕ.</dct:description>
+                <dct:title xml:lang="cs">EU Whoiswho: Oficiální adresáŕ Evropské unie</dct:title>
+                <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+                >2022-02-01</dct:modified>
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/128"/>
+                <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+                >2019-01-01</dct:issued>
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/7927"/>
+                <dct:title xml:lang="de">EU Whoiswho: DAS AMTLICHE VERZEICHNIS DER EUROPÄISCHEN UNION</dct:title>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/a917249e-9fc1-449e-b527-c10beb2a469a">
+                        <dct:description xml:lang="de-t-en-t0-mtec">Bitte beachten Sie, dass sich die Mitgliedschaft der MdEP in einem bestimmten Ausschuss im Laufe der Zeit ihres Mandats ändern könnte, weshalb dieser Datensatz den jüngsten Status der Mitglieder des Ausschusses erfasst.</dct:description>
+                        <dct:description xml:lang="el-t-en-t0-mtec">Έχετε υπόψη σας ότι η συμμετοχή των βουλευτών σε μια συγκεκριμένη επιτροπή ενδέχεται να αλλάξει κατά τη διάρκεια της θητείας τους και, ως εκ τούτου, το συγκεκριμένο σύνολο δεδομένων αποτυπώνει την τελευταία ιδιότητα μέλους της επιτροπής.</dct:description>
+                        <dct:title xml:lang="hr-t-en-t0-mtec">Zastupnici u Europskom parlamentu u parlamentarnim odborima</dct:title>
+                        <dcat:accessURL rdf:resource="https://europa.eu/!Ny98Cx"/>
+                        <dct:title xml:lang="pl-t-en-t0-mtec">Posłowie do Parlamentu Europejskiego przez komisje parlamentarne</dct:title>
+                        <dct:description xml:lang="ga-t-en-t0-mtec">Tabhair do d’aire go bhféadfadh sé go n-athródh ballraíocht na bhFeisirí i gcoiste áirithe le linn thréimhse a sainordaithe, agus dá bhrí sin, gabhann an tacar sonraí áirithe seo an stádas ballraíochta is déanaí sa choiste.</dct:description>
+                        <dct:title xml:lang="et-t-en-t0-mtec">Euroopa Parlamendi liikmed parlamendikomisjonides</dct:title>
+                        <dct:title xml:lang="da-t-en-t0-mtec">Medlemmer af Europa-Parlamentet af parlamentariske udvalg</dct:title>
+                        <dct:description xml:lang="pt-t-en-t0-mtec">Por favor, esteja ciente de que a composição dos deputados a uma determinada comissão pode mudar ao longo do seu mandato e, por conseguinte, este conjunto de dados em particular capta o mais recente estatuto de membro da comissão.</dct:description>
+                        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+                        >2019-07-01</dct:issued>
+                        <dct:title xml:lang="en">Members in the European Parliament by Parliamentary committees</dct:title>
+                        <dct:description xml:lang="nl-t-en-t0-mtec">Houd er rekening mee dat het lidmaatschap van de leden van het Europees Parlement in een bepaalde commissie kan veranderen in de tijd van hun mandaat, en dat deze specifieke dataset daarom de laatste status van het lidmaatschap van de commissie vastlegt.</dct:description>
+                        <adms:status>
+                            <skos:Concept rdf:about="http://purl.org/adms/status/Completed"/>
+                        </adms:status>
+                        <dct:title xml:lang="el-t-en-t0-mtec">Βουλευτές στο Ευρωπαϊκό Κοινοβούλιο από κοινοβουλευτικές επιτροπές</dct:title>
+                        <dct:title xml:lang="sl-t-en-t0-mtec">Poslanci v Evropskem parlamentu s strani parlamentarnih odborov</dct:title>
+                        <dct:description xml:lang="hr-t-en-t0-mtec">Imajte na umu da bi se članstvo zastupnika u određenom odboru moglo promijeniti tijekom njihova mandata te stoga ovaj skup podataka obuhvaća najnoviji status članstva u odboru.</dct:description>
+                        <dct:title xml:lang="de-t-en-t0-mtec">Mitglieder des Europäischen Parlaments durch parlamentarische Ausschüsse</dct:title>
+                        <dct:title xml:lang="nl-t-en-t0-mtec">Leden in het Europees Parlement door parlementaire commissies</dct:title>
+                        <dct:description xml:lang="da-t-en-t0-mtec">Vær opmærksom på, at medlemmernes medlemskab af et bestemt udvalg kan ændre sig i løbet af deres mandat, og derfor registrerer dette datasæt den seneste status som medlem af udvalget.</dct:description>
+                        <dct:title xml:lang="pt-t-en-t0-mtec">Deputados ao Parlamento Europeu por comissões parlamentares</dct:title>
+                        <dct:description xml:lang="sl-t-en-t0-mtec">Prosimo, upoštevajte, da se lahko članstvo poslancev Evropskega parlamenta v določenem odboru spremeni v času njihovega mandata, zato ta nabor podatkov zajema najnovejši status članstva v odboru.</dct:description>
+                        <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/DOWNLOADABLE_FILE"/>
+                        <dct:description xml:lang="es-t-en-t0-mtec">Tenga en cuenta que la composición de los diputados al Parlamento Europeo en una determinada comisión podría cambiar con el tiempo de su mandato y, por lo tanto, este conjunto de datos en particular recoge la condición de miembro de la comisión más reciente.</dct:description>
+                        <dct:title xml:lang="hu-t-en-t0-mtec">Parlamenti bizottságok európai parlamenti képviselői</dct:title>
+                        <dct:title xml:lang="sk-t-en-t0-mtec">Poslanci v Európskom parlamente v parlamentných výboroch</dct:title>
+                        <dct:title xml:lang="fr-t-en-t0-mtec">Députés au Parlement européen par les commissions parlementaires</dct:title>
+                        <dct:description xml:lang="fi-t-en-t0-mtec">On syytä huomata, että Euroopan parlamentin jäsenten jäsenyys tietyssä valiokunnassa saattaa muuttua heidän toimikautensa aikana, ja siksi tämä tietokokonaisuus kuvaa valiokunnan viimeisintä kokoonpanoa.</dct:description>
+                        <dcat:mediaType>
+                            <dct:MediaType rdf:about="http://www.iana.org/assignments/media-types/text/csv"/>
+                        </dcat:mediaType>
+                        <dct:language>
+                            <dct:LinguisticSystem rdf:about="http://publications.europa.eu/resource/authority/language/ENG"/>
+                        </dct:language>
+                        <dct:description xml:lang="en">Please be aware that MEPs' membership in a certain committee might change over the time of their mandate, and therefore, this particular dataset captures the latest committee membership status.</dct:description>
+                        <dct:title xml:lang="it-t-en-t0-mtec">Deputati al Parlamento europeo delle commissioni parlamentari</dct:title>
+                        <dct:title xml:lang="es-t-en-t0-mtec">Diputados al Parlamento Europeo por comisiones parlamentarias</dct:title>
+                        <dct:format>
+                            <dct:MediaTypeOrExtent rdf:about="http://publications.europa.eu/resource/authority/file-type/CSV"/>
+                        </dct:format>
+                        <dct:description xml:lang="sk-t-en-t0-mtec">Upozorňujeme, že členstvo poslancov v určitom výbore sa môže v priebehu svojho mandátu zmeniť, a preto tento konkrétny súbor údajov zachytáva najnovší status členstva vo výbore.</dct:description>
+                        <dct:description xml:lang="ro-t-en-t0-mtec">Vă rugăm să aveți în vedere faptul că calitatea de membru al deputaților într-o anumită comisie s-ar putea schimba în perioada mandatului lor și, prin urmare, acest set de date include cel mai recent statut de membru al comitetului.</dct:description>
+                        <dct:description xml:lang="mt-t-en-t0-mtec">Jekk jogħġbok kun af li s-sħubija tal-MPE f’ċertu kumitat tista’ tinbidel matul iż-żmien tal-mandat tagħhom, u għalhekk, dan is-sett ta’ data partikolari jiġbor l-aħħar status ta’ sħubija fil-kumitat.</dct:description>
+                        <dcat:downloadURL rdf:resource="https://europa.eu/!Ny98Cx"/>
+                        <dct:license>
+                            <dct:LicenseDocument rdf:about="http://publications.europa.eu/resource/authority/licence/CC_BY_4_0"/>
+                        </dct:license>
+                        <dct:description xml:lang="hu-t-en-t0-mtec">Kérjük, vegye figyelembe, hogy az európai parlamenti képviselők egy bizonyos bizottságban való tagsága a megbízatásuk ideje alatt változhat, és ezért ez az adatkészlet rögzíti a legutóbbi bizottsági tagsági státuszt.</dct:description>
+                        <dct:description xml:lang="cs-t-en-t0-mtec">Vezměte prosím na vědomí, že členství poslanců EP v určitém výboru by se mohlo v průběhu svého mandátu změnit, a proto tento konkrétní soubor údajů zachycuje nejnovější status členství ve výboru.</dct:description>
+                        <dct:description xml:lang="lv-t-en-t0-mtec">Lūdzu, ņemiet vērā, ka deputātu dalība konkrētā komitejā var mainīties viņu pilnvaru laikā, un tāpēc šī konkrētā datu kopa atspoguļo jaunāko komitejas locekļu statusu.</dct:description>
+                        <dct:title xml:lang="cs-t-en-t0-mtec">Poslanci v Evropském parlamentu parlamentní výbory</dct:title>
+                        <dct:title xml:lang="ro-t-en-t0-mtec">Deputații în Parlamentul European de către comisiile parlamentare</dct:title>
+                        <dct:rights>
+                            <dct:RightsStatement rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        </dct:rights>
+                        <dct:title xml:lang="ga-t-en-t0-mtec">Feisirí i bParlaimint na hEorpa ag coistí parlaiminteacha</dct:title>
+                        <dct:description xml:lang="it-t-en-t0-mtec">Si prega di essere consapevoli del fatto che l'appartenenza dei deputati a una determinata commissione potrebbe cambiare nel tempo del loro mandato e, pertanto, questa particolare serie di dati cattura l'ultimo status di membro della commissione.</dct:description>
+                        <dct:title xml:lang="lt-t-en-t0-mtec">Parlamento komitetų nariai Europos Parlamente</dct:title>
+                        <dct:description xml:lang="et-t-en-t0-mtec">Palun arvestage, et parlamendiliikmete liikmesus teatavas komisjonis võib nende ametiaja jooksul muutuda, mistõttu see konkreetne andmekogum kajastab viimast parlamendikomisjoni liikmestaatust.</dct:description>
+                        <dct:title xml:lang="bg-t-en-t0-mtec">Членове на Европейския парламент от парламентарни комисии</dct:title>
+                        <dct:description xml:lang="bg-t-en-t0-mtec">Моля, имайте предвид, че членството на членовете на ЕП в дадена комисия може да се промени по време на мандата им и следователно този конкретен набор от данни обхваща най-новия статут на член на комисията.</dct:description>
+                        <dct:identifier>http://data.europa.eu/88u/distribution/3f3433d4-0604-4682-a46a-c3d7c756358f</dct:identifier>
+                        <dct:description xml:lang="sv-t-en-t0-mtec">Observera att ledamöternas medlemskap i ett visst utskott kan komma att ändras under tiden för deras mandatperiod, och därför fångar denna datauppsättning den senaste statusen för utskottsmedlemskap.</dct:description>
+                        <dct:title xml:lang="lv-t-en-t0-mtec">Parlamenta komiteju locekļi Eiropas Parlamentā</dct:title>
+                        <dct:title xml:lang="mt-t-en-t0-mtec">Membri fil-Parlament Ewropew mill-kumitati Parlamentari</dct:title>
+                        <dct:title xml:lang="fi-t-en-t0-mtec">Parlamentin valiokuntien jäsenet Euroopan parlamentissa</dct:title>
+                        <dct:title xml:lang="sv-t-en-t0-mtec">Parlamentsutskottens ledamöter i Europaparlamentet</dct:title>
+                        <dct:description xml:lang="lt-t-en-t0-mtec">Atkreipkite dėmesį į tai, kad EP narių narystė tam tikrame komitete gali pasikeisti jų kadencijos metu, todėl šis konkretus duomenų rinkinys apima naujausią komiteto narių statusą.</dct:description>
+                        <dct:description xml:lang="fr-t-en-t0-mtec">Veuillez noter que la composition des députés au sein d’une commission peut changer au cours de leur mandat et que, par conséquent, cet ensemble de données précise le statut de membre de la commission le plus récent.</dct:description>
+                        <dct:description xml:lang="pl-t-en-t0-mtec">Proszę pamiętać, że członkostwo posłów do PE w danej komisji może ulec zmianie w czasie sprawowania przez nich mandatu, w związku z czym ten konkretny zbiór danych obejmuje najnowszy status członków komisji.</dct:description>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <dct:title xml:lang="it">EU Whoiswho: Repertorio elettronico dell'Unione europea</dct:title>
+                <dct:title xml:lang="hu">EU Whoiswho: Az Európai Unió hivatalos név- és címjegyzéke</dct:title>
+                <dct:description xml:lang="fi">EU Whoiswho on sähköinen hakemisto, joka sisältää EU:n toimielinten, laitosten ja virastojen organisaatiokaaviot kaikilla EU:n virallisilla kielillä.</dct:description>
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/4838"/>
+                <dct:title xml:lang="lv">EU Whoiswho: Eiropas Savienības iestāžu kontaktinformācijas katalogs</dct:title>
+                <dct:description xml:lang="lt">EU Whoiswho – tai elektroninis katalogas, kuriame visomis oficialiosiomis ES kalbomis pateikiamos ES institucijø, ástaigø ir agentûrø organizacinës struktûros.</dct:description>
+                <dct:description xml:lang="mt">EU Whoiswho hu direttorju elettroniku li  jippre]enta l-istrutturi ta' l-organizzazzjonijiet ta' l-istituzzjonijiet, l-organi u l-aõenziji Ewropej fil-lingwi uffiååjali ta' l-UE.</dct:description>
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/256"/>
+                <dct:description xml:lang="sv">EU Whoiswho är en elektronisk institutionskatalog med organisationsplaner för EU:s institutioner och organ på samtliga officiella EU-språk.</dct:description>
+                <dct:title xml:lang="da">EU Whoiswho: Den Europæiske Unions officielle vejviser</dct:title>
+                <foaf:page>
+                    <foaf:Document rdf:about="http://data.europa.eu/euodp/en/data/storage/f/2022-02-14T112219/application-profiles-ORGAPOP-28xd.xlsx">
+                        <dct:language rdf:resource="http://publications.europa.eu/resource/authority/language/ENG"/>
+                        <dct:type>
+                            <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/documentation-type/DOCUMENTATION_MAIN"/>
+                        </dct:type>
+                        <dct:title xml:lang="en">EU Whoiswho Data Model (RDF Linked open data) description (ORG-AP-OP)</dct:title>
+                        <dcat:mediaType>
+                            <dct:MediaType rdf:about="http://www.iana.org/assignments/media-types/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+                        </dcat:mediaType>
+                        <schema:url xml:lang="en">http://data.europa.eu/euodp/en/data/storage/f/2022-02-14T112219/application-profiles-ORGAPOP-28xd.xlsx</schema:url>
+                        <dct:format>
+                            <dct:MediaTypeOrExtent rdf:about="http://publications.europa.eu/resource/authority/file-type/XLSX"/>
+                        </dct:format>
+                        <foaf:topic rdf:resource="http://data.europa.eu/88u/dataset/eu-whoiswho-the-official-directory-of-the-european-union"/>
+                    </foaf:Document>
+                </foaf:page>
+                <dct:title xml:lang="fi">EU Whoiswho: Euroopan unionin virallinen hakemisto</dct:title>
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/1451"/>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/c956a81a-ac66-43fa-80ff-63267880aa75">
+                        <dct:title xml:lang="ro-t-en-t0-mtec">Consiliul Uniunii Europene</dct:title>
+                        <dct:title xml:lang="fr-t-en-t0-mtec">Conseil de l’Union européenne</dct:title>
+                        <dct:title xml:lang="lv-t-en-t0-mtec">Eiropas Savienības Padome</dct:title>
+                        <dcat:mediaType>
+                            <dct:MediaType rdf:about="http://www.iana.org/assignments/media-types/text/html"/>
+                        </dcat:mediaType>
+                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:title xml:lang="pt-t-en-t0-mtec">Conselho da União Europeia</dct:title>
+                        <dct:title xml:lang="sv-t-en-t0-mtec">Europeiska unionens råd</dct:title>
+                        <dct:title xml:lang="hr-t-en-t0-mtec">Vijeće Europske unije</dct:title>
+                        <dct:title xml:lang="sl-t-en-t0-mtec">Svet Evropske unije</dct:title>
+                        <dct:title xml:lang="mt-t-en-t0-mtec">Il-Kunsill ta’ l-Unjoni Ewropea</dct:title>
+                        <dct:title xml:lang="it-t-en-t0-mtec">Consiglio dell'Unione europea</dct:title>
+                        <dct:title xml:lang="da-t-en-t0-mtec">Rådet for Den Europæiske Union</dct:title>
+                        <dct:title xml:lang="et-t-en-t0-mtec">Euroopa Liidu Nõukogu</dct:title>
+                        <dcat:accessURL rdf:resource="https://op.europa.eu/web/who-is-who/organization/-/organization/CONSIL/CONSIL"/>
+                        <dct:title xml:lang="nl-t-en-t0-mtec">Raad van de Europese Unie</dct:title>
+                        <dct:title xml:lang="en">Council of the European Union</dct:title>
+                        <dct:title xml:lang="bg-t-en-t0-mtec">Съвет на Европейския съюз</dct:title>
+                        <dct:license>
+                            <dct:LicenseDocument rdf:about="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        </dct:license>
+                        <dct:title xml:lang="de-t-en-t0-mtec">Rat der Europäischen Union</dct:title>
+                        <dct:title xml:lang="lt-t-en-t0-mtec">Europos Sąjungos Taryba</dct:title>
+                        <j.0:iframe xml:lang="en">http://publications.europa.eu/code/images/scan/5000200-conseil-cl.jpg</j.0:iframe>
+                        <dct:title xml:lang="pl-t-en-t0-mtec">Rada Unii Europejskiej</dct:title>
+                        <dct:title xml:lang="ga-t-en-t0-mtec">Comhairle an Aontais Eorpaigh</dct:title>
+                        <dct:title xml:lang="sk-t-en-t0-mtec">Rada Európskej únie</dct:title>
+                        <dct:title xml:lang="el-t-en-t0-mtec">ΣΥΜΒΟΥΛΙΟ ΤΗΣ ΕΥΡΩΠΑΪΚΗΣ ΕΝΩΣΗΣ</dct:title>
+                        <dct:title xml:lang="fi-t-en-t0-mtec">Euroopan unionin neuvosto</dct:title>
+                        <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/VISUALIZATION"/>
+                        <dct:format>
+                            <dct:MediaTypeOrExtent rdf:about="http://publications.europa.eu/resource/authority/file-type/HTML"/>
+                        </dct:format>
+                        <dct:title xml:lang="cs-t-en-t0-mtec">Rada Evropské unie</dct:title>
+                        <dct:identifier>http://data.europa.eu/88u/distribution/cc9b3bea-0a94-42f4-a1a0-deeff2f71dd7</dct:identifier>
+                        <dct:title xml:lang="es-t-en-t0-mtec">Consejo de la Unión Europea</dct:title>
+                        <dct:title xml:lang="hu-t-en-t0-mtec">Az Európai Unió Tanácsa</dct:title>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/6d463455-1ac1-4ee8-a93f-170cb56ade87">
+                        <dct:title xml:lang="hr-t-en-t0-mtec">EU Whoiswho cjelovit popis osoba (CSV) verzija 2</dct:title>
+                        <dct:title xml:lang="pl-t-en-t0-mtec">EU Whoiswho pełna lista osób (CSV) wersja 2</dct:title>
+                        <dct:description xml:lang="cs-t-en-t0-mtec">Tento seznam souborů CSV všech osob přítomných v EU Whoiswho. Obsahuje: pracovní názvy, názvy, označení subjektů. Soubor je vytvořen za běhu, a proto může trvat několik sekund načtení.</dct:description>
+                        <dcat:mediaType rdf:resource="http://www.iana.org/assignments/media-types/text/csv"/>
+                        <dct:title xml:lang="it-t-en-t0-mtec">EU Whoiswho elenco completo delle persone (CSV) versione 2</dct:title>
+                        <dct:description xml:lang="en">This CSV file list of all the persons present in the EU Whoiswho. It containts: job titles, names, labels of entities. The file is created on the fly and therefore may take several seconds to load. </dct:description>
+                        <dct:description xml:lang="da-t-en-t0-mtec">Denne CSV-filliste over alle de personer, der er til stede i EU Whoiswho. Det indeholder: jobtitler, navne, mærker på enheder. Filen oprettes på farten og kan derfor tage flere sekunder at indlæse.</dct:description>
+                        <dct:title xml:lang="lt-t-en-t0-mtec">ES, kas turi išsamų asmenų sąrašą, 2 versija</dct:title>
+                        <dct:description xml:lang="ro-t-en-t0-mtec">Această listă a dosarului CSV cu toate persoanele prezente în UE Whoiswho. Conține: titluri de locuri de muncă, nume, etichete ale entităților. Fișierul este creat pe zbor și, prin urmare, poate dura câteva secunde pentru a încărca. Această listă a dosarului CSV cu toate persoanele prezente în UE Whoiswho. Conține: titluri de locuri de muncă, nume, etichete ale entităților.
+                            Fișierul este creat pe zbor și, prin urmare, poate dura câteva secunde pentru a încărca.</dct:description>
+                        <dct:description xml:lang="lv-t-en-t0-mtec">Šajā CSV datnē ir uzskaitītas visas personas, kas atrodas ES, kurš ir kurš. Tajā ietilpst: amatu nosaukumi, nosaukumi, vienību marķējumi. Fails ir izveidots uz lidot, un tāpēc var ilgt vairākas sekundes, lai ielādētu. Šajā CSV datnē ir uzskaitītas visas personas, kas atrodas ES, kurš ir kurš. Tajā ietilpst: amatu nosaukumi, nosaukumi, vienību marķējumi.
+                            Fails ir izveidots uz lidot, un tāpēc var ilgt vairākas sekundes, lai ielādētu.</dct:description>
+                        <dcat:byteSize xml:lang="en">27000000</dcat:byteSize>
+                        <dct:title xml:lang="bg-t-en-t0-mtec">EU Whoiswho пълен списък на лицата (CSV) версия 2</dct:title>
+                        <dct:title xml:lang="es-t-en-t0-mtec">EU Whoiswho lista completa de personas (CSV) versión 2</dct:title>
+                        <dct:title xml:lang="fr-t-en-t0-mtec">UE Whoiswho liste complète des personnes (CSV) version 2</dct:title>
+                        <dct:title xml:lang="nl-t-en-t0-mtec">EU Whoiswho volledige lijst van personen (CSV) versie 2</dct:title>
+                        <dct:title xml:lang="et-t-en-t0-mtec">EU Whoiswho isikute täielik nimekiri (CSV) versioon 2</dct:title>
+                        <dct:description xml:lang="hr-t-en-t0-mtec">Ovaj popis spisa CSV svih osoba koje se nalaze u Whoiswhou EU-a. Sadržava: nazivi posla, imena, oznake entiteta. Datoteka je stvorena u letu i stoga može potrajati nekoliko sekundi za učitavanje. Ovaj popis spisa CSV svih osoba koje se nalaze u Whoiswhou EU-a.
+                            Sadržava:
+                            nazivi posla, imena, oznake entiteta.
+                            Datoteka je stvorena u letu i stoga može potrajati nekoliko sekundi za učitavanje.</dct:description>
+                        <dct:title xml:lang="pt-t-en-t0-mtec">UE Whoiswho lista completa de pessoas (CSV) versão 2</dct:title>
+                        <dct:title xml:lang="en">EU Whoiswho full list of persons (CSV) version 2</dct:title>
+                        <dct:description xml:lang="el-t-en-t0-mtec">Αυτός ο κατάλογος αρχείων CSV με όλα τα πρόσωπα που είναι παρόντα στην ΕΕ Whoiswho. Περιέχει: τίτλοι εργασίας, ονόματα, ετικέτες οντοτήτων. Το αρχείο δημιουργείται κατά τη μύγα και, ως εκ τούτου, μπορεί να χρειαστούν αρκετά δευτερόλεπτα για να φορτωθεί.</dct:description>
+                        <dct:format rdf:resource="http://publications.europa.eu/resource/authority/file-type/CSV"/>
+                        <dct:title xml:lang="lv-t-en-t0-mtec">EU Whoiswho pilns personu saraksts (CSV) versija 2</dct:title>
+                        <dcat:accessURL rdf:resource="http://publications.europa.eu/webapi/rdf/sparql?default-graph-uri=&amp;query=PREFIX+euvoc%3A%3Chttp%3A%2F%2Fpublications.europa.eu%2Fontology%2Feuvoc%23%3E%0D%0APREFIX+org%3A%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23%3E%0D%0Aprefix+skos%3A%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%3E%0D%0APREFIX+vcard%3A%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0APREFIX+foaf%3A%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E%0D%0Aprefix+useC%3A%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Fuse-context%2F%3E%0D%0ASELECT+distinct+str%28%3FCB%29as%3FCorporateBody+str%28%3Fmnem%29+as+%3Fentity+%3ForgLabel+concat%28%3FgN%2C%22+%22%2C%3FfN%29as%3Fname%3Fhon%3Fperson%3Fposition+WHERE%7B%0D%0A%3Forg+org%3AsubOrganizationOf%2B+%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Fcorporate-body%2FEURUN%3E.%0D%0A%3Forg+skos%3AprefLabel+%3ForgLabel.FILTER%28LANGMATCHES%28LANG%28%3ForgLabel%29%2C%22en%22%29%29%0D%0A%3FMS+org%3Aorganization+%3Forg.%0D%0Aoptional%7B%3FMS+euvoc%3Aorder+%3Forder%7D%0D%0Aoptional%7B%3FMS+euvoc%3ApositionComplement%3Fposition+FILTER%28LANGMATCHES%28LANG%28%3Fposition%29%2C%22en%22%29%29%7D%0D%0A%3Fperson+org%3AhasMembership%3FMS.%0D%0A%3Fperson+foaf%3AfamilyName%3FfN.%3Fperson+foaf%3AgivenName%3FgN.%0D%0AOPTIONAL%7B%3Fperson+vcard%3AhasHonorificPrefix%3Fhon%7D%0D%0AOPTIONAL%7B%3Forg+org%3Aidentifier+%3Fmnem.Filter%28datatype%28%3Fmnem%29%3DuseC%3AMNEMONIC%29%7D%0D%0AOPTIONAL%7B%3Forg+org%3Aidentifier+%3FCB.Filter%28datatype%28%3FCB%29%3DuseC%3AWHOISWHO-institution-uri%29%7D%0D%0A%7DORDER+BY+%3FCorporateBody%3Fentity%3Forder&amp;format=text%2Fcsv&amp;timeout=0&amp;debug=on&amp;run=+Run+Query+"/>
+                        <dct:title xml:lang="mt-t-en-t0-mtec">EU Whoiswho lista sħiħa ta’ persuni (CSV) verżjoni 2</dct:title>
+                        <dct:title xml:lang="da-t-en-t0-mtec">EU Whoiswho fuld liste over personer (CSV) version 2</dct:title>
+                        <dct:title xml:lang="sv-t-en-t0-mtec">EU Whoiswho fullständiga personförteckning (CSV) version 2</dct:title>
+                        <dct:description xml:lang="sk-t-en-t0-mtec">Tento zoznam súborov CSV všetkých osôb prítomných v EÚ Whoiswho. Obsahuje: názvy pracovných miest, mená, označenia subjektov. Súbor je vytvorený za letu, a preto môže trvať niekoľko sekúnd na načítanie. Tento zoznam súborov CSV všetkých osôb prítomných v EÚ Whoiswho. Obsahuje: názvy pracovných miest, mená, označenia subjektov.
+                            Súbor je vytvorený za letu, a preto môže trvať niekoľko sekúnd na načítanie.</dct:description>
+                        <dct:title xml:lang="ga-t-en-t0-mtec">EU Whoiswho liosta iomlán na ndaoine (CSV) leagan 2</dct:title>
+                        <dct:description xml:lang="it-t-en-t0-mtec">Questo elenco di file CSV di tutte le persone presenti nell'EU Whoiswho. Contiene: titoli di lavoro, nomi, etichette delle entità. Il file viene creato al volo e quindi può richiedere diversi secondi per caricare. Questo elenco di file CSV di tutte le persone presenti nell'EU Whoiswho. Contiene: titoli di lavoro, nomi, etichette delle entità.
+                            Il file viene creato al volo e quindi può richiedere diversi secondi per caricare.</dct:description>
+                        <dct:description xml:lang="ga-t-en-t0-mtec">Liosta comhaid CSV seo de na daoine go léir atá i láthair in EU Whoiswho. Allah warns a seirbhísigh leis a chuid Word: teidil poist, ainmneacha, lipéid na n-eintiteas. Is é an comhad a cruthaíodh ar an eitilt agus dá bhrí sin d’fhéadfadh a ghlacadh roinnt soicind a luchtú.</dct:description>
+                        <dct:description xml:lang="bg-t-en-t0-mtec">Този CSV списък на всички лица, намиращи се в EU Whoiswho. Той съдържа: заглавия на длъжности, имена, етикети на субекти. Файлът е създаден в движение и следователно може да отнеме няколко секунди, за да се зареди.</dct:description>
+                        <dct:title xml:lang="fi-t-en-t0-mtec">EU Whoiswho täydellinen luettelo henkilöistä (CSV) versio 2</dct:title>
+                        <dct:description xml:lang="sl-t-en-t0-mtec">Ta seznam datotek CSV vseh oseb, prisotnih v EU Whoiswho. Vsebuje: nazivi delovnih mest, imena, oznake entitet. Datoteka je ustvarjena na letenje in zato lahko traja nekaj sekund, da se naloži. Ta seznam datotek CSV vseh oseb, prisotnih v EU Whoiswho. Vsebuje: nazivi delovnih mest, imena, oznake entitet.
+                            Datoteka je ustvarjena na letenje in zato lahko traja nekaj sekund, da se naloži.</dct:description>
+                        <dcat:downloadURL rdf:resource="http://publications.europa.eu/webapi/rdf/sparql?default-graph-uri=&amp;query=PREFIX+euvoc%3A%3Chttp%3A%2F%2Fpublications.europa.eu%2Fontology%2Feuvoc%23%3E%0D%0APREFIX+org%3A%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23%3E%0D%0Aprefix+skos%3A%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%3E%0D%0APREFIX+vcard%3A%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0APREFIX+foaf%3A%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E%0D%0Aprefix+useC%3A%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Fuse-context%2F%3E%0D%0ASELECT+distinct+str%28%3FCB%29as%3FCorporateBody+str%28%3Fmnem%29+as+%3Fentity+%3ForgLabel+concat%28%3FgN%2C%22+%22%2C%3FfN%29as%3Fname%3Fhon%3Fperson%3Fposition+WHERE%7B%0D%0A%3Forg+org%3AsubOrganizationOf%2B+%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Fcorporate-body%2FEURUN%3E.%0D%0A%3Forg+skos%3AprefLabel+%3ForgLabel.FILTER%28LANGMATCHES%28LANG%28%3ForgLabel%29%2C%22en%22%29%29%0D%0A%3FMS+org%3Aorganization+%3Forg.%0D%0Aoptional%7B%3FMS+euvoc%3Aorder+%3Forder%7D%0D%0Aoptional%7B%3FMS+euvoc%3ApositionComplement%3Fposition+FILTER%28LANGMATCHES%28LANG%28%3Fposition%29%2C%22en%22%29%29%7D%0D%0A%3Fperson+org%3AhasMembership%3FMS.%0D%0A%3Fperson+foaf%3AfamilyName%3FfN.%3Fperson+foaf%3AgivenName%3FgN.%0D%0AOPTIONAL%7B%3Fperson+vcard%3AhasHonorificPrefix%3Fhon%7D%0D%0AOPTIONAL%7B%3Forg+org%3Aidentifier+%3Fmnem.Filter%28datatype%28%3Fmnem%29%3DuseC%3AMNEMONIC%29%7D%0D%0AOPTIONAL%7B%3Forg+org%3Aidentifier+%3FCB.Filter%28datatype%28%3FCB%29%3DuseC%3AWHOISWHO-institution-uri%29%7D%0D%0A%7DORDER+BY+%3FCorporateBody%3Fentity%3Forder&amp;format=text%2Fcsv&amp;timeout=0&amp;debug=on&amp;run=+Run+Query+"/>
+                        <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/DOWNLOADABLE_FILE"/>
+                        <dct:description xml:lang="pt-t-en-t0-mtec">Esta lista de ficheiros CSV de todas as pessoas presentes na UE Whoiswho. Contém: cargos, nomes, rótulos de entidades. O arquivo é criado em tempo real e, portanto, pode demorar vários segundos para carregar. Esta lista de ficheiros CSV de todas as pessoas presentes na UE Whoiswho. Contém: cargos, nomes, rótulos de entidades.
+                            O arquivo é criado em tempo real e, portanto, pode demorar vários segundos para carregar.</dct:description>
+                        <dct:identifier>http://data.europa.eu/88u/distribution/7fceac36-e015-4381-88b7-11c35c6179ed</dct:identifier>
+                        <dct:language rdf:resource="http://publications.europa.eu/resource/authority/language/ENG"/>
+                        <dct:description xml:lang="es-t-en-t0-mtec">Este archivo CSV lista de todas las personas presentes en la UE Whoiswho. Contiene: títulos de trabajo, nombres, etiquetas de entidades. El archivo se crea sobre la marcha y por lo tanto puede tardar varios segundos en cargar.</dct:description>
+                        <dct:description xml:lang="mt-t-en-t0-mtec">Din il-lista ta’ fajls tas-CSV tal-persuni kollha preżenti fl-UE Whoiswho. Fiha: it-titli tal-impjiegi, l-ismijiet, it-tikketti tal-entitajiet. Il-fajl huwa maħluq fuq il-fly u għalhekk jista ‘jieħu diversi sekondi biex tagħbija. Din il-lista ta’ fajls tas-CSV tal-persuni kollha preżenti fl-UE Whoiswho. Fiha: it-titli tal-impjiegi, l-ismijiet, it-tikketti tal-entitajiet.
+                            Il-fajl huwa maħluq fuq il-fly u għalhekk jista ‘jieħu diversi sekondi biex tagħbija.</dct:description>
+                        <dct:title xml:lang="el-t-en-t0-mtec">EU Whoiswho πλήρης κατάλογος προσώπων (CSV) έκδοση 2</dct:title>
+                        <dct:title xml:lang="de-t-en-t0-mtec">EU Whoiswho vollständige Personenliste (CSV) Version 2</dct:title>
+                        <dct:description xml:lang="et-t-en-t0-mtec">Selles CSV-failis on loetletud kõik EU Whoiswho’s viibivad isikud. See sisaldab järgmist: ametinimetused, nimed, üksuste sildid. Fail on loodud lendama ja seetõttu võib võtta mitu sekundit laadida.</dct:description>
+                        <dct:description xml:lang="lt-t-en-t0-mtec">Šis CSV bylos sąrašas, kuriame nurodyti visi asmenys, esantys ES. Jame yra: pareigybių pavadinimai, pavadinimai, subjektų etiketės. Failas sukurtas skristi, todėl gali užtrukti kelias sekundes. Šis CSV bylos sąrašas, kuriame nurodyti visi asmenys, esantys ES. Jame yra: pareigybių pavadinimai, pavadinimai, subjektų etiketės.
+                            Failas sukurtas skristi, todėl gali užtrukti kelias sekundes.</dct:description>
+                        <dct:description xml:lang="fr-t-en-t0-mtec">Cette liste de fichiers CSV de toutes les personnes présentes dans l’UE Whoiswho. Il contient: titres d’emploi, noms, étiquettes d’entités. Le fichier est créé à la volée et peut donc prendre plusieurs secondes à charger. Cette liste de fichiers CSV de toutes les personnes présentes dans l’UE Whoiswho. Il contient: titres d’emploi, noms, étiquettes d’entités.
+                            Le fichier est créé à la volée et peut donc prendre plusieurs secondes à charger.</dct:description>
+                        <dct:title xml:lang="sk-t-en-t0-mtec">EU Whoiswho úplný zoznam osôb (CSV) verzia 2</dct:title>
+                        <dct:title xml:lang="hu-t-en-t0-mtec">EU Whoiswho a személyek teljes listája (CSV) 2. verziója</dct:title>
+                        <dct:description xml:lang="sv-t-en-t0-mtec">Denna CSV-fillista över alla personer i EU Whoiswho. Den innehåller: jobbtitlar, namn och etiketter på entiteter. Filen skapas i farten och kan därför ta flera sekunder att ladda. Denna CSV-fillista över alla personer i EU Whoiswho. Den innehåller: jobbtitlar, namn och etiketter på entiteter.
+                            Filen skapas i farten och kan därför ta flera sekunder att ladda.</dct:description>
+                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:title xml:lang="sl-t-en-t0-mtec">EU Whoiswho popoln seznam oseb (CSV) različica 2</dct:title>
+                        <dct:description xml:lang="pl-t-en-t0-mtec">Lista wszystkich osób obecnych w UE Whoiswho. Zawiera: tytuły zadań, imiona i nazwiska, etykiety podmiotów. Plik jest tworzony w locie i dlatego może zająć kilka sekund na załadowanie. Lista wszystkich osób obecnych w UE Whoiswho. Zawiera: tytuły zadań, imiona i nazwiska, etykiety podmiotów.
+                            Plik jest tworzony w locie i dlatego może zająć kilka sekund na załadowanie.</dct:description>
+                        <dct:description xml:lang="hu-t-en-t0-mtec">Ez a CSV fájllista az EU Whoiswho-ban tartózkodó valamennyi személyről. A következőket tartalmazza: munkaköri címek, nevek, entitások címkéi. A fájl a menet közben jön létre, ezért a betöltése több másodpercig is eltarthat. Ez a CSV fájllista az EU Whoiswho-ban tartózkodó valamennyi személyről. A következőket tartalmazza: munkaköri címek, nevek, entitások címkéi.
+                            A fájl a menet közben jön létre, ezért a betöltése több másodpercig is eltarthat.</dct:description>
+                        <dct:description xml:lang="de-t-en-t0-mtec">Diese CSV-Dateiliste aller Personen, die in der EU Whoiswho anwesend sind. Es enthält: Berufsbezeichnungen, Namen, Etiketten von Entitäten. Die Datei wird auf der Fliege erstellt und kann daher mehrere Sekunden dauern, um zu laden. Diese CSV-Dateiliste aller Personen, die in der EU Whoiswho anwesend sind. Es enthält: Berufsbezeichnungen, Namen, Etiketten von Entitäten.
+                            Die Datei wird auf der Fliege erstellt und kann daher mehrere Sekunden dauern, um zu laden.</dct:description>
+                        <dct:title xml:lang="ro-t-en-t0-mtec">Eu Whoiswho lista completă a persoanelor (CSV) versiunea 2</dct:title>
+                        <dct:description xml:lang="nl-t-en-t0-mtec">Deze CSV-bestandslijst van alle personen die aanwezig zijn in de EU Whoiswho.
+                            Het bevat:
+                            functietitels, namen, labels van entiteiten.
+                            Het bestand wordt on the fly aangemaakt en kan daarom enkele seconden duren om te laden.</dct:description>
+                        <dct:title xml:lang="cs-t-en-t0-mtec">EU Whoiswho úplný seznam osob (CSV) verze 2</dct:title>
+                        <dct:description xml:lang="fi-t-en-t0-mtec">Tämä CSV-tiedostoluettelo kaikista EU Whoiswhossa olevista henkilöistä. Se sisältää: tehtävänimikkeet, nimet, yhteisöjen merkit. Tiedosto on luotu lennossa ja siksi voi kestää useita sekunteja ladata. Tämä CSV-tiedostoluettelo kaikista EU Whoiswhossa olevista henkilöistä. Se sisältää: tehtävänimikkeet, nimet, yhteisöjen merkit.
+                            Tiedosto on luotu lennossa ja siksi voi kestää useita sekunteja ladata.</dct:description>
+                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/CC_BY_4_0"/>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <dct:description xml:lang="sl">EU Whoiswho je elektronski imenik, ki kaže organizacijsko sestavo institucij, organov in agencij EU v vseh uradnih jezikih EU.</dct:description>
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/5769"/>
+                <dcat:landingPage>
+                    <foaf:Document rdf:about="https://op.europa.eu/web/who-is-who/">
+                        <foaf:topic rdf:resource="http://data.europa.eu/88u/dataset/eu-whoiswho-the-official-directory-of-the-european-union"/>
+                        <schema:url>https://op.europa.eu/web/who-is-who/</schema:url>
+                    </foaf:Document>
+                </dcat:landingPage>
+                <dct:description xml:lang="ga">Eolaire leictreonach is ea EU Whoiswho a thugann cairteanna eagrúcháin na bhforas, na gcomhlachtaí is na ngníomhaireachtaí AE i ngach teanga oifigiúil AE.</dct:description>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/f8d1844d-a345-47d1-8ecd-fc878ff6fff6">
+                        <dct:description xml:lang="fi-t-en-t0-mtec">Tämä CSV-tiedostoluettelo kaikista EU Whoiswhossa olevista henkilöistä. Se sisältää: tehtävänimikkeet, nimet, yhteisöjen merkit. Tiedosto on luotu lennossa ja siksi voi kestää useita sekunteja ladata. Tiedoston lataamisen jälkeen,</dct:description>
+                        <dct:title xml:lang="hr-t-en-t0-mtec">EU Whoiswho cjelovit popis osoba (CSV)</dct:title>
+                        <dct:title xml:lang="en">EU Whoiswho full list of persons (CSV)</dct:title>
+                        <dct:title xml:lang="de-t-en-t0-mtec">EU Whoiswho full list of persons (CSV)</dct:title>
+                        <dct:title xml:lang="sk-t-en-t0-mtec">EU Whoiswho úplný zoznam osôb (CSV)</dct:title>
+                        <dct:title xml:lang="et-t-en-t0-mtec">EU Whoiswho isikute täielik nimekiri (CSV)</dct:title>
+                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:title xml:lang="hu-t-en-t0-mtec">EU Whoiswho személyek teljes listája (CSV)</dct:title>
+                        <dcat:byteSize xml:lang="en">17000000</dcat:byteSize>
+                        <dct:title xml:lang="it-t-en-t0-mtec">EU Whoiswho elenco completo delle persone (CSV)</dct:title>
+                        <dct:description xml:lang="es-t-en-t0-mtec">Este archivo CSV lista de todas las personas presentes en la UE Whoiswho. Contiene: títulos de trabajo, nombres, etiquetas de entidades.
+                            El archivo se crea sobre la marcha y por lo tanto puede tardar varios segundos en cargar.
+                            Después de descargar el archivo,</dct:description>
+                        <dct:description xml:lang="hu-t-en-t0-mtec">Ez a CSV fájllista az EU Whoiswho-ban tartózkodó valamennyi személyről. A következőket tartalmazza: munkaköri címek, nevek, entitások címkéi. A fájl a menet közben jön létre, ezért a betöltése több másodpercig is eltarthat. A fájl letöltése után,</dct:description>
+                        <dct:description xml:lang="sv-t-en-t0-mtec">Denna CSV-fillista över alla personer i EU Whoiswho.
+                            Den innehåller:
+                            jobbtitlar, namn och etiketter på entiteter.
+                            Filen skapas i farten och kan därför ta flera sekunder att ladda.
+                            Efter att ha laddat ner filen,</dct:description>
+                        <dct:title xml:lang="pl-t-en-t0-mtec">EU Whoiswho pełny wykaz osób (CSV)</dct:title>
+                        <dct:format rdf:resource="http://publications.europa.eu/resource/authority/file-type/CSV"/>
+                        <dct:description xml:lang="et-t-en-t0-mtec">Selles CSV-failis on loetletud kõik EU Whoiswho’s viibivad isikud. See sisaldab järgmist: ametinimetused, nimed, üksuste sildid. Fail on loodud lendama ja seetõttu võib võtta mitu sekundit laadida. Pärast faili allalaadimist,</dct:description>
+                        <dct:description xml:lang="lt-t-en-t0-mtec">Šis CSV bylos sąrašas, kuriame nurodyti visi asmenys, esantys ES. Jame yra: pareigybių pavadinimai, pavadinimai, subjektų etiketės. Failas sukurtas skristi, todėl gali užtrukti kelias sekundes. Atsisiųstą failą,</dct:description>
+                        <dct:description xml:lang="fr-t-en-t0-mtec">Cette liste de fichiers CSV de toutes les personnes présentes dans l’UE Whoiswho. Il contient: titres d’emploi, noms, étiquettes d’entités. Le fichier est créé à la volée et peut donc prendre plusieurs secondes à charger. Après avoir téléchargé le fichier,</dct:description>
+                        <dct:description xml:lang="bg-t-en-t0-mtec">Този CSV списък на всички лица, намиращи се в EU Whoiswho. Той съдържа: заглавия на длъжности, имена, етикети на субекти. Файлът е създаден в движение и следователно може да отнеме няколко секунди, за да се зареди. След изтегляне на файла,</dct:description>
+                        <dct:title xml:lang="lv-t-en-t0-mtec">EU Whoiswho pilns personu saraksts (CSV)</dct:title>
+                        <dct:title xml:lang="el-t-en-t0-mtec">EU Whoiswho πλήρης κατάλογος προσώπων (CSV)</dct:title>
+                        <dct:title xml:lang="fi-t-en-t0-mtec">EU Whoiswho täydellinen luettelo henkilöistä (CSV)</dct:title>
+                        <dct:language rdf:resource="http://publications.europa.eu/resource/authority/language/ENG"/>
+                        <dct:identifier>http://data.europa.eu/88u/distribution/95acaf45-3a68-4a07-ad08-f2f60c386877</dct:identifier>
+                        <dct:description xml:lang="ro-t-en-t0-mtec">Această listă a dosarului CSV cu toate persoanele prezente în UE Whoiswho. Conține: titluri de locuri de muncă, nume, etichete ale entităților. Fișierul este creat pe zbor și, prin urmare, poate dura câteva secunde pentru a încărca. După descărcarea fișierului,</dct:description>
+                        <dct:title xml:lang="lt-t-en-t0-mtec">ES, kas turi išsamų asmenų sąrašą</dct:title>
+                        <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/DOWNLOADABLE_FILE"/>
+                        <dct:description xml:lang="el-t-en-t0-mtec">Αυτός ο κατάλογος αρχείων CSV με όλα τα πρόσωπα που είναι παρόντα στην ΕΕ Whoiswho. Περιέχει: τίτλοι εργασίας, ονόματα, ετικέτες οντοτήτων. Το αρχείο δημιουργείται κατά τη μύγα και, ως εκ τούτου, μπορεί να χρειαστούν αρκετά δευτερόλεπτα για να φορτωθεί. Μετά τη λήψη του αρχείου,</dct:description>
+                        <dcat:mediaType rdf:resource="http://www.iana.org/assignments/media-types/text/csv"/>
+                        <dct:description xml:lang="da-t-en-t0-mtec">Denne CSV-filliste over alle de personer, der er til stede i EU Whoiswho. Det indeholder: jobtitler, navne, mærker på enheder. Filen oprettes på farten og kan derfor tage flere sekunder at indlæse. Efter download af filen,</dct:description>
+                        <dct:title xml:lang="es-t-en-t0-mtec">Lista completa de personas de EU Whoiswho (CSV)</dct:title>
+                        <dct:title xml:lang="fr-t-en-t0-mtec">UE Whoiswho liste complète des personnes (CSV)</dct:title>
+                        <dct:title xml:lang="sv-t-en-t0-mtec">EU Whoiswho fullständig förteckning över personer (CSV)</dct:title>
+                        <dct:title xml:lang="ro-t-en-t0-mtec">UE Whoiswho lista completă a persoanelor (CSV)</dct:title>
+                        <dct:title xml:lang="mt-t-en-t0-mtec">EU Whoiswho lista sħiħa ta’ persuni (CSV)</dct:title>
+                        <dct:title xml:lang="ga-t-en-t0-mtec">EU Whoiswho liosta iomlán na ndaoine (CSV)</dct:title>
+                        <dct:description xml:lang="de-t-en-t0-mtec">Diese CSV-Dateiliste aller Personen, die in der EU Whoiswho anwesend sind. Es enthält: Berufsbezeichnungen, Namen, Etiketten von Entitäten. Die Datei wird auf der Fliege erstellt und kann daher mehrere Sekunden dauern, um zu laden. Nach dem Herunterladen der Datei,</dct:description>
+                        <dct:description xml:lang="cs-t-en-t0-mtec">Tento seznam souborů CSV všech osob přítomných v EU Whoiswho. Obsahuje: pracovní názvy, názvy, označení subjektů. Soubor je vytvořen za běhu, a proto může trvat několik sekund načtení. Po stažení souboru,</dct:description>
+                        <dct:description xml:lang="nl-t-en-t0-mtec">Deze CSV-bestandslijst van alle personen die aanwezig zijn in de EU Whoiswho. Het bevat: functietitels, namen, labels van entiteiten. Het bestand wordt on the fly aangemaakt en kan daarom enkele seconden duren om te laden. Na het downloaden van het bestand, Deze CSV-bestandslijst van alle personen die aanwezig zijn in de EU Whoiswho. Het bevat: functietitels, namen, labels van entiteiten. Het bestand wordt on the fly aangemaakt en kan daarom enkele seconden duren om te laden.
+                            Na het downloaden van het bestand,</dct:description>
+                        <dct:description xml:lang="ga-t-en-t0-mtec">Liosta comhaid CSV seo de na daoine go léir atá i láthair in EU Whoiswho. Allah warns a seirbhísigh leis a chuid Word: teidil poist, ainmneacha, lipéid na n-eintiteas. Is é an comhad a cruthaíodh ar an eitilt agus dá bhrí sin d’fhéadfadh a ghlacadh roinnt soicind a luchtú. Tar éis an comhad a íoslódáil,</dct:description>
+                        <dct:title xml:lang="pt-t-en-t0-mtec">UE Whoiswho lista completa de pessoas (CSV)</dct:title>
+                        <dct:title xml:lang="bg-t-en-t0-mtec">EU Whoiswho пълен списък на лицата (CSV)</dct:title>
+                        <dcat:accessURL rdf:resource="http://publications.europa.eu/webapi/rdf/sparql?default-graph-uri=&amp;query=PREFIX+euvoc%3A%3Chttp%3A%2F%2Fpublications.europa.eu%2Fontology%2Feuvoc%23%3E%0D%0APREFIX+org%3A%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23%3E%0D%0Aprefix+skos%3A%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%3E%0D%0APREFIX+vcard%3A%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0APREFIX+foaf%3A%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E%0D%0ASELECT+distinct+str%28%3Fmnemonic%29+as+%3Fentity+%3Fname+%3Fperson+%28%3ForgL+as+%3FOrgLabel%29+%3Fposition+WHERE%7B%0D%0A%3Forg+org%3AsubOrganizationOf%2B+%3ForgP.%0D%0AFILTER%28%3ForgP%3D%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Fcorporate-body%2FEURUN%3E%29%0D%0A%3Forg+skos%3AprefLabel+%3ForgL.FILTER%28LANGMATCHES%28LANG%28%3ForgL%29%2C%22en%22%29%29%0D%0A%3FMS+org%3Aorganization+%3Forg.%0D%0Aoptional%7B%3FMS+euvoc%3Aorder+%3Forder%7D%0D%0Aoptional%7B%3FMS+euvoc%3ApositionComplement+%3Fposition+FILTER%28LANGMATCHES%28LANG%28%3Fposition%29%2C%22en%22%29%29%7D%0D%0A%3Fperson+org%3AhasMembership+%3FMS.%0D%0AOPTIONAL%7B%3FMS+euvoc%3AcontactPoint+%3FcontPt.+%3FcontPt+vcard%3AhasEmail+%3Femail%7D%0D%0A%3Fperson+foaf%3AfamilyName+%3FfamilyN.%3Fperson+foaf%3AgivenName+%3FgivenN.%0D%0AOPTIONAL%7B%3Fperson+vcard%3AhasHonorificPrefix+%3Fhon.%3Fhon+skos%3AprefLabel+%3FhonValue.FILTER%28LANGMATCHES%28LANG%28%3FhonValue%29%2C%22en%22%29%29%7D%0D%0AOPTIONAL%7B%3Forg+org%3Aidentifier+%3Fmnemonic.+Filter%28datatype%28%3Fmnemonic%29%3D%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Fuse-context%2FMNEMONIC%3E%29%7D%0D%0Abind+%28concat%28%3FhonValue%2C%27+%27%2C%3FgivenN%2C%27+%27%2C%3FfamilyN%29as%3Fname%29%0D%0A%7DORDER+BY+%3Fentity%3Forder&amp;format=text%2Fcsv&amp;timeout=0&amp;run=+Run+Query+"/>
+                        <dcat:downloadURL rdf:resource="http://publications.europa.eu/webapi/rdf/sparql?default-graph-uri=&amp;query=PREFIX+euvoc%3A%3Chttp%3A%2F%2Fpublications.europa.eu%2Fontology%2Feuvoc%23%3E%0D%0APREFIX+org%3A%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23%3E%0D%0Aprefix+skos%3A%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%3E%0D%0APREFIX+vcard%3A%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0APREFIX+foaf%3A%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E%0D%0ASELECT+distinct+str%28%3Fmnemonic%29+as+%3Fentity+%3Fname+%3Fperson+%28%3ForgL+as+%3FOrgLabel%29+%3Fposition+WHERE%7B%0D%0A%3Forg+org%3AsubOrganizationOf%2B+%3ForgP.%0D%0AFILTER%28%3ForgP%3D%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Fcorporate-body%2FEURUN%3E%29%0D%0A%3Forg+skos%3AprefLabel+%3ForgL.FILTER%28LANGMATCHES%28LANG%28%3ForgL%29%2C%22en%22%29%29%0D%0A%3FMS+org%3Aorganization+%3Forg.%0D%0Aoptional%7B%3FMS+euvoc%3Aorder+%3Forder%7D%0D%0Aoptional%7B%3FMS+euvoc%3ApositionComplement+%3Fposition+FILTER%28LANGMATCHES%28LANG%28%3Fposition%29%2C%22en%22%29%29%7D%0D%0A%3Fperson+org%3AhasMembership+%3FMS.%0D%0AOPTIONAL%7B%3FMS+euvoc%3AcontactPoint+%3FcontPt.+%3FcontPt+vcard%3AhasEmail+%3Femail%7D%0D%0A%3Fperson+foaf%3AfamilyName+%3FfamilyN.%3Fperson+foaf%3AgivenName+%3FgivenN.%0D%0AOPTIONAL%7B%3Fperson+vcard%3AhasHonorificPrefix+%3Fhon.%3Fhon+skos%3AprefLabel+%3FhonValue.FILTER%28LANGMATCHES%28LANG%28%3FhonValue%29%2C%22en%22%29%29%7D%0D%0AOPTIONAL%7B%3Forg+org%3Aidentifier+%3Fmnemonic.+Filter%28datatype%28%3Fmnemonic%29%3D%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Fuse-context%2FMNEMONIC%3E%29%7D%0D%0Abind+%28concat%28%3FhonValue%2C%27+%27%2C%3FgivenN%2C%27+%27%2C%3FfamilyN%29as%3Fname%29%0D%0A%7DORDER+BY+%3Fentity%3Forder&amp;format=text%2Fcsv&amp;timeout=0&amp;run=+Run+Query+"/>
+                        <dct:description xml:lang="mt-t-en-t0-mtec">Din il-lista ta’ fajls tas-CSV tal-persuni kollha preżenti fl-UE Whoiswho. Fiha: it-titli tal-impjiegi, l-ismijiet, it-tikketti tal-entitajiet. Il-fajl huwa maħluq fuq il-fly u għalhekk jista ‘jieħu diversi sekondi biex tagħbija. Wara li tniżżel il-fajl,</dct:description>
+                        <dct:description xml:lang="hr-t-en-t0-mtec">Ovaj popis spisa CSV svih osoba koje se nalaze u Whoiswhou EU-a. Sadržava: nazivi posla, imena, oznake entiteta. Datoteka je stvorena u letu i stoga može potrajati nekoliko sekundi za učitavanje. Nakon preuzimanja datoteke,</dct:description>
+                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/CC_BY_4_0"/>
+                        <dct:description xml:lang="sk-t-en-t0-mtec">Tento zoznam súborov CSV všetkých osôb prítomných v EÚ Whoiswho. Obsahuje: názvy pracovných miest, mená, označenia subjektov.
+                            Súbor je vytvorený za letu, a preto môže trvať niekoľko sekúnd na načítanie.
+                            Po stiahnutí súboru,</dct:description>
+                        <dct:description xml:lang="en">This CSV file list of all the persons present in the EU Whoiswho. It containts: job titles, names, labels of entities. The file is created on the fly and therefore may take several seconds to load. After downloading the file,</dct:description>
+                        <dct:description xml:lang="sl-t-en-t0-mtec">Ta seznam datotek CSV vseh oseb, prisotnih v EU Whoiswho. Vsebuje: nazivi delovnih mest, imena, oznake entitet. Datoteka je ustvarjena na letenje in zato lahko traja nekaj sekund, da se naloži. Po prenosu datoteke, Ta seznam datotek CSV vseh oseb, prisotnih v EU Whoiswho. Vsebuje: nazivi delovnih mest, imena, oznake entitet. Datoteka je ustvarjena na letenje in zato lahko traja nekaj sekund, da se naloži.
+                            Po prenosu datoteke,</dct:description>
+                        <dct:title xml:lang="sl-t-en-t0-mtec">EU Whoiswho popoln seznam oseb (CSV)</dct:title>
+                        <dct:title xml:lang="da-t-en-t0-mtec">EU Whoiswho fuld liste over personer (CSV)</dct:title>
+                        <dct:description xml:lang="pt-t-en-t0-mtec">Esta lista de ficheiros CSV de todas as pessoas presentes na UE Whoiswho. Contém: cargos, nomes, rótulos de entidades. O arquivo é criado em tempo real e, portanto, pode demorar vários segundos para carregar. Depois de baixar o arquivo,</dct:description>
+                        <dct:title xml:lang="cs-t-en-t0-mtec">EU Whoiswho úplný seznam osob (CSV)</dct:title>
+                        <dct:description xml:lang="pl-t-en-t0-mtec">Lista wszystkich osób obecnych w UE Whoiswho. Zawiera: tytuły zadań, imiona i nazwiska, etykiety podmiotów. Plik jest tworzony w locie i dlatego może zająć kilka sekund na załadowanie. Po pobraniu pliku,</dct:description>
+                        <dct:description xml:lang="it-t-en-t0-mtec">Questo elenco di file CSV di tutte le persone presenti nell'EU Whoiswho. Contiene: titoli di lavoro, nomi, etichette delle entità. Il file viene creato al volo e quindi può richiedere diversi secondi per caricare. Dopo aver scaricato il file,</dct:description>
+                        <dct:description xml:lang="lv-t-en-t0-mtec">Šajā CSV datnē ir uzskaitītas visas personas, kas atrodas ES, kurš ir kurš.
+                            Tajā ietilpst:
+                            amatu nosaukumi, nosaukumi, vienību marķējumi.
+                            Fails ir izveidots uz lidot, un tāpēc var ilgt vairākas sekundes, lai ielādētu.
+                            Pēc faila lejupielādes,</dct:description>
+                        <dct:title xml:lang="nl-t-en-t0-mtec">EU Whoiswho volledige lijst van personen (CSV)</dct:title>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <dct:title xml:lang="ga">EU Whoiswho: Eolaire oifigiúil an Aontais Eorpaigh</dct:title>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/a9e20885-c087-498b-8b39-c5c51518881b">
+                        <dct:title xml:lang="bg-t-en-t0-mtec">Европейски парламент</dct:title>
+                        <dct:title xml:lang="sv-t-en-t0-mtec">Europaparlamentet</dct:title>
+                        <dct:title xml:lang="sl-t-en-t0-mtec">Evropski parlament</dct:title>
+                        <dcat:mediaType rdf:resource="http://www.iana.org/assignments/media-types/text/html"/>
+                        <dct:title xml:lang="da-t-en-t0-mtec">Europa-Parlamentet</dct:title>
+                        <dct:title xml:lang="en">European Parliament</dct:title>
+                        <dct:identifier>http://data.europa.eu/88u/distribution/e9bef95f-401d-4e28-bcb9-7676e2509373</dct:identifier>
+                        <dcat:accessURL rdf:resource="https://op.europa.eu/web/who-is-who/organization/-/organization/EP/EP"/>
+                        <dct:title xml:lang="de-t-en-t0-mtec">Europäisches Parlament</dct:title>
+                        <dct:format rdf:resource="http://publications.europa.eu/resource/authority/file-type/HTML"/>
+                        <dct:title xml:lang="hr-t-en-t0-mtec">Europski parlament</dct:title>
+                        <dct:title xml:lang="fr-t-en-t0-mtec">Parlement européen</dct:title>
+                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/VISUALIZATION"/>
+                        <dct:title xml:lang="it-t-en-t0-mtec">Parlamento europeo</dct:title>
+                        <dct:title xml:lang="ro-t-en-t0-mtec">Parlamentul European</dct:title>
+                        <dct:title xml:lang="hu-t-en-t0-mtec">Európai Parlament</dct:title>
+                        <dct:title xml:lang="lv-t-en-t0-mtec">Eiropas Parlaments</dct:title>
+                        <dct:title xml:lang="lt-t-en-t0-mtec">Europos Parlamentas</dct:title>
+                        <dct:title xml:lang="pl-t-en-t0-mtec">Parlament Europejski</dct:title>
+                        <dct:title xml:lang="el-t-en-t0-mtec">Ευρωπαϊκό Κοινοβούλιο</dct:title>
+                        <dct:title xml:lang="mt-t-en-t0-mtec">Il-Parlament Ewropew</dct:title>
+                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:title xml:lang="pt-t-en-t0-mtec">Parlamento Europeu</dct:title>
+                        <dct:title xml:lang="sk-t-en-t0-mtec">Európsky parlament</dct:title>
+                        <dct:title xml:lang="fi-t-en-t0-mtec">Euroopan parlamentti</dct:title>
+                        <dct:title xml:lang="nl-t-en-t0-mtec">Europees Parlement</dct:title>
+                        <dct:title xml:lang="es-t-en-t0-mtec">Parlamento Europeo</dct:title>
+                        <dct:title xml:lang="cs-t-en-t0-mtec">Evropský parlament</dct:title>
+                        <dct:title xml:lang="et-t-en-t0-mtec">Euroopa Parlament</dct:title>
+                        <dct:title xml:lang="ga-t-en-t0-mtec">Parlaimint na hEorpa</dct:title>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/3342"/>
+                <dct:description xml:lang="lv">“EU Whoiswho” ir elektronisks kontaktinformācijas katalogs, kas ietver ES iestāžu, struktūru un aģentūru organizācijas shēmas visās oficiālajās ES valodās.</dct:description>
+                <dct:relation rdf:resource="http://data.europa.eu/88u/dataset/members-of-the-european-economic-and-social-committee"/>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/f6866dda-3892-47bd-bb38-f9a8879d5076">
+                        <dct:title xml:lang="da-t-en-t0-mtec">Det Europæiske Råd</dct:title>
+                        <dct:title xml:lang="nl-t-en-t0-mtec">Europese Raad</dct:title>
+                        <dct:title xml:lang="pl-t-en-t0-mtec">Rada Europejska</dct:title>
+                        <dct:title xml:lang="en">European Council</dct:title>
+                        <dct:identifier>http://data.europa.eu/88u/distribution/b06629a3-d5fa-4a20-a644-20ed2f543b06</dct:identifier>
+                        <dct:title xml:lang="hr-t-en-t0-mtec">Europsko vijeće</dct:title>
+                        <dcat:mediaType rdf:resource="http://www.iana.org/assignments/media-types/text/html"/>
+                        <dct:title xml:lang="et-t-en-t0-mtec">Euroopa Ülemkogu</dct:title>
+                        <dct:title xml:lang="mt-t-en-t0-mtec">Kunsill Ewropew</dct:title>
+                        <dct:title xml:lang="el-t-en-t0-mtec">Ευρωπαϊκό Συμβούλιο</dct:title>
+                        <dct:title xml:lang="ga-t-en-t0-mtec">An Chomhairle Eorpach</dct:title>
+                        <dct:title xml:lang="hu-t-en-t0-mtec">Európai Tanács</dct:title>
+                        <dct:title xml:lang="sl-t-en-t0-mtec">Evropski svet</dct:title>
+                        <dct:title xml:lang="pt-t-en-t0-mtec">Conselho Europeu</dct:title>
+                        <dct:title xml:lang="sv-t-en-t0-mtec">Europeiska rådet</dct:title>
+                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:title xml:lang="sk-t-en-t0-mtec">Európska rada</dct:title>
+                        <dct:format rdf:resource="http://publications.europa.eu/resource/authority/file-type/HTML"/>
+                        <dct:title xml:lang="ro-t-en-t0-mtec">Consiliul European</dct:title>
+                        <dct:title xml:lang="lv-t-en-t0-mtec">Eiropadome</dct:title>
+                        <dct:title xml:lang="it-t-en-t0-mtec">Consiglio europeo</dct:title>
+                        <dct:title xml:lang="lt-t-en-t0-mtec">Europos Vadovų Taryba</dct:title>
+                        <dcat:accessURL rdf:resource="https://op.europa.eu/web/who-is-who/organization/-/organization/EURCOU/EURCOU"/>
+                        <dct:title xml:lang="es-t-en-t0-mtec">Consejo Europeo</dct:title>
+                        <dct:title xml:lang="bg-t-en-t0-mtec">Европейски съвет</dct:title>
+                        <dct:title xml:lang="de-t-en-t0-mtec">Europäischer Rat</dct:title>
+                        <dct:title xml:lang="cs-t-en-t0-mtec">Evropská rada</dct:title>
+                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/VISUALIZATION"/>
+                        <dct:title xml:lang="fr-t-en-t0-mtec">Conseil européen</dct:title>
+                        <dct:title xml:lang="fi-t-en-t0-mtec">Eurooppa-neuvosto</dct:title>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <dct:publisher>
+                    <foaf:Agent rdf:about="http://publications.europa.eu/resource/authority/corporate-body/PUBL"/>
+                </dct:publisher>
+                <dct:title xml:lang="pt">EU Whoiswho: Lista de contactos oficial da União Europeia</dct:title>
+                <dct:title xml:lang="fr">EU Whoiswho: Annuaire officiel de l'Union européenne</dct:title>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/dca16309-9b68-4e12-b57a-2e99ab7088d1">
+                        <dct:title xml:lang="pt-t-en-t0-mtec">Navegação nas instituições da UE</dct:title>
+                        <dct:identifier>http://data.europa.eu/88u/distribution/dd1803bd-611f-4395-a8f2-cfc47deedd4c</dct:identifier>
+                        <dct:title xml:lang="hu-t-en-t0-mtec">Navigáció az uniós intézményekben</dct:title>
+                        <dct:title xml:lang="hr-t-en-t0-mtec">Plovidba u institucijama EU-a</dct:title>
+                        <dct:title xml:lang="mt-t-en-t0-mtec">Navigazzjoni fl-istituzzjonijiet tal-UE</dct:title>
+                        <dcat:mediaType rdf:resource="http://www.iana.org/assignments/media-types/text/html"/>
+                        <dct:title xml:lang="bg-t-en-t0-mtec">Навигация в институциите на ЕС</dct:title>
+                        <dct:title xml:lang="et-t-en-t0-mtec">Navigeerimine ELi institutsioonides</dct:title>
+                        <dct:title xml:lang="es-t-en-t0-mtec">Navegación en las instituciones de la UE</dct:title>
+                        <dct:title xml:lang="fr-t-en-t0-mtec">Navigation dans les institutions de l’UE</dct:title>
+                        <dct:title xml:lang="en">Navigation in the EU institutions</dct:title>
+                        <dct:title xml:lang="pl-t-en-t0-mtec">Nawigacja w instytucjach UE</dct:title>
+                        <dct:title xml:lang="nl-t-en-t0-mtec">Navigatie in de EU-instellingen</dct:title>
+                        <dcat:accessURL rdf:resource="https://op.europa.eu/en/web/who-is-who"/>
+                        <dct:title xml:lang="de-t-en-t0-mtec">Navigation in den EU-Institutionen</dct:title>
+                        <dct:title xml:lang="sl-t-en-t0-mtec">Navigacija v institucijah EU</dct:title>
+                        <dct:title xml:lang="lt-t-en-t0-mtec">Navigacija ES institucijose</dct:title>
+                        <dct:title xml:lang="da-t-en-t0-mtec">Sejlads i EU-institutionerne</dct:title>
+                        <dct:format rdf:resource="http://publications.europa.eu/resource/authority/file-type/HTML"/>
+                        <dct:title xml:lang="fi-t-en-t0-mtec">Navigointi EU:n toimielimissä</dct:title>
+                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/CC_BY_4_0"/>
+                        <dct:title xml:lang="it-t-en-t0-mtec">Navigazione nelle istituzioni dell'UE</dct:title>
+                        <dct:title xml:lang="lv-t-en-t0-mtec">Navigācija ES iestādēs</dct:title>
+                        <dct:title xml:lang="el-t-en-t0-mtec">Πλοήγηση στα θεσμικά όργανα της ΕΕ</dct:title>
+                        <dct:title xml:lang="cs-t-en-t0-mtec">Navigace v orgánech EU</dct:title>
+                        <dct:title xml:lang="ro-t-en-t0-mtec">Navigarea în instituțiile UE</dct:title>
+                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:title xml:lang="ga-t-en-t0-mtec">Loingseoireacht in institiúidí an Aontais Eorpaigh</dct:title>
+                        <dct:title xml:lang="sk-t-en-t0-mtec">Navigácia v inštitúciách EÚ</dct:title>
+                        <dct:title xml:lang="sv-t-en-t0-mtec">Navigering i EU-institutionerna</dct:title>
+                        <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/VISUALIZATION"/>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <dcat:theme>
+                    <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/data-theme/GOVE"/>
+                </dcat:theme>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/8b03c0bb-4399-45f1-a1bb-a3d92bbfd3e4">
+                        <dcat:accessURL rdf:resource="https://op.europa.eu/web/who-is-who/organization/-/organization/AGEN_OTH/AGEN_OTH"/>
+                        <dct:title xml:lang="en">Agencies and other bodies</dct:title>
+                        <dct:title xml:lang="nl-t-en-t0-mtec">Agentschappen en andere organen</dct:title>
+                        <dct:title xml:lang="hr-t-en-t0-mtec">Agencije i druga tijela</dct:title>
+                        <dct:title xml:lang="es-t-en-t0-mtec">Agencias y otros órganos</dct:title>
+                        <dct:title xml:lang="de-t-en-t0-mtec">Agenturen und sonstige Einrichtungen</dct:title>
+                        <dct:title xml:lang="ga-t-en-t0-mtec">Gníomhaireachtaí agus comhlachtaí eile</dct:title>
+                        <dct:title xml:lang="et-t-en-t0-mtec">Ametid ja muud organid</dct:title>
+                        <dct:title xml:lang="pt-t-en-t0-mtec">Agências e outros organismos</dct:title>
+                        <dct:title xml:lang="sl-t-en-t0-mtec">Agencije in drugi organi</dct:title>
+                        <dct:title xml:lang="bg-t-en-t0-mtec">Агенции и други органи</dct:title>
+                        <dct:title xml:lang="mt-t-en-t0-mtec">Aġenziji u korpi oħra</dct:title>
+                        <dcat:mediaType rdf:resource="http://www.iana.org/assignments/media-types/text/html"/>
+                        <dct:title xml:lang="it-t-en-t0-mtec">Agenzie e altri organismi</dct:title>
+                        <dct:title xml:lang="fr-t-en-t0-mtec">Agences et autres organes</dct:title>
+                        <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/VISUALIZATION"/>
+                        <dct:format rdf:resource="http://publications.europa.eu/resource/authority/file-type/HTML"/>
+                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        <dct:title xml:lang="ro-t-en-t0-mtec">Agenții și alte organisme</dct:title>
+                        <dct:title xml:lang="sk-t-en-t0-mtec">Agentúry a iné orgány</dct:title>
+                        <dct:identifier>http://data.europa.eu/88u/distribution/8df3b2e7-a69b-4f06-bdca-d16436018f19</dct:identifier>
+                        <dct:title xml:lang="cs-t-en-t0-mtec">Agentury a jiné subjekty</dct:title>
+                        <dct:title xml:lang="hu-t-en-t0-mtec">Ügynökségek és egyéb szervek</dct:title>
+                        <dct:title xml:lang="lt-t-en-t0-mtec">Agentūros ir kitos įstaigos</dct:title>
+                        <dct:title xml:lang="pl-t-en-t0-mtec">Agencje i inne organy</dct:title>
+                        <dct:title xml:lang="sv-t-en-t0-mtec">Byråer och andra organ</dct:title>
+                        <dct:title xml:lang="lv-t-en-t0-mtec">Aģentūras un citas struktūras</dct:title>
+                        <dct:title xml:lang="da-t-en-t0-mtec">Agenturer og andre organer</dct:title>
+                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:title xml:lang="el-t-en-t0-mtec">ΟΡΓΑΝΙΣΜΟΙ και αλλα ΟΡΓΑΝΑ</dct:title>
+                        <dct:title xml:lang="fi-t-en-t0-mtec">Virastot ja muut elimet</dct:title>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <j.0:debugInfo>EUODP Legacy-&gt;DEU xslt, version:20220321</j.0:debugInfo>
+                <dct:title xml:lang="bg">EU Whoiswho: Oфициалният указател на Европейския съюз</dct:title>
+                <dct:title xml:lang="hr">EU Whoiswho: Službeni imenik Europske unije</dct:title>
+                <dct:title xml:lang="nl">EU Whoiswho: De officiële gids van de Europese Unie</dct:title>
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/5508"/>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/cbc73747-dd88-4a83-a8ec-9233fdea88be">
+                        <dct:title xml:lang="mt-t-en-t0-mtec">Direttorju tal-Kummissjoni Ewropea</dct:title>
+                        <dct:title xml:lang="bg-t-en-t0-mtec">Списък на членовете и персонала на Европейската комисия</dct:title>
+                        <dct:title xml:lang="en">List of European Commission Members and staff </dct:title>
+                        <dct:title xml:lang="ro-t-en-t0-mtec">Anuarul Comisiei Europene</dct:title>
+                        <dct:title xml:lang="el-t-en-t0-mtec">Κατάλογος των μελών και του προσωπικού της Ευρωπαϊκής Επιτροπής</dct:title>
+                        <dct:title xml:lang="mt-t-en-t0-mtec">Lista tal-Membri u l-persunal tal-Kummissjoni Ewropea</dct:title>
+                        <dct:title xml:lang="da-t-en-t0-mtec">Liste over Europa-Kommissionens medlemmer og personale</dct:title>
+                        <dct:description xml:lang="sl-t-en-t0-mtec">V tej datoteki CSV so navedeni uradni „osebje“ in člani Evropske komisije z nazivi delovnih mest, imeni in oznakami subjektov. Datoteka je ustvarjena na letenje in zato lahko traja nekaj sekund, da se naloži.</dct:description>
+                        <dct:description xml:lang="hr-t-en-t0-mtec">U spisu CSV-a navedeni su službeni „osoblje” i članovi Europske komisije s nazivima radnih mjesta, imenima i oznakama subjekata. Datoteka je stvorena u letu i stoga može potrajati nekoliko sekundi za učitavanje.</dct:description>
+                        <dct:description xml:lang="fr-t-en-t0-mtec">Ce fichier CSV énumère le «personnel» officiel et les membres de la Commission européenne avec les titres de poste, les noms et les étiquettes des entités. Le fichier est créé à la volée et peut donc prendre plusieurs secondes à charger.</dct:description>
+                        <dct:title xml:lang="de-t-en-t0-mtec">Liste der Mitglieder und Bediensteten der Europäischen Kommission</dct:title>
+                        <dct:description xml:lang="mt-t-en-t0-mtec">Dan il-fajl tas-CSV jelenka l-“persunal” uffiċjali u l-Membri tal-Kummissjoni Ewropea bit-titli tal-impjiegi, l-ismijiet u t-tikketti tal-entitajiet. Il-fajl huwa maħluq fuq il-fly u għalhekk jistgħu jieħdu diversi tieni biex jiġu rkuprati. Dan il-fajl tas-CSV jelenka l-“persunal” uffiċjali u l-Membri tal-Kummissjoni Ewropea bit-titli tal-impjiegi, l-ismijiet u t-tikketti tal-entitajiet. Il-fajl huwa maħluq fuq il-fly u għalhekk jistgħu jieħdu diversi tieni biex jiġu rkuprati. Dan il-fajl tas-CSV jelenka l-“persunal” uffiċjali u l-Membri tal-Kummissjoni Ewropea bit-titli tal-impjiegi, l-ismijiet u t-tikketti tal-entitajiet.
+                            Il-fajl huwa maħluq fuq il-fly u għalhekk jistgħu jieħdu diversi tieni biex jiġu rkuprati.</dct:description>
+                        <dct:title xml:lang="fi-t-en-t0-mtec">Luettelo Euroopan komission jäsenistä ja henkilöstöstä</dct:title>
+                        <dct:title xml:lang="sk-t-en-t0-mtec">Zoznam členov a zamestnancov Európskej komisie</dct:title>
+                        <dct:title xml:lang="sv-t-en-t0-mtec">Förteckning över ledamöter och personal vid Europeiska kommissionen</dct:title>
+                        <dct:description xml:lang="lt-t-en-t0-mtec">Šioje CSV rinkmenoje išvardijami oficialūs „darbuotojai“ ir Europos Komisijos nariai, nurodant subjektų pareigybių pavadinimus, pavardes, ženklus. Failas sukurtas skristi, todėl gali užtrukti kelias sekundes.</dct:description>
+                        <dct:title xml:lang="es-t-en-t0-mtec">Directorio de la Comisión Europea</dct:title>
+                        <dct:title xml:lang="et-t-en-t0-mtec">Euroopa Komisjoni kataloog</dct:title>
+                        <dct:title xml:lang="pl-t-en-t0-mtec">Lista członków i pracowników Komisji Europejskiej</dct:title>
+                        <dct:description xml:lang="ro-t-en-t0-mtec">Acest dosar CSV enumeră „personalul” oficial și membrii Comisiei Europene cu titlurile postului, denumirile, etichetele entităților. Fișierul este creat pe zbor și, prin urmare, poate dura câteva secunde pentru a încărca.</dct:description>
+                        <dct:title xml:lang="lt-t-en-t0-mtec">Europos Komisijos narių ir darbuotojų sąrašas</dct:title>
+                        <dct:description xml:lang="lv-t-en-t0-mtec">Šajā CSV lietā ir uzskaitīti oficiālie “darbinieki” un Eiropas Komisijas locekļi, norādot amatu nosaukumus, nosaukumus un struktūru marķējumus. Fails ir izveidots uz lidot, un tāpēc var veikt vairākas sekundes, lai izgūtu. Šajā CSV lietā ir uzskaitīti oficiālie “darbinieki” un Eiropas Komisijas locekļi, norādot amatu nosaukumus, nosaukumus un struktūru marķējumus. Fails ir izveidots uz lidot, un tāpēc var veikt vairākas sekundes, lai izgūtu. Šajā CSV lietā ir uzskaitīti oficiālie “darbinieki” un Eiropas Komisijas locekļi, norādot amatu nosaukumus, nosaukumus un struktūru marķējumus.
+                            Fails ir izveidots uz lidot, un tāpēc var veikt vairākas sekundes, lai izgūtu.</dct:description>
+                        <dct:description xml:lang="bg-t-en-t0-mtec">В това досие CSV са изброени официалният „персонал“ и членовете на Европейската комисия със заглавията на длъжностите, имената и етикетите на субектите. Файлът е създаден в движение и следователно може да отнеме няколко секунди, за да се зареди.</dct:description>
+                        <dct:description xml:lang="fi-t-en-t0-mtec">Tässä CSV-tiedostossa on luettelo Euroopan komission virallisista ”henkilöstöstä” ja jäsenistä, joilla on yhteisöjen tehtävänimikkeet, nimet ja etiketit. Tiedosto luodaan lennolla, joten se voi kestää useita sekunteja noudettavaksi. Tässä CSV-tiedostossa on luettelo Euroopan komission virallisista ”henkilöstöstä” ja jäsenistä, joilla on yhteisöjen tehtävänimikkeet, nimet ja etiketit. Tiedosto luodaan lennolla, joten se voi kestää useita sekunteja noudettavaksi. Tässä CSV-tiedostossa on luettelo Euroopan komission virallisista ”henkilöstöstä” ja jäsenistä, joilla on yhteisöjen tehtävänimikkeet, nimet ja etiketit.
+                            Tiedosto luodaan lennolla, joten se voi kestää useita sekunteja noudettavaksi.</dct:description>
+                        <dct:description xml:lang="pt-t-en-t0-mtec">Este ficheiro CSV enumera o «pessoal» oficial e os membros da Comissão Europeia com os títulos, nomes e rótulos das entidades. O arquivo é criado em tempo real e, portanto, pode demorar vários segundos para ser recuperado.</dct:description>
+                        <dct:description xml:lang="ga-t-en-t0-mtec">Liostaítear sa chomhad CSV seo “foireann” oifigiúil agus Comhaltaí an Choimisiúin Eorpaigh a bhfuil teidil phoist, ainmneacha agus lipéid na n-eintiteas acu. Is é an comhad a cruthaíodh ar an eitilt agus dá bhrí sin d’fhéadfadh a ghlacadh roinnt soicind a luchtú.</dct:description>
+                        <dct:description xml:lang="fi-t-en-t0-mtec">Tässä CSV-tiedostossa on luettelo Euroopan komission virallisista ”henkilöstöstä” ja jäsenistä, joilla on yhteisöjen tehtävänimikkeet, nimet ja etiketit. Tiedosto on luotu lennossa ja siksi voi kestää useita sekunteja ladata.</dct:description>
+                        <dct:title xml:lang="fr-t-en-t0-mtec">Annuaire de la Commission européenne</dct:title>
+                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:title xml:lang="sl-t-en-t0-mtec">Imenik Evropske komisije</dct:title>
+                        <dct:title xml:lang="es-t-en-t0-mtec">Lista de miembros y personal de la Comisión Europea</dct:title>
+                        <dct:identifier>http://data.europa.eu/88u/distribution/0db6e62b-4171-4858-a48d-1cd79531a8f0</dct:identifier>
+                        <dct:title xml:lang="ro-t-en-t0-mtec">Lista membrilor și a personalului Comisiei Europene</dct:title>
+                        <dct:title xml:lang="pl-t-en-t0-mtec">Katalog Komisji Europejskiej</dct:title>
+                        <dct:title xml:lang="lt-t-en-t0-mtec">Europos Komisijos katalogas</dct:title>
+                        <dct:description xml:lang="es-t-en-t0-mtec">Este archivo CSV enumera al «personal» oficial y a los miembros de la Comisión Europea con los títulos de trabajo, los nombres y las etiquetas de las entidades. El archivo se crea sobre la marcha y por lo tanto puede tardar varios segundos en ser recuperado.</dct:description>
+                        <dct:title xml:lang="pt-t-en-t0-mtec">Lista de membros e pessoal da Comissão Europeia</dct:title>
+                        <dct:description xml:lang="lt-t-en-t0-mtec">Šioje CSV rinkmenoje išvardijami oficialūs „darbuotojai“ ir Europos Komisijos nariai, nurodant subjektų pareigybių pavadinimus, pavardes, ženklus. Failas yra sukurtas skristi, todėl gali užtrukti keletą sekundžių, kad būtų galima gauti. Šioje CSV rinkmenoje išvardijami oficialūs „darbuotojai“ ir Europos Komisijos nariai, nurodant subjektų pareigybių pavadinimus, pavardes, ženklus. Failas yra sukurtas skristi, todėl gali užtrukti keletą sekundžių, kad būtų galima gauti. Šioje CSV rinkmenoje išvardijami oficialūs „darbuotojai“ ir Europos Komisijos nariai, nurodant subjektų pareigybių pavadinimus, pavardes, ženklus.
+                            Failas yra sukurtas skristi, todėl gali užtrukti keletą sekundžių, kad būtų galima gauti.</dct:description>
+                        <dct:description xml:lang="sk-t-en-t0-mtec">V tomto súbore CSV sa uvádzajú oficiálne „zamestnanci“ a členovia Európskej komisie s názvami, menami a označeniami subjektov. Súbor je vytvorený za behu, a preto môže trvať niekoľko sekúnd, aby sa vyhľadal.</dct:description>
+                        <dct:title xml:lang="nl-t-en-t0-mtec">Lijst van leden en personeelsleden van de Europese Commissie</dct:title>
+                        <dct:description xml:lang="el-t-en-t0-mtec">Αυτό το αρχείο CSV απαριθμεί το επίσημο «προσωπικό» και τα μέλη της Ευρωπαϊκής Επιτροπής με τους τίτλους εργασίας, τα ονόματα, τις ετικέτες των οντοτήτων. Το αρχείο δημιουργείται κατά τη μύγα και, ως εκ τούτου, μπορεί να χρειαστούν αρκετά δευτερόλεπτα για να φορτωθεί.</dct:description>
+                        <dct:title xml:lang="hu-t-en-t0-mtec">Az Európai Bizottság névjegyzéke</dct:title>
+                        <dct:description xml:lang="sk-t-en-t0-mtec">V tomto súbore CSV sa uvádzajú oficiálne „zamestnanci“ a členovia Európskej komisie s názvami, menami a označeniami subjektov. Súbor je vytvorený za letu, a preto môže trvať niekoľko sekúnd na načítanie.</dct:description>
+                        <dct:title xml:lang="fr-t-en-t0-mtec">Liste des membres et du personnel de la Commission européenne</dct:title>
+                        <dct:description xml:lang="ro-t-en-t0-mtec">Acest dosar CSV enumeră „personalul” oficial și membrii Comisiei Europene cu titlurile postului, denumirile, etichetele entităților. Fișierul este creat pe zbor și, prin urmare, poate dura câteva secunde pentru a fi recuperat. Acest dosar CSV enumeră „personalul” oficial și membrii Comisiei Europene cu titlurile postului, denumirile, etichetele entităților. Fișierul este creat pe zbor și, prin urmare, poate dura câteva secunde pentru a fi recuperat. Acest dosar CSV enumeră „personalul” oficial și membrii Comisiei Europene cu titlurile postului, denumirile, etichetele entităților.
+                            Fișierul este creat pe zbor și, prin urmare, poate dura câteva secunde pentru a fi recuperat.</dct:description>
+                        <dct:title xml:lang="lv-t-en-t0-mtec">Eiropas Komisijas locekļu un darbinieku saraksts</dct:title>
+                        <dct:description xml:lang="it-t-en-t0-mtec">Questo file CSV elenca il "personale" ufficiale e i membri della Commissione europea con i titoli di lavoro, i nomi, le etichette delle entità. Il file viene creato al volo e quindi può richiedere diversi secondi per caricare.</dct:description>
+                        <dct:title xml:lang="el-t-en-t0-mtec">Ευρετήριο της Ευρωπαϊκής Επιτροπής</dct:title>
+                        <dct:description xml:lang="hr-t-en-t0-mtec">U spisu CSV-a navedeni su službeni „osoblje” i članovi Europske komisije s nazivima radnih mjesta, imenima i oznakama subjekata. Datoteka je izrađena u letu i stoga može potrajati nekoliko sekundi da se dohvate. U spisu CSV-a navedeni su službeni „osoblje” i članovi Europske komisije s nazivima radnih mjesta, imenima i oznakama subjekata.
+                            Datoteka je izrađena u letu i stoga može potrajati nekoliko sekundi da se dohvate.</dct:description>
+                        <dct:description xml:lang="sv-t-en-t0-mtec">I denna CSV-fil listas de officiella ”personalen” och EU-kommissionens ledamöter med tjänstetitlar, namn och namn på enheter. Filen skapas i farten och kan därför ta flera sekunder att hämta.</dct:description>
+                        <dct:description xml:lang="nl-t-en-t0-mtec">In dit CSV-bestand staan de officiële „personeelsleden” en de leden van de Europese Commissie met de functietitels, namen en labels van entiteiten. Het bestand wordt on the fly aangemaakt en kan daarom enkele seconden duren om te worden opgehaald. In dit CSV-bestand staan de officiële „personeelsleden” en de leden van de Europese Commissie met de functietitels, namen en labels van entiteiten. Het bestand wordt on the fly aangemaakt en kan daarom enkele seconden duren om te worden opgehaald. In dit CSV-bestand staan de officiële „personeelsleden” en de leden van de Europese Commissie met de functietitels, namen en labels van entiteiten.
+                            Het bestand wordt on the fly aangemaakt en kan daarom enkele seconden duren om te worden opgehaald.</dct:description>
+                        <dct:title xml:lang="ga-t-en-t0-mtec">Liosta de Chomhaltaí agus d’fhoireann an Choimisiúin Eorpaigh</dct:title>
+                        <dct:title xml:lang="pt-t-en-t0-mtec">Repertório da Comissão Europeia</dct:title>
+                        <dct:title xml:lang="nl-t-en-t0-mtec">Repertorium van de Europese Commissie</dct:title>
+                        <dct:title xml:lang="lv-t-en-t0-mtec">Eiropas Komisijas direktorijs</dct:title>
+                        <dct:title xml:lang="it-t-en-t0-mtec">Repertorio della Commissione europea</dct:title>
+                        <dcat:downloadURL rdf:resource="http://publications.europa.eu/webapi/rdf/sparql?default-graph-uri=&amp;query=PREFIX+euvoc%3A%3Chttp%3A%2F%2Fpublications.europa.eu%2Fontology%2Feuvoc%23%3E%0D%0APREFIX+org%3A%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23%3E%0D%0Aprefix+skos%3A%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%3E%0D%0APREFIX+vcard%3A%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0APREFIX+foaf%3A%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E%0D%0ASELECT+distinct+str%28%3Fmnemonic%29+as+%3Fentity+%3Fname+%3Fperson+%28%3ForgL+as+%3FOrgLabel%29+%3Fposition+WHERE%7B%0D%0A%3Forg+org%3AsubOrganizationOf%2B+%3ForgP.%0D%0AFILTER%28%3ForgP%3D%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Fcorporate-body%2FCOM%3E%29%0D%0A%3Forg+skos%3AprefLabel+%3ForgL.FILTER%28LANGMATCHES%28LANG%28%3ForgL%29%2C%22en%22%29%29%0D%0A%3FMS+org%3Aorganization+%3Forg.%0D%0Aoptional%7B%3FMS+euvoc%3Aorder+%3Forder%7D%0D%0Aoptional%7B%3FMS+euvoc%3ApositionComplement+%3Fposition+FILTER%28LANGMATCHES%28LANG%28%3Fposition%29%2C%22en%22%29%29%7D%0D%0A%3Fperson+org%3AhasMembership+%3FMS.%0D%0AOPTIONAL%7B%3FMS+euvoc%3AcontactPoint+%3FcontPt.+%3FcontPt+vcard%3AhasEmail+%3Femail%7D%0D%0A%3Fperson+foaf%3AfamilyName+%3FfamilyN.%3Fperson+foaf%3AgivenName+%3FgivenN.%0D%0AOPTIONAL%7B%3Fperson+vcard%3AhasHonorificPrefix+%3Fhon.%3Fhon+skos%3AprefLabel+%3FhonValue.FILTER%28LANGMATCHES%28LANG%28%3FhonValue%29%2C%22en%22%29%29%7D%0D%0AOPTIONAL%7B%3Forg+org%3Aidentifier+%3Fmnemonic.+Filter%28datatype%28%3Fmnemonic%29%3D%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Fuse-context%2FMNEMONIC%3E%29%7D%0D%0Abind+%28concat%28%3FhonValue%2C%27+%27%2C%3FgivenN%2C%27+%27%2C%3FfamilyN%29as%3Fname%29%0D%0A%7DORDER+BY+%3Fentity%3Forder&amp;format=application%2Fvnd.ms-excel&amp;timeout=0&amp;run=+Run+Query+"/>
+                        <dcat:mediaType rdf:resource="http://www.iana.org/assignments/media-types/text/csv"/>
+                        <dct:title xml:lang="ga-t-en-t0-mtec">Eolaire an Choimisiúin Eorpaigh</dct:title>
+                        <dct:description xml:lang="da-t-en-t0-mtec">Denne CSV-fil indeholder en liste over de officielle "personale" og medlemmer af Europa-Kommissionen med stillingsbetegnelser, navne og mærker på enheder. Filen er oprettet på farten og kan derfor tage flere sekunder, der skal hentes.</dct:description>
+                        <dct:title xml:lang="sl-t-en-t0-mtec">Seznam članov in osebja Evropske komisije</dct:title>
+                        <dct:description xml:lang="pl-t-en-t0-mtec">Ten plik CSV zawiera oficjalne „personel” i członków Komisji Europejskiej z nazwami, nazwiskami i nazwami podmiotów. Plik jest tworzony w locie i w związku z tym może zająć kilka sekund do pobrania. Ten plik CSV zawiera oficjalne „personel” i członków Komisji Europejskiej z nazwami, nazwiskami i nazwami podmiotów. Plik jest tworzony w locie i w związku z tym może zająć kilka sekund do pobrania. Ten plik CSV zawiera oficjalne „personel” i członków Komisji Europejskiej z nazwami, nazwiskami i nazwami podmiotów.
+                            Plik jest tworzony w locie i w związku z tym może zająć kilka sekund do pobrania.</dct:description>
+                        <dct:description xml:lang="fr-t-en-t0-mtec">Ce fichier CSV énumère le «personnel» officiel et les membres de la Commission européenne avec les titres de poste, les noms et les étiquettes des entités. Le fichier est créé à la volée et peut donc prendre plusieurs secondes à récupérer.</dct:description>
+                        <dct:description xml:lang="sl-t-en-t0-mtec">V tej datoteki CSV so navedeni uradni „osebje“ in člani Evropske komisije z nazivi delovnih mest, imeni in oznakami subjektov. Datoteka je ustvarjena na letenje in zato lahko traja več sekund, da se pridobi. V tej datoteki CSV so navedeni uradni „osebje“ in člani Evropske komisije z nazivi delovnih mest, imeni in oznakami subjektov. Datoteka je ustvarjena na letenje in zato lahko traja več sekund, da se pridobi. V tej datoteki CSV so navedeni uradni „osebje“ in člani Evropske komisije z nazivi delovnih mest, imeni in oznakami subjektov.
+                            Datoteka je ustvarjena na letenje in zato lahko traja več sekund, da se pridobi.</dct:description>
+                        <dct:description xml:lang="et-t-en-t0-mtec">Selles CSV-failis on loetletud ametnikud ja Euroopa Komisjoni liikmed, kellel on ametinimetused, nimed ja üksuste sildid. Fail on loodud lendama ja seetõttu võib võtta mitu sekundit laadida.</dct:description>
+                        <dct:title xml:lang="hr-t-en-t0-mtec">Imenik Europske komisije</dct:title>
+                        <dct:title xml:lang="cs-t-en-t0-mtec">Seznam členů a zaměstnanců Evropské komise</dct:title>
+                        <dct:description xml:lang="hu-t-en-t0-mtec">Ez a CSV fájl felsorolja a hivatalos „személyzetet” és az Európai Bizottság tagjait a szervezetek beosztásával, nevével és címkéivel. A fájl a menet közben jön létre, ezért több másodpercig is eltarthat a lehívás. Ez a CSV fájl felsorolja a hivatalos „személyzetet” és az Európai Bizottság tagjait a szervezetek beosztásával, nevével és címkéivel. A fájl a menet közben jön létre, ezért több másodpercig is eltarthat a lehívás. Ez a CSV fájl felsorolja a hivatalos „személyzetet” és az Európai Bizottság tagjait a szervezetek beosztásával, nevével és címkéivel.
+                            A fájl a menet közben jön létre, ezért több másodpercig is eltarthat a lehívás.</dct:description>
+                        <dct:description xml:lang="cs-t-en-t0-mtec">Tento soubor CSV uvádí oficiální „zaměstnance“ a členy Evropské komise s názvy pracovních míst, názvy a označeními subjektů. Soubor je vytvořen za běhu, a proto může trvat několik sekund načtení.</dct:description>
+                        <dct:description xml:lang="el-t-en-t0-mtec">Αυτό το αρχείο CSV απαριθμεί το επίσημο «προσωπικό» και τα μέλη της Ευρωπαϊκής Επιτροπής με τους τίτλους εργασίας, τα ονόματα, τις ετικέτες των οντοτήτων. Το αρχείο δημιουργείται on the fly και ως εκ τούτου μπορεί να πάρει αρκετά δευτερόλεπτα για να ανακτηθεί. Αυτό το αρχείο CSV απαριθμεί το επίσημο «προσωπικό» και τα μέλη της Ευρωπαϊκής Επιτροπής με τους τίτλους εργασίας, τα ονόματα, τις ετικέτες των οντοτήτων. Το αρχείο δημιουργείται on the fly και ως εκ τούτου μπορεί να πάρει αρκετά δευτερόλεπτα για να ανακτηθεί. Αυτό το αρχείο CSV απαριθμεί το επίσημο «προσωπικό» και τα μέλη της Ευρωπαϊκής Επιτροπής με τους τίτλους εργασίας, τα ονόματα, τις ετικέτες των οντοτήτων.
+                            Το αρχείο δημιουργείται on the fly και ως εκ τούτου μπορεί να πάρει αρκετά δευτερόλεπτα για να ανακτηθεί.</dct:description>
+                        <dct:description xml:lang="pl-t-en-t0-mtec">Ten plik CSV zawiera oficjalne „personel” i członków Komisji Europejskiej z nazwami, nazwiskami i nazwami podmiotów. Plik jest tworzony w locie i dlatego może zająć kilka sekund na załadowanie.</dct:description>
+                        <dct:description xml:lang="en">This CSV file lists the official "staff" and Members of the European Commission with the job titles, names, labels of entities. The file is created on the fly and therefore may take several seconds to load.</dct:description>
+                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/CC_BY_4_0"/>
+                        <dct:description xml:lang="de-t-en-t0-mtec">Diese CSV-Datei listet das offizielle „Personal“ und die Mitglieder der Europäischen Kommission mit den Titeln, Namen und Etiketten der Einrichtungen auf. Die Datei wird auf der Fliege erstellt und kann daher mehrere Sekunden dauern, um zu laden.</dct:description>
+                        <dct:description xml:lang="sv-t-en-t0-mtec">I denna CSV-fil listas de officiella ”personalen” och EU-kommissionens ledamöter med tjänstetitlar, namn och namn på enheter. Filen skapas i farten och kan därför ta flera sekunder att ladda.</dct:description>
+                        <dct:description xml:lang="hu-t-en-t0-mtec">Ez a CSV fájl felsorolja a hivatalos „személyzetet” és az Európai Bizottság tagjait a szervezetek beosztásával, nevével és címkéivel. A fájl a menet közben jön létre, ezért a betöltése több másodpercig is eltarthat.</dct:description>
+                        <dct:title xml:lang="cs-t-en-t0-mtec">Adresář Evropské komise</dct:title>
+                        <dct:title xml:lang="hr-t-en-t0-mtec">Popis članova i osoblja Europske komisije</dct:title>
+                        <dct:description xml:lang="pt-t-en-t0-mtec">Este ficheiro CSV enumera o «pessoal» oficial e os membros da Comissão Europeia com os títulos, nomes e rótulos das entidades. O arquivo é criado em tempo real e, portanto, pode demorar vários segundos para carregar.</dct:description>
+                        <dct:description xml:lang="mt-t-en-t0-mtec">Dan il-fajl tas-CSV jelenka l-“persunal” uffiċjali u l-Membri tal-Kummissjoni Ewropea bit-titli tal-impjiegi, l-ismijiet u t-tikketti tal-entitajiet. Il-fajl huwa maħluq fuq il-fly u għalhekk jista ‘jieħu diversi sekondi biex tagħbija.</dct:description>
+                        <dct:description xml:lang="bg-t-en-t0-mtec">В това досие CSV са изброени официалният „персонал“ и членовете на Европейската комисия със заглавията на длъжностите, имената и етикетите на субектите. Файлът е създаден в движение и следователно може да отнеме няколко секунди, за да бъде възстановен. В това досие CSV са изброени официалният „персонал“ и членовете на Европейската комисия със заглавията на длъжностите, имената и етикетите на субектите. Файлът е създаден в движение и следователно може да отнеме няколко секунди, за да бъде възстановен. В това досие CSV са изброени официалният „персонал“ и членовете на Европейската комисия със заглавията на длъжностите, имената и етикетите на субектите.
+                            Файлът е създаден в движение и следователно може да отнеме няколко секунди, за да бъде възстановен.</dct:description>
+                        <dct:title xml:lang="bg-t-en-t0-mtec">Указател на Европейската комисия</dct:title>
+                        <dcat:accessURL rdf:resource="http://publications.europa.eu/webapi/rdf/sparql?default-graph-uri=&amp;query=PREFIX+euvoc%3A%3Chttp%3A%2F%2Fpublications.europa.eu%2Fontology%2Feuvoc%23%3E%0D%0APREFIX+org%3A%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23%3E%0D%0Aprefix+skos%3A%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%3E%0D%0APREFIX+vcard%3A%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0APREFIX+foaf%3A%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E%0D%0ASELECT+distinct+str%28%3Fmnemonic%29+as+%3Fentity+%3Fname+%3Fperson+%28%3ForgL+as+%3FOrgLabel%29+%3Fposition+WHERE%7B%0D%0A%3Forg+org%3AsubOrganizationOf%2B+%3ForgP.%0D%0AFILTER%28%3ForgP%3D%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Fcorporate-body%2FCOM%3E%29%0D%0A%3Forg+skos%3AprefLabel+%3ForgL.FILTER%28LANGMATCHES%28LANG%28%3ForgL%29%2C%22en%22%29%29%0D%0A%3FMS+org%3Aorganization+%3Forg.%0D%0Aoptional%7B%3FMS+euvoc%3Aorder+%3Forder%7D%0D%0Aoptional%7B%3FMS+euvoc%3ApositionComplement+%3Fposition+FILTER%28LANGMATCHES%28LANG%28%3Fposition%29%2C%22en%22%29%29%7D%0D%0A%3Fperson+org%3AhasMembership+%3FMS.%0D%0AOPTIONAL%7B%3FMS+euvoc%3AcontactPoint+%3FcontPt.+%3FcontPt+vcard%3AhasEmail+%3Femail%7D%0D%0A%3Fperson+foaf%3AfamilyName+%3FfamilyN.%3Fperson+foaf%3AgivenName+%3FgivenN.%0D%0AOPTIONAL%7B%3Fperson+vcard%3AhasHonorificPrefix+%3Fhon.%3Fhon+skos%3AprefLabel+%3FhonValue.FILTER%28LANGMATCHES%28LANG%28%3FhonValue%29%2C%22en%22%29%29%7D%0D%0AOPTIONAL%7B%3Forg+org%3Aidentifier+%3Fmnemonic.+Filter%28datatype%28%3Fmnemonic%29%3D%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Fuse-context%2FMNEMONIC%3E%29%7D%0D%0Abind+%28concat%28%3FhonValue%2C%27+%27%2C%3FgivenN%2C%27+%27%2C%3FfamilyN%29as%3Fname%29%0D%0A%7DORDER+BY+%3Fentity%3Forder&amp;format=application%2Fvnd.ms-excel&amp;timeout=0&amp;run=+Run+Query+"/>
+                        <dct:title xml:lang="da-t-en-t0-mtec">Europa-Kommissionens fortegnelse</dct:title>
+                        <dct:description xml:lang="da-t-en-t0-mtec">Denne CSV-fil indeholder en liste over de officielle "personale" og medlemmer af Europa-Kommissionen med stillingsbetegnelser, navne og mærker på enheder. Filen oprettes på farten og kan derfor tage flere sekunder at indlæse.</dct:description>
+                        <dct:description xml:lang="nl-t-en-t0-mtec">In dit CSV-bestand staan de officiële „personeelsleden” en de leden van de Europese Commissie met de functietitels, namen en labels van entiteiten. Het bestand wordt on the fly aangemaakt en kan daarom enkele seconden duren om te laden.</dct:description>
+                        <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/DOWNLOADABLE_FILE"/>
+                        <dct:title xml:lang="sk-t-en-t0-mtec">Adresár Európskej komisie</dct:title>
+                        <dct:title xml:lang="fi-t-en-t0-mtec">Euroopan komission hakemisto</dct:title>
+                        <dct:title xml:lang="de-t-en-t0-mtec">Verzeichnis der Europäischen Kommission</dct:title>
+                        <dct:description xml:lang="ga-t-en-t0-mtec">Liostaítear sa chomhad CSV seo “foireann” oifigiúil agus Comhaltaí an Choimisiúin Eorpaigh a bhfuil teidil phoist, ainmneacha agus lipéid na n-eintiteas acu. Is é an comhad a cruthaíodh ar an eitilt agus dá bhrí sin d’fhéadfadh a ghlacadh an dara roinnt a aisghabháil.</dct:description>
+                        <dct:title xml:lang="it-t-en-t0-mtec">Elenco dei membri e del personale della Commissione europea</dct:title>
+                        <dct:description xml:lang="es-t-en-t0-mtec">Este archivo CSV enumera al «personal» oficial y a los miembros de la Comisión Europea con los títulos de trabajo, los nombres y las etiquetas de las entidades. El archivo se crea sobre la marcha y por lo tanto puede tardar varios segundos en cargar.</dct:description>
+                        <dct:title xml:lang="hu-t-en-t0-mtec">Az Európai Bizottság tagjainak és személyzetének jegyzéke</dct:title>
+                        <dct:title xml:lang="et-t-en-t0-mtec">Euroopa Komisjoni liikmete ja töötajate nimekiri</dct:title>
+                        <dct:description xml:lang="lv-t-en-t0-mtec">Šajā CSV lietā ir uzskaitīti oficiālie “darbinieki” un Eiropas Komisijas locekļi, norādot amatu nosaukumus, nosaukumus un struktūru marķējumus. Fails ir izveidots uz lidot, un tāpēc var ilgt vairākas sekundes, lai ielādētu.</dct:description>
+                        <dct:description xml:lang="et-t-en-t0-mtec">Selles CSV-failis on loetletud ametnikud ja Euroopa Komisjoni liikmed, kellel on ametinimetused, nimed ja üksuste sildid. Fail on loodud kärbsel ja võib seega võtta mitu sekundit, et saada.</dct:description>
+                        <dct:description xml:lang="de-t-en-t0-mtec">Diese CSV-Datei listet das offizielle „Personal“ und die Mitglieder der Europäischen Kommission mit den Titeln, Namen und Etiketten der Einrichtungen auf. Die Datei wird auf der Fliege erstellt und kann daher mehrere Sekunden dauern, um abgerufen zu werden.</dct:description>
+                        <dct:description xml:lang="it-t-en-t0-mtec">Questo file CSV elenca il "personale" ufficiale e i membri della Commissione europea con i titoli di lavoro, i nomi, le etichette delle entità. Il file viene creato al volo e quindi può richiedere diversi secondi per essere recuperato.</dct:description>
+                        <dct:title xml:lang="sv-t-en-t0-mtec">Europeiska kommissionens katalog</dct:title>
+                        <dct:description xml:lang="cs-t-en-t0-mtec">Tento soubor CSV uvádí oficiální „zaměstnance“ a členy Evropské komise s názvy pracovních míst, názvy a označeními subjektů. Soubor je vytvořen za běhu, a proto může trvat několik sekund, aby byl získán.</dct:description>
+                        <dct:format rdf:resource="http://publications.europa.eu/resource/authority/file-type/CSV"/>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <dct:description xml:lang="da">EU Whoiswho er en elektronisk vejviser, der indeholder organisationsplanerne for EU's institutioner, organer og agenturer på alle de officielle EU-sprog.</dct:description>
+                <j.0:datasetGroup>
+                    <j.0:DatasetGroup rdf:about="file:///usr/verticles/eu-official-directories"/>
+                </j.0:datasetGroup>
+                <foaf:page>
+                    <foaf:Document rdf:about="https://op.europa.eu/o/opportal-service/euvoc-download-handler?cellarURI=http%3A%2F%2Fpublications.europa.eu%2Fresource%2Fcellar%2F0041595b-2d9d-11eb-b27b-01aa75ed71a1.0001.01%2FDOC_5&amp;fileName=euvoc.rdf">
+                        <foaf:topic rdf:resource="http://data.europa.eu/88u/dataset/eu-whoiswho-the-official-directory-of-the-european-union"/>
+                        <dct:description xml:lang="en">See also https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm</dct:description>
+                        <schema:url xml:lang="en">https://op.europa.eu/o/opportal-service/euvoc-download-handler?cellarURI=http%3A%2F%2Fpublications.europa.eu%2Fresource%2Fcellar%2F0041595b-2d9d-11eb-b27b-01aa75ed71a1.0001.01%2FDOC_5&amp;fileName=euvoc.rdf</schema:url>
+                        <dct:type rdf:resource="http://publications.europa.eu/resource/authority/documentation-type/DOCUMENTATION_MAIN"/>
+                        <dct:format>
+                            <dct:MediaTypeOrExtent rdf:about="http://publications.europa.eu/resource/authority/file-type/RDF"/>
+                        </dct:format>
+                        <dct:title xml:lang="en">EU Whoiswho web semantic ontology (part of CDM/EUVOC)</dct:title>
+                        <dct:language>
+                            <dct:LinguisticSystem rdf:about="http://publications.europa.eu/resource/authority/language/MUL"/>
+                        </dct:language>
+                    </foaf:Document>
+                </foaf:page>
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/2163"/>
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/5130"/>
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/2140"/>
+                <dct:title xml:lang="en">EU Whoiswho: the official directory of the European Union</dct:title>
+                <dct:relation rdf:resource="http://data.europa.eu/88u/dataset/members-of-the-european-parliament"/>
+                <dcat:keyword xml:lang="en">EU Whoiswho</dcat:keyword>
+                <dct:description xml:lang="it">EU Whoiswho è un repertorio elettronico contenente gli organigrammi delle istituzioni, degli organi e delle agenzie dell'UE in tutte le lingue ufficiali.</dct:description>
+                <dct:title xml:lang="ro">EU Whoiswho: Anuarul oficial al Uniunii Europene</dct:title>
+                <dcat:contactPoint>
+                    <vcard:Kind rdf:about="http://www.w3.org/2006/vcard/ns#Kind/72070c6d-280b-4f28-a90c-78fd093a8615">
+                        <vcard:hasURL>
+                            <foaf:Document rdf:about="https://publications.europa.eu/en/web/about-us/contact">
+                                <schema:url>https://publications.europa.eu/en/web/about-us/contact</schema:url>
+                                <foaf:topic rdf:resource="file:///usr/verticles/"/>
+                            </foaf:Document>
+                        </vcard:hasURL>
+                        <vcard:hasEmail rdf:resource="mailto:OP-WHOISWHO-UPDATE@publications.europa.eu"/>
+                        <vcard:hasAddress>
+                            <vcard:Address rdf:about="http://www.w3.org/2006/vcard/ns#Address/8b9eab79-3ab8-4140-bd03-3f2012c716d4">
+                                <vcard:street-address>2, rue Mercier L-2985 Luxembourg</vcard:street-address>
+                            </vcard:Address>
+                        </vcard:hasAddress>
+                        <vcard:organisation-name>Publications Office of the European Union</vcard:organisation-name>
+                    </vcard:Kind>
+                </dcat:contactPoint>
+                <dct:title xml:lang="mt">EU Whoiswho: Id-Direttorju Elettroniku ta' l-Unjoni Ewropea</dct:title>
+                <dct:accessRights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                <dct:title xml:lang="lt">EU Whoiswho: Oficialus Europos Sàjungos katalogas</dct:title>
+                <dct:description xml:lang="ro">EU Whoiswho este un anuar electronic care prezintă organigramele instituţiilor, organismelor şi agenţiilor europene în toate limbile oficiale ale UE şi care este actualizat săptămânal.</dct:description>
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/447472"/>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/dae8b346-74d3-43f4-9c76-8fbffc0836aa">
+                        <dcat:mediaType rdf:resource="http://www.iana.org/assignments/media-types/text/html"/>
+                        <dct:title xml:lang="bg-t-en-t0-mtec">Брой субекти за институции, агенции или други органи в ЕС Whoiswho</dct:title>
+                        <dct:description xml:lang="es-t-en-t0-mtec">Número de entidades para instituciones, agencias u otros organismos de la UE Whoiswho</dct:description>
+                        <dct:title xml:lang="es-t-en-t0-mtec">Número de entidades para instituciones, agencias u otros organismos de la UE Whoiswho</dct:title>
+                        <dct:title xml:lang="nl-t-en-t0-mtec">Aantal entiteiten voor instellingen, agentschappen of andere organen in de EU Whoiswho</dct:title>
+                        <dct:title xml:lang="lt-t-en-t0-mtec">ES institucijų, agentūrų ar kitų įstaigų subjektų skaičius</dct:title>
+                        <dct:title xml:lang="da-t-en-t0-mtec">Antal enheder for institutioner, agenturer eller andre organer i EU Whoiswho</dct:title>
+                        <dct:description xml:lang="sk-t-en-t0-mtec">Počet subjektov pre inštitúcie, agentúry alebo iné orgány v EÚ Whoiswho</dct:description>
+                        <dct:title xml:lang="pt-t-en-t0-mtec">Número de entidades para instituições, agências ou outros organismos da UE Whoiswho</dct:title>
+                        <dct:title xml:lang="ro-t-en-t0-mtec">Numărul de entități pentru instituții, agenții sau alte organisme din UE Whoiswho</dct:title>
+                        <dct:title xml:lang="cs-t-en-t0-mtec">Počet subjektů pro orgány, agentury nebo jiné subjekty v EU Whoiswho</dct:title>
+                        <dct:identifier>http://data.europa.eu/88u/distribution/4afe8a20-5cc2-4ed1-8c88-d604bbab6627</dct:identifier>
+                        <dct:title xml:lang="el-t-en-t0-mtec">Αριθμός οντοτήτων για θεσμικά όργανα, οργανισμούς ή άλλους οργανισμούς στην ΕΕ Whoiswho</dct:title>
+                        <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/VISUALIZATION"/>
+                        <dct:description xml:lang="fi-t-en-t0-mtec">EU:n toimielinten, virastojen tai muiden elinten yksikköjen lukumäärä Whoiswho</dct:description>
+                        <dct:description xml:lang="ro-t-en-t0-mtec">Numărul de entități pentru instituții, agenții sau alte organisme din UE Whoiswho</dct:description>
+                        <dct:description xml:lang="lv-t-en-t0-mtec">Iestāžu, aģentūru vai citu struktūru vienību skaits ES Whoiswho</dct:description>
+                        <dct:description xml:lang="el-t-en-t0-mtec">Αριθμός οντοτήτων για θεσμικά όργανα, οργανισμούς ή άλλους οργανισμούς στην ΕΕ Whoiswho</dct:description>
+                        <dct:title xml:lang="sk-t-en-t0-mtec">Počet subjektov pre inštitúcie, agentúry alebo iné orgány v EÚ Whoiswho</dct:title>
+                        <dct:description xml:lang="de-t-en-t0-mtec">Zahl der Einrichtungen für Organe, Agenturen oder sonstige Einrichtungen in der EU Whoiswho</dct:description>
+                        <dct:title xml:lang="pl-t-en-t0-mtec">Liczba podmiotów dla instytucji, agencji lub innych organów w UE Whoiswho</dct:title>
+                        <dct:description xml:lang="sv-t-en-t0-mtec">Antal enheter för institutioner, byråer eller andra organ i EU Whoiswho</dct:description>
+                        <dct:title xml:lang="hu-t-en-t0-mtec">Az EU-ban működő intézmények, ügynökségek vagy egyéb szervek száma Whoiswho</dct:title>
+                        <dct:title xml:lang="it-t-en-t0-mtec">Numero di entità per istituzioni, agenzie o altri organismi dell'UE Whoiswho</dct:title>
+                        <dct:description xml:lang="et-t-en-t0-mtec">Institutsioonide, asutuste või muude organite üksuste arv EU Whoiswho</dct:description>
+                        <dct:title xml:lang="ga-t-en-t0-mtec">Líon na n-eintiteas le haghaidh institiúidí, gníomhaireachtaí nó comhlachtaí eile in EU Whoiswho</dct:title>
+                        <dct:title xml:lang="en">Number of entities for institutions, agencies or other bodies in EU Whoiswho</dct:title>
+                        <dct:description xml:lang="cs-t-en-t0-mtec">Počet subjektů pro orgány, agentury nebo jiné subjekty v EU Whoiswho</dct:description>
+                        <dct:description xml:lang="fr-t-en-t0-mtec">Nombre d’entités pour les institutions, agences ou autres organes de l’UE Whoiswho</dct:description>
+                        <dct:title xml:lang="fr-t-en-t0-mtec">Nombre d’entités pour les institutions, agences ou autres organes de l’UE Whoiswho</dct:title>
+                        <dct:title xml:lang="mt-t-en-t0-mtec">Numru ta’ entitajiet għal istituzzjonijiet, aġenziji jew korpi oħra fl-UE Whoiswho</dct:title>
+                        <dct:title xml:lang="de-t-en-t0-mtec">Zahl der Einrichtungen für Organe, Agenturen oder sonstige Einrichtungen in der EU Whoiswho</dct:title>
+                        <dct:description xml:lang="hu-t-en-t0-mtec">Az EU-ban működő intézmények, ügynökségek vagy egyéb szervek száma Whoiswho</dct:description>
+                        <dct:description xml:lang="ga-t-en-t0-mtec">Líon na n-eintiteas le haghaidh institiúidí, gníomhaireachtaí nó comhlachtaí eile in EU Whoiswho</dct:description>
+                        <dct:description xml:lang="it-t-en-t0-mtec">Numero di entità per istituzioni, agenzie o altri organismi dell'UE Whoiswho</dct:description>
+                        <dct:description xml:lang="bg-t-en-t0-mtec">Брой субекти за институции, агенции или други органи в ЕС Whoiswho</dct:description>
+                        <dct:title xml:lang="hr-t-en-t0-mtec">Broj subjekata za institucije, agencije ili druga tijela u Whoiswhou EU-a</dct:title>
+                        <dct:title xml:lang="sv-t-en-t0-mtec">Antal enheter för institutioner, byråer eller andra organ i EU Whoiswho</dct:title>
+                        <dct:description xml:lang="sl-t-en-t0-mtec">Število subjektov za institucije, agencije ali druge organe v EU Whoiswho</dct:description>
+                        <dct:description xml:lang="hr-t-en-t0-mtec">Broj subjekata za institucije, agencije ili druga tijela u Whoiswhou EU-a</dct:description>
+                        <dct:title xml:lang="lv-t-en-t0-mtec">Iestāžu, aģentūru vai citu struktūru vienību skaits ES Whoiswho</dct:title>
+                        <dct:description xml:lang="lt-t-en-t0-mtec">ES institucijų, agentūrų ar kitų įstaigų subjektų skaičius</dct:description>
+                        <dct:title xml:lang="sl-t-en-t0-mtec">Število subjektov za institucije, agencije ali druge organe v EU Whoiswho</dct:title>
+                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        <dct:description xml:lang="da-t-en-t0-mtec">Antal enheder for institutioner, agenturer eller andre organer i EU Whoiswho</dct:description>
+                        <dct:title xml:lang="et-t-en-t0-mtec">Institutsioonide, asutuste või muude organite üksuste arv EU Whoiswho</dct:title>
+                        <dct:title xml:lang="fi-t-en-t0-mtec">EU:n toimielinten, virastojen tai muiden elinten yksikköjen lukumäärä Whoiswho</dct:title>
+                        <dct:description xml:lang="pl-t-en-t0-mtec">Liczba podmiotów dla instytucji, agencji lub innych organów w UE Whoiswho</dct:description>
+                        <dct:description xml:lang="mt-t-en-t0-mtec">Numru ta’ entitajiet għal istituzzjonijiet, aġenziji jew korpi oħra fl-UE Whoiswho</dct:description>
+                        <dct:description xml:lang="nl-t-en-t0-mtec">Aantal entiteiten voor instellingen, agentschappen of andere organen in de EU Whoiswho</dct:description>
+                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:description xml:lang="en">Number of entities for institutions, agencies or other bodies in EU Whoiswho</dct:description>
+                        <dct:format rdf:resource="http://publications.europa.eu/resource/authority/file-type/HTML"/>
+                        <dcat:accessURL rdf:resource="https://data.europa.eu/euodp/repository/ec/publ/WIW_VISU_8_PROD.html"/>
+                        <dct:description xml:lang="pt-t-en-t0-mtec">Número de entidades para instituições, agências ou outros organismos da UE Whoiswho</dct:description>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <dct:title xml:lang="pl">EU Whoiswho: Urzędowa organizacyjna baza danych Unii Europejskiej</dct:title>
+                <dct:description xml:lang="de">EU Whoiswho ist ein elektronisches Verzeichnis, das die Organisationsstruktur der Organe, Institutionen, Ämter, Agenturen und sonstigen Einrichtungen der Europäischen Union in allen EU-Amtssprachen wiedergibt.</dct:description>
+                <dct:description xml:lang="en">EU Whoiswho is an electronic directory which presents the organisational charts of the EU institutions, bodies and agencies in all official EU languages. The personal data in this directory are provided by the institutions, bodies and agencies of EU. The SPARQL endpoint allows to query the full current content visible in EU whoiswho website. For historical content, PDF are available from 1981.&#xD;
+                    &#xD;
+                    It is strictly forbidden to use these data for direct marketing purposes. &#xD;
+                    &#xD;
+                    If you detect any errors, please report them to: whoiswho@publications.europa.eu&#xD;
+                    &#xD;
+                    [Privacy statement of EU Whoiswho](https://op.europa.eu/en/web/about-us/legal-notices/op_whoiswho).</dct:description>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/a3988edd-3ce9-4718-b136-226681ab6e5a">
+                        <dct:description xml:lang="sk-t-en-t0-mtec">Tabuľka orgánov pre webové stránky poskytuje webové stránky, ktoré využívajú rôzne inštitúcie a orgány EÚ, a spravuje ju Úrad pre vydávanie publikácií Európskej únie na webovej stránke slovníkov EÚ.</dct:description>
+                        <dct:description xml:lang="pl-t-en-t0-mtec">Tabela autorytetów na stronie internetowej zawiera obiekty zajmowane przez różne instytucje i organy UE i jest prowadzona przez Urząd Publikacji Unii Europejskiej na stronie internetowej Słowników UE.</dct:description>
+                        <dct:description xml:lang="et-t-en-t0-mtec">Veebisaidi asutuse tabelis on esitatud ELi institutsioonide ja asutuste kasutuses olevad veebisaidid ning seda haldab Euroopa Liidu Väljaannete Talitus ELi sõnastike veebisaidil.</dct:description>
+                        <dct:title xml:lang="ga-t-en-t0-mtec">Láithreáin agus Tógáil institiúidí an Aontais ar fud an domhain</dct:title>
+                        <dct:description xml:lang="it-t-en-t0-mtec">La tabella delle autorità del sito fornisce i siti occupati dalle varie istituzioni e organi dell'UE ed è mantenuta dall'Ufficio delle pubblicazioni dell'Unione europea sul sito web dei Vocabulari dell'UE.</dct:description>
+                        <dct:description xml:lang="ro-t-en-t0-mtec">Tabelul autorității site-urilor furnizează site-urile ocupate de diferitele instituții și organisme ale UE și este întreținut de Oficiul pentru Publicații al Uniunii Europene pe site-ul web al Vocabularelor UE.</dct:description>
+                        <dcat:mediaType>
+                            <dct:MediaType rdf:about="http://www.iana.org/assignments/media-types/application/geo+json"/>
+                        </dcat:mediaType>
+                        <dct:description xml:lang="ga-t-en-t0-mtec">Is é bord na n-údarás suímh atá lonnaithe ag institiúidí agus comhlachtaí éagsúla an Aontais agus is í Oifig Foilseachán an Aontais Eorpaigh a dhéanann cothabháil air ar shuíomh gréasáin EU Vocabularies.</dct:description>
+                        <dct:title xml:lang="hu-t-en-t0-mtec">Helyszínek és az uniós intézmények építése a világ minden tájáról</dct:title>
+                        <dct:title xml:lang="de-t-en-t0-mtec">Standorte und Bau von EU-Institutionen auf der ganzen Welt</dct:title>
+                        <dct:title xml:lang="nl-t-en-t0-mtec">Vestigingen en opbouw van EU-instellingen over de hele wereld</dct:title>
+                        <dct:title xml:lang="da-t-en-t0-mtec">Steder og opbygning af EU-institutioner over hele verden</dct:title>
+                        <dct:title xml:lang="lt-t-en-t0-mtec">Vietos ir ES institucijų kūrimas visame pasaulyje</dct:title>
+                        <dct:title xml:lang="fi-t-en-t0-mtec">EU:n toimielinten toimipaikat ja rakentaminen kaikkialla maailmassa</dct:title>
+                        <dct:description xml:lang="fr-t-en-t0-mtec">Le tableau de l’autorité du site fournit les sites occupés par les différentes institutions et organes de l’UE et est tenu à jour par l’Office des publications de l’Union européenne sur le site web des vocabulaires de l’UE.</dct:description>
+                        <dct:title xml:lang="it-t-en-t0-mtec">Siti e costruzione delle istituzioni dell'UE in tutto il mondo</dct:title>
+                        <dct:title xml:lang="sv-t-en-t0-mtec">Platser och uppbyggnad av EU-institutioner över hela världen</dct:title>
+                        <dct:title xml:lang="es-t-en-t0-mtec">Emplazamientos y construcción de instituciones de la UE en todo el mundo</dct:title>
+                        <dct:description xml:lang="el-t-en-t0-mtec">Ο πίνακας της αρχής της τοποθεσίας παρέχει τους δικτυακούς τόπους που καταλαμβάνουν τα διάφορα θεσμικά όργανα και οργανισμοί της ΕΕ και διατηρείται από την Υπηρεσία Εκδόσεων της Ευρωπαϊκής Ένωσης στον ιστότοπο των Λεξιλογίων της ΕΕ.</dct:description>
+                        <dct:title xml:lang="el-t-en-t0-mtec">Χώροι και οικοδόμηση θεσμικών οργάνων της ΕΕ σε όλο τον κόσμο</dct:title>
+                        <dct:title xml:lang="et-t-en-t0-mtec">Veebisaidid ja ELi institutsioonide ülesehitamine üle kogu maailma</dct:title>
+                        <dct:description xml:lang="da-t-en-t0-mtec">Oversigten over websteders myndighed indeholder de websteder, der er besat af de forskellige EU-institutioner og -organer, og som vedligeholdes af Den Europæiske Unions Publikationskontor på EU's websted for glossarer.</dct:description>
+                        <dct:title xml:lang="sl-t-en-t0-mtec">Lokacije in vzpostavljanje institucij EU po vsem svetu</dct:title>
+                        <dcat:downloadURL rdf:resource="https://publications.europa.eu/resource/distribution/site/geojson/geojson/sites.geojson"/>
+                        <dct:description xml:lang="en">The Site authority table provides the sites occupied by the various EU institutions and bodies and is maintained by the Publications Office of the European Union on the EU Vocabularies website.</dct:description>
+                        <dct:description xml:lang="de-t-en-t0-mtec">Die Site-Behörde-Tabelle enthält die von den verschiedenen EU-Organen und -Einrichtungen besetzten Standorte und wird vom Amt für Veröffentlichungen der Europäischen Union auf der Website der EU-Vokabularien verwaltet.</dct:description>
+                        <dct:title xml:lang="lv-t-en-t0-mtec">ES iestāžu objekti un veidošana visā pasaulē</dct:title>
+                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/CC_BY_4_0"/>
+                        <dct:description xml:lang="es-t-en-t0-mtec">El cuadro de la autoridad del sitio proporciona los sitios ocupados por las distintas instituciones y organismos de la UE y es mantenido por la Oficina de Publicaciones de la Unión Europea en el sitio web de los vocabularios de la UE.</dct:description>
+                        <dct:title xml:lang="cs-t-en-t0-mtec">Pamětihodnosti a budování institucí EU po celém světě</dct:title>
+                        <dct:title xml:lang="hr-t-en-t0-mtec">Lokacije i izgradnja institucija EU-a diljem svijeta</dct:title>
+                        <dcat:accessURL rdf:resource="https://publications.europa.eu/resource/distribution/site/geojson/geojson/sites.geojson"/>
+                        <dct:title xml:lang="pt-t-en-t0-mtec">Sítios e construção de instituições da UE em todo o mundo</dct:title>
+                        <dct:description xml:lang="nl-t-en-t0-mtec">De siteautoriteitstabel bevat de sites van de verschillende EU-instellingen en -organen en wordt onderhouden door het Publicatiebureau van de Europese Unie op de website van EU-woordenlijsten.</dct:description>
+                        <dct:description xml:lang="fi-t-en-t0-mtec">Sivustoa koskevassa viranomaistaulukossa esitetään EU:n eri toimielinten ja elinten käyttämät sivustot, ja sitä ylläpitää Euroopan unionin julkaisutoimisto EU:n sanastosivustolla.</dct:description>
+                        <dct:title xml:lang="ro-t-en-t0-mtec">Site-uri și construirea de instituții ale UE în întreaga lume</dct:title>
+                        <dct:description xml:lang="cs-t-en-t0-mtec">Tabulka orgánů pro publikace uvádí pamětihodnosti využívané různými orgány a institucemi EU a je spravována Úřadem pro publikace Evropské unie na internetových stránkách slovníků EU.</dct:description>
+                        <dct:format>
+                            <dct:MediaTypeOrExtent rdf:about="http://publications.europa.eu/resource/authority/file-type/GEOJSON"/>
+                        </dct:format>
+                        <dct:description xml:lang="sv-t-en-t0-mtec">Webbplatsens myndighetstabell innehåller de webbplatser som används av de olika EU-institutionerna och EU-organen och underhålls av Europeiska unionens publikationsbyrå på webbplatsen för EU-vokabulärer.</dct:description>
+                        <dct:description xml:lang="lv-t-en-t0-mtec">Vietnes iestādes tabulā ir norādītas dažādu ES iestāžu un struktūru izmantotās vietnes, un Eiropas Savienības Publikāciju birojs to uztur ES vārdnīcu tīmekļa vietnē.</dct:description>
+                        <dct:title xml:lang="pl-t-en-t0-mtec">Obiekty i budowa instytucji UE na całym świecie</dct:title>
+                        <dct:description xml:lang="hu-t-en-t0-mtec">A webhely hatósági táblázata tartalmazza a különböző uniós intézmények és szervek által használt webhelyeket, amelyeket az Európai Unió Kiadóhivatala tart fenn az uniós szókincsek honlapján.</dct:description>
+                        <dct:description xml:lang="lt-t-en-t0-mtec">Svetainės institucijų lentelėje pateikiamos įvairių ES institucijų ir įstaigų užimamos svetainės, kurias tvarko Europos Sąjungos leidinių biuras ES žodynų svetainėje.</dct:description>
+                        <dct:title xml:lang="bg-t-en-t0-mtec">Обекти и изграждане на институции на ЕС по целия свят</dct:title>
+                        <dct:description xml:lang="sl-t-en-t0-mtec">V preglednici organov spletnega mesta so navedena mesta, ki jih zasedajo različne institucije in organi EU, vzdržuje pa jo Urad za publikacije Evropske unije na spletišču besednjakov EU.</dct:description>
+                        <dct:title xml:lang="sk-t-en-t0-mtec">Miesta a budovanie inštitúcií EÚ na celom svete</dct:title>
+                        <dct:description xml:lang="bg-t-en-t0-mtec">Таблицата с органите на сайта предоставя сайтовете, заемани от различните институции и органи на ЕС, и се поддържа от Службата за публикации на Европейския съюз на уебсайта на EU Vocabularies.</dct:description>
+                        <dct:description xml:lang="hr-t-en-t0-mtec">U tablici tijela web-mjesta nalaze se web-mjesta na kojima se nalaze različite institucije i tijela EU-a, a održava je Ured za publikacije Europske unije na internetskim stranicama rječnika EU-a.</dct:description>
+                        <dct:description xml:lang="mt-t-en-t0-mtec">It-tabella tal-Awtorità tas-Sit tipprovdi s-siti okkupati mid-diversi istituzzjonijiet u korpi tal-UE u hija miżmuma mill-Uffiċċju tal-Pubblikazzjonijiet tal-Unjoni Ewropea fuq is-sit web tal-Vokabularji tal-UE.</dct:description>
+                        <dct:title xml:lang="fr-t-en-t0-mtec">Sites et construction d’institutions de l’UE partout dans le monde</dct:title>
+                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:title xml:lang="en">Sites and Building of EU institutions all over the world</dct:title>
+                        <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/DOWNLOADABLE_FILE"/>
+                        <dct:identifier>http://data.europa.eu/88u/distribution/0458c224-6d12-4113-8723-255d1787ece6</dct:identifier>
+                        <dct:title xml:lang="mt-t-en-t0-mtec">Siti u Bini ta’ istituzzjonijiet tal-UE madwar id-dinja</dct:title>
+                        <dct:description xml:lang="pt-t-en-t0-mtec">O quadro da autoridade do sítio apresenta os sítios ocupados pelas diferentes instituições e organismos da UE e é mantido pelo Serviço das Publicações da União Europeia no sítio Web dos Vocabulares da UE.</dct:description>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <dct:description xml:lang="pt"> A EU Whoiswho é uma lista electrónica dos organogramas das instituições, organismos e agências da União Europeia em todas as línguas oficiais que é actualizada todas as semanas.</dct:description>
+                <dcat:keyword xml:lang="en">group-eu-official-directories</dcat:keyword>
+                <dct:description xml:lang="sk">EU Whoiswho je elektronický adresár, ktorý obsahuje organizačné štruktúry inštitúcií, orgánov a agentúr EÚ vo všetkých úradných jazykoch EÚ.</dct:description>
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/2243"/>
+                <dct:language>
+                    <dct:LinguisticSystem rdf:about="http://publications.europa.eu/resource/authority/language/DEU"/>
+                </dct:language>
+                <dct:title xml:lang="sv">EU Whoiswho: Europeiska unionens elektroniska institutionskatalog</dct:title>
+                <dct:title xml:lang="es">EU Whoiswho: Anuario oficial de la Unión Europea</dct:title>
+                <dct:description xml:lang="nl">EU Whoiswho is een elektronische gids waarin de organisatieschema's van de instellingen, organen en agentschappen van de EU in alle officiële EU-talen zijn opgenomen.</dct:description>
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/4038"/>
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/114"/>
+                <dct:title xml:lang="sl">EU Whoiswho: Uradni imenik Evropske Unije</dct:title>
+                <dct:description xml:lang="pl">EU Whoiswho jest elektroniczną organizacyjną bazą danych przedstawiającą schematy organizacyjne instytucji, organów i agencji UE we wszystkich językach urzędowych UE.</dct:description>
+                <dct:description xml:lang="cs">EU Whoiswho je elektronický adresář, který obsahuje organizační schémata orgánù, institucí a agentur ve všech úředních jazycích EU.</dct:description>
+                <dct:temporal>
+                    <dct:PeriodOfTime rdf:about="http://purl.org/dc/terms/PeriodOfTime/3918bc13-09d8-4936-9bf2-52e649bb9955">
+                        <dcat:startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+                        >1981-01-01</dcat:startDate>
+                    </dct:PeriodOfTime>
+                </dct:temporal>
+                <dct:description xml:lang="es">EU Whoiswho es un anuario electrónico que presenta los organigramas de las instituciones, organismos y agencias de la UE en todas las lenguas oficiales.</dct:description>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/45e7f22d-8829-497e-bc75-837ff207cea5">
+                        <dct:title xml:lang="sl-t-en-t0-mtec">Poslanci v Evropskem parlamentu po narodnostih in političnih skupinah</dct:title>
+                        <dct:title xml:lang="ga-t-en-t0-mtec">Feisirí i bParlaimint na hEorpa de réir náisiúntachtaí agus grúpaí polaitiúla</dct:title>
+                        <dct:format rdf:resource="http://publications.europa.eu/resource/authority/file-type/CSV"/>
+                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        <dct:title xml:lang="mt-t-en-t0-mtec">Membri fil-Parlament Ewropew skont in-nazzjonalitajiet u l-gruppi politiċi</dct:title>
+                        <dcat:downloadURL rdf:resource="https://europa.eu/!Cy46Jf"/>
+                        <dcat:accessURL rdf:resource="https://europa.eu/!Cy46Jf"/>
+                        <dct:title xml:lang="ro-t-en-t0-mtec">Deputați în Parlamentul European în funcție de naționalități și grupuri politice</dct:title>
+                        <dcat:mediaType rdf:resource="http://www.iana.org/assignments/media-types/text/csv"/>
+                        <dct:title xml:lang="sk-t-en-t0-mtec">Poslanci Európskeho parlamentu podľa národností a politických skupín</dct:title>
+                        <dct:title xml:lang="es-t-en-t0-mtec">Diputados al Parlamento Europeo por nacionalidades y grupos políticos</dct:title>
+                        <dct:title xml:lang="pl-t-en-t0-mtec">Posłowie do Parlamentu Europejskiego według narodowości i grup politycznych</dct:title>
+                        <dct:title xml:lang="cs-t-en-t0-mtec">Poslanci v Evropském parlamentu podle národností a politických skupin</dct:title>
+                        <dct:title xml:lang="el-t-en-t0-mtec">Βουλευτές στο Ευρωπαϊκό Κοινοβούλιο ανά εθνικότητα και πολιτικές ομάδες</dct:title>
+                        <dct:title xml:lang="fr">Membres du Parlement Européen par nationalité et groupe politique</dct:title>
+                        <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/DOWNLOADABLE_FILE"/>
+                        <dct:title xml:lang="de-t-en-t0-mtec">Mitglieder des Europäischen Parlaments nach Nationalitäten und Fraktionen</dct:title>
+                        <dct:title xml:lang="fi-t-en-t0-mtec">Euroopan parlamentin jäsenet kansallisuuksien ja poliittisten ryhmien mukaan</dct:title>
+                        <dct:title xml:lang="pt-t-en-t0-mtec">Deputados ao Parlamento Europeu por nacionalidades e grupos políticos</dct:title>
+                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:title xml:lang="sv-t-en-t0-mtec">Ledamöter i Europaparlamentet efter nationaliteter och politiska grupper</dct:title>
+                        <dct:title xml:lang="nl-t-en-t0-mtec">Leden in het Europees Parlement per nationaliteit en fractie</dct:title>
+                        <dct:title xml:lang="da-t-en-t0-mtec">Medlemmer af Europa-Parlamentet efter nationalitet og politiske grupper</dct:title>
+                        <adms:status rdf:resource="http://purl.org/adms/status/Completed"/>
+                        <dct:title xml:lang="en">Members in the European Parliament by nationalities and political groups</dct:title>
+                        <dct:title xml:lang="bg-t-en-t0-mtec">Членове на Европейския парламент от националности и политически групи</dct:title>
+                        <dct:title xml:lang="lt-t-en-t0-mtec">Europos Parlamento nariai pagal tautybes ir frakcijas</dct:title>
+                        <dct:title xml:lang="it-t-en-t0-mtec">Deputati al Parlamento europeo per nazionalità e gruppi politici</dct:title>
+                        <dct:title xml:lang="et-t-en-t0-mtec">Euroopa Parlamendi liikmed rahvuste ja fraktsioonide kaupa</dct:title>
+                        <dct:identifier>http://data.europa.eu/88u/distribution/e1c30e90-ff75-4008-b6ed-597d76bca568</dct:identifier>
+                        <dct:title xml:lang="hu-t-en-t0-mtec">Az Európai Parlament képviselői állampolgárságok és képviselőcsoportok szerint</dct:title>
+                        <dct:title xml:lang="hr-t-en-t0-mtec">Zastupnici u Europskom parlamentu po državljanstvima i klubovima zastupnika</dct:title>
+                        <dct:title xml:lang="lv-t-en-t0-mtec">Deputāti Eiropas Parlamentā pa tautībām un politiskajām grupām</dct:title>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <j.0:temporalGranularity rdf:resource="http://publications.europa.eu/resource/authority/timeperiod/DAY"/>
+                <dct:language>
+                    <dct:LinguisticSystem rdf:about="http://publications.europa.eu/resource/authority/language/FRA"/>
+                </dct:language>
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/255"/>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/96b490d7-abad-42c7-9450-608bb7b6f929">
+                        <dct:title xml:lang="ro-t-en-t0-mtec">Punctul final SPARQL</dct:title>
+                        <dct:description xml:lang="lt-t-en-t0-mtec">Pagal šį SPARQL galutinį tašką galima tiesiogiai pateikti užklausą dėl turinio „EU Whoiswho“ (organizacija/narystė/asmuo) pagal [Bendrąjį duomenų modelį (BPM)](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm).</dct:description>
+                        <dct:description xml:lang="ga-t-en-t0-mtec">Leis an bpointe deiridh SPARQL sin is féidir cuardach díreach a dhéanamh ar ábhar EU Whoiswho (eagraíocht/ballraíocht/duine) i ndiaidh na [Samhail Choiteann Sonraí (CDM)](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm)</dct:description>
+                        <dct:title xml:lang="lv-t-en-t0-mtec">SPARQL beigu punkts</dct:title>
+                        <dct:description xml:lang="fi-t-en-t0-mtec">Tämä SPARQL-päätepiste antaa mahdollisuuden tehdä hakuja suoraan EU Whoiswho -sisällöstä (organisaatio/jäsenyys/henkilö) [yhteisen tietomallin (CDM)](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm) mukaisesti.</dct:description>
+                        <dct:description xml:lang="fr-t-en-t0-mtec">Ce point final SPARQL permet d’interroger directement le contenu de l’UE Whoiswho (organisation/adhésion/personne) en suivant le [modèle commun de données (CDM)] (https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm).</dct:description>
+                        <dct:title xml:lang="da-t-en-t0-mtec">SPARQL slutpunkt</dct:title>
+                        <dct:title xml:lang="sv-t-en-t0-mtec">SPARQL slutpunkt</dct:title>
+                        <dct:description xml:lang="sl-t-en-t0-mtec">Ta končna točka SPARQL omogoča neposredno poizvedovanje po vsebini EU Whoiswho (organizacija/članstvo/oseba) na podlagi [skupnega podatkovnega modela (CDM)] (https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm).</dct:description>
+                        <dct:description xml:lang="bg-t-en-t0-mtec">Тази крайна точка на SPARQL дава възможност за директно търсене в съдържанието на „EU Whoiswho“ (организация/членство/лице) съгласно [Общ модел на данни (CDM)] (https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm))</dct:description>
+                        <dcat:accessURL rdf:resource="http://publications.europa.eu/webapi/rdf/sparql"/>
+                        <dct:description xml:lang="hr-t-en-t0-mtec">Ova krajnja točka SPARQL-a omogućuje izravno pretraživanje sadržaja „EU Whoiswho” (organizacija/članstvo/osoba) u skladu s [Zajedničkim podatkovnim modelom (CDM)] (https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm).</dct:description>
+                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        <dct:title xml:lang="pl-t-en-t0-mtec">Punkt końcowy SPARQL</dct:title>
+                        <dct:title xml:lang="hr-t-en-t0-mtec">Krajnja točka SPARQL-a</dct:title>
+                        <dct:title xml:lang="et-t-en-t0-mtec">SPARQLi lõpp-punkt</dct:title>
+                        <dct:description xml:lang="en">This SPARQL end point allow to directly query the EU Whoiswho content (organization / membership / person) following the [Common Data Model (CDM)](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm)</dct:description>
+                        <dcat:accessService>
+                            <dcat:DataService rdf:about="http://data.europa.eu/88u/dataservice/8178822a-8610-48ec-bc74-186f2a3bdc71">
+                                <dct:description xml:lang="en">This SPARQL end point allow to directly query the EU Whoiswho content (organization / membership / person) following the [Common Data Model (CDM)](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm)</dct:description>
+                                <dcat:endpointURL rdf:resource="http://publications.europa.eu/webapi/rdf/sparql"/>
+                                <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                                <dcat:servesDataset rdf:resource="http://data.europa.eu/88u/dataset/eu-whoiswho-the-official-directory-of-the-european-union"/>
+                                <dct:title xml:lang="en">SPARQL end Point</dct:title>
+                            </dcat:DataService>
+                        </dcat:accessService>
+                        <dct:description xml:lang="pl-t-en-t0-mtec">Ten punkt końcowy SPARQL umożliwia bezpośrednie zapytanie do EU Whoiswho treści (organizacja/członkostwo/osoba) zgodnie z [wspólnym modelem danych (CDM)] (https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm).</dct:description>
+                        <dct:identifier>http://data.europa.eu/88u/distribution/8178822a-8610-48ec-bc74-186f2a3bdc71</dct:identifier>
+                        <dct:description xml:lang="mt-t-en-t0-mtec">Dan il-punt tat-tmiem tal-SPARQL jippermetti li ssir tfittxija diretta fil-kontenut tal-EU Whoiswho (organizzazzjoni/sħubija/persuna) skont il-[Mudell ta’ Data Komuni (CDM)](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm)</dct:description>
+                        <dct:title xml:lang="fi-t-en-t0-mtec">SPARQL päätepiste</dct:title>
+                        <dct:description xml:lang="hu-t-en-t0-mtec">Ez a SPARQL végpont lehetővé teszi az EU Whoiswho tartalmának (szervezet/tagság/személy) közvetlen lekérdezését a [közös adatmodell (CDM)](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm) alapján.</dct:description>
+                        <dct:description xml:lang="el-t-en-t0-mtec">Αυτό το τελικό σημείο SPARQL επιτρέπει την απευθείας αναζήτηση στο περιεχόμενο EU Whoiswho (οργάνωση/μέλος/πρόσωπο) σύμφωνα με το [κοινό μοντέλο δεδομένων (CDM)](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm)</dct:description>
+                        <dct:description xml:lang="sv-t-en-t0-mtec">Denna slutpunkt för SPARQL gör det möjligt att direkt fråga EU Whoiswhos innehåll (organisation/medlemskap/person) enligt [Common Data Model (CDM)](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm)</dct:description>
+                        <dct:description xml:lang="lv-t-en-t0-mtec">Šis SPARQL beigu punkts ļauj tieši veikt vaicājumus EU Whoiswho saturā (organizācija/dalība/persona), izmantojot [Kopīgo datu modeli (CDM)] (https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm).</dct:description>
+                        <dct:description xml:lang="de-t-en-t0-mtec">Dieser SPARQL-Endpunkt ermöglicht es, die Inhalte der EU (Organisation/Mitgliedschaft/Person) direkt nach dem [Gemeinsamen Datenmodell (CDM)](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm) abzufragen.</dct:description>
+                        <dct:title xml:lang="nl-t-en-t0-mtec">SPARQL eindpunt</dct:title>
+                        <dct:title xml:lang="hu-t-en-t0-mtec">SPARQL végpont</dct:title>
+                        <dct:title xml:lang="en">SPARQL end Point</dct:title>
+                        <dct:title xml:lang="it-t-en-t0-mtec">Punto finale SPARQL</dct:title>
+                        <dct:title xml:lang="fr-t-en-t0-mtec">Point final de SPARQL</dct:title>
+                        <dct:title xml:lang="bg-t-en-t0-mtec">SPARQL крайна точка</dct:title>
+                        <dct:description xml:lang="nl-t-en-t0-mtec">Dit SPARQL-eindpunt maakt het mogelijk rechtstreeks de EU Whoiswho-inhoud (organisatie/lidmaatschap/persoon) te raadplegen volgens het [gemeenschappelijk gegevensmodel (CDM)] (https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm).</dct:description>
+                        <dct:description xml:lang="it-t-en-t0-mtec">Questo punto finale SPARQL consente di interrogare direttamente i contenuti dell'UE Whoiswho (organizzazione/adesione/persona) seguendo il [modello comune di dati (CDM)] (https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm).</dct:description>
+                        <dct:description xml:lang="da-t-en-t0-mtec">Dette SPARQL-slutpunkt gør det muligt direkte at søge i EU Whoiswho-indholdet (organisation/medlemskab/person) efter [den fælles datamodel (CDM)](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm)</dct:description>
+                        <dct:description xml:lang="et-t-en-t0-mtec">See SPARQLi lõpp-punkt võimaldab teha päringuid otse EU Whoiswho sisust (organisatsioon/liige/isik) [ühise andmemudeli (CDM)] kohaselt (https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm).</dct:description>
+                        <dct:title xml:lang="sl-t-en-t0-mtec">Končna točka SPARQL</dct:title>
+                        <dct:title xml:lang="mt-t-en-t0-mtec">Punt ta’ tmiem SPARQL</dct:title>
+                        <dct:description xml:lang="cs-t-en-t0-mtec">Tento koncový bod SPARQL umožňuje přímo dotazovat se na obsah EU Whoiswho (organizace/členství/osoba) podle [společného datového modelu (CDM)](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm).</dct:description>
+                        <dct:title xml:lang="pt-t-en-t0-mtec">Ponto final da SPARQL</dct:title>
+                        <dct:title xml:lang="ga-t-en-t0-mtec">Críochphointe SPARQL</dct:title>
+                        <dct:title xml:lang="lt-t-en-t0-mtec">SPARQL pabaigos taškas</dct:title>
+                        <dct:title xml:lang="es-t-en-t0-mtec">Punto final de SPARQL</dct:title>
+                        <dct:title xml:lang="cs-t-en-t0-mtec">Koncový bod SPARQL</dct:title>
+                        <dct:title xml:lang="sk-t-en-t0-mtec">Koncový bod SPARQL</dct:title>
+                        <dct:title xml:lang="de-t-en-t0-mtec">SPARQL Endpunkt</dct:title>
+                        <dct:description xml:lang="sk-t-en-t0-mtec">Tento koncový bod SPARQL umožňuje priamo vyhľadávať obsah EU Whoiswho (organizácia/členstvo/osoba) podľa [spoločného dátového modelu (CDM)](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm)</dct:description>
+                        <dct:description xml:lang="es-t-en-t0-mtec">Este punto final de SPARQL permite consultar directamente el contenido de EU Whoiswho (organización/miembro/persona) siguiendo el [Modelo Común de Datos (CDM)](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm)</dct:description>
+                        <dct:description xml:lang="ro-t-en-t0-mtec">Acest punct final SPARQL permite interogarea directă a conținutului UE Whoiswho (organizație/aderare/persoană) în conformitate cu [modelul comun de date (CDM)] (https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm))</dct:description>
+                        <dct:title xml:lang="el-t-en-t0-mtec">Τελικό σημείο SPARQL</dct:title>
+                        <dct:description xml:lang="pt-t-en-t0-mtec">Este ponto final da SPARQL permite consultar diretamente o conteúdo da EU Whoiswho (organização/filiação/pessoa) seguindo o [Modelo Comum de Dados (CDM)](https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm)</dct:description>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/612f185a-93ed-46f1-a59b-3b8ac9f67340">
+                        <dct:title xml:lang="bg-t-en-t0-mtec">Архиви Whoiswho (1981—2018)</dct:title>
+                        <dct:title xml:lang="hu-t-en-t0-mtec">Archives Whoiswho (1981–2018)</dct:title>
+                        <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/DOWNLOADABLE_FILE"/>
+                        <dcat:mediaType>
+                            <dct:MediaType rdf:about="http://www.iana.org/assignments/media-types/application/pdf"/>
+                        </dcat:mediaType>
+                        <dct:title xml:lang="ro-t-en-t0-mtec">Arhive Whoiswho (1981-2018)</dct:title>
+                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:title xml:lang="sk-t-en-t0-mtec">Archív Whoiswho (1981 – 2018)</dct:title>
+                        <dct:title xml:lang="cs-t-en-t0-mtec">Archivy Whoiswho (1981–2018)</dct:title>
+                        <dct:title xml:lang="es-t-en-t0-mtec">Archivos Whoiswho (1981-2018)</dct:title>
+                        <dct:identifier>http://data.europa.eu/88u/distribution/e2f4d5f2-93f9-4aa2-ac22-7ac5df555fc0</dct:identifier>
+                        <dct:title xml:lang="lt-t-en-t0-mtec">Archyvai Whoiswho (1981–2018)</dct:title>
+                        <dct:format>
+                            <dct:MediaTypeOrExtent rdf:about="http://publications.europa.eu/resource/authority/file-type/PDF"/>
+                        </dct:format>
+                        <dct:title xml:lang="ga-t-en-t0-mtec">Cartlann Whoiswho (1981-2018)</dct:title>
+                        <dct:title xml:lang="it-t-en-t0-mtec">Archivi Whoiswho (1981-2018)</dct:title>
+                        <dct:title xml:lang="pl-t-en-t0-mtec">Archiwum Whoiswho (1981-2018)</dct:title>
+                        <dct:title xml:lang="sv-t-en-t0-mtec">Arkiv Whoiswho (1981–2018)</dct:title>
+                        <dct:title xml:lang="hr-t-en-t0-mtec">Arhiva Whoiswho (1981 – 2018)</dct:title>
+                        <dct:title xml:lang="mt-t-en-t0-mtec">Arkivji Whoiswho (1981–2018)</dct:title>
+                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        <dct:title xml:lang="fi-t-en-t0-mtec">Arkisto Whoiswho (1981–2018)</dct:title>
+                        <dct:title xml:lang="pt-t-en-t0-mtec">Arquivos Whoiswho (1981-2018)</dct:title>
+                        <dcat:accessURL rdf:resource="https://op.europa.eu/en/web/who-is-who/archive"/>
+                        <dct:title xml:lang="el-t-en-t0-mtec">Αρχεία Whoiswho (1981-2018)</dct:title>
+                        <dct:title xml:lang="nl-t-en-t0-mtec">Archief Whoiswho (1981-2018)</dct:title>
+                        <dct:title xml:lang="sl-t-en-t0-mtec">Arhiv Whoiswho (1981–2018)</dct:title>
+                        <dct:title xml:lang="fr-t-en-t0-mtec">Archives Whoiswho (1981-2018)</dct:title>
+                        <dct:title xml:lang="et-t-en-t0-mtec">Arhiivid Whoiswho (1981–2018)</dct:title>
+                        <dct:title xml:lang="da-t-en-t0-mtec">Archives Whoiswho (1981-2018)</dct:title>
+                        <dct:title xml:lang="en">Archives Whoiswho (1981-2018)</dct:title>
+                        <dct:title xml:lang="de-t-en-t0-mtec">Archiv Whoiswho (1981-2018)</dct:title>
+                        <dct:title xml:lang="lv-t-en-t0-mtec">Arhīvs Whoiswho (1981–2018)</dct:title>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/6b215972-8b86-42b6-b2c1-795f0ffdc898">
+                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        <dct:title xml:lang="da-t-en-t0-mtec">Europa-Kommissionen</dct:title>
+                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:title xml:lang="pt-t-en-t0-mtec">Comissão Europeia</dct:title>
+                        <dct:format rdf:resource="http://publications.europa.eu/resource/authority/file-type/HTML"/>
+                        <dct:title xml:lang="fr-t-en-t0-mtec">Commission européenne</dct:title>
+                        <dct:title xml:lang="mt-t-en-t0-mtec">Il-Kummissjoni Ewropea</dct:title>
+                        <dct:title xml:lang="sv-t-en-t0-mtec">Europeiska kommissionen</dct:title>
+                        <dct:title xml:lang="en">European Commission</dct:title>
+                        <dct:title xml:lang="es-t-en-t0-mtec">Comisión Europea</dct:title>
+                        <dct:title xml:lang="et-t-en-t0-mtec">Euroopa Komisjon</dct:title>
+                        <dct:title xml:lang="ro-t-en-t0-mtec">Comisia Europeană</dct:title>
+                        <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/VISUALIZATION"/>
+                        <dct:title xml:lang="nl-t-en-t0-mtec">Europese Commissie</dct:title>
+                        <dct:title xml:lang="lt-t-en-t0-mtec">Europos Komisija</dct:title>
+                        <dct:title xml:lang="hr-t-en-t0-mtec">Europska komisija</dct:title>
+                        <dct:title xml:lang="de-t-en-t0-mtec">Europäische Kommission</dct:title>
+                        <dct:title xml:lang="cs-t-en-t0-mtec">Evropská komise</dct:title>
+                        <dct:title xml:lang="sk-t-en-t0-mtec">Európska komisia</dct:title>
+                        <dct:title xml:lang="hu-t-en-t0-mtec">Európai Bizottság</dct:title>
+                        <dct:title xml:lang="fi-t-en-t0-mtec">Euroopan komissio</dct:title>
+                        <dct:title xml:lang="ga-t-en-t0-mtec">An Coimisiún Eorpach</dct:title>
+                        <dct:title xml:lang="pl-t-en-t0-mtec">Komisja Europejska</dct:title>
+                        <dct:title xml:lang="sl-t-en-t0-mtec">Evropska komisija</dct:title>
+                        <dct:title xml:lang="it-t-en-t0-mtec">Commissione europea</dct:title>
+                        <dct:title xml:lang="bg-t-en-t0-mtec">Европейска комисия</dct:title>
+                        <dct:identifier>http://data.europa.eu/88u/distribution/0f0a95b2-afa6-467e-99e8-064bd37676c7</dct:identifier>
+                        <dcat:accessURL rdf:resource="https://op.europa.eu/web/who-is-who/organization/-/organization/COM/COM"/>
+                        <dct:title xml:lang="el-t-en-t0-mtec">Ευρωπαϊκή Επιτροπή</dct:title>
+                        <dcat:mediaType rdf:resource="http://www.iana.org/assignments/media-types/text/html"/>
+                        <dct:title xml:lang="lv-t-en-t0-mtec">Eiropas Komisija</dct:title>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <dct:title xml:lang="sk">EU Whoiswho: Oficiálny adresár Európskej únie</dct:title>
+                <dct:language rdf:resource="http://publications.europa.eu/resource/authority/language/ENG"/>
+                <dct:accrualPeriodicity>
+                    <dct:Frequency rdf:about="http://publications.europa.eu/resource/authority/frequency/BIMONTHLY"/>
+                </dct:accrualPeriodicity>
+                <dct:description xml:lang="bg">EU Whoiswho“ е електронен указател, представящ организационните схеми на институциите, органите и агенциите на ЕС на всички официални езици на Съюза.</dct:description>
+                <dct:description xml:lang="hr">„EU Whoiswho” elektronički je imenik koji sadrži organizacijske sheme institucija, tijela i agencija EU-a na svim službenim jezicima Europske unije.</dct:description>
+                <dct:title xml:lang="et">EU Whoiswho: Euroopa Liidu institutsioonide infokataloog</dct:title>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/c1be3310-29f5-4e08-a595-47b90fdd58ae">
+                        <dct:title xml:lang="ro-t-en-t0-mtec">Caută Whoiswho</dct:title>
+                        <dct:title xml:lang="bg-t-en-t0-mtec">Търсене Whoiswho</dct:title>
+                        <dct:title xml:lang="es-t-en-t0-mtec">Buscar ¿Quién es quién?</dct:title>
+                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:title xml:lang="el-t-en-t0-mtec">Αναζήτηση Whoiswho</dct:title>
+                        <dct:title xml:lang="pl-t-en-t0-mtec">Szukaj Whoiswho</dct:title>
+                        <dct:title xml:lang="sl-t-en-t0-mtec">Iskanje Whoiswho</dct:title>
+                        <dct:title xml:lang="en">Search Whoiswho</dct:title>
+                        <dct:title xml:lang="mt-t-en-t0-mtec">Fittex Whoiswho</dct:title>
+                        <dct:title xml:lang="de-t-en-t0-mtec">Suche Whoiswho</dct:title>
+                        <dct:title xml:lang="hr-t-en-t0-mtec">Pretražite Tkoiswho</dct:title>
+                        <dct:title xml:lang="et-t-en-t0-mtec">Otsige, kes</dct:title>
+                        <dcat:accessURL rdf:resource="https://publications.europa.eu/en/web/who-is-who/"/>
+                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        <dct:title xml:lang="lt-t-en-t0-mtec">Ieškoti, kas yra kas</dct:title>
+                        <dct:title xml:lang="nl-t-en-t0-mtec">Zoek Whoiswho</dct:title>
+                        <dct:title xml:lang="pt-t-en-t0-mtec">Pesquisar Whoiswho</dct:title>
+                        <dct:title xml:lang="it-t-en-t0-mtec">Cerca Whoiswho</dct:title>
+                        <dct:title xml:lang="hu-t-en-t0-mtec">Keresés Whoiswho</dct:title>
+                        <dct:title xml:lang="fi-t-en-t0-mtec">Etsi Whoiswho</dct:title>
+                        <dct:title xml:lang="sk-t-en-t0-mtec">Hľadať kto</dct:title>
+                        <dct:title xml:lang="sv-t-en-t0-mtec">Sök Whoiswho</dct:title>
+                        <dct:title xml:lang="cs-t-en-t0-mtec">Hledat Whoiswho</dct:title>
+                        <dct:title xml:lang="lv-t-en-t0-mtec">Meklēt Whoiswho</dct:title>
+                        <dct:format rdf:resource="http://publications.europa.eu/resource/authority/file-type/HTML"/>
+                        <dcat:mediaType rdf:resource="http://www.iana.org/assignments/media-types/text/html"/>
+                        <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/DOWNLOADABLE_FILE"/>
+                        <dct:title xml:lang="fr-t-en-t0-mtec">Rechercher Whoiswho</dct:title>
+                        <dct:title xml:lang="da-t-en-t0-mtec">Søg Whoiswho</dct:title>
+                        <dct:title xml:lang="ga-t-en-t0-mtec">Cuardaigh Whoiswho</dct:title>
+                        <dct:identifier>http://data.europa.eu/88u/distribution/566d98f8-7019-4a9a-8ad7-820dc58c52ec</dct:identifier>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <adms:identifier>
+                    <adms:Identifier rdf:about="https://doi.org/10.2906/112117098108/5">
+                        <skos:notation rdf:datatype="http://purl.org/spar/datacite/doi"
+                        >10.2906/112117098108/5</skos:notation>
+                        <dct:creator rdf:resource="http://publications.europa.eu/resource/authority/corporate-body/PUBL"/>
+                        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+                        >2022-04-13T10:29:19</dct:issued>
+                    </adms:Identifier>
+                </adms:identifier>
+                <dct:title xml:lang="el">EU Whoiswho: O επίσημος κατάλογος της Ευρωπαϊκής Ένωσης</dct:title>
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/5455"/>
+                <dct:description xml:lang="fr">EU Whoiswho est un annuaire électronique qui présente les organigrammes des institutions, organismes et agences de l'Union européenne dans toutes les langues officielles de l'Union.  </dct:description>
+                <dct:description xml:lang="hu">A EU Whoiswho az Európai Unió intézményeinek, szerveinek és ügynökségeinek szervezeti felépítését mutatja be az EU valamennyi hivatalos nyelvén.</dct:description>
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/1048"/>
+                <dct:relation rdf:resource="http://data.europa.eu/88u/dataset/members-of-the-committee-of-the-regions"/>
+                <dct:subject rdf:resource="http://eurovoc.europa.eu/6054"/>
+            </dcat:Dataset>
+        </foaf:primaryTopic>
+        <dct:identifier>eu-whoiswho-the-official-directory-of-the-european-union</dct:identifier>
+        <dqv:hasQualityMetadata rdf:resource="http://data.europa.eu/88u/metrics/eu-whoiswho-the-official-directory-of-the-european-union"/>
+    </dcat:CatalogRecord>
+    <dct:MediaTypeOrExtent rdf:about="http://publications.europa.eu/resource/authority/file-type/SPARQLQ"/>
+</rdf:RDF>
