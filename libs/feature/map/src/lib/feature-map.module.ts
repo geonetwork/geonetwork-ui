@@ -9,7 +9,6 @@ import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTabsModule } from '@angular/material/tabs'
 import { TranslateModule } from '@ngx-translate/core'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { AddLayerFromCatalogComponent } from './add-layer-from-catalog/add-layer-from-catalog.component'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { StoreModule } from '@ngrx/store'
@@ -17,6 +16,7 @@ import { EffectsModule } from '@ngrx/effects'
 import * as fromMap from './+state/map.reducer'
 import { MapEffects } from './+state/map.effects'
 import { MapFacade } from './+state/map.facade'
+import { MapContainerComponent } from './map-container/map-container.component'
 
 @NgModule({
   declarations: [
@@ -24,12 +24,14 @@ import { MapFacade } from './+state/map.facade'
     MapInstanceDirective,
     LayersPanelComponent,
     AddLayerFromCatalogComponent,
+    MapContainerComponent,
   ],
   exports: [
     MapContextComponent,
     MapInstanceDirective,
     LayersPanelComponent,
     AddLayerFromCatalogComponent,
+    MapContainerComponent,
   ],
   imports: [
     CommonModule,
