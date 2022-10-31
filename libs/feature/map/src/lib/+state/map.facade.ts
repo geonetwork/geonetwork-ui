@@ -24,4 +24,7 @@ export class MapFacade {
   addLayerAtIndex(layer: MapLayer, index: number) {
     this.store.dispatch(MapActions.addLayer({ layer, atIndex: index }))
   }
+  removeLayer(index: number) {
+    this.store.dispatch(MapActions.removeLayer({ index }))
+  }
 }
