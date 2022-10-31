@@ -12,6 +12,11 @@ import { TranslateModule } from '@ngx-translate/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { AddLayerFromCatalogComponent } from './add-layer-from-catalog/add-layer-from-catalog.component'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
+import { StoreModule } from '@ngrx/store'
+import { EffectsModule } from '@ngrx/effects'
+import * as fromMap from './+state/map.reducer'
+import { MapEffects } from './+state/map.effects'
+import { MapFacade } from './+state/map.facade'
 
 @NgModule({
   declarations: [
@@ -34,12 +39,15 @@ import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
     MatTabsModule,
     TranslateModule,
     FeatureSearchModule,
+    StoreModule.forFeature(fromMap.MAP_FEATURE_KEY, fromMap.mapReducer),
+    EffectsModule.forFeature([MapEffects]),
   ],
   providers: [
     {
       provide: FEATURE_MAP_OPTIONS,
       useValue: defaultMapOptions,
     },
+    MapFacade,
   ],
 })
 export class FeatureMapModule {}
