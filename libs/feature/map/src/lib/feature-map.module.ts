@@ -17,6 +17,9 @@ import * as fromMap from './+state/map.reducer'
 import { MapEffects } from './+state/map.effects'
 import { MapFacade } from './+state/map.facade'
 import { MapContainerComponent } from './map-container/map-container.component'
+import { AddLayerRecordPreviewComponent } from './add-layer-from-catalog/add-layer-record-preview/add-layer-record-preview.component'
+import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 
 @NgModule({
   declarations: [
@@ -25,6 +28,7 @@ import { MapContainerComponent } from './map-container/map-container.component'
     LayersPanelComponent,
     AddLayerFromCatalogComponent,
     MapContainerComponent,
+    AddLayerRecordPreviewComponent,
   ],
   exports: [
     MapContextComponent,
@@ -43,6 +47,8 @@ import { MapContainerComponent } from './map-container/map-container.component'
     FeatureSearchModule,
     StoreModule.forFeature(fromMap.MAP_FEATURE_KEY, fromMap.mapReducer),
     EffectsModule.forFeature([MapEffects]),
+    UiElementsModule,
+    UiInputsModule,
   ],
   providers: [
     {
