@@ -17,7 +17,7 @@ describe('LinkClassifierService', () => {
       it('returns map API  and API usage', () => {
         expect(service.getUsagesForLink(LINK_FIXTURES.geodataWms)).toEqual([
           LinkUsage.API,
-          LinkUsage.MAPAPI,
+          LinkUsage.MAP_API,
         ])
       })
     })
@@ -50,7 +50,9 @@ describe('LinkClassifierService', () => {
     })
     describe('for a ESRI REST map service link', () => {
       it('returns no usage', () => {
-        expect(service.getUsagesForLink(LINK_FIXTURES.maplayerRest)).toEqual([])
+        expect(service.getUsagesForLink(LINK_FIXTURES.maplayerRest)).toEqual([
+          LinkUsage.UNKNOWN,
+        ])
       })
     })
     describe('for a link to a CSV file', () => {
@@ -85,14 +87,16 @@ describe('LinkClassifierService', () => {
       })
     })
     describe('for a link to a simple page', () => {
-      it('returns null', () => {
-        expect(service.getUsagesForLink(LINK_FIXTURES.readmeLink)).toEqual([])
+      it('returns UNKNOWN', () => {
+        expect(service.getUsagesForLink(LINK_FIXTURES.readmeLink)).toEqual([
+          LinkUsage.UNKNOWN,
+        ])
       })
     })
     describe('for a landing page', () => {
       it('returns landingpage usage', () => {
         expect(service.getUsagesForLink(LINK_FIXTURES.landingPage)).toEqual([
-          LinkUsage.LANDINGPAGE,
+          LinkUsage.LANDING_PAGE,
         ])
       })
     })

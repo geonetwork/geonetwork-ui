@@ -56,15 +56,25 @@ export interface MetadataRecord {
   isOpenData?: boolean
 }
 
+export enum MetadataLinkType {
+  WMS,
+  WMTS,
+  WFS,
+  ESRI_REST,
+  DOWNLOAD,
+  LANDING_PAGE,
+  OTHER,
+}
+
 export interface MetadataLink {
   url: string
+  type: MetadataLinkType
   // either a file name, a layer name or any other resource identifier
   name?: string
   protocol?: string
-  format?: string
+  mimeType?: string
   description?: string
   label?: string
-  isWfs?: boolean
 }
 
 export interface RecordMetric {

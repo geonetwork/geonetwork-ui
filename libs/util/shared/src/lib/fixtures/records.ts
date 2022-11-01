@@ -1,4 +1,4 @@
-import { MetadataRecord } from '../models'
+import { MetadataLinkType, MetadataRecord } from '../models'
 
 export const RECORDS_SUMMARY_FIXTURE: MetadataRecord[] = [
   {
@@ -74,48 +74,56 @@ export const RECORDS_FULL_FIXTURE: MetadataRecord[] = [
         name: 'surval_parametre_point',
         protocol: 'OGC:WMS',
         url: 'https://www.ifremer.fr/services/wms/surveillance_littorale',
+        type: MetadataLinkType.WMS,
       },
       {
         description: 'Lieu de surveillance (point)',
         name: 'surval_parametre_point',
         protocol: 'OGC:WFS',
         url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
+        type: MetadataLinkType.WFS,
       },
       {
         description: "Extraction des données d'observation",
         name: 'r:survalextraction',
         protocol: 'OGC:WPS',
         url: 'https://www.ifremer.fr/services/wps/surval',
+        type: MetadataLinkType.OTHER,
       },
       {
         description: 'Lieu de surveillance (polygone)',
         name: 'surval_parametre_polygone',
         protocol: 'OGC:WMS',
         url: 'https://www.ifremer.fr/services/wms/surveillance_littorale',
+        type: MetadataLinkType.WMS,
       },
       {
         description: 'Lieu de surveillance (polygone)',
         name: 'surval_parametre_polygone',
         protocol: 'OGC:WFS',
         url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
+        type: MetadataLinkType.WFS,
       },
       {
         description: "Extraction des données d'observation",
         name: 'r:survalextraction',
         protocol: 'OGC:WPS',
         url: 'https://www.ifremer.fr/services/wps/surval',
+        type: MetadataLinkType.OTHER,
       },
       {
         description: '',
         name: 'La base de données Quadrige',
         protocol: 'WWW:LINK',
         url: 'http://envlit.ifremer.fr/resultats/quadrige',
+        type: MetadataLinkType.OTHER,
       },
       {
         description: '',
         name: 'La surveillance du milieu marin et côtier',
         protocol: 'WWW:LINK-1.0-http--link',
         url: 'http://envlit.ifremer.fr/surveillance/presentation',
+        type: MetadataLinkType.OTHER,
       },
       {
         description:
@@ -123,12 +131,14 @@ export const RECORDS_FULL_FIXTURE: MetadataRecord[] = [
         name: 'Manuel pour l’utilisation des données REPHY',
         protocol: 'WWW:LINK',
         url: 'http://archimer.ifremer.fr/doc/00409/52016/',
+        type: MetadataLinkType.OTHER,
       },
       {
         description: 'DOI du jeu de données',
         name: 'DOI du jeu de données',
         protocol: 'WWW:LINK-1.0-http--metadata-URL',
         url: 'https://doi.org/10.12770/cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
+        type: MetadataLinkType.OTHER,
       },
     ],
     metadataUrl: 'url',

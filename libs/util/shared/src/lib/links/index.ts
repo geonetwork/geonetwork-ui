@@ -1,2 +1,2 @@
 export * from './link-utils'
-export * from './link-helper.service'
+export * from './link-classifier.service'
