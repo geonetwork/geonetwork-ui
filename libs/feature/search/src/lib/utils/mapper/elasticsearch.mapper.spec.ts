@@ -13,6 +13,10 @@ const metadataUrlServiceMock = {
 describe('ElasticsearchMapper', () => {
   let service: ElasticsearchMapper
 
+  beforeAll(() => {
+    window.console.warn = jest.fn()
+  })
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -134,14 +138,13 @@ describe('ElasticsearchMapper', () => {
             },
           ]
         })
-        it('parses as an invalid link', () => {
+        it('does not parse the link', () => {
           const summary = service.toRecord(hit)
-          expect(summary.links).toEqual([
-            {
-              invalid: true,
-              reason: expect.stringContaining('URL'),
-            },
-          ])
+          expect(summary.links).toEqual([])
+          expect(window.console.warn).toHaveBeenCalledWith(
+            expect.stringContaining('URL'),
+            expect.any(Object)
+          )
         })
       })
       describe('invalid link (invalid url)', () => {
@@ -153,14 +156,13 @@ describe('ElasticsearchMapper', () => {
             },
           ]
         })
-        it('parses as an invalid link', () => {
+        it('does not parse the link', () => {
           const summary = service.toRecord(hit)
-          expect(summary.links).toEqual([
-            {
-              invalid: true,
-              reason: expect.stringContaining('URL'),
-            },
-          ])
+          expect(summary.links).toEqual([])
+          expect(window.console.warn).toHaveBeenCalledWith(
+            expect.stringContaining('URL'),
+            expect.any(Object)
+          )
         })
       })
       describe('invalid link (url with unsupported protocol)', () => {
@@ -173,14 +175,13 @@ describe('ElasticsearchMapper', () => {
             },
           ]
         })
-        it('parses as an invalid link', () => {
+        it('does not parse the link', () => {
           const summary = service.toRecord(hit)
-          expect(summary.links).toEqual([
-            {
-              invalid: true,
-              reason: expect.stringContaining('protocol'),
-            },
-          ])
+          expect(summary.links).toEqual([])
+          expect(window.console.warn).toHaveBeenCalledWith(
+            expect.stringContaining('protocol'),
+            expect.any(Object)
+          )
         })
       })
     })

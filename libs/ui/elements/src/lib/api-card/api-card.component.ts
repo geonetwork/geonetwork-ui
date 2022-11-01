@@ -5,7 +5,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core'
-import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { MetadataLink } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-api-card',
@@ -14,7 +14,7 @@ import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ApiCardComponent {
-  @Input() link: MetadataLinkValid
+  @Input() link: MetadataLink
   @Output() apiUrl = new EventEmitter<string>()
 
   copyUrl() {

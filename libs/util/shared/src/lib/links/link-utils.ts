@@ -1,5 +1,5 @@
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { MetadataLinkValid } from '../models'
+import { MetadataLink } from '../models'
 
 marker('downloads.wfs.featuretype.not.found')
 
@@ -78,7 +78,7 @@ export const FORMATS = {
   },
 }
 
-export function sortPriority(link: MetadataLinkValid): number {
+export function sortPriority(link: MetadataLink): number {
   for (const format in FORMATS) {
     for (const ext of FORMATS[format].extensions) {
       if ('format' in link && new RegExp(`${ext}`, 'i').test(link.format)) {
@@ -90,7 +90,7 @@ export function sortPriority(link: MetadataLinkValid): number {
   return 0
 }
 
-export function getWfsFormat(link: MetadataLinkValid): string {
+export function getWfsFormat(link: MetadataLink): string {
   for (const format in FORMATS) {
     for (const alias of FORMATS[format].extensions) {
       if ('format' in link && new RegExp(`${alias}`, 'i').test(link.format))
@@ -100,7 +100,7 @@ export function getWfsFormat(link: MetadataLinkValid): string {
   return undefined
 }
 
-export function getFileFormat(link: MetadataLinkValid): string | void {
+export function getFileFormat(link: MetadataLink): string | void {
   if (link.format) {
     return link.format
   }
@@ -127,10 +127,7 @@ export function mimeTypeToFormat(mimeType: string): string {
   return undefined
 }
 
-export function checkFileFormat(
-  link: MetadataLinkValid,
-  format: string
-): boolean {
+export function checkFileFormat(link: MetadataLink, format: string): boolean {
   return (
     ('name' in link && new RegExp(`[./]${format}`, 'i').test(link.name)) ||
     ('url' in link && new RegExp(`[./]${format}`, 'i').test(link.url))

@@ -56,7 +56,7 @@ export interface MetadataRecord {
   isOpenData?: boolean
 }
 
-export interface MetadataLinkValid {
+export interface MetadataLink {
   url: string
   // either a file name, a layer name or any other resource identifier
   name?: string
@@ -66,7 +66,6 @@ export interface MetadataLinkValid {
   label?: string
   isWfs?: boolean
 }
-export type MetadataLink = MetadataLinkValid | { invalid: true; reason: string }
 
 export interface RecordMetric {
   value: string

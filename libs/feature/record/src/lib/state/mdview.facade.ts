@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { LinkHelperService } from '@geonetwork-ui/util/shared'
-import { MetadataLinkValid, MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataLink, MetadataRecord } from '@geonetwork-ui/util/shared'
 
 import { select, Store } from '@ngrx/store'
 import { filter, map } from 'rxjs/operators'
@@ -39,33 +39,25 @@ export class MdViewFacade {
   allLinks$ = this.metadata$.pipe(
     map((record) => (this.helper.hasLinks(record) ? record.links : []))
   )
-  validLinks$ = this.allLinks$.pipe(
-    map(
-      (links) =>
-        links.filter((link) =>
-          this.helper.isValidLink(link)
-        ) as MetadataLinkValid[]
-    )
-  )
-  apiLinks$ = this.validLinks$.pipe(
+  apiLinks$ = this.allLinks$.pipe(
     map((links) => links.filter((link) => this.helper.isApiLink(link)))
   )
-  mapApiLinks$ = this.validLinks$.pipe(
+  mapApiLinks$ = this.allLinks$.pipe(
     map((links) => links.filter((link) => this.helper.isMapApiLink(link)))
   )
-  downloadLinks$ = this.validLinks$.pipe(
+  downloadLinks$ = this.allLinks$.pipe(
     map((links) => links.filter((link) => this.helper.isDownloadLink(link)))
   )
-  dataLinks$ = this.validLinks$.pipe(
+  dataLinks$ = this.allLinks$.pipe(
     map((links) => links.filter((link) => this.helper.isDataLink(link)))
   )
-  geoDataLinks$ = this.validLinks$.pipe(
+  geoDataLinks$ = this.allLinks$.pipe(
     map((links) => links.filter((link) => this.helper.isGeoDataLink(link)))
   )
-  landingPageLinks$ = this.validLinks$.pipe(
+  landingPageLinks$ = this.allLinks$.pipe(
     map((links) => links.filter((link) => this.helper.isLandingPage(link)))
   )
-  otherLinks$ = this.validLinks$.pipe(
+  otherLinks$ = this.allLinks$.pipe(
     map((links) => links.filter((link) => this.helper.isOtherLink(link)))
   )
 

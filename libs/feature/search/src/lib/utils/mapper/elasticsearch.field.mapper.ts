@@ -97,9 +97,9 @@ export class ElasticsearchFieldMapper {
     }),
     link: (output, source) => ({
       ...output,
-      links: getAsArray(
-        selectField<SourceWithUnknownProps[]>(source, 'link')
-      ).map(mapLink),
+      links: getAsArray(selectField<SourceWithUnknownProps[]>(source, 'link'))
+        .map(mapLink)
+        .filter((v) => v !== null),
     }),
     linkProtocol: (output, source) => {
       const protocols = getAsArray(

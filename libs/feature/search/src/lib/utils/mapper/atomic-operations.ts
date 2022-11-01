@@ -47,20 +47,25 @@ export const getAsUrl = (field) => {
   }
 }
 
-export const mapLink = (sourceLink: SourceWithUnknownProps): MetadataLink => {
+export const mapLink = (
+  sourceLink: SourceWithUnknownProps
+): MetadataLink | null => {
   const url = getAsUrl(selectField<string>(sourceLink, 'url'))
   // no url: fail early
   if (url === null) {
-    return { invalid: true, reason: 'The link does not contain a valid URL' }
+    // TODO: collect errors at the record level?
+    console.warn('A link without valid URL was found', sourceLink)
+    return null
   }
 
   const protocolMatch = /^(https?|ftp):/.test(url)
   if (!protocolMatch) {
-    return {
-      invalid: true,
-      reason:
-        'The URL for the link is in an unsupported protocol; supported protocols are HTTP, HTTPS and FTP',
-    }
+    // TODO: collect errors at the record level?
+    console.warn(
+      'A link with an unsupported protocol URL was found; supported protocols are HTTP, HTTPS and FTP',
+      sourceLink
+    )
+    return null
   }
 
   const name = selectField<string>(sourceLink, 'name')

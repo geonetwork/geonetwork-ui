@@ -5,7 +5,7 @@ import {
   LinkHelperService,
   sortPriority,
 } from '@geonetwork-ui/util/shared'
-import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { MetadataLink } from '@geonetwork-ui/util/shared'
 import { combineLatest, of } from 'rxjs'
 import { catchError, map, switchMap } from 'rxjs/operators'
 import { DataService } from '../service/data.service'
@@ -50,7 +50,7 @@ export class DataDownloadsComponent {
           ? wfsLinks.map((link) =>
               this.dataService.getDownloadLinksFromWfs(link)
             )
-          : [of([] as MetadataLinkValid[])]
+          : [of([] as MetadataLink[])]
       ).pipe(
         // flatten array
         map((wfsDownloadLinks) =>
@@ -83,11 +83,9 @@ export class DataDownloadsComponent {
           return of([...otherLinks, ...esriRestLinks])
         }),
         map((allLinks) =>
-          allLinks.sort(
-            (a: MetadataLinkValid, b: MetadataLinkValid): number => {
-              return sortPriority(b) - sortPriority(a)
-            }
-          )
+          allLinks.sort((a: MetadataLink, b: MetadataLink): number => {
+            return sortPriority(b) - sortPriority(a)
+          })
         )
       )
     })

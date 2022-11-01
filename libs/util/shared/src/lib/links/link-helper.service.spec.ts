@@ -123,29 +123,6 @@ describe('LinkHelperService', () => {
       })
     })
   })
-  describe('#isValidLink', () => {
-    describe('valid link', () => {
-      beforeEach(() => {
-        link = RECORD_LINK_FIXTURE_WMS
-        result = service.isValidLink(link)
-      })
-      it('returns true', () => {
-        expect(result).toBe(true)
-      })
-    })
-    describe('invalid link', () => {
-      beforeEach(() => {
-        link = {
-          invalid: true,
-          reason: 'no',
-        }
-        result = service.isValidLink(link)
-      })
-      it('returns false', () => {
-        expect(result).toBe(false)
-      })
-    })
-  })
 
   describe('#isMapLink', () => {
     describe('MAP usage', () => {

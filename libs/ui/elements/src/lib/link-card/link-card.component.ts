@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
-import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { MetadataLink } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-link-card',
@@ -8,5 +8,5 @@ import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LinkCardComponent {
-  @Input() link: MetadataLinkValid
+  @Input() link: MetadataLink
 }

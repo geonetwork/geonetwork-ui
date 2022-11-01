@@ -4,7 +4,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core'
-import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { MetadataLink } from '@geonetwork-ui/util/shared'
 import { getBadgeColor, LinkHelperService } from '@geonetwork-ui/util/shared'
 import { TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -24,14 +24,14 @@ export class DownloadsListComponent implements OnInit {
     private translateService: TranslateService
   ) {}
 
-  @Input() links: MetadataLinkValid[]
+  @Input() links: MetadataLink[]
 
   filterParam = ''
   filterFormats: string[] = ['all', 'csv', 'excel', 'json', 'shp', 'others']
   activeFilterFormats: string[] = ['all']
 
-  processedLinks: MetadataLinkValid[] = []
-  filteredLinks: MetadataLinkValid[] = []
+  processedLinks: MetadataLink[] = []
+  filteredLinks: MetadataLink[] = []
   filterButtons: FilterButton[]
 
   toggleFilterFormat(format: string): void {
@@ -69,14 +69,14 @@ export class DownloadsListComponent implements OnInit {
     })
   }
 
-  filterLinks(links: MetadataLinkValid[]) {
+  filterLinks(links: MetadataLink[]) {
     if (
       this.activeFilterFormats.length === 0 ||
       this.activeFilterFormats.includes('all')
     ) {
       return links
     }
-    let others: MetadataLinkValid[] = []
+    let others: MetadataLink[] = []
     if (this.activeFilterFormats.includes('others')) {
       others = links.filter((link) => {
         let isOther = true
@@ -86,14 +86,14 @@ export class DownloadsListComponent implements OnInit {
         return isOther
       })
     }
-    const filteredLinks = links.filter((link: MetadataLinkValid) => {
+    const filteredLinks = links.filter((link: MetadataLink) => {
       return this.activeFilterFormats.includes(link.format)
     })
     return [...filteredLinks, ...others]
   }
 
-  assignColor(links: MetadataLinkValid[]) {
-    return links.map((link: MetadataLinkValid) => {
+  assignColor(links: MetadataLink[]) {
+    return links.map((link: MetadataLink) => {
       return {
         ...link,
         color: getBadgeColor(link.format),
@@ -101,7 +101,7 @@ export class DownloadsListComponent implements OnInit {
     })
   }
 
-  formatWfs(links: MetadataLinkValid[]) {
+  formatWfs(links: MetadataLink[]) {
     return links.map((link) => {
       if (this.linkHelper.isWfsLink(link)) {
         const { format = '' } = link

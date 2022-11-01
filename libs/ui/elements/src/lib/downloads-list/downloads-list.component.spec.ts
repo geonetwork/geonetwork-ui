@@ -7,10 +7,7 @@ import {
 } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import {
-  LinkHelperService,
-  MetadataLinkValid,
-} from '@geonetwork-ui/util/shared'
+import { LinkHelperService, MetadataLink } from '@geonetwork-ui/util/shared'
 import { LINK_FIXTURES } from '@geonetwork-ui/util/shared/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -25,7 +22,7 @@ const linkHelperServiceMock = {
   template: ``,
 })
 class MockDownloadItemComponent {
-  @Input() link: MetadataLinkValid
+  @Input() link: MetadataLink
   @Input() color: string
 }
 

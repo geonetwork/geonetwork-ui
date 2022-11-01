@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { MetadataLinkValid, MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataLink, MetadataRecord } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-metadata-info',
@@ -16,7 +16,7 @@ import { MetadataLinkValid, MetadataRecord } from '@geonetwork-ui/util/shared'
 export class MetadataInfoComponent {
   @Input() metadata: MetadataRecord
   @Input() incomplete: boolean
-  @Input() landingPages: MetadataLinkValid[]
+  @Input() landingPages: MetadataLink[]
   @Output() keyword = new EventEmitter<string>()
 
   get hasUsage() {

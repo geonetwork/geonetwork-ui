@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { MetadataLink, MetadataLinkValid, MetadataRecord } from '../models'
+import { MetadataLink, MetadataRecord } from '../models'
 import { LinkClassifierService, LinkUsage } from './link-classifier.service'
 import { getFileFormat } from './link-utils'
 
@@ -30,9 +30,6 @@ export class LinkHelperService {
         this.isMapApiLink(link as MetadataLink)
       )
   }
-  isValidLink(link: MetadataLink): boolean {
-    return !('invalid' in link)
-  }
   isApiLink(link: MetadataLink): boolean {
     return this.linkClassifier.getUsagesForLink(link).includes(LinkUsage.API)
   }
@@ -55,13 +52,13 @@ export class LinkHelperService {
   isOtherLink(link: MetadataLink): boolean {
     return this.linkClassifier.getUsagesForLink(link).length === 0
   }
-  isWmsLink(link: MetadataLinkValid): boolean {
+  isWmsLink(link: MetadataLink): boolean {
     return /^OGC:WMS/.test(link.protocol)
   }
-  isWmtsLink(link: MetadataLinkValid): boolean {
+  isWmtsLink(link: MetadataLink): boolean {
     return /^OGC:WMTS/.test(link.protocol)
   }
-  isWfsLink(link: MetadataLinkValid): boolean {
+  isWfsLink(link: MetadataLink): boolean {
     return /^OGC:WFS/.test(link.protocol)
   }
   isLandingPage(link: MetadataLink): boolean {
@@ -69,14 +66,14 @@ export class LinkHelperService {
       .getUsagesForLink(link)
       .includes(LinkUsage.LANDINGPAGE)
   }
-  isEsriRestFeatureServer(link: MetadataLinkValid): boolean {
+  isEsriRestFeatureServer(link: MetadataLink): boolean {
     return /^ESRI:REST/.test(link.protocol) && /FeatureServer/.test(link.url)
   }
-  hasProtocolDownload(link: MetadataLinkValid): boolean {
+  hasProtocolDownload(link: MetadataLink): boolean {
     return /^WWW:DOWNLOAD/.test(link.protocol)
   }
 
-  getLinkLabelWithFormat(link: MetadataLinkValid): string {
+  getLinkLabelWithFormat(link: MetadataLink): string {
     let format
     if (this.isWmsLink(link)) {
       format = 'WMS'

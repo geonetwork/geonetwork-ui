@@ -5,7 +5,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core'
-import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { MetadataLink } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-download-item',
@@ -14,7 +14,7 @@ import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DownloadItemComponent {
-  @Input() link: MetadataLinkValid
+  @Input() link: MetadataLink
   @Input() color: string
   @Output() exportUrl = new EventEmitter<string>()
 

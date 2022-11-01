@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { SupportedType, SupportedTypes } from '@geonetwork-ui/data-fetcher'
-import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { MetadataLink } from '@geonetwork-ui/util/shared'
 import {
   BehaviorSubject,
   combineLatest,
@@ -74,7 +74,7 @@ export class DataViewTableComponent {
     private dataService: DataService
   ) {}
 
-  fetchData(link: MetadataLinkValid): Observable<{ id: string | number }[]> {
+  fetchData(link: MetadataLink): Observable<{ id: string | number }[]> {
     if (this.linkHelper.isWfsLink(link)) {
       return this.dataService
         .getGeoJsonDownloadUrlFromWfs(link.url, link.name)

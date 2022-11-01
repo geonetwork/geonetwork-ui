@@ -35,7 +35,7 @@ import { DataViewMapComponent } from './data-view-map.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { DataService } from '../service/data.service'
 import { delay } from 'rxjs/operators'
-import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { MetadataLink } from '@geonetwork-ui/util/shared'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
 import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared/fixtures'
 
@@ -149,7 +149,7 @@ export class MockDropdownSelectorComponent {
   template: '<div></div>',
 })
 export class MockExternalViewerButtonComponent {
-  @Input() link: MetadataLinkValid
+  @Input() link: MetadataLink
   @Input() mapConfig: MapConfig
 }
 

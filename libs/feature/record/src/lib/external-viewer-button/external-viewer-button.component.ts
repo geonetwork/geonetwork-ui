@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { LinkHelperService } from '@geonetwork-ui/util/shared'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
-import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { MetadataLink } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-external-viewer-button',
@@ -10,7 +10,7 @@ import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExternalViewerButtonComponent {
-  @Input() link: MetadataLinkValid
+  @Input() link: MetadataLink
   @Input() mapConfig: MapConfig
 
   get externalViewer() {

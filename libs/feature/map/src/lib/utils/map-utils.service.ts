@@ -18,7 +18,7 @@ import { from, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { MapContextLayerModel } from '../..'
 import { MapUtilsWMSService } from './map-utils-wms.service'
-import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import { MetadataLink } from '@geonetwork-ui/util/shared'
 
 const FEATURE_PROJECTION = 'EPSG:3857'
 const DATA_PROJECTION = 'EPSG:4326'
@@ -154,7 +154,7 @@ export class MapUtilsService {
     )
   }
 
-  getWmtsOptionsFromCapabilities(link: MetadataLinkValid): Observable<Options> {
+  getWmtsOptionsFromCapabilities(link: MetadataLink): Observable<Options> {
     return from(
       fetch(link.url)
         .then(function (response) {

@@ -15,7 +15,7 @@ import {
 } from '@geonetwork-ui/feature/map'
 import { LinkHelperService } from '@geonetwork-ui/util/shared'
 import { getMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
-import { MetadataLinkValid, ProxyService } from '@geonetwork-ui/util/shared'
+import { MetadataLink, ProxyService } from '@geonetwork-ui/util/shared'
 import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
 import { StyleLike } from 'ol/style/Style'
@@ -157,7 +157,7 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
     this.selection = null
   }
 
-  getLayerFromLink(link: MetadataLinkValid): Observable<MapContextLayerModel> {
+  getLayerFromLink(link: MetadataLink): Observable<MapContextLayerModel> {
     if (this.linkHelper.isWmsLink(link)) {
       return of({
         url: link.url,
