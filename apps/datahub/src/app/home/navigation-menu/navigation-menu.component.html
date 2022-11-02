@@ -22,7 +22,6 @@
   >
     <div *ngFor="let l of tabLinks">
       <button
-        (click)="setActiveLabel($event.target)"
         [routerLink]="l.link"
         class="block pl-5 pr-3 py-3 rounded-md text-[18px] font-medium uppercase tracking-wider w-full text-left truncate"
         translate
@@ -34,8 +33,7 @@
   <button
     class="block pl-5 pr-3 py-3 rounded-md text-[18px] font-medium uppercase tracking-wider flex-shrink truncate"
     [class]="displayMobileMenu ? 'hidden' : 'block'"
-    translate
   >
-    {{ activeLabel }}
+    {{ activeLabel$ | async | translate }}
   </button>
 </button>
