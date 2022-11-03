@@ -116,16 +116,54 @@ describe('DownloadsListComponent', () => {
       expect(items[0].componentInstance.isFromWfs).toEqual(false)
     })
   })
-  describe('filtering', () => {
+  describe('filtering links', () => {
     beforeEach(() => {
-      component.links = [LINK_FIXTURES.dataCsv]
-      component.activeFilterFormats = ['csv', 'json']
-      fixture.detectChanges()
+      component.links = [
+        LINK_FIXTURES.dataCsv,
+        LINK_FIXTURES.geodataJsonWithMimeType,
+      ]
     })
-    it('csv link is displayed', () => {
-      expect(component.filteredLinks.length).toBe(1)
-      component.toggleFilterFormat('csv')
-      expect(component.filteredLinks.length).toBe(0)
+    describe('no filter', () => {
+      beforeEach(() => {
+        component.activeFilterFormats = ['all']
+        fixture.detectChanges()
+      })
+      it('shows all links', () => {
+        expect(component.filteredLinks).toEqual([
+          LINK_FIXTURES.dataCsv,
+          LINK_FIXTURES.geodataJsonWithMimeType,
+        ])
+      })
+    })
+    describe('filter on csv', () => {
+      beforeEach(() => {
+        component.activeFilterFormats = ['csv']
+        fixture.detectChanges()
+      })
+      it('shows only one link', () => {
+        expect(component.filteredLinks).toEqual([LINK_FIXTURES.dataCsv])
+      })
+    })
+    describe('filter on json and csv', () => {
+      beforeEach(() => {
+        component.activeFilterFormats = ['csv', 'json']
+        fixture.detectChanges()
+      })
+      it('shows both links including geojson', () => {
+        expect(component.filteredLinks).toEqual([
+          LINK_FIXTURES.dataCsv,
+          LINK_FIXTURES.geodataJsonWithMimeType,
+        ])
+      })
+    })
+    describe('filter on shp', () => {
+      beforeEach(() => {
+        component.activeFilterFormats = ['shp']
+        fixture.detectChanges()
+      })
+      it('shows no link', () => {
+        expect(component.filteredLinks).toEqual([])
+      })
     })
   })
 })

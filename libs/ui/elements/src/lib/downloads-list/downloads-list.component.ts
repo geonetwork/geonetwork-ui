@@ -88,7 +88,9 @@ export class DownloadsListComponent implements OnInit {
       })
     }
     const filteredLinks = links.filter((link: MetadataLink) => {
-      return this.activeFilterFormats.includes(getFileFormat(link))
+      return this.activeFilterFormats.some(
+        (filter) => getFileFormat(link).indexOf(filter) > -1
+      )
     })
     return [...filteredLinks, ...others]
   }
