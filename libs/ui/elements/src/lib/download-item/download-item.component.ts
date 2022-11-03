@@ -16,6 +16,8 @@ import { MetadataLink } from '@geonetwork-ui/util/shared'
 export class DownloadItemComponent {
   @Input() link: MetadataLink
   @Input() color: string
+  @Input() format: string
+  @Input() isFromWfs: boolean
   @Output() exportUrl = new EventEmitter<string>()
 
   openUrl() {

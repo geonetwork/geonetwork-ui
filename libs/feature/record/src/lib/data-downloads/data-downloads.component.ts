@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import {
   getFileFormat,
-  getWfsFormat,
-  LinkHelperService,
+  MetadataLinkType,
   sortPriority,
 } from '@geonetwork-ui/util/shared'
 import { MetadataLink } from '@geonetwork-ui/util/shared'
 import { combineLatest, of } from 'rxjs'
-import { catchError, map, switchMap } from 'rxjs/operators'
+import { catchError, map, switchMap, tap } from 'rxjs/operators'
 import { DataService } from '../service/data.service'
 import { MdViewFacade } from '../state'
 
@@ -18,30 +17,23 @@ import { MdViewFacade } from '../state'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataDownloadsComponent {
-  constructor(
-    public facade: MdViewFacade,
-    private linkHelper: LinkHelperService,
-    private dataService: DataService
-  ) {}
+  constructor(public facade: MdViewFacade, private dataService: DataService) {}
 
   error: string = null
 
   links$ = this.facade.downloadLinks$.pipe(
     switchMap((links) => {
-      const wfsLinks = links.filter((link) => this.linkHelper.isWfsLink(link))
+      const wfsLinks = links.filter(
+        (link) => link.type === MetadataLinkType.WFS
+      )
       const esriRestLinks = links
-        .filter((link) => this.linkHelper.isEsriRestFeatureServer(link))
+        .filter((link) => link.type === MetadataLinkType.ESRI_REST)
         .flatMap((link) => this.dataService.getDownloadLinksFromEsriRest(link))
-      const otherLinks = links
-        .filter((link) => !/^OGC:WFS|ESRI:REST/.test(link.protocol))
-        .map((link) =>
-          'format' in link
-            ? link
-            : {
-                ...link,
-                format: getFileFormat(link),
-              }
-        )
+      const otherLinks = links.filter(
+        (link) =>
+          link.type !== MetadataLinkType.WFS &&
+          link.type !== MetadataLinkType.ESRI_REST
+      )
 
       this.error = null
 
@@ -56,22 +48,21 @@ export class DataDownloadsComponent {
         map((wfsDownloadLinks) =>
           wfsDownloadLinks.reduce((prev, curr) => [...prev, ...curr], [])
         ),
+        // only keep known formats
         map((wfsDownloadLinks) =>
-          wfsDownloadLinks
-            .map((link) => ({
-              ...link,
-              format: getWfsFormat(link),
-            }))
-            .filter((link) => link.format)
-            // remove duplicates
-            .filter(
-              (link, i, links) =>
-                links.findIndex(
-                  (firstLink) =>
-                    firstLink.format === link.format &&
-                    firstLink.name === link.name
-                ) === i
-            )
+          wfsDownloadLinks.filter((link) => !!getFileFormat(link))
+        ),
+        // remove duplicates
+        map((wfsDownloadLinks) =>
+          wfsDownloadLinks.filter(
+            (link, i, links) =>
+              links.findIndex(
+                (firstLink) =>
+                  getFileFormat(firstLink) === getFileFormat(link) &&
+                  firstLink.name === link.name &&
+                  firstLink.type === link.type
+              ) === i
+          )
         ),
         map((wfsDownloadLinks) => [
           ...otherLinks,

@@ -7,7 +7,7 @@ import {
 import { BehaviorSubject, of, throwError } from 'rxjs'
 import { MdViewFacade } from '../state'
 import { DataDownloadsComponent } from './data-downloads.component'
-import { MetadataLink } from '@geonetwork-ui/util/shared'
+import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util/shared'
 import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { DataService } from '../service/data.service'
@@ -23,27 +23,27 @@ class DataServiceMock {
       : of([
           {
             ...link,
-            format: 'geojson',
+            mimeType: 'application/geo+json',
           },
           {
             ...link,
-            format: 'csv',
+            mimeType: 'text/csv',
           },
           {
             ...link,
-            format: 'gml',
+            mimeType: 'gml',
           },
         ])
   )
   getDownloadLinksFromEsriRest = jest.fn((link) => [
     {
       ...link,
-      format: 'REST:json',
+      mimeType: 'application/json',
       url: `${link.url}/query?f=json&where=1=1&outFields=*`,
     },
     {
       ...link,
-      format: 'REST:geojson',
+      mimeType: 'application/geo+json',
       url: `${link.url}/query?f=geojson&where=1=1&outFields=*`,
     },
   ])
@@ -109,12 +109,14 @@ describe('DataDownloadsComponent', () => {
             name: 'surval_parametre_point.csv',
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/surval_parametre_point.csv',
+            type: MetadataLinkType.DOWNLOAD,
           },
           {
             description: 'Lieu de surveillance (ligne)',
             name: 'surval_parametre_ligne',
             protocol: 'OGC:WFS',
             url: 'https://error/wfs/surveillance_littorale',
+            type: MetadataLinkType.WFS,
           },
         ])
         fixture.detectChanges()
@@ -129,9 +131,9 @@ describe('DataDownloadsComponent', () => {
           {
             description: 'Lieu de surveillance (point)',
             name: 'surval_parametre_point.csv',
-            format: 'csv',
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/surval_parametre_point.csv',
+            type: MetadataLinkType.DOWNLOAD,
           },
         ])
       }))
@@ -164,34 +166,35 @@ describe('DataDownloadsComponent', () => {
             name: 'surval_parametre_point.csv',
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/surval_parametre_point.csv',
+            type: MetadataLinkType.DOWNLOAD,
           },
           {
             description: 'Lieu de surveillance (polygone)',
             name: 'surval_parametre_polygone.geojson',
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/surval_parametre_polygone.geojson',
+            type: MetadataLinkType.DOWNLOAD,
           },
           {
             description: 'Lieu de surveillance (ligne)',
             name: 'surval_parametre_ligne',
             protocol: 'OGC:WFS',
             url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
+            type: MetadataLinkType.WFS,
           },
           {
             protocol: 'OGC:WFS',
             name: 'mes_hdf',
-            format: 'arcgis geoservices rest api',
             description: 'ArcGIS GeoService Wfs',
-            mediaType: 'application/json',
             url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/WFSServer/0',
+            type: MetadataLinkType.WFS,
           },
           {
             protocol: 'ESRI:REST',
             name: 'mes_hdf_journalier_poll_princ',
-            format: 'arcgis geoservices rest api',
             description: 'ArcGIS GeoService',
-            mediaType: 'application/json',
             url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf_journalier_poll_princ/FeatureServer/0',
+            type: MetadataLinkType.ESRI_REST,
           },
         ])
         fixture.detectChanges()
@@ -205,63 +208,65 @@ describe('DataDownloadsComponent', () => {
         expect(downloadLinks).toEqual([
           {
             description: 'Lieu de surveillance (point)',
-            format: 'csv',
             name: 'surval_parametre_point.csv',
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/surval_parametre_point.csv',
+            type: MetadataLinkType.DOWNLOAD,
           },
           {
             description: 'Lieu de surveillance (ligne)',
-            format: 'WFS:csv',
+            mimeType: 'text/csv',
             name: 'surval_parametre_ligne',
             protocol: 'OGC:WFS',
             url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
+            type: MetadataLinkType.WFS,
           },
           {
             description: 'ArcGIS GeoService Wfs',
-            format: 'WFS:csv',
-            mediaType: 'application/json',
+            mimeType: 'text/csv',
             name: 'mes_hdf',
             protocol: 'OGC:WFS',
             url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/WFSServer/0',
+            type: MetadataLinkType.WFS,
           },
           {
             description: 'Lieu de surveillance (polygone)',
-            format: 'geojson',
             name: 'surval_parametre_polygone.geojson',
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/surval_parametre_polygone.geojson',
+            type: MetadataLinkType.DOWNLOAD,
           },
           {
             description: 'Lieu de surveillance (ligne)',
-            format: 'WFS:geojson',
             name: 'surval_parametre_ligne',
+            mimeType: 'application/geo+json',
             protocol: 'OGC:WFS',
             url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
+            type: MetadataLinkType.WFS,
           },
           {
             description: 'ArcGIS GeoService Wfs',
-            format: 'WFS:geojson',
-            mediaType: 'application/json',
+            mimeType: 'application/geo+json',
             name: 'mes_hdf',
             protocol: 'OGC:WFS',
             url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/WFSServer/0',
+            type: MetadataLinkType.WFS,
           },
           {
             description: 'ArcGIS GeoService',
-            format: 'REST:json',
-            mediaType: 'application/json',
+            mimeType: 'application/json',
             name: 'mes_hdf_journalier_poll_princ',
             protocol: 'ESRI:REST',
             url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf_journalier_poll_princ/FeatureServer/0/query?f=json&where=1=1&outFields=*',
+            type: MetadataLinkType.ESRI_REST,
           },
           {
             description: 'ArcGIS GeoService',
-            format: 'REST:geojson',
-            mediaType: 'application/json',
+            mimeType: 'application/geo+json',
             name: 'mes_hdf_journalier_poll_princ',
             protocol: 'ESRI:REST',
             url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf_journalier_poll_princ/FeatureServer/0/query?f=geojson&where=1=1&outFields=*',
+            type: MetadataLinkType.ESRI_REST,
           },
         ])
       }))
@@ -272,37 +277,37 @@ describe('DataDownloadsComponent', () => {
           {
             description: 'KML Data',
             name: 'abc.kml',
-            format: 'kml',
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/data.kml',
+            type: MetadataLinkType.DOWNLOAD,
           },
           {
             description: 'Lieu de surveillance (point)',
             name: 'surval_parametre_point.csv',
-            format: 'csv',
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/surval_parametre_point.csv',
+            type: MetadataLinkType.DOWNLOAD,
           },
           {
             description: 'pdf file',
             name: 'abc.pdf',
-            format: 'pdf',
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/file.pdf',
+            type: MetadataLinkType.DOWNLOAD,
           },
           {
             description: 'Lieu de surveillance (polygone)',
             name: 'surval_parametre_polygone.geojson',
-            format: 'geojson',
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/surval_parametre_polygone.geojson',
+            type: MetadataLinkType.DOWNLOAD,
           },
           {
             description: 'excel data',
             name: 'data.xls',
-            format: 'Excel',
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/data.excel',
+            type: MetadataLinkType.DOWNLOAD,
           },
         ])
         fixture.detectChanges()
@@ -317,37 +322,37 @@ describe('DataDownloadsComponent', () => {
           {
             description: 'Lieu de surveillance (point)',
             name: 'surval_parametre_point.csv',
-            format: 'csv',
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/surval_parametre_point.csv',
+            type: MetadataLinkType.DOWNLOAD,
           },
           {
             description: 'excel data',
             name: 'data.xls',
-            format: 'Excel',
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/data.excel',
+            type: MetadataLinkType.DOWNLOAD,
           },
           {
             description: 'Lieu de surveillance (polygone)',
             name: 'surval_parametre_polygone.geojson',
-            format: 'geojson',
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/surval_parametre_polygone.geojson',
+            type: MetadataLinkType.DOWNLOAD,
           },
           {
             description: 'KML Data',
             name: 'abc.kml',
-            format: 'kml',
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/data.kml',
+            type: MetadataLinkType.DOWNLOAD,
           },
           {
             description: 'pdf file',
             name: 'abc.pdf',
-            format: 'pdf',
             protocol: 'WWW:DOWNLOAD',
             url: 'https://www.ifremer.fr/file.pdf',
+            type: MetadataLinkType.DOWNLOAD,
           },
         ])
       }))

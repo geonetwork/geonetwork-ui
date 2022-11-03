@@ -4,10 +4,15 @@ import {
   Input,
   OnInit,
 } from '@angular/core'
-import { MetadataLink } from '@geonetwork-ui/util/shared'
-import { getBadgeColor, LinkHelperService } from '@geonetwork-ui/util/shared'
 import { TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import {
+  getBadgeColor,
+  getFileFormat,
+  LinkClassifierService,
+  MetadataLink,
+  MetadataLinkType,
+} from '@geonetwork-ui/util/shared'
 
 marker('datahub.search.filter.all')
 marker('datahub.search.filter.others')
@@ -20,17 +25,15 @@ marker('datahub.search.filter.others')
 })
 export class DownloadsListComponent implements OnInit {
   constructor(
-    private linkHelper: LinkHelperService,
+    private linkClassifier: LinkClassifierService,
     private translateService: TranslateService
   ) {}
 
   @Input() links: MetadataLink[]
 
-  filterParam = ''
   filterFormats: string[] = ['all', 'csv', 'excel', 'json', 'shp', 'others']
   activeFilterFormats: string[] = ['all']
 
-  processedLinks: MetadataLink[] = []
   filteredLinks: MetadataLink[] = []
   filterButtons: FilterButton[]
 
@@ -42,7 +45,7 @@ export class DownloadsListComponent implements OnInit {
         ? this.activeFilterFormats.filter((f: string) => format !== f)
         : [...this.activeFilterFormats.filter((f) => f !== 'all'), format]
     }
-    this.filteredLinks = this.filterLinks(this.processedLinks)
+    this.filteredLinks = this.filterLinks(this.links)
   }
 
   isFilterActive(filter: string): boolean {
@@ -57,13 +60,11 @@ export class DownloadsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.processedLinks = this.assignColor(this.links)
-    this.processedLinks = this.formatWfs(this.processedLinks)
-    this.filteredLinks = this.filterLinks(this.processedLinks)
+    this.filteredLinks = this.filterLinks(this.links)
 
     this.filterButtons = this.filterFormats.map((format) => {
       return {
-        format: format,
+        format,
         color: getBadgeColor(format),
       }
     })
@@ -81,39 +82,27 @@ export class DownloadsListComponent implements OnInit {
       others = links.filter((link) => {
         let isOther = true
         for (const format of this.filterFormats) {
-          if (format === link.format) isOther = false
+          if (format === getFileFormat(link)) isOther = false
         }
         return isOther
       })
     }
     const filteredLinks = links.filter((link: MetadataLink) => {
-      return this.activeFilterFormats.includes(link.format)
+      return this.activeFilterFormats.includes(getFileFormat(link))
     })
     return [...filteredLinks, ...others]
   }
 
-  assignColor(links: MetadataLink[]) {
-    return links.map((link: MetadataLink) => {
-      return {
-        ...link,
-        color: getBadgeColor(link.format),
-      }
-    })
+  getLinkFormat(link: MetadataLink) {
+    return getFileFormat(link)
   }
 
-  formatWfs(links: MetadataLink[]) {
-    return links.map((link) => {
-      if (this.linkHelper.isWfsLink(link)) {
-        const { format = '' } = link
-        const tokens = format.split(':')
-        link = {
-          ...link,
-          isWfs: true,
-          format: tokens[tokens.length - 1],
-        }
-      }
-      return link
-    })
+  getLinkColor(link: MetadataLink) {
+    return getBadgeColor(getFileFormat(link))
+  }
+
+  getIsFromWfs(link: MetadataLink) {
+    return link.type === MetadataLinkType.WFS
   }
 }
 

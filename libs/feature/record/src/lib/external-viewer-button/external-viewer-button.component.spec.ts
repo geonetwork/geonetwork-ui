@@ -1,15 +1,10 @@
 import { Component } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { LinkHelperService } from '@geonetwork-ui/util/shared'
 import { MAP_CONFIG_FIXTURE } from '@geonetwork-ui/util/app-config'
 
 import { ExternalViewerButtonComponent } from './external-viewer-button.component'
-
-class LinkHelperServiceMock {
-  isWmsLink = jest.fn((link) => link.protocol === 'OGC:WMS')
-  isWfsLink = jest.fn((link) => link.protocol === 'OGC:WFS')
-}
+import { MetadataLinkType } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-button',
@@ -24,12 +19,6 @@ describe('ExternalViewerButtonComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ExternalViewerButtonComponent, MockButtonComponent],
-      providers: [
-        {
-          provide: LinkHelperService,
-          useClass: LinkHelperServiceMock,
-        },
-      ],
     }).compileComponents()
   })
 
@@ -58,6 +47,7 @@ describe('ExternalViewerButtonComponent', () => {
         url: 'http://example.com/ows?service=wms&request=getcapabilities',
         name: 'layername',
         protocol: 'OGC:WMS',
+        type: MetadataLinkType.WMS,
       }
       fixture.detectChanges()
     })
@@ -109,6 +99,7 @@ describe('ExternalViewerButtonComponent', () => {
         url: 'http://example.com/',
         name: 'layername',
         protocol: 'NOT:WMS',
+        type: MetadataLinkType.OTHER,
       }
       fixture.detectChanges()
     })

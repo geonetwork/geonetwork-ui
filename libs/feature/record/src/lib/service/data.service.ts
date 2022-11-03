@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { WfsEndpoint } from '@camptocamp/ogc-client'
 import { readDataset, SupportedType } from '@geonetwork-ui/data-fetcher'
-import { MetadataLink, ProxyService } from '@geonetwork-ui/util/shared'
+import {
+  extensionToFormat,
+  getMimeTypeForFormat,
+  MetadataLink,
+  ProxyService,
+} from '@geonetwork-ui/util/shared'
 import type { FeatureCollection } from 'geojson'
 import { from, Observable, throwError } from 'rxjs'
 import { catchError, map, tap } from 'rxjs/operators'
@@ -107,7 +112,7 @@ export class DataService {
         Object.keys(urls).map((format) => ({
           ...wfsLink,
           url: urls[format],
-          format: format,
+          mimeType: getMimeTypeForFormat(extensionToFormat(format)) || format,
         }))
       )
     )
@@ -117,7 +122,7 @@ export class DataService {
     return ['json', 'geojson'].map((format) => ({
       ...esriRestLink,
       url: this.getDownloadUrlFromEsriRest(esriRestLink.url, format),
-      format: `REST:${format}`,
+      mimeType: getMimeTypeForFormat(extensionToFormat(format)) || format,
     }))
   }
 

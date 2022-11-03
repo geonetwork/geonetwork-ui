@@ -35,7 +35,7 @@ import { DataViewMapComponent } from './data-view-map.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { DataService } from '../service/data.service'
 import { delay } from 'rxjs/operators'
-import { MetadataLink } from '@geonetwork-ui/util/shared'
+import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util/shared'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
 import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared/fixtures'
 
@@ -280,12 +280,14 @@ describe('DataViewMapComponent', () => {
             name: 'layer1',
             label: 'layer1',
             protocol: 'OGC:WMS--1-3-0',
+            type: MetadataLinkType.WMS,
           },
           {
             url: 'http://abcd.com/',
             name: 'layer2',
             label: 'layer2',
             protocol: 'OGC:WMS--1-1-0',
+            type: MetadataLinkType.WMS,
           },
         ])
         mdViewFacade.geoDataLinks$.next([])
@@ -321,6 +323,7 @@ describe('DataViewMapComponent', () => {
           label: 'layer1',
           name: 'layer1',
           protocol: 'OGC:WMS--1-3-0',
+          type: MetadataLinkType.WMS,
         })
       })
     })
@@ -333,6 +336,7 @@ describe('DataViewMapComponent', () => {
             name: 'layer1',
             label: 'layer1',
             protocol: 'OGC:WMS',
+            type: MetadataLinkType.WMS,
           },
         ])
         mdViewFacade.geoDataLinks$.next([
@@ -341,13 +345,14 @@ describe('DataViewMapComponent', () => {
             name: 'featuretype',
             label: 'featuretype',
             protocol: 'OGC:WFS--2-0-0',
+            type: MetadataLinkType.WFS,
           },
           {
             url: 'http://abcd.com/data.geojson',
             name: 'data.geojson',
             label: 'data.geojson',
             protocol: 'WWW:DOWNLOAD',
-            format: 'geojson',
+            type: MetadataLinkType.DOWNLOAD,
           },
         ])
         fixture.detectChanges()
@@ -374,6 +379,7 @@ describe('DataViewMapComponent', () => {
           name: 'layer1',
           label: 'layer1',
           protocol: 'OGC:WMS',
+          type: MetadataLinkType.WMS,
         })
       })
     })
@@ -386,6 +392,7 @@ describe('DataViewMapComponent', () => {
             url: 'http://abcd.com/wfs',
             name: 'featuretype',
             protocol: 'OGC:WFS',
+            type: MetadataLinkType.WFS,
           },
         ])
         tick(200)
@@ -411,6 +418,7 @@ describe('DataViewMapComponent', () => {
             url: 'http://abcd.com/wmts',
             name: 'orthophoto',
             protocol: 'OGC:WMTS',
+            type: MetadataLinkType.WMTS,
           },
         ])
         mdViewFacade.geoDataLinks$.next([])
@@ -438,6 +446,7 @@ describe('DataViewMapComponent', () => {
             protocol: 'ESRI:REST',
             name: 'mes_hdf',
             url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/FeatureServer/0',
+            type: MetadataLinkType.ESRI_REST,
           },
         ])
         tick(200)
@@ -464,6 +473,7 @@ describe('DataViewMapComponent', () => {
             url: 'http://abcd.com/wfs/error',
             name: 'featuretype',
             protocol: 'OGC:WFS',
+            type: MetadataLinkType.WFS,
           },
         ])
       })
@@ -481,7 +491,7 @@ describe('DataViewMapComponent', () => {
               url: 'http://abcd.com/data.geojson',
               name: 'data.geojson',
               protocol: 'WWW:DOWNLOAD--https',
-              format: 'geojson',
+              type: MetadataLinkType.DOWNLOAD,
             },
           ])
           fixture.detectChanges()
@@ -505,7 +515,7 @@ describe('DataViewMapComponent', () => {
               url: 'http://abcd.com/data.geojson',
               name: 'data.geojson',
               protocol: 'WWW:DOWNLOAD--https',
-              format: 'geojson',
+              type: MetadataLinkType.DOWNLOAD,
             },
           ])
           fixture.detectChanges()
@@ -541,7 +551,7 @@ describe('DataViewMapComponent', () => {
             name: 'data.geojson',
             label: 'data.geojson',
             protocol: 'WWW:DOWNLOAD',
-            format: 'geojson',
+            type: MetadataLinkType.DOWNLOAD,
           },
         ])
         mdViewFacade.mapApiLinks$.next([
@@ -550,6 +560,7 @@ describe('DataViewMapComponent', () => {
             name: 'layer',
             label: 'layer',
             protocol: 'OGC:WMS',
+            type: MetadataLinkType.WMS,
           },
         ])
         mdViewFacade.geoDataLinks$.next([])
@@ -581,6 +592,7 @@ describe('DataViewMapComponent', () => {
           name: 'layer',
           label: 'layer',
           protocol: 'OGC:WMS',
+          type: MetadataLinkType.WMS,
         })
       })
     })
@@ -593,11 +605,13 @@ describe('DataViewMapComponent', () => {
             url: 'http://abcd.com/',
             name: 'layer1',
             protocol: 'OGC:WMS',
+            type: MetadataLinkType.WMS,
           },
           {
             url: 'http://abcd.com/',
             name: 'layer2',
             protocol: 'OGC:WMS',
+            type: MetadataLinkType.WMS,
           },
         ])
         mdViewFacade.geoDataLinks$.next([])
@@ -633,6 +647,7 @@ describe('DataViewMapComponent', () => {
             url: 'http://abcd.com/',
             name: 'layer2',
             protocol: 'OGC:WMS',
+            type: MetadataLinkType.WMS,
           })
         })
       })
@@ -660,6 +675,7 @@ describe('DataViewMapComponent', () => {
             url: 'http://abcd.com/',
             name: 'layer2',
             protocol: 'OGC:WMS',
+            type: MetadataLinkType.WMS,
           })
         })
       })
@@ -685,6 +701,7 @@ describe('DataViewMapComponent', () => {
             url: 'http://abcd.com/',
             name: 'layer2',
             protocol: 'OGC:WMS',
+            type: MetadataLinkType.WMS,
           })
         })
       })

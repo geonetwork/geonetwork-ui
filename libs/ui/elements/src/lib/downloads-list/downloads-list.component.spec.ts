@@ -7,15 +7,11 @@ import {
 } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { LinkHelperService, MetadataLink } from '@geonetwork-ui/util/shared'
+import { LinkClassifierService, MetadataLink } from '@geonetwork-ui/util/shared'
 import { LINK_FIXTURES } from '@geonetwork-ui/util/shared/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
 
 import { DownloadsListComponent } from './downloads-list.component'
-
-const linkHelperServiceMock = {
-  isWfsLink: jest.fn(() => true),
-}
 
 @Component({
   selector: 'gn-ui-download-item',
@@ -24,6 +20,8 @@ const linkHelperServiceMock = {
 class MockDownloadItemComponent {
   @Input() link: MetadataLink
   @Input() color: string
+  @Input() format: string
+  @Input() isFromWfs: boolean
 }
 
 describe('DownloadsListComponent', () => {
@@ -36,12 +34,7 @@ describe('DownloadsListComponent', () => {
       imports: [TranslateModule.forRoot()],
       declarations: [DownloadsListComponent, MockDownloadItemComponent],
       schemas: [NO_ERRORS_SCHEMA],
-      providers: [
-        {
-          provide: LinkHelperService,
-          useValue: linkHelperServiceMock,
-        },
-      ],
+      providers: [LinkClassifierService],
     })
       .overrideComponent(DownloadsListComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
@@ -103,7 +96,7 @@ describe('DownloadsListComponent', () => {
       expect(items.length).toBe(1)
     })
   })
-  describe('hydrates link with color and format', () => {
+  describe('derivates color and format from link', () => {
     let items: DebugElement[]
 
     beforeEach(() => {
@@ -113,19 +106,19 @@ describe('DownloadsListComponent', () => {
     })
     it('contains color, isWfs & format', () => {
       expect(items.length).toBe(1)
-      expect(items[0].componentInstance.link).toEqual({
-        ...LINK_FIXTURES.geodataShpWithMimeType,
-        color: 'var(--color-gray-700)',
-        format: '',
-        isWfs: true,
-      })
+      expect(items[0].componentInstance.link).toEqual(
+        LINK_FIXTURES.geodataShpWithMimeType
+      )
+      expect(items[0].componentInstance.format).toEqual('shp')
+      expect(items[0].componentInstance.color).toEqual(
+        expect.stringMatching(/#[0-9a-b]{2,6}/i)
+      )
+      expect(items[0].componentInstance.isFromWfs).toEqual(false)
     })
   })
   describe('filtering', () => {
-    let items: DebugElement[]
-
     beforeEach(() => {
-      component.links = [{ ...LINK_FIXTURES.dataCsv, format: 'csv' }]
+      component.links = [LINK_FIXTURES.dataCsv]
       component.activeFilterFormats = ['csv', 'json']
       fixture.detectChanges()
     })

@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { LinkHelperService } from '@geonetwork-ui/util/shared'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
-import { MetadataLink } from '@geonetwork-ui/util/shared'
+import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-external-viewer-button',
@@ -25,14 +24,12 @@ export class ExternalViewerButtonComponent {
 
   get supportedLinkLayerType() {
     if (!this.link) return null
-    return this.linkHelper.isWmsLink(this.link)
+    return this.link.type === MetadataLinkType.WMS
       ? 'wms'
-      : this.linkHelper.isWfsLink(this.link)
+      : this.link.type === MetadataLinkType.WFS
       ? 'wfs'
       : null
   }
-
-  constructor(private linkHelper: LinkHelperService) {}
 
   openInExternalViewer() {
     const templateUrl = this.mapConfig.EXTERNAL_VIEWER_URL_TEMPLATE
