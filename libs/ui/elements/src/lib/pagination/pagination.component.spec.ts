@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-
 import { PaginationComponent } from './pagination.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'

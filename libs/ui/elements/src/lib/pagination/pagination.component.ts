@@ -33,6 +33,7 @@ export class PaginationComponent implements OnChanges {
   }
 
   setPage(newPage) {
+    if (!Number.isInteger(newPage)) return
     this.currentPage = newPage
     this.applyPageBounds()
     this.newCurrentPageEvent.emit(this.currentPage)
