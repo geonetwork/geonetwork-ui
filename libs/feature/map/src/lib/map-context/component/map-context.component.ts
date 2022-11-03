@@ -26,6 +26,11 @@ import { MapConfig } from '@geonetwork-ui/util/app-config'
 export class MapContextComponent implements OnChanges {
   @Input() context: MapContextModel
   @Input() mapConfig: MapConfig
+  @Input() set prioritizePageScroll(pagePriority: boolean) {
+    if (pagePriority) {
+      this.utils.prioritizePageScroll(this.map.getInteractions())
+    }
+  }
   @Output() featureClicked = new EventEmitter<Feature<Geometry>[]>()
 
   map: Map

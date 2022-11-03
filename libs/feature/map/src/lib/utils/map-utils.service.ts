@@ -13,12 +13,15 @@ import ImageWMS from 'ol/source/ImageWMS'
 import TileWMS from 'ol/source/TileWMS'
 import VectorSource from 'ol/source/Vector'
 import { Options, optionsFromCapabilities } from 'ol/source/WMTS'
+import { DragPan, MouseWheelZoom, defaults, Interaction } from 'ol/interaction'
+import { platformModifierKeyOnly } from 'ol/events/condition'
 import WMTSCapabilities from 'ol/format/WMTSCapabilities'
 import { from, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { MapContextLayerModel } from '../..'
 import { MapUtilsWMSService } from './map-utils-wms.service'
 import { MetadataLink } from '@geonetwork-ui/util/shared'
+import Collection from 'ol/Collection'
 
 const FEATURE_PROJECTION = 'EPSG:3857'
 const DATA_PROJECTION = 'EPSG:4326'
@@ -167,6 +170,27 @@ export class MapUtilsService {
             matrixSet: 'EPSG:3857',
           })
         })
+    )
+  }
+
+  prioritizePageScroll(interactions: Collection<Interaction>) {
+    interactions.clear()
+    interactions.extend(
+      defaults({ dragPan: false, mouseWheelZoom: false })
+        .extend([
+          new DragPan({
+            condition: function (event) {
+              return (
+                (this as DragPan).getPointerCount() === 2 ||
+                platformModifierKeyOnly(event)
+              )
+            },
+          }),
+          new MouseWheelZoom({
+            condition: platformModifierKeyOnly,
+          }),
+        ])
+        .getArray()
     )
   }
 }
