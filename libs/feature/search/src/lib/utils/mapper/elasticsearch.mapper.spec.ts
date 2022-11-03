@@ -1,9 +1,13 @@
 import { TestBed } from '@angular/core/testing'
 import { ElasticsearchMapper } from './elasticsearch.mapper'
-import { MetadataUrlService, MetadataRecord } from '@geonetwork-ui/util/shared'
 import {
-  hitsOnly,
+  MetadataLinkType,
+  MetadataRecord,
+  MetadataUrlService,
+} from '@geonetwork-ui/util/shared'
+import {
   ES_FIXTURE_FULL_RESPONSE,
+  hitsOnly,
 } from '@geonetwork-ui/util/shared/fixtures'
 
 const metadataUrlServiceMock = {
@@ -105,6 +109,7 @@ describe('ElasticsearchMapper', () => {
               name: 'my data layer',
               label: 'my data layer',
               url: 'https://my.website/services/data/',
+              type: MetadataLinkType.OTHER,
             },
           ])
         })
@@ -125,26 +130,33 @@ describe('ElasticsearchMapper', () => {
               description: 'Download this file!',
               label: 'Download this file!',
               url: 'https://my.website/services/static/data.csv',
+              type: MetadataLinkType.OTHER,
             },
           ])
         })
       })
-      describe('invalid link (no url)', () => {
+      describe('valid link with a mime type', () => {
         beforeEach(() => {
           hit._source.link = [
             {
               description: 'Download this file!',
-              protocol: 'FILE',
+              protocol: 'WWW:DOWNLOAD:application/csv',
+              url: 'https://my.website/services/static/data.csv',
             },
           ]
         })
-        it('does not parse the link', () => {
+        it('parses as a valid link, uses description as label', () => {
           const summary = service.toRecord(hit)
-          expect(summary.links).toEqual([])
-          expect(window.console.warn).toHaveBeenCalledWith(
-            expect.stringContaining('URL'),
-            expect.any(Object)
-          )
+          expect(summary.links).toEqual([
+            {
+              description: 'Download this file!',
+              label: 'Download this file!',
+              mimeType: 'application/csv',
+              url: 'https://my.website/services/static/data.csv',
+              type: MetadataLinkType.DOWNLOAD,
+              protocol: 'WWW:DOWNLOAD:application/csv',
+            },
+          ])
         })
       })
       describe('invalid link (invalid url)', () => {
@@ -193,15 +205,21 @@ describe('ElasticsearchMapper', () => {
           summary = service.toRecord(hit)
         })
         it('hasDownloads is false', () => {
-          expect(summary.hasDownloads).toBeUndefined()
+          expect(summary.hasDownloads).toBe(false)
         })
         it('hasMaps is false', () => {
-          expect(summary.hasMaps).toBeUndefined()
+          expect(summary.hasMaps).toBe(false)
         })
       })
       describe('unknwown protocols', () => {
         beforeEach(() => {
-          hit._source.linkProtocol = ['MY-PROTOCOL']
+          hit._source.link = [
+            {
+              protocol: 'MYPROTOCOL',
+              url: 'https://abcd/',
+              type: MetadataLinkType.OTHER,
+            },
+          ]
           summary = service.toRecord(hit)
         })
         it('hasDownloads is false', () => {
@@ -213,13 +231,24 @@ describe('ElasticsearchMapper', () => {
       })
       describe('map and downloads protocol', () => {
         beforeEach(() => {
-          hit._source.linkProtocol = ['OGC:WMS', 'WWW:DOWNLOAD:1.0']
+          hit._source.link = [
+            {
+              protocol: 'OGC:WMS',
+              url: 'https://my.ogc.server/wms',
+              type: MetadataLinkType.WMS,
+            },
+            {
+              protocol: 'WWW:DOWNLOAD',
+              url: 'http://my.server/files/geographic/dataset.gpkg',
+              type: MetadataLinkType.DOWNLOAD,
+            },
+          ]
           summary = service.toRecord(hit)
         })
-        it('hasDownloads is false', () => {
+        it('hasDownloads is true', () => {
           expect(summary.hasDownloads).toBe(true)
         })
-        it('hasMaps is false', () => {
+        it('hasMaps is true', () => {
           expect(summary.hasMaps).toBe(true)
         })
       })
@@ -241,12 +270,14 @@ describe('ElasticsearchMapper', () => {
               name: 'La base de données Quadrige',
               protocol: 'WWW:LINK',
               url: 'https://wwz.ifremer.fr/envlit/Quadrige-la-base-de-donnees',
+              type: MetadataLinkType.OTHER,
             },
             {
               label: 'La surveillance du milieu marin et côtier',
               name: 'La surveillance du milieu marin et côtier',
               protocol: 'WWW:LINK-1.0-http--link',
               url: 'https://wwz.ifremer.fr/envlit/Surveillance-du-littoral',
+              type: MetadataLinkType.OTHER,
             },
             {
               description:
@@ -256,6 +287,7 @@ describe('ElasticsearchMapper', () => {
               name: 'Manuel pour l’utilisation des données REPHY',
               protocol: 'WWW:LINK',
               url: 'http://archimer.ifremer.fr/doc/00409/52016/',
+              type: MetadataLinkType.OTHER,
             },
             {
               description: 'Lieu de surveillance (point)',
@@ -263,6 +295,7 @@ describe('ElasticsearchMapper', () => {
               name: 'surval_parametre_point',
               protocol: 'OGC:WMS',
               url: 'http://www.ifremer.fr/services/wms/surveillance_littorale',
+              type: MetadataLinkType.WMS,
             },
             {
               description: 'Lieu de surveillance (point)',
@@ -270,6 +303,7 @@ describe('ElasticsearchMapper', () => {
               name: 'surval_parametre_point',
               protocol: 'OGC:WFS',
               url: 'http://www.ifremer.fr/services/wfs/surveillance_littorale',
+              type: MetadataLinkType.WFS,
             },
             {
               description: "Extraction des données d'observation",
@@ -277,6 +311,7 @@ describe('ElasticsearchMapper', () => {
               name: 'r:survalextraction30140',
               protocol: 'OGC:WPS',
               url: 'https://www.ifremer.fr/services/wps3/surval',
+              type: MetadataLinkType.OTHER,
             },
             {
               description: 'Lieu de surveillance (ligne)',
@@ -284,6 +319,7 @@ describe('ElasticsearchMapper', () => {
               name: 'surval_parametre_ligne',
               protocol: 'OGC:WMS',
               url: 'http://www.ifremer.fr/services/wms/surveillance_littorale',
+              type: MetadataLinkType.WMS,
             },
             {
               description: 'Lieu de surveillance (ligne)',
@@ -291,6 +327,7 @@ describe('ElasticsearchMapper', () => {
               name: 'surval_parametre_ligne',
               protocol: 'OGC:WFS',
               url: 'http://www.ifremer.fr/services/wfs/surveillance_littorale',
+              type: MetadataLinkType.WFS,
             },
             {
               description: "Extraction des données d'observation",
@@ -298,6 +335,7 @@ describe('ElasticsearchMapper', () => {
               name: 'r:survalextraction30140',
               protocol: 'OGC:WPS',
               url: 'https://www.ifremer.fr/services/wps3/surval',
+              type: MetadataLinkType.OTHER,
             },
             {
               description: 'Lieu de surveillance (polygone)',
@@ -305,6 +343,7 @@ describe('ElasticsearchMapper', () => {
               name: 'surval_parametre_polygone',
               protocol: 'OGC:WMS',
               url: 'http://www.ifremer.fr/services/wms/surveillance_littorale',
+              type: MetadataLinkType.WMS,
             },
             {
               description: 'Lieu de surveillance (polygone)',
@@ -312,6 +351,7 @@ describe('ElasticsearchMapper', () => {
               name: 'surval_parametre_polygone',
               protocol: 'OGC:WFS',
               url: 'http://www.ifremer.fr/services/wfs/surveillance_littorale',
+              type: MetadataLinkType.WFS,
             },
             {
               description: "Extraction des données d'observation",
@@ -319,6 +359,7 @@ describe('ElasticsearchMapper', () => {
               name: 'r:survalextraction30140',
               protocol: 'OGC:WPS',
               url: 'https://www.ifremer.fr/services/wps3/surval',
+              type: MetadataLinkType.OTHER,
             },
             {
               description: 'DOI du jeu de données',
@@ -326,6 +367,7 @@ describe('ElasticsearchMapper', () => {
               name: 'DOI du jeu de données',
               protocol: 'WWW:LINK-1.0-http--metadata-URL',
               url: 'https://doi.org/10.12770/cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
+              type: MetadataLinkType.OTHER,
             },
           ],
           metadataUrl: 'url',

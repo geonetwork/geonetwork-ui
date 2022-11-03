@@ -1,4 +1,8 @@
-import { MetadataContact, MetadataLink } from '@geonetwork-ui/util/shared'
+import {
+  MetadataContact,
+  MetadataLink,
+  MetadataLinkType,
+} from '@geonetwork-ui/util/shared'
 
 export type SourceWithUnknownProps = { [key: string]: unknown }
 
@@ -47,6 +51,18 @@ export const getAsUrl = (field) => {
   }
 }
 
+export function getLinkType(url: string, protocol?: string): MetadataLinkType {
+  if (!protocol) return MetadataLinkType.OTHER
+  if (/^ESRI:REST/.test(protocol) && /FeatureServer/.test(url))
+    return MetadataLinkType.ESRI_REST
+  if (/^OGC:WMS/.test(protocol)) return MetadataLinkType.WMS
+  if (/^OGC:WFS/.test(protocol)) return MetadataLinkType.WFS
+  if (/^OGC:WMTS/.test(protocol)) return MetadataLinkType.WMTS
+  if (/^WWW:DOWNLOAD/.test(protocol)) return MetadataLinkType.DOWNLOAD
+  if (protocol === 'WWW:LINK:LANDING_PAGE') return MetadataLinkType.LANDING_PAGE
+  return MetadataLinkType.OTHER
+}
+
 export const mapLink = (
   sourceLink: SourceWithUnknownProps
 ): MetadataLink | null => {
@@ -72,12 +88,20 @@ export const mapLink = (
   const description = selectField<string>(sourceLink, 'description')
   const label = description || name
   const protocol = selectField<string>(sourceLink, 'protocol')
+
+  const mimeTypeMatches = protocol && protocol.match(/^WWW:DOWNLOAD:(.+\/.+)$/)
+  const mimeType = mimeTypeMatches && mimeTypeMatches[1]
+
+  const type = getLinkType(url, protocol)
+
   return {
     url,
+    type,
     ...(name && { name }),
     ...(description && { description }),
     ...(label && { label }),
     ...(protocol && { protocol }),
+    ...(mimeType && { mimeType }),
   }
 }
 
