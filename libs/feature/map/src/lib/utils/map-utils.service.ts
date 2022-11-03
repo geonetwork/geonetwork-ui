@@ -179,12 +179,7 @@ export class MapUtilsService {
       defaults({ dragPan: false, mouseWheelZoom: false })
         .extend([
           new DragPan({
-            condition: function (event) {
-              return (
-                (this as DragPan).getPointerCount() === 2 ||
-                platformModifierKeyOnly(event)
-              )
-            },
+            condition: dragPanCondition,
           }),
           new MouseWheelZoom({
             condition: platformModifierKeyOnly,
@@ -193,4 +188,8 @@ export class MapUtilsService {
         .getArray()
     )
   }
+}
+
+export function dragPanCondition(this: DragPan, event) {
+  return this.getPointerCount() === 2 || platformModifierKeyOnly(event)
 }
