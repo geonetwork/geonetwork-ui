@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, EventEmitter, Output } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { LinkHelperService } from '@geonetwork-ui/util/shared'
@@ -15,7 +15,9 @@ class LinkHelperServiceMock {
   selector: 'gn-ui-button',
   template: '<div></div>',
 })
-export class MockButtonComponent {}
+export class MockButtonComponent {
+  @Output() buttonClick = new EventEmitter()
+}
 
 describe('ExternalViewerButtonComponent', () => {
   let component: ExternalViewerButtonComponent
@@ -73,7 +75,7 @@ describe('ExternalViewerButtonComponent', () => {
       beforeEach(() => {
         buttonComponent = fixture.debugElement.query(
           By.directive(MockButtonComponent)
-        )
+        ).componentInstance
         componentSpy = jest.spyOn(component, 'openInExternalViewer')
         windowSpy = jest
           .spyOn(global, 'window', 'get')
@@ -81,7 +83,7 @@ describe('ExternalViewerButtonComponent', () => {
             open: openMock,
             focus: focusMock,
           }))
-        buttonComponent.nativeElement.click()
+        buttonComponent.buttonClick.emit()
       })
 
       afterEach(() => {

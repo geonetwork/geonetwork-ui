@@ -9,7 +9,7 @@
 
   <ng-container *ngIf="(facade.isLoading$ | async) === false">
     <div class="show-more" *ngIf="showMore === 'button'">
-      <gn-ui-button type="primary" (click)="onShowMore()">
+      <gn-ui-button type="primary" (buttonClick)="onShowMore()">
         <span translate>results.showMore</span>
       </gn-ui-button>
     </div>

@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core'
 
 @Component({
   selector: 'gn-ui-button',
@@ -7,41 +13,29 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {
-  @Input() type: 'primary' | 'secondary' | 'default' | 'outline' = 'default'
+  @Input() type: 'primary' | 'secondary' | 'default' | 'outline' | 'light' =
+    'default'
   @Input() disabled = false
   @Input() extraClass = ''
+  @Output() buttonClick = new EventEmitter<void>()
 
   get classList() {
     return `${this.color} ${this.textColor} ${this.borderColor} ${this.extraClass}`
   }
 
   get color() {
-    let classes = ''
     switch (this.type) {
       case 'default':
-        classes =
-          'bg-gray-700 hover:bg-gray-800 hover:bg-gray-800 active:bg-gray-900'
-        break
+        return 'bg-gray-700 hover:bg-gray-800 hover:bg-gray-800 active:bg-gray-900'
       case 'primary':
-        classes =
-          'bg-primary-darker hover:bg-primary-darkest focus:bg-primary-darkest active:bg-primary-black'
-        break
+        return 'bg-primary-darker hover:bg-primary-darkest focus:bg-primary-darkest active:bg-primary-black'
       case 'secondary':
-        classes =
-          'bg-secondary-darker hover:bg-secondary-darkest focus:bg-secondary-darkest active:bg-secondary-black'
-        break
+        return 'bg-secondary-darker hover:bg-secondary-darkest focus:bg-secondary-darkest active:bg-secondary-black'
       case 'outline':
-        classes = 'bg-white'
-        break
+        return 'bg-white'
+      case 'light':
+        return 'bg-white hover:bg-gray-50 focus:bg-gray-50 active:bg-gray-100'
     }
-    if (this.disabled) {
-      classes = [
-        classes.split(' ').filter((cls) => !cls.startsWith('hover:')),
-        'disabled:opacity-50',
-        'cursor-auto',
-      ].join(' ')
-    }
-    return classes
   }
 
   get textColor() {
@@ -52,32 +46,29 @@ export class ButtonComponent {
         return 'text-white'
       case 'outline':
         return 'text-main hover:text-primary-darker focus:text-primary-darker active:text-primary-black'
+      case 'light':
+        return 'text-main'
     }
   }
 
   get borderColor() {
-    let classes = ''
     switch (this.type) {
       case 'default':
-        classes = 'focus:ring-4 focus:ring-gray-200'
-        break
+        return 'focus:ring-4 focus:ring-gray-200'
       case 'secondary':
-        classes = 'focus:ring-4 focus:ring-secondary-lightest'
-        break
+        return 'focus:ring-4 focus:ring-secondary-lightest'
       case 'primary':
-        classes = 'focus:ring-4 focus:ring-primary-lightest'
-        break
+        return 'focus:ring-4 focus:ring-primary-lightest'
       case 'outline':
-        classes =
-          'border border-gray-300 hover:border-primary-lighter focus:border-primary-lighter focus:ring-4 focus:ring-primary-lightest active:border-primary-darker'
-        break
+        return 'border border-gray-300 hover:border-primary-lighter focus:border-primary-lighter focus:ring-4 focus:ring-primary-lightest active:border-primary-darker'
+      case 'light':
+        return 'focus:ring-4 focus:ring-gray-300'
     }
-    if (this.disabled) {
-      classes = classes
-        .split(' ')
-        .filter((cls) => !cls.startsWith('hover:'))
-        .join(' ')
-    }
-    return classes
+  }
+
+  handleClick(event: Event) {
+    this.buttonClick.emit()
+    event.preventDefault()
+    event.stopPropagation()
   }
 }

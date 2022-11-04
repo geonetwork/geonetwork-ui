@@ -38,6 +38,6 @@ Primary.args = {
 Primary.argTypes = {
   type: {
     control: 'radio',
-    options: ['primary', 'secondary', 'default', 'outline'],
+    options: ['primary', 'secondary', 'default', 'outline', 'light'],
   },
 }

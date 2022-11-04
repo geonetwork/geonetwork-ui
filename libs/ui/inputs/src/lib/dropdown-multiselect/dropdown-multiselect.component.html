@@ -1,9 +1,9 @@
 <gn-ui-button
   type="outline"
-  extraClass="w-full flex flex-row"
+  extraClass="w-full !p-[8px] !pl-[16px]"
   [title]="title"
   [attr.aria-owns]="id"
-  (click)="openOverlay()"
+  (buttonClick)="openOverlay()"
   (keydown)="handleTriggerKeydown($event)"
   cdkOverlayOrigin
   #overlayOrigin="cdkOverlayOrigin"
@@ -13,7 +13,7 @@
   </div>
   <div
     *ngIf="hasSelectedChoices"
-    class="flex-shrink-0 rounded-full bg-primary text-white font-bold text-[13px] w-6 h-6 py-[3px] mr-1 selected-count"
+    class="flex-shrink-0 rounded-full bg-primary text-white font-bold text-[13px] w-6 h-6 p-[6px] mr-1 selected-count"
   >
     {{ selected.length }}
   </div>

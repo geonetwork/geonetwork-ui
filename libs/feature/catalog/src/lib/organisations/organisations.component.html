@@ -5,14 +5,15 @@
   class="grid grid-cols-1 mt-6 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3"
 >
   <gn-ui-organisation-preview
-    *ngFor="let organisation of organisations$ | async"
+    *ngFor="let organisation of organisations$ | async; trackBy: trackByIndex"
     [organisation]="organisation"
     (clickedOrganisation)="searchByOrganisation($event)"
   ></gn-ui-organisation-preview>
 </div>
-<gn-ui-pagination
-  class="flex justify-end mt-20"
-  [currentPage]="currentPage$ | async"
-  [nPages]="totalPages"
-  (newCurrentPageEvent)="setCurrentPage($event)"
-></gn-ui-pagination>
+<div class="py-20">
+  <gn-ui-pagination
+    [currentPage]="currentPage$ | async"
+    [nPages]="totalPages"
+    (newCurrentPageEvent)="setCurrentPage($event)"
+  ></gn-ui-pagination>
+</div>

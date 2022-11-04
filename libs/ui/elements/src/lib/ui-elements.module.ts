@@ -19,6 +19,8 @@ import { MetadataCatalogComponent } from './metadata-catalog/metadata-catalog.co
 import { SearchResultsErrorComponent } from './search-results-error/search-results-error.component'
 import { PaginationComponent } from './pagination/pagination.component'
 import { ThumbnailComponent } from './thumbnail/thumbnail.component'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { FormsModule } from '@angular/forms'
 
 @NgModule({
   imports: [
@@ -30,6 +32,8 @@ import { ThumbnailComponent } from './thumbnail/thumbnail.component'
     TranslateModule.forChild(),
     UtilSharedModule,
     RouterModule,
+    UiInputsModule,
+    FormsModule,
   ],
   declarations: [
     MetadataInfoComponent,

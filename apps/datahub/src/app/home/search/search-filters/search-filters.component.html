@@ -65,10 +65,12 @@
       <gn-ui-button
         class="hidden sm:block"
         *ngIf="!isOpen"
-        (click)="open()"
+        (buttonClick)="open()"
         type="outline"
-        >...</gn-ui-button
+        extraClass="!p-[8px]"
       >
+        <mat-icon>more_horiz</mat-icon>
+      </gn-ui-button>
       <button
         type="button"
         *ngIf="!isOpen"
