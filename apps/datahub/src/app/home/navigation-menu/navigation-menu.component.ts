@@ -1,6 +1,10 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { ROUTER_ROUTE_SEARCH } from '@geonetwork-ui/feature/router'
+import {
+  RouterFacade,
+  ROUTER_ROUTE_SEARCH,
+} from '@geonetwork-ui/feature/router'
+import { map } from 'rxjs/operators'
 import {
   ROUTER_ROUTE_NEWS,
   ROUTER_ROUTE_ORGANISATIONS,
@@ -31,10 +35,20 @@ export class NavigationMenuComponent {
       label: 'datahub.header.organisations',
     },
   ]
-  activeLabel = this.tabLinks[0].label
-  setActiveLabel(el: HTMLElement) {
-    this.activeLabel = el.textContent
-  }
+  activeLabel$ = this.routerFacade.currentRoute$.pipe(
+    map(
+      (route) =>
+        (
+          this.tabLinks.find((tab) => tab.link === route.url[0].path) || {
+            link: '',
+            label: '',
+          }
+        ).label
+    )
+  )
+
+  constructor(private routerFacade: RouterFacade) {}
+
   toggleMobileMenu() {
     this.displayMobileMenu = !this.displayMobileMenu
   }
