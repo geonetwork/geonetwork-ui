@@ -8,10 +8,10 @@
   >
     record.metadata.download
   </p>
-  <div class="w-[420px] flex flex-wrap justify-between sm:pb-4">
+  <div class="flex flex-wrap justify-start sm:justify-end sm:pb-4">
     <span
       [class.opacity-100]="isFilterActive(format)"
-      class="bg-gray-200 cursor-pointer p-2 mb-2 rounded opacity-50 text-sm"
+      class="bg-gray-200 cursor-pointer p-2 m-2 rounded opacity-50 text-sm"
       (click)="toggleFilterFormat($event.target.value)"
       [value]="format"
       *ngFor="let format of filterFormats"
