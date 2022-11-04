@@ -7,6 +7,7 @@ import {
 import { DownloadItemComponent } from './download-item.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiElementsModule } from '../ui-elements.module'
+import { MetadataLinkType } from '@geonetwork-ui/util/shared'
 
 export default {
   title: 'Elements/DownloadsListItemComponent',
@@ -33,7 +34,7 @@ Primary.args = {
   link: {
     protocol: 'WWW:DOWNLOAD',
     name: 'allroads.geojson',
-    format: 'geojson',
+    type: MetadataLinkType.DOWNLOAD,
     description: 'A file that contains all roads',
     url: 'https//roads.com/allroads.geojson',
   },

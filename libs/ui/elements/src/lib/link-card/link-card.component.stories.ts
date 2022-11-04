@@ -12,6 +12,7 @@ import {
 import { LinkCardComponent } from './link-card.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiElementsModule } from '../ui-elements.module'
+import { MetadataLinkType } from '@geonetwork-ui/util/shared'
 
 export default {
   title: 'Elements/LinkCardComponent',
@@ -40,6 +41,7 @@ export const Primary = Template.bind({})
 Primary.args = {
   link: {
     protocol: 'WWW:LINK',
+    type: MetadataLinkType.OTHER,
     name: 'Consulter sur Géoclip',
     description:
       'Lorem ipsum dolor sit amet, consect etur adipiscing elit. Donec id condim entum ex. Etiam sed molestie est.',

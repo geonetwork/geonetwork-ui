@@ -12,6 +12,7 @@ import {
 import { ApiCardComponent } from './api-card.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiElementsModule } from '../ui-elements.module'
+import { MetadataLinkType } from '@geonetwork-ui/util/shared'
 
 export default {
   title: 'Elements/ApiCardComponent',
@@ -40,6 +41,7 @@ export const Primary = Template.bind({})
 Primary.args = {
   link: {
     protocol: 'OGC:WFS',
+    type: MetadataLinkType.WFS,
     name: "Scot en cours d'élaboration ou de révision",
     description: 'A file that contains all roads',
     url: 'https//roads.com/wfs',
