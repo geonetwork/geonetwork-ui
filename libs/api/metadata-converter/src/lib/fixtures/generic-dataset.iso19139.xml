@@ -13,6 +13,12 @@
     </gmd:hierarchyLevel>
     <gmd:contact>
         <gmd:CI_ResponsibleParty>
+            <gmd:individualName>
+                <gco:CharacterString>Bob TheGreat</gco:CharacterString>
+            </gmd:individualName>
+            <gmd:positionName>
+                <gco:CharacterString>developer</gco:CharacterString>
+            </gmd:positionName>
             <gmd:organisationName>
                 <gco:CharacterString>MyOrganization</gco:CharacterString>
             </gmd:organisationName>
@@ -93,6 +99,12 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
             </gmd:status>
             <gmd:pointOfContact>
                 <gmd:CI_ResponsibleParty>
+                    <gmd:individualName>
+                        <gco:CharacterString>Bob TheGreat</gco:CharacterString>
+                    </gmd:individualName>
+                    <gmd:positionName>
+                        <gco:CharacterString>developer</gco:CharacterString>
+                    </gmd:positionName>
                     <gmd:organisationName>
                         <gco:CharacterString>MyOrganization</gco:CharacterString>
                     </gmd:organisationName>
@@ -123,6 +135,9 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
             </gmd:pointOfContact>
             <gmd:pointOfContact>
                 <gmd:CI_ResponsibleParty>
+                    <gmd:positionName>
+                        <gco:CharacterString>manager</gco:CharacterString>
+                    </gmd:positionName>
                     <gmd:organisationName>
                         <gco:CharacterString>Another Organization</gco:CharacterString>
                     </gmd:organisationName>

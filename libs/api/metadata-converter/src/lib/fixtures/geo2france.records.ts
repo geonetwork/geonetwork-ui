@@ -47,6 +47,7 @@ Malgré l'attention portée à la création de ces données, il est rappelé que
   spatialRepresentation: 'vector',
   distributions: [
     {
+      type: 'link',
       linkUrl: new URL(
         'http://geo.compiegnois.fr/documents/metiers/urba/docurba/60036_PLU_20220329.zip'
       ),

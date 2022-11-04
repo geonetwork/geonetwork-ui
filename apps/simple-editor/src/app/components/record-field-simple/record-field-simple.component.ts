@@ -5,6 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
+import { debounce, debounceTime, map } from 'rxjs/operators'
 
 type ValueModel = string | URL | Date | number
 
@@ -19,9 +20,12 @@ export class RecordFieldSimpleComponent {
   @Input() fieldValue: ValueModel
   @Output() fieldValueChange = new EventEmitter<ValueModel>()
   @Input() readonly = false
-  @Input() type: 'text' | 'rich' | 'url' | 'date' = 'text'
+  @Input() type: 'text' | 'rich' | 'url' | 'date' | 'number' = 'text'
   @Input() options?: string[]
-  @Output() confirm = new EventEmitter<void>()
+  @Output() confirm = this.fieldValueChange.pipe(
+    debounceTime(300),
+    map(() => undefined)
+  )
 
   get hasOptions() {
     return Array.isArray(this.options)
@@ -41,6 +45,9 @@ export class RecordFieldSimpleComponent {
   get isDate() {
     return !this.hasOptions && !this.isMissing && this.type === 'date'
   }
+  get isNumber() {
+    return !this.hasOptions && !this.isMissing && this.type === 'number'
+  }
 
   toDate(date: string) {
     return new Date(date)
@@ -48,6 +55,10 @@ export class RecordFieldSimpleComponent {
 
   toURL(url: string) {
     return new URL(url, window.location.toString())
+  }
+
+  toNumber(number: string) {
+    return parseFloat(number) || 0
   }
 
   addValue() {
@@ -64,6 +75,5 @@ export class RecordFieldSimpleComponent {
         this.fieldValue = ''
     }
     this.fieldValueChange.emit(this.fieldValue)
-    this.confirm.emit()
   }
 }

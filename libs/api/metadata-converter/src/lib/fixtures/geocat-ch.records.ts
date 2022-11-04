@@ -51,6 +51,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
   spatialRepresentation: 'vector',
   distributions: [
     {
+      type: 'link',
       linkUrl: new URL(
         'https://map.geo.admin.ch/?layers=ch.are.alpenkonvention'
       ),
@@ -58,12 +59,14 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
       description: 'Vorschau map.geo.admin.ch',
     },
     {
+      type: 'link',
       linkUrl: new URL(
         'https://www.are.admin.ch/are/de/home/laendliche-raeume-und-berggebiete/internationale-zusammenarbeit/alpenkonvention.html'
       ),
       description: 'Webseite des ARE über die Alpenkonvention',
     },
     {
+      type: 'download',
       downloadUrl: new URL(
         'https://data.geo.admin.ch/browser/index.html#/collections/ch.are.alpenkonvention'
       ),
@@ -71,6 +74,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
       mimeType: 'x-gis/x-shapefile',
     },
     {
+      type: 'service',
       accessServiceUrl: new URL(
         'http://wms.geo.admin.ch/?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities&lang=de'
       ),
@@ -80,6 +84,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
       description: 'WMS Dienst von geo.admin.ch',
     },
     {
+      type: 'download',
       downloadUrl: new URL(
         'https://www.are.admin.ch/are/de/home/raumentwicklung-und-raumplanung/grundlagen-und-daten/minimale-geodatenmodelle/alpenkonvention.html'
       ),
@@ -87,27 +92,32 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
       mimeType: 'x-gis/x-shapefile',
     },
     {
+      type: 'link',
       linkUrl: new URL(
         'http://map.are.admin.ch/?Y=660000&X=190000&zoom=1&bgLayer=ch.swisstopo.pixelkarte-grau&layers=ch.are.alpenkonvention&layers_opacity=0.2&layers_visibility=true&lang=de'
       ),
       description: 'Web-GIS ARE',
     },
     {
+      type: 'link',
       linkUrl: new URL('http://www.alpconv.org'),
       description: 'Offizielle Homepage der Alpenkonvention',
     },
     {
+      type: 'link',
       linkUrl: new URL(
         'http://map.geo.admin.ch/?selectedNode=LT1_1&Y=660000&X=190000&zoom=1&bgLayer=ch.swisstopo.pixelkarte-farbe&layers=ch.are.alpenkonvention&layers_opacity=0.6&layers_visibility=true&lang=de'
       ),
       description: 'Die Alpenkonvention im Bundesgeoportal',
     },
     {
+      type: 'link',
       linkUrl: new URL('http://www.admin.ch/ch/d/sr/0_700_1/app1.html'),
       description:
         'Liste der administrativen Einheiten des Alpenraumes in der schweizerischen Eidgenossenschaft',
     },
     {
+      type: 'service',
       accessServiceUrl: new URL(
         'https://api3.geo.admin.ch/rest/services/api/MapServer/ch.are.alpenkonvention'
       ),
@@ -116,6 +126,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
       description: 'RESTful API von geo.admin.ch',
     },
     {
+      type: 'link',
       linkUrl: new URL(
         'https://opendata.swiss/de/perma/8698bf0b-fceb-4f0f-989b-111e7c4af0a4@bundesamt-fur-raumentwicklung-are'
       ),

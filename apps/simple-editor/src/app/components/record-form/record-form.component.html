@@ -23,8 +23,9 @@
 <p>
   <gn-ui-record-field-simple
     label="Kind"
-    [readonly]="true"
-    [(fieldValue)]="record.kind"
+    [options]="['dataset', 'service']"
+    [fieldValue]="record.kind"
+    (fieldValueChange)="switchToRecordKind($event)"
   ></gn-ui-record-field-simple>
 </p>
 <p>
@@ -62,7 +63,8 @@
     [defaultItem]="{
       firstName: 'first',
       lastName: 'last',
-      organisation: {},
+      email: 'email@domain.com',
+      organisation: { name: 'org' },
       role: 'UNSPECIFIED'
     }"
   >
@@ -99,6 +101,34 @@
           (fieldValueChange)="set($event, 'position')"
           (confirm)="emitChangedRecord()"
         ></gn-ui-record-field-simple>
+        <gn-ui-record-field-group label="Organisation">
+          <gn-ui-record-field-simple
+            label="Name"
+            [fieldValue]="get().organisation.name"
+            (fieldValueChange)="set($event, 'organisation', 'name')"
+            (confirm)="emitChangedRecord()"
+          ></gn-ui-record-field-simple>
+          <gn-ui-record-field-simple
+            label="Description"
+            [fieldValue]="get().organisation.description"
+            (fieldValueChange)="set($event, 'organisation', 'description')"
+            (confirm)="emitChangedRecord()"
+          ></gn-ui-record-field-simple>
+          <gn-ui-record-field-simple
+            label="Website"
+            [fieldValue]="get().organisation.website"
+            (fieldValueChange)="set($event, 'organisation', 'website')"
+            (confirm)="emitChangedRecord()"
+            [type]="'url'"
+          ></gn-ui-record-field-simple>
+          <gn-ui-record-field-simple
+            label="Logo URL"
+            [fieldValue]="get().organisation.logoUrl"
+            (fieldValueChange)="set($event, 'organisation', 'logoUrl')"
+            (confirm)="emitChangedRecord()"
+            [type]="'url'"
+          ></gn-ui-record-field-simple>
+        </gn-ui-record-field-group>
       </gn-ui-record-field-group>
     </ng-template>
   </gn-ui-record-field-array>
@@ -227,7 +257,7 @@
         ></gn-ui-record-field-simple>
         <gn-ui-record-field-simple
           label="URL"
-          [fieldValue]="get().type"
+          [fieldValue]="get().url"
           (fieldValueChange)="set($event, 'url')"
           [type]="'url'"
           (confirm)="emitChangedRecord()"
@@ -236,28 +266,159 @@
     </ng-template>
   </gn-ui-record-field-array>
 </p>
-<p class="text-xl font-bold text-title mt-8 mb-0 m-2">
-  Dataset record specific fields
-</p>
-<p *ngIf="isDatasetRecord">
-  <gn-ui-record-field-simple
-    label="Lineage"
-    [(fieldValue)]="record.lineage"
-    (confirm)="emitChangedRecord()"
-    [type]="'rich'"
-  ></gn-ui-record-field-simple>
-</p>
-<p class="grid grid-cols-2" *ngIf="isDatasetRecord">
-  <gn-ui-record-field-simple
-    label="Dataset created on"
-    [(fieldValue)]="record.datasetCreated"
-    (confirm)="emitChangedRecord()"
-    [type]="'date'"
-  ></gn-ui-record-field-simple>
-  <gn-ui-record-field-simple
-    label="Dataset updated on"
-    [(fieldValue)]="record.datasetUpdated"
-    (confirm)="emitChangedRecord()"
-    [type]="'date'"
-  ></gn-ui-record-field-simple>
-</p>
+
+<div *ngIf="isDatasetRecord">
+  <p class="text-xl font-bold font-title mt-8 mb-0 m-2">
+    Dataset record specific fields
+  </p>
+  <p>
+    <gn-ui-record-field-simple
+      label="Spatial Representation Type"
+      [(fieldValue)]="record.spatialRepresentation"
+      (confirm)="emitChangedRecord()"
+      [options]="['grid', 'vector', 'tin', 'table', 'point']"
+    ></gn-ui-record-field-simple>
+  </p>
+  <p>
+    <gn-ui-record-field-simple
+      label="Lineage"
+      [(fieldValue)]="record.lineage"
+      (confirm)="emitChangedRecord()"
+      [type]="'rich'"
+    ></gn-ui-record-field-simple>
+  </p>
+  <p class="grid grid-cols-2">
+    <gn-ui-record-field-simple
+      label="Dataset created on"
+      [(fieldValue)]="record.datasetCreated"
+      (confirm)="emitChangedRecord()"
+      [type]="'date'"
+    ></gn-ui-record-field-simple>
+    <gn-ui-record-field-simple
+      label="Dataset updated on"
+      [(fieldValue)]="record.datasetUpdated"
+      (confirm)="emitChangedRecord()"
+      [type]="'date'"
+    ></gn-ui-record-field-simple>
+  </p>
+  <p>
+    <gn-ui-record-field-array
+      label="Distributions"
+      [(fieldValue)]="record.distributions"
+      [itemTemplate]="distributionTpl"
+      (confirm)="emitChangedRecord()"
+      [defaultItem]="getDistributionForType('download')"
+    >
+      <ng-template #distributionTpl let-get="getValue" let-set="setValue">
+        <gn-ui-record-field-group label="Distribution">
+          <gn-ui-record-field-simple
+            label="Type"
+            [options]="['service', 'download', 'link']"
+            [fieldValue]="get().type"
+            (fieldValueChange)="set(getDistributionForType($event))"
+            (confirm)="emitChangedRecord()"
+          ></gn-ui-record-field-simple>
+          <gn-ui-record-field-simple
+            *ngIf="get().type === 'service'"
+            label="Access Service URL"
+            [type]="'url'"
+            [fieldValue]="get().accessServiceUrl"
+            (fieldValueChange)="set($event, 'accessServiceUrl')"
+            (confirm)="emitChangedRecord()"
+          ></gn-ui-record-field-simple>
+          <gn-ui-record-field-simple
+            *ngIf="get().type === 'service'"
+            label="Access Service Protocol"
+            [fieldValue]="get().accessServiceProtocol"
+            (fieldValueChange)="set($event, 'accessServiceProtocol')"
+            (confirm)="emitChangedRecord()"
+          ></gn-ui-record-field-simple>
+          <gn-ui-record-field-simple
+            *ngIf="get().type === 'service'"
+            label="Identifier In Service"
+            [fieldValue]="get().identifierInService"
+            (fieldValueChange)="set($event, 'identifierInService')"
+            (confirm)="emitChangedRecord()"
+          ></gn-ui-record-field-simple>
+          <gn-ui-record-field-simple
+            *ngIf="get().type === 'download'"
+            label="Download URL"
+            [type]="'url'"
+            [fieldValue]="get().downloadUrl"
+            (fieldValueChange)="set($event, 'downloadUrl')"
+            (confirm)="emitChangedRecord()"
+          ></gn-ui-record-field-simple>
+          <gn-ui-record-field-simple
+            *ngIf="get().type === 'download'"
+            label="Mime Type"
+            [fieldValue]="get().mimeType"
+            (fieldValueChange)="set($event, 'mimeType')"
+            (confirm)="emitChangedRecord()"
+          ></gn-ui-record-field-simple>
+          <gn-ui-record-field-simple
+            *ngIf="get().type === 'download'"
+            label="Size In Bytes"
+            [type]="'number'"
+            [fieldValue]="get().sizeBytes"
+            (fieldValueChange)="set($event, 'sizeBytes')"
+            (confirm)="emitChangedRecord()"
+          ></gn-ui-record-field-simple>
+          <gn-ui-record-field-simple
+            *ngIf="get().type === 'link'"
+            label="Link URL"
+            [type]="'url'"
+            [fieldValue]="get().linkUrl"
+            (fieldValueChange)="set($event, 'linkUrl')"
+            (confirm)="emitChangedRecord()"
+          ></gn-ui-record-field-simple>
+          <gn-ui-record-field-simple
+            label="Name"
+            [fieldValue]="get().name"
+            (fieldValueChange)="set($event, 'name')"
+            (confirm)="emitChangedRecord()"
+          ></gn-ui-record-field-simple>
+          <gn-ui-record-field-simple
+            label="Description"
+            [type]="'rich'"
+            [fieldValue]="get().description"
+            (fieldValueChange)="set($event, 'description')"
+            (confirm)="emitChangedRecord()"
+          ></gn-ui-record-field-simple>
+        </gn-ui-record-field-group>
+      </ng-template>
+    </gn-ui-record-field-array>
+  </p>
+</div>
+
+<div *ngIf="isServiceRecord">
+  <p class="text-xl font-bold font-title mt-8 mb-0 m-2">
+    Service record specific fields
+  </p>
+  <p>
+    <gn-ui-record-field-array
+      label="Endpoints"
+      [(fieldValue)]="record.endpoints"
+      [itemTemplate]="endpointTpl"
+      (confirm)="emitChangedRecord()"
+      [defaultItem]="{ endpointUrl: '', protocol: 'OGC:WMS' }"
+    >
+      <ng-template #endpointTpl let-get="getValue" let-set="setValue">
+        <gn-ui-record-field-group label="Contact">
+          <gn-ui-record-field-simple
+            label="Endpoint URL"
+            [type]="'url'"
+            [fieldValue]="get().endpointUrl"
+            (fieldValueChange)="set($event, 'endpointUrl')"
+            (confirm)="emitChangedRecord()"
+          ></gn-ui-record-field-simple>
+          <gn-ui-record-field-simple
+            label="Protocol"
+            [fieldValue]="get().protocol"
+            (fieldValueChange)="set($event, 'protocol')"
+            (confirm)="emitChangedRecord()"
+          ></gn-ui-record-field-simple>
+        </gn-ui-record-field-group>
+      </ng-template>
+    </gn-ui-record-field-array>
+  </p>
+</div>

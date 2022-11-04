@@ -6,7 +6,6 @@ import {
   DatasetServiceDistribution,
   Individual,
   License,
-  Organisation,
   RecordStatus,
   Role,
   UpdateFrequencyCode,
@@ -18,11 +17,11 @@ import {
   createChild,
   createElement,
   findChildElement,
+  findChildOrCreate,
   findChildrenElement,
+  findNestedChildOrCreate,
   findNestedElement,
   findNestedElements,
-  findChildOrCreate,
-  findNestedChildOrCreate,
   readAttribute,
   removeAllChildren,
   removeChildren,
@@ -222,38 +221,52 @@ function getISODuration(updateFrequency: UpdateFrequencyCustom): string {
   return `P${duration.years}Y${duration.months}M${duration.days}D${hours}`
 }
 
-function appendResponsibleParty(
-  org: Organisation,
-  contacts: Individual[],
-  role: Role
-) {
+function appendResponsibleParty(contact: Individual) {
+  const name =
+    contact.lastName && contact.firstName
+      ? `${contact.firstName} ${contact.lastName}`
+      : contact.lastName || contact.firstName || null
   return appendChildren(
     pipe(
       createElement('gmd:CI_ResponsibleParty'),
+      name
+        ? appendChildren(
+            pipe(
+              createElement('gmd:individualName'),
+              writeCharacterString(name)
+            )
+          )
+        : noop,
+      contact.position
+        ? appendChildren(
+            pipe(
+              createElement('gmd:positionName'),
+              writeCharacterString(contact.position)
+            )
+          )
+        : noop,
       appendChildren(
         pipe(
           createElement('gmd:organisationName'),
-          writeCharacterString(org.name)
+          writeCharacterString(contact.organisation.name)
         ),
         pipe(
           createElement('gmd:contactInfo'),
           createChild('gmd:CI_Contact'),
           appendChildren(
-            ...contacts.map((contact) =>
-              pipe(
-                createElement('gmd:address'),
-                createChild('gmd:CI_Address'),
-                createChild('gmd:electronicMailAddress'),
-                writeCharacterString(contact.email)
-              )
+            pipe(
+              createElement('gmd:address'),
+              createChild('gmd:CI_Address'),
+              createChild('gmd:electronicMailAddress'),
+              writeCharacterString(contact.email)
             )
           ),
-          'website' in org
+          'website' in contact.organisation
             ? appendChildren(
                 pipe(
                   createElement('gmd:onlineResource'),
                   createChild('gmd:CI_OnlineResource'),
-                  writeLinkage(org.website)
+                  writeLinkage(contact.organisation.website)
                 )
               )
             : noop
@@ -265,7 +278,7 @@ function appendResponsibleParty(
             'codeList',
             'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode'
           ),
-          addAttribute('codeListValue', getRoleCode(role))
+          addAttribute('codeListValue', getRoleCode(contact.role))
         )
       )
     )
@@ -529,12 +542,12 @@ function createDistribution(distribution: DatasetDistribution) {
       : noop
 
   let linkageUrl, name, functionCode, protocol
-  if ('accessServiceUrl' in distribution) {
+  if (distribution.type === 'service') {
     linkageUrl = distribution.accessServiceUrl.toString()
     name = distribution.identifierInService // this is for GeoNetwork to know the layer name
     functionCode = 'download'
     protocol = getDistributionProtocol(distribution)
-  } else if ('downloadUrl' in distribution) {
+  } else if (distribution.type === 'download') {
     linkageUrl = distribution.downloadUrl.toString()
     name = distribution.name
     functionCode = 'download'
@@ -612,15 +625,25 @@ export function writeOwnerOrganisation(
   record: CatalogRecord,
   rootEl: XmlElement
 ) {
+  // if no contact matches the owner org, create an empty one
+  const ownerContact: Individual = record.contacts.find(
+    (contact) => contact.organisation.name === record.ownerOrganisation.name
+  )
   pipe(
     findChildOrCreate('gmd:contact'),
     removeAllChildren(),
     appendResponsibleParty(
-      record.ownerOrganisation,
-      record.contacts.filter(
-        (contact) => contact.organisation.name === record.ownerOrganisation.name
-      ),
-      Role.POINT_OF_CONTACT // owner responsible party is always point of contact
+      ownerContact
+        ? {
+            ...ownerContact,
+            // owner responsible party is always point of contact
+            role: Role.POINT_OF_CONTACT,
+          }
+        : {
+            organisation: record.ownerOrganisation,
+            email: '',
+            role: Role.POINT_OF_CONTACT,
+          }
     )
   )(rootEl)
 }
@@ -686,7 +709,7 @@ export function writeContacts(record: CatalogRecord, rootEl: XmlElement) {
       ...record.contacts.map((contact) =>
         pipe(
           createElement('gmd:pointOfContact'),
-          appendResponsibleParty(contact.organisation, [contact], contact.role)
+          appendResponsibleParty(contact)
         )
       )
     )

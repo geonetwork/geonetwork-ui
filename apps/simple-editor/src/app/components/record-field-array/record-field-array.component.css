@@ -1,0 +1,8 @@
+.outer {
+  position: relative;
+  background: rgba(235 235 235 / 50%);
+}
+.outer:before {
+  @apply absolute inset-y-0 left-0 w-[10px] rounded-sm border border-r-0 border-gray-400;
+  content: '';
+}

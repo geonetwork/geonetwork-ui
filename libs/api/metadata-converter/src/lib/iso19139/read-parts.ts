@@ -172,25 +172,43 @@ function extractIndividuals(): ChainableFunction<
   Array<Individual>
 > {
   const getRole = pipe(findChildElement('gmd:role'), extractRole())
+  const getPosition = pipe(
+    findChildElement('gmd:positionName'),
+    extractCharacterString()
+  )
+  const getNameParts = pipe(
+    findChildElement('gmd:individualName'),
+    extractCharacterString(),
+    map((fullName) => {
+      if (!fullName) return []
+      const parts = fullName.split(/\s+/)
+      if (!parts.length) return [fullName, null]
+      const first = parts.shift()
+      return [first, parts.join(' ')]
+    })
+  )
   const getOrganisation = extractOrganization()
   const getEmail = pipe(
     findChildElement('gmd:electronicMailAddress'),
     extractCharacterString(),
-    tap((email) => {
-      if (email === null) throw new Error('could not read email from contact')
-    })
+    map((email) => (email === null ? 'missing@missing.com' : email))
   )
   return pipe(
     combine(
       getRole,
+      getPosition,
+      getNameParts,
       getOrganisation,
       pipe(findChildrenElement('gmd:contactInfo'), mapArray(getEmail))
     ),
-    map(([role, organisation, emails]) =>
+    map(([role, position, [firstName, lastName], organisation, emails]) =>
       emails.map((email) => ({
         email,
         role,
         organisation,
+        ...(position && { position }),
+        ...(firstName && { firstName }),
+        ...(lastName && { lastName }),
       }))
     )
   )
@@ -380,6 +398,7 @@ function extractDatasetDistributions(): ChainableFunction<
         if (isService) {
           const hasIdentifier = protocol === 'wms' || protocol === 'wfs'
           return {
+            type: 'service',
             accessServiceUrl: url,
             accessServiceProtocol: protocol,
             ...(name && hasIdentifier && { identifierInService: name }),
@@ -389,14 +408,15 @@ function extractDatasetDistributions(): ChainableFunction<
         } else if (isDownload) {
           const mimeType = format
           return {
+            type: 'download',
             downloadUrl: url,
             ...(name && { name }),
             ...(description && { description }),
             ...(mimeType && { mimeType }),
-            // todo: text encoding
           }
         } else {
           return {
+            type: 'link',
             linkUrl: url,
             ...(name && { name }),
             ...(description && { description }),

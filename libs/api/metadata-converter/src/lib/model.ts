@@ -109,7 +109,10 @@ export interface BaseRecord {
 // TODO: handle actual codelists
 export type ServiceProtocol = 'wms' | 'wfs' | 'esriRest' | 'other'
 
+export type DatasetDistributionType = 'service' | 'download' | 'link'
+
 export interface DatasetServiceDistribution {
+  type: 'service'
   accessServiceUrl: URL
   accessServiceProtocol: ServiceProtocol
   identifierInService?: string
@@ -118,6 +121,7 @@ export interface DatasetServiceDistribution {
 }
 
 export interface DatasetDownloadDistribution {
+  type: 'download'
   downloadUrl: URL
   mimeType?: string
   sizeBytes?: number
@@ -129,15 +133,19 @@ export interface DatasetDownloadDistribution {
 }
 
 export interface DatasetLinkDistribution {
+  type: 'link'
   linkUrl: URL
   name?: string
   description?: string
 }
 
-export type DatasetDistribution =
+export type DatasetDistribution = (
   | DatasetServiceDistribution
   | DatasetDownloadDistribution
   | DatasetLinkDistribution
+) & {
+  type: DatasetDistributionType
+}
 
 export interface DatasetOverview {
   url: URL

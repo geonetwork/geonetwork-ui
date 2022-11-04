@@ -193,7 +193,7 @@ export function xmlToString(
     )}`
   if (el instanceof XmlText) {
     const text = el.text
-    const isEmpty = text.replace(/^\s+|\s+$/g, '') === ''
+    const isEmpty = !text || text.replace(/^\s+|\s+$/g, '') === ''
     if (isEmpty) return ''
     return text
       .replace(/&/g, '&amp;')

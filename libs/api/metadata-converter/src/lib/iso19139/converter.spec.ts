@@ -61,7 +61,21 @@ describe('ISO19139 converter', () => {
       describe('when converting to XML and back', () => {
         it('keeps the record unchanged', () => {
           const backAndForth = toModel(toXml(GENERIC_DATASET_RECORD))
-          expect(backAndForth).toStrictEqual(GENERIC_DATASET_RECORD)
+          // unsupported fields need to be filtered out
+          expect(backAndForth).toStrictEqual({
+            ...GENERIC_DATASET_RECORD,
+            ownerOrganisation: {
+              name: GENERIC_DATASET_RECORD.ownerOrganisation.name,
+              website: GENERIC_DATASET_RECORD.ownerOrganisation.website,
+            },
+            contacts: GENERIC_DATASET_RECORD.contacts.map((c) => ({
+              ...c,
+              organisation: {
+                name: c.organisation.name,
+                website: c.organisation.website,
+              },
+            })),
+          })
         })
       })
     })

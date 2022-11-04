@@ -1,33 +1,37 @@
-<div class="p-2">{{ label }}</div>
-<div class="pl-4 pr-1 text-sm bg-green-50">
-  <div
-    *ngFor="let item of fieldValue; let i = index; trackBy: trackBy"
-    class="relative"
-  >
-    <ng-container
-      [ngTemplateOutlet]="itemTemplate"
-      [ngTemplateOutletContext]="{
-        getValue: valueGetterByIndex(i),
-        setValue: valueSetterByIndex(i)
-      }"
+<gn-ui-record-field-group [label]="label">
+  <div class="text-[0.9em]">
+    <div
+      *ngFor="let item of fieldValue; let i = index; trackBy: trackBy"
+      class="relative pr-[2.8em]"
     >
-    </ng-container>
-    <button
-      class="bg-red-500 hover:bg-red-700 text-white py-1 px-3 m-1 mr-0 rounded absolute"
-      style="top: 0; right: 0"
-      type="button"
-      (click)="removeItem(i)"
-    >
-      Delete
-    </button>
+      <ng-container
+        [ngTemplateOutlet]="itemTemplate"
+        [ngTemplateOutletContext]="{
+          getValue: valueGetterByIndex(i),
+          setValue: valueSetterByIndex(i)
+        }"
+      >
+      </ng-container>
+      <gn-ui-button
+        class="absolute top-0 right-1"
+        [type]="'outline'"
+        (buttonClick)="removeItem(i)"
+        extraClass="!p-[0.5em]"
+        title="Delete this item"
+      >
+        <mat-icon class="material-icons-outlined text-[1.6em] !w-[1em] !h-[1em]"
+          >delete_forever</mat-icon
+        >
+      </gn-ui-button>
+    </div>
+    <div class="p-2">
+      <gn-ui-button
+        [type]="'primary'"
+        (buttonClick)="addItem()"
+        extraClass="py-[0.5em] px-[1em]"
+      >
+        Add new item...
+      </gn-ui-button>
+    </div>
   </div>
-  <div class="p-2">
-    <button
-      class="bg-green-500 hover:bg-green-700 text-white py-1 px-3 rounded"
-      type="button"
-      (click)="addItem()"
-    >
-      Add new item
-    </button>
-  </div>
-</div>
+</gn-ui-record-field-group>

@@ -38,13 +38,21 @@ export class RecordFieldArrayComponent {
     return () => this.fieldValue[index]
   }
   valueSetterByIndex(index: number) {
-    return (v: unknown, prop?: string) => {
-      if (prop)
+    return (v: unknown, prop?: string, prop2?: string) => {
+      if (prop && prop2) {
+        this.fieldValue[index] = {
+          ...(this.fieldValue as unknown)[index],
+          [prop]: {
+            ...this.fieldValue[index][prop],
+            [prop2]: v,
+          },
+        }
+      } else if (prop) {
         this.fieldValue[index] = {
           ...(this.fieldValue as unknown)[index],
           [prop]: v,
         }
-      else this.fieldValue[index] = v
+      } else this.fieldValue[index] = v
     }
   }
 

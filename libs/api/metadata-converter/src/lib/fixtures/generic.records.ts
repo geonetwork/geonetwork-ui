@@ -6,6 +6,8 @@ export const GENERIC_DATASET_RECORD: DatasetRecord = {
   ownerOrganisation: {
     name: 'MyOrganization',
     website: new URL('https://www.my.org/info'),
+    logoUrl: new URL('https://www.my.org/logo.png'),
+    description: 'A generic organization',
   },
   contacts: [
     {
@@ -14,7 +16,12 @@ export const GENERIC_DATASET_RECORD: DatasetRecord = {
       organisation: {
         name: 'MyOrganization',
         website: new URL('https://www.my.org/info'),
+        logoUrl: new URL('https://www.my.org/logo.png'),
+        description: 'A generic organization',
       },
+      firstName: 'Bob',
+      lastName: 'TheGreat',
+      position: 'developer',
     },
     {
       email: 'john@org2.com',
@@ -23,6 +30,7 @@ export const GENERIC_DATASET_RECORD: DatasetRecord = {
         name: 'Another Organization',
         website: new URL('https://www.another.org/docs'),
       },
+      position: 'manager',
     },
   ],
   status: RecordStatus.ON_GOING,
@@ -53,23 +61,27 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
   spatialRepresentation: 'grid',
   distributions: [
     {
+      type: 'download',
       downloadUrl: new URL('http://my-org.net/download/1.zip'),
       mimeType: 'x-gis/x-shapefile',
       name: 'Direct download',
       description: 'Dataset downloaded as a shapefile',
     },
     {
+      type: 'download',
       downloadUrl: new URL('http://my-org.net/download/2.geojson'),
       mimeType: 'application/geo+json',
       name: 'Direct download',
     },
     {
+      type: 'link',
       linkUrl: new URL('https://my-org.net/docs/1234.pdf'),
       name: 'Documentation',
       description:
         'A link to the online documentation in PDF; please forgive the typos.',
     },
     {
+      type: 'service',
       accessServiceUrl: new URL('https://my-org.net/wfs'),
       accessServiceProtocol: 'wfs',
       name: 'my:featuretype', // FIXME: same as identifier otherwise it will be lost in iso...
