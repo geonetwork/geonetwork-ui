@@ -9,9 +9,9 @@ import { MdViewFacade } from '@geonetwork-ui/feature/record'
 })
 export class RecordPageComponent implements OnDestroy {
   constructor(public mdViewFacade: MdViewFacade) {
-    document.body.classList.add('record-page-active')
+    document.documentElement.classList.add('record-page-active')
   }
   ngOnDestroy() {
-    document.body.classList.remove('record-page-active')
+    document.documentElement.classList.remove('record-page-active')
   }
 }

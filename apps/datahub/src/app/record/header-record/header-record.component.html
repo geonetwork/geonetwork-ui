@@ -3,6 +3,7 @@
     class="h-full container-lg mx-auto flex flex-col justify-center relative"
   >
     <gn-ui-favorite-star
+      *ngIf="metadata"
       [record]="metadata"
       class="absolute text-background top-[0.85em] right-[0.85em]"
       [style.color]="foregroundColor"
@@ -28,6 +29,8 @@
   </div>
 </header>
 
-<div class="container-lg mt-[-40px] z-20 sticky lg:mx-auto inset-0 top-[10px]">
+<div
+  class="container-lg mt-[-40px] z-20 sticky lg:mx-auto inset-x-0 top-[10px]"
+>
   <datahub-navigation-bar></datahub-navigation-bar>
 </div>
