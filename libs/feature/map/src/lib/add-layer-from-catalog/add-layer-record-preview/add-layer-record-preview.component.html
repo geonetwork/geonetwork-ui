@@ -11,10 +11,12 @@
     <ng-container *ngFor="let link of mapLinks">
       <gn-ui-button
         [type]="'outline'"
-        (click)="handleLinkClick(link)"
-        extraClass="p-1 text-[11px] truncate"
+        (buttonClick)="handleLinkClick(link)"
+        extraClass="!py-[8px] !px-[12px]"
       >
-        {{ getLinkLabel(link) }}
+        <div class="text-left text-[12px] line-clamp-2">
+          {{ getLinkLabel(link) }}
+        </div>
       </gn-ui-button>
     </ng-container>
   </div>
