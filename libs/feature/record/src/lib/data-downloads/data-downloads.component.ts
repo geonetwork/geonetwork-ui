@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import {
   getFileFormat,
+  MetadataLink,
   MetadataLinkType,
   sortPriority,
 } from '@geonetwork-ui/util/shared'
-import { MetadataLink } from '@geonetwork-ui/util/shared'
 import { combineLatest, of } from 'rxjs'
-import { catchError, map, switchMap, tap } from 'rxjs/operators'
+import { catchError, map, switchMap } from 'rxjs/operators'
 import { DataService } from '../service/data.service'
 import { MdViewFacade } from '../state'
 
@@ -44,26 +44,9 @@ export class DataDownloadsComponent {
             )
           : [of([] as MetadataLink[])]
       ).pipe(
-        // flatten array
-        map((wfsDownloadLinks) =>
-          wfsDownloadLinks.reduce((prev, curr) => [...prev, ...curr], [])
-        ),
-        // only keep known formats
-        map((wfsDownloadLinks) =>
-          wfsDownloadLinks.filter((link) => !!getFileFormat(link))
-        ),
-        // remove duplicates
-        map((wfsDownloadLinks) =>
-          wfsDownloadLinks.filter(
-            (link, i, links) =>
-              links.findIndex(
-                (firstLink) =>
-                  getFileFormat(firstLink) === getFileFormat(link) &&
-                  firstLink.name === link.name &&
-                  firstLink.type === link.type
-              ) === i
-          )
-        ),
+        map(flattenArray),
+        map(removeLinksWithUnknownFormat),
+        map(removeDuplicateLinks),
         map((wfsDownloadLinks) => [
           ...otherLinks,
           ...wfsDownloadLinks,
@@ -73,12 +56,30 @@ export class DataDownloadsComponent {
           this.error = e.message
           return of([...otherLinks, ...esriRestLinks])
         }),
-        map((allLinks) =>
-          allLinks.sort((a: MetadataLink, b: MetadataLink): number => {
-            return sortPriority(b) - sortPriority(a)
-          })
-        )
+        map(sortLinks)
       )
     })
   )
 }
+
+const flattenArray = (arrayOfArrays) =>
+  arrayOfArrays.reduce((prev, curr) => [...prev, ...curr], [])
+
+const removeLinksWithUnknownFormat = (wfsDownloadLinks) =>
+  wfsDownloadLinks.filter((link) => !!getFileFormat(link))
+
+const removeDuplicateLinks = (wfsDownloadLinks) =>
+  wfsDownloadLinks.filter(
+    (link, i, links) =>
+      links.findIndex(
+        (firstLink) =>
+          getFileFormat(firstLink) === getFileFormat(link) &&
+          firstLink.name === link.name &&
+          firstLink.type === link.type
+      ) === i
+  )
+
+const sortLinks = (allLinks) =>
+  allLinks.sort((a: MetadataLink, b: MetadataLink): number => {
+    return sortPriority(b) - sortPriority(a)
+  })

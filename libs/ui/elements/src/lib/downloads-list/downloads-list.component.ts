@@ -103,7 +103,7 @@ export class DownloadsListComponent implements OnInit {
     return getBadgeColor(getFileFormat(link))
   }
 
-  getIsFromWfs(link: MetadataLink) {
+  isFromWfs(link: MetadataLink) {
     return link.type === MetadataLinkType.WFS
   }
 }
