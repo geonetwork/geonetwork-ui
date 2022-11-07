@@ -53,6 +53,7 @@ import {
   readUpdateFrequency,
   readUseLimitations,
 } from './read-parts'
+import { isEqual } from '../convert-utils'
 
 export function toModel(xml: string): CatalogRecord {
   const doc = parseXmlString(xml)
@@ -112,28 +113,6 @@ export function toModel(xml: string): CatalogRecord {
     distributions,
     updateFrequency,
   } as DatasetRecord
-}
-
-function isEqual<
-  T extends
-    | Array<unknown>
-    | Record<string, unknown>
-    | string
-    | Date
-    | number
-    | URL
-    | unknown
->(a: T, b: T): boolean {
-  if (Array.isArray(a) && Array.isArray(b)) {
-    return a.every((e, i) => isEqual(e, b[i]))
-  } else if (a instanceof Date && b instanceof Date) {
-    return a.getTime() === b.getTime()
-  } else if (a instanceof URL && b instanceof URL) {
-    return a.toString() === b.toString()
-  } else if (a instanceof Object && b instanceof Object) {
-    return Object.keys(a).every((key) => isEqual(a[key], b[key]))
-  }
-  return a === b
 }
 
 export function toXml(record: CatalogRecord, originalXml?: string): string {

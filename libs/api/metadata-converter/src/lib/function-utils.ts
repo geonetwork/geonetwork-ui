@@ -1,5 +1,4 @@
 export type ChainableFunction<T, U> = (input: T) => U
-export type ChainResult<U> = U | null
 
 export function pipe(): ChainableFunction<void, void>
 export function pipe<U, V>(
