@@ -1,6 +1,7 @@
 import { MetadataLinkType, MetadataRecord } from '../models'
+import { deepFreeze } from '../utils'
 
-export const RECORDS_SUMMARY_FIXTURE: MetadataRecord[] = [
+export const RECORDS_SUMMARY_FIXTURE: MetadataRecord[] = deepFreeze([
   {
     id: '139',
     uuid: 'd2f30aa4-867e-40b9-9c37-3cb21f541008',
@@ -58,9 +59,9 @@ export const RECORDS_SUMMARY_FIXTURE: MetadataRecord[] = [
     hasDownloads: true,
     catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
   },
-]
+])
 
-export const RECORDS_FULL_FIXTURE: MetadataRecord[] = [
+export const RECORDS_FULL_FIXTURE: MetadataRecord[] = deepFreeze([
   {
     abstract:
       "Le produit Surval \"Données par paramètre\" met à disposition les données d'observation et de surveillance bancarisées dans Quadrige.\n\nCe produit contient des résultats sur la plupart des paramètres physiques, chimiques et biologiques de description de l'environnement. Les premières données datent par exemple de 1974 pour les paramètres de la qualité générale des eaux et les contaminants, 1987 pour le phytoplancton et les phycotoxines, 1989 pour la microbiologie, du début des années 2000 pour le benthos. \n\nLes données sous moratoire ou les données qualifiées \"Faux\" sont exclues de la diffusion Surval.\nUne donnée validée dans Quadrige aujourd’hui sera disponible dans Surval demain.\n\nL'accès aux données d'observation se réalise par lieu.\nUn lieu de surveillance est un lieu géographique où des observations, des mesures et/ou des prélèvements sont effectués. Il est localisé de façon unique par son emprise cartographique (surface, ligne ou point). Un lieu de mesure peut être utilisé par plusieurs programmes.\n\nAujourd’hui, ce produit met à disposition des données issues d'une sélection de thématiques.\n\nThématiques suivies :\n- Benthos dont récifs coralliens\n- Contaminants chimiques et Écotoxicologie\n- Déchets\n- Microbiologie\n- Phytoplancton et Hydrologie\n- Ressources aquacoles\n- Zooplancton\n- Autres\n\nL'emprise géographique est nationale : la métropole et les départements et régions d'outre-mer (DROM).",
@@ -158,4 +159,4 @@ export const RECORDS_FULL_FIXTURE: MetadataRecord[] = [
     },
     catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
   },
-]
+])

@@ -1,6 +1,7 @@
-import { MetadataLink, MetadataLinkType } from '../models'
+import { MetadataLinkType } from '../models'
+import { deepFreeze } from '../utils'
 
-export const LINK_FIXTURES: { [key: string]: MetadataLink } = {
+export const LINK_FIXTURES = deepFreeze({
   readmeLink: {
     protocol: 'WWW:LINK',
     description: 'Readme page',
@@ -191,4 +192,4 @@ export const LINK_FIXTURES: { [key: string]: MetadataLink } = {
     url: 'http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/fr-120066022-jdd-199fd14c-2abb-4c14-b0f8-6c8d92e7b480',
     type: MetadataLinkType.DOWNLOAD,
   },
-}
+})
