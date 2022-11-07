@@ -49,6 +49,9 @@ describe('ElasticsearchMapper', () => {
           title: 'EEA reference grid for Germany (10km), May 2013',
           uuid: '20e9e1a1-83c1-4f13-89ef-c19767d6ee18f',
           catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
+          hasDownloads: false,
+          hasMaps: false,
+          links: [],
         },
         {
           abstract: 'Reference layer of the rivers sensitive areas, ',
@@ -60,6 +63,9 @@ describe('ElasticsearchMapper', () => {
           uuid: '5b35f06e-8c6b-4907-b8f4-39541d170360',
           catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
           favoriteCount: 4,
+          hasDownloads: false,
+          hasMaps: false,
+          links: [],
         },
       ])
     })
@@ -68,7 +74,12 @@ describe('ElasticsearchMapper', () => {
   describe('#toRecord', () => {
     let hit
     beforeEach(() => {
-      hit = (hitsOnly as any).hits.hits[0]
+      hit = {
+        ...(hitsOnly as any).hits.hits[0],
+        _source: {
+          ...(hitsOnly as any).hits.hits[0]._source,
+        },
+      }
     })
 
     describe('overview', () => {
