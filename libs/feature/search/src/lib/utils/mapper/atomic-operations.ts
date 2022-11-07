@@ -1,4 +1,8 @@
-import { MetadataContact, MetadataLink } from '@geonetwork-ui/util/shared'
+import {
+  MetadataContact,
+  MetadataLink,
+  MetadataLinkType,
+} from '@geonetwork-ui/util/shared'
 
 export type SourceWithUnknownProps = { [key: string]: unknown }
 
@@ -47,32 +51,57 @@ export const getAsUrl = (field) => {
   }
 }
 
-export const mapLink = (sourceLink: SourceWithUnknownProps): MetadataLink => {
+export function getLinkType(url: string, protocol?: string): MetadataLinkType {
+  if (!protocol) return MetadataLinkType.OTHER
+  if (/^ESRI:REST/.test(protocol) && /FeatureServer/.test(url))
+    return MetadataLinkType.ESRI_REST
+  if (/^OGC:WMS/.test(protocol)) return MetadataLinkType.WMS
+  if (/^OGC:WFS/.test(protocol)) return MetadataLinkType.WFS
+  if (/^OGC:WMTS/.test(protocol)) return MetadataLinkType.WMTS
+  if (/^WWW:DOWNLOAD/.test(protocol)) return MetadataLinkType.DOWNLOAD
+  if (protocol === 'WWW:LINK:LANDING_PAGE') return MetadataLinkType.LANDING_PAGE
+  return MetadataLinkType.OTHER
+}
+
+export const mapLink = (
+  sourceLink: SourceWithUnknownProps
+): MetadataLink | null => {
   const url = getAsUrl(selectField<string>(sourceLink, 'url'))
   // no url: fail early
   if (url === null) {
-    return { invalid: true, reason: 'The link does not contain a valid URL' }
+    // TODO: collect errors at the record level?
+    console.warn('A link without valid URL was found', sourceLink)
+    return null
   }
 
   const protocolMatch = /^(https?|ftp):/.test(url)
   if (!protocolMatch) {
-    return {
-      invalid: true,
-      reason:
-        'The URL for the link is in an unsupported protocol; supported protocols are HTTP, HTTPS and FTP',
-    }
+    // TODO: collect errors at the record level?
+    console.warn(
+      'A link with an unsupported protocol URL was found; supported protocols are HTTP, HTTPS and FTP',
+      sourceLink
+    )
+    return null
   }
 
   const name = selectField<string>(sourceLink, 'name')
   const description = selectField<string>(sourceLink, 'description')
   const label = description || name
   const protocol = selectField<string>(sourceLink, 'protocol')
+
+  const mimeTypeMatches = protocol && protocol.match(/^WWW:DOWNLOAD:(.+\/.+)$/)
+  const mimeType = mimeTypeMatches && mimeTypeMatches[1]
+
+  const type = getLinkType(url, protocol)
+
   return {
     url,
+    type,
     ...(name && { name }),
     ...(description && { description }),
     ...(label && { label }),
     ...(protocol && { protocol }),
+    ...(mimeType && { mimeType }),
   }
 }
 

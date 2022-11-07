@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { TranslateModule } from '@ngx-translate/core'
 
 import { LinkCardComponent } from './link-card.component'
+import { MetadataLinkType } from '@geonetwork-ui/util/shared'
 
 describe('LinkCardComponent', () => {
   let component: LinkCardComponent
@@ -26,6 +27,7 @@ describe('LinkCardComponent', () => {
       description:
         'Lorem ipsum dolor sit amet, consect etur adipiscing elit. Donec id condim entum ex. Etiam sed molestie est.',
       url: 'https//example.com/someurlpath',
+      type: MetadataLinkType.OTHER,
     }
     fixture.detectChanges()
   })

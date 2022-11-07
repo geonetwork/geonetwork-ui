@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import {
   getFileFormat,
-  getWfsFormat,
-  LinkHelperService,
+  MetadataLink,
+  MetadataLinkType,
   sortPriority,
 } from '@geonetwork-ui/util/shared'
-import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
 import { combineLatest, of } from 'rxjs'
 import { catchError, map, switchMap } from 'rxjs/operators'
 import { DataService } from '../service/data.service'
@@ -18,30 +17,23 @@ import { MdViewFacade } from '../state'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataDownloadsComponent {
-  constructor(
-    public facade: MdViewFacade,
-    private linkHelper: LinkHelperService,
-    private dataService: DataService
-  ) {}
+  constructor(public facade: MdViewFacade, private dataService: DataService) {}
 
   error: string = null
 
   links$ = this.facade.downloadLinks$.pipe(
     switchMap((links) => {
-      const wfsLinks = links.filter((link) => this.linkHelper.isWfsLink(link))
+      const wfsLinks = links.filter(
+        (link) => link.type === MetadataLinkType.WFS
+      )
       const esriRestLinks = links
-        .filter((link) => this.linkHelper.isEsriRestFeatureServer(link))
+        .filter((link) => link.type === MetadataLinkType.ESRI_REST)
         .flatMap((link) => this.dataService.getDownloadLinksFromEsriRest(link))
-      const otherLinks = links
-        .filter((link) => !/^OGC:WFS|ESRI:REST/.test(link.protocol))
-        .map((link) =>
-          'format' in link
-            ? link
-            : {
-                ...link,
-                format: getFileFormat(link),
-              }
-        )
+      const otherLinks = links.filter(
+        (link) =>
+          link.type !== MetadataLinkType.WFS &&
+          link.type !== MetadataLinkType.ESRI_REST
+      )
 
       this.error = null
 
@@ -50,29 +42,11 @@ export class DataDownloadsComponent {
           ? wfsLinks.map((link) =>
               this.dataService.getDownloadLinksFromWfs(link)
             )
-          : [of([] as MetadataLinkValid[])]
+          : [of([] as MetadataLink[])]
       ).pipe(
-        // flatten array
-        map((wfsDownloadLinks) =>
-          wfsDownloadLinks.reduce((prev, curr) => [...prev, ...curr], [])
-        ),
-        map((wfsDownloadLinks) =>
-          wfsDownloadLinks
-            .map((link) => ({
-              ...link,
-              format: getWfsFormat(link),
-            }))
-            .filter((link) => link.format)
-            // remove duplicates
-            .filter(
-              (link, i, links) =>
-                links.findIndex(
-                  (firstLink) =>
-                    firstLink.format === link.format &&
-                    firstLink.name === link.name
-                ) === i
-            )
-        ),
+        map(flattenArray),
+        map(removeLinksWithUnknownFormat),
+        map(removeDuplicateLinks),
         map((wfsDownloadLinks) => [
           ...otherLinks,
           ...wfsDownloadLinks,
@@ -82,14 +56,30 @@ export class DataDownloadsComponent {
           this.error = e.message
           return of([...otherLinks, ...esriRestLinks])
         }),
-        map((allLinks) =>
-          allLinks.sort(
-            (a: MetadataLinkValid, b: MetadataLinkValid): number => {
-              return sortPriority(b) - sortPriority(a)
-            }
-          )
-        )
+        map(sortLinks)
       )
     })
   )
 }
+
+const flattenArray = (arrayOfArrays) =>
+  arrayOfArrays.reduce((prev, curr) => [...prev, ...curr], [])
+
+const removeLinksWithUnknownFormat = (wfsDownloadLinks) =>
+  wfsDownloadLinks.filter((link) => !!getFileFormat(link))
+
+const removeDuplicateLinks = (wfsDownloadLinks) =>
+  wfsDownloadLinks.filter(
+    (link, i, links) =>
+      links.findIndex(
+        (firstLink) =>
+          getFileFormat(firstLink) === getFileFormat(link) &&
+          firstLink.name === link.name &&
+          firstLink.type === link.type
+      ) === i
+  )
+
+const sortLinks = (allLinks) =>
+  allLinks.sort((a: MetadataLink, b: MetadataLink): number => {
+    return sortPriority(b) - sortPriority(a)
+  })

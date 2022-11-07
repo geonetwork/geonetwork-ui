@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core'
+import { MapFacade } from '../+state/map.facade'
 
 @Component({
   selector: 'gn-ui-layers-panel',
@@ -6,4 +7,11 @@ import { Component, ChangeDetectionStrategy } from '@angular/core'
   styleUrls: ['./layers-panel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LayersPanelComponent {}
+export class LayersPanelComponent {
+  layers$ = this.mapFacade.layers$
+  constructor(private mapFacade: MapFacade) {}
+
+  deleteLayer(index: number) {
+    this.mapFacade.removeLayer(index)
+  }
+}

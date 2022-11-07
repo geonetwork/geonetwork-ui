@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing'
 import { DataService } from './data.service'
 import { readFirst } from '@nrwl/angular/testing'
 import { readDataset } from '@geonetwork-ui/data-fetcher'
-import { PROXY_PATH } from '@geonetwork-ui/util/shared'
+import { MetadataLinkType, PROXY_PATH } from '@geonetwork-ui/util/shared'
 
 const newEndpointCall = jest.fn()
 
@@ -146,6 +146,7 @@ describe('DataService', () => {
         name: 'surval_parametre_ligne',
         protocol: 'OGC:WFS',
         url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
+        type: MetadataLinkType.WFS,
       }
       describe('WFS unreachable (CORS)', () => {
         it('throws a relevant error', async () => {
@@ -214,24 +215,27 @@ describe('DataService', () => {
           expect(urls).toEqual([
             {
               description: 'Lieu de surveillance (ligne)',
-              format: 'csv',
+              mimeType: 'text/csv',
               name: 'surval_parametre_ligne',
               protocol: 'OGC:WFS',
               url: 'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=csv',
+              type: MetadataLinkType.WFS,
             },
             {
               description: 'Lieu de surveillance (ligne)',
-              format: 'xls',
+              mimeType: 'application/vnd.ms-excel',
               name: 'surval_parametre_ligne',
               protocol: 'OGC:WFS',
               url: 'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=xls',
+              type: MetadataLinkType.WFS,
             },
             {
               description: 'Lieu de surveillance (ligne)',
-              format: 'json',
+              mimeType: 'application/json',
               name: 'surval_parametre_ligne',
               protocol: 'OGC:WFS',
               url: 'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=json',
+              type: MetadataLinkType.WFS,
             },
           ])
         })
@@ -248,17 +252,19 @@ describe('DataService', () => {
           expect(urls).toEqual([
             {
               description: 'Lieu de surveillance (ligne)',
-              format: 'csv',
+              mimeType: 'text/csv',
               name: 'nojson_type',
               protocol: 'OGC:WFS',
               url: 'http://local/wfs?GetFeature&FeatureType=nojson_type&format=csv',
+              type: MetadataLinkType.WFS,
             },
             {
               description: 'Lieu de surveillance (ligne)',
-              format: 'xls',
+              mimeType: 'application/vnd.ms-excel',
               name: 'nojson_type',
               protocol: 'OGC:WFS',
               url: 'http://local/wfs?GetFeature&FeatureType=nojson_type&format=xls',
+              type: MetadataLinkType.WFS,
             },
           ])
         })
@@ -275,24 +281,27 @@ describe('DataService', () => {
           expect(urls).toEqual([
             {
               description: 'Lieu de surveillance (ligne)',
-              format: 'csv',
+              mimeType: 'text/csv',
               name: '',
               protocol: 'OGC:WFS',
               url: 'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=csv',
+              type: MetadataLinkType.WFS,
             },
             {
               description: 'Lieu de surveillance (ligne)',
-              format: 'xls',
+              mimeType: 'application/vnd.ms-excel',
               name: '',
               protocol: 'OGC:WFS',
               url: 'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=xls',
+              type: MetadataLinkType.WFS,
             },
             {
               description: 'Lieu de surveillance (ligne)',
-              format: 'json',
+              mimeType: 'application/json',
               name: '',
               protocol: 'OGC:WFS',
               url: 'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=json',
+              type: MetadataLinkType.WFS,
             },
           ])
         })
@@ -353,21 +362,23 @@ describe('DataService', () => {
           service.getDownloadLinksFromEsriRest({
             protocol: 'ESRI:REST',
             name: 'myrestlayer',
-            format: 'arcgis geoservices rest api',
             url: 'https://my.esri.server/FeatureServer',
+            type: MetadataLinkType.ESRI_REST,
           })
         ).toEqual([
           {
             protocol: 'ESRI:REST',
             name: 'myrestlayer',
-            format: 'REST:json',
+            mimeType: 'application/json',
             url: 'https://my.esri.server/FeatureServer/query?f=json&where=1=1&outFields=*',
+            type: MetadataLinkType.ESRI_REST,
           },
           {
             protocol: 'ESRI:REST',
             name: 'myrestlayer',
-            format: 'REST:geojson',
+            mimeType: 'application/geo+json',
             url: 'https://my.esri.server/FeatureServer/query?f=geojson&where=1=1&outFields=*',
+            type: MetadataLinkType.ESRI_REST,
           },
         ])
       })

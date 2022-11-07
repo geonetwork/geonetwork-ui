@@ -1,4 +1,6 @@
-export const ORGANISATIONS_FIXTURE = [
+import { deepFreeze } from '../utils'
+
+export const ORGANISATIONS_FIXTURE = deepFreeze([
   {
     name: 'I Data Org',
     description: 'one org for testing',
@@ -59,4 +61,4 @@ export const ORGANISATIONS_FIXTURE = [
     logoUrl: 'https://my-geonetwork.org/logo10.png',
     recordCount: 1,
   },
-]
+])

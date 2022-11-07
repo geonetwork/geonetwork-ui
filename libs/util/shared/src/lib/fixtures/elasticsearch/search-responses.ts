@@ -1,4 +1,6 @@
-export const aggsOnly = {
+import { deepFreeze } from '../../utils'
+
+export const aggsOnly = deepFreeze({
   took: 7,
   timed_out: false,
   _shards: { total: 1, successful: 1, skipped: 0, failed: 0 },
@@ -57,9 +59,9 @@ export const aggsOnly = {
       ],
     },
   },
-}
+})
 
-export const hitsOnly: unknown = {
+export const hitsOnly: unknown = deepFreeze({
   hits: {
     max_score: 1,
     hits: [
@@ -122,6 +124,7 @@ export const hitsOnly: unknown = {
           ],
           resourceType: ['dataset'],
           sourceCatalogue: '6731be1e-6533-44e0-9b8a-580b45e36e80',
+          link: [],
         },
         edit: false,
         owner: false,
@@ -200,6 +203,7 @@ export const hitsOnly: unknown = {
           resourceType: ['dataset'],
           sourceCatalogue: '6731be1e-6533-44e0-9b8a-580b45e36e80',
           userSavedCount: '4',
+          link: [],
         },
         edit: false,
         owner: false,
@@ -214,14 +218,14 @@ export const hitsOnly: unknown = {
       },
     ],
   },
-}
+})
 
-export const simpleWithAgg = {
+export const simpleWithAgg = deepFreeze({
   hits: { hits: [] },
   aggregations: { abc: {} },
-}
+})
 
-export const summaryHits = {
+export const summaryHits = deepFreeze({
   took: 3,
   timed_out: false,
   _shards: { total: 1, successful: 1, skipped: 0, failed: 0 },
@@ -438,4 +442,4 @@ export const summaryHits = {
       },
     ],
   },
-}
+})

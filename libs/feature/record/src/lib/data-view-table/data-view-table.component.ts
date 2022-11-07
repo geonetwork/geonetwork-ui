@@ -1,6 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { SupportedType, SupportedTypes } from '@geonetwork-ui/data-fetcher'
-import { MetadataLinkValid } from '@geonetwork-ui/util/shared'
+import {
+  getFileFormat,
+  getLinkLabel,
+  MetadataLink,
+  MetadataLinkType,
+} from '@geonetwork-ui/util/shared'
 import {
   BehaviorSubject,
   combineLatest,
@@ -17,7 +22,6 @@ import {
   switchMap,
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
-import { getFileFormat, LinkHelperService } from '@geonetwork-ui/util/shared'
 import { DataService } from '../service/data.service'
 
 @Component({
@@ -35,7 +39,7 @@ export class DataViewTableComponent {
   dropdownChoices$ = this.compatibleDataLinks$.pipe(
     map((links) =>
       links.map((link, index) => ({
-        label: this.linkHelper.getLinkLabelWithFormat(link),
+        label: getLinkLabel(link),
         value: index,
       }))
     )
@@ -70,12 +74,11 @@ export class DataViewTableComponent {
 
   constructor(
     private mdViewFacade: MdViewFacade,
-    private linkHelper: LinkHelperService,
     private dataService: DataService
   ) {}
 
-  fetchData(link: MetadataLinkValid): Observable<{ id: string | number }[]> {
-    if (this.linkHelper.isWfsLink(link)) {
+  fetchData(link: MetadataLink): Observable<{ id: string | number }[]> {
+    if (link.type === MetadataLinkType.WFS) {
       return this.dataService
         .getGeoJsonDownloadUrlFromWfs(link.url, link.name)
         .pipe(
@@ -90,7 +93,7 @@ export class DataViewTableComponent {
             )
           )
         )
-    } else if (this.linkHelper.hasProtocolDownload(link)) {
+    } else if (link.type === MetadataLinkType.DOWNLOAD) {
       const format = getFileFormat(link)
       const supportedType =
         SupportedTypes.indexOf(format as any) > -1
@@ -104,7 +107,7 @@ export class DataViewTableComponent {
           }))
         )
       )
-    } else if (this.linkHelper.isEsriRestFeatureServer(link)) {
+    } else if (link.type === MetadataLinkType.ESRI_REST) {
       const url = this.dataService.getGeoJsonDownloadUrlFromEsriRest(link.url)
       return this.dataService.readGeoJsonDataset(url).pipe(
         map((featureCollection) =>

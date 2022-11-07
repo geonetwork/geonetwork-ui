@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core'
-import { LinkHelperService } from '@geonetwork-ui/util/shared'
+import {
+  LinkClassifierService,
+  LinkUsage,
+  MetadataRecord,
+  MetadataUrlService,
+} from '@geonetwork-ui/util/shared'
 import {
   getAsArray,
   getAsUrl,
@@ -14,7 +19,6 @@ import {
   SourceWithUnknownProps,
   toDate,
 } from './atomic-operations'
-import { MetadataUrlService, MetadataRecord } from '@geonetwork-ui/util/shared'
 
 type ESResponseSource = SourceWithUnknownProps
 
@@ -29,7 +33,7 @@ type EsFieldMapperFn = (
 export class ElasticsearchFieldMapper {
   constructor(
     private metadataUrlService: MetadataUrlService,
-    private linkHelper: LinkHelperService
+    private linkClassifier: LinkClassifierService
   ) {}
 
   protected fields: Record<string, EsFieldMapperFn> = {
@@ -95,20 +99,20 @@ export class ElasticsearchFieldMapper {
       ...output,
       updatedOn: toDate(selectField<string>(source, 'changeDate')),
     }),
-    link: (output, source) => ({
-      ...output,
-      links: getAsArray(
+    link: (output, source) => {
+      const rawLinks = getAsArray(
         selectField<SourceWithUnknownProps[]>(source, 'link')
-      ).map(mapLink),
-    }),
-    linkProtocol: (output, source) => {
-      const protocols = getAsArray(
-        selectField<SourceWithUnknownProps[]>(source, 'linkProtocol')
       )
+      const links = rawLinks.map(mapLink).filter((v) => v !== null)
       return {
         ...output,
-        hasDownloads: this.linkHelper.hasDownloadProtocols(protocols),
-        hasMaps: this.linkHelper.hasMapApiProtocols(protocols),
+        links,
+        hasDownloads: links.some((link) =>
+          this.linkClassifier.hasUsage(link, LinkUsage.DOWNLOAD)
+        ),
+        hasMaps: links.some((link) =>
+          this.linkClassifier.hasUsage(link, LinkUsage.MAP_API)
+        ),
       }
     },
     contact: (output, source) => ({

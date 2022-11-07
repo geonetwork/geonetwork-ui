@@ -9,9 +9,17 @@ import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTabsModule } from '@angular/material/tabs'
 import { TranslateModule } from '@ngx-translate/core'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { AddLayerFromCatalogComponent } from './add-layer-from-catalog/add-layer-from-catalog.component'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
+import { StoreModule } from '@ngrx/store'
+import { EffectsModule } from '@ngrx/effects'
+import * as fromMap from './+state/map.reducer'
+import { MapEffects } from './+state/map.effects'
+import { MapFacade } from './+state/map.facade'
+import { MapContainerComponent } from './map-container/map-container.component'
+import { AddLayerRecordPreviewComponent } from './add-layer-from-catalog/add-layer-record-preview/add-layer-record-preview.component'
+import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 
 @NgModule({
   declarations: [
@@ -19,12 +27,15 @@ import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
     MapInstanceDirective,
     LayersPanelComponent,
     AddLayerFromCatalogComponent,
+    MapContainerComponent,
+    AddLayerRecordPreviewComponent,
   ],
   exports: [
     MapContextComponent,
     MapInstanceDirective,
     LayersPanelComponent,
     AddLayerFromCatalogComponent,
+    MapContainerComponent,
   ],
   imports: [
     CommonModule,
@@ -34,12 +45,17 @@ import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
     MatTabsModule,
     TranslateModule,
     FeatureSearchModule,
+    StoreModule.forFeature(fromMap.MAP_FEATURE_KEY, fromMap.mapReducer),
+    EffectsModule.forFeature([MapEffects]),
+    UiElementsModule,
+    UiInputsModule,
   ],
   providers: [
     {
       provide: FEATURE_MAP_OPTIONS,
       useValue: defaultMapOptions,
     },
+    MapFacade,
   ],
 })
 export class FeatureMapModule {}

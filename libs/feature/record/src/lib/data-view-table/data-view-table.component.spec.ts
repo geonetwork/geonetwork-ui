@@ -14,6 +14,7 @@ import { DataViewTableComponent } from './data-view-table.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { delay } from 'rxjs/operators'
 import { DataService } from '../service/data.service'
+import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util/shared'
 
 const SAMPLE_GEOJSON = {
   type: 'FeatureCollection',
@@ -29,24 +30,24 @@ const SAMPLE_GEOJSON = {
   ],
 }
 
-const DATALINKS_FIXTURE = [
+const DATALINKS_FIXTURE: MetadataLink[] = [
   {
     label: 'CSV file',
     description: 'CSV file',
     name: 'some_file_name.csv',
-    format: 'csv',
     protocol: 'WWW:DOWNLOAD',
     url: 'https://test.org/some_file_name.csv',
+    type: MetadataLinkType.DOWNLOAD,
   },
 ]
-const GEODATALINKS_FIXTURE = [
+const GEODATALINKS_FIXTURE: MetadataLink[] = [
   {
     label: 'Geojson file',
     description: 'Geojson file',
     name: 'some_file_name.geojson',
-    format: 'geojson',
     protocol: 'WWW:DOWNLOAD',
     url: 'https://test.org/some_file_name.geojson',
+    type: MetadataLinkType.DOWNLOAD,
   },
   {
     label: 'Service WFS',
@@ -54,6 +55,7 @@ const GEODATALINKS_FIXTURE = [
     name: 'abc:featureType',
     protocol: 'OGC:WFS',
     url: 'https://test.org/wfs',
+    type: MetadataLinkType.WFS,
   },
 ]
 
@@ -257,6 +259,7 @@ describe('DataViewTableComponent', () => {
           url: 'http://abcd.com/wfs/error',
           name: 'featuretype',
           protocol: 'OGC:WFS',
+          type: MetadataLinkType.WFS,
         },
       ])
     })

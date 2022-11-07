@@ -1,4 +1,6 @@
-export const ES_FIXTURE_FULL_RESPONSE = {
+import { deepFreeze } from '../../utils'
+
+export const ES_FIXTURE_FULL_RESPONSE = deepFreeze({
   took: 1,
   timed_out: false,
   _shards: { total: 1, successful: 1, skipped: 0, failed: 0 },
@@ -1587,4 +1589,4 @@ export const ES_FIXTURE_FULL_RESPONSE = {
       },
     ],
   },
-}
+})

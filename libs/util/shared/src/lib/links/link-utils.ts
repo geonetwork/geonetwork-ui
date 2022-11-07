@@ -1,5 +1,5 @@
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { MetadataLinkValid } from '../models'
+import { MetadataLink, MetadataLinkType } from '../models'
 
 marker('downloads.wfs.featuretype.not.found')
 
@@ -78,10 +78,11 @@ export const FORMATS = {
   },
 }
 
-export function sortPriority(link: MetadataLinkValid): number {
+export function sortPriority(link: MetadataLink): number {
+  const linkFormat = getFileFormat(link)
   for (const format in FORMATS) {
     for (const ext of FORMATS[format].extensions) {
-      if ('format' in link && new RegExp(`${ext}`, 'i').test(link.format)) {
+      if (new RegExp(`${ext}`, 'i').test(linkFormat)) {
         if (FORMATS[format].priority === 0) return 0
         return Object.keys(FORMATS).length - FORMATS[format].priority
       }
@@ -90,32 +91,25 @@ export function sortPriority(link: MetadataLinkValid): number {
   return 0
 }
 
-export function getWfsFormat(link: MetadataLinkValid): string {
+export function extensionToFormat(extension: string): string {
   for (const format in FORMATS) {
     for (const alias of FORMATS[format].extensions) {
-      if ('format' in link && new RegExp(`${alias}`, 'i').test(link.format))
-        return `WFS:${format}`
+      if (alias === extension.toLowerCase()) return format
     }
   }
   return undefined
 }
 
-export function getFileFormat(link: MetadataLinkValid): string | void {
-  if (link.format) {
-    return link.format
-  }
-  if ('protocol' in link && /^WWW:DOWNLOAD/.test(link.protocol)) {
-    // mime types in protocol
-    const matches = link.protocol.match(/^WWW:DOWNLOAD:(.+\/.+)$/)
-    if (matches !== null) {
-      return mimeTypeToFormat(matches[1])
-    }
+export function getFileFormat(link: MetadataLink): string {
+  if ('mimeType' in link) {
+    return mimeTypeToFormat(link.mimeType)
   }
   for (const format in FORMATS) {
     for (const alias of FORMATS[format].extensions) {
       if (checkFileFormat(link, alias)) return format
     }
   }
+  return ''
 }
 
 export function mimeTypeToFormat(mimeType: string): string {
@@ -127,17 +121,14 @@ export function mimeTypeToFormat(mimeType: string): string {
   return undefined
 }
 
-export function checkFileFormat(
-  link: MetadataLinkValid,
-  format: string
-): boolean {
+export function checkFileFormat(link: MetadataLink, format: string): boolean {
   return (
     ('name' in link && new RegExp(`[./]${format}`, 'i').test(link.name)) ||
     ('url' in link && new RegExp(`[./]${format}`, 'i').test(link.url))
   )
 }
 
-export function getBadgeColor(linkFormat: string): string | void {
+export function getBadgeColor(linkFormat: string): string {
   for (const format in FORMATS) {
     for (const alias of FORMATS[format].extensions) {
       if (new RegExp(`${alias}`, 'i').test(linkFormat))
@@ -145,4 +136,29 @@ export function getBadgeColor(linkFormat: string): string | void {
     }
   }
   return 'var(--color-gray-700)' // Default color ?
+}
+
+export function getLinkLabel(link: MetadataLink): string {
+  let format = ''
+  switch (link.type) {
+    case MetadataLinkType.WFS:
+      format = 'WFS'
+      break
+    case MetadataLinkType.WMS:
+      format = 'WMS'
+      break
+    case MetadataLinkType.WMTS:
+      format = 'WMTS'
+      break
+    case MetadataLinkType.ESRI_REST:
+      format = 'REST'
+      break
+    default:
+      format = getFileFormat(link)
+  }
+  return format ? `${link.label} (${format})` : link.label
+}
+
+export function getMimeTypeForFormat(format: string): string | null {
+  return format in FORMATS ? FORMATS[format.toLowerCase()].mimeTypes[0] : null
 }

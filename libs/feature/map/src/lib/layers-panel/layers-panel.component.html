@@ -5,6 +5,22 @@
     <mat-icon class="mr-2">layers</mat-icon>
     <span translate>map.layers.list</span>
   </div>
+  <div class="flex flex-col px-4 divide-y divide-y-gray-50">
+    <div
+      *ngFor="let layer of layers$ | async; let index = index"
+      class="flex flex-row py-3"
+    >
+      <mat-icon class="-ml-2 mr-2 flex-shrink-0">chevron_right</mat-icon>
+      <span class="mr-2 flex-grow">{{ layer.title }}</span>
+      <a
+        href
+        class="underline text-sm text-red-700 hover:text-red-900"
+        (click)="deleteLayer(index)"
+      >
+        delete
+      </a>
+    </div>
+  </div>
   <gn-ui-expandable-panel-button [titleTemplate]="addLayerTitle">
     <mat-tab-group animationDuration="200ms" class="h-full">
       <mat-tab [label]="'map.add.layer.catalog' | translate">

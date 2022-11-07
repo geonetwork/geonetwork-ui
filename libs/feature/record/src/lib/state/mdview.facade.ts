@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core'
-import { LinkHelperService } from '@geonetwork-ui/util/shared'
-import { MetadataLinkValid, MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
 
 import { select, Store } from '@ngrx/store'
 import { filter, map } from 'rxjs/operators'
 
 import * as MdViewActions from './mdview.actions'
 import * as MdViewSelectors from './mdview.selectors'
+import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
 
 @Injectable()
 /**
@@ -36,40 +36,57 @@ export class MdViewFacade {
 
   related$ = this.store.pipe(select(MdViewSelectors.getRelated))
 
-  allLinks$ = this.metadata$.pipe(
-    map((record) => (this.helper.hasLinks(record) ? record.links : []))
-  )
-  validLinks$ = this.allLinks$.pipe(
-    map(
-      (links) =>
-        links.filter((link) =>
-          this.helper.isValidLink(link)
-        ) as MetadataLinkValid[]
+  allLinks$ = this.metadata$.pipe(map((record) => record.links || []))
+  apiLinks$ = this.allLinks$.pipe(
+    map((links) =>
+      links.filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.API))
     )
   )
-  apiLinks$ = this.validLinks$.pipe(
-    map((links) => links.filter((link) => this.helper.isApiLink(link)))
+  mapApiLinks$ = this.allLinks$.pipe(
+    map((links) =>
+      links.filter((link) =>
+        this.linkClassifier.hasUsage(link, LinkUsage.MAP_API)
+      )
+    )
   )
-  mapApiLinks$ = this.validLinks$.pipe(
-    map((links) => links.filter((link) => this.helper.isMapApiLink(link)))
+  downloadLinks$ = this.allLinks$.pipe(
+    map((links) =>
+      links.filter((link) =>
+        this.linkClassifier.hasUsage(link, LinkUsage.DOWNLOAD)
+      )
+    )
   )
-  downloadLinks$ = this.validLinks$.pipe(
-    map((links) => links.filter((link) => this.helper.isDownloadLink(link)))
+  dataLinks$ = this.allLinks$.pipe(
+    map((links) =>
+      links.filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.DATA))
+    )
   )
-  dataLinks$ = this.validLinks$.pipe(
-    map((links) => links.filter((link) => this.helper.isDataLink(link)))
+  geoDataLinks$ = this.allLinks$.pipe(
+    map((links) =>
+      links.filter((link) =>
+        this.linkClassifier.hasUsage(link, LinkUsage.GEODATA)
+      )
+    )
   )
-  geoDataLinks$ = this.validLinks$.pipe(
-    map((links) => links.filter((link) => this.helper.isGeoDataLink(link)))
+  landingPageLinks$ = this.allLinks$.pipe(
+    map((links) =>
+      links.filter((link) =>
+        this.linkClassifier.hasUsage(link, LinkUsage.LANDING_PAGE)
+      )
+    )
   )
-  landingPageLinks$ = this.validLinks$.pipe(
-    map((links) => links.filter((link) => this.helper.isLandingPage(link)))
-  )
-  otherLinks$ = this.validLinks$.pipe(
-    map((links) => links.filter((link) => this.helper.isOtherLink(link)))
+  otherLinks$ = this.allLinks$.pipe(
+    map((links) =>
+      links.filter((link) =>
+        this.linkClassifier.hasUsage(link, LinkUsage.UNKNOWN)
+      )
+    )
   )
 
-  constructor(private store: Store, private helper: LinkHelperService) {}
+  constructor(
+    private store: Store,
+    private linkClassifier: LinkClassifierService
+  ) {}
 
   /**
    * This will show an incomplete record (e.g. from a search result) as a preview

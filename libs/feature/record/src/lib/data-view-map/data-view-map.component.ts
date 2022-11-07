@@ -13,9 +13,13 @@ import {
   MapStyleService,
   MapUtilsService,
 } from '@geonetwork-ui/feature/map'
-import { LinkHelperService } from '@geonetwork-ui/util/shared'
 import { getMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
-import { MetadataLinkValid, ProxyService } from '@geonetwork-ui/util/shared'
+import {
+  getLinkLabel,
+  MetadataLink,
+  MetadataLinkType,
+  ProxyService,
+} from '@geonetwork-ui/util/shared'
 import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
 import { StyleLike } from 'ol/style/Style'
@@ -61,7 +65,7 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
     map((links) =>
       links.length
         ? links.map((link, index) => ({
-            label: this.linkHelper.getLinkLabelWithFormat(link),
+            label: getLinkLabel(link),
             value: index,
           }))
         : [{ label: 'No preview layer', value: 0 }]
@@ -119,7 +123,6 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
   constructor(
     private mdViewFacade: MdViewFacade,
     private mapUtils: MapUtilsService,
-    private linkHelper: LinkHelperService,
     private dataService: DataService,
     private proxy: ProxyService,
     private featureInfo: FeatureInfoService,
@@ -157,21 +160,21 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
     this.selection = null
   }
 
-  getLayerFromLink(link: MetadataLinkValid): Observable<MapContextLayerModel> {
-    if (this.linkHelper.isWmsLink(link)) {
+  getLayerFromLink(link: MetadataLink): Observable<MapContextLayerModel> {
+    if (link.type === MetadataLinkType.WMS) {
       return of({
         url: link.url,
         type: MapContextLayerTypeEnum.WMS,
         name: link.name,
       })
-    } else if (this.linkHelper.isWmtsLink(link)) {
+    } else if (link.type === MetadataLinkType.WMTS) {
       return this.mapUtils.getWmtsOptionsFromCapabilities(link).pipe(
         map((options) => ({
           type: MapContextLayerTypeEnum.WMTS,
           options: options,
         }))
       )
-    } else if (this.linkHelper.isWfsLink(link)) {
+    } else if (link.type === MetadataLinkType.WFS) {
       return this.dataService
         .getGeoJsonDownloadUrlFromWfs(link.url, link.name)
         .pipe(
@@ -181,14 +184,14 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
             data,
           }))
         )
-    } else if (this.linkHelper.hasProtocolDownload(link)) {
+    } else if (link.type === MetadataLinkType.DOWNLOAD) {
       return this.dataService.readGeoJsonDataset(link.url).pipe(
         map((data) => ({
           type: MapContextLayerTypeEnum.GEOJSON,
           data,
         }))
       )
-    } else if (this.linkHelper.isEsriRestFeatureServer(link)) {
+    } else if (link.type === MetadataLinkType.ESRI_REST) {
       const url = this.dataService.getGeoJsonDownloadUrlFromEsriRest(link.url)
       return this.dataService.readGeoJsonDataset(url).pipe(
         map((data) => ({

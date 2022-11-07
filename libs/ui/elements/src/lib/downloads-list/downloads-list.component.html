@@ -20,5 +20,10 @@
   </div>
 </div>
 <div class="mb-2 sm:mb-3" *ngFor="let link of filteredLinks">
-  <gn-ui-download-item [link]="link" [color]="link.color"></gn-ui-download-item>
+  <gn-ui-download-item
+    [link]="link"
+    [color]="getLinkColor(link)"
+    [format]="getLinkFormat(link)"
+    [isFromWfs]="isFromWfs(link)"
+  ></gn-ui-download-item>
 </div>

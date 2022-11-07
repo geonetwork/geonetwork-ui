@@ -7,26 +7,21 @@ import {
 } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import {
-  LinkHelperService,
-  MetadataLinkValid,
-} from '@geonetwork-ui/util/shared'
+import { LinkClassifierService, MetadataLink } from '@geonetwork-ui/util/shared'
 import { LINK_FIXTURES } from '@geonetwork-ui/util/shared/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
 
 import { DownloadsListComponent } from './downloads-list.component'
-
-const linkHelperServiceMock = {
-  isWfsLink: jest.fn(() => true),
-}
 
 @Component({
   selector: 'gn-ui-download-item',
   template: ``,
 })
 class MockDownloadItemComponent {
-  @Input() link: MetadataLinkValid
+  @Input() link: MetadataLink
   @Input() color: string
+  @Input() format: string
+  @Input() isFromWfs: boolean
 }
 
 describe('DownloadsListComponent', () => {
@@ -39,12 +34,7 @@ describe('DownloadsListComponent', () => {
       imports: [TranslateModule.forRoot()],
       declarations: [DownloadsListComponent, MockDownloadItemComponent],
       schemas: [NO_ERRORS_SCHEMA],
-      providers: [
-        {
-          provide: LinkHelperService,
-          useValue: linkHelperServiceMock,
-        },
-      ],
+      providers: [LinkClassifierService],
     })
       .overrideComponent(DownloadsListComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
@@ -106,7 +96,7 @@ describe('DownloadsListComponent', () => {
       expect(items.length).toBe(1)
     })
   })
-  describe('hydrates link with color and format', () => {
+  describe('derivates color and format from link', () => {
     let items: DebugElement[]
 
     beforeEach(() => {
@@ -116,26 +106,64 @@ describe('DownloadsListComponent', () => {
     })
     it('contains color, isWfs & format', () => {
       expect(items.length).toBe(1)
-      expect(items[0].componentInstance.link).toEqual({
-        ...LINK_FIXTURES.geodataShpWithMimeType,
-        color: 'var(--color-gray-700)',
-        format: '',
-        isWfs: true,
-      })
+      expect(items[0].componentInstance.link).toEqual(
+        LINK_FIXTURES.geodataShpWithMimeType
+      )
+      expect(items[0].componentInstance.format).toEqual('shp')
+      expect(items[0].componentInstance.color).toEqual(
+        expect.stringMatching(/#[0-9a-b]{2,6}/i)
+      )
+      expect(items[0].componentInstance.isFromWfs).toEqual(false)
     })
   })
-  describe('filtering', () => {
-    let items: DebugElement[]
-
+  describe('filtering links', () => {
     beforeEach(() => {
-      component.links = [{ ...LINK_FIXTURES.dataCsv, format: 'csv' }]
-      component.activeFilterFormats = ['csv', 'json']
-      fixture.detectChanges()
+      component.links = [
+        LINK_FIXTURES.dataCsv,
+        LINK_FIXTURES.geodataJsonWithMimeType,
+      ]
     })
-    it('csv link is displayed', () => {
-      expect(component.filteredLinks.length).toBe(1)
-      component.toggleFilterFormat('csv')
-      expect(component.filteredLinks.length).toBe(0)
+    describe('no filter', () => {
+      beforeEach(() => {
+        component.activeFilterFormats = ['all']
+        fixture.detectChanges()
+      })
+      it('shows all links', () => {
+        expect(component.filteredLinks).toEqual([
+          LINK_FIXTURES.dataCsv,
+          LINK_FIXTURES.geodataJsonWithMimeType,
+        ])
+      })
+    })
+    describe('filter on csv', () => {
+      beforeEach(() => {
+        component.activeFilterFormats = ['csv']
+        fixture.detectChanges()
+      })
+      it('shows only one link', () => {
+        expect(component.filteredLinks).toEqual([LINK_FIXTURES.dataCsv])
+      })
+    })
+    describe('filter on json and csv', () => {
+      beforeEach(() => {
+        component.activeFilterFormats = ['csv', 'json']
+        fixture.detectChanges()
+      })
+      it('shows both links including geojson', () => {
+        expect(component.filteredLinks).toEqual([
+          LINK_FIXTURES.dataCsv,
+          LINK_FIXTURES.geodataJsonWithMimeType,
+        ])
+      })
+    })
+    describe('filter on shp', () => {
+      beforeEach(() => {
+        component.activeFilterFormats = ['shp']
+        fixture.detectChanges()
+      })
+      it('shows no link', () => {
+        expect(component.filteredLinks).toEqual([])
+      })
     })
   })
 })

@@ -1,79 +1,65 @@
 import { Injectable } from '@angular/core'
-import { MetadataLink } from '../models'
+import { MetadataLink, MetadataLinkType } from '../models'
 
 export enum LinkUsage {
   API = 'api',
-  MAPAPI = 'mapapi',
+  MAP_API = 'mapapi',
   DOWNLOAD = 'download',
   DATA = 'data',
   GEODATA = 'geodata',
-  LANDINGPAGE = 'landingpage',
+  LANDING_PAGE = 'landingpage',
+  UNKNOWN = 'unknown',
 }
-
-const LANDINGPAGE_LINK_PROTOCOL = 'WWW:LINK:LANDING_PAGE'
 
 @Injectable({
   providedIn: 'root',
 })
 export class LinkClassifierService {
-  /**
-   * Returns Array of link usages
-   * @param link
-   */
   getUsagesForLink(link: MetadataLink): LinkUsage[] {
-    if ('protocol' in link) {
-      if (/^WWW:DOWNLOAD/.test(link.protocol)) {
-        // mime types in protocol
-        const matches = link.protocol.match(/^WWW:DOWNLOAD:(.+\/.+)$/)
-        if (matches !== null) {
-          const mimeType = matches[1]
-          switch (mimeType) {
-            case 'application/json':
-            case 'text/csv':
-            case 'application/csv':
-            case 'application/vnd.ms-excel':
-            case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-              return [LinkUsage.DOWNLOAD, LinkUsage.DATA]
-            case 'application/geo+json':
-            case 'application/vnd.geo+json':
-              return [LinkUsage.DOWNLOAD, LinkUsage.GEODATA]
-          }
+    switch (link.type) {
+      case MetadataLinkType.ESRI_REST:
+      case MetadataLinkType.WFS:
+        return [LinkUsage.API, LinkUsage.DOWNLOAD, LinkUsage.GEODATA]
+      case MetadataLinkType.WMS:
+      case MetadataLinkType.WMTS:
+        return [LinkUsage.API, LinkUsage.MAP_API]
+      case MetadataLinkType.LANDING_PAGE:
+        return [LinkUsage.LANDING_PAGE]
+      case MetadataLinkType.DOWNLOAD: {
+        switch (link.mimeType) {
+          case 'application/json':
+          case 'text/csv':
+          case 'application/csv':
+          case 'application/vnd.ms-excel':
+          case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+            return [LinkUsage.DOWNLOAD, LinkUsage.DATA]
+          case 'application/geo+json':
+          case 'application/vnd.geo+json':
+            return [LinkUsage.DOWNLOAD, LinkUsage.GEODATA]
         }
 
         // fallback: look for extension
-        const dataFormatExtensions = '(json|csv|xls)'
-        if (this.foundInFileExtension(dataFormatExtensions, link)) {
+        if (this.hasFileExtension(['json', 'csv', 'xls'], link)) {
           return [LinkUsage.DOWNLOAD, LinkUsage.DATA]
         }
-        const geoDataFormatExtensions = '(geojson|wfs)'
-        if (this.foundInFileExtension(geoDataFormatExtensions, link)) {
+        if (this.hasFileExtension(['geojson', 'wfs'], link)) {
           return [LinkUsage.DOWNLOAD, LinkUsage.GEODATA]
         }
         return [LinkUsage.DOWNLOAD]
       }
-      if (/^OGC:WFS/.test(link.protocol))
-        return [LinkUsage.API, LinkUsage.DOWNLOAD, LinkUsage.GEODATA]
-      if (/^ESRI:REST/.test(link.protocol) && /FeatureServer/.test(link.url))
-        return [LinkUsage.API, LinkUsage.DOWNLOAD, LinkUsage.GEODATA]
-      if (/^OGC:WMS/.test(link.protocol))
-        return [LinkUsage.API, LinkUsage.MAPAPI]
-      if (/^OGC:WMTS/.test(link.protocol))
-        return [LinkUsage.API, LinkUsage.MAPAPI]
-      if (link.protocol === LANDINGPAGE_LINK_PROTOCOL) {
-        return [LinkUsage.LANDINGPAGE]
-      }
+      case MetadataLinkType.OTHER:
+        return [LinkUsage.UNKNOWN]
     }
-    return []
   }
 
-  foundInFileExtension(formatExtension: string, link: MetadataLink) {
+  hasUsage(link: MetadataLink, usage: LinkUsage) {
+    return this.getUsagesForLink(link).indexOf(usage) > -1
+  }
+
+  private hasFileExtension(extensions: string[], link: MetadataLink) {
     return (
-      ('format' in link &&
-        new RegExp(`${formatExtension}`, 'i').test(link.format)) ||
-      ('name' in link &&
-        new RegExp(`[./]${formatExtension}`, 'i').test(link.name)) ||
-      ('url' in link &&
-        new RegExp(`[./]${formatExtension}`, 'i').test(link.url))
+      new RegExp(`[./](${extensions.join('|')})`, 'i').test(link.name) ||
+      new RegExp(`[./](${extensions.join('|')})`, 'i').test(link.url)
     )
   }
 }

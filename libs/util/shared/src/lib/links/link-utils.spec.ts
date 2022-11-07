@@ -1,32 +1,15 @@
+import { LINK_FIXTURES } from '../fixtures'
+import { MetadataLinkType } from '../models'
 import {
-  getFileFormat,
-  getWfsFormat,
   checkFileFormat,
-  mimeTypeToFormat,
-  getBadgeColor,
-  sortPriority,
+  extensionToFormat,
   FORMATS,
+  getBadgeColor,
+  getFileFormat,
+  getLinkLabel,
+  mimeTypeToFormat,
+  sortPriority,
 } from './link-utils'
-import { LINK_FIXTURES } from '../fixtures/link.fixtures'
-
-jest.mock('@camptocamp/ogc-client', () => ({
-  WfsEndpoint: class {
-    constructor(private url) {}
-    isReady() {
-      return Promise.resolve({
-        getFeatureUrl: () => this.url + '?GetFeature',
-        getFeatureTypeSummary: (name) => {
-          return name !== 'NOT_A_LAYER_NAME'
-            ? {
-                name,
-                outputFormats: ['geojson', 'csv'],
-              }
-            : null
-        },
-      })
-    }
-  },
-}))
 
 describe('link utils', () => {
   describe('#getFileFormat', () => {
@@ -96,17 +79,6 @@ describe('link utils', () => {
     })
   })
   describe('#getFileFormat', () => {
-    it('from link format', () => {
-      expect(
-        getFileFormat({
-          name: 'Cities',
-          label: 'Cities',
-          format: 'geojson',
-          protocol: 'WWW:DOWNLOAD',
-          url: 'http://example.com/data',
-        })
-      ).toEqual('geojson')
-    })
     it('from link url', () => {
       expect(
         getFileFormat({
@@ -114,31 +86,26 @@ describe('link utils', () => {
           label: 'Cities',
           protocol: 'WWW:DOWNLOAD',
           url: 'http://example.com/data.geojson',
+          type: MetadataLinkType.DOWNLOAD,
         })
       ).toEqual('geojson')
     })
-    it('from link protocol', () => {
+    it('from mime type', () => {
       expect(
         getFileFormat({
           name: 'Cities',
           label: 'Cities',
           protocol: 'WWW:DOWNLOAD:application/vnd.geo+json',
+          mimeType: 'application/vnd.geo+json',
           url: 'http://example.com/data',
+          type: MetadataLinkType.DOWNLOAD,
         })
       ).toEqual('geojson')
     })
   })
-  describe('#getWfsFormat for a WFS link with geojson format', () => {
-    it('returns WFS:geojson format', () => {
-      expect(
-        getWfsFormat({
-          description: 'Test service',
-          name: 'some_layer',
-          format: 'geojson',
-          protocol: 'OGC:WFS',
-          url: 'http://example.com/service',
-        })
-      ).toEqual('WFS:geojson')
+  describe('#extensionToFormat for an XLS extension', () => {
+    it('returns excel format', () => {
+      expect(extensionToFormat('XLS')).toEqual('excel')
     })
   })
   describe('#getBadgeColor for format', () => {
@@ -157,9 +124,9 @@ describe('link utils', () => {
           protocol: 'WWW:DOWNLOAD',
           description: 'Data in CSV format',
           label: 'Data in CSV format',
-          format: 'csv',
           name: 'abc.csv',
           url: 'https://my.server/files/abc.csv',
+          type: MetadataLinkType.DOWNLOAD,
         })
       ).toEqual(nFormats - 1)
     })
@@ -169,9 +136,9 @@ describe('link utils', () => {
           protocol: 'WWW:DOWNLOAD',
           description: 'Data in KML format',
           label: 'Data in KML format',
-          format: 'kml',
           name: 'abc.kml',
           url: 'https://my.server/files/abc.kml',
+          type: MetadataLinkType.DOWNLOAD,
         })
       ).toEqual(nFormats - 5)
     })
@@ -187,6 +154,7 @@ describe('link utils', () => {
               name: 'file.geojson',
               protocol: 'WWW:DOWNLOAD',
               url: 'http://example.com',
+              type: MetadataLinkType.DOWNLOAD,
             },
             'geojson'
           )
@@ -203,6 +171,7 @@ describe('link utils', () => {
               name: 'file.geojson',
               protocol: 'WWW:DOWNLOAD',
               url: 'http://example.com',
+              type: MetadataLinkType.DOWNLOAD,
             },
             'csv'
           )
@@ -233,6 +202,57 @@ describe('link utils', () => {
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       )
       expect([excel1, excel2]).toEqual(['excel', 'excel'])
+    })
+  })
+
+  describe('#getLinkLabel', () => {
+    it('returns label for WMS link', () => {
+      expect(
+        getLinkLabel({
+          description: 'A mapping service',
+          label: 'A mapping service',
+          name: 'some_layer',
+          protocol: 'OGC:WMS',
+          url: 'http://example.com/service',
+          type: MetadataLinkType.WMS,
+        })
+      ).toEqual('A mapping service (WMS)')
+    })
+    it('returns label for WFS link', () => {
+      expect(
+        getLinkLabel({
+          description: 'A feature service',
+          label: 'A feature service',
+          name: 'some_layer',
+          protocol: 'OGC:WFS',
+          url: 'http://example.com/service',
+          type: MetadataLinkType.WFS,
+        })
+      ).toEqual('A feature service (WFS)')
+    })
+    it('returns label for REST link', () => {
+      expect(
+        getLinkLabel({
+          description: 'An esri feature service',
+          label: 'An esri feature service',
+          name: 'some_layer',
+          protocol: 'ESRI:REST',
+          url: 'http://example.com/FeatureServer',
+          type: MetadataLinkType.ESRI_REST,
+        })
+      ).toEqual('An esri feature service (REST)')
+    })
+    it('returns label for a file link from mime type', () => {
+      expect(
+        getLinkLabel({
+          name: 'Cities',
+          label: 'Cities',
+          protocol: 'WWW:DOWNLOAD',
+          url: 'http://example.com/data',
+          mimeType: 'application/geo+json',
+          type: MetadataLinkType.DOWNLOAD,
+        })
+      ).toEqual('Cities (geojson)')
     })
   })
 })

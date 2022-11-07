@@ -60,10 +60,16 @@ describe('FacetsService', () => {
 
       describe('when there is no more documents for this agg', () => {
         beforeEach(() => {
-          responseAggregations['tag.default'].sum_other_doc_count = 0
+          const respAggsNoMoreDocs = {
+            ...responseAggregations,
+            'tag.default': {
+              ...responseAggregations['tag.default'],
+              sum_other_doc_count: 0,
+            },
+          }
           result = service.createFacetModel(
             requestAggregations,
-            responseAggregations,
+            respAggsNoMoreDocs,
             false
           )
         })
