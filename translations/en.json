@@ -113,6 +113,7 @@
   "map.add.layer.wms": "From WMS",
   "map.layers.list": "Layers",
   "map.loading.data": "Loading map data...",
+  "map.navigation.message": "Please use CTRL + mouse (or two fingers on mobile) to navigate the map",
   "map.select.layer": "Select the layer to display",
   "nav.back": "Back",
   "next": "next",
