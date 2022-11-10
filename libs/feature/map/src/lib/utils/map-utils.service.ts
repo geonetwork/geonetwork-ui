@@ -22,6 +22,7 @@ import { MapContextLayerModel } from '../..'
 import { MapUtilsWMSService } from './map-utils-wms.service'
 import { MetadataLink } from '@geonetwork-ui/util/shared'
 import Collection from 'ol/Collection'
+import MapBrowserEvent from 'ol/MapBrowserEvent'
 
 const FEATURE_PROJECTION = 'EPSG:3857'
 const DATA_PROJECTION = 'EPSG:4326'
@@ -182,7 +183,7 @@ export class MapUtilsService {
             condition: dragPanCondition,
           }),
           new MouseWheelZoom({
-            condition: platformModifierKeyOnly,
+            condition: mouseWheelZoomCondition,
           }),
         ])
         .getArray()
@@ -190,6 +191,24 @@ export class MapUtilsService {
   }
 }
 
-export function dragPanCondition(this: DragPan, event) {
-  return this.getPointerCount() === 2 || platformModifierKeyOnly(event)
+export function dragPanCondition(
+  this: DragPan,
+  event: MapBrowserEvent<UIEvent>
+) {
+  const dragPanCondition =
+    this.getPointerCount() === 2 || platformModifierKeyOnly(event)
+  if (!dragPanCondition) {
+    this.getMap().dispatchEvent('mapmuted')
+  }
+  return dragPanCondition
+}
+
+export function mouseWheelZoomCondition(
+  this: MouseWheelZoom,
+  event: MapBrowserEvent<UIEvent>
+) {
+  if (!platformModifierKeyOnly(event) && event.type === 'wheel') {
+    this.getMap().dispatchEvent('mapmuted')
+  }
+  return platformModifierKeyOnly(event)
 }

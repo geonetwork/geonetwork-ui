@@ -12,10 +12,13 @@ import XYZ from 'ol/source/XYZ'
 import { of } from 'rxjs'
 import { MapUtilsWMSService } from './map-utils-wms.service'
 
-import { MapUtilsService, dragPanCondition } from './map-utils.service'
+import {
+  MapUtilsService,
+  dragPanCondition,
+  mouseWheelZoomCondition,
+} from './map-utils.service'
 import { readFirst } from '@nrwl/angular/testing'
 import { defaults, DragPan, MouseWheelZoom } from 'ol/interaction'
-import { platformModifierKeyOnly } from 'ol/events/condition'
 
 const wmsUtilsMock = {
   getLayerLonLatBBox: jest.fn(() => of([1.33, 48.81, 4.3, 51.1])),
@@ -230,7 +233,7 @@ describe('MapUtilsService', () => {
       const mouseWheelZoom = interactions
         .getArray()
         .find((interaction) => interaction instanceof MouseWheelZoom)
-      expect(mouseWheelZoom.condition_).toEqual(platformModifierKeyOnly)
+      expect(mouseWheelZoom.condition_).toEqual(mouseWheelZoomCondition)
     })
   })
 })
