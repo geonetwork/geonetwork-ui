@@ -1,49 +1,52 @@
-<div
-  class="relative w-full h-full bg-white border border-gray-500 rounded-lg overflow-hidden"
->
-  <gn-ui-map-context
-    [context]="mapContext$ | async"
-    [mapConfig]="mapConfig"
-  ></gn-ui-map-context>
-  <div
-    class="feature-info p-3 bg-white absolute overflow-y-auto overflow-x-hidden max-h-72 w-56"
-    [class.hidden]="!selection"
-  >
-    <button
-      (click)="resetSelection()"
-      class="rounded bg-primary-opacity-25 text-white absolute right-[0.5em]"
-    >
-      <mat-icon class="align-middle text-sm" style="height: 21px"
-        >close</mat-icon
-      >
-    </button>
-    <gn-ui-feature-detail [feature]="selection"></gn-ui-feature-detail>
-  </div>
-  <gn-ui-loading-mask
-    *ngIf="loading"
-    class="absolute inset-0"
-    [message]="'map.loading.data' | translate"
-  ></gn-ui-loading-mask>
-  <gn-ui-popup-alert
-    *ngIf="error"
-    type="warning"
-    icon="error_outline"
-    class="absolute m-2 inset-0"
-  >
-    <span translate>{{ error }}</span>
-  </gn-ui-popup-alert>
-  <div class="absolute flex w-full bottom-0">
+<div class="w-full h-full flex flex-col">
+  <div class="flex w-full justify-end gap-2 mb-7">
     <gn-ui-dropdown-selector
-      class="flex-grow m-2"
+      extraClass="!text-primary font-sans font-medium"
       [title]="'map.select.layer' | translate"
       [choices]="dropdownChoices$ | async"
       [showTitle]="false"
       (selectValue)="selectLinkToDisplay($event)"
     ></gn-ui-dropdown-selector>
     <gn-ui-external-viewer-button
+      class="flex-shrink-0"
       [link]="selectedLink$ | async"
       [mapConfig]="mapConfig"
     >
     </gn-ui-external-viewer-button>
+  </div>
+  <div
+    class="relative w-full h-full bg-white border border-gray-500 rounded-lg overflow-hidden"
+  >
+    <gn-ui-map-context
+      [context]="mapContext$ | async"
+      [mapConfig]="mapConfig"
+    ></gn-ui-map-context>
+    <div
+      class="top-[1em] right-[1em] p-3 bg-white absolute overflow-y-auto overflow-x-hidden max-h-72 w-56"
+      [class.hidden]="!selection"
+    >
+      <button
+        (click)="resetSelection()"
+        class="rounded bg-primary-opacity-25 text-white absolute right-[0.5em]"
+      >
+        <mat-icon class="align-middle text-sm" style="height: 21px"
+          >close</mat-icon
+        >
+      </button>
+      <gn-ui-feature-detail [feature]="selection"></gn-ui-feature-detail>
+    </div>
+    <gn-ui-loading-mask
+      *ngIf="loading"
+      class="absolute inset-0"
+      [message]="'map.loading.data' | translate"
+    ></gn-ui-loading-mask>
+    <gn-ui-popup-alert
+      *ngIf="error"
+      type="warning"
+      icon="error_outline"
+      class="absolute m-2 inset-0"
+    >
+      <span translate>{{ error }}</span>
+    </gn-ui-popup-alert>
   </div>
 </div>

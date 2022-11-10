@@ -2,7 +2,8 @@
   <gn-ui-dropdown-selector
     *ngIf="dropdownChoices$ | async as choices"
     [title]="'table.select.data' | translate"
-    class="flex-shrink-0 text-primary mb-3 capitalize w-3/4"
+    class="mb-7 w-auto ml-auto"
+    extraClass="!text-primary font-sans font-medium"
     [choices]="choices"
     [showTitle]="false"
     (selectValue)="selectLinkToDisplay($event)"

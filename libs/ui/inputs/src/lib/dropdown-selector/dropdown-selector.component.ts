@@ -22,6 +22,7 @@ export class DropdownSelectorComponent implements AfterViewInit {
     label: string
   }[]
   @Input() selected: any
+  @Input() extraClass = ''
   @Output() selectValue = new EventEmitter<any>()
 
   get id() {
