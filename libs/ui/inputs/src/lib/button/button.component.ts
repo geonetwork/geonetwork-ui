@@ -28,9 +28,9 @@ export class ButtonComponent {
       case 'default':
         return 'bg-gray-700 hover:bg-gray-800 hover:bg-gray-800 active:bg-gray-900'
       case 'primary':
-        return 'bg-primary-darker hover:bg-primary-darkest focus:bg-primary-darkest active:bg-primary-black'
+        return 'bg-primary hover:bg-primary-darker focus:bg-primary-darker active:bg-primary-darkest'
       case 'secondary':
-        return 'bg-secondary-darker hover:bg-secondary-darkest focus:bg-secondary-darkest active:bg-secondary-black'
+        return 'bg-secondary hover:bg-secondary-darker focus:bg-secondary-darker active:bg-secondary-darkest'
       case 'outline':
         return 'bg-white'
       case 'light':
