@@ -1,1 +1,7 @@
 <div class="h-full w-full" #map></div>
+<div
+  [ngClass]="(displayMessage$ | async) ? 'block' : 'hidden'"
+  class="absolute bottom-14 left-2 right-2 min-h-fit p-2 rounded z-50 bg-primary-opacity-25 text-white sm:right-auto sm:max-w-fit"
+>
+  <p class="text-black" translate>map.navigation.message</p>
+</div>

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MapComponent } from './map.component'
-import Map from 'ol/Map'
+import { readFirst } from '@nrwl/angular/testing'
 
 class ResizeObserverMock {
   observe = jest.fn()
@@ -8,6 +8,7 @@ class ResizeObserverMock {
 }
 window.ResizeObserver = ResizeObserverMock
 
+let mapmutedCallback
 class OpenLayersMapMock {
   _size = undefined
   setTarget = jest.fn()
@@ -16,6 +17,11 @@ class OpenLayersMapMock {
   }
   getSize() {
     return this._size
+  }
+  on(type, callback) {
+    if (type === 'mapmuted') {
+      mapmutedCallback = callback
+    }
   }
 }
 
@@ -46,6 +52,15 @@ describe('MapComponent', () => {
     })
     it('observes div element of map to update map size', () => {
       expect(component.resizeObserver.observe).toHaveBeenCalled()
+    })
+    describe('display message that map navigation has been muted', () => {
+      beforeEach(() => {
+        mapmutedCallback()
+      })
+      it('mapmuted event displays message', async () => {
+        const displayMessage = await readFirst(component.displayMessage$)
+        expect(displayMessage).toEqual(true)
+      })
     })
   })
 })
