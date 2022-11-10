@@ -2,67 +2,104 @@ import { Injectable } from '@angular/core'
 import { getThemeConfig, isConfigLoaded } from '@geonetwork-ui/util/app-config'
 import chroma from 'chroma-js'
 import { Fill, Stroke, Style } from 'ol/style'
-import CircleStyle from 'ol/style/Circle'
 import { StyleLike } from 'ol/style/Style'
+import CircleStyle from 'ol/style/Circle'
+import Feature from 'ol/Feature'
 
 export interface CreateStyleOptions {
-  color?: string
-  radius?: number
-  width?: number
+  color: string
+  isFocused?: boolean
 }
 
-type DefaultStyleKeys = 'default' | 'defaultHL' | string
+export type StyleByGeometryType = {
+  line: Style | Style[]
+  polygon: Style | Style[]
+  point: Style | Style[]
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class MapStyleService {
-  styles: Record<DefaultStyleKeys, StyleLike> = {
-    default: this.createStyle(),
-    defaultHL: this.createDefaultStyleHL(),
+  styles = {
+    default: this.createStyleFunction(
+      this.createGeometryStyles({
+        color: isConfigLoaded() ? getThemeConfig().PRIMARY_COLOR : 'blue',
+      })
+    ),
+    defaultHL: this.createStyleFunction(
+      this.createGeometryStyles({
+        color: isConfigLoaded() ? getThemeConfig().SECONDARY_COLOR : 'red',
+        isFocused: true,
+      })
+    ),
   }
 
-  createStyle(options: CreateStyleOptions = {}): Style {
-    const defaultColor = isConfigLoaded()
-      ? getThemeConfig().PRIMARY_COLOR
-      : 'blue'
-    const { color = defaultColor, width = 2, radius = 7 } = options
-    const fill = new Fill({
-      color,
-    })
-    const stroke = new Stroke({
-      color: 'white',
-      width,
-    })
-    return new Style({
-      image: new CircleStyle({
-        fill,
-        stroke,
-        radius,
+  createGeometryStyles(options: CreateStyleOptions): StyleByGeometryType {
+    const { color, isFocused } = options
+    const zIndex = isFocused ? 10 : undefined
+    return {
+      polygon: new Style({
+        fill: new Fill({
+          color: this.computeTransparentFillColor(color),
+        }),
+        stroke: new Stroke({
+          color: 'white',
+          width: 2,
+        }),
+        zIndex,
       }),
-      fill: new Fill({
-        color: this.computeTransparentFillColor(color),
+      point: new Style({
+        image: new CircleStyle({
+          fill: new Fill({
+            color,
+          }),
+          stroke: new Stroke({
+            color: 'white',
+            width: isFocused ? 3 : 2,
+          }),
+          radius: isFocused ? 8 : 7,
+        }),
+        zIndex,
       }),
-      stroke,
-    })
+      line: [
+        new Style({
+          stroke: new Stroke({
+            color: 'white',
+            width: isFocused ? 8 : 6,
+          }),
+          zIndex,
+        }),
+        new Style({
+          stroke: new Stroke({
+            color,
+            width: isFocused ? 3 : 2,
+          }),
+          zIndex,
+        }),
+      ],
+    }
   }
 
-  private createDefaultStyleHL() {
-    const style = this.createStyle()
-    const defaultColorHL = isConfigLoaded()
-      ? getThemeConfig().SECONDARY_COLOR
-      : 'red'
-    return this.createHLFromStyle(style, defaultColorHL)
-  }
-
-  createHLFromStyle(style: Style, color): Style {
-    const circle = style.getImage() as CircleStyle
-    style.getFill().setColor(this.computeTransparentFillColor(color))
-    circle.getFill().setColor(color)
-    circle.getStroke().setWidth(circle.getStroke().getWidth() + 1)
-    circle.setRadius(circle.getRadius() + 1)
-    style.setZIndex(10)
-    return style
+  createStyleFunction(styleByGeometryType: StyleByGeometryType): StyleLike {
+    return (feature: Feature): Style | Style[] => {
+      const geometryType = feature?.getGeometry()?.getType()
+      switch (geometryType) {
+        case 'LinearRing':
+        case 'LineString':
+        case 'MultiLineString':
+          return styleByGeometryType.line
+        case 'Point':
+        case 'MultiPoint':
+          return styleByGeometryType.point
+        case 'Circle':
+        case 'Polygon':
+        case 'MultiPolygon':
+          return styleByGeometryType.polygon
+        default:
+          return styleByGeometryType.point
+      }
+    }
   }
 
   private computeTransparentFillColor(color: string, alpha = 0.25): string {
