@@ -27,6 +27,8 @@ import { GnFacetsComponent } from './components/gn-facets/gn-facets.component'
 import { GnResultsListComponent } from './components/gn-results-list/gn-results-list.component'
 import { GnSearchInputComponent } from './components/gn-search-input/gn-search-input.component'
 import { GnDatasetViewTableComponent } from './components/gn-dataset-view-table/gn-dataset-view-table.component'
+import { GnMapViewerComponent } from './components/gn-map-viewer/gn-map-viewer.component'
+import { FeatureMapModule } from '@geonetwork-ui/feature/map'
 
 const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnFacetsComponent, 'gn-facets'],
@@ -34,6 +36,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnAggregatedRecordsComponent, 'gn-aggregated-records'],
   [GnSearchInputComponent, 'gn-search-input'],
   [GnDatasetViewTableComponent, 'gn-dataset-preview'],
+  [GnMapViewerComponent, 'gn-map-viewer'],
 ]
 
 @NgModule({
@@ -46,6 +49,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     GnAggregatedRecordsComponent,
     GnSearchInputComponent,
     GnDatasetViewTableComponent,
+    GnMapViewerComponent,
   ],
   imports: [
     CommonModule,
@@ -55,6 +59,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     UiElementsModule,
     FeatureSearchModule,
     FeatureRecordModule,
+    FeatureMapModule,
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot(),
