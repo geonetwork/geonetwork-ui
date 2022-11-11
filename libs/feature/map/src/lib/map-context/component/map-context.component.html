@@ -1,1 +1,5 @@
-<gn-ui-map [map]="map"></gn-ui-map>
+<native-map
+  [context]="context"
+  (featuresClicked)="handleFeaturesClicked($event)"
+  class="h-full w-full"
+></native-map>

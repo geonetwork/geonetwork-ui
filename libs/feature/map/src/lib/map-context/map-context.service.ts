@@ -1,36 +1,12 @@
 import { Injectable } from '@angular/core'
 import { MapStyleService } from '../style/map-style.service'
+import { MapUtilsService } from '../utils/map-utils.service'
+import { LayerConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 import {
   MapContextLayerModel,
-  MapContextLayerTypeEnum,
-  MapContextLayerXyzModel,
   MapContextModel,
   MapContextViewModel,
-} from './map-context.model'
-import Map from 'ol/Map'
-import View from 'ol/View'
-import Layer from 'ol/layer/Base'
-import VectorLayer from 'ol/layer/Vector'
-import TileWMS from 'ol/source/TileWMS'
-import TileLayer from 'ol/layer/Tile'
-import XYZ from 'ol/source/XYZ'
-import VectorSource from 'ol/source/Vector'
-import GeoJSON from 'ol/format/GeoJSON'
-import { MapUtilsService } from '../utils/map-utils.service'
-import { bbox as bboxStrategy } from 'ol/loadingstrategy'
-import { LayerConfig, MapConfig } from '@geonetwork-ui/util/app-config'
-import { FeatureCollection } from 'geojson'
-import { fromLonLat } from 'ol/proj'
-import WMTS from 'ol/source/WMTS'
-
-export const DEFAULT_BASELAYER_CONTEXT: MapContextLayerXyzModel = {
-  type: MapContextLayerTypeEnum.XYZ,
-  urls: [
-    `https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
-    `https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
-    `https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
-  ],
-}
+} from '@geonetwork-ui/feature/map'
 
 export const DEFAULT_VIEW: MapContextViewModel = {
   center: [0, 15],
@@ -40,125 +16,11 @@ export const DEFAULT_VIEW: MapContextViewModel = {
 @Injectable({
   providedIn: 'root',
 })
-export class MapContextService {
+export class MapContextModelService {
   constructor(
     private mapUtils: MapUtilsService,
     private styleService: MapStyleService
   ) {}
-
-  resetMapFromContext(
-    map: Map,
-    mapContext: MapContextModel,
-    mapConfig?: MapConfig
-  ): Map {
-    if (mapConfig) {
-      mapContext = this.mergeMapConfigWithContext(mapContext, mapConfig)
-    }
-    if (
-      !mapContext.view?.extent &&
-      (!mapContext.view?.center || !mapContext.view?.zoom)
-    ) {
-      mapContext.view = this.getFallbackView(mapConfig)
-    }
-    map.setView(this.createView(mapContext.view, map))
-    map.getLayers().clear()
-    mapContext.layers.forEach((layer) => map.addLayer(this.createLayer(layer)))
-    return map
-  }
-
-  createLayer(layerModel: MapContextLayerModel): Layer {
-    const { type } = layerModel
-    const style = this.styleService.styles.default
-    switch (type) {
-      case MapContextLayerTypeEnum.XYZ:
-        return new TileLayer({
-          source: new XYZ({
-            url: 'url' in layerModel ? layerModel.url : undefined,
-            urls: 'urls' in layerModel ? layerModel.urls : undefined,
-          }),
-        })
-      case MapContextLayerTypeEnum.WMS:
-        return new TileLayer({
-          source: new TileWMS({
-            url: layerModel.url,
-            params: { LAYERS: layerModel.name },
-            gutter: 20,
-          }),
-        })
-      case MapContextLayerTypeEnum.WMTS:
-        return new TileLayer({
-          source: new WMTS(layerModel.options),
-        })
-      case MapContextLayerTypeEnum.WFS:
-        return new VectorLayer({
-          source: new VectorSource({
-            format: new GeoJSON(),
-            url: function (extent) {
-              return `${
-                layerModel.url
-              }?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json&typename=${
-                layerModel.name
-              }&srsname=EPSG:3857&bbox=${extent.join(',')},EPSG:3857`
-            },
-            strategy: bboxStrategy,
-          }),
-          style,
-        })
-      case MapContextLayerTypeEnum.GEOJSON: {
-        if ('url' in layerModel) {
-          return new VectorLayer({
-            source: new VectorSource({
-              format: new GeoJSON(),
-              url: layerModel.url,
-            }),
-            style,
-          })
-        } else {
-          let geojson = layerModel.data
-          if (typeof geojson === 'string') {
-            try {
-              geojson = JSON.parse(geojson)
-            } catch (e) {
-              console.warn('A layer could not be created', layerModel, e)
-              geojson = { type: 'FeatureCollection', features: [] }
-            }
-          }
-          const features = this.mapUtils.readFeatureCollection(
-            geojson as FeatureCollection
-          )
-          return new VectorLayer({
-            source: new VectorSource({
-              features,
-            }),
-            style,
-          })
-        }
-      }
-      default:
-        throw new Error(`Unrecognized layer type: ${layerModel.type}`)
-    }
-  }
-
-  createView(viewModel: MapContextViewModel, map?: Map): View {
-    const { center: centerInViewProj, zoom, maxZoom, maxExtent } = viewModel
-    const center = centerInViewProj
-      ? fromLonLat(centerInViewProj, 'EPSG:3857')
-      : [0, 0]
-    const view = new View({
-      center,
-      zoom,
-      maxZoom,
-      extent: maxExtent,
-      multiWorld: false,
-      constrainResolution: true,
-    })
-    if (viewModel.extent && map) {
-      view.fit(viewModel.extent, {
-        size: map.getSize(),
-      })
-    }
-    return view
-  }
 
   mergeMapConfigWithContext(
     mapContext: MapContextModel,
@@ -176,9 +38,6 @@ export class MapContextService {
         }),
       },
       layers: [
-        ...(mapConfig.DO_NOT_USE_DEFAULT_BASEMAP
-          ? []
-          : [DEFAULT_BASELAYER_CONTEXT]),
         ...mapConfig.MAP_LAYERS.map(this.getContextLayerFromConfig),
         ...mapContext.layers,
       ],

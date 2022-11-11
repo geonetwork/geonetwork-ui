@@ -11,10 +11,8 @@ import {
 } from '@angular/core'
 import {
   FEATURE_MAP_OPTIONS,
-  FeatureInfoService,
   MapContextLayerTypeEnum,
   MapContextModel,
-  MapManagerService,
   MapOptionsModel,
 } from '@geonetwork-ui/feature/map'
 import {
@@ -55,8 +53,6 @@ export class GeoTableViewComponent implements OnInit, AfterViewInit, OnDestroy {
   private subscription = new Subscription()
 
   constructor(
-    private manager: MapManagerService,
-    private featureInfo: FeatureInfoService,
     private changeRef: ChangeDetectorRef,
     @Inject(FEATURE_MAP_OPTIONS) private mapOptions: MapOptionsModel
   ) {}
@@ -64,24 +60,18 @@ export class GeoTableViewComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.tableData = this.geojsonToTableData(this.data)
     this.mapContext = this.initMapContext()
-    this.featureInfo.handleFeatureInfo()
-    this.subscription.add(
-      this.featureInfo.features$.subscribe((features) => {
-        this.onMapFeatureSelect(features)
-      })
-    )
   }
 
   ngAfterViewInit(): void {
-    const map = (this.map = this.manager.map)
-    this.view = map.getView()
-    this.vectorLayer = this.manager.map.getLayers().item(1) as VectorLayer<
-      VectorSource<Geometry>
-    >
-    this.vectorLayer.setStyle(this.styleFn.bind(this))
-    this.vectorSource = this.vectorLayer.getSource()
-    this.features = this.vectorSource.getFeatures()
-    this.view.fit(this.vectorSource.getExtent())
+    // const map = (this.map = this.manager.map)
+    // this.view = map.getView()
+    // this.vectorLayer = this.manager.map.getLayers().item(1) as VectorLayer<
+    //   VectorSource<Geometry>
+    // >
+    // this.vectorLayer.setStyle(this.styleFn.bind(this))
+    // this.vectorSource = this.vectorLayer.getSource()
+    // this.features = this.vectorSource.getFeatures()
+    // this.view.fit(this.vectorSource.getExtent())
   }
 
   onTableSelect(tableEntry: TableItemModel) {
@@ -120,6 +110,7 @@ export class GeoTableViewComponent implements OnInit, AfterViewInit, OnDestroy {
         {
           type: MapContextLayerTypeEnum.GEOJSON,
           data: this.data,
+          style: this.styleFn.bind(this),
         },
       ],
     }

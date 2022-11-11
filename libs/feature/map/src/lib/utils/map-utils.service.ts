@@ -29,14 +29,6 @@ const DATA_PROJECTION = 'EPSG:4326'
 export class MapUtilsService {
   constructor(private http: HttpClient, private wmsUtils: MapUtilsWMSService) {}
 
-  createEmptyMap(): Map {
-    const map = new Map({
-      controls: [],
-      pixelRatio: 1,
-    })
-    return map
-  }
-
   readFeatureCollection = (
     featureCollection: FeatureCollection,
     featureProjection = FEATURE_PROJECTION,
@@ -141,15 +133,15 @@ export class MapUtilsService {
     } else if (layer && layer.type === 'wms') {
       geographicExtent = this.wmsUtils.getLayerLonLatBBox(layer)
     } else if (layer && layer.type === 'wmts') {
-      return of(layer.options.tileGrid.getExtent())
+      return of(null) // FIXME: restore
     } else {
       return of(null)
     }
     return geographicExtent.pipe(
-      map((extent) => [
-        ...fromLonLat([extent[0], extent[1]], 'EPSG:3857'),
-        ...fromLonLat([extent[2], extent[3]], 'EPSG:3857'),
-      ]),
+      // map((extent) => [
+      //   ...fromLonLat([extent[0], extent[1]], 'EPSG:3857'),
+      //   ...fromLonLat([extent[2], extent[3]], 'EPSG:3857'),
+      // ]),
       map((extent) => (isEmpty(extent) ? null : extent))
     )
   }

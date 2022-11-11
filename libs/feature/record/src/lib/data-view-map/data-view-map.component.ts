@@ -2,11 +2,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnDestroy,
   OnInit,
 } from '@angular/core'
 import {
-  FeatureInfoService,
   MapContextLayerModel,
   MapContextLayerTypeEnum,
   MapContextModel,
@@ -48,10 +46,9 @@ import { MdViewFacade } from '../state/mdview.facade'
   styleUrls: ['./data-view-map.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataViewMapComponent implements OnInit, OnDestroy {
+export class DataViewMapComponent implements OnInit {
   mapConfig: MapConfig = getMapConfig()
-  selection: Feature<Geometry>
-  private subscription = new Subscription()
+  selection: Feature
   private selectionStyle: StyleLike
 
   compatibleMapLinks$ = combineLatest([
@@ -125,23 +122,12 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
     private mapUtils: MapUtilsService,
     private dataService: DataService,
     private proxy: ProxyService,
-    private featureInfo: FeatureInfoService,
     private changeRef: ChangeDetectorRef,
     private styleService: MapStyleService
   ) {}
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe()
-  }
-
   ngOnInit(): void {
     this.selectionStyle = this.styleService.styles.defaultHL
-    this.featureInfo.handleFeatureInfo()
-    this.subscription.add(
-      this.featureInfo.features$.subscribe((features) => {
-        this.onMapFeatureSelect(features)
-      })
-    )
   }
 
   onMapFeatureSelect(features: Feature<Geometry>[]): void {
@@ -169,10 +155,13 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
       })
     } else if (link.type === MetadataLinkType.WMTS) {
       return this.mapUtils.getWmtsOptionsFromCapabilities(link).pipe(
-        map((options) => ({
-          type: MapContextLayerTypeEnum.WMTS,
-          options: options,
-        }))
+        map(
+          (options) =>
+            ({
+              type: MapContextLayerTypeEnum.WMTS,
+              options: options,
+            } as any)
+        )
       )
     } else if (link.type === MetadataLinkType.WFS) {
       return this.dataService
@@ -182,6 +171,7 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
           map((data) => ({
             type: MapContextLayerTypeEnum.GEOJSON,
             data,
+            style: this.styleService.styles.default as any, // FIXME: fix typing
           }))
         )
     } else if (link.type === MetadataLinkType.DOWNLOAD) {
@@ -189,6 +179,7 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
         map((data) => ({
           type: MapContextLayerTypeEnum.GEOJSON,
           data,
+          style: this.styleService.styles.default as any, // FIXME: fix typing
         }))
       )
     } else if (link.type === MetadataLinkType.ESRI_REST) {
