@@ -26,10 +26,15 @@ import {
 import { EffectsModule } from '@ngrx/effects'
 import { provideMockActions } from '@ngrx/effects/testing'
 import { Store, StoreModule } from '@ngrx/store'
-import { hot, getTestScheduler } from 'jasmine-marbles'
+import { getTestScheduler, hot } from 'jasmine-marbles'
 import { Observable, of, throwError } from 'rxjs'
-import { SearchEffects } from './effects'
-import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
+import { FILTER_GEOMETRY, SearchEffects } from './effects'
+import {
+  initialState,
+  reducer,
+  SEARCH_FEATURE_KEY,
+  SearchState,
+} from './reducer'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import {
   ES_FIXTURE_AGGS_REQUEST,
@@ -121,6 +126,10 @@ describe('Effects', () => {
         {
           provide: ElasticsearchService,
           useClass: EsServiceMock,
+        },
+        {
+          provide: FILTER_GEOMETRY,
+          useValue: null,
         },
       ],
     })
@@ -307,7 +316,34 @@ describe('Effects', () => {
           expect.anything(),
           expect.anything(),
           expect.anything(),
-          ['fav001', 'fav002', 'fav003']
+          ['fav001', 'fav002', 'fav003'],
+          null
+        )
+      })
+    })
+
+    describe('when providing a filter geometry', () => {
+      let esService: ElasticsearchService
+      beforeEach(() => {
+        effects['filterGeometry'] = Promise.resolve({
+          type: 'Polygon',
+          coordinates: [],
+        })
+        esService = TestBed.inject(ElasticsearchService)
+      })
+      it('passes the geometry to the ES service', async () => {
+        actions$ = of(new RequestMoreResults('main'))
+        await readFirst(effects.loadResults$)
+        expect(esService.getSearchRequestBody).toHaveBeenCalledWith(
+          expect.anything(),
+          expect.anything(),
+          expect.anything(),
+          undefined,
+          expect.anything(),
+          expect.anything(),
+          expect.anything(),
+          null,
+          { type: 'Polygon', coordinates: [] }
         )
       })
     })
