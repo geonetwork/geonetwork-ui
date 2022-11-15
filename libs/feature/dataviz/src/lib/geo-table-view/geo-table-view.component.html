@@ -8,6 +8,7 @@
   <gn-ui-map-context
     class="w-1/2 h-full"
     [context]="mapContext"
+    (featuresClicked)="onMapFeatureSelect($event)"
   ></gn-ui-map-context>
   <gn-ui-feature-detail
     style="width: 300px"

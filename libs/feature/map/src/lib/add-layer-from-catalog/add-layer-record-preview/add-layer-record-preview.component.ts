@@ -52,10 +52,13 @@ export class AddLayerRecordPreviewComponent extends RecordPreviewComponent {
       })
     } else if (link.type === MetadataLinkType.WMTS) {
       return this.mapUtils.getWmtsOptionsFromCapabilities(link).pipe(
-        map((options) => ({
-          type: MapContextLayerTypeEnum.WMTS,
-          options: options,
-        }))
+        map(
+          (options) =>
+            ({
+              type: MapContextLayerTypeEnum.WMTS,
+              options: options,
+            } as any)
+        )
       )
     }
     return throwError('protocol not supported')

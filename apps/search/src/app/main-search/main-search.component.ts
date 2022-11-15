@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core'
-import { FeatureInfoService } from '@geonetwork-ui/feature/map'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { BootstrapService } from '@geonetwork-ui/util/shared'
 import { map, take, tap } from 'rxjs/operators'
@@ -12,7 +11,6 @@ import { map, take, tap } from 'rxjs/operators'
 export class MainSearchComponent implements OnInit {
   constructor(
     private bootstrap: BootstrapService,
-    private featureInfo: FeatureInfoService,
     private searchFacade: SearchFacade
   ) {}
 

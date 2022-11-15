@@ -1,7 +1,13 @@
-import type { FeatureCollection } from 'geojson'
-import { Coordinate } from 'ol/coordinate'
-import type { Extent } from 'ol/extent'
-import { Options } from 'ol/source/WMTS'
+import {
+  MapContext,
+  MapContextLayer,
+  MapContextLayerGeojson,
+  MapContextLayerWfs,
+  MapContextLayerWms,
+  MapContextLayerWmts,
+  MapContextLayerXyz,
+  MapContextView,
+} from 'native-map'
 
 export enum MapContextLayerTypeEnum {
   XYZ = 'xyz',
@@ -11,69 +17,18 @@ export enum MapContextLayerTypeEnum {
   GEOJSON = 'geojson',
 }
 
-export interface MapContextModel {
-  layers: MapContextLayerModel[]
-  view?: MapContextViewModel
-}
+export type MapContextModel = MapContext
 
-export interface MapContextLayerWmsModel {
-  type: 'wms'
-  url: string
-  name: string
-}
+export type MapContextLayerWmsModel = MapContextLayerWms
 
-export interface MapContextLayerWmtsModel {
-  type: 'wmts'
-  options: Options
-}
+export type MapContextLayerWmtsModel = MapContextLayerWmts
 
-interface MapContextLayerWfsModel {
-  type: 'wfs'
-  url: string
-  name: string
-}
+export type MapContextLayerWfsModel = MapContextLayerWfs
 
-interface LayerXyzModel {
-  type: 'xyz'
-}
-interface LayerXyzModelWithUrl extends LayerXyzModel {
-  url: string
-  urls?: never
-}
-interface LayerXyzModelWithUrls extends LayerXyzModel {
-  urls: string[]
-  url?: never
-}
-export type MapContextLayerXyzModel =
-  | LayerXyzModelWithUrl
-  | LayerXyzModelWithUrls
+export type MapContextLayerXyzModel = MapContextLayerXyz
 
-interface LayerGeojson {
-  type: 'geojson'
-}
-interface LayerGeojsonWithUrl extends LayerGeojson {
-  url: string
-  data?: never
-}
-interface LayerGeojsonWithData extends LayerGeojson {
-  data: FeatureCollection | string
-  url?: never
-}
-export type MapContextLayerGeojsonModel =
-  | LayerGeojsonWithUrl
-  | LayerGeojsonWithData
+export type MapContextLayerGeojsonModel = MapContextLayerGeojson
 
-export type MapContextLayerModel =
-  | MapContextLayerWmsModel
-  | MapContextLayerWmtsModel
-  | MapContextLayerWfsModel
-  | MapContextLayerXyzModel
-  | MapContextLayerGeojsonModel
+export type MapContextLayerModel = MapContextLayer
 
-export interface MapContextViewModel {
-  center?: Coordinate // expressed in long/lat (EPSG:4326)
-  zoom?: number
-  extent?: Extent // expressed in long/lat (EPSG:4326)
-  maxZoom?: number
-  maxExtent?: Extent // expressed in long/lat (EPSG:4326)
-}
+export type MapContextViewModel = MapContextView
