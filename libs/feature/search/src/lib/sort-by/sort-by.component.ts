@@ -22,7 +22,7 @@ export class SortByComponent {
     },
     {
       label: 'results.sortBy.popularity',
-      value: 'popularity',
+      value: '-userSavedCount',
     },
   ]
   currentSortBy$ = this.facade.sortBy$
