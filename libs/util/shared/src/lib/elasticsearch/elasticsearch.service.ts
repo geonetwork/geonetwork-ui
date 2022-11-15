@@ -8,6 +8,7 @@ import {
   SortParams,
   StateConfigFilters,
 } from '../models'
+import { Geometry } from 'geojson'
 
 export const METADATA_LANGUAGE = new InjectionToken<string>('metadata-language')
 
@@ -27,14 +28,20 @@ export class ElasticsearchService {
     requestFields: RequestFields = [],
     searchFilters: SearchFilters = {},
     configFilters: StateConfigFilters = {},
-    uuids?: string[]
+    uuids?: string[],
+    geometry?: Geometry
   ): EsSearchParams {
     const payload = {
       aggregations,
       from,
       size,
       sort: this.buildPayloadSort(sortBy),
-      query: this.buildPayloadQuery(searchFilters, configFilters, uuids),
+      query: this.buildPayloadQuery(
+        searchFilters,
+        configFilters,
+        uuids,
+        geometry
+      ),
       _source: requestFields,
     }
     return payload
@@ -116,48 +123,64 @@ export class ElasticsearchService {
   private buildPayloadQuery(
     { any, ...fieldSearchFilters }: SearchFilters,
     configFilters: StateConfigFilters,
-    uuids?: string[]
+    uuids?: string[],
+    geometry?: Geometry
   ) {
     const queryFilters = this.stateFiltersToQueryString(fieldSearchFilters)
+    const must = [this.addTemplateClause('n')] as Record<string, unknown>[]
+    const should = [] as Record<string, unknown>[]
+    const filter = this.buildPayloadFilter(configFilters)
+    if (any) {
+      must.push({
+        query_string: {
+          query: this.escapeSpecialCharacters(any),
+          default_operator: 'AND',
+          fields: this.injectLangInQueryStringFields(
+            ES_QUERY_STRING_FIELDS,
+            this.metadataLang
+          ),
+        },
+      })
+    }
+    if (queryFilters) {
+      must.push({
+        query_string: {
+          query: queryFilters,
+        },
+      })
+    }
+    if (uuids?.length > 0) {
+      must.push({
+        ids: {
+          values: uuids,
+        },
+      })
+    }
+    if (geometry) {
+      should.push({
+        geo_shape: {
+          geom: {
+            shape: geometry,
+            relation: 'within',
+          },
+          boost: 10.0,
+        },
+      })
+      filter.push({
+        geo_shape: {
+          geom: {
+            shape: geometry,
+            relation: 'intersects',
+          },
+        },
+      })
+    }
 
     return {
       bool: {
-        must: [
-          ...(any
-            ? [
-                {
-                  query_string: {
-                    query: this.escapeSpecialCharacters(any),
-                    default_operator: 'AND',
-                    fields: this.injectLangInQueryStringFields(
-                      ES_QUERY_STRING_FIELDS,
-                      this.metadataLang
-                    ),
-                  },
-                },
-              ]
-            : []),
-          ...(queryFilters
-            ? [
-                {
-                  query_string: {
-                    query: queryFilters,
-                  },
-                },
-              ]
-            : []),
-          ...(uuids?.length > 0
-            ? [
-                {
-                  ids: {
-                    values: uuids,
-                  },
-                },
-              ]
-            : []),
-          this.addTemplateClause('n'),
-        ],
-        filter: this.buildPayloadFilter(configFilters),
+        must,
+        should,
+        filter,
       },
     }
   }
