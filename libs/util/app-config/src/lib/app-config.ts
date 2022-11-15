@@ -5,70 +5,39 @@ import {
   parseMultiConfigSection,
   parseTranslationsConfigSection,
 } from './parse-utils'
+import {
+  CustomTranslations,
+  CustomTranslationsAllLanguages,
+  GlobalConfig,
+  LayerConfig,
+  MapConfig,
+  ThemeConfig,
+} from './model'
 
 const MISSING_CONFIG_ERROR = `Application configuration was not initialized correctly.
 This error might show up in case of an invalid/malformed configuration file. 
 
 Note: make sure that you have called \`loadAppConfig\` from '@geonetwork-ui/util/app-config' before starting the Angular application.`
 
-interface GlobalConfig {
-  GN4_API_URL: string
-  PROXY_PATH?: string
-  METADATA_LANGUAGE?: string
-}
 let globalConfig: GlobalConfig = null
-
 export function getGlobalConfig(): GlobalConfig {
   if (globalConfig === null) throw new Error(MISSING_CONFIG_ERROR)
   return globalConfig
 }
 
-export interface LayerConfig {
-  TYPE: 'xyz' | 'wms' | 'wfs' | 'geojson'
-  URL?: string
-  NAME?: string
-  DATA?: string
-}
-export interface MapConfig {
-  MAX_ZOOM?: number
-  MAX_EXTENT?: [number, number, number, number] // Expressed as [minx, miny, maxx, maxy]
-  EXTERNAL_VIEWER_URL_TEMPLATE?: string
-  EXTERNAL_VIEWER_OPEN_NEW_TAB?: boolean
-  DO_NOT_USE_DEFAULT_BASEMAP: boolean
-  MAP_LAYERS: LayerConfig[]
-}
 let mapConfig: MapConfig = null
-
 export function getMapConfig(): MapConfig {
   if (mapConfig === null) throw new Error(MISSING_CONFIG_ERROR)
   return mapConfig
 }
 
-interface ThemeConfig {
-  PRIMARY_COLOR: string
-  SECONDARY_COLOR: string
-  MAIN_COLOR: string
-  BACKGROUND_COLOR: string
-  HEADER_FOREGROUND_COLOR: string
-  HEADER_BACKGROUND: string
-  THUMBNAIL_PLACEHOLDER: string
-  MAIN_FONT?: string
-  TITLE_FONT?: string
-  FONTS_STYLESHEET_URL?: string
-}
 let themeConfig: ThemeConfig = null
-
 export function getThemeConfig(): ThemeConfig {
   if (themeConfig === null) throw new Error(MISSING_CONFIG_ERROR)
   return themeConfig
 }
 
-type CustomTranslations = { [translationKey: string]: string }
-type CustomTranslationsAllLanguages = {
-  [lang: string]: CustomTranslations
-}
 let customTranslations: CustomTranslationsAllLanguages = null
-
 export function getCustomTranslations(langCode: string): CustomTranslations {
   if (customTranslations === null) throw new Error(MISSING_CONFIG_ERROR)
   return langCode in customTranslations ? customTranslations[langCode] : {}
