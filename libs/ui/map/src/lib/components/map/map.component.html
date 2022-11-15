@@ -1,7 +1,11 @@
 <div class="h-full w-full" #map></div>
-<div
-  [ngClass]="(displayMessage$ | async) ? 'block' : 'hidden'"
-  class="absolute bottom-14 left-2 right-2 min-h-fit p-2 rounded z-50 bg-primary-opacity-25 text-white sm:right-auto sm:max-w-fit"
->
-  <p class="text-black" translate>map.navigation.message</p>
+<div [ngClass]="(displayMessage$ | async) ? 'block' : 'hidden'">
+  <div
+    class="absolute inset-0 p-2 rounded z-40 bg-gradient-to-b from-white to-primary-lightest opacity-75 flex flex-col justify-center text-primary select-none"
+  >
+    <mat-icon class="mx-auto !w-16 !h-16 text-[64px] mb-4 opacity-75"
+      >swipe</mat-icon
+    >
+    <p class="text-center" translate>map.navigation.message</p>
+  </div>
 </div>

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MapComponent } from './map.component'
 import { readFirst } from '@nrwl/angular/testing'
+import { MatIconModule } from '@angular/material/icon'
 
 class ResizeObserverMock {
   observe = jest.fn()
@@ -31,6 +32,7 @@ describe('MapComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [MatIconModule],
       declarations: [MapComponent],
     }).compileComponents()
   })
