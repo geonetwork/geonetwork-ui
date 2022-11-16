@@ -38,6 +38,7 @@ import {
   PROXY_PATH,
   ThemeService,
   UtilSharedModule,
+  getGeometryFromGeoJSON,
 } from '@geonetwork-ui/util/shared'
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
@@ -143,12 +144,12 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
         if (getSearchConfig().FILTER_GEOMETRY_DATA) {
           return Promise.resolve(
             JSON.parse(getSearchConfig().FILTER_GEOMETRY_DATA)
-          )
+          ).then(getGeometryFromGeoJSON)
         }
         if (getSearchConfig().FILTER_GEOMETRY_URL) {
-          return fetch(getSearchConfig().FILTER_GEOMETRY_URL).then((resp) =>
-            resp.json()
-          )
+          return fetch(getSearchConfig().FILTER_GEOMETRY_URL)
+            .then((resp) => resp.json())
+            .then(getGeometryFromGeoJSON)
         }
         return null
       },
