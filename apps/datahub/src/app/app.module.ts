@@ -11,7 +11,10 @@ import {
   ROUTER_ROUTE_DATASET,
   RouterService,
 } from '@geonetwork-ui/feature/router'
-import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
+import {
+  FeatureSearchModule,
+  FILTER_GEOMETRY,
+} from '@geonetwork-ui/feature/search'
 import {
   THUMBNAIL_PLACEHOLDER,
   UiElementsModule,
@@ -19,7 +22,11 @@ import {
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { RESULTS_LAYOUT_CONFIG, UiSearchModule } from '@geonetwork-ui/ui/search'
-import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
+import {
+  getGlobalConfig,
+  getSearchConfig,
+  getThemeConfig,
+} from '@geonetwork-ui/util/app-config'
 import {
   getDefaultLang,
   getLangFromBrowser,
@@ -129,6 +136,22 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     {
       provide: THUMBNAIL_PLACEHOLDER,
       useFactory: () => getThemeConfig().THUMBNAIL_PLACEHOLDER,
+    },
+    {
+      provide: FILTER_GEOMETRY,
+      useFactory: () => {
+        if (getSearchConfig().FILTER_GEOMETRY_DATA) {
+          return Promise.resolve(
+            JSON.parse(getSearchConfig().FILTER_GEOMETRY_DATA)
+          )
+        }
+        if (getSearchConfig().FILTER_GEOMETRY_URL) {
+          return fetch(getSearchConfig().FILTER_GEOMETRY_URL).then((resp) =>
+            resp.json()
+          )
+        }
+        return null
+      },
     },
   ],
   bootstrap: [AppComponent],
