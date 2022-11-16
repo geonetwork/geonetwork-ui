@@ -11,6 +11,7 @@ import {
   GlobalConfig,
   LayerConfig,
   MapConfig,
+  SearchConfig,
   ThemeConfig,
 } from './model'
 
@@ -35,6 +36,12 @@ let themeConfig: ThemeConfig = null
 export function getThemeConfig(): ThemeConfig {
   if (themeConfig === null) throw new Error(MISSING_CONFIG_ERROR)
   return themeConfig
+}
+
+let searchConfig: SearchConfig = null
+export function getSearchConfig(): SearchConfig {
+  if (searchConfig === null) throw new Error(MISSING_CONFIG_ERROR)
+  return searchConfig
 }
 
 let customTranslations: CustomTranslationsAllLanguages = null
@@ -167,6 +174,22 @@ export function loadAppConfig() {
               MAIN_FONT: parsedThemeSection.main_font,
               FONTS_STYLESHEET_URL: parsedThemeSection.fonts_stylesheet_url,
             } as ThemeConfig)
+
+      const parsedSearchSection = parseConfigSection(
+        parsed,
+        'search',
+        [],
+        ['filter_geometry_data', 'filter_geometry_url'],
+        warnings,
+        errors
+      )
+      searchConfig =
+        parsedSearchSection === null
+          ? null
+          : ({
+              FILTER_GEOMETRY_DATA: parsedSearchSection.filter_geometry_data,
+              FILTER_GEOMETRY_URL: parsedSearchSection.filter_geometry_url,
+            } as SearchConfig)
 
       customTranslations = parseTranslationsConfigSection(
         parsed,

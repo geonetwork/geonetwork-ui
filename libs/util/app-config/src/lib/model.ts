@@ -1,3 +1,5 @@
+import { Geometry } from 'geojson'
+
 export interface GlobalConfig {
   GN4_API_URL: string
   PROXY_PATH?: string
@@ -33,7 +35,16 @@ export interface ThemeConfig {
   FONTS_STYLESHEET_URL?: string
 }
 
+export interface SearchConfig {
+  FILTER_GEOMETRY_URL?: string
+  FILTER_GEOMETRY_DATA?: string
+}
+
 export type CustomTranslations = { [translationKey: string]: string }
 export type CustomTranslationsAllLanguages = {
   [lang: string]: CustomTranslations
+}
+
+export interface SearchConfig {
+  FILTER_GEOMETRY?: Geometry
 }

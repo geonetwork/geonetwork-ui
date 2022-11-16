@@ -1,5 +1,5 @@
 import fetchMock from 'fetch-mock-jest'
-import { getMapConfig } from '..'
+import { getMapConfig, getSearchConfig } from '..'
 import {
   _reset,
   getCustomTranslations,
@@ -7,7 +7,7 @@ import {
   getThemeConfig,
   loadAppConfig,
 } from './app-config'
-import { CONFIG_MINIMAL, CONFIG_WITH_TRANSLATIONS } from './fixtures'
+import { CONFIG_WITH_TRANSLATIONS } from './fixtures'
 
 const CONFIG_MALFORMED = `
 {
@@ -124,9 +124,9 @@ describe('app config utils', () => {
       fetchMock.get('end:default.toml', () => CONFIG_MISSING_MANDATORY)
     })
     describe('loadAppConfig', () => {
-      it('throws an error', async () => {
+      it('throws an error (only for sections with mandatory properties)', async () => {
         await expect(loadAppConfig()).rejects.toThrow(
-          /(?=.*\[global] section is missing)(?=.*\[map] section is missing)(?=.*main_color)/s
+          /(?=.*\[global] mandatory section is missing)(?=.*main_color)/s
         )
       })
     })
@@ -209,6 +209,13 @@ describe('app config utils', () => {
           HEADER_BACKGROUND: 'teal',
           HEADER_FOREGROUND_COLOR: '#872e2e',
           THUMBNAIL_PLACEHOLDER: 'assets/img/placeholder.svg',
+        })
+      })
+    })
+    describe('getSearchConfig', () => {
+      it('returns the search config', () => {
+        expect(getSearchConfig()).toEqual({
+          FILTER_GEOMETRY_URL: 'https://my.domain.org/geom.json',
         })
       })
     })

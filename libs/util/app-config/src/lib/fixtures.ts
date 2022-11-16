@@ -1,4 +1,4 @@
-import { MapConfig } from './app-config'
+import { MapConfig } from './model'
 
 export const CONFIG_WITH_TRANSLATIONS = `
 [global]
@@ -32,6 +32,9 @@ header_foreground_color = "#872e2e"
 main_font = 'sans-serif'
 title_font = 'serif'
 fonts_stylesheet_url = "https://fonts.googleapis.com/css2?family=Open+Sans"
+
+[search]
+filter_geometry_url = 'https://my.domain.org/geom.json'
 
 [translations.en]
 "my.first.key" = 'First label.'
