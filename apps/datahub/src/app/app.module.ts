@@ -62,6 +62,7 @@ import { NavigationBarComponent } from './record/navigation-bar/navigation-bar.c
 import { RecordPageComponent } from './record/record-page/record-page.component'
 import { DatahubRouterService } from './router/datahub-router.service'
 import { NavigationMenuComponent } from './home/navigation-menu/navigation-menu.component'
+import { FormsModule } from '@angular/forms'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
@@ -116,6 +117,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     UiInputsModule,
     UiLayoutModule,
     UiElementsModule,
+    FormsModule,
   ],
   providers: [
     { provide: RouterService, useClass: DatahubRouterService },

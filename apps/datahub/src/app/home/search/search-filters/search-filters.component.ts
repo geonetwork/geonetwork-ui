@@ -14,7 +14,7 @@ export class SearchFiltersComponent {
     map((orgState) => orgState && Object.keys(orgState)[0])
   )
   constructor(
-    private searchFacade: SearchFacade,
+    public searchFacade: SearchFacade,
     private searchService: SearchService
   ) {}
 
@@ -32,5 +32,9 @@ export class SearchFiltersComponent {
     this.searchService.updateSearch({
       OrgForResource: {},
     })
+  }
+
+  toggleSpatialFilter(enabled: boolean) {
+    this.searchFacade.setSpatialFilterEnabled(enabled)
   }
 }
