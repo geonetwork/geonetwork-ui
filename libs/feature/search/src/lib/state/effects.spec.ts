@@ -20,6 +20,7 @@ import {
   SetResultsHits,
   SetSearch,
   SetSortBy,
+  SetSpatialFilterEnabled,
   UpdateFilters,
   UpdateRequestAggregationTerm,
 } from './actions'
@@ -176,7 +177,19 @@ describe('Effects', () => {
     })
     it('clear results list on setSearch action', () => {
       actions$ = hot('-a---', {
-        a: new SetSearch({ filters: { any: 'abcd' } }, 'main'),
+        a: new SetSearch({ filters: { any: 'abcd' } } as any, 'main'),
+      })
+      const expected = hot('-(bcd)', {
+        b: new ClearResults('main'),
+        c: new ClearPagination('main'),
+        d: new RequestMoreResults('main'),
+      })
+
+      expect(effects.clearResults$).toBeObservable(expected)
+    })
+    it('clear results list on setSpatialFilterEnabled action', () => {
+      actions$ = hot('-a---', {
+        a: new SetSpatialFilterEnabled(true, 'main'),
       })
       const expected = hot('-(bcd)', {
         b: new ClearResults('main'),
@@ -332,20 +345,49 @@ describe('Effects', () => {
         })
         esService = TestBed.inject(ElasticsearchService)
       })
-      it('passes the geometry to the ES service', async () => {
-        actions$ = of(new RequestMoreResults('main'))
-        await readFirst(effects.loadResults$)
-        expect(esService.getSearchRequestBody).toHaveBeenCalledWith(
-          expect.anything(),
-          expect.anything(),
-          expect.anything(),
-          undefined,
-          expect.anything(),
-          expect.anything(),
-          expect.anything(),
-          null,
-          { type: 'Polygon', coordinates: [] }
-        )
+      describe('when useSpatialFilter is enabled', () => {
+        beforeEach(() => {
+          TestBed.inject(Store).dispatch(
+            new SetSpatialFilterEnabled(true, 'main')
+          )
+        })
+        it('passes the geometry to the ES service', async () => {
+          actions$ = of(new RequestMoreResults('main'))
+          await readFirst(effects.loadResults$)
+          expect(esService.getSearchRequestBody).toHaveBeenCalledWith(
+            expect.anything(),
+            expect.anything(),
+            expect.anything(),
+            undefined,
+            expect.anything(),
+            expect.anything(),
+            expect.anything(),
+            null,
+            { type: 'Polygon', coordinates: [] }
+          )
+        })
+      })
+      describe('when useSpatialFilter is disabled', () => {
+        beforeEach(() => {
+          TestBed.inject(Store).dispatch(
+            new SetSpatialFilterEnabled(false, 'main')
+          )
+        })
+        it('does not pass the geometry to the ES service', async () => {
+          actions$ = of(new RequestMoreResults('main'))
+          await readFirst(effects.loadResults$)
+          expect(esService.getSearchRequestBody).toHaveBeenCalledWith(
+            expect.anything(),
+            expect.anything(),
+            expect.anything(),
+            undefined,
+            expect.anything(),
+            expect.anything(),
+            expect.anything(),
+            null,
+            null
+          )
+        })
       })
     })
   })

@@ -35,6 +35,7 @@ import {
   SET_PAGINATION,
   SET_SEARCH,
   SET_SORT_BY,
+  SET_SPATIAL_FILTER_ENABLED,
   SetError,
   SetIncludeOnAggregation,
   SetResultsAggregations,
@@ -75,7 +76,8 @@ export class SearchEffects {
         SET_SEARCH,
         SET_PAGINATION,
         PAGINATE,
-        SET_FAVORITES_ONLY
+        SET_FAVORITES_ONLY,
+        SET_SPATIAL_FILTER_ENABLED
       ),
       switchMap((action: SearchActions) =>
         of(
@@ -113,11 +115,14 @@ export class SearchEffects {
               )
             )
           ),
-          switchMap(([state, favorites]) =>
-            from(this.filterGeometry ?? of(null)).pipe(
+          switchMap(([state, favorites]) => {
+            if (!state.params.useSpatialFilter || !this.filterGeometry) {
+              return of([state, favorites, null])
+            }
+            return from(this.filterGeometry).pipe(
               map((geom) => [state, favorites, geom])
             )
-          ),
+          }),
           switchMap(
             ([state, favorites, geometry]: [
               SearchStateSearch,
