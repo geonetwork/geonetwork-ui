@@ -120,7 +120,8 @@ export class SearchEffects {
               return of([state, favorites, null])
             }
             return from(this.filterGeometry).pipe(
-              map((geom) => [state, favorites, geom])
+              map((geom) => [state, favorites, geom]),
+              catchError(() => of([state, favorites, null])) // silently opt out of spatial filter if an error happens
             )
           }),
           switchMap(

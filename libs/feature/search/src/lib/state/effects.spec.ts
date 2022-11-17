@@ -392,6 +392,34 @@ describe('Effects', () => {
     })
   })
 
+  describe('when providing a filter geometry that fails to load', () => {
+    describe('when providing a filter geometry', () => {
+      let esService: ElasticsearchService
+      beforeEach(() => {
+        effects['filterGeometry'] = Promise.reject('blarg')
+        esService = TestBed.inject(ElasticsearchService)
+        TestBed.inject(Store).dispatch(
+          new SetSpatialFilterEnabled(true, 'main')
+        )
+      })
+      it('does not pass the geometry to the ES service', async () => {
+        actions$ = of(new RequestMoreResults('main'))
+        await readFirst(effects.loadResults$)
+        expect(esService.getSearchRequestBody).toHaveBeenCalledWith(
+          expect.anything(),
+          expect.anything(),
+          expect.anything(),
+          undefined,
+          expect.anything(),
+          expect.anything(),
+          expect.anything(),
+          null,
+          null
+        )
+      })
+    })
+  })
+
   describe('loadMoreOnAggregation$', () => {
     it('dispatch UPDATE_REQUEST_AGGREGATION_TERM', () => {
       actions$ = hot('-a-', { a: new RequestMoreOnAggregation('abc', 1) })

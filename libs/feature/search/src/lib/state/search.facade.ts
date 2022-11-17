@@ -44,7 +44,7 @@ import {
 } from './selectors'
 import { FILTER_GEOMETRY } from '../feature-search.module'
 import { Geometry } from 'geojson'
-import { map } from 'rxjs/operators'
+import { catchError, map, shareReplay } from 'rxjs/operators'
 
 @Injectable()
 export class SearchFacade {
@@ -61,7 +61,9 @@ export class SearchFacade {
   error$: Observable<SearchError>
   spatialFilterEnabled$: Observable<boolean>
   hasSpatialFilter$ = from(this.filterGeometry ?? of(null)).pipe(
-    map((geom) => !!geom)
+    map((geom) => !!geom),
+    catchError(() => of(false)),
+    shareReplay(1)
   )
 
   searchId: string
