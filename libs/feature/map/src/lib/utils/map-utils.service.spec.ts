@@ -12,8 +12,13 @@ import XYZ from 'ol/source/XYZ'
 import { of } from 'rxjs'
 import { MapUtilsWMSService } from './map-utils-wms.service'
 
-import { MapUtilsService } from './map-utils.service'
+import {
+  MapUtilsService,
+  dragPanCondition,
+  mouseWheelZoomCondition,
+} from './map-utils.service'
 import { readFirst } from '@nrwl/angular/testing'
+import { defaults, DragPan, MouseWheelZoom } from 'ol/interaction'
 
 const wmsUtilsMock = {
   getLayerLonLatBBox: jest.fn(() => of([1.33, 48.81, 4.3, 51.1])),
@@ -211,6 +216,24 @@ describe('MapUtilsService', () => {
           ])
         })
       })
+    })
+  })
+  describe('prioritizePageScroll', () => {
+    const interactions = defaults()
+    beforeEach(() => {
+      service.prioritizePageScroll(interactions)
+    })
+    it('adds condition to DragPan', () => {
+      const dragPan = interactions
+        .getArray()
+        .find((interaction) => interaction instanceof DragPan)
+      expect(dragPan.condition_).toEqual(dragPanCondition)
+    })
+    it('adds condition to MouseWheelZoom', () => {
+      const mouseWheelZoom = interactions
+        .getArray()
+        .find((interaction) => interaction instanceof MouseWheelZoom)
+      expect(mouseWheelZoom.condition_).toEqual(mouseWheelZoomCondition)
     })
   })
 })

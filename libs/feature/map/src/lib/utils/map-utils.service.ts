@@ -13,12 +13,16 @@ import ImageWMS from 'ol/source/ImageWMS'
 import TileWMS from 'ol/source/TileWMS'
 import VectorSource from 'ol/source/Vector'
 import { Options, optionsFromCapabilities } from 'ol/source/WMTS'
+import { DragPan, MouseWheelZoom, defaults, Interaction } from 'ol/interaction'
+import { platformModifierKeyOnly } from 'ol/events/condition'
 import WMTSCapabilities from 'ol/format/WMTSCapabilities'
 import { from, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { MapContextLayerModel } from '../..'
 import { MapUtilsWMSService } from './map-utils-wms.service'
 import { MetadataLink } from '@geonetwork-ui/util/shared'
+import Collection from 'ol/Collection'
+import MapBrowserEvent from 'ol/MapBrowserEvent'
 
 const FEATURE_PROJECTION = 'EPSG:3857'
 const DATA_PROJECTION = 'EPSG:4326'
@@ -169,4 +173,42 @@ export class MapUtilsService {
         })
     )
   }
+
+  prioritizePageScroll(interactions: Collection<Interaction>) {
+    interactions.clear()
+    interactions.extend(
+      defaults({ dragPan: false, mouseWheelZoom: false })
+        .extend([
+          new DragPan({
+            condition: dragPanCondition,
+          }),
+          new MouseWheelZoom({
+            condition: mouseWheelZoomCondition,
+          }),
+        ])
+        .getArray()
+    )
+  }
+}
+
+export function dragPanCondition(
+  this: DragPan,
+  event: MapBrowserEvent<UIEvent>
+) {
+  const dragPanCondition =
+    this.getPointerCount() === 2 || platformModifierKeyOnly(event)
+  if (!dragPanCondition) {
+    this.getMap().dispatchEvent('mapmuted')
+  }
+  return dragPanCondition
+}
+
+export function mouseWheelZoomCondition(
+  this: MouseWheelZoom,
+  event: MapBrowserEvent<UIEvent>
+) {
+  if (!platformModifierKeyOnly(event) && event.type === 'wheel') {
+    this.getMap().dispatchEvent('mapmuted')
+  }
+  return platformModifierKeyOnly(event)
 }

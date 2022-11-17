@@ -113,6 +113,7 @@
   "map.add.layer.wms": "",
   "map.layers.list": "",
   "map.loading.data": "Chargement des données...",
+  "map.navigation.message": "Veuillez utiliser CTRL + souris (ou deux doigts sur mobile) pour naviguer sur la carte",
   "map.select.layer": "Choisir la couche à afficher",
   "nav.back": "Retour",
   "next": "suivant",
