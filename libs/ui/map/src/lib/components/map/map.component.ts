@@ -4,11 +4,12 @@ import {
   Component,
   ElementRef,
   Input,
+  OnInit,
   ViewChild,
 } from '@angular/core'
 import Map from 'ol/Map'
-import { BehaviorSubject, merge } from 'rxjs'
-import { debounceTime, map } from 'rxjs/operators'
+import { fromEvent, Observable, timer } from 'rxjs'
+import { map, startWith, switchMap } from 'rxjs/operators'
 
 @Component({
   selector: 'gn-ui-map',
@@ -16,27 +17,31 @@ import { debounceTime, map } from 'rxjs/operators'
   styleUrls: ['./map.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements OnInit, AfterViewInit {
   @Input() map: Map
   @ViewChild('map') container: ElementRef
-  show$ = new BehaviorSubject(false)
-  showMessage$ = this.show$.pipe(map((bool) => bool))
-  hideMessage$ = this.show$.pipe(
-    debounceTime(2000),
-    map(() => false)
-  )
-  displayMessage$ = merge(this.showMessage$, this.hideMessage$)
-
   resizeObserver = new ResizeObserver(() => {
     this.map.updateSize()
     this.resizeObserver.unobserve(this.container.nativeElement)
   })
+  displayMessage$: Observable<boolean>
 
   constructor(private _element: ElementRef) {}
 
+  ngOnInit() {
+    // this will show the message when a 'mapmuted' event is received and hide it a few seconds later
+    this.displayMessage$ = fromEvent(this.map, 'mapmuted').pipe(
+      switchMap(() =>
+        timer(2000).pipe(
+          map(() => false),
+          startWith(true)
+        )
+      )
+    )
+  }
+
   ngAfterViewInit() {
     this.map.setTarget(this.container.nativeElement)
-    this.map.on('mapmuted' as any, () => this.show$.next(true))
     this.resizeObserver.observe(this.container.nativeElement)
   }
 }
