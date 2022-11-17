@@ -33,13 +33,8 @@ export class FilterDropdownComponent implements OnInit {
     startWith([])
   )
   selected$ = this.searchFacade.searchFilters$.pipe(
-    map(
-      (filters) =>
-        filters[this.fieldName] && Object.keys(filters[this.fieldName])
-    ),
-    filter((selected) => !!selected),
-    take(1),
-    startWith([])
+    map((filters) => Object.keys(filters[this.fieldName] ?? {})),
+    filter((selected) => !!selected)
   )
 
   onSelectedValues(values: unknown[]) {
