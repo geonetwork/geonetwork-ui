@@ -27,7 +27,6 @@
           (action)="listFavorites($event)"
         ></datahub-header-badge-button>
         <datahub-header-badge-button
-          [routerLink]="ROUTE_SEARCH"
           class="mr-3"
           label="datahub.header.lastRecords"
           [toggled]="
@@ -36,7 +35,6 @@
           (action)="setSortBy($event, SORT_BY_PARAMS.CREATE_DATE)"
         ></datahub-header-badge-button>
         <datahub-header-badge-button
-          [routerLink]="ROUTE_SEARCH"
           class="mr-3"
           label="datahub.header.popularRecords"
           [toggled]="

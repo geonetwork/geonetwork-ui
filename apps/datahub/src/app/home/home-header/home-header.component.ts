@@ -66,6 +66,7 @@ export class HomeHeaderComponent {
 
   setSortBy(toggled: boolean, param: SortByParams): void {
     const sortBy = toggled ? param : ''
+    this.searchService.setSearch({})
     this.searchFacade.setSortBy(sortBy)
   }
 }
