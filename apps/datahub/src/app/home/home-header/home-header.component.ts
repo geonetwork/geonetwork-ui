@@ -56,15 +56,11 @@ export class HomeHeaderComponent {
     this.routerFacade.goToMetadata(record)
   }
 
-  updateSearch(): void {
-    this.searchService.updateSearch({})
-  }
-
   listFavorites(toggled: boolean): void {
     this.searchFacade.setFavoritesOnly(toggled)
   }
 
-  setSortBy(toggled: boolean, param: SortByParams): void {
+  clearSearchAndSort(toggled: boolean, param: SortByParams): void {
     const sortBy = toggled ? param : ''
     this.searchService.setSearch({})
     this.searchFacade.setSortBy(sortBy)

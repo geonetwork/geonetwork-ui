@@ -32,7 +32,7 @@
           [toggled]="
             (searchFacade.sortBy$ | async) === SORT_BY_PARAMS.CREATE_DATE
           "
-          (action)="setSortBy($event, SORT_BY_PARAMS.CREATE_DATE)"
+          (action)="clearSearchAndSort($event, SORT_BY_PARAMS.CREATE_DATE)"
         ></datahub-header-badge-button>
         <datahub-header-badge-button
           class="mr-3"
@@ -40,7 +40,7 @@
           [toggled]="
             (searchFacade.sortBy$ | async) === SORT_BY_PARAMS.USER_SAVED_COUNT
           "
-          (action)="setSortBy($event, SORT_BY_PARAMS.USER_SAVED_COUNT)"
+          (action)="clearSearchAndSort($event, SORT_BY_PARAMS.USER_SAVED_COUNT)"
         ></datahub-header-badge-button>
       </div>
     </div>

@@ -84,16 +84,6 @@ describe('HeaderComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('tabs navigation', () => {
-    describe('click datasets tab', () => {
-      beforeEach(() => {
-        component.updateSearch()
-      })
-      it('calls searchService updateSearch with empty object', () => {
-        expect(searchServiceMock.updateSearch).toHaveBeenCalledWith({})
-      })
-    })
-  })
   describe('favorites badge', () => {
     describe('isAuthenticated$', () => {
       describe('user is authenticated', () => {
