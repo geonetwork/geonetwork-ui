@@ -170,6 +170,8 @@
   "search.filters.maximize": "Agrandir",
   "search.filters.minimize": "Réduire",
   "search.filters.title": "Affiner votre recherche",
+  "search.filters.useSpatialFilter": "Mettre en avant les résultats sur la zone d'intérêt",
+  "search.filters.useSpatialFilterHelp": "Si cette option est activée, les fiches portant sur la zone d'intérêt du catalogue seront montrées en premier; les fiches en dehors de cette zone n'apparaitront pas dans les résultats.",
   "table.loading.data": "Chargement des données...",
   "table.object.count": "enregistrements dans ce jeu de données",
   "table.select.data": "Choisir le jeu de données à afficher",
