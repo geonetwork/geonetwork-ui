@@ -16,11 +16,17 @@ import { initialState, reducer, SEARCH_FEATURE_KEY } from './state/reducer'
 import { ResultsHitsContainerComponent } from './results-hits-number/results-hits.container.component'
 import { SearchStateContainerDirective } from './state/container/search-state.container.directive'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { NgModule } from '@angular/core'
+import { InjectionToken, NgModule } from '@angular/core'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { FavoriteStarComponent } from './favorites/favorite-star/favorite-star.component'
 import { MatIconModule } from '@angular/material/icon'
 import { FilterDropdownComponent } from './filter-dropdown/filter-dropdown.component'
+import { Geometry } from 'geojson'
+
+// this geometry will be used to filter & boost results accordingly
+export const FILTER_GEOMETRY = new InjectionToken<Promise<Geometry>>(
+  'filter-geometry'
+)
 
 @NgModule({
   declarations: [

@@ -1,4 +1,4 @@
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core'
+import { Inject, Injectable, Optional } from '@angular/core'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { AuthService } from '@geonetwork-ui/feature/auth'
 import { ElasticsearchMapper } from '../utils/mapper'
@@ -49,11 +49,7 @@ import { HttpErrorResponse } from '@angular/common/http'
 import { switchMapWithSearchId } from '../utils/operators/search.operator'
 import { FavoritesService } from '../favorites/favorites.service'
 import { Geometry } from 'geojson'
-
-// this geometry will be used to filter & boost results accordingly
-export const FILTER_GEOMETRY = new InjectionToken<Promise<Geometry>>(
-  'filter-geometry'
-)
+import { FILTER_GEOMETRY } from '../feature-search.module'
 
 @Injectable()
 export class SearchEffects {
@@ -117,14 +113,11 @@ export class SearchEffects {
               )
             )
           ),
-          switchMap(([state, favorites]) => {
-            if (!this.filterGeometry) {
-              return of([state, favorites, null])
-            }
-            return from(this.filterGeometry).pipe(
+          switchMap(([state, favorites]) =>
+            from(this.filterGeometry ?? of(null)).pipe(
               map((geom) => [state, favorites, geom])
             )
-          }),
+          ),
           switchMap(
             ([state, favorites, geometry]: [
               SearchStateSearch,

@@ -1,5 +1,5 @@
 import fetchMock from 'fetch-mock-jest'
-import { getMapConfig, getSearchConfig } from '..'
+import { CONFIG_MINIMAL, getMapConfig, getSearchConfig } from '..'
 import {
   _reset,
   getCustomTranslations,
@@ -235,6 +235,20 @@ describe('app config utils', () => {
       })
       it('returns an empty object if no translation defined', () => {
         expect(getCustomTranslations('nl')).toEqual({})
+      })
+    })
+  })
+  describe('minimal config', () => {
+    beforeEach(async () => {
+      fetchMock.get('end:default.toml', () => CONFIG_MINIMAL)
+      await loadAppConfig()
+    })
+    describe('loadAppConfig', () => {
+      it('does not throw an error', () => {
+        expect(getGlobalConfig()).toEqual({
+          GN4_API_URL: '/geonetwork/srv/api',
+          PROXY_PATH: '/proxy/?url=',
+        })
       })
     })
   })

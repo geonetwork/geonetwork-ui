@@ -28,7 +28,7 @@ import { provideMockActions } from '@ngrx/effects/testing'
 import { Store, StoreModule } from '@ngrx/store'
 import { getTestScheduler, hot } from 'jasmine-marbles'
 import { Observable, of, throwError } from 'rxjs'
-import { FILTER_GEOMETRY, SearchEffects } from './effects'
+import { SearchEffects } from './effects'
 import {
   initialState,
   reducer,
@@ -45,6 +45,7 @@ import { delay } from 'rxjs/operators'
 import { FavoritesService } from '../favorites/favorites.service'
 import { readFirst } from '@nrwl/angular/testing'
 import { ElasticsearchService } from '@geonetwork-ui/util/shared'
+import { FILTER_GEOMETRY } from '../feature-search.module'
 
 const defaultSearchState = initialState[DEFAULT_SEARCH_KEY]
 const stateWithSearches = {

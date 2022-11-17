@@ -55,8 +55,6 @@ export const CONFIG_MINIMAL = `
 geonetwork4_api_url = "/geonetwork/srv/api"
 proxy_path = "/proxy/?url="
 
-[map]
-
 [theme]
 primary_color = "#093564"
 secondary_color = "#c2e9dc"
