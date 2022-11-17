@@ -1,5 +1,5 @@
 import fetchMock from 'fetch-mock-jest'
-import { CONFIG_MINIMAL, getMapConfig, getSearchConfig } from '..'
+import { getMapConfig, getSearchConfig } from '..'
 import {
   _reset,
   getCustomTranslations,
@@ -7,75 +7,14 @@ import {
   getThemeConfig,
   loadAppConfig,
 } from './app-config'
-import { CONFIG_WITH_TRANSLATIONS } from './fixtures'
-
-const CONFIG_MALFORMED = `
-{
-  "I thought": "we were still doing json"
-}
-`
-
-const CONFIG_MISSING_MANDATORY = `
-[theme]
-primary_color = "#093564"
-secondary_color = "#c2e9dc"
-background_color = "#fdfbff"
-main_font = 'sans-serif'
-`
-
-const CONFIG_WRONG_LANGUAGE_CODE = `
-[global]
-geonetwork4_api_url = "/geonetwork/srv/api"
-proxy_path = "/proxy/?url="
-metadata_language = "fra"
-
-[map]
-
-[theme]
-primary_color = "#093564"
-secondary_color = "#c2e9dc"
-main_color = "#212029" # All-purpose text color
-background_color = "#fdfbff"
-`
-
-const CONFIG_UNRECOGNIZED_KEYS = `
-[global]
-geonetwork4_api_url = "/geonetwork/srv/api"
-proxy_path = "/proxy/?url="
-metadata_language = "fre"
-another_path = '/whatever'
-
-[map]
-max_zoom = 10
-max_extent = [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855]
-do_not_use_default_basemap = false
-external_viewer_url_template = 'https://example.com/myviewer?'
-external_viewer_open_new_tab = true
-another_zoom = 15
-[[map_layer]]
-type = "wms"
-url = "https://www.geo2france.fr/geoserver/cr_hdf/ows"
-name = "masque_hdf_ign_carto_latin1"
-[[map_layer]]
-type = "wfs"
-url = "https://www.geo2france.fr/geoserver/cr_hdf/ows"
-name = "masque_hdf_ign_carto_latin1"
-another_layer = "wrong layer definition"
-
-[theme]
-primary_color = "#093564"
-secondary_color = "#c2e9dc"
-main_color = "#212029" # All-purpose text color
-background_color = "#fdfbff"
-thumbnail_placeholder = 'assets/img/placeholder.svg'
-header_background = 'teal'
-header_foreground_color = "#872e2e"
-main_font = 'sans-serif'
-title_font = 'serif'
-another_color = 'red'
-`
-
-const CONFIG_OK = CONFIG_WITH_TRANSLATIONS
+import {
+  CONFIG_MALFORMED,
+  CONFIG_MINIMAL,
+  CONFIG_MISSING_MANDATORY,
+  CONFIG_OK,
+  CONFIG_UNRECOGNIZED_KEYS,
+  CONFIG_WRONG_LANGUAGE_CODE,
+} from './fixtures'
 
 describe('app config utils', () => {
   beforeEach(() => {
