@@ -51,7 +51,7 @@ export const getAsUrl = (field) => {
   }
 }
 
-export function getLinkType(url: string, protocol?: string): MetadataLinkType {
+export function getLinkType(url?: string, protocol?: string): MetadataLinkType {
   if (!protocol) return MetadataLinkType.OTHER
   if (/^ESRI:REST/.test(protocol) && /FeatureServer/.test(url))
     return MetadataLinkType.ESRI_REST

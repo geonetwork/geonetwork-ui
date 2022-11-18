@@ -6,6 +6,39 @@ import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FilterDropdownComponent } from './filter-dropdown.component'
 
+function formatGroupFactory(selectOptions: any) {
+  const groupedOptions = groupBy(selectOptions, 'label')
+  const groupedOptionsSum = []
+  if (groupedOptions) {
+    Object.entries(groupedOptions).forEach((group: any) => {
+      const option = group[1].reduce((group: any, item: any) => ({
+        ...group,
+        value:
+          group.value instanceof Array
+            ? [...group.value, item.value]
+            : [group.value],
+        count: group.count + item.count,
+      }))
+      groupedOptionsSum.push({
+        ...option,
+        label: `${option.label} (${option.count})`,
+      })
+    })
+  }
+  return groupedOptionsSum
+}
+
+function groupBy(list, key) {
+  return list
+    ? list.reduce(
+        (groups, item) => ({
+          ...groups,
+          [item[key]]: [...(groups[item[key]] || []), item],
+        }),
+        {}
+      )
+    : list
+}
 class SearchFacadeMock {
   updateConfigAggregations = jest.fn()
   resultsAggregations$ = new BehaviorSubject<any>({})
@@ -179,4 +212,88 @@ describe('FilterDropdownComponent', () => {
   //     })
   //   })
   // })
+
+  describe('with a label factory', () => {
+    beforeEach(() => {
+      component.labelFactory = (bucketKey) => {
+        if (bucketKey.startsWith('OGC:WMS')) return `WMS`
+        if (bucketKey.startsWith('OGC:WFS')) return `WFS`
+        return 'OTHER'
+      }
+      ;(facade as any).resultsAggregations$.next({
+        Org: {
+          buckets: [
+            { doc_count: 4, key: 'OGC:WMS' },
+            { doc_count: 2, key: 'OGC:WMS-1.3.0' },
+            { doc_count: 1, key: 'OGC:WFS' },
+            { doc_count: 2, key: 'OGC:WCS' },
+          ],
+        },
+      })
+      fixture.detectChanges()
+    })
+    it('labels equal protocol options with the same label', () => {
+      expect(dropdown.choices).toEqual([
+        { label: 'WMS', value: 'OGC:WMS', count: 4 },
+        { label: 'WMS', value: 'OGC:WMS-1.3.0', count: 2 },
+        { label: 'WFS', value: 'OGC:WFS', count: 1 },
+        { label: 'OTHER', value: 'OGC:WCS', count: 2 },
+      ])
+    })
+  })
+  describe('with a label and group factory', () => {
+    beforeEach(() => {
+      component.labelFactory = (bucketKey) => {
+        if (bucketKey.startsWith('OGC:WMS')) return `WMS`
+        if (bucketKey.startsWith('OGC:WFS')) return `WFS`
+        return 'OTHER'
+      }
+      component.groupFactory = formatGroupFactory
+      ;(facade as any).resultsAggregations$.next({
+        Org: {
+          buckets: [
+            { doc_count: 4, key: 'OGC:WMS' },
+            { doc_count: 2, key: 'OGC:WMS-1.3.0' },
+            { doc_count: 1, key: 'OGC:WFS' },
+            { doc_count: 2, key: 'OGC:WCS' },
+          ],
+        },
+      })
+      fixture.detectChanges()
+    })
+    it('groups options with the same label and adds counts', () => {
+      expect(dropdown.choices).toEqual([
+        { label: 'WMS (6)', value: ['OGC:WMS', 'OGC:WMS-1.3.0'], count: 6 },
+        { label: 'WFS (1)', value: ['OGC:WFS'], count: 1 },
+        { label: 'OTHER (2)', value: ['OGC:WCS'], count: 2 },
+      ])
+    })
+    describe('click on WMS', () => {
+      beforeEach(() => {
+        component.onSelectedValues(['WMS'])
+        fixture.detectChanges()
+      })
+      it('calls updateSearch with all options corresponding to WMS label', () => {
+        expect(searchService.updateSearch).toHaveBeenCalledWith({
+          linkProtocol: { 'OGC:WMS': true, 'OGC:WMS-1.3.0': true },
+        })
+      })
+    })
+    describe('click on WFS', () => {
+      beforeEach(() => {
+        component.onSelectedValues(['WFS'])
+        fixture.detectChanges()
+      })
+      it('calls updateSearch with all options corresponding to WFS label', () => {
+        expect(searchService.updateSearch).toHaveBeenCalledWith({
+          linkProtocol: { 'OGC:WFS': true },
+        })
+      })
+    })
+
+    // it('does not show options for which the factory returns null', () => {
+    //   // only has 2 options
+    //   expect(dropdown.choices.length).toEqual(2)
+    // })
+  })
 })

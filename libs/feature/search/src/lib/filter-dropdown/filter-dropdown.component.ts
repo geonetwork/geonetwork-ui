@@ -24,12 +24,14 @@ export class FilterDropdownComponent implements OnInit {
         aggs &&
         aggs[this.fieldName] &&
         aggs[this.fieldName].buckets.map((bucket) => ({
-          label: `${bucket.key} (${bucket.doc_count})`,
+          label: this.labelFactory(bucket.key, bucket.doc_count),
           value: bucket.key.toString(),
+          count: bucket.doc_count,
         }))
     ),
+    map((choicesUngrouped) => this.groupFactory(choicesUngrouped)),
     filter((choices) => !!choices),
-    take(1),
+    // take(1),
     startWith([])
   )
   selected$ = this.searchFacade.searchFilters$.pipe(
@@ -42,9 +44,17 @@ export class FilterDropdownComponent implements OnInit {
     startWith([])
   )
 
-  onSelectedValues(values: unknown[]) {
+  @Input() labelFactory = (bucketKey: string, docCount: number) =>
+    `${bucketKey} (${docCount})`
+  @Input() groupFactory = (selectOptions: any[]) => selectOptions
+
+  onSelectedValues(values: any[]) {
+    const valuesToReduce =
+      values[values.length - 1] instanceof Array
+        ? values[values.length - 1]
+        : values
     this.searchService.updateSearch({
-      [this.fieldName]: values.reduce<Record<string, boolean>>((acc, val) => {
+      [this.fieldName]: valuesToReduce.reduce((acc, val) => {
         return { ...acc, [val.toString()]: true }
       }, {}),
     })
