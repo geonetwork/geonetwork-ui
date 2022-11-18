@@ -6,39 +6,6 @@ import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FilterDropdownComponent } from './filter-dropdown.component'
 
-function formatGroupFactory(selectOptions: any) {
-  const groupedOptions = groupBy(selectOptions, 'label')
-  const groupedOptionsSum = []
-  if (groupedOptions) {
-    Object.entries(groupedOptions).forEach((group: any) => {
-      const option = group[1].reduce((group: any, item: any) => ({
-        ...group,
-        value:
-          group.value instanceof Array
-            ? [...group.value, item.value]
-            : [group.value],
-        count: group.count + item.count,
-      }))
-      groupedOptionsSum.push({
-        ...option,
-        label: `${option.label} (${option.count})`,
-      })
-    })
-  }
-  return groupedOptionsSum
-}
-
-function groupBy(list, key) {
-  return list
-    ? list.reduce(
-        (groups, item) => ({
-          ...groups,
-          [item[key]]: [...(groups[item[key]] || []), item],
-        }),
-        {}
-      )
-    : list
-}
 class SearchFacadeMock {
   updateConfigAggregations = jest.fn()
   resultsAggregations$ = new BehaviorSubject<any>({})
@@ -110,7 +77,7 @@ describe('FilterDropdownComponent', () => {
 
   describe('when selected values change', () => {
     beforeEach(() => {
-      dropdown.selectValues.emit(['org1', 'org2', 34])
+      dropdown.selectValues.emit([['org1'], ['org2'], [34]])
     })
     it('calls updateSearch on the search service', () => {
       expect(searchService.updateSearch).toHaveBeenCalledWith({
@@ -135,9 +102,9 @@ describe('FilterDropdownComponent', () => {
       })
       it('reads choices from the search response', () => {
         expect(dropdown.choices).toEqual([
-          { label: 'First Org (4)', value: 'First Org' },
-          { label: 'Second Org (2)', value: 'Second Org' },
-          { label: 'Third Org (1)', value: 'Third Org' },
+          { label: 'First Org (4)', value: ['First Org'] },
+          { label: 'Second Org (2)', value: ['Second Org'] },
+          { label: 'Third Org (1)', value: ['Third Org'] },
         ])
       })
     })
@@ -165,9 +132,9 @@ describe('FilterDropdownComponent', () => {
       })
       it('converts values to string', () => {
         expect(dropdown.choices).toEqual([
-          { label: '1 (4)', value: '1' },
-          { label: '2 (2)', value: '2' },
-          { label: '3 (1)', value: '3' },
+          { label: '1 (4)', value: ['1'] },
+          { label: '2 (2)', value: ['2'] },
+          { label: '3 (1)', value: ['3'] },
         ])
       })
     })
@@ -185,7 +152,7 @@ describe('FilterDropdownComponent', () => {
         fixture.detectChanges()
       })
       it('reads selected values from the search filters', () => {
-        expect(dropdown.selected).toEqual(['First Org', 'Second Org'])
+        expect(dropdown.selected).toEqual([['First Org'], ['Second Org']])
       })
     })
     describe('when a filter is not available', () => {
@@ -202,23 +169,13 @@ describe('FilterDropdownComponent', () => {
       })
     })
   })
-  // describe('when no values are selected', () => {
-  //   beforeEach(() => {
-  //     dropdown.selectValues.emit([])
-  //   })
-  //   it('clears the filter on the search facade', () => {
-  //     expect(facade.updateFilters).toHaveBeenCalledWith({
-  //       Org: undefined
-  //     })
-  //   })
-  // })
 
   describe('with a label factory', () => {
     beforeEach(() => {
       component.labelFactory = (bucketKey) => {
-        if (bucketKey.startsWith('OGC:WMS')) return `WMS`
-        if (bucketKey.startsWith('OGC:WFS')) return `WFS`
-        return 'OTHER'
+        if (bucketKey.startsWith('OGC:WMS')) return `WMS Service`
+        if (bucketKey.startsWith('OGC:WFS')) return `WFS Service`
+        return 'Other'
       }
       ;(facade as any).resultsAggregations$.next({
         Org: {
@@ -227,73 +184,48 @@ describe('FilterDropdownComponent', () => {
             { doc_count: 2, key: 'OGC:WMS-1.3.0' },
             { doc_count: 1, key: 'OGC:WFS' },
             { doc_count: 2, key: 'OGC:WCS' },
+            { doc_count: 1, key: 'WWW:DOWNLOAD' },
           ],
         },
       })
       fixture.detectChanges()
     })
-    it('labels equal protocol options with the same label', () => {
+    it('groups choices with identical labels', () => {
       expect(dropdown.choices).toEqual([
-        { label: 'WMS', value: 'OGC:WMS', count: 4 },
-        { label: 'WMS', value: 'OGC:WMS-1.3.0', count: 2 },
-        { label: 'WFS', value: 'OGC:WFS', count: 1 },
-        { label: 'OTHER', value: 'OGC:WCS', count: 2 },
+        { label: 'WMS Service (6)', value: ['OGC:WMS', 'OGC:WMS-1.3.0'] },
+        { label: 'WFS Service (1)', value: ['OGC:WFS'] },
+        { label: 'Other (3)', value: ['OGC:WCS', 'WWW:DOWNLOAD'] },
       ])
     })
-  })
-  describe('with a label and group factory', () => {
-    beforeEach(() => {
-      component.labelFactory = (bucketKey) => {
-        if (bucketKey.startsWith('OGC:WMS')) return `WMS`
-        if (bucketKey.startsWith('OGC:WFS')) return `WFS`
-        return 'OTHER'
-      }
-      component.groupFactory = formatGroupFactory
-      ;(facade as any).resultsAggregations$.next({
-        Org: {
-          buckets: [
-            { doc_count: 4, key: 'OGC:WMS' },
-            { doc_count: 2, key: 'OGC:WMS-1.3.0' },
-            { doc_count: 1, key: 'OGC:WFS' },
-            { doc_count: 2, key: 'OGC:WCS' },
-          ],
-        },
-      })
-      fixture.detectChanges()
-    })
-    it('groups options with the same label and adds counts', () => {
-      expect(dropdown.choices).toEqual([
-        { label: 'WMS (6)', value: ['OGC:WMS', 'OGC:WMS-1.3.0'], count: 6 },
-        { label: 'WFS (1)', value: ['OGC:WFS'], count: 1 },
-        { label: 'OTHER (2)', value: ['OGC:WCS'], count: 2 },
-      ])
-    })
-    describe('click on WMS', () => {
+    describe('when clicking an option that covers several values', () => {
       beforeEach(() => {
-        component.onSelectedValues(['WMS'])
+        component.onSelectedValues([['OGC:WFS'], ['OGC:WMS', 'OGC:WMS-1.3.0']])
         fixture.detectChanges()
       })
-      it('calls updateSearch with all options corresponding to WMS label', () => {
+      it('adds all values to the search params', () => {
         expect(searchService.updateSearch).toHaveBeenCalledWith({
-          linkProtocol: { 'OGC:WMS': true, 'OGC:WMS-1.3.0': true },
+          Org: { 'OGC:WFS': true, 'OGC:WMS': true, 'OGC:WMS-1.3.0': true },
         })
       })
     })
-    describe('click on WFS', () => {
+    describe('when some filters are already set', () => {
       beforeEach(() => {
-        component.onSelectedValues(['WFS'])
+        ;(facade as any).searchFilters$.next({
+          Org: {
+            'OGC:WMS': true,
+            'OGC:WMS-1.3.0': true,
+            'OGC:WFS': true,
+            'OGC:WCS': true,
+          },
+        })
         fixture.detectChanges()
       })
-      it('calls updateSearch with all options corresponding to WFS label', () => {
-        expect(searchService.updateSearch).toHaveBeenCalledWith({
-          linkProtocol: { 'OGC:WFS': true },
-        })
+      it('sets groups of values as selected according to the existing choices', () => {
+        expect(dropdown.selected).toEqual([
+          ['OGC:WFS'],
+          ['OGC:WMS', 'OGC:WMS-1.3.0'],
+        ])
       })
     })
-
-    // it('does not show options for which the factory returns null', () => {
-    //   // only has 2 options
-    //   expect(dropdown.choices.length).toEqual(2)
-    // })
   })
 })

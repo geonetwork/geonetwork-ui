@@ -7,6 +7,13 @@ import {
 import { filter, map, startWith, take } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
+import { Observable } from 'rxjs'
+
+type BucketKeys = (string | number)[]
+type BucketKeysChoice = {
+  value: BucketKeys
+  label: string
+}[]
 
 @Component({
   selector: 'gn-ui-filter-dropdown',
@@ -18,45 +25,55 @@ export class FilterDropdownComponent implements OnInit {
   @Input() fieldName: string
   @Input() title: string
 
-  choices$ = this.searchFacade.resultsAggregations$.pipe(
-    map(
-      (aggs) =>
-        aggs &&
-        aggs[this.fieldName] &&
-        aggs[this.fieldName].buckets.map((bucket) => ({
-          label: this.labelFactory(bucket.key, bucket.doc_count),
-          value: bucket.key.toString(),
-          count: bucket.doc_count,
+  choices$: Observable<BucketKeysChoice> =
+    this.searchFacade.resultsAggregations$.pipe(
+      map((aggs) => aggs?.[this.fieldName]?.buckets),
+      filter((buckets) => !!buckets),
+      map((buckets) => {
+        const choicesByLabel: Record<
+          string,
+          { values: BucketKeys; count: number }
+        > = {}
+        for (const { key, doc_count } of buckets) {
+          const label = this.labelFactory(key)
+          if (label in choicesByLabel) {
+            choicesByLabel[label].values.push(key.toString())
+            choicesByLabel[label].count += doc_count
+          } else {
+            choicesByLabel[label] = {
+              values: [key.toString()],
+              count: doc_count,
+            }
+          }
+        }
+        return Object.keys(choicesByLabel).map((label) => ({
+          label: `${label} (${choicesByLabel[label].count})`,
+          value: choicesByLabel[label].values,
         }))
-    ),
-    map((choicesUngrouped) => this.groupFactory(choicesUngrouped)),
-    filter((choices) => !!choices),
-    // take(1),
-    startWith([])
-  )
-  selected$ = this.searchFacade.searchFilters$.pipe(
-    map(
-      (filters) =>
-        filters[this.fieldName] && Object.keys(filters[this.fieldName])
-    ),
-    filter((selected) => !!selected),
-    take(1),
-    startWith([])
-  )
+      }),
+      take(1),
+      startWith([])
+    )
+  selected$: Observable<BucketKeysChoice> =
+    this.searchFacade.searchFilters$.pipe(
+      map(
+        (filters) =>
+          filters[this.fieldName] && Object.keys(filters[this.fieldName])
+      ),
+      filter((selected) => !!selected),
+      take(1),
+      startWith([])
+    )
 
-  @Input() labelFactory = (bucketKey: string, docCount: number) =>
-    `${bucketKey} (${docCount})`
-  @Input() groupFactory = (selectOptions: any[]) => selectOptions
+  @Input() labelFactory = (bucketKey: string) => bucketKey
 
-  onSelectedValues(values: any[]) {
-    const valuesToReduce =
-      values[values.length - 1] instanceof Array
-        ? values[values.length - 1]
-        : values
+  onSelectedValues(values: BucketKeys[]) {
+    const flattened = values.reduce((prev, curr) => [...prev, ...curr], [])
+    const filters = flattened.reduce((acc, val) => {
+      return { ...acc, [val.toString()]: true }
+    }, {})
     this.searchService.updateSearch({
-      [this.fieldName]: valuesToReduce.reduce((acc, val) => {
-        return { ...acc, [val.toString()]: true }
-      }, {}),
+      [this.fieldName]: filters,
     })
   }
 
