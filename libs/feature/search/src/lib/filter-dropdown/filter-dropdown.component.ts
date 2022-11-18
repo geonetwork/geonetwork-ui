@@ -56,13 +56,8 @@ export class FilterDropdownComponent implements OnInit {
     )
   selected$: Observable<BucketKeysChoice> =
     this.searchFacade.searchFilters$.pipe(
-      map(
-        (filters) =>
-          filters[this.fieldName] && Object.keys(filters[this.fieldName])
-      ),
-      filter((selected) => !!selected),
-      take(1),
-      startWith([])
+      map((filters) => Object.keys(filters[this.fieldName] ?? {})),
+      filter((selected) => !!selected)
     )
 
   @Input() labelFactory = (bucketKey: string) => bucketKey
