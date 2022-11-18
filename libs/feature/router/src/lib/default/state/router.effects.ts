@@ -2,11 +2,16 @@ import { Location } from '@angular/common'
 import { Inject, Injectable } from '@angular/core'
 import { ActivatedRouteSnapshot, Router } from '@angular/router'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
-import { SetFilters } from '@geonetwork-ui/feature/search'
+import { SetFilters, SetSortBy } from '@geonetwork-ui/feature/search'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { navigation } from '@nrwl/angular'
-import { map, tap } from 'rxjs/operators'
-import { routeParamsToState } from '../router.mapper'
+import { of } from 'rxjs'
+import { map, switchMap, tap } from 'rxjs/operators'
+import {
+  getSearchFilters,
+  getSortBy,
+  routeParamsToState,
+} from '../router.mapper'
 import { ROUTER_CONFIG, RouterConfigModel } from '../router.module'
 import * as RouterActions from './router.actions'
 import { RouterFacade } from './router.facade'
@@ -37,12 +42,17 @@ export class RouterEffects {
 
   navigateWithFieldSearch$ = createEffect(() =>
     this.facade.searchParams$.pipe(
-      map(
-        (filters) =>
+      switchMap((searchParams) =>
+        of(
           new SetFilters(
-            routeParamsToState(filters),
+            routeParamsToState(getSearchFilters(searchParams)),
+            this.routerConfig.searchStateId
+          ),
+          new SetSortBy(
+            getSortBy(searchParams),
             this.routerConfig.searchStateId
           )
+        )
       )
     )
   )

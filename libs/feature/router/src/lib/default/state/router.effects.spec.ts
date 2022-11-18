@@ -4,7 +4,7 @@ import { Component } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
-import { SetFilters } from '@geonetwork-ui/feature/search'
+import { SetFilters, SetSortBy } from '@geonetwork-ui/feature/search'
 import { provideMockActions } from '@ngrx/effects/testing'
 import { routerNavigationAction } from '@ngrx/router-store'
 import { Action } from '@ngrx/store'
@@ -27,7 +27,7 @@ const routerConfigMock = {
 }
 
 const routerFacadeMock = {
-  searchParams$: new BehaviorSubject({ q: 'any' }),
+  searchParams$: new BehaviorSubject({ q: 'any', _sort: '_score' }),
 }
 
 describe('RouterEffects', () => {
@@ -165,8 +165,9 @@ describe('RouterEffects', () => {
     it('should call location forward', () => {
       actions = hot('-a', { a: routerFacadeMock.searchParams$ })
 
-      const expected = hot('a', {
+      const expected = hot('(ab)', {
         a: new SetFilters({ any: 'any' }, 'main'),
+        b: new SetSortBy('_score', 'main'),
       })
       expect(effects.navigateWithFieldSearch$).toBeObservable(expected)
     })
