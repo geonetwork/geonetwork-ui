@@ -1,14 +1,15 @@
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { AuthService } from '@geonetwork-ui/feature/auth'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
+import { SortByEnum } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
+import { readFirst } from '@nrwl/angular/testing'
 import { BehaviorSubject } from 'rxjs'
 import { HeaderBadgeButtonComponent } from '../header-badge-button/header-badge-button.component'
-import { HomeHeaderComponent, SortByParams } from './home-header.component'
-import { readFirst } from '@nrwl/angular/testing'
+import { HomeHeaderComponent } from './home-header.component'
 import resetAllMocks = jest.resetAllMocks
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
@@ -125,7 +126,7 @@ describe('HeaderComponent', () => {
       })
       it('calls searchFacade setSortBy with correct value', () => {
         expect(searchFacadeMock.setSortBy).toHaveBeenCalledWith(
-          SortByParams.CREATE_DATE
+          SortByEnum.CREATE_DATE
         )
       })
       it('resets search filters', () => {
@@ -155,7 +156,7 @@ describe('HeaderComponent', () => {
       })
       it('sort on popularity', () => {
         expect(searchFacadeMock.setSortBy).toHaveBeenCalledWith(
-          SortByParams.USER_SAVED_COUNT
+          SortByEnum.POPULARITY
         )
       })
       it('resets search filters', () => {

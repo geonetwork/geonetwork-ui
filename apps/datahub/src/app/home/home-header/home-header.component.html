@@ -38,9 +38,9 @@
           class="mr-3"
           label="datahub.header.popularRecords"
           [toggled]="
-            (searchFacade.sortBy$ | async) === SORT_BY_PARAMS.USER_SAVED_COUNT
+            (searchFacade.sortBy$ | async) === SORT_BY_PARAMS.POPULARITY
           "
-          (action)="clearSearchAndSort($event, SORT_BY_PARAMS.USER_SAVED_COUNT)"
+          (action)="clearSearchAndSort($event, SORT_BY_PARAMS.POPULARITY)"
         ></datahub-header-badge-button>
       </div>
     </div>

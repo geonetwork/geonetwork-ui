@@ -7,7 +7,7 @@ import {
 } from '@geonetwork-ui/feature/router'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { getThemeConfig } from '@geonetwork-ui/util/app-config'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataRecord, SortByEnum } from '@geonetwork-ui/util/shared'
 import { map } from 'rxjs/operators'
 import {
   ROUTER_ROUTE_NEWS,
@@ -17,11 +17,6 @@ import {
 marker('datahub.header.myfavorites')
 marker('datahub.header.lastRecords')
 marker('datahub.header.popularRecords')
-
-export enum SortByParams {
-  CREATE_DATE = '-createDate',
-  USER_SAVED_COUNT = '-userSavedCount',
-}
 
 @Component({
   selector: 'datahub-home-header',
@@ -39,7 +34,7 @@ export class HomeHeaderComponent {
   ROUTE_NEWS = `${ROUTER_ROUTE_NEWS}`
   ROUTE_SEARCH = `${ROUTER_ROUTE_SEARCH}`
   ROUTE_ORGANISATIONS = `${ROUTER_ROUTE_ORGANISATIONS}`
-  SORT_BY_PARAMS = SortByParams
+  SORT_BY_PARAMS = SortByEnum
 
   constructor(
     public routerFacade: RouterFacade,
@@ -60,7 +55,7 @@ export class HomeHeaderComponent {
     this.searchFacade.setFavoritesOnly(toggled)
   }
 
-  clearSearchAndSort(toggled: boolean, param: SortByParams): void {
+  clearSearchAndSort(toggled: boolean, param: SortByEnum): void {
     const sortBy = toggled ? param : ''
     this.searchService.setSearch({})
     this.searchFacade.setSortBy(sortBy)
