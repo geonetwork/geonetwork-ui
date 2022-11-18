@@ -77,7 +77,7 @@ describe('FilterDropdownComponent', () => {
 
   describe('when selected values change', () => {
     beforeEach(() => {
-      dropdown.selectValues.emit([['org1'], ['org2'], [34]])
+      dropdown.selectValues.emit(['["org1"]', '["org2"]', '[34]'])
     })
     it('calls updateSearch on the search service', () => {
       expect(searchService.updateSearch).toHaveBeenCalledWith({
@@ -102,9 +102,9 @@ describe('FilterDropdownComponent', () => {
       })
       it('reads choices from the search response', () => {
         expect(dropdown.choices).toEqual([
-          { label: 'First Org (4)', value: ['First Org'] },
-          { label: 'Second Org (2)', value: ['Second Org'] },
-          { label: 'Third Org (1)', value: ['Third Org'] },
+          { label: 'First Org (4)', value: '["First Org"]' },
+          { label: 'Second Org (2)', value: '["Second Org"]' },
+          { label: 'Third Org (1)', value: '["Third Org"]' },
         ])
       })
     })
@@ -132,26 +132,17 @@ describe('FilterDropdownComponent', () => {
       })
       it('converts values to string', () => {
         expect(dropdown.choices).toEqual([
-          { label: '1 (4)', value: ['1'] },
-          { label: '2 (2)', value: ['2'] },
-          { label: '3 (1)', value: ['3'] },
+          { label: '1 (4)', value: '["1"]' },
+          { label: '2 (2)', value: '["2"]' },
+          { label: '3 (1)', value: '["3"]' },
         ])
       })
     })
   })
 
   describe('selected values', () => {
-    describe('when a filter is available', () => {
+    describe('when a filter is available without aggregations', () => {
       beforeEach(() => {
-        ;(facade as any).resultsAggregations$.next({
-          Org: {
-            buckets: [
-              { doc_count: 4, key: 'First Org' },
-              { doc_count: 2, key: 'Second Org' },
-              { doc_count: 1, key: 'Third Org' },
-            ],
-          },
-        })
         ;(facade as any).searchFilters$.next({
           Org: {
             'First Org': true,
@@ -161,8 +152,32 @@ describe('FilterDropdownComponent', () => {
         })
         fixture.detectChanges()
       })
+      it('gives empty selected values', () => {
+        expect(dropdown.selected).toEqual([])
+      })
+    })
+    describe('when a filter is available and aggregations afterwards', () => {
+      beforeEach(() => {
+        ;(facade as any).searchFilters$.next({
+          Org: {
+            'First Org': true,
+            'Second Org': true,
+            'Another unknown value': true,
+          },
+        })
+        ;(facade as any).resultsAggregations$.next({
+          Org: {
+            buckets: [
+              { doc_count: 4, key: 'First Org' },
+              { doc_count: 2, key: 'Second Org' },
+              { doc_count: 1, key: 'Third Org' },
+            ],
+          },
+        })
+        fixture.detectChanges()
+      })
       it('reads selected values from the search filters (excluding values not in choices)', () => {
-        expect(dropdown.selected).toEqual([['First Org'], ['Second Org']])
+        expect(dropdown.selected).toEqual(['["First Org"]', '["Second Org"]'])
       })
     })
     describe('when a filter is not available', () => {
@@ -202,14 +217,26 @@ describe('FilterDropdownComponent', () => {
     })
     it('groups choices with identical labels', () => {
       expect(dropdown.choices).toEqual([
-        { label: 'WMS Service (6)', value: ['OGC:WMS', 'OGC:WMS-1.3.0'] },
-        { label: 'WFS Service (1)', value: ['OGC:WFS'] },
-        { label: 'Other (3)', value: ['OGC:WCS', 'WWW:DOWNLOAD'] },
+        {
+          label: 'WMS Service (6)',
+          value: '["OGC:WMS","OGC:WMS-1.3.0"]',
+        },
+        {
+          label: 'WFS Service (1)',
+          value: '["OGC:WFS"]',
+        },
+        {
+          label: 'Other (3)',
+          value: '["OGC:WCS","WWW:DOWNLOAD"]',
+        },
       ])
     })
     describe('when clicking an option that covers several values', () => {
       beforeEach(() => {
-        component.onSelectedValues([['OGC:WFS'], ['OGC:WMS', 'OGC:WMS-1.3.0']])
+        component.onSelectedValues([
+          '["OGC:WFS"]',
+          '["OGC:WMS", "OGC:WMS-1.3.0"]',
+        ])
         fixture.detectChanges()
       })
       it('adds all values to the search params', () => {
@@ -232,8 +259,8 @@ describe('FilterDropdownComponent', () => {
       })
       it('sets groups of values as selected according to the existing choices', () => {
         expect(dropdown.selected).toEqual([
-          ['OGC:WMS', 'OGC:WMS-1.3.0'],
-          ['OGC:WFS'],
+          '["OGC:WMS","OGC:WMS-1.3.0"]',
+          '["OGC:WFS"]',
         ])
       })
     })
