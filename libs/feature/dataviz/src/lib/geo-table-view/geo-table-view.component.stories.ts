@@ -1,6 +1,5 @@
 import { HttpClientModule } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { FeatureMapModule } from '@geonetwork-ui/feature/map'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { UiMapModule } from '@geonetwork-ui/ui/map'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
@@ -13,6 +12,7 @@ import {
   Story,
 } from '@storybook/angular'
 import { GeoTableViewComponent } from './geo-table-view.component'
+import { MapContextComponent } from '@geonetwork-ui/feature/map'
 
 export default {
   title: 'Map/GeoTable',
@@ -23,13 +23,14 @@ export default {
         HttpClientModule,
         UiMapModule,
         UiLayoutModule,
-        FeatureMapModule,
         BrowserAnimationsModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
       ],
+      declarations: [MapContextComponent],
     }),
     componentWrapperDecorator(
-      (story) => `<div style="height: 400px">${story}</div>`
+      (story) =>
+        `<div class="h-[400px] w-[800px] overflow-auto resize border border-gray-300">${story}</div>`
     ),
   ],
 } as Meta<GeoTableViewComponent>

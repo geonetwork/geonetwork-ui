@@ -7,6 +7,11 @@ import {
   moduleMetadata,
   Story,
 } from '@storybook/angular'
+import {
+  MAP_CTX_LAYER_GEOJSON_FIXTURE,
+  MAP_CTX_LAYER_WMS_FIXTURE,
+  MAP_CTX_LAYER_XYZ_FIXTURE,
+} from '../map-context.fixtures'
 import { MapContextComponent } from './map-context.component'
 
 export default {

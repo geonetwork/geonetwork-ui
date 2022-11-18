@@ -1,12 +1,10 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   Inject,
   Input,
-  OnDestroy,
-  OnInit,
+  Optional,
   ViewChild,
 } from '@angular/core'
 import {
@@ -14,6 +12,7 @@ import {
   MapContextLayerTypeEnum,
   MapContextModel,
   MapOptionsModel,
+  MapStyleService,
 } from '@geonetwork-ui/feature/map'
 import {
   TableComponent,
@@ -21,14 +20,14 @@ import {
   TableItemModel,
 } from '@geonetwork-ui/ui/layout'
 import type { FeatureCollection } from 'geojson'
-import Map from 'ol/Map'
-import View from 'ol/View'
 import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import Style from 'ol/style/Style'
-import { Subscription } from 'rxjs'
+import { BehaviorSubject } from 'rxjs'
+import { MapContextComponent } from '@geonetwork-ui/feature/map'
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'gn-ui-geo-table-view',
@@ -36,43 +35,60 @@ import { Subscription } from 'rxjs'
   styleUrls: ['./geo-table-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GeoTableViewComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Input() data: FeatureCollection = { type: 'FeatureCollection', features: [] }
+export class GeoTableViewComponent {
+  @Input() set data(value: FeatureCollection) {
+    this.data$.next(value)
+  }
   @ViewChild(TableComponent) uiTable: TableComponent
-
-  private map: Map
-  private view: View
-  private vectorLayer: VectorLayer<VectorSource<Geometry>>
-  private vectorSource: VectorSource<Geometry>
-  private features: Feature<Geometry>[]
+  @ViewChild(MapContextComponent) mapComponent: MapContextComponent
 
   tableData: TableItemModel[]
-  mapContext: MapContextModel
   selectionId: TableItemId
   selection: Feature<Geometry>
-  private subscription = new Subscription()
+
+  data$ = new BehaviorSubject<FeatureCollection>({
+    type: 'FeatureCollection',
+    features: [],
+  })
+  context$ = this.data$.pipe(
+    map(
+      (data) =>
+        ({
+          view: {
+            center: [3, 43],
+            zoom: 3,
+          },
+          layers: [
+            {
+              type: MapContextLayerTypeEnum.GEOJSON,
+              data,
+              style: this.styleFn.bind(this),
+            },
+          ],
+        } as MapContextModel)
+    )
+  )
+  tableData$ = this.data$.pipe(
+    map((data) =>
+      data.features.map((f) => ({
+        id: f.id,
+        ...f.properties,
+      }))
+    )
+  )
+
+  get dataLayer(): VectorLayer<VectorSource> {
+    return this.mapComponent?.layers[0]
+  }
+  get dataSource() {
+    return this.dataLayer?.getSource()
+  }
 
   constructor(
     private changeRef: ChangeDetectorRef,
-    @Inject(FEATURE_MAP_OPTIONS) private mapOptions: MapOptionsModel
+    private styleService: MapStyleService,
+    @Optional() @Inject(FEATURE_MAP_OPTIONS) private mapOptions: MapOptionsModel
   ) {}
-
-  ngOnInit(): void {
-    this.tableData = this.geojsonToTableData(this.data)
-    this.mapContext = this.initMapContext()
-  }
-
-  ngAfterViewInit(): void {
-    // const map = (this.map = this.manager.map)
-    // this.view = map.getView()
-    // this.vectorLayer = this.manager.map.getLayers().item(1) as VectorLayer<
-    //   VectorSource<Geometry>
-    // >
-    // this.vectorLayer.setStyle(this.styleFn.bind(this))
-    // this.vectorSource = this.vectorLayer.getSource()
-    // this.features = this.vectorSource.getFeatures()
-    // this.view.fit(this.vectorSource.getExtent())
-  }
 
   onTableSelect(tableEntry: TableItemModel) {
     const { id } = tableEntry
@@ -88,60 +104,33 @@ export class GeoTableViewComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.selection) {
       this.selectionId = this.selection.getId()
       this.changeRef.detectChanges()
-      this.vectorLayer.changed()
+      this.dataLayer.changed()
       this.uiTable.scrollToItem(this.selectionId)
     }
   }
 
-  private geojsonToTableData(geojson: FeatureCollection) {
-    return geojson.features.map((f) => ({
-      id: f.id,
-      ...f.properties,
-    }))
-  }
-
-  private initMapContext(): MapContextModel {
-    return {
-      layers: [
-        {
-          type: MapContextLayerTypeEnum.XYZ,
-          url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        },
-        {
-          type: MapContextLayerTypeEnum.GEOJSON,
-          data: this.data,
-          style: this.styleFn.bind(this),
-        },
-      ],
-    }
-  }
-
   private animateToFeature(feature: Feature<Geometry>): void {
-    this.view.fit(feature.getGeometry().getExtent(), {
+    this.mapComponent.view.fit(feature.getGeometry().getExtent(), {
       duration: 1000,
       maxZoom: 11,
     })
   }
 
   private getFeatureFromId(id: TableItemId) {
-    return this.features.find((feature) => feature.getId() === id)
+    return this.dataSource
+      .getFeatures()
+      .find((feature) => feature.getId() === id)
   }
 
   private styleFn(
     feature: Feature<Geometry>,
     resolution: number
   ): void | Style | Style[] {
-    if (
-      this.selectionId !== undefined &&
-      this.selectionId === feature.getId()
-    ) {
-      return this.mapOptions.hlStyle(feature, resolution)
-    } else {
-      return this.mapOptions.defaultStyle(feature, resolution)
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe()
+    const isSelected =
+      this.selectionId !== undefined && this.selectionId === feature.getId()
+    const styleFn = isSelected
+      ? this.styleService.styles.defaultHL
+      : this.styleService.styles.default
+    return styleFn(feature, resolution)
   }
 }

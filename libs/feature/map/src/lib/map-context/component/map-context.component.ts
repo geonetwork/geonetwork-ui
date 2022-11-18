@@ -1,9 +1,16 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core'
 import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
-import { MapContext, FeaturesClickedEvent } from 'native-map'
-import 'native-map' // define custom element
+import { FeaturesClickedEvent, MapContext, NativeMapElement } from 'native-map'
+import 'native-map'
 
 @Component({
   selector: 'gn-ui-map-context',
@@ -14,6 +21,14 @@ export class MapContextComponent {
   @Input() context: MapContext
   @Input() mapConfig: MapConfig // TODO: use this
   @Output() featuresClicked = new EventEmitter<Feature<Geometry>[]>()
+  @ViewChild('nativeMap') mapRef: ElementRef<NativeMapElement>
+
+  get view(): any {
+    return this.mapRef.nativeElement.olView
+  }
+  get layers(): any {
+    return this.mapRef.nativeElement.olLayers
+  }
 
   handleFeaturesClicked(event: FeaturesClickedEvent) {
     const featuresArray = event.detail.features as any // FIXME: fix typing

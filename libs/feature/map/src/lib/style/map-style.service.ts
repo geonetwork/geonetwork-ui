@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { getThemeConfig, isConfigLoaded } from '@geonetwork-ui/util/app-config'
 import chroma from 'chroma-js'
 import { Fill, Stroke, Style } from 'ol/style'
-import { StyleLike } from 'ol/style/Style'
+import { StyleFunction, StyleLike } from 'ol/style/Style'
 import CircleStyle from 'ol/style/Circle'
 import Feature from 'ol/Feature'
 
@@ -81,7 +81,7 @@ export class MapStyleService {
     }
   }
 
-  createStyleFunction(styleByGeometryType: StyleByGeometryType): StyleLike {
+  createStyleFunction(styleByGeometryType: StyleByGeometryType): StyleFunction {
     return (feature: Feature): Style | Style[] => {
       const geometryType = feature?.getGeometry()?.getType()
       switch (geometryType) {
