@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { SortByEnum } from '@geonetwork-ui/util/shared'
 import { SearchFacade } from '../state/search.facade'
 
 marker('results.sortBy.relevancy')
@@ -14,15 +15,15 @@ export class SortByComponent {
   choices = [
     {
       label: 'results.sortBy.relevancy',
-      value: '_score',
+      value: SortByEnum.RELEVANCY,
     },
     {
       label: 'results.sortBy.dateStamp',
-      value: '-dateStamp',
+      value: SortByEnum.CREATE_DATE,
     },
     {
       label: 'results.sortBy.popularity',
-      value: '-userSavedCount',
+      value: SortByEnum.POPULARITY,
     },
   ]
   currentSortBy$ = this.facade.sortBy$
