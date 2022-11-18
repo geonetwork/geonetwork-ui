@@ -1,4 +1,9 @@
-import { routeParamsToState, stateToRouteParams } from './router.mapper'
+import {
+  getSearchFilters,
+  getSortBy,
+  routeParamsToState,
+  stateToRouteParams,
+} from './router.mapper'
 
 describe('RouterMapper', () => {
   describe('stateToRouteParams', () => {
@@ -102,6 +107,29 @@ describe('RouterMapper', () => {
           },
         })
       })
+    })
+  })
+  describe('extract search params types', () => {
+    let routeParams
+    beforeEach(() => {
+      routeParams = {
+        publisher: ['org 1', 'org (%2)', '123[]<>;:!'],
+        q: 'scot',
+        resolution: ['10000', '200000'],
+        format: ['OGC:WFS', 'WWW:DOWNLOAD:application/json'],
+        _sort: '_score',
+      }
+    })
+    it('get search filters', () => {
+      expect(getSearchFilters(routeParams)).toEqual({
+        publisher: ['org 1', 'org (%2)', '123[]<>;:!'],
+        q: 'scot',
+        resolution: ['10000', '200000'],
+        format: ['OGC:WFS', 'WWW:DOWNLOAD:application/json'],
+      })
+    })
+    it('get sort option', () => {
+      expect(getSortBy(routeParams)).toEqual('_score')
     })
   })
 })
