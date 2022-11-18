@@ -27,22 +27,20 @@
           (action)="listFavorites($event)"
         ></datahub-header-badge-button>
         <datahub-header-badge-button
-          [routerLink]="ROUTE_SEARCH"
           class="mr-3"
           label="datahub.header.lastRecords"
           [toggled]="
             (searchFacade.sortBy$ | async) === SORT_BY_PARAMS.CREATE_DATE
           "
-          (action)="setSortBy($event, SORT_BY_PARAMS.CREATE_DATE)"
+          (action)="clearSearchAndSort($event, SORT_BY_PARAMS.CREATE_DATE)"
         ></datahub-header-badge-button>
         <datahub-header-badge-button
-          [routerLink]="ROUTE_SEARCH"
           class="mr-3"
           label="datahub.header.popularRecords"
           [toggled]="
             (searchFacade.sortBy$ | async) === SORT_BY_PARAMS.USER_SAVED_COUNT
           "
-          (action)="setSortBy($event, SORT_BY_PARAMS.USER_SAVED_COUNT)"
+          (action)="clearSearchAndSort($event, SORT_BY_PARAMS.USER_SAVED_COUNT)"
         ></datahub-header-badge-button>
       </div>
     </div>

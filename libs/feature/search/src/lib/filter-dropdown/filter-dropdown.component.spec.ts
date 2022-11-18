@@ -33,7 +33,7 @@ export class MockDropdownComponent {
 describe('FilterDropdownComponent', () => {
   let component: FilterDropdownComponent
   let dropdown: MockDropdownComponent
-  let facade: SearchFacade
+  let facade: SearchFacadeMock
   let searchService: SearchService
   let fixture: ComponentFixture<FilterDropdownComponent>
 
@@ -143,7 +143,7 @@ describe('FilterDropdownComponent', () => {
   describe('selected values', () => {
     describe('when a filter is available', () => {
       beforeEach(() => {
-        ;(facade as any).searchFilters$.next({
+        facade.searchFilters$.next({
           Org: {
             'First Org': true,
             'Second Org': true,
@@ -154,10 +154,24 @@ describe('FilterDropdownComponent', () => {
       it('reads selected values from the search filters', () => {
         expect(dropdown.selected).toEqual(['First Org', 'Second Org'])
       })
+      describe('then the  filter is clear', () => {
+        beforeEach(() => {
+          facade.searchFilters$.next({
+            anoterField: {
+              value1: true,
+            },
+          })
+          fixture.detectChanges()
+        })
+
+        it('it removes the filter from the dropdown', () => {
+          expect(dropdown.selected).toEqual([])
+        })
+      })
     })
     describe('when a filter is not available', () => {
       beforeEach(() => {
-        ;(facade as any).searchFilters$.next({
+        facade.searchFilters$.next({
           anoterField: {
             value1: true,
           },
