@@ -9,6 +9,7 @@ import { BehaviorSubject } from 'rxjs'
 import { HeaderBadgeButtonComponent } from '../header-badge-button/header-badge-button.component'
 import { HomeHeaderComponent, SortByParams } from './home-header.component'
 import { readFirst } from '@nrwl/angular/testing'
+import resetAllMocks = jest.resetAllMocks
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
@@ -35,12 +36,6 @@ class AuthServiceMock {
   authReady = jest.fn(() => this._authSubject$)
   _authSubject$ = new BehaviorSubject({})
 }
-
-@Component({
-  selector: 'gn-ui-popup-alert',
-  template: '<div></div>',
-})
-export class MockHeaderBadgeButtonComponent {}
 
 describe('HeaderComponent', () => {
   let component: HomeHeaderComponent
@@ -78,6 +73,9 @@ describe('HeaderComponent', () => {
     fixture = TestBed.createComponent(HomeHeaderComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
+  })
+  afterEach(() => {
+    resetAllMocks()
   })
 
   it('should create', () => {
@@ -169,10 +167,11 @@ describe('HeaderComponent', () => {
         const mostPopularBadge = fixture.debugElement.queryAll(
           By.directive(HeaderBadgeButtonComponent)
         )[1]
-        mostPopularBadge.componentInstance.action.emit(true)
+        mostPopularBadge.componentInstance.action.emit(false)
       })
       it('sorts on popularity', () => {
         expect(searchFacadeMock.setSortBy).toHaveBeenCalledWith('')
+        expect(searchFacadeMock.setSortBy).toHaveBeenCalledTimes(1)
       })
       it('resets search filters', () => {
         expect(searchServiceMock.setSearch).toHaveBeenCalledWith({})
