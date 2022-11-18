@@ -172,8 +172,8 @@ describe('HeaderComponent', () => {
         mostPopularBadge.componentInstance.action.emit(false)
       })
       it('sorts on popularity', () => {
-        expect(searchFacadeMock.setSortBy).toHaveBeenCalledWith('')
-        expect(searchFacadeMock.setSortBy).toHaveBeenCalledTimes(1)
+        expect(searchServiceMock.setSortBy).toHaveBeenCalledWith('')
+        expect(searchServiceMock.setSortBy).toHaveBeenCalledTimes(1)
       })
       it('resets search filters', () => {
         expect(searchServiceMock.setSearch).toHaveBeenCalledWith({})
