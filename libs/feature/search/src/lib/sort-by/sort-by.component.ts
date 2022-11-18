@@ -2,6 +2,7 @@ import { Component } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { SortByEnum } from '@geonetwork-ui/util/shared'
 import { SearchFacade } from '../state/search.facade'
+import { SearchService } from '../utils/service/search.service'
 
 marker('results.sortBy.relevancy')
 marker('results.sortBy.dateStamp')
@@ -28,11 +29,14 @@ export class SortByComponent {
   ]
   currentSortBy$ = this.facade.sortBy$
 
-  constructor(private facade: SearchFacade) {}
+  constructor(
+    private facade: SearchFacade,
+    private searchService: SearchService
+  ) {}
 
   changeSortBy(criteria: any) {
     if (typeof criteria === 'string') {
-      this.facade.setSortBy(criteria)
+      this.searchService.setSortBy(criteria)
     } else {
       throw new Error(
         `Unexpected SortBy value received: ${JSON.stringify(criteria)}`
