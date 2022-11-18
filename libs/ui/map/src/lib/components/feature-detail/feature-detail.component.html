@@ -1,4 +1,4 @@
-<div *ngIf="feature" class="root">
+<div class="root p-3 bg-white">
   <div class="property" *ngFor="let propName of properties">
     <div>{{ propName }}</div>
     <div class="font-bold">{{ feature.get(propName) }}</div>

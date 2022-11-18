@@ -23,15 +23,15 @@ export class MapContextComponent {
   @Output() featuresClicked = new EventEmitter<Feature<Geometry>[]>()
   @ViewChild('nativeMap') mapRef: ElementRef<NativeMapElement>
 
-  get view(): any {
+  get view() {
     return this.mapRef.nativeElement.olView
   }
-  get layers(): any {
+  get layers() {
     return this.mapRef.nativeElement.olLayers
   }
 
   handleFeaturesClicked(event: FeaturesClickedEvent) {
-    const featuresArray = event.detail.features as any // FIXME: fix typing
+    const featuresArray = event.detail.features
     this.featuresClicked.emit(featuresArray.flat(1))
   }
 }

@@ -72,6 +72,7 @@
     "express": "^4.17.1",
     "messageformat": "^2.3.0",
     "moment": "^2.29.4",
+    "native-map": "file:../native-map",
     "ng-table-virtual-scroll": "^1.4.0",
     "ngx-chips": "^2.2.2",
     "ngx-dropzone": "^3.0.0",

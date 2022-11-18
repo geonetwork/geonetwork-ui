@@ -1,4 +1,4 @@
-<div class="flex flex-row h-full w-full overflow-auto">
+<div class="flex flex-row h-full w-full overflow-auto relative">
   <gn-ui-table
     class="w-1/2 overflow-auto"
     [data]="tableData$ | async"
@@ -11,7 +11,8 @@
     (featuresClicked)="onMapFeatureSelect($event)"
   ></gn-ui-map-context>
   <gn-ui-feature-detail
-    class="w-[300px] p-3 overflow-auto absolute inset-y-0 right-0"
+    *ngIf="selection"
+    class="w-[300px] m-2 overflow-auto absolute inset-y-0 right-0"
     [feature]="selection"
   ></gn-ui-feature-detail>
 </div>
