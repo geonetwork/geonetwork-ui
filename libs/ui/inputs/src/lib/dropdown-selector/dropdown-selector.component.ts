@@ -13,7 +13,7 @@ import {
   styleUrls: ['./dropdown-selector.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DropdownSelectorComponent implements AfterViewInit {
+export class DropdownSelectorComponent {
   @Input() title: string
   @Input() showTitle = true
   @Input() ariaName: string
@@ -31,9 +31,5 @@ export class DropdownSelectorComponent implements AfterViewInit {
 
   isSelected(choice) {
     return choice.value === this.selected
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => this.selectValue.emit(this.choices[0].value))
   }
 }
