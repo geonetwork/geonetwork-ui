@@ -6,6 +6,7 @@ import { first, map } from 'rxjs/operators'
 export interface SearchServiceI {
   updateSearch: (params: SearchFilters) => void
   setSearch: (params: SearchFilters) => void
+  setSortBy: (sort: string) => void
 }
 
 @Injectable()
@@ -23,5 +24,9 @@ export class SearchService implements SearchServiceI {
 
   setSearch(params: SearchFilters) {
     this.facade.setFilters(params)
+  }
+
+  setSortBy(sort: string): void {
+    this.facade.setSortBy(sort)
   }
 }

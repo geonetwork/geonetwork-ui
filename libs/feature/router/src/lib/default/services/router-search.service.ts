@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { SearchFacade, SearchServiceI } from '@geonetwork-ui/feature/search'
 import { SearchFilters } from '@geonetwork-ui/util/shared'
 import { first, map } from 'rxjs/operators'
+import { ROUTE_PARAMS } from '../constants'
 import { stateToRouteParams } from '../router.mapper'
 import { RouterFacade } from '../state/router.facade'
 
@@ -24,5 +25,9 @@ export class RouterSearchService implements SearchServiceI {
         map((filters) => stateToRouteParams(filters))
       )
       .subscribe((params) => this.facade.updateSearch(params))
+  }
+
+  setSortBy(sort: string): void {
+    this.facade.updateSearch({ [ROUTE_PARAMS.SORT]: sort })
   }
 }

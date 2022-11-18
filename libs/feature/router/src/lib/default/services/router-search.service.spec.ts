@@ -1,3 +1,4 @@
+import { SortByEnum } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject } from 'rxjs'
 import { RouterSearchService } from './router-search.service'
 
@@ -36,6 +37,15 @@ describe('RouterSearchService', () => {
       expect(routerFacade.setSearch).toHaveBeenCalledWith({
         q: 'any',
         publisher: ['Org'],
+      })
+    })
+  })
+
+  describe('#setSortBy', () => {
+    it('dispatch sortBy', () => {
+      service.setSortBy(SortByEnum.RELEVANCY)
+      expect(routerFacade.updateSearch).toHaveBeenCalledWith({
+        _sort: SortByEnum.RELEVANCY,
       })
     })
   })
