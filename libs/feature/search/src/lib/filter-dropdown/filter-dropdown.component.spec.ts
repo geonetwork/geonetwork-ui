@@ -143,15 +143,25 @@ describe('FilterDropdownComponent', () => {
   describe('selected values', () => {
     describe('when a filter is available', () => {
       beforeEach(() => {
+        ;(facade as any).resultsAggregations$.next({
+          Org: {
+            buckets: [
+              { doc_count: 4, key: 'First Org' },
+              { doc_count: 2, key: 'Second Org' },
+              { doc_count: 1, key: 'Third Org' },
+            ],
+          },
+        })
         ;(facade as any).searchFilters$.next({
           Org: {
             'First Org': true,
             'Second Org': true,
+            'Another unknown value': true,
           },
         })
         fixture.detectChanges()
       })
-      it('reads selected values from the search filters', () => {
+      it('reads selected values from the search filters (excluding values not in choices)', () => {
         expect(dropdown.selected).toEqual([['First Org'], ['Second Org']])
       })
     })
@@ -222,8 +232,8 @@ describe('FilterDropdownComponent', () => {
       })
       it('sets groups of values as selected according to the existing choices', () => {
         expect(dropdown.selected).toEqual([
-          ['OGC:WFS'],
           ['OGC:WMS', 'OGC:WMS-1.3.0'],
+          ['OGC:WFS'],
         ])
       })
     })

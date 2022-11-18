@@ -4,7 +4,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core'
-import { filter, map, startWith, take } from 'rxjs/operators'
+import { filter, map, startWith, take, withLatestFrom } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { Observable } from 'rxjs'
@@ -54,11 +54,18 @@ export class FilterDropdownComponent implements OnInit {
       take(1),
       startWith([])
     )
-  selected$: Observable<BucketKeysChoice> =
-    this.searchFacade.searchFilters$.pipe(
-      map((filters) => Object.keys(filters[this.fieldName] ?? {})),
-      filter((selected) => !!selected)
+  selected$: Observable<BucketKeys[]> = this.searchFacade.searchFilters$.pipe(
+    map((filters) => Object.keys(filters[this.fieldName] ?? {})),
+    filter((selected) => !!selected),
+    withLatestFrom(this.choices$),
+    map(([selectedValues, choices]) =>
+      choices
+        .filter((choice) =>
+          choice.value.every((v) => selectedValues.indexOf(v.toString()) > -1)
+        )
+        .map((choice) => choice.value)
     )
+  )
 
   @Input() labelFactory = (bucketKey: string) => bucketKey
 
