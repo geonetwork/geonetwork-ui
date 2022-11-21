@@ -47,7 +47,7 @@ class OrganisationsServiceMock {
 }
 
 class SearchServiceMock {
-  setSearch = jest.fn()
+  setFilters = jest.fn()
 }
 
 const organisationMock = {
@@ -207,7 +207,7 @@ describe('OrganisationsComponent', () => {
         jest.restoreAllMocks()
       })
       it('should call searchByOrganisation() with correct organisation', () => {
-        expect(searchService.setSearchFilters).toHaveBeenCalledWith({
+        expect(searchService.setFilters).toHaveBeenCalledWith({
           OrgForResource: { [organisationMock.name]: true },
         })
       })

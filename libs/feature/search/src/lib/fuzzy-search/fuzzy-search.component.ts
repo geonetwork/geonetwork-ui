@@ -76,6 +76,6 @@ export class FuzzySearchComponent implements OnInit {
   }
 
   handleInputSubmission(any: string) {
-    this.searchService.updateSearchFilters({ any })
+    this.searchService.updateFilters({ any })
   }
 }

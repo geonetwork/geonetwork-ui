@@ -38,7 +38,7 @@ export class FilterDropdownComponent implements OnInit {
   )
 
   onSelectedValues(values: unknown[]) {
-    this.searchService.updateSearchFilters({
+    this.searchService.updateFilters({
       [this.fieldName]: values.reduce<Record<string, boolean>>((acc, val) => {
         return { ...acc, [val.toString()]: true }
       }, {}),

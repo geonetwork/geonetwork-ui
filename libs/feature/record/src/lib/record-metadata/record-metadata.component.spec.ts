@@ -29,8 +29,8 @@ class MdViewFacadeMock {
 }
 
 const searchServiceMock = {
-  setSearch: jest.fn(),
-  updateSearchFilters: jest.fn(),
+  setFilters: jest.fn(),
+  updateFilters: jest.fn(),
 }
 const sourcesServiceMock = {
   getSourceLabel: jest.fn(() => of('catalog label')),
@@ -407,7 +407,7 @@ describe('RecordMetadataComponent', () => {
   describe('#onInfoKeywordClick', () => {
     it('call searchService for any', () => {
       component.onInfoKeywordClick('any')
-      expect(searchServiceMock.updateSearch).toHaveBeenCalledWith({
+      expect(searchServiceMock.updateFilters).toHaveBeenCalledWith({
         any: 'any',
       })
     })
@@ -415,7 +415,7 @@ describe('RecordMetadataComponent', () => {
   describe('#onContactClick', () => {
     it('call update search for OrgForResource', () => {
       component.onContactClick('orgname')
-      expect(searchServiceMock.updateSearch).toHaveBeenCalledWith({
+      expect(searchServiceMock.updateFilters).toHaveBeenCalledWith({
         OrgForResource: {
           orgname: true,
         },

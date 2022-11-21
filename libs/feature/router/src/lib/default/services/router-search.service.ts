@@ -20,7 +20,7 @@ export class RouterSearchService implements SearchServiceI {
     })
   }
 
-  setSearchFilters(newFilters: SearchFilters): void {
+  setFilters(newFilters: SearchFilters): void {
     this.searchFacade.sortBy$
       .pipe(
         first(),
@@ -33,7 +33,7 @@ export class RouterSearchService implements SearchServiceI {
       .subscribe((routeParams) => this.facade.setSearch(routeParams))
   }
 
-  updateSearchFilters(params: SearchFilters): void {
+  updateFilters(params: SearchFilters): void {
     this.searchFacade.searchFilters$
       .pipe(
         first(),

@@ -4,8 +4,8 @@ import { SearchFilters, SortByEnum } from '@geonetwork-ui/util/shared'
 import { first, map } from 'rxjs/operators'
 
 export interface SearchServiceI {
-  updateSearchFilters: (params: SearchFilters) => void
-  setSearchFilters: (params: SearchFilters) => void
+  updateFilters: (params: SearchFilters) => void
+  setFilters: (params: SearchFilters) => void
   setSortAndFilters: (filters: SearchFilters, sort: SortByEnum) => void
   setSortBy: (sort: string) => void
 }
@@ -15,11 +15,11 @@ export class SearchService implements SearchServiceI {
   constructor(private facade: SearchFacade) {}
 
   setSortAndFilters(filters: SearchFilters, sort: SortByEnum) {
-    this.setSearchFilters(filters)
+    this.setFilters(filters)
     this.setSortBy(sort)
   }
 
-  updateSearchFilters(params: SearchFilters) {
+  updateFilters(params: SearchFilters) {
     this.facade.searchFilters$
       .pipe(
         first(),
@@ -28,7 +28,7 @@ export class SearchService implements SearchServiceI {
       .subscribe((filters) => this.facade.setFilters(filters))
   }
 
-  setSearchFilters(params: SearchFilters) {
+  setFilters(params: SearchFilters) {
     this.facade.setFilters(params)
   }
 
