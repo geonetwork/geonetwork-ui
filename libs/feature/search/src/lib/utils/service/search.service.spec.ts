@@ -37,6 +37,21 @@ describe('SearchService', () => {
     })
   })
 
+  describe('#setSortAndFilters', () => {
+    const filters = {
+      any: 'any',
+    }
+    beforeEach(() => {
+      service.setSortAndFilters(filters, SortByEnum.RELEVANCY)
+    })
+    it('dispatch sortBy', () => {
+      expect(facadeMock.setSortBy).toHaveBeenCalledWith(SortByEnum.RELEVANCY)
+    })
+    it('dispatch setSearchFilters', () => {
+      expect(facadeMock.setFilters).toHaveBeenCalledWith(filters)
+    })
+  })
+
   describe('#updateSearch', () => {
     describe('#updateSearch', () => {
       beforeEach(() => {

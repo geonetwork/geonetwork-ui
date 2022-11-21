@@ -14,7 +14,7 @@ const facadeMock = {
 }
 
 const searchServiceMock = {
-  updateSearch: jest.fn(),
+  updateSearchFilters: jest.fn(),
   setSortBy: jest.fn(),
 }
 

@@ -29,9 +29,10 @@ const searchFacadeMock = {
 }
 
 const searchServiceMock = {
-  updateSearch: jest.fn(),
+  updateSearchFilters: jest.fn(),
   setSearch: jest.fn(),
   setSortBy: jest.fn(),
+  setSortAndFilters: jest.fn(),
 }
 
 class AuthServiceMock {
@@ -122,32 +123,28 @@ describe('HeaderComponent', () => {
       beforeEach(() => {
         const latestBadge = fixture.debugElement.queryAll(
           By.css('.badge-btn')
-        )[1]
+        )[0]
         latestBadge.nativeElement.click()
       })
-      it('calls searchService setSortBy with correct value', () => {
-        expect(searchServiceMock.setSortBy).toHaveBeenCalledWith(
+      it('resets filters and sort', () => {
+        expect(searchServiceMock.setSortAndFilters).toHaveBeenCalledWith(
+          {},
           SortByEnum.CREATE_DATE
         )
-      })
-      it('resets search filters', () => {
-        expect(searchServiceMock.setSearch).toHaveBeenCalledWith({})
       })
     })
     describe('enable sort on USER_SAVED_COUNT', () => {
       beforeEach(() => {
         const mostPopularBadge = fixture.debugElement.queryAll(
           By.css('.badge-btn')
-        )[2]
+        )[1]
         mostPopularBadge.nativeElement.click()
       })
-      it('sort on popularity', () => {
-        expect(searchServiceMock.setSortBy).toHaveBeenCalledWith(
+      it('resets filters and sort', () => {
+        expect(searchServiceMock.setSortAndFilters).toHaveBeenCalledWith(
+          {},
           SortByEnum.POPULARITY
         )
-      })
-      it('resets search filters', () => {
-        expect(searchServiceMock.setSearch).toHaveBeenCalledWith({})
       })
     })
   })

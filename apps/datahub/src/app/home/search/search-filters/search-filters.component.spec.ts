@@ -21,7 +21,7 @@ class SearchFacadeMock {
   setSpatialFilterEnabled = jest.fn()
 }
 class SearchServiceMock {
-  updateSearch = jest.fn()
+  updateSearchFilters = jest.fn()
 }
 describe('SearchFiltersComponent', () => {
   let component: SearchFiltersComponent

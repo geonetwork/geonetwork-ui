@@ -55,8 +55,7 @@ export class HomeHeaderComponent {
     this.searchFacade.setFavoritesOnly(toggled)
   }
 
-  clearSearchAndSort(param: SortByEnum): void {
-    this.searchService.setSearchFilters({})
-    this.searchService.setSortBy(param)
+  clearSearchAndSort(sort: SortByEnum): void {
+    this.searchService.setSortAndFilters({}, sort)
   }
 }

@@ -30,7 +30,7 @@ class MdViewFacadeMock {
 
 const searchServiceMock = {
   setSearch: jest.fn(),
-  updateSearch: jest.fn(),
+  updateSearchFilters: jest.fn(),
 }
 const sourcesServiceMock = {
   getSourceLabel: jest.fn(() => of('catalog label')),

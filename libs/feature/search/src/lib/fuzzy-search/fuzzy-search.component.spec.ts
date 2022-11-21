@@ -50,7 +50,7 @@ const searchApiServiceMock = {
 }
 
 const searchServiceMock = {
-  updateSearch: jest.fn(),
+  updateSearchFilters: jest.fn(),
 }
 const esServiceMock = {
   buildAutocompletePayload: jest.fn(() => ({ fakeQuery: '' })),
