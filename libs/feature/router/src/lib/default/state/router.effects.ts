@@ -3,10 +3,11 @@ import { Inject, Injectable } from '@angular/core'
 import { ActivatedRouteSnapshot, Router } from '@angular/router'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
 import { SetFilters, SetSortBy } from '@geonetwork-ui/feature/search'
+import { SortByEnum } from '@geonetwork-ui/util/shared'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { navigation } from '@nrwl/angular'
 import { of } from 'rxjs'
-import { map, switchMap, tap } from 'rxjs/operators'
+import { mergeMap, tap } from 'rxjs/operators'
 import {
   getSearchFilters,
   getSortBy,
@@ -40,16 +41,16 @@ export class RouterEffects {
     { dispatch: false }
   )
 
-  navigateWithFieldSearch$ = createEffect(() =>
+  syncSearchState$ = createEffect(() =>
     this.facade.searchParams$.pipe(
-      switchMap((searchParams) =>
+      mergeMap((searchParams) =>
         of(
           new SetFilters(
             routeParamsToState(getSearchFilters(searchParams)),
             this.routerConfig.searchStateId
           ),
           new SetSortBy(
-            getSortBy(searchParams),
+            getSortBy(searchParams) || SortByEnum.RELEVANCY,
             this.routerConfig.searchStateId
           )
         )
