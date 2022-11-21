@@ -29,7 +29,7 @@ export class SearchFiltersComponent {
   }
 
   removeOrg() {
-    this.searchService.updateSearch({
+    this.searchService.updateSearchFilters({
       OrgForResource: {},
     })
   }

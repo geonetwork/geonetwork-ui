@@ -13,11 +13,11 @@ export class RouterSearchService implements SearchServiceI {
     private facade: RouterFacade
   ) {}
 
-  setSearch(params: SearchFilters): void {
+  setSearchFilters(params: SearchFilters): void {
     this.facade.setSearch(stateToRouteParams(params))
   }
 
-  updateSearch(params: SearchFilters): void {
+  updateSearchFilters(params: SearchFilters): void {
     this.searchFacade.searchFilters$
       .pipe(
         first(),

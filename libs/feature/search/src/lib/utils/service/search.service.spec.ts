@@ -25,7 +25,7 @@ describe('SearchService', () => {
       const p = {
         any: 'any',
       }
-      service.setSearch(p)
+      service.setSearchFilters(p)
       expect(facadeMock.setFilters).toHaveBeenCalledWith(p)
     })
   })
@@ -43,7 +43,7 @@ describe('SearchService', () => {
         const params = {
           any: 'any',
         }
-        service.updateSearch(params)
+        service.updateSearchFilters(params)
       })
       it('dispatch setFilter with merged params', () => {
         expect(facadeMock.setFilters).toHaveBeenCalledWith({

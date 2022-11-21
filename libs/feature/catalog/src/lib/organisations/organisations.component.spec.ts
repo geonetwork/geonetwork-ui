@@ -207,7 +207,7 @@ describe('OrganisationsComponent', () => {
         jest.restoreAllMocks()
       })
       it('should call searchByOrganisation() with correct organisation', () => {
-        expect(searchService.setSearch).toHaveBeenCalledWith({
+        expect(searchService.setSearchFilters).toHaveBeenCalledWith({
           OrgForResource: { [organisationMock.name]: true },
         })
       })

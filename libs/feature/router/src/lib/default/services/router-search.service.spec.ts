@@ -33,7 +33,7 @@ describe('RouterSearchService', () => {
           Org: true,
         },
       }
-      service.setSearch(state)
+      service.setSearchFilters(state)
       expect(routerFacade.setSearch).toHaveBeenCalledWith({
         q: 'any',
         publisher: ['Org'],
@@ -55,7 +55,7 @@ describe('RouterSearchService', () => {
       const state = {
         any: 'any',
       }
-      service.updateSearch(state)
+      service.updateSearchFilters(state)
     })
     it('dispatch updateSearch with merged mapped params', () => {
       expect(routerFacade.updateSearch).toHaveBeenCalledWith({

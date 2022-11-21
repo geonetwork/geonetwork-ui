@@ -56,7 +56,7 @@ export class HomeHeaderComponent {
   }
 
   clearSearchAndSort(param: SortByEnum): void {
-    this.searchService.setSearch({})
+    this.searchService.setSearchFilters({})
     this.searchService.setSortBy(param)
   }
 }

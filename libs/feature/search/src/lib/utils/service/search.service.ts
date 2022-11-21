@@ -4,8 +4,8 @@ import { SearchFilters } from '@geonetwork-ui/util/shared'
 import { first, map } from 'rxjs/operators'
 
 export interface SearchServiceI {
-  updateSearch: (params: SearchFilters) => void
-  setSearch: (params: SearchFilters) => void
+  updateSearchFilters: (params: SearchFilters) => void
+  setSearchFilters: (params: SearchFilters) => void
   setSortBy: (sort: string) => void
 }
 
@@ -13,7 +13,7 @@ export interface SearchServiceI {
 export class SearchService implements SearchServiceI {
   constructor(private facade: SearchFacade) {}
 
-  updateSearch(params: SearchFilters) {
+  updateSearchFilters(params: SearchFilters) {
     this.facade.searchFilters$
       .pipe(
         first(),
@@ -22,7 +22,7 @@ export class SearchService implements SearchServiceI {
       .subscribe((filters) => this.facade.setFilters(filters))
   }
 
-  setSearch(params: SearchFilters) {
+  setSearchFilters(params: SearchFilters) {
     this.facade.setFilters(params)
   }
 

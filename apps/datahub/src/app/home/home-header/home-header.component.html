@@ -19,7 +19,6 @@
       <div class="flex h-0 py-5 gap-3" [style.opacity]="-0.6 + expandRatio * 2">
         <datahub-header-badge-button
           [routerLink]="ROUTE_SEARCH"
-          class="mr-3"
           *ngIf="isAuthenticated$ | async"
           icon="star"
           label="datahub.header.myfavorites"
