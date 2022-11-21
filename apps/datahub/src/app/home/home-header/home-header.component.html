@@ -16,7 +16,7 @@
         class="text-[18px]"
         (itemSelected)="onFuzzySearchSelection($event)"
       ></gn-ui-fuzzy-search>
-      <div class="flex h-0 py-5" [style.opacity]="-0.6 + expandRatio * 2">
+      <div class="flex h-0 py-5 gap-3" [style.opacity]="-0.6 + expandRatio * 2">
         <datahub-header-badge-button
           [routerLink]="ROUTE_SEARCH"
           class="mr-3"
@@ -26,22 +26,22 @@
           [toggled]="searchFacade.favoritesOnly$ | async"
           (action)="listFavorites($event)"
         ></datahub-header-badge-button>
-        <datahub-header-badge-button
-          class="mr-3"
-          label="datahub.header.lastRecords"
-          [toggled]="
-            (searchFacade.sortBy$ | async) === SORT_BY_PARAMS.CREATE_DATE
-          "
-          (action)="clearSearchAndSort($event, SORT_BY_PARAMS.CREATE_DATE)"
-        ></datahub-header-badge-button>
-        <datahub-header-badge-button
-          class="mr-3"
-          label="datahub.header.popularRecords"
-          [toggled]="
-            (searchFacade.sortBy$ | async) === SORT_BY_PARAMS.POPULARITY
-          "
-          (action)="clearSearchAndSort($event, SORT_BY_PARAMS.POPULARITY)"
-        ></datahub-header-badge-button>
+        <div>
+          <button
+            class="badge-btn bg-primary-opacity-25"
+            (click)="clearSearchAndSort(SORT_BY_PARAMS.CREATE_DATE)"
+          >
+            <span translate="">datahub.header.lastRecords</span>
+          </button>
+        </div>
+        <div>
+          <button
+            class="badge-btn bg-primary-opacity-25"
+            (click)="clearSearchAndSort(SORT_BY_PARAMS.POPULARITY)"
+          >
+            <span translate="">datahub.header.popularRecords</span>
+          </button>
+        </div>
       </div>
     </div>
     <!--

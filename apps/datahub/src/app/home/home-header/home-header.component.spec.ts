@@ -121,9 +121,9 @@ describe('HeaderComponent', () => {
     describe('enable sort on CREATE_DATE', () => {
       beforeEach(() => {
         const latestBadge = fixture.debugElement.queryAll(
-          By.directive(HeaderBadgeButtonComponent)
-        )[0]
-        latestBadge.componentInstance.action.emit(true)
+          By.css('.badge-btn')
+        )[1]
+        latestBadge.nativeElement.click()
       })
       it('calls searchService setSortBy with correct value', () => {
         expect(searchServiceMock.setSortBy).toHaveBeenCalledWith(
@@ -134,46 +134,17 @@ describe('HeaderComponent', () => {
         expect(searchServiceMock.setSearch).toHaveBeenCalledWith({})
       })
     })
-    describe('disable sort on CREATE_DATE', () => {
-      beforeEach(() => {
-        const latestBadge = fixture.debugElement.queryAll(
-          By.directive(HeaderBadgeButtonComponent)
-        )[0]
-        latestBadge.componentInstance.action.emit(false)
-      })
-      it('sorts on create date', () => {
-        expect(searchServiceMock.setSortBy).toHaveBeenCalledWith('')
-      })
-      it('resets search filters', () => {
-        expect(searchServiceMock.setSearch).toHaveBeenCalledWith({})
-      })
-    })
     describe('enable sort on USER_SAVED_COUNT', () => {
       beforeEach(() => {
         const mostPopularBadge = fixture.debugElement.queryAll(
-          By.directive(HeaderBadgeButtonComponent)
-        )[1]
-        mostPopularBadge.componentInstance.action.emit(true)
+          By.css('.badge-btn')
+        )[2]
+        mostPopularBadge.nativeElement.click()
       })
       it('sort on popularity', () => {
         expect(searchServiceMock.setSortBy).toHaveBeenCalledWith(
           SortByEnum.POPULARITY
         )
-      })
-      it('resets search filters', () => {
-        expect(searchServiceMock.setSearch).toHaveBeenCalledWith({})
-      })
-    })
-    describe('disable sort on USER_SAVED_COUNT', () => {
-      beforeEach(() => {
-        const mostPopularBadge = fixture.debugElement.queryAll(
-          By.directive(HeaderBadgeButtonComponent)
-        )[1]
-        mostPopularBadge.componentInstance.action.emit(false)
-      })
-      it('sorts on popularity', () => {
-        expect(searchServiceMock.setSortBy).toHaveBeenCalledWith('')
-        expect(searchServiceMock.setSortBy).toHaveBeenCalledTimes(1)
       })
       it('resets search filters', () => {
         expect(searchServiceMock.setSearch).toHaveBeenCalledWith({})

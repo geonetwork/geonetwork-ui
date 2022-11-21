@@ -29,3 +29,9 @@ html.record-page-active {
     scroll-padding-top: 80px;
   }
 }
+
+@layer components {
+  .badge-btn {
+    @apply items-center justify-center px-2 py-1 bg-primary hover:text-primary text-white rounded transition-all
+  }
+}
