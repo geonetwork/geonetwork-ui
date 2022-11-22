@@ -18,9 +18,7 @@ import { By } from '@angular/platform-browser'
 import {
   DEFAULT_STYLE_FIXTURE,
   DEFAULT_STYLE_HL_FIXTURE,
-  FeatureInfoService,
   MapContextModel,
-  MapManagerService,
   MapStyleService,
   MapUtilsService,
 } from '@geonetwork-ui/feature/map'
@@ -38,6 +36,7 @@ import { delay } from 'rxjs/operators'
 import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util/shared'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
 import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared/fixtures'
+import Feature from 'ol/Feature'
 
 const mapConfigMock = {
   MAX_ZOOM: 10,
@@ -118,12 +117,6 @@ const mapStyleServiceMock = {
     defaultHL: DEFAULT_STYLE_HL_FIXTURE,
   },
 }
-const mapManagerMock = {}
-
-const featureInfoServiceMock = {
-  handleFeatureInfo: jest.fn(),
-  features$: new Subject(),
-}
 
 @Component({
   selector: 'gn-ui-map-context',
@@ -132,6 +125,7 @@ const featureInfoServiceMock = {
 export class MockMapContextComponent {
   @Input() context: MapContextModel
   @Input() mapConfig: MapConfig
+  @Output() featuresClicked = new EventEmitter<Feature[]>()
 }
 
 @Component({
@@ -171,6 +165,7 @@ describe('DataViewMapComponent', () => {
   let component: DataViewMapComponent
   let fixture: ComponentFixture<DataViewMapComponent>
   let mdViewFacade
+  let mapComponent: MockMapContextComponent
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -200,14 +195,6 @@ describe('DataViewMapComponent', () => {
           provide: MapStyleService,
           useValue: mapStyleServiceMock,
         },
-        {
-          provide: MapManagerService,
-          useValue: mapManagerMock,
-        },
-        {
-          provide: FeatureInfoService,
-          useValue: featureInfoServiceMock,
-        },
       ],
       imports: [TranslateModule.forRoot()],
     }).compileComponents()
@@ -218,6 +205,9 @@ describe('DataViewMapComponent', () => {
     fixture = TestBed.createComponent(DataViewMapComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
+    mapComponent = fixture.debugElement.query(
+      By.directive(MockMapContextComponent)
+    ).componentInstance
   })
 
   it('should create', () => {
@@ -225,14 +215,10 @@ describe('DataViewMapComponent', () => {
   })
 
   describe('map layers', () => {
-    let mapComponent: MockMapContextComponent
     let dropdownComponent: DropdownSelectorComponent
     let externalViewerButtonComponent: MockExternalViewerButtonComponent
 
     beforeEach(() => {
-      mapComponent = fixture.debugElement.query(
-        By.directive(MockMapContextComponent)
-      ).componentInstance
       dropdownComponent = fixture.debugElement.query(
         By.directive(MockDropdownSelectorComponent)
       ).componentInstance
@@ -404,6 +390,7 @@ describe('DataViewMapComponent', () => {
             {
               type: 'geojson',
               data: SAMPLE_GEOJSON,
+              style: DEFAULT_STYLE_FIXTURE,
             },
           ],
           view: expect.any(Object),
@@ -498,8 +485,8 @@ describe('DataViewMapComponent', () => {
           tick(50)
           discardPeriodicTasks()
         }))
-        it('does not emit immediately a map context', () => {
-          expect(mapComponent.context).toBe(null)
+        it('emits an empty context', () => {
+          expect(mapComponent.context).toEqual({ layers: [] })
         })
         it('shows a loading indicator', () => {
           expect(
@@ -528,6 +515,7 @@ describe('DataViewMapComponent', () => {
               {
                 type: 'geojson',
                 data: SAMPLE_GEOJSON,
+                style: DEFAULT_STYLE_FIXTURE,
               },
             ],
             view: expect.any(Object),
@@ -619,8 +607,8 @@ describe('DataViewMapComponent', () => {
         fixture.detectChanges()
       }))
       describe('while extent is not ready', () => {
-        it('does not emit a map context', () => {
-          expect(mapComponent.context).toBeFalsy()
+        it('emits an empty context', () => {
+          expect(mapComponent.context).toEqual({ layers: [] })
         })
       })
       describe('when extent is received', () => {
@@ -752,7 +740,7 @@ describe('DataViewMapComponent', () => {
           fixture.debugElement.injector.get(ChangeDetectorRef)
         jest.spyOn(changeDetectorRef.constructor.prototype, 'detectChanges')
         jest.spyOn(component, 'resetSelection')
-        featureInfoServiceMock.features$.next(selectionFeatures)
+        mapComponent.featuresClicked.emit(selectionFeatures)
       })
       it('reset the selection first', () => {
         expect(component.resetSelection).toHaveBeenCalled()

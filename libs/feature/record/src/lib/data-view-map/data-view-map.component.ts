@@ -34,6 +34,7 @@ import {
   distinctUntilChanged,
   finalize,
   map,
+  startWith,
   switchMap,
   tap,
 } from 'rxjs/operators'
@@ -96,25 +97,25 @@ export class DataViewMapComponent implements OnInit {
     })
   )
 
-  mapContext$ = this.currentLayers$.pipe(
+  mapContext$: Observable<MapContextModel> = this.currentLayers$.pipe(
     switchMap((layers) =>
       this.mapUtils.getLayerExtent(layers[0]).pipe(
         catchError((error) => {
           console.warn(error) // FIXME: report this to the user somehow
           return of(undefined)
         }),
-        map(
-          (extent) =>
-            ({
-              layers,
-              view: {
-                extent,
-              },
-            } as MapContextModel)
-        ),
+        map((extent) => ({
+          layers,
+          view: {
+            extent,
+          },
+        })),
         tap(() => this.resetSelection())
       )
-    )
+    ),
+    startWith({
+      layers: [],
+    })
   )
 
   constructor(
