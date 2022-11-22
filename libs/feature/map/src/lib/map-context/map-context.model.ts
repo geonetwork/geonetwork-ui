@@ -7,7 +7,7 @@ import {
   MapContextLayerWmts,
   MapContextLayerXyz,
   MapContextView,
-} from 'native-map'
+} from '@camptocamp/native-map'
 
 export enum MapContextLayerTypeEnum {
   XYZ = 'xyz',

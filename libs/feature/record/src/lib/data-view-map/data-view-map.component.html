@@ -34,7 +34,10 @@
           >close</mat-icon
         >
       </button>
-      <gn-ui-feature-detail [feature]="selection"></gn-ui-feature-detail>
+      <gn-ui-feature-detail
+        *ngIf="selection"
+        [feature]="selection"
+      ></gn-ui-feature-detail>
     </div>
     <gn-ui-loading-mask
       *ngIf="loading"

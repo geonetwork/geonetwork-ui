@@ -9,8 +9,12 @@ import {
 import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
-import { FeaturesClickedEvent, MapContext, NativeMapElement } from 'native-map'
-import 'native-map'
+import {
+  FeaturesClickedEvent,
+  MapContext,
+  NativeMapElement,
+} from '@camptocamp/native-map'
+import '@camptocamp/native-map'
 
 @Component({
   selector: 'gn-ui-map-context',
