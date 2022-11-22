@@ -5,33 +5,20 @@ import { MAP_CTX_FIXTURE } from '../map-context.fixtures'
 import { MapContextComponent } from './map-context.component'
 import { MAP_CONFIG_FIXTURE } from '@geonetwork-ui/util/app-config'
 import { HttpClientModule } from '@angular/common/http'
+import { NativeMapElement } from '@camptocamp/native-map'
+import { By } from '@angular/platform-browser'
+import Feature from 'ol/Feature'
 
-class MapContextServiceMock {
-  resetMapFromContext = jest.fn()
-}
-
-let resizeCallBack
-class OpenLayersMapMock {
-  _size = undefined
-  once(type, callback) {
-    if (type === 'change:size') {
-      resizeCallBack = callback
-    }
-  }
-  updateSize() {
-    this._size = [100, 100]
-  }
-  getSize() {
-    return this._size
-  }
-}
-class MapManagerMock {
-  map = new OpenLayersMapMock()
-}
+jest.mock('@camptocamp/native-map', () => {
+  class NativeMapMock extends HTMLElement {}
+  customElements.define('native-map', NativeMapMock)
+  return {}
+})
 
 describe('MapContextComponent', () => {
   let component: MapContextComponent
   let fixture: ComponentFixture<MapContextComponent>
+  let nativeMapElt: NativeMapElement
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -44,6 +31,11 @@ describe('MapContextComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MapContextComponent)
     component = fixture.componentInstance
+    component.context = MAP_CTX_FIXTURE
+    component.mapConfig = MAP_CONFIG_FIXTURE
+    nativeMapElt = fixture.debugElement.query(
+      By.css('native-map')
+    ).nativeElement
   })
 
   it('should create', () => {
@@ -51,91 +43,34 @@ describe('MapContextComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('with initial value', () => {
+  describe('with initial context', () => {
     beforeEach(() => {
       component.context = MAP_CTX_FIXTURE
-      component.mapConfig = MAP_CONFIG_FIXTURE
       fixture.detectChanges()
     })
-    it('reset the map from context', () => {
-      // expect(mapContextService.resetMapFromContext).toHaveBeenCalledWith(
-      //   expect.any(OpenLayersMapMock),
-      //   MAP_CTX_FIXTURE,
-      //   MAP_CONFIG_FIXTURE
-      // )
+    it('provides the value to the native-map element', () => {
+      expect(nativeMapElt.context).toBe(MAP_CTX_FIXTURE)
     })
   })
 
-  describe('no initial value', () => {
-    beforeEach(() => {
-      component.context = null
-      fixture.detectChanges()
-    })
-    it('does not reset the map', () => {
-      // expect(mapContextService.resetMapFromContext).not.toHaveBeenCalled()
-    })
-  })
-
-  describe('no initial value, two values afterwards', () => {
-    beforeEach(() => {
-      component.context = null
-      component.mapConfig = MAP_CONFIG_FIXTURE
-      fixture.detectChanges()
-      // component.ngOnChanges({})
-      component.context = { ...MAP_CTX_FIXTURE }
-      // component.ngOnChanges({})
-      component.context = { ...MAP_CTX_FIXTURE }
-      // component.ngOnChanges({})
-    })
-    it('reset the map from context twice', () => {
-      // expect(mapContextService.resetMapFromContext).toHaveBeenCalledWith(
-      //   expect.any(OpenLayersMapMock),
-      //   MAP_CTX_FIXTURE,
-      //   MAP_CONFIG_FIXTURE
-      // )
-      // expect(mapContextService.resetMapFromContext).toHaveBeenCalledTimes(2)
-    })
-  })
-  describe('mapContext with extent', () => {
-    const MAP_CTX_EXTENT = {
-      ...MAP_CTX_FIXTURE,
-      view: {
-        extent: [-100, -200, 300, 400],
-      },
-    }
-
-    describe('initial context is provided', () => {
-      describe('before change detection and when map has no size', () => {
-        beforeEach(() => {
-          // component.context = MAP_CTX_EXTENT
-        })
-        it('does not reset the map', () => {
-          // expect(mapContextService.resetMapFromContext).not.toHaveBeenCalled()
-        })
+  describe('featuresClicked', () => {
+    describe('when a featuresClicked event is received from the native map', () => {
+      let emitted
+      const feature1 = new Feature({})
+      const feature2 = new Feature({})
+      beforeEach(() => {
+        emitted = null
+        component.featuresClicked.subscribe((v) => (emitted = v))
+        nativeMapElt.dispatchEvent(
+          new CustomEvent('featuresClicked', {
+            detail: {
+              features: [[feature1], null, null, [feature2]],
+            },
+          })
+        )
       })
-      describe('after change detection and when map has no size', () => {
-        beforeEach(() => {
-          // component.context = MAP_CTX_EXTENT
-          // component.ngOnChanges({ context: MAP_CTX_EXTENT })
-        })
-        it('does not reset the map', () => {
-          // expect(mapContextService.resetMapFromContext).not.toHaveBeenCalled()
-        })
-      })
-      describe('after change detection and when map has a size', () => {
-        beforeEach(() => {
-          // component.context = MAP_CTX_EXTENT
-          // component.mapConfig = MAP_CONFIG_FIXTURE
-          // component.ngOnChanges({ context: MAP_CTX_EXTENT })
-          // resizeCallBack()
-        })
-        it('resets the map with a view computed from extent', () => {
-          // expect(mapContextService.resetMapFromContext).toHaveBeenCalledWith(
-          //   expect.any(OpenLayersMapMock),
-          //   MAP_CTX_EXTENT,
-          //   MAP_CONFIG_FIXTURE
-          // )
-        })
+      it('emits features in a simple array', () => {
+        expect(emitted).toEqual([feature1, feature2])
       })
     })
   })

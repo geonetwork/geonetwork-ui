@@ -22,7 +22,7 @@ import '@camptocamp/native-map'
   styleUrls: ['./map-context.component.css'],
 })
 export class MapContextComponent {
-  @Input() context: MapContext
+  @Input() context!: MapContext
   @Input() mapConfig: MapConfig // TODO: use this
   @Output() featuresClicked = new EventEmitter<Feature<Geometry>[]>()
   @ViewChild('nativeMap') mapRef: ElementRef<NativeMapElement>
@@ -35,7 +35,10 @@ export class MapContextComponent {
   }
 
   handleFeaturesClicked(event: FeaturesClickedEvent) {
-    const featuresArray = event.detail.features
-    this.featuresClicked.emit(featuresArray.flat(1))
+    const featuresArray = event.detail.features.reduce(
+      (prev, curr) => (curr !== null ? [...prev, ...curr] : prev),
+      []
+    )
+    this.featuresClicked.emit(featuresArray)
   }
 }

@@ -2,7 +2,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { MapFacade } from '../+state/map.facade'
-import { MapContextModel } from '../map-context/map-context.model'
+import {
+  MapContextModel,
+  MapContextViewModel,
+} from '../map-context/map-context.model'
 
 @Component({
   selector: 'gn-ui-map-container',
@@ -11,12 +14,13 @@ import { MapContextModel } from '../map-context/map-context.model'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapContainerComponent {
+  view: MapContextViewModel = {
+    center: [4, 42],
+    zoom: 6,
+  }
   context$: Observable<MapContextModel> = this.mapFacade.layers$.pipe(
     map((layers) => ({
-      view: {
-        center: [4, 42],
-        zoom: 6,
-      },
+      view: this.view,
       layers,
     }))
   )

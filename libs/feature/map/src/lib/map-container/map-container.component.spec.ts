@@ -1,18 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MapContainerComponent } from './map-container.component'
 import { MapFacade } from '../+state/map.facade'
-import { of } from 'rxjs'
-import { MAP_CTX_LAYER_XYZ_FIXTURE } from '../map-context/map-context.fixtures'
+import { BehaviorSubject } from 'rxjs'
+import {
+  MAP_CTX_LAYER_WMS_FIXTURE,
+  MAP_CTX_LAYER_XYZ_FIXTURE,
+} from '../map-context/map-context.fixtures'
 import { readFirst } from '@nrwl/angular/testing'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 class MapFacadeMock {
-  layers$ = of([MAP_CTX_LAYER_XYZ_FIXTURE])
+  layers$ = new BehaviorSubject([MAP_CTX_LAYER_XYZ_FIXTURE])
 }
 
 describe('MapContainerComponent', () => {
   let component: MapContainerComponent
   let fixture: ComponentFixture<MapContainerComponent>
+  let facade: MapFacadeMock
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -26,6 +30,7 @@ describe('MapContainerComponent', () => {
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
 
+    facade = TestBed.inject(MapFacade) as any
     fixture = TestBed.createComponent(MapContainerComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -45,6 +50,12 @@ describe('MapContainerComponent', () => {
           zoom: expect.any(Number),
         },
       })
+    })
+    it('does not emit a new view for each context', async () => {
+      const view1 = (await readFirst(component.context$)).view
+      facade.layers$.next([MAP_CTX_LAYER_WMS_FIXTURE])
+      const view2 = (await readFirst(component.context$)).view
+      expect(view1).toBe(view2)
     })
   })
 })
