@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { OL_FEATURE_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
-import { Feature } from 'ol'
+import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
 
 import { FeatureDetailComponent } from './feature-detail.component'
@@ -11,6 +11,7 @@ describe('FeatureDetailComponent', () => {
   let component: FeatureDetailComponent
   let fixture: ComponentFixture<FeatureDetailComponent>
   let de: DebugElement
+  let feature: Feature
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -25,23 +26,16 @@ describe('FeatureDetailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(FeatureDetailComponent)
     component = fixture.componentInstance
+    feature = new Feature()
+    feature.set('id', 123)
+    feature.set('name', 'ol_feature')
+    component.feature = OL_FEATURE_FIXTURE
     de = fixture.debugElement
     fixture.detectChanges()
   })
 
-  describe('when no feature', () => {
-    it('it is empty', () => {
-      const rootDiv = de.query(By.css('.root'))
-      expect(rootDiv).toBeFalsy()
-    })
-  })
   describe('when a feature is given', () => {
-    let feature
     beforeEach(() => {
-      feature = new Feature()
-      feature.set('id', 123)
-      feature.set('name', 'ol_feature')
-      component.feature = OL_FEATURE_FIXTURE
       fixture.detectChanges()
     })
     it('displays the info', () => {
