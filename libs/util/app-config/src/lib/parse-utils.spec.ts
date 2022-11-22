@@ -18,6 +18,44 @@ describe('parse utils', () => {
   })
 
   describe('parseConfigSection', () => {
+    describe('section is missing', () => {
+      describe('the section contains mandatory keys', () => {
+        beforeEach(() => {
+          result = parseConfigSection(
+            {
+              bla: {},
+            },
+            'test',
+            ['mandatory1', 'mandatory2'],
+            ['optional1'],
+            warnings,
+            errors
+          )
+        })
+        it('generates an error', () => {
+          expect(errors).toEqual([expect.stringMatching('is missing')])
+        })
+      })
+      describe('the section contains only optional keys', () => {
+        beforeEach(() => {
+          result = parseConfigSection(
+            {
+              bla: {},
+            },
+            'test',
+            [],
+            ['optional1'],
+            warnings,
+            errors
+          )
+        })
+        it('generates neither warnings nor errors', () => {
+          expect(errors).toEqual([])
+          expect(warnings).toEqual([])
+        })
+      })
+    })
+
     describe('object with unrecognized keys', () => {
       beforeEach(() => {
         result = parseConfigSection(

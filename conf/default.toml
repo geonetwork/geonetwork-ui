@@ -15,6 +15,43 @@ proxy_path = ""
 # If not indicated, a wildcard is used and no language preference is applied for the search.
 # metadata_language = "fre"
 
+### VISUAL THEME
+
+# All parameters are expressed in CSS format, see:
+#  - for color: https://developer.mozilla.org/en-US/docs/Web/CSS/color
+#  - for font families: https://developer.mozilla.org/en-US/docs/Web/CSS/font-family
+#  - for background: https://developer.mozilla.org/en-US/docs/Web/CSS/background
+[theme]
+primary_color = "#c82850"
+secondary_color = "#001638"
+main_color = "#212029" # All-purpose text color
+background_color = "#fdfbff"
+
+# These optional parameters indicate which background should be used for the main header and the text color used
+# on top of the background. The color should be chosen to contrast well with the background (defaults to white).
+# Note: The search header does not use the header_foreground_color as it allows futher customisation via HTML.
+# header_background = "center /cover url('assets/img/header_bg.webp')" or "var(--color-gray-500)"
+# header_foreground_color = 'white'
+
+# This optional parameter allows to override the fallback image that should be used for thumbnails,
+# if the metadata record has no thumbnail image url or it is broken.
+# thumbnail_placeholder = 'assets/img/my_custom_placeholder.png'
+
+# These optional parameters allow changing fonts used in the app
+# main_font = "'My Custom Font', fallback-font"
+# title_font = "'My Custom Title Font', fallback-font-title"
+# fonts_stylesheet_url = "https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Permanent+Marker&display=swap"
+
+### SEARCH SETTINGS
+
+# This section contains settings used for fine-tuning the search experience
+[search]
+# Optional; specify a GeoJSON object to be used as filter: all records contained inside the geometry will be boosted on top,
+# all records which _do not_ intersect with the geometry will be excluded; can be specified as URL or inline
+# Note: if the GeoJSON object contains multiple features, only the geometry of the first one will be kept!
+# filter_geometry_url = "https://my.domain.org/assets/boundary.geojson"
+# filter_geometry_data = '{ "coordinates": [...], "type": "Polygon" }'
+
 ### MAP SETTINGS
 
 # The map section allows to customize how maps are configured.
@@ -68,33 +105,6 @@ proxy_path = ""
 #   "features": [{"type": "Feature", "geometry": {"type": "Point", "coordinates": [125.6, 10.1]}}]
 # }
 # """
-
-### VISUAL THEME
-
-# All parameters are expressed in CSS format, see:
-#  - for color: https://developer.mozilla.org/en-US/docs/Web/CSS/color
-#  - for font families: https://developer.mozilla.org/en-US/docs/Web/CSS/font-family
-#  - for background: https://developer.mozilla.org/en-US/docs/Web/CSS/background
-[theme]
-primary_color = "#c82850"
-secondary_color = "#001638"
-main_color = "#212029" # All-purpose text color
-background_color = "#fdfbff"
-
-# These optional parameters indicate which background should be used for the main header and the text color used 
-# on top of the background. The color should be chosen to contrast well with the background (defaults to white).
-# Note: The search header does not use the header_foreground_color as it allows futher customisation via HTML.
-# header_background = "center /cover url('assets/img/header_bg.webp')" or "var(--color-gray-500)"
-# header_foreground_color = 'white'
-
-# This optional parameter allows to override the fallback image that should be used for thumbnails, 
-# if the metadata record has no thumbnail image url or it is broken.
-# thumbnail_placeholder = 'assets/img/my_custom_placeholder.png'
-
-# These optional parameters allow changing fonts used in the app
-# main_font = "'My Custom Font', fallback-font"
-# title_font = "'My Custom Title Font', fallback-font-title"
-# fonts_stylesheet_url = "https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Permanent+Marker&display=swap"
 
 ### TRANSLATIONS
 

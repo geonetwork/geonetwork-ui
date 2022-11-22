@@ -69,3 +69,8 @@ export const getError = createSelector(
   getSearchStateSearch,
   (state: SearchStateSearch) => state.error
 )
+
+export const getSpatialFilterEnabled = createSelector(
+  getSearchStateSearch,
+  (state: SearchStateSearch) => state.params.useSpatialFilter
+)

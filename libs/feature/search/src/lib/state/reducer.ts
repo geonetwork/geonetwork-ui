@@ -17,6 +17,7 @@ export interface SearchStateParams {
   size?: number
   from?: number
   favoritesOnly?: boolean
+  useSpatialFilter?: boolean
 }
 
 export type SearchError = {
@@ -57,6 +58,7 @@ export const initSearch = (): SearchStateSearch => {
       size: RESULTS_PAGE_SIZE,
       from: 0,
       favoritesOnly: false,
+      useSpatialFilter: true,
     },
     results: {
       hits: null,
@@ -312,6 +314,16 @@ export function reducerSearch(
       return {
         ...state,
         error: null,
+      }
+    }
+
+    case fromActions.SET_SPATIAL_FILTER_ENABLED: {
+      return {
+        ...state,
+        params: {
+          ...state.params,
+          useSpatialFilter: action.enabled,
+        },
       }
     }
   }

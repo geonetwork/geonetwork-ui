@@ -5,6 +5,7 @@ import {
   ES_FIXTURE_AGGS_REQUEST,
   ES_FIXTURE_AGGS_RESPONSE,
 } from '@geonetwork-ui/util/shared/fixtures'
+import { getSpatialFilterEnabled } from './selectors'
 
 const initialStateSearch = initialState[DEFAULT_SEARCH_KEY]
 
@@ -168,6 +169,19 @@ describe('Search Selectors', () => {
         code: 501,
         message: 'Unauthorized',
       })
+    })
+  })
+
+  describe('getSpatialFilterEnabled', () => {
+    it('should return the useSpatialFilter value', () => {
+      const result = fromSelectors.getSpatialFilterEnabled.projector({
+        ...initialStateSearch,
+        params: {
+          ...initialStateSearch.params,
+          useSpatialFilter: false,
+        },
+      })
+      expect(result).toEqual(false)
     })
   })
 })

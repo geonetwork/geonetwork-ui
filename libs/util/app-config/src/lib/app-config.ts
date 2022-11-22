@@ -5,70 +5,46 @@ import {
   parseMultiConfigSection,
   parseTranslationsConfigSection,
 } from './parse-utils'
+import {
+  CustomTranslations,
+  CustomTranslationsAllLanguages,
+  GlobalConfig,
+  LayerConfig,
+  MapConfig,
+  SearchConfig,
+  ThemeConfig,
+} from './model'
 
 const MISSING_CONFIG_ERROR = `Application configuration was not initialized correctly.
 This error might show up in case of an invalid/malformed configuration file. 
 
 Note: make sure that you have called \`loadAppConfig\` from '@geonetwork-ui/util/app-config' before starting the Angular application.`
 
-interface GlobalConfig {
-  GN4_API_URL: string
-  PROXY_PATH?: string
-  METADATA_LANGUAGE?: string
-}
 let globalConfig: GlobalConfig = null
-
 export function getGlobalConfig(): GlobalConfig {
   if (globalConfig === null) throw new Error(MISSING_CONFIG_ERROR)
   return globalConfig
 }
 
-export interface LayerConfig {
-  TYPE: 'xyz' | 'wms' | 'wfs' | 'geojson'
-  URL?: string
-  NAME?: string
-  DATA?: string
-}
-export interface MapConfig {
-  MAX_ZOOM?: number
-  MAX_EXTENT?: [number, number, number, number] // Expressed as [minx, miny, maxx, maxy]
-  EXTERNAL_VIEWER_URL_TEMPLATE?: string
-  EXTERNAL_VIEWER_OPEN_NEW_TAB?: boolean
-  DO_NOT_USE_DEFAULT_BASEMAP: boolean
-  MAP_LAYERS: LayerConfig[]
-}
 let mapConfig: MapConfig = null
-
 export function getMapConfig(): MapConfig {
   if (mapConfig === null) throw new Error(MISSING_CONFIG_ERROR)
   return mapConfig
 }
 
-interface ThemeConfig {
-  PRIMARY_COLOR: string
-  SECONDARY_COLOR: string
-  MAIN_COLOR: string
-  BACKGROUND_COLOR: string
-  HEADER_FOREGROUND_COLOR: string
-  HEADER_BACKGROUND: string
-  THUMBNAIL_PLACEHOLDER: string
-  MAIN_FONT?: string
-  TITLE_FONT?: string
-  FONTS_STYLESHEET_URL?: string
-}
 let themeConfig: ThemeConfig = null
-
 export function getThemeConfig(): ThemeConfig {
   if (themeConfig === null) throw new Error(MISSING_CONFIG_ERROR)
   return themeConfig
 }
 
-type CustomTranslations = { [translationKey: string]: string }
-type CustomTranslationsAllLanguages = {
-  [lang: string]: CustomTranslations
+let searchConfig: SearchConfig = null
+export function getSearchConfig(): SearchConfig {
+  if (searchConfig === null) throw new Error(MISSING_CONFIG_ERROR)
+  return searchConfig
 }
-let customTranslations: CustomTranslationsAllLanguages = null
 
+let customTranslations: CustomTranslationsAllLanguages = null
 export function getCustomTranslations(langCode: string): CustomTranslations {
   if (customTranslations === null) throw new Error(MISSING_CONFIG_ERROR)
   return langCode in customTranslations ? customTranslations[langCode] : {}
@@ -198,6 +174,22 @@ export function loadAppConfig() {
               MAIN_FONT: parsedThemeSection.main_font,
               FONTS_STYLESHEET_URL: parsedThemeSection.fonts_stylesheet_url,
             } as ThemeConfig)
+
+      const parsedSearchSection = parseConfigSection(
+        parsed,
+        'search',
+        [],
+        ['filter_geometry_data', 'filter_geometry_url'],
+        warnings,
+        errors
+      )
+      searchConfig =
+        parsedSearchSection === null
+          ? null
+          : ({
+              FILTER_GEOMETRY_DATA: parsedSearchSection.filter_geometry_data,
+              FILTER_GEOMETRY_URL: parsedSearchSection.filter_geometry_url,
+            } as SearchConfig)
 
       customTranslations = parseTranslationsConfigSection(
         parsed,

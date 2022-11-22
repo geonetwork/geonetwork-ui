@@ -171,6 +171,8 @@
   "search.filters.maximize": "",
   "search.filters.minimize": "",
   "search.filters.title": "",
+  "search.filters.useSpatialFilter": "",
+  "search.filters.useSpatialFilterHelp": "",
   "table.loading.data": "",
   "table.object.count": "",
   "table.select.data": "",

@@ -49,7 +49,8 @@ export function parseConfigSection(
   outErrors: string[]
 ): Record<string, unknown> | null {
   if (typeof fullConfigObj[sectionName] !== 'object') {
-    outErrors.push(`The [${sectionName}] section is missing.`)
+    if (mandatoryKeys.length === 0) return null
+    outErrors.push(`The [${sectionName}] mandatory section is missing.`)
     return null
   }
 

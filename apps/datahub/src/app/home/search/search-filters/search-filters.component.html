@@ -49,6 +49,19 @@
       [fieldName]="'resolutionScaleDenominator'"
       [title]="'search.filters.byResolution' | translate"
     ></gn-ui-filter-dropdown>
+    <div
+      class="col-span-2 spatial-filter-toggle"
+      *ngIf="isOpen && searchFacade.hasSpatialFilter$ | async"
+    >
+      <label [title]="'search.filters.useSpatialFilterHelp' | translate">
+        <input
+          type="checkbox"
+          [ngModel]="searchFacade.spatialFilterEnabled$ | async"
+          (ngModelChange)="toggleSpatialFilter($event)"
+        />
+        <span translate class="ml-2">search.filters.useSpatialFilter</span>
+      </label>
+    </div>
   </div>
   <div
     class="col-span-2 flex flex-col justify-between"

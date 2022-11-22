@@ -20,16 +20,22 @@ import {
   SetResultsHits,
   SetSearch,
   SetSortBy,
+  SetSpatialFilterEnabled,
   UpdateFilters,
   UpdateRequestAggregationTerm,
 } from './actions'
 import { EffectsModule } from '@ngrx/effects'
 import { provideMockActions } from '@ngrx/effects/testing'
 import { Store, StoreModule } from '@ngrx/store'
-import { hot, getTestScheduler } from 'jasmine-marbles'
+import { getTestScheduler, hot } from 'jasmine-marbles'
 import { Observable, of, throwError } from 'rxjs'
 import { SearchEffects } from './effects'
-import { initialState, reducer, SEARCH_FEATURE_KEY } from './reducer'
+import {
+  initialState,
+  reducer,
+  SEARCH_FEATURE_KEY,
+  SearchState,
+} from './reducer'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import {
   ES_FIXTURE_AGGS_REQUEST,
@@ -40,6 +46,7 @@ import { delay } from 'rxjs/operators'
 import { FavoritesService } from '../favorites/favorites.service'
 import { readFirst } from '@nrwl/angular/testing'
 import { ElasticsearchService } from '@geonetwork-ui/util/shared'
+import { FILTER_GEOMETRY } from '../feature-search.module'
 
 const defaultSearchState = initialState[DEFAULT_SEARCH_KEY]
 const stateWithSearches = {
@@ -122,6 +129,10 @@ describe('Effects', () => {
           provide: ElasticsearchService,
           useClass: EsServiceMock,
         },
+        {
+          provide: FILTER_GEOMETRY,
+          useValue: null,
+        },
       ],
     })
     effects = TestBed.inject(SearchEffects)
@@ -166,7 +177,19 @@ describe('Effects', () => {
     })
     it('clear results list on setSearch action', () => {
       actions$ = hot('-a---', {
-        a: new SetSearch({ filters: { any: 'abcd' } }, 'main'),
+        a: new SetSearch({ filters: { any: 'abcd' } } as any, 'main'),
+      })
+      const expected = hot('-(bcd)', {
+        b: new ClearResults('main'),
+        c: new ClearPagination('main'),
+        d: new RequestMoreResults('main'),
+      })
+
+      expect(effects.clearResults$).toBeObservable(expected)
+    })
+    it('clear results list on setSpatialFilterEnabled action', () => {
+      actions$ = hot('-a---', {
+        a: new SetSpatialFilterEnabled(true, 'main'),
       })
       const expected = hot('-(bcd)', {
         b: new ClearResults('main'),
@@ -307,7 +330,91 @@ describe('Effects', () => {
           expect.anything(),
           expect.anything(),
           expect.anything(),
-          ['fav001', 'fav002', 'fav003']
+          ['fav001', 'fav002', 'fav003'],
+          null
+        )
+      })
+    })
+
+    describe('when providing a filter geometry', () => {
+      let esService: ElasticsearchService
+      beforeEach(() => {
+        effects['filterGeometry'] = Promise.resolve({
+          type: 'Polygon',
+          coordinates: [],
+        })
+        esService = TestBed.inject(ElasticsearchService)
+      })
+      describe('when useSpatialFilter is enabled', () => {
+        beforeEach(() => {
+          TestBed.inject(Store).dispatch(
+            new SetSpatialFilterEnabled(true, 'main')
+          )
+        })
+        it('passes the geometry to the ES service', async () => {
+          actions$ = of(new RequestMoreResults('main'))
+          await readFirst(effects.loadResults$)
+          expect(esService.getSearchRequestBody).toHaveBeenCalledWith(
+            expect.anything(),
+            expect.anything(),
+            expect.anything(),
+            undefined,
+            expect.anything(),
+            expect.anything(),
+            expect.anything(),
+            null,
+            { type: 'Polygon', coordinates: [] }
+          )
+        })
+      })
+      describe('when useSpatialFilter is disabled', () => {
+        beforeEach(() => {
+          TestBed.inject(Store).dispatch(
+            new SetSpatialFilterEnabled(false, 'main')
+          )
+        })
+        it('does not pass the geometry to the ES service', async () => {
+          actions$ = of(new RequestMoreResults('main'))
+          await readFirst(effects.loadResults$)
+          expect(esService.getSearchRequestBody).toHaveBeenCalledWith(
+            expect.anything(),
+            expect.anything(),
+            expect.anything(),
+            undefined,
+            expect.anything(),
+            expect.anything(),
+            expect.anything(),
+            null,
+            null
+          )
+        })
+      })
+    })
+  })
+
+  describe('when providing a filter geometry that fails to load', () => {
+    describe('when providing a filter geometry', () => {
+      let esService: ElasticsearchService
+      beforeEach(() => {
+        effects['filterGeometry'] = Promise.reject('blarg')
+        esService = TestBed.inject(ElasticsearchService)
+        TestBed.inject(Store).dispatch(
+          new SetSpatialFilterEnabled(true, 'main')
+        )
+      })
+      it('does not pass the geometry to the ES service', async () => {
+        actions$ = of(new RequestMoreResults('main'))
+        await readFirst(effects.loadResults$)
+        expect(esService.getSearchRequestBody).toHaveBeenCalledWith(
+          expect.anything(),
+          expect.anything(),
+          expect.anything(),
+          undefined,
+          expect.anything(),
+          expect.anything(),
+          expect.anything(),
+          null,
+          null
         )
       })
     })

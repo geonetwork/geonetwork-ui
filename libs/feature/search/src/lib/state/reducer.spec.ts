@@ -129,6 +129,7 @@ describe('Search Reducer', () => {
         filters: {
           any: 'tag:river',
         },
+        useSpatialFilter: false,
       }
       const action = new fromActions.SetSearch(searchParams)
       const state = reducerSearch(initialStateSearch, action)
@@ -438,6 +439,23 @@ describe('Search Reducer', () => {
         action
       )
       expect(state.error).toEqual(null)
+    })
+  })
+
+  describe('SetSpatialFilterEnabled action', () => {
+    it('should set the spatial filter to be disabled', () => {
+      const action = new fromActions.SetSpatialFilterEnabled(false)
+      const state = reducerSearch(
+        {
+          ...initialStateSearch,
+          params: {
+            ...initialStateSearch.params,
+            useSpatialFilter: true,
+          },
+        },
+        action
+      )
+      expect(state.params.useSpatialFilter).toEqual(false)
     })
   })
 })

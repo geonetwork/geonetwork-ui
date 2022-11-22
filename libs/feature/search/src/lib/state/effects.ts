@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Inject, Injectable, Optional } from '@angular/core'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { AuthService } from '@geonetwork-ui/feature/auth'
 import { ElasticsearchMapper } from '../utils/mapper'
@@ -8,7 +8,7 @@ import {
 } from '@geonetwork-ui/util/shared'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
-import { of } from 'rxjs'
+import { from, of } from 'rxjs'
 import {
   catchError,
   map,
@@ -29,11 +29,13 @@ import {
   RequestMoreResults,
   SCROLL,
   SearchActions,
+  SET_FAVORITES_ONLY,
   SET_FILTERS,
   SET_INCLUDE_ON_AGGREGATION,
   SET_PAGINATION,
   SET_SEARCH,
   SET_SORT_BY,
+  SET_SPATIAL_FILTER_ENABLED,
   SetError,
   SetIncludeOnAggregation,
   SetResultsAggregations,
@@ -41,14 +43,14 @@ import {
   UPDATE_FILTERS,
   UPDATE_REQUEST_AGGREGATION_TERM,
   UpdateRequestAggregationTerm,
-  SET_FAVORITES_ONLY,
-  SetFilters,
 } from './actions'
 import { SearchState, SearchStateSearch } from './reducer'
 import { getSearchStateSearch } from './selectors'
 import { HttpErrorResponse } from '@angular/common/http'
 import { switchMapWithSearchId } from '../utils/operators/search.operator'
 import { FavoritesService } from '../favorites/favorites.service'
+import { Geometry } from 'geojson'
+import { FILTER_GEOMETRY } from '../feature-search.module'
 
 @Injectable()
 export class SearchEffects {
@@ -59,7 +61,10 @@ export class SearchEffects {
     private authService: AuthService,
     private esService: ElasticsearchService,
     private esMapper: ElasticsearchMapper,
-    private favoritesService: FavoritesService
+    private favoritesService: FavoritesService,
+    @Optional()
+    @Inject(FILTER_GEOMETRY)
+    private filterGeometry: Promise<Geometry>
   ) {}
 
   clearResults$ = createEffect(() =>
@@ -71,7 +76,8 @@ export class SearchEffects {
         SET_SEARCH,
         SET_PAGINATION,
         PAGINATE,
-        SET_FAVORITES_ONLY
+        SET_FAVORITES_ONLY,
+        SET_SPATIAL_FILTER_ENABLED
       ),
       switchMap((action: SearchActions) =>
         of(
@@ -109,22 +115,37 @@ export class SearchEffects {
               )
             )
           ),
-          switchMap(([state, favorites]) =>
-            this.searchService.search(
-              'bucket',
-              JSON.stringify(
-                this.esService.getSearchRequestBody(
-                  state.config.aggregations,
-                  state.params.size,
-                  state.params.from,
-                  state.params.sortBy,
-                  state.config.source,
-                  state.params.filters,
-                  state.config.filters,
-                  state.params.favoritesOnly ? favorites : null
+          switchMap(([state, favorites]) => {
+            if (!state.params.useSpatialFilter || !this.filterGeometry) {
+              return of([state, favorites, null])
+            }
+            return from(this.filterGeometry).pipe(
+              map((geom) => [state, favorites, geom]),
+              catchError(() => of([state, favorites, null])) // silently opt out of spatial filter if an error happens
+            )
+          }),
+          switchMap(
+            ([state, favorites, geometry]: [
+              SearchStateSearch,
+              string[],
+              Geometry | null
+            ]) =>
+              this.searchService.search(
+                'bucket',
+                JSON.stringify(
+                  this.esService.getSearchRequestBody(
+                    state.config.aggregations,
+                    state.params.size,
+                    state.params.from,
+                    state.params.sortBy,
+                    state.config.source,
+                    state.params.filters,
+                    state.config.filters,
+                    state.params.favoritesOnly ? favorites : null,
+                    geometry
+                  )
                 )
               )
-            )
           ),
           switchMap((response: EsSearchResponse) => {
             const records = this.esMapper.toRecords(response)

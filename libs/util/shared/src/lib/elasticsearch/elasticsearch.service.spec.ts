@@ -80,7 +80,13 @@ describe('ElasticsearchService', () => {
       expect(query).toEqual({
         bool: {
           filter: [],
+          should: [],
           must: [
+            {
+              terms: {
+                isTemplate: ['n'],
+              },
+            },
             {
               query_string: {
                 default_operator: 'AND',
@@ -98,11 +104,6 @@ describe('ElasticsearchService', () => {
             {
               query_string: {
                 query: '(Org:"world")',
-              },
-            },
-            {
-              terms: {
-                isTemplate: ['n'],
               },
             },
           ],
@@ -123,7 +124,13 @@ describe('ElasticsearchService', () => {
       expect(query).toEqual({
         bool: {
           filter: [],
+          should: [],
           must: [
+            {
+              terms: {
+                isTemplate: ['n'],
+              },
+            },
             {
               query_string: {
                 default_operator: 'AND',
@@ -148,11 +155,6 @@ describe('ElasticsearchService', () => {
                 values: ['record-1', 'record-2', 'record-3'],
               },
             },
-            {
-              terms: {
-                isTemplate: ['n'],
-              },
-            },
           ],
         },
       })
@@ -169,9 +171,89 @@ describe('ElasticsearchService', () => {
         )
       })
       it('escapes special char', () => {
-        expect(query.bool.must[0].query_string.query).toEqual(
+        expect(query.bool.must[1].query_string.query).toEqual(
           `scot \\(\\)\\{\\?\\[ \\/ test`
         )
+      })
+    })
+    describe('specify an input polygon geometry', () => {
+      let geojsonPolygon
+      beforeEach(() => {
+        geojsonPolygon = {
+          coordinates: [
+            [
+              [3.017921158755172, 50.65759907920972],
+              [3.017921158755172, 50.613483610573155],
+              [3.1098886148436122, 50.613483610573155],
+              [3.017921158755172, 50.65759907920972],
+            ],
+          ],
+          type: 'Polygon',
+        }
+      })
+      it('adds a criteria for intersecting with it and boosting on geoms within', () => {
+        const query = service['buildPayloadQuery'](
+          {
+            Org: {
+              world: true,
+            },
+            any: 'hello',
+          },
+          {},
+          undefined,
+          geojsonPolygon
+        )
+        expect(query).toEqual({
+          bool: {
+            filter: [
+              {
+                geo_shape: {
+                  geom: {
+                    shape: geojsonPolygon,
+                    relation: 'intersects',
+                  },
+                },
+              },
+            ],
+            must: [
+              {
+                terms: {
+                  isTemplate: ['n'],
+                },
+              },
+              {
+                query_string: {
+                  default_operator: 'AND',
+                  fields: [
+                    'resourceTitleObject.langfre^5',
+                    'tag.langfre^4',
+                    'resourceAbstractObject.langfre^3',
+                    'lineageObject.langfre^2',
+                    'any.langfre',
+                    'uuid',
+                  ],
+                  query: 'hello',
+                },
+              },
+              {
+                query_string: {
+                  query: '(Org:"world")',
+                },
+              },
+            ],
+            should: [
+              {
+                geo_shape: {
+                  geom: {
+                    shape: geojsonPolygon,
+                    relation: 'within',
+                  },
+                  boost: 10.0,
+                },
+              },
+            ],
+          },
+        })
       })
     })
   })

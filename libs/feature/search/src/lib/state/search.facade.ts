@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core'
+import { Inject, Injectable, Optional } from '@angular/core'
 import {
   RequestFields,
   SearchFilters,
   StateConfigFilters,
 } from '@geonetwork-ui/util/shared'
 import { select, Store } from '@ngrx/store'
-import { Observable } from 'rxjs'
+import { from, Observable, of } from 'rxjs'
 import {
   AddSearch,
   DEFAULT_SEARCH_KEY,
@@ -23,6 +23,7 @@ import {
   SetResultsLayout,
   SetSearch,
   SetSortBy,
+  SetSpatialFilterEnabled,
   UpdateConfigAggregations,
   UpdateFilters,
 } from './actions'
@@ -38,8 +39,12 @@ import {
   getSearchResultsLayout,
   getSearchResultsLoading,
   getSearchSortBy,
+  getSpatialFilterEnabled,
   isEndOfResults,
 } from './selectors'
+import { FILTER_GEOMETRY } from '../feature-search.module'
+import { Geometry } from 'geojson'
+import { catchError, map, shareReplay } from 'rxjs/operators'
 
 @Injectable()
 export class SearchFacade {
@@ -54,10 +59,21 @@ export class SearchFacade {
   resultsHits$: Observable<any>
   favoritesOnly$: Observable<boolean>
   error$: Observable<SearchError>
+  spatialFilterEnabled$: Observable<boolean>
+  hasSpatialFilter$ = from(this.filterGeometry ?? of(null)).pipe(
+    map((geom) => !!geom),
+    catchError(() => of(false)),
+    shareReplay(1)
+  )
 
   searchId: string
 
-  constructor(private store: Store<SearchState>) {}
+  constructor(
+    private store: Store<SearchState>,
+    @Optional()
+    @Inject(FILTER_GEOMETRY)
+    private filterGeometry: Promise<Geometry>
+  ) {}
 
   init(searchId: string = DEFAULT_SEARCH_KEY): void {
     if (this.searchId)
@@ -83,6 +99,9 @@ export class SearchFacade {
     this.sortBy$ = this.store.pipe(select(getSearchSortBy, searchId))
     this.favoritesOnly$ = this.store.pipe(select(getFavoritesOnly, searchId))
     this.error$ = this.store.pipe(select(getError, searchId))
+    this.spatialFilterEnabled$ = this.store.pipe(
+      select(getSpatialFilterEnabled, searchId)
+    )
   }
 
   setConfigAggregations(config: any): SearchFacade {
@@ -166,6 +185,11 @@ export class SearchFacade {
 
   setSortBy(sortBy: string) {
     this.store.dispatch(new SetSortBy(sortBy, this.searchId))
+    return this
+  }
+
+  setSpatialFilterEnabled(enabled: boolean) {
+    this.store.dispatch(new SetSpatialFilterEnabled(enabled, this.searchId))
     return this
   }
 }

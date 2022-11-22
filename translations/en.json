@@ -171,6 +171,8 @@
   "search.filters.maximize": "Expand",
   "search.filters.minimize": "Minimize",
   "search.filters.title": "Filter your results",
+  "search.filters.useSpatialFilter": "Show records in the area of interest first",
+  "search.filters.useSpatialFilterHelp": "When this is enabled, records situated in the catalog's area of interest are shown first; records outside of this area will not show up.",
   "table.loading.data": "Loading data...",
   "table.object.count": "objects in this dataset",
   "table.select.data": "Select the dataset to display",

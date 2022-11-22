@@ -11,7 +11,10 @@ import {
   ROUTER_ROUTE_DATASET,
   RouterService,
 } from '@geonetwork-ui/feature/router'
-import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
+import {
+  FeatureSearchModule,
+  FILTER_GEOMETRY,
+} from '@geonetwork-ui/feature/search'
 import {
   THUMBNAIL_PLACEHOLDER,
   UiElementsModule,
@@ -19,7 +22,11 @@ import {
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { RESULTS_LAYOUT_CONFIG, UiSearchModule } from '@geonetwork-ui/ui/search'
-import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
+import {
+  getGlobalConfig,
+  getSearchConfig,
+  getThemeConfig,
+} from '@geonetwork-ui/util/app-config'
 import {
   getDefaultLang,
   getLangFromBrowser,
@@ -31,6 +38,7 @@ import {
   PROXY_PATH,
   ThemeService,
   UtilSharedModule,
+  getGeometryFromGeoJSON,
 } from '@geonetwork-ui/util/shared'
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
@@ -54,6 +62,7 @@ import { NavigationBarComponent } from './record/navigation-bar/navigation-bar.c
 import { RecordPageComponent } from './record/record-page/record-page.component'
 import { DatahubRouterService } from './router/datahub-router.service'
 import { NavigationMenuComponent } from './home/navigation-menu/navigation-menu.component'
+import { FormsModule } from '@angular/forms'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
@@ -108,6 +117,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     UiInputsModule,
     UiLayoutModule,
     UiElementsModule,
+    FormsModule,
   ],
   providers: [
     { provide: RouterService, useClass: DatahubRouterService },
@@ -129,6 +139,22 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     {
       provide: THUMBNAIL_PLACEHOLDER,
       useFactory: () => getThemeConfig().THUMBNAIL_PLACEHOLDER,
+    },
+    {
+      provide: FILTER_GEOMETRY,
+      useFactory: () => {
+        if (getSearchConfig().FILTER_GEOMETRY_DATA) {
+          return Promise.resolve(
+            JSON.parse(getSearchConfig().FILTER_GEOMETRY_DATA)
+          ).then(getGeometryFromGeoJSON)
+        }
+        if (getSearchConfig().FILTER_GEOMETRY_URL) {
+          return fetch(getSearchConfig().FILTER_GEOMETRY_URL)
+            .then((resp) => resp.json())
+            .then(getGeometryFromGeoJSON)
+        }
+        return null
+      },
     },
   ],
   bootstrap: [AppComponent],

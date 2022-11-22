@@ -37,6 +37,7 @@ export const UPDATE_REQUEST_AGGREGATION_TERM =
 export const PATCH_RESULTS_AGGREGATIONS = '[Search] Patch Results Aggregations'
 export const SET_ERROR = '[Search] Set Error'
 export const CLEAR_ERROR = '[Search] Clear Error'
+export const SET_SPATIAL_FILTER_ENABLED = '[Search] Set Spatial Filter Enabled'
 
 export const DEFAULT_SEARCH_KEY = 'default'
 
@@ -246,6 +247,12 @@ export class ClearError extends AbstractAction implements Action {
   }
 }
 
+export class SetSpatialFilterEnabled extends AbstractAction implements Action {
+  readonly type = SET_SPATIAL_FILTER_ENABLED
+  constructor(public enabled: boolean, id?: string) {
+    super(id)
+  }
+}
 export type SearchActions =
   | AddSearch
   | SetConfigFilters
@@ -273,3 +280,4 @@ export type SearchActions =
   | PatchResultsAggregations
   | SetError
   | ClearError
+  | SetSpatialFilterEnabled
