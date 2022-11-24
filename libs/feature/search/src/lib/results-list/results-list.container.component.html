@@ -8,9 +8,15 @@
   ></gn-ui-results-list>
 
   <ng-container *ngIf="(facade.isLoading$ | async) === false">
-    <div class="show-more" *ngIf="showMore === 'button'">
-      <gn-ui-button type="primary" (buttonClick)="onShowMore()">
-        <span translate>results.showMore</span>
+    <div class="show-more mt-[30px]" *ngIf="showMore === 'button'">
+      <gn-ui-button
+        type="secondary"
+        (buttonClick)="onShowMore()"
+        extraClass="lg:m-auto !p-[22px]"
+      >
+        <span class="uppercase font-medium tracking-widest" translate
+          >results.showMore</span
+        >
       </gn-ui-button>
     </div>
     <div
