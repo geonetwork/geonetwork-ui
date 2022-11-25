@@ -1,13 +1,17 @@
 <div *ngIf="(error$ | async) === null" class="search-results relative">
   <gn-ui-results-list
-    [loading]="facade.isLoading$ | async"
     [records]="facade.results$ | async"
     [layoutConfig]="layoutConfig$ | async"
     [favoriteTemplate]="favoriteToggle"
     (mdSelect)="onMetadataSelection($event)"
   ></gn-ui-results-list>
 
-  <ng-container *ngIf="(facade.isLoading$ | async) === false">
+  <ng-container
+    *ngIf="
+      (facade.isLoading$ | async) === false &&
+      (facade.isEndOfResults$ | async) === false
+    "
+  >
     <div class="show-more h-[100px] pt-[30px]" *ngIf="showMore === 'button'">
       <gn-ui-button
         type="secondary"

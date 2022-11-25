@@ -26,10 +26,9 @@ class ResultsListMockComponent {
 })
 class ViewportIntersectorMockComponent {}
 
-const isEndOfResultsSubject = new BehaviorSubject(false)
 class SearchFacadeMock {
   isLoading$ = new BehaviorSubject(false)
-  isEndOfResults$ = isEndOfResultsSubject
+  isEndOfResults$ = new BehaviorSubject(false)
   results$ = of(['one'])
   layout$ = of('CARD')
   setResultsLayout = jest.fn()
@@ -93,16 +92,6 @@ describe('ResultsListContainerComponent', () => {
       component.onShowMore()
       expect(searchFacade.scroll).toHaveBeenCalled()
     })
-
-    describe('results loading', () => {
-      beforeEach(() => {
-        searchFacade.isLoading$.next(true)
-        fixture.detectChanges()
-      })
-      it('shows loading indicator on results', () => {
-        expect(resultsList.componentInstance.loading).toBe(true)
-      })
-    })
   })
 
   describe('show-more element', () => {
@@ -136,6 +125,15 @@ describe('ResultsListContainerComponent', () => {
     describe('when showMore is none', () => {
       beforeEach(() => {
         component.showMore = 'none'
+        fixture.detectChanges()
+      })
+      it('show-more element is hidden', () => {
+        expect(getShowMoreEl()).toBeFalsy()
+      })
+    })
+    describe('when there are no more results', () => {
+      beforeEach(() => {
+        searchFacade.isEndOfResults$.next(true)
         fixture.detectChanges()
       })
       it('show-more element is hidden', () => {
