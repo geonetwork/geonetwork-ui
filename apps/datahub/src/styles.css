@@ -35,3 +35,10 @@ html.record-page-active {
     @apply items-center justify-center px-2 py-1 bg-primary hover:text-primary text-white rounded transition-all;
   }
 }
+.tippy-box a {
+  @apply text-primary-lighter;
+  text-decoration: underline;
+}
+.tippy-box a:hover {
+  @apply text-primary-lightest;
+}
