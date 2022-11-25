@@ -1,8 +1,8 @@
 <button
-  class="items-center justify-center px-4 py-1 text-white rounded transition-all"
-  [class]="toggled ? 'bg-primary' : 'bg-primary-opacity-25'"
+  class="badge-btn"
+  [class]="toggled ? 'hover:text-secondary' : 'bg-primary-opacity-25'"
   (click)="toggle()"
 >
-  <mat-icon *ngIf="icon" class="align-middle">{{ icon }}</mat-icon>
+  <mat-icon *ngIf="icon" class="align-middle mr-2">{{ icon }}</mat-icon>
   <span class="align-middle text-center">{{ label | translate }}</span>
 </button>

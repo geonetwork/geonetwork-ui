@@ -50,7 +50,7 @@ const searchApiServiceMock = {
 }
 
 const searchServiceMock = {
-  updateSearch: jest.fn(),
+  updateFilters: jest.fn(),
 }
 const esServiceMock = {
   buildAutocompletePayload: jest.fn(() => ({ fakeQuery: '' })),
@@ -157,7 +157,7 @@ describe('FuzzySearchComponent', () => {
         component.handleInputSubmission('blarg')
       })
       it('updates the search filters', () => {
-        expect(searchServiceMock.updateSearch).toHaveBeenCalledWith({
+        expect(searchServiceMock.updateFilters).toHaveBeenCalledWith({
           any: 'blarg',
         })
       })
@@ -167,7 +167,7 @@ describe('FuzzySearchComponent', () => {
         component.handleInputSubmission('blarg')
       })
       it('updates the search filters as well', () => {
-        expect(searchServiceMock.updateSearch).toHaveBeenCalledWith({
+        expect(searchServiceMock.updateFilters).toHaveBeenCalledWith({
           any: 'blarg',
         })
       })

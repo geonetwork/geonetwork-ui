@@ -1,6 +1,26 @@
 import { Params } from '@angular/router'
 import { SearchFilters } from '@geonetwork-ui/util/shared'
-import { ROUTE_PARAMS_MAPPING } from './constants'
+import { ROUTE_PARAMS, ROUTE_PARAMS_MAPPING } from './constants'
+
+function isSearchFilterParam(param: string): boolean {
+  return !param.startsWith('_')
+}
+
+export function getSearchFilters(routeSearchParams: Params): Params {
+  return Object.keys(routeSearchParams)
+    .filter(isSearchFilterParam)
+    .reduce(
+      (searchFilters, paramName) => ({
+        ...searchFilters,
+        [paramName]: routeSearchParams[paramName],
+      }),
+      {}
+    )
+}
+
+export function getSortBy(routeSearchParams: Params) {
+  return routeSearchParams[ROUTE_PARAMS.SORT] ?? ''
+}
 
 export function routeParamsToState(filters: Params) {
   return Object.keys(filters).reduce((state, key) => {

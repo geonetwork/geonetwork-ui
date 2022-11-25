@@ -13,7 +13,7 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
 }))
 
 const searchServiceMock = {
-  updateSearch: jest.fn(),
+  updateFilters: jest.fn(),
 }
 describe('HeaderRecordComponent', () => {
   let component: HeaderRecordComponent
@@ -41,7 +41,7 @@ describe('HeaderRecordComponent', () => {
   describe('#back', () => {
     it('searchFilter updateSearch', () => {
       component.back()
-      expect(searchServiceMock.updateSearch).toHaveBeenCalledWith({})
+      expect(searchServiceMock.updateFilters).toHaveBeenCalledWith({})
     })
   })
 })

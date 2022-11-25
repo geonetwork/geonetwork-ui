@@ -19,6 +19,6 @@ export class HeaderRecordComponent {
   constructor(private searchService: SearchService) {}
 
   back() {
-    this.searchService.updateSearch({})
+    this.searchService.updateFilters({})
   }
 }

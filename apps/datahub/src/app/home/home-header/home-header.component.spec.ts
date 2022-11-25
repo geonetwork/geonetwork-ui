@@ -1,14 +1,15 @@
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { AuthService } from '@geonetwork-ui/feature/auth'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
+import { SortByEnum } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
+import { readFirst } from '@nrwl/angular/testing'
 import { BehaviorSubject } from 'rxjs'
 import { HeaderBadgeButtonComponent } from '../header-badge-button/header-badge-button.component'
-import { HomeHeaderComponent, SortByParams } from './home-header.component'
-import { readFirst } from '@nrwl/angular/testing'
+import { HomeHeaderComponent } from './home-header.component'
 import resetAllMocks = jest.resetAllMocks
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
@@ -28,8 +29,10 @@ const searchFacadeMock = {
 }
 
 const searchServiceMock = {
-  updateSearch: jest.fn(),
+  updateSearchFilters: jest.fn(),
   setSearch: jest.fn(),
+  setSortBy: jest.fn(),
+  setSortAndFilters: jest.fn(),
 }
 
 class AuthServiceMock {
@@ -119,62 +122,29 @@ describe('HeaderComponent', () => {
     describe('enable sort on CREATE_DATE', () => {
       beforeEach(() => {
         const latestBadge = fixture.debugElement.queryAll(
-          By.directive(HeaderBadgeButtonComponent)
+          By.css('.badge-btn')
         )[0]
-        latestBadge.componentInstance.action.emit(true)
+        latestBadge.nativeElement.click()
       })
-      it('calls searchFacade setSortBy with correct value', () => {
-        expect(searchFacadeMock.setSortBy).toHaveBeenCalledWith(
-          SortByParams.CREATE_DATE
+      it('resets filters and sort', () => {
+        expect(searchServiceMock.setSortAndFilters).toHaveBeenCalledWith(
+          {},
+          SortByEnum.CREATE_DATE
         )
-      })
-      it('resets search filters', () => {
-        expect(searchServiceMock.setSearch).toHaveBeenCalledWith({})
-      })
-    })
-    describe('disable sort on CREATE_DATE', () => {
-      beforeEach(() => {
-        const latestBadge = fixture.debugElement.queryAll(
-          By.directive(HeaderBadgeButtonComponent)
-        )[0]
-        latestBadge.componentInstance.action.emit(false)
-      })
-      it('sorts on create date', () => {
-        expect(searchFacadeMock.setSortBy).toHaveBeenCalledWith('')
-      })
-      it('resets search filters', () => {
-        expect(searchServiceMock.setSearch).toHaveBeenCalledWith({})
       })
     })
     describe('enable sort on USER_SAVED_COUNT', () => {
       beforeEach(() => {
         const mostPopularBadge = fixture.debugElement.queryAll(
-          By.directive(HeaderBadgeButtonComponent)
+          By.css('.badge-btn')
         )[1]
-        mostPopularBadge.componentInstance.action.emit(true)
+        mostPopularBadge.nativeElement.click()
       })
-      it('sort on popularity', () => {
-        expect(searchFacadeMock.setSortBy).toHaveBeenCalledWith(
-          SortByParams.USER_SAVED_COUNT
+      it('resets filters and sort', () => {
+        expect(searchServiceMock.setSortAndFilters).toHaveBeenCalledWith(
+          {},
+          SortByEnum.POPULARITY
         )
-      })
-      it('resets search filters', () => {
-        expect(searchServiceMock.setSearch).toHaveBeenCalledWith({})
-      })
-    })
-    describe('disable sort on USER_SAVED_COUNT', () => {
-      beforeEach(() => {
-        const mostPopularBadge = fixture.debugElement.queryAll(
-          By.directive(HeaderBadgeButtonComponent)
-        )[1]
-        mostPopularBadge.componentInstance.action.emit(false)
-      })
-      it('sorts on popularity', () => {
-        expect(searchFacadeMock.setSortBy).toHaveBeenCalledWith('')
-        expect(searchFacadeMock.setSortBy).toHaveBeenCalledTimes(1)
-      })
-      it('resets search filters', () => {
-        expect(searchServiceMock.setSearch).toHaveBeenCalledWith({})
       })
     })
   })

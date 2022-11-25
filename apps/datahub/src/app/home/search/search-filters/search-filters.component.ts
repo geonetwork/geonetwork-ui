@@ -28,12 +28,6 @@ export class SearchFiltersComponent {
     this.isOpen = false
   }
 
-  removeOrg() {
-    this.searchService.updateSearch({
-      OrgForResource: {},
-    })
-  }
-
   toggleSpatialFilter(enabled: boolean) {
     this.searchFacade.setSpatialFilterEnabled(enabled)
   }

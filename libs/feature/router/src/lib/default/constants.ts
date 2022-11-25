@@ -8,6 +8,7 @@ export enum ROUTE_PARAMS {
   PUBLISHER = 'publisher',
   RESOLUTION = 'resolution',
   FORMAT = 'format',
+  SORT = '_sort',
 }
 export type SearchRouteParams = Partial<Record<ROUTE_PARAMS, string>>
 export const ROUTE_PARAMS_MAPPING: SearchRouteParams = {

@@ -12,7 +12,7 @@ class SearchFacadeMock {
   searchFilters$ = new BehaviorSubject<any>({})
 }
 class SearchServiceMock {
-  updateSearch = jest.fn()
+  updateFilters = jest.fn()
 }
 
 @Component({
@@ -80,7 +80,7 @@ describe('FilterDropdownComponent', () => {
       dropdown.selectValues.emit(['org1', 'org2', 34])
     })
     it('calls updateSearch on the search service', () => {
-      expect(searchService.updateSearch).toHaveBeenCalledWith({
+      expect(searchService.updateFilters).toHaveBeenCalledWith({
         Org: { org1: true, org2: true, 34: true },
       })
     })

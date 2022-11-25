@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser'
 import { SearchFacade } from '../state/search.facade'
 import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject } from 'rxjs'
+import { SearchService } from '../utils/service/search.service'
 import { SortByComponent } from './sort-by.component'
 
 const sortBySubject = new BehaviorSubject('title')
@@ -11,6 +12,12 @@ const facadeMock = {
   sortBy$: sortBySubject,
   setSortBy: jest.fn(),
 }
+
+const searchServiceMock = {
+  updateSearchFilters: jest.fn(),
+  setSortBy: jest.fn(),
+}
+
 @Component({
   selector: 'gn-ui-dropdown-selector',
   template: '<div></div>',
@@ -33,6 +40,10 @@ describe('SortByComponent', () => {
         {
           provide: SearchFacade,
           useValue: facadeMock,
+        },
+        {
+          provide: SearchService,
+          useValue: searchServiceMock,
         },
       ],
     }).compileComponents()
@@ -74,7 +85,7 @@ describe('SortByComponent', () => {
         component.changeSortBy(sort)
       })
       it('dispatch search action', () => {
-        expect(facadeMock.setSortBy).toHaveBeenCalledWith(sort)
+        expect(searchServiceMock.setSortBy).toHaveBeenCalledWith(sort)
       })
     })
     describe('when sort is not a string', () => {
