@@ -8,7 +8,7 @@
   ></gn-ui-results-list>
 
   <ng-container *ngIf="(facade.isLoading$ | async) === false">
-    <div class="show-more mt-[30px]" *ngIf="showMore === 'button'">
+    <div class="show-more h-[100px] pt-[30px]" *ngIf="showMore === 'button'">
       <gn-ui-button
         type="secondary"
         (buttonClick)="onShowMore()"
@@ -19,13 +19,16 @@
         >
       </gn-ui-button>
     </div>
-    <div
-      class="show-more absolute inset-x-0 bottom-0 h-[2px]"
-      *ngIf="showMore === 'auto'"
-    >
+    <div class="show-more h-[100px]" *ngIf="showMore === 'auto'">
       <gn-ui-viewport-intersector
         (entersViewport)="onShowMore()"
       ></gn-ui-viewport-intersector>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="(facade.isLoading$ | async) === true">
+    <div class="loading flex justify-center h-[100px] pt-[45px]">
+      <gn-ui-spinning-loader></gn-ui-spinning-loader>
     </div>
   </ng-container>
 </div>

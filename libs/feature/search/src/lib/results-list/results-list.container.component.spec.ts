@@ -107,6 +107,7 @@ describe('ResultsListContainerComponent', () => {
 
   describe('show-more element', () => {
     const getShowMoreEl = () => fixture.debugElement.query(By.css('.show-more'))
+    const getLoadingEl = () => fixture.debugElement.query(By.css('.loading'))
     describe('when showMore is auto', () => {
       beforeEach(() => {
         component.showMore = 'auto'
@@ -117,6 +118,9 @@ describe('ResultsListContainerComponent', () => {
           By.directive(ViewportIntersectorMockComponent)
         )
         expect(intersector).toBeTruthy()
+      })
+      it('loading spinner is hidden', () => {
+        expect(getLoadingEl()).toBeFalsy()
       })
     })
     describe('when showMore is button', () => {
@@ -145,6 +149,9 @@ describe('ResultsListContainerComponent', () => {
       })
       it('show-more element is hidden', () => {
         expect(getShowMoreEl()).toBeFalsy()
+      })
+      it('loading spinner is shown', () => {
+        expect(getLoadingEl()).toBeTruthy()
       })
     })
   })

@@ -54,7 +54,6 @@ const Template: Story<ResultsListComponentWithKey> = (
 export const Primary = Template.bind({})
 Primary.args = {
   records: RECORDS_SUMMARY_FIXTURE,
-  loading: false,
   layoutConfigKey: 'CARD',
 }
 Primary.argTypes = {
