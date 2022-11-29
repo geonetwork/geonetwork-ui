@@ -13,7 +13,7 @@ import {
   MapStyleService,
   MapUtilsService,
 } from '@geonetwork-ui/feature/map'
-import { getMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
+import { getOptionalMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 import {
   getLinkLabel,
   MetadataLink,
@@ -49,7 +49,7 @@ import { MdViewFacade } from '../state/mdview.facade'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataViewMapComponent implements OnInit, OnDestroy {
-  mapConfig: MapConfig = getMapConfig()
+  mapConfig: MapConfig = getOptionalMapConfig()
   selection: Feature<Geometry>
   private subscription = new Subscription()
   private selectionStyle: StyleLike
