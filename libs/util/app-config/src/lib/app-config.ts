@@ -26,21 +26,19 @@ export function getGlobalConfig(): GlobalConfig {
   return globalConfig
 }
 
-let mapConfig: MapConfig = null
-export function getMapConfig(): MapConfig {
-  if (mapConfig === null) throw new Error(MISSING_CONFIG_ERROR)
-  return mapConfig
-}
-
 let themeConfig: ThemeConfig = null
 export function getThemeConfig(): ThemeConfig {
   if (themeConfig === null) throw new Error(MISSING_CONFIG_ERROR)
   return themeConfig
 }
 
+let mapConfig: MapConfig = null
+export function getOptionalMapConfig(): MapConfig | null {
+  return mapConfig
+}
+
 let searchConfig: SearchConfig = null
-export function getSearchConfig(): SearchConfig {
-  if (searchConfig === null) throw new Error(MISSING_CONFIG_ERROR)
+export function getOptionalSearchConfig(): SearchConfig | null {
   return searchConfig
 }
 

@@ -24,7 +24,7 @@ import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { RESULTS_LAYOUT_CONFIG, UiSearchModule } from '@geonetwork-ui/ui/search'
 import {
   getGlobalConfig,
-  getSearchConfig,
+  getOptionalSearchConfig,
   getThemeConfig,
 } from '@geonetwork-ui/util/app-config'
 import {
@@ -143,13 +143,13 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     {
       provide: FILTER_GEOMETRY,
       useFactory: () => {
-        if (getSearchConfig().FILTER_GEOMETRY_DATA) {
+        if (getOptionalSearchConfig()?.FILTER_GEOMETRY_DATA) {
           return Promise.resolve(
-            JSON.parse(getSearchConfig().FILTER_GEOMETRY_DATA)
+            JSON.parse(getOptionalSearchConfig().FILTER_GEOMETRY_DATA)
           ).then(getGeometryFromGeoJSON)
         }
-        if (getSearchConfig().FILTER_GEOMETRY_URL) {
-          return fetch(getSearchConfig().FILTER_GEOMETRY_URL)
+        if (getOptionalSearchConfig()?.FILTER_GEOMETRY_URL) {
+          return fetch(getOptionalSearchConfig().FILTER_GEOMETRY_URL)
             .then((resp) => resp.json())
             .then(getGeometryFromGeoJSON)
         }

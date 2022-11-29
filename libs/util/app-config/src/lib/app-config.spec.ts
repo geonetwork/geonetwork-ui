@@ -1,11 +1,12 @@
 import fetchMock from 'fetch-mock-jest'
-import { getMapConfig, getSearchConfig } from '..'
 import {
   _reset,
   getCustomTranslations,
   getGlobalConfig,
   getThemeConfig,
   loadAppConfig,
+  getOptionalMapConfig,
+  getOptionalSearchConfig,
 } from './app-config'
 import {
   CONFIG_MALFORMED,
@@ -151,9 +152,9 @@ describe('app config utils', () => {
         })
       })
     })
-    describe('getSearchConfig', () => {
+    describe('getOptionalSearchConfig', () => {
       it('returns the search config', () => {
-        expect(getSearchConfig()).toEqual({
+        expect(getOptionalSearchConfig()).toEqual({
           FILTER_GEOMETRY_URL: 'https://my.domain.org/geom.json',
         })
       })
@@ -190,9 +191,37 @@ describe('app config utils', () => {
         })
       })
     })
+    describe('getGlobalConfig', () => {
+      it('returns config', () => {
+        expect(getGlobalConfig()).toEqual({
+          GN4_API_URL: '/geonetwork/srv/api',
+          PROXY_PATH: '/proxy/?url=',
+        })
+      })
+    })
+    describe('getThemeConfig', () => {
+      it('returns config', () => {
+        expect(getThemeConfig()).toEqual({
+          BACKGROUND_COLOR: '#fdfbff',
+          MAIN_COLOR: '#212029',
+          PRIMARY_COLOR: '#093564',
+          SECONDARY_COLOR: '#c2e9dc',
+        })
+      })
+    })
+    describe('getOptionalMapConfig', () => {
+      it('returns null', () => {
+        expect(getOptionalMapConfig()).toEqual(null)
+      })
+    })
+    describe('getOptionalSearchConfig', () => {
+      it('returns null', () => {
+        expect(getOptionalSearchConfig()).toEqual(null)
+      })
+    })
   })
 
-  describe('getMapConfig', () => {
+  describe('getOptionalMapConfig', () => {
     const baseConfig = `
     [global]
     geonetwork4_api_url = "/geonetwork/srv/api"
@@ -231,7 +260,7 @@ describe('app config utils', () => {
       })
 
       it('returns the map config', () => {
-        expect(getMapConfig()).toEqual({
+        expect(getOptionalMapConfig()).toEqual({
           MAX_ZOOM: 10,
           MAX_EXTENT: [
             -418263.418776, 5251529.591305, 961272.067714, 6706890.609855,
@@ -267,7 +296,7 @@ describe('app config utils', () => {
       })
 
       it('returns the map config', () => {
-        expect(getMapConfig()).toEqual({
+        expect(getOptionalMapConfig()).toEqual({
           MAX_ZOOM: undefined,
           MAX_EXTENT: undefined,
           EXTERNAL_VIEWER_URL_TEMPLATE: undefined,

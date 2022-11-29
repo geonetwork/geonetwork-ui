@@ -60,7 +60,7 @@ const mapConfigMock = {
   ],
 }
 jest.mock('@geonetwork-ui/util/app-config', () => ({
-  getMapConfig: () => mapConfigMock,
+  getOptionalMapConfig: () => mapConfigMock,
   isConfigLoaded: jest.fn(() => true),
 }))
 
