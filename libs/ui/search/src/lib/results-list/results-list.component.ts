@@ -20,7 +20,6 @@ import {
 })
 export class ResultsListComponent {
   @Input() records: MetadataRecord[]
-  @Input() loading: boolean
   @Input() layoutConfig: ResultsLayoutConfigItem =
     DEFAULT_RESULTS_LAYOUT_CONFIG['CARD']
   @Input() favoriteTemplate: TemplateRef<{ $implicit: MetadataRecord }>

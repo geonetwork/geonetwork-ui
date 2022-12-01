@@ -22,6 +22,7 @@ import { FavoriteStarComponent } from './favorites/favorite-star/favorite-star.c
 import { MatIconModule } from '@angular/material/icon'
 import { FilterDropdownComponent } from './filter-dropdown/filter-dropdown.component'
 import { Geometry } from 'geojson'
+import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 
 // this geometry will be used to filter & boost results accordingly
 export const FILTER_GEOMETRY = new InjectionToken<Promise<Geometry>>(
@@ -55,6 +56,7 @@ export const FILTER_GEOMETRY = new InjectionToken<Promise<Geometry>>(
     ApiModule,
     FacetsModule,
     MatIconModule,
+    UiWidgetsModule,
   ],
   exports: [
     SortByComponent,

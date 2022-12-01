@@ -26,10 +26,9 @@ class ResultsListMockComponent {
 })
 class ViewportIntersectorMockComponent {}
 
-const isEndOfResultsSubject = new BehaviorSubject(false)
 class SearchFacadeMock {
   isLoading$ = new BehaviorSubject(false)
-  isEndOfResults$ = isEndOfResultsSubject
+  isEndOfResults$ = new BehaviorSubject(false)
   results$ = of(['one'])
   layout$ = of('CARD')
   setResultsLayout = jest.fn()
@@ -93,20 +92,11 @@ describe('ResultsListContainerComponent', () => {
       component.onShowMore()
       expect(searchFacade.scroll).toHaveBeenCalled()
     })
-
-    describe('results loading', () => {
-      beforeEach(() => {
-        searchFacade.isLoading$.next(true)
-        fixture.detectChanges()
-      })
-      it('shows loading indicator on results', () => {
-        expect(resultsList.componentInstance.loading).toBe(true)
-      })
-    })
   })
 
   describe('show-more element', () => {
     const getShowMoreEl = () => fixture.debugElement.query(By.css('.show-more'))
+    const getLoadingEl = () => fixture.debugElement.query(By.css('.loading'))
     describe('when showMore is auto', () => {
       beforeEach(() => {
         component.showMore = 'auto'
@@ -117,6 +107,9 @@ describe('ResultsListContainerComponent', () => {
           By.directive(ViewportIntersectorMockComponent)
         )
         expect(intersector).toBeTruthy()
+      })
+      it('loading spinner is hidden', () => {
+        expect(getLoadingEl()).toBeFalsy()
       })
     })
     describe('when showMore is button', () => {
@@ -138,6 +131,15 @@ describe('ResultsListContainerComponent', () => {
         expect(getShowMoreEl()).toBeFalsy()
       })
     })
+    describe('when there are no more results', () => {
+      beforeEach(() => {
+        searchFacade.isEndOfResults$.next(true)
+        fixture.detectChanges()
+      })
+      it('show-more element is hidden', () => {
+        expect(getShowMoreEl()).toBeFalsy()
+      })
+    })
     describe('when loading', () => {
       beforeEach(() => {
         searchFacade.isLoading$.next(true)
@@ -145,6 +147,9 @@ describe('ResultsListContainerComponent', () => {
       })
       it('show-more element is hidden', () => {
         expect(getShowMoreEl()).toBeFalsy()
+      })
+      it('loading spinner is shown', () => {
+        expect(getLoadingEl()).toBeTruthy()
       })
     })
   })
