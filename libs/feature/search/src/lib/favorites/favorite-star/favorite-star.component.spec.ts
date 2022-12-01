@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { FavoriteStarComponent } from './favorite-star.component'
+import { FavoriteStarComponent, LOGIN_URL } from './favorite-star.component'
 import { BehaviorSubject, of, throwError } from 'rxjs'
 import { AuthService } from '@geonetwork-ui/feature/auth'
 import { FavoritesService } from '../favorites.service'
@@ -7,8 +7,10 @@ import { StarToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 import { By } from '@angular/platform-browser'
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import tippy from 'tippy.js'
 
+tippy = jest.fn()
 class AuthServiceMock {
   authReady = jest.fn(() => this._authSubject)
   _authSubject = new BehaviorSubject({
@@ -23,6 +25,11 @@ class FavoritesServiceMock {
   addToFavorites = jest.fn(() => of(true))
 }
 
+class TranslateServiceMock {
+  currentLang = 'fr'
+  instant = jest.fn(() => 'You can log in here')
+}
+
 describe('FavoriteStarComponent', () => {
   let component: FavoriteStarComponent
   let fixture: ComponentFixture<FavoriteStarComponent>
@@ -30,6 +37,7 @@ describe('FavoriteStarComponent', () => {
   let favoritesService: FavoritesService
   let favoriteCountEl: HTMLElement
   let starToggle: StarToggleComponent
+  let loginUrl
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -43,6 +51,14 @@ describe('FavoriteStarComponent', () => {
         {
           provide: FavoritesService,
           useClass: FavoritesServiceMock,
+        },
+        {
+          provide: TranslateService,
+          useClass: TranslateServiceMock,
+        },
+        {
+          provide: LOGIN_URL,
+          useFactory: () => loginUrl,
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],
@@ -69,6 +85,22 @@ describe('FavoriteStarComponent', () => {
     expect(component).toBeTruthy()
   })
 
+  describe('default login URL', () => {
+    it('should construct a localised GN login URL by default', () => {
+      expect(component.loginUrl).toEqual(
+        '/geonetwork/srv/fre/catalog.signin?redirect=http://localhost/'
+      )
+    })
+  })
+  describe('config login URL', () => {
+    beforeEach(() => {
+      loginUrl = '/cas/login?service='
+    })
+    it('should construct a login URL based on the injected value', () => {
+      expect(component.loginUrl).toEqual('/cas/login?service=http://localhost/')
+    })
+  })
+
   describe('when a record has a favorite count', () => {
     beforeEach(() => {
       favoriteCountEl = fixture.debugElement.query(
@@ -92,18 +124,12 @@ describe('FavoriteStarComponent', () => {
       expect(fixture.debugElement.query(By.css('.favorite-count'))).toBeFalsy()
     })
   })
-  describe('when not authenticated', () => {
-    beforeEach(() => {
-      ;(authService as any)._authSubject.next(null)
-      fixture.detectChanges()
-    })
-    it('star toggle is disabled', () => {
-      expect(starToggle.disabled).toBe(true)
-    })
-  })
   describe('when authenticated', () => {
     it('star toggle is enabled', () => {
       expect(starToggle.disabled).toBe(false)
+    })
+    it('does not create tippy tooltip', () => {
+      expect(tippy).not.toHaveBeenCalled()
     })
     describe('on toggle state change', () => {
       beforeEach(() => {
@@ -192,6 +218,37 @@ describe('FavoriteStarComponent', () => {
           )
         })
       })
+    })
+  })
+  describe('when not authenticated', () => {
+    beforeEach(() => {
+      ;(authService as any)._authSubject.next(null)
+      fixture.detectChanges()
+    })
+    it('star toggle is disabled', () => {
+      expect(starToggle.disabled).toBe(true)
+    })
+    it('creates tippy tooltip', () => {
+      expect(tippy).toHaveBeenCalledWith(
+        expect.any(Object),
+        expect.objectContaining({
+          content: 'You can log in here',
+          allowHTML: true,
+          interactive: true,
+          zIndex: 40,
+          maxWidth: 250,
+        })
+      )
+    })
+  })
+  describe('unsubscribe', () => {
+    let unsubscribeSpy
+    beforeEach(() => {
+      unsubscribeSpy = jest.spyOn(component.subscription, 'unsubscribe')
+      component.ngOnDestroy()
+    })
+    it('unsubscribes', () => {
+      expect(unsubscribeSpy).toHaveBeenCalled()
     })
   })
 })
