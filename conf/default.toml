@@ -14,6 +14,10 @@ proxy_path = ""
 # Use ISO 639-2/B (https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format to indicate the language of the metadata.
 # If not indicated, a wildcard is used and no language preference is applied for the search.
 # metadata_language = "fre"
+# This optional URL should point to the login page that allows authentication to the datahub.
+# If not indicated, the default geonetwork login page is used.
+# Example to use the georchestra login page:
+# login_url = "/cas/login?service="
 
 ### VISUAL THEME
 

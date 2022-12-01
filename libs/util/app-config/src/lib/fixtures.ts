@@ -5,6 +5,7 @@ export const CONFIG_OK = `
 geonetwork4_api_url = "/geonetwork/srv/api"
 proxy_path = "/proxy/?url="
 metadata_language = "fre"
+login_url = "/cas/login?service="
 
 [map]
 max_zoom = 10

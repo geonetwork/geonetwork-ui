@@ -4,6 +4,7 @@ export interface GlobalConfig {
   GN4_API_URL: string
   PROXY_PATH?: string
   METADATA_LANGUAGE?: string
+  LOGIN_URL?: string
 }
 
 export interface LayerConfig {

@@ -40,6 +40,7 @@ import {
   UtilSharedModule,
   getGeometryFromGeoJSON,
 } from '@geonetwork-ui/util/shared'
+import { LOGIN_URL } from '@geonetwork-ui/feature/search'
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
@@ -131,6 +132,10 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     {
       provide: PROXY_PATH,
       useFactory: () => getGlobalConfig().PROXY_PATH,
+    },
+    {
+      provide: LOGIN_URL,
+      useFactory: () => getGlobalConfig().LOGIN_URL,
     },
     {
       provide: METADATA_LANGUAGE,

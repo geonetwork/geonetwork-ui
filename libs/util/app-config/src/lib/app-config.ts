@@ -72,7 +72,7 @@ export function loadAppConfig() {
         parsed,
         'global',
         ['geonetwork4_api_url'],
-        ['proxy_path', 'metadata_language'],
+        ['proxy_path', 'metadata_language', 'login_url'],
         warnings,
         errors
       )
@@ -93,6 +93,7 @@ export function loadAppConfig() {
                     parsedGlobalSection.metadata_language as string
                   ).toLowerCase()
                 : undefined,
+              LOGIN_URL: parsedGlobalSection.login_url,
             } as GlobalConfig)
 
       const parsedLayersSections = parseMultiConfigSection(
