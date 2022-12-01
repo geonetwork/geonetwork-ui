@@ -24,11 +24,12 @@ export function getSortBy(routeSearchParams: Params) {
 
 export function routeParamsToState(filters: Params) {
   return Object.keys(filters).reduce((state, key) => {
-    const paramName = key
     const paramValue = filters[key]
     const filterName = ROUTE_PARAMS_MAPPING[key]
 
-    if (filterName === 'any') {
+    if (!filterName) {
+      return { ...state }
+    } else if (filterName === 'any') {
       return { ...state, [filterName]: paramValue }
     } else if (Array.isArray(paramValue)) {
       return {
