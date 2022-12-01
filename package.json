@@ -57,7 +57,7 @@
     "@angular/router": "14.2.2",
     "@bartholomej/ngx-translate-extract": "^8.0.2",
     "@biesbjerg/ngx-translate-extract-marker": "^1.0.0",
-    "@camptocamp/native-map": "^0.1.0",
+    "@camptocamp/native-map": "^0.1.2",
     "@camptocamp/ogc-client": "^0.3.4",
     "@ltd/j-toml": "~1.35.2",
     "@ngrx/router-store": "14.0.2",
