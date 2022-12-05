@@ -132,6 +132,7 @@ describe('app config utils', () => {
           GN4_API_URL: '/geonetwork/srv/api',
           PROXY_PATH: '/proxy/?url=',
           METADATA_LANGUAGE: 'fre',
+          LOGIN_URL: '/cas/login?service=',
         })
       })
     })

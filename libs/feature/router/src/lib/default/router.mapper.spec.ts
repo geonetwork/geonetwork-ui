@@ -63,6 +63,7 @@ describe('RouterMapper', () => {
           q: 'scot',
           resolution: '10000',
           format: 'OGC:WFS',
+          ticket: 'should be ignored',
         }
       })
       it('transform to route object', () => {
@@ -87,6 +88,7 @@ describe('RouterMapper', () => {
           q: 'scot',
           resolution: ['10000', '200000'],
           format: ['OGC:WFS', 'WWW:DOWNLOAD:application/json'],
+          ticket: ['should', 'also', 'be', 'ignored'],
         }
       })
       it('transform to route object', () => {

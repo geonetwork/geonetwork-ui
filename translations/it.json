@@ -105,7 +105,7 @@
   "facets.block.title.tag": "",
   "facets.block.title.tag.default": "",
   "facets.block.title.th_regions_tree.default": "",
-  "favorite.not.authenticated": "",
+  "favorite.not.authenticated.tooltip": "",
   "map.add.layer": "",
   "map.add.layer.catalog": "",
   "map.add.layer.file": "",

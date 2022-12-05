@@ -80,6 +80,7 @@
     "papaparse": "^5.3.1",
     "rxjs": "~6.6.7",
     "tailwindcss": "^2.2.19",
+    "tippy.js": "^6.3.7",
     "tslib": "^2.0.0",
     "whatwg-fetch": "^3.6.2",
     "xlsx": "^0.17.3",

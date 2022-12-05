@@ -6,8 +6,5 @@
     [toggled]="isFavorite$ | async"
     (newValue)="toggleFavorite($event)"
     [disabled]="loading || (isAnonymous$ | async)"
-    [attr.title]="
-      (isAnonymous$ | async) ? ('favorite.not.authenticated' | translate) : null
-    "
   ></gn-ui-star-toggle>
 </div>

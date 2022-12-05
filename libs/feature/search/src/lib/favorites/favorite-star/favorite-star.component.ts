@@ -1,13 +1,21 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   Input,
+  OnDestroy,
+  ViewChild,
 } from '@angular/core'
 import { FavoritesService } from '../favorites.service'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { map } from 'rxjs/operators'
 import { AuthService } from '@geonetwork-ui/feature/auth'
+import tippy from 'tippy.js'
+import { TranslateService } from '@ngx-translate/core'
+import { StarToggleComponent } from '@geonetwork-ui/ui/inputs'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'gn-ui-favorite-star',
@@ -15,7 +23,7 @@ import { AuthService } from '@geonetwork-ui/feature/auth'
   styleUrls: ['./favorite-star.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FavoriteStarComponent {
+export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   @Input() set record(value) {
     this.record_ = value
     this.favoriteCount =
@@ -33,6 +41,16 @@ export class FavoriteStarComponent {
   record_: MetadataRecord
   favoriteCount: number | null
   loading = false
+  loginUrl = this.authService.loginUrl
+  loginMessage = this.translateService.instant(
+    'favorite.not.authenticated.tooltip',
+    {
+      link: this.loginUrl,
+    }
+  )
+  @ViewChild(StarToggleComponent, { read: ElementRef })
+  starToggleRef: ElementRef
+  subscription: Subscription
 
   get hasFavoriteCount() {
     return this.favoriteCount !== null
@@ -41,8 +59,28 @@ export class FavoriteStarComponent {
   constructor(
     private favoritesService: FavoritesService,
     private authService: AuthService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private translateService: TranslateService
   ) {}
+
+  ngAfterViewInit(): void {
+    this.subscription = this.isAnonymous$.subscribe((anonymous) => {
+      if (anonymous) {
+        tippy(this.starToggleRef.nativeElement, {
+          appendTo: () => document.body,
+          content: this.loginMessage,
+          allowHTML: true,
+          interactive: true,
+          zIndex: 40,
+          maxWidth: 250,
+        })
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe()
+  }
 
   toggleFavorite(isFavorite) {
     this.loading = true

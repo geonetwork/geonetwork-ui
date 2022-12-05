@@ -7,8 +7,10 @@ import { StarToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 import { By } from '@angular/platform-browser'
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import tippy from 'tippy.js'
 
+tippy = jest.fn()
 class AuthServiceMock {
   authReady = jest.fn(() => this._authSubject)
   _authSubject = new BehaviorSubject({
@@ -21,6 +23,11 @@ class FavoritesServiceMock {
   myFavoritesUuid$ = new BehaviorSubject<string[]>([])
   removeFromFavorites = jest.fn(() => of(true))
   addToFavorites = jest.fn(() => of(true))
+}
+
+class TranslateServiceMock {
+  currentLang = 'fr'
+  instant = jest.fn(() => 'You can log in here')
 }
 
 describe('FavoriteStarComponent', () => {
@@ -43,6 +50,10 @@ describe('FavoriteStarComponent', () => {
         {
           provide: FavoritesService,
           useClass: FavoritesServiceMock,
+        },
+        {
+          provide: TranslateService,
+          useClass: TranslateServiceMock,
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],
@@ -92,18 +103,12 @@ describe('FavoriteStarComponent', () => {
       expect(fixture.debugElement.query(By.css('.favorite-count'))).toBeFalsy()
     })
   })
-  describe('when not authenticated', () => {
-    beforeEach(() => {
-      ;(authService as any)._authSubject.next(null)
-      fixture.detectChanges()
-    })
-    it('star toggle is disabled', () => {
-      expect(starToggle.disabled).toBe(true)
-    })
-  })
   describe('when authenticated', () => {
     it('star toggle is enabled', () => {
       expect(starToggle.disabled).toBe(false)
+    })
+    it('does not create tippy tooltip', () => {
+      expect(tippy).not.toHaveBeenCalled()
     })
     describe('on toggle state change', () => {
       beforeEach(() => {
@@ -192,6 +197,37 @@ describe('FavoriteStarComponent', () => {
           )
         })
       })
+    })
+  })
+  describe('when not authenticated', () => {
+    beforeEach(() => {
+      ;(authService as any)._authSubject.next(null)
+      fixture.detectChanges()
+    })
+    it('star toggle is disabled', () => {
+      expect(starToggle.disabled).toBe(true)
+    })
+    it('creates tippy tooltip', () => {
+      expect(tippy).toHaveBeenCalledWith(
+        expect.any(Object),
+        expect.objectContaining({
+          content: 'You can log in here',
+          allowHTML: true,
+          interactive: true,
+          zIndex: 40,
+          maxWidth: 250,
+        })
+      )
+    })
+  })
+  describe('unsubscribe', () => {
+    let unsubscribeSpy
+    beforeEach(() => {
+      unsubscribeSpy = jest.spyOn(component.subscription, 'unsubscribe')
+      component.ngOnDestroy()
+    })
+    it('unsubscribes', () => {
+      expect(unsubscribeSpy).toHaveBeenCalled()
     })
   })
 })
