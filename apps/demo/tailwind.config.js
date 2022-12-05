@@ -4,7 +4,7 @@ const { join } = require('path')
 
 module.exports = {
   ...baseConfig,
-  purge: [
+  content: [
     './libs/**/src/**/!(*.spec).{ts,html}',
     ...createGlobPatternsForDependencies(__dirname),
   ],
