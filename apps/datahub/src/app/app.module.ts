@@ -40,7 +40,7 @@ import {
   UtilSharedModule,
   getGeometryFromGeoJSON,
 } from '@geonetwork-ui/util/shared'
-import { LOGIN_URL } from '@geonetwork-ui/feature/search'
+import { LOGIN_URL } from '@geonetwork-ui/feature/auth'
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'

@@ -4,11 +4,8 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  Inject,
-  InjectionToken,
   Input,
   OnDestroy,
-  Optional,
   ViewChild,
 } from '@angular/core'
 import { FavoritesService } from '../favorites.service'
@@ -19,9 +16,6 @@ import tippy from 'tippy.js'
 import { TranslateService } from '@ngx-translate/core'
 import { StarToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { Subscription } from 'rxjs'
-import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n'
-
-export const LOGIN_URL = new InjectionToken<string>('loginUrl')
 
 @Component({
   selector: 'gn-ui-favorite-star',
@@ -47,12 +41,7 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   record_: MetadataRecord
   favoriteCount: number | null
   loading = false
-  DEFAULT_GN4_LOGIN_URL = `/geonetwork/srv/${
-    LANG_2_TO_3_MAPPER[this.translateService.currentLang]
-  }/catalog.signin?redirect=`
-  loginUrl = `${
-    this.optionalLoginUrl ? this.optionalLoginUrl : this.DEFAULT_GN4_LOGIN_URL
-  }${window.location}`
+  loginUrl = this.authService.loginUrl
   loginMessage = this.translateService.instant(
     'favorite.not.authenticated.tooltip',
     {
@@ -68,9 +57,6 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   }
 
   constructor(
-    @Optional()
-    @Inject(LOGIN_URL)
-    private optionalLoginUrl: string,
     private favoritesService: FavoritesService,
     private authService: AuthService,
     private changeDetector: ChangeDetectorRef,
