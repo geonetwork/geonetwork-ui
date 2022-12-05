@@ -148,14 +148,6 @@
   ></gn-ui-record-field-simple>
 </p>
 <p>
-  <gn-ui-record-field-simple
-    label="Status"
-    [(fieldValue)]="record.status"
-    (confirm)="emitChangedRecord()"
-    [options]="statusOptions"
-  ></gn-ui-record-field-simple>
-</p>
-<p>
   <gn-ui-record-field-array
     label="Themes"
     [(fieldValue)]="record.themes"
@@ -270,6 +262,14 @@
 <div *ngIf="isDatasetRecord">
   <p class="text-xl font-bold font-title mt-8 mb-0 m-2">
     Dataset record specific fields
+  </p>
+  <p>
+    <gn-ui-record-field-simple
+      label="Status"
+      [(fieldValue)]="record.status"
+      (confirm)="emitChangedRecord()"
+      [options]="statusOptions"
+    ></gn-ui-record-field-simple>
   </p>
   <p>
     <gn-ui-record-field-simple
@@ -396,15 +396,23 @@
   </p>
   <p>
     <gn-ui-record-field-array
-      label="Endpoints"
-      [(fieldValue)]="record.endpoints"
+      label="Online Resources"
+      [(fieldValue)]="record.onlineResources"
       [itemTemplate]="endpointTpl"
       (confirm)="emitChangedRecord()"
       [defaultItem]="{ endpointUrl: '', protocol: 'OGC:WMS' }"
     >
       <ng-template #endpointTpl let-get="getValue" let-set="setValue">
-        <gn-ui-record-field-group label="Contact">
+        <gn-ui-record-field-group label="Online Resource">
           <gn-ui-record-field-simple
+            label="Type"
+            [options]="['endpoint', 'link']"
+            [fieldValue]="get().type"
+            (fieldValueChange)="set(getOnlineResourceForType($event))"
+            (confirm)="emitChangedRecord()"
+          ></gn-ui-record-field-simple>
+          <gn-ui-record-field-simple
+            *ngIf="get().type === 'endpoint'"
             label="Endpoint URL"
             [type]="'url'"
             [fieldValue]="get().endpointUrl"
@@ -412,9 +420,24 @@
             (confirm)="emitChangedRecord()"
           ></gn-ui-record-field-simple>
           <gn-ui-record-field-simple
+            *ngIf="get().type === 'endpoint'"
             label="Protocol"
             [fieldValue]="get().protocol"
             (fieldValueChange)="set($event, 'protocol')"
+            (confirm)="emitChangedRecord()"
+          ></gn-ui-record-field-simple>
+          <gn-ui-record-field-simple
+            *ngIf="get().type === 'link'"
+            label="Name"
+            [fieldValue]="get().name"
+            (fieldValueChange)="set($event, 'name')"
+            (confirm)="emitChangedRecord()"
+          ></gn-ui-record-field-simple>
+          <gn-ui-record-field-simple
+            label="Description"
+            [type]="'rich'"
+            [fieldValue]="get().description"
+            (fieldValueChange)="set($event, 'description')"
             (confirm)="emitChangedRecord()"
           ></gn-ui-record-field-simple>
         </gn-ui-record-field-group>

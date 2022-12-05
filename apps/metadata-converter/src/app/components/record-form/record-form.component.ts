@@ -14,6 +14,8 @@ import {
   RecordKind,
   RecordStatus,
   Role,
+  ServiceOnlineResource,
+  ServiceOnlineResourceType,
   ServiceRecord,
 } from '@geonetwork-ui/metadata-converter'
 
@@ -71,6 +73,24 @@ export class RecordFormComponent implements AfterViewInit {
     }
   }
 
+  getOnlineResourceForType(
+    type: ServiceOnlineResourceType
+  ): ServiceOnlineResource {
+    switch (type) {
+      case 'endpoint':
+        return {
+          type,
+          endpointUrl: new URL('', window.location.toString()),
+          protocol: 'other',
+        }
+      case 'link':
+        return {
+          type,
+          linkUrl: new URL('', window.location.toString()),
+        }
+    }
+  }
+
   switchToRecordKind(kind: RecordKind) {
     const hasPrevious = !!this.record
     const record = {
@@ -86,16 +106,16 @@ export class RecordFormComponent implements AfterViewInit {
         : { name: 'My Organization' },
       contacts: hasPrevious ? this.record.contacts : [],
       accessConstraints: hasPrevious ? this.record.accessConstraints : [],
-      updateFrequency: hasPrevious ? this.record.updateFrequency : 'unknown',
       keywords: hasPrevious ? this.record.keywords : [],
       themes: hasPrevious ? this.record.themes : [],
-      status: hasPrevious ? this.record.status : RecordStatus.UNDER_DEVELOPMENT,
       useLimitations: hasPrevious ? this.record.useLimitations : [],
     }
     if (kind === 'dataset') {
       this.record = {
         ...record,
         kind: 'dataset',
+        status: RecordStatus.UNDER_DEVELOPMENT,
+        updateFrequency: 'unknown',
         lineage: '',
         overviews: [],
         distributions: [],
@@ -106,7 +126,7 @@ export class RecordFormComponent implements AfterViewInit {
       this.record = {
         ...record,
         kind: 'service',
-        endpoints: [],
+        onlineResources: [],
       } as ServiceRecord
     }
     this.recordChanged.emit(this.record)
