@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "api-metadata-converter": "libs/api/metadata-converter",
     "data-access-datafeeder": "libs/data-access/datafeeder",
     "data-access-gn4": "libs/data-access/gn4",
     "datafeeder": "apps/datafeeder",
@@ -19,6 +20,8 @@
     "feature-search": "libs/feature/search",
     "map-viewer": "apps/map-viewer",
     "map-viewer-e2e": "apps/map-viewer-e2e",
+    "metadata-converter": "apps/metadata-converter",
+    "metadata-converter-e2e": "apps/metadata-converter-e2e",
     "search": "apps/search",
     "search-e2e": "apps/search-e2e",
     "ui-catalog": "libs/ui/catalog",

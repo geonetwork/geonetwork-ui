@@ -1,0 +1,36 @@
+<div class="grid grid-cols-3 grid-rows-auto auto-rows-min h-full">
+  <header class="col-span-3 flex flex-row items-center">
+    <div>
+      <h1 class="text-[50px] font-bold font-title my-6 mx-10">
+        Simple metadata editor<br />
+        <gn-ui-status
+          #status
+          class="font-main font-normal text-gray-900 text-[16px]"
+          (newRecordIso19139)="onRecordOutputReceived($event)"
+          (newRecordNative)="onRecordNativeReceived($event)"
+        ></gn-ui-status>
+      </h1>
+    </div>
+    <div class="flex-grow p-3">
+      <input
+        type="file"
+        accept=".xml, application/xml"
+        class="mb-3 border border-gray-500 rounded-sm w-full bg-white p-2"
+        (change)="onFileSelect($event)"
+        placeholder="Upload a record from your computer"
+      />
+      <input
+        type="string"
+        class="border border-gray-500 rounded-sm w-full bg-white p-2"
+        (change)="onFileUrlInput($event.target.value)"
+        placeholder="...or enter a URL pointing to a metadata record"
+      />
+    </div>
+  </header>
+  <gn-ui-record-form
+    #form
+    class="overflow-auto"
+    (recordChanged)="onRecordChange($event)"
+  ></gn-ui-record-form>
+  <gn-ui-record-output-xml #output class="col-span-2"></gn-ui-record-output-xml>
+</div>

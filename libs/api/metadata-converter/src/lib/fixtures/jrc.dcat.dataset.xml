@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xml:base="https://data.jrc.ec.europa.eu/dataset/201bbb6b-dd80-4645-8b81-4b84ba86fcd7" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:adms="http://www.w3.org/ns/adms#" xmlns:dcat="http://www.w3.org/ns/dcat#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:dctype="http://purl.org/dc/dcmitype/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:gsp="http://www.opengis.net/ont/geosparql#" xmlns:locn="http://www.w3.org/ns/locn#" xmlns:org="http://www.w3.org/ns/org#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:schema="http://schema.org/" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:vann="http://purl.org/vocab/vann/" xmlns:vcard="http://www.w3.org/2006/vcard/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <dcat:Dataset rdf:about="http://data.europa.eu/89h/201bbb6b-dd80-4645-8b81-4b84ba86fcd7">
+        <dct:accrualPeriodicity rdf:resource="http://publications.europa.eu/resource/authority/frequency/CONT" />
+        <dct:bibliographicCitation>European Commission, Joint Research Centre (JRC) (2020): Digital finance and virtual currency data. [Dataset] PID: http://data.europa.eu/89h/201bbb6b-dd80-4645-8b81-4b84ba86fcd7</dct:bibliographicCitation>
+        <dct:creator rdf:resource="http://publications.europa.eu/resource/authority/corporate-body/JRC" />
+        <dct:description xml:lang="en">Digital finance data in support of the Commission's Proposal on Crypto Assets </dct:description>
+        <dct:isPartOf rdf:resource="https://data.jrc.ec.europa.eu/collection/id-00292" />
+        <dct:isReferencedBy rdf:nodeID="autos1" />
+        <dct:isReferencedBy rdf:nodeID="autos2" />
+        <dct:isReferencedBy rdf:nodeID="bda4b49e39b549cfb55f74c781f3e917" />
+        <dct:isReferencedBy rdf:nodeID="ed6dd08b7cff42a09c05070b30c1866a" />
+        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2020-02-05</dct:issued>
+        <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2022-04-13</dct:modified>
+        <dct:publisher rdf:resource="http://publications.europa.eu/resource/authority/corporate-body/JRC" />
+        <dct:title xml:lang="en">Digital finance and virtual currency data</dct:title>
+        <dcat:contactPoint rdf:nodeID="autos3" />
+        <dcat:distribution rdf:nodeID="autos4" />
+        <dcat:theme rdf:resource="http://publications.europa.eu/resource/authority/data-theme/ECON" />
+    </dcat:Dataset>
+    <foaf:Organization rdf:about="http://publications.europa.eu/resource/authority/corporate-body/JRC">
+        <foaf:homepage rdf:resource="https://ec.europa.eu/jrc/en" />
+        <foaf:name xml:lang="en">European Commission, Joint Research Centre</foaf:name>
+    </foaf:Organization>
+    <foaf:Document rdf:nodeID="autos1">
+        <dc:creator>Ciaian, P; Rajcaniova, M; Kancs, D</dc:creator>
+        <dc:publisher>ROUTLEDGE JOURNALS, ENGLAND, OXFORDSHIRE</dc:publisher>
+        <dct:bibliographicCitation>Ciaian P; Rajcaniova M; Kancs D. The Economics of BitCoin Price Formation. APPLIED ECONOMICS 48 (19); 2016. p. 1799–1815. JRC99549</dct:bibliographicCitation>
+        <dct:title xml:lang="en">The Economics of BitCoin Price Formation</dct:title>
+        <owl:sameAs rdf:resource="https://doi.org/10.1080/00036846.2015.1109038" />
+        <owl:sameAs rdf:resource="https://publications.jrc.ec.europa.eu/repository/handle/JRC99549" />
+    </foaf:Document>
+    <vcard:Kind rdf:nodeID="autos3">
+        <vcard:hasEmail rdf:resource="mailto:d'artis.kancs@ec.europa.eu" />
+    </vcard:Kind>
+    <foaf:Document rdf:nodeID="autos2">
+        <dc:creator>Ciaian, P; Rajcaniova, M; Kancs, D</dc:creator>
+        <dc:publisher>SPRINGER HEIDELBERG, HEIDELBERG, GERMANY</dc:publisher>
+        <dct:bibliographicCitation>Ciaian P; Rajcaniova M; Kancs D. The digital agenda of virtual currencies: Can BitCoin become a global currency. INFORMATION SYSTEMS AND E-BUSINESS MANAGEMENT 14; 2016. p. 883-919. JRC99553</dct:bibliographicCitation>
+        <dct:title xml:lang="en">The digital agenda of virtual currencies: Can BitCoin become a global currency?</dct:title>
+        <owl:sameAs rdf:resource="https://doi.org/10.1007/s10257-016-0304-0" />
+        <owl:sameAs rdf:resource="https://publications.jrc.ec.europa.eu/repository/handle/JRC99553" />
+    </foaf:Document>
+    <dcat:Distribution rdf:nodeID="autos4">
+        <dct:accessRights rdf:resource="http://data.jrc.ec.europa.eu/access-rights/no-limitations" />
+        <dct:description xml:lang="en">Decentralized finance (DeFi) data describes financial instruments not relying on intermediaries such as brokerages, exchanges, or banks by using smart contracts on a blockchain. DeFi data contain lending and borrowing funds, speculations on price movements on assets using derivatives, trading cryptocurrencies, insuring against risks, and earning interest in savings-like accounts.</dct:description>
+        <dct:format rdf:resource="http://publications.europa.eu/resource/authority/file-type/CSV" />
+        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/CC_BY_4_0" />
+        <dct:title xml:lang="en">Blockchain, cryptocurrencies and decentralized finance (DeFi)</dct:title>
+        <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/DOWNLOADABLE_FILE" />
+        <dcat:accessURL rdf:resource="https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/EUREGIO/DigitalFinance/" />
+    </dcat:Distribution>
+    <foaf:Document rdf:nodeID="bda4b49e39b549cfb55f74c781f3e917">
+        <dc:creator>Ciaian, P; Rajcaniova, M; Kancs, D</dc:creator>
+        <dc:publisher>ELSEVIER SCIENCE BV, AMSTERDAM, NETHERLANDS</dc:publisher>
+        <dct:bibliographicCitation>Ciaian, P., Rajcaniova, M. and Kancs, D., Virtual relationships: Short- and long-run evidence from BitCoin and altcoin markets
+            , JOURNAL OF INTERNATIONAL FINANCIAL MARKETS INSTITUTIONS and MONEY, ISSN 1042-4431, 52, 2018, p. 173–195, JRC109192.</dct:bibliographicCitation>
+        <dct:title xml:lang="en">Virtual relationships: Short- and long-run evidence from BitCoin and altcoin markets</dct:title>
+        <owl:sameAs rdf:resource="https://doi.org/10.1016/j.intfin.2017.11.001" />
+        <owl:sameAs rdf:resource="https://publications.jrc.ec.europa.eu/repository/handle/JRC109192" />
+    </foaf:Document>
+    <foaf:Document rdf:nodeID="ed6dd08b7cff42a09c05070b30c1866a">
+        <dc:creator>Kancs, D; Ciaian, P; Rajcaniova, M</dc:creator>
+        <dc:publisher>Publications Office of the European Union, Luxembourg, Luxembourg</dc:publisher>
+        <dct:bibliographicCitation>Kancs, D., Ciaian, P. and Rajcaniova, M., The Price of BitCoin: GARCH Evidence from High Frequency Data, EUR 29598 EN, Publications Office of the European Union, Luxembourg, 2019, ISBN 978-92-79-98570-6 (online), doi:10.2760/06822 (online), JRC115098.</dct:bibliographicCitation>
+        <dct:title xml:lang="en">The Price of BitCoin: GARCH Evidence from High Frequency Data</dct:title>
+        <owl:sameAs rdf:resource="https://doi.org/10.2760/06822" />
+        <owl:sameAs rdf:resource="https://publications.jrc.ec.europa.eu/repository/handle/JRC115098" />
+    </foaf:Document>
+</rdf:RDF>

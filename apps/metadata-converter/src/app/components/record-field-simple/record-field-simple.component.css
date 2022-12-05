@@ -1,0 +1,10 @@
+input,
+textarea,
+select {
+  @apply w-full bg-white;
+  padding: 1.3em 0.5em 0.3em 0.5em;
+}
+
+input[readonly] {
+  @apply bg-gray-50 text-gray-700;
+}

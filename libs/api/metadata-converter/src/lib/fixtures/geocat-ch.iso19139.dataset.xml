@@ -1,0 +1,1870 @@
+<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd">
+    <gmd:fileIdentifier xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gco:CharacterString>8698bf0b-fceb-4f0f-989b-111e7c4af0a4</gco:CharacterString>
+    </gmd:fileIdentifier>
+    <gmd:language xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ger" />
+    </gmd:language>
+    <gmd:characterSet xmlns:comp="http://www.geocat.ch/2003/05/gateway/GM03Comprehensive" xmlns:xalan="http://xml.apache.org/xalan" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8" />
+    </gmd:characterSet>
+    <gmd:hierarchyLevel xmlns:comp="http://www.geocat.ch/2003/05/gateway/GM03Comprehensive" xmlns:xalan="http://xml.apache.org/xalan" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset" />
+    </gmd:hierarchyLevel>
+    <gmd:contact xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:show="embed" uuidref="b407586c-c3b4-4620-8df1-5518ac7d656f" xlink:href="local://srv/api/registries/entries/b407586c-c3b4-4620-8df1-5518ac7d656f?lang=ger,fre,ita,eng,roh&amp;process=gmd:role/gmd:CI_RoleCode/@codeListValue~pointOfContact">
+        <gmd:CI_ResponsibleParty>
+            <gmd:organisationName xsi:type="gmd:PT_FreeText_PropertyType">
+                <gco:CharacterString>Bundesamt für Raumentwicklung</gco:CharacterString>
+                <gmd:PT_FreeText>
+                    <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#DE">Bundesamt für Raumentwicklung</gmd:LocalisedCharacterString>
+                    </gmd:textGroup>
+                    <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#FR">Office fédéral du développement territorial</gmd:LocalisedCharacterString>
+                    </gmd:textGroup>
+                    <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#IT">Ufficio federale dello sviluppo territoriale</gmd:LocalisedCharacterString>
+                    </gmd:textGroup>
+                    <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#EN">Federal Office for Spatial Development</gmd:LocalisedCharacterString>
+                    </gmd:textGroup>
+                    <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#RM">Bundesamt für Raumentwicklung</gmd:LocalisedCharacterString>
+                    </gmd:textGroup>
+                </gmd:PT_FreeText>
+            </gmd:organisationName>
+            <gmd:contactInfo>
+                <gmd:CI_Contact>
+                    <gmd:phone>
+                        <gmd:CI_Telephone />
+                    </gmd:phone>
+                    <gmd:address>
+                        <gmd:CI_Address>
+                            <gmd:city>
+                                <gco:CharacterString>Ittigen</gco:CharacterString>
+                            </gmd:city>
+                            <gmd:postalCode>
+                                <gco:CharacterString>3063</gco:CharacterString>
+                            </gmd:postalCode>
+                            <gmd:country>
+                                <gco:CharacterString>CH</gco:CharacterString>
+                            </gmd:country>
+                            <gmd:electronicMailAddress>
+                                <gco:CharacterString>rolf.giezendanner@are.admin.ch</gco:CharacterString>
+                            </gmd:electronicMailAddress>
+                        </gmd:CI_Address>
+                    </gmd:address>
+                    <gmd:onlineResource>
+                        <gmd:CI_OnlineResource>
+                            <gmd:linkage />
+                            <gmd:protocol>
+                                <gco:CharacterString>WWW:LINK</gco:CharacterString>
+                            </gmd:protocol>
+                        </gmd:CI_OnlineResource>
+                    </gmd:onlineResource>
+                </gmd:CI_Contact>
+            </gmd:contactInfo>
+            <gmd:role>
+                <gmd:CI_RoleCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_RoleCode" codeListValue="pointOfContact" />
+            </gmd:role>
+        </gmd:CI_ResponsibleParty>
+    </gmd:contact>
+    <gmd:dateStamp xmlns:comp="http://www.geocat.ch/2003/05/gateway/GM03Comprehensive" xmlns:xalan="http://xml.apache.org/xalan" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gco:DateTime>2022-02-22T19:40:06</gco:DateTime>
+    </gmd:dateStamp>
+    <gmd:metadataStandardName>
+        <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ISO 19115/19119</gco:CharacterString>
+    </gmd:metadataStandardName>
+    <gmd:locale xmlns:comp="http://www.geocat.ch/2003/05/gateway/GM03Comprehensive" xmlns:xalan="http://xml.apache.org/xalan" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gmd:PT_Locale id="FR">
+            <gmd:languageCode>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="fre" />
+            </gmd:languageCode>
+            <gmd:characterEncoding>
+                <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8" />
+            </gmd:characterEncoding>
+        </gmd:PT_Locale>
+    </gmd:locale>
+    <gmd:locale xmlns:comp="http://www.geocat.ch/2003/05/gateway/GM03Comprehensive" xmlns:xalan="http://xml.apache.org/xalan" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gmd:PT_Locale id="IT">
+            <gmd:languageCode>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ita" />
+            </gmd:languageCode>
+            <gmd:characterEncoding>
+                <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8" />
+            </gmd:characterEncoding>
+        </gmd:PT_Locale>
+    </gmd:locale>
+    <gmd:locale xmlns:comp="http://www.geocat.ch/2003/05/gateway/GM03Comprehensive" xmlns:xalan="http://xml.apache.org/xalan" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gmd:PT_Locale id="EN">
+            <gmd:languageCode>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng" />
+            </gmd:languageCode>
+            <gmd:characterEncoding>
+                <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8" />
+            </gmd:characterEncoding>
+        </gmd:PT_Locale>
+    </gmd:locale>
+    <gmd:locale xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gmd:PT_Locale id="RM">
+            <gmd:languageCode>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="roh" />
+            </gmd:languageCode>
+            <gmd:characterEncoding>
+                <gmd:MD_CharacterSetCode codeListValue="utf8" codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode" />
+            </gmd:characterEncoding>
+        </gmd:PT_Locale>
+    </gmd:locale>
+    <gmd:locale xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gmd:PT_Locale id="DE">
+            <gmd:languageCode>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ger" />
+            </gmd:languageCode>
+            <gmd:characterEncoding>
+                <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8" />
+            </gmd:characterEncoding>
+        </gmd:PT_Locale>
+    </gmd:locale>
+    <gmd:spatialRepresentationInfo xmlns:comp="http://www.geocat.ch/2003/05/gateway/GM03Comprehensive" xmlns:xalan="http://xml.apache.org/xalan" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gmd:MD_VectorSpatialRepresentation>
+            <gmd:geometricObjects>
+                <gmd:MD_GeometricObjects>
+                    <gmd:geometricObjectType>
+                        <gmd:MD_GeometricObjectTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_GeometricObjectTypeCode" codeListValue="surface" />
+                    </gmd:geometricObjectType>
+                    <gmd:geometricObjectCount>
+                        <gco:Integer>1</gco:Integer>
+                    </gmd:geometricObjectCount>
+                </gmd:MD_GeometricObjects>
+            </gmd:geometricObjects>
+        </gmd:MD_VectorSpatialRepresentation>
+    </gmd:spatialRepresentationInfo>
+    <gmd:referenceSystemInfo xmlns:comp="http://www.geocat.ch/2003/05/gateway/GM03Comprehensive" xmlns:xalan="http://xml.apache.org/xalan" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gmd:MD_ReferenceSystem>
+            <gmd:referenceSystemIdentifier>
+                <gmd:RS_Identifier>
+                    <gmd:code xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>EPSG:21781</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">EPSG:21781</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">EPSG:21781</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">EPSG:21781</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">EPSG:21781</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:code>
+                </gmd:RS_Identifier>
+            </gmd:referenceSystemIdentifier>
+        </gmd:MD_ReferenceSystem>
+    </gmd:referenceSystemInfo>
+    <gmd:identificationInfo xmlns:comp="http://www.geocat.ch/2003/05/gateway/GM03Comprehensive" xmlns:xalan="http://xml.apache.org/xalan" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gmd:MD_DataIdentification>
+            <gmd:citation>
+                <gmd:CI_Citation>
+                    <gmd:title xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Alpenkonvention</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Alpenkonvention</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">Convention des Alpes</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">Convenzione delle alpi</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">Alpine Convention</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#RM">Convenziun da las Alps</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:title>
+                    <gmd:alternateTitle xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Alpenkonvention</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Alpenkonvention</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">Convention des Alpes</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">Convenzione delle alpi</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">Alpine Convention</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#RM">Convenziun da las Alps</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:alternateTitle>
+                    <gmd:date>
+                        <gmd:CI_Date>
+                            <gmd:date>
+                                <gco:Date>2009-01-01</gco:Date>
+                            </gmd:date>
+                            <gmd:dateType>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision" />
+                            </gmd:dateType>
+                        </gmd:CI_Date>
+                    </gmd:date>
+                    <gmd:date>
+                        <gmd:CI_Date>
+                            <gmd:date>
+                                <gco:DateTime>1999-01-01T00:00:00</gco:DateTime>
+                            </gmd:date>
+                            <gmd:dateType>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation" />
+                            </gmd:dateType>
+                        </gmd:CI_Date>
+                    </gmd:date>
+                    <gmd:identifier>
+                        <gmd:MD_Identifier>
+                            <gmd:code>
+                                <gco:CharacterString>ch.are.alpenkonvention</gco:CharacterString>
+                            </gmd:code>
+                        </gmd:MD_Identifier>
+                    </gmd:identifier>
+                    <gmd:identifier />
+                    <gmd:collectiveTitle xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Alpenkonvention</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Alpenkonvention</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">Convention des Alpes</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">Convenzione delle alpi</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:collectiveTitle>
+                </gmd:CI_Citation>
+            </gmd:citation>
+            <gmd:abstract xsi:type="gmd:PT_FreeText_PropertyType">
+                <gco:CharacterString>Perimeter der Alpenkonvention in der Schweiz. Die Alpenkonvention ist ein völkerrechtlicher Vertrag zwischen den acht Alpenländern Deutschland, Frankreich, Italien, Liechtenstein, Monaco, Österreich, Schweiz, Slowenien sowie der Europäischen Union. Das Ziel des Übereinkommens ist der Schutz der Alpen durch eine sektorübergreifende, ganzheitliche und nachhaltige Politik.</gco:CharacterString>
+                <gmd:PT_FreeText>
+                    <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#DE">Perimeter der Alpenkonvention in der Schweiz. Die Alpenkonvention ist ein völkerrechtlicher Vertrag zwischen den acht Alpenländern Deutschland, Frankreich, Italien, Liechtenstein, Monaco, Österreich, Schweiz, Slowenien sowie der Europäischen Union. Das Ziel des Übereinkommens ist der Schutz der Alpen durch eine sektorübergreifende, ganzheitliche und nachhaltige Politik.</gmd:LocalisedCharacterString>
+                    </gmd:textGroup>
+                    <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#FR">Périmètre de la Convention alpine en Suisse. La Convention alpine est un traité de droit international conclu par huit Etats alpins (Allemagne, Autriche, France, Italie, Liechtenstein, Monaco, Suisse, Slovénie) et l`Union européenne. L`accord vise à assurer la préservation et la protection des Alpes à travers une politique plurisectorielle, globale et durable.</gmd:LocalisedCharacterString>
+                    </gmd:textGroup>
+                    <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#IT">Il perimetro della Convenzione delle Alpi. La Convenzione delle Alpi è un trattato internazionale tra gli otto Paesi alpini Germania, Francia, Italia, Liechtenstein, Monaco, Austria, Svizzera, Slovenia e l'Unione europea. Lo scopo della Convenzione è la conservazione e la protezione delle Alpi mediante una politica intersettoriale, globale e durevole.</gmd:LocalisedCharacterString>
+                    </gmd:textGroup>
+                    <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#EN">The perimeters of the Alpine Convention in Switzerland. The Alpine Convention is an international treaty between the eight Alpine countries: Germany, France, Italy, Liechtenstein, Monaco, Austria, Switzerland and Slovenia, plus the European Union. The aim of the treaty is to protect the Alps by means of cross-sectoral, integrated and sustainable policies.</gmd:LocalisedCharacterString>
+                    </gmd:textGroup>
+                    <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#RM">Perimeter da la Convenziun da las Alps en Svizra. La Convenziun da las Alps è in contract internaziunal tranter ils otg pajais alpins (Austria, Frantscha, Germania, Italia, Liechtenstein, Monaco, Slovenia, Svizra) e l'Uniun europeica. La convenziun ha la finamira da proteger las Alps cun agid d'ina politica intersecturiala, cumplessiva e duraivla.</gmd:LocalisedCharacterString>
+                    </gmd:textGroup>
+                </gmd:PT_FreeText>
+            </gmd:abstract>
+            <gmd:status>
+                <gmd:MD_ProgressCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode" codeListValue="completed" />
+            </gmd:status>
+            <gmd:pointOfContact xlink:show="embed" uuidref="b407586c-c3b4-4620-8df1-5518ac7d656f" xlink:href="local://srv/api/registries/entries/b407586c-c3b4-4620-8df1-5518ac7d656f?lang=ger,fre,ita,eng,roh&amp;process=gmd:role/gmd:CI_RoleCode/@codeListValue~pointOfContact">
+                <gmd:CI_ResponsibleParty>
+                    <gmd:organisationName xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Bundesamt für Raumentwicklung</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Bundesamt für Raumentwicklung</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">Office fédéral du développement territorial</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">Ufficio federale dello sviluppo territoriale</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">Federal Office for Spatial Development</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#RM">Bundesamt für Raumentwicklung</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:organisationName>
+                    <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                            <gmd:phone>
+                                <gmd:CI_Telephone />
+                            </gmd:phone>
+                            <gmd:address>
+                                <gmd:CI_Address>
+                                    <gmd:city>
+                                        <gco:CharacterString>Ittigen</gco:CharacterString>
+                                    </gmd:city>
+                                    <gmd:postalCode>
+                                        <gco:CharacterString>3063</gco:CharacterString>
+                                    </gmd:postalCode>
+                                    <gmd:country>
+                                        <gco:CharacterString>CH</gco:CharacterString>
+                                    </gmd:country>
+                                    <gmd:electronicMailAddress>
+                                        <gco:CharacterString>rolf.giezendanner@are.admin.ch</gco:CharacterString>
+                                    </gmd:electronicMailAddress>
+                                </gmd:CI_Address>
+                            </gmd:address>
+                            <gmd:onlineResource>
+                                <gmd:CI_OnlineResource>
+                                    <gmd:linkage />
+                                    <gmd:protocol>
+                                        <gco:CharacterString>WWW:LINK</gco:CharacterString>
+                                    </gmd:protocol>
+                                </gmd:CI_OnlineResource>
+                            </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                    </gmd:contactInfo>
+                    <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_RoleCode" codeListValue="pointOfContact" />
+                    </gmd:role>
+                </gmd:CI_ResponsibleParty>
+            </gmd:pointOfContact>
+            <gmd:pointOfContact xlink:show="embed" uuidref="2f6a598e-a704-47bf-86fa-0cbbb08f0d12" xlink:href="local://srv/api/registries/entries/2f6a598e-a704-47bf-86fa-0cbbb08f0d12?lang=ger,fre,ita,eng,roh&amp;process=gmd:role/gmd:CI_RoleCode/@codeListValue~owner">
+                <gmd:CI_ResponsibleParty>
+                    <gmd:organisationName xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Bundesamt für Raumentwicklung</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Bundesamt für Raumentwicklung</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:organisationName>
+                    <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                            <gmd:address>
+                                <gmd:CI_Address>
+                                    <gmd:electronicMailAddress>
+                                        <gco:CharacterString>info@are.admin.ch</gco:CharacterString>
+                                    </gmd:electronicMailAddress>
+                                </gmd:CI_Address>
+                            </gmd:address>
+                        </gmd:CI_Contact>
+                    </gmd:contactInfo>
+                    <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_RoleCode" codeListValue="owner" />
+                    </gmd:role>
+                </gmd:CI_ResponsibleParty>
+            </gmd:pointOfContact>
+            <gmd:resourceMaintenance>
+                <gmd:MD_MaintenanceInformation>
+                    <gmd:maintenanceAndUpdateFrequency>
+                        <gmd:MD_MaintenanceFrequencyCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_MaintenanceFrequencyCode" codeListValue="asNeeded" />
+                    </gmd:maintenanceAndUpdateFrequency>
+                </gmd:MD_MaintenanceInformation>
+            </gmd:resourceMaintenance>
+            <gmd:descriptiveKeywords xlink:href="local://srv/api/registries/vocabularies/keyword?skipdescriptivekeywords=true&amp;thesaurus=local.theme.geocat.ch&amp;id=http%3A%2F%2Fgeocat.ch%2Fconcept%2394202915-c2c1-44fd-a106-71488110e399&amp;lang=ger,fre,ita,eng,roh">
+                <gmd:MD_Keywords>
+                    <gmd:keyword xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Aufbewahrungs- und Archivierungsplanung AAP - Bund</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Aufbewahrungs- und Archivierungsplanung AAP - Bund</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">Planification de la conservation et de l'archivage AAP - Conféderation</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">Pianificazione della conservazione e dell’archiviazione AAP - Confederazione</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">Conservation and archiving planning AAP - Confederation</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#RM" />
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:keyword>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>geocat.ch</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:Date>2022-03-04</gco:Date>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gmx:Anchor xlink:href="https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch">geonetwork.thesaurus.local.theme.geocat.ch</gmx:Anchor>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:descriptiveKeywords xlink:href="local://srv/api/registries/vocabularies/keyword?skipdescriptivekeywords=true&amp;thesaurus=local.theme.geocat.ch&amp;id=http%3A%2F%2Fcustom.shared.obj.ch%2Fconcept%23ab642d3d-d74f-400c-bb01-81c6dde26247&amp;lang=ger,fre,ita,eng,roh">
+                <gmd:MD_Keywords>
+                    <gmd:keyword xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Geobasisdaten</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Geobasisdaten</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">géodonnées de base</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">geodati di base</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">official geodata</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#RM" />
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:keyword>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>geocat.ch</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:Date>2022-03-04</gco:Date>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gmx:Anchor xlink:href="https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch">geonetwork.thesaurus.local.theme.geocat.ch</gmx:Anchor>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:descriptiveKeywords xlink:href="local://srv/api/registries/vocabularies/keyword?skipdescriptivekeywords=true&amp;thesaurus=local.theme.geocat.ch&amp;id=http%3A%2F%2Fcustom.shared.obj.ch%2Fconcept%23948082ad-0adf-4d3c-8c4f-685f9d4d9372&amp;lang=ger,fre,ita,eng,roh">
+                <gmd:MD_Keywords>
+                    <gmd:keyword xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>e-geo.ch</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">e-geo.ch</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">e-geo.ch</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">e-geo.ch</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">e-geo.ch</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#RM" />
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:keyword>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>geocat.ch</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:Date>2022-03-04</gco:Date>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gmx:Anchor xlink:href="https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch">geonetwork.thesaurus.local.theme.geocat.ch</gmx:Anchor>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:descriptiveKeywords xlink:href="local://srv/api/registries/vocabularies/keyword?skipdescriptivekeywords=true&amp;thesaurus=local.theme.geocat.ch&amp;id=http%3A%2F%2Fgeocat.ch%2Fconcept%23e6485c01-fe69-485e-b194-035f682463db&amp;lang=ger,fre,ita,eng,roh">
+                <gmd:MD_Keywords>
+                    <gmd:keyword xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>opendata.swiss</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">opendata.swiss</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">opendata.swiss</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">opendata.swiss</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">opendata.swiss</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#RM">opendata.swiss</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:keyword>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>geocat.ch</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:Date>2022-03-04</gco:Date>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gmx:Anchor xlink:href="https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch">geonetwork.thesaurus.local.theme.geocat.ch</gmx:Anchor>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:descriptiveKeywords xlink:href="local://srv/api/registries/vocabularies/keyword?skipdescriptivekeywords=true&amp;thesaurus=external.theme.gemet&amp;id=http%3A%2F%2Fwww.eionet.europa.eu%2Fgemet%2Fconcept%2F8247&amp;lang=ger,fre,ita,eng,roh">
+                <gmd:MD_Keywords>
+                    <gmd:keyword xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Nachhaltige Entwicklung</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Nachhaltige Entwicklung</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">développement durable</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">sviluppo sostenibile</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">sustainable development</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#RM" />
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:keyword>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>GEMET</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:Date>2018-08-16</gco:Date>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gmx:Anchor xlink:href="https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet">geonetwork.thesaurus.external.theme.gemet</gmx:Anchor>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:descriptiveKeywords xlink:href="local://srv/api/registries/vocabularies/keyword?skipdescriptivekeywords=true&amp;thesaurus=external.theme.gemet&amp;id=http%3A%2F%2Fwww.eionet.europa.eu%2Fgemet%2Fconcept%2F6225&amp;lang=ger,fre,ita,eng,roh">
+                <gmd:MD_Keywords>
+                    <gmd:keyword xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Raumplanung</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Raumplanung</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">planification de l'espace physique</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">pianificazione dello spazio fisico</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">physical planning</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#RM" />
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:keyword>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>GEMET</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:Date>2018-08-16</gco:Date>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gmx:Anchor xlink:href="https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet">geonetwork.thesaurus.external.theme.gemet</gmx:Anchor>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:descriptiveKeywords xlink:href="local://srv/api/registries/vocabularies/keyword?skipdescriptivekeywords=true&amp;thesaurus=external.theme.gemet&amp;id=http%3A%2F%2Fwww.eionet.europa.eu%2Fgemet%2Fconcept%2F10236&amp;lang=ger,fre,ita,eng,roh">
+                <gmd:MD_Keywords>
+                    <gmd:keyword xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Bergschutz</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Bergschutz</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">protection de la montagne</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">protezione della montagna</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">mountain protection</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#RM" />
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:keyword>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>GEMET</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:Date>2018-08-16</gco:Date>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gmx:Anchor xlink:href="https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet">geonetwork.thesaurus.external.theme.gemet</gmx:Anchor>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:descriptiveKeywords xlink:href="local://srv/api/registries/vocabularies/keyword?skipdescriptivekeywords=true&amp;thesaurus=external.theme.gemet&amp;id=http%3A%2F%2Fwww.eionet.europa.eu%2Fgemet%2Fconcept%2F7852&amp;lang=ger,fre,ita,eng,roh">
+                <gmd:MD_Keywords>
+                    <gmd:keyword xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Bodenschutz</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Bodenschutz</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">conservation du sol</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">conservazione del suolo</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">soil conservation</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#RM" />
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:keyword>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>GEMET</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:Date>2018-08-16</gco:Date>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gmx:Anchor xlink:href="https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet">geonetwork.thesaurus.external.theme.gemet</gmx:Anchor>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:descriptiveKeywords xlink:href="local://srv/api/registries/vocabularies/keyword?skipdescriptivekeywords=true&amp;thesaurus=external.theme.gemet&amp;id=http%3A%2F%2Fwww.eionet.europa.eu%2Fgemet%2Ftheme%2F11&amp;lang=ger,fre,ita,eng,roh">
+                <gmd:MD_Keywords>
+                    <gmd:keyword xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Umweltpolitik</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Umweltpolitik</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">politique environnementale</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">politica ambientale</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">environmental policy</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#RM" />
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:keyword>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>GEMET</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:Date>2018-08-16</gco:Date>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gmx:Anchor xlink:href="https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet">geonetwork.thesaurus.external.theme.gemet</gmx:Anchor>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:descriptiveKeywords xlink:href="local://srv/api/registries/vocabularies/keyword?skipdescriptivekeywords=true&amp;thesaurus=external.theme.gemet&amp;id=http%3A%2F%2Fwww.eionet.europa.eu%2Fgemet%2Ftheme%2F11&amp;lang=ger,fre,ita,eng,roh">
+                <gmd:MD_Keywords>
+                    <gmd:keyword xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Umweltpolitik</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Umweltpolitik</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">politique environnementale</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">politica ambientale</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">environmental policy</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#RM" />
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:keyword>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>GEMET</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:Date>2018-08-16</gco:Date>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gmx:Anchor xlink:href="https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet">geonetwork.thesaurus.external.theme.gemet</gmx:Anchor>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:descriptiveKeywords xlink:href="local://srv/api/registries/vocabularies/keyword?skipdescriptivekeywords=true&amp;thesaurus=external.theme.gemet&amp;id=http%3A%2F%2Fwww.eionet.europa.eu%2Fgemet%2Ftheme%2F37&amp;lang=ger,fre,ita,eng,roh">
+                <gmd:MD_Keywords>
+                    <gmd:keyword xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Verkehr</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Verkehr</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">transport</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">trasporti</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">transport</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#RM" />
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:keyword>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>GEMET</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:Date>2018-08-16</gco:Date>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gmx:Anchor xlink:href="https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet">geonetwork.thesaurus.external.theme.gemet</gmx:Anchor>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:descriptiveKeywords xlink:href="local://srv/api/registries/vocabularies/keyword?skipdescriptivekeywords=true&amp;thesaurus=external.theme.gemet&amp;id=http%3A%2F%2Fwww.eionet.europa.eu%2Fgemet%2Ftheme%2F37&amp;lang=ger,fre,ita,eng,roh">
+                <gmd:MD_Keywords>
+                    <gmd:keyword xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Verkehr</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Verkehr</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">transport</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">trasporti</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">transport</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#RM" />
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:keyword>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>GEMET</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:Date>2018-08-16</gco:Date>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gmx:Anchor xlink:href="https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet">geonetwork.thesaurus.external.theme.gemet</gmx:Anchor>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:descriptiveKeywords xlink:href="local://srv/api/registries/vocabularies/keyword?skipdescriptivekeywords=true&amp;thesaurus=external.theme.gemet&amp;id=http%3A%2F%2Fwww.eionet.europa.eu%2Fgemet%2Ftheme%2F37&amp;lang=ger,fre,ita,eng,roh">
+                <gmd:MD_Keywords>
+                    <gmd:keyword xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Verkehr</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Verkehr</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">transport</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">trasporti</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">transport</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#RM" />
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:keyword>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>GEMET</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:Date>2018-08-16</gco:Date>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gmx:Anchor xlink:href="https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet">geonetwork.thesaurus.external.theme.gemet</gmx:Anchor>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:descriptiveKeywords xlink:href="local://srv/api/registries/vocabularies/keyword?skipdescriptivekeywords=true&amp;thesaurus=external.theme.inspire-theme&amp;id=http%3A%2F%2Frdfdata.eionet.europa.eu%2Finspirethemes%2Fthemes%2F20&amp;lang=ger,fre,ita,eng,roh">
+                <gmd:MD_Keywords>
+                    <gmd:keyword xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Umweltüberwachung</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Umweltüberwachung</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">Installations de suivi environnemental</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">Impianti di monitoraggio ambientale</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">Environmental monitoring facilities</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#RM" />
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:keyword>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>GEMET - INSPIRE themes, version 1.0</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:Date>2008-06-01</gco:Date>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gmx:Anchor xlink:href="https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.inspire-theme">geonetwork.thesaurus.external.theme.inspire-theme</gmx:Anchor>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:descriptiveKeywords xlink:href="local://srv/api/registries/vocabularies/keyword?skipdescriptivekeywords=true&amp;thesaurus=external.theme.inspire-theme&amp;id=http%3A%2F%2Frdfdata.eionet.europa.eu%2Finspirethemes%2Fthemes%2F4&amp;lang=ger,fre,ita,eng,roh">
+                <gmd:MD_Keywords>
+                    <gmd:keyword xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Verwaltungseinheiten</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Verwaltungseinheiten</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">Unités administratives</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">Unità amministrative</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">Administrative units</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#RM" />
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:keyword>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>GEMET - INSPIRE themes, version 1.0</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:Date>2008-06-01</gco:Date>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gmx:Anchor xlink:href="https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.inspire-theme">geonetwork.thesaurus.external.theme.inspire-theme</gmx:Anchor>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:descriptiveKeywords>
+                <gmd:MD_Keywords>
+                    <gmd:keyword xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>BGDI Bundesgeodaten-Infrastruktur</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">BGDI Bundesgeodaten-Infrastruktur</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">IFDG l’Infrastructure Fédérale de données géographiques</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">IFDG Infrastruttura federale dei dati geografici</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">FSDI Federal Spatial Data Infrastructure</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:keyword>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title xsi:type="gmd:PT_FreeText_PropertyType">
+                                <gco:CharacterString>geocat.ch</gco:CharacterString>
+                                <gmd:PT_FreeText>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#DE">geocat.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                </gmd:PT_FreeText>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:Date>2021-11-09</gco:Date>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gmx:Anchor xlink:href="https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch">geonetwork.thesaurus.local.theme.geocat.ch</gmx:Anchor>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:resourceConstraints>
+                <gmd:MD_LegalConstraints>
+                    <gmd:useConstraints>
+                        <gmd:MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode" codeListValue="license" />
+                    </gmd:useConstraints>
+                    <gmd:otherConstraints xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Licence passée entre l'Office fédéral de l'environnement (OFEV), et le canton de Fribourg, représenté par la Coordination SIT (SITel)</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">Licence passée entre l'Office fédéral de l'environnement (OFEV), et le canton de Fribourg, représenté par la Coordination SIT (SITel)</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:otherConstraints>
+                </gmd:MD_LegalConstraints>
+            </gmd:resourceConstraints>
+            <gmd:spatialRepresentationType>
+                <gmd:MD_SpatialRepresentationTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_SpatialRepresentationTypeCode" codeListValue="vector" />
+            </gmd:spatialRepresentationType>
+            <gmd:spatialResolution>
+                <gmd:MD_Resolution>
+                    <gmd:equivalentScale>
+                        <gmd:MD_RepresentativeFraction>
+                            <gmd:denominator>
+                                <gco:Integer>25000</gco:Integer>
+                            </gmd:denominator>
+                        </gmd:MD_RepresentativeFraction>
+                    </gmd:equivalentScale>
+                </gmd:MD_Resolution>
+            </gmd:spatialResolution>
+            <gmd:language>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ger" />
+            </gmd:language>
+            <gmd:language>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="fre" />
+            </gmd:language>
+            <gmd:language>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ita" />
+            </gmd:language>
+            <gmd:characterSet>
+                <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8" />
+            </gmd:characterSet>
+            <gmd:topicCategory />
+            <gmd:topicCategory />
+            <gmd:topicCategory />
+            <gmd:topicCategory />
+            <gmd:topicCategory />
+            <gmd:topicCategory />
+            <gmd:topicCategory>
+                <gmd:MD_TopicCategoryCode>planningCadastre</gmd:MD_TopicCategoryCode>
+            </gmd:topicCategory>
+            <gmd:topicCategory>
+                <gmd:MD_TopicCategoryCode>planningCadastre_Planning</gmd:MD_TopicCategoryCode>
+            </gmd:topicCategory>
+            <gmd:extent xlink:show="embed" uuidref="geocatch-subtpl-extent-custom-15" xlink:href="local://srv/api/registries/entries/geocatch-subtpl-extent-custom-15?lang=ger,fre,ita,eng,roh&amp;">
+                <gmd:EX_Extent>
+                    <gmd:description xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Alpenkonvention</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Alpenkonvention</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">Convention des Alpes</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#IT">Convenzione delle alpi</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">Alpine Convention</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#RM" />
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:description>
+                    <gmd:geographicElement>
+                        <gmd:EX_GeographicDescription>
+                            <gmd:geographicIdentifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code xsi:type="gmd:PT_FreeText_PropertyType">
+                                        <gco:CharacterString>AK</gco:CharacterString>
+                                        <gmd:PT_FreeText>
+                                            <gmd:textGroup>
+                                                <gmd:LocalisedCharacterString locale="#DE">AK</gmd:LocalisedCharacterString>
+                                            </gmd:textGroup>
+                                            <gmd:textGroup>
+                                                <gmd:LocalisedCharacterString locale="#FR">CA</gmd:LocalisedCharacterString>
+                                            </gmd:textGroup>
+                                            <gmd:textGroup>
+                                                <gmd:LocalisedCharacterString locale="#IT">CA</gmd:LocalisedCharacterString>
+                                            </gmd:textGroup>
+                                            <gmd:textGroup>
+                                                <gmd:LocalisedCharacterString locale="#EN">AC</gmd:LocalisedCharacterString>
+                                            </gmd:textGroup>
+                                            <gmd:textGroup>
+                                                <gmd:LocalisedCharacterString locale="#RM">null</gmd:LocalisedCharacterString>
+                                            </gmd:textGroup>
+                                        </gmd:PT_FreeText>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:geographicIdentifier>
+                        </gmd:EX_GeographicDescription>
+                    </gmd:geographicElement>
+                    <gmd:geographicElement>
+                        <gmd:EX_GeographicBoundingBox>
+                            <gmd:westBoundLongitude>
+                                <gco:Decimal>6.75599105586694</gco:Decimal>
+                            </gmd:westBoundLongitude>
+                            <gmd:eastBoundLongitude>
+                                <gco:Decimal>10.5418236945627</gco:Decimal>
+                            </gmd:eastBoundLongitude>
+                            <gmd:southBoundLatitude>
+                                <gco:Decimal>45.7887442565203</gco:Decimal>
+                            </gmd:southBoundLatitude>
+                            <gmd:northBoundLatitude>
+                                <gco:Decimal>47.5175655551557</gco:Decimal>
+                            </gmd:northBoundLatitude>
+                        </gmd:EX_GeographicBoundingBox>
+                    </gmd:geographicElement>
+                    <gmd:geographicElement>
+                        <gmd:EX_BoundingPolygon>
+                            <gmd:polygon>
+                                <gml:MultiSurface gml:id="_ms151936099836">
+                                    <gml:surfaceMember>
+                                        <gml:Polygon gml:id="_p156032327050">
+                                            <gml:exterior>
+                                                <gml:LinearRing>
+                                                    <gml:posList srsDimension="2">6.777075 45.827119 6.755991 47.517566 10.541824 47.477984 10.446252 45.788744 6.777075 45.827119</gml:posList>
+                                                </gml:LinearRing>
+                                            </gml:exterior>
+                                        </gml:Polygon>
+                                    </gml:surfaceMember>
+                                </gml:MultiSurface>
+                            </gmd:polygon>
+                        </gmd:EX_BoundingPolygon>
+                    </gmd:geographicElement>
+                </gmd:EX_Extent>
+            </gmd:extent>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+    <gmd:contentInfo xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gmd:MD_FeatureCatalogueDescription>
+            <gmd:language>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ger" />
+            </gmd:language>
+            <gmd:includedWithDataset>
+                <gco:Boolean>0</gco:Boolean>
+            </gmd:includedWithDataset>
+            <gmd:featureCatalogueCitation>
+                <gmd:CI_Citation>
+                    <gmd:title xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Alpenkonvention (INTERLIS 2)</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Alpenkonvention (INTERLIS 2)</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:title>
+                    <gmd:date>
+                        <gmd:CI_Date>
+                            <gmd:date>
+                                <gco:Date>2009-09-18</gco:Date>
+                            </gmd:date>
+                            <gmd:dateType>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation" />
+                            </gmd:dateType>
+                        </gmd:CI_Date>
+                    </gmd:date>
+                </gmd:CI_Citation>
+            </gmd:featureCatalogueCitation>
+        </gmd:MD_FeatureCatalogueDescription>
+    </gmd:contentInfo>
+    <gmd:contentInfo xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gmd:MD_FeatureCatalogueDescription>
+            <gmd:language>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ger" />
+            </gmd:language>
+            <gmd:includedWithDataset>
+                <gco:Boolean>0</gco:Boolean>
+            </gmd:includedWithDataset>
+            <gmd:featureCatalogueCitation>
+                <gmd:CI_Citation>
+                    <gmd:title xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Alpenkonvention (INTERLIS 1)</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Alpenkonvention (INTERLIS 1)</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:title>
+                    <gmd:date>
+                        <gmd:CI_Date>
+                            <gmd:date>
+                                <gco:Date>2009-09-18</gco:Date>
+                            </gmd:date>
+                            <gmd:dateType>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation" />
+                            </gmd:dateType>
+                        </gmd:CI_Date>
+                    </gmd:date>
+                </gmd:CI_Citation>
+            </gmd:featureCatalogueCitation>
+        </gmd:MD_FeatureCatalogueDescription>
+    </gmd:contentInfo>
+    <gmd:contentInfo xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gmd:MD_FeatureCatalogueDescription>
+            <gmd:language>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ger" />
+            </gmd:language>
+            <gmd:includedWithDataset>
+                <gco:Boolean>0</gco:Boolean>
+            </gmd:includedWithDataset>
+            <gmd:featureCatalogueCitation>
+                <gmd:CI_Citation>
+                    <gmd:title xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Alpenkonvention (UML)</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Alpenkonvention (UML)</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:title>
+                    <gmd:date>
+                        <gmd:CI_Date>
+                            <gmd:date>
+                                <gco:Date>2009-09-18</gco:Date>
+                            </gmd:date>
+                            <gmd:dateType>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation" />
+                            </gmd:dateType>
+                        </gmd:CI_Date>
+                    </gmd:date>
+                </gmd:CI_Citation>
+            </gmd:featureCatalogueCitation>
+        </gmd:MD_FeatureCatalogueDescription>
+    </gmd:contentInfo>
+    <gmd:contentInfo xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gmd:MD_FeatureCatalogueDescription>
+            <gmd:language>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ger" />
+            </gmd:language>
+            <gmd:includedWithDataset>
+                <gco:Boolean>0</gco:Boolean>
+            </gmd:includedWithDataset>
+            <gmd:featureCatalogueCitation>
+                <gmd:CI_Citation>
+                    <gmd:title xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Alpenkonvention (Objektkatalog)</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Alpenkonvention (Objektkatalog)</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:title>
+                    <gmd:date>
+                        <gmd:CI_Date>
+                            <gmd:date>
+                                <gco:Date>2009-09-18</gco:Date>
+                            </gmd:date>
+                            <gmd:dateType>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation" />
+                            </gmd:dateType>
+                        </gmd:CI_Date>
+                    </gmd:date>
+                </gmd:CI_Citation>
+            </gmd:featureCatalogueCitation>
+        </gmd:MD_FeatureCatalogueDescription>
+    </gmd:contentInfo>
+    <gmd:distributionInfo xmlns:comp="http://www.geocat.ch/2003/05/gateway/GM03Comprehensive" xmlns:xalan="http://xml.apache.org/xalan" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gmd:MD_Distribution>
+            <gmd:distributionFormat xlink:show="embed" uuidref="5533f00e-57f9-4f4d-b2a2-560fee4b32ad" xlink:href="local://srv/api/registries/entries/5533f00e-57f9-4f4d-b2a2-560fee4b32ad?lang=ger,fre,ita,eng,roh&amp;">
+                <gmd:MD_Format>
+                    <gmd:name>
+                        <gco:CharacterString>ESRI Shapefile</gco:CharacterString>
+                    </gmd:name>
+                    <gmd:version>
+                        <gco:CharacterString>-</gco:CharacterString>
+                    </gmd:version>
+                </gmd:MD_Format>
+            </gmd:distributionFormat>
+            <gmd:transferOptions>
+                <gmd:MD_DigitalTransferOptions>
+                    <gmd:onLine>
+                        <gmd:CI_OnlineResource>
+                            <gmd:linkage>
+                                <gmd:URL>https://map.geo.admin.ch/?layers=ch.are.alpenkonvention</gmd:URL>
+                            </gmd:linkage>
+                            <gmd:protocol>
+                                <gco:CharacterString>MAP:Preview</gco:CharacterString>
+                            </gmd:protocol>
+                            <gmd:name xsi:type="gmd:PT_FreeText_PropertyType">
+                                <gco:CharacterString>Vorschau map.geo.admin.ch</gco:CharacterString>
+                                <gmd:PT_FreeText>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#DE">Vorschau map.geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#FR">Aperçu map.geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#IT">Previsione map.geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#EN">Preview map.geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                </gmd:PT_FreeText>
+                            </gmd:name>
+                            <gmd:description xsi:type="gmd:PT_FreeText_PropertyType">
+                                <gco:CharacterString>Vorschau map.geo.admin.ch</gco:CharacterString>
+                                <gmd:PT_FreeText>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#DE">Vorschau map.geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#FR">Aperçu map.geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#IT">Previsione map.geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#EN">Preview map.geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                </gmd:PT_FreeText>
+                            </gmd:description>
+                        </gmd:CI_OnlineResource>
+                    </gmd:onLine>
+                </gmd:MD_DigitalTransferOptions>
+            </gmd:transferOptions>
+            <gmd:transferOptions>
+                <gmd:MD_DigitalTransferOptions>
+                    <gmd:onLine>
+                        <gmd:CI_OnlineResource>
+                            <gmd:linkage>
+                                <gmd:URL>https://www.are.admin.ch/are/de/home/laendliche-raeume-und-berggebiete/internationale-zusammenarbeit/alpenkonvention.html</gmd:URL>
+                            </gmd:linkage>
+                            <gmd:protocol>
+                                <gco:CharacterString>WWW:LINK</gco:CharacterString>
+                            </gmd:protocol>
+                            <gmd:description xsi:type="gmd:PT_FreeText_PropertyType">
+                                <gco:CharacterString>Webseite des ARE über die Alpenkonvention</gco:CharacterString>
+                                <gmd:PT_FreeText>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#DE">Webseite des ARE über die Alpenkonvention</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#FR">Page web de l'ARE sur la Convention alpine</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                </gmd:PT_FreeText>
+                            </gmd:description>
+                        </gmd:CI_OnlineResource>
+                    </gmd:onLine>
+                    <gmd:onLine>
+                        <gmd:CI_OnlineResource>
+                            <gmd:linkage>
+                                <gmd:URL>https://data.geo.admin.ch/browser/index.html#/collections/ch.are.alpenkonvention</gmd:URL>
+                            </gmd:linkage>
+                            <gmd:protocol>
+                                <gco:CharacterString>WWW:DOWNLOAD-URL</gco:CharacterString>
+                            </gmd:protocol>
+                            <gmd:description xsi:type="gmd:PT_FreeText_PropertyType">
+                                <gco:CharacterString>Download von data.geo.admin.ch</gco:CharacterString>
+                                <gmd:PT_FreeText>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#DE">Download von data.geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#FR">Serveur de téléchargement de geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#IT">Server di download di geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#EN">Download server from geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                </gmd:PT_FreeText>
+                            </gmd:description>
+                            <gmd:function>
+                                <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download" />
+                            </gmd:function>
+                        </gmd:CI_OnlineResource>
+                    </gmd:onLine>
+                    <gmd:onLine>
+                        <gmd:CI_OnlineResource>
+                            <gmd:linkage>
+                                <gmd:URL>http://wms.geo.admin.ch/?SERVICE=WMS&amp;VERSION=1.3.0&amp;REQUEST=GetCapabilities&amp;lang=de</gmd:URL>
+                            </gmd:linkage>
+                            <gmd:protocol>
+                                <gco:CharacterString>OGC:WMS</gco:CharacterString>
+                            </gmd:protocol>
+                            <gmd:name xsi:type="gmd:PT_FreeText_PropertyType">
+                                <gco:CharacterString>ch.are.alpenkonvention</gco:CharacterString>
+                                <gmd:PT_FreeText>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#DE">ch.are.alpenkonvention</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                </gmd:PT_FreeText>
+                            </gmd:name>
+                            <gmd:description xsi:type="gmd:PT_FreeText_PropertyType">
+                                <gco:CharacterString>WMS Dienst von geo.admin.ch</gco:CharacterString>
+                                <gmd:PT_FreeText>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#DE">WMS Dienst von geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#FR">Service WMS de geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#IT">Servizio WMS di geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#EN">WMS Service from geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                </gmd:PT_FreeText>
+                            </gmd:description>
+                        </gmd:CI_OnlineResource>
+                    </gmd:onLine>
+                </gmd:MD_DigitalTransferOptions>
+            </gmd:transferOptions>
+            <gmd:transferOptions>
+                <gmd:MD_DigitalTransferOptions>
+                    <gmd:onLine>
+                        <gmd:CI_OnlineResource>
+                            <gmd:linkage>
+                                <gmd:URL>https://www.are.admin.ch/are/de/home/raumentwicklung-und-raumplanung/grundlagen-und-daten/minimale-geodatenmodelle/alpenkonvention.html</gmd:URL>
+                            </gmd:linkage>
+                            <gmd:protocol>
+                                <gco:CharacterString>WWW:DOWNLOAD-URL</gco:CharacterString>
+                            </gmd:protocol>
+                            <gmd:description xsi:type="gmd:PT_FreeText_PropertyType">
+                                <gco:CharacterString>Minimales Geodatenmodell in INTERLIS 2.3</gco:CharacterString>
+                                <gmd:PT_FreeText>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#DE">Minimales Geodatenmodell in INTERLIS 2.3</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#FR">Modèle de données minimal en INTERLIS 2.3</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                </gmd:PT_FreeText>
+                            </gmd:description>
+                        </gmd:CI_OnlineResource>
+                    </gmd:onLine>
+                </gmd:MD_DigitalTransferOptions>
+            </gmd:transferOptions>
+            <gmd:transferOptions>
+                <gmd:MD_DigitalTransferOptions>
+                    <gmd:onLine>
+                        <gmd:CI_OnlineResource>
+                            <gmd:linkage>
+                                <gmd:URL>http://map.are.admin.ch/?Y=660000&amp;X=190000&amp;zoom=1&amp;bgLayer=ch.swisstopo.pixelkarte-grau&amp;layers=ch.are.alpenkonvention&amp;layers_opacity=0.2&amp;layers_visibility=true&amp;lang=de</gmd:URL>
+                            </gmd:linkage>
+                            <gmd:protocol>
+                                <gco:CharacterString>CHTOPO:specialised-geoportal</gco:CharacterString>
+                            </gmd:protocol>
+                            <gmd:description xsi:type="gmd:PT_FreeText_PropertyType">
+                                <gco:CharacterString>Web-GIS ARE</gco:CharacterString>
+                                <gmd:PT_FreeText>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#DE">Web-GIS ARE</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#FR">Web-SIG ARE</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                </gmd:PT_FreeText>
+                            </gmd:description>
+                        </gmd:CI_OnlineResource>
+                    </gmd:onLine>
+                </gmd:MD_DigitalTransferOptions>
+            </gmd:transferOptions>
+            <gmd:transferOptions>
+                <gmd:MD_DigitalTransferOptions>
+                    <gmd:onLine>
+                        <gmd:CI_OnlineResource>
+                            <gmd:linkage>
+                                <gmd:URL>http://www.alpconv.org</gmd:URL>
+                            </gmd:linkage>
+                            <gmd:protocol>
+                                <gco:CharacterString>WWW:LINK</gco:CharacterString>
+                            </gmd:protocol>
+                            <gmd:description xsi:type="gmd:PT_FreeText_PropertyType">
+                                <gco:CharacterString>Offizielle Homepage der Alpenkonvention</gco:CharacterString>
+                                <gmd:PT_FreeText>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#DE">Offizielle Homepage der Alpenkonvention</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#FR">Site web officiel de la Convention alpine</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#IT">Pagina web ufficiale della Convenzione delle alpi</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#EN">Official Website of the Alpine Convention</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                </gmd:PT_FreeText>
+                            </gmd:description>
+                            <gmd:function>
+                                <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="information" />
+                            </gmd:function>
+                        </gmd:CI_OnlineResource>
+                    </gmd:onLine>
+                </gmd:MD_DigitalTransferOptions>
+            </gmd:transferOptions>
+            <gmd:transferOptions>
+                <gmd:MD_DigitalTransferOptions>
+                    <gmd:onLine>
+                        <gmd:CI_OnlineResource>
+                            <gmd:linkage>
+                                <gmd:URL>http://map.geo.admin.ch/?selectedNode=LT1_1&amp;Y=660000&amp;X=190000&amp;zoom=1&amp;bgLayer=ch.swisstopo.pixelkarte-farbe&amp;layers=ch.are.alpenkonvention&amp;layers_opacity=0.6&amp;layers_visibility=true&amp;lang=de</gmd:URL>
+                            </gmd:linkage>
+                            <gmd:protocol>
+                                <gco:CharacterString>WWW:LINK</gco:CharacterString>
+                            </gmd:protocol>
+                            <gmd:description xsi:type="gmd:PT_FreeText_PropertyType">
+                                <gco:CharacterString>Die Alpenkonvention im Bundesgeoportal</gco:CharacterString>
+                                <gmd:PT_FreeText>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#DE">Die Alpenkonvention im Bundesgeoportal</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#FR">La convention alpine dans le géoportail fédéral</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                </gmd:PT_FreeText>
+                            </gmd:description>
+                            <gmd:function>
+                                <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="information" />
+                            </gmd:function>
+                        </gmd:CI_OnlineResource>
+                    </gmd:onLine>
+                </gmd:MD_DigitalTransferOptions>
+            </gmd:transferOptions>
+            <gmd:transferOptions>
+                <gmd:MD_DigitalTransferOptions>
+                    <gmd:onLine>
+                        <gmd:CI_OnlineResource>
+                            <gmd:linkage>
+                                <gmd:URL>http://www.admin.ch/ch/d/sr/0_700_1/app1.html</gmd:URL>
+                            </gmd:linkage>
+                            <gmd:protocol>
+                                <gco:CharacterString>WWW:LINK</gco:CharacterString>
+                            </gmd:protocol>
+                            <gmd:description xsi:type="gmd:PT_FreeText_PropertyType">
+                                <gco:CharacterString>Liste der administrativen Einheiten des Alpenraumes in der schweizerischen Eidgenossenschaft</gco:CharacterString>
+                                <gmd:PT_FreeText>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#DE">Liste der administrativen Einheiten des Alpenraumes in der schweizerischen Eidgenossenschaft</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#FR">Liste des unités administratives de l'espace alpin dans la Confédération suisse</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#IT">Elenco delle unità amministrative dello spazio alpino nella Confederazione Svizzera</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                </gmd:PT_FreeText>
+                            </gmd:description>
+                            <gmd:function>
+                                <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="information" />
+                            </gmd:function>
+                        </gmd:CI_OnlineResource>
+                    </gmd:onLine>
+                    <gmd:onLine>
+                        <gmd:CI_OnlineResource>
+                            <gmd:linkage>
+                                <gmd:URL>https://api3.geo.admin.ch/rest/services/api/MapServer/ch.are.alpenkonvention</gmd:URL>
+                            </gmd:linkage>
+                            <gmd:protocol>
+                                <gco:CharacterString>ESRI:REST</gco:CharacterString>
+                            </gmd:protocol>
+                            <gmd:name xsi:type="gmd:PT_FreeText_PropertyType">
+                                <gco:CharacterString>RESTful API von geo.admin.ch</gco:CharacterString>
+                                <gmd:PT_FreeText>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#DE">RESTful API von geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#FR">RESTful API de geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#IT">RESTful API da geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#EN">RESTful API from geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#RM">RESTful API dad geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                </gmd:PT_FreeText>
+                            </gmd:name>
+                            <gmd:description xsi:type="gmd:PT_FreeText_PropertyType">
+                                <gco:CharacterString>RESTful API von geo.admin.ch</gco:CharacterString>
+                                <gmd:PT_FreeText>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#DE">RESTful API von geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#FR">RESTful API de geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#IT">RESTful API da geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#EN">RESTful API from geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#RM">RESTful API dad geo.admin.ch</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                </gmd:PT_FreeText>
+                            </gmd:description>
+                        </gmd:CI_OnlineResource>
+                    </gmd:onLine>
+                    <gmd:onLine>
+                        <gmd:CI_OnlineResource>
+                            <gmd:linkage>
+                                <gmd:URL>https://opendata.swiss/de/perma/8698bf0b-fceb-4f0f-989b-111e7c4af0a4@bundesamt-fur-raumentwicklung-are</gmd:URL>
+                            </gmd:linkage>
+                            <gmd:protocol>
+                                <gco:CharacterString>OPENDATA:SWISS</gco:CharacterString>
+                            </gmd:protocol>
+                            <gmd:name xsi:type="gmd:PT_FreeText_PropertyType">
+                                <gco:CharacterString>Permalink opendata.swiss</gco:CharacterString>
+                                <gmd:PT_FreeText>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#DE">Permalink opendata.swiss</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#FR">Permalink opendata.swiss</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#IT">Permalink opendata.swiss</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#EN">Permalink opendata.swiss</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                </gmd:PT_FreeText>
+                            </gmd:name>
+                            <gmd:description xsi:type="gmd:PT_FreeText_PropertyType">
+                                <gco:CharacterString>Permalink opendata.swiss</gco:CharacterString>
+                                <gmd:PT_FreeText>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#DE">Permalink opendata.swiss</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#FR">Permalink opendata.swiss</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#IT">Permalink opendata.swiss</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#EN">Permalink opendata.swiss</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                </gmd:PT_FreeText>
+                            </gmd:description>
+                        </gmd:CI_OnlineResource>
+                    </gmd:onLine>
+                </gmd:MD_DigitalTransferOptions>
+            </gmd:transferOptions>
+        </gmd:MD_Distribution>
+    </gmd:distributionInfo>
+    <gmd:dataQualityInfo xmlns:comp="http://www.geocat.ch/2003/05/gateway/GM03Comprehensive" xmlns:xalan="http://xml.apache.org/xalan" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gmd:DQ_DataQuality>
+            <gmd:scope>
+                <gmd:DQ_Scope>
+                    <gmd:level>
+                        <gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset" />
+                    </gmd:level>
+                </gmd:DQ_Scope>
+            </gmd:scope>
+            <gmd:lineage>
+                <gmd:LI_Lineage>
+                    <gmd:statement xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Digitalisiert nach den administrativen Einheiten der Schweiz, die im Anhang des Übereinkommens erscheinen.</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Digitalisiert nach den administrativen Einheiten der Schweiz, die im Anhang des Übereinkommens erscheinen.</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:statement>
+                </gmd:LI_Lineage>
+            </gmd:lineage>
+        </gmd:DQ_DataQuality>
+    </gmd:dataQualityInfo>
+    <gmd:metadataConstraints xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <gmd:MD_LegalConstraints />
+    </gmd:metadataConstraints>
+</gmd:MD_Metadata>

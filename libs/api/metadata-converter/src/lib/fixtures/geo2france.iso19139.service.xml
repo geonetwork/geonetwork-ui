@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:gco="http://www.isotc211.org/2005/gco"
+                 xmlns:srv="http://www.isotc211.org/2005/srv"
+                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                 xmlns:gts="http://www.isotc211.org/2005/gts"
+                 xmlns:gsr="http://www.isotc211.org/2005/gsr"
+                 xmlns:gmi="http://www.isotc211.org/2005/gmi"
+                 xmlns:gml="http://www.opengis.net/gml"
+                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                 xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.isotc211.org/2005/gmd/gmd.xsd http://www.isotc211.org/2005/gmx http://www.isotc211.org/2005/gmx/gmx.xsd http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd">
+    <gmd:fileIdentifier>
+        <gco:CharacterString>97d343c5-d026-4f07-8a6c-79f9329b6c21</gco:CharacterString>
+    </gmd:fileIdentifier>
+    <gmd:language>
+        <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="fre"/>
+    </gmd:language>
+    <gmd:characterSet>
+        <gmd:MD_CharacterSetCode codeListValue="utf8"
+                                 codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode"/>
+    </gmd:characterSet>
+    <gmd:hierarchyLevel>
+        <gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
+                          codeListValue="service"/>
+    </gmd:hierarchyLevel>
+    <gmd:contact>
+        <gmd:CI_ResponsibleParty>
+            <gmd:individualName>
+                <gco:CharacterString>DESSE Alexis</gco:CharacterString>
+            </gmd:individualName>
+            <gmd:organisationName>
+                <gco:CharacterString>Conservatoire botanique national de Bailleul</gco:CharacterString>
+            </gmd:organisationName>
+            <gmd:positionName gco:nilReason="missing">
+                <gco:CharacterString/>
+            </gmd:positionName>
+            <gmd:contactInfo>
+                <gmd:CI_Contact>
+                    <gmd:phone>
+                        <gmd:CI_Telephone>
+                            <gmd:voice gco:nilReason="missing">
+                                <gco:CharacterString/>
+                            </gmd:voice>
+                            <gmd:facsimile gco:nilReason="missing">
+                                <gco:CharacterString/>
+                            </gmd:facsimile>
+                        </gmd:CI_Telephone>
+                    </gmd:phone>
+                    <gmd:address>
+                        <gmd:CI_Address>
+                            <gmd:deliveryPoint gco:nilReason="missing">
+                                <gco:CharacterString/>
+                            </gmd:deliveryPoint>
+                            <gmd:city gco:nilReason="missing">
+                                <gco:CharacterString/>
+                            </gmd:city>
+                            <gmd:administrativeArea gco:nilReason="missing">
+                                <gco:CharacterString/>
+                            </gmd:administrativeArea>
+                            <gmd:postalCode gco:nilReason="missing">
+                                <gco:CharacterString/>
+                            </gmd:postalCode>
+                            <gmd:country gco:nilReason="missing">
+                                <gco:CharacterString/>
+                            </gmd:country>
+                            <gmd:electronicMailAddress>
+                                <gco:CharacterString>a.desse@cbnbl.org</gco:CharacterString>
+                            </gmd:electronicMailAddress>
+                        </gmd:CI_Address>
+                    </gmd:address>
+                    <gmd:onlineResource>
+                        <gmd:CI_OnlineResource>
+                            <gmd:linkage>
+                                <gmd:URL>digitale.cbnbl.org</gmd:URL>
+                            </gmd:linkage>
+                        </gmd:CI_OnlineResource>
+                    </gmd:onlineResource>
+                </gmd:CI_Contact>
+            </gmd:contactInfo>
+            <gmd:role>
+                <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                                 codeListValue="author"/>
+            </gmd:role>
+        </gmd:CI_ResponsibleParty>
+    </gmd:contact>
+    <gmd:dateStamp>
+        <gco:DateTime>2022-02-23T13:02:17</gco:DateTime>
+    </gmd:dateStamp>
+    <gmd:metadataStandardName>
+        <gco:CharacterString>ISO 19115:2003/19139</gco:CharacterString>
+    </gmd:metadataStandardName>
+    <gmd:metadataStandardVersion>
+        <gco:CharacterString>1.0</gco:CharacterString>
+    </gmd:metadataStandardVersion>
+    <gmd:spatialRepresentationInfo>
+        <gmd:MD_VectorSpatialRepresentation>
+            <gmd:topologyLevel>
+                <gmd:MD_TopologyLevelCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_TopologyLevelCode"
+                                          codeListValue="geometryOnly"/>
+            </gmd:topologyLevel>
+            <gmd:geometricObjects>
+                <gmd:MD_GeometricObjects>
+                    <gmd:geometricObjectType>
+                        <gmd:MD_GeometricObjectTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_GeometricObjectTypeCode"
+                                                        codeListValue="surface"/>
+                    </gmd:geometricObjectType>
+                </gmd:MD_GeometricObjects>
+            </gmd:geometricObjects>
+        </gmd:MD_VectorSpatialRepresentation>
+    </gmd:spatialRepresentationInfo>
+    <gmd:referenceSystemInfo>
+        <gmd:MD_ReferenceSystem/>
+    </gmd:referenceSystemInfo>
+    <gmd:referenceSystemInfo>
+        <gmd:MD_ReferenceSystem>
+            <gmd:referenceSystemIdentifier>
+                <gmd:RS_Identifier>
+                    <gmd:code>
+                        <gco:CharacterString>WGS 84 (EPSG:4326)</gco:CharacterString>
+                    </gmd:code>
+                    <gmd:codeSpace>
+                        <gco:CharacterString>EPSG</gco:CharacterString>
+                    </gmd:codeSpace>
+                    <gmd:version>
+                        <gco:CharacterString>8.6</gco:CharacterString>
+                    </gmd:version>
+                </gmd:RS_Identifier>
+            </gmd:referenceSystemIdentifier>
+        </gmd:MD_ReferenceSystem>
+    </gmd:referenceSystemInfo>
+    <gmd:identificationInfo>
+        <srv:SV_ServiceIdentification>
+            <gmd:citation>
+                <gmd:CI_Citation>
+                    <gmd:title>
+                        <gco:CharacterString>MEL - Pression d'inventaire - Plantes vasculaires tous statuts (Période récente - Par maille)</gco:CharacterString>
+                    </gmd:title>
+                    <gmd:alternateTitle gco:nilReason="missing"/>
+                    <gmd:date>
+                        <gmd:CI_Date>
+                            <gmd:date>
+                                <gco:DateTime>2020-01-24T12:00:00</gco:DateTime>
+                            </gmd:date>
+                            <gmd:dateType>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                     codeListValue="creation"/>
+                            </gmd:dateType>
+                        </gmd:CI_Date>
+                    </gmd:date>
+                </gmd:CI_Citation>
+            </gmd:citation>
+            <gmd:abstract>
+                <gco:CharacterString>Nombre, par maille d'1 km², d'observations de plantes vasculaires (tous statuts) pour le territoire de la Métropole européenne de Lille (MEL), réalisées depuis 2010
+
+                    Description du contenu
+                    Cette couche précise, par maille d'1 km² et pour le territoire de la Métropole européenne de Lille (MEL), le nombre d’observations de plantes vasculaires (Fougères et Plantes à graines) tous statuts et réalisées après le 31/12/2009.
+
+                    Données attributaires
+                    Maille [libelle] : libellé de la maille UTM 1 km².
+                    Nombre d’espèces [nbre] : nombre d’observations de plantes vasculaires (Fougères et Plantes à graines) tous statuts et réalisées depuis 2010 sur la maille.</gco:CharacterString>
+            </gmd:abstract>
+            <gmd:purpose gco:nilReason="missing">
+                <gco:CharacterString/>
+            </gmd:purpose>
+            <gmd:status>
+                <gmd:MD_ProgressCode codeListValue="onGoing"
+                                     codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"/>
+            </gmd:status>
+            <gmd:pointOfContact>
+                <gmd:CI_ResponsibleParty>
+                    <gmd:individualName>
+                        <gco:CharacterString>DESSE Alexis</gco:CharacterString>
+                    </gmd:individualName>
+                    <gmd:organisationName>
+                        <gco:CharacterString>Conservatoire botanique national de Bailleul</gco:CharacterString>
+                    </gmd:organisationName>
+                    <gmd:positionName gco:nilReason="missing">
+                        <gco:CharacterString/>
+                    </gmd:positionName>
+                    <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                            <gmd:phone>
+                                <gmd:CI_Telephone>
+                                    <gmd:voice gco:nilReason="missing">
+                                        <gco:CharacterString/>
+                                    </gmd:voice>
+                                    <gmd:facsimile gco:nilReason="missing">
+                                        <gco:CharacterString/>
+                                    </gmd:facsimile>
+                                </gmd:CI_Telephone>
+                            </gmd:phone>
+                            <gmd:address>
+                                <gmd:CI_Address>
+                                    <gmd:deliveryPoint gco:nilReason="missing">
+                                        <gco:CharacterString/>
+                                    </gmd:deliveryPoint>
+                                    <gmd:city gco:nilReason="missing">
+                                        <gco:CharacterString/>
+                                    </gmd:city>
+                                    <gmd:administrativeArea gco:nilReason="missing">
+                                        <gco:CharacterString/>
+                                    </gmd:administrativeArea>
+                                    <gmd:postalCode gco:nilReason="missing">
+                                        <gco:CharacterString/>
+                                    </gmd:postalCode>
+                                    <gmd:country gco:nilReason="missing">
+                                        <gco:CharacterString/>
+                                    </gmd:country>
+                                    <gmd:electronicMailAddress>
+                                        <gco:CharacterString>a.desse@cbnbl.org</gco:CharacterString>
+                                    </gmd:electronicMailAddress>
+                                </gmd:CI_Address>
+                            </gmd:address>
+                            <gmd:onlineResource>
+                                <gmd:CI_OnlineResource>
+                                    <gmd:linkage>
+                                        <gmd:URL>digitale.cbnbl.org</gmd:URL>
+                                    </gmd:linkage>
+                                </gmd:CI_OnlineResource>
+                            </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                    </gmd:contactInfo>
+                    <gmd:role>
+                        <gmd:CI_RoleCode codeListValue="author"
+                                         codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"/>
+                    </gmd:role>
+                </gmd:CI_ResponsibleParty>
+            </gmd:pointOfContact>
+            <gmd:resourceMaintenance>
+                <gmd:MD_MaintenanceInformation>
+                    <gmd:maintenanceAndUpdateFrequency>
+                        <gmd:MD_MaintenanceFrequencyCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_MaintenanceFrequencyCode"
+                                                         codeListValue="quarterly"/>
+                    </gmd:maintenanceAndUpdateFrequency>
+                </gmd:MD_MaintenanceInformation>
+            </gmd:resourceMaintenance>
+            <gmd:graphicOverview>
+                <gmd:MD_BrowseGraphic>
+                    <gmd:fileName>
+                        <gco:CharacterString>https://georchestra.cbnbl.org/geonetwork/srv/api/records/97d343c5-d026-4f07-8a6c-79f9329b6c21/attachments/mel_obstousta_pv_perrec_m1.GIF</gco:CharacterString>
+                    </gmd:fileName>
+                </gmd:MD_BrowseGraphic>
+            </gmd:graphicOverview>
+            <gmd:descriptiveKeywords>
+                <gmd:MD_Keywords>
+                    <gmd:keyword>
+                        <gco:CharacterString>Flore</gco:CharacterString>
+                    </gmd:keyword>
+                    <gmd:keyword>
+                        <gco:CharacterString>Plantes vasculaires</gco:CharacterString>
+                    </gmd:keyword>
+                    <gmd:keyword>
+                        <gco:CharacterString>Pression d'inventaire</gco:CharacterString>
+                    </gmd:keyword>
+                    <gmd:keyword>
+                        <gco:CharacterString>Période récente (depuis 2010)</gco:CharacterString>
+                    </gmd:keyword>
+                    <gmd:keyword>
+                        <gco:CharacterString>Maille 1 km²</gco:CharacterString>
+                    </gmd:keyword>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:descriptiveKeywords>
+                <gmd:MD_Keywords>
+                    <gmd:keyword gco:nilReason="missing">
+                        <gco:CharacterString/>
+                    </gmd:keyword>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:descriptiveKeywords>
+                <gmd:MD_Keywords>
+                    <gmd:keyword>
+                        <gco:CharacterString>Métropole européenne de Lille (MEL)</gco:CharacterString>
+                    </gmd:keyword>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                                codeListValue="theme"/>
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>Territoires</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:Date>2021-12-10</gco:Date>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                             codeListValue="publication"/>
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gmx:Anchor xlink:href="https://georchestra.cbnbl.org/geonetwork/srv/eng/thesaurus.download?ref=local.theme.TA_CBNBL">geonetwork.thesaurus.local.theme.TA_CBNBL</gmx:Anchor>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:resourceSpecificUsage/>
+            <gmd:resourceConstraints>
+                <gmd:MD_LegalConstraints>
+                    <gmd:useLimitation>
+                        <gco:CharacterString>Utilisation libre sous réserve de mentionner la source</gco:CharacterString>
+                    </gmd:useLimitation>
+                    <gmd:useLimitation>
+                        <gco:CharacterString>Source à citer :  Conservatoire botanique national de Bailleul, 1994-2020. Digitale2 (Système d'information sur la flore et la végétation sauvage du Nord-Ouest de la France), Bailleul. digitale.cbnbl.org</gco:CharacterString>
+                    </gmd:useLimitation>
+                    <gmd:accessConstraints>
+                        <gmd:MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
+                                                codeListValue="intellectualPropertyRights"/>
+                    </gmd:accessConstraints>
+                    <gmd:useConstraints>
+                        <gmd:MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
+                                                codeListValue="intellectualPropertyRights"/>
+                    </gmd:useConstraints>
+                </gmd:MD_LegalConstraints>
+            </gmd:resourceConstraints>
+            <srv:serviceType>
+                <gco:LocalName codeSpace="www.w3c.org">OGC:WMS, WFS</gco:LocalName>
+            </srv:serviceType>
+            <srv:accessProperties>
+                <gmd:MD_StandardOrderProcess>
+                    <gmd:fees>
+                        <gco:CharacterString>NONE</gco:CharacterString>
+                    </gmd:fees>
+                </gmd:MD_StandardOrderProcess>
+            </srv:accessProperties>
+            <srv:extent>
+                <gmd:EX_Extent>
+                    <gmd:temporalElement>
+                        <gmd:EX_TemporalExtent>
+                            <gmd:extent>
+                                <gml:TimePeriod gml:id="d143558e314a1052958">
+                                    <gml:beginPosition>2010-01-01</gml:beginPosition>
+                                </gml:TimePeriod>
+                            </gmd:extent>
+                        </gmd:EX_TemporalExtent>
+                    </gmd:temporalElement>
+                    <gmd:temporalElement/>
+                </gmd:EX_Extent>
+            </srv:extent>
+            <srv:extent>
+                <gmd:EX_Extent xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    <gmd:geographicElement>
+                        <gmd:EX_GeographicBoundingBox>
+                            <gmd:westBoundLongitude>
+                                <gco:Decimal>2.789133</gco:Decimal>
+                            </gmd:westBoundLongitude>
+                            <gmd:eastBoundLongitude>
+                                <gco:Decimal>3.272525</gco:Decimal>
+                            </gmd:eastBoundLongitude>
+                            <gmd:southBoundLatitude>
+                                <gco:Decimal>50.49973</gco:Decimal>
+                            </gmd:southBoundLatitude>
+                            <gmd:northBoundLatitude>
+                                <gco:Decimal>50.794814</gco:Decimal>
+                            </gmd:northBoundLatitude>
+                        </gmd:EX_GeographicBoundingBox>
+                    </gmd:geographicElement>
+                </gmd:EX_Extent>
+            </srv:extent>
+            <srv:extent>
+                <gmd:EX_Extent xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    <gmd:description>
+                        <gco:CharacterString>Métropole européenne de Lille (MEL)</gco:CharacterString>
+                    </gmd:description>
+                </gmd:EX_Extent>
+            </srv:extent>
+            <srv:couplingType>
+                <srv:SV_CouplingType codeListValue="tight"
+                                     codeList="http://www.isotc211.org/2005/iso19119/resources/Codelist/gmxCodelists.xml#SV_CouplingType"/>
+            </srv:couplingType>
+            <srv:containsOperations>
+                <srv:SV_OperationMetadata>
+                    <srv:operationName>
+                        <gco:CharacterString>GetCapabilities</gco:CharacterString>
+                    </srv:operationName>
+                    <srv:DCP>
+                        <srv:DCPList codeList="http://inspire.ec.europa.eu/metadata-codelist/DCPList"
+                                     codeListValue="XML"/>
+                    </srv:DCP>
+                    <srv:connectPoint>
+                        <gmd:CI_OnlineResource>
+                            <gmd:linkage>
+                                <gmd:URL/>
+                            </gmd:linkage>
+                        </gmd:CI_OnlineResource>
+                    </srv:connectPoint>
+                </srv:SV_OperationMetadata>
+            </srv:containsOperations>
+        </srv:SV_ServiceIdentification>
+    </gmd:identificationInfo>
+    <gmd:distributionInfo>
+        <gmd:MD_Distribution>
+            <gmd:distributionFormat xmlns:che="http://www.geocat.ch/2008/che">
+                <gmd:MD_Format>
+                    <gmd:name>
+                        <gco:CharacterString>OGC:WFS</gco:CharacterString>
+                    </gmd:name>
+                    <gmd:version>
+                        <gco:CharacterString>1.0.0</gco:CharacterString>
+                    </gmd:version>
+                </gmd:MD_Format>
+            </gmd:distributionFormat>
+            <gmd:distributionFormat xmlns:che="http://www.geocat.ch/2008/che">
+                <gmd:MD_Format>
+                    <gmd:name>
+                        <gco:CharacterString>OGC:WMS</gco:CharacterString>
+                    </gmd:name>
+                    <gmd:version>
+                        <gco:CharacterString>1.3.0</gco:CharacterString>
+                    </gmd:version>
+                </gmd:MD_Format>
+            </gmd:distributionFormat>
+            <gmd:transferOptions>
+                <gmd:MD_DigitalTransferOptions>
+                    <gmd:onLine>
+                        <gmd:CI_OnlineResource>
+                            <gmd:linkage>
+                                <gmd:URL>https://georchestra.cbnbl.org/geoserver/ows</gmd:URL>
+                            </gmd:linkage>
+                            <gmd:protocol>
+                                <gco:CharacterString>OGC:WMS</gco:CharacterString>
+                            </gmd:protocol>
+                            <gmd:name>
+                                <gco:CharacterString>opendata:mel_obstousta_pv_perrec_m1</gco:CharacterString>
+                            </gmd:name>
+                            <gmd:description>
+                                <gco:CharacterString>MEL - Pression d'inventaire - Plantes vasculaires tous statuts (Période récente - Par maille)</gco:CharacterString>
+                            </gmd:description>
+                        </gmd:CI_OnlineResource>
+                    </gmd:onLine>
+                    <gmd:onLine>
+                        <gmd:CI_OnlineResource>
+                            <gmd:linkage>
+                                <gmd:URL>https://georchestra.cbnbl.org/geoserver/ows</gmd:URL>
+                            </gmd:linkage>
+                            <gmd:protocol>
+                                <gco:CharacterString>OGC:WFS</gco:CharacterString>
+                            </gmd:protocol>
+                            <gmd:name>
+                                <gco:CharacterString>opendata:mel_obstousta_pv_perrec_m1</gco:CharacterString>
+                            </gmd:name>
+                            <gmd:description>
+                                <gco:CharacterString>MEL - Pression d'inventaire - Plantes vasculaires tous statuts (Période récente - Par maille)</gco:CharacterString>
+                            </gmd:description>
+                        </gmd:CI_OnlineResource>
+                    </gmd:onLine>
+                </gmd:MD_DigitalTransferOptions>
+            </gmd:transferOptions>
+        </gmd:MD_Distribution>
+    </gmd:distributionInfo>
+    <gmd:dataQualityInfo>
+        <gmd:DQ_DataQuality>
+            <gmd:scope>
+                <gmd:DQ_Scope>
+                    <gmd:level>
+                        <gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
+                                          codeListValue="service"/>
+                    </gmd:level>
+                </gmd:DQ_Scope>
+            </gmd:scope>
+            <gmd:report>
+                <gmd:DQ_DomainConsistency>
+                    <gmd:result>
+                        <gmd:DQ_ConformanceResult>
+                            <gmd:specification>
+                                <gmd:CI_Citation>
+                                    <gmd:title>
+                                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/Category/invocable">invocable</gmx:Anchor>
+                                    </gmd:title>
+                                    <gmd:date>
+                                        <gmd:CI_Date>
+                                            <gmd:date>
+                                                <gco:Date>2014-12-11</gco:Date>
+                                            </gmd:date>
+                                            <gmd:dateType>
+                                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                                     codeListValue="publication"/>
+                                            </gmd:dateType>
+                                        </gmd:CI_Date>
+                                    </gmd:date>
+                                </gmd:CI_Citation>
+                            </gmd:specification>
+                            <gmd:explanation>
+                                <gco:CharacterString>Conformant to the INSPIRE SDS specifications.</gco:CharacterString>
+                            </gmd:explanation>
+                            <gmd:pass>
+                                <gco:Boolean>true</gco:Boolean>
+                            </gmd:pass>
+                        </gmd:DQ_ConformanceResult>
+                    </gmd:result>
+                </gmd:DQ_DomainConsistency>
+            </gmd:report>
+            <gmd:report>
+                <gmd:DQ_ConceptualConsistency>
+                    <gmd:nameOfMeasure>
+                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/Criteria/availability">availability</gmx:Anchor>
+                    </gmd:nameOfMeasure>
+                    <gmd:measureIdentification>
+                        <gmd:MD_Identifier>
+                            <gmd:code>
+                                <gco:CharacterString>INSPIRE_service_availability</gco:CharacterString>
+                            </gmd:code>
+                        </gmd:MD_Identifier>
+                    </gmd:measureIdentification>
+                    <gmd:result>
+                        <gmd:DQ_QuantitativeResult>
+                            <gmd:valueUnit xlink:href="http://www.opengis.net/def/uom/OGC/1.0/unity"/>
+                            <gmd:value>
+                                <gco:Record>90</gco:Record>
+                            </gmd:value>
+                        </gmd:DQ_QuantitativeResult>
+                    </gmd:result>
+                </gmd:DQ_ConceptualConsistency>
+            </gmd:report>
+            <gmd:report>
+                <gmd:DQ_ConceptualConsistency>
+                    <gmd:nameOfMeasure>
+                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/Criteria/performance">performance</gmx:Anchor>
+                    </gmd:nameOfMeasure>
+                    <gmd:measureIdentification>
+                        <gmd:MD_Identifier>
+                            <gmd:code>
+                                <gco:CharacterString>INSPIRE_service_performance</gco:CharacterString>
+                            </gmd:code>
+                        </gmd:MD_Identifier>
+                    </gmd:measureIdentification>
+                    <gmd:result>
+                        <gmd:DQ_QuantitativeResult>
+                            <gmd:valueUnit xlink:href=" http://www.opengis.net/def/uom/SI/second"/>
+                            <gmd:value>
+                                <gco:Record>0.5</gco:Record>
+                            </gmd:value>
+                        </gmd:DQ_QuantitativeResult>
+                    </gmd:result>
+                </gmd:DQ_ConceptualConsistency>
+            </gmd:report>
+            <gmd:report>
+                <gmd:DQ_ConceptualConsistency>
+                    <gmd:nameOfMeasure>
+                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/Criteria/capacity">capacity</gmx:Anchor>
+                    </gmd:nameOfMeasure>
+                    <gmd:measureIdentification>
+                        <gmd:MD_Identifier>
+                            <gmd:code>
+                                <gco:CharacterString>INSPIRE_service_capacity</gco:CharacterString>
+                            </gmd:code>
+                        </gmd:MD_Identifier>
+                    </gmd:measureIdentification>
+                    <gmd:result>
+                        <gmd:DQ_QuantitativeResult>
+                            <gmd:valueUnit gco:nilReason="inapplicable"/>
+                            <gmd:value>
+                                <gco:Record>50</gco:Record>
+                            </gmd:value>
+                        </gmd:DQ_QuantitativeResult>
+                    </gmd:result>
+                </gmd:DQ_ConceptualConsistency>
+            </gmd:report>
+            <gmd:report>
+                <gmd:DQ_FormatConsistency>
+                    <gmd:result>
+                        <gmd:DQ_ConformanceResult>
+                            <gmd:specification>
+                                <gmd:CI_Citation>
+                                    <gmd:title>
+                                        <gmx:Anchor xlink:href="http://link,to/the.technical.specification">Description of technical specification</gmx:Anchor>
+                                    </gmd:title>
+                                    <gmd:date>
+                                        <gmd:CI_Date>
+                                            <gmd:date>
+                                                <gco:Date>2014-12-11</gco:Date>
+                                            </gmd:date>
+                                            <gmd:dateType>
+                                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                                     codeListValue="publication"/>
+                                            </gmd:dateType>
+                                        </gmd:CI_Date>
+                                    </gmd:date>
+                                </gmd:CI_Citation>
+                            </gmd:specification>
+                            <gmd:explanation>
+                                <gco:CharacterString>Conformant to the cited specifications.</gco:CharacterString>
+                            </gmd:explanation>
+                            <gmd:pass>
+                                <gco:Boolean>true</gco:Boolean>
+                            </gmd:pass>
+                        </gmd:DQ_ConformanceResult>
+                    </gmd:result>
+                </gmd:DQ_FormatConsistency>
+            </gmd:report>
+        </gmd:DQ_DataQuality>
+    </gmd:dataQualityInfo>
+</gmd:MD_Metadata>

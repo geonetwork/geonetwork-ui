@@ -1,0 +1,528 @@
+<?xml version="1.0"?>
+<rdf:RDF
+        xmlns:edp="https://europeandataportal.eu/voc#"
+        xmlns:dct="http://purl.org/dc/terms/"
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:dqv="http://www.w3.org/ns/dqv#"
+        xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
+        xmlns:dcat="http://www.w3.org/ns/dcat#"
+        xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+        xmlns:spdx="https://spdx.org/rdf/terms/#"
+        xmlns:foaf="http://xmlns.com/foaf/0.1/">
+    <dcat:CatalogRecord rdf:about="http://data.europa.eu/88u/record/393940cd-6a67-4190-8b91-378669cdea1d-bundesamt-fur-energie-bfe">
+        <edp:transReceived rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+        >2022-06-14T08:05:13Z</edp:transReceived>
+        <dqv:hasQualityMetadata rdf:resource="http://data.europa.eu/88u/metrics/393940cd-6a67-4190-8b91-378669cdea1d-bundesamt-fur-energie-bfe"/>
+        <edp:originalLanguage>de</edp:originalLanguage>
+        <foaf:primaryTopic>
+            <dcat:Dataset rdf:about="http://data.europa.eu/88u/dataset/393940cd-6a67-4190-8b91-378669cdea1d-bundesamt-fur-energie-bfe">
+                <dcat:theme rdf:resource="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/8ce7aec1-a363-4dbc-84be-f374f000536a">
+                        <dct:description xml:lang="de">Geopackage</dct:description>
+                        <dct:description xml:lang="it-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dct:format>GPKG</dct:format>
+                        <dct:description xml:lang="hu-t-de-t0-mtec">GeoPackage – Videó letöltés mp3-ban</dct:description>
+                        <dct:description xml:lang="lt-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dct:description xml:lang="sv-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dct:description xml:lang="fr-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dct:description xml:lang="ga-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dct:description xml:lang="hr-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dct:description xml:lang="bg-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dcat:accessURL rdf:resource="https://data.geo.admin.ch/ch.bfe.energiestaedte/gpkg/2056/ch.bfe.energiestaedte.zip"/>
+                        <dct:description xml:lang="sk-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dct:description xml:lang="cs-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dct:description xml:lang="ro-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dct:title xml:lang="mt-t-de-t0-mtec">Ippakkjar ta ‘GeoPackage</dct:title>
+                        <dct:description xml:lang="nl-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dct:description xml:lang="et-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dct:description xml:lang="pl-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dct:description xml:lang="da-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dct:description xml:lang="es-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dct:description xml:lang="pt-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dct:description xml:lang="en-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dct:description xml:lang="fi-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dct:description xml:lang="el-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dct:description xml:lang="sl-t-de-t0-mtec">GeoPackage</dct:description>
+                        <dct:title xml:lang="el-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dct:title xml:lang="sl-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dct:title xml:lang="ro-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dct:identifier>https://ckan.opendata.swiss/dataset/a6e6dd8c-d41d-4cfd-a582-ede009b31e4d/resource/4a53f612-b1b4-43ca-a5d6-b862d1f3dbfc</dct:identifier>
+                        <dct:title xml:lang="sk-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dct:title xml:lang="fi-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dct:title xml:lang="lt-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dct:title xml:lang="da-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dct:title xml:lang="pt-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dct:title xml:lang="en-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dct:title xml:lang="es-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dct:title xml:lang="nl-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dct:title xml:lang="sv-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dct:title xml:lang="et-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dct:title xml:lang="pl-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dct:title xml:lang="fr-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dct:title xml:lang="it-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dct:title xml:lang="ga-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dct:title xml:lang="bg-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dct:title xml:lang="hr-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dct:title xml:lang="cs-t-de-t0-mtec">GeoPackage</dct:title>
+                        <dcat:mediaType>Geopackage (ogc)</dcat:mediaType>
+                        <dct:description xml:lang="lv-t-de-t0-mtec">GeoPackage Sistēmas Prasības</dct:description>
+                        <dct:title xml:lang="hu-t-de-t0-mtec">GeoPackage – Videó letöltés mp3-ban</dct:title>
+                        <dct:title xml:lang="uk-t-de-t0-mtec">Геопакет геопакетів</dct:title>
+                        <dct:title xml:lang="lv-t-de-t0-mtec">GeoPackage Sistēmas Prasības</dct:title>
+                        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                        >2014-06-30T00:00:00</dct:issued>
+                        <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                        >2022-06-15T00:00:00</dct:modified>
+                        <dct:description xml:lang="uk-t-de-t0-mtec">Геопакет геопакетів</dct:description>
+                        <dct:title xml:lang="de">Geopackage</dct:title>
+                        <dcat:downloadURL rdf:resource="https://data.geo.admin.ch/ch.bfe.energiestaedte/gpkg/2056/ch.bfe.energiestaedte.zip"/>
+                        <dct:language>de</dct:language>
+                        <dct:rights>NonCommercialAllowed-CommercialAllowed-ReferenceRequired</dct:rights>
+                        <dct:description xml:lang="mt-t-de-t0-mtec">Ippakkjar ta ‘GeoPackage</dct:description>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <dct:description xml:lang="es-t-de-t0-mtec">La etiqueta Energiestadt es un certificado de rendimiento para los municipios que persiguen e implementan una política energética municipal sostenible. Las ciudades energéticas promueven las energías renovables, la movilidad respetuosa con el medio ambiente y se centran en el uso eficiente de los recursos. Para llegar a la etiqueta Energiestadt, un municipio debe haber implementado o decidido al menos el 50 % de su margen de maniobra de política energética, según lo determinado por el catálogo de Energy City.
+                    El premio más alto es el «European Energy Award®GOLD».
+                    Este premio se otorga a las ciudades energéticas que han implementado el 75 por ciento o más de las medidas tomadas por el catálogo creado durante el proceso de certificación.
+                    Con el Premio GOLD, las ciudades energéticas coronan su compromiso con un futuro energético sostenible.
+                    La etiqueta se basa en la evaluación de la política energética municipal en la planificación del desarrollo y la ordenación del territorio, edificios e instalaciones municipales, suministro y eliminación, movilidad, organización interna, comunicación y cooperación.</dct:description>
+                <dct:description xml:lang="uk-t-de-t0-mtec">Етикетка Energiestadt - це сертифікат ефективності для муніципалітетів, які проводять та реалізують сталу муніципальну енергетичну політику. Енергетичні міста сприяють поновлюваним джерелам енергії, екологічно чистій мобільності та фокусуються на ефективному використанні ресурсів. Для того, щоб досягти етикетки Energiestadt, муніципалітет повинен був впровадити або вирішити принаймні 50 % своєї енергетичної політики для маневрів, як це визначено каталогом Енергетичного міста.
+                    Найвища нагорода - «Європейська енергетична премія®GOLD».
+                    Ця нагорода присуджується енергетичним містам, які впровадили 75% або більше заходів, вжитих каталогом, створеним під час процесу сертифікації.
+                    З нагородою GOLD, енергетичні міста увінчують свою прихильність сталому енергетичному майбутньому.
+                    Етикетка базується на оцінці муніципальної енергетичної політики в плануванні розвитку та просторовому плануванні, муніципальних будівлях та об'єктах, постачанні та утилізації, мобільності, внутрішньої організації, комунікації та співпраці.</dct:description>
+                <dcat:theme rdf:resource="http://dcat-ap.ch/vocabulary/themes/energy"/>
+                <dct:description xml:lang="bg-t-de-t0-mtec">Етикетът Energestadt е сертификат за изпълнение на общини, които следват и прилагат устойчива общинска енергийна политика. Енергийните градове насърчават енергията от възобновяеми източници, екологосъобразната мобилност и се съсредоточават върху ефективното използване на ресурсите. За да достигне до етикета Energestadt, дадена община трябва да е въвела или определила най-малко 50 % от възможностите си за маневриране в областта на енергийната политика, както е определено в каталога на Energy City.
+                    Най-високата награда е „Европейската енергийна награда®GOLD“.
+                    Тази награда се присъжда на енергийни градове, които са изпълнили 75 % или повече от мерките, предприети от каталога, създаден по време на процеса на сертифициране.
+                    С наградата „Злато“ енергийните градове увенчават ангажимента си за устойчиво енергийно бъдеще.
+                    Етикетът се основава на оценка на общинската енергийна политика при планиране и устройствено планиране, общински сгради и съоръжения, доставка и обезвреждане, мобилност, вътрешна организация, комуникация и сътрудничество.</dct:description>
+                <dct:description xml:lang="pl-t-de-t0-mtec">Etykieta Energiestadt jest świadectwem wydajności dla gmin, które realizują i wdrażają zrównoważoną politykę energetyczną gmin. Miasta energetyczne promują odnawialne źródła energii, mobilność przyjazną dla środowiska i koncentrują się na efektywnym wykorzystaniu zasobów.
+                    Aby osiągnąć etykietę Energiestadt, gmina musi wdrożyć lub podjąć decyzję co najmniej 50 % swojego pola manewru w zakresie polityki energetycznej, zgodnie z katalogiem Energy City.
+                    Najwyższą nagrodą jest „European Energy Award®GOLD”.
+                    Nagroda przyznawana jest miastom energetycznym, które wdrożyły 75 % lub więcej środków podjętych przez katalog utworzony w trakcie procesu certyfikacji.
+                    Dzięki Złotej Nagrodzie miasta energetyczne wieńczą swoje zaangażowanie w zrównoważoną przyszłość energetyczną.
+                    Etykieta opiera się na ocenie miejskiej polityki energetycznej w planowaniu rozwoju i planowaniu przestrzennym, budynkach i obiektach komunalnych, dostawach i utylizacji, mobilności, organizacji wewnętrznej, komunikacji i współpracy.</dct:description>
+                <dcat:theme rdf:resource="http://publications.europa.eu/resource/authority/data-theme/ENER"/>
+                <dcat:theme rdf:resource="http://dcat-ap.ch/vocabulary/themes/territory"/>
+                <dct:language>de</dct:language>
+                <dct:title xml:lang="hu-t-de-t0-mtec">Energia városok</dct:title>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/bceea8d2-fb5f-40d5-96d4-2049f357a885">
+                        <dct:description xml:lang="it-t-de-t0-mtec">API di swisstopo REST</dct:description>
+                        <dct:language>de</dct:language>
+                        <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                        >2022-06-15T00:00:00</dct:modified>
+                        <dct:title xml:lang="es-t-de-t0-mtec">swisstopo REST API</dct:title>
+                        <dct:title xml:lang="de">swisstopo REST API</dct:title>
+                        <dct:description xml:lang="bg-t-de-t0-mtec">Swisstopo REST API</dct:description>
+                        <dct:description xml:lang="pl-t-de-t0-mtec">Swisstopo REST API</dct:description>
+                        <dct:title xml:lang="et-t-de-t0-mtec">swisstopo REST API</dct:title>
+                        <dct:title xml:lang="en-t-de-t0-mtec">swisstopo REST API</dct:title>
+                        <dct:description xml:lang="lt-t-de-t0-mtec">Swisstopo REST API</dct:description>
+                        <dct:title xml:lang="mt-t-de-t0-mtec">swisstopo REST API</dct:title>
+                        <dct:description xml:lang="ga-t-de-t0-mtec">Swisstopo REST API</dct:description>
+                        <dct:description xml:lang="cs-t-de-t0-mtec">Swisstopo REST API</dct:description>
+                        <dct:description xml:lang="el-t-de-t0-mtec">Swisstopo REST API</dct:description>
+                        <dct:description xml:lang="sk-t-de-t0-mtec">Swisstopo REST API</dct:description>
+                        <dct:description xml:lang="sv-t-de-t0-mtec">Swisstopo REST API</dct:description>
+                        <dct:title xml:lang="da-t-de-t0-mtec">swisstopo REST API</dct:title>
+                        <dct:title xml:lang="pt-t-de-t0-mtec">swisstopo REST API</dct:title>
+                        <dct:description xml:lang="hu-t-de-t0-mtec">Swisstopo REST API</dct:description>
+                        <dct:description xml:lang="fi-t-de-t0-mtec">Swisstopo REST API</dct:description>
+                        <dcat:accessURL rdf:resource="https://api3.geo.admin.ch/rest/services/api/MapServer/ch.bfe.energiestaedte"/>
+                        <dct:description xml:lang="sl-t-de-t0-mtec">Swisstopo REST API</dct:description>
+                        <dct:title xml:lang="nl-t-de-t0-mtec">swisstopo REST API</dct:title>
+                        <dct:description xml:lang="lv-t-de-t0-mtec">Swisstopo REST API</dct:description>
+                        <dct:description xml:lang="uk-t-de-t0-mtec">Swisstopo REST API</dct:description>
+                        <dct:title xml:lang="ro-t-de-t0-mtec">swisstopo REST API</dct:title>
+                        <dct:description xml:lang="hr-t-de-t0-mtec">Swisstopo REST API</dct:description>
+                        <dct:description xml:lang="fr-t-de-t0-mtec">API Swisstopo REST</dct:description>
+                        <dct:rights>NonCommercialAllowed-CommercialAllowed-ReferenceRequired</dct:rights>
+                        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                        >2014-06-30T00:00:00</dct:issued>
+                        <dct:identifier>https://ckan.opendata.swiss/dataset/a6e6dd8c-d41d-4cfd-a582-ede009b31e4d/resource/6ab0c87f-bbb2-4a94-90a8-c33c15764df5</dct:identifier>
+                        <dct:title xml:lang="lv-t-de-t0-mtec">Swisstopo REST API</dct:title>
+                        <dct:title xml:lang="sl-t-de-t0-mtec">Swisstopo REST API</dct:title>
+                        <dct:title xml:lang="uk-t-de-t0-mtec">Swisstopo REST API</dct:title>
+                        <dct:title xml:lang="fi-t-de-t0-mtec">Swisstopo REST API</dct:title>
+                        <dct:title xml:lang="hu-t-de-t0-mtec">Swisstopo REST API</dct:title>
+                        <dct:title xml:lang="sv-t-de-t0-mtec">Swisstopo REST API</dct:title>
+                        <dct:title xml:lang="pl-t-de-t0-mtec">Swisstopo REST API</dct:title>
+                        <dct:title xml:lang="ga-t-de-t0-mtec">Swisstopo REST API</dct:title>
+                        <dct:title xml:lang="lt-t-de-t0-mtec">Swisstopo REST API</dct:title>
+                        <dct:title xml:lang="hr-t-de-t0-mtec">Swisstopo REST API</dct:title>
+                        <dct:title xml:lang="sk-t-de-t0-mtec">Swisstopo REST API</dct:title>
+                        <dct:title xml:lang="bg-t-de-t0-mtec">Swisstopo REST API</dct:title>
+                        <dct:title xml:lang="el-t-de-t0-mtec">Swisstopo REST API</dct:title>
+                        <dct:title xml:lang="cs-t-de-t0-mtec">Swisstopo REST API</dct:title>
+                        <dct:description xml:lang="en-t-de-t0-mtec">swisstopo REST API</dct:description>
+                        <dct:description xml:lang="ro-t-de-t0-mtec">swisstopo REST API</dct:description>
+                        <dct:description xml:lang="nl-t-de-t0-mtec">swisstopo REST API</dct:description>
+                        <dct:description xml:lang="pt-t-de-t0-mtec">swisstopo REST API</dct:description>
+                        <dct:title xml:lang="it-t-de-t0-mtec">API di swisstopo REST</dct:title>
+                        <dct:description xml:lang="da-t-de-t0-mtec">swisstopo REST API</dct:description>
+                        <dct:description xml:lang="mt-t-de-t0-mtec">swisstopo REST API</dct:description>
+                        <dct:description xml:lang="et-t-de-t0-mtec">swisstopo REST API</dct:description>
+                        <dct:description xml:lang="de">swisstopo REST API</dct:description>
+                        <dct:description xml:lang="es-t-de-t0-mtec">swisstopo REST API</dct:description>
+                        <dct:format>API</dct:format>
+                        <dct:title xml:lang="fr-t-de-t0-mtec">API Swisstopo REST</dct:title>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <dct:title xml:lang="en">Energy cities</dct:title>
+                <dct:spatial>Schweiz</dct:spatial>
+                <dct:title xml:lang="pt-t-de-t0-mtec">Cidades de energia</dct:title>
+                <dcat:landingPage rdf:resource="https://www.bfe.admin.ch/energiestaedte"/>
+                <dcat:keyword xml:lang="fr">ifdg-linfrastructure-federale-de-donnees-geographiques</dcat:keyword>
+                <dct:description xml:lang="nl-t-de-t0-mtec">Het Energiestadt label is een prestatiecertificaat voor gemeenten die een duurzaam gemeentelijk energiebeleid voeren en implementeren. Energiesteden bevorderen hernieuwbare energie, milieuvriendelijke mobiliteit en richten zich op een efficiënt gebruik van hulpbronnen. Om het Energiestadt-label te bereiken, moet een gemeente ten minste 50 % van haar manoeuvreerruimte voor energiebeleid hebben geïmplementeerd of besloten, zoals bepaald in de Energy City-catalogus.
+                    De hoogste prijs is de „European Energy Award®GOLD”.
+                    Deze prijs wordt toegekend aan energiesteden die 75 procent of meer van de maatregelen die zijn genomen door de catalogus die tijdens het certificeringsproces is gemaakt, hebben geïmplementeerd.
+                    Met de GOLD Award bekronen energiesteden hun inzet voor een duurzame energietoekomst.
+                    Het label is gebaseerd op de beoordeling van het gemeentelijke energiebeleid in ontwikkelingsplanning en ruimtelijke ordening, gemeentelijke gebouwen en voorzieningen, levering en verwijdering, mobiliteit, interne organisatie, communicatie en samenwerking.</dct:description>
+                <dct:title xml:lang="hr-t-de-t0-mtec">Energetski gradovi</dct:title>
+                <dcat:theme rdf:resource="http://publications.europa.eu/resource/authority/data-theme/REGI"/>
+                <dct:description xml:lang="hr-t-de-t0-mtec">Oznaka Energiestadt certifikat je učinkovitosti za općine koje provode i provode održivu općinsku energetsku politiku. Energetski gradovi promiču energiju iz obnovljivih izvora, ekološki prihvatljivu mobilnost i usredotočuju se na učinkovito korištenje resursa. Kako bi dosegla oznaku Energiestadt, općina mora provesti ili odlučiti najmanje 50 % svojeg manevarskog prostora energetske politike, kako je utvrđeno u katalogu Energy City. Najveća nagrada je „European Energy Award®GOLD”. Nagrada se dodjeljuje energetskim gradovima koji su implementirali 75 posto ili više mjera poduzetih u katalogu izrađenom tijekom postupka certificiranja. S Nagradom ZLATNI, energetski gradovi okrune svoju predanost održivoj energetskoj budućnosti. Oznaka se temelji na procjeni komunalne energetske politike u razvojnom planiranju i prostornom planiranju, općinskim zgradama i objektima, opskrbi i odlaganju, mobilnosti, unutarnjoj organizaciji, komunikaciji i suradnji.</dct:description>
+                <dcat:theme rdf:resource="http://dcat-ap.ch/vocabulary/themes/culture"/>
+                <dct:title xml:lang="fi-t-de-t0-mtec">Energia Kaupungit</dct:title>
+                <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                >2014-06-30T00:00:00</dct:issued>
+                <dcat:contactPoint>
+                    <vcard:Organization>
+                        <vcard:hasEmail rdf:resource="mailto:geoinformation@bfe.admin.ch"/>
+                        <vcard:fn>geoinformation@bfe.admin.ch</vcard:fn>
+                    </vcard:Organization>
+                </dcat:contactPoint>
+                <dct:description xml:lang="it">Il label Città dell’energia è un riconoscimento per i Comuni che adottano e vivono una politica energetica comunale sostenibile. Le città dell’energia promuovono le energie rinnovabili, una mobilità sostenibile e utilizzano in modo efficiente le risorse. Per ottenere il riconoscimento i Comuni devono avere realizzato o deciso formalmente il 50 % delle misure possibili nell’ambito del proprio margine di manovra politico, scelte sulla base del Catalogo Città dell’energia standardizzato. Il massimo riconoscimento per le città dell’energia è l’«European Energy Award®GOLD», rilasciato solo alle città che hanno attuato almeno il 75 % delle misure definite nel catalogo stilato nell’ambito della procedura di certificazione. Con il GOLD-Award le città dell’energia coronano il proprio impegno per un futuro energetico sostenibile. Il riconoscimento è basato sulla valutazione della politica energetica comunale nei settori della pianificazione dello sviluppo, dell’ordinamento territoriale, degli edifici e degli impianti comunali, dei sistemi di approvvigionamento e di smaltimento, della mobilità, dell’organizzazione interna nonché della comunicazione e della cooperazione.</dct:description>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/2d28af36-fd6e-4a1d-a478-ac425abb767a">
+                        <dct:title xml:lang="lv-t-de-t0-mtec">Karte (Priekšskatījums) Fachportal — map.geo.admin.ch</dct:title>
+                        <dct:description xml:lang="hu-t-de-t0-mtec">Speciális portál – map.geo.admin.ch</dct:description>
+                        <dct:title xml:lang="uk-t-de-t0-mtec">Карта (Попередній перегляд) Fachportal - map.geo.admin.ch</dct:title>
+                        <dct:description xml:lang="ro-t-de-t0-mtec">Portalul specialiștilor – map.geo.admin.ch</dct:description>
+                        <dct:description xml:lang="es-t-de-t0-mtec">Portal especializado — map.geo.admin.ch</dct:description>
+                        <dct:description xml:lang="pt-t-de-t0-mtec">Portal especializado — map.geo.admin.ch</dct:description>
+                        <dct:identifier>https://ckan.opendata.swiss/dataset/a6e6dd8c-d41d-4cfd-a582-ede009b31e4d/resource/df2b42a7-00d0-41f7-b229-07863b6838a3</dct:identifier>
+                        <dct:title xml:lang="nl-t-de-t0-mtec">Kaart (Voorbeeld) Fachportal — map.geo.admin.ch</dct:title>
+                        <dct:description xml:lang="hr-t-de-t0-mtec">Specijalistički portal – map.geo.admin.ch</dct:description>
+                        <dct:title xml:lang="et-t-de-t0-mtec">Kaart (eelvaade) Fachportal – map.geo.admin.ch</dct:title>
+                        <dct:title xml:lang="sv-t-de-t0-mtec">Karta (förhandsgranska) Fachportal – map.geo.admin.ch</dct:title>
+                        <dct:title xml:lang="ga-t-de-t0-mtec">Mapa (Réamhamharc) Fachportal — map.geo.admin.ch</dct:title>
+                        <dct:description xml:lang="it">Geoportale tematico - map.geo.admin.ch</dct:description>
+                        <dct:title xml:lang="da-t-de-t0-mtec">Kort (Preview) Fachportal — kort.geo.admin.ch</dct:title>
+                        <dct:description xml:lang="nl-t-de-t0-mtec">Specialist portal — map.geo.admin.ch</dct:description>
+                        <dct:description xml:lang="da-t-de-t0-mtec">Specialist portal — map.geo.admin.ch</dct:description>
+                        <dct:title xml:lang="mt-t-de-t0-mtec">Mappa (Preview) Fachportal — map.geo.admin.ch</dct:title>
+                        <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                        >2022-06-15T00:00:00</dct:modified>
+                        <dct:title xml:lang="hu-t-de-t0-mtec">Térkép (előzetes) Fachportal – map.geo.admin.ch</dct:title>
+                        <dct:title xml:lang="de">Map (Preview) Fachportal - map.geo.admin.ch</dct:title>
+                        <dct:title xml:lang="pl-t-de-t0-mtec">Mapa (Podgląd) Fachportal – map.geo.admin.ch</dct:title>
+                        <dct:title xml:lang="fi-t-de-t0-mtec">Kartta (esikatselu) Fachportal – map.geo.admin.ch</dct:title>
+                        <dct:description xml:lang="pl-t-de-t0-mtec">Portal specjalistyczny – map.geo.admin.ch</dct:description>
+                        <dct:description xml:lang="bg-t-de-t0-mtec">Специализиран портал — map.geo.admin.ch</dct:description>
+                        <dct:description xml:lang="ga-t-de-t0-mtec">Tairseach speisialaithe — léarscáil.geo.admin.ch</dct:description>
+                        <dct:description xml:lang="fi-t-de-t0-mtec">Asiantuntijaportaali – map.geo.admin.ch</dct:description>
+                        <dct:title xml:lang="hr-t-de-t0-mtec">Karta (Pregled) Fachportal – map.geo.admin.ch</dct:title>
+                        <dct:title xml:lang="es-t-de-t0-mtec">Mapa (Preview) Fachportal — map.geo.admin.ch</dct:title>
+                        <dct:title xml:lang="pt-t-de-t0-mtec">Mapa (Preview) Fachportal — map.geo.admin.ch</dct:title>
+                        <dct:title xml:lang="lt-t-de-t0-mtec">Žemėlapis (Preview) Fachportal – map.geo.admin.ch</dct:title>
+                        <dct:title xml:lang="fr">Map (Preview) Géoportail thématique - map.geo.admin.ch</dct:title>
+                        <dct:description xml:lang="et-t-de-t0-mtec">Spetsialisti portaal – map.geo.admin.ch</dct:description>
+                        <dct:description xml:lang="sk-t-de-t0-mtec">Odborný portál – map.geo.admin.ch</dct:description>
+                        <dct:description xml:lang="cs-t-de-t0-mtec">Odborný portál – map.geo.admin.ch</dct:description>
+                        <dct:description xml:lang="sv-t-de-t0-mtec">Specialportal – map.geo.admin.ch</dct:description>
+                        <dct:title xml:lang="sk-t-de-t0-mtec">Mapa (Zobraziť) Fachportal – map.geo.admin.ch</dct:title>
+                        <dct:rights>NonCommercialAllowed-CommercialAllowed-ReferenceRequired</dct:rights>
+                        <dct:description xml:lang="lt-t-de-t0-mtec">Specialistų portalas – map.geo.admin.ch</dct:description>
+                        <dct:title xml:lang="bg-t-de-t0-mtec">Карта (Преглед) Fachportal — map.geo.admin.ch</dct:title>
+                        <dct:description xml:lang="lv-t-de-t0-mtec">Speciālistu portāls — map.geo.admin.ch</dct:description>
+                        <dct:language>it</dct:language>
+                        <dct:title xml:lang="sl-t-de-t0-mtec">Zemljevid (predogled) Fachportal – map.geo.admin.ch</dct:title>
+                        <dct:language>de</dct:language>
+                        <dct:title xml:lang="el-t-de-t0-mtec">Χάρτης (Προεπισκόπηση) Fachportal — map.geo.admin.ch</dct:title>
+                        <dct:description xml:lang="mt-t-de-t0-mtec">Portal speċjalizzat — map.geo.admin.ch</dct:description>
+                        <dct:title xml:lang="cs-t-de-t0-mtec">Mapa (Preview) Fachportal – map.geo.admin.ch</dct:title>
+                        <dct:title xml:lang="it">Map (Preview) Geoportale tematico - map.geo.admin.ch</dct:title>
+                        <dct:description xml:lang="fr">Géoportail thématique - map.geo.admin.ch</dct:description>
+                        <dcat:accessURL rdf:resource="https://map.geo.admin.ch/?topic=energie&amp;lang=de&amp;layers=ch.bfe.energiestaedte"/>
+                        <dct:title xml:lang="en">Map (Preview) Thematic geoportal - map.geo.admin.ch</dct:title>
+                        <dct:description xml:lang="sl-t-de-t0-mtec">Strokovni portal – map.geo.admin.ch</dct:description>
+                        <dct:description xml:lang="uk-t-de-t0-mtec">Спеціалізований портал - map.geo.admin.ch</dct:description>
+                        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                        >2014-06-30T00:00:00</dct:issued>
+                        <dct:language>en</dct:language>
+                        <dct:description xml:lang="en">Thematic geoportal - map.geo.admin.ch</dct:description>
+                        <dct:description xml:lang="de">Fachportal - map.geo.admin.ch</dct:description>
+                        <dct:format>SERVICE</dct:format>
+                        <dct:language>fr</dct:language>
+                        <dct:title xml:lang="ro-t-de-t0-mtec">Hartă (Previzualizare) Fachportal – map.geo.admin.ch</dct:title>
+                        <dct:description xml:lang="el-t-de-t0-mtec">Ειδική πύλη — map.geo.admin.ch</dct:description>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <dct:title xml:lang="bg-t-de-t0-mtec">Енергийни градове</dct:title>
+                <dct:publisher>
+                    <foaf:Organization rdf:about="https://www.bfe.admin.ch/bfe/de/home/versorgung/statistik-und-geodaten/geoinformation.html">
+                        <foaf:name>Bundesamt für Energie</foaf:name>
+                    </foaf:Organization>
+                </dct:publisher>
+                <dct:title xml:lang="it">Città dell’energia</dct:title>
+                <dct:description xml:lang="el-t-de-t0-mtec">Το σήμα Energiestadt είναι ένα πιστοποιητικό επιδόσεων για τους δήμους που ακολουθούν και εφαρμόζουν μια βιώσιμη πολιτική για την ενέργεια των δήμων. Οι πόλεις ενέργειας προωθούν τις ανανεώσιμες πηγές ενέργειας, την φιλική προς το περιβάλλον κινητικότητα και εστιάζουν στην αποδοτική χρήση των πόρων. Για να αποκτήσει το σήμα Energiestadt, ένας δήμος πρέπει να έχει υλοποιήσει ή να έχει αποφασίσει τουλάχιστον το 50 % του περιθωρίου ελιγμών του για την ενεργειακή πολιτική, όπως καθορίζεται από τον κατάλογο της Ενεργειακής Πόλης.
+                    Το υψηλότερο βραβείο είναι το «European Energy Award®GOLD».
+                    Το βραβείο απονέμεται σε ενεργειακές πόλεις που έχουν υλοποιήσει το 75 % ή περισσότερο των μέτρων που ελήφθησαν από τον κατάλογο που δημιουργήθηκε κατά τη διάρκεια της διαδικασίας πιστοποίησης.
+                    Με το βραβείο ΧΡΥΣΟ, οι ενεργειακές πόλεις τιμούν τη δέσμευσή τους για ένα βιώσιμο ενεργειακό μέλλον.
+                    Το σήμα βασίζεται στην αξιολόγηση της δημοτικής ενεργειακής πολιτικής στον αναπτυξιακό σχεδιασμό και τον χωροταξικό σχεδιασμό, τα δημοτικά κτίρια και εγκαταστάσεις, την προμήθεια και διάθεση, την κινητικότητα, την εσωτερική οργάνωση, την επικοινωνία και τη συνεργασία.</dct:description>
+                <dct:title xml:lang="mt-t-de-t0-mtec">Bliet ta’ l-Enerġija</dct:title>
+                <dct:title xml:lang="lv-t-de-t0-mtec">Enerģijas pilsētas</dct:title>
+                <dct:title xml:lang="ga-t-de-t0-mtec">Cathracha Fuinnimh</dct:title>
+                <dct:description xml:lang="fr">Le label «Cité de l’énergie» atteste les performances des communes qui pratiquent et mettent en œuvre une politique énergétique exemplaire en matière de développement durable. Les Cités de l’énergie promeuvent les énergies renouvelables et une mobilité respectueuse de l’environnement et elles favorisent l’utilisation efficace des ressources. Pour obtenir le label «Cité de l’énergie», une commune doit avoir décidé ou concrétisé au minimum 50% de la marge de manœuvre dont elle dispose en matière de politique énergétique (marge de manœuvre calculée sur la base du catalogue d’exigences correspondant). La plus haute distinction pour les cités de l’énergie est le «European Energy Award®GOLD». Cette distinction est octroyée aux Cités de l’énergie qui ont mis en œuvre au moins 75% des mesures du catalogue élaboré lors de la procédure de certification. Le GOLD Award récompense les Cités de l’énergie pour leur engagement en faveur d’un avenir énergétique durable. Il se fonde sur divers aspects de la politique énergétique communale: planification du développement et aménagement du territoire, bâtiments et installations communales, approvisionnement et gestion des déchets, mobilité, organisation interne, communication et coopération.</dct:description>
+                <dct:title xml:lang="sk-t-de-t0-mtec">Energetické mestá</dct:title>
+                <dct:title xml:lang="el-t-de-t0-mtec">Ενεργειακές πόλεις</dct:title>
+                <dct:title xml:lang="pl-t-de-t0-mtec">Miasta energetyczne</dct:title>
+                <dct:description xml:lang="da-t-de-t0-mtec">Energiestadt-mærket er et præstationscertifikat for kommuner, der forfølger og gennemfører en bæredygtig kommunal energipolitik. Energibyer fremmer vedvarende energi, miljøvenlig mobilitet og fokuserer på en effektiv udnyttelse af ressourcerne. For at nå Energiestadt-mærket skal en kommune have implementeret eller besluttet mindst 50 % af sit energipolitiske råderum som fastsat i Energy City-kataloget.
+                    Den højeste pris er "European Energy Award®GOLD".
+                    Denne pris uddeles til energibyer, der har gennemført 75 procent eller flere af de foranstaltninger, der er truffet af det katalog, der blev oprettet under certificeringsprocessen.
+                    Med GOLD Award kroner energibyerne deres engagement i en bæredygtig energifremtid.
+                    Mærket er baseret på vurdering af kommunal energipolitik i udviklingsplanlægning og fysisk planlægning, kommunale bygninger og faciliteter, forsyning og bortskaffelse, mobilitet, intern organisation, kommunikation og samarbejde.</dct:description>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/9144bbd2-3d36-498b-a838-b8f049eb497c">
+                        <dct:description xml:lang="en-t-de-t0-mtec">INTERLIS</dct:description>
+                        <dct:description xml:lang="it-t-de-t0-mtec">INTERLIS</dct:description>
+                        <dct:description xml:lang="fi-t-de-t0-mtec">INTERLIS</dct:description>
+                        <dct:description xml:lang="mt-t-de-t0-mtec">INTERLIS</dct:description>
+                        <dct:description xml:lang="ga-t-de-t0-mtec">INTERLIS</dct:description>
+                        <dct:description xml:lang="es-t-de-t0-mtec">INTERLIS</dct:description>
+                        <dct:description xml:lang="hr-t-de-t0-mtec">INTERLIS</dct:description>
+                        <dct:description xml:lang="el-t-de-t0-mtec">INTERLIS</dct:description>
+                        <dct:description xml:lang="nl-t-de-t0-mtec">INTERLIS</dct:description>
+                        <dct:description xml:lang="pl-t-de-t0-mtec">INTERLIS</dct:description>
+                        <dct:description xml:lang="et-t-de-t0-mtec">INTERLIS</dct:description>
+                        <dct:title xml:lang="de">Interlis</dct:title>
+                        <dct:description xml:lang="pt-t-de-t0-mtec">INTERLIS</dct:description>
+                        <dct:description xml:lang="cs-t-de-t0-mtec">INTERLIS</dct:description>
+                        <dct:description xml:lang="da-t-de-t0-mtec">I NÆRHEDEN AF INTERLIS</dct:description>
+                        <dcat:mediaType>INTERLIS</dcat:mediaType>
+                        <dct:description xml:lang="sv-t-de-t0-mtec">SVENSKA</dct:description>
+                        <dct:title xml:lang="sk-t-de-t0-mtec">SLOVENČINA</dct:title>
+                        <dct:title xml:lang="hu-t-de-t0-mtec">AZ INTERLIS</dct:title>
+                        <dct:rights>NonCommercialAllowed-CommercialAllowed-ReferenceRequired</dct:rights>
+                        <dcat:accessURL rdf:resource="https://data.geo.admin.ch/ch.bfe.energiestaedte/xtf/2056/ch.bfe.energiestaedte.zip"/>
+                        <dct:identifier>https://ckan.opendata.swiss/dataset/a6e6dd8c-d41d-4cfd-a582-ede009b31e4d/resource/e501ca6a-5052-42d1-8865-b4cf892543aa</dct:identifier>
+                        <dct:description xml:lang="ro-t-de-t0-mtec">ROMÂNĂ</dct:description>
+                        <dcat:downloadURL rdf:resource="https://data.geo.admin.ch/ch.bfe.energiestaedte/xtf/2056/ch.bfe.energiestaedte.zip"/>
+                        <dct:description xml:lang="uk-t-de-t0-mtec">МІЖНАРОДНИЙ МІЖНАРОДН</dct:description>
+                        <dct:title xml:lang="da-t-de-t0-mtec">I NÆRHEDEN AF INTERLIS</dct:title>
+                        <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                        >2022-06-15T00:00:00</dct:modified>
+                        <dct:title xml:lang="ga-t-de-t0-mtec">INTERLIS</dct:title>
+                        <dct:title xml:lang="cs-t-de-t0-mtec">INTERLIS</dct:title>
+                        <dct:title xml:lang="pt-t-de-t0-mtec">INTERLIS</dct:title>
+                        <dct:title xml:lang="et-t-de-t0-mtec">INTERLIS</dct:title>
+                        <dct:title xml:lang="hr-t-de-t0-mtec">INTERLIS</dct:title>
+                        <dct:title xml:lang="fr-t-de-t0-mtec">INTERLIS</dct:title>
+                        <dct:title xml:lang="bg-t-de-t0-mtec">INTERLIS</dct:title>
+                        <dct:title xml:lang="lt-t-de-t0-mtec">INTERLIS</dct:title>
+                        <dct:title xml:lang="sl-t-de-t0-mtec">INTERLIS</dct:title>
+                        <dct:title xml:lang="it-t-de-t0-mtec">INTERLIS</dct:title>
+                        <dct:title xml:lang="fi-t-de-t0-mtec">INTERLIS</dct:title>
+                        <dct:title xml:lang="mt-t-de-t0-mtec">INTERLIS</dct:title>
+                        <dct:title xml:lang="nl-t-de-t0-mtec">INTERLIS</dct:title>
+                        <dct:title xml:lang="el-t-de-t0-mtec">INTERLIS</dct:title>
+                        <dct:title xml:lang="es-t-de-t0-mtec">INTERLIS</dct:title>
+                        <dct:title xml:lang="pl-t-de-t0-mtec">INTERLIS</dct:title>
+                        <dct:title xml:lang="en-t-de-t0-mtec">INTERLIS</dct:title>
+                        <dct:title xml:lang="ro-t-de-t0-mtec">ROMÂNĂ</dct:title>
+                        <dct:description xml:lang="hu-t-de-t0-mtec">AZ INTERLIS</dct:description>
+                        <dct:description xml:lang="de">Interlis</dct:description>
+                        <dct:language>de</dct:language>
+                        <dct:description xml:lang="sk-t-de-t0-mtec">SLOVENČINA</dct:description>
+                        <dct:format>INTERLIS</dct:format>
+                        <dct:description xml:lang="lv-t-de-t0-mtec">INTERLIS INFORMĀCIJA</dct:description>
+                        <dct:title xml:lang="uk-t-de-t0-mtec">МІЖНАРОДНИЙ МІЖНАРОДН</dct:title>
+                        <dct:title xml:lang="lv-t-de-t0-mtec">INTERLIS INFORMĀCIJA</dct:title>
+                        <dct:title xml:lang="sv-t-de-t0-mtec">SVENSKA</dct:title>
+                        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                        >2014-06-30T00:00:00</dct:issued>
+                        <dct:description xml:lang="bg-t-de-t0-mtec">INTERLIS</dct:description>
+                        <dct:description xml:lang="sl-t-de-t0-mtec">INTERLIS</dct:description>
+                        <dct:description xml:lang="lt-t-de-t0-mtec">INTERLIS</dct:description>
+                        <dct:description xml:lang="fr-t-de-t0-mtec">INTERLIS</dct:description>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <dct:relation>
+                    <rdf:Description rdf:about="https://www.geocat.ch/geonetwork/srv/ger/md.viewer#/full_view/393940cd-6a67-4190-8b91-378669cdea1d">
+                        <rdfs:label>geocat.ch permalink</rdfs:label>
+                    </rdf:Description>
+                </dct:relation>
+                <dct:language>it</dct:language>
+                <dct:language>fr</dct:language>
+                <dct:description xml:lang="de">Das Label Energiestadt ist ein Leistungsausweis für Gemeinden, die eine nachhaltige kommunale Energiepolitik vorleben und umsetzen. Energiestädte fördern erneuerbare Energien, umweltverträgliche Mobilität und setzen auf eine effiziente Nutzung der Ressourcen. Um das Label Energiestadt zu erreichen, muss eine Gemeinde mindestens 50% ihres energiepolitischen Handlungsspielraums, ermittelt anhand des Energiestadt-Katalogs, realisiert oder beschlossen haben. Die höchste Auszeichnung ist der «European Energy Award®GOLD». Diese Ehrung erhalten Energiestädte, die 75 Prozent oder mehr der Massnahmen des beim Zertifizierungsverfahren erstellten Katalogs umgesetzt haben. Mit dem GOLD-Award krönen Energiestädte ihr Engagement für eine nachhaltige Energiezukunft. Das Label beruht auf der Beurteilung der kommunalen Energiepolitik in Entwicklungsplanung und Raumordnung, kommunaler Gebäude und Anlagen, der Versorgung und Entsorgung, der Mobilität, der internen Organisation sowie von Kommunikation und Kooperation.</dct:description>
+                <dct:description xml:lang="cs-t-de-t0-mtec">Energetický štítek je certifikát výkonnosti pro obce, které sledují a provádějí udržitelnou městskou energetickou politiku. Energetická města podporují energii z obnovitelných zdrojů, mobilitu šetrnou k životnímu prostředí a zaměřují se na účinné využívání zdrojů. Aby se obec dostala na štítek Energiestadt, musela zavést nebo rozhodnout alespoň o 50 % svého manévrovacího prostoru v oblasti energetické politiky, jak je stanoveno v katalogu Energy City.
+                    Nejvyšším oceněním je „European Energy Award®GOLD“.
+                    Toto ocenění je udělováno energetickým městům, která realizovala 75 % nebo více opatření přijatých katalogem vytvořeným během certifikačního procesu.
+                    Oceněním GOLD Award se energetická města zasazují o udržitelnou energetickou budoucnost.
+                    Energetický štítek je založen na hodnocení komunální energetické politiky v plánování rozvoje a územním plánování, obecních budovách a zařízeních, dodávkách a likvidaci, mobilitě, vnitřní organizaci, komunikaci a spolupráci.</dct:description>
+                <dct:description xml:lang="en">The Energy City label is used for certifying municipalities that develop and implement a sustainable energy policy. Municipalities that have been awarded this label promote renewable energy and ecological mobility, and focus on the efficient use of resources. In order to qualify for the label, a municipality must have realised or adopted at least 50 percent of its scope for action in the area of energy policy. Here the calculation is based on the Energy Cities catalogue. The European Energy Award®GOLD is the highest level of certification. This label is awarded to municipalities that have implemented at least 75 percent of the measures listed in the catalogue at the time of certification. Municipalities that qualify for this award demonstrate the highest level of commitment towards a sustainable energy future. The label is based on an assessment of municipal energy policy in the areas of development and spatial planning, municipal buildings and installations, supply and disposal, mobility, internal organisation, communication and cooperation.</dct:description>
+                <dct:description xml:lang="ga-t-de-t0-mtec">Is teastas feidhmíochta é an lipéad fuinnimh do bhardais a shaothraíonn beartas fuinnimh bardasach inbhuanaithe agus a chuireann chun feidhme é. Cuireann cathracha fuinnimh fuinneamh in-athnuaite, soghluaisteacht atá neamhdhíobhálach don chomhshaol chun cinn agus díríonn siad ar úsáid éifeachtúil acmhainní. Chun an lipéad fuinnimh a bhaint amach, ní mór do bhardas 50 % ar a laghad dá spás inlíochta beartais fuinnimh a bheith curtha i bhfeidhm nó cinneadh déanta aige, mar a chinntear i gcatalóg na Cathrach Fuinnimh.
+                    Is é “Gradam Fuinnimh na hEorpa®GOLD” an gradam is airde.
+                    Bronntar an dámhachtain seo ar chathracha fuinnimh a bhfuil 75 faoin gcéad nó níos mó de na bearta a rinne an chatalóg a cruthaíodh le linn an phróisis deimhniúcháin curtha i bhfeidhm acu.
+                    Le Gradam GOLD, tá cathracha fuinnimh i gcroílár a dtiomantas do thodhchaí fuinnimh inbhuanaithe.
+                    Tá an lipéad bunaithe ar mheasúnú ar bheartas fuinnimh bardasach i bpleanáil forbartha agus pleanáil spásúil, foirgnimh agus áiseanna bardasacha, soláthar agus diúscairt, soghluaisteacht, eagrú inmheánach, cumarsáid agus comhar.</dct:description>
+                <dct:description xml:lang="pt-t-de-t0-mtec">O rótulo Energiestadt é um certificado de desempenho para concelhos que buscam e implementam uma política energética municipal sustentável. As cidades energéticas promovem as energias renováveis, a mobilidade respeitadora do ambiente e centram-se na utilização eficiente dos recursos. Para chegar ao rótulo Energiestadt, um concelho deve ter implementado ou decidido pelo menos 50 % da sua margem de manobra para a política energética, conforme determinado pelo catálogo Energy City.
+                    O prêmio mais alto é o «European Energy Award®GOLD».
+                    Este prêmio é concedido a cidades de energia que implementaram 75 % ou mais das medidas tomadas pelo catálogo criado durante o processo de certificação.
+                    Com o Prêmio GOLD, as cidades de energia coroam seu compromisso com um futuro energético sustentável.
+                    O rótulo baseia-se na avaliação da política energética municipal no planeamento do desenvolvimento e do ordenamento do território, nos edifícios e instalações municipais, no fornecimento e eliminação, na mobilidade, na organização interna, na comunicação e na cooperação.</dct:description>
+                <dct:title xml:lang="uk-t-de-t0-mtec">Енергетичні міста</dct:title>
+                <dcat:keyword xml:lang="it">ifdg-infrastruttura-federale-dei-dati-geografici</dcat:keyword>
+                <dct:description xml:lang="lv-t-de-t0-mtec">Energiestadt marķējums ir izpildes sertifikāts pašvaldībām, kas īsteno un īsteno ilgtspējīgu pašvaldību enerģētikas politiku. Enerģijas pilsētas veicina atjaunojamo enerģiju, videi draudzīgu mobilitāti un koncentrējas uz resursu efektīvu izmantošanu. Lai sasniegtu Energiestadt marķējumu, pašvaldībai ir jāīsteno vai jāizlemj vismaz 50 % no savas enerģētikas politikas manevrēšanas iespējas, kā noteikts Energy City katalogā.
+                    Augstākā balva ir “Eiropas Enerģētikas balva®GOLD”.
+                    Šī balva tiek piešķirta enerģētikas pilsētām, kas ir īstenojušas 75 % vai vairāk pasākumu, ko veic sertifikācijas procesa laikā izveidotais katalogs.
+                    Ar GOLD balvu enerģētikas pilsētas vainago savu apņemšanos veidot ilgtspējīgu enerģētikas nākotni.
+                    Zīmes pamatā ir pašvaldības enerģētikas politikas novērtējums attīstības plānošanā un teritorijas plānošanā, pašvaldību ēkās un iekārtās, piegādē un likvidēšanā, mobilitātē, iekšējā organizācijā, komunikācijā un sadarbībā.</dct:description>
+                <dct:identifier>393940cd-6a67-4190-8b91-378669cdea1d@bundesamt-fur-energie-bfe</dct:identifier>
+                <dct:title xml:lang="nl-t-de-t0-mtec">Energiesteden</dct:title>
+                <dct:description xml:lang="hu-t-de-t0-mtec">Az Energiestadt címke olyan települések teljesítményigazolása, amelyek fenntartható önkormányzati energiapolitikát folytatnak és hajtanak végre. Az energiavárosok előmozdítják a megújuló energiákat, a környezetbarát mobilitást és az erőforrások hatékony felhasználására összpontosítanak. Az Energiestadt-címke eléréséhez az önkormányzatnak az Energy City katalógusban meghatározott energiapolitikai mozgásterének legalább 50%-át végre kellett hajtania vagy el kellett döntenie.
+                    A legmagasabb díj a European Energy Award® GOLD.
+                    Ezt a díjat azoknak az energiavárosoknak ítélik oda, amelyek a tanúsítási folyamat során létrehozott katalógus intézkedéseinek legalább 75%-át végrehajtották.
+                    A GOLD díjjal az energiavárosok megerősítik elkötelezettségüket a fenntartható energia jövője iránt.
+                    A címke alapja a települési energiapolitika értékelése a fejlesztéstervezés és területrendezés, a települési épületek és létesítmények, az ellátás és ártalmatlanítás, a mobilitás, a belső szervezés, a kommunikáció és az együttműködés terén.</dct:description>
+                <dct:description xml:lang="mt-t-de-t0-mtec">It-tikketta Energiestadt hija ċertifikat tal-prestazzjoni għall-muniċipalitajiet li jsegwu u jimplimentaw politika tal-enerġija muniċipali sostenibbli. Il-bliet tal-enerġija jippromwovu l-enerġiji rinnovabbli, il-mobbiltà li ma tagħmilx ħsara lill-ambjent u jiffukaw fuq l-użu effiċjenti tar-riżorsi. Sabiex tilħaq it-tikketta ta’ Energiestadt, muniċipalità trid tkun implimentat jew iddeċidiet mill-inqas 50 % tal-ispazju għall-immanuvrar tal-politika tal-enerġija tagħha, kif determinat mill-katalogu tal-Belt tal-Enerġija.
+                    L-ogħla premju huwa l-“Premju Ewropew għall-Enerġija®GOLD”.
+                    Dan il-premju jingħata lil bliet tal-enerġija li implimentaw 75 fil-mija jew aktar tal-miżuri meħuda mill-katalgu maħluq matul il-proċess ta’ ċertifikazzjoni.
+                    Bil-Premju GOLD, il-bliet tal-enerġija jinkurunaw l-impenn tagħhom għal futur ta’ enerġija sostenibbli.
+                    It-tikketta hija bbażata fuq il-valutazzjoni tal-politika tal-enerġija muniċipali fl-ippjanar tal-iżvilupp u l-ippjanar spazjali, il-bini u l-faċilitajiet muniċipali, il-provvista u r-rimi, il-mobbiltà, l-organizzazzjoni interna, il-komunikazzjoni u l-kooperazzjoni.</dct:description>
+                <dct:description xml:lang="ro-t-de-t0-mtec">Eticheta Energiestadt este un certificat de performanță pentru municipalitățile care urmăresc și pun în aplicare o politică energetică municipală durabilă. Orașele energetice promovează energiile regenerabile, mobilitatea ecologică și se concentrează pe utilizarea eficientă a resurselor. Pentru a ajunge la eticheta Energiestadt, o municipalitate trebuie să fi pus în aplicare sau să fi decis cel puțin 50 % din spațiul său de manevră pentru politica energetică, după cum se stabilește în catalogul Energy City.
+                    Cel mai mare premiu este „European Energy Award®GOLD”.
+                    Acest premiu este acordat orașelor energetice care au implementat 75 % sau mai mult din măsurile luate de catalogul creat în timpul procesului de certificare.
+                    Cu premiul GOLD, orasele energetice incoroneaza angajamentul lor pentru un viitor energetic durabil.
+                    Eticheta se bazează pe evaluarea politicii energetice municipale în planificarea dezvoltării și amenajarea teritoriului, clădiri și instalații municipale, furnizare și eliminare, mobilitate, organizare internă, comunicare și cooperare.</dct:description>
+                <dct:description xml:lang="sk-t-de-t0-mtec">Značka Energiestadt je osvedčenie o výkonnosti pre obce, ktoré sledujú a vykonávajú udržateľnú mestskú energetickú politiku. Energetické mestá podporujú energiu z obnoviteľných zdrojov, mobilitu šetrnú k životnému prostrediu a zameriavajú sa na efektívne využívanie zdrojov. Na to, aby obec dosiahla značku Energiestadt, musela zaviesť alebo rozhodnúť aspoň o 50 % svojho manévrovacieho priestoru v oblasti energetickej politiky, ako sa stanovuje v katalógu Energy City.
+                    Najvyššie ocenenie je „European Energy Award®GOLD“.
+                    Toto ocenenie sa udeľuje energetickým mestám, ktoré zaviedli 75 % alebo viac opatrení prijatých katalógom vytvoreným počas procesu certifikácie.
+                    S cenou GOLD Award energetické mestá korunujú svoj záväzok k udržateľnej energetickej budúcnosti.
+                    Značka je založená na hodnotení mestskej energetickej politiky pri plánovaní rozvoja a priestorovom plánovaní, komunálnych budovách a zariadeniach, dodávkach a likvidácii, mobilite, vnútornej organizácii, komunikácii a spolupráci.</dct:description>
+                <dct:language>en</dct:language>
+                <dct:title xml:lang="da-t-de-t0-mtec">Energibyer</dct:title>
+                <dct:title xml:lang="sl-t-de-t0-mtec">Energetska mesta</dct:title>
+                <dcat:keyword xml:lang="de">bgdi-bundesgeodaten-infrastruktur</dcat:keyword>
+                <dct:title xml:lang="es-t-de-t0-mtec">Ciudades de Energía</dct:title>
+                <dct:title xml:lang="cs-t-de-t0-mtec">Energetická města</dct:title>
+                <dcat:theme rdf:resource="http://publications.europa.eu/resource/authority/data-theme/EDUC"/>
+                <dct:description xml:lang="sv-t-de-t0-mtec">Energiestadt-märkningen är ett prestationscertifikat för kommuner som bedriver och genomför en hållbar kommunal energipolitik. Energistäder främjar förnybar energi, miljövänlig rörlighet och fokuserar på en effektiv resursanvändning. För att nå Energiestadt-märkningen måste en kommun ha genomfört eller beslutat om minst 50 % av sitt energipolitiska handlingsutrymme enligt Energy City-katalogen. Det högsta priset är European Energy Award®GOLD. Priset delas ut till energistäder som har genomfört 75 procent eller mer av de åtgärder som vidtagits av katalogen som skapats under certifieringsprocessen. Med GOLD Award kröner energistäderna sitt engagemang för en hållbar energiframtid.
+                    Märkningen bygger på bedömningen av kommunal energipolitik i utvecklingsplanering och fysisk planering, kommunala byggnader och anläggningar, försörjning och bortskaffande, rörlighet, intern organisation, kommunikation och samarbete.</dct:description>
+                <dct:title xml:lang="fr">Cités de l’énergie</dct:title>
+                <dct:title xml:lang="sv-t-de-t0-mtec">Energistäder</dct:title>
+                <dct:description xml:lang="fi-t-de-t0-mtec">Energiestadt-merkki on suorituskykysertifikaatti kunnille, jotka noudattavat ja toteuttavat kestävää kunnallista energiapolitiikkaa. Energiakaupungit edistävät uusiutuvia energialähteitä, ympäristöystävällistä liikkuvuutta ja keskittyvät resurssien tehokkaaseen käyttöön. Energiestadt-merkin saamiseksi kunnan on täytynyt toteuttaa tai päättää vähintään 50 prosenttia energiapoliittisesta liikkumavarastaan Energy City -luettelon mukaisesti.
+                    Korkein palkinto on ”European Energy Award®GOLD”.
+                    Palkinto myönnetään energiakaupungeille, jotka ovat toteuttaneet vähintään 75 prosenttia sertifiointiprosessin aikana laaditun luettelon toimista.
+                    GOLD-palkinnolla energiakaupungit kruunaavat sitoutumisensa kestävään energian tulevaisuuteen.
+                    Tunnus perustuu kunnallisen energiapolitiikan arviointiin kehittämis- ja aluesuunnittelussa, kunnallisissa rakennuksissa ja toimitiloissa, toimituksessa ja loppusijoituksessa, liikkuvuudessa, sisäisessä organisaatiossa, viestinnässä ja yhteistyössä.</dct:description>
+                <dct:description xml:lang="lt-t-de-t0-mtec">Energiestadt ženklas yra efektyvumo sertifikatas savivaldybėms, kurios vykdo ir įgyvendina tvarią savivaldybių energetikos politiką. Energetikos miestai skatina atsinaujinančiąją energiją, aplinką tausojantį judumą ir sutelkia dėmesį į efektyvų išteklių naudojimą. Kad pasiektų „Energytadt“ ženklą, savivaldybė turi būti įgyvendinusi arba nusprendusi bent 50 proc. savo energetikos politikos veiksmų laisvės, kaip nustatyta Energetikos miesto kataloge.
+                    Aukščiausias apdovanojimas – „European Energy Award®GOLD“.
+                    Šis apdovanojimas skiriamas energetikos miestams, įgyvendinusiems 75 proc. ar daugiau priemonių, kurių ėmėsi sertifikavimo proceso metu sudarytame kataloge.
+                    Su aukso apdovanojimu, energetikos miestai vainikuoja savo įsipareigojimą tvarios energetikos ateitį.
+                    Ženklas paremtas savivaldybės energetikos politikos vertinimu plėtros planavimo ir teritorijų planavimo, savivaldybių pastatų ir įrenginių, tiekimo ir šalinimo, mobilumo, vidaus organizavimo, komunikacijos ir bendradarbiavimo srityse.</dct:description>
+                <dct:title xml:lang="de">Energiestädte</dct:title>
+                <dct:title xml:lang="ro-t-de-t0-mtec">Orașe energetice</dct:title>
+                <dct:description xml:lang="et-t-de-t0-mtec">Energiestadti märgis on tulemuslikkuse sertifikaat omavalitsustele, kes taotlevad ja rakendavad säästvat munitsipaalenergiapoliitikat. Energialinnad edendavad taastuvenergiat, keskkonnasõbralikku liikuvust ja keskenduvad ressursside tõhusale kasutamisele. Energiestadti märgise saamiseks peab omavalitsus olema rakendanud või otsustanud vähemalt 50 % oma energiapoliitika manööverdamisruumist, nagu on kindlaks määratud Energy City kataloogis.
+                    Kõrgeim auhind on „European Energy Award®GOLD“.
+                    Auhind antakse energialinnadele, mis on rakendanud 75 % või rohkem sertifitseerimisprotsessi käigus loodud kataloogis võetud meetmetest.
+                    Kuldauhinnaga tähistavad energialinnad oma pühendumist säästvale energiatulevikule.
+                    Märgis põhineb munitsipaalenergiapoliitika hindamisel arengu planeerimisel ja ruumilisel planeerimisel, munitsipaalhoonetel ja -rajatistel, varustamisel ja kõrvaldamisel, liikuvusel, sisekorraldusel, suhtlemisel ja koostööl.</dct:description>
+                <dcat:keyword xml:lang="en">fsdi-federal-spatial-data-infrastructure</dcat:keyword>
+                <dct:title xml:lang="et-t-de-t0-mtec">Energialinnad</dct:title>
+                <dct:title xml:lang="lt-t-de-t0-mtec">Energetiniai miestai</dct:title>
+                <dct:description xml:lang="sl-t-de-t0-mtec">Oznaka Energiestadt je izkaznica o učinkovitosti za občine, ki izvajajo in izvajajo trajnostno občinsko energetsko politiko. Energetska mesta spodbujajo obnovljive vire energije, okolju prijazno mobilnost in se osredotočajo na učinkovito rabo virov. Da bi občina dosegla oznako Energiestadt, mora izvesti ali določiti vsaj 50 % svojega manevrskega prostora za energetsko politiko, kot je določeno v katalogu Energy City.
+                    Najvišja nagrada je „European Energy Award® GOLD“.
+                    Ta nagrada je podeljena energetskim mestom, ki so izvedla 75 odstotkov ali več ukrepov, ki jih je sprejel katalog, ustvarjen med postopkom certificiranja.
+                    Z zlato nagrado energetska mesta kronajo svojo zavezanost trajnostni energetski prihodnosti.
+                    Oznaka temelji na oceni občinske energetske politike v razvojnem načrtovanju in prostorskem načrtovanju, občinskih stavbah in objektih, dobavi in odstranjevanju, mobilnosti, notranji organizaciji, komunikaciji in sodelovanju.</dct:description>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/d0335f7c-bbc2-4b00-ad1c-def82c54c79a">
+                        <dct:format>WMS</dct:format>
+                        <dct:description xml:lang="bg-t-de-t0-mtec">Уеб картови услуги WMS</dct:description>
+                        <dct:description xml:lang="fi-t-de-t0-mtec">Web Karttapalvelut WMS</dct:description>
+                        <dct:language>de</dct:language>
+                        <dct:description xml:lang="ro-t-de-t0-mtec">Servicii de hărți web WMS</dct:description>
+                        <dct:description xml:lang="uk-t-de-t0-mtec">Послуги веб-карти WMS</dct:description>
+                        <dct:description xml:lang="et-t-de-t0-mtec">Veebikaardi teenused WMS</dct:description>
+                        <dct:title xml:lang="lv-t-de-t0-mtec">ch.bfe.energiestaedte</dct:title>
+                        <dct:title xml:lang="de">ch.bfe.energiestaedte</dct:title>
+                        <dct:description xml:lang="pt-t-de-t0-mtec">Serviços de Mapa Web WMS</dct:description>
+                        <dct:title xml:lang="uk-t-de-t0-mtec">ch.bfe.energiestaedte</dct:title>
+                        <dct:rights>NonCommercialAllowed-CommercialAllowed-ReferenceRequired</dct:rights>
+                        <dct:title xml:lang="pt-t-de-t0-mtec">ch.bfe.energiestaedte</dct:title>
+                        <dct:title xml:lang="et-t-de-t0-mtec">ch.bfe.energiestaedte</dct:title>
+                        <dct:title xml:lang="en">ch.bfe.energiestaedte</dct:title>
+                        <dct:title xml:lang="es-t-de-t0-mtec">ch.bfe.energiestaedte</dct:title>
+                        <dct:title xml:lang="it">ch.bfe.energiestaedte</dct:title>
+                        <dct:title xml:lang="mt-t-de-t0-mtec">ch.bfe.energiestaedte</dct:title>
+                        <dct:title xml:lang="fi-t-de-t0-mtec">ch.bfe.energiestaedte</dct:title>
+                        <dct:title xml:lang="hu-t-de-t0-mtec">ch.bfe.energiestaedte</dct:title>
+                        <dct:title xml:lang="sl-t-de-t0-mtec">ch.bfe.energiestaedte</dct:title>
+                        <dct:title xml:lang="lt-t-de-t0-mtec">ch.bfe.energiestaedte</dct:title>
+                        <dct:title xml:lang="sv-t-de-t0-mtec">ch.bfe.energiestaedte</dct:title>
+                        <dct:title xml:lang="bg-t-de-t0-mtec">ch.bfe.energiestaedte</dct:title>
+                        <dct:title xml:lang="nl-t-de-t0-mtec">ch.bfe.energiestaedte</dct:title>
+                        <dct:title xml:lang="cs-t-de-t0-mtec">ch.bfe.energiestaedte</dct:title>
+                        <dct:title xml:lang="ro-t-de-t0-mtec">ch.bfe.energiestaedte</dct:title>
+                        <dct:title xml:lang="fr">ch.bfe.energiestaedte</dct:title>
+                        <dct:title xml:lang="el-t-de-t0-mtec">ch.bfe.energiestaedte</dct:title>
+                        <dct:title xml:lang="pl-t-de-t0-mtec">ch.bfe.energiestaedte</dct:title>
+                        <dct:title xml:lang="hr-t-de-t0-mtec">ch.bfe.energiestaedte</dct:title>
+                        <dct:description xml:lang="cs-t-de-t0-mtec">Služby webových map WMS</dct:description>
+                        <dct:description xml:lang="nl-t-de-t0-mtec">Web Kaart Diensten WMS</dct:description>
+                        <dct:description xml:lang="sk-t-de-t0-mtec">Služby webovej mapy WMS</dct:description>
+                        <dct:description xml:lang="mt-t-de-t0-mtec">Servizzi web Mappa WMS</dct:description>
+                        <dct:description xml:lang="lt-t-de-t0-mtec">WEB Žemėlapis Paslaugos WMS</dct:description>
+                        <dct:identifier>https://ckan.opendata.swiss/dataset/a6e6dd8c-d41d-4cfd-a582-ede009b31e4d/resource/fb9f2d7e-b473-45ac-8cc0-b85a4963b2c7</dct:identifier>
+                        <dct:description xml:lang="lv-t-de-t0-mtec">Tīmekļa kartes pakalpojumi WMS</dct:description>
+                        <dct:description xml:lang="da-t-de-t0-mtec">Web Map Services WMS</dct:description>
+                        <dct:description xml:lang="el-t-de-t0-mtec">WEB Map Υπηρεσίες WMS</dct:description>
+                        <dct:description xml:lang="en">Web Map Services WMS</dct:description>
+                        <dct:description xml:lang="de">Web Map Services WMS</dct:description>
+                        <dct:description xml:lang="it">Web Map Services WMS</dct:description>
+                        <dct:description xml:lang="fr">Web Map Services WMS</dct:description>
+                        <dct:title xml:lang="da-t-de-t0-mtec">CH.bfe.energiestaedte</dct:title>
+                        <dcat:accessURL rdf:resource="http://wms.geo.admin.ch/?SERVICE=WMS&amp;VERSION=1.3.0&amp;REQUEST=GetCapabilities&amp;lang=de"/>
+                        <dct:description xml:lang="hr-t-de-t0-mtec">Web Map Usluge WMS</dct:description>
+                        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                        >2014-06-30T00:00:00</dct:issued>
+                        <dct:language>en</dct:language>
+                        <dct:description xml:lang="es-t-de-t0-mtec">Servicios de Mapa Web WMS</dct:description>
+                        <dct:title xml:lang="ga-t-de-t0-mtec">ch.bfe. fuinneamh</dct:title>
+                        <dct:title xml:lang="sk-t-de-t0-mtec">CH.bfe.energestaedte</dct:title>
+                        <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                        >2022-06-15T00:00:00</dct:modified>
+                        <dct:description xml:lang="pl-t-de-t0-mtec">Usługi map internetowych WMS</dct:description>
+                        <dct:description xml:lang="ga-t-de-t0-mtec">Seirbhísí Léarscáileanna Gréasáin WMS</dct:description>
+                        <dct:description xml:lang="hu-t-de-t0-mtec">Web Térkép Szolgáltatások WMS</dct:description>
+                        <dct:description xml:lang="sl-t-de-t0-mtec">Storitve spletnega zemljevida WMS</dct:description>
+                        <dct:language>fr</dct:language>
+                        <dct:description xml:lang="sv-t-de-t0-mtec">Webbkarta Tjänster WMS</dct:description>
+                    </dcat:Distribution>
+                </dcat:distribution>
+                <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+                >2022-06-15T00:00:00</dct:modified>
+                <dcat:theme rdf:resource="http://dcat-ap.ch/vocabulary/themes/geography"/>
+            </dcat:Dataset>
+        </foaf:primaryTopic>
+        <dct:creator rdf:resource="http://piveau.io"/>
+        <spdx:checksum>
+            <spdx:Checksum>
+                <spdx:algorithm rdf:resource="https://spdx.org/rdf/terms/#checksumAlgorithm_md5"/>
+                <spdx:checksumValue>c966bce42d1c6b2d962357d6fab0d09b</spdx:checksumValue>
+            </spdx:Checksum>
+        </spdx:checksum>
+        <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+        >2022-06-16T20:06:22Z</dct:modified>
+        <edp:transStatus rdf:resource="https://europeandataportal.eu/voc#TransCompleted"/>
+        <dct:identifier>393940cd-6a67-4190-8b91-378669cdea1d@bundesamt-fur-energie-bfe</dct:identifier>
+        <edp:transIssued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+        >2022-06-13T20:06:50Z</edp:transIssued>
+        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+        >2022-06-03T08:24:30Z</dct:issued>
+    </dcat:CatalogRecord>
+</rdf:RDF>

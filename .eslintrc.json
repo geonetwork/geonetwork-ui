@@ -18,7 +18,8 @@
                   "type:feature",
                   "type:data-access",
                   "type:ui",
-                  "type:util"
+                  "type:util",
+                  "type:api"
                 ],
                 "bannedExternalImports": ["*app-config"]
               },
@@ -39,7 +40,11 @@
               // util libs should only depend on util and data-access libs
               {
                 "sourceTag": "type:util",
-                "onlyDependOnLibsWithTags": ["type:util", "type:data-access"]
+                "onlyDependOnLibsWithTags": [
+                  "type:util",
+                  "type:api",
+                  "type:data-access"
+                ]
               },
               // apps should depend on all kind of libs
               {
@@ -48,8 +53,15 @@
                   "type:feature",
                   "type:data-access",
                   "type:ui",
-                  "type:util"
+                  "type:util",
+                  "type:api"
                 ]
+              },
+              // api libs should only depend on api libs
+              {
+                "sourceTag": "type:api",
+                "onlyDependOnLibsWithTags": ["type:api"],
+                "bannedExternalImports": ["*app-config"]
               }
             ]
           }
