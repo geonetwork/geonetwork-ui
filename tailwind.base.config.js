@@ -1,6 +1,4 @@
 module.exports = {
-  mode: 'jit',
-  darkMode: false, // or 'media' or 'class',
   theme: {
     extend: {
       inset: {
@@ -76,11 +74,6 @@ module.exports = {
         45: 0.45,
       },
     },
-  },
-  variants: {
-    textColor: ['responsive', 'hover', 'focus', 'group-hover'],
-    visibility: ['responsive', 'group-hover'],
-    opacity: ['disabled'],
   },
   plugins: [require('@tailwindcss/line-clamp')],
 }
