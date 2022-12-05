@@ -1,4 +1,5 @@
 {
+  "name": "metadata-converter",
   "projectType": "application",
   "sourceRoot": "apps/metadata-converter/src",
   "prefix": "gn-ui",
@@ -84,7 +85,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/metadata-converter"],
+      "outputs": ["{workspaceRoot}/coverage/apps/metadata-converter"],
       "options": {
         "jestConfig": "apps/metadata-converter/jest.config.ts",
         "passWithNoTests": true
