@@ -1,4 +1,5 @@
 {
+  "name": "map-viewer",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/map-viewer/src",
@@ -92,7 +93,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/map-viewer"],
+      "outputs": ["{workspaceRoot}/coverage/apps/map-viewer"],
       "options": {
         "jestConfig": "apps/map-viewer/jest.config.ts",
         "passWithNoTests": true

@@ -1,4 +1,5 @@
 {
+  "name": "feature-map",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/feature/map/src",
@@ -6,7 +7,7 @@
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/feature/map"],
+      "outputs": ["{workspaceRoot}/coverage/libs/feature/map"],
       "options": {
         "jestConfig": "libs/feature/map/jest.config.ts",
         "passWithNoTests": true

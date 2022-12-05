@@ -15,14 +15,14 @@ import { DragAndDropFileInputComponent } from './drag-and-drop-file-input/drag-a
 import { DropdownSelectorComponent } from './dropdown-selector/dropdown-selector.component'
 import { TextAreaComponent } from './text-area/text-area.component'
 import { TextInputComponent } from './text-input/text-input.component'
-import { MatAutocompleteModule } from '@angular/material/autocomplete'
+import { MatLegacyAutocompleteModule as MatAutocompleteModule } from '@angular/material/legacy-autocomplete'
 import { MatIconModule } from '@angular/material/icon'
 import { NavigationButtonComponent } from './navigation-button/navigation-button.component'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { StarToggleComponent } from './star-toggle/star-toggle.component'
 import { DropdownMultiselectComponent } from './dropdown-multiselect/dropdown-multiselect.component'
 import { OverlayModule } from '@angular/cdk/overlay'
-import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox'
 import { ViewportIntersectorComponent } from './viewport-intersector/viewport-intersector.component'
 
 @NgModule({
