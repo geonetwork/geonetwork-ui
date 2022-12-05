@@ -96,13 +96,11 @@ export interface BaseRecord {
   accessConstraints: Array<AccessConstraint>
   useLimitations: Array<string>
   licenses: Array<License>
-  status: RecordStatus
-  updateFrequency: UpdateFrequency
+  overviews: Array<GraphicOverview>
 
   // to add: iso19139.topicCategory
   // to add: canonical url
   // to add: source catalog (??)
-  // to add: thumbnail url
   // to add: is open data ?
 }
 
@@ -132,7 +130,7 @@ export interface DatasetDownloadDistribution {
   description?: string
 }
 
-export interface DatasetLinkDistribution {
+export interface OnlineLinkResource {
   type: 'link'
   linkUrl: URL
   name?: string
@@ -142,12 +140,12 @@ export interface DatasetLinkDistribution {
 export type DatasetDistribution = (
   | DatasetServiceDistribution
   | DatasetDownloadDistribution
-  | DatasetLinkDistribution
+  | OnlineLinkResource
 ) & {
   type: DatasetDistributionType
 }
 
-export interface DatasetOverview {
+export interface GraphicOverview {
   url: URL
   description?: string
 }
@@ -165,24 +163,33 @@ export interface DatasetTemporalExtent {
 
 export interface DatasetRecord extends BaseRecord {
   kind: 'dataset'
+  status: RecordStatus
+  updateFrequency: UpdateFrequency
   datasetCreated?: Date
   datasetUpdated?: Date
   lineage: string // Explanation of the origin of this record (e.g: how, why)"
   distributions: Array<DatasetDistribution>
-  overviews: Array<DatasetOverview>
   spatialExtents: Array<DatasetSpatialExtent> // not handled yet
   temporalExtents: Array<DatasetTemporalExtent> // not handled yet
   spatialRepresentation?: SpatialRepresentationType
 }
 
+export type ServiceOnlineResourceType = 'endpoint' | 'link'
+
 export interface ServiceEndpoint {
   endpointUrl: URL
-  protocol: string // TODO: handle codelist
+  protocol: string
+  type: 'endpoint'
+  description?: string
+}
+
+export type ServiceOnlineResource = (ServiceEndpoint | OnlineLinkResource) & {
+  type: ServiceOnlineResourceType
 }
 
 export interface ServiceRecord extends BaseRecord {
   kind: 'service'
-  endpoints: Array<ServiceEndpoint>
+  onlineResources: Array<ServiceOnlineResource>
 }
 
 export type CatalogRecord = ServiceRecord | DatasetRecord

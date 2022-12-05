@@ -1,4 +1,4 @@
-import { CatalogRecord, DatasetRecord } from '../model'
+import { CatalogRecord, DatasetRecord, ServiceRecord } from '../model'
 import {
   createDocument,
   createElement,
@@ -18,6 +18,7 @@ import {
   writeKind,
   writeLicenses,
   writeLineage,
+  writeOnlineResources,
   writeOwnerOrganisation,
   writeRecordUpdated,
   writeSpatialRepresentation,
@@ -40,6 +41,7 @@ import {
   readKind,
   readLicenses,
   readLineage,
+  readOnlineResources,
   readOverviews,
   readOwnerOrganisation,
   readRecordUpdated,
@@ -69,50 +71,70 @@ export function toModel(xml: string): CatalogRecord {
   const recordCreated = recordUpdated
   const keywords = readKeywords(rootEl)
   const themes = readThemes(rootEl)
-  const status = readStatus(rootEl)
   const accessConstraints = readAccessConstraints(rootEl)
   const useLimitations = readUseLimitations(rootEl)
   const licenses = readLicenses(rootEl)
+  const overviews = readOverviews(rootEl)
 
   // not used yet
   const isoTopics = readIsoTopics(rootEl)
 
-  // TODO: only do these for dataset records
-  const datasetCreated = readDatasetCreated(rootEl)
-  const datasetUpdated = readDatasetUpdated(rootEl)
-  const spatialRepresentation = readSpatialRepresentation(rootEl)
-  const overviews = readOverviews(rootEl)
-  const spatialExtents = readSpatialExtents(rootEl)
-  const temporalExtents = readTemporalExtents(rootEl)
-  const lineage = readLineage(rootEl)
-  const distributions = readDistributions(rootEl)
-  const updateFrequency = readUpdateFrequency(rootEl)
+  if (kind === 'dataset') {
+    const status = readStatus(rootEl)
+    const datasetCreated = readDatasetCreated(rootEl)
+    const datasetUpdated = readDatasetUpdated(rootEl)
+    const spatialRepresentation = readSpatialRepresentation(rootEl)
+    const spatialExtents = readSpatialExtents(rootEl)
+    const temporalExtents = readTemporalExtents(rootEl)
+    const lineage = readLineage(rootEl)
+    const distributions = readDistributions(rootEl)
+    const updateFrequency = readUpdateFrequency(rootEl)
 
-  return {
-    uniqueIdentifier,
-    kind,
-    recordCreated,
-    recordUpdated,
-    status,
-    title,
-    abstract,
-    ownerOrganisation,
-    contacts,
-    keywords,
-    themes,
-    accessConstraints,
-    useLimitations,
-    licenses,
-    ...(datasetCreated && { datasetCreated }),
-    ...(datasetUpdated && { datasetUpdated }),
-    lineage,
-    ...(spatialRepresentation && { spatialRepresentation }),
-    overviews,
-    spatialExtents,
-    temporalExtents,
-    distributions,
-    updateFrequency,
-  } as DatasetRecord
+    return {
+      uniqueIdentifier,
+      kind,
+      recordCreated,
+      recordUpdated,
+      status,
+      title,
+      abstract,
+      ownerOrganisation,
+      contacts,
+      keywords,
+      themes,
+      accessConstraints,
+      useLimitations,
+      licenses,
+      ...(datasetCreated && { datasetCreated }),
+      ...(datasetUpdated && { datasetUpdated }),
+      lineage,
+      ...(spatialRepresentation && { spatialRepresentation }),
+      overviews,
+      spatialExtents,
+      temporalExtents,
+      distributions,
+      updateFrequency,
+    } as DatasetRecord
+  } else {
+    const onlineResources = readOnlineResources(rootEl)
+    return {
+      uniqueIdentifier,
+      kind,
+      recordCreated,
+      recordUpdated,
+      title,
+      abstract,
+      ownerOrganisation,
+      contacts,
+      keywords,
+      themes,
+      accessConstraints,
+      useLimitations,
+      licenses,
+      overviews,
+      onlineResources,
+    } as ServiceRecord
+  }
 }
 
 export function toXml(record: CatalogRecord, originalXml?: string): string {
@@ -134,16 +156,16 @@ export function toXml(record: CatalogRecord, originalXml?: string): string {
   fieldChanged('recordUpdated') && writeRecordUpdated(record, rootEl)
   writeTitle(record, rootEl)
   writeAbstract(record, rootEl)
-  writeStatus(record, rootEl)
   fieldChanged('contacts') && writeContacts(record, rootEl)
   fieldChanged('keywords') && writeKeywords(record, rootEl)
   fieldChanged('themes') && writeThemes(record, rootEl)
   fieldChanged('accessConstraints') && writeAccessConstraints(record, rootEl)
   fieldChanged('licenses') && writeLicenses(record, rootEl)
   fieldChanged('useLimitations') && writeUseLimitations(record, rootEl)
-  fieldChanged('updateFrequency') && writeUpdateFrequency(record, rootEl)
 
   if (record.kind === 'dataset') {
+    writeStatus(record, rootEl)
+    fieldChanged('updateFrequency') && writeUpdateFrequency(record, rootEl)
     fieldChanged('datasetCreated') && writeDatasetCreated(record, rootEl)
     fieldChanged('datasetUpdated') && writeDatasetUpdated(record, rootEl)
     fieldChanged('spatialRepresentation') &&
@@ -151,6 +173,8 @@ export function toXml(record: CatalogRecord, originalXml?: string): string {
     fieldChanged('overviews') && writeGraphicOverviews(record, rootEl)
     fieldChanged('distributions') && writeDistributions(record, rootEl)
     writeLineage(record, rootEl)
+  } else {
+    fieldChanged('onlineResources') && writeOnlineResources(record, rootEl)
   }
 
   const newDocument = createDocument(rootEl)

@@ -2,7 +2,10 @@
 import { toModel, toXml } from './converter'
 import { parseXmlString, xmlToString } from '../xml-utils'
 import { GEO2FRANCE_PLU_DATASET_RECORD } from '../fixtures/geo2france.records'
-import { GEOCAT_CH_DATASET_RECORD } from '../fixtures/geocat-ch.records'
+import {
+  GEOCAT_CH_DATASET_RECORD,
+  GEOCAT_CH_SERVICE_RECORD,
+} from '../fixtures/geocat-ch.records'
 import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records'
 // @ts-ignore
 import GEO2FRANCE_PLU_DATASET from '../fixtures/geo2france.iso19139.plu.xml'
@@ -10,6 +13,8 @@ import GEO2FRANCE_PLU_DATASET from '../fixtures/geo2france.iso19139.plu.xml'
 import GENERIC_DATASET_PLUS_GEO2FRANCE_DATASET from '../fixtures/generic-dataset+geo2france-plu.iso19139.xml'
 // @ts-ignore
 import GEOCAT_CH_DATASET from '../fixtures/geocat-ch.iso19139.dataset.xml'
+// @ts-ignore
+import GEOCAT_CH_SERVICE from '../fixtures/geocat-ch.iso19139.service.xml'
 // @ts-ignore
 import GENERIC_DATASET from '../fixtures/generic-dataset.iso19139.xml'
 
@@ -27,6 +32,9 @@ describe('ISO19139 converter', () => {
     })
     it('produces the corresponding record (geocat.ch dataset)', () => {
       expect(toModel(GEOCAT_CH_DATASET)).toStrictEqual(GEOCAT_CH_DATASET_RECORD)
+    })
+    it('produces the corresponding record (geocat.ch service)', () => {
+      expect(toModel(GEOCAT_CH_SERVICE)).toStrictEqual(GEOCAT_CH_SERVICE_RECORD)
     })
   })
 
@@ -48,12 +56,19 @@ describe('ISO19139 converter', () => {
   describe('idempotency', () => {
     describe('with a third-party XML record', () => {
       describe('when converting to a native record and back to XML', () => {
-        it('keeps the record unchanged', () => {
+        it('keeps the record unchanged (dataset)', () => {
           const backAndForth = toXml(
             toModel(GEO2FRANCE_PLU_DATASET),
             GEO2FRANCE_PLU_DATASET
           )
           expect(backAndForth).toStrictEqual(formatXml(GEO2FRANCE_PLU_DATASET))
+        })
+        it('keeps the record unchanged (service)', () => {
+          const backAndForth = toXml(
+            toModel(GEOCAT_CH_SERVICE),
+            GEOCAT_CH_SERVICE
+          )
+          expect(backAndForth).toStrictEqual(formatXml(GEOCAT_CH_SERVICE))
         })
       })
     })

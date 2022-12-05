@@ -47,12 +47,13 @@ Malgré l'attention portée à la création de ces données, il est rappelé que
   spatialRepresentation: 'vector',
   distributions: [
     {
-      type: 'link',
-      linkUrl: new URL(
+      type: 'download',
+      downloadUrl: new URL(
         'http://geo.compiegnois.fr/documents/metiers/urba/docurba/60036_PLU_20220329.zip'
       ),
       name: 'Télécharger les données géographiques et les pièces écrites disponibles', // name or desc?
       description: 'Téléchargement du fichier',
+      mimeType: 'x-gis/x-shapefile',
     },
   ],
   lineage: `Document d’urbanisme numérisé conformément aux prescriptions nationales du CNIG par le Service d'Information Géographique de l'Agglomération de la Région de Compiègne.

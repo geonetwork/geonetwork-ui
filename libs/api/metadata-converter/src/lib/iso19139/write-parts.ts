@@ -8,6 +8,9 @@ import {
   License,
   RecordStatus,
   Role,
+  ServiceEndpoint,
+  ServiceOnlineResource,
+  ServiceRecord,
   UpdateFrequencyCode,
   UpdateFrequencyCustom,
 } from '../model'
@@ -41,6 +44,8 @@ import {
   tap,
 } from '../function-utils'
 import format from 'date-fns/format'
+import { readKind } from './read-parts'
+import { description } from 'commander'
 
 function writeCharacterString(
   text: string
@@ -600,6 +605,19 @@ function createDistribution(distribution: DatasetDistribution) {
   )
 }
 
+/**
+ * Looks for srv:SV_ServiceIdentification or gmd:MD_DataIdentification element
+ * depending on record type, create if missing
+ */
+function findOrCreateIdentification() {
+  return (rootEl: XmlElement) => {
+    const kind = readKind(rootEl)
+    let eltName = 'gmd:MD_DataIdentification'
+    if (kind === 'service') eltName = 'srv:SV_ServiceIdentification'
+    return findNestedChildOrCreate('gmd:identificationInfo', eltName)(rootEl)
+  }
+}
+
 export function writeUniqueIdentifier(
   record: CatalogRecord,
   rootEl: XmlElement
@@ -658,38 +676,24 @@ export function writeRecordUpdated(record: CatalogRecord, rootEl: XmlElement) {
 
 export function writeTitle(record: CatalogRecord, rootEl: XmlElement) {
   pipe(
-    findNestedChildOrCreate(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification',
-      'gmd:citation',
-      'gmd:CI_Citation',
-      'gmd:title'
-    ),
-    removeAllChildren(),
+    findOrCreateIdentification(),
+    findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation', 'gmd:title'),
     writeCharacterString(record.title)
   )(rootEl)
 }
 
 export function writeAbstract(record: CatalogRecord, rootEl: XmlElement) {
   pipe(
-    findNestedChildOrCreate(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification',
-      'gmd:abstract'
-    ),
-    removeAllChildren(),
+    findOrCreateIdentification(),
+    findChildOrCreate('gmd:abstract'),
     writeCharacterString(record.abstract)
   )(rootEl)
 }
 
-export function writeStatus(record: CatalogRecord, rootEl: XmlElement) {
+export function writeStatus(record: DatasetRecord, rootEl: XmlElement) {
   pipe(
-    findNestedChildOrCreate(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification',
-      'gmd:status',
-      'gmd:MD_ProgressCode'
-    ),
+    findOrCreateIdentification(),
+    findNestedChildOrCreate('gmd:status', 'gmd:MD_ProgressCode'),
     addAttribute(
       'codeList',
       'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode'
@@ -700,10 +704,7 @@ export function writeStatus(record: CatalogRecord, rootEl: XmlElement) {
 
 export function writeContacts(record: CatalogRecord, rootEl: XmlElement) {
   pipe(
-    findNestedChildOrCreate(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification'
-    ),
+    findOrCreateIdentification(),
     removeChildrenByName('gmd:pointOfContact'),
     appendChildren(
       ...record.contacts.map((contact) =>
@@ -718,10 +719,7 @@ export function writeContacts(record: CatalogRecord, rootEl: XmlElement) {
 
 export function writeKeywords(record: CatalogRecord, rootEl: XmlElement) {
   pipe(
-    findNestedChildOrCreate(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification'
-    ),
+    findOrCreateIdentification(),
     removeKeywords(null),
     appendKeywords(record.keywords, null)
   )(rootEl)
@@ -729,10 +727,7 @@ export function writeKeywords(record: CatalogRecord, rootEl: XmlElement) {
 
 export function writeThemes(record: CatalogRecord, rootEl: XmlElement) {
   pipe(
-    findNestedChildOrCreate(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification'
-    ),
+    findOrCreateIdentification(),
     removeKeywords('theme'),
     appendKeywords(record.themes, 'theme')
   )(rootEl)
@@ -743,10 +738,7 @@ export function writeAccessConstraints(
   rootEl: XmlElement
 ) {
   pipe(
-    findNestedChildOrCreate(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification'
-    ),
+    findOrCreateIdentification(),
     removeAccessConstraints(),
     appendChildren(...record.accessConstraints.map(createAccessConstraint))
   )(rootEl)
@@ -754,10 +746,7 @@ export function writeAccessConstraints(
 
 export function writeLicenses(record: CatalogRecord, rootEl: XmlElement) {
   pipe(
-    findNestedChildOrCreate(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification'
-    ),
+    findOrCreateIdentification(),
     removeLicenses(),
     appendChildren(...record.licenses.map(createLicense))
   )(rootEl)
@@ -765,25 +754,19 @@ export function writeLicenses(record: CatalogRecord, rootEl: XmlElement) {
 
 export function writeUseLimitations(record: CatalogRecord, rootEl: XmlElement) {
   pipe(
-    findNestedChildOrCreate(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification'
-    ),
+    findOrCreateIdentification(),
     removeUseLimitations(),
     appendChildren(...record.useLimitations.map(createUseLimitation))
   )(rootEl)
 }
 
 export function writeUpdateFrequency(
-  record: CatalogRecord,
+  record: DatasetRecord,
   rootEl: XmlElement
 ) {
   pipe(
-    findNestedChildOrCreate(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification',
-      'gmd:resourceMaintenance'
-    ),
+    findOrCreateIdentification(),
+    findChildOrCreate('gmd:resourceMaintenance'),
     removeAllChildren(),
     findChildOrCreate('gmd:MD_MaintenanceInformation'),
     typeof record.updateFrequency === 'object'
@@ -810,12 +793,8 @@ export function writeUpdateFrequency(
 export function writeDatasetCreated(record: DatasetRecord, rootEl: XmlElement) {
   if (!('datasetCreated' in record)) return
   pipe(
-    findNestedChildOrCreate(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification',
-      'gmd:citation',
-      'gmd:CI_Citation'
-    ),
+    findOrCreateIdentification(),
+    findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation'),
     fallback(
       updateCitationDate(record.datasetCreated, 'creation'),
       appendCitationDate(record.datasetCreated, 'creation')
@@ -826,12 +805,8 @@ export function writeDatasetCreated(record: DatasetRecord, rootEl: XmlElement) {
 export function writeDatasetUpdated(record: DatasetRecord, rootEl: XmlElement) {
   if (!('datasetUpdated' in record)) return
   pipe(
-    findNestedChildOrCreate(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification',
-      'gmd:citation',
-      'gmd:CI_Citation'
-    ),
+    findOrCreateIdentification(),
+    findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation'),
     fallback(
       updateCitationDate(record.datasetUpdated, 'revision'),
       appendCitationDate(record.datasetUpdated, 'revision')
@@ -844,9 +819,8 @@ export function writeSpatialRepresentation(
   rootEl: XmlElement
 ) {
   pipe(
+    findOrCreateIdentification(),
     findNestedChildOrCreate(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification',
       'gmd:spatialRepresentationType',
       'gmd:MD_SpatialRepresentationTypeCode'
     ),
@@ -863,10 +837,7 @@ export function writeGraphicOverviews(
   rootEl: XmlElement
 ) {
   pipe(
-    findNestedChildOrCreate(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification'
-    ),
+    findOrCreateIdentification(),
     removeChildrenByName('gmd:graphicOverview'),
     appendChildren(
       ...record.overviews.map((overview) =>
@@ -910,5 +881,83 @@ export function writeLineage(record: DatasetRecord, rootEl: XmlElement) {
       'gmd:statement'
     ),
     writeCharacterString(record.lineage)
+  )(rootEl)
+}
+
+function getServiceEndpointProtocol(endpoint: ServiceEndpoint): string {
+  switch (endpoint.protocol.toLowerCase()) {
+    case 'wfs':
+      return 'OGC:WFS'
+    case 'wms':
+      return 'OGC:WMS'
+    case 'wps':
+      return 'OGC:WPS'
+    default:
+      return endpoint.protocol
+  }
+}
+
+function createOnlineResource(onlineResource: ServiceOnlineResource) {
+  let linkageUrl, functionCode, protocol
+  if (onlineResource.type === 'endpoint') {
+    linkageUrl = onlineResource.endpointUrl.toString()
+    protocol = getServiceEndpointProtocol(onlineResource)
+    functionCode = 'download'
+  } else {
+    linkageUrl = onlineResource.linkUrl.toString()
+    functionCode = 'information'
+    protocol = 'WWW:LINK'
+  }
+  const appendTransferOptions = appendChildren(
+    pipe(
+      createElement('gmd:transferOptions'),
+      createChild('gmd:MD_DigitalTransferOptions'),
+      createChild('gmd:onLine'),
+      createChild('gmd:CI_OnlineResource'),
+      writeLinkage(linkageUrl),
+      'description' in onlineResource
+        ? appendChildren(
+            pipe(
+              createElement('gmd:description'),
+              writeCharacterString(onlineResource.description)
+            )
+          )
+        : noop,
+      'name' in onlineResource
+        ? appendChildren(
+            pipe(
+              createElement('gmd:name'),
+              writeCharacterString(onlineResource.name)
+            )
+          )
+        : noop,
+      appendChildren(
+        pipe(createElement('gmd:protocol'), writeCharacterString(protocol)),
+        pipe(
+          createElement('gmd:function'),
+          createChild('gmd:CI_OnLineFunctionCode'),
+          addAttribute(
+            'codeList',
+            'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode'
+          ),
+          addAttribute('codeListValue', functionCode)
+        )
+      )
+    )
+  )
+  return pipe(
+    createElement('gmd:distributionInfo'),
+    createChild('gmd:MD_Distribution'),
+    appendTransferOptions
+  )
+}
+
+export function writeOnlineResources(
+  record: ServiceRecord,
+  rootEl: XmlElement
+) {
+  pipe(
+    removeDistributions(),
+    appendChildren(...record.onlineResources.map(createOnlineResource))
   )(rootEl)
 }

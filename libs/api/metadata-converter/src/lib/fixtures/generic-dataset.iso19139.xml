@@ -92,11 +92,6 @@ This is a section about details. Here is an HTML tag: &lt;img src="http://google
 ## Informations intéressantes
 Cette section contient des *caractères internationaux* (ainsi que des "caractères spéciaux"). 'çàü^@/~^&amp;</gco:CharacterString>
             </gmd:abstract>
-            <gmd:status>
-                <gmd:MD_ProgressCode
-                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"
-                        codeListValue="onGoing"/>
-            </gmd:status>
             <gmd:pointOfContact>
                 <gmd:CI_ResponsibleParty>
                     <gmd:individualName>
@@ -241,6 +236,11 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                     </gmd:useLimitation>
                 </gmd:MD_Constraints>
             </gmd:resourceConstraints>
+            <gmd:status>
+                <gmd:MD_ProgressCode
+                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"
+                        codeListValue="onGoing"/>
+            </gmd:status>
             <gmd:resourceMaintenance>
                 <gmd:MD_MaintenanceInformation>
                     <gmd:userDefinedMaintenanceFrequency>

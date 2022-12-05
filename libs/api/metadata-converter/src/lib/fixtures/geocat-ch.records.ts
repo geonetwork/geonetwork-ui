@@ -1,4 +1,4 @@
-import { DatasetRecord, RecordStatus, Role } from '../model'
+import { DatasetRecord, RecordStatus, Role, ServiceRecord } from '../model'
 
 export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
   uniqueIdentifier: '8698bf0b-fceb-4f0f-989b-111e7c4af0a4',
@@ -148,4 +148,73 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
   temporalExtents: [],
   status: RecordStatus.COMPLETED,
   updateFrequency: 'asNeeded',
+}
+
+export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
+  uniqueIdentifier: '4a008c24-ecf1-4430-b7e7-cb76b2856bad-8371',
+  kind: 'service',
+  ownerOrganisation: {
+    name: 'Amt für Raumentwicklung und Geoinformation (SG)',
+    website: new URL('https://www.sg.ch/bauen/geoinformation/datenbezug.html'),
+  },
+  contacts: [
+    {
+      email: 'geodaten@sg.ch',
+      role: Role.OTHER,
+      organisation: {
+        name: 'Amt für Raumentwicklung und Geoinformation (SG)',
+        website: new URL(
+          'https://www.sg.ch/bauen/geoinformation/datenbezug.html'
+        ),
+      },
+    },
+    {
+      email: 'geodaten@sg.ch',
+      role: Role.PUBLISHER,
+      organisation: {
+        name: 'Amt für Raumentwicklung und Geoinformation (SG)',
+        website: new URL(
+          'https://www.sg.ch/bauen/geoinformation/datenbezug.html'
+        ),
+      },
+    },
+  ],
+  recordCreated: new Date('2022-03-07T01:15:51+01:00'),
+  recordUpdated: new Date('2022-03-07T01:15:51+01:00'),
+  title: 'Verkehrsregelungsanlagen (WMS)',
+  abstract: `Diese Karte beinhaltet die Verkehrsregelungsanlagen des Kantons St.Gallen.`,
+  overviews: [
+    {
+      url: new URL(
+        'https://services.geo.sg.ch/wss/service/metadaten/guest/vorschau/SG00170.V.jpg'
+      ),
+      description: 'Vorschaubild',
+    },
+  ],
+  themes: [],
+  keywords: ['Verkehr', 'opendata.swiss'],
+  onlineResources: [
+    {
+      type: 'link',
+      linkUrl: new URL('https://metadata.geo.sg.ch/produkte/170'),
+      description: 'Verkehrsregelungsanlagen',
+    },
+    {
+      type: 'link',
+      linkUrl: new URL('https://metadata.geo.sg.ch'),
+      description: 'Geometadaten Kanton St.Gallen',
+    },
+    {
+      type: 'endpoint',
+      endpointUrl: new URL(
+        'https://services.geo.sg.ch/wss/service/SG00170_WMS/guest?request=GetCapabilities&service=WMS'
+      ),
+      protocol: 'wms',
+      description:
+        'https://services.geo.sg.ch/wss/service/SG00170_WMS/guest?request=GetCapabilities&service=WMS',
+    },
+  ],
+  accessConstraints: [],
+  useLimitations: [],
+  licenses: [],
 }

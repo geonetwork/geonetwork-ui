@@ -2,7 +2,7 @@ import {
   AccessConstraint,
   AccessConstraintType,
   DatasetDistribution,
-  DatasetOverview,
+  GraphicOverview,
   DatasetSpatialExtent,
   DatasetTemporalExtent,
   Individual,
@@ -15,6 +15,7 @@ import {
   SpatialRepresentationType,
   UpdateFrequency,
   UpdateFrequencyCustom,
+  ServiceOnlineResource,
 } from '../model'
 import {
   findChildElement,
@@ -355,7 +356,7 @@ function extractDatasetDistributions(): ChainableFunction<
   )
   const getProtocol = pipe(getProtocolStr, map(matchProtocol))
   const getOnlineFunction = pipe(
-    findChildElement('gmd:function'),
+    findNestedElement('gmd:function', 'gmd:CI_OnLineFunctionCode'),
     readAttribute('codeListValue')
   )
   const getIsService = pipe(
@@ -567,15 +568,23 @@ function extractUpdateFrequency(): ChainableFunction<
   )
 }
 
+/**
+ * Looks for srv:SV_ServiceIdentification or gmd:MD_DataIdentification element
+ * depending on record type
+ */
+function findIdentification() {
+  return (rootEl: XmlElement) => {
+    const kind = readKind(rootEl)
+    let eltName = 'gmd:MD_DataIdentification'
+    if (kind === 'service') eltName = 'srv:SV_ServiceIdentification'
+    return findNestedElement('gmd:identificationInfo', eltName)(rootEl)
+  }
+}
+
 function extractCitationDate(type: 'creation' | 'revision') {
   return pipe(
-    findNestedElements(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification',
-      'gmd:citation',
-      'gmd:CI_Citation',
-      'gmd:date'
-    ),
+    findIdentification(),
+    findNestedElements('gmd:citation', 'gmd:CI_Citation', 'gmd:date'),
     filterArray(
       pipe(
         findNestedElements(
@@ -641,24 +650,16 @@ export function readRecordUpdated(rootEl: XmlElement): Date {
 
 export function readTitle(rootEl: XmlElement): string {
   return pipe(
-    findNestedElement(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification',
-      'gmd:citation',
-      'gmd:CI_Citation',
-      'gmd:title'
-    ),
+    findIdentification(),
+    findNestedElement('gmd:citation', 'gmd:CI_Citation', 'gmd:title'),
     extractCharacterString()
   )(rootEl)
 }
 
 export function readAbstract(rootEl: XmlElement): string {
   return pipe(
-    findNestedElement(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification',
-      'gmd:abstract'
-    ),
+    findIdentification(),
+    findChildElement('gmd:abstract', false),
     extractCharacterString()
   )(rootEl)
 }
@@ -673,7 +674,7 @@ export function readDatasetUpdated(rootEl: XmlElement): Date {
 
 export function readContacts(rootEl: XmlElement): Individual[] {
   return pipe(
-    findNestedElement('gmd:identificationInfo', 'gmd:MD_DataIdentification'),
+    findIdentification(),
     combine(
       findChildrenElement('gmd:contact'),
       findChildrenElement('gmd:pointOfContact')
@@ -687,12 +688,8 @@ export function readContacts(rootEl: XmlElement): Individual[] {
 
 function readKeywordsOfType(isTheme: boolean) {
   return pipe(
-    findNestedElements(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification',
-      'gmd:descriptiveKeywords',
-      'gmd:MD_Keywords'
-    ),
+    findIdentification(),
+    findNestedElements('gmd:descriptiveKeywords', 'gmd:MD_Keywords'),
     filterArray(
       pipe(
         findChildrenElement('gmd:MD_KeywordTypeCode'),
@@ -716,19 +713,15 @@ export function readThemes(rootEl: XmlElement): string[] {
 
 export function readStatus(rootEl: XmlElement): RecordStatus {
   return pipe(
-    findNestedElement(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification',
-      'gmd:status'
-    ),
+    findIdentification(),
+    findChildElement('gmd:status', false),
     extractStatus()
   )(rootEl)
 }
 
-const getConstraints = findNestedElements(
-  'gmd:identificationInfo',
-  'gmd:MD_DataIdentification',
-  'gmd:resourceConstraints'
+const getConstraints = pipe(
+  findIdentification(),
+  findChildrenElement('gmd:resourceConstraints', false)
 )
 
 export function readAccessConstraints(rootEl: XmlElement): AccessConstraint[] {
@@ -759,11 +752,8 @@ export function readLicenses(rootEl: XmlElement): License[] {
 // not used yet
 export function readIsoTopics(rootEl: XmlElement): string[] {
   return pipe(
-    findNestedElements(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification',
-      'gmd:MD_TopicCategoryCode'
-    ),
+    findIdentification(),
+    findChildrenElement('gmd:MD_TopicCategoryCode', false),
     mapArray(readText())
   )(rootEl)
 }
@@ -772,9 +762,8 @@ export function readSpatialRepresentation(
   rootEl: XmlElement
 ): SpatialRepresentationType | null {
   return pipe(
+    findIdentification(),
     findNestedElement(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification',
       'gmd:spatialRepresentationType',
       'gmd:MD_SpatialRepresentationTypeCode'
     ),
@@ -783,13 +772,10 @@ export function readSpatialRepresentation(
   )(rootEl)
 }
 
-export function readOverviews(rootEl: XmlElement): DatasetOverview[] {
+export function readOverviews(rootEl: XmlElement): GraphicOverview[] {
   return pipe(
-    findNestedElements(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification',
-      'gmd:graphicOverview'
-    ),
+    findIdentification(),
+    findChildrenElement('gmd:graphicOverview', false),
     mapArray(
       combine(
         pipe(findChildElement('gmd:fileName'), extractUrl()),
@@ -836,13 +822,80 @@ export function readDistributions(rootEl: XmlElement): DatasetDistribution[] {
 
 export function readUpdateFrequency(rootEl: XmlElement): UpdateFrequency {
   return pipe(
+    findIdentification(),
     findNestedElement(
-      'gmd:identificationInfo',
-      'gmd:MD_DataIdentification',
       'gmd:resourceMaintenance',
       'gmd:MD_MaintenanceInformation'
     ),
     extractUpdateFrequency(),
     map((updateFrequency) => updateFrequency || 'unknown')
+  )(rootEl)
+}
+
+export function extractServiceOnlineResources(): ChainableFunction<
+  XmlElement,
+  ServiceOnlineResource[]
+> {
+  const getUrl = pipe(
+    findChildElement('gmd:linkage'),
+    extractUrl(),
+    tap((url) => {
+      if (url === null)
+        throw new Error('could not find an url for the online resource')
+    })
+  )
+  const getProtocolStr = pipe(
+    findChildElement('gmd:protocol'),
+    extractCharacterString()
+  )
+  const getProtocol = pipe(getProtocolStr, map(matchProtocol))
+  const getOnlineFunction = pipe(
+    findNestedElement('gmd:function', 'gmd:CI_OnLineFunctionCode'),
+    readAttribute('codeListValue')
+  )
+  const getIsLink = pipe(
+    getOnlineFunction,
+    map((onlineFunction) => onlineFunction === 'information')
+  )
+  const getName = pipe(findChildElement('gmd:name'), extractCharacterString())
+  const getDescription = pipe(
+    findChildElement('gmd:description'),
+    extractCharacterString()
+  )
+  return pipe(
+    findNestedElements(
+      'gmd:transferOptions',
+      'gmd:MD_DigitalTransferOptions',
+      'gmd:onLine',
+      'gmd:CI_OnlineResource'
+    ),
+    mapArray(combine(getIsLink, getProtocol, getUrl, getName, getDescription)),
+    mapArray(([isLink, protocol, url, name, description]) => {
+      if (isLink) {
+        return {
+          type: 'link',
+          linkUrl: url,
+          ...(name && { name }),
+          ...(description && { description }),
+        }
+      } else {
+        return {
+          type: 'endpoint',
+          endpointUrl: url,
+          protocol,
+          ...(description && { description }),
+        }
+      }
+    })
+  )
+}
+
+export function readOnlineResources(
+  rootEl: XmlElement
+): ServiceOnlineResource[] {
+  return pipe(
+    findNestedElements('gmd:distributionInfo', 'gmd:MD_Distribution'),
+    mapArray(extractServiceOnlineResources()),
+    flattenArray()
   )(rootEl)
 }
