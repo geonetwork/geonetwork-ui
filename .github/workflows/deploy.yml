@@ -52,7 +52,7 @@ jobs:
       #      - name: Build storybook for web components
       #        run: npm run build:storybook-wc
 
-      - run: echo "::set-env name=BRANCH_NAME::${GITHUB_HEAD_REF:-master}"
+      - run: echo "::set-env name=BRANCH_NAME::${GITHUB_HEAD_REF:-main}"
 
       - name: Deploy to directory ${{ env.BRANCH_NAME }}
         run: |

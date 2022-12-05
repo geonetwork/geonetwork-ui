@@ -46,7 +46,7 @@ Releases are made periodically when needed. Each release includes:
 
 > Note that the latest development version of each application is also available by replacing the version with
 > the branch name, for example:
-> `geonetwork-ui-datahub-master.zip` or `geonetwork/geonetwork-ui-datahub:master`
+> `geonetwork-ui-datahub-main.zip` or `geonetwork/geonetwork-ui-datahub:main`
 
 ### How to make a release
 
