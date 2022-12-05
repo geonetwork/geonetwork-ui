@@ -1,4 +1,4 @@
-![Workflow status](https://github.com/geonetwork/geonetwork-ui/workflows/Build/badge.svg?branch=master)
+![Workflow status](https://github.com/geonetwork/geonetwork-ui/workflows/Build/badge.svg?branch=main)
 
 # GeoNetwork UI
 
@@ -36,9 +36,9 @@ You can start it with `npm run storybook`.
 
 You can either try complete applications or showcases of components using the following links:
 
-- [Storybook of UI components](https://geonetwork.github.io/geonetwork-ui/master/storybook/demo/)
-- [Storybook of Web components](https://geonetwork.github.io/geonetwork-ui/master/storybook-wc/)
-- [Demo](https://geonetwork.github.io/geonetwork-ui/master/demo/) _(not functional yet, WIP)_
+- [Storybook of UI components](https://geonetwork.github.io/geonetwork-ui/main/storybook/demo/)
+- [Storybook of Web components](https://geonetwork.github.io/geonetwork-ui/main/storybook-wc/)
+- [Demo](https://geonetwork.github.io/geonetwork-ui/main/demo/)
 
 ## More information
 
@@ -123,7 +123,7 @@ Lastly, even if authenticated requests were cleared regarding CORS rules, it wou
 ### Tests
 
 Run `npm test` to execute the affected unit tests via Jest.
-Affected code is compared to origin/master.
+Affected code is compared to origin/main.
 
 You can test
 

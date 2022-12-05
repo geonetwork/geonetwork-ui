@@ -1,6 +1,6 @@
 # GeoNetwork UI Web Components
 
-Visit the online [demo page](https://geonetwork.github.io/geonetwork-ui/master/demo/webcomponents/).
+Visit the online [demo page](https://geonetwork.github.io/geonetwork-ui/main/demo/webcomponents/).
 This directory contains [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) relying on the same code as the full GeoNetwork UI, and which are available for use in third-party apps.
 
 Web Components are published through an Angular application `webcomponents` hosted in `apps/webcomponents/src` folder. It's a common Angular application, the only difference is that all Angular components
