@@ -1,18 +1,18 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/simple-editor-e2e/src",
+  "sourceRoot": "apps/metadata-converter-e2e/src",
   "projectType": "application",
   "targets": {
     "e2e": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
-        "cypressConfig": "apps/simple-editor-e2e/cypress.json",
-        "devServerTarget": "simple-editor:serve:development",
+        "cypressConfig": "apps/metadata-converter-e2e/cypress.json",
+        "devServerTarget": "metadata-converter:serve:development",
         "testingType": "e2e"
       },
       "configurations": {
         "production": {
-          "devServerTarget": "simple-editor:serve:production"
+          "devServerTarget": "metadata-converter:serve:production"
         }
       }
     },
@@ -20,10 +20,10 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/simple-editor-e2e/**/*.{js,ts}"]
+        "lintFilePatterns": ["apps/metadata-converter-e2e/**/*.{js,ts}"]
       }
     }
   },
   "tags": [],
-  "implicitDependencies": ["simple-editor"]
+  "implicitDependencies": ["metadata-converter"]
 }

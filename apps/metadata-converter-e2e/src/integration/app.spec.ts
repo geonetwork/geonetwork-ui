@@ -1,6 +1,6 @@
 import { getGreeting } from '../support/app.po'
 
-describe('simple-editor', () => {
+describe('metadata-converter', () => {
   beforeEach(() => cy.visit('/'))
 
   it('should display welcome message', () => {
@@ -8,6 +8,6 @@ describe('simple-editor', () => {
     cy.login('my-email@something.com', 'myPassword')
 
     // Function helper example, see `../support/app.po.ts` file
-    getGreeting().contains('Welcome simple-editor')
+    getGreeting().contains('Welcome metadata-converter')
   })
 })

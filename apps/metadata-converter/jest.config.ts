@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'simple-editor',
+  displayName: 'metadata-converter',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -9,7 +9,7 @@ export default {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/apps/simple-editor',
+  coverageDirectory: '../../coverage/apps/metadata-converter',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },

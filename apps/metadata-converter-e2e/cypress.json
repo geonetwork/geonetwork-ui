@@ -6,7 +6,7 @@
   "supportFile": "./src/support/index.ts",
   "pluginsFile": false,
   "video": true,
-  "videosFolder": "../../dist/cypress/apps/simple-editor-e2e/videos",
-  "screenshotsFolder": "../../dist/cypress/apps/simple-editor-e2e/screenshots",
+  "videosFolder": "../../dist/cypress/apps/metadata-converter-e2e/videos",
+  "screenshotsFolder": "../../dist/cypress/apps/metadata-converter-e2e/screenshots",
   "chromeWebSecurity": false
 }
