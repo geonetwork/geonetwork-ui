@@ -1,4 +1,5 @@
 {
+  "name": "util-app-config",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/util/app-config/src",
   "projectType": "library",
@@ -12,7 +13,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/util/app-config"],
+      "outputs": ["{workspaceRoot}/coverage/libs/util/app-config"],
       "options": {
         "jestConfig": "libs/util/app-config/jest.config.ts",
         "passWithNoTests": true

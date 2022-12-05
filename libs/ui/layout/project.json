@@ -1,4 +1,5 @@
 {
+  "name": "ui-layout",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/ui/layout/src",
@@ -6,7 +7,7 @@
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ui/layout"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ui/layout"],
       "options": {
         "jestConfig": "libs/ui/layout/jest.config.ts",
         "passWithNoTests": true
