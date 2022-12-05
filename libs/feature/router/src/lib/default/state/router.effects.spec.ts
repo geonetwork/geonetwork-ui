@@ -177,7 +177,7 @@ describe('RouterEffects', () => {
         expect(effects.syncSearchState$).toBeObservable(expected)
       })
     })
-    describe('when a sort value in the route', () => {
+    describe('when no sort value in the route', () => {
       beforeEach(() => {
         routerFacadeMock.searchParams$.next({ q: 'any' })
         actions = hot('-a', { a: routerFacadeMock.searchParams$ })
