@@ -41,7 +41,7 @@
           "xlsx",
           "chroma-js",
           "@rgrove/parse-xml",
-          "messageformat",
+          "@messageformat/core",
           "rbush"
         ]
       },
