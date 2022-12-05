@@ -1,4 +1,5 @@
 {
+  "name": "util-data-fetcher",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/util/data-fetcher/src",
   "projectType": "library",
@@ -23,7 +24,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/util/data-fetcher"],
+      "outputs": ["{workspaceRoot}/coverage/libs/util/data-fetcher"],
       "options": {
         "jestConfig": "libs/util/data-fetcher/jest.config.ts",
         "passWithNoTests": true

@@ -1,4 +1,5 @@
 {
+  "name": "ui-search",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/ui/search/src",
@@ -6,7 +7,7 @@
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ui/search"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ui/search"],
       "options": {
         "jestConfig": "libs/ui/search/jest.config.ts",
         "passWithNoTests": true

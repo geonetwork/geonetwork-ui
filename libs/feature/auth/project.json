@@ -1,4 +1,5 @@
 {
+  "name": "feature-auth",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/feature/auth/src",
@@ -6,7 +7,7 @@
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/feature/auth"],
+      "outputs": ["{workspaceRoot}/coverage/libs/feature/auth"],
       "options": {
         "jestConfig": "libs/feature/auth/jest.config.ts",
         "passWithNoTests": true

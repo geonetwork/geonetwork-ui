@@ -1,4 +1,5 @@
 {
+  "name": "feature-editor",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/feature/editor/src",
@@ -6,7 +7,7 @@
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/feature/editor"],
+      "outputs": ["{workspaceRoot}/coverage/libs/feature/editor"],
       "options": {
         "jestConfig": "libs/feature/editor/jest.config.ts",
         "passWithNoTests": true
