@@ -8,15 +8,15 @@ env:
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     types: [opened, synchronize, ready_for_review]
 
-# Only allow concurrent checks on the master branch to keep history
+# Only allow concurrent checks on the main branch to keep history
 # on QA checks
 concurrency:
   group: checks-${{ github.ref }}
-  cancel-in-progress: ${{ github.ref_name != 'master' }}
+  cancel-in-progress: ${{ github.ref_name != 'main' }}
 
 jobs:
   format-lint-test:
@@ -39,7 +39,7 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
         with:
-          main-branch-name: 'master'
+          main-branch-name: 'main'
 
       - name: Cache node modules
         uses: actions/cache@v1
@@ -88,7 +88,7 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
         with:
-          main-branch-name: 'master'
+          main-branch-name: 'main'
 
       - name: Cache node modules
         uses: actions/cache@v1
