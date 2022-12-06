@@ -19,34 +19,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check-user-request:
-    if: github.event_name == 'issue_comment' && github.event.issue.pull_request
-    name: Check whether a deploy was requested on a PR
-    runs-on: ubuntu-latest
-    outputs:
-      shouldRun: ${{ steps.check-pr.outputs.shouldRun }}
-
-    steps:
-      - name: Dump GitHub event
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github.event) }}
-        run: echo "$GITHUB_CONTEXT"
-
-      - name: Check the PR
-        # https://github.com/bahmutov/should-run-github-action
-        uses: bahmutov/should-run-github-action@v1
-        id: check-pr
-        with:
-          checkbox_text: '- [x] Build and deploy affected apps on GitHub Pages'
-        env:
-          GITHUB_EVENT: ${{ toJson(github.event) }}
-
-      - if: steps.check-pr.outputs.shouldRun
-        run: echo "should run!"
-
   gh-pages:
-    needs: check-user-request
-    if: github.event_name != 'issue_comment' || needs.check-user-request.outputs.shouldRun
+    if: github.event_name != 'issue_comment' || contains(github.event.comment.body, '- [x] Build and deploy affected apps on GitHub Pages')
     name: Deploy Storybook to GitHub Pages
     runs-on: ubuntu-latest
 
