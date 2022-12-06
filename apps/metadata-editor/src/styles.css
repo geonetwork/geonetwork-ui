@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+  color: var(--color-main);
+}
+
+.icon-btn {
+  @apply text-slate-600 hover:text-slate-400 cursor-pointer transition-colors;
+}

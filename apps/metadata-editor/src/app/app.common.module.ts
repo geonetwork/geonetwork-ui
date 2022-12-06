@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
-import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
+import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
+import { ThemeService } from '@geonetwork-ui/util/shared'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
@@ -43,4 +44,17 @@ import { environment } from '../../../datahub/src/environments/environment'
     },
   ],
 })
-export class AppCommonModule {}
+export class AppCommonModule {
+  constructor() {
+    ThemeService.applyCssVariables(
+      getThemeConfig().PRIMARY_COLOR,
+      getThemeConfig().SECONDARY_COLOR,
+      getThemeConfig().MAIN_COLOR || '#475569',
+      getThemeConfig().BACKGROUND_COLOR,
+      getThemeConfig().MAIN_FONT || "'Rubik', sans-serif",
+      getThemeConfig().TITLE_FONT || "'Readex Pro', sans-serif",
+      getThemeConfig().FONTS_STYLESHEET_URL ||
+        'https://fonts.googleapis.com/css2?family=Readex+Pro&family=Rubik&display=swap'
+    )
+  }
+}
