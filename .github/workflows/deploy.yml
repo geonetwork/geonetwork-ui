@@ -1,13 +1,15 @@
 name: Deploy
-run-name: 🚀 Deploy to GitHub Pages for 🌱 ${{github.ref_name}}
+run-name: 🚀 Deploy to GitHub Pages for 🌱 ${{github.event_name == 'issue_comment' && github.event.issue.number || github.ref_name}}
 
 env:
   NODE_VERSION: 16.17.0
-  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
-# This workflow runs whenever QA checks completed successfully
+# This workflow runs whenever the "deploy affected apps" checkbox is checked (for PR)
+# or on every push to main
 on:
-  workflow_call:
+  push:
+    branches:
+      - main
   issue_comment:
     types:
       - edited
@@ -17,30 +19,51 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  check-user-request:
+    if: github.event_name == 'issue_comment' && github.event.issue.pull_request
+    name: Check whether a deploy was requested on a PR
+    runs-on: ubuntu-latest
+    outputs:
+      shouldRun: ${{ steps.check-pr.outputs.shouldRun }}
+
+    steps:
+      - name: Dump GitHub event
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github.event) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - name: Check the PR
+        # https://github.com/bahmutov/should-run-github-action
+        uses: bahmutov/should-run-github-action@v1
+        id: check-pr
+        with:
+          checkbox_text: '- [x] Build and deploy affected apps on GitHub Pages'
+        env:
+          GITHUB_EVENT: ${{ toJson(github.event) }}
+
+      - if: steps.check-pr.outputs.shouldRun
+        run: echo "should run!"
+
   gh-pages:
+    needs: check-user-request
+    if: github.event_name != 'issue_comment' || needs.check-user-request.outputs.shouldRun
     name: Deploy Storybook to GitHub Pages
     runs-on: ubuntu-latest
 
     steps:
+      - name: Dump GitHub event
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github.event) }}
+        run: echo "$GITHUB_CONTEXT"
+
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-
-      - name: Cache node modules
-        uses: actions/cache@v1
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          cache: 'npm'
 
       - name: Install
         run: npm ci
@@ -55,7 +78,7 @@ jobs:
       #      - name: Build storybook for web components
       #        run: npm run build:storybook-wc
 
-      - run: echo "::set-env name=BRANCH_NAME::${GITHUB_HEAD_REF:-main}"
+      - run: echo "BRANCH_NAME=${GITHUB_HEAD_REF:-main}" >> $GITHUB_ENV
 
       - name: Deploy to directory ${{ env.BRANCH_NAME }}
         run: |
@@ -65,7 +88,7 @@ jobs:
 
       - name: add PR comment
         uses: thollander/actions-comment-pull-request@v1
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'issue_comment'
         with:
           message: 'GitHub Pages links:
 
