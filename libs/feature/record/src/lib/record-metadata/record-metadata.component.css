@@ -1,10 +1,10 @@
 ::ng-deep .mat-mdc-tab.mdc-tab {
   letter-spacing: 0.88px;
 }
-::ng-deep .mat-mdc-tab.mdc-tab:hover .tab-header-label{
-  color: var(--color-primary-darkest)
+::ng-deep .mat-mdc-tab.mdc-tab:hover .tab-header-label {
+  color: var(--color-primary-darkest);
 }
-::ng-deep .mat-mdc-tab.mdc-tab.mdc-tab--active .tab-header-label{
+::ng-deep .mat-mdc-tab.mdc-tab.mdc-tab--active .tab-header-label {
   opacity: 100%;
   font-weight: bold;
 }
@@ -13,7 +13,6 @@
 }
 ::ng-deep .mdc-tab__ripple::before {
   background-color: transparent !important;
-
 }
 @media only screen and (min-width: 640px) {
   ::ng-deep mat-tab-header {
@@ -33,5 +32,5 @@
 }
 
 .tab-header-label {
-  @apply uppercase text-sm text-primary opacity-75 hover:text-primary-darker
+  @apply uppercase text-sm text-primary opacity-75 hover:text-primary-darker;
 }
