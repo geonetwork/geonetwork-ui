@@ -1,7 +1,6 @@
 import { Component } from '@angular/core'
-
 @Component({
-  selector: 'geonetwork-ui-root',
+  selector: 'md-editor-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
