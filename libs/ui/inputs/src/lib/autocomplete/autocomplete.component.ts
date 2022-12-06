@@ -14,10 +14,10 @@ import {
 } from '@angular/core'
 import { UntypedFormControl } from '@angular/forms'
 import {
-  MatLegacyAutocomplete as MatAutocomplete,
-  MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent,
-  MatLegacyAutocompleteTrigger as MatAutocompleteTrigger,
-} from '@angular/material/legacy-autocomplete'
+  MatAutocomplete,
+  MatAutocompleteSelectedEvent,
+  MatAutocompleteTrigger,
+} from '@angular/material/autocomplete'
 import { Observable, of, ReplaySubject, Subscription } from 'rxjs'
 import {
   catchError,
