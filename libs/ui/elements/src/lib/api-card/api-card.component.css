@@ -1,9 +1,0 @@
-:host:not(:hover) .badge {
-  background-color: var(--color-primary-lightest) !important;
-}
-:host:hover .badge {
-  background-color: var(--color-primary) !important;
-}
-:host:hover .copy-icon {
-  color: var(--color-secondary);
-}
