@@ -1,9 +1,12 @@
 name: Artifacts
-run-name: 📦 Generate artifacts for ${{ github.event_name == 'issue_comment' && 'PR' || '🏷' }} ${{github.event_name == 'issue_comment' && github.event.issue.number || github.ref_name}}
+run-name: 📦 Generate artifacts for ${{ github.event_name == 'issue_comment' && 'PR' || (github.event_name == 'release' && '🏷' || '🌱') }} ${{github.event_name == 'issue_comment' && github.event.issue.number || github.ref_name}}
 
 # This workflow runs whenever the "build affected docker images" checkbox is checked (for PR)
-# and also whenever a tag is pushed
+# and also whenever a commit is pushed on main or a tag is pushed
 on:
+  push:
+    branches:
+      - main
   release:
     types: [published]
   issue_comment:
@@ -30,6 +33,7 @@ jobs:
 
     steps:
       - uses: xt0rted/pull-request-comment-branch@v1
+        if: github.event_name == 'issue_comment'
         id: comment-branch
 
   build-archive-docker:
