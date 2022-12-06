@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 
 @Component({
-  selector: 'geonetwork-ui-sidebar',
+  selector: 'md-editor-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
