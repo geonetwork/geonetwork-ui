@@ -1,6 +1,7 @@
 <gn-ui-dropdown-multiselect
   class="w-full"
   [title]="title"
+  [maxRows]="6"
   [choices]="choices$ | async"
   [selected]="selected$ | async"
   (selectValues)="onSelectedValues($event)"

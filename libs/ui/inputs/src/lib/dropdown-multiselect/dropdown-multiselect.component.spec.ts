@@ -87,7 +87,7 @@ describe('DropdownMultiselectComponent', () => {
         component.openOverlay()
       })
       it('sets the max height according to the max rows input', () => {
-        expect(component.overlayMaxHeight).toMatch(/^[0-9]+px$/)
+        expect(component.overlayMaxHeight).toMatch('350px')
       })
     })
     describe('max height (with maxRows unset)', () => {
