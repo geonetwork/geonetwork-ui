@@ -7,7 +7,7 @@ import { MapContextComponent } from './map-context/component/map-context.compone
 import { LayersPanelComponent } from './layers-panel/layers-panel.component'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { MatIconModule } from '@angular/material/icon'
-import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-tabs'
+import { MatTabsModule } from '@angular/material/tabs'
 import { TranslateModule } from '@ngx-translate/core'
 import { AddLayerFromCatalogComponent } from './add-layer-from-catalog/add-layer-from-catalog.component'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'

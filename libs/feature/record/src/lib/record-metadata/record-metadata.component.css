@@ -1,5 +1,7 @@
+
+/* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
 ::ng-deep .mat-tab-label,
-::ng-deep .mat-tab-link {
+::ng-deep .mat-mdc-tab-link {
   font-family: var(--font-family-main);
   letter-spacing: 0.88px;
 }
@@ -9,7 +11,7 @@
 ::ng-deep .mat-ink-bar {
   display: none;
 }
-::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
+::ng-deep .mat-mdc-tab-group.mat-primary .mat-ink-bar {
   background-color: var(--color-primary);
 }
 @media only screen and (min-width: 640px) {
@@ -18,6 +20,7 @@
   }
 }
 @media only screen and (max-width: 639px) {
+  /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
   ::ng-deep .mat-tab-label {
     padding: 0px !important;
     margin-right: 24px;
