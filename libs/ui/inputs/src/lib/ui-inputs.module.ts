@@ -24,6 +24,16 @@ import { DropdownMultiselectComponent } from './dropdown-multiselect/dropdown-mu
 import { OverlayModule } from '@angular/cdk/overlay'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { ViewportIntersectorComponent } from './viewport-intersector/viewport-intersector.component'
+import {
+  FormFieldArrayComponent,
+  FormFieldComponent,
+  FormFieldFileComponent,
+  FormFieldObjectComponent,
+  FormFieldRichComponent,
+  FormFieldSimpleComponent,
+  FormFieldSpatialExtentComponent,
+  FormFieldTemporalExtentComponent,
+} from './form-field'
 
 @NgModule({
   declarations: [
@@ -39,6 +49,14 @@ import { ViewportIntersectorComponent } from './viewport-intersector/viewport-in
     StarToggleComponent,
     DropdownMultiselectComponent,
     ViewportIntersectorComponent,
+    FormFieldComponent,
+    FormFieldSimpleComponent,
+    FormFieldArrayComponent,
+    FormFieldObjectComponent,
+    FormFieldRichComponent,
+    FormFieldFileComponent,
+    FormFieldSpatialExtentComponent,
+    FormFieldTemporalExtentComponent,
   ],
   imports: [
     BrowserModule,

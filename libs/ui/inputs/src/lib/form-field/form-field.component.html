@@ -1,0 +1,40 @@
+<div class="flex flex-col h-full">
+  <label class="mb-2">
+    <span class="font-medium label">{{ config.labelKey | translate }}</span>
+    <span *ngIf="config.hintKey" class="text-gray-900 text-sm">
+      - {{ config.hintKey | translate }}
+    </span>
+  </label>
+  <ng-container *ngIf="isSimpleField">
+    <gn-ui-form-field-simple
+      [type]="simpleType"
+      [control]="formControl"
+      [readonly]="config.locked"
+    ></gn-ui-form-field-simple>
+  </ng-container>
+  <ng-container *ngIf="isFileField">
+    <gn-ui-form-field-file
+      [control]="formControl"
+      [readonly]="config.locked"
+    ></gn-ui-form-field-file>
+  </ng-container>
+  <ng-container *ngIf="isRichField">
+    <gn-ui-form-field-rich
+      class="grow"
+      [control]="formControl"
+      [readonly]="config.locked"
+    ></gn-ui-form-field-rich>
+  </ng-container>
+  <ng-container *ngIf="isArrayField">
+    <gn-ui-form-field-array></gn-ui-form-field-array>
+  </ng-container>
+  <ng-container *ngIf="isObjectField">
+    <gn-ui-form-field-object></gn-ui-form-field-object>
+  </ng-container>
+  <ng-container *ngIf="isSpatialExtentField">
+    <gn-ui-form-field-spatial-extent></gn-ui-form-field-spatial-extent>
+  </ng-container>
+  <ng-container *ngIf="isTemporalExtentField">
+    <gn-ui-form-field-temporal-extent></gn-ui-form-field-temporal-extent>
+  </ng-container>
+</div>

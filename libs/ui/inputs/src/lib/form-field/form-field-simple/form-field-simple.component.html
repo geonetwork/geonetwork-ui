@@ -1,0 +1,29 @@
+<input
+  *ngIf="type === 'text' || type === 'url'"
+  type="text"
+  [readonly]="readonly"
+  [formControl]="control"
+/>
+<input
+  *ngIf="type === 'date'"
+  type="datetime-local"
+  [readonly]="readonly"
+  [formControl]="control"
+/>
+<input
+  *ngIf="type === 'number'"
+  type="number"
+  [readonly]="readonly"
+  [formControl]="control"
+/>
+<input
+  *ngIf="type === 'toggle'"
+  type="checkbox"
+  [readonly]="readonly"
+  [formControl]="control"
+/>
+<select *ngIf="type === 'list'" [formControl]="control">
+  <option *ngFor="let option of options" [ngValue]="option.value">
+    {{ option.label }}
+  </option>
+</select>
