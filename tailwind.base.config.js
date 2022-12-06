@@ -1,10 +1,6 @@
 module.exports = {
   theme: {
     extend: {
-      inset: {
-        '1/10': '10%',
-        '1/2': '50%',
-      },
       colors: {
         'primary-white': 'var(--color-primary-white)',
         'primary-lightest': 'var(--color-primary-lightest)',

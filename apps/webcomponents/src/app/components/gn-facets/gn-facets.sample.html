@@ -39,13 +39,13 @@
         </p>
       </div>
       <div style="display: flex">
-        <div style="width: 320px; flex-shrink: 0; margin: 20px">
+        <div style="width: 320px; shrink: 0; margin: 20px">
           <gn-facets
             api-url="https://apps.titellus.net/geonetwork/srv/api"
             facet-config='{"tag.default":{"terms":{"field":"tag.default","include":".*","size": 10}}}'
           ></gn-facets>
         </div>
-        <div style="flex-grow: 1; margin: 20px">
+        <div style="grow: 1; margin: 20px">
           <gn-results-list
             api-url="https://sdi.eea.europa.eu/catalogue/eea/api"
             catalog-url="https://sdi.eea.europa.eu/catalogue/eea/fre/catalog.search#/metadata/{uuid}"
