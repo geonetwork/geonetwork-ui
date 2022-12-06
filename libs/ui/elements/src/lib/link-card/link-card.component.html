@@ -1,5 +1,5 @@
 <div
-  class="flex flex-col justify-between root h-40 grow py-5 px-5 bg-white rounded border-gray-300 filter card-shadow overflow-hidden lg:w-80"
+  class="flex flex-col justify-between group h-40 grow py-5 px-5 bg-white rounded border-gray-300 filter card-shadow overflow-hidden lg:w-80"
 >
   <div class="max-h-24 overflow-hidden text-ellipsis">
     <p class="font-title font-medium text-21 text-black break-words pb-1">
@@ -18,7 +18,8 @@
       [matTooltip]="'tooltip.url.open' | translate"
       matTooltipPosition="above"
     >
-      <mat-icon class="align-middle text-gray-200 open-icon"
+      <mat-icon
+        class="align-middle text-gray-200 group-hover:text-secondary transition-colors"
         >open_in_new</mat-icon
       >
     </a>
