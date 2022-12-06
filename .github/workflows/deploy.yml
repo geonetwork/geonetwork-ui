@@ -59,6 +59,17 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
+      - name: add initial comment
+        uses: thollander/actions-comment-pull-request@v1
+        if: github.event_name == 'issue_comment'
+        with:
+          message: 'GitHub Pages links:
+
+            🚧 building in progress... 🚧'
+          comment_includes: 'GitHub Pages links:'
+          pr_number: ${{ github.event.issue.number }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Install
         run: npm ci
 
@@ -80,7 +91,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           npx gh-pages --dist dist/ --dest ${{env.BRANCH_NAME}} --remove "${{env.BRANCH_NAME}}/**" --no-history --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
 
-      - name: add PR comment
+      - name: update PR comment
         uses: thollander/actions-comment-pull-request@v1
         if: github.event_name == 'issue_comment'
         with:
@@ -90,4 +101,5 @@ jobs:
 
             * UI components storybook: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/demo/'
           comment_includes: 'GitHub Pages links:'
+          pr_number: ${{ github.event.issue.number }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
