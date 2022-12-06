@@ -14,15 +14,13 @@
       <div class="w-full flex flex-row justify-between">
         <span class="flex flex-col sm:flex-row items-baseline justify-start">
           <h2 class="text-xl mr-4" translate>search.filters.title</h2>
-          <gn-ui-results-hits
-            class="text-sm opacity-[60%]"
-          ></gn-ui-results-hits>
+          <gn-ui-results-hits class="text-sm opacity-60"></gn-ui-results-hits>
         </span>
         <span class="sm:hidden">
           <button
             type="button"
             *ngIf="isOpen"
-            class="text-white opacity-[60%] hover:opacity-[90%] border-0 bg-transparent"
+            class="text-white opacity-60 hover:opacity-90 border-0 bg-transparent"
             (click)="close()"
           >
             <span class="text-sm" translate>search.filters.minimize</span>
@@ -87,7 +85,7 @@
       <button
         type="button"
         *ngIf="!isOpen"
-        class="text-white opacity-[60%] hover:opacity-[90%] border-0 bg-transparent sm:hidden"
+        class="text-white opacity-60 hover:opacity-90 border-0 bg-transparent sm:hidden"
         (click)="open()"
       >
         <span class="text-sm" translate>search.filters.maximize</span>
@@ -101,7 +99,7 @@
       <button
         type="button"
         *ngIf="isOpen"
-        class="text-white opacity-[60%] hover:opacity-[90%] border-0 bg-transparent hidden sm:inline"
+        class="text-white opacity-60 hover:opacity-90 border-0 bg-transparent hidden sm:inline"
         (click)="close()"
       >
         <span class="text-sm" translate>search.filters.minimize</span>

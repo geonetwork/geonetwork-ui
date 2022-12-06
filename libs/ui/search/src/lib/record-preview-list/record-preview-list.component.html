@@ -8,18 +8,18 @@
   >
     <div class="h-full flex flex-row items-center shadow-sm">
       <gn-ui-thumbnail
-        class="w-40 h-full flex-shrink-0 border-r border-gray-200 bg-gray-100"
+        class="w-40 h-full shrink-0 border-r border-gray-200 bg-gray-100"
         [thumbnailUrl]="record.thumbnailUrl"
       ></gn-ui-thumbnail>
 
-      <div class="flex-grow h-full px-6 py-4 flex flex-col overflow-hidden">
+      <div class="grow h-full px-6 py-4 flex flex-col overflow-hidden">
         <div class="title-font text-lg font-medium mb-2">
           <h1 class="truncate">{{ record.title }}</h1>
         </div>
         <p class="leading-relaxed clamp-3 text-sm text-gray-700">
           {{ record.abstract }}
         </p>
-        <div class="flex-grow"></div>
+        <div class="grow"></div>
         <div class="flex flex-row items-center">
           <div
             class="text-gray-500 text-xs truncate capitalize border-r mr-4 pr-4"

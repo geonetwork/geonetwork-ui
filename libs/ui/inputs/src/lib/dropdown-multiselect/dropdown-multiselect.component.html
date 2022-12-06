@@ -8,16 +8,16 @@
   cdkOverlayOrigin
   #overlayOrigin="cdkOverlayOrigin"
 >
-  <div class="flex-grow text-left truncate font-medium mr-2">
+  <div class="grow text-left truncate font-medium mr-2">
     {{ title }}
   </div>
   <div
     *ngIf="hasSelectedChoices"
-    class="flex-shrink-0 rounded-full bg-primary text-white font-bold text-[13px] w-6 h-6 p-[6px] mr-1 selected-count"
+    class="shrink-0 rounded-full bg-primary text-white font-bold text-[13px] w-6 h-6 p-[6px] mr-1 selected-count"
   >
     {{ selected.length }}
   </div>
-  <mat-icon class="flex-shrink-0 opacity-[40%]">
+  <mat-icon class="shrink-0 opacity-40">
     <ng-container *ngIf="overlayOpen">expand_less</ng-container>
     <ng-container *ngIf="!overlayOpen">expand_more</ng-container>
   </mat-icon>
@@ -54,14 +54,14 @@
         type="button"
         *ngFor="let selected of selectedChoices"
         [title]="selected.label"
-        class="max-w-full bg-main text-white rounded pr-[7px] pl-[10px] flex flex-row items-center opacity-[70%] hover:opacity-100 focus:opacity-100 transition-all duration-100"
+        class="max-w-full bg-main text-white rounded pr-[7px] pl-[10px] flex flex-row items-center opacity-70 hover:opacity-100 focus:opacity-100 transition-all duration-100"
         (click)="select(selected, false)"
       >
         <span class="text-sm leading-[26px] truncate">{{
           selected.label
         }}</span>
         <span
-          class="ml-1 px-[2.5px] rounded-full bg-white text-main h-[13px] w-[13px] leading-[13px] flex-shrink-0"
+          class="ml-1 px-[2.5px] rounded-full bg-white text-main h-[13px] w-[13px] leading-[13px] shrink-0"
           >&times;</span
         >
       </button>
@@ -71,7 +71,7 @@
       class="flex px-5 py-1 w-full text-gray-900 cursor-pointer hover:text-primary-darkest hover:bg-gray-50 focus-within:text-primary-darkest focus-within:bg-gray-50 transition-all duration-100"
     >
       <input
-        class="w-[18px] h-[18px] align-text-top flex-shrink-0"
+        class="w-[18px] h-[18px] align-text-top shrink-0"
         type="checkbox"
         #checkBox
         [checked]="isSelected(choice)"
