@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { MatNativeDateModule } from '@angular/material/core'
 import { MatDatepickerModule } from '@angular/material/datepicker'
-import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field'
+import { MatFormFieldModule } from '@angular/material/form-field'
 import { WizardComponent } from './components/wizard/wizard.component'
 import { WizardFieldComponent } from './components/wizard-field/wizard-field.component'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'

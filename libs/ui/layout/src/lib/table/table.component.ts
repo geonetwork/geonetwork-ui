@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core'
 import { MatSort } from '@angular/material/sort'
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table'
+import { MatTableDataSource } from '@angular/material/table'
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll'
 
 const rowIdPrefix = 'table-item-'
