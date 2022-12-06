@@ -13,8 +13,8 @@
     (mouseenter)="expand()"
     (mouseleave)="expandAndClose()"
   >
-    <mat-icon class="mr-2 flex-shrink-0 select-none">{{ icon }}</mat-icon>
-    <div class="flex-grow" #content [ngClass]="{ invisible: !expanded }">
+    <mat-icon class="mr-2 shrink-0 select-none">{{ icon }}</mat-icon>
+    <div class="grow" #content [ngClass]="{ invisible: !expanded }">
       <ng-content></ng-content>
     </div>
   </div>

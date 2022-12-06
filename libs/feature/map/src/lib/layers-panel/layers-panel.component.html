@@ -10,8 +10,8 @@
       *ngFor="let layer of layers$ | async; let index = index"
       class="flex flex-row py-3"
     >
-      <mat-icon class="-ml-2 mr-2 flex-shrink-0">chevron_right</mat-icon>
-      <span class="mr-2 flex-grow">{{ layer.title }}</span>
+      <mat-icon class="-ml-2 mr-2 shrink-0">chevron_right</mat-icon>
+      <span class="mr-2 grow">{{ layer.title }}</span>
       <a
         href
         class="underline text-sm text-red-700 hover:text-red-900"

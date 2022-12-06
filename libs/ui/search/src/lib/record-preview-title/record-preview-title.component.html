@@ -9,12 +9,12 @@
   >
     <div class="h-full flex flex-row items-center">
       <gn-ui-thumbnail
-        class="w-10 h-full flex-shrink-0 border-r border-gray-200 bg-gray-100"
+        class="w-10 h-full shrink-0 border-r border-gray-200 bg-gray-100"
         [thumbnailUrl]="record.thumbnailUrl"
       ></gn-ui-thumbnail>
 
-      <div class="flex-grow px-3 py-1 flex flex-col overflow-hidden">
-        <h1 class="title-font text-sm font-bold truncate md:overflow-clip">
+      <div class="grow px-3 py-1 flex flex-col overflow-hidden">
+        <h1 class="title-font text-sm font-bold truncate md:text-clip">
           {{ record.title }}
         </h1>
       </div>
