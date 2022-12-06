@@ -20,11 +20,11 @@ concurrency:
 
 jobs:
   checks:
-    if: github.event_name == 'issue_comment' && github.event.issue.pull_request
+    if: github.event_name != 'issue_comment' || github.event.issue.pull_request
     name: Check whether a deploy was requested on a PR
     runs-on: ubuntu-latest
     outputs:
-      shouldRun: ${{ github.event_name == 'issue_comment' || (contains(github.event.changes.body.from, '- [ ] 🚀 Build and deploy storybook and demo on GitHub Pages') && contains(github.event.comment.body, '- [x] 🚀 Build and deploy storybook and demo on GitHub Pages')) || '' }}
+      shouldRun: ${{ github.event_name != 'issue_comment' || (contains(github.event.changes.body.from, '- [ ] 🚀 Build and deploy storybook and demo on GitHub Pages') && contains(github.event.comment.body, '- [x] 🚀 Build and deploy storybook and demo on GitHub Pages')) || '' }}
       ref: ${{ github.event_name == 'issue_comment' && steps.comment-branch.outputs.head_ref || '' }}
 
     steps:
