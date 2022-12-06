@@ -1,11 +1,8 @@
-<p>dashboard-page works!</p>
-
-<p>
-  <a [routerLink]="'/sign-in'">Sign in</a>
-</p>
-<p>
-  <a [routerLink]="'/create'">Create new record</a>
-</p>
-<p>
-  <a [routerLink]="'/edit'">Edit record</a>
-</p>
+<main class="flex h-screen" gnUiSearchStateContainer="editor">
+  <aside class="w-[370px] bg-blue-100 shrink-0">
+    <md-editor-sidebar></md-editor-sidebar>
+  </aside>
+  <header>
+    <md-editor-search></md-editor-search>
+  </header>
+</main>
