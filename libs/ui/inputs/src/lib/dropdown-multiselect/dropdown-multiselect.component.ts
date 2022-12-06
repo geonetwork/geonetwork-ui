@@ -84,7 +84,7 @@ export class DropdownMultiselectComponent {
       this.overlayOrigin.elementRef.nativeElement.getBoundingClientRect()
         .width + 'px'
     this.overlayMaxHeight = this.maxRows
-      ? `${this.maxRows * 32.5 + 18}px`
+      ? `${this.maxRows * 29 + 60}px`
       : 'none'
     this.overlayOpen = true
     // this will wait for the checkboxes to be referenced and the overlay to be attached
