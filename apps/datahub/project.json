@@ -29,6 +29,7 @@
           }
         ],
         "styles": [
+          "tailwind.base.css",
           "apps/datahub/src/styles.css",
           "node_modules/tippy.js/dist/tippy.css",
           "node_modules/ol/ol.css",
