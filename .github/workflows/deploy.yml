@@ -8,6 +8,9 @@ env:
 # This workflow runs whenever QA checks completed successfully
 on:
   workflow_call:
+  issue_comment:
+    types:
+      - edited
 
 concurrency:
   group: deploy-${{ github.ref }}
