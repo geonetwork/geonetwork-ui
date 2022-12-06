@@ -1,12 +1,14 @@
 name: Artifacts
-run-name: 📦 Generate artifacts for ${{ github.event_name == 'release' && '🏷' || '🌱' }} ${{github.ref_name}}
+run-name: 📦 Generate artifacts for ${{ github.event_name == 'issue_comment' && 'PR' || '🏷' }} ${{github.event_name == 'issue_comment' && github.event.issue.number || github.ref_name}}
 
-# This workflow runs whenever QA checks completed successfully,
+# This workflow runs whenever the "build affected docker images" checkbox is checked (for PR)
 # and also whenever a tag is pushed
 on:
-  workflow_call:
   release:
     types: [published]
+  issue_comment:
+    types:
+      - edited
 
 concurrency:
   group: artifacts-${{ github.ref }}
@@ -18,7 +20,26 @@ env:
   APP_NAMES: datafeeder,datahub
 
 jobs:
+  checks:
+    if: github.event_name == 'issue_comment' && github.event.issue.pull_request
+    name: Check whether a deploy was requested on a PR
+    runs-on: ubuntu-latest
+    outputs:
+      shouldRun: ${{ contains(github.event.changes.body.from, '- [ ] 📦 Build and push affected docker images') && contains(github.event.comment.body, '- [x] 📦 Build and push affected docker images') || '' }}
+      ref: ${{ github.event_name == 'issue_comment' && steps.comment-branch.outputs.head_ref || '' }}
+
+    steps:
+      - name: Dump GitHub event
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github.event) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - uses: xt0rted/pull-request-comment-branch@v1
+        id: comment-branch
+
   build-archive-docker:
+    needs: checks
+    if: github.event_name != 'issue_comment' || needs.checks.outputs.shouldRun
     name: Build docker images and archives
     runs-on: ubuntu-latest
 
@@ -26,31 +47,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.event_name == 'pull_request' && github.head_ref || '' }} # use the PR head ref if applicable; otherwise keep default behaviour
+          ref: ${{ needs.checks.outputs.ref }} # use the PR head ref if applicable; otherwise keep default behaviour
           persist-credentials: false
           fetch-depth: 0
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
         with:
           main-branch-name: 'main'
-
-      - name: Cache node modules
-        uses: actions/cache@v1
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
 
       - name: Install dependencies
         run: npm ci
