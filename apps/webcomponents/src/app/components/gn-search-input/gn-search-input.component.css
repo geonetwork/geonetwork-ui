@@ -1,7 +1,6 @@
 @import '../../../styles.css';
 
-/* TODO(mdc-migration): The following rule targets internal classes of autocomplete that may no longer apply for the MDC version. */
-.mat-autocomplete-panel {
-  margin-top: 10px;
+.mdc-menu-surface.mat-mdc-autocomplete-panel {
+  margin-top: 10px !important;
   border-radius: 8px;
 }
