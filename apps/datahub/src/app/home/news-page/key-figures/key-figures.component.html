@@ -1,8 +1,7 @@
 <div class="flex flex-col">
   <a [routerLink]="ROUTE_SEARCH">
     <gn-ui-figure
-      class="py-[37px] pl-[47px] rounded-lg border bg-white mb-5 hover:bg-gray-50 hover:text-primary hover:border-primary hover:cursor-pointer"
-      style="box-shadow: 0 0 44px 0 rgba(5, 31, 156, 0.09)"
+      class="py-[37px] pl-[47px] rounded-lg border bg-white mb-5 card-shadow cursor-pointer"
       [figure]="recordsCount$ | async"
       [icon]="'folder_open'"
       [title]="'catalog.figures.datasets' | translate"
@@ -11,8 +10,7 @@
   </a>
   <a [routerLink]="ROUTE_ORGANISATIONS">
     <gn-ui-figure
-      class="py-[37px] pl-[47px] rounded-lg bg-white border hover:bg-gray-50 hover:text-primary hover:border-primary hover:cursor-pointer"
-      style="box-shadow: 0 0 44px 0 rgba(5, 31, 156, 0.09)"
+      class="py-[37px] pl-[47px] rounded-lg bg-white border card-shadow cursor-pointer"
       [figure]="orgsCount$ | async"
       [icon]="'corporate_fare'"
       [title]="'catalog.figures.organisations' | translate"
