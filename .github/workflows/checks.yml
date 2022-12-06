@@ -32,26 +32,15 @@ jobs:
           fetch-depth: 0
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
         with:
           main-branch-name: 'main'
-
-      - name: Cache node modules
-        uses: actions/cache@v1
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
 
       - name: Install dependencies
         run: npm ci
@@ -81,26 +70,15 @@ jobs:
           fetch-depth: 0
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
         with:
           main-branch-name: 'main'
-
-      - name: Cache node modules
-        uses: actions/cache@v1
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
 
       - name: Install dependencies
         run: npm ci
@@ -108,12 +86,52 @@ jobs:
       - name: Build affected
         run: npx nx affected --target=build --parallel=3
 
-  deploy:
-    needs: ['format-lint-test', 'test-build']
-    uses: ./.github/workflows/deploy.yml
-    secrets: inherit
+  affected-recap:
+    if: github.event_name == 'pull_request'
+    name: Print affected libs and apps
+    runs-on: ubuntu-latest
 
-  artifacts:
-    needs: ['format-lint-test', 'test-build']
-    uses: ./.github/workflows/artifacts.yml
-    secrets: inherit
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v2
+        with:
+          main-branch-name: 'main'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Compute affected projects
+        run: |
+          echo "AFFECTED_LIBS=$(npx nx print-affected --type=lib --select=projects | awk 'BEGIN {RS = ", "; ORS = ", "} \
+          { print "`"$1"`" }')" >> $GITHUB_ENV
+
+      - name: Compute affected apps
+        run: |
+          echo "AFFECTED_APPS=$(npx nx print-affected --type=app --select=projects | awk 'BEGIN {RS = ", "; ORS = ", "} \
+          { print "`"$1"`" }')" >> $GITHUB_ENV
+
+      - name: add PR comment
+        uses: thollander/actions-comment-pull-request@v1
+        with:
+          message: 'Affected libs: ${{ env.AFFECTED_LIBS }}
+
+            Affected apps: ${{ env.AFFECTED_APPS }}
+
+            - [ ] 🚀 Build and deploy storybook and demo on GitHub Pages
+
+            - [ ] 📦 Build and push affected docker images'
+          comment_includes: 'Affected libs:'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

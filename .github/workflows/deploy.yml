@@ -24,7 +24,7 @@ jobs:
     name: Check whether a deploy was requested on a PR
     runs-on: ubuntu-latest
     outputs:
-      shouldRun: ${{ contains(github.event.changes.body.from, '- [ ] 🚀 Build and deploy affected apps on GitHub Pages') && contains(github.event.comment.body, '- [x] 🚀 Build and deploy affected apps on GitHub Pages') || '' }}
+      shouldRun: ${{ contains(github.event.changes.body.from, '- [ ] 🚀 Build and deploy storybook and demo on GitHub Pages') && contains(github.event.comment.body, '- [x] 🚀 Build and deploy storybook and demo on GitHub Pages') || '' }}
       ref: ${{ github.event_name == 'issue_comment' && steps.comment-branch.outputs.head_ref || '' }}
 
     steps:
