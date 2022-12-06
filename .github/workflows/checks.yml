@@ -130,7 +130,7 @@ jobs:
 
             Affected apps: ${{ env.AFFECTED_APPS }}
 
-            - [ ] 🚀 Build and deploy affected apps on GitHub Pages
+            - [ ] 🚀 Build and deploy storybook and demo on GitHub Pages
 
             - [ ] 📦 Build and push affected docker images'
           comment_includes: 'Affected libs:'
