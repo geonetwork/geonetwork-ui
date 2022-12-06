@@ -117,6 +117,7 @@
 .mat-mdc-option.mat-selected:not(.mat-mdc-option-multiple):not(.mat-option-disabled) {
   background: rgba(0, 0, 0, 0.04);
 }
-.mat-mdc-select-panel .mat-mdc-option.mat-selected:not(.mat-mdc-option-multiple) {
+.mat-mdc-select-panel
+  .mat-mdc-option.mat-selected:not(.mat-mdc-option-multiple) {
   background: rgba(0, 0, 0, 0.12);
 }

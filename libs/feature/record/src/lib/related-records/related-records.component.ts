@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  Input,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 
 @Component({
