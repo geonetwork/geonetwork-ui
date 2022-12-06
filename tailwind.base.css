@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .card-shadow {
+    @apply shadow-xl hover:shadow-primary-lightest transition-shadow;
+  }
+
+  .badge-btn {
+    @apply items-center justify-center px-2 py-1 bg-primary hover:text-primary text-white rounded transition-all;
+  }
+}
+
+html {
+  --mdc-typography-font-family: var(--font-family-main);
+}
