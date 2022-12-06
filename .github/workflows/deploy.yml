@@ -41,6 +41,8 @@ jobs:
     if: github.event_name != 'issue_comment' || needs.checks.outputs.shouldRun
     name: Deploy Storybook to GitHub Pages
     runs-on: ubuntu-latest
+    env:
+      BRANCH_NAME: ${{needs.checks.outputs.ref || 'main'}}
 
     steps:
       - name: Dump GitHub event
@@ -83,8 +85,6 @@ jobs:
       # FIXME: restore a system for testing web components but faster/lighter than storybook
       #      - name: Build storybook for web components
       #        run: npm run build:storybook-wc
-
-      - run: echo "BRANCH_NAME=${GITHUB_HEAD_REF:-main}" >> $GITHUB_ENV
 
       - name: Deploy to directory ${{ env.BRANCH_NAME }}
         run: |
