@@ -17,6 +17,11 @@ tr.mat-mdc-header-row {
   height: 48px;
 }
 
+[mat-header-cell] {
+  color: #0000008a;
+  font-size: 12px;
+  font-weight: 500;
+}
 tr {
   cursor: pointer;
 }
@@ -25,6 +30,3 @@ tr {
   color: var(--color-primary);
 }
 
-.mat-mdc-table {
-  font-family: var(--font-family-main);
-}

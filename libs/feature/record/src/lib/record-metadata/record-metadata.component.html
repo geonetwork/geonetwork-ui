@@ -55,12 +55,12 @@
           (selectedIndexChange)="onTabIndexChange()"
           [selectedIndex]="(displayMap$ | async) ? 0 : 1"
           animationDuration="200ms"
+          mat-stretch-tabs="false"
+          mat-align-tabs="start"
         >
           <mat-tab [disabled]="(displayMap$ | async) === false">
             <ng-template mat-tab-label>
-              <span class="uppercase text-sm text-primary opacity-75" translate
-                >record.tab.map</span
-              >
+              <span class="tab-header-label" translate>record.tab.map</span>
             </ng-template>
             <div
               class="block"
@@ -72,9 +72,7 @@
           </mat-tab>
           <mat-tab [disabled]="(displayData$ | async) === false">
             <ng-template mat-tab-label>
-              <span class="uppercase text-sm text-primary opacity-75" translate
-                >record.tab.data</span
-              >
+              <span class="tab-header-label" translate>record.tab.data</span>
             </ng-template>
             <div class="block" *ngIf="displayData$ | async">
               <gn-ui-data-view-table></gn-ui-data-view-table>
