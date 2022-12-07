@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { CatalogRecord } from '@geonetwork-ui/metadata-converter'
+import { EditorService } from '@geonetwork-ui/feature/editor'
 
 @Component({
   selector: 'md-editor-edit',
@@ -8,11 +8,13 @@ import { CatalogRecord } from '@geonetwork-ui/metadata-converter'
   styleUrls: ['./edit-page.component.css'],
 })
 export class EditPageComponent implements OnInit {
-  currentRecord: CatalogRecord
-
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private editorService: EditorService
+  ) {}
 
   ngOnInit(): void {
-    this.currentRecord = this.route.snapshot.data['record']
+    const currentRecord = this.route.snapshot.data['record']
+    this.editorService.setCurrentRecord(currentRecord)
   }
 }

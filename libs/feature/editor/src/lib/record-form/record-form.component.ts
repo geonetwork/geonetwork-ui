@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { CatalogRecord } from '@geonetwork-ui/metadata-converter'
-import { FormFieldConfig } from '@geonetwork-ui/ui/inputs'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { EditorService } from '../services/editor.service'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -9,23 +8,5 @@ import { FormFieldConfig } from '@geonetwork-ui/ui/inputs'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecordFormComponent {
-  @Input() record: CatalogRecord
-  @Input() fieldsConfig: FormFieldConfig[] = [
-    {
-      model: 'title',
-      labelKey: 'Metadata title',
-      type: 'text',
-    },
-    {
-      model: 'abstract',
-      labelKey: 'Abstract',
-      type: 'rich',
-    },
-    {
-      model: 'uniqueIdentifier',
-      labelKey: 'Unique identifier',
-      type: 'text',
-      locked: true,
-    },
-  ]
+  constructor(public editorService: EditorService) {}
 }

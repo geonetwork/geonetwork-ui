@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-6">
   <gn-ui-form-field
-    *ngFor="let fieldConfig of fieldsConfig"
-    [config]="fieldConfig"
-    [value]="record[fieldConfig.model]"
+    *ngFor="let field of editorService.fields$ | async"
+    [config]="field.config"
+    [value]="field.value"
   ></gn-ui-form-field>
 </div>
