@@ -23,6 +23,9 @@ import { FormControl } from '@angular/forms'
 })
 export class FormFieldComponent {
   @Input() config: FormFieldConfig
+  @Input() set value(v: unknown) {
+    this.formControl.setValue(v)
+  }
   formControl = new FormControl()
 
   get simpleType() {

@@ -15,6 +15,7 @@ import { SidebarComponent } from './dashboard/sidebar/sidebar.component'
 import { EditPageComponent } from './edit/edit-page.component'
 import { SignInPageComponent } from './sign-in/sign-in-page.component'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
     AppCommonModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
     UiInputsModule,
+    FeatureEditorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
