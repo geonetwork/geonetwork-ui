@@ -41,6 +41,7 @@ import {
   getSearchResultsLayout,
   getSearchResultsLoading,
   getSearchSortBy,
+  getSize,
   getSpatialFilterEnabled,
   isEndOfResults,
   totalPages,
@@ -58,6 +59,7 @@ export class SearchFacade {
   isEndOfResults$: Observable<boolean>
   totalPages$: Observable<number>
   currentPage$: Observable<number>
+  size$: Observable<number>
   searchFilters$: Observable<SearchFilters>
   configAggregations$: Observable<any>
   resultsAggregations$: Observable<any>
@@ -97,6 +99,7 @@ export class SearchFacade {
     this.isEndOfResults$ = this.store.pipe(select(isEndOfResults, searchId))
     this.totalPages$ = this.store.pipe(select(totalPages, searchId))
     this.currentPage$ = this.store.pipe(select(currentPage, searchId))
+    this.size$ = this.store.pipe(select(getSize, searchId))
     this.configAggregations$ = this.store.pipe(
       select(getSearchConfigAggregations, searchId)
     )

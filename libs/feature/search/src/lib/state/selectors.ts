@@ -76,6 +76,11 @@ export const currentPage = createSelector(
     Math.ceil(state.params.from / state.params.size) + 1
 )
 
+export const getSize = createSelector(
+  getSearchStateSearch,
+  (state: SearchStateSearch) => state.params.size
+)
+
 export const getFavoritesOnly = createSelector(
   getSearchStateSearch,
   (state: SearchStateSearch) => state.params.favoritesOnly
