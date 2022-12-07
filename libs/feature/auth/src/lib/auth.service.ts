@@ -4,9 +4,10 @@ import {
   MeResponseApiModel,
 } from '@geonetwork-ui/data-access/gn4'
 import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n'
+import { UserModel } from '@geonetwork-ui/util/shared'
 import { TranslateService } from '@ngx-translate/core'
 import { Observable } from 'rxjs'
-import { shareReplay } from 'rxjs/operators'
+import { map, shareReplay } from 'rxjs/operators'
 
 export const DEFAULT_GN4_LOGIN_URL = `/geonetwork/srv/\${lang3}/catalog.signin?redirect=\${current_url}`
 export const LOGIN_URL = new InjectionToken<string>('loginUrl')
@@ -34,12 +35,25 @@ export class AuthService {
     private translateService: TranslateService
   ) {}
 
-  authReady() {
+  authReady(): Observable<UserModel> {
     if (!this.authReady$) {
-      this.authReady$ = this.meApi
-        .getMe()
-        .pipe(shareReplay({ bufferSize: 1, refCount: true }))
+      this.authReady$ = this.meApi.getMe().pipe(
+        map((apiUser) => this.mapToUserModel(apiUser)),
+        shareReplay({ bufferSize: 1, refCount: true })
+      )
     }
     return this.authReady$
+  }
+
+  private mapToUserModel(apiUser: MeResponseApiModel): UserModel {
+    const {
+      hash,
+      groupsWithRegisteredUser,
+      groupsWithEditor,
+      groupsWithReviewer,
+      groupsWithUserAdmin,
+      ...user
+    } = apiUser
+    return user
   }
 }
