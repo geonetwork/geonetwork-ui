@@ -13,6 +13,7 @@ import { SearchComponent } from './dashboard/search/search.component'
 import { SidebarComponent } from './dashboard/sidebar/sidebar.component'
 import { EditPageComponent } from './edit/edit-page.component'
 import { SignInPageComponent } from './sign-in/sign-in-page.component'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { SignInPageComponent } from './sign-in/sign-in-page.component'
     FeatureSearchModule,
     AppCommonModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
+    UiInputsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

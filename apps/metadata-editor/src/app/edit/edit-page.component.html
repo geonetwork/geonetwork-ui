@@ -1,1 +1,42 @@
-<p>edit-page works!</p>
+<div
+  class="bg-gray-50 w-full h-full grid grid-cols-2 gap-6 p-16"
+  style="
+    grid-template-columns: max-content auto;
+    grid-template-rows: max-content auto;
+  "
+>
+  <div class="row-span-2">
+    <div class="card p-8 w-[350px]">
+      <h1 class="text-xl font-bold font-title mb-4">Completion</h1>
+      <p class="mb-4">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In cursus augue
+        ac lacus imperdiet, nec pretium ante tincidunt. Pellentesque placerat
+        odio et lacinia vehicula.
+      </p>
+      <p class="mb-4">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In cursus augue
+        ac lacus imperdiet, nec pretium ante tincidunt. Pellentesque placerat
+        odio et lacinia vehicula.
+      </p>
+    </div>
+  </div>
+  <div class="card p-6">
+    <h1 class="text-xl font-bold font-title mb-4">General informations</h1>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. In cursus augue
+      ac lacus imperdiet, nec pretium ante tincidunt. Pellentesque placerat odio
+      et lacinia vehicula.
+    </p>
+  </div>
+  <div>
+    <div class="card p-14 flex flex-col gap-6">
+      <gn-ui-form-field
+        *ngFor="let fieldConfig of config"
+        [config]="fieldConfig"
+      ></gn-ui-form-field>
+    </div>
+    <div class="mt-10 ml-auto w-max">
+      <gn-ui-button type="primary">Save record</gn-ui-button>
+    </div>
+  </div>
+</div>

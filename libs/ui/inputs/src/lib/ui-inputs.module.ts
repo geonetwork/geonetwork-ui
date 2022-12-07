@@ -87,6 +87,7 @@ import {
     StarToggleComponent,
     DropdownMultiselectComponent,
     ViewportIntersectorComponent,
+    FormFieldComponent,
   ],
 })
 export class UiInputsModule {}
