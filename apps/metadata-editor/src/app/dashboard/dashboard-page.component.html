@@ -19,6 +19,7 @@
       <div class="mt-16 shadow rounded bg-white">
         <gn-ui-record-table
           [records]="searchFacade.results$ | async"
+          (select)="editRecord($event)"
         ></gn-ui-record-table>
       </div>
     </main>

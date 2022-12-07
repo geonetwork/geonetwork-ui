@@ -1,6 +1,12 @@
 <div class="grid grid-cols-[repeat(5,minmax(0,max-content))] gap-x-4 gap-y-1">
-  <ng-container *ngFor="let record of records">
-    <div class="record-table-col">{{ record.title }}</div>
+  <div
+    class="contents hover:text-gray-800 cursor-pointer"
+    (click)="select.emit(record)"
+    *ngFor="let record of records"
+  >
+    <div class="record-table-col">
+      {{ record.title }}
+    </div>
     <div class="record-table-col">
       <span class="badge-btn bg-blue-50 text-blue-600 text-sm">{{
         getStatus(record.isPublishedToAll)
@@ -12,5 +18,5 @@
     </div>
     <div class="record-table-col">{{ dateToString(record.updatedOn) }}</div>
     <div class="record-table-col">{{ dateToString(record.createdOn) }}</div>
-  </ng-container>
+  </div>
 </div>

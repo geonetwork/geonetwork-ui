@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
+import { RouterLink } from '@angular/router'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { NgxDropzoneModule } from 'ngx-dropzone'
@@ -55,6 +56,7 @@ import { RecordTableComponent } from './record-table/record-table.component'
     UiWidgetsModule,
     UiElementsModule,
     MatIconModule,
+    RouterLink,
   ],
   exports: [
     RecordPreviewListComponent,

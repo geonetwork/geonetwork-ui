@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { Router } from '@angular/router'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
+import { MetadataRecord } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'md-editor-dashboard',
@@ -9,10 +11,11 @@ import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
   providers: [SearchFacade, SearchService],
 })
 export class DashboardPageComponent {
-  constructor(public searchFacade: SearchFacade) {
+  constructor(public searchFacade: SearchFacade, private router: Router) {
     this.searchFacade.init('editor')
     this.searchFacade.setConfigRequestFields({
       includes: [
+        'uuid',
         'resourceTitleObject',
         'createDate',
         'changeDate',
@@ -24,5 +27,9 @@ export class DashboardPageComponent {
     this.searchFacade.setPagination(0, 10)
     this.searchFacade.setSortBy('changeDate')
     this.searchFacade.requestMoreResults()
+  }
+
+  editRecord(record: MetadataRecord) {
+    this.router.navigate(['/edit', record.uuid])
   }
 }
