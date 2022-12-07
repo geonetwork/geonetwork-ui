@@ -14,6 +14,7 @@ import { AppCommonModule } from './app.common.module'
 import { AppComponent } from './app.component'
 import { appRoutes } from './app.routes'
 import { CreatePageComponent } from './create/create-page.component'
+import { DashboardMenuComponent } from './dashboard/dashboard-menu/dashboard-menu.component'
 import { DashboardPageComponent } from './dashboard/dashboard-page.component'
 import { SearchHeaderComponent } from './dashboard/search-header/search-header.component'
 import { SidebarComponent } from './dashboard/sidebar/sidebar.component'
@@ -32,6 +33,7 @@ import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
     EditPageComponent,
     SidebarComponent,
     SearchHeaderComponent,
+    DashboardMenuComponent,
   ],
   imports: [
     BrowserModule,
