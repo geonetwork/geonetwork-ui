@@ -8,6 +8,7 @@ import { select, Store } from '@ngrx/store'
 import { from, Observable, of } from 'rxjs'
 import {
   AddSearch,
+  ClearResults,
   DEFAULT_SEARCH_KEY,
   Paginate,
   RequestMoreOnAggregation,
@@ -108,6 +109,11 @@ export class SearchFacade {
     this.spatialFilterEnabled$ = this.store.pipe(
       select(getSpatialFilterEnabled, searchId)
     )
+  }
+
+  clearResults(): SearchFacade {
+    this.store.dispatch(new ClearResults(this.searchId))
+    return this
   }
 
   setConfigAggregations(config: any): SearchFacade {
