@@ -188,7 +188,7 @@ export class SearchFacade {
     return this
   }
 
-  paginate(delta: number): SearchFacade {
+  paginate(delta?: number): SearchFacade {
     this.store.dispatch(new Paginate(delta, this.searchId))
     return this
   }
