@@ -1,13 +1,26 @@
-<div class="flex h-screen" gnUiSearchStateContainer="editor">
+<div class="flex h-screen">
   <aside class="w-[370px] shrink-0 border-r">
     <md-editor-sidebar></md-editor-sidebar>
   </aside>
   <div class="grow flex flex-col">
-    <header class="shrink-0">
-      <md-editor-search></md-editor-search>
+    <header class="shrink-0 border-b border-blue-300">
+      <md-editor-search-header></md-editor-search-header>
     </header>
-    <main class="grow bg-gray-100">
-      <gn-ui-results-list-container></gn-ui-results-list-container>
+    <main class="grow bg-gray-100 p-12">
+      <div class="flex justify-center gap-8 items-baseline">
+        <h1 class="text-[56px] capitalize font-title grow" translate="">
+          catalog
+        </h1>
+        <button role="button" class="btn-default flex gap-3 items-center">
+          <mat-icon class="material-icons-outlined">post_add</mat-icon>
+          <span>new record</span>
+        </button>
+      </div>
+      <div class="mt-16 shadow rounded bg-white">
+        <gn-ui-record-table
+          [records]="searchFacade.results$ | async"
+        ></gn-ui-record-table>
+      </div>
     </main>
   </div>
 </div>
