@@ -17,6 +17,7 @@ import {
 export class PaginationComponent implements OnChanges {
   @Input() currentPage = 1
   @Input() nPages = 1
+  @Input() hideButton = false
   @Output() newCurrentPageEvent = new EventEmitter<number>()
 
   private applyPageBounds() {
