@@ -7,3 +7,10 @@ body {
 .icon-btn {
   @apply text-slate-600 hover:text-slate-400 cursor-pointer transition-colors;
 }
+
+.btn-primary {
+  @apply bg-primary text-white px-9 py-3 rounded-[50px];
+}
+.btn-default {
+  @apply bg-blue-600 text-white px-9 py-3 rounded-[50px] hover:scale-[1.02] transition-transform;
+}
