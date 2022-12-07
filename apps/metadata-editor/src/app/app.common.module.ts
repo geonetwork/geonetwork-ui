@@ -6,7 +6,6 @@ import { ThemeService } from '@geonetwork-ui/util/shared'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { metaReducers } from '../../../datahub/src/app/app.module'
 import { environment } from '../../../datahub/src/environments/environment'
 
 @NgModule({
@@ -16,7 +15,6 @@ import { environment } from '../../../datahub/src/environments/environment'
     StoreModule.forRoot(
       {},
       {
-        metaReducers,
         runtimeChecks: {
           strictStateImmutability: false,
           strictActionImmutability: false,

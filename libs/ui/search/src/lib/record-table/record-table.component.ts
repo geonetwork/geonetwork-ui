@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 
@@ -17,9 +9,7 @@ import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 })
 export class RecordTableComponent {
   @Input() records: MetadataRecord[] = RECORDS_SUMMARY_FIXTURE
-  @Output() select = new EventEmitter<MetadataRecord>()
-
-  constructor() {}
+  @Output() recordSelect = new EventEmitter<MetadataRecord>()
 
   dateToString(date: Date): string {
     return date?.toLocaleDateString(undefined, {

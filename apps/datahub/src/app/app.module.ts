@@ -21,7 +21,7 @@ import {
 } from '@geonetwork-ui/ui/elements'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
-import { RESULTS_LAYOUT_CONFIG, UiSearchModule } from '@geonetwork-ui/ui/search'
+import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import {
   getGlobalConfig,
   getOptionalSearchConfig,

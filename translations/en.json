@@ -161,6 +161,7 @@
   "results.layout.selectOne": "Results layout",
   "results.records.hits.empty.help.html": "Suggestions: <ul class='list-disc list-inside'><li>Try other words</li><li>Specify fewer words</li></ul>",
   "results.records.hits.found": "{hits, plural, =0{No documents match the specified search.} one{1 record found.} other{{hits} records found.}}",
+  "results.records.hits.displayedOn": "{displayed, plural, =0{No record.} one{1 record} other{{displayed} records }} {hits, plural, other{display on {hits} total.}}",
   "results.showMore": "Show more results...",
   "results.sortBy.dateStamp": "Last updates",
   "results.sortBy.popularity": "Popularity",

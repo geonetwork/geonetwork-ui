@@ -11,16 +11,45 @@
         <h1 class="text-[56px] capitalize font-title grow" translate="">
           catalog
         </h1>
-        <button role="button" class="btn-default flex gap-3 items-center">
+        <button
+          role="button"
+          class="btn-default flex gap-3 items-center"
+          (click)="createRecord()"
+        >
           <mat-icon class="material-icons-outlined">post_add</mat-icon>
           <span>new record</span>
         </button>
       </div>
-      <div class="mt-16 shadow rounded bg-white">
+      <div
+        class="mt-16 shadow rounded bg-white"
+        *ngIf="searchFacade.results$ | async as results"
+      >
         <gn-ui-record-table
-          [records]="searchFacade.results$ | async"
-          (select)="editRecord($event)"
+          [records]="results"
+          (recordSelect)="editRecord($event)"
         ></gn-ui-record-table>
+        <div
+          class="px-5 py-5 flex justify-center gap-8 items-baseline"
+          *ngIf="searchFacade.resultsHits$ | async as hits"
+        >
+          <div
+            translate
+            class="text-gray-500"
+            [translateParams]="{
+              displayed: results.length,
+              hits: hits.value
+            }"
+          >
+            results.records.hits.displayedOn
+          </div>
+          <div class="grow">
+            <gn-ui-pagination
+              [currentPage]="searchFacade.currentPage$ | async"
+              [nPages]="searchFacade.totalPages$ | async"
+              (newCurrentPageEvent)="paginate($event)"
+            ></gn-ui-pagination>
+          </div>
+        </div>
       </div>
     </main>
   </div>
