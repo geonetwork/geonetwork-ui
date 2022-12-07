@@ -4,6 +4,11 @@ import { RouterModule } from '@angular/router'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
+import {
+  TRANSLATE_DEFAULT_CONFIG,
+  UtilI18nModule,
+} from '@geonetwork-ui/util/i18n'
+import { TranslateModule } from '@ngx-translate/core'
 import { AppCommonModule } from './app.common.module'
 
 import { AppComponent } from './app.component'
@@ -37,6 +42,8 @@ import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
     UiInputsModule,
     FeatureEditorModule,
+    UtilI18nModule,
+    TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
   ],
   providers: [],
   bootstrap: [AppComponent],

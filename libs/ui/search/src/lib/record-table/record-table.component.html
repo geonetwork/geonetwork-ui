@@ -1,4 +1,17 @@
 <div class="grid grid-cols-[repeat(5,minmax(0,max-content))] gap-x-4 gap-y-1">
+  <div class="contents text-sm">
+    <div translate="" class="record-table-header">record.metadata.title</div>
+    <div translate="" class="record-table-header">record.metadata.status</div>
+    <div translate="" class="record-table-header">
+      record.metadata.administrator
+    </div>
+    <div translate="" class="record-table-header">
+      record.metadata.updatedOn
+    </div>
+    <div translate="" class="record-table-header">
+      record.metadata.createdOn
+    </div>
+  </div>
   <div
     class="contents hover:text-gray-800 cursor-pointer"
     (click)="select.emit(record)"
@@ -14,7 +27,7 @@
     </div>
     <div class="record-table-col flex items-center gap-2">
       <mat-icon class="material-icons-outlined"> person </mat-icon>
-      {{ formatUserInfo(record.ownerInfo) }}
+      <span class="text-gray-800">{{ formatUserInfo(record.ownerInfo) }}</span>
     </div>
     <div class="record-table-col">{{ dateToString(record.updatedOn) }}</div>
     <div class="record-table-col">{{ dateToString(record.createdOn) }}</div>

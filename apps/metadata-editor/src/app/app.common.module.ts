@@ -2,15 +2,10 @@ import { NgModule } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
 import { ThemeService } from '@geonetwork-ui/util/shared'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { TranslateModule } from '@ngx-translate/core'
 import { metaReducers } from '../../../datahub/src/app/app.module'
 import { environment } from '../../../datahub/src/environments/environment'
 
@@ -30,8 +25,6 @@ import { environment } from '../../../datahub/src/environments/environment'
     ),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot(),
-    UtilI18nModule,
-    TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
   ],
   exports: [MatIconModule],
   providers: [
