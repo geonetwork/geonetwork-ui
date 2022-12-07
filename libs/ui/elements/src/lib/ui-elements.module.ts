@@ -22,6 +22,7 @@ import { ThumbnailComponent } from './thumbnail/thumbnail.component'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { FormsModule } from '@angular/forms'
 import { AvatarComponent } from './avatar/avatar.component'
+import { UserPreviewComponent } from './user-preview/user-preview.component'
 
 @NgModule({
   imports: [
@@ -51,6 +52,7 @@ import { AvatarComponent } from './avatar/avatar.component'
     PaginationComponent,
     ThumbnailComponent,
     AvatarComponent,
+    UserPreviewComponent,
   ],
   exports: [
     MetadataInfoComponent,
@@ -66,6 +68,7 @@ import { AvatarComponent } from './avatar/avatar.component'
     PaginationComponent,
     ThumbnailComponent,
     AvatarComponent,
+    UserPreviewComponent,
   ],
 })
 export class UiElementsModule {}
