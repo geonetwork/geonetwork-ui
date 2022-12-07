@@ -29,6 +29,7 @@ import {
 } from './actions'
 import { SearchError, SearchState, SearchStateParams } from './reducer'
 import {
+  currentPage,
   getError,
   getFavoritesOnly,
   getSearchConfigAggregations,
@@ -41,6 +42,7 @@ import {
   getSearchSortBy,
   getSpatialFilterEnabled,
   isEndOfResults,
+  totalPages,
 } from './selectors'
 import { FILTER_GEOMETRY } from '../feature-search.module'
 import { Geometry } from 'geojson'
@@ -53,6 +55,8 @@ export class SearchFacade {
   sortBy$: Observable<string>
   isLoading$: Observable<boolean>
   isEndOfResults$: Observable<boolean>
+  totalPages$: Observable<number>
+  currentPage$: Observable<number>
   searchFilters$: Observable<SearchFilters>
   configAggregations$: Observable<any>
   resultsAggregations$: Observable<any>
@@ -90,6 +94,8 @@ export class SearchFacade {
     this.searchFilters$ = this.store.pipe(select(getSearchFilters, searchId))
     this.resultsHits$ = this.store.pipe(select(getSearchResultsHits, searchId))
     this.isEndOfResults$ = this.store.pipe(select(isEndOfResults, searchId))
+    this.totalPages$ = this.store.pipe(select(totalPages, searchId))
+    this.currentPage$ = this.store.pipe(select(currentPage, searchId))
     this.configAggregations$ = this.store.pipe(
       select(getSearchConfigAggregations, searchId)
     )
