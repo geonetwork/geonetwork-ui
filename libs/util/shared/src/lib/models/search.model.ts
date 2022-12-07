@@ -54,6 +54,8 @@ export interface MetadataRecord {
   constraints?: string[]
   favoriteCount?: number
   isOpenData?: boolean
+  ownerInfo?: string
+  isPublishedToAll?: boolean
 }
 
 export enum MetadataLinkType {

@@ -173,9 +173,17 @@ export class ElasticsearchFieldMapper {
       ...output,
       favoriteCount: parseInt(selectField(source, 'userSavedCount')),
     }),
+    userinfo: (output, source) => ({
+      ...output,
+      ownerInfo: selectField(source, 'userinfo'),
+    }),
     isOpenData: (output, source) => ({
       ...output,
       isOpenData: selectField(source, 'isOpenData') !== 'false',
+    }),
+    isPublishedToAll: (output, source) => ({
+      ...output,
+      isPublishedToAll: selectField(source, 'isPublishedToAll') !== 'false',
     }),
   }
 
