@@ -21,7 +21,6 @@ import {
   ClearError,
   ClearPagination,
   ClearResults,
-  PAGINATE,
   PatchResultsAggregations,
   REQUEST_MORE_ON_AGGREGATION,
   REQUEST_MORE_RESULTS,
@@ -75,7 +74,6 @@ export class SearchEffects {
         UPDATE_FILTERS,
         SET_SEARCH,
         SET_PAGINATION,
-        PAGINATE,
         SET_FAVORITES_ONLY,
         SET_SPATIAL_FILTER_ENABLED
       ),
