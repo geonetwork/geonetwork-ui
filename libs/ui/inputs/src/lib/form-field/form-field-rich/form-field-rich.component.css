@@ -1,8 +1,0 @@
-textarea {
-  @apply border border-gray-200 rounded-md p-3 w-full h-full;
-  resize: none;
-}
-
-textarea[readonly] {
-  @apply bg-gray-50 text-gray-700;
-}

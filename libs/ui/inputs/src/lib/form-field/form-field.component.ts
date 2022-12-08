@@ -66,4 +66,14 @@ export class FormFieldComponent {
   get isObjectField() {
     return this.config.type === 'object'
   }
+
+  get isFieldOk() {
+    return !this.config.locked && !this.config.invalid
+  }
+  get isFieldLocked() {
+    return this.config.locked
+  }
+  get isFieldInvalid() {
+    return !this.config.locked && this.config.invalid
+  }
 }

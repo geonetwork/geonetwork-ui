@@ -20,6 +20,8 @@ interface FormFieldConfigBase {
   tooltipKey?: string
   required?: boolean
   locked?: boolean
+  invalid?: boolean
+  invalidHintKey?: string
 }
 
 export interface FormFieldConfigSimple extends FormFieldConfigBase {

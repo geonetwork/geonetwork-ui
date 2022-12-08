@@ -37,6 +37,8 @@ Basic.args = {
   tooltipKey: 'my.field.tooltip',
   required: false,
   locked: false,
+  invalid: false,
+  invalidHintKey: '',
 }
 Basic.argTypes = {
   type: {

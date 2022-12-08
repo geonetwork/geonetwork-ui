@@ -1,8 +1,0 @@
-input,
-select {
-  @apply border border-gray-200 rounded-md p-3 w-full;
-}
-
-input[readonly] {
-  @apply bg-gray-50 text-gray-700;
-}

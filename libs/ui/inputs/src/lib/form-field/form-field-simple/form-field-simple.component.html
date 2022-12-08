@@ -1,28 +1,26 @@
 <input
-  *ngIf="type === 'text' || type === 'url'"
-  type="text"
+  *ngIf="!isSelect"
+  [type]="inputType"
   [readonly]="readonly"
   [formControl]="control"
+  [placeholder]="placeholder"
+  class="border rounded-md p-3 w-full bg-white transition-colors"
+  [ngClass]="{
+    'border-pink-500': invalid,
+    'border-gray-200': !invalid,
+    'text-gray-600': readonly
+  }"
 />
-<input
-  *ngIf="type === 'date'"
-  type="datetime-local"
-  [readonly]="readonly"
+<select
+  *ngIf="isSelect"
   [formControl]="control"
-/>
-<input
-  *ngIf="type === 'number'"
-  type="number"
-  [readonly]="readonly"
-  [formControl]="control"
-/>
-<input
-  *ngIf="type === 'toggle'"
-  type="checkbox"
-  [readonly]="readonly"
-  [formControl]="control"
-/>
-<select *ngIf="type === 'list'" [formControl]="control">
+  class="border rounded-md p-3 w-full bg-white transition-colors"
+  [ngClass]="{
+    'border-pink-500': invalid,
+    'border-gray-200': !invalid,
+    'text-gray-600': readonly
+  }"
+>
   <option *ngFor="let option of options" [ngValue]="option.value">
     {{ option.label }}
   </option>

@@ -10,4 +10,6 @@ import { FormControl } from '@angular/forms'
 export class FormFieldFileComponent {
   @Input() control!: FormControl
   @Input() readonly = false
+  @Input() invalid = false
+  @Input() placeholder = ''
 }
