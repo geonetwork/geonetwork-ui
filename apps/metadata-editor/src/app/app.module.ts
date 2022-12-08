@@ -22,6 +22,7 @@ import { EditPageComponent } from './edit/edit-page.component'
 import { SignInPageComponent } from './sign-in/sign-in-page.component'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
     FeatureEditorModule,
     UtilI18nModule,
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

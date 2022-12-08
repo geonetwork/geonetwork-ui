@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing'
+import { fakeAsync, TestBed, tick } from '@angular/core/testing'
 import { EditorService } from './editor.service'
 import {
   HttpClientTestingModule,
@@ -7,12 +7,28 @@ import {
 import { CatalogRecord, RecordStatus } from '@geonetwork-ui/metadata-converter'
 import { readFirst } from '@nrwl/angular/testing'
 
-const SAMPLE_RECORD: any = {
+const SAMPLE_RECORD: CatalogRecord = {
   uniqueIdentifier: '1234-5678',
   kind: 'dataset',
   title: 'my title',
   abstract: 'my abstract',
   status: RecordStatus.ON_GOING,
+  contacts: [],
+  ownerOrganisation: {
+    name: 'bla',
+  },
+  lineage: '',
+  licenses: [],
+  recordUpdated: new Date(),
+  accessConstraints: [],
+  keywords: [],
+  themes: [],
+  useLimitations: [],
+  updateFrequency: 'unknown',
+  overviews: [],
+  distributions: [],
+  spatialExtents: [],
+  temporalExtents: [],
 }
 
 describe('EditorService', () => {
@@ -84,6 +100,28 @@ describe('EditorService', () => {
           value: '1234-5678',
         },
       ])
+    })
+  })
+
+  describe('saveCurrentRecord', () => {
+    describe('after a record was set as current', () => {
+      beforeEach(fakeAsync(() => {
+        service.setCurrentRecord(SAMPLE_RECORD)
+        service.saveCurrentRecord().subscribe()
+        tick()
+      }))
+      it('sends the record as XML to the API', () => {
+        http.expectOne(
+          (req) => req.method === 'PUT' && req.url.indexOf('/records') > -1
+        )
+      })
+    })
+    describe('when no record was set as current', () => {
+      it('throws an error', async () => {
+        await expect(
+          service.saveCurrentRecord().toPromise()
+        ).rejects.toThrowError('Save record failed')
+      })
     })
   })
 })

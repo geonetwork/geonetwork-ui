@@ -33,7 +33,21 @@
       <gn-ui-record-form></gn-ui-record-form>
     </div>
     <div class="mt-10 ml-auto w-max">
-      <gn-ui-button type="primary">Save record</gn-ui-button>
+      <gn-ui-button
+        *ngIf="(saving$ | async) === false"
+        type="primary"
+        (buttonClick)="saveRecord()"
+        >Save record</gn-ui-button
+      >
+      <gn-ui-button
+        *ngIf="(saving$ | async) === true"
+        type="primary"
+        extraClass="opacity-50"
+        [disabled]="true"
+      >
+        <mat-spinner [diameter]="16" class="mr-2"></mat-spinner>
+        Saving...
+      </gn-ui-button>
     </div>
   </div>
 </div>

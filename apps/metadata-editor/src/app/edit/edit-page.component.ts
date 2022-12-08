@@ -8,6 +8,8 @@ import { EditorService } from '@geonetwork-ui/feature/editor'
   styleUrls: ['./edit-page.component.css'],
 })
 export class EditPageComponent implements OnInit {
+  saving$ = this.editorService.saving$
+
   constructor(
     private route: ActivatedRoute,
     private editorService: EditorService
@@ -16,5 +18,9 @@ export class EditPageComponent implements OnInit {
   ngOnInit(): void {
     const currentRecord = this.route.snapshot.data['record']
     this.editorService.setCurrentRecord(currentRecord)
+  }
+
+  saveRecord() {
+    this.editorService.saveCurrentRecord().subscribe()
   }
 }
