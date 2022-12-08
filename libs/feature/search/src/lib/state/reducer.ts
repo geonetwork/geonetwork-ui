@@ -207,7 +207,6 @@ export function reducerSearch(
         ...state,
         results: {
           ...state.results,
-          hits: null,
           records: [],
         },
       }

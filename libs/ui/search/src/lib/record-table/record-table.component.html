@@ -14,7 +14,7 @@
   </div>
   <div
     class="contents hover:text-gray-800 cursor-pointer"
-    (click)="select.emit(record)"
+    (click)="recordSelect.emit(record)"
     *ngFor="let record of records"
   >
     <div class="record-table-col">

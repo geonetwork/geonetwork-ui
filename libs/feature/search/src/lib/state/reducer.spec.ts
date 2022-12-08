@@ -228,12 +228,19 @@ describe('Search Reducer', () => {
           ...initialStateSearch,
           results: {
             ...initialStateSearch.results,
+            hits: {
+              value: 200,
+            },
             records: [{ title: 'abcd' } as any],
           },
         },
         action
       )
-      expect(state.results.records).toEqual([])
+      expect(state.results).toEqual({
+        aggregations: {},
+        hits: { value: 200 },
+        records: [],
+      })
     })
   })
 
