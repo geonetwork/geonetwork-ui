@@ -77,7 +77,7 @@ function extractUrl(): ChainableFunction<XmlElement, URL> {
       try {
         return new URL(urlStr)
       } catch (e) {
-        return null
+        return new URL('http://missing')
       }
     })
   )
@@ -342,14 +342,7 @@ function extractDatasetDistributions(): ChainableFunction<
     map(matchMimeType)
   )
 
-  const getUrl = pipe(
-    findChildElement('gmd:linkage'),
-    extractUrl(),
-    tap((url) => {
-      if (url === null)
-        throw new Error('could not find an url for the distribution')
-    })
-  )
+  const getUrl = pipe(findChildElement('gmd:linkage'), extractUrl())
   const getProtocolStr = pipe(
     findChildElement('gmd:protocol'),
     extractCharacterString()
@@ -836,14 +829,7 @@ export function extractServiceOnlineResources(): ChainableFunction<
   XmlElement,
   ServiceOnlineResource[]
 > {
-  const getUrl = pipe(
-    findChildElement('gmd:linkage'),
-    extractUrl(),
-    tap((url) => {
-      if (url === null)
-        throw new Error('could not find an url for the online resource')
-    })
-  )
+  const getUrl = pipe(findChildElement('gmd:linkage'), extractUrl())
   const getProtocolStr = pipe(
     findChildElement('gmd:protocol'),
     extractCharacterString()
