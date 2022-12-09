@@ -32,17 +32,18 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     // this will show the message when a 'mapmuted' event is received and hide it a few seconds later
-    // 'movestart' will cancel displaying the message in particular for two finger interactions on mobile
+    // 'movestart' and 'singleclick' will cancel displaying the message in particular for two finger interactions on mobile
     this.displayMessage$ = merge(
       fromEvent(this.map, 'mapmuted').pipe(map(() => true)),
-      fromEvent(this.map, 'movestart').pipe(map(() => false))
+      fromEvent(this.map, 'movestart').pipe(map(() => false)),
+      fromEvent(this.map, 'singleclick').pipe(map(() => false))
     ).pipe(
       switchMap((muted) =>
         muted
           ? timer(2000).pipe(
               map(() => false),
               startWith(true),
-              delay(150)
+              delay(300)
             )
           : of(false)
       )

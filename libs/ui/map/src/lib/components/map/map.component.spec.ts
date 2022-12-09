@@ -17,6 +17,7 @@ class ResizeObserverMock {
 
 let mapmutedCallback
 let movestartCallback
+let singleclickCallback
 class OpenLayersMapMock {
   _size = undefined
   setTarget = jest.fn()
@@ -32,6 +33,9 @@ class OpenLayersMapMock {
     }
     if (type === 'movestart') {
       movestartCallback = callback
+    }
+    if (type === 'singleclick') {
+      singleclickCallback = callback
     }
   }
   off() {
@@ -76,9 +80,9 @@ describe('MapComponent', () => {
           (value) => (messageDisplayed = value)
         )
       })
-      it('mapmuted event displays message after 200ms (delay for evetually hiding message)', fakeAsync(() => {
+      it('mapmuted event displays message after 300ms (delay for eventually hiding message)', fakeAsync(() => {
         mapmutedCallback()
-        tick(200)
+        tick(300)
         expect(messageDisplayed).toEqual(true)
         discardPeriodicTasks()
       }))
@@ -90,6 +94,13 @@ describe('MapComponent', () => {
       }))
       it('message does not display if map fires movestart event', fakeAsync(() => {
         movestartCallback()
+        tick(300)
+        expect(messageDisplayed).toEqual(false)
+        discardPeriodicTasks()
+      }))
+      it('message does not display if map fires singleclick event', fakeAsync(() => {
+        singleclickCallback()
+        tick(300)
         expect(messageDisplayed).toEqual(false)
         discardPeriodicTasks()
       }))
