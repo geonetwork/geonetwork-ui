@@ -2,14 +2,10 @@ import {
   ComponentFixture,
   discardPeriodicTasks,
   fakeAsync,
-  flush,
-  flushMicrotasks,
   TestBed,
   tick,
-  waitForAsync,
 } from '@angular/core/testing'
 import { MapComponent } from './map.component'
-import { readFirst } from '@nrwl/angular/testing'
 import { MatIconModule } from '@angular/material/icon'
 
 class ResizeObserverMock {
@@ -20,6 +16,7 @@ class ResizeObserverMock {
 ;(window as any).ResizeObserver = ResizeObserverMock
 
 let mapmutedCallback
+let movestartCallback
 class OpenLayersMapMock {
   _size = undefined
   setTarget = jest.fn()
@@ -32,6 +29,9 @@ class OpenLayersMapMock {
   on(type, callback) {
     if (type === 'mapmuted') {
       mapmutedCallback = callback
+    }
+    if (type === 'movestart') {
+      movestartCallback = callback
     }
   }
   off() {
@@ -76,14 +76,20 @@ describe('MapComponent', () => {
           (value) => (messageDisplayed = value)
         )
       })
-      it('mapmuted event displays message', fakeAsync(() => {
+      it('mapmuted event displays message after 200ms (delay for evetually hiding message)', fakeAsync(() => {
         mapmutedCallback()
+        tick(200)
         expect(messageDisplayed).toEqual(true)
         discardPeriodicTasks()
       }))
       it('message goes away after 2s', fakeAsync(() => {
         mapmutedCallback()
         tick(2500)
+        expect(messageDisplayed).toEqual(false)
+        discardPeriodicTasks()
+      }))
+      it('message does not display if map fires movestart event', fakeAsync(() => {
+        movestartCallback()
         expect(messageDisplayed).toEqual(false)
         discardPeriodicTasks()
       }))
