@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
 import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
@@ -19,9 +20,6 @@ import { CreatePageComponent } from './create/create-page.component'
 import { DashboardModule } from './dashboard/dashboard.module'
 import { EditPageComponent } from './edit/edit-page.component'
 import { SignInPageComponent } from './sign-in/sign-in-page.component'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 @NgModule({
   declarations: [
