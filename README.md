@@ -87,15 +87,15 @@ GeoNetwork has an XSRF protection by default, which _will_ make authenticated re
      </bean>
   ```
 
-  Also make sure that the GeoNetwork API URL used the application is _not_ an absolute URL that starts with `http://` or `https://`; for the datahub that could be the following change:
+  Also make sure that the GeoNetwork API URL used by the application is _not_ an absolute URL; a relative URL should be enough in that scenario:
 
   ```diff
   --- a/conf/default.toml
   +++ b/conf/default.toml
   @@ -5,7 +5,7 @@
   [global]
-  -geonetwork4_api_url = "https://www.mydomain.net/geonetwork/srv/api"
-  +geonetwork4_api_url = "//www.mydomain.net/geonetwork/srv/api"
+  -geonetwork4_api_url = "https://my.host/geonetwork/srv/api"
+  +geonetwork4_api_url = "/geonetwork/srv/api"
   ```
 
 - or disable the XSRF protection selectively for non-critical endpoints of GeoNetwork, e.g. https://my.host/geonetwork/srv/api/userSelections for marking records as favorites; this is typically done like so in GeoNetwork:
@@ -111,6 +111,8 @@ GeoNetwork has an XSRF protection by default, which _will_ make authenticated re
        </constructor-arg>
      </bean>
   ```
+  
+  :warning: Please do this responsibly as this could have security implications! :warning:
 
 #### 2. GeoNetwork and GeoNetwork-UI are _not_ deployed on the same host, e.g. https://my.host/geonetwork and https://another.org/datahub
 
