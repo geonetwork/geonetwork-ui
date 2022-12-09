@@ -99,6 +99,7 @@ GeoNetwork has an XSRF protection by default, which _will_ make authenticated re
   ```
 
 - or disable the XSRF protection selectively for non-critical endpoints of GeoNetwork, e.g. https://my.host/geonetwork/srv/api/userSelections for marking records as favorites; this is typically done like so in GeoNetwork:
+
   ```diff
   --- a/web/src/main/webapp/WEB-INF/config-security/config-security-core.xml
   +++ b/web/src/main/webapp/WEB-INF/config-security/config-security-core.xml
@@ -111,7 +112,7 @@ GeoNetwork has an XSRF protection by default, which _will_ make authenticated re
        </constructor-arg>
      </bean>
   ```
-  
+
   :warning: Please do this responsibly as this could have security implications! :warning:
 
 #### 2. GeoNetwork and GeoNetwork-UI are _not_ deployed on the same host, e.g. https://my.host/geonetwork and https://another.org/datahub
