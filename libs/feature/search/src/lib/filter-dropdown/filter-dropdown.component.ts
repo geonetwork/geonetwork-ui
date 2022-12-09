@@ -52,7 +52,15 @@ export class FilterDropdownComponent implements OnInit {
 
   ngOnInit() {
     this.searchFacade.updateConfigAggregations({
-      [this.fieldName]: { terms: { field: this.fieldName, size: 100 } },
+      [this.fieldName]: {
+        terms: {
+          field: this.fieldName,
+          size: 100,
+          order: {
+            _key: 'asc',
+          },
+        },
+      },
     })
   }
 }

@@ -70,7 +70,15 @@ describe('FilterDropdownComponent', () => {
   describe('at initialization', () => {
     it('adds an aggregation in the search config', () => {
       expect(facade.updateConfigAggregations).toHaveBeenCalledWith({
-        Org: { terms: { field: 'Org', size: 100 } },
+        Org: {
+          terms: {
+            field: 'Org',
+            size: 100,
+            order: {
+              _key: 'asc',
+            },
+          },
+        },
       })
     })
   })
