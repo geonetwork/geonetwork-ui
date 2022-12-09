@@ -84,6 +84,7 @@ export class EditorService {
             headers: {
               'Content-Type': 'application/xml',
             },
+            withCredentials: true,
           }
         )
       ),

@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { WizardSummarizeComponent } from './components/wizard-summarize/wizard-summarize.component'
 import { CommonModule } from '@angular/common'
 import { RecordFormComponent } from './record-form/record-form.component'
+import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -28,6 +29,8 @@ import { RecordFormComponent } from './record-form/record-form.component'
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
+    HttpClientModule,
+    HttpClientXsrfModule,
   ],
   exports: [WizardComponent, WizardSummarizeComponent, RecordFormComponent],
 })
