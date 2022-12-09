@@ -1,22 +1,47 @@
 <div class="flex flex-col gap-3">
-  <button class="menu-item btn-active" role="buton">
+  <button
+    (click)="setActive('my-org')"
+    class="menu-item"
+    role="buton"
+    [class.btn-active]="isActive$('my-org') | async"
+  >
     <mat-icon class="material-icons-outlined">home</mat-icon>
     <span translate="">editor.dashboard.myOrg</span>
   </button>
-  <button class="menu-item" role="buton">
+  <button
+    (click)="setActive('catalog')"
+    class="menu-item"
+    role="buton"
+    [class.btn-active]="isActive$('catalog') | async"
+  >
     <mat-icon class="material-icons-outlined">work_outline</mat-icon>
     <span translate="">editor.dashboard.catalog</span>
   </button>
   <div class="menu-title" translate="">editor.dashboard.mySpace</div>
-  <button class="menu-item" role="buton">
+  <button
+    (click)="setActive('my-records')"
+    class="menu-item"
+    role="buton"
+    [class.btn-active]="isActive$('my-records') | async"
+  >
     <mat-icon class="material-icons-outlined">post_add</mat-icon>
     <span translate="">editor.dashboard.myRecords</span>
   </button>
-  <button class="menu-item" role="buton">
+  <button
+    (click)="setActive('my-draft')"
+    class="menu-item"
+    role="buton"
+    [class.btn-active]="isActive$('my-draft') | async"
+  >
     <mat-icon class="material-icons-outlined">edit_note</mat-icon>
     <span translate="">editor.dashboard.myDraft</span>
   </button>
-  <button class="menu-item" role="buton">
+  <button
+    (click)="setActive('my-library')"
+    class="menu-item"
+    role="buton"
+    [class.btn-active]="isActive$('my-library') | async"
+  >
     <mat-icon class="material-icons-outlined">bookmark_border</mat-icon>
     <span translate="">editor.dashboard.myLibrary</span>
   </button>

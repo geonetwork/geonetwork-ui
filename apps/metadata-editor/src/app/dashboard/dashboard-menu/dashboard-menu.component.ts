@@ -1,4 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { map } from 'rxjs/operators'
+import { DashboardFacade } from '../+state/dashboard.facade'
+import { DashboardMenuItem } from '../dashboard.mode'
 
 @Component({
   selector: 'md-editor-dashboard-menu',
@@ -6,4 +9,14 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   styleUrls: ['./dashboard-menu.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardMenuComponent {}
+export class DashboardMenuComponent {
+  constructor(private facade: DashboardFacade) {}
+  setActive(activeMenu: DashboardMenuItem) {
+    this.facade.setActiveMenu(activeMenu)
+  }
+  isActive$(menu: DashboardMenuItem) {
+    return this.facade.activeMenu$.pipe(
+      map((activeMenu) => activeMenu === menu)
+    )
+  }
+}
