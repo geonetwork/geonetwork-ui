@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { DashboardPageComponent } from './dashboard-page.component'
 
@@ -7,8 +8,13 @@ describe('DashboardPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      schemas: [NO_ERRORS_SCHEMA],
       declarations: [DashboardPageComponent],
-    }).compileComponents()
+    })
+      .overrideComponent(DashboardPageComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents()
 
     fixture = TestBed.createComponent(DashboardPageComponent)
     component = fixture.componentInstance
