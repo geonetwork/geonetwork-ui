@@ -7,6 +7,10 @@
     @apply shadow-xl hover:shadow-primary-lightest transition-shadow;
   }
 
+  .btn-default {
+    @apply bg-blue-600 text-white flex gap-3 items-center px-9 py-3 rounded-[50px] hover:scale-[1.02] transition-transform;
+  }
+
   .badge-btn {
     @apply items-center justify-center px-4 py-1 text-white rounded;
   }
