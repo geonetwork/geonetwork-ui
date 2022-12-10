@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { map } from 'rxjs/operators'
 import { DashboardFacade } from '../+state/dashboard.facade'
-import { DashboardMenuItem } from '../dashboard.mode'
+import { DashboardMenuItem } from '../dashboard.model'
 
 @Component({
   selector: 'md-editor-dashboard-menu',

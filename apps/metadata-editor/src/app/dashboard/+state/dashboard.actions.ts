@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store'
-import { DashboardMenuItem } from '../dashboard.mode'
+import { DashboardMenuItem } from '../dashboard.model'
 
 export const SetActiveMenu = createAction(
   '[Dashboard] Set active menu',

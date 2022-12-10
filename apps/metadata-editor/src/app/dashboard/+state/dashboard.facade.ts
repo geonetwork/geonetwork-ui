@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 
 import { select, Store } from '@ngrx/store'
-import { DashboardMenuItem } from '../dashboard.mode'
+import { DashboardMenuItem } from '../dashboard.model'
 import { SetActiveMenu } from './dashboard.actions'
 import { getActiveMenu } from './dashboard.selectors'
 

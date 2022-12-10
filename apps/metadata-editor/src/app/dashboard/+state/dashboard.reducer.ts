@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store'
-import { DashboardMenuItem } from '../dashboard.mode'
+import { DashboardMenuItem } from '../dashboard.model'
 import { SetActiveMenu } from './dashboard.actions'
 
 export const EDITOR_DASHBOARD_FEATURE_STATE_KEY = 'editor-dashboard'
