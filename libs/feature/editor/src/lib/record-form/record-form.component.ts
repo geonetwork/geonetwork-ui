@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { EditorService } from '../services/editor.service'
+import { EditorService, FormField } from '../services/editor.service'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -9,4 +9,12 @@ import { EditorService } from '../services/editor.service'
 })
 export class RecordFormComponent {
   constructor(public editorService: EditorService) {}
+
+  handleFieldValueChange(fieldName: string, value: unknown) {
+    this.editorService.updateRecordField(fieldName, value)
+  }
+
+  fieldTracker(index: number, field: FormField) {
+    return field.config.model
+  }
 }

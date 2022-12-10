@@ -5,12 +5,12 @@ import {
   toXml,
 } from '@geonetwork-ui/metadata-converter'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
-import { BehaviorSubject, Observable, of } from 'rxjs'
-import { finalize, first, map, switchMap, take, tap } from 'rxjs/operators'
+import { BehaviorSubject, Observable } from 'rxjs'
+import { finalize, map, switchMap, take, tap } from 'rxjs/operators'
 import { HttpClient } from '@angular/common/http'
 import { FormFieldConfig } from '@geonetwork-ui/ui/inputs'
 
-interface FormField {
+export interface FormField {
   config: FormFieldConfig
   value: string | number | boolean | unknown
 }
@@ -97,5 +97,14 @@ export class EditorService {
 
   setCurrentRecord(record: CatalogRecord) {
     this.record$.next(record)
+  }
+
+  updateRecordField(fieldName: string, value: unknown) {
+    this.record$
+      .pipe(
+        take(1),
+        map((record) => ({ ...record, [fieldName]: value }))
+      )
+      .subscribe((record) => this.record$.next(record))
   }
 }
