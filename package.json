@@ -96,6 +96,7 @@
     "@angular/cli": "~15.0.0",
     "@angular/compiler-cli": "15.0.2",
     "@angular/language-service": "15.0.2",
+    "@ngrx/component": "^15.0.0",
     "@ngrx/effects": "15.0.0",
     "@ngrx/schematics": "~15.0.0",
     "@ngrx/store": "15.0.0",
