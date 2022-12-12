@@ -5,6 +5,7 @@ import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
+import { LetModule } from '@ngrx/component'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { TranslateModule } from '@ngx-translate/core'
@@ -30,6 +31,7 @@ import { SidebarComponent } from './sidebar/sidebar.component'
     FeatureSearchModule,
     UiElementsModule,
     UiSearchModule,
+    LetModule,
     StoreModule.forFeature(EDITOR_DASHBOARD_FEATURE_STATE_KEY, reducer),
     EffectsModule.forFeature(),
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
