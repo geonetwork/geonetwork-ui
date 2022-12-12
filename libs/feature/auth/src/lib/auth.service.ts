@@ -5,6 +5,7 @@ import {
 } from '@geonetwork-ui/data-access/gn4'
 import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n'
 import { UserModel } from '@geonetwork-ui/util/shared'
+import { USER_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 import { TranslateService } from '@ngx-translate/core'
 import { Observable } from 'rxjs'
 import { map, shareReplay } from 'rxjs/operators'
@@ -16,7 +17,9 @@ export const LOGIN_URL = new InjectionToken<string>('loginUrl')
   providedIn: 'root',
 })
 export class AuthService {
-  authReady$: Observable<MeResponseApiModel>
+  authReady$: Observable<UserModel>
+  user$: Observable<UserModel>
+
   baseLoginUrl = this.baseLoginUrlToken || DEFAULT_GN4_LOGIN_URL
   get loginUrl() {
     return this.baseLoginUrl
@@ -33,8 +36,15 @@ export class AuthService {
     private baseLoginUrlToken: string,
     private meApi: MeApiService,
     private translateService: TranslateService
-  ) {}
+  ) {
+    this.user$ = this.meApi.getMe().pipe(
+      map((apiUser) => this.mapToUserModel(apiUser)),
+      map((user) => user ?? USER_FIXTURE()),
+      shareReplay({ bufferSize: 1, refCount: true })
+    )
+  }
 
+  // TODO: refactor authReady
   authReady(): Observable<UserModel> {
     if (!this.authReady$) {
       this.authReady$ = this.meApi.getMe().pipe(
