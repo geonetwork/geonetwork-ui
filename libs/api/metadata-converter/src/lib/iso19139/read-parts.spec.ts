@@ -1,9 +1,16 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
+import GEO2FRANCE_PLU_DATASET from '../fixtures/geo2france.iso19139.plu.xml'
+// @ts-ignore
 import GEOCAT_CH_DATASET from '../fixtures/geocat-ch.iso19139.dataset.xml'
 // @ts-ignore
 import GEOCAT_CH_SERVICE from '../fixtures/geocat-ch.iso19139.service.xml'
-import { readDistributions, readOnlineResources } from './read-parts'
+import {
+  readContacts,
+  readDistributions,
+  readOnlineResources,
+  readOwnerOrganization,
+} from './read-parts'
 import {
   appendChildren,
   findNestedElement,
@@ -16,6 +23,81 @@ import { XmlElement } from '@rgrove/parse-xml'
 
 describe('read parts', () => {
   let recordRootEl: XmlElement
+
+  describe('common functions', () => {
+    beforeEach(() => {
+      recordRootEl = getRootElement(parseXmlString(GEOCAT_CH_DATASET))
+    })
+    describe('readContacts', () => {
+      it('returns an array of individuals with their organization', () => {
+        expect(readContacts(recordRootEl)).toEqual([
+          {
+            email: 'rolf.giezendanner@are.admin.ch',
+            organization: {
+              name: 'Bundesamt für Raumentwicklung',
+            },
+            role: 'POINT_OF_CONTACT',
+          },
+          {
+            email: 'info@are.admin.ch',
+            organization: {
+              name: 'Bundesamt für Raumentwicklung',
+            },
+            role: 'OWNER',
+          },
+        ])
+      })
+    })
+    describe('readOwnerOrganization', () => {
+      it('returns an organization without website', () => {
+        expect(readOwnerOrganization(recordRootEl)).toEqual({
+          name: 'Bundesamt für Raumentwicklung',
+        })
+      })
+      describe('organization with website', () => {
+        beforeEach(() => {
+          const contactWithUrl = getRootElement(
+            parseXmlString(`
+<gmd:contact>
+    <gmd:CI_ResponsibleParty>
+        <gmd:organisationName>
+            <gco:CharacterString>MyOrganization</gco:CharacterString>
+        </gmd:organisationName>
+        <gmd:contactInfo>
+            <gmd:CI_Contact>
+                <gmd:address>
+                    <gmd:CI_Address>
+                        <gmd:electronicMailAddress>
+                            <gco:CharacterString>bob@org.net</gco:CharacterString>
+                        </gmd:electronicMailAddress>
+                    </gmd:CI_Address>
+                </gmd:address>
+                <gmd:onlineResource>
+                    <gmd:CI_OnlineResource>
+                        <gmd:linkage>
+                            <gmd:URL>https://www.my.org/info</gmd:URL>
+                        </gmd:linkage>
+                    </gmd:CI_OnlineResource>
+                </gmd:onlineResource>
+            </gmd:CI_Contact>
+        </gmd:contactInfo>
+    </gmd:CI_ResponsibleParty>
+</gmd:contact>`)
+          )
+          pipe(
+            removeChildrenByName('gmd:contact'),
+            appendChildren(() => contactWithUrl)
+          )(recordRootEl)
+        })
+        it('returns an organization with a website', () => {
+          expect(readOwnerOrganization(recordRootEl)).toEqual({
+            name: 'MyOrganization',
+            website: new URL('https://www.my.org/info'),
+          })
+        })
+      })
+    })
+  })
 
   describe('dataset record', () => {
     beforeEach(() => {

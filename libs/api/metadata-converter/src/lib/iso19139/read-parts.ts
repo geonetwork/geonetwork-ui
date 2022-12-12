@@ -77,10 +77,14 @@ function extractUrl(): ChainableFunction<XmlElement, URL> {
       try {
         return new URL(urlStr)
       } catch (e) {
-        return new URL('http://missing')
+        return null
       }
     })
   )
+}
+
+function extractMandatoryUrl() {
+  return fallback(extractUrl(), () => new URL('http://missing'))
 }
 
 function getRoleFromRoleCode(roleCode: string): Role {
@@ -342,7 +346,7 @@ function extractDatasetDistributions(): ChainableFunction<
     map(matchMimeType)
   )
 
-  const getUrl = pipe(findChildElement('gmd:linkage'), extractUrl())
+  const getUrl = pipe(findChildElement('gmd:linkage'), extractMandatoryUrl())
   const getProtocolStr = pipe(
     findChildElement('gmd:protocol'),
     extractCharacterString()
@@ -771,7 +775,7 @@ export function readOverviews(rootEl: XmlElement): GraphicOverview[] {
     findChildrenElement('gmd:graphicOverview', false),
     mapArray(
       combine(
-        pipe(findChildElement('gmd:fileName'), extractUrl()),
+        pipe(findChildElement('gmd:fileName'), extractMandatoryUrl()),
         pipe(findChildElement('gmd:fileDescription'), extractCharacterString())
       )
     ),
@@ -829,7 +833,7 @@ export function extractServiceOnlineResources(): ChainableFunction<
   XmlElement,
   ServiceOnlineResource[]
 > {
-  const getUrl = pipe(findChildElement('gmd:linkage'), extractUrl())
+  const getUrl = pipe(findChildElement('gmd:linkage'), extractMandatoryUrl())
   const getProtocolStr = pipe(
     findChildElement('gmd:protocol'),
     extractCharacterString()
