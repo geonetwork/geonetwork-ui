@@ -5,8 +5,7 @@ import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { ThemeService } from '@geonetwork-ui/util/shared'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
-import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { environment } from '../../../datahub/src/environments/environment'
+import { extModules } from './build-specific'
 
 @NgModule({
   declarations: [],
@@ -21,8 +20,8 @@ import { environment } from '../../../datahub/src/environments/environment'
         },
       }
     ),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot(),
+    extModules,
   ],
   exports: [MatIconModule],
   providers: [
