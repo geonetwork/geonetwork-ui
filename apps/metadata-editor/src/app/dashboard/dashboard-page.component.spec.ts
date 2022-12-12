@@ -1,6 +1,12 @@
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { DashboardPageComponent } from './dashboard-page.component'
+import { DashboardSearchService } from './dashboard-search.service'
+import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
+
+class DashboardSearchServiceMock {}
+class SearchFacadeMock {}
+class SearchServiceMock {}
 
 describe('DashboardPageComponent', () => {
   let component: DashboardPageComponent
@@ -10,9 +16,35 @@ describe('DashboardPageComponent', () => {
     await TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       declarations: [DashboardPageComponent],
+      providers: [
+        {
+          provide: DashboardSearchService,
+          useClass: DashboardSearchServiceMock,
+        },
+        {
+          provide: SearchFacade,
+          useClass: SearchFacadeMock,
+        },
+      ],
     })
       .overrideComponent(DashboardPageComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default },
+        set: {
+          changeDetection: ChangeDetectionStrategy.Default,
+          providers: [
+            {
+              provide: DashboardSearchService,
+              useClass: DashboardSearchServiceMock,
+            },
+            {
+              provide: SearchFacade,
+              useClass: SearchFacadeMock,
+            },
+            {
+              provide: SearchService,
+              useClass: SearchServiceMock,
+            },
+          ],
+        },
       })
       .compileComponents()
 

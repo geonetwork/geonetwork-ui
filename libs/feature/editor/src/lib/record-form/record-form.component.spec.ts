@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-
 import { RecordFormComponent } from './record-form.component'
+import { EditorService } from '../services/editor.service'
+
+class EditorServiceMock {}
 
 describe('RecordFormComponent', () => {
   let component: RecordFormComponent
@@ -9,6 +11,12 @@ describe('RecordFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [RecordFormComponent],
+      providers: [
+        {
+          provide: EditorService,
+          useClass: EditorServiceMock,
+        },
+      ],
     }).compileComponents()
 
     fixture = TestBed.createComponent(RecordFormComponent)

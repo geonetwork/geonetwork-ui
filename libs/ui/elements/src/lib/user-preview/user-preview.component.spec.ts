@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-
 import { UserPreviewComponent } from './user-preview.component'
 
 describe('UserPreviewComponent', () => {
@@ -13,6 +12,11 @@ describe('UserPreviewComponent', () => {
 
     fixture = TestBed.createComponent(UserPreviewComponent)
     component = fixture.componentInstance
+    component.user = {
+      name: 'John',
+      surname: 'Doe',
+      id: '1234',
+    }
     fixture.detectChanges()
   })
 
