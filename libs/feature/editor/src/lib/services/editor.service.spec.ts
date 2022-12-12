@@ -14,7 +14,7 @@ const SAMPLE_RECORD: CatalogRecord = {
   abstract: 'my abstract',
   status: RecordStatus.ON_GOING,
   contacts: [],
-  ownerOrganisation: {
+  ownerOrganization: {
     name: 'bla',
   },
   lineage: '',

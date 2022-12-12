@@ -7,7 +7,7 @@ import {
   DatasetTemporalExtent,
   Individual,
   License,
-  Organisation,
+  Organization,
   RecordKind,
   RecordStatus,
   Role,
@@ -140,7 +140,7 @@ function extractRole(): ChainableFunction<XmlElement, Role> {
 }
 
 // from gmd:CI_ResponsibleParty
-function extractOrganization(): ChainableFunction<XmlElement, Organisation> {
+function extractOrganization(): ChainableFunction<XmlElement, Organization> {
   const getUrl = pipe(
     findNestedElements(
       'gmd:contactInfo',
@@ -188,7 +188,7 @@ function extractIndividuals(): ChainableFunction<
       return [first, parts.join(' ')]
     })
   )
-  const getOrganisation = extractOrganization()
+  const getOrganization = extractOrganization()
   const getEmail = pipe(
     findChildElement('gmd:electronicMailAddress'),
     extractCharacterString(),
@@ -199,14 +199,14 @@ function extractIndividuals(): ChainableFunction<
       getRole,
       getPosition,
       getNameParts,
-      getOrganisation,
+      getOrganization,
       pipe(findChildrenElement('gmd:contactInfo'), mapArray(getEmail))
     ),
-    map(([role, position, [firstName, lastName], organisation, emails]) =>
+    map(([role, position, [firstName, lastName], organization, emails]) =>
       emails.map((email) => ({
         email,
         role,
-        organisation,
+        organization,
         ...(position && { position }),
         ...(firstName && { firstName }),
         ...(lastName && { lastName }),
@@ -630,7 +630,7 @@ export function readKind(rootEl: XmlElement): RecordKind {
   )(rootEl)
 }
 
-export function readOwnerOrganisation(rootEl: XmlElement): Organisation {
+export function readOwnerOrganization(rootEl: XmlElement): Organization {
   return pipe(
     findNestedElement('gmd:contact', 'gmd:CI_ResponsibleParty'),
     extractOrganization()

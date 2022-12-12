@@ -19,7 +19,7 @@ import {
   writeLicenses,
   writeLineage,
   writeOnlineResources,
-  writeOwnerOrganisation,
+  writeOwnerOrganization,
   writeRecordUpdated,
   writeSpatialRepresentation,
   writeStatus,
@@ -43,7 +43,7 @@ import {
   readLineage,
   readOnlineResources,
   readOverviews,
-  readOwnerOrganisation,
+  readOwnerOrganization,
   readRecordUpdated,
   readSpatialExtents,
   readSpatialRepresentation,
@@ -63,7 +63,7 @@ export function toModel(xml: string): CatalogRecord {
 
   const uniqueIdentifier = readUniqueIdentifier(rootEl)
   const kind = readKind(rootEl)
-  const ownerOrganisation = readOwnerOrganisation(rootEl)
+  const ownerOrganization = readOwnerOrganization(rootEl)
   const title = readTitle(rootEl)
   const abstract = readAbstract(rootEl)
   const contacts = readContacts(rootEl)
@@ -98,7 +98,7 @@ export function toModel(xml: string): CatalogRecord {
       status,
       title,
       abstract,
-      ownerOrganisation,
+      ownerOrganization,
       contacts,
       keywords,
       themes,
@@ -124,7 +124,7 @@ export function toModel(xml: string): CatalogRecord {
       recordUpdated,
       title,
       abstract,
-      ownerOrganisation,
+      ownerOrganization,
       contacts,
       keywords,
       themes,
@@ -152,7 +152,7 @@ export function toXml(record: CatalogRecord, originalXml?: string): string {
 
   writeUniqueIdentifier(record, rootEl)
   writeKind(record, rootEl)
-  fieldChanged('ownerOrganisation') && writeOwnerOrganisation(record, rootEl)
+  fieldChanged('ownerOrganization') && writeOwnerOrganization(record, rootEl)
   fieldChanged('recordUpdated') && writeRecordUpdated(record, rootEl)
   writeTitle(record, rootEl)
   writeAbstract(record, rootEl)

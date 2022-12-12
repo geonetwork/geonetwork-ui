@@ -3,7 +3,7 @@ import { DatasetRecord, RecordStatus, Role } from '../model'
 export const GENERIC_DATASET_RECORD: DatasetRecord = {
   uniqueIdentifier: 'my-dataset-001',
   kind: 'dataset',
-  ownerOrganisation: {
+  ownerOrganization: {
     name: 'MyOrganization',
     website: new URL('https://www.my.org/info'),
     logoUrl: new URL('https://www.my.org/logo.png'),
@@ -13,7 +13,7 @@ export const GENERIC_DATASET_RECORD: DatasetRecord = {
     {
       email: 'bob@org.net',
       role: Role.AUTHOR,
-      organisation: {
+      organization: {
         name: 'MyOrganization',
         website: new URL('https://www.my.org/info'),
         logoUrl: new URL('https://www.my.org/logo.png'),
@@ -26,7 +26,7 @@ export const GENERIC_DATASET_RECORD: DatasetRecord = {
     {
       email: 'john@org2.com',
       role: Role.CUSTODIAN,
-      organisation: {
+      organization: {
         name: 'Another Organization',
         website: new URL('https://www.another.org/docs'),
       },
