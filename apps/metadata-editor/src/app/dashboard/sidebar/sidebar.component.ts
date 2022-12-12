@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { UserModel } from '@geonetwork-ui/util/shared'
+import { AuthService } from '@geonetwork-ui/feature/auth'
 
 @Component({
   selector: 'md-editor-sidebar',
@@ -8,14 +8,5 @@ import { UserModel } from '@geonetwork-ui/util/shared'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent {
-  user: UserModel = {
-    id: '21737',
-    profile: 'Administrator',
-    username: 'C2C-gravin',
-    name: 'Florent',
-    surname: 'Gravin',
-    email: 'florent.gravin@camptocamp.com',
-    organisation: null,
-    admin: true,
-  }
+  constructor(public authService: AuthService) {}
 }
