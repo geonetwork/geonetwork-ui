@@ -10,7 +10,7 @@ const user = USER_FIXTURE()
   selector: 'gn-ui-avatar',
   template: '',
 })
-export class AvatarComponentMock {
+export class AvatarComponent {
   @Input() avatarUrl?: string
 }
 
@@ -20,7 +20,7 @@ describe('UserPreviewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [UserPreviewComponent, AvatarComponentMock],
+      declarations: [UserPreviewComponent, AvatarComponent],
     })
       .overrideComponent(UserPreviewComponent, {
         set: {
@@ -40,7 +40,7 @@ describe('UserPreviewComponent', () => {
   })
   it('displays avatar', () => {
     const avatar = fixture.debugElement.query(
-      By.directive(AvatarComponentMock)
+      By.directive(AvatarComponent)
     ).componentInstance
     expect(avatar).toBeTruthy()
   })

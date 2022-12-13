@@ -15,16 +15,18 @@ import { BehaviorSubject } from 'rxjs'
 import { SidebarComponent } from './sidebar.component'
 
 @Component({
+  // eslint-disable-next-line
   selector: 'md-editor-dashboard-menu',
   template: '<div></div>',
 })
 class DashboardMenuMockComponent {}
 
 @Component({
+  // eslint-disable-next-line
   selector: 'gn-ui-user-preview',
   template: '<div></div>',
 })
-export class UserPreviewComponentMock {
+export class UserPreviewComponent {
   @Input() user: UserModel
 }
 
@@ -41,7 +43,7 @@ describe('SidebarComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         SidebarComponent,
-        UserPreviewComponentMock,
+        UserPreviewComponent,
         DashboardMenuMockComponent,
       ],
       imports: [LetModule],
@@ -64,7 +66,7 @@ describe('SidebarComponent', () => {
   describe('when a user is logged', () => {
     it('displays the user preview', () => {
       const avatar = fixture.debugElement.query(
-        By.directive(UserPreviewComponentMock)
+        By.directive(UserPreviewComponent)
       )
       expect(avatar.componentInstance.user).toBe(user)
     })

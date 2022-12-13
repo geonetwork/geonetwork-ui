@@ -20,18 +20,20 @@ const currentPage = 5
 const totalPages = 25
 
 @Component({
+  // eslint-disable-next-line
   selector: 'gn-ui-record-table',
   template: '',
 })
-export class RecordTableComponentMock {
+export class RecordTableComponent {
   @Input() records: MetadataRecord[]
   @Output() recordSelect = new EventEmitter<MetadataRecord>()
 }
 @Component({
+  // eslint-disable-next-line
   selector: 'gn-ui-pagination',
   template: '',
 })
-export class PaginationComponentMock {
+export class PaginationComponent {
   @Input() currentPage = 1
   @Input() nPages = 1
   @Input() hideButton = false
@@ -63,8 +65,8 @@ describe('DashboardPageComponent', () => {
       schemas: [NO_ERRORS_SCHEMA],
       declarations: [
         DashboardPageComponent,
-        PaginationComponentMock,
-        RecordTableComponentMock,
+        PaginationComponent,
+        RecordTableComponent,
       ],
       providers: [
         { provide: SearchFacade, useClass: SearchFacadeMock },
@@ -114,10 +116,10 @@ describe('DashboardPageComponent', () => {
     let table, pagination
     beforeEach(() => {
       table = fixture.debugElement.query(
-        By.directive(RecordTableComponentMock)
+        By.directive(RecordTableComponent)
       ).componentInstance
       pagination = fixture.debugElement.query(
-        By.directive(PaginationComponentMock)
+        By.directive(PaginationComponent)
       ).componentInstance
     })
     it('displays record table', () => {
