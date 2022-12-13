@@ -2,6 +2,18 @@ import { Params } from '@angular/router'
 import { SearchFilters } from '@geonetwork-ui/util/shared'
 import { ROUTE_PARAMS, ROUTE_PARAMS_MAPPING } from './constants'
 
+const DEFAULT_IGNORE_SEPARATOR = '?'
+
+function sanitizeParam(param: string | Array<string>) {
+  let paramValue
+  if (typeof param === 'string') {
+    paramValue = param.split(DEFAULT_IGNORE_SEPARATOR)[0]
+  } else {
+    paramValue = param.map((value) => value.split(DEFAULT_IGNORE_SEPARATOR)[0])
+  }
+  return paramValue
+}
+
 function isSearchFilterParam(param: string): boolean {
   return !param.startsWith('_')
 }
@@ -24,7 +36,7 @@ export function getSortBy(routeSearchParams: Params) {
 
 export function routeParamsToState(filters: Params) {
   return Object.keys(filters).reduce((state, key) => {
-    const paramValue = filters[key]
+    const paramValue = sanitizeParam(filters[key])
     const filterName = ROUTE_PARAMS_MAPPING[key]
 
     if (!filterName) {

@@ -62,7 +62,7 @@ describe('RouterMapper', () => {
           publisher: 'org sample',
           q: 'scot',
           resolution: '10000',
-          format: 'OGC:WFS',
+          format: 'OGC:WFS?ignore-after-questionmark',
           ticket: 'should be ignored',
         }
       })
@@ -86,7 +86,7 @@ describe('RouterMapper', () => {
         routeParams = {
           publisher: ['org 1', 'org (%2)', '123[]<>;:!'],
           q: 'scot',
-          resolution: ['10000', '200000'],
+          resolution: ['10000', '200000?ignore-after-questionmark'],
           format: ['OGC:WFS', 'WWW:DOWNLOAD:application/json'],
           ticket: ['should', 'also', 'be', 'ignored'],
         }
