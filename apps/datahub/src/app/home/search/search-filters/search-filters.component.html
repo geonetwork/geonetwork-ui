@@ -14,7 +14,6 @@
       <div class="w-full flex flex-row justify-between">
         <span class="flex flex-col sm:flex-row items-baseline justify-start">
           <h2 class="text-xl mr-4" translate>search.filters.title</h2>
-          <gn-ui-results-hits class="text-sm opacity-60"></gn-ui-results-hits>
         </span>
         <span class="sm:hidden">
           <button
@@ -70,7 +69,7 @@
       <gn-ui-button
         class="hidden sm:block"
         *ngIf="!isOpen"
-        [class.invisible]="!(searchFacade.hasSpatialFilter$ | async)"
+        [class.invisible]="(searchFacade.hasSpatialFilter$ | async) === false"
         (buttonClick)="open()"
         type="outline"
         extraClass="!p-[8px]"
