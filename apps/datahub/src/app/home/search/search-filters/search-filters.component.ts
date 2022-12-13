@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { map, pluck } from 'rxjs/operators'
 
 @Component({
@@ -13,10 +13,7 @@ export class SearchFiltersComponent {
     pluck('OrgForResource'),
     map((orgState) => orgState && Object.keys(orgState)[0])
   )
-  constructor(
-    public searchFacade: SearchFacade,
-    private searchService: SearchService
-  ) {}
+  constructor(public searchFacade: SearchFacade) {}
 
   isOpen = false
 
