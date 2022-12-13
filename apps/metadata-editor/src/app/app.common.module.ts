@@ -5,7 +5,7 @@ import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { ThemeService } from '@geonetwork-ui/util/shared'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
-import { extModules } from './build-specific'
+import { extModules } from './build-specifics'
 
 @NgModule({
   declarations: [],
