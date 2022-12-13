@@ -41,12 +41,6 @@
       [fieldName]="'linkProtocol'"
       [title]="'search.filters.byFormat' | translate"
     ></gn-ui-filter-dropdown>
-    <gn-ui-filter-dropdown
-      class="w-full"
-      [ngClass]="isOpen ? 'block' : 'hidden'"
-      [fieldName]="'resolutionScaleDenominator'"
-      [title]="'search.filters.byResolution' | translate"
-    ></gn-ui-filter-dropdown>
     <div
       class="col-span-2 spatial-filter-toggle"
       *ngIf="isOpen && searchFacade.hasSpatialFilter$ | async"
