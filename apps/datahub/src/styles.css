@@ -26,6 +26,16 @@ html.record-page-active {
   }
 }
 
+.btn-text-white {
+  @apply text-white hover:text-primary-lighter;
+}
+.badge-btn {
+  @apply btn-text-white transition-colors;
+}
+.badge-btn.active {
+  @apply bg-primary hover:text-secondary;
+}
+
 .tippy-box a {
   @apply text-primary-lighter;
   text-decoration: underline;
