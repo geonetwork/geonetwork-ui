@@ -1,4 +1,5 @@
 {
+  "name": "feature-catalog",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/feature/catalog/src",
@@ -6,7 +7,7 @@
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/feature/catalog"],
+      "outputs": ["{workspaceRoot}/coverage/libs/feature/catalog"],
       "options": {
         "jestConfig": "libs/feature/catalog/jest.config.ts",
         "passWithNoTests": true

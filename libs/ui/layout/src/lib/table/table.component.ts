@@ -41,7 +41,7 @@ export class TableComponent implements AfterViewInit {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort
   properties: string[]
-  dataSource: MatTableDataSource<any>
+  dataSource: TableVirtualScrollDataSource<any>
   headerHeight: number
   count: number
 

@@ -1,0 +1,7 @@
+.card {
+  @apply border border-gray-200 rounded-md bg-white;
+}
+
+mat-spinner {
+  --mdc-circular-progress-active-indicator-color: white;
+}

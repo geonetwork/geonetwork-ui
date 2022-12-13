@@ -32,23 +32,23 @@
   <gn-ui-record-field-group label="Owner Organisation">
     <gn-ui-record-field-simple
       label="Name"
-      [(fieldValue)]="record.ownerOrganisation.name"
+      [(fieldValue)]="record.ownerOrganization.name"
       (confirm)="emitChangedRecord()"
     ></gn-ui-record-field-simple>
     <gn-ui-record-field-simple
       label="Description"
-      [(fieldValue)]="record.ownerOrganisation.description"
+      [(fieldValue)]="record.ownerOrganization.description"
       (confirm)="emitChangedRecord()"
     ></gn-ui-record-field-simple>
     <gn-ui-record-field-simple
       label="Website"
-      [(fieldValue)]="record.ownerOrganisation.website"
+      [(fieldValue)]="record.ownerOrganization.website"
       (confirm)="emitChangedRecord()"
       [type]="'url'"
     ></gn-ui-record-field-simple>
     <gn-ui-record-field-simple
       label="Logo URL"
-      [(fieldValue)]="record.ownerOrganisation.logoUrl"
+      [(fieldValue)]="record.ownerOrganization.logoUrl"
       (confirm)="emitChangedRecord()"
       [type]="'url'"
     ></gn-ui-record-field-simple>
@@ -64,7 +64,7 @@
       firstName: 'first',
       lastName: 'last',
       email: 'email@domain.com',
-      organisation: { name: 'org' },
+      organization: { name: 'org' },
       role: 'UNSPECIFIED'
     }"
   >
@@ -104,27 +104,27 @@
         <gn-ui-record-field-group label="Organisation">
           <gn-ui-record-field-simple
             label="Name"
-            [fieldValue]="get().organisation.name"
-            (fieldValueChange)="set($event, 'organisation', 'name')"
+            [fieldValue]="get().organization.name"
+            (fieldValueChange)="set($event, 'organization', 'name')"
             (confirm)="emitChangedRecord()"
           ></gn-ui-record-field-simple>
           <gn-ui-record-field-simple
             label="Description"
-            [fieldValue]="get().organisation.description"
-            (fieldValueChange)="set($event, 'organisation', 'description')"
+            [fieldValue]="get().organization.description"
+            (fieldValueChange)="set($event, 'organization', 'description')"
             (confirm)="emitChangedRecord()"
           ></gn-ui-record-field-simple>
           <gn-ui-record-field-simple
             label="Website"
-            [fieldValue]="get().organisation.website"
-            (fieldValueChange)="set($event, 'organisation', 'website')"
+            [fieldValue]="get().organization.website"
+            (fieldValueChange)="set($event, 'organization', 'website')"
             (confirm)="emitChangedRecord()"
             [type]="'url'"
           ></gn-ui-record-field-simple>
           <gn-ui-record-field-simple
             label="Logo URL"
-            [fieldValue]="get().organisation.logoUrl"
-            (fieldValueChange)="set($event, 'organisation', 'logoUrl')"
+            [fieldValue]="get().organization.logoUrl"
+            (fieldValueChange)="set($event, 'organization', 'logoUrl')"
             (confirm)="emitChangedRecord()"
             [type]="'url'"
           ></gn-ui-record-field-simple>

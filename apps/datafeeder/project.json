@@ -1,4 +1,5 @@
 {
+  "name": "datafeeder",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/datafeeder/src",
@@ -24,6 +25,7 @@
           }
         ],
         "styles": [
+          "tailwind.base.css",
           "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
           "apps/datafeeder/src/styles.css"
         ],
@@ -93,14 +95,14 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/datafeeder"],
+      "outputs": ["{workspaceRoot}/coverage/apps/datafeeder"],
       "options": {
         "jestConfig": "apps/datafeeder/jest.config.ts",
         "passWithNoTests": true
       }
     },
     "docker-build": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           "nx build datafeeder --base-href='/datafeeder/'",

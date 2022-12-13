@@ -3,21 +3,21 @@ import { DatasetRecord, RecordStatus, Role, ServiceRecord } from '../model'
 export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
   uniqueIdentifier: '8698bf0b-fceb-4f0f-989b-111e7c4af0a4',
   kind: 'dataset',
-  ownerOrganisation: {
+  ownerOrganization: {
     name: 'Bundesamt für Raumentwicklung',
   },
   contacts: [
     {
       email: 'rolf.giezendanner@are.admin.ch',
       role: Role.POINT_OF_CONTACT,
-      organisation: {
+      organization: {
         name: 'Bundesamt für Raumentwicklung',
       },
     },
     {
       email: 'info@are.admin.ch',
       role: Role.OWNER,
-      organisation: {
+      organization: {
         name: 'Bundesamt für Raumentwicklung',
       },
     },
@@ -153,7 +153,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
 export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
   uniqueIdentifier: '4a008c24-ecf1-4430-b7e7-cb76b2856bad-8371',
   kind: 'service',
-  ownerOrganisation: {
+  ownerOrganization: {
     name: 'Amt für Raumentwicklung und Geoinformation (SG)',
     website: new URL('https://www.sg.ch/bauen/geoinformation/datenbezug.html'),
   },
@@ -161,7 +161,7 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
     {
       email: 'geodaten@sg.ch',
       role: Role.OTHER,
-      organisation: {
+      organization: {
         name: 'Amt für Raumentwicklung und Geoinformation (SG)',
         website: new URL(
           'https://www.sg.ch/bauen/geoinformation/datenbezug.html'
@@ -171,7 +171,7 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
     {
       email: 'geodaten@sg.ch',
       role: Role.PUBLISHER,
-      organisation: {
+      organization: {
         name: 'Amt für Raumentwicklung und Geoinformation (SG)',
         website: new URL(
           'https://www.sg.ch/bauen/geoinformation/datenbezug.html'

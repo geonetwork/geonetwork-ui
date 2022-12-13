@@ -1,8 +1,8 @@
 <div class="relative">
-  <div class="sm:absolute sm:inset-0">
+  <div class="sm:absolute sm:inset-0" *ngIf="!hideButton">
     <gn-ui-button
       (buttonClick)="nextPage()"
-      [type]="'secondary'"
+      type="secondary"
       [disabled]="currentPage === nPages"
       extraClass="lg:m-auto !p-[22px]"
     >

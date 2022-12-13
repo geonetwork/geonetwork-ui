@@ -1,0 +1,8 @@
+<div class="flex flex-col gap-6">
+  <gn-ui-form-field
+    *ngFor="let field of editorService.fields$ | async; trackBy: fieldTracker"
+    [config]="field.config"
+    [value]="field.value"
+    (valueChange)="handleFieldValueChange(field.config.model, $event)"
+  ></gn-ui-form-field>
+</div>

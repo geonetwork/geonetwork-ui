@@ -1,0 +1,23 @@
+html,
+body {
+  height: 100%;
+  color: var(--color-main);
+}
+
+.icon-btn {
+  @apply text-slate-600 hover:text-slate-400 cursor-pointer transition-colors;
+}
+
+.btn-primary {
+  @apply bg-primary text-white px-9 py-3 rounded-[50px];
+}
+
+.menu-item {
+  @apply rounded px-9 py-3 flex gap-3 items-center hover:opacity-80 transition-opacity;
+}
+.btn-active {
+  @apply bg-blue-50 text-blue-600;
+}
+.menu-title {
+  @apply text-xl px-9 py-3;
+}

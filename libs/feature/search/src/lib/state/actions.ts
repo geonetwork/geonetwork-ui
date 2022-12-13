@@ -107,7 +107,7 @@ export class SetPagination extends AbstractAction implements Action {
 
 export class Paginate extends AbstractAction implements Action {
   readonly type = PAGINATE
-  constructor(public delta: number, id?: string) {
+  constructor(public delta?: number, id?: string) {
     super(id)
   }
 }

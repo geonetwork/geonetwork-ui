@@ -22,6 +22,8 @@
     "map-viewer-e2e": "apps/map-viewer-e2e",
     "metadata-converter": "apps/metadata-converter",
     "metadata-converter-e2e": "apps/metadata-converter-e2e",
+    "metadata-editor": "apps/metadata-editor",
+    "metadata-editor-e2e": "apps/metadata-editor-e2e",
     "search": "apps/search",
     "search-e2e": "apps/search-e2e",
     "ui-catalog": "libs/ui/catalog",

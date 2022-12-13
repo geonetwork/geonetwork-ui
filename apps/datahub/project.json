@@ -1,11 +1,12 @@
 {
+  "name": "datahub",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/datahub/src",
   "prefix": "datahub",
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular-devkit/build-angular:browser-esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/datahub",
@@ -28,6 +29,7 @@
           }
         ],
         "styles": [
+          "tailwind.base.css",
           "apps/datahub/src/styles.css",
           "node_modules/tippy.js/dist/tippy.css",
           "node_modules/ol/ol.css",
@@ -40,7 +42,7 @@
           "xlsx",
           "chroma-js",
           "@rgrove/parse-xml",
-          "messageformat",
+          "@messageformat/core",
           "rbush"
         ]
       },
@@ -108,14 +110,14 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/datahub"],
+      "outputs": ["{workspaceRoot}/coverage/apps/datahub"],
       "options": {
         "jestConfig": "apps/datahub/jest.config.ts",
         "passWithNoTests": true
       }
     },
     "docker-build": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           "nx build datahub --base-href='/datahub/'",

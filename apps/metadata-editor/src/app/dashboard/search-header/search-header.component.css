@@ -1,0 +1,15 @@
+:host ::ng-deep gn-ui-autocomplete input {
+  @apply bg-blue-50 rounded-3xl shadow-none !py-2 !px-8 hover:shadow-none focus:outline-4 focus:outline-offset-1 focus:outline-blue-100 focus:outline-dotted;
+}
+:host ::ng-deep gn-ui-autocomplete button {
+  display: none;
+}
+
+::ng-deep .mdc-menu-surface.mat-mdc-autocomplete-panel {
+  @apply !mt-2.5 !rounded-xl bg-blue-50;
+  --mdc-typography-body1-font-size: 14px;
+}
+
+::ng-deep .mdc-menu-surface .mat-mdc-option {
+  min-height: 36px;
+}

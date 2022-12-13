@@ -1,5 +1,5 @@
 <a
-  class="w-72 h-96 overflow-hidden rounded-lg shadow-primary-light bg-white cursor-pointer block"
+  class="w-72 h-96 overflow-hidden rounded-lg bg-white cursor-pointer block hover:-translate-y-2 duration-[180ms]"
   [routerLink]="['/dataset', record.uuid]"
   target="_blank"
 >
@@ -11,7 +11,7 @@
   </div>
   <div class="flex flex-col justify-between h-44 px-5 pt-4 pb-6">
     <h4
-      class="max-h-24 font-title text-21 text-black overflow-ellipsis overflow-hidden"
+      class="max-h-24 font-title text-21 text-black text-ellipsis overflow-hidden"
     >
       {{ record.title }}
     </h4>

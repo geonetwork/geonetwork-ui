@@ -1,4 +1,5 @@
 {
+  "name": "data-access-datafeeder",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/data-access/datafeeder/src",

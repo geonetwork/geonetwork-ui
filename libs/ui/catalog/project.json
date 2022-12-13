@@ -1,4 +1,5 @@
 {
+  "name": "ui-catalog",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/ui/catalog/src",
@@ -6,7 +7,7 @@
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ui/catalog"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ui/catalog"],
       "options": {
         "jestConfig": "libs/ui/catalog/jest.config.ts",
         "passWithNoTests": true

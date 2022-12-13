@@ -382,6 +382,7 @@ describe('ElasticsearchMapper', () => {
             },
           ],
           metadataUrl: 'url',
+          ownerInfo: 'testadmin|ADMIN|Test|Administrator',
           thumbnailUrl:
             'https://sextant.ifremer.fr/geonetwork/srv/api/records/cf5048f6-5bbf-4e44-ba74-e6f429af51ea/attachments/parametres.gif',
           title: 'Surval - Données par paramètre',
@@ -492,6 +493,7 @@ describe('ElasticsearchMapper', () => {
           ],
           catalogUuid: '81e8a591-7815-4d2f-a7da-5673192e74c9',
           isOpenData: true,
+          isPublishedToAll: true,
           favoriteCount: 12,
           hasDownloads: true,
           hasMaps: true,

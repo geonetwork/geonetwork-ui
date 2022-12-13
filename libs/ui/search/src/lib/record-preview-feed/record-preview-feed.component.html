@@ -2,10 +2,9 @@
   class="mx-[18px] pl-[18px] pb-[18px] border-solid border-l-2 border-gray-100"
 >
   <a
-    class="record-container block rounded-lg bg-white border border-white transition duration-200 hover:bg-gray-50 hover:text-primary hover:border-primary"
+    class="record-container block rounded-lg bg-white border border-white card-shadow"
     [href]="record.metadataUrl"
     [target]="linkTarget"
-    style="box-shadow: 0 0 44px 0 rgba(5, 31, 156, 0.09)"
   >
     <div
       class="record-header py-4 px-4 border-b border-gray-300 flex flex-row items-center relative transition duration-200"
@@ -15,7 +14,7 @@
         style="right: calc(100% + 14px)"
       ></div>
       <div
-        class="record-header-image border border-gray-300 bg-white rounded-full w-16 h-16 object-contain mr-4 overflow-hidden transition duration-200 flex-shrink-0"
+        class="record-header-image border border-gray-300 bg-white rounded-full w-16 h-16 object-contain mr-4 overflow-hidden transition duration-200 shrink-0"
       >
         <mat-icon
           *ngIf="!hasLogo"

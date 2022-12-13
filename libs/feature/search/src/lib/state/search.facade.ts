@@ -8,6 +8,7 @@ import { select, Store } from '@ngrx/store'
 import { from, Observable, of } from 'rxjs'
 import {
   AddSearch,
+  ClearResults,
   DEFAULT_SEARCH_KEY,
   Paginate,
   RequestMoreOnAggregation,
@@ -29,6 +30,7 @@ import {
 } from './actions'
 import { SearchError, SearchState, SearchStateParams } from './reducer'
 import {
+  currentPage,
   getError,
   getFavoritesOnly,
   getSearchConfigAggregations,
@@ -39,8 +41,10 @@ import {
   getSearchResultsLayout,
   getSearchResultsLoading,
   getSearchSortBy,
+  getSize,
   getSpatialFilterEnabled,
   isEndOfResults,
+  totalPages,
 } from './selectors'
 import { FILTER_GEOMETRY } from '../feature-search.module'
 import { Geometry } from 'geojson'
@@ -53,6 +57,9 @@ export class SearchFacade {
   sortBy$: Observable<string>
   isLoading$: Observable<boolean>
   isEndOfResults$: Observable<boolean>
+  totalPages$: Observable<number>
+  currentPage$: Observable<number>
+  size$: Observable<number>
   searchFilters$: Observable<SearchFilters>
   configAggregations$: Observable<any>
   resultsAggregations$: Observable<any>
@@ -90,6 +97,9 @@ export class SearchFacade {
     this.searchFilters$ = this.store.pipe(select(getSearchFilters, searchId))
     this.resultsHits$ = this.store.pipe(select(getSearchResultsHits, searchId))
     this.isEndOfResults$ = this.store.pipe(select(isEndOfResults, searchId))
+    this.totalPages$ = this.store.pipe(select(totalPages, searchId))
+    this.currentPage$ = this.store.pipe(select(currentPage, searchId))
+    this.size$ = this.store.pipe(select(getSize, searchId))
     this.configAggregations$ = this.store.pipe(
       select(getSearchConfigAggregations, searchId)
     )
@@ -102,6 +112,11 @@ export class SearchFacade {
     this.spatialFilterEnabled$ = this.store.pipe(
       select(getSpatialFilterEnabled, searchId)
     )
+  }
+
+  clearResults(): SearchFacade {
+    this.store.dispatch(new ClearResults(this.searchId))
+    return this
   }
 
   setConfigAggregations(config: any): SearchFacade {
@@ -173,7 +188,7 @@ export class SearchFacade {
     return this
   }
 
-  paginate(delta: number): SearchFacade {
+  paginate(delta?: number): SearchFacade {
     this.store.dispatch(new Paginate(delta, this.searchId))
     return this
   }

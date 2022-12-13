@@ -1,0 +1,12 @@
+<input
+  type="file"
+  [readonly]="readonly"
+  [formControl]="control"
+  [placeholder]="placeholder"
+  class="border rounded-md p-3 w-full bg-white transition-colors"
+  [ngClass]="{
+    'border-pink-500': invalid,
+    'border-gray-200': !invalid,
+    'text-gray-600': readonly
+  }"
+/>

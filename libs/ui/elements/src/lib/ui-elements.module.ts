@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core'
-import { CommonModule } from '@angular/common'
+import { CommonModule, NgOptimizedImage } from '@angular/common'
 import { RouterModule } from '@angular/router'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
@@ -21,6 +21,8 @@ import { PaginationComponent } from './pagination/pagination.component'
 import { ThumbnailComponent } from './thumbnail/thumbnail.component'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { FormsModule } from '@angular/forms'
+import { AvatarComponent } from './avatar/avatar.component'
+import { UserPreviewComponent } from './user-preview/user-preview.component'
 
 @NgModule({
   imports: [
@@ -34,6 +36,7 @@ import { FormsModule } from '@angular/forms'
     RouterModule,
     UiInputsModule,
     FormsModule,
+    NgOptimizedImage,
   ],
   declarations: [
     MetadataInfoComponent,
@@ -48,6 +51,8 @@ import { FormsModule } from '@angular/forms'
     SearchResultsErrorComponent,
     PaginationComponent,
     ThumbnailComponent,
+    AvatarComponent,
+    UserPreviewComponent,
   ],
   exports: [
     MetadataInfoComponent,
@@ -62,6 +67,8 @@ import { FormsModule } from '@angular/forms'
     SearchResultsErrorComponent,
     PaginationComponent,
     ThumbnailComponent,
+    AvatarComponent,
+    UserPreviewComponent,
   ],
 })
 export class UiElementsModule {}

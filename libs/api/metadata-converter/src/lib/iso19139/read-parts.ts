@@ -7,7 +7,7 @@ import {
   DatasetTemporalExtent,
   Individual,
   License,
-  Organisation,
+  Organization,
   RecordKind,
   RecordStatus,
   Role,
@@ -83,6 +83,10 @@ function extractUrl(): ChainableFunction<XmlElement, URL> {
   )
 }
 
+function extractMandatoryUrl() {
+  return fallback(extractUrl(), () => new URL('http://missing'))
+}
+
 function getRoleFromRoleCode(roleCode: string): Role {
   if (!roleCode) return Role.UNSPECIFIED
   switch (roleCode) {
@@ -140,7 +144,7 @@ function extractRole(): ChainableFunction<XmlElement, Role> {
 }
 
 // from gmd:CI_ResponsibleParty
-function extractOrganization(): ChainableFunction<XmlElement, Organisation> {
+function extractOrganization(): ChainableFunction<XmlElement, Organization> {
   const getUrl = pipe(
     findNestedElements(
       'gmd:contactInfo',
@@ -188,7 +192,7 @@ function extractIndividuals(): ChainableFunction<
       return [first, parts.join(' ')]
     })
   )
-  const getOrganisation = extractOrganization()
+  const getOrganization = extractOrganization()
   const getEmail = pipe(
     findChildElement('gmd:electronicMailAddress'),
     extractCharacterString(),
@@ -199,14 +203,14 @@ function extractIndividuals(): ChainableFunction<
       getRole,
       getPosition,
       getNameParts,
-      getOrganisation,
+      getOrganization,
       pipe(findChildrenElement('gmd:contactInfo'), mapArray(getEmail))
     ),
-    map(([role, position, [firstName, lastName], organisation, emails]) =>
+    map(([role, position, [firstName, lastName], organization, emails]) =>
       emails.map((email) => ({
         email,
         role,
-        organisation,
+        organization,
         ...(position && { position }),
         ...(firstName && { firstName }),
         ...(lastName && { lastName }),
@@ -342,14 +346,7 @@ function extractDatasetDistributions(): ChainableFunction<
     map(matchMimeType)
   )
 
-  const getUrl = pipe(
-    findChildElement('gmd:linkage'),
-    extractUrl(),
-    tap((url) => {
-      if (url === null)
-        throw new Error('could not find an url for the distribution')
-    })
-  )
+  const getUrl = pipe(findChildElement('gmd:linkage'), extractMandatoryUrl())
   const getProtocolStr = pipe(
     findChildElement('gmd:protocol'),
     extractCharacterString()
@@ -637,7 +634,7 @@ export function readKind(rootEl: XmlElement): RecordKind {
   )(rootEl)
 }
 
-export function readOwnerOrganisation(rootEl: XmlElement): Organisation {
+export function readOwnerOrganization(rootEl: XmlElement): Organization {
   return pipe(
     findNestedElement('gmd:contact', 'gmd:CI_ResponsibleParty'),
     extractOrganization()
@@ -778,7 +775,7 @@ export function readOverviews(rootEl: XmlElement): GraphicOverview[] {
     findChildrenElement('gmd:graphicOverview', false),
     mapArray(
       combine(
-        pipe(findChildElement('gmd:fileName'), extractUrl()),
+        pipe(findChildElement('gmd:fileName'), extractMandatoryUrl()),
         pipe(findChildElement('gmd:fileDescription'), extractCharacterString())
       )
     ),
@@ -836,14 +833,7 @@ export function extractServiceOnlineResources(): ChainableFunction<
   XmlElement,
   ServiceOnlineResource[]
 > {
-  const getUrl = pipe(
-    findChildElement('gmd:linkage'),
-    extractUrl(),
-    tap((url) => {
-      if (url === null)
-        throw new Error('could not find an url for the online resource')
-    })
-  )
+  const getUrl = pipe(findChildElement('gmd:linkage'), extractMandatoryUrl())
   const getProtocolStr = pipe(
     findChildElement('gmd:protocol'),
     extractCharacterString()

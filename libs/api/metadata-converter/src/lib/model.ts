@@ -37,7 +37,7 @@ export type UpdateFrequencyCustom = {
 }
 export type UpdateFrequency = UpdateFrequencyCode | UpdateFrequencyCustom
 
-export interface Organisation {
+export interface Organization {
   name: string
   description?: string
   website?: URL
@@ -50,7 +50,7 @@ export interface Individual {
   email: string
   role: Role
   position?: string
-  organisation: Organisation
+  organization: Organization
   // to add: address, phone
 }
 
@@ -84,7 +84,7 @@ export type SpatialRepresentationType =
 
 export interface BaseRecord {
   uniqueIdentifier: Uuid
-  ownerOrganisation: Organisation
+  ownerOrganization: Organization
   contacts: Array<Individual>
   title: string
   abstract: string

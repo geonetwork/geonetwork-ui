@@ -10,12 +10,15 @@ import { BrowserModule } from '@angular/platform-browser'
 import { TranslateModule } from '@ngx-translate/core'
 import { WizardSummarizeComponent } from './components/wizard-summarize/wizard-summarize.component'
 import { CommonModule } from '@angular/common'
+import { RecordFormComponent } from './record-form/record-form.component'
+import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http'
 
 @NgModule({
   declarations: [
     WizardComponent,
     WizardFieldComponent,
     WizardSummarizeComponent,
+    RecordFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,8 +29,10 @@ import { CommonModule } from '@angular/common'
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
+    HttpClientModule,
+    HttpClientXsrfModule,
   ],
-  exports: [WizardComponent, WizardSummarizeComponent],
+  exports: [WizardComponent, WizardSummarizeComponent, RecordFormComponent],
 })
 export class FeatureEditorModule {}
 export * from './services/wizard.service'

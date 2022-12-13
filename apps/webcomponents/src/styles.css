@@ -87,31 +87,37 @@
   display: none;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of autocomplete that may no longer apply for the MDC version. */
 .mat-autocomplete-panel {
   background: #fff;
   color: rgba(0, 0, 0, 0.87);
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of autocomplete that may no longer apply for the MDC version. */
 .mat-autocomplete-panel:not([class*='mat-elevation-z']) {
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
     0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of autocomplete that may no longer apply for the MDC version. */
 .mat-autocomplete-panel .mat-option.mat-selected:not(.mat-active):not(:hover) {
   background: #fff;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of autocomplete that may no longer apply for the MDC version. */
 .mat-autocomplete-panel
   .mat-option.mat-selected:not(.mat-active):not(:hover):not(.mat-option-disabled) {
   color: rgba(0, 0, 0, 0.87);
 }
-.mat-option:hover:not(.mat-option-disabled),
+.mat-mdc-option:hover:not(.mat-option-disabled),
 .mat-option:focus:not(.mat-option-disabled) {
   background: rgba(0, 0, 0, 0.04);
 }
-.mat-option.mat-selected:not(.mat-option-multiple):not(.mat-option-disabled) {
+/* TODO(mdc-migration): The following rule targets internal classes of option that may no longer apply for the MDC version. */
+.mat-mdc-option.mat-selected:not(.mat-mdc-option-multiple):not(.mat-option-disabled) {
   background: rgba(0, 0, 0, 0.04);
 }
-.mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple) {
+.mat-mdc-select-panel
+  .mat-mdc-option.mat-selected:not(.mat-mdc-option-multiple) {
   background: rgba(0, 0, 0, 0.12);
 }

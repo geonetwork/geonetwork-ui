@@ -35,7 +35,7 @@ export interface SearchStateSearch {
   results: {
     hits: {
       value: number
-      eq: string
+      eq?: string
     }
     records: MetadataRecord[]
     aggregations: any
@@ -207,7 +207,6 @@ export function reducerSearch(
         ...state,
         results: {
           ...state.results,
-          hits: null,
           records: [],
         },
       }

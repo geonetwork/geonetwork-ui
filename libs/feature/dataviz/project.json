@@ -1,4 +1,5 @@
 {
+  "name": "feature-dataviz",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/feature/dataviz/src",
@@ -6,7 +7,7 @@
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/feature/dataviz"],
+      "outputs": ["{workspaceRoot}/coverage/libs/feature/dataviz"],
       "options": {
         "jestConfig": "libs/feature/dataviz/jest.config.ts",
         "passWithNoTests": true

@@ -1,4 +1,5 @@
 {
+  "name": "map-viewer",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/map-viewer/src",
@@ -23,6 +24,7 @@
           }
         ],
         "styles": [
+          "tailwind.base.css",
           "apps/map-viewer/src/styles.css",
           "node_modules/ol/ol.css",
           "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
@@ -92,7 +94,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/map-viewer"],
+      "outputs": ["{workspaceRoot}/coverage/apps/map-viewer"],
       "options": {
         "jestConfig": "apps/map-viewer/jest.config.ts",
         "passWithNoTests": true

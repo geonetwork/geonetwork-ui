@@ -1,0 +1,53 @@
+<div
+  class="bg-gray-50 w-full h-full grid grid-cols-2 gap-6 p-16"
+  style="
+    grid-template-columns: max-content auto;
+    grid-template-rows: max-content auto;
+  "
+>
+  <div class="row-span-2">
+    <div class="card p-8 w-[350px]">
+      <h1 class="text-xl font-bold font-title mb-4">Completion</h1>
+      <p class="mb-4">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In cursus augue
+        ac lacus imperdiet, nec pretium ante tincidunt. Pellentesque placerat
+        odio et lacinia vehicula.
+      </p>
+      <p class="mb-4">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In cursus augue
+        ac lacus imperdiet, nec pretium ante tincidunt. Pellentesque placerat
+        odio et lacinia vehicula.
+      </p>
+    </div>
+  </div>
+  <div class="card p-6">
+    <h1 class="text-xl font-bold font-title mb-4">General informations</h1>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. In cursus augue
+      ac lacus imperdiet, nec pretium ante tincidunt. Pellentesque placerat odio
+      et lacinia vehicula.
+    </p>
+  </div>
+  <div>
+    <div class="card p-14 flex flex-col gap-6">
+      <gn-ui-record-form></gn-ui-record-form>
+    </div>
+    <div class="mt-10 ml-auto w-max">
+      <gn-ui-button
+        *ngIf="(saving$ | async) === false"
+        type="primary"
+        (buttonClick)="saveRecord()"
+        >Save record</gn-ui-button
+      >
+      <gn-ui-button
+        *ngIf="(saving$ | async) === true"
+        type="primary"
+        extraClass="opacity-50"
+        [disabled]="true"
+      >
+        <mat-spinner [diameter]="16" class="mr-2"></mat-spinner>
+        Saving...
+      </gn-ui-button>
+    </div>
+  </div>
+</div>

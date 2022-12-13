@@ -1,0 +1,10 @@
+<img
+  *ngIf="avatarUrl"
+  class="rounded-full object-cover"
+  [src]="avatarUrl"
+  (error)="hideImage()"
+/>
+<div
+  *ngIf="!avatarUrl"
+  class="w-full h-full rounded-full bg-gradient-to-tr from-primary to-slate-200"
+></div>

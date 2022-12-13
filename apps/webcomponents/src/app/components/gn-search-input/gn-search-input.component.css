@@ -1,6 +1,6 @@
 @import '../../../styles.css';
 
-.mat-autocomplete-panel {
-  margin-top: 10px;
+.mdc-menu-surface.mat-mdc-autocomplete-panel {
+  margin-top: 10px !important;
   border-radius: 8px;
 }

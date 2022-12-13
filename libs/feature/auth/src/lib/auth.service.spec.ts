@@ -77,4 +77,34 @@ describe('AuthService', () => {
       expect(service.loginUrl).toEqual('http://localhost/?login')
     })
   })
+  describe('#mapToUserModel', () => {
+    it('maps to UserModel', () => {
+      expect(
+        service['mapToUserModel']({
+          id: '21737',
+          profile: 'Administrator',
+          username: 'C2C-gravin',
+          name: 'Florent',
+          surname: 'Gravin',
+          email: 'florent.gravin@camptocamp.com',
+          hash: '79efeb7b1f8faa9609b73d9bc89b6417',
+          organisation: null,
+          admin: true,
+          groupsWithRegisteredUser: [],
+          groupsWithEditor: [],
+          groupsWithReviewer: [],
+          groupsWithUserAdmin: [],
+        })
+      ).toEqual({
+        id: '21737',
+        profile: 'Administrator',
+        username: 'C2C-gravin',
+        name: 'Florent',
+        surname: 'Gravin',
+        email: 'florent.gravin@camptocamp.com',
+        organisation: null,
+        admin: true,
+      })
+    })
+  })
 })

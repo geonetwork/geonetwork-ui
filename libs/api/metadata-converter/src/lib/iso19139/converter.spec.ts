@@ -79,15 +79,15 @@ describe('ISO19139 converter', () => {
           // unsupported fields need to be filtered out
           expect(backAndForth).toStrictEqual({
             ...GENERIC_DATASET_RECORD,
-            ownerOrganisation: {
-              name: GENERIC_DATASET_RECORD.ownerOrganisation.name,
-              website: GENERIC_DATASET_RECORD.ownerOrganisation.website,
+            ownerOrganization: {
+              name: GENERIC_DATASET_RECORD.ownerOrganization.name,
+              website: GENERIC_DATASET_RECORD.ownerOrganization.website,
             },
             contacts: GENERIC_DATASET_RECORD.contacts.map((c) => ({
               ...c,
-              organisation: {
-                name: c.organisation.name,
-                website: c.organisation.website,
+              organization: {
+                name: c.organization.name,
+                website: c.organization.website,
               },
             })),
           })

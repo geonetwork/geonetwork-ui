@@ -4,14 +4,14 @@ export const GEO2FRANCE_PLU_DATASET_RECORD: DatasetRecord = {
   uniqueIdentifier: '7d002c4c-92ef-4b9f-a568-d732f740b99e',
   // parentuuid: 0822db32-0122-41ee-b6fd-a6934c386288 ???
   kind: 'dataset',
-  ownerOrganisation: {
+  ownerOrganization: {
     name: 'GeoCompiegnois',
   },
   contacts: [
     {
       email: 'sig@agglo-compiegne.fr',
       role: Role.POINT_OF_CONTACT,
-      organisation: {
+      organization: {
         name: 'GeoCompiegnois',
       },
     },

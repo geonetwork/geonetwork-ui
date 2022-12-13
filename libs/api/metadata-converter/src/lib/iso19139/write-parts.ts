@@ -253,7 +253,7 @@ function appendResponsibleParty(contact: Individual) {
       appendChildren(
         pipe(
           createElement('gmd:organisationName'),
-          writeCharacterString(contact.organisation.name)
+          writeCharacterString(contact.organization.name)
         ),
         pipe(
           createElement('gmd:contactInfo'),
@@ -266,12 +266,12 @@ function appendResponsibleParty(contact: Individual) {
               writeCharacterString(contact.email)
             )
           ),
-          'website' in contact.organisation
+          'website' in contact.organization
             ? appendChildren(
                 pipe(
                   createElement('gmd:onlineResource'),
                   createChild('gmd:CI_OnlineResource'),
-                  writeLinkage(contact.organisation.website)
+                  writeLinkage(contact.organization.website)
                 )
               )
             : noop
@@ -639,13 +639,13 @@ export function writeKind(record: CatalogRecord, rootEl: XmlElement) {
   )(rootEl)
 }
 
-export function writeOwnerOrganisation(
+export function writeOwnerOrganization(
   record: CatalogRecord,
   rootEl: XmlElement
 ) {
   // if no contact matches the owner org, create an empty one
   const ownerContact: Individual = record.contacts.find(
-    (contact) => contact.organisation.name === record.ownerOrganisation.name
+    (contact) => contact.organization.name === record.ownerOrganization.name
   )
   pipe(
     findChildOrCreate('gmd:contact'),
@@ -658,7 +658,7 @@ export function writeOwnerOrganisation(
             role: Role.POINT_OF_CONTACT,
           }
         : {
-            organisation: record.ownerOrganisation,
+            organization: record.ownerOrganization,
             email: '',
             role: Role.POINT_OF_CONTACT,
           }

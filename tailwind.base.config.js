@@ -1,12 +1,6 @@
 module.exports = {
-  mode: 'jit',
-  darkMode: false, // or 'media' or 'class',
   theme: {
     extend: {
-      inset: {
-        '1/10': '10%',
-        '1/2': '50%',
-      },
       colors: {
         'primary-white': 'var(--color-primary-white)',
         'primary-lightest': 'var(--color-primary-lightest)',
@@ -50,11 +44,6 @@ module.exports = {
           900: '#73230d',
         },
       },
-      boxShadow: {
-        primary:
-          '0 0 37px -10px var(--color-primary-lightest), 0 10px 25px -5px rgba(0, 0, 0, 0.04)',
-        'primary-light': '0 0 44px 0 rgba(5, 31, 156, 0.09)',
-      },
       fontFamily: {
         sans: 'var(--font-family-main, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")',
         serif:
@@ -76,11 +65,6 @@ module.exports = {
         45: 0.45,
       },
     },
-  },
-  variants: {
-    textColor: ['responsive', 'hover', 'focus', 'group-hover'],
-    visibility: ['responsive', 'group-hover'],
-    opacity: ['disabled'],
   },
   plugins: [require('@tailwindcss/line-clamp')],
 }

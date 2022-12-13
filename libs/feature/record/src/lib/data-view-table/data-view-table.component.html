@@ -11,7 +11,7 @@
   <div class="relative h-full">
     <gn-ui-table
       *ngIf="tableData$ | async"
-      class="overflow-auto flex-grow"
+      class="overflow-auto grow"
       [data]="tableData$ | async"
       [activeId]="selectionId"
       (selected)="onTableSelect($event)"

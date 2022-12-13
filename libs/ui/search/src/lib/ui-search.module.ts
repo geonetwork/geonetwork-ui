@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
+import { RouterLink } from '@angular/router'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { NgxDropzoneModule } from 'ngx-dropzone'
@@ -25,6 +26,7 @@ import { ResultsListItemComponent } from './results-list-item/results-list-item.
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { RecordPreviewFeedComponent } from './record-preview-feed/record-preview-feed.component'
+import { RecordTableComponent } from './record-table/record-table.component'
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { RecordPreviewFeedComponent } from './record-preview-feed/record-preview
     ResultsListItemComponent,
     RecordPreviewFeedComponent,
     RecordPreviewRowComponent,
+    RecordTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +56,7 @@ import { RecordPreviewFeedComponent } from './record-preview-feed/record-preview
     UiWidgetsModule,
     UiElementsModule,
     MatIconModule,
+    RouterLink,
   ],
   exports: [
     RecordPreviewListComponent,
@@ -66,6 +70,7 @@ import { RecordPreviewFeedComponent } from './record-preview-feed/record-preview
     ResultsHitsNumberComponent,
     RecordPreviewFeedComponent,
     RecordPreviewRowComponent,
+    RecordTableComponent,
   ],
   providers: [
     { provide: RESULTS_LAYOUT_CONFIG, useValue: DEFAULT_RESULTS_LAYOUT_CONFIG },

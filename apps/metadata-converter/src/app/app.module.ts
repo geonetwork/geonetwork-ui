@@ -35,6 +35,7 @@ import { MatIconModule } from '@angular/material/icon'
   ],
   providers: [],
   bootstrap: [AppComponent],
+  exports: [RecordFormComponent],
 })
 export class AppModule {
   constructor() {

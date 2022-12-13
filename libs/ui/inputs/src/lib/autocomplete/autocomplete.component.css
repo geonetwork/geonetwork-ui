@@ -18,6 +18,6 @@ input {
   height: 3.5em;
   padding: 1.05em;
 }
-.mat-option.suggestion.mat-active {
+.mat-mdc-option.suggestion.mat-mdc-option-active {
   background-color: var(--color-primary-lightest);
 }

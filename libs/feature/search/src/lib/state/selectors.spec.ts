@@ -5,7 +5,7 @@ import {
   ES_FIXTURE_AGGS_REQUEST,
   ES_FIXTURE_AGGS_RESPONSE,
 } from '@geonetwork-ui/util/shared/fixtures'
-import { getSpatialFilterEnabled } from './selectors'
+import { currentPage, getSpatialFilterEnabled, totalPages } from './selectors'
 
 const initialStateSearch = initialState[DEFAULT_SEARCH_KEY]
 
@@ -126,6 +126,50 @@ describe('Search Selectors', () => {
         },
       })
       expect(exactEndOfResult).toEqual(true)
+    })
+  })
+
+  describe('totalPages', () => {
+    it('returns correct page amount', () => {
+      const result = fromSelectors.totalPages.projector({
+        ...initialStateSearch,
+        params: {
+          ...initialStateSearch.params,
+          from: 0,
+          size: 20,
+        },
+        results: {
+          ...initialStateSearch.results,
+          hits: {
+            value: 62,
+          },
+        },
+      })
+      expect(result).toEqual(4)
+    })
+  })
+
+  describe('currentPage', () => {
+    it('returns the correct current page', () => {
+      const result = fromSelectors.currentPage.projector({
+        ...initialStateSearch,
+        params: {
+          ...initialStateSearch.params,
+          from: 0,
+          size: 20,
+        },
+      })
+      expect(result).toEqual(1)
+
+      const secondPage = fromSelectors.currentPage.projector({
+        ...initialStateSearch,
+        params: {
+          ...initialStateSearch.params,
+          from: 20,
+          size: 20,
+        },
+      })
+      expect(secondPage).toEqual(2)
     })
   })
 

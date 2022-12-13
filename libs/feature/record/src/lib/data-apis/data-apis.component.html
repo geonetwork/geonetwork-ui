@@ -5,11 +5,11 @@
   record.metadata.api
 </p>
 <div
-  class="mb-4 justify-center flex flex-row flex-wrap sm:justify-start md:flex-nowrap md:items-stretch md:overflow-x-auto md:overflow-y-visible"
+  class="mb-4 -ml-4 px-4 justify-center flex flex-row flex-wrap sm:gap-4 sm:justify-start md:flex-nowrap md:items-stretch md:overflow-x-auto md:overflow-y-visible"
 >
   <gn-ui-api-card
     *ngFor="let link of facade.apiLinks$ | async"
-    class="shrink w-80 my-2 sm:mr-4"
+    class="shrink w-80 my-2"
     [link]="link"
   >
   </gn-ui-api-card>
