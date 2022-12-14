@@ -32,8 +32,6 @@ export class SearchService implements SearchServiceI {
     this.facade.setFilters(params)
   }
 
-  clearFilters(filterKeys: string[]) {}
-
   setSortBy(sort: string): void {
     this.facade.setSortBy(sort)
   }
