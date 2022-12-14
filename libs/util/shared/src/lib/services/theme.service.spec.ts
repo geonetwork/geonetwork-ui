@@ -80,15 +80,15 @@ describe('ThemeService', () => {
           document.styleSheets[document.styleSheets.length - 1].cssRules
         firstRule = cssRules[0]
       })
-      it('generates one rule per opacity value', () => {
-        expect(cssRules.length).toEqual(5)
+      it('generates 2 rules per opacity value', () => {
+        expect(cssRules.length).toEqual(10)
       })
       it('generates .bg-{name}-opacity-{value} class name', () => {
         expect(firstRule.selectorText).toEqual('.bg-primary-opacity-0')
       })
       it('the rules has a background-color with opacity', () => {
         expect(firstRule.style['background-color']).toEqual('rgba(255,0,0,0)')
-        expect(cssRules[2].style['background-color']).toEqual(
+        expect(cssRules[4].style['background-color']).toEqual(
           'rgba(255,0,0,0.25)'
         )
       })
@@ -100,8 +100,8 @@ describe('ThemeService', () => {
           document.styleSheets[document.styleSheets.length - 1].cssRules
         firstRule = cssRules[0]
       })
-      it('generates 1 css rule', () => {
-        expect(cssRules.length).toEqual(1)
+      it('generates 2 css rules', () => {
+        expect(cssRules.length).toEqual(2)
       })
       it('generates .bg-primary-opacity-75 class name', () => {
         expect(firstRule.selectorText).toEqual('.bg-primary-opacity-75')

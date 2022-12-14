@@ -21,6 +21,10 @@ export class ThemeService {
       cssRules += `.bg-${colorName}-opacity-${opacity}{background-color:${color
         .alpha(opacity / 100)
         .css()};}`
+
+      cssRules += `.hover-bg-${colorName}-opacity-${opacity}:hover {background-color:${color
+        .alpha(opacity / 100)
+        .css()};}`
       return cssRules
     }, '')
     document.getElementsByTagName('head')[0].appendChild(styleElement)
