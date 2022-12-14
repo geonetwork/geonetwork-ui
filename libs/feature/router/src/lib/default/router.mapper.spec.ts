@@ -18,7 +18,7 @@ describe('RouterMapper', () => {
           resolutionScaleDenominator: {
             '10000': true,
           },
-          linkProtocol: {
+          format: {
             'OGC:WFS': true,
           },
           keyword: {},
@@ -75,7 +75,7 @@ describe('RouterMapper', () => {
           resolutionScaleDenominator: {
             '10000': true,
           },
-          linkProtocol: {
+          format: {
             'OGC:WFS': true,
           },
         })
@@ -103,7 +103,7 @@ describe('RouterMapper', () => {
             '10000': true,
             '200000': true,
           },
-          linkProtocol: {
+          format: {
             'OGC:WFS': true,
             'WWW:DOWNLOAD:application/json': true,
           },

@@ -15,5 +15,5 @@ export const ROUTE_PARAMS_MAPPING: SearchRouteParams = {
   [ROUTE_PARAMS.ANY]: 'any',
   [ROUTE_PARAMS.PUBLISHER]: 'OrgForResource',
   [ROUTE_PARAMS.RESOLUTION]: 'resolutionScaleDenominator',
-  [ROUTE_PARAMS.FORMAT]: 'linkProtocol',
+  [ROUTE_PARAMS.FORMAT]: 'format',
 }
