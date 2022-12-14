@@ -20,12 +20,13 @@ class SearchFacadeMock {
   setSpatialFilterEnabled = jest.fn()
 }
 class SearchServiceMock {
-  updateSearchFilters = jest.fn()
+  updateFilters = jest.fn()
 }
 describe('SearchFiltersComponent', () => {
   let component: SearchFiltersComponent
   let fixture: ComponentFixture<SearchFiltersComponent>
   let searchFacade
+  let searchService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -51,6 +52,7 @@ describe('SearchFiltersComponent', () => {
 
   beforeEach(() => {
     searchFacade = TestBed.inject(SearchFacade)
+    searchService = TestBed.inject(SearchService)
     fixture = TestBed.createComponent(SearchFiltersComponent)
     component = fixture.componentInstance
   })
@@ -144,6 +146,27 @@ describe('SearchFiltersComponent', () => {
       })
       it('shows up', () => {
         expect(getMoreButton().classes.invisible).toBeFalsy()
+      })
+    })
+  })
+  describe('clear button', () => {
+    const getClearBtn = () => fixture.debugElement.query(By.css('.clear-btn'))
+    beforeEach(() => {
+      component.isOpen = true
+      fixture.detectChanges()
+    })
+    it('shows up', () => {
+      expect(getClearBtn()).toBeTruthy()
+    })
+    describe('when clicked', () => {
+      beforeEach(() => {
+        getClearBtn().nativeElement.click()
+      })
+      it('clear OrgForResource & format', () => {
+        expect(searchService.updateFilters).toHaveBeenCalledWith({
+          OrgForResource: {},
+          format: {},
+        })
       })
     })
   })

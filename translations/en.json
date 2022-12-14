@@ -1,5 +1,5 @@
 {
-  "catalog": "",
+  "catalog": "catalog",
   "catalog.figures.datasets": "datasets",
   "catalog.figures.organisations": "organisations",
   "datafeeder.analysisProgressBar.illustration.fileFormatDetection": "File format \n detection",
@@ -123,6 +123,7 @@
   "map.navigation.message": "Please use CTRL + mouse (or two fingers on mobile) to navigate the map",
   "map.select.layer": "Select the layer to display",
   "nav.back": "Back",
+  "new record": "New record",
   "next": "next",
   "organisation.sort.intro": "The organisations are the providers of metadata records and their corresponding data. They may be owners of metadata catalogs harvested by this instance or owners of (meta-)data referenced by another catalog.",
   "organisation.sort.sortBy": "Sort by:",
@@ -179,7 +180,7 @@
   "search.field.sortBy": "Sort by:",
   "search.filters.byFormat": "Formats",
   "search.filters.byOrganisation": "Organisations",
-  "search.filters.byResolution": "Spatial resolution",
+  "search.filters.clear": "Reset",
   "search.filters.maximize": "Expand",
   "search.filters.minimize": "Minimize",
   "search.filters.title": "Filter your results",
