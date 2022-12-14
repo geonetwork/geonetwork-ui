@@ -1,7 +1,12 @@
 <button
   *ngFor="let l of tabLinks"
   [routerLink]="l.link"
-  class="hidden sm:block uppercase truncate text-white underline decoration-transparent hover:decoration-primary decoration-2 underline-offset-4 transition-colors"
+  [ngClass]="
+    (activeLink$ | async).link === l.link
+      ? 'decoration-primary'
+      : 'decoration-transparent hover:decoration-primary transition-colors'
+  "
+  class="hidden sm:block sm:py-4 uppercase truncate text-white underline decoration-4 underline-offset-[19px]"
   translate
 >
   {{ l.label }}
@@ -31,6 +36,6 @@
     class="block pl-5 pr-3 py-3 rounded-md text-[18px] font-medium uppercase tracking-wider shrink truncate"
     [class]="displayMobileMenu ? 'hidden' : 'block'"
   >
-    {{ activeLabel$ | async | translate }}
+    {{ (activeLink$ | async).label | translate }}
   </button>
 </button>
