@@ -1,9 +1,9 @@
-<div class="container-lg mx-auto">
+<div class="container-lg mx-auto mt-8">
   <datahub-search-filters></datahub-search-filters>
-  <div>
-    <gn-ui-results-hits class=""></gn-ui-results-hits>
+  <div class="mt-4 rounded-lg text-primary p-5 bg-primary-opacity-10">
+    <gn-ui-results-hits></gn-ui-results-hits>
   </div>
-  <div>
+  <div class="mt-8">
     <gn-ui-results-list-container
       (mdSelect)="onMetadataSelection($event)"
       showMore="button"
