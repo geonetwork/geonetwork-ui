@@ -1,5 +1,5 @@
 <div
-  class="bg-primary text-white p-5 my-8 shadow-xl rounded-xl grid grid-cols-6 gap-4 transition-[height] duration-100"
+  class="bg-primary text-white p-5 my-8 shadow-xl rounded-lg grid grid-cols-6 gap-4 transition-[height] duration-100"
   [ngClass]="{ 'sm:bg-white sm:text-main': !isOpen }"
 >
   <div
@@ -14,7 +14,6 @@
       <div class="w-full flex flex-row justify-between">
         <span class="flex flex-col sm:flex-row items-baseline justify-start">
           <h2 class="text-xl mr-4" translate>search.filters.title</h2>
-          <gn-ui-results-hits class="text-sm opacity-60"></gn-ui-results-hits>
         </span>
         <span class="sm:hidden">
           <button
@@ -40,12 +39,6 @@
       [ngClass]="isOpen ? 'block' : 'hidden sm:block'"
       [fieldName]="'linkProtocol'"
       [title]="'search.filters.byFormat' | translate"
-    ></gn-ui-filter-dropdown>
-    <gn-ui-filter-dropdown
-      class="w-full"
-      [ngClass]="isOpen ? 'block' : 'hidden'"
-      [fieldName]="'resolutionScaleDenominator'"
-      [title]="'search.filters.byResolution' | translate"
     ></gn-ui-filter-dropdown>
     <div
       class="col-span-2 spatial-filter-toggle"
@@ -76,6 +69,7 @@
       <gn-ui-button
         class="hidden sm:block"
         *ngIf="!isOpen"
+        [class.invisible]="(searchFacade.hasSpatialFilter$ | async) === false"
         (buttonClick)="open()"
         type="outline"
         extraClass="!p-[8px]"

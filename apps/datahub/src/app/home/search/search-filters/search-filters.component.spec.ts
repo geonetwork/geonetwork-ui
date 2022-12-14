@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  DebugElement,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { SearchFilters } from '@geonetwork-ui/util/shared'
@@ -106,6 +110,40 @@ describe('SearchFiltersComponent', () => {
         checkbox.checked = false
         checkbox.dispatchEvent(new InputEvent('change'))
         expect(searchFacade.setSpatialFilterEnabled).toHaveBeenCalledWith(false)
+      })
+    })
+  })
+  describe('advanced search button (more)', () => {
+    function getMoreButton(): DebugElement {
+      return fixture.debugElement.query(By.css('gn-ui-button'))
+    }
+    describe('when panel is opened', () => {
+      beforeEach(() => {
+        component.isOpen = true
+        fixture.detectChanges()
+      })
+      it('does not show up', () => {
+        expect(getMoreButton()).toBeFalsy()
+      })
+    })
+    describe('when panel is closed & a spatial filter is unavailable', () => {
+      beforeEach(() => {
+        component.isOpen = false
+        searchFacade.hasSpatialFilter$.next(false)
+        fixture.detectChanges()
+      })
+      it('is hidden', () => {
+        expect(getMoreButton().classes.invisible).toBeTruthy()
+      })
+    })
+    describe('when panel is closed & a spatial filter is available', () => {
+      beforeEach(() => {
+        component.isOpen = false
+        searchFacade.hasSpatialFilter$.next(true)
+        fixture.detectChanges()
+      })
+      it('shows up', () => {
+        expect(getMoreButton().classes.invisible).toBeFalsy()
       })
     })
   })
