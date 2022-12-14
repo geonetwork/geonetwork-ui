@@ -232,4 +232,43 @@ describe('DropdownMultiselectComponent', () => {
       })
     })
   })
+
+  describe('clear button', () => {
+    let emitted
+    beforeEach(() => {
+      component.choices = [
+        { label: 'First Choice', value: 'choice1' },
+        { label: 'Second Choice', value: 'choice2' },
+        { label: 'Third Choice', value: 'choice3' },
+      ]
+    })
+    describe('when no item selected', () => {
+      it('is not displayed', () => {
+        const clearBtn = fixture.debugElement.query(By.css('.clear-btn'))
+        expect(clearBtn).toBeFalsy()
+      })
+    })
+    describe('when items are selected', () => {
+      beforeEach(() => {
+        component.selected = ['choice2']
+        fixture.detectChanges()
+      })
+      it('is displayed', () => {
+        const clearBtn = fixture.debugElement.query(By.css('.clear-btn'))
+        expect(clearBtn).toBeTruthy()
+      })
+    })
+    describe('on click', () => {
+      beforeEach(() => {
+        component.selected = ['choice2']
+        jest.spyOn(component.selectValues, 'emit')
+        fixture.detectChanges()
+        const clearBtn = fixture.debugElement.query(By.css('.clear-btn'))
+        clearBtn.nativeElement.click()
+      })
+      it('is displayed', () => {
+        expect(component.selectValues.emit).toHaveBeenCalledWith([])
+      })
+    })
+  })
 })
