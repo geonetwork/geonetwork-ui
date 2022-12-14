@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  NO_ERRORS_SCHEMA,
+  Output,
+} from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { BehaviorSubject } from 'rxjs'
@@ -6,8 +13,11 @@ import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FilterDropdownComponent } from './filter-dropdown.component'
 
+let facade: SearchFacadeMock
+
 class SearchFacadeMock {
-  updateConfigAggregations = jest.fn()
+  updateConfigAggregations = jest.fn(() => facade)
+  requestMoreResults = jest.fn()
   resultsAggregations$ = new BehaviorSubject<any>({})
   searchFilters$ = new BehaviorSubject<any>({})
 }
@@ -33,13 +43,13 @@ export class MockDropdownComponent {
 describe('FilterDropdownComponent', () => {
   let component: FilterDropdownComponent
   let dropdown: MockDropdownComponent
-  let facade: SearchFacadeMock
   let searchService: SearchService
   let fixture: ComponentFixture<FilterDropdownComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [FilterDropdownComponent, MockDropdownComponent],
+      schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
           provide: SearchFacade,
@@ -50,7 +60,13 @@ describe('FilterDropdownComponent', () => {
           useClass: SearchServiceMock,
         },
       ],
-    }).compileComponents()
+    })
+      .overrideComponent(FilterDropdownComponent, {
+        set: {
+          changeDetection: ChangeDetectionStrategy.Default,
+        },
+      })
+      .compileComponents()
 
     fixture = TestBed.createComponent(FilterDropdownComponent)
     facade = TestBed.inject(SearchFacade)
@@ -80,6 +96,7 @@ describe('FilterDropdownComponent', () => {
           },
         },
       })
+      expect(facade.requestMoreResults).toHaveBeenCalledTimes(1)
     })
   })
 
