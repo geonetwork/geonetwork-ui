@@ -13,9 +13,18 @@ const meApiMock = {
   getMe: () => me$,
 }
 
+let windowLocation
+Object.defineProperties((global as any).window, {
+  location: {
+    get: () => new URL(windowLocation),
+  },
+})
+
 describe('AuthService', () => {
   let service: AuthService
   beforeEach(() => {
+    windowLocation = 'http://localhost'
+
     TestBed.configureTestingModule({
       providers: [
         {
@@ -75,6 +84,19 @@ describe('AuthService', () => {
     })
     it('should construct a login URL based on the injected value', () => {
       expect(service.loginUrl).toEqual('http://localhost/?login')
+    })
+  })
+  describe('login URL from config (special georchestra case, appending a query param with existing query params)', () => {
+    beforeEach(() => {
+      windowLocation =
+        'https://my.georchestra/datahub/?org=Abcd&keywords=bla;bla&location'
+      loginUrlTokenMock = '${current_url}?login&something=else'
+      service = TestBed.inject(AuthService)
+    })
+    it('should construct a login URL based on the injected value', () => {
+      expect(service.loginUrl).toEqual(
+        'https://my.georchestra/datahub/?org=Abcd&keywords=bla;bla&location&login&something=else'
+      )
     })
   })
   describe('#mapToUserModel', () => {

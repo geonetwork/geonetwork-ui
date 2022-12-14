@@ -22,7 +22,13 @@ export class AuthService {
 
   baseLoginUrl = this.baseLoginUrlToken || DEFAULT_GN4_LOGIN_URL
   get loginUrl() {
-    return this.baseLoginUrl
+    let baseUrl = this.baseLoginUrl
+    const locationHasQueryParams = !!window.location.search
+    // this is specific to georchestra login URL based on a ?login query param
+    if (baseUrl.startsWith('${current_url}?') && locationHasQueryParams) {
+      baseUrl = baseUrl.replace('?', '&')
+    }
+    return baseUrl
       .replace('${current_url}', window.location.toString())
       .replace('${lang2}', this.translateService.currentLang)
       .replace(
