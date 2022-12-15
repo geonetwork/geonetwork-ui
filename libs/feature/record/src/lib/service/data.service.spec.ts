@@ -315,7 +315,7 @@ describe('DataService', () => {
             service.getGeoJsonDownloadUrlFromWfs('http://local/wfs', 'abcd')
           )
           expect(url).toEqual(
-            'http://local/wfs?GetFeature&FeatureType=abcd&format=geojson'
+            'http://local/wfs?GetFeature&FeatureType=abcd&format=application/json'
           )
         })
       })
@@ -342,7 +342,7 @@ describe('DataService', () => {
             )
           )
           expect(url).toEqual(
-            'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=geojson'
+            'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=application/json'
           )
         })
       })
@@ -479,7 +479,7 @@ describe('DataService', () => {
           service.getGeoJsonDownloadUrlFromWfs('http://local/wfs', 'abcd')
         )
         expect(url).toEqual(
-          'http://proxy.local/?url=http%3A%2F%2Flocal%2Fwfs?GetFeature&FeatureType=abcd&format=geojson'
+          'http://proxy.local/?url=http%3A%2F%2Flocal%2Fwfs?GetFeature&FeatureType=abcd&format=application/json'
         )
       })
     })
