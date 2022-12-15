@@ -35,15 +35,14 @@ export class NavigationMenuComponent {
       label: 'datahub.header.organisations',
     },
   ]
-  activeLabel$ = this.routerFacade.currentRoute$.pipe(
+
+  activeLink$ = this.routerFacade.currentRoute$.pipe(
     map(
       (route) =>
-        (
-          this.tabLinks.find((tab) => tab.link === route.url[0].path) || {
-            link: '',
-            label: '',
-          }
-        ).label
+        this.tabLinks.find((tab) => tab.link === route.url[0].path) || {
+          link: '',
+          label: '',
+        }
     )
   )
 

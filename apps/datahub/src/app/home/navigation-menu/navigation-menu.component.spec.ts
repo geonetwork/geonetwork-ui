@@ -48,9 +48,9 @@ describe('NavigationMenuComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('should display activeLabel$', () => {
+  describe('should display activeLink$', () => {
     it('displays initially activeLabel for news', async () => {
-      const activeLabel = await readFirst(component.activeLabel$)
+      const activeLabel = (await readFirst(component.activeLink$)).label
       expect(activeLabel).toEqual('datahub.header.news')
     })
     describe('navigate to search route', () => {
@@ -60,7 +60,7 @@ describe('NavigationMenuComponent', () => {
         })
       })
       it('displays activeLabel for search', async () => {
-        const activeLabel = await readFirst(component.activeLabel$)
+        const activeLabel = (await readFirst(component.activeLink$)).label
         expect(activeLabel).toEqual('datahub.header.datasets')
       })
     })
@@ -71,7 +71,7 @@ describe('NavigationMenuComponent', () => {
         })
       })
       it('displays activeLabel for organisations', async () => {
-        const activeLabel = await readFirst(component.activeLabel$)
+        const activeLabel = (await readFirst(component.activeLink$)).label
         expect(activeLabel).toEqual('datahub.header.organisations')
       })
     })
@@ -82,7 +82,7 @@ describe('NavigationMenuComponent', () => {
         })
       })
       it('displays empty string as activeLabel', async () => {
-        const activeLabel = await readFirst(component.activeLabel$)
+        const activeLabel = (await readFirst(component.activeLink$)).label
         expect(activeLabel).toEqual('')
       })
     })
