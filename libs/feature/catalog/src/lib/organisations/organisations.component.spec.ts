@@ -124,7 +124,7 @@ describe('OrganisationsComponent', () => {
         expect(orgPreviewComponents[0].organisation.name).toEqual('A Data Org')
       })
       it('should pass 6th organisation (sorted by name-asc) on page to 6th ui preview component', () => {
-        expect(orgPreviewComponents[5].organisation.name).toEqual('F Data Org')
+        expect(orgPreviewComponents[5].organisation.name).toEqual('é Data Org')
       })
     })
     describe('pass params to ui pagination component', () => {
@@ -156,7 +156,7 @@ describe('OrganisationsComponent', () => {
         })
         it('should pass first organisation of second page (sorted by name-asc) to first ui preview component', () => {
           expect(orgPreviewComponents[0].organisation.name).toEqual(
-            'G Data Org'
+            'F Data Org'
           )
         })
         it('should pass last organisation of second page (sorted by name-asc) to last ui preview component', () => {
@@ -181,16 +181,16 @@ describe('OrganisationsComponent', () => {
       it('should call setSortBy', () => {
         expect(setSortBySpy).toHaveBeenCalledWith('recordCount-desc')
       })
-      it('should have organsiation with max recordCount at first position in observable', async () => {
+      it('should have organisation with max recordCount at first position in observable', async () => {
         const organisations = await readFirst(component.organisations$)
         expect(organisations[0]).toEqual(ORGANISATIONS_FIXTURE[5])
       })
-      it('should pass organsiation with max recordCount to first preview component', () => {
+      it('should pass organisation with max recordCount to first preview component', () => {
         expect(orgPreviewComponents[0].organisation).toEqual(
           ORGANISATIONS_FIXTURE[5]
         )
       })
-      it('should pass organsiation with 6th highest recordCount to 6th preview component', () => {
+      it('should pass organisation with 6th highest recordCount to 6th preview component', () => {
         expect(orgPreviewComponents[5].organisation).toEqual(
           ORGANISATIONS_FIXTURE[3]
         )

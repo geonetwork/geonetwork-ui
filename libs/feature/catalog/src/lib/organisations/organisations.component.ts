@@ -59,17 +59,17 @@ export class OrganisationsComponent {
     organisations: Organisation[],
     sortBy: string
   ): Organisation[] {
-    const sortValue = sortBy.split('-')
-    const attribute = sortValue[0]
-    const order = sortValue[1]
-    const orderParam = order === 'asc' ? [1, -1] : [-1, 1]
-    return [...organisations].sort((a, b) =>
-      a[`${attribute}`] > b[`${attribute}`]
-        ? orderParam[0]
-        : b[`${attribute}`] > a[`${attribute}`]
-        ? orderParam[1]
-        : 0
-    )
+    const sortParts = sortBy.split('-')
+    const attribute = sortParts[0]
+    const direction = sortParts[1] === 'asc' ? 1 : -1
+    return [...organisations].sort((a, b) => {
+      const valueA = a[attribute]
+      const valueB = b[attribute]
+      if (typeof valueA === 'string' && typeof valueB === 'string') {
+        return direction * valueA.localeCompare(valueB)
+      }
+      return direction * Math.sign(valueA - valueB)
+    })
   }
 
   searchByOrganisation(organisation: Organisation) {
