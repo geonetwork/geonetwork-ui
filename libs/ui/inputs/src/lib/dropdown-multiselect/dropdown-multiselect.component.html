@@ -8,8 +8,10 @@
   cdkOverlayOrigin
   #overlayOrigin="cdkOverlayOrigin"
 >
-  <div class="grow flex items-center mr-2 gap-2">
-    <div class="text-left truncate font-medium">{{ title }}</div>
+  <div class="grow flex items-center mr-2 gap-2 overflow-hidden">
+    <div class="text-left font-medium truncate py-1">
+      {{ title }}
+    </div>
     <div
       *ngIf="hasSelectedChoices"
       class="shrink-0 rounded-full text-primary bg-primary-opacity-25 text-white font-bold text-[12px] w-5 h-5 flex items-center justify-center mr-1 selected-count"
