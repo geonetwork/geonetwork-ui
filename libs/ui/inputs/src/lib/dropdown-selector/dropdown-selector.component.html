@@ -9,7 +9,7 @@
   <select
     [id]="id"
     (change)="this.selectValue.emit($event.target.value)"
-    class="text-main bg-white border border-gray-300 py-[10px] px-[16px] rounded-[0.25em] leading-tight focus:outline-none focus:border-primary"
+    class="text-main bg-white border border-gray-300 py-[10px] px-[16px] rounded-[0.25em] cursor-pointer leading-tight focus:outline-none hover:text-primary-darker hover:border-primary-lighter focus:ring-primary-lightest focus:ring-4"
     [ngClass]="extraClass"
     [class.w-full]="!showTitle"
   >

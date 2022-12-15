@@ -19,14 +19,13 @@ export class FilterDropdownComponent implements OnInit {
   @Input() title: string
 
   choices$ = this.searchFacade.resultsAggregations$.pipe(
-    map(
-      (aggs) =>
-        aggs &&
-        aggs[this.fieldName] &&
-        aggs[this.fieldName].buckets.map((bucket) => ({
-          label: `${bucket.key} (${bucket.doc_count})`,
-          value: bucket.key.toString(),
-        }))
+    filter((aggs) => aggs && aggs[this.fieldName]),
+    map((aggs) => aggs[this.fieldName]),
+    map((agg) =>
+      agg.buckets.map((bucket) => ({
+        label: `${bucket.key} (${bucket.doc_count})`,
+        value: bucket.key.toString(),
+      }))
     ),
     filter((choices) => !!choices),
     take(1),
