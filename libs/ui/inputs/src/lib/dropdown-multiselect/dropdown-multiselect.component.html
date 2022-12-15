@@ -12,18 +12,20 @@
     <div class="text-left truncate font-medium">{{ title }}</div>
     <div
       *ngIf="hasSelectedChoices"
-      class="shrink-0 rounded-full bg-primary text-white font-bold text-[12px] w-5 h-5 flex items-center justify-center mr-1 selected-count"
+      class="shrink-0 rounded-full text-primary bg-primary-opacity-25 text-white font-bold text-[12px] w-5 h-5 flex items-center justify-center mr-1 selected-count"
     >
       {{ selected.length }}
     </div>
   </div>
-  <mat-icon
-    class="shrink-0 opacity-40 mr-1.5 hover:opacity-80 transition-colors clear-btn"
-    *ngIf="hasSelectedChoices && !overlayOpen"
-    (click)="clearSelection($event)"
-  >
-    close
-  </mat-icon>
+  <button class="h-6 w-6">
+    <mat-icon
+      class="shrink-0 opacity-40 mr-1.5 hover:opacity-80 transition-colors clear-btn"
+      *ngIf="hasSelectedChoices && !overlayOpen"
+      (click)="clearSelection($event)"
+    >
+      close
+    </mat-icon>
+  </button>
   <mat-icon class="shrink-0 opacity-40">
     <ng-container *ngIf="overlayOpen">expand_less</ng-container>
     <ng-container *ngIf="!overlayOpen">expand_more</ng-container>
@@ -64,7 +66,7 @@
         class="max-w-full bg-main text-white rounded pr-[7px] pl-2.5 flex gap-2 items-center opacity-70 hover:opacity-100 focus:opacity-100 transition-opacity"
         (click)="select(selected, false)"
       >
-        <div class="text-sm truncate leading-[19px]">{{ selected.label }}</div>
+        <div class="text-sm truncate leading-[26px]">{{ selected.label }}</div>
         <div
           class="flex items-center justify-center rounded-full bg-white text-main h-[13px] w-[13px] pt-px -mt-px shrink-0"
         >
