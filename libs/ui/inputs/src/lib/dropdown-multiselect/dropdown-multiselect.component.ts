@@ -154,4 +154,9 @@ export class DropdownMultiselectComponent {
   toggle(choice: Choice) {
     this.select(choice, !this.isSelected(choice))
   }
+
+  clearSelection(event: Event) {
+    this.selectValues.emit([])
+    event.stopPropagation()
+  }
 }

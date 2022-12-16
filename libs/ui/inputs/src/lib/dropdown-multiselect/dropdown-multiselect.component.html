@@ -8,15 +8,26 @@
   cdkOverlayOrigin
   #overlayOrigin="cdkOverlayOrigin"
 >
-  <div class="grow text-left truncate font-medium mr-2">
-    {{ title }}
+  <div class="grow flex items-center mr-2 gap-2 overflow-hidden">
+    <div class="text-left font-medium truncate py-1">
+      {{ title }}
+    </div>
+    <div
+      *ngIf="hasSelectedChoices"
+      class="shrink-0 rounded-full text-primary bg-primary-opacity-25 text-white font-bold text-[12px] w-5 h-5 flex items-center justify-center mr-1 selected-count"
+    >
+      {{ selected.length }}
+    </div>
   </div>
-  <div
-    *ngIf="hasSelectedChoices"
-    class="shrink-0 rounded-full bg-primary text-white font-bold text-[13px] w-6 h-6 p-[6px] mr-1 selected-count"
-  >
-    {{ selected.length }}
-  </div>
+  <button class="h-6 w-6">
+    <mat-icon
+      class="shrink-0 opacity-40 mr-1.5 hover:opacity-80 transition-colors clear-btn"
+      *ngIf="hasSelectedChoices && !overlayOpen"
+      (click)="clearSelection($event)"
+    >
+      close
+    </mat-icon>
+  </button>
   <mat-icon class="shrink-0 opacity-40">
     <ng-container *ngIf="overlayOpen">expand_less</ng-container>
     <ng-container *ngIf="!overlayOpen">expand_more</ng-container>
@@ -54,21 +65,20 @@
         type="button"
         *ngFor="let selected of selectedChoices"
         [title]="selected.label"
-        class="max-w-full bg-main text-white rounded pr-[7px] pl-[10px] flex flex-row items-center opacity-70 hover:opacity-100 focus:opacity-100 transition-all duration-100"
+        class="max-w-full bg-main text-white rounded pr-[7px] pl-2.5 flex gap-2 items-center opacity-70 hover:opacity-100 focus:opacity-100 transition-opacity"
         (click)="select(selected, false)"
       >
-        <span class="text-sm leading-[26px] truncate">{{
-          selected.label
-        }}</span>
-        <span
-          class="ml-1 px-[2.5px] rounded-full bg-white text-main h-[13px] w-[13px] leading-[13px] shrink-0"
-          >&times;</span
+        <div class="text-sm truncate leading-[26px]">{{ selected.label }}</div>
+        <div
+          class="flex items-center justify-center rounded-full bg-white text-main h-[13px] w-[13px] pt-px -mt-px shrink-0"
         >
+          <mat-icon class="!h-[12px] !w-[12px] text-[12px]"> close </mat-icon>
+        </div>
       </button>
     </div>
     <label
       *ngFor="let choice of choices"
-      class="flex px-5 py-1 w-full text-gray-900 cursor-pointer hover:text-primary-darkest hover:bg-gray-50 focus-within:text-primary-darkest focus-within:bg-gray-50 transition-all duration-100"
+      class="flex px-5 py-1 w-full text-gray-900 cursor-pointer hover:text-primary-darkest hover:bg-gray-50 focus-within:text-primary-darkest focus-within:bg-gray-50 transition-colors"
     >
       <input
         class="w-[18px] h-[18px] align-text-top shrink-0"

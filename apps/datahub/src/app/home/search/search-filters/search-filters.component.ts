@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { map, pluck } from 'rxjs/operators'
 
 @Component({
@@ -13,7 +13,10 @@ export class SearchFiltersComponent {
     pluck('OrgForResource'),
     map((orgState) => orgState && Object.keys(orgState)[0])
   )
-  constructor(public searchFacade: SearchFacade) {}
+  constructor(
+    public searchFacade: SearchFacade,
+    private searchService: SearchService
+  ) {}
 
   isOpen = false
 
@@ -27,5 +30,12 @@ export class SearchFiltersComponent {
 
   toggleSpatialFilter(enabled: boolean) {
     this.searchFacade.setSpatialFilterEnabled(enabled)
+  }
+
+  clearFilters() {
+    this.searchService.updateFilters({
+      OrgForResource: {},
+      format: {},
+    })
   }
 }
