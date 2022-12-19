@@ -6,6 +6,7 @@ import {
 } from '@angular/core'
 import { filter, map, startWith, take } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
+import { AggregationsService } from '../utils/service/aggregations.service'
 import { SearchService } from '../utils/service/search.service'
 
 @Component({
@@ -18,19 +19,7 @@ export class FilterDropdownComponent implements OnInit {
   @Input() fieldName: string
   @Input() title: string
 
-  choices$ = this.searchFacade.resultsAggregations$.pipe(
-    filter((aggs) => aggs && aggs[this.fieldName]),
-    map((aggs) => aggs[this.fieldName]),
-    map((agg) =>
-      agg.buckets.map((bucket) => ({
-        label: `${bucket.key} (${bucket.doc_count})`,
-        value: bucket.key.toString(),
-      }))
-    ),
-    filter((choices) => !!choices),
-    take(1),
-    startWith([])
-  )
+  choices$
   selected$ = this.searchFacade.searchFilters$.pipe(
     map((filters) => Object.keys(filters[this.fieldName] ?? {})),
     filter((selected) => !!selected)
@@ -46,10 +35,24 @@ export class FilterDropdownComponent implements OnInit {
 
   constructor(
     private searchFacade: SearchFacade,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private aggregationsService: AggregationsService
   ) {}
 
   ngOnInit() {
+    this.choices$ = this.aggregationsService
+      .getAggregation(this.fieldName)
+      .pipe(
+        map((agg) =>
+          agg.buckets.map((bucket) => ({
+            label: `${bucket.key} (${bucket.doc_count})`,
+            value: bucket.key.toString(),
+          }))
+        ),
+        filter((choices) => !!choices),
+        take(1),
+        startWith([])
+      )
     this.searchFacade
       .updateConfigAggregations({
         [this.fieldName]: {
