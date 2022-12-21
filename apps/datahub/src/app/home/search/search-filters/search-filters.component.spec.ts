@@ -1,7 +1,11 @@
 import {
   ChangeDetectionStrategy,
+  Component,
   DebugElement,
+  Input,
   NO_ERRORS_SCHEMA,
+  Output,
+  EventEmitter,
 } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
@@ -12,6 +16,17 @@ import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 import { FormsModule } from '@angular/forms'
 
+@Component({
+  selector: 'gn-ui-check-toggle',
+  template: '<div></div>',
+})
+export class MockCheckToggleComponent {
+  @Input() title: string
+  @Input() label: string
+  @Input() value: boolean
+  @Input() color: 'primary' | 'secondary' = 'primary'
+  @Output() toggled = new EventEmitter()
+}
 const state = { OrgForResource: { mel: true } } as SearchFilters
 class SearchFacadeMock {
   searchFilters$ = new BehaviorSubject(state)
@@ -30,7 +45,7 @@ describe('SearchFiltersComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SearchFiltersComponent],
+      declarations: [SearchFiltersComponent, MockCheckToggleComponent],
       imports: [TranslateModule.forRoot(), FormsModule],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
@@ -63,18 +78,17 @@ describe('SearchFiltersComponent', () => {
   })
 
   describe('spatial filter button', () => {
-    function getCheckbox(): HTMLInputElement {
-      return fixture.debugElement.query(
-        By.css('.spatial-filter-toggle input[type=checkbox]')
-      )?.nativeElement
+    function getCheckToggleDebugElement() {
+      return fixture.debugElement.query(By.directive(MockCheckToggleComponent))
     }
+
     describe('when panel is closed', () => {
       beforeEach(() => {
         component.isOpen = false
         fixture.detectChanges()
       })
       it('does not show up', () => {
-        expect(getCheckbox()).toBeFalsy()
+        expect(getCheckToggleDebugElement()).toBeFalsy()
       })
     })
     describe('when panel is opened & a spatial filter is unavailable', () => {
@@ -84,7 +98,7 @@ describe('SearchFiltersComponent', () => {
         fixture.detectChanges()
       })
       it('does not show up', () => {
-        expect(getCheckbox()).toBeFalsy()
+        expect(getCheckToggleDebugElement()).toBeFalsy()
       })
     })
     describe('when panel is opened & a spatial filter is available', () => {
@@ -95,10 +109,12 @@ describe('SearchFiltersComponent', () => {
         fixture.detectChanges()
       })
       it('does show up', () => {
-        expect(getCheckbox()).toBeTruthy()
+        expect(getCheckToggleDebugElement()).toBeTruthy()
       })
       it('has the value set in the state', () => {
-        expect(getCheckbox().checked).toBeTruthy()
+        expect(
+          getCheckToggleDebugElement().componentInstance.value
+        ).toBeTruthy()
       })
     })
     describe('when clicked', () => {
@@ -108,9 +124,9 @@ describe('SearchFiltersComponent', () => {
         fixture.detectChanges()
       })
       it('emits a SetSpatialFilterEnabled action', () => {
-        const checkbox = getCheckbox()
-        checkbox.checked = false
-        checkbox.dispatchEvent(new InputEvent('change'))
+        const checkToggleComponent =
+          getCheckToggleDebugElement().componentInstance
+        checkToggleComponent.toggled.emit(false)
         expect(searchFacade.setSpatialFilterEnabled).toHaveBeenCalledWith(false)
       })
     })
