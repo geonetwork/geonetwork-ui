@@ -12,11 +12,7 @@ import tippy from 'tippy.js'
 
 tippy = jest.fn()
 class AuthServiceMock {
-  authReady = jest.fn(() => this._authSubject)
-  _authSubject = new BehaviorSubject({
-    id: '1234',
-    name: 'fakeuser',
-  })
+  isAnonymous$ = new BehaviorSubject(false)
 }
 
 class FavoritesServiceMock {
@@ -201,7 +197,7 @@ describe('FavoriteStarComponent', () => {
   })
   describe('when not authenticated', () => {
     beforeEach(() => {
-      ;(authService as any)._authSubject.next(null)
+      ;(authService as any).isAnonymous$.next(true)
       fixture.detectChanges()
     })
     it('star toggle is disabled', () => {
