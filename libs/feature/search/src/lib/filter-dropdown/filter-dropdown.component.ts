@@ -41,7 +41,7 @@ export class FilterDropdownComponent implements OnInit {
 
   ngOnInit() {
     this.choices$ = this.aggregationsService
-      .getAggregation(this.fieldName)
+      .getFullSearchTermAggregations(this.fieldName)
       .pipe(
         map((agg) =>
           agg.buckets.map((bucket) => ({

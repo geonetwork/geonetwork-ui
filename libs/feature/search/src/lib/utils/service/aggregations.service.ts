@@ -13,31 +13,26 @@ export class AggregationsService {
     private searchApiService: SearchApiService
   ) {}
 
-  getAggregation(fieldName: string): Observable<any> {
+  getFullSearchTermAggregations(
+    fieldName: string,
+    order: 'asc' | 'desc' = 'asc'
+  ): Observable<any> {
     return this.searchApiService
       .search(
         'bucket',
         JSON.stringify(
-          this.esService.getSearchRequestBody(
-            {
-              agg: {
-                terms: {
-                  size: 1000,
-                  field: fieldName,
-                  order: {
-                    _key: 'asc',
-                  },
-                  exclude: '',
+          this.esService.getSearchRequestBody({
+            agg: {
+              terms: {
+                size: 1000,
+                field: fieldName,
+                order: {
+                  _key: order,
                 },
+                exclude: '',
               },
             },
-            0,
-            0,
-            '',
-            '',
-            {},
-            {}
-          )
+          })
         )
       )
       .pipe(
