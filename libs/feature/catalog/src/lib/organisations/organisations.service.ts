@@ -17,7 +17,7 @@ interface OrganisationApiModel {
 export class OrganisationsService {
   groups$: Observable<GroupApiModel[]> = this.groupsApiService.getGroups()
   organisations$: Observable<OrganisationApiModel[]> = this.aggregationsService
-    .getFullSearchTermAggregations('OrgForResource')
+    .getFullSearchTermAggregation('OrgForResource')
     .pipe(map((response) => response.buckets))
 
   constructor(

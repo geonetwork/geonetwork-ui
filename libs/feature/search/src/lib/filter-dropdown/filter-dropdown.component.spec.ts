@@ -25,9 +25,9 @@ class SearchServiceMock {
   updateFilters = jest.fn()
 }
 
-const mockAggregations$ = new BehaviorSubject<any>({})
+const mockAggregation$ = new BehaviorSubject<any>({})
 class AggregationsServiceMock {
-  getFullSearchTermAggregations = jest.fn(() => mockAggregations$)
+  getFullSearchTermAggregation = jest.fn(() => mockAggregation$)
 }
 
 @Component({
@@ -123,7 +123,7 @@ describe('FilterDropdownComponent', () => {
   describe('available choices', () => {
     describe('when an aggregation is available', () => {
       beforeEach(() => {
-        mockAggregations$.next({
+        mockAggregation$.next({
           buckets: [
             { doc_count: 4, key: 'First Org' },
             { doc_count: 2, key: 'Second Org' },
@@ -143,7 +143,7 @@ describe('FilterDropdownComponent', () => {
     })
     describe('when an aggregation is not available', () => {
       beforeEach(() => {
-        mockAggregations$.next([])
+        mockAggregation$.next([])
         component.ngOnInit()
         fixture.detectChanges()
       })
@@ -153,7 +153,7 @@ describe('FilterDropdownComponent', () => {
     })
     describe('a numerical aggregation is available', () => {
       beforeEach(() => {
-        mockAggregations$.next({
+        mockAggregation$.next({
           buckets: [
             { doc_count: 4, key: 1 },
             { doc_count: 2, key: 2 },

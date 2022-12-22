@@ -13,7 +13,7 @@ export class AggregationsService {
     private searchApiService: SearchApiService
   ) {}
 
-  getFullSearchTermAggregations(
+  getFullSearchTermAggregation(
     fieldName: string,
     order: 'asc' | 'desc' = 'asc'
   ): Observable<any> {

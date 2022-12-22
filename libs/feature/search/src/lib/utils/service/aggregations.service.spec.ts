@@ -47,12 +47,12 @@ describe('AggregationsService', () => {
     expect(service).toBeTruthy()
   })
 
-  describe('#getFullSearchTermAggregations', () => {
-    let aggregations
+  describe('#getFullSearchTermAggregation', () => {
+    let aggregation
     beforeEach(() => {
       service
-        .getFullSearchTermAggregations('OrgForResource')
-        .subscribe((orgs) => (aggregations = orgs))
+        .getFullSearchTermAggregation('OrgForResource')
+        .subscribe((orgs) => (aggregation = orgs))
     })
     it('should call ElasticsearchService getSearchRequestBody', () => {
       expect(esService.getSearchRequestBody).toHaveBeenCalledWith({
@@ -69,7 +69,7 @@ describe('AggregationsService', () => {
       })
     })
     it('should get aggregation', () => {
-      expect(aggregations).toEqual({
+      expect(aggregation).toEqual({
         buckets: [
           { doc_count: 5, key: 'Agence de test' },
           { doc_count: 3, key: 'Association pour le testing' },

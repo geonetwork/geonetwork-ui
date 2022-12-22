@@ -13,9 +13,7 @@ const organisationsAggregationMock = {
 }
 
 const aggregationsServiceMock = {
-  getFullSearchTermAggregations: jest.fn(() =>
-    of(organisationsAggregationMock)
-  ),
+  getFullSearchTermAggregation: jest.fn(() => of(organisationsAggregationMock)),
 }
 
 const groupsApiMock = [
