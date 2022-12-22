@@ -1,25 +1,21 @@
 import { TestBed } from '@angular/core/testing'
-import {
-  GroupsApiService,
-  SearchApiService,
-} from '@geonetwork-ui/data-access/gn4'
+import { GroupsApiService } from '@geonetwork-ui/data-access/gn4'
+import { AggregationsService } from '@geonetwork-ui/feature/search'
 import { of } from 'rxjs'
 
 import { OrganisationsService } from './organisations.service'
 
 const organisationsAggregationMock = {
-  aggregations: {
-    org: {
-      buckets: [
-        { key: 'Agence de test', doc_count: 5 },
-        { key: 'Association pour le testing', doc_count: 3 },
-      ],
-    },
-  },
+  buckets: [
+    { key: 'Agence de test', doc_count: 5 },
+    { key: 'Association pour le testing', doc_count: 3 },
+  ],
 }
 
-const searchApiServiceMock = {
-  search: jest.fn(() => of(organisationsAggregationMock)),
+const aggregationsServiceMock = {
+  getFullSearchTermAggregations: jest.fn(() =>
+    of(organisationsAggregationMock)
+  ),
 }
 
 const groupsApiMock = [
@@ -48,8 +44,8 @@ describe('OrganisationsService', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: SearchApiService,
-          useValue: searchApiServiceMock,
+          provide: AggregationsService,
+          useValue: aggregationsServiceMock,
         },
         {
           provide: GroupsApiService,
