@@ -21,7 +21,7 @@
           "error",
           {
             "type": "element",
-            "prefix": ["datahub", "gn-ui"],
+            "prefix": "datahub",
             "style": "kebab-case"
           }
         ]

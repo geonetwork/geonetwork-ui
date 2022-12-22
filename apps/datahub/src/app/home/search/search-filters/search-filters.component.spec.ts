@@ -17,7 +17,7 @@ import { By } from '@angular/platform-browser'
 import { FormsModule } from '@angular/forms'
 
 @Component({
-  selector: 'gn-ui-check-toggle',
+  selector: 'gn-ui-check-toggle', // eslint-disable-line
   template: '<div></div>',
 })
 export class MockCheckToggleComponent {
