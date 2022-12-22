@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core'
-import {
-  GroupApiModel,
-  GroupsApiService,
-  SearchApiService,
-} from '@geonetwork-ui/data-access/gn4'
+import { GroupApiModel, GroupsApiService } from '@geonetwork-ui/data-access/gn4'
 import { ElasticsearchService, Organisation } from '@geonetwork-ui/util/shared'
+import { AggregationsService } from '@geonetwork-ui/feature/search'
 import { combineLatest, Observable } from 'rxjs'
-import { filter, map } from 'rxjs/operators'
+import { map } from 'rxjs/operators'
 
 const IMAGE_URL = '/geonetwork/images/harvesting/'
 
@@ -19,41 +16,14 @@ interface OrganisationApiModel {
 })
 export class OrganisationsService {
   groups$: Observable<GroupApiModel[]> = this.groupsApiService.getGroups()
-  organisations$: Observable<OrganisationApiModel[]> = this.searchApiService
-    .search(
-      'bucket',
-      JSON.stringify(
-        this.esService.getSearchRequestBody(
-          {
-            org: {
-              terms: {
-                size: 1000,
-                field: 'OrgForResource',
-                order: {
-                  _key: 'asc',
-                },
-                exclude: '',
-              },
-            },
-          },
-          0,
-          0,
-          '',
-          '',
-          {},
-          {}
-        )
-      )
-    )
-    .pipe(
-      filter((response) => response.aggregations.org),
-      map((response) => response.aggregations.org.buckets)
-    )
+  organisations$: Observable<OrganisationApiModel[]> = this.aggregationsService
+    .getFullSearchTermAggregations('OrgForResource')
+    .pipe(map((response) => response.buckets))
 
   constructor(
     private esService: ElasticsearchService,
-    private searchApiService: SearchApiService,
-    private groupsApiService: GroupsApiService
+    private groupsApiService: GroupsApiService,
+    private aggregationsService: AggregationsService
   ) {}
 
   countOrganisations(): Observable<number> {
