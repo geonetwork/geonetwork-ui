@@ -19,6 +19,7 @@ export const LOGIN_URL = new InjectionToken<string>('loginUrl')
 export class AuthService {
   authReady$: Observable<UserModel>
   user$: Observable<UserModel>
+  isAnonymous$ = this.authReady().pipe(map((user) => !user || !('id' in user)))
 
   baseLoginUrl = this.baseLoginUrlToken || DEFAULT_GN4_LOGIN_URL
   get loginUrl() {

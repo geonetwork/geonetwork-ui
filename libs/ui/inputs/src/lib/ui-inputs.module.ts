@@ -34,6 +34,7 @@ import {
   FormFieldSpatialExtentComponent,
   FormFieldTemporalExtentComponent,
 } from './form-field'
+import { CheckToggleComponent } from './check-toggle/check-toggle.component'
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import {
     FormFieldFileComponent,
     FormFieldSpatialExtentComponent,
     FormFieldTemporalExtentComponent,
+    CheckToggleComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,6 +90,7 @@ import {
     DropdownMultiselectComponent,
     ViewportIntersectorComponent,
     FormFieldComponent,
+    CheckToggleComponent,
   ],
 })
 export class UiInputsModule {}

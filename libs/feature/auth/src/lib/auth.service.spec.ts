@@ -4,6 +4,21 @@ import { TestBed } from '@angular/core/testing'
 import { MeApiService } from '@geonetwork-ui/data-access/gn4'
 import { TranslateService } from '@ngx-translate/core'
 
+const userMock = {
+  id: '21737',
+  profile: 'Administrator',
+  username: 'C2C-gravin',
+  name: 'Florent',
+  surname: 'Gravin',
+  email: 'florent.gravin@camptocamp.com',
+  hash: '79efeb7b1f8faa9609b73d9bc89b6417',
+  organisation: null,
+  admin: true,
+  groupsWithRegisteredUser: [],
+  groupsWithEditor: [],
+  groupsWithReviewer: [],
+  groupsWithUserAdmin: [],
+}
 let loginUrlTokenMock
 const translateServiceMock = {
   currentLang: 'fr',
@@ -48,13 +63,31 @@ describe('AuthService', () => {
     expect(service).toBeTruthy()
   })
 
-  describe('#authReady', () => {
-    it('emits a value on subscribe after auth was queried', () => {
+  describe('authentication', () => {
+    beforeEach(() => {
       service = TestBed.inject(AuthService)
-      let emitted = false
-      service.authReady().subscribe(() => (emitted = true))
-      me$.next()
-      expect(emitted).toBeTruthy()
+    })
+    describe('#authReady', () => {
+      it('emits a value on subscribe after auth was queried', () => {
+        let emitted = false
+        service.authReady().subscribe(() => (emitted = true))
+        me$.next()
+        expect(emitted).toBeTruthy()
+      })
+    })
+    describe('#isAnonymous', () => {
+      it('returns true for anonymous user', () => {
+        let isAnonymous = false
+        service.isAnonymous$.subscribe((anonymous) => (isAnonymous = anonymous))
+        me$.next(null)
+        expect(isAnonymous).toBeTruthy()
+      })
+      it('returns false for authenticated user', () => {
+        let isAnonymous = true
+        service.isAnonymous$.subscribe((anonymous) => (isAnonymous = anonymous))
+        me$.next(userMock)
+        expect(isAnonymous).toBeFalsy()
+      })
     })
   })
   describe('login URL (default)', () => {
@@ -101,23 +134,7 @@ describe('AuthService', () => {
   })
   describe('#mapToUserModel', () => {
     it('maps to UserModel', () => {
-      expect(
-        service['mapToUserModel']({
-          id: '21737',
-          profile: 'Administrator',
-          username: 'C2C-gravin',
-          name: 'Florent',
-          surname: 'Gravin',
-          email: 'florent.gravin@camptocamp.com',
-          hash: '79efeb7b1f8faa9609b73d9bc89b6417',
-          organisation: null,
-          admin: true,
-          groupsWithRegisteredUser: [],
-          groupsWithEditor: [],
-          groupsWithReviewer: [],
-          groupsWithUserAdmin: [],
-        })
-      ).toEqual({
+      expect(service['mapToUserModel'](userMock)).toEqual({
         id: '21737',
         profile: 'Administrator',
         username: 'C2C-gravin',

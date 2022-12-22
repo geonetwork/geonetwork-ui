@@ -35,9 +35,7 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   isFavorite$ = this.favoritesService.myFavoritesUuid$.pipe(
     map((favorites) => favorites.indexOf(this.record.uuid) > -1)
   )
-  isAnonymous$ = this.authService
-    .authReady()
-    .pipe(map((user) => !user || !('id' in user)))
+  isAnonymous$ = this.authService.isAnonymous$
   record_: MetadataRecord
   favoriteCount: number | null
   loading = false
