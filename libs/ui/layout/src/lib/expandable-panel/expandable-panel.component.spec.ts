@@ -47,7 +47,7 @@ describe('ExpandablePanelComponent', () => {
       })
       it('hides content', () => {
         const el = fixture.debugElement.query(By.css('.content'))
-        expect(el).toBeFalsy()
+        expect(el.classes['max-h-0']).toBeTruthy()
       })
     })
     describe('when not collapsed', () => {
@@ -57,7 +57,7 @@ describe('ExpandablePanelComponent', () => {
       })
       it('shows content', () => {
         const el = fixture.debugElement.query(By.css('.content'))
-        expect(el).toBeTruthy()
+        expect(el.classes['max-h-[300px]']).toBeTruthy()
       })
     })
   })
