@@ -12,6 +12,9 @@
     <mat-icon *ngIf="!collapsed">remove</mat-icon>
   </div>
 </div>
-<div *ngIf="!collapsed" class="content">
+<div
+  class="content duration-500 overflow-hidden transition-[max-height]"
+  [ngClass]="collapsed ? 'max-h-0 ease-out' : 'ease-in max-h-[300px]'"
+>
   <ng-content></ng-content>
 </div>
