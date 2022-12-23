@@ -53,18 +53,5 @@ export class FilterDropdownComponent implements OnInit {
         take(1),
         startWith([])
       )
-    this.searchFacade
-      .updateConfigAggregations({
-        [this.fieldName]: {
-          terms: {
-            field: this.fieldName,
-            size: 100,
-            order: {
-              _key: 'asc',
-            },
-          },
-        },
-      })
-      .requestMoreResults()
   }
 }

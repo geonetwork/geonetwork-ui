@@ -92,23 +92,6 @@ describe('FilterDropdownComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('at initialization', () => {
-    it('adds an aggregation in the search config', () => {
-      expect(facade.updateConfigAggregations).toHaveBeenCalledWith({
-        Org: {
-          terms: {
-            field: 'Org',
-            size: 100,
-            order: {
-              _key: 'asc',
-            },
-          },
-        },
-      })
-      expect(facade.requestMoreResults).toHaveBeenCalledTimes(1)
-    })
-  })
-
   describe('when selected values change', () => {
     beforeEach(() => {
       dropdown.selectValues.emit(['org1', 'org2', 34])
