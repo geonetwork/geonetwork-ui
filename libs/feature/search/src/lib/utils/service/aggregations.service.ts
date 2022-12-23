@@ -22,7 +22,7 @@ export class AggregationsService {
         'bucket',
         JSON.stringify(
           this.esService.getSearchRequestBody({
-            agg: {
+            [fieldName]: {
               terms: {
                 size: 1000,
                 field: fieldName,
@@ -36,8 +36,8 @@ export class AggregationsService {
         )
       )
       .pipe(
-        filter((response) => response.aggregations.agg),
-        map((response) => response.aggregations.agg)
+        filter((response) => response.aggregations[fieldName]),
+        map((response) => response.aggregations[fieldName])
       )
   }
 }

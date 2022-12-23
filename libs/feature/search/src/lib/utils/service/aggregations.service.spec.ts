@@ -7,7 +7,7 @@ import { AggregationsService } from './aggregations.service'
 
 const organisationsAggregationMock = {
   aggregations: {
-    agg: {
+    OrgForResource: {
       buckets: [
         { key: 'Agence de test', doc_count: 5 },
         { key: 'Association pour le testing', doc_count: 3 },
@@ -56,7 +56,7 @@ describe('AggregationsService', () => {
     })
     it('should call ElasticsearchService getSearchRequestBody', () => {
       expect(esService.getSearchRequestBody).toHaveBeenCalledWith({
-        agg: {
+        OrgForResource: {
           terms: {
             size: 1000,
             field: 'OrgForResource',
