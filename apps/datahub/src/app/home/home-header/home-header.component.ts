@@ -9,10 +9,7 @@ import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { MetadataRecord, SortByEnum } from '@geonetwork-ui/util/shared'
 import { map } from 'rxjs/operators'
-import {
-  ROUTER_ROUTE_NEWS,
-  ROUTER_ROUTE_ORGANISATIONS,
-} from '../../router/constants'
+import { ROUTER_ROUTE_NEWS } from '../../router/constants'
 
 marker('datahub.header.myfavorites')
 marker('datahub.header.lastRecords')
@@ -31,9 +28,7 @@ export class HomeHeaderComponent {
     getThemeConfig().HEADER_BACKGROUND ||
     `center /cover url('assets/img/header_bg.webp')`
 
-  ROUTE_NEWS = `${ROUTER_ROUTE_NEWS}`
   ROUTE_SEARCH = `${ROUTER_ROUTE_SEARCH}`
-  ROUTE_ORGANISATIONS = `${ROUTER_ROUTE_ORGANISATIONS}`
   SORT_BY_PARAMS = SortByEnum
 
   constructor(
@@ -42,6 +37,10 @@ export class HomeHeaderComponent {
     private searchService: SearchService,
     private authService: AuthService
   ) {}
+
+  displaySortBadges$ = this.routerFacade.currentRoute$.pipe(
+    map((route) => route.url[0].path === ROUTER_ROUTE_NEWS)
+  )
 
   isAuthenticated$ = this.authService
     .authReady()
