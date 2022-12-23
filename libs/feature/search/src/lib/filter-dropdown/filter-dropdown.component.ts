@@ -52,7 +52,6 @@ export class FilterDropdownComponent implements OnInit {
           }))
         ),
         filter((choices) => !!choices),
-        take(1),
         startWith([])
       )
   }
