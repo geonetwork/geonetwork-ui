@@ -1,11 +1,13 @@
 <div
-  class="flex align-middle title border-b border-gray-100 cursor-pointer pt-2.5"
+  class="group flex align-middle title border-b border-gray-100 cursor-pointer pt-2.5"
   (click)="toggle()"
 >
   <div class="grow font-medium text-black text-sm">
     {{ title }}
   </div>
-  <div class="w-8 opacity-25 text-primary icon">
+  <div
+    class="w-8 opacity-25 text-primary group-hover:opacity-100 transition-opacity"
+  >
     <mat-icon *ngIf="collapsed">add</mat-icon>
     <mat-icon *ngIf="!collapsed">remove</mat-icon>
   </div>
