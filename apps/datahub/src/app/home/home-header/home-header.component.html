@@ -25,7 +25,7 @@
           [toggled]="searchFacade.favoritesOnly$ | async"
           (action)="listFavorites($event)"
         ></datahub-header-badge-button>
-        <div>
+        <div *ngIf="displaySortBadges$ | async">
           <button
             type="button"
             class="badge-btn bg-primary-opacity-25 hover-bg-primary-opacity-60"
@@ -34,7 +34,7 @@
             <span translate="">datahub.header.lastRecords</span>
           </button>
         </div>
-        <div>
+        <div *ngIf="displaySortBadges$ | async">
           <button
             type="button"
             class="badge-btn bg-primary-opacity-25 hover-bg-primary-opacity-60"

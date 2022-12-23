@@ -2,12 +2,16 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { AuthService } from '@geonetwork-ui/feature/auth'
-import { RouterFacade } from '@geonetwork-ui/feature/router'
+import {
+  RouterFacade,
+  ROUTER_ROUTE_SEARCH,
+} from '@geonetwork-ui/feature/router'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { SortByEnum } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { readFirst } from '@nrwl/angular/testing'
 import { BehaviorSubject } from 'rxjs'
+import { ROUTER_ROUTE_NEWS } from '../../router/constants'
 import { HeaderBadgeButtonComponent } from '../header-badge-button/header-badge-button.component'
 import { HomeHeaderComponent } from './home-header.component'
 import resetAllMocks = jest.resetAllMocks
@@ -21,6 +25,7 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
 const routerFacadeMock = {
   goToMetadata: jest.fn(),
   anySearch$: new BehaviorSubject('scot'),
+  currentRoute$: new BehaviorSubject({}),
 }
 
 const searchFacadeMock = {
@@ -119,32 +124,55 @@ describe('HeaderComponent', () => {
     })
   })
   describe('sort badges', () => {
-    describe('enable sort on CREATE_DATE', () => {
+    describe('navigate to search route', () => {
       beforeEach(() => {
-        const latestBadge = fixture.debugElement.queryAll(
-          By.css('.badge-btn')
-        )[0]
-        latestBadge.nativeElement.click()
+        routerFacadeMock.currentRoute$.next({
+          url: [{ path: ROUTER_ROUTE_SEARCH }],
+        })
       })
-      it('resets filters and sort', () => {
-        expect(searchServiceMock.setSortAndFilters).toHaveBeenCalledWith(
-          {},
-          SortByEnum.CREATE_DATE
-        )
+      it('does not display sort badges on search route', async () => {
+        const displaySortBadges = await readFirst(component.displaySortBadges$)
+        expect(displaySortBadges).toEqual(false)
       })
     })
-    describe('enable sort on USER_SAVED_COUNT', () => {
+    describe('navigate to news route', () => {
       beforeEach(() => {
-        const mostPopularBadge = fixture.debugElement.queryAll(
-          By.css('.badge-btn')
-        )[1]
-        mostPopularBadge.nativeElement.click()
+        routerFacadeMock.currentRoute$.next({
+          url: [{ path: ROUTER_ROUTE_NEWS }],
+        })
       })
-      it('resets filters and sort', () => {
-        expect(searchServiceMock.setSortAndFilters).toHaveBeenCalledWith(
-          {},
-          SortByEnum.POPULARITY
-        )
+      it('displays sort badges on news route', async () => {
+        const displaySortBadges = await readFirst(component.displaySortBadges$)
+        expect(displaySortBadges).toEqual(true)
+      })
+
+      describe('enable sort on CREATE_DATE', () => {
+        beforeEach(() => {
+          const latestBadge = fixture.debugElement.queryAll(
+            By.css('.badge-btn')
+          )[0]
+          latestBadge.nativeElement.click()
+        })
+        it('resets filters and sort', () => {
+          expect(searchServiceMock.setSortAndFilters).toHaveBeenCalledWith(
+            {},
+            SortByEnum.CREATE_DATE
+          )
+        })
+      })
+      describe('enable sort on USER_SAVED_COUNT', () => {
+        beforeEach(() => {
+          const mostPopularBadge = fixture.debugElement.queryAll(
+            By.css('.badge-btn')
+          )[1]
+          mostPopularBadge.nativeElement.click()
+        })
+        it('resets filters and sort', () => {
+          expect(searchServiceMock.setSortAndFilters).toHaveBeenCalledWith(
+            {},
+            SortByEnum.POPULARITY
+          )
+        })
       })
     })
   })
