@@ -3,7 +3,7 @@ import { GroupApiModel, GroupsApiService } from '@geonetwork-ui/data-access/gn4'
 import { ElasticsearchService, Organisation } from '@geonetwork-ui/util/shared'
 import { AggregationsService } from '@geonetwork-ui/feature/search'
 import { combineLatest, Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, shareReplay } from 'rxjs/operators'
 
 const IMAGE_URL = '/geonetwork/images/harvesting/'
 
@@ -18,7 +18,10 @@ export class OrganisationsService {
   groups$: Observable<GroupApiModel[]> = this.groupsApiService.getGroups()
   organisations$: Observable<OrganisationApiModel[]> = this.aggregationsService
     .getFullSearchTermAggregation('OrgForResource')
-    .pipe(map((response) => response.buckets))
+    .pipe(
+      map((response) => response.buckets),
+      shareReplay()
+    )
 
   constructor(
     private esService: ElasticsearchService,
