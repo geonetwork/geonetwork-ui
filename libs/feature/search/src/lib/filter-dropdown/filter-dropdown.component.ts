@@ -4,6 +4,8 @@ import {
   Input,
   OnInit,
 } from '@angular/core'
+import { Choice } from '@geonetwork-ui/ui/inputs'
+import { Observable } from 'rxjs'
 import { filter, map, startWith, take } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { AggregationsService } from '../utils/service/aggregations.service'
@@ -19,7 +21,7 @@ export class FilterDropdownComponent implements OnInit {
   @Input() fieldName: string
   @Input() title: string
 
-  choices$
+  choices$: Observable<Choice[]>
   selected$ = this.searchFacade.searchFilters$.pipe(
     map((filters) => Object.keys(filters[this.fieldName] ?? {})),
     filter((selected) => !!selected)

@@ -16,11 +16,7 @@ import {
   ScrollStrategyOptions,
 } from '@angular/cdk/overlay'
 import { take } from 'rxjs/operators'
-
-interface Choice {
-  value: unknown
-  label: string
-}
+import { Choice } from './dropdown-multiselect.model'
 
 @Component({
   selector: 'gn-ui-dropdown-multiselect',
