@@ -6,7 +6,7 @@ import {
 } from '@angular/core'
 import { Choice } from '@geonetwork-ui/ui/inputs'
 import { Observable } from 'rxjs'
-import { filter, map, startWith, take } from 'rxjs/operators'
+import { filter, map, startWith } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { AggregationsService } from '../utils/service/aggregations.service'
 import { SearchService } from '../utils/service/search.service'
