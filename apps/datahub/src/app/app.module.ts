@@ -185,7 +185,7 @@ export class AppModule {
     ThemeService.generateBgOpacityClasses(
       'primary',
       getThemeConfig().PRIMARY_COLOR,
-      [10, 25, 60]
+      [10, 25, 75]
     )
 
     router.events

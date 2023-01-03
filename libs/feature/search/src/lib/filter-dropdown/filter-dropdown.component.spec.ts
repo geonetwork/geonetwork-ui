@@ -10,6 +10,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { BehaviorSubject } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
+import { AggregationsService } from '../utils/service/aggregations.service'
 import { SearchService } from '../utils/service/search.service'
 import { FilterDropdownComponent } from './filter-dropdown.component'
 
@@ -18,11 +19,15 @@ let facade: SearchFacadeMock
 class SearchFacadeMock {
   updateConfigAggregations = jest.fn(() => facade)
   requestMoreResults = jest.fn()
-  resultsAggregations$ = new BehaviorSubject<any>({})
   searchFilters$ = new BehaviorSubject<any>({})
 }
 class SearchServiceMock {
   updateFilters = jest.fn()
+}
+
+const mockAggregation$ = new BehaviorSubject<any>({})
+class AggregationsServiceMock {
+  getFullSearchTermAggregation = jest.fn(() => mockAggregation$)
 }
 
 @Component({
@@ -59,6 +64,10 @@ describe('FilterDropdownComponent', () => {
           provide: SearchService,
           useClass: SearchServiceMock,
         },
+        {
+          provide: AggregationsService,
+          useClass: AggregationsServiceMock,
+        },
       ],
     })
       .overrideComponent(FilterDropdownComponent, {
@@ -83,23 +92,6 @@ describe('FilterDropdownComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('at initialization', () => {
-    it('adds an aggregation in the search config', () => {
-      expect(facade.updateConfigAggregations).toHaveBeenCalledWith({
-        Org: {
-          terms: {
-            field: 'Org',
-            size: 100,
-            order: {
-              _key: 'asc',
-            },
-          },
-        },
-      })
-      expect(facade.requestMoreResults).toHaveBeenCalledTimes(1)
-    })
-  })
-
   describe('when selected values change', () => {
     beforeEach(() => {
       dropdown.selectValues.emit(['org1', 'org2', 34])
@@ -114,15 +106,14 @@ describe('FilterDropdownComponent', () => {
   describe('available choices', () => {
     describe('when an aggregation is available', () => {
       beforeEach(() => {
-        ;(facade as any).resultsAggregations$.next({
-          Org: {
-            buckets: [
-              { doc_count: 4, key: 'First Org' },
-              { doc_count: 2, key: 'Second Org' },
-              { doc_count: 1, key: 'Third Org' },
-            ],
-          },
+        mockAggregation$.next({
+          buckets: [
+            { doc_count: 4, key: 'First Org' },
+            { doc_count: 2, key: 'Second Org' },
+            { doc_count: 1, key: 'Third Org' },
+          ],
         })
+        component.ngOnInit()
         fixture.detectChanges()
       })
       it('reads choices from the search response', () => {
@@ -135,7 +126,8 @@ describe('FilterDropdownComponent', () => {
     })
     describe('when an aggregation is not available', () => {
       beforeEach(() => {
-        ;(facade as any).resultsAggregations$.next({ anotherAgg: [] })
+        mockAggregation$.next([])
+        component.ngOnInit()
         fixture.detectChanges()
       })
       it('uses an empty array', () => {
@@ -144,15 +136,14 @@ describe('FilterDropdownComponent', () => {
     })
     describe('a numerical aggregation is available', () => {
       beforeEach(() => {
-        ;(facade as any).resultsAggregations$.next({
-          Org: {
-            buckets: [
-              { doc_count: 4, key: 1 },
-              { doc_count: 2, key: 2 },
-              { doc_count: 1, key: 3 },
-            ],
-          },
+        mockAggregation$.next({
+          buckets: [
+            { doc_count: 4, key: 1 },
+            { doc_count: 2, key: 2 },
+            { doc_count: 1, key: 3 },
+          ],
         })
+        component.ngOnInit()
         fixture.detectChanges()
       })
       it('converts values to string', () => {

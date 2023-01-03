@@ -4,8 +4,11 @@ import {
   Input,
   OnInit,
 } from '@angular/core'
-import { filter, map, startWith, take } from 'rxjs/operators'
+import { Choice } from '@geonetwork-ui/ui/inputs'
+import { Observable } from 'rxjs'
+import { filter, map, startWith } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
+import { AggregationsService } from '../utils/service/aggregations.service'
 import { SearchService } from '../utils/service/search.service'
 
 @Component({
@@ -18,19 +21,7 @@ export class FilterDropdownComponent implements OnInit {
   @Input() fieldName: string
   @Input() title: string
 
-  choices$ = this.searchFacade.resultsAggregations$.pipe(
-    filter((aggs) => aggs && aggs[this.fieldName]),
-    map((aggs) => aggs[this.fieldName]),
-    map((agg) =>
-      agg.buckets.map((bucket) => ({
-        label: `${bucket.key} (${bucket.doc_count})`,
-        value: bucket.key.toString(),
-      }))
-    ),
-    filter((choices) => !!choices),
-    take(1),
-    startWith([])
-  )
+  choices$: Observable<Choice[]>
   selected$ = this.searchFacade.searchFilters$.pipe(
     map((filters) => Object.keys(filters[this.fieldName] ?? {})),
     filter((selected) => !!selected)
@@ -46,22 +37,22 @@ export class FilterDropdownComponent implements OnInit {
 
   constructor(
     private searchFacade: SearchFacade,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private aggregationsService: AggregationsService
   ) {}
 
   ngOnInit() {
-    this.searchFacade
-      .updateConfigAggregations({
-        [this.fieldName]: {
-          terms: {
-            field: this.fieldName,
-            size: 100,
-            order: {
-              _key: 'asc',
-            },
-          },
-        },
-      })
-      .requestMoreResults()
+    this.choices$ = this.aggregationsService
+      .getFullSearchTermAggregation(this.fieldName)
+      .pipe(
+        map((agg) =>
+          agg.buckets.map((bucket) => ({
+            label: `${bucket.key} (${bucket.doc_count})`,
+            value: bucket.key.toString(),
+          }))
+        ),
+        filter((choices) => !!choices),
+        startWith([])
+      )
   }
 }
