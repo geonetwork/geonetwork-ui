@@ -8,8 +8,6 @@ import { MapContextComponent } from './map-context.component'
 import { MAP_CONFIG_FIXTURE } from '@geonetwork-ui/util/app-config'
 import { HttpClientModule } from '@angular/common/http'
 import { MapUtilsService } from '../../utils'
-import Collection from 'ol/Collection'
-import { Interaction } from 'ol/interaction'
 
 class MapContextServiceMock {
   resetMapFromContext = jest.fn()
@@ -33,12 +31,8 @@ class OpenLayersMapMock {
   getSize() {
     return this._size
   }
-  getInteractions() {
-    return new InteractionsMock()
-  }
 }
 
-class InteractionsMock implements Collection<Interaction> {}
 class MapManagerMock {
   map = new OpenLayersMapMock()
 }
@@ -47,7 +41,6 @@ describe('MapContextComponent', () => {
   let component: MapContextComponent
   let fixture: ComponentFixture<MapContextComponent>
   let mapContextService
-  let mapUtilsService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -70,7 +63,6 @@ describe('MapContextComponent', () => {
       ],
     }).compileComponents()
     mapContextService = TestBed.inject(MapContextService)
-    mapUtilsService = TestBed.inject(MapUtilsService)
   })
 
   beforeEach(() => {
@@ -96,17 +88,6 @@ describe('MapContextComponent', () => {
         MAP_CTX_FIXTURE,
         MAP_CONFIG_FIXTURE
       )
-    })
-    describe('prioritizePageScroll input', () => {
-      it('does not prioritze page scroll by default', () => {
-        expect(mapUtilsService.prioritizePageScroll).not.toHaveBeenCalled()
-      })
-      it('prioritzes page scroll if input set to true', () => {
-        component.prioritizePageScroll = true
-        expect(mapUtilsService.prioritizePageScroll).toHaveBeenCalledWith(
-          expect.any(InteractionsMock)
-        )
-      })
     })
   })
 
