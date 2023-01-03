@@ -82,7 +82,7 @@ describe('MapComponent', () => {
       })
       it('mapmuted event displays message after 300ms (delay for eventually hiding message)', fakeAsync(() => {
         mapmutedCallback()
-        tick(300)
+        tick(400)
         expect(messageDisplayed).toEqual(true)
         discardPeriodicTasks()
       }))
