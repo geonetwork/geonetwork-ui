@@ -10,6 +10,7 @@ import {
   MapContextLayerModel,
   MapContextLayerTypeEnum,
   MapContextModel,
+  MapManagerService,
   MapStyleService,
   MapUtilsService,
 } from '@geonetwork-ui/feature/map'
@@ -122,6 +123,7 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
 
   constructor(
     private mdViewFacade: MdViewFacade,
+    private mapManager: MapManagerService,
     private mapUtils: MapUtilsService,
     private dataService: DataService,
     private proxy: ProxyService,
@@ -135,6 +137,7 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.mapUtils.prioritizePageScroll(this.mapManager.map.getInteractions())
     this.selectionStyle = this.styleService.styles.defaultHL
     this.featureInfo.handleFeatureInfo()
     this.subscription.add(
