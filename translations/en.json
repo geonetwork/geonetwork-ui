@@ -125,7 +125,7 @@
   "nav.back": "Back",
   "new record": "New record",
   "next": "next",
-  "organisation.sort.intro": "The organisations are the providers of metadata records and their corresponding data. They may be owners of metadata catalogs harvested by this instance or owners of (meta-)data referenced by another catalog.",
+  "organisation.sort.intro": "Organisations are data providers. They can be owners, suppliers, or a simple point of contact for the data offered.",
   "organisation.sort.sortBy": "Sort by:",
   "organisations.sortBy.nameAsc": "Name A → Z",
   "organisations.sortBy.nameDesc": "Name Z → A",
