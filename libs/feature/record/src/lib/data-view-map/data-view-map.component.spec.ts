@@ -38,6 +38,8 @@ import { delay } from 'rxjs/operators'
 import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util/shared'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
 import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared/fixtures'
+import { Collection } from 'ol'
+import { Interaction } from 'ol/interaction'
 
 const mapConfigMock = {
   MAX_ZOOM: 10,
@@ -83,6 +85,7 @@ class MapUtilsServiceMock {
       observer.next(null)
     })
   })
+  prioritizePageScroll = jest.fn()
   _returnImmediately = true
   _observer = null
 }
@@ -118,7 +121,30 @@ const mapStyleServiceMock = {
     defaultHL: DEFAULT_STYLE_HL_FIXTURE,
   },
 }
-const mapManagerMock = {}
+
+class OpenLayersMapMock {
+  _size = undefined
+  once(type, callback) {
+    if (type === 'change:size') {
+      resizeCallBack = callback
+    }
+  }
+  updateSize() {
+    this._size = [100, 100]
+  }
+  getSize() {
+    return this._size
+  }
+  getInteractions() {
+    return new InteractionsMock()
+  }
+}
+
+class InteractionsMock implements Collection<Interaction> {}
+
+class mapManagerMock {
+  map = new OpenLayersMapMock()
+}
 
 const featureInfoServiceMock = {
   handleFeatureInfo: jest.fn(),
@@ -202,7 +228,7 @@ describe('DataViewMapComponent', () => {
         },
         {
           provide: MapManagerService,
-          useValue: mapManagerMock,
+          useClass: mapManagerMock,
         },
         {
           provide: FeatureInfoService,
@@ -721,6 +747,18 @@ describe('DataViewMapComponent', () => {
           ])
         })
       })
+    })
+  })
+
+  describe('prioritizePageScroll', () => {
+    let mapUtilsService
+    beforeEach(inject([MapUtilsService], (mapUtils) => {
+      mapUtilsService = mapUtils
+    }))
+    it('calls prioritzePageScroll with interactions', () => {
+      expect(mapUtilsService.prioritizePageScroll).toHaveBeenCalledWith(
+        expect.any(InteractionsMock)
+      )
     })
   })
 

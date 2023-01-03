@@ -177,7 +177,14 @@ export class MapUtilsService {
   prioritizePageScroll(interactions: Collection<Interaction>) {
     interactions.clear()
     interactions.extend(
-      defaults({ dragPan: false, mouseWheelZoom: false })
+      defaults({
+        // remove rotate interactions
+        altShiftDragRotate: false,
+        pinchRotate: false,
+        // replace drag and zoom interactions
+        dragPan: false,
+        mouseWheelZoom: false,
+      })
         .extend([
           new DragPan({
             condition: dragPanCondition,

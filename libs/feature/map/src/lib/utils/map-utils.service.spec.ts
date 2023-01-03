@@ -18,7 +18,13 @@ import {
   mouseWheelZoomCondition,
 } from './map-utils.service'
 import { readFirst } from '@nrwl/angular/testing'
-import { defaults, DragPan, MouseWheelZoom } from 'ol/interaction'
+import {
+  defaults,
+  DragPan,
+  DragRotate,
+  MouseWheelZoom,
+  PinchRotate,
+} from 'ol/interaction'
 
 const wmsUtilsMock = {
   getLayerLonLatBBox: jest.fn(() => of([1.33, 48.81, 4.3, 51.1])),
@@ -220,6 +226,8 @@ describe('MapUtilsService', () => {
   })
   describe('prioritizePageScroll', () => {
     const interactions = defaults()
+    let dragRotate
+    let pinchRotate
     beforeEach(() => {
       service.prioritizePageScroll(interactions)
     })
@@ -234,6 +242,24 @@ describe('MapUtilsService', () => {
         .getArray()
         .find((interaction) => interaction instanceof MouseWheelZoom)
       expect(mouseWheelZoom.condition_).toEqual(mouseWheelZoomCondition)
+    })
+    describe('interactions', () => {
+      beforeEach(() => {
+        interactions.forEach((interaction) => {
+          if (interaction instanceof DragRotate) {
+            dragRotate = interaction
+          }
+          if (interaction instanceof PinchRotate) {
+            pinchRotate = interaction
+          }
+        })
+      })
+      it('with no DragRotate interaction', () => {
+        expect(dragRotate).toBeFalsy()
+      })
+      it('with no PinchRotate interaction', () => {
+        expect(pinchRotate).toBeFalsy()
+      })
     })
   })
 })
