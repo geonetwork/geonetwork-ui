@@ -107,6 +107,11 @@ describe('ElasticsearchService', () => {
               },
             },
           ],
+          must_not: {
+            terms: {
+              resourceType: ['service', 'featureCatalog'],
+            },
+          },
         },
       })
     })
@@ -156,6 +161,11 @@ describe('ElasticsearchService', () => {
               },
             },
           ],
+          must_not: {
+            terms: {
+              resourceType: ['service', 'featureCatalog'],
+            },
+          },
         },
       })
     })
@@ -241,6 +251,11 @@ describe('ElasticsearchService', () => {
                 },
               },
             ],
+            must_not: {
+              terms: {
+                resourceType: ['service', 'featureCatalog'],
+              },
+            },
             should: [
               {
                 geo_shape: {
@@ -337,6 +352,11 @@ describe('ElasticsearchService', () => {
                   },
                 },
               ],
+              must_not: {
+                terms: {
+                  resourceType: ['service', 'featureCatalog'],
+                },
+              },
             },
           },
           from: 0,
@@ -419,10 +439,10 @@ describe('ElasticsearchService', () => {
     })
   })
 
-  describe('#addTemplateClause', () => {
+  describe('#queryFilterOnValues', () => {
     let payload
     it('when array of templates', () => {
-      payload = service.addTemplateClause(['n', 's'])
+      payload = service.queryFilterOnValues('isTemplate', ['n', 's'])
       expect(payload).toEqual({
         terms: {
           isTemplate: ['n', 's'],
@@ -430,7 +450,7 @@ describe('ElasticsearchService', () => {
       })
     })
     it('when single template', () => {
-      payload = service.addTemplateClause('n')
+      payload = service.queryFilterOnValues('isTemplate', 'n')
       expect(payload).toEqual({
         terms: {
           isTemplate: ['n'],
@@ -438,11 +458,11 @@ describe('ElasticsearchService', () => {
       })
     })
     it('when undefined', () => {
-      payload = service.addTemplateClause(undefined)
+      payload = service.queryFilterOnValues('isTemplate', undefined)
       expect(payload).toEqual({})
     })
     it('when empty array', () => {
-      payload = service.addTemplateClause([])
+      payload = service.queryFilterOnValues('isTemplate', [])
       expect(payload).toEqual({})
     })
   })

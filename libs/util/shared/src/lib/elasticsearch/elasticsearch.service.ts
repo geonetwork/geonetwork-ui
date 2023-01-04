@@ -1,14 +1,13 @@
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core'
-import { ES_QUERY_STRING_FIELDS, ES_SOURCE_SUMMARY } from './constant'
+import { Geometry } from 'geojson'
 import {
   EsSearchParams,
-  EsTemplateType,
   RequestFields,
   SearchFilters,
   SortParams,
   StateConfigFilters,
 } from '../models'
-import { Geometry } from 'geojson'
+import { ES_QUERY_STRING_FIELDS, ES_SOURCE_SUMMARY } from './constant'
 
 export const METADATA_LANGUAGE = new InjectionToken<string>('metadata-language')
 
@@ -127,9 +126,19 @@ export class ElasticsearchService {
     geometry?: Geometry
   ) {
     const queryFilters = this.stateFiltersToQueryString(fieldSearchFilters)
-    const must = [this.addTemplateClause('n')] as Record<string, unknown>[]
+    const must = [this.queryFilterOnValues('isTemplate', 'n')] as Record<
+      string,
+      unknown
+    >[]
     const should = [] as Record<string, unknown>[]
     const filter = this.buildPayloadFilter(configFilters)
+    const must_not = {
+      ...this.queryFilterOnValues('resourceType', [
+        'service',
+        'featureCatalog',
+      ]),
+    }
+
     if (any) {
       must.push({
         query_string: {
@@ -179,6 +188,7 @@ export class ElasticsearchService {
     return {
       bool: {
         must,
+        must_not,
         should,
         filter,
       },
@@ -216,12 +226,12 @@ export class ElasticsearchService {
     }
   }
 
-  addTemplateClause(value: EsTemplateType) {
-    return !value || value.length <= 0
+  queryFilterOnValues(key, values) {
+    return !values || values.length <= 0
       ? {}
       : {
           terms: {
-            isTemplate: [...value],
+            [key]: [...values],
           },
         }
   }
@@ -231,7 +241,7 @@ export class ElasticsearchService {
       query: {
         bool: {
           must: [
-            this.addTemplateClause('n'),
+            this.queryFilterOnValues('isTemplate', 'n'),
             {
               multi_match: {
                 query,
@@ -248,6 +258,12 @@ export class ElasticsearchService {
               },
             },
           ],
+          must_not: {
+            ...this.queryFilterOnValues('resourceType', [
+              'service',
+              'featureCatalog',
+            ]),
+          },
         },
       },
       _source: ['resourceTitleObject', 'uuid'],
