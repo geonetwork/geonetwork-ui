@@ -4,7 +4,7 @@
 
 @layer components {
   .card-shadow {
-    @apply shadow-xl hover:shadow-primary-lightest transition-shadow;
+    @apply shadow-xl hover:shadow-xl-hover transition-shadow;
   }
 
   .btn-default {
