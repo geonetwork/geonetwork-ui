@@ -11,6 +11,7 @@ module.exports = {
       boxShadow: {
         ...baseConfig.theme.extend.boxShadow,
         xl: '0 0 44px 0 rgba(5, 31, 156, 0.09)',
+        'xl-hover': '0 0 44px 0 rgba(5, 31, 156, 0.2)',
       },
     },
   },

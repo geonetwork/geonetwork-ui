@@ -35,3 +35,18 @@ export type EsSearchResponse = any
 
 export type EsTemplateValues = 'y' | 'n' | 's' | 't'
 export type EsTemplateType = EsTemplateValues | EsTemplateValues[]
+
+export const ES_RESOURCES_VALUES = [
+  'dataset',
+  'series',
+  'publication',
+  'nonGeographicDataset',
+  'map',
+  'map/static',
+  'mapDigital',
+  'service',
+  'featureCatalog',
+] as const
+
+export type EsResourceTypeValues = typeof ES_RESOURCES_VALUES[number]
+export type EsResourceType = EsResourceTypeValues | EsResourceTypeValues[]
