@@ -2,13 +2,12 @@ import { DOCUMENT } from '@angular/common'
 import { Inject, NgModule } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
-import { Event, Router, RouterModule, Scroll } from '@angular/router'
+import { Router, RouterModule } from '@angular/router'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
 import {
   DefaultRouterModule,
-  ROUTER_ROUTE_DATASET,
   RouterService,
 } from '@geonetwork-ui/feature/router'
 import {
@@ -89,6 +88,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     BrowserModule,
     RouterModule.forRoot([], {
       initialNavigation: 'enabledBlocking',
+      scrollPositionRestoration: 'enabled',
     }),
     StoreModule.forRoot(
       {},
@@ -187,22 +187,5 @@ export class AppModule {
       getThemeConfig().PRIMARY_COLOR,
       [10, 25, 75]
     )
-
-    router.events
-      .pipe(filter((e: Event): e is Scroll => e instanceof Scroll))
-      .subscribe((e) => {
-        if (e.position) {
-          // backward navigation
-        } else {
-          if (e.routerEvent.url.startsWith(`/${ROUTER_ROUTE_DATASET}`)) {
-            const recordPageElement = document.getElementById('record-page')
-            if (recordPageElement) {
-              recordPageElement.scrollTo({
-                top: 0,
-              })
-            }
-          }
-        }
-      })
   }
 }
