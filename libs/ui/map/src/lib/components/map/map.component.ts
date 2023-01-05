@@ -43,7 +43,7 @@ export class MapComponent implements OnInit, AfterViewInit {
           ? timer(2000).pipe(
               map(() => false),
               startWith(true),
-              delay(300)
+              delay(400)
             )
           : of(false)
       )
