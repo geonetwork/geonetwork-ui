@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import { Organisation } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
-import { map, tap } from 'rxjs/operators'
+import { map, startWith, tap } from 'rxjs/operators'
 import { OrganisationsService } from './organisations.service'
 
 @Component({
@@ -23,7 +23,9 @@ export class OrganisationsComponent {
   sortBy$ = new BehaviorSubject('name-asc')
 
   organisationsSorted$: Observable<Organisation[]> = combineLatest([
-    this.organisationsService.getOrganisationsWithGroups(),
+    this.organisationsService.hydratedOrganisations$.pipe(
+      startWith(Array(this.itemsOnPage).fill({}))
+    ),
     this.sortBy$,
   ]).pipe(
     map(([organisations, sortBy]) =>

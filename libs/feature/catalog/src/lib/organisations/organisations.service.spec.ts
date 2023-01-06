@@ -2,6 +2,8 @@ import { TestBed } from '@angular/core/testing'
 import { GroupsApiService } from '@geonetwork-ui/data-access/gn4'
 import { AggregationsService } from '@geonetwork-ui/feature/search'
 import { of } from 'rxjs'
+import { take } from 'rxjs/operators'
+import { GroupService } from '../group/group.service'
 
 import { OrganisationsService } from './organisations.service'
 
@@ -31,8 +33,8 @@ const groupsApiMock = [
   },
 ]
 
-const groupsApiServiceMock = {
-  getGroups: jest.fn(() => of(groupsApiMock)),
+const groupServiceMock = {
+  groups$: of(groupsApiMock),
 }
 
 describe('OrganisationsService', () => {
@@ -46,8 +48,8 @@ describe('OrganisationsService', () => {
           useValue: aggregationsServiceMock,
         },
         {
-          provide: GroupsApiService,
-          useValue: groupsApiServiceMock,
+          provide: GroupService,
+          useValue: groupServiceMock,
         },
       ],
     })
@@ -57,28 +59,53 @@ describe('OrganisationsService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy()
   })
-  describe('#getOrganisationsWithGroups', () => {
+  describe('hydratedOrganisations$', () => {
     let organisations
-    beforeEach(() => {
-      service
-        .getOrganisationsWithGroups()
-        .subscribe((orgs) => (organisations = orgs))
+    describe('initially', () => {
+      beforeEach(() => {
+        service.hydratedOrganisations$
+          .pipe(take(1))
+          .subscribe((orgs) => (organisations = orgs))
+      })
+      it('get rough organisations', () => {
+        expect(organisations).toEqual([
+          {
+            name: 'Agence de test',
+            description: null,
+            logoUrl: null,
+            recordCount: 5,
+          },
+          {
+            name: 'Association pour le testing',
+            description: null,
+            logoUrl: null,
+            recordCount: 3,
+          },
+        ])
+      })
     })
-    it('should get organisations, enriching first one with description, logoUrl from groups', () => {
-      expect(organisations).toEqual([
-        {
-          name: 'Agence de test',
-          description: 'une agence',
-          logoUrl: '/geonetwork/images/harvesting/logo-ag.png',
-          recordCount: 5,
-        },
-        {
-          name: 'Association pour le testing',
-          description: undefined,
-          logoUrl: undefined,
-          recordCount: 3,
-        },
-      ])
+    describe('when users tick', () => {
+      beforeEach(() => {
+        service.hydratedOrganisations$
+          .pipe(take(2))
+          .subscribe((orgs) => (organisations = orgs))
+      })
+      it('get organisations hydrated from groups ', () => {
+        expect(organisations).toEqual([
+          {
+            name: 'Agence de test',
+            description: 'une agence',
+            logoUrl: '/geonetwork/images/harvesting/logo-ag.png',
+            recordCount: 5,
+          },
+          {
+            name: 'Association pour le testing',
+            description: undefined,
+            logoUrl: undefined,
+            recordCount: 3,
+          },
+        ])
+      })
     })
   })
   describe('#normalizeName', () => {
