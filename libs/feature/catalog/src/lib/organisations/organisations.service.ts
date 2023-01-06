@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core'
-import { GroupApiModel, GroupsApiService } from '@geonetwork-ui/data-access/gn4'
 import { ElasticsearchService, Organisation } from '@geonetwork-ui/util/shared'
 import { AggregationsService } from '@geonetwork-ui/feature/search'
 import { combineLatest, Observable } from 'rxjs'
 import { map, shareReplay } from 'rxjs/operators'
+import { GroupService } from '../group/group.service'
 
 const IMAGE_URL = '/geonetwork/images/harvesting/'
 
@@ -15,7 +15,6 @@ interface OrganisationApiModel {
   providedIn: 'root',
 })
 export class OrganisationsService {
-  groups$: Observable<GroupApiModel[]> = this.groupsApiService.getGroups()
   organisations$: Observable<OrganisationApiModel[]> = this.aggregationsService
     .getFullSearchTermAggregation('OrgForResource')
     .pipe(
@@ -28,12 +27,12 @@ export class OrganisationsService {
 
   constructor(
     private esService: ElasticsearchService,
-    private groupsApiService: GroupsApiService,
+    private groupService: GroupService,
     private aggregationsService: AggregationsService
   ) {}
 
   getOrganisationsWithGroups(): Observable<Organisation[]> {
-    return combineLatest([this.organisations$, this.groups$]).pipe(
+    return combineLatest([this.organisations$, this.groupService.groups$]).pipe(
       map(([organisations, groups]) =>
         organisations.map((organisation) => {
           const group = groups.find(
