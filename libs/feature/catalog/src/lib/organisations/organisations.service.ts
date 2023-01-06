@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core'
 import { ElasticsearchService, Organisation } from '@geonetwork-ui/util/shared'
 import { AggregationsService } from '@geonetwork-ui/feature/search'
 import { combineLatest, Observable } from 'rxjs'
-import { map, shareReplay } from 'rxjs/operators'
+import { delay, map, shareReplay } from 'rxjs/operators'
 import { GroupService } from '../group/group.service'
 
 const IMAGE_URL = '/geonetwork/images/harvesting/'
 
-interface OrganisationApiModel {
+interface OrganisationAggsBucket {
   key: string
   doc_count: number
 }
@@ -15,13 +15,22 @@ interface OrganisationApiModel {
   providedIn: 'root',
 })
 export class OrganisationsService {
-  organisations$: Observable<OrganisationApiModel[]> = this.aggregationsService
-    .getFullSearchTermAggregation('OrgForResource')
-    .pipe(
-      map((response) => response.buckets),
-      shareReplay()
+  organisationsAggs$: Observable<OrganisationAggsBucket[]> =
+    this.aggregationsService
+      .getFullSearchTermAggregation('OrgForResource')
+      .pipe(
+        map((response) => response.buckets),
+        shareReplay()
+      )
+  organisations$: Observable<Organisation[]> = this.organisationsAggs$.pipe(
+    map((buckets) =>
+      buckets.map((bucket) => ({
+        name: bucket.key,
+        recordCount: bucket.doc_count,
+      }))
     )
-  organisationsCount$ = this.organisations$.pipe(
+  )
+  organisationsCount$ = this.organisationsAggs$.pipe(
     map((organisations) => organisations.length)
   )
 
