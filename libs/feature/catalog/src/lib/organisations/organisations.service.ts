@@ -22,18 +22,15 @@ export class OrganisationsService {
       map((response) => response.buckets),
       shareReplay()
     )
+  organisationsCount$ = this.organisations$.pipe(
+    map((organisations) => organisations.length)
+  )
 
   constructor(
     private esService: ElasticsearchService,
     private groupsApiService: GroupsApiService,
     private aggregationsService: AggregationsService
   ) {}
-
-  countOrganisations(): Observable<number> {
-    return this.organisations$.pipe(
-      map((organisations) => organisations.length)
-    )
-  }
 
   getOrganisationsWithGroups(): Observable<Organisation[]> {
     return combineLatest([this.organisations$, this.groups$]).pipe(
