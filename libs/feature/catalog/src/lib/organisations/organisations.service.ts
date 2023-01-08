@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core'
-import { GroupApiModel } from '@geonetwork-ui/data-access/gn4'
+import { GroupApiModel, SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { AggregationsService } from '@geonetwork-ui/feature/search'
 import { ElasticsearchService, Organisation } from '@geonetwork-ui/util/shared'
 import { combineLatest, Observable } from 'rxjs'
-import { map, shareReplay, startWith } from 'rxjs/operators'
+import { filter, map, shareReplay, startWith, tap } from 'rxjs/operators'
 import { GroupService } from '../group/group.service'
 
 const IMAGE_URL = '/geonetwork/images/harvesting/'
@@ -17,16 +17,15 @@ interface OrganisationAggsBucket {
 })
 export class OrganisationsService {
   organisationsAggs$: Observable<OrganisationAggsBucket[]> =
-    this.aggregationsService
-      .getFullSearchTermAggregation('OrgForResource')
-      .pipe(
-        map((response) => response.buckets),
-        shareReplay()
-      )
+    this.fetchOrgForResourceAggs().pipe(
+      map((response) => response.buckets),
+      shareReplay()
+    )
   organisations$: Observable<Organisation[]> = this.organisationsAggs$.pipe(
     map((buckets) =>
       buckets.map((bucket) => ({
-        name: bucket.key,
+        name: bucket.key[0],
+        email: bucket.key[1],
         recordCount: bucket.doc_count,
         description: null,
         logoUrl: null,
@@ -47,8 +46,8 @@ export class OrganisationsService {
 
   constructor(
     private esService: ElasticsearchService,
-    private groupService: GroupService,
-    private aggregationsService: AggregationsService
+    private searchApiService: SearchApiService,
+    private groupService: GroupService
   ) {}
 
   normalizeName(name: string): string {
@@ -57,6 +56,52 @@ export class OrganisationsService {
       .replace(/[\u0300-\u036f]/g, '') // remove accent characters
       .toLowerCase()
       .replace(/[^a-z0-9]/g, '') // replace all except letters & numbers
+  }
+
+  private fetchOrgForResourceAggs() {
+    return this.searchApiService
+      .search(
+        'bucket',
+        JSON.stringify(
+          this.esService.getSearchRequestBody({
+            contact: {
+              nested: {
+                path: 'contactForResource',
+              },
+              aggs: {
+                org: {
+                  multi_terms: {
+                    size: 1000,
+                    order: { _key: 'asc' },
+                    terms: [
+                      {
+                        field: 'contactForResource.organisation',
+                      },
+                      {
+                        field: 'contactForResource.email.keyword',
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          })
+        )
+      )
+      .pipe(
+        filter((response) => response.aggregations.contact.org),
+        map((response) => response.aggregations.contact.org),
+        tap(({ buckets }) => {
+          console.log(
+            buckets.reduce((output, bucket) => {
+              const org = bucket.key[0]
+              output[org] = output[org] ?? 0
+              output[org]++
+              return output
+            }, {})
+          )
+        })
+      )
   }
 
   private mapWithGroups(

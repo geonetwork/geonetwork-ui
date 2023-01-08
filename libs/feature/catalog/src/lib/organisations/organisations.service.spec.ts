@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing'
-import { GroupsApiService } from '@geonetwork-ui/data-access/gn4'
-import { AggregationsService } from '@geonetwork-ui/feature/search'
+import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { of } from 'rxjs'
 import { take } from 'rxjs/operators'
 import { GroupService } from '../group/group.service'
@@ -8,14 +7,23 @@ import { GroupService } from '../group/group.service'
 import { OrganisationsService } from './organisations.service'
 
 const organisationsAggregationMock = {
-  buckets: [
-    { key: 'Agence de test', doc_count: 5 },
-    { key: 'Association pour le testing', doc_count: 3 },
-  ],
+  aggregations: {
+    contact: {
+      org: {
+        buckets: [
+          { key: ['Agence de test', 'test@agence.com'], doc_count: 5 },
+          {
+            key: ['Association pour le testing', 'testing@assoc.net'],
+            doc_count: 3,
+          },
+        ],
+      },
+    },
+  },
 }
 
-const aggregationsServiceMock = {
-  getFullSearchTermAggregation: jest.fn(() => of(organisationsAggregationMock)),
+const searchApiServiceMock = {
+  search: jest.fn(() => of(organisationsAggregationMock)),
 }
 
 const groupsApiMock = [
@@ -44,8 +52,8 @@ describe('OrganisationsService', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: AggregationsService,
-          useValue: aggregationsServiceMock,
+          provide: SearchApiService,
+          useValue: searchApiServiceMock,
         },
         {
           provide: GroupService,
@@ -71,12 +79,14 @@ describe('OrganisationsService', () => {
         expect(organisations).toEqual([
           {
             name: 'Agence de test',
+            email: 'test@agence.com',
             description: null,
             logoUrl: null,
             recordCount: 5,
           },
           {
             name: 'Association pour le testing',
+            email: 'testing@assoc.net',
             description: null,
             logoUrl: null,
             recordCount: 3,
@@ -95,11 +105,13 @@ describe('OrganisationsService', () => {
           {
             name: 'Agence de test',
             description: 'une agence',
+            email: 'test@agence.com',
             logoUrl: '/geonetwork/images/harvesting/logo-ag.png',
             recordCount: 5,
           },
           {
             name: 'Association pour le testing',
+            email: 'testing@assoc.net',
             description: undefined,
             logoUrl: undefined,
             recordCount: 3,
