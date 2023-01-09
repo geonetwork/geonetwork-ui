@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core'
-import { WmsEndpoint } from '@camptocamp/ogc-client'
+import { WmsEndpoint, WmsLayerFull } from '@camptocamp/ogc-client'
 import { MapContextLayerWmsModel } from '../map-context/map-context.model'
 import { ProxyService } from '@geonetwork-ui/util/shared'
 import { from, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { LONLAT_CRS_CODES } from './projections'
-
-export type WMSEndPoint = any
-export type WMSLayerFull = any
 
 @Injectable({
   providedIn: 'root',
@@ -15,11 +12,11 @@ export type WMSLayerFull = any
 export class MapUtilsWMSService {
   constructor(private proxy: ProxyService) {}
 
-  getCapabilities(layer: MapContextLayerWmsModel): Observable<WMSEndPoint> {
+  getCapabilities(layer: MapContextLayerWmsModel): Observable<WmsEndpoint> {
     return from(new WmsEndpoint(this.proxy.getProxiedUrl(layer.url)).isReady())
   }
 
-  getLayerFull(layer: MapContextLayerWmsModel): Observable<WMSLayerFull> {
+  getLayerFull(layer: MapContextLayerWmsModel): Observable<WmsLayerFull> {
     return this.getCapabilities(layer).pipe(
       map((endpoint) => endpoint.getLayerByName(layer.name))
     )
@@ -31,7 +28,7 @@ export class MapUtilsWMSService {
     )
   }
 
-  getLonLatBBox(wmsLayerFull: WMSLayerFull) {
+  getLonLatBBox(wmsLayerFull: WmsLayerFull) {
     const { boundingBoxes } = wmsLayerFull
     const lonLatCRS = Object.keys(boundingBoxes)?.find((crs) =>
       LONLAT_CRS_CODES.includes(crs)

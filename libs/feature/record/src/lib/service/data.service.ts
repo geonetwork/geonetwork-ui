@@ -49,8 +49,7 @@ export class DataService {
           throw new Error(`wfs.unreachable.unknown`)
         }
       }),
-      // eslint-disable-next-line -- ogc-client lacks typing
-      map((endpoint: any) => {
+      map((endpoint) => {
         const featureTypes = endpoint.getFeatureTypes()
         const featureType = endpoint.getFeatureTypeSummary(
           featureTypes.length === 1 && !featureTypeName
