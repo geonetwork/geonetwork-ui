@@ -88,6 +88,16 @@ describe('ElasticsearchService', () => {
               },
             },
             {
+              terms: {
+                resourceType: [
+                  'dataset',
+                  'series',
+                  'publication',
+                  'nonGeographicDataset',
+                ],
+              },
+            },
+            {
               query_string: {
                 default_operator: 'AND',
                 fields: [
@@ -107,11 +117,6 @@ describe('ElasticsearchService', () => {
               },
             },
           ],
-          must_not: {
-            terms: {
-              resourceType: ['service', 'featureCatalog'],
-            },
-          },
         },
       })
     })
@@ -134,6 +139,16 @@ describe('ElasticsearchService', () => {
             {
               terms: {
                 isTemplate: ['n'],
+              },
+            },
+            {
+              terms: {
+                resourceType: [
+                  'dataset',
+                  'series',
+                  'publication',
+                  'nonGeographicDataset',
+                ],
               },
             },
             {
@@ -161,11 +176,6 @@ describe('ElasticsearchService', () => {
               },
             },
           ],
-          must_not: {
-            terms: {
-              resourceType: ['service', 'featureCatalog'],
-            },
-          },
         },
       })
     })
@@ -181,7 +191,7 @@ describe('ElasticsearchService', () => {
         )
       })
       it('escapes special char', () => {
-        expect(query.bool.must[1].query_string.query).toEqual(
+        expect(query.bool.must[2].query_string.query).toEqual(
           `scot \\(\\)\\{\\?\\[ \\/ test`
         )
       })
@@ -232,6 +242,16 @@ describe('ElasticsearchService', () => {
                 },
               },
               {
+                terms: {
+                  resourceType: [
+                    'dataset',
+                    'series',
+                    'publication',
+                    'nonGeographicDataset',
+                  ],
+                },
+              },
+              {
                 query_string: {
                   default_operator: 'AND',
                   fields: [
@@ -251,11 +271,6 @@ describe('ElasticsearchService', () => {
                 },
               },
             ],
-            must_not: {
-              terms: {
-                resourceType: ['service', 'featureCatalog'],
-              },
-            },
             should: [
               {
                 geo_shape: {
@@ -340,6 +355,16 @@ describe('ElasticsearchService', () => {
                   },
                 },
                 {
+                  terms: {
+                    resourceType: [
+                      'dataset',
+                      'series',
+                      'publication',
+                      'nonGeographicDataset',
+                    ],
+                  },
+                },
+                {
                   multi_match: {
                     fields: [
                       'resourceTitleObject.langfre',
@@ -352,11 +377,6 @@ describe('ElasticsearchService', () => {
                   },
                 },
               ],
-              must_not: {
-                terms: {
-                  resourceType: ['service', 'featureCatalog'],
-                },
-              },
             },
           },
           from: 0,
