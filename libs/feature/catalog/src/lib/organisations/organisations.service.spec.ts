@@ -38,6 +38,7 @@ const groupsApiMock = [
     label: { eng: 'Association National du testing' },
     description: 'une association',
     logo: 'logo-asso.png',
+    email: 'testing@assoc.net',
   },
 ]
 
@@ -94,13 +95,14 @@ describe('OrganisationsService', () => {
         ])
       })
     })
-    describe('when users tick', () => {
+    describe('when groups tick', () => {
       beforeEach(() => {
+        organisations = null
         service.hydratedOrganisations$
           .pipe(take(2))
           .subscribe((orgs) => (organisations = orgs))
       })
-      it('get organisations hydrated from groups ', () => {
+      it('get organisations hydrated from groups via name or email mapping', () => {
         expect(organisations).toEqual([
           {
             name: 'Agence de test',
@@ -112,29 +114,57 @@ describe('OrganisationsService', () => {
           {
             name: 'Association pour le testing',
             email: 'testing@assoc.net',
-            description: undefined,
-            logoUrl: undefined,
+            description: 'une association',
+            logoUrl: '/geonetwork/images/harvesting/logo-asso.png',
             recordCount: 3,
           },
         ])
       })
     })
   })
-  describe('#normalizeName', () => {
+  describe('#normalizeString', () => {
     it('should match "ATMO Haut de France" and "ATMO Haut-de-France"', () => {
-      expect(service.normalizeName('ATMO Haut de France')).toEqual(
-        service.normalizeName('ATMO Haut-de-France')
+      expect(service.normalizeString('ATMO Haut de France')).toEqual(
+        service.normalizeString('ATMO Haut-de-France')
       )
     })
     it('should match "ATMO Haut de France" and "ATMOHautdeFrance"', () => {
-      expect(service.normalizeName('ATMO Haut de France')).toEqual(
-        service.normalizeName('ATMOHautdeFrance')
+      expect(service.normalizeString('ATMO Haut de France')).toEqual(
+        service.normalizeString('ATMOHautdeFrance')
       )
     })
     it('should NOT match "ATMO Haut de France" and "ATMO HDF"', () => {
-      expect(service.normalizeName('ATMO Haut de France')).not.toEqual(
-        service.normalizeName('ATMO HDF')
+      expect(service.normalizeString('ATMO Haut de France')).not.toEqual(
+        service.normalizeString('ATMO HDF')
       )
+    })
+  })
+  describe('#compareNormalizedString', () => {
+    it('should match "ATMO Haut de France" and "ATMO Haut-de-France"', () => {
+      expect(
+        service.compareNormalizedStrings(
+          'ATMO Haut de France',
+          'ATMO Haut-de-France'
+        )
+      ).toBeTruthy()
+    })
+    it('should NOT match "ATMO Haut de France" and "ATMO Haut-de-France" (not replacing special chars)', () => {
+      expect(
+        service.compareNormalizedStrings(
+          'ATMO Haut de France',
+          'ATMO Haut-de-France',
+          false
+        )
+      ).toBeFalsy()
+    })
+    it('should match email adresses (not replacing special chars)', () => {
+      expect(
+        service.compareNormalizedStrings(
+          'Some.user@C2C.com',
+          'some.user@c2c.com',
+          false
+        )
+      ).toBeTruthy()
     })
   })
 })

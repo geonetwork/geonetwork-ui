@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core'
 import { GroupApiModel, SearchApiService } from '@geonetwork-ui/data-access/gn4'
-import { AggregationsService } from '@geonetwork-ui/feature/search'
 import { ElasticsearchService, Organisation } from '@geonetwork-ui/util/shared'
 import { combineLatest, Observable } from 'rxjs'
 import { filter, map, shareReplay, startWith, tap } from 'rxjs/operators'
@@ -50,12 +49,30 @@ export class OrganisationsService {
     private groupService: GroupService
   ) {}
 
-  normalizeName(name: string): string {
-    return name
-      .normalize('NFD') // decompose graphemes to remove accents from letters
-      .replace(/[\u0300-\u036f]/g, '') // remove accent characters
-      .toLowerCase()
-      .replace(/[^a-z0-9]/g, '') // replace all except letters & numbers
+  compareNormalizedStrings(
+    str1: string,
+    str2: string,
+    replaceSpecialChars = true
+  ): boolean {
+    if (!str1 || !str2) return false
+    return (
+      this.normalizeString(str1, replaceSpecialChars) ===
+      this.normalizeString(str2, replaceSpecialChars)
+    )
+  }
+
+  normalizeString(str: string, replaceSpecialChars = true): string {
+    function normalize(str: string) {
+      return str
+        .normalize('NFD') // decompose graphemes to remove accents from letters
+        .replace(/[\u0300-\u036f]/g, '') // remove accent characters
+        .toLowerCase()
+    }
+    if (replaceSpecialChars) {
+      return normalize(str).replace(/[^a-z0-9]/g, '') // replace all except letters & numbers
+    } else {
+      return normalize(str)
+    }
   }
 
   private fetchOrgForResourceAggs() {
@@ -90,17 +107,7 @@ export class OrganisationsService {
       )
       .pipe(
         filter((response) => response.aggregations.contact.org),
-        map((response) => response.aggregations.contact.org),
-        tap(({ buckets }) => {
-          console.log(
-            buckets.reduce((output, bucket) => {
-              const org = bucket.key[0]
-              output[org] = output[org] ?? 0
-              output[org]++
-              return output
-            }, {})
-          )
-        })
+        map((response) => response.aggregations.contact.org)
       )
   }
 
@@ -109,13 +116,17 @@ export class OrganisationsService {
     groups: GroupApiModel[]
   ) {
     return organisations.map((organisation) => {
-      const group = groups.find(
-        (group) =>
-          (group.label.eng
-            ? this.normalizeName(group.label.eng)
-            : this.normalizeName(group.name)) ===
-          this.normalizeName(organisation.name)
+      let group = groups.find((group) =>
+        this.compareNormalizedStrings(
+          group.label.eng ? group.label.eng : group.name,
+          organisation.name
+        )
       )
+      if (!group) {
+        group = groups.find((group) =>
+          this.compareNormalizedStrings(group.email, organisation.email, false)
+        )
+      }
       return {
         ...organisation,
         description: group?.description || undefined,
