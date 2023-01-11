@@ -64,6 +64,9 @@ module.exports = {
       opacity: {
         45: 0.45,
       },
+      boxShadow: {
+        'xl-hover': '0 20px 25px -5px rgb(0 0 0 / 0.2)',
+      },
     },
   },
   plugins: [require('@tailwindcss/line-clamp')],
