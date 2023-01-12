@@ -1,22 +1,66 @@
 import { TestBed } from '@angular/core/testing'
-import { GroupsApiService } from '@geonetwork-ui/data-access/gn4'
-import { AggregationsService } from '@geonetwork-ui/feature/search'
+import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { of } from 'rxjs'
+import { take } from 'rxjs/operators'
+import { GroupService } from '../group/group.service'
 
 import { OrganisationsService } from './organisations.service'
 
 const organisationsAggregationMock = {
-  buckets: [
-    { key: 'Agence de test', doc_count: 5 },
-    { key: 'Association pour le testing', doc_count: 3 },
-  ],
+  aggregations: {
+    contact: {
+      org: {
+        buckets: [
+          {
+            key: 'Agence de test',
+            doc_count: 5,
+            mail: {
+              doc_count_error_upper_bound: 0,
+              sum_other_doc_count: 0,
+              buckets: [
+                {
+                  key: 'test@agence.com',
+                  doc_count: 3,
+                },
+                {
+                  key: 'test2@agence.com',
+                  doc_count: 1,
+                },
+              ],
+            },
+          },
+          {
+            key: 'Association pour le testing',
+            doc_count: 1,
+            mail: {
+              doc_count_error_upper_bound: 0,
+              sum_other_doc_count: 0,
+              buckets: [
+                {
+                  key: 'testing@assoc.net',
+                  doc_count: 1,
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  },
 }
 
-const aggregationsServiceMock = {
-  getFullSearchTermAggregation: jest.fn(() => of(organisationsAggregationMock)),
+const searchApiServiceMock = {
+  search: jest.fn(() => of(organisationsAggregationMock)),
 }
 
 const groupsApiMock = [
+  {
+    name: 'agence de test',
+    label: { eng: 'AGENCE-DE-TEST' },
+    description: 'une agence',
+    email: 'test@test.net',
+    logo: 'logo-ag.png',
+  },
   {
     name: 'agence',
     label: { eng: 'AGENCE-DE-TEST' },
@@ -28,11 +72,12 @@ const groupsApiMock = [
     label: { eng: 'Association National du testing' },
     description: 'une association',
     logo: 'logo-asso.png',
+    email: 'testing@assoc.net',
   },
 ]
 
-const groupsApiServiceMock = {
-  getGroups: jest.fn(() => of(groupsApiMock)),
+const groupServiceMock = {
+  groups$: of(groupsApiMock),
 }
 
 describe('OrganisationsService', () => {
@@ -42,12 +87,12 @@ describe('OrganisationsService', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: AggregationsService,
-          useValue: aggregationsServiceMock,
+          provide: SearchApiService,
+          useValue: searchApiServiceMock,
         },
         {
-          provide: GroupsApiService,
-          useValue: groupsApiServiceMock,
+          provide: GroupService,
+          useValue: groupServiceMock,
         },
       ],
     })
@@ -57,45 +102,105 @@ describe('OrganisationsService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy()
   })
-  describe('#getOrganisationsWithGroups', () => {
+  describe('hydratedOrganisations$', () => {
     let organisations
-    beforeEach(() => {
-      service
-        .getOrganisationsWithGroups()
-        .subscribe((orgs) => (organisations = orgs))
+    describe('initially', () => {
+      beforeEach(() => {
+        service.hydratedOrganisations$
+          .pipe(take(1))
+          .subscribe((orgs) => (organisations = orgs))
+      })
+      it('get rough organisations', () => {
+        expect(organisations).toEqual([
+          {
+            description: null,
+            emails: ['test@agence.com', 'test2@agence.com'],
+            logoUrl: null,
+            name: 'Agence de test',
+            recordCount: 5,
+          },
+          {
+            description: null,
+            emails: ['testing@assoc.net'],
+            logoUrl: null,
+            name: 'Association pour le testing',
+            recordCount: 1,
+          },
+        ])
+      })
     })
-    it('should get organisations, enriching first one with description, logoUrl from groups', () => {
-      expect(organisations).toEqual([
-        {
-          name: 'Agence de test',
-          description: 'une agence',
-          logoUrl: '/geonetwork/images/harvesting/logo-ag.png',
-          recordCount: 5,
-        },
-        {
-          name: 'Association pour le testing',
-          description: undefined,
-          logoUrl: undefined,
-          recordCount: 3,
-        },
-      ])
+    describe('when groups tick', () => {
+      beforeEach(() => {
+        organisations = null
+        service.hydratedOrganisations$
+          .pipe(take(2))
+          .subscribe((orgs) => (organisations = orgs))
+      })
+      it('get organisations hydrated from groups via name or email mapping', () => {
+        expect(organisations).toEqual([
+          {
+            description: 'une agence',
+            email: 'test@test.net',
+            emails: ['test@agence.com', 'test2@agence.com'],
+            logoUrl: '/geonetwork/images/harvesting/logo-ag.png',
+            name: 'Agence de test',
+            recordCount: 5,
+          },
+          {
+            description: 'une association',
+            email: 'testing@assoc.net',
+            emails: ['testing@assoc.net'],
+            logoUrl: '/geonetwork/images/harvesting/logo-asso.png',
+            name: 'Association pour le testing',
+            recordCount: 1,
+          },
+        ])
+      })
     })
   })
-  describe('#normalizeName', () => {
+  describe('#normalizeString', () => {
     it('should match "ATMO Haut de France" and "ATMO Haut-de-France"', () => {
-      expect(service.normalizeName('ATMO Haut de France')).toEqual(
-        service.normalizeName('ATMO Haut-de-France')
+      expect(service.normalizeString('ATMO Haut de France')).toEqual(
+        service.normalizeString('ATMO Haut-de-France')
       )
     })
     it('should match "ATMO Haut de France" and "ATMOHautdeFrance"', () => {
-      expect(service.normalizeName('ATMO Haut de France')).toEqual(
-        service.normalizeName('ATMOHautdeFrance')
+      expect(service.normalizeString('ATMO Haut de France')).toEqual(
+        service.normalizeString('ATMOHautdeFrance')
       )
     })
     it('should NOT match "ATMO Haut de France" and "ATMO HDF"', () => {
-      expect(service.normalizeName('ATMO Haut de France')).not.toEqual(
-        service.normalizeName('ATMO HDF')
+      expect(service.normalizeString('ATMO Haut de France')).not.toEqual(
+        service.normalizeString('ATMO HDF')
       )
+    })
+  })
+  describe('#compareNormalizedString', () => {
+    it('should match "ATMO Haut de France" and "ATMO Haut-de-France"', () => {
+      expect(
+        service.equalsNormalizedStrings(
+          'ATMO Haut de France',
+          'ATMO Haut-de-France'
+        )
+      ).toBeTruthy()
+    })
+    it('should NOT match "ATMO Haut de France" and "ATMO Haut-de-France" (not replacing special chars)', () => {
+      expect(
+        service.equalsNormalizedStrings(
+          'ATMO Haut de France',
+          'ATMO Haut-de-France',
+          false
+        )
+      ).toBeFalsy()
+    })
+    it('should match email adresses (not replacing special chars)', () => {
+      expect(
+        service.equalsNormalizedStrings(
+          'Some.user@C2C.com',
+          'some.user@c2c.com',
+          false
+        )
+      ).toBeTruthy()
     })
   })
 })

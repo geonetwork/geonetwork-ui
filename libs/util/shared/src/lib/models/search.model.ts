@@ -18,6 +18,8 @@ export interface Organisation {
   description?: string
   logoUrl?: string
   recordCount?: number
+  email?: string
+  emails?: string[]
 }
 
 export interface MetadataContact {

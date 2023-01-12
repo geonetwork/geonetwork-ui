@@ -1,20 +1,17 @@
 <a href (click)="clickOrganisation($event)">
-  <div
-    class="cursor-pointer rounded-lg hover:shadow-2xl transition-shadow duration-200"
-  >
+  <div class="group cursor-pointer rounded-lg" [title]="organisation.name">
     <div
-      class="overflow-hidden bg-gray-100 rounded-lg w-full border border-gray-300 h-36"
+      class="overflow-hidden bg-gray-100 rounded-lg w-full border border-gray-300 h-36 group-hover:shadow-xl group-hover:border-0"
     >
       <gn-ui-thumbnail
         class="relative h-full w-full"
         [thumbnailUrl]="organisation.logoUrl"
-        [fit]="'contain'"
+        fit="contain"
       ></gn-ui-thumbnail>
     </div>
     <div class="px-3 pb-2 capitalize">
       <span
-        [title]="organisation.name"
-        class="mb-3 mt-5 font-title text-21 text-title line-clamp-2 sm:line-clamp-1 sm:mt-2"
+        class="mb-3 mt-5 font-title text-21 text-title group-hover:text-primary line-clamp-2 sm:line-clamp-1 sm:mt-2"
       >
         {{ organisation.name }}</span
       >

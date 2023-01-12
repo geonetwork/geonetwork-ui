@@ -18,7 +18,7 @@ import {
 })
 export class KeyFiguresComponent {
   recordsCount$ = this.catalogRecords.recordsCount$.pipe(startWith('-'))
-  orgsCount$ = this.catalogOrgs.countOrganisations().pipe(startWith('-'))
+  orgsCount$ = this.catalogOrgs.organisationsCount$.pipe(startWith('-'))
   ROUTE_SEARCH = `/${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_SEARCH}`
   ROUTE_ORGANISATIONS = `/${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_ORGANISATIONS}`
 

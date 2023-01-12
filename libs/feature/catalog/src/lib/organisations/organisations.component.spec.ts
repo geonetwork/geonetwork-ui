@@ -7,14 +7,15 @@ import {
   Output,
 } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { readFirst } from '@nrwl/angular/testing'
 import { By } from '@angular/platform-browser'
+import { SearchService } from '@geonetwork-ui/feature/search'
+import { ContentGhostComponent } from '@geonetwork-ui/ui/elements'
 import { Organisation } from '@geonetwork-ui/util/shared'
 import { ORGANISATIONS_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
+import { readFirst } from '@nrwl/angular/testing'
 import { of } from 'rxjs'
 import { OrganisationsComponent } from './organisations.component'
 import { OrganisationsService } from './organisations.service'
-import { SearchService } from '@geonetwork-ui/feature/search'
 
 @Component({
   selector: 'gn-ui-organisations-sort',
@@ -43,7 +44,7 @@ class PaginationMockComponent {
 }
 
 class OrganisationsServiceMock {
-  getOrganisationsWithGroups = jest.fn(() => of(ORGANISATIONS_FIXTURE))
+  hydratedOrganisations$ = of(ORGANISATIONS_FIXTURE)
 }
 
 class SearchServiceMock {
@@ -73,6 +74,7 @@ describe('OrganisationsComponent', () => {
         OrganisationsSortMockComponent,
         OrganisationPreviewMockComponent,
         PaginationMockComponent,
+        ContentGhostComponent,
       ],
       providers: [
         {
@@ -110,9 +112,6 @@ describe('OrganisationsComponent', () => {
     let setSortBySpy
     beforeEach(() => {
       paginationComponentDE = de.query(By.directive(PaginationMockComponent))
-    })
-    it('should call getOrganisationsWithGroups', () => {
-      expect(organisationsService.getOrganisationsWithGroups).toHaveBeenCalled()
     })
     describe('pass organisations to ui preview components', () => {
       beforeEach(() => {

@@ -10,3 +10,27 @@ export const USER_FIXTURE = (): UserModel => ({
   organisation: 'Région Hauts-de-France',
   admin: true,
 })
+
+export const USERS_FIXTURE = (): UserModel[] => [
+  USER_FIXTURE(),
+  {
+    id: '1',
+    profile: 'Editor',
+    username: 'neo',
+    name: 'Tomas',
+    surname: 'Anderson',
+    email: 't.anderson@matrix.com',
+    organisation: 'The matrix',
+    admin: true,
+  },
+  {
+    id: '2',
+    profile: 'Editor',
+    username: 'trinity',
+    name: 'Tyfany',
+    surname: 'Trinity',
+    email: 't.trinity@matrix.com',
+    organisation: 'The matrix',
+    admin: true,
+  },
+]

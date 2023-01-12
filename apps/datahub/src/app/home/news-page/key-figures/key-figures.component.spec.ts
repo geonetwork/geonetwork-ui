@@ -15,7 +15,7 @@ class RecordsServiceMock {
 }
 
 class OrganisationsServiceMock {
-  countOrganisations = () => of(456)
+  organisationsCount$ = of(456)
 }
 
 describe('KeyFiguresComponent', () => {
