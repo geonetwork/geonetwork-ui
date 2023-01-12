@@ -11,10 +11,37 @@ const organisationsAggregationMock = {
     contact: {
       org: {
         buckets: [
-          { key: ['Agence de test', 'test@agence.com'], doc_count: 5 },
           {
-            key: ['Association pour le testing', 'testing@assoc.net'],
-            doc_count: 3,
+            key: 'Agence de test',
+            doc_count: 5,
+            mail: {
+              doc_count_error_upper_bound: 0,
+              sum_other_doc_count: 0,
+              buckets: [
+                {
+                  key: 'test@agence.com',
+                  doc_count: 3,
+                },
+                {
+                  key: 'test2@agence.com',
+                  doc_count: 1,
+                },
+              ],
+            },
+          },
+          {
+            key: 'Association pour le testing',
+            doc_count: 1,
+            mail: {
+              doc_count_error_upper_bound: 0,
+              sum_other_doc_count: 0,
+              buckets: [
+                {
+                  key: 'testing@assoc.net',
+                  doc_count: 1,
+                },
+              ],
+            },
           },
         ],
       },
@@ -27,6 +54,13 @@ const searchApiServiceMock = {
 }
 
 const groupsApiMock = [
+  {
+    name: 'agence de test',
+    label: { eng: 'AGENCE-DE-TEST' },
+    description: 'une agence',
+    email: 'test@test.net',
+    logo: 'logo-ag.png',
+  },
   {
     name: 'agence',
     label: { eng: 'AGENCE-DE-TEST' },
@@ -79,18 +113,18 @@ describe('OrganisationsService', () => {
       it('get rough organisations', () => {
         expect(organisations).toEqual([
           {
-            name: 'Agence de test',
-            email: 'test@agence.com',
             description: null,
+            emails: ['test@agence.com', 'test2@agence.com'],
             logoUrl: null,
+            name: 'Agence de test',
             recordCount: 5,
           },
           {
-            name: 'Association pour le testing',
-            email: 'testing@assoc.net',
             description: null,
+            emails: ['testing@assoc.net'],
             logoUrl: null,
-            recordCount: 3,
+            name: 'Association pour le testing',
+            recordCount: 1,
           },
         ])
       })
@@ -105,18 +139,20 @@ describe('OrganisationsService', () => {
       it('get organisations hydrated from groups via name or email mapping', () => {
         expect(organisations).toEqual([
           {
-            name: 'Agence de test',
             description: 'une agence',
-            email: 'test@agence.com',
+            email: 'test@test.net',
+            emails: ['test@agence.com', 'test2@agence.com'],
             logoUrl: '/geonetwork/images/harvesting/logo-ag.png',
+            name: 'Agence de test',
             recordCount: 5,
           },
           {
-            name: 'Association pour le testing',
-            email: 'testing@assoc.net',
             description: 'une association',
+            email: 'testing@assoc.net',
+            emails: ['testing@assoc.net'],
             logoUrl: '/geonetwork/images/harvesting/logo-asso.png',
-            recordCount: 3,
+            name: 'Association pour le testing',
+            recordCount: 1,
           },
         ])
       })

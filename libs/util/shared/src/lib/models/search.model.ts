@@ -19,6 +19,7 @@ export interface Organisation {
   logoUrl?: string
   recordCount?: number
   email?: string
+  emails?: string[]
 }
 
 export interface MetadataContact {

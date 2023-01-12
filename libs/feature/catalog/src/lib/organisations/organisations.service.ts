@@ -7,9 +7,14 @@ import { GroupService } from '../group/group.service'
 
 const IMAGE_URL = '/geonetwork/images/harvesting/'
 
-interface OrganisationAggsBucket {
+type ESBucket = {
   key: string
   doc_count: number
+}
+interface OrganisationAggsBucket extends ESBucket {
+  mail: {
+    buckets: ESBucket[]
+  }
 }
 @Injectable({
   providedIn: 'root',
@@ -23,8 +28,10 @@ export class OrganisationsService {
   organisations$: Observable<Organisation[]> = this.organisationsAggs$.pipe(
     map((buckets) =>
       buckets.map((bucket) => ({
-        name: bucket.key[0],
-        email: bucket.key[1],
+        name: bucket.key,
+        emails: bucket.mail.buckets
+          .map((bucket) => bucket.key)
+          .filter((mail) => !!mail),
         recordCount: bucket.doc_count,
         description: null,
         logoUrl: null,
@@ -87,17 +94,20 @@ export class OrganisationsService {
               },
               aggs: {
                 org: {
-                  multi_terms: {
+                  terms: {
+                    field: 'contactForResource.organisation',
+                    exclude: '',
                     size: 1000,
                     order: { _key: 'asc' },
-                    terms: [
-                      {
-                        field: 'contactForResource.organisation',
-                      },
-                      {
+                  },
+                  aggs: {
+                    mail: {
+                      terms: {
+                        size: 1000,
+                        exclude: '',
                         field: 'contactForResource.email.keyword',
                       },
-                    ],
+                    },
                   },
                 },
               },
@@ -123,11 +133,16 @@ export class OrganisationsService {
             organisation.name
           )
         ) ??
-        groups.find((group) =>
-          this.equalsNormalizedStrings(group.email, organisation.email, false)
-        )
+        groups
+          .filter((group) => !!group.email)
+          .find((group) =>
+            organisation.emails
+              .map((mail) => this.normalizeString(mail, false))
+              .includes(this.normalizeString(group.email, false))
+          )
       return {
         ...organisation,
+        email: group?.email || undefined,
         description: group?.description || undefined,
         logoUrl: group?.logo ? `${IMAGE_URL}${group.logo}` : undefined,
       } as Organisation
