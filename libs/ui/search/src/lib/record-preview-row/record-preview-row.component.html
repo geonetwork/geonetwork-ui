@@ -1,4 +1,7 @@
-<div class="container-lg mx-auto flex cursor-pointer flex-wrap sm:flex-nowrap">
+<div
+  class="group container-lg mx-auto flex cursor-pointer flex-wrap sm:flex-nowrap"
+  [title]="record.title"
+>
   <div class="shrink-0 w-full sm:w-52">
     <div
       class="overflow-hidden bg-gray-100 rounded-lg w-full border border-gray-300 h-36"
@@ -15,8 +18,7 @@
   >
     <div class="mb-3 mt-5 sm:mt-2">
       <div
-        class="font-title text-21 text-title line-clamp-2 col-start-1 col-span-2 sm:line-clamp-1"
-        [title]="record.title"
+        class="font-title text-21 text-title line-clamp-2 col-start-1 col-span-2 sm:line-clamp-1 group-hover:text-primary"
       >
         {{ record.title }}
       </div>
