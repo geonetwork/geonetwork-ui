@@ -49,7 +49,7 @@ export class OrganisationsService {
     private groupService: GroupService
   ) {}
 
-  compareNormalizedStrings(
+  equalsNormalizedStrings(
     str1: string,
     str2: string,
     replaceSpecialChars = true
@@ -116,17 +116,16 @@ export class OrganisationsService {
     groups: GroupApiModel[]
   ) {
     return organisations.map((organisation) => {
-      let group = groups.find((group) =>
-        this.compareNormalizedStrings(
-          group.label.eng ? group.label.eng : group.name,
-          organisation.name
+      const group =
+        groups.find((group) =>
+          this.equalsNormalizedStrings(
+            group.label.eng ? group.label.eng : group.name,
+            organisation.name
+          )
+        ) ??
+        groups.find((group) =>
+          this.equalsNormalizedStrings(group.email, organisation.email, false)
         )
-      )
-      if (!group) {
-        group = groups.find((group) =>
-          this.compareNormalizedStrings(group.email, organisation.email, false)
-        )
-      }
       return {
         ...organisation,
         description: group?.description || undefined,

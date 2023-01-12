@@ -142,7 +142,7 @@ describe('OrganisationsService', () => {
   describe('#compareNormalizedString', () => {
     it('should match "ATMO Haut de France" and "ATMO Haut-de-France"', () => {
       expect(
-        service.compareNormalizedStrings(
+        service.equalsNormalizedStrings(
           'ATMO Haut de France',
           'ATMO Haut-de-France'
         )
@@ -150,7 +150,7 @@ describe('OrganisationsService', () => {
     })
     it('should NOT match "ATMO Haut de France" and "ATMO Haut-de-France" (not replacing special chars)', () => {
       expect(
-        service.compareNormalizedStrings(
+        service.equalsNormalizedStrings(
           'ATMO Haut de France',
           'ATMO Haut-de-France',
           false
@@ -159,7 +159,7 @@ describe('OrganisationsService', () => {
     })
     it('should match email adresses (not replacing special chars)', () => {
       expect(
-        service.compareNormalizedStrings(
+        service.equalsNormalizedStrings(
           'Some.user@C2C.com',
           'some.user@c2c.com',
           false
