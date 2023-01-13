@@ -165,23 +165,26 @@ export class ElasticsearchService {
       })
     }
     if (geometry) {
-      should.push({
-        geo_shape: {
-          geom: {
-            shape: geometry,
-            relation: 'within',
-          },
-          boost: 10.0,
-        },
-      })
-      filter.push({
-        geo_shape: {
-          geom: {
-            shape: geometry,
-            relation: 'intersects',
+      should.push(
+        {
+          geo_shape: {
+            geom: {
+              shape: geometry,
+              relation: 'within',
+            },
+            boost: 10.0,
           },
         },
-      })
+        {
+          geo_shape: {
+            geom: {
+              shape: geometry,
+              relation: 'intersects',
+            },
+            boost: 7.0,
+          },
+        }
+      )
     }
 
     return {

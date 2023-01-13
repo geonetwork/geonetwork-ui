@@ -211,7 +211,7 @@ describe('ElasticsearchService', () => {
           type: 'Polygon',
         }
       })
-      it('adds a criteria for intersecting with it and boosting on geoms within', () => {
+      it('adds boosting of 7 for intersecting with it and boosting of 10 on geoms within', () => {
         const query = service['buildPayloadQuery'](
           {
             Org: {
@@ -225,16 +225,7 @@ describe('ElasticsearchService', () => {
         )
         expect(query).toEqual({
           bool: {
-            filter: [
-              {
-                geo_shape: {
-                  geom: {
-                    shape: geojsonPolygon,
-                    relation: 'intersects',
-                  },
-                },
-              },
-            ],
+            filter: [],
             must: [
               {
                 terms: {
@@ -279,6 +270,15 @@ describe('ElasticsearchService', () => {
                     relation: 'within',
                   },
                   boost: 10.0,
+                },
+              },
+              {
+                geo_shape: {
+                  geom: {
+                    shape: geojsonPolygon,
+                    relation: 'intersects',
+                  },
+                  boost: 7.0,
                 },
               },
             ],
