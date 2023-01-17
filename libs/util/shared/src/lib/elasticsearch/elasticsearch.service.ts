@@ -126,15 +126,19 @@ export class ElasticsearchService {
     geometry?: Geometry
   ) {
     const queryFilters = this.stateFiltersToQueryString(fieldSearchFilters)
-    const must = [
-      this.queryFilterOnValues('isTemplate', 'n'),
-      this.queryFilterOnValues('resourceType', [
-        'dataset',
-        'series',
-        'publication',
-        'nonGeographicDataset',
+    const must = [this.queryFilterOnValues('isTemplate', 'n')] as Record<
+      string,
+      unknown
+    >[]
+    const must_not = {
+      ...this.queryFilterOnValues('resourceType', [
+        'service',
+        'featureCatalog',
+        'map',
+        'map/static',
+        'mapDigital',
       ]),
-    ] as Record<string, unknown>[]
+    }
     const should = [] as Record<string, unknown>[]
     const filter = this.buildPayloadFilter(configFilters)
 
@@ -190,6 +194,7 @@ export class ElasticsearchService {
     return {
       bool: {
         must,
+        must_not,
         should,
         filter,
       },
@@ -243,12 +248,6 @@ export class ElasticsearchService {
         bool: {
           must: [
             this.queryFilterOnValues('isTemplate', 'n'),
-            this.queryFilterOnValues('resourceType', [
-              'dataset',
-              'series',
-              'publication',
-              'nonGeographicDataset',
-            ]),
             {
               multi_match: {
                 query,
@@ -265,6 +264,15 @@ export class ElasticsearchService {
               },
             },
           ],
+          must_not: {
+            ...this.queryFilterOnValues('resourceType', [
+              'service',
+              'featureCatalog',
+              'map',
+              'map/static',
+              'mapDigital',
+            ]),
+          },
         },
       },
       _source: ['resourceTitleObject', 'uuid'],
