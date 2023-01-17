@@ -133,7 +133,6 @@ export class ElasticsearchService {
     const must_not = {
       ...this.queryFilterOnValues('resourceType', [
         'service',
-        'featureCatalog',
         'map',
         'map/static',
         'mapDigital',
@@ -267,7 +266,6 @@ export class ElasticsearchService {
           must_not: {
             ...this.queryFilterOnValues('resourceType', [
               'service',
-              'featureCatalog',
               'map',
               'map/static',
               'mapDigital',
