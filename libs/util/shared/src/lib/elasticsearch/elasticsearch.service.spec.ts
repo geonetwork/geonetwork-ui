@@ -169,6 +169,60 @@ describe('ElasticsearchService', () => {
         },
       })
     })
+    it('add any and other fields query_strings and limit search payload by ids (also if id array is empty)', () => {
+      const query = service['buildPayloadQuery'](
+        {
+          Org: {
+            world: true,
+          },
+          any: 'hello',
+        },
+        {},
+        []
+      )
+      expect(query).toEqual({
+        bool: {
+          filter: [],
+          should: [],
+          must: [
+            {
+              terms: {
+                isTemplate: ['n'],
+              },
+            },
+            {
+              query_string: {
+                default_operator: 'AND',
+                fields: [
+                  'resourceTitleObject.langfre^5',
+                  'tag.langfre^4',
+                  'resourceAbstractObject.langfre^3',
+                  'lineageObject.langfre^2',
+                  'any.langfre',
+                  'uuid',
+                ],
+                query: 'hello',
+              },
+            },
+            {
+              query_string: {
+                query: '(Org:"world")',
+              },
+            },
+            {
+              ids: {
+                values: [],
+              },
+            },
+          ],
+          must_not: {
+            terms: {
+              resourceType: ['service', 'map', 'map/static', 'mapDigital'],
+            },
+          },
+        },
+      })
+    })
     describe('any has special characters', () => {
       let query
       beforeEach(() => {
