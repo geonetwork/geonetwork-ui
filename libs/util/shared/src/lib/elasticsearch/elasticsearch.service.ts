@@ -160,7 +160,7 @@ export class ElasticsearchService {
         },
       })
     }
-    if (uuids?.length > 0) {
+    if (uuids) {
       must.push({
         ids: {
           values: uuids,
