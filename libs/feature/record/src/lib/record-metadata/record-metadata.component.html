@@ -78,6 +78,14 @@
               <gn-ui-data-view-table></gn-ui-data-view-table>
             </div>
           </mat-tab>
+          <mat-tab [disabled]="(displayData$ | async) === false">
+            <ng-template mat-tab-label>
+              <span class="tab-header-label" translate>record.tab.chart</span>
+            </ng-template>
+            <div class="block" *ngIf="displayData$ | async">
+              <gn-ui-data-view-chart></gn-ui-data-view-chart>
+            </div>
+          </mat-tab>
         </mat-tab-group>
       </div>
     </div>

@@ -49,6 +49,12 @@ export class MockDataMapComponent {}
 export class MockDataTableComponent {}
 
 @Component({
+  selector: 'gn-ui-data-view-chart',
+  template: '<div></div>',
+})
+export class MockDataChartComponent {}
+
+@Component({
   selector: 'gn-ui-data-downloads',
   template: '<div></div>',
 })
@@ -83,6 +89,7 @@ describe('RecordMetadataComponent', () => {
         RecordMetadataComponent,
         MockDataMapComponent,
         MockDataTableComponent,
+        MockDataChartComponent,
         MockDataDownloadsComponent,
         MockDataOtherlinksComponent,
         MockDataApisComponent,
@@ -242,8 +249,9 @@ describe('RecordMetadataComponent', () => {
       })
     })
   })
-  describe('Table', () => {
+  describe('Data (table and chart)', () => {
     let tableTab
+    let chartTab
     let tabGroup
     describe('when MAPAPI link, but no DATA and no GEODATA link', () => {
       beforeEach(() => {
@@ -252,10 +260,14 @@ describe('RecordMetadataComponent', () => {
         facade.geoDataLinks$.next(null)
         fixture.detectChanges()
         tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
+        chartTab = fixture.debugElement.queryAll(By.css('mat-tab'))[2]
         tabGroup = fixture.debugElement.queryAll(By.css('mat-tab-group'))[0]
       })
       it('renders preview, table tab is disabled', () => {
         expect(tableTab.nativeNode.disabled).toBe(true)
+      })
+      it('renders preview, chart tab is disabled', () => {
+        expect(chartTab.nativeNode.disabled).toBe(true)
       })
       it('renders preview, map tab is selected', () => {
         expect(tabGroup.nativeNode.selectedIndex).toBe(0)
@@ -265,19 +277,33 @@ describe('RecordMetadataComponent', () => {
           fixture.debugElement.query(By.directive(MockDataTableComponent))
         ).toBeFalsy()
       })
+      it('does not render chart component', () => {
+        expect(
+          fixture.debugElement.query(By.directive(MockDataChartComponent))
+        ).toBeFalsy()
+      })
     })
     describe('when a DATA link present', () => {
       beforeEach(() => {
         facade.dataLinks$.next(['link'])
         fixture.detectChanges()
         tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
+        chartTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
       })
       it('renders preview, table tab is enabled', () => {
         expect(tableTab.nativeNode.disabled).toBe(false)
       })
+      it('renders preview, chart tab is enabled', () => {
+        expect(chartTab.nativeNode.disabled).toBe(false)
+      })
       it('renders table component', () => {
         expect(
           fixture.debugElement.query(By.directive(MockDataTableComponent))
+        ).toBeTruthy()
+      })
+      it('renders chart component', () => {
+        expect(
+          fixture.debugElement.query(By.directive(MockDataChartComponent))
         ).toBeTruthy()
       })
     })
@@ -286,13 +312,22 @@ describe('RecordMetadataComponent', () => {
         facade.geoDataLinks$.next(['link'])
         fixture.detectChanges()
         tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
+        chartTab = fixture.debugElement.queryAll(By.css('mat-tab'))[2]
       })
       it('renders preview, table tab is enabled', () => {
         expect(tableTab.nativeNode.disabled).toBe(false)
       })
+      it('renders preview, chart tab is enabled', () => {
+        expect(chartTab.nativeNode.disabled).toBe(false)
+      })
       it('renders table component', () => {
         expect(
           fixture.debugElement.query(By.directive(MockDataTableComponent))
+        ).toBeTruthy()
+      })
+      it('renders chart component', () => {
+        expect(
+          fixture.debugElement.query(By.directive(MockDataChartComponent))
         ).toBeTruthy()
       })
     })
