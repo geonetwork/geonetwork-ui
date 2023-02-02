@@ -1,7 +1,21 @@
-<gn-ui-chart-container
-  [data]="chartData$ | async"
-  [xAxis]="xAxis$ | async"
-  [yAxis]="yAxis$ | async"
-  [label]="label$ | async"
-  [chartType]="chartType$ | async"
-></gn-ui-chart-container>
+<div class="w-full h-full flex flex-col">
+  <gn-ui-dropdown-selector
+    *ngIf="dataFacade.dropdownChoices$ | async as choices"
+    [title]="'table.select.data' | translate"
+    class="mb-7 w-auto ml-auto m-1"
+    extraClass="!text-primary font-sans font-medium"
+    [choices]="choices"
+    [showTitle]="false"
+    (selectValue)="selectLinkToDisplay($event)"
+  ></gn-ui-dropdown-selector>
+  <div class="relative h-full">
+    <gn-ui-chart-container
+      *ngIf="dataFacade.tableData$ | async"
+      [data]="dataFacade.tableData$ | async"
+      [xAxis]="xAxis$ | async"
+      [yAxis]="yAxis$ | async"
+      [label]="label$ | async"
+      [chartType]="chartType$ | async"
+    ></gn-ui-chart-container>
+  </div>
+</div>
