@@ -10,10 +10,6 @@ import { DataFacade } from '../state/data.facade'
 export class DataViewTableComponent {
   constructor(protected dataFacade: DataFacade) {}
 
-  selectLinkToDisplay(link: number) {
-    this.dataFacade.selectedLinkIndex$.next(link)
-  }
-
   onTableSelect(event) {
     console.log(event)
   }

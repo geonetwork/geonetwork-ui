@@ -44,16 +44,30 @@
   >
     <div class="container-lg px-4 lg:mx-auto">
       <div>
-        <div
-          class="text-[28px] text-title font-title transform sm:translate-y-10"
-          translate
-          id="preview"
-        >
-          record.metadata.preview
+        <div class="grid grid-cols-2">
+          <div
+            class="col-span-1 text-[28px] text-title font-title transform sm:translate-y-10"
+            translate
+            id="preview"
+          >
+            record.metadata.preview
+          </div>
+          <gn-ui-dropdown-selector
+            *ngIf="
+              (activeTabIndex$ | async) !== 0 && dataFacade.dropdownChoices$
+                | async as choices
+            "
+            [title]="'table.select.data' | translate"
+            class="col-span-1 ml-auto m-1"
+            extraClass="!text-primary font-sans font-medium"
+            [choices]="choices"
+            [showTitle]="false"
+            (selectValue)="selectLinkToDisplay($event)"
+          ></gn-ui-dropdown-selector>
         </div>
         <mat-tab-group
-          (selectedIndexChange)="onTabIndexChange()"
-          [selectedIndex]="(displayMap$ | async) ? 0 : 1"
+          (selectedIndexChange)="onTabIndexChange($event)"
+          [selectedIndex]="activeTabIndex$ | async"
           animationDuration="200ms"
           mat-stretch-tabs="false"
           mat-align-tabs="start"
