@@ -6,6 +6,10 @@ import Chart, { ChartType } from 'chart.js/auto'
 })
 export class ChartService {
   chart: Chart
+  xAxis: string
+  yAxis: string
+  label: string
+  rawData: Array<unknown>
 
   createChart(
     canvasContext: HTMLCanvasElement,
@@ -15,22 +19,35 @@ export class ChartService {
     label: string,
     type: ChartType
   ) {
+    this.setData(data, xAxis, yAxis, label)
     this.chart = new Chart(canvasContext, {
       type: type,
-      data: this.mapData(data, xAxis, yAxis, label),
+      data: this.getMappedData(),
       options: {
         aspectRatio: 2.5,
       },
     })
   }
 
-  mapData(data: Array<unknown>, xAxis: string, yAxis: string, label: string) {
+  private setData(
+    data: Array<unknown>,
+    xAxis: string,
+    yAxis: string,
+    label: string
+  ) {
+    this.xAxis = xAxis
+    this.yAxis = yAxis
+    this.label = label
+    this.rawData = data
+  }
+
+  getMappedData() {
     return {
-      labels: data.map((row) => row[xAxis]),
+      labels: this.rawData.map((row) => row[this.xAxis]),
       datasets: [
         {
-          label,
-          data: data.map((row) => row[yAxis]),
+          label: this.label,
+          data: this.rawData.map((row) => row[this.yAxis]),
         },
       ],
     }
@@ -38,6 +55,20 @@ export class ChartService {
 
   changeChartType(type: ChartType) {
     this.chart.config.type = type
+    this.chart.update()
+  }
+
+  updateXAxis(xAxis: string, label: string) {
+    this.xAxis = xAxis
+    this.label = label
+    this.chart.config.data = this.getMappedData()
+    this.chart.update()
+  }
+
+  updateYAxis(yAxis: string, label: string) {
+    this.yAxis = yAxis
+    this.label = label
+    this.chart.config.data = this.getMappedData()
     this.chart.update()
   }
 }
