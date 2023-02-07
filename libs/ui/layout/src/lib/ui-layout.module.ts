@@ -12,6 +12,7 @@ import { ExpandablePanelComponent } from './expandable-panel/expandable-panel.co
 import { StickyHeaderComponent } from './sticky-header/sticky-header.component'
 import { AnchorLinkDirective } from './anchor-link/anchor-link.directive'
 import { ExpandablePanelButtonComponent } from './expandable-panel-button/expandable-panel-button.component'
+import { ChartComponent } from './chart/chart.component'
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { ExpandablePanelButtonComponent } from './expandable-panel-button/expand
     StickyHeaderComponent,
     AnchorLinkDirective,
     ExpandablePanelButtonComponent,
+    ChartComponent,
   ],
   exports: [
     TableComponent,
@@ -38,6 +40,7 @@ import { ExpandablePanelButtonComponent } from './expandable-panel-button/expand
     StickyHeaderComponent,
     AnchorLinkDirective,
     ExpandablePanelButtonComponent,
+    ChartComponent,
   ],
 })
 export class UiLayoutModule {}

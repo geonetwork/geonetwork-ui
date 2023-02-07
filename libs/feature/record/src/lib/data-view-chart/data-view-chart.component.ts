@@ -1,19 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { ChartType } from 'chart.js'
+import { ChartType, CHART_TYPE_VALUES } from '@geonetwork-ui/ui/layout'
 import { BehaviorSubject, Subscription } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { DataFacade } from '../state/data.facade'
-
-const CHART_TYPE_VALUES = [
-  'bar',
-  'line',
-  'scatter',
-  'bubble',
-  'pie',
-  'doughnut',
-  'polarArea',
-  'radar',
-]
 
 @Component({
   selector: 'gn-ui-data-view-chart',

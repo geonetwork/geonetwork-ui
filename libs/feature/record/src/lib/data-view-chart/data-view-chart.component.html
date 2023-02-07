@@ -29,12 +29,12 @@
     ></gn-ui-dropdown-selector>
   </div>
   <div class="relative h-full">
-    <gn-ui-chart-container
+    <gn-ui-chart
       *ngIf="dataFacade.tableData$ | async"
       [data]="dataFacade.tableData$ | async"
       [xAxis]="xAxis$ | async"
       [yAxis]="yAxis$ | async"
       [chartType]="chartType$ | async"
-    ></gn-ui-chart-container>
+    ></gn-ui-chart>
   </div>
 </div>
