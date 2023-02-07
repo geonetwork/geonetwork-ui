@@ -1,3 +1,8 @@
 <div id="angular-app-root">
-  <gn-ui-fuzzy-search class="text-[18px]"> </gn-ui-fuzzy-search>
+  <gn-ui-fuzzy-search
+    class="text-[18px]"
+    (inputSubmited)="search($event)"
+    (itemSelected)="select($event)"
+  >
+  </gn-ui-fuzzy-search>
 </div>
