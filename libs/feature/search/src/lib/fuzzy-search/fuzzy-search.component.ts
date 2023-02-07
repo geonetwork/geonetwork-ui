@@ -76,6 +76,10 @@ export class FuzzySearchComponent implements OnInit {
   }
 
   handleInputSubmission(any: string) {
-    this.searchService.updateFilters({ any })
+    if (this.inputSubmited.observers.length > 0) {
+      this.inputSubmited.emit(any)
+    } else {
+      this.searchService.updateFilters({ any })
+    }
   }
 }
