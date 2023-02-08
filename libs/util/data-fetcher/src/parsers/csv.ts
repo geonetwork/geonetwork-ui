@@ -1,8 +1,9 @@
 import * as Papa from 'papaparse'
-import type { Feature } from 'geojson'
 import { jsonToGeojsonFeature } from './json'
+import { DataItem } from '../lib/model'
+import { BaseDataset } from './base'
 
-export function parseCsv(text: string): Feature[] {
+export function parseCsv(text: string): DataItem[] {
   // first parse the header to guess the delimiter
   // note that we do that to not rely on Papaparse logic for guessing delimiter
   let delimiter
@@ -33,4 +34,10 @@ export function parseCsv(text: string): Feature[] {
     )
   }
   return (parsed.data as any[]).map(jsonToGeojsonFeature)
+}
+
+export class CsvDataset extends BaseDataset {
+  readAll(): Promise<DataItem[]> {
+    return this.fetchAsText().then(parseCsv)
+  }
 }

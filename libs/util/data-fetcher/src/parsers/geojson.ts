@@ -1,11 +1,12 @@
-import { Feature } from 'geojson'
+import { DataItem } from '../lib/model'
+import { BaseDataset } from './base'
 
 /**
  * This parser supports both Geojson Feature collections or arrays
  * of Features
  * @param text
  */
-export function parseGeojson(text: string): Feature[] {
+export function parseGeojson(text: string): DataItem[] {
   const parsed = JSON.parse(text)
   const features =
     parsed.type === 'FeatureCollection' ? parsed.features : parsed
@@ -15,4 +16,10 @@ export function parseGeojson(text: string): Feature[] {
     )
   }
   return features
+}
+
+export class GeojsonDataset extends BaseDataset {
+  readAll(): Promise<DataItem[]> {
+    return this.fetchAsText().then(parseGeojson)
+  }
 }

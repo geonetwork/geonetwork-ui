@@ -2,8 +2,8 @@ import fetchMock from 'fetch-mock-jest'
 import fs from 'fs/promises'
 import path from 'path'
 import { readDataset } from './data-fetcher'
-import * as csv from '../parsers/csv'
-import * as geojson from '../parsers/geojson'
+import { CsvDataset } from '../parsers/csv'
+import { GeojsonDataset } from '../parsers/geojson'
 import { useCache, sharedFetch } from '@camptocamp/ogc-client'
 
 jest.mock('@camptocamp/ogc-client', () => ({
@@ -60,8 +60,8 @@ describe('data-fetcher', () => {
         sendAsJson: false,
       }
     )
-    jest.spyOn(csv, 'parseCsv')
-    jest.spyOn(geojson, 'parseGeojson')
+    jest.spyOn(CsvDataset.prototype, 'readAll')
+    jest.spyOn(GeojsonDataset.prototype, 'readAll')
   })
   afterEach(() => {
     fetchMock.reset()
@@ -335,26 +335,26 @@ describe('data-fetcher', () => {
       })
     })
     describe('specifying a type hint', () => {
-      it('ignores the advertised content type and follow the type hint instead', async () => {
+      it('ignores the advertised content type and follows the type hint instead', async () => {
         try {
           await readDataset(
             'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson',
             'csv'
           )
         } catch {} // eslint-disable-line
-        expect(csv.parseCsv).toHaveBeenCalled()
+        expect(CsvDataset.prototype.readAll).toHaveBeenCalled()
       })
     })
     describe('when no header present', () => {
       it('infers type from the file extension (csv)', async () => {
         await readDataset('http://localfile/fixtures/rephytox.csv?noheader')
-        expect(csv.parseCsv).toHaveBeenCalled()
+        expect(CsvDataset.prototype.readAll).toHaveBeenCalled()
       })
       it('infers type from the file extension (geojson)', async () => {
         await readDataset(
           'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson?noheader'
         )
-        expect(geojson.parseGeojson).toHaveBeenCalled()
+        expect(GeojsonDataset.prototype.readAll).toHaveBeenCalled()
       })
       it('fails if no recognized extension in the url', async () => {
         expect(
@@ -370,7 +370,8 @@ describe('data-fetcher', () => {
     describe('use ogc-client utils for caching', () => {
       beforeEach(() => {
         readDataset(
-          'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson'
+          'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson',
+          'geojson'
         )
       })
       it('uses cache', () => {
