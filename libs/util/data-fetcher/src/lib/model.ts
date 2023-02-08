@@ -87,3 +87,13 @@ export interface DatasetHeaders {
   lastUpdate?: Date
   lastUpdateInvalid?: true
 }
+
+export interface PropertyInfo {
+  name: string
+  label: string
+  type: 'number' | 'date' | 'url' | 'string'
+}
+
+export interface DatasetInfo {
+  itemsCount: number
+}

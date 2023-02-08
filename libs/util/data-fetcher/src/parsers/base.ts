@@ -1,4 +1,4 @@
-import { DataItem } from '../lib/model'
+import { DataItem, DatasetInfo, PropertyInfo } from '../lib/model'
 import { fetchData } from '../lib/utils'
 
 export class BaseDataset {
@@ -10,6 +10,14 @@ export class BaseDataset {
 
   protected fetchAsBuffer(): Promise<ArrayBuffer> {
     return fetchData(this.url).then((resp) => resp.arrayBuffer())
+  }
+
+  get properties(): Promise<PropertyInfo[]> {
+    throw new Error('not implemented')
+  }
+
+  get info(): Promise<DatasetInfo> {
+    throw new Error('not implemented')
   }
 
   readAll(): Promise<DataItem[]> {
