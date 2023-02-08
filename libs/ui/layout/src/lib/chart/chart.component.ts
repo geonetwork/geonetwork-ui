@@ -6,7 +6,8 @@ import {
   Input,
   ViewChild,
 } from '@angular/core'
-import { Chart, ChartType } from 'chart.js'
+import Chart from 'chart.js/auto'
+import { ChartType } from './chart.model'
 
 @Component({
   selector: 'gn-ui-chart',
