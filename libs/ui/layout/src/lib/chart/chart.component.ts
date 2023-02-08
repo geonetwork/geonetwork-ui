@@ -6,8 +6,39 @@ import {
   Input,
   ViewChild,
 } from '@angular/core'
-import Chart from 'chart.js/auto'
+import {
+  Chart,
+  BarController,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  LineController,
+  LineElement,
+  PointElement,
+  PieController,
+  ArcElement,
+  ScatterController,
+  Tooltip,
+  Colors,
+  Legend,
+} from 'chart.js'
 import { ChartType } from './chart.model'
+
+Chart.register(
+  BarController,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  LineController,
+  LineElement,
+  PointElement,
+  PieController,
+  ArcElement,
+  ScatterController,
+  Tooltip,
+  Colors,
+  Legend
+)
 
 @Component({
   selector: 'gn-ui-chart',
