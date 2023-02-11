@@ -26,6 +26,11 @@
             "glob": "*",
             "input": "conf",
             "output": "assets/configuration/"
+          },
+          {
+            "glob": "duckdb-(eh|mvp|browser-eh|browser-mvp)*",
+            "input": "./node_modules/@duckdb/duckdb-wasm/dist",
+            "output": "./assets/"
           }
         ],
         "styles": [
