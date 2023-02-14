@@ -26,10 +26,12 @@ describe('ChartComponent', () => {
   describe('create chart', () => {
     let createChartSpy
     let getChartTypeSpy
+    let getOptionsSpy
 
     beforeEach(() => {
       createChartSpy = jest.spyOn(component, 'createChart')
       getChartTypeSpy = jest.spyOn(component, 'getChartType')
+      getOptionsSpy = jest.spyOn(component, 'getOptions')
       fixture.detectChanges()
     })
 
@@ -43,6 +45,10 @@ describe('ChartComponent', () => {
 
     it('should call getChartType for mapping', () => {
       expect(getChartTypeSpy).toHaveBeenCalled()
+    })
+
+    it('should call getOptions for ChartType dependent options', () => {
+      expect(getOptionsSpy).toHaveBeenCalled()
     })
 
     it('should create a chart', () => {

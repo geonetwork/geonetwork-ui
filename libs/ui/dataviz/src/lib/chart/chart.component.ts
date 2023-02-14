@@ -22,6 +22,7 @@ import {
   Colors,
   Legend,
   ChartType,
+  ChartOptions,
 } from 'chart.js'
 import { InputChartType } from './chart.model'
 
@@ -59,7 +60,7 @@ export class ChartComponent implements AfterViewInit {
   @Input() set xAxis(value: string) {
     if (this.xAxisValue) {
       this.xAxisValue = value
-      this.updateChartData()
+      this.updateChart()
     } else {
       this.xAxisValue = value
     }
@@ -67,14 +68,18 @@ export class ChartComponent implements AfterViewInit {
   @Input() set yAxis(value: string) {
     if (this.yAxisValue) {
       this.yAxisValue = value
-      this.updateChartData()
+      this.updateChart()
     } else {
       this.yAxisValue = value
     }
   }
   @Input() set chartType(value: InputChartType) {
-    this.chartTypeValue && this.changeChartType(value)
-    this.chartTypeValue = value
+    if (this.chartTypeValue) {
+      this.chartTypeValue = value
+      this.updateChart()
+    } else {
+      this.chartTypeValue = value
+    }
   }
   @ViewChild('chartCanvas') canvasRef: ElementRef<HTMLCanvasElement>
 
@@ -85,35 +90,64 @@ export class ChartComponent implements AfterViewInit {
   createChart() {
     this.chart = new Chart(this.canvasRef.nativeElement, {
       type: this.getChartType(),
-      data: this.getMappedData(),
-      options: {
-        aspectRatio: 2.5,
-        ...(this.chartTypeValue === 'scatter' && {
+      data: {
+        datasets: [
+          {
+            label: this.yAxisValue,
+            data: this.data,
+          },
+        ],
+      },
+      options: this.getOptions(),
+    })
+  }
+
+  getOptions(): ChartOptions {
+    const options = {
+      aspectRatio: 2.5,
+      parsing: {
+        xAxisKey: this.xAxisValue,
+        yAxisKey: this.yAxisValue,
+      },
+    }
+    switch (this.chartTypeValue) {
+      case 'scatter':
+        return {
+          ...options,
           scales: {
             x: {
               type: 'category',
             },
           },
-        }),
-        ...(this.chartTypeValue === 'bar' && {
+        }
+      case 'curve':
+        return {
+          ...options,
+          elements: {
+            line: {
+              cubicInterpolationMode: 'monotone',
+            },
+          },
+        }
+      case 'bar':
+        return {
+          ...options,
           indexAxis: 'y',
-        }),
-        ...(this.chartTypeValue === 'curve' && {
-          cubicInterpolationMode: 'monotone',
-        }),
-      },
-    })
-  }
+          parsing: {
+            xAxisKey: this.yAxisValue,
+            yAxisKey: this.xAxisValue,
+          },
+        }
 
-  getMappedData() {
-    return {
-      labels: this.data?.map((row) => row[this.xAxisValue]),
-      datasets: [
-        {
-          label: this.yAxisValue,
-          data: this.data?.map((row) => row[this.yAxisValue]),
-        },
-      ],
+      case 'pie':
+        return {
+          ...options,
+          parsing: {
+            key: this.yAxisValue,
+          },
+        }
+      default:
+        return options
     }
   }
 
@@ -129,16 +163,8 @@ export class ChartComponent implements AfterViewInit {
     return chartTypeMapping[this.chartTypeValue] as ChartType
   }
 
-  changeChartType(type: InputChartType) {
-    // recreate chart to make chartjs automatically use multiple colors
-    // for pie chart and one color for other types
+  updateChart() {
     this.chart.destroy()
-    this.chartTypeValue = type
     this.createChart()
-  }
-
-  updateChartData() {
-    this.chart.config.data = this.getMappedData()
-    this.chart.update()
   }
 }
