@@ -5,7 +5,7 @@ import { UiMapModule } from '@geonetwork-ui/ui/map'
 import { GeoTableViewComponent } from './geo-table-view/geo-table-view.component'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { FigureContainerComponent } from './figure/figure-container/figure-container.component'
-import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
+import { TableComponent } from '@geonetwork-ui/ui/dataviz'
 
 @NgModule({
   imports: [
@@ -13,7 +13,7 @@ import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
     UiLayoutModule,
     FeatureMapModule,
     UiMapModule,
-    UiDatavizModule,
+    TableComponent,
   ],
   declarations: [GeoTableViewComponent, FigureContainerComponent],
   exports: [GeoTableViewComponent, FigureContainerComponent],

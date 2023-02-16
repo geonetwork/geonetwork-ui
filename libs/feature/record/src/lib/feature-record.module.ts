@@ -24,7 +24,7 @@ import { DataOtherlinksComponent } from './data-otherlinks/data-otherlinks.compo
 import { RelatedRecordsComponent } from './related-records/related-records.component'
 import { ExternalViewerButtonComponent } from './external-viewer-button/external-viewer-button.component'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
-import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
+import { TableComponent } from '@geonetwork-ui/ui/dataviz'
 
 @NgModule({
   declarations: [
@@ -52,7 +52,7 @@ import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
     MatIconModule,
     UiWidgetsModule,
     TranslateModule,
-    UiDatavizModule,
+    TableComponent,
   ],
   providers: [MdViewFacade],
   exports: [
