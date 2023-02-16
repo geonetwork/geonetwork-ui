@@ -1,9 +1,4 @@
 import {
-  TABLE_ITEM_FIXTURE,
-  TABLE_ITEM_FIXTURE_HAB,
-  UiLayoutModule,
-} from '@geonetwork-ui/ui/layout'
-import {
   moduleMetadata,
   Story,
   Meta,
@@ -11,13 +6,18 @@ import {
 } from '@storybook/angular'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FigureContainerComponent } from './figure-container.component'
+import {
+  TABLE_ITEM_FIXTURE,
+  TABLE_ITEM_FIXTURE_HAB,
+  UiDatavizModule,
+} from '@geonetwork-ui/ui/dataviz'
 
 export default {
   title: 'Dataviz/FigureContainerComponent',
   component: FigureContainerComponent,
   decorators: [
     moduleMetadata({
-      imports: [UiLayoutModule, BrowserAnimationsModule],
+      imports: [UiDatavizModule, BrowserAnimationsModule],
     }),
     componentWrapperDecorator(
       (story) => `

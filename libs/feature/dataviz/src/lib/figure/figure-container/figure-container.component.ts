@@ -4,7 +4,7 @@ import {
   Input,
   OnChanges,
 } from '@angular/core'
-import { TableItemModel } from '@geonetwork-ui/ui/layout'
+import { TableItemModel } from '@geonetwork-ui/ui/dataviz'
 import { FigureService } from '../figure.service'
 
 @Component({

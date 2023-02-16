@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { TableItemModel } from '@geonetwork-ui/ui/layout'
+import { TableItemModel } from '@geonetwork-ui/ui/dataviz'
 
 type FigureOperationTypes = 'sum' | 'average'
 type FigureOperationsModel = Record<
