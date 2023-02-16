@@ -5,6 +5,8 @@ import { MatSortModule } from '@angular/material/sort'
 import { TableVirtualScrollModule } from 'ng-table-virtual-scroll'
 import { TableComponent } from './table/table.component'
 import { ScrollingModule } from '@angular/cdk/scrolling'
+import { FigureComponent } from './figure/figure.component'
+import { MatIconModule } from '@angular/material/icon'
 @NgModule({
   imports: [
     CommonModule,
@@ -12,8 +14,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling'
     MatSortModule,
     TableVirtualScrollModule,
     ScrollingModule,
+    MatIconModule,
   ],
-  declarations: [TableComponent],
-  exports: [TableComponent],
+  declarations: [TableComponent, FigureComponent],
+  exports: [TableComponent, FigureComponent],
 })
 export class UiDatavizModule {}

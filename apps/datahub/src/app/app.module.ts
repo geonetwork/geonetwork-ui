@@ -63,6 +63,7 @@ import { RecordPageComponent } from './record/record-page/record-page.component'
 import { DatahubRouterService } from './router/datahub-router.service'
 import { NavigationMenuComponent } from './home/navigation-menu/navigation-menu.component'
 import { FormsModule } from '@angular/forms'
+import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
@@ -118,6 +119,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     UiInputsModule,
     UiLayoutModule,
     UiElementsModule,
+    UiDatavizModule,
     FormsModule,
   ],
   providers: [
