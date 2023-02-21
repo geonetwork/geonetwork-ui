@@ -159,17 +159,31 @@ export class MapUtilsService {
   }
 
   getWmtsOptionsFromCapabilities(link: MetadataLink): Observable<Options> {
+    const getCapabilitiesUrl = new URL(link.url, window.location.toString())
+    getCapabilitiesUrl.searchParams.set('SERVICE', 'WMTS')
+    getCapabilitiesUrl.searchParams.set('REQUEST', 'GetCapabilities')
     return from(
-      fetch(link.url)
-        .then(function (response) {
+      fetch(getCapabilitiesUrl.toString())
+        .then(async function (response) {
+          if (!response.ok) {
+            throw new Error(`WMTS GetCapabilities HTTP request failed with code ${
+              response.status
+            } and body:
+${await response.text()}`)
+          }
           return response.text()
         })
         .then(function (text) {
-          const result = new WMTSCapabilities().read(text)
-          return optionsFromCapabilities(result, {
-            layer: link.name,
-            matrixSet: 'EPSG:3857',
-          })
+          try {
+            const result = new WMTSCapabilities().read(text)
+            return optionsFromCapabilities(result, {
+              layer: link.name,
+              matrixSet: 'EPSG:3857',
+            })
+          } catch (e: any) {
+            throw new Error(`WMTS GetCapabilities parsing failed:
+${e.stack || e.message || e}`)
+          }
         })
     )
   }
