@@ -61,6 +61,7 @@ export class DataViewTableComponent {
         ? this.fetchData(link).pipe(
             catchError((error) => {
               this.error = error.message
+              console.warn(error.stack || error.message)
               return of([])
             }),
             finalize(() => {

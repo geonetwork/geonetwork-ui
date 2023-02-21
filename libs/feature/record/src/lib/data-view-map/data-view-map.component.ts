@@ -93,6 +93,7 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
         map((layer) => [layer]),
         catchError((e) => {
           this.error = e.message
+          console.warn(e.stack || e.message)
           return of([])
         }),
         finalize(() => (this.loading = false))
