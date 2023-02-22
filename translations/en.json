@@ -33,7 +33,7 @@
   "datafeeder.publish.hint": "You can safely exit this page, you will be notified when the process is over",
   "datafeeder.publish.illustration.title": "Another dataset \n to publish ?",
   "datafeeder.publish.subtitle": "Publishing may take several minutes.",
-  "datafeeder.publish.title": "Thank you! \n Your dataset is being publish",
+  "datafeeder.publish.title": "Thank you! \n Your dataset is being published",
   "datafeeder.publish.upload": "Upload it now",
   "datafeeder.publishSuccess.geonetworkRecord": "Metadata record",
   "datafeeder.publishSuccess.illustration.title": "Done, all is good!",
