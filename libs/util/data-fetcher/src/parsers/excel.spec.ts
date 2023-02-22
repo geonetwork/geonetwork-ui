@@ -4124,6 +4124,7 @@ describe('Excel parsing', () => {
         }
       )
       dataset = new ExcelDataset('http://localfile/fixtures/ENS_CG02.xls')
+      dataset.load()
     })
     afterEach(() => {
       fetchMock.reset()
@@ -4171,10 +4172,10 @@ describe('Excel parsing', () => {
         ])
       })
     })
-    describe('#readAll', () => {
+    describe('#read', () => {
       it('reads data', async () => {
         const start = performance.now()
-        const items = await dataset.readAll()
+        const items = await dataset.read()
         console.log(`took ${(performance.now() - start).toFixed(1)}ms`)
         expect(items[0]).toEqual({
           geometry: null,

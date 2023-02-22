@@ -373,6 +373,7 @@ describe('CSV parsing', () => {
         }
       )
       dataset = new CsvDataset('http://localfile/fixtures/rephytox.csv')
+      dataset.load()
     })
     afterEach(() => {
       fetchMock.reset()
@@ -646,10 +647,10 @@ describe('CSV parsing', () => {
         ])
       })
     })
-    describe('#readAll', () => {
+    describe('#read', () => {
       it('reads data', async () => {
         const start = performance.now()
-        const items = await dataset.readAll()
+        const items = await dataset.read()
         console.log(`took ${(performance.now() - start).toFixed(1)}ms`)
         expect(items[0]).toEqual({
           geometry: null,

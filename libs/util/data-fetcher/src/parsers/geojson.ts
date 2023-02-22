@@ -1,6 +1,6 @@
-import { DataItem, DatasetInfo, PropertyInfo } from '../lib/model'
-import { BaseDataset } from './base'
+import { DataItem, PropertyInfo } from '../lib/model'
 import { processItemProperties } from '../lib/utils'
+import { BaseFileDataset } from './base-file'
 
 /**
  * This parser supports both Geojson Feature collections or arrays
@@ -22,25 +22,8 @@ export function parseGeojson(text: string): {
   return processItemProperties(features)
 }
 
-export class GeojsonDataset extends BaseDataset {
-  private parseResult_ = this.fetchAsText().then(parseGeojson)
-  private propertiesInfo_ = this.parseResult_.then(
-    (result) => result.properties
-  )
-  private datasetInfo_ = this.parseResult_.then(
-    (result) =>
-      ({
-        itemsCount: result.items.length,
-      } as DatasetInfo)
-  )
-  get properties(): Promise<PropertyInfo[]> {
-    return this.propertiesInfo_
-  }
-
-  get info(): Promise<DatasetInfo> {
-    return this.datasetInfo_
-  }
-  readAll(): Promise<DataItem[]> {
-    return this.parseResult_.then((result) => result.items)
+export class GeojsonDataset extends BaseFileDataset {
+  getData() {
+    return this.fetchAsText().then(parseGeojson)
   }
 }

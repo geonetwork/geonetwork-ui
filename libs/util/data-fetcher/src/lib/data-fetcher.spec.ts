@@ -60,8 +60,8 @@ describe('data-fetcher', () => {
         sendAsJson: false,
       }
     )
-    jest.spyOn(CsvDataset.prototype, 'readAll')
-    jest.spyOn(GeojsonDataset.prototype, 'readAll')
+    jest.spyOn(CsvDataset.prototype, 'read')
+    jest.spyOn(GeojsonDataset.prototype, 'read')
   })
   afterEach(() => {
     fetchMock.reset()
@@ -342,19 +342,19 @@ describe('data-fetcher', () => {
             'csv'
           ).catch(console.warn)
         } catch {} // eslint-disable-line
-        expect(CsvDataset.prototype.readAll).toHaveBeenCalled()
+        expect(CsvDataset.prototype.read).toHaveBeenCalled()
       })
     })
     describe('when no header present', () => {
       it('infers type from the file extension (csv)', async () => {
         await readDataset('http://localfile/fixtures/rephytox.csv?noheader')
-        expect(CsvDataset.prototype.readAll).toHaveBeenCalled()
+        expect(CsvDataset.prototype.read).toHaveBeenCalled()
       })
       it('infers type from the file extension (geojson)', async () => {
         await readDataset(
           'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson?noheader'
         )
-        expect(GeojsonDataset.prototype.readAll).toHaveBeenCalled()
+        expect(GeojsonDataset.prototype.read).toHaveBeenCalled()
       })
       it('fails if no recognized extension in the url', async () => {
         expect(
