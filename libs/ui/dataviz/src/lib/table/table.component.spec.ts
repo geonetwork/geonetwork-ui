@@ -16,7 +16,7 @@ describe('TableComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [NoopAnimationsModule, MatTableModule, MatSortModule],
-      declarations: [TableComponent, TableItemSizeDirective],
+      declarations: [TableItemSizeDirective],
     })
       .overrideComponent(TableComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },

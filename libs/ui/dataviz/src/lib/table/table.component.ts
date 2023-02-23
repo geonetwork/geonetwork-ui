@@ -1,3 +1,5 @@
+import { ScrollingModule } from '@angular/cdk/scrolling'
+import { NgForOf } from '@angular/common'
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -8,9 +10,12 @@ import {
   Output,
   ViewChild,
 } from '@angular/core'
-import { MatSort } from '@angular/material/sort'
-import { MatTableDataSource } from '@angular/material/table'
-import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll'
+import { MatSort, MatSortModule } from '@angular/material/sort'
+import { MatTableModule } from '@angular/material/table'
+import {
+  TableVirtualScrollDataSource,
+  TableVirtualScrollModule,
+} from 'ng-table-virtual-scroll'
 
 const rowIdPrefix = 'table-item-'
 
@@ -23,6 +28,14 @@ export interface TableItemModel {
 }
 
 @Component({
+  standalone: true,
+  imports: [
+    MatTableModule,
+    MatSortModule,
+    TableVirtualScrollModule,
+    ScrollingModule,
+    NgForOf,
+  ],
   selector: 'gn-ui-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],

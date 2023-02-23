@@ -8,8 +8,8 @@ import {
 } from '@storybook/angular'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
 import { TableComponent } from './table.component'
-import { UiLayoutModule } from '../ui-layout.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { UiDatavizModule } from '../ui-dataviz.module'
 
 export default {
   title: 'Layout/TableComponent',
@@ -17,7 +17,7 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [
-        UiLayoutModule,
+        UiDatavizModule,
         BrowserAnimationsModule,
         HttpClientModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),

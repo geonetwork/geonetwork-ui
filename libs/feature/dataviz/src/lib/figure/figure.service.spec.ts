@@ -1,8 +1,5 @@
 import { TestBed } from '@angular/core/testing'
-import {
-  TABLE_ITEM_FIXTURE,
-  TABLE_ITEM_FIXTURE_HAB,
-} from '@geonetwork-ui/ui/layout'
+import { FIGURE_ITEM_FIXTURE, FIGURE_ITEM_FIXTURE_HAB } from './figure.fixtures'
 
 import { FigureService } from './figure.service'
 
@@ -35,7 +32,7 @@ describe('FigureServiceService', () => {
 
     describe('average', () => {
       beforeEach(() => {
-        dataset = TABLE_ITEM_FIXTURE
+        dataset = FIGURE_ITEM_FIXTURE
         expression = 'average|age'
         figure = service.compute(expression, dataset)
       })
@@ -46,7 +43,7 @@ describe('FigureServiceService', () => {
     })
     describe('sum', () => {
       beforeEach(() => {
-        dataset = TABLE_ITEM_FIXTURE_HAB
+        dataset = FIGURE_ITEM_FIXTURE_HAB
         expression = 'sum|pop'
         figure = service.compute(expression, dataset)
       })
@@ -57,7 +54,7 @@ describe('FigureServiceService', () => {
     })
     describe('error', () => {
       beforeEach(() => {
-        dataset = TABLE_ITEM_FIXTURE
+        dataset = FIGURE_ITEM_FIXTURE
         expression = 'avera---age'
         figure = service.compute(expression, dataset)
       })

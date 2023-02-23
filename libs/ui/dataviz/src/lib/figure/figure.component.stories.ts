@@ -5,15 +5,15 @@ import {
   componentWrapperDecorator,
 } from '@storybook/angular'
 import { FigureComponent } from './figure.component'
-import { UiLayoutModule } from '../ui-layout.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { UiDatavizModule } from '../ui-dataviz.module'
 
 export default {
   title: 'Layout/FigureComponent',
   component: FigureComponent,
   decorators: [
     moduleMetadata({
-      imports: [UiLayoutModule, BrowserAnimationsModule],
+      imports: [UiDatavizModule, BrowserAnimationsModule],
     }),
     componentWrapperDecorator(
       (story) => `

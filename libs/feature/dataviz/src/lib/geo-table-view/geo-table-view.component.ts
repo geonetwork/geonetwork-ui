@@ -21,7 +21,7 @@ import {
   TableComponent,
   TableItemId,
   TableItemModel,
-} from '@geonetwork-ui/ui/layout'
+} from '@geonetwork-ui/ui/dataviz'
 import type { FeatureCollection } from 'geojson'
 import Map from 'ol/Map'
 import View from 'ol/View'
