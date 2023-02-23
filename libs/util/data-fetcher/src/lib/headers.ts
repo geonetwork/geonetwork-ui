@@ -1,12 +1,4 @@
-import { AllMimeTypes, SupportedType, SupportedTypes } from '../mime/types'
-
-export interface DatasetHeaders {
-  mimeType?: string
-  supportedType?: SupportedType
-  fileSizeBytes?: number
-  lastUpdate?: Date
-  lastUpdateInvalid?: true
-}
+import { AllMimeTypes, DatasetHeaders, SupportedTypes } from './model'
 
 export function parseHeaders(httpHeaders: Headers): DatasetHeaders {
   const result: DatasetHeaders = {}

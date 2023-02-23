@@ -1,10 +1,10 @@
 import fetchMock from 'fetch-mock-jest'
-import fs from 'fs/promises'
+import fs from 'fs'
 import path from 'path'
 import { readDataset } from './data-fetcher'
-import * as csv from '../parsers/csv'
-import * as geojson from '../parsers/geojson'
-import { useCache, sharedFetch } from '@camptocamp/ogc-client'
+import { CsvDataset } from '../parsers/csv'
+import { GeojsonDataset } from '../parsers/geojson'
+import { sharedFetch, useCache } from '@camptocamp/ogc-client'
 
 jest.mock('@camptocamp/ogc-client', () => ({
   useCache: jest.fn((factory) => factory()),
@@ -25,23 +25,23 @@ describe('data-fetcher', () => {
         let contentType
         switch (fileExt) {
           case '.csv':
-            body = await fs.readFile(filePath, 'utf8') // as string
+            body = fs.readFileSync(filePath, { encoding: 'utf8' }) // as string
             contentType = 'text/csv'
             break
           case '.json':
-            body = await fs.readFile(filePath, 'utf8') // as string
+            body = fs.readFileSync(filePath, { encoding: 'utf8' }) // as string
             contentType = 'application/json'
             break
           case '.geojson':
-            body = await fs.readFile(filePath, 'utf8') // as string
+            body = fs.readFileSync(filePath, { encoding: 'utf8' }) // as string
             contentType = 'application/geo+json'
             break
           case '.xls':
-            body = await fs.readFile(filePath) // as arraybuffer
+            body = fs.readFileSync(filePath, null) // as arraybuffer
             contentType = 'application/vnd.ms-excel'
             break
           case '.xlsx':
-            body = await fs.readFile(filePath) // as arraybuffer
+            body = fs.readFileSync(filePath, null) // as arraybuffer
             contentType =
               'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             break
@@ -60,8 +60,8 @@ describe('data-fetcher', () => {
         sendAsJson: false,
       }
     )
-    jest.spyOn(csv, 'parseCsv')
-    jest.spyOn(geojson, 'parseGeojson')
+    jest.spyOn(CsvDataset.prototype, 'readAll')
+    jest.spyOn(GeojsonDataset.prototype, 'readAll')
   })
   afterEach(() => {
     fetchMock.reset()
@@ -148,34 +148,34 @@ describe('data-fetcher', () => {
         expect(csv[0]).toEqual({
           geometry: null,
           properties: {
-            'Coordonnées passage : Coordonnées maxx': '1.99866073',
-            'Coordonnées passage : Coordonnées maxy': '51.00247775',
-            'Coordonnées passage : Coordonnées minx': '1.99866073',
-            'Coordonnées passage : Coordonnées miny': '51.00247775',
-            'Coordonnées passage : Coordonnées redéfinies': '0',
+            'Coordonnées passage : Coordonnées maxx': 1.99866073,
+            'Coordonnées passage : Coordonnées maxy': 51.00247775,
+            'Coordonnées passage : Coordonnées minx': 1.99866073,
+            'Coordonnées passage : Coordonnées miny': 51.00247775,
+            'Coordonnées passage : Coordonnées redéfinies': 0,
             'Echantillon : Commentaire': '',
             'Echantillon : Commentaire de qualification': '',
             'Echantillon : Date de qualification': '',
-            'Echantillon : Date de validation': '',
-            'Echantillon : Identifiant interne': '5380212',
+            'Echantillon : Date de validation': null,
+            'Echantillon : Identifiant interne': 5380212,
             'Echantillon : Libellé du support': 'Bivalve',
             'Echantillon : Libellé du taxon support': 'Mytilus edulis',
             'Echantillon : Niveau de qualité': 'Non qualifié',
             "Libellé de l'engin de prélévement": 'Main ',
-            'Lieu de surveillance : Identifiant': '1001104',
+            'Lieu de surveillance : Identifiant': 1001104,
             'Lieu de surveillance : Libellé': 'Oye plage',
             'Lieu de surveillance : Mnémonique': '001-P-022',
             'Passage : Commentaire': '',
             'Passage : Commentaire de qualification': '',
-            'Passage : Date': '15/04/2008',
+            'Passage : Date': new Date('2008-04-15T00:00'),
             'Passage : Date de qualification': '',
-            'Passage : Date de validation': '',
+            'Passage : Date de validation': null,
             'Passage : Niveau de qualité': 'Non qualifié',
             'Prélèvement : Commentaire': '',
             'Prélèvement : Commentaire de qualification': '',
             'Prélèvement : Date de qualification': '',
-            'Prélèvement : Date de validation': '',
-            'Prélèvement : Immersion': '0',
+            'Prélèvement : Date de validation': null,
+            'Prélèvement : Immersion': 0,
             'Prélèvement : Immersion Max': '',
             'Prélèvement : Immersion Min': '',
             'Prélèvement : Niveau': 'Emergé',
@@ -189,7 +189,7 @@ describe('data-fetcher', () => {
             'Résultat : Commentaire de qualification': '',
             'Résultat : Commentaires': '',
             'Résultat : Date de qualification': '',
-            'Résultat : Date de validation': '',
+            'Résultat : Date de validation': null,
             'Résultat : Libellé fraction': 'Chair totale égouttée',
             'Résultat : Libellé méthode': 'CL/UV toxines amnésiantes - mg/kg',
             'Résultat : Libellé paramètre': 'Toxines ASP',
@@ -202,7 +202,7 @@ describe('data-fetcher', () => {
               'Laboratoire Environnement Ressources de Bretagne Occidentale',
             'Résultat : Symbole unité de mesure associé au quadruplet':
               'mg.kg-1',
-            'Résultat : Valeur de la mesure': '1.1',
+            'Résultat : Valeur de la mesure': 1.1,
             'Résultat : Valeur qualitative': '',
           },
           type: 'Feature',
@@ -220,11 +220,11 @@ describe('data-fetcher', () => {
           properties: {
             COMMUNE: 'ANGLEFORT',
             DEP_NOM: 'AIN',
-            DEP_NUM: '01',
+            DEP_NUM: 1,
             FACADE: 'Métropole',
             FRANCE: 'Métropole',
-            LAT: '',
-            LONG: '',
+            LAT: null,
+            LONG: null,
             POINT: "PLAN D'EAU D'ANGLEFORT",
             QEB_2013: '',
             QEB_2014: '',
@@ -258,7 +258,7 @@ describe('data-fetcher', () => {
             id_s_inond: 'SIN_1',
             id_tri: 'FRA_TRI_LILL',
             scenario: '01For',
-            typ_inond: '01',
+            typ_inond: 1,
           },
           type: 'Feature',
         })
@@ -335,26 +335,26 @@ describe('data-fetcher', () => {
       })
     })
     describe('specifying a type hint', () => {
-      it('ignores the advertised content type and follow the type hint instead', async () => {
+      it('ignores the advertised content type and follows the type hint instead', async () => {
         try {
           await readDataset(
-            'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson',
+            'http://localfile/fixtures/small.json',
             'csv'
-          )
+          ).catch(console.warn)
         } catch {} // eslint-disable-line
-        expect(csv.parseCsv).toHaveBeenCalled()
+        expect(CsvDataset.prototype.readAll).toHaveBeenCalled()
       })
     })
     describe('when no header present', () => {
       it('infers type from the file extension (csv)', async () => {
         await readDataset('http://localfile/fixtures/rephytox.csv?noheader')
-        expect(csv.parseCsv).toHaveBeenCalled()
+        expect(CsvDataset.prototype.readAll).toHaveBeenCalled()
       })
       it('infers type from the file extension (geojson)', async () => {
         await readDataset(
           'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson?noheader'
         )
-        expect(geojson.parseGeojson).toHaveBeenCalled()
+        expect(GeojsonDataset.prototype.readAll).toHaveBeenCalled()
       })
       it('fails if no recognized extension in the url', async () => {
         expect(
@@ -370,7 +370,8 @@ describe('data-fetcher', () => {
     describe('use ogc-client utils for caching', () => {
       beforeEach(() => {
         readDataset(
-          'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson'
+          'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson',
+          'geojson'
         )
       })
       it('uses cache', () => {

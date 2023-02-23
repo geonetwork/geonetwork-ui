@@ -1,10 +1,14 @@
-import { parseGeojson } from './geojson'
+import { GeojsonDataset, parseGeojson } from './geojson'
+import fetchMock from 'fetch-mock-jest'
+import path from 'path'
+import fs from 'fs/promises'
 
-describe('parseGeojson', () => {
-  describe('Valid Geojson (array of features)', () => {
-    it('returns the features', () => {
-      expect(
-        parseGeojson(`
+describe('geojson parsing', () => {
+  describe('parseGeojson', () => {
+    describe('Valid Geojson (array of features)', () => {
+      it('returns the features', () => {
+        expect(
+          parseGeojson(`
 {
   "type": "FeatureCollection",
   "features": [
@@ -60,52 +64,106 @@ describe('parseGeojson', () => {
     }
   ]
 }`)
-      ).toEqual([
-        {
-          geometry: {
-            coordinates: [3.37305747018, 43.7929180957],
-            type: 'Point',
-          },
-          properties: {
-            code_dep: '34',
-            code_epci: 200017341,
-            code_region: '76',
-            geo_point_2d: [43.7929180957, 3.37305747018],
-            nom_dep: 'HERAULT',
-            nom_epci: 'CC Lodévois et Larzac',
-            nom_region: 'OCCITANIE',
-            objectid: 25,
-            st_area_shape: 554841824.0549872,
-            st_perimeter_shape: 125726.64842881361,
-          },
-          type: 'Feature',
-        },
-        {
-          geometry: {
-            coordinates: [4.57226840664, 44.1745337933],
-            type: 'Point',
-          },
-          properties: {
-            code_dep: '30',
-            code_epci: 200034692,
-            code_region: '76',
-            geo_point_2d: [44.1745337933, 4.57226840664],
-            nom_dep: 'GARD',
-            nom_epci: 'CA Gard Rhodanien',
-            nom_region: 'OCCITANIE',
-            objectid: 29,
-            st_area_shape: 632262734.2850112,
-            st_perimeter_shape: 138820.51662269383,
-          },
-          type: 'Feature',
-        },
-      ])
+        ).toEqual({
+          items: [
+            {
+              geometry: {
+                coordinates: [3.37305747018, 43.7929180957],
+                type: 'Point',
+              },
+              properties: {
+                code_dep: '34',
+                code_epci: 200017341,
+                code_region: '76',
+                geo_point_2d: [43.7929180957, 3.37305747018],
+                nom_dep: 'HERAULT',
+                nom_epci: 'CC Lodévois et Larzac',
+                nom_region: 'OCCITANIE',
+                objectid: 25,
+                st_area_shape: 554841824.0549872,
+                st_perimeter_shape: 125726.64842881361,
+              },
+              type: 'Feature',
+            },
+            {
+              geometry: {
+                coordinates: [4.57226840664, 44.1745337933],
+                type: 'Point',
+              },
+              properties: {
+                code_dep: '30',
+                code_epci: 200034692,
+                code_region: '76',
+                geo_point_2d: [44.1745337933, 4.57226840664],
+                nom_dep: 'GARD',
+                nom_epci: 'CA Gard Rhodanien',
+                nom_region: 'OCCITANIE',
+                objectid: 29,
+                st_area_shape: 632262734.2850112,
+                st_perimeter_shape: 138820.51662269383,
+              },
+              type: 'Feature',
+            },
+          ],
+          properties: [
+            {
+              label: 'code_epci',
+              name: 'code_epci',
+              type: 'number',
+            },
+            {
+              label: 'code_region',
+              name: 'code_region',
+              type: 'string',
+            },
+            {
+              label: 'objectid',
+              name: 'objectid',
+              type: 'number',
+            },
+            {
+              label: 'nom_region',
+              name: 'nom_region',
+              type: 'string',
+            },
+            {
+              label: 'geo_point_2d',
+              name: 'geo_point_2d',
+              type: 'string',
+            },
+            {
+              label: 'nom_dep',
+              name: 'nom_dep',
+              type: 'string',
+            },
+            {
+              label: 'st_area_shape',
+              name: 'st_area_shape',
+              type: 'number',
+            },
+            {
+              label: 'st_perimeter_shape',
+              name: 'st_perimeter_shape',
+              type: 'number',
+            },
+            {
+              label: 'code_dep',
+              name: 'code_dep',
+              type: 'string',
+            },
+            {
+              label: 'nom_epci',
+              name: 'nom_epci',
+              type: 'string',
+            },
+          ],
+        })
+      })
     })
-  })
-  describe('Valid Geojson (features collection)', () => {
-    it('returns the features', () => {
-      expect(
-        parseGeojson(`
+    describe('Valid Geojson (features collection)', () => {
+      it('returns the features', () => {
+        expect(
+          parseGeojson(`
 [
   {
     "type": "Feature",
@@ -158,52 +216,106 @@ describe('parseGeojson', () => {
     }
   }
 ]`)
-      ).toEqual([
-        {
-          geometry: {
-            coordinates: [3.37305747018, 43.7929180957],
-            type: 'Point',
-          },
-          properties: {
-            code_dep: '34',
-            code_epci: 200017341,
-            code_region: '76',
-            geo_point_2d: [43.7929180957, 3.37305747018],
-            nom_dep: 'HERAULT',
-            nom_epci: 'CC Lodévois et Larzac',
-            nom_region: 'OCCITANIE',
-            objectid: 25,
-            st_area_shape: 554841824.0549872,
-            st_perimeter_shape: 125726.64842881361,
-          },
-          type: 'Feature',
-        },
-        {
-          geometry: {
-            coordinates: [4.57226840664, 44.1745337933],
-            type: 'Point',
-          },
-          properties: {
-            code_dep: '30',
-            code_epci: 200034692,
-            code_region: '76',
-            geo_point_2d: [44.1745337933, 4.57226840664],
-            nom_dep: 'GARD',
-            nom_epci: 'CA Gard Rhodanien',
-            nom_region: 'OCCITANIE',
-            objectid: 29,
-            st_area_shape: 632262734.2850112,
-            st_perimeter_shape: 138820.51662269383,
-          },
-          type: 'Feature',
-        },
-      ])
+        ).toEqual({
+          items: [
+            {
+              geometry: {
+                coordinates: [3.37305747018, 43.7929180957],
+                type: 'Point',
+              },
+              properties: {
+                code_dep: '34',
+                code_epci: 200017341,
+                code_region: '76',
+                geo_point_2d: [43.7929180957, 3.37305747018],
+                nom_dep: 'HERAULT',
+                nom_epci: 'CC Lodévois et Larzac',
+                nom_region: 'OCCITANIE',
+                objectid: 25,
+                st_area_shape: 554841824.0549872,
+                st_perimeter_shape: 125726.64842881361,
+              },
+              type: 'Feature',
+            },
+            {
+              geometry: {
+                coordinates: [4.57226840664, 44.1745337933],
+                type: 'Point',
+              },
+              properties: {
+                code_dep: '30',
+                code_epci: 200034692,
+                code_region: '76',
+                geo_point_2d: [44.1745337933, 4.57226840664],
+                nom_dep: 'GARD',
+                nom_epci: 'CA Gard Rhodanien',
+                nom_region: 'OCCITANIE',
+                objectid: 29,
+                st_area_shape: 632262734.2850112,
+                st_perimeter_shape: 138820.51662269383,
+              },
+              type: 'Feature',
+            },
+          ],
+          properties: [
+            {
+              label: 'code_epci',
+              name: 'code_epci',
+              type: 'number',
+            },
+            {
+              label: 'code_region',
+              name: 'code_region',
+              type: 'string',
+            },
+            {
+              label: 'objectid',
+              name: 'objectid',
+              type: 'number',
+            },
+            {
+              label: 'nom_region',
+              name: 'nom_region',
+              type: 'string',
+            },
+            {
+              label: 'geo_point_2d',
+              name: 'geo_point_2d',
+              type: 'string',
+            },
+            {
+              label: 'nom_dep',
+              name: 'nom_dep',
+              type: 'string',
+            },
+            {
+              label: 'st_area_shape',
+              name: 'st_area_shape',
+              type: 'number',
+            },
+            {
+              label: 'st_perimeter_shape',
+              name: 'st_perimeter_shape',
+              type: 'number',
+            },
+            {
+              label: 'code_dep',
+              name: 'code_dep',
+              type: 'string',
+            },
+            {
+              label: 'nom_epci',
+              name: 'nom_epci',
+              type: 'string',
+            },
+          ],
+        })
+      })
     })
-  })
-  describe('neither array or Features collection', () => {
-    it('throws a relevant error', () => {
-      expect(() =>
-        parseGeojson(`
+    describe('neither array or Features collection', () => {
+      it('throws a relevant error', () => {
+        expect(() =>
+          parseGeojson(`
 {
   "records": [
     {
@@ -233,13 +345,13 @@ describe('parseGeojson', () => {
     }
   ]
 }`)
-      ).toThrow('Could not parse GeoJSON')
+        ).toThrow('Could not parse GeoJSON')
+      })
     })
-  })
-  describe('invalid json', () => {
-    it('throws a relevant error', () => {
-      expect(() =>
-        parseGeojson(`
+    describe('invalid json', () => {
+      it('throws a relevant error', () => {
+        expect(() =>
+          parseGeojson(`
 [
   {
     "type": "Feature",
@@ -254,7 +366,125 @@ describe('parseGeojson', () => {
     }
   }
 ]`)
-      ).toThrow('Unexpected token')
+        ).toThrow('Unexpected token')
+      })
+    })
+  })
+
+  describe('GeojsonDataset', () => {
+    let dataset: GeojsonDataset
+    beforeEach(() => {
+      fetchMock.get(
+        (url) => new URL(url).hostname === 'localfile',
+        async (url) => {
+          const filePath = path.join(__dirname, '..', new URL(url).pathname)
+          return {
+            body: await fs.readFile(filePath, 'utf8'),
+            status: 200,
+            headers: {
+              'Content-Type': 'application/geo+json',
+            },
+          }
+        },
+        {
+          sendAsJson: false,
+        }
+      )
+      dataset = new GeojsonDataset(
+        'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson'
+      )
+    })
+    afterEach(() => {
+      fetchMock.reset()
+    })
+    describe('#info', () => {
+      it('returns dataset info', async () => {
+        await expect(dataset.info).resolves.toEqual({
+          itemsCount: 37,
+        })
+      })
+    })
+    describe('#properties', () => {
+      it('returns properties info', async () => {
+        await expect(dataset.properties).resolves.toEqual([
+          {
+            label: 'code_epci',
+            name: 'code_epci',
+            type: 'number',
+          },
+          {
+            label: 'code_region',
+            name: 'code_region',
+            type: 'string',
+          },
+          {
+            label: 'objectid',
+            name: 'objectid',
+            type: 'number',
+          },
+          {
+            label: 'nom_region',
+            name: 'nom_region',
+            type: 'string',
+          },
+          {
+            label: 'geo_point_2d',
+            name: 'geo_point_2d',
+            type: 'string',
+          },
+          {
+            label: 'nom_dep',
+            name: 'nom_dep',
+            type: 'string',
+          },
+          {
+            label: 'st_area_shape',
+            name: 'st_area_shape',
+            type: 'number',
+          },
+          {
+            label: 'st_perimeter_shape',
+            name: 'st_perimeter_shape',
+            type: 'number',
+          },
+          {
+            label: 'code_dep',
+            name: 'code_dep',
+            type: 'string',
+          },
+          {
+            label: 'nom_epci',
+            name: 'nom_epci',
+            type: 'string',
+          },
+        ])
+      })
+    })
+    describe('#readAll', () => {
+      it('reads data', async () => {
+        const start = performance.now()
+        const items = await dataset.readAll()
+        console.log(`took ${(performance.now() - start).toFixed(1)}ms`)
+        expect(items[0]).toEqual({
+          geometry: {
+            coordinates: [3.37305747018, 43.7929180957],
+            type: 'Point',
+          },
+          properties: {
+            code_dep: '34',
+            code_epci: 200017341,
+            code_region: '76',
+            geo_point_2d: [43.7929180957, 3.37305747018],
+            nom_dep: 'HERAULT',
+            nom_epci: 'CC Lodévois et Larzac',
+            nom_region: 'OCCITANIE',
+            objectid: 25,
+            st_area_shape: 554841824.0549872,
+            st_perimeter_shape: 125726.64842881361,
+          },
+          type: 'Feature',
+        })
+      })
     })
   })
 })

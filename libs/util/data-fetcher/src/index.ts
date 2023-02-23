@@ -1,2 +1,2 @@
 export * from './lib/data-fetcher'
-export * from './mime/types'
+export { SupportedType, SupportedTypes } from './lib/model'
