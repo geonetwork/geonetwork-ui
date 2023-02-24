@@ -97,3 +97,42 @@ export interface PropertyInfo {
 export interface DatasetInfo {
   itemsCount: number
 }
+
+export type FieldName = string
+
+type SumOperation = ['sum', FieldName]
+type AverageOperation = ['average', FieldName]
+type MinOperation = ['min', FieldName]
+type MaxOperation = ['max', FieldName]
+type CountOperation = ['count']
+export type FieldAggregation =
+  | SumOperation
+  | AverageOperation
+  | MinOperation
+  | MaxOperation
+  | CountOperation
+
+type AllOperation = ['all']
+type DistinctOperation = ['distinct', FieldName]
+type RangeBucketsOperation = ['rangeBuckets', FieldName, number] // 3rd value is the bucket count; NOT IMPLEMENTED
+export type FieldGroupBy =
+  | AllOperation
+  | DistinctOperation
+  | RangeBucketsOperation
+
+export type FieldSort = ['desc' | 'asc', FieldName]
+
+type ComparisonOperator = '<' | '>' | '<=' | '>=' | '=' | '!='
+type Comparison = [ComparisonOperator, FieldName, string | number]
+type AndOperation = ['and', ...FieldFilter[]]
+type OrOperation = ['or', ...FieldFilter[]]
+type NotOperation = ['not', FieldFilter]
+type InOperation = ['in', FieldName, ...(string[] | number[])]
+type LikeOperation = ['like', FieldName, string]
+export type FieldFilter =
+  | Comparison
+  | AndOperation
+  | OrOperation
+  | NotOperation
+  | InOperation
+  | LikeOperation
