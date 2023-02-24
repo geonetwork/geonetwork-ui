@@ -1,6 +1,12 @@
 import { BaseDataset } from './base'
 import { DataItem, DatasetInfo, PropertyInfo } from '../lib/model'
-import { fetchData } from '../lib/utils'
+import {
+  fetchData,
+  generateSqlQuery,
+  getJsonDataItemsProxy,
+  jsonToGeojsonFeature,
+} from '../lib/utils'
+import alasql from 'alasql'
 
 type ParseResult = {
   items: DataItem[]
@@ -35,8 +41,33 @@ export class BaseFileDataset extends BaseDataset {
     return this.datasetInfo_
   }
 
-  read(): Promise<DataItem[]> {
-    return this.parseResult_.then((result) => result.items)
+  async read(): Promise<DataItem[]> {
+    const items = (await this.parseResult_).items
+    // no query defined: return the full results as is
+    if (
+      this.groupBy == null &&
+      this.aggregations == null &&
+      this.selected == null &&
+      this.sort == null &&
+      this.filter == null &&
+      this.startIndex == null &&
+      this.count == null
+    ) {
+      return items
+    }
+
+    const jsonItems = getJsonDataItemsProxy(items)
+    const query = generateSqlQuery(
+      this.selected,
+      this.filter,
+      this.sort,
+      this.startIndex,
+      this.count,
+      this.groupBy,
+      this.aggregations
+    )
+    const result = alasql(query, [jsonItems])
+    return result.map(jsonToGeojsonFeature)
   }
 
   protected fetchAsText(): Promise<string> {
