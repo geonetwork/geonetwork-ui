@@ -7,7 +7,9 @@ import { GeojsonReader } from './readers/geojson'
 import { sharedFetch, useCache } from '@camptocamp/ogc-client'
 
 jest.mock('@camptocamp/ogc-client', () => ({
-  useCache: jest.fn((factory) => factory()),
+  useCache: jest.fn(async (factory) =>
+    JSON.parse(JSON.stringify(await factory()))
+  ),
   sharedFetch: jest.fn((url) => global.fetch(url)),
 }))
 

@@ -51,17 +51,34 @@ export function fetchHeaders(url: string): Promise<DatasetHeaders> {
     })
 }
 
-export function fetchData(url: string): Promise<Response> {
+export function fetchDataAsText(url: string): Promise<string> {
   return useCache(
     () =>
       sharedFetch(url).then(async (response) => {
         if (!response.ok) {
           throw FetchError.http(response.status)
         }
-        return response
+        return response.text()
       }),
-    url
+    url,
+    'asText'
   )
+}
+export function fetchDataAsArrayBuffer(url: string): Promise<ArrayBuffer> {
+  return useCache(
+    () =>
+      sharedFetch(url).then(async (response) => {
+        if (!response.ok) {
+          throw FetchError.http(response.status)
+        }
+        // convert to a numeric array so that we can store the response in cache
+        return Array.from(new Uint8Array(await response.arrayBuffer()))
+      }),
+    url,
+    'asArrayBuffer'
+  ).then((array) => {
+    return new Uint8Array(array).buffer
+  })
 }
 
 export function tryParseDate(input: string): Date | null {

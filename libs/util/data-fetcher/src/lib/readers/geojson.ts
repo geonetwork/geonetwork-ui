@@ -1,5 +1,5 @@
 import { DataItem, PropertyInfo } from '../model'
-import { processItemProperties } from '../utils'
+import { fetchDataAsText, processItemProperties } from '../utils'
 import { BaseFileReader } from './base-file'
 
 /**
@@ -24,6 +24,6 @@ export function parseGeojson(text: string): {
 
 export class GeojsonReader extends BaseFileReader {
   getData() {
-    return this.fetchAsText().then(parseGeojson)
+    return fetchDataAsText(this.url).then(parseGeojson)
   }
 }

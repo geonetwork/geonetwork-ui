@@ -1,12 +1,8 @@
 import { BaseReader } from './base'
 import { DataItem, DatasetInfo, PropertyInfo } from '../model'
-import {
-  fetchData,
-  generateSqlQuery,
-  getJsonDataItemsProxy,
-  jsonToGeojsonFeature,
-} from '../utils'
+import { getJsonDataItemsProxy, jsonToGeojsonFeature } from '../utils'
 import alasql from 'alasql'
+import { generateSqlQuery } from '../sql-utils'
 
 type ParseResult = {
   items: DataItem[]
@@ -68,13 +64,5 @@ export class BaseFileReader extends BaseReader {
     )
     const result = alasql(query, [jsonItems])
     return result.map(jsonToGeojsonFeature)
-  }
-
-  protected fetchAsText(): Promise<string> {
-    return fetchData(this.url).then((resp) => resp.text())
-  }
-
-  protected fetchAsBuffer(): Promise<ArrayBuffer> {
-    return fetchData(this.url).then((resp) => resp.arrayBuffer())
   }
 }

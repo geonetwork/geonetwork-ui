@@ -1,5 +1,9 @@
 import { DataItem, PropertyInfo } from '../model'
-import { jsonToGeojsonFeature, processItemProperties } from '../utils'
+import {
+  fetchDataAsArrayBuffer,
+  jsonToGeojsonFeature,
+  processItemProperties,
+} from '../utils'
 import { BaseFileReader } from './base-file'
 
 /**
@@ -24,6 +28,6 @@ export function parseExcel(buffer: ArrayBuffer): Promise<{
 
 export class ExcelReader extends BaseFileReader {
   getData() {
-    return this.fetchAsBuffer().then(parseExcel)
+    return fetchDataAsArrayBuffer(this.url).then(parseExcel)
   }
 }
