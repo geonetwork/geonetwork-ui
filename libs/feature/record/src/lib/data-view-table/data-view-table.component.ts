@@ -22,7 +22,7 @@ import {
   switchMap,
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
-import { DataService } from '../service/data.service'
+import { DataService } from '@geonetwork-ui/feature/dataviz'
 
 @Component({
   selector: 'gn-ui-data-view-table',
@@ -84,9 +84,9 @@ export class DataViewTableComponent {
         .getGeoJsonDownloadUrlFromWfs(link.url, link.name)
         .pipe(
           switchMap((url) =>
-            this.dataService.readGeoJsonDataset(url).pipe(
-              map((featureCollection) =>
-                featureCollection.features.map((f) => ({
+            this.dataService.readDataset(url, 'geojson').pipe(
+              map((features) =>
+                features.map((f) => ({
                   id: f.id,
                   ...f.properties,
                 }))
@@ -101,8 +101,8 @@ export class DataViewTableComponent {
           ? (format as SupportedType)
           : undefined
       return this.dataService.readDataset(link.url, supportedType).pipe(
-        map((featureCollection) =>
-          featureCollection.features.map((f) => ({
+        map((features) =>
+          features.map((f) => ({
             id: f.id,
             ...f.properties,
           }))
@@ -110,9 +110,9 @@ export class DataViewTableComponent {
       )
     } else if (link.type === MetadataLinkType.ESRI_REST) {
       const url = this.dataService.getGeoJsonDownloadUrlFromEsriRest(link.url)
-      return this.dataService.readGeoJsonDataset(url).pipe(
-        map((featureCollection) =>
-          featureCollection.features.map((f) => ({
+      return this.dataService.readDataset(url, 'geojson').pipe(
+        map((features) =>
+          features.map((f) => ({
             id: f.id,
             ...f.properties,
           }))

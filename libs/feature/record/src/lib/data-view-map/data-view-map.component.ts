@@ -40,8 +40,8 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators'
-import { DataService } from '../service/data.service'
 import { MdViewFacade } from '../state/mdview.facade'
+import { DataService } from '@geonetwork-ui/feature/dataviz'
 
 @Component({
   selector: 'gn-ui-data-view-map',
