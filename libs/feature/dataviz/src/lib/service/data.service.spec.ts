@@ -433,11 +433,11 @@ describe('DataService', () => {
             'csv'
           )
         })
-        it('returns an observable that emits the feature collection', async () => {
+        it('returns an observable that emits the array of features', async () => {
           const result = await readFirst(
             service.readDataset('http://sample/csv', 'csv')
           )
-          expect(result).toEqual(SAMPLE_GEOJSON)
+          expect(result).toEqual(SAMPLE_GEOJSON.features)
         })
       })
     })

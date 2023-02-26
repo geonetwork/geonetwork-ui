@@ -1,2 +1,2 @@
 export * from './lib/data-fetcher'
-export { SupportedType, SupportedTypes } from './lib/model'
+export { SupportedType, SupportedTypes, DataItem } from './lib/model'

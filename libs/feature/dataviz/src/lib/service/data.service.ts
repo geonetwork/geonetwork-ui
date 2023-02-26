@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { WfsEndpoint } from '@camptocamp/ogc-client'
-import { readDataset, SupportedType } from '@geonetwork-ui/data-fetcher'
+import {
+  DataItem,
+  readDataset,
+  SupportedType,
+} from '@geonetwork-ui/data-fetcher'
 import {
   extensionToFormat,
   getMimeTypeForFormat,
@@ -125,10 +129,7 @@ export class DataService {
     }))
   }
 
-  readDataset(
-    url: string,
-    typeHint?: SupportedType
-  ): Observable<FeatureCollection> {
+  readDataset(url: string, typeHint?: SupportedType): Observable<DataItem[]> {
     const proxiedUrl = this.proxy.getProxiedUrl(url)
     return from(readDataset(proxiedUrl, typeHint)).pipe(
       catchError((error) => {
@@ -141,15 +142,16 @@ export class DataService {
         } else {
           return throwError(new Error('dataset.error.unknown'))
         }
-      }),
+      })
+    )
+  }
+
+  readGeoJsonDataset(url: string): Observable<FeatureCollection> {
+    return this.readDataset(url, 'geojson').pipe(
       map((features) => ({
         type: 'FeatureCollection',
         features,
       }))
     )
-  }
-
-  readGeoJsonDataset(url: string): Observable<FeatureCollection> {
-    return this.readDataset(url, 'geojson')
   }
 }
