@@ -1,7 +1,7 @@
 import * as Papa from 'papaparse'
-import { DataItem, PropertyInfo } from '../lib/model'
-import { jsonToGeojsonFeature, processItemProperties } from '../lib/utils'
-import { BaseFileDataset } from './base-file'
+import { DataItem, PropertyInfo } from '../model'
+import { jsonToGeojsonFeature, processItemProperties } from '../utils'
+import { BaseFileReader } from './base-file'
 
 export function parseCsv(text: string): {
   items: DataItem[]
@@ -41,7 +41,7 @@ export function parseCsv(text: string): {
   return processItemProperties(items, true)
 }
 
-export class CsvDataset extends BaseFileDataset {
+export class CsvReader extends BaseFileReader {
   getData() {
     return this.fetchAsText().then(parseCsv)
   }

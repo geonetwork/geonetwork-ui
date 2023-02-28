@@ -2,8 +2,8 @@ import fetchMock from 'fetch-mock-jest'
 import fs from 'fs'
 import path from 'path'
 import { readDataset } from './data-fetcher'
-import { CsvDataset } from '../parsers/csv'
-import { GeojsonDataset } from '../parsers/geojson'
+import { CsvReader } from './readers/csv'
+import { GeojsonReader } from './readers/geojson'
 import { sharedFetch, useCache } from '@camptocamp/ogc-client'
 
 jest.mock('@camptocamp/ogc-client', () => ({
@@ -60,8 +60,8 @@ describe('data-fetcher', () => {
         sendAsJson: false,
       }
     )
-    jest.spyOn(CsvDataset.prototype, 'read')
-    jest.spyOn(GeojsonDataset.prototype, 'read')
+    jest.spyOn(CsvReader.prototype, 'read')
+    jest.spyOn(GeojsonReader.prototype, 'read')
   })
   afterEach(() => {
     fetchMock.reset()
@@ -342,19 +342,19 @@ describe('data-fetcher', () => {
             'csv'
           ).catch(console.warn)
         } catch {} // eslint-disable-line
-        expect(CsvDataset.prototype.read).toHaveBeenCalled()
+        expect(CsvReader.prototype.read).toHaveBeenCalled()
       })
     })
     describe('when no header present', () => {
       it('infers type from the file extension (csv)', async () => {
         await readDataset('http://localfile/fixtures/rephytox.csv?noheader')
-        expect(CsvDataset.prototype.read).toHaveBeenCalled()
+        expect(CsvReader.prototype.read).toHaveBeenCalled()
       })
       it('infers type from the file extension (geojson)', async () => {
         await readDataset(
           'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson?noheader'
         )
-        expect(GeojsonDataset.prototype.read).toHaveBeenCalled()
+        expect(GeojsonReader.prototype.read).toHaveBeenCalled()
       })
       it('fails if no recognized extension in the url', async () => {
         expect(

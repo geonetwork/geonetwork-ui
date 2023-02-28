@@ -1,4 +1,4 @@
-import { CsvDataset, parseCsv } from './csv'
+import { CsvReader, parseCsv } from './csv'
 import fetchMock from 'fetch-mock-jest'
 import path from 'path'
 import fs from 'fs/promises'
@@ -353,13 +353,13 @@ describe('CSV parsing', () => {
     })
   })
 
-  describe('CsvDataset', () => {
-    let dataset: CsvDataset
+  describe('CsvReader', () => {
+    let reader: CsvReader
     beforeEach(() => {
       fetchMock.get(
         (url) => new URL(url).hostname === 'localfile',
         async (url) => {
-          const filePath = path.join(__dirname, '..', new URL(url).pathname)
+          const filePath = path.join(__dirname, '../..', new URL(url).pathname)
           return {
             body: await fs.readFile(filePath, 'utf8'),
             status: 200,
@@ -372,22 +372,22 @@ describe('CSV parsing', () => {
           sendAsJson: false,
         }
       )
-      dataset = new CsvDataset('http://localfile/fixtures/rephytox.csv')
-      dataset.load()
+      reader = new CsvReader('http://localfile/fixtures/rephytox.csv')
+      reader.load()
     })
     afterEach(() => {
       fetchMock.reset()
     })
     describe('#info', () => {
       it('returns dataset info', async () => {
-        await expect(dataset.info).resolves.toEqual({
+        await expect(reader.info).resolves.toEqual({
           itemsCount: 279,
         })
       })
     })
     describe('#properties', () => {
       it('returns properties info', async () => {
-        await expect(dataset.properties).resolves.toEqual([
+        await expect(reader.properties).resolves.toEqual([
           {
             name: 'Passage : Commentaire',
             label: 'Passage : Commentaire',
@@ -661,7 +661,7 @@ describe('CSV parsing', () => {
       })
       describe('#selectAll', () => {
         it('reads all data items', async () => {
-          const items = await dataset.selectAll().read()
+          const items = await reader.selectAll().read()
           expect(items.length).toEqual(279)
           expect(items[0]).toEqual({
             geometry: null,
@@ -730,7 +730,7 @@ describe('CSV parsing', () => {
       })
       describe('#select', () => {
         it('reads only certain fields', async () => {
-          const items = await dataset
+          const items = await reader
             .select(
               'Echantillon : Commentaire',
               'Résultat : Valeur de la mesure'
@@ -749,7 +749,7 @@ describe('CSV parsing', () => {
       })
       describe('#limit', () => {
         it('reads only a certain range of items', async () => {
-          const items = await dataset.limit(12, 5).read()
+          const items = await reader.limit(12, 5).read()
           expect(items.length).toEqual(5)
           expect(items[0]).toEqual({
             geometry: null,
@@ -762,7 +762,7 @@ describe('CSV parsing', () => {
       })
       describe('#orderBy', () => {
         it('reads only a certain range of items', async () => {
-          const items = await dataset
+          const items = await reader
             .orderBy(
               ['desc', 'Lieu de surveillance : Mnémonique'],
               ['asc', 'Prélèvement : Date de validation'],
@@ -809,7 +809,7 @@ describe('CSV parsing', () => {
       })
       describe('#aggregate', () => {
         it('aggregates all records', async () => {
-          const items = await dataset
+          const items = await reader
             .aggregate(
               ['all'],
               ['count'],
@@ -834,7 +834,7 @@ describe('CSV parsing', () => {
           ])
         })
         it('aggregates by distinct values', async () => {
-          const items = await dataset
+          const items = await reader
             .aggregate(
               ['distinct', 'Echantillon : Libellé du taxon support'],
               ['count'],
@@ -875,7 +875,7 @@ describe('CSV parsing', () => {
         })
         // FIXME: unsxkip when buckets are implemented
         it.skip('aggregates by ranges', async () => {
-          const items = await dataset
+          const items = await reader
             .aggregate(
               ['rangeBuckets', 'Passage : Date', 4],
               ['count'],
@@ -903,7 +903,7 @@ describe('CSV parsing', () => {
       })
       describe('#where', () => {
         it('filters records', async () => {
-          const items = await dataset
+          const items = await reader
             .where([
               'or',
               ['>', 'Résultat : Valeur de la mesure', 2],

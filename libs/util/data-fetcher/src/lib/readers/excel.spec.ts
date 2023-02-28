@@ -1,14 +1,14 @@
 import fs from 'fs'
 import path from 'path'
-import { ExcelDataset, parseExcel } from './excel'
+import { ExcelReader, parseExcel } from './excel'
 import fetchMock from 'fetch-mock-jest'
 
 const sampleXlsx = fs.readFileSync(
-  path.join(__dirname, '../fixtures/eaux-baignades.xlsx'),
+  path.join(__dirname, '../../fixtures/eaux-baignades.xlsx'),
   null
 )
 const sampleXls = fs.readFileSync(
-  path.join(__dirname, '../fixtures/ENS_CG02.xls'),
+  path.join(__dirname, '../../fixtures/ENS_CG02.xls'),
   null
 )
 
@@ -4104,13 +4104,13 @@ describe('Excel parsing', () => {
       })
     })
   })
-  describe('ExcelDataset', () => {
-    let dataset: ExcelDataset
+  describe('ExcelReader', () => {
+    let reader: ExcelReader
     beforeEach(() => {
       fetchMock.get(
         (url) => new URL(url).hostname === 'localfile',
         async (url) => {
-          const filePath = path.join(__dirname, '..', new URL(url).pathname)
+          const filePath = path.join(__dirname, '../..', new URL(url).pathname)
           return {
             body: fs.readFileSync(filePath, null),
             status: 200,
@@ -4123,22 +4123,22 @@ describe('Excel parsing', () => {
           sendAsJson: false,
         }
       )
-      dataset = new ExcelDataset('http://localfile/fixtures/ENS_CG02.xls')
-      dataset.load()
+      reader = new ExcelReader('http://localfile/fixtures/ENS_CG02.xls')
+      reader.load()
     })
     afterEach(() => {
       fetchMock.reset()
     })
     describe('#info', () => {
       it('returns dataset info', async () => {
-        await expect(dataset.info).resolves.toEqual({
+        await expect(reader.info).resolves.toEqual({
           itemsCount: 259,
         })
       })
     })
     describe('#properties', () => {
       it('returns properties info', async () => {
-        await expect(dataset.properties).resolves.toEqual([
+        await expect(reader.properties).resolves.toEqual([
           {
             label: 'the_geom',
             name: 'the_geom',
@@ -4175,7 +4175,7 @@ describe('Excel parsing', () => {
     describe('#read', () => {
       it('reads data', async () => {
         const start = performance.now()
-        const items = await dataset.read()
+        const items = await reader.read()
         console.log(`took ${(performance.now() - start).toFixed(1)}ms`)
         expect(items[0]).toEqual({
           geometry: null,

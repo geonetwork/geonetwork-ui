@@ -7,9 +7,9 @@ import {
   FieldName,
   FieldSort,
   PropertyInfo,
-} from '../lib/model'
+} from '../model'
 
-export class BaseDataset {
+export class BaseReader {
   protected selected: FieldName[] = null
   protected groupBy: FieldGroupBy = null
   protected aggregations: FieldAggregation[] = null

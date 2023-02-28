@@ -1,11 +1,11 @@
-import { BaseDataset } from './base'
-import { DataItem, DatasetInfo, PropertyInfo } from '../lib/model'
+import { BaseReader } from './base'
+import { DataItem, DatasetInfo, PropertyInfo } from '../model'
 import {
   fetchData,
   generateSqlQuery,
   getJsonDataItemsProxy,
   jsonToGeojsonFeature,
-} from '../lib/utils'
+} from '../utils'
 import alasql from 'alasql'
 
 type ParseResult = {
@@ -13,7 +13,7 @@ type ParseResult = {
   properties: PropertyInfo[]
 }
 
-export class BaseFileDataset extends BaseDataset {
+export class BaseFileReader extends BaseReader {
   private parseResult_: Promise<ParseResult>
   private propertiesInfo_: Promise<PropertyInfo[]>
   private datasetInfo_: Promise<DatasetInfo>

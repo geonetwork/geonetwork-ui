@@ -1,35 +1,35 @@
 import { parseHeaders } from './headers'
-import { CsvDataset } from '../parsers/csv'
-import { JsonDataset } from '../parsers/json'
-import { GeojsonDataset } from '../parsers/geojson'
-import { ExcelDataset } from '../parsers/excel'
+import { CsvReader } from './readers/csv'
+import { JsonReader } from './readers/json'
+import { GeojsonReader } from './readers/geojson'
+import { ExcelReader } from './readers/excel'
 import { DataItem, DatasetHeaders, FetchError, SupportedType } from './model'
 import { inferDatasetType } from './utils'
-import { BaseDataset } from '../parsers/base'
+import { BaseReader } from './readers/base'
 
 export async function openDataset(
   url: string,
   typeHint?: SupportedType
-): Promise<BaseDataset> {
+): Promise<BaseReader> {
   const fileType = await inferDatasetType(url, typeHint)
-  let dataset: BaseDataset
+  let reader: BaseReader
   try {
     switch (fileType) {
       case 'csv':
-        dataset = new CsvDataset(url)
+        reader = new CsvReader(url)
         break
       case 'json':
-        dataset = new JsonDataset(url)
+        reader = new JsonReader(url)
         break
       case 'geojson':
-        dataset = new GeojsonDataset(url)
+        reader = new GeojsonReader(url)
         break
       case 'excel':
-        dataset = new ExcelDataset(url)
+        reader = new ExcelReader(url)
         break
     }
-    dataset.load()
-    return dataset
+    reader.load()
+    return reader
   } catch (e: any) {
     throw FetchError.parsingFailed(e.message)
   }
@@ -48,9 +48,9 @@ export async function readDataset(
   url: string,
   typeHint?: SupportedType
 ): Promise<DataItem[]> {
-  const dataset = await openDataset(url, typeHint)
+  const reader = await openDataset(url, typeHint)
   try {
-    return await dataset.read()
+    return await reader.read()
   } catch (e: any) {
     throw FetchError.parsingFailed(e.message)
   }

@@ -1,6 +1,6 @@
-import { DataItem, PropertyInfo } from '../lib/model'
-import { jsonToGeojsonFeature, processItemProperties } from '../lib/utils'
-import { BaseFileDataset } from './base-file'
+import { DataItem, PropertyInfo } from '../model'
+import { jsonToGeojsonFeature, processItemProperties } from '../utils'
+import { BaseFileReader } from './base-file'
 
 /**
  * This will read the first sheet of the excel workbook and expect the first
@@ -22,7 +22,7 @@ export function parseExcel(buffer: ArrayBuffer): Promise<{
   })
 }
 
-export class ExcelDataset extends BaseFileDataset {
+export class ExcelReader extends BaseFileReader {
   getData() {
     return this.fetchAsBuffer().then(parseExcel)
   }
