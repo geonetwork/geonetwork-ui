@@ -1,7 +1,6 @@
 import { BaseReader } from './base'
 import { DataItem, DatasetInfo, PropertyInfo } from '../model'
 import { getJsonDataItemsProxy, jsonToGeojsonFeature } from '../utils'
-import alasql from 'alasql'
 import { generateSqlQuery } from '../sql-utils'
 
 type ParseResult = {
@@ -62,7 +61,9 @@ export class BaseFileReader extends BaseReader {
       this.groupedBy,
       this.aggregations
     )
-    const result = alasql(query, [jsonItems])
+    const result = await import('alasql').then((module) =>
+      module.default(query, [jsonItems])
+    )
     return result.map(jsonToGeojsonFeature)
   }
 }
