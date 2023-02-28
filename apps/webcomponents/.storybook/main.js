@@ -1,11 +1,11 @@
-const rootMain = require('../../../.storybook/main')
-
-rootMain.core = { ...rootMain.core, builder: 'webpack5' }
+rootMain.core = { builder: 'webpack5' }
 
 // Use the following syntax to add addons!
 // rootMain.addons.push('');
-rootMain.stories.push(
-  ...['../src/app/**/*.stories.mdx', '../src/app/**/*.stories.@(js|jsx|ts|tsx)']
-)
 
 module.exports = rootMain
+module.exports.addons = ['@storybook/addon-essentials']
+module.exports.stories = [
+  '../src/app/**/*.stories.mdx',
+  '../src/app/**/*.stories.@(js|jsx|ts|tsx)',
+]
