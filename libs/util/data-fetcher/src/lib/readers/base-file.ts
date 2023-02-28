@@ -41,7 +41,7 @@ export class BaseFileReader extends BaseReader {
     const items = (await this.parseResult_).items
     // no query defined: return the full results as is
     if (
-      this.groupBy == null &&
+      this.groupedBy == null &&
       this.aggregations == null &&
       this.selected == null &&
       this.sort == null &&
@@ -59,7 +59,7 @@ export class BaseFileReader extends BaseReader {
       this.sort,
       this.startIndex,
       this.count,
-      this.groupBy,
+      this.groupedBy,
       this.aggregations
     )
     const result = alasql(query, [jsonItems])

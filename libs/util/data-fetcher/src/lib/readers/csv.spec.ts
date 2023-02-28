@@ -810,8 +810,8 @@ describe('CSV parsing', () => {
       describe('#aggregate', () => {
         it('aggregates all records', async () => {
           const items = await reader
+            .groupBy(['all'])
             .aggregate(
-              ['all'],
               ['count'],
               ['max', 'Résultat : Valeur de la mesure'],
               ['min', 'Résultat : Valeur de la mesure'],
@@ -835,8 +835,8 @@ describe('CSV parsing', () => {
         })
         it('aggregates by distinct values', async () => {
           const items = await reader
+            .groupBy(['distinct', 'Echantillon : Libellé du taxon support'])
             .aggregate(
-              ['distinct', 'Echantillon : Libellé du taxon support'],
               ['count'],
               ['max', 'Résultat : Valeur de la mesure'],
               ['min', 'Résultat : Valeur de la mesure'],
@@ -876,8 +876,8 @@ describe('CSV parsing', () => {
         // FIXME: unsxkip when buckets are implemented
         it.skip('aggregates by ranges', async () => {
           const items = await reader
+            .groupBy(['rangeBuckets', 'Passage : Date', 4])
             .aggregate(
-              ['rangeBuckets', 'Passage : Date', 4],
               ['count'],
               ['max', 'Prélèvement : Immersion'],
               ['min', 'Prélèvement : Immersion'],

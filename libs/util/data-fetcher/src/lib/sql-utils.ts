@@ -74,7 +74,7 @@ export function generateSqlQuery(
   sort: FieldSort[] = null,
   startIndex: number = null,
   count: number = null,
-  groupBy: FieldGroupBy = null,
+  groupBy: FieldGroupBy[] = null,
   aggregations: FieldAggregation[] = null
 ): string {
   let sqlSelect = 'SELECT *'
@@ -99,9 +99,16 @@ export function generateSqlQuery(
   }
   if (groupBy !== null && aggregations !== null) {
     sqlSelect = `SELECT ${aggregations.map(aggregationToSql).join(', ')}`
-    if (groupBy[0] == 'distinct') {
-      sqlGroupBy = ` GROUP BY [${groupBy[1]}]`
-      sqlSelect += `, [${groupBy[1]}] as [distinct(${groupBy[1]})]`
+    const groupedByDistinct = groupBy.filter((group) => group[0] === 'distinct')
+    const sqlGroupByFields = groupedByDistinct
+      .map((group) => `[${group[1]}]`)
+      .join(', ')
+    const sqlGroupBySelect = groupedByDistinct
+      .map((group) => `[${group[1]}] as [distinct(${group[1]})]`)
+      .join(', ')
+    if (sqlGroupByFields && sqlGroupBySelect) {
+      sqlGroupBy = ` GROUP BY ${sqlGroupByFields}`
+      sqlSelect += `, ${sqlGroupBySelect}`
     }
   }
   return sqlSelect + sqlFrom + sqlGroupBy + sqlOrderBy + sqlWhere + sqlLimit

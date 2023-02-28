@@ -60,7 +60,7 @@ describe('data-fetcher utils', () => {
           null,
           null,
           null,
-          ['distinct', 'field C'],
+          [['distinct', 'field C']],
           [
             ['count'],
             ['max', 'field D'],
@@ -73,6 +73,24 @@ describe('data-fetcher utils', () => {
         `SELECT COUNT(*) as [count()], MAX([field D]) as [max(field D)], MIN([field D]) as [min(field D)], SUM([field D]) as [sum(field D)], AVG([field D]) as [average(field D)], [field C] as [distinct(field C)] FROM ? GROUP BY [field C] WHERE ([field A] < 1234 AND [field B] != 'test')`
       )
     })
+    it('adds two group by clauses', () => {
+      expect(
+        generateSqlQuery(
+          null,
+          null,
+          null,
+          null,
+          null,
+          [
+            ['distinct', 'field C'],
+            ['distinct', 'field D'],
+          ],
+          [['count']]
+        )
+      ).toEqual(
+        `SELECT COUNT(*) as [count()], [field C] as [distinct(field C)], [field D] as [distinct(field D)] FROM ? GROUP BY [field C], [field D]`
+      )
+    })
     it('adds aggregations for all records', () => {
       expect(
         generateSqlQuery(
@@ -81,7 +99,7 @@ describe('data-fetcher utils', () => {
           null,
           null,
           null,
-          ['all'],
+          [['all']],
           [
             ['count'],
             ['max', 'field D'],
@@ -106,7 +124,7 @@ describe('data-fetcher utils', () => {
           ],
           8,
           14,
-          ['distinct', 'field C'],
+          [['distinct', 'field C']],
           [
             ['count'],
             ['max', 'field D'],

@@ -11,7 +11,7 @@ import {
 
 export class BaseReader {
   protected selected: FieldName[] = null
-  protected groupBy: FieldGroupBy = null
+  protected groupedBy: FieldGroupBy[] = null
   protected aggregations: FieldAggregation[] = null
   protected filter: FieldFilter = null
   protected sort: FieldSort[] = null
@@ -37,7 +37,7 @@ export class BaseReader {
   }
 
   selectAll(): this {
-    this.groupBy = null
+    this.groupedBy = null
     this.aggregations = null
     this.selected = null
     this.filter = null
@@ -47,13 +47,17 @@ export class BaseReader {
   }
   select(...selectedFields: FieldName[]): this {
     this.selected = selectedFields
-    this.aggregations = null
+    this.aggregations = null // clear aggregations & groups when selecting fields
+    this.groupedBy = null
     return this
   }
-  aggregate(groupBy: FieldGroupBy, ...aggregations: FieldAggregation[]): this {
-    this.groupBy = groupBy
+  groupBy(...groupBy: FieldGroupBy[]): this {
+    this.groupedBy = groupBy
+    this.selected = null // clear normal field selection when aggregating
+    return this
+  }
+  aggregate(...aggregations: FieldAggregation[]): this {
     this.aggregations = aggregations
-    this.selected = null
     return this
   }
   where(filter: FieldFilter): this {
