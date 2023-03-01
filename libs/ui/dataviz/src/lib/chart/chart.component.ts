@@ -54,9 +54,9 @@ export class ChartComponent implements AfterViewInit {
   private yAxisValue: string
   private chartTypeValue: InputChartType
 
-  chart: Chart
+  chart: Chart<ChartType, object[]>
 
-  @Input() data: Array<unknown>
+  @Input() data: object[]
   @Input() set xAxis(value: string) {
     if (this.xAxisValue) {
       this.xAxisValue = value
@@ -152,7 +152,7 @@ export class ChartComponent implements AfterViewInit {
   }
 
   getChartType(): ChartType {
-    const chartTypeMapping = {
+    const chartTypeMapping: Record<string, ChartType> = {
       bar: 'bar',
       column: 'bar',
       line: 'line',
@@ -160,7 +160,7 @@ export class ChartComponent implements AfterViewInit {
       scatter: 'scatter',
       pie: 'pie',
     }
-    return chartTypeMapping[this.chartTypeValue] as ChartType
+    return chartTypeMapping[this.chartTypeValue]
   }
 
   updateChart() {
