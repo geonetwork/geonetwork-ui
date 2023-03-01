@@ -11,6 +11,12 @@
       "options": {
         "jestConfig": "libs/ui/search/jest.config.ts",
         "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
       }
     },
     "lint": {
