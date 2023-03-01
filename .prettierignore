@@ -2,6 +2,7 @@
 
 /dist
 /coverage
+/node_modules
 
 # OpenAPI generated specs
 **/spec.yaml
