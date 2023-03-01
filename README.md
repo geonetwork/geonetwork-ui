@@ -1,4 +1,4 @@
-![Workflow status](https://github.com/geonetwork/geonetwork-ui/workflows/Build/badge.svg?branch=main)
+![Workflow status](https://github.com/geonetwork/geonetwork-ui/workflows/Build/badge.svg)
 
 # GeoNetwork UI
 
