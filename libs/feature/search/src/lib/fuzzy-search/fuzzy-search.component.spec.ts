@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
@@ -16,7 +17,7 @@ import { FuzzySearchComponent } from './fuzzy-search.component'
 
 const searchFacadeMock = {
   setFilters: jest.fn(),
-  searchFilters$: new BehaviorSubject({ any: 'scot' }),
+  searchFilters$: new BehaviorSubject({ any: 'scot' } as any),
 }
 
 const searchApiServiceMock = {
@@ -69,6 +70,7 @@ describe('FuzzySearchComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [FuzzySearchComponent],
+      schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
           provide: SearchFacade,

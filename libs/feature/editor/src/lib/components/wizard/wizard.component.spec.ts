@@ -14,12 +14,7 @@ describe('WizardComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [WizardComponent],
-      imports: [
-        TranslateModule.forRoot(),
-        UiInputsModule,
-        BrowserModule,
-        HttpClientTestingModule,
-      ],
+      imports: [TranslateModule.forRoot(), HttpClientTestingModule],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   })

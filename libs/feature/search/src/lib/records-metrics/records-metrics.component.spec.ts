@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
@@ -17,11 +18,8 @@ describe('RecordsMetricsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [RecordsMetricsComponent],
-      imports: [
-        UiSearchModule,
-        TranslateModule.forRoot(),
-        HttpClientTestingModule,
-      ],
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [TranslateModule.forRoot(), HttpClientTestingModule],
     }).compileComponents()
     httpMock = TestBed.inject(HttpTestingController)
   })

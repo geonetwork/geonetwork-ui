@@ -22,12 +22,7 @@ describe('WizardService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-        UiInputsModule,
-        BrowserModule,
-        HttpClientTestingModule,
-      ],
+      imports: [TranslateModule.forRoot()],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
     service = TestBed.inject(WizardService)
