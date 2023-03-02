@@ -4,13 +4,11 @@ import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
-import { AngularMyDatePickerModule } from 'angular-mydatepicker'
 import { TagInputModule } from 'ngx-chips'
 import { NgxDropzoneModule } from 'ngx-dropzone'
 import { AutocompleteComponent } from './autocomplete/autocomplete.component'
 import { ButtonComponent } from './button/button.component'
 import { ChipsInputComponent } from './chips-input/chips-input.component'
-import { DatepickerComponent } from './datepicker/datepicker.component'
 import { DragAndDropFileInputComponent } from './drag-and-drop-file-input/drag-and-drop-file-input.component'
 import { DropdownSelectorComponent } from './dropdown-selector/dropdown-selector.component'
 import { TextAreaComponent } from './text-area/text-area.component'
@@ -45,7 +43,6 @@ import { CheckToggleComponent } from './check-toggle/check-toggle.component'
     DragAndDropFileInputComponent,
     TextAreaComponent,
     ChipsInputComponent,
-    DatepickerComponent,
     NavigationButtonComponent,
     StarToggleComponent,
     DropdownMultiselectComponent,
@@ -68,7 +65,6 @@ import { CheckToggleComponent } from './check-toggle/check-toggle.component'
     FormsModule,
     ReactiveFormsModule,
     TagInputModule,
-    AngularMyDatePickerModule,
     UtilSharedModule,
     MatAutocompleteModule,
     MatIconModule,
@@ -84,7 +80,6 @@ import { CheckToggleComponent } from './check-toggle/check-toggle.component'
     DragAndDropFileInputComponent,
     TextAreaComponent,
     ChipsInputComponent,
-    DatepickerComponent,
     NavigationButtonComponent,
     StarToggleComponent,
     DropdownMultiselectComponent,

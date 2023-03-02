@@ -72,7 +72,6 @@
     "@nrwl/angular": "15.8.1",
     "@rgrove/parse-xml": "~4.0.1",
     "alasql": "^3.1.0",
-    "angular-mydatepicker": "^0.11.3",
     "axios": "^1.0.0",
     "chart.js": "^4.2.0",
     "chroma-js": "^2.1.2",
