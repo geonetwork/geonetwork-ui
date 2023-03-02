@@ -64,6 +64,7 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/swagger": "^6.2.1",
     "@nestjs/typeorm": "^9.0.1",
     "@nguniversal/express-engine": "15.1.0",
     "@ngx-translate/core": "~14.0.0",

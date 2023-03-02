@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
 import { CreateDatavizDto } from './dto/create-dataviz.dto'
 import { UpdateDatavizDto } from './dto/update-dataviz.dto'
+import { Dataviz } from './entities/dataviz.entity'
 
 @Injectable()
 export class DatavizService {
+  constructor(
+    @InjectRepository(Dataviz)
+    readonly repo: Repository<Dataviz>
+  ) {}
+
   create(createDatavizDto: CreateDatavizDto) {
-    return 'This action adds a new dataviz'
+    return this.repo.save(createDatavizDto)
   }
 
   findAll() {
-    return `This action returns all dataviz`
+    return this.repo.find()
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} dataviz`
+    return this.repo.findOneBy({ id })
   }
 
   update(id: number, updateDatavizDto: UpdateDatavizDto) {
-    return `This action updates a #${id} dataviz`
+    return this.repo.update(id, updateDatavizDto)
   }
 
   remove(id: number) {
-    return `This action removes a #${id} dataviz`
+    return this.repo.delete(id)
   }
 }
