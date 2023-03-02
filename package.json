@@ -62,6 +62,7 @@
     "@messageformat/core": "^3.0.1",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/typeorm": "^9.0.1",
     "@nguniversal/express-engine": "15.1.0",
