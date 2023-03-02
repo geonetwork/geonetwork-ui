@@ -4,25 +4,27 @@ import {
   Component,
   ElementRef,
   Input,
+  OnChanges,
   ViewChild,
 } from '@angular/core'
 import {
-  Chart,
+  ArcElement,
   BarController,
   BarElement,
   CategoryScale,
+  Chart,
+  ChartData,
+  ChartOptions,
+  ChartType,
+  Colors,
+  Legend,
   LinearScale,
   LineController,
   LineElement,
-  PointElement,
   PieController,
-  ArcElement,
+  PointElement,
   ScatterController,
   Tooltip,
-  Colors,
-  Legend,
-  ChartType,
-  ChartOptions,
 } from 'chart.js'
 import { InputChartType } from './chart.model'
 
@@ -49,78 +51,69 @@ Chart.register(
   styleUrls: ['./chart.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChartComponent implements AfterViewInit {
-  private xAxisValue: string
-  private yAxisValue: string
-  private chartTypeValue: InputChartType
-
-  chart: Chart<ChartType, object[]>
-
-  @Input() data: object[]
-  @Input() set xAxis(value: string) {
-    if (this.xAxisValue) {
-      this.xAxisValue = value
-      this.updateChart()
-    } else {
-      this.xAxisValue = value
-    }
+export class ChartComponent implements OnChanges, AfterViewInit {
+  @Input() set data(value: object[]) {
+    this.dataRaw = value
   }
-  @Input() set yAxis(value: string) {
-    if (this.yAxisValue) {
-      this.yAxisValue = value
-      this.updateChart()
-    } else {
-      this.yAxisValue = value
-    }
-  }
-  @Input() set chartType(value: InputChartType) {
-    if (this.chartTypeValue) {
-      this.chartTypeValue = value
-      this.updateChart()
-    } else {
-      this.chartTypeValue = value
-    }
-  }
+  @Input() labelProperty: string
+  @Input() valueProperty: string
+  @Input() secondaryValueProperty: string
+  @Input() type: InputChartType = 'bar'
   @ViewChild('chartCanvas') canvasRef: ElementRef<HTMLCanvasElement>
 
+  private dataRaw: object[] = []
+
+  chart: Chart<ChartType, unknown[]>
+  ready = new Promise((resolve) => (this.setReady = resolve))
+  setReady: (v?: unknown) => void
+
   ngAfterViewInit() {
-    this.createChart()
+    this.setReady()
+  }
+
+  ngOnChanges() {
+    this.refreshChart()
   }
 
   createChart() {
-    this.chart = new Chart(this.canvasRef.nativeElement, {
+    return new Chart(this.canvasRef.nativeElement, {
       type: this.getChartType(),
-      data: {
-        datasets: [
-          {
-            label: this.yAxisValue,
-            data: this.data,
-          },
-        ],
-      },
+      data: this.getChartData(),
       options: this.getOptions(),
     })
   }
 
+  getChartData(): ChartData {
+    const data = this.handlesSecondaryValue()
+      ? (this.getDataProxy(this.valueProperty, this.secondaryValueProperty) as [
+          number,
+          number
+        ][])
+      : (this.getDataProxy(this.valueProperty) as number[])
+    return {
+      labels: this.getDataProxy(this.labelProperty) as string[],
+      datasets: [
+        {
+          label: this.valueProperty,
+          data,
+        },
+      ],
+    }
+  }
+
   getOptions(): ChartOptions {
-    const options = {
+    const options: ChartOptions = {
       aspectRatio: 2.5,
-      parsing: {
-        xAxisKey: this.xAxisValue,
-        yAxisKey: this.yAxisValue,
+      parsing: {},
+      scales: {
+        x: {
+          type: this.handlesSecondaryValue() ? 'linear' : 'category',
+          position: 'bottom',
+        },
       },
     }
-    switch (this.chartTypeValue) {
-      case 'scatter':
-        return {
-          ...options,
-          scales: {
-            x: {
-              type: 'category',
-            },
-          },
-        }
-      case 'curve':
+    switch (this.type) {
+      case 'line-interpolated':
         return {
           ...options,
           elements: {
@@ -129,22 +122,10 @@ export class ChartComponent implements AfterViewInit {
             },
           },
         }
-      case 'bar':
+      case 'bar-horizontal':
         return {
           ...options,
           indexAxis: 'y',
-          parsing: {
-            xAxisKey: this.yAxisValue,
-            yAxisKey: this.xAxisValue,
-          },
-        }
-
-      case 'pie':
-        return {
-          ...options,
-          parsing: {
-            key: this.yAxisValue,
-          },
         }
       default:
         return options
@@ -152,19 +133,54 @@ export class ChartComponent implements AfterViewInit {
   }
 
   getChartType(): ChartType {
-    const chartTypeMapping: Record<string, ChartType> = {
-      bar: 'bar',
-      column: 'bar',
-      line: 'line',
-      curve: 'line',
-      scatter: 'scatter',
-      pie: 'pie',
+    switch (this.type) {
+      case 'bar':
+      case 'bar-horizontal':
+        return 'bar'
+      case 'line':
+      case 'line-interpolated':
+        return 'line'
+      case 'scatter':
+      case 'pie':
+        return this.type
     }
-    return chartTypeMapping[this.chartTypeValue]
   }
 
-  updateChart() {
-    this.chart.destroy()
-    this.createChart()
+  handlesSecondaryValue(): boolean {
+    return this.secondaryValueProperty && this.type === 'scatter'
+  }
+
+  private getDataProxy(
+    property: string,
+    secondaryProperty?: string
+  ): unknown[] {
+    return new Proxy<unknown[]>(this.dataRaw as any, {
+      get: (target: any, index: string | symbol) => {
+        if (
+          typeof index === 'string' &&
+          !Number.isNaN(parseInt(index)) &&
+          target[index] !== undefined
+        ) {
+          if (secondaryProperty) {
+            return {
+              y: target[index][property],
+              x: target[index][secondaryProperty],
+            }
+          } else {
+            return target[index][property]
+          }
+        }
+        return target[index]
+      },
+    })
+  }
+
+  async refreshChart() {
+    if (this.chart) {
+      this.chart.destroy()
+      this.chart = null
+    }
+    await this.ready
+    this.chart = this.createChart()
   }
 }

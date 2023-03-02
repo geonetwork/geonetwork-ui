@@ -3,16 +3,19 @@ export const CHART_ITEM_FIXTURE = [
     name: 'name 1',
     id: 'id 1',
     age: 15,
+    amount: 100,
   },
   {
     name: 'name 2',
     id: 'id 2',
     age: 10,
+    amount: 101,
   },
   {
     name: 'name 3',
     id: 'id 3',
     age: 55,
+    amount: 102,
   },
 ]
 
