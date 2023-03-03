@@ -51,17 +51,34 @@ export function fetchHeaders(url: string): Promise<DatasetHeaders> {
     })
 }
 
-export function fetchData(url: string): Promise<Response> {
+export function fetchDataAsText(url: string): Promise<string> {
   return useCache(
     () =>
       sharedFetch(url).then(async (response) => {
         if (!response.ok) {
           throw FetchError.http(response.status)
         }
-        return response
+        return response.text()
       }),
-    url
+    url,
+    'asText'
   )
+}
+export function fetchDataAsArrayBuffer(url: string): Promise<ArrayBuffer> {
+  return useCache(
+    () =>
+      sharedFetch(url).then(async (response) => {
+        if (!response.ok) {
+          throw FetchError.http(response.status)
+        }
+        // convert to a numeric array so that we can store the response in cache
+        return Array.from(new Uint8Array(await response.arrayBuffer()))
+      }),
+    url,
+    'asArrayBuffer'
+  ).then((array) => {
+    return new Uint8Array(array).buffer
+  })
 }
 
 export function tryParseDate(input: string): Date | null {
@@ -200,4 +217,25 @@ export function processItemProperties(
     mutateProperties(items, mutators)
   }
   return { items, properties }
+}
+
+/**
+ * This creates a Proxy that allows reading and writing to the data item properties
+ * as if it was a simple array of JSON objects
+ * @param items
+ */
+export function getJsonDataItemsProxy(
+  items: DataItem[]
+): Record<string, unknown>[] {
+  return new Proxy<Record<string, unknown>[]>(items as any, {
+    get(target: Record<string, unknown>[], p: string) {
+      if (!Number.isNaN(parseInt(p)) && target[p]?.properties) {
+        return target[p].properties
+      }
+      return target[p]
+    },
+    set() {
+      throw new Error('This object is read-only')
+    },
+  })
 }

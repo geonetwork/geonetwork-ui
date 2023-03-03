@@ -1,4 +1,4 @@
-import { JsonDataset, parseJson } from './json'
+import { JsonReader, parseJson } from './json'
 import fetchMock from 'fetch-mock-jest'
 import path from 'path'
 import fs from 'fs/promises'
@@ -214,13 +214,13 @@ describe('json parsing', () => {
       })
     })
   })
-  describe('JsonDataset', () => {
-    let dataset: JsonDataset
+  describe('JsonReader', () => {
+    let reader: JsonReader
     beforeEach(() => {
       fetchMock.get(
         (url) => new URL(url).hostname === 'localfile',
         async (url) => {
-          const filePath = path.join(__dirname, '..', new URL(url).pathname)
+          const filePath = path.join(__dirname, '../..', new URL(url).pathname)
           return {
             body: await fs.readFile(filePath, 'utf8'),
             status: 200,
@@ -233,23 +233,24 @@ describe('json parsing', () => {
           sendAsJson: false,
         }
       )
-      dataset = new JsonDataset(
+      reader = new JsonReader(
         'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.json'
       )
+      reader.load()
     })
     afterEach(() => {
       fetchMock.reset()
     })
     describe('#info', () => {
       it('returns dataset info', async () => {
-        await expect(dataset.info).resolves.toEqual({
+        await expect(reader.info).resolves.toEqual({
           itemsCount: 37,
         })
       })
     })
     describe('#properties', () => {
       it('returns properties info', async () => {
-        await expect(dataset.properties).resolves.toEqual([
+        await expect(reader.properties).resolves.toEqual([
           {
             label: 'code_epci',
             name: 'code_epci',
@@ -298,10 +299,10 @@ describe('json parsing', () => {
         ])
       })
     })
-    describe('#readAll', () => {
+    describe('#read', () => {
       it('reads data', async () => {
         const start = performance.now()
-        const items = await dataset.readAll()
+        const items = await reader.read()
         console.log(`took ${(performance.now() - start).toFixed(1)}ms`)
         expect(items[0]).toEqual({
           geometry: null,

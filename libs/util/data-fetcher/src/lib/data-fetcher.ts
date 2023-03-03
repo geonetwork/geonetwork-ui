@@ -1,11 +1,39 @@
 import { parseHeaders } from './headers'
-import { CsvDataset } from '../parsers/csv'
-import { JsonDataset } from '../parsers/json'
-import { GeojsonDataset } from '../parsers/geojson'
-import { ExcelDataset } from '../parsers/excel'
+import { CsvReader } from './readers/csv'
+import { JsonReader } from './readers/json'
+import { GeojsonReader } from './readers/geojson'
+import { ExcelReader } from './readers/excel'
 import { DataItem, DatasetHeaders, FetchError, SupportedType } from './model'
 import { inferDatasetType } from './utils'
-import { BaseDataset } from '../parsers/base'
+import { BaseReader } from './readers/base'
+
+export async function openDataset(
+  url: string,
+  typeHint?: SupportedType
+): Promise<BaseReader> {
+  const fileType = await inferDatasetType(url, typeHint)
+  let reader: BaseReader
+  try {
+    switch (fileType) {
+      case 'csv':
+        reader = new CsvReader(url)
+        break
+      case 'json':
+        reader = new JsonReader(url)
+        break
+      case 'geojson':
+        reader = new GeojsonReader(url)
+        break
+      case 'excel':
+        reader = new ExcelReader(url)
+        break
+    }
+    reader.load()
+    return reader
+  } catch (e: any) {
+    throw FetchError.parsingFailed(e.message)
+  }
+}
 
 /**
  * This fetches the full dataset at the given URL and parses it according to its mime type.
@@ -20,25 +48,9 @@ export async function readDataset(
   url: string,
   typeHint?: SupportedType
 ): Promise<DataItem[]> {
-  const fileType = await inferDatasetType(url, typeHint)
-
-  let dataset: BaseDataset
+  const reader = await openDataset(url, typeHint)
   try {
-    switch (fileType) {
-      case 'csv':
-        dataset = new CsvDataset(url)
-        break
-      case 'json':
-        dataset = new JsonDataset(url)
-        break
-      case 'geojson':
-        dataset = new GeojsonDataset(url)
-        break
-      case 'excel':
-        dataset = new ExcelDataset(url)
-        break
-    }
-    return await dataset.readAll()
+    return await reader.read()
   } catch (e: any) {
     throw FetchError.parsingFailed(e.message)
   }

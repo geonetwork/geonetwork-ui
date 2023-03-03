@@ -1,4 +1,4 @@
-import { CsvDataset, parseCsv } from './csv'
+import { CsvReader, parseCsv } from './csv'
 import fetchMock from 'fetch-mock-jest'
 import path from 'path'
 import fs from 'fs/promises'
@@ -353,13 +353,13 @@ describe('CSV parsing', () => {
     })
   })
 
-  describe('CsvDataset', () => {
-    let dataset: CsvDataset
+  describe('CsvReader', () => {
+    let reader: CsvReader
     beforeEach(() => {
       fetchMock.get(
         (url) => new URL(url).hostname === 'localfile',
         async (url) => {
-          const filePath = path.join(__dirname, '..', new URL(url).pathname)
+          const filePath = path.join(__dirname, '../..', new URL(url).pathname)
           return {
             body: await fs.readFile(filePath, 'utf8'),
             status: 200,
@@ -372,21 +372,22 @@ describe('CSV parsing', () => {
           sendAsJson: false,
         }
       )
-      dataset = new CsvDataset('http://localfile/fixtures/rephytox.csv')
+      reader = new CsvReader('http://localfile/fixtures/rephytox.csv')
+      reader.load()
     })
     afterEach(() => {
       fetchMock.reset()
     })
     describe('#info', () => {
       it('returns dataset info', async () => {
-        await expect(dataset.info).resolves.toEqual({
+        await expect(reader.info).resolves.toEqual({
           itemsCount: 279,
         })
       })
     })
     describe('#properties', () => {
       it('returns properties info', async () => {
-        await expect(dataset.properties).resolves.toEqual([
+        await expect(reader.properties).resolves.toEqual([
           {
             name: 'Passage : Commentaire',
             label: 'Passage : Commentaire',
@@ -646,72 +647,277 @@ describe('CSV parsing', () => {
         ])
       })
     })
-    describe('#readAll', () => {
-      it('reads data', async () => {
-        const start = performance.now()
-        const items = await dataset.readAll()
-        console.log(`took ${(performance.now() - start).toFixed(1)}ms`)
-        expect(items[0]).toEqual({
-          geometry: null,
-          properties: {
-            'Coordonnées passage : Coordonnées maxx': 1.99866073,
-            'Coordonnées passage : Coordonnées maxy': 51.00247775,
-            'Coordonnées passage : Coordonnées minx': 1.99866073,
-            'Coordonnées passage : Coordonnées miny': 51.00247775,
-            'Coordonnées passage : Coordonnées redéfinies': 0,
-            'Echantillon : Commentaire': '',
-            'Echantillon : Commentaire de qualification': '',
-            'Echantillon : Date de qualification': '',
-            'Echantillon : Date de validation': null,
-            'Echantillon : Identifiant interne': 5380212,
-            'Echantillon : Libellé du support': 'Bivalve',
-            'Echantillon : Libellé du taxon support': 'Mytilus edulis',
-            'Echantillon : Niveau de qualité': 'Non qualifié',
-            "Libellé de l'engin de prélévement": 'Main ',
-            'Lieu de surveillance : Identifiant': 1001104,
-            'Lieu de surveillance : Libellé': 'Oye plage',
-            'Lieu de surveillance : Mnémonique': '001-P-022',
-            'Passage : Commentaire': '',
-            'Passage : Commentaire de qualification': '',
-            'Passage : Date': new Date('2008-04-15T00:00'),
-            'Passage : Date de qualification': '',
-            'Passage : Date de validation': null,
-            'Passage : Niveau de qualité': 'Non qualifié',
-            'Prélèvement : Commentaire': '',
-            'Prélèvement : Commentaire de qualification': '',
-            'Prélèvement : Date de qualification': '',
-            'Prélèvement : Date de validation': null,
-            'Prélèvement : Immersion': 0,
-            'Prélèvement : Immersion Max': '',
-            'Prélèvement : Immersion Min': '',
-            'Prélèvement : Niveau': 'Emergé',
-            'Prélèvement : Niveau de qualité': 'Non qualifié',
-            'Prélèvement : Service préleveur : Code': 'PDG-ODE-LITTORAL-LERBL',
-            'Prélèvement : Service préleveur : Libellé':
-              'Laboratoire Environnement Ressources de Boulogne-sur-Mer',
-            "Prélèvement : Symbole de l'unité d'immersion": 'm',
-            "Prélèvement : Unité d'immersion": 'Mètre',
-            'Résultat : Code paramètre': 'ASP',
-            'Résultat : Commentaire de qualification': '',
-            'Résultat : Commentaires': '',
-            'Résultat : Date de qualification': '',
-            'Résultat : Date de validation': null,
-            'Résultat : Libellé fraction': 'Chair totale égouttée',
-            'Résultat : Libellé méthode': 'CL/UV toxines amnésiantes - mg/kg',
-            'Résultat : Libellé paramètre': 'Toxines ASP',
-            'Résultat : Libellé précision': '',
-            'Résultat : Libellé support': 'Bivalve',
-            'Résultat : Libellé unité de mesure associé au quadruplet':
-              'Milligramme par kilogramme',
-            'Résultat : Niveau de qualité': 'Non qualifié',
-            'Résultat : Service analyste : Libellé':
-              'Laboratoire Environnement Ressources de Bretagne Occidentale',
-            'Résultat : Symbole unité de mesure associé au quadruplet':
-              'mg.kg-1',
-            'Résultat : Valeur de la mesure': 1.1,
-            'Résultat : Valeur qualitative': '',
-          },
-          type: 'Feature',
+    describe('#read', () => {
+      let start
+      beforeEach(() => {
+        start = performance.now()
+      })
+      afterEach(() => {
+        console.log(
+          `"${expect.getState().currentTestName}" took ${(
+            performance.now() - start
+          ).toFixed(1)}ms`
+        )
+      })
+      describe('#selectAll', () => {
+        it('reads all data items', async () => {
+          const items = await reader.selectAll().read()
+          expect(items.length).toEqual(279)
+          expect(items[0]).toEqual({
+            geometry: null,
+            properties: {
+              'Coordonnées passage : Coordonnées maxx': 1.99866073,
+              'Coordonnées passage : Coordonnées maxy': 51.00247775,
+              'Coordonnées passage : Coordonnées minx': 1.99866073,
+              'Coordonnées passage : Coordonnées miny': 51.00247775,
+              'Coordonnées passage : Coordonnées redéfinies': 0,
+              'Echantillon : Commentaire': '',
+              'Echantillon : Commentaire de qualification': '',
+              'Echantillon : Date de qualification': '',
+              'Echantillon : Date de validation': null,
+              'Echantillon : Identifiant interne': 5380212,
+              'Echantillon : Libellé du support': 'Bivalve',
+              'Echantillon : Libellé du taxon support': 'Mytilus edulis',
+              'Echantillon : Niveau de qualité': 'Non qualifié',
+              "Libellé de l'engin de prélévement": 'Main ',
+              'Lieu de surveillance : Identifiant': 1001104,
+              'Lieu de surveillance : Libellé': 'Oye plage',
+              'Lieu de surveillance : Mnémonique': '001-P-022',
+              'Passage : Commentaire': '',
+              'Passage : Commentaire de qualification': '',
+              'Passage : Date': new Date('2008-04-15T00:00'),
+              'Passage : Date de qualification': '',
+              'Passage : Date de validation': null,
+              'Passage : Niveau de qualité': 'Non qualifié',
+              'Prélèvement : Commentaire': '',
+              'Prélèvement : Commentaire de qualification': '',
+              'Prélèvement : Date de qualification': '',
+              'Prélèvement : Date de validation': null,
+              'Prélèvement : Immersion': 0,
+              'Prélèvement : Immersion Max': '',
+              'Prélèvement : Immersion Min': '',
+              'Prélèvement : Niveau': 'Emergé',
+              'Prélèvement : Niveau de qualité': 'Non qualifié',
+              'Prélèvement : Service préleveur : Code':
+                'PDG-ODE-LITTORAL-LERBL',
+              'Prélèvement : Service préleveur : Libellé':
+                'Laboratoire Environnement Ressources de Boulogne-sur-Mer',
+              "Prélèvement : Symbole de l'unité d'immersion": 'm',
+              "Prélèvement : Unité d'immersion": 'Mètre',
+              'Résultat : Code paramètre': 'ASP',
+              'Résultat : Commentaire de qualification': '',
+              'Résultat : Commentaires': '',
+              'Résultat : Date de qualification': '',
+              'Résultat : Date de validation': null,
+              'Résultat : Libellé fraction': 'Chair totale égouttée',
+              'Résultat : Libellé méthode': 'CL/UV toxines amnésiantes - mg/kg',
+              'Résultat : Libellé paramètre': 'Toxines ASP',
+              'Résultat : Libellé précision': '',
+              'Résultat : Libellé support': 'Bivalve',
+              'Résultat : Libellé unité de mesure associé au quadruplet':
+                'Milligramme par kilogramme',
+              'Résultat : Niveau de qualité': 'Non qualifié',
+              'Résultat : Service analyste : Libellé':
+                'Laboratoire Environnement Ressources de Bretagne Occidentale',
+              'Résultat : Symbole unité de mesure associé au quadruplet':
+                'mg.kg-1',
+              'Résultat : Valeur de la mesure': 1.1,
+              'Résultat : Valeur qualitative': '',
+            },
+            type: 'Feature',
+          })
+        })
+      })
+      describe('#select', () => {
+        it('reads only certain fields', async () => {
+          const items = await reader
+            .select(
+              'Echantillon : Commentaire',
+              'Résultat : Valeur de la mesure'
+            )
+            .read()
+          expect(items.length).toEqual(279)
+          expect(items[0]).toEqual({
+            geometry: null,
+            properties: {
+              'Echantillon : Commentaire': '',
+              'Résultat : Valeur de la mesure': 1.1,
+            },
+            type: 'Feature',
+          })
+        })
+      })
+      describe('#limit', () => {
+        it('reads only a certain range of items', async () => {
+          const items = await reader.limit(12, 5).read()
+          expect(items.length).toEqual(5)
+          expect(items[0]).toEqual({
+            geometry: null,
+            properties: expect.objectContaining({
+              'Echantillon : Identifiant interne': 60577361,
+            }),
+            type: 'Feature',
+          })
+        })
+      })
+      describe('#orderBy', () => {
+        it('reads only a certain range of items', async () => {
+          const items = await reader
+            .orderBy(
+              ['desc', 'Lieu de surveillance : Mnémonique'],
+              ['asc', 'Prélèvement : Date de validation'],
+              ['desc', 'Echantillon : Identifiant interne']
+            )
+            .read()
+          expect(items.length).toEqual(279)
+          expect(items.slice(0, 3)).toEqual([
+            {
+              geometry: null,
+              properties: expect.objectContaining({
+                'Lieu de surveillance : Mnémonique': '003-S-032',
+                'Prélèvement : Date de validation': new Date(
+                  '2013-01-31T00:00'
+                ),
+                'Echantillon : Identifiant interne': 60362233,
+              }),
+              type: 'Feature',
+            },
+            {
+              geometry: null,
+              properties: expect.objectContaining({
+                'Lieu de surveillance : Mnémonique': '003-S-032',
+                'Prélèvement : Date de validation': new Date(
+                  '2016-01-05T00:00'
+                ),
+                'Echantillon : Identifiant interne': 60539259,
+              }),
+              type: 'Feature',
+            },
+            {
+              geometry: null,
+              properties: expect.objectContaining({
+                'Lieu de surveillance : Mnémonique': '003-S-032',
+                'Prélèvement : Date de validation': new Date(
+                  '2016-01-05T00:00'
+                ),
+                'Echantillon : Identifiant interne': 60528877,
+              }),
+              type: 'Feature',
+            },
+          ])
+        })
+      })
+      describe('#aggregate', () => {
+        it('aggregates all records', async () => {
+          const items = await reader
+            .groupBy(['all'])
+            .aggregate(
+              ['count'],
+              ['max', 'Résultat : Valeur de la mesure'],
+              ['min', 'Résultat : Valeur de la mesure'],
+              ['sum', 'Résultat : Valeur de la mesure'],
+              ['average', 'Résultat : Valeur de la mesure']
+            )
+            .read()
+          expect(items).toEqual([
+            {
+              geometry: null,
+              properties: {
+                'average(Résultat : Valeur de la mesure)': 2.0777777777777775,
+                'count()': 279,
+                'max(Résultat : Valeur de la mesure)': 17.9,
+                'min(Résultat : Valeur de la mesure)': 0.15,
+                'sum(Résultat : Valeur de la mesure)': 579.6999999999999,
+              },
+              type: 'Feature',
+            },
+          ])
+        })
+        it('aggregates by distinct values', async () => {
+          const items = await reader
+            .groupBy(['distinct', 'Echantillon : Libellé du taxon support'])
+            .aggregate(
+              ['count'],
+              ['max', 'Résultat : Valeur de la mesure'],
+              ['min', 'Résultat : Valeur de la mesure'],
+              ['sum', 'Résultat : Valeur de la mesure'],
+              ['average', 'Résultat : Valeur de la mesure']
+            )
+            .read()
+          expect(items).toEqual([
+            {
+              geometry: null,
+              properties: {
+                'average(Résultat : Valeur de la mesure)': 1.972368421052632,
+                'count()': 38,
+                'distinct(Echantillon : Libellé du taxon support)':
+                  'Mytilus edulis',
+                'max(Résultat : Valeur de la mesure)': 15,
+                'min(Résultat : Valeur de la mesure)': 0.15,
+                'sum(Résultat : Valeur de la mesure)': 74.95000000000002,
+              },
+              type: 'Feature',
+            },
+            {
+              geometry: null,
+              properties: {
+                'average(Résultat : Valeur de la mesure)': 2.094398340248963,
+                'count()': 241,
+                'distinct(Echantillon : Libellé du taxon support)':
+                  'Pecten maximus',
+                'max(Résultat : Valeur de la mesure)': 17.9,
+                'min(Résultat : Valeur de la mesure)': 0.15,
+                'sum(Résultat : Valeur de la mesure)': 504.7500000000001,
+              },
+              type: 'Feature',
+            },
+          ])
+        })
+        // FIXME: unsxkip when buckets are implemented
+        it.skip('aggregates by ranges', async () => {
+          const items = await reader
+            .groupBy(['rangeBuckets', 'Passage : Date', 4])
+            .aggregate(
+              ['count'],
+              ['max', 'Prélèvement : Immersion'],
+              ['min', 'Prélèvement : Immersion'],
+              ['sum', 'Prélèvement : Immersion'],
+              ['average', 'Prélèvement : Immersion']
+            )
+            .read()
+          expect(items).toEqual([
+            {
+              geometry: null,
+              properties: {
+                'rangeMin(Passage : Date)': '',
+                'rangeMax(Passage : Date)': '',
+                'max(Prélèvement : Immersion)': 1.1,
+                'min(Prélèvement : Immersion)': 1.1,
+                'sum(Prélèvement : Immersion)': 1.1,
+                'average(Prélèvement : Immersion)': 1.1,
+              },
+              type: 'Feature',
+            },
+          ])
+        })
+      })
+      describe('#where', () => {
+        it('filters records', async () => {
+          const items = await reader
+            .where([
+              'or',
+              ['>', 'Résultat : Valeur de la mesure', 2],
+              ['=', 'Résultat : Libellé précision', 'Inf. LQ'],
+            ])
+            .read()
+          expect(items.length).toEqual(90)
+          expect(items[0]).toEqual({
+            geometry: null,
+            properties: expect.objectContaining({
+              'Echantillon : Identifiant interne': 60034460,
+            }),
+            type: 'Feature',
+          })
         })
       })
     })
