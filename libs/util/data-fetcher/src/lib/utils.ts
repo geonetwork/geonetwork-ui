@@ -228,8 +228,12 @@ export function getJsonDataItemsProxy(
   items: DataItem[]
 ): Record<string, unknown>[] {
   return new Proxy<Record<string, unknown>[]>(items as any, {
-    get(target: Record<string, unknown>[], p: string) {
-      if (!Number.isNaN(parseInt(p)) && target[p]?.properties) {
+    get(target: Record<string, unknown>[], p: string | symbol) {
+      if (
+        typeof p === 'string' &&
+        !Number.isNaN(parseInt(p)) &&
+        target[p]?.properties
+      ) {
         return target[p].properties
       }
       return target[p]
