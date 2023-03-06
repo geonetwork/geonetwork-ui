@@ -10,7 +10,7 @@ import { DataDownloadsComponent } from './data-downloads.component'
 import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util/shared'
 import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { By } from '@angular/platform-browser'
-import { DataService } from '../service/data.service'
+import { DataService } from '@geonetwork-ui/feature/dataviz'
 
 class MdViewFacadeMock {
   downloadLinks$ = new BehaviorSubject([])

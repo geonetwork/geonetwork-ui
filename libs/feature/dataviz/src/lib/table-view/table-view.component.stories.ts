@@ -10,7 +10,7 @@ import {
 } from '@storybook/angular'
 import { TableViewComponent } from './table-view.component'
 import { MetadataLinkType } from '@geonetwork-ui/util/shared'
-import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
+import { TableComponent, UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 
 export default {
@@ -19,6 +19,7 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [
+        TableComponent,
         HttpClientModule,
         UiDatavizModule,
         UiWidgetsModule,

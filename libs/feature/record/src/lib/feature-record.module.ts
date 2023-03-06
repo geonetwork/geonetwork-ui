@@ -25,6 +25,7 @@ import { RelatedRecordsComponent } from './related-records/related-records.compo
 import { ExternalViewerButtonComponent } from './external-viewer-button/external-viewer-button.component'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import { TableComponent } from '@geonetwork-ui/ui/dataviz'
+import { FeatureDatavizModule } from '@geonetwork-ui/feature/dataviz'
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { TableComponent } from '@geonetwork-ui/ui/dataviz'
     UiWidgetsModule,
     TranslateModule,
     TableComponent,
+    FeatureDatavizModule,
   ],
   providers: [MdViewFacade],
   exports: [

@@ -1,18 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { SupportedType, SupportedTypes } from '@geonetwork-ui/data-fetcher'
-import {
-  getFileFormat,
-  getLinkLabel,
-  MetadataLink,
-  MetadataLinkType,
-} from '@geonetwork-ui/util/shared'
-import {
-  BehaviorSubject,
-  combineLatest,
-  Observable,
-  of,
-  throwError,
-} from 'rxjs'
+import { DataItem } from '@geonetwork-ui/data-fetcher'
+import { getLinkLabel, MetadataLink } from '@geonetwork-ui/util/shared'
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs'
 import {
   catchError,
   distinctUntilChanged,
@@ -78,48 +67,10 @@ export class DataViewTableComponent {
     private dataService: DataService
   ) {}
 
-  fetchData(link: MetadataLink): Observable<{ id: string | number }[]> {
-    if (link.type === MetadataLinkType.WFS) {
-      return this.dataService
-        .getGeoJsonDownloadUrlFromWfs(link.url, link.name)
-        .pipe(
-          switchMap((url) =>
-            this.dataService.readDataset(url, 'geojson').pipe(
-              map((features) =>
-                features.map((f) => ({
-                  id: f.id,
-                  ...f.properties,
-                }))
-              )
-            )
-          )
-        )
-    } else if (link.type === MetadataLinkType.DOWNLOAD) {
-      const format = getFileFormat(link)
-      const supportedType =
-        SupportedTypes.indexOf(format as any) > -1
-          ? (format as SupportedType)
-          : undefined
-      return this.dataService.readDataset(link.url, supportedType).pipe(
-        map((features) =>
-          features.map((f) => ({
-            id: f.id,
-            ...f.properties,
-          }))
-        )
-      )
-    } else if (link.type === MetadataLinkType.ESRI_REST) {
-      const url = this.dataService.getGeoJsonDownloadUrlFromEsriRest(link.url)
-      return this.dataService.readDataset(url, 'geojson').pipe(
-        map((features) =>
-          features.map((f) => ({
-            id: f.id,
-            ...f.properties,
-          }))
-        )
-      )
-    }
-    return throwError('protocol not supported')
+  fetchData(link: MetadataLink): Observable<DataItem[]> {
+    return this.dataService
+      .getDataset(link)
+      .pipe(switchMap((dataset) => dataset.read()))
   }
 
   selectLinkToDisplay(link: number) {

@@ -1,10 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import {
-  getFileFormat,
-  MetadataLink,
-  MetadataLinkType,
-} from '@geonetwork-ui/util/shared'
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs'
+import { MetadataLink } from '@geonetwork-ui/util/shared'
+import { BehaviorSubject, Observable, of } from 'rxjs'
 import {
   catchError,
   finalize,
@@ -13,11 +9,7 @@ import {
   startWith,
   switchMap,
 } from 'rxjs/operators'
-import {
-  DataItem,
-  SupportedType,
-  SupportedTypes,
-} from '@geonetwork-ui/data-fetcher'
+import { DataItem } from '@geonetwork-ui/data-fetcher'
 import { DataService } from '../service/data.service'
 import { TableItemModel } from '@geonetwork-ui/ui/dataviz'
 
@@ -65,22 +57,9 @@ export class TableViewComponent {
   constructor(private dataService: DataService) {}
 
   fetchData(link: MetadataLink): Observable<DataItem[]> {
-    if (link.type === MetadataLinkType.WFS) {
-      return this.dataService
-        .getGeoJsonDownloadUrlFromWfs(link.url, link.name)
-        .pipe(switchMap((url) => this.dataService.readDataset(url, 'geojson')))
-    } else if (link.type === MetadataLinkType.DOWNLOAD) {
-      const format = getFileFormat(link)
-      const supportedType =
-        SupportedTypes.indexOf(format as any) > -1
-          ? (format as SupportedType)
-          : undefined
-      return this.dataService.readDataset(link.url, supportedType)
-    } else if (link.type === MetadataLinkType.ESRI_REST) {
-      const url = this.dataService.getGeoJsonDownloadUrlFromEsriRest(link.url)
-      return this.dataService.readDataset(url, 'geojson')
-    }
-    return throwError('protocol not supported')
+    return this.dataService
+      .getDataset(link)
+      .pipe(switchMap((dataset) => dataset.read()))
   }
 
   onTableSelect(event) {

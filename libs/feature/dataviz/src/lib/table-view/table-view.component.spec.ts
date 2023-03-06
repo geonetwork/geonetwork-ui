@@ -2,13 +2,13 @@ import {
   ComponentFixture,
   discardPeriodicTasks,
   fakeAsync,
+  flushMicrotasks,
   TestBed,
   tick,
 } from '@angular/core/testing'
 import { TableViewComponent } from './table-view.component'
 import { MetadataLinkType } from '@geonetwork-ui/util/shared'
 import { of, throwError } from 'rxjs'
-import { delay } from 'rxjs/operators'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -21,27 +21,20 @@ import { By } from '@angular/platform-browser'
 import { DataService } from '../service/data.service'
 import { LINK_FIXTURES } from '@geonetwork-ui/util/shared/fixtures'
 
-const SAMPLE_GEOJSON = {
-  type: 'FeatureCollection',
-  features: [
-    {
-      type: 'Feature',
-      id: 123,
-      properties: {
-        test: 'abcd',
-      },
-      geometry: {},
-    },
-  ],
-}
+const SAMPLE_DATA_ITEMS = [
+  { type: 'Feature', properties: { id: 1 } },
+  { type: 'Feature', properties: { id: 2 } },
+]
+const SAMPLE_TABLE_DATA = [{ id: 1 }, { id: 2 }]
 
+class DatasetReaderMock {
+  read = jest.fn(() => Promise.resolve(SAMPLE_DATA_ITEMS))
+}
 class DataServiceMock {
-  getGeoJsonDownloadUrlFromWfs = jest.fn((url) => of(url + '?download'))
-  getGeoJsonDownloadUrlFromEsriRest = jest.fn((url) => of(url + '?download'))
-  readDataset = jest.fn((url) =>
+  getDataset = jest.fn(({ url }) =>
     url.indexOf('error') > -1
       ? throwError(new Error('data loading error'))
-      : of(SAMPLE_GEOJSON.features).pipe(delay(50))
+      : of(new DatasetReaderMock())
   )
 }
 
@@ -97,9 +90,12 @@ describe('TableViewComponent', () => {
     dataService = TestBed.inject(DataService)
     fixture = TestBed.createComponent(TableViewComponent)
     component = fixture.componentInstance
+  })
+  beforeEach(fakeAsync(() => {
     component.link = LINK_FIXTURES.dataCsv
     fixture.detectChanges()
-  })
+    flushMicrotasks()
+  }))
 
   it('should create', () => {
     expect(component).toBeTruthy()
@@ -109,10 +105,7 @@ describe('TableViewComponent', () => {
     let tableComponent: MockTableComponent
 
     it('loads the data from the first available link', () => {
-      expect(dataService.readDataset).toHaveBeenCalledWith(
-        'http://my.server/files/abc.csv',
-        'csv'
-      )
+      expect(dataService.getDataset).toHaveBeenCalledWith(LINK_FIXTURES.dataCsv)
     })
 
     describe('during data loading', () => {
@@ -132,54 +125,46 @@ describe('TableViewComponent', () => {
     describe('when data is loaded', () => {
       beforeEach(fakeAsync(() => {
         component.link = LINK_FIXTURES.dataCsv
-        tick(200)
         fixture.detectChanges()
+        flushMicrotasks()
         tableComponent = fixture.debugElement.query(
           By.directive(MockTableComponent)
         ).componentInstance
+        fixture.detectChanges()
       }))
 
       it('displays mocked data in the table', () => {
-        expect(tableComponent.data).toEqual([
-          {
-            id: SAMPLE_GEOJSON.features[0].id,
-            ...SAMPLE_GEOJSON.features[0].properties,
-          },
-        ])
+        expect(tableComponent.data).toEqual(SAMPLE_TABLE_DATA)
       })
 
       describe('when switching data link', () => {
-        beforeEach(() => {
+        beforeEach(fakeAsync(() => {
           component.link = LINK_FIXTURES.geodataJson
+          flushMicrotasks()
           fixture.detectChanges()
-        })
+        }))
         it('loads data from selected link', () => {
-          expect(dataService.readDataset).toHaveBeenCalledWith(
-            'http://my.server/files/geographic/dataset.geojson',
-            'geojson'
+          expect(dataService.getDataset).toHaveBeenCalledWith(
+            LINK_FIXTURES.geodataJson
           )
         })
         it('displays mocked data in the table', () => {
-          expect(tableComponent.data).toEqual([
-            {
-              id: SAMPLE_GEOJSON.features[0].id,
-              ...SAMPLE_GEOJSON.features[0].properties,
-            },
-          ])
+          expect(tableComponent.data).toEqual(SAMPLE_TABLE_DATA)
         })
       })
     })
   })
   describe('error when loading data', () => {
-    beforeEach(() => {
+    beforeEach(fakeAsync(() => {
       component.link = {
         url: 'http://abcd.com/wfs/error',
         name: 'featuretype',
         protocol: 'OGC:WFS',
         type: MetadataLinkType.WFS,
       }
+      flushMicrotasks()
       fixture.detectChanges()
-    })
+    }))
     it('shows an error warning', () => {
       expect(component.error).toEqual('data loading error')
     })

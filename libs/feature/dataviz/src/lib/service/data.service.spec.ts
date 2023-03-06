@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing'
 import { DataService } from './data.service'
-import { readFirst } from '@nrwl/angular/testing'
-import { readDataset } from '@geonetwork-ui/data-fetcher'
+import { openDataset } from '@geonetwork-ui/data-fetcher'
 import { MetadataLinkType, PROXY_PATH } from '@geonetwork-ui/util/shared'
 
 const newEndpointCall = jest.fn()
@@ -87,7 +86,7 @@ const SAMPLE_GEOJSON = {
 }
 
 jest.mock('@geonetwork-ui/data-fetcher', () => ({
-  readDataset: jest.fn(
+  openDataset: jest.fn(
     (url) =>
       new Promise((resolve, reject) => {
         if (url.indexOf('error.parse') > -1) {
@@ -117,7 +116,11 @@ jest.mock('@geonetwork-ui/data-fetcher', () => ({
           })
           return
         }
-        resolve(SAMPLE_GEOJSON.features)
+        const dataset = {
+          selectAll: () => dataset,
+          read: () => Promise.resolve(SAMPLE_GEOJSON.features),
+        }
+        resolve(dataset)
       })
   ),
   SupportedTypes: ['csv', 'geojson', 'json', 'excel'],
@@ -151,12 +154,12 @@ describe('DataService', () => {
       describe('WFS unreachable (CORS)', () => {
         it('throws a relevant error', async () => {
           try {
-            await readFirst(
-              service.getDownloadLinksFromWfs({
+            await service
+              .getDownloadLinksFromWfs({
                 ...link,
                 url: 'http://error.cors/wfs',
               })
-            )
+              .toPromise()
           } catch (e) {
             expect(e.message).toBe('wfs.unreachable.cors')
           }
@@ -165,12 +168,12 @@ describe('DataService', () => {
       describe('WFS unreachable (HTTP error)', () => {
         it('throws a relevant error', async () => {
           try {
-            await readFirst(
-              service.getDownloadLinksFromWfs({
+            await service
+              .getDownloadLinksFromWfs({
                 ...link,
                 url: 'http://error.http/wfs',
               })
-            )
+              .toPromise()
           } catch (e) {
             expect(e.message).toBe('wfs.unreachable.http')
           }
@@ -179,12 +182,12 @@ describe('DataService', () => {
       describe('WFS unreachable (unknown)', () => {
         it('throws a relevant error', async () => {
           try {
-            await readFirst(
-              service.getDownloadLinksFromWfs({
+            await service
+              .getDownloadLinksFromWfs({
                 ...link,
                 url: 'http://error/wfs',
               })
-            )
+              .toPromise()
           } catch (e) {
             expect(e.message).toBe('wfs.unreachable.unknown')
           }
@@ -193,12 +196,12 @@ describe('DataService', () => {
       describe('WFS with unknown feature type', () => {
         it('throws a relevant error', async () => {
           try {
-            await readFirst(
-              service.getDownloadLinksFromWfs({
+            await service
+              .getDownloadLinksFromWfs({
                 ...link,
                 name: 'featuretype_missing',
               })
-            )
+              .toPromise()
           } catch (e) {
             expect(e.message).toBe('wfs.featuretype.notfound')
           }
@@ -206,12 +209,12 @@ describe('DataService', () => {
       })
       describe('WFS with GeoJSON support', () => {
         it('returns a list of links', async () => {
-          const urls = await readFirst(
-            service.getDownloadLinksFromWfs({
+          const urls = await service
+            .getDownloadLinksFromWfs({
               ...link,
               url: 'http://local/wfs',
             })
-          )
+            .toPromise()
           expect(urls).toEqual([
             {
               description: 'Lieu de surveillance (ligne)',
@@ -242,13 +245,13 @@ describe('DataService', () => {
       })
       describe('WFS without GeoJSON support', () => {
         it('returns a list of links (without geojson)', async () => {
-          const urls = await readFirst(
-            service.getDownloadLinksFromWfs({
+          const urls = await service
+            .getDownloadLinksFromWfs({
               ...link,
               url: 'http://local/wfs',
               name: 'nojson_type',
             })
-          )
+            .toPromise()
           expect(urls).toEqual([
             {
               description: 'Lieu de surveillance (ligne)',
@@ -271,13 +274,13 @@ describe('DataService', () => {
       })
       describe('WFS with only one feature type, no feature type name specified', () => {
         it('returns a list of links using the only feature type', async () => {
-          const urls = await readFirst(
-            service.getDownloadLinksFromWfs({
+          const urls = await service
+            .getDownloadLinksFromWfs({
               ...link,
               url: 'http://unique-feature-type/wfs',
               name: '',
             })
-          )
+            .toPromise()
           expect(urls).toEqual([
             {
               description: 'Lieu de surveillance (ligne)',
@@ -311,9 +314,9 @@ describe('DataService', () => {
     describe('#getGeoJsonDownloadUrlFromWfs', () => {
       describe('WFS with GeoJSON support', () => {
         it('returns an url', async () => {
-          const url = await readFirst(
-            service.getGeoJsonDownloadUrlFromWfs('http://local/wfs', 'abcd')
-          )
+          const url = await service
+            .getGeoJsonDownloadUrlFromWfs('http://local/wfs', 'abcd')
+            .toPromise()
           expect(url).toEqual(
             'http://local/wfs?GetFeature&FeatureType=abcd&format=application/json'
           )
@@ -322,12 +325,9 @@ describe('DataService', () => {
       describe('WFS without GeoJSON support', () => {
         it('returns an observable that errors with a relevant error', async () => {
           try {
-            await readFirst(
-              service.getGeoJsonDownloadUrlFromWfs(
-                'http://local/wfs',
-                'nojsontype'
-              )
-            )
+            await service
+              .getGeoJsonDownloadUrlFromWfs('http://local/wfs', 'nojsontype')
+              .toPromise()
           } catch (e) {
             expect(e.message).toBe('wfs.geojson.notsupported')
           }
@@ -335,12 +335,9 @@ describe('DataService', () => {
       })
       describe('WFS with only one feature type, no feature type name specified', () => {
         it('returns one valid link using the only feature type', async () => {
-          const url = await readFirst(
-            service.getGeoJsonDownloadUrlFromWfs(
-              'http://unique-feature-type/wfs',
-              ''
-            )
-          )
+          const url = await service
+            .getGeoJsonDownloadUrlFromWfs('http://unique-feature-type/wfs', '')
+            .toPromise()
           expect(url).toEqual(
             'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=application/json'
           )
@@ -348,10 +345,13 @@ describe('DataService', () => {
       })
     })
 
-    describe('#getGeoJsonDownloadUrlFromEsriRest', () => {
+    describe('#getDownloadUrlFromEsriRest', () => {
       it('builds the url using API url', () => {
         expect(
-          service.getGeoJsonDownloadUrlFromEsriRest('http://esri.rest/local/')
+          service.getDownloadUrlFromEsriRest(
+            'http://esri.rest/local/',
+            'geojson'
+          )
         ).toBe('http://esri.rest/local//query?f=geojson&where=1=1&outFields=*')
       })
     })
@@ -384,13 +384,17 @@ describe('DataService', () => {
       })
     })
 
-    describe('#readDataset', () => {
+    describe('#getDataset', () => {
       describe('parse failure', () => {
         it('returns an observable that errors with a relevant error', async () => {
           try {
-            await readFirst(
-              service.readDataset('http://error.parse/geojson', 'geojson')
-            )
+            await service
+              .getDataset({
+                url: 'http://error.parse/geojson',
+                mimeType: 'application/geo+json',
+                type: MetadataLinkType.DOWNLOAD,
+              })
+              .toPromise()
           } catch (e) {
             expect(e.message).toBe('dataset.error.parse')
           }
@@ -399,9 +403,13 @@ describe('DataService', () => {
       describe('CORS or network error', () => {
         it('returns an observable that errors with a relevant error', async () => {
           try {
-            await readFirst(
-              service.readDataset('http://error.network/xls', 'excel')
-            )
+            await service
+              .getDataset({
+                url: 'http://error.network/xls',
+                mimeType: 'application/vnd.ms-excel',
+                type: MetadataLinkType.DOWNLOAD,
+              })
+              .toPromise()
           } catch (e) {
             expect(e.message).toBe('dataset.error.network')
           }
@@ -410,7 +418,13 @@ describe('DataService', () => {
       describe('HTTP error', () => {
         it('returns an observable that errors with a relevant error', async () => {
           try {
-            await readFirst(service.readDataset('http://error.http/csv', 'csv'))
+            await service
+              .getDataset({
+                url: 'http://error.http/csv',
+                mimeType: 'text/csv',
+                type: MetadataLinkType.DOWNLOAD,
+              })
+              .toPromise()
           } catch (e) {
             expect(e.message).toBe('dataset.error.http')
           }
@@ -419,25 +433,39 @@ describe('DataService', () => {
       describe('unknown error', () => {
         it('returns an observable that errors with a relevant error', async () => {
           try {
-            await readFirst(service.readDataset('http://error/xls', 'excel'))
+            await service
+              .getDataset({
+                url: 'http://error/xls',
+                mimeType: 'application/vnd.ms-excel',
+                type: MetadataLinkType.DOWNLOAD,
+              })
+              .toPromise()
           } catch (e) {
             expect(e.message).toBe('dataset.error.unknown')
           }
         })
       })
       describe('valid file', () => {
-        it('calls DataFetcher.readDataset', () => {
-          service.readDataset('http://sample/geojson', 'csv')
-          expect(readDataset).toHaveBeenCalledWith(
+        it('calls DataFetcher.openDataset', () => {
+          service.getDataset({
+            url: 'http://sample/geojson',
+            mimeType: 'text/csv',
+            type: MetadataLinkType.DOWNLOAD,
+          })
+          expect(openDataset).toHaveBeenCalledWith(
             'http://sample/geojson',
             'csv'
           )
         })
         it('returns an observable that emits the array of features', async () => {
-          const result = await readFirst(
-            service.readDataset('http://sample/csv', 'csv')
-          )
-          expect(result).toEqual(SAMPLE_GEOJSON.features)
+          const result = await service
+            .getDataset({
+              url: 'http://sample/csv',
+              mimeType: 'text/csv',
+              type: MetadataLinkType.DOWNLOAD,
+            })
+            .toPromise()
+          await expect(result.read()).resolves.toEqual(SAMPLE_GEOJSON.features)
         })
       })
     })
@@ -445,9 +473,13 @@ describe('DataService', () => {
     describe('#readGeoJsonDataset', () => {
       describe('valid file', () => {
         it('returns an observable that emits the feature collection', async () => {
-          const result = await readFirst(
-            service.readGeoJsonDataset('http://sample/geojson')
-          )
+          const result = await service
+            .readAsGeoJson({
+              url: 'http://sample/geojson',
+              mimeType: 'application/geo+json',
+              type: MetadataLinkType.DOWNLOAD,
+            })
+            .toPromise()
           expect(result).toEqual(SAMPLE_GEOJSON)
         })
       })
@@ -475,19 +507,22 @@ describe('DataService', () => {
         )
       })
       it('returns a proxied url', async () => {
-        const url = await readFirst(
-          service.getGeoJsonDownloadUrlFromWfs('http://local/wfs', 'abcd')
-        )
+        const url = await service
+          .getGeoJsonDownloadUrlFromWfs('http://local/wfs', 'abcd')
+          .toPromise()
         expect(url).toEqual(
           'http://proxy.local/?url=http%3A%2F%2Flocal%2Fwfs?GetFeature&FeatureType=abcd&format=application/json'
         )
       })
     })
 
-    describe('#getGeoJsonDownloadUrlFromEsriRest', () => {
+    describe('#getDownloadUrlFromEsriRest', () => {
       it('builds a proxied url', () => {
         expect(
-          service.getGeoJsonDownloadUrlFromEsriRest('http://esri.rest/local/')
+          service.getDownloadUrlFromEsriRest(
+            'http://esri.rest/local/',
+            'geojson'
+          )
         ).toBe(
           'http://proxy.local/?url=http%3A%2F%2Fesri.rest%2Flocal%2F%2Fquery%3Ff%3Dgeojson%26where%3D1%3D1%26outFields%3D*'
         )
@@ -495,19 +530,24 @@ describe('DataService', () => {
     })
 
     describe('#readGeoJsonDataset', () => {
-      it('calls DataFetcher.readDataset with a proxied url', () => {
-        service.readDataset('http://sample/geojson', 'csv')
-        expect(readDataset).toHaveBeenCalledWith(
+      it('calls DataFetcher.openDataset with a proxied url', () => {
+        service.getDataset({
+          url: 'http://sample/geojson',
+          mimeType: 'text/csv',
+          type: MetadataLinkType.DOWNLOAD,
+        })
+        expect(openDataset).toHaveBeenCalledWith(
           'http://proxy.local/?url=http%3A%2F%2Fsample%2Fgeojson',
           'csv'
         )
       })
       it('does not apply the proxy twice', () => {
-        service.readDataset(
-          'http://proxy.local/?url=http%3A%2F%2Fsample%2Fgeojson',
-          'csv'
-        )
-        expect(readDataset).toHaveBeenCalledWith(
+        service.getDataset({
+          url: 'http://proxy.local/?url=http%3A%2F%2Fsample%2Fgeojson',
+          mimeType: 'text/csv',
+          type: MetadataLinkType.DOWNLOAD,
+        })
+        expect(openDataset).toHaveBeenCalledWith(
           'http://proxy.local/?url=http%3A%2F%2Fsample%2Fgeojson',
           'csv'
         )
