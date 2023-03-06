@@ -1,34 +1,16 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import {
   ComponentFixture,
-  discardPeriodicTasks,
   fakeAsync,
+  flushMicrotasks,
   TestBed,
-  tick,
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { of, Subject, throwError } from 'rxjs'
+import { Subject } from 'rxjs'
 import { MdViewFacade } from '../state'
-
 import { DataViewTableComponent } from './data-view-table.component'
 import { TranslateModule } from '@ngx-translate/core'
-import { delay } from 'rxjs/operators'
-import { DataService } from '../service/data.service'
 import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util/shared'
-
-const SAMPLE_GEOJSON = {
-  type: 'FeatureCollection',
-  features: [
-    {
-      type: 'Feature',
-      id: 123,
-      properties: {
-        test: 'abcd',
-      },
-      geometry: {},
-    },
-  ],
-}
 
 const DATALINKS_FIXTURE: MetadataLink[] = [
   {
@@ -64,25 +46,12 @@ class MdViewFacadeMock {
   geoDataLinks$ = new Subject()
 }
 
-class DataServiceMock {
-  getGeoJsonDownloadUrlFromWfs = jest.fn((url) => of(url + '?download'))
-  getGeoJsonDownloadUrlFromEsriRest = jest.fn((url) => of(url + '?download'))
-  readDataset = jest.fn(() => of(SAMPLE_GEOJSON).pipe(delay(100)))
-  readGeoJsonDataset = jest.fn((url) =>
-    url.indexOf('error') > -1
-      ? throwError(new Error('data loading error'))
-      : of(SAMPLE_GEOJSON).pipe(delay(100))
-  )
-}
-
 @Component({
-  selector: 'gn-ui-table',
+  selector: 'gn-ui-table-view',
   template: '<div></div>',
 })
-export class MockTableComponent {
-  @Input() data: []
-  @Input() activeId
-  @Output() selected = new EventEmitter<number>()
+export class MockTableViewComponent {
+  @Input() link: MetadataLink
 }
 
 @Component({
@@ -95,176 +64,86 @@ export class MockDropdownSelectorComponent {
   @Output() selectValue = new EventEmitter()
 }
 
-@Component({
-  selector: 'gn-ui-loading-mask',
-  template: '<div></div>',
-})
-export class MockLoadingMaskComponent {
-  @Input() message
-}
-
-@Component({
-  selector: 'gn-ui-popup-alert',
-  template: '<div></div>',
-})
-export class MockPopupAlertComponent {}
-
 describe('DataViewTableComponent', () => {
   let component: DataViewTableComponent
   let fixture: ComponentFixture<DataViewTableComponent>
   let facade
-  let dataService: DataService
+  let dropdownComponent: MockDropdownSelectorComponent
+  let tableViewComponent: MockTableViewComponent
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
         DataViewTableComponent,
-        MockTableComponent,
+        MockTableViewComponent,
         MockDropdownSelectorComponent,
-        MockLoadingMaskComponent,
-        MockPopupAlertComponent,
       ],
       providers: [
         {
           provide: MdViewFacade,
           useClass: MdViewFacadeMock,
         },
-        {
-          provide: DataService,
-          useClass: DataServiceMock,
-        },
       ],
       imports: [TranslateModule.forRoot()],
     }).compileComponents()
     facade = TestBed.inject(MdViewFacade)
-    dataService = TestBed.inject(DataService)
   })
 
-  beforeEach(() => {
+  beforeEach(fakeAsync(() => {
     fixture = TestBed.createComponent(DataViewTableComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
-  })
+    facade.dataLinks$.next(DATALINKS_FIXTURE)
+    facade.geoDataLinks$.next(GEODATALINKS_FIXTURE)
+    flushMicrotasks()
+    fixture.detectChanges()
+
+    dropdownComponent = fixture.debugElement.query(
+      By.directive(MockDropdownSelectorComponent)
+    ).componentInstance
+    tableViewComponent = fixture.debugElement.query(
+      By.directive(MockTableViewComponent)
+    ).componentInstance
+  }))
 
   it('should create', () => {
     expect(component).toBeTruthy()
   })
 
   describe('initial state', () => {
-    let dropDownComponent: MockDropdownSelectorComponent
-    let tableComponent: MockTableComponent
-
     describe('when component is rendered', () => {
-      beforeEach(() => {
-        facade.dataLinks$.next(DATALINKS_FIXTURE)
-        facade.geoDataLinks$.next(GEODATALINKS_FIXTURE)
-        fixture.detectChanges()
-        dropDownComponent = fixture.debugElement.query(
-          By.directive(MockDropdownSelectorComponent)
-        ).componentInstance
-      })
-
       it('shows the dropdown with the same number of entries', () => {
-        expect(dropDownComponent.choices).toEqual([
+        expect(dropdownComponent.choices).toEqual([
           {
             label: 'CSV file (csv)',
-            value: 0,
+            value: JSON.stringify(DATALINKS_FIXTURE[0]),
           },
           {
             label: 'Geojson file (geojson)',
-            value: 1,
+            value: JSON.stringify(GEODATALINKS_FIXTURE[0]),
           },
           {
             label: 'Service WFS (WFS)',
-            value: 2,
+            value: JSON.stringify(GEODATALINKS_FIXTURE[1]),
           },
         ])
       })
+      it('displays link in the table', () => {
+        expect(tableViewComponent.link).toEqual(DATALINKS_FIXTURE[0])
+      })
+    })
 
-      it('loads the data from the first available link', () => {
-        expect(dataService.readDataset).toHaveBeenCalledWith(
-          'https://test.org/some_file_name.csv',
-          'csv'
+    describe('when switching data link', () => {
+      beforeEach(fakeAsync(() => {
+        dropdownComponent.selectValue.emit(
+          JSON.stringify(GEODATALINKS_FIXTURE[1])
         )
-      })
-    })
-
-    describe('during data loading', () => {
-      beforeEach(fakeAsync(() => {
-        facade.dataLinks$.next(DATALINKS_FIXTURE)
-        facade.geoDataLinks$.next([])
+        flushMicrotasks()
         fixture.detectChanges()
-        tick(50)
-        discardPeriodicTasks()
       }))
-      it('shows a loading indicator', () => {
-        expect(
-          fixture.debugElement.query(By.directive(MockLoadingMaskComponent))
-        ).toBeTruthy()
+      it('displays link in the table', () => {
+        expect(tableViewComponent.link).toEqual(GEODATALINKS_FIXTURE[1])
       })
-    })
-    describe('when data is loaded', () => {
-      beforeEach(fakeAsync(() => {
-        facade.dataLinks$.next(DATALINKS_FIXTURE)
-        facade.geoDataLinks$.next(GEODATALINKS_FIXTURE)
-        tick(200)
-        fixture.detectChanges()
-
-        dropDownComponent = fixture.debugElement.query(
-          By.directive(MockDropdownSelectorComponent)
-        ).componentInstance
-
-        tableComponent = fixture.debugElement.query(
-          By.directive(MockTableComponent)
-        ).componentInstance
-      }))
-      it('displays mocked data in the table', () => {
-        expect(tableComponent.data).toEqual([
-          {
-            id: SAMPLE_GEOJSON.features[0].id,
-            ...SAMPLE_GEOJSON.features[0].properties,
-          },
-        ])
-      })
-
-      describe('when switching data link', () => {
-        beforeEach(() => {
-          dropDownComponent = fixture.debugElement.query(
-            By.directive(MockDropdownSelectorComponent)
-          ).componentInstance
-          dropDownComponent.selectValue.emit(1)
-        })
-        it('loads data from selected link', () => {
-          expect(dataService.readDataset).toHaveBeenCalledWith(
-            'https://test.org/some_file_name.geojson',
-            'geojson'
-          )
-        })
-        it('displays mocked data in the table', () => {
-          expect(tableComponent.data).toEqual([
-            {
-              id: SAMPLE_GEOJSON.features[0].id,
-              ...SAMPLE_GEOJSON.features[0].properties,
-            },
-          ])
-        })
-      })
-    })
-  })
-  describe('error when loading data', () => {
-    beforeEach(() => {
-      facade.dataLinks$.next([])
-      facade.geoDataLinks$.next([
-        {
-          url: 'http://abcd.com/wfs/error',
-          name: 'featuretype',
-          protocol: 'OGC:WFS',
-          type: MetadataLinkType.WFS,
-        },
-      ])
-    })
-    it('shows an error warning', () => {
-      expect(component.error).toEqual('data loading error')
     })
   })
 })

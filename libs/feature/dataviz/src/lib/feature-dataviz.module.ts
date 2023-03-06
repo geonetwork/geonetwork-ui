@@ -33,6 +33,10 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
     TableViewComponent,
     ChartViewComponent,
   ],
-  exports: [GeoTableViewComponent, FigureContainerComponent],
+  exports: [
+    GeoTableViewComponent,
+    FigureContainerComponent,
+    TableViewComponent,
+  ],
 })
 export class FeatureDatavizModule {}
