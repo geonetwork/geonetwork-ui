@@ -1,0 +1,47 @@
+<div class="w-full h-full flex flex-col">
+  <div class="flex flex-row justify-between text-[13px]">
+    <gn-ui-dropdown-selector
+      [choices]="typeChoices"
+      (selectValue)="chartType = $event"
+      title="Type"
+    ></gn-ui-dropdown-selector>
+    <gn-ui-dropdown-selector
+      [choices]="xChoices$ | async"
+      (selectValue)="xProperty$.next($event)"
+      title="X Axis"
+    ></gn-ui-dropdown-selector>
+    <gn-ui-dropdown-selector
+      *ngIf="!isCountAggregation"
+      [choices]="yChoices$ | async"
+      (selectValue)="yProperty$.next($event)"
+      title="Y Axis"
+      class="select-y-prop"
+    ></gn-ui-dropdown-selector>
+    <gn-ui-dropdown-selector
+      [choices]="aggregationChoices"
+      (selectValue)="aggregation$.next($event)"
+      title="Aggregation"
+    ></gn-ui-dropdown-selector>
+  </div>
+  <div class="relative h-full">
+    <gn-ui-chart
+      [data]="chartData$ | async"
+      [type]="chartType"
+      [labelProperty]="labelProperty"
+      [valueProperty]="valueProperty"
+    ></gn-ui-chart>
+    <gn-ui-loading-mask
+      *ngIf="loading"
+      class="absolute inset-0"
+      [message]="'chart.loading.data' | translate"
+    ></gn-ui-loading-mask>
+    <gn-ui-popup-alert
+      *ngIf="error"
+      type="warning"
+      icon="error_outline"
+      class="absolute m-2 inset-0"
+    >
+      <span translate>{{ error }}</span>
+    </gn-ui-popup-alert>
+  </div>
+</div>

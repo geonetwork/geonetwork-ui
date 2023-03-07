@@ -40,8 +40,8 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators'
-import { DataService } from '../service/data.service'
 import { MdViewFacade } from '../state/mdview.facade'
+import { DataService } from '@geonetwork-ui/feature/dataviz'
 
 @Component({
   selector: 'gn-ui-data-view-map',
@@ -178,26 +178,12 @@ export class DataViewMapComponent implements OnInit, OnDestroy {
           options: options,
         }))
       )
-    } else if (link.type === MetadataLinkType.WFS) {
-      return this.dataService
-        .getGeoJsonDownloadUrlFromWfs(link.url, link.name)
-        .pipe(
-          switchMap((url) => this.dataService.readGeoJsonDataset(url)),
-          map((data) => ({
-            type: MapContextLayerTypeEnum.GEOJSON,
-            data,
-          }))
-        )
-    } else if (link.type === MetadataLinkType.DOWNLOAD) {
-      return this.dataService.readGeoJsonDataset(link.url).pipe(
-        map((data) => ({
-          type: MapContextLayerTypeEnum.GEOJSON,
-          data,
-        }))
-      )
-    } else if (link.type === MetadataLinkType.ESRI_REST) {
-      const url = this.dataService.getGeoJsonDownloadUrlFromEsriRest(link.url)
-      return this.dataService.readGeoJsonDataset(url).pipe(
+    } else if (
+      link.type === MetadataLinkType.WFS ||
+      link.type === MetadataLinkType.DOWNLOAD ||
+      link.type === MetadataLinkType.ESRI_REST
+    ) {
+      return this.dataService.readAsGeoJson(link).pipe(
         map((data) => ({
           type: MapContextLayerTypeEnum.GEOJSON,
           data,

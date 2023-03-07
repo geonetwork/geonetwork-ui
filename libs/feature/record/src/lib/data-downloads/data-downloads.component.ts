@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { DataService } from '@geonetwork-ui/feature/dataviz'
 import {
   getFileFormat,
   MetadataLink,
@@ -7,7 +8,6 @@ import {
 } from '@geonetwork-ui/util/shared'
 import { combineLatest, of } from 'rxjs'
 import { catchError, map, switchMap } from 'rxjs/operators'
-import { DataService } from '../service/data.service'
 import { MdViewFacade } from '../state'
 
 @Component({

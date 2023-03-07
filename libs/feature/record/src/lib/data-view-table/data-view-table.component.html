@@ -6,28 +6,9 @@
     extraClass="!text-primary font-sans font-medium"
     [choices]="choices"
     [showTitle]="false"
-    (selectValue)="selectLinkToDisplay($event)"
+    (selectValue)="selectLink($event)"
   ></gn-ui-dropdown-selector>
   <div class="relative h-full">
-    <gn-ui-table
-      *ngIf="tableData$ | async"
-      class="overflow-auto grow"
-      [data]="tableData$ | async"
-      [activeId]="selectionId"
-      (selected)="onTableSelect($event)"
-    ></gn-ui-table>
-    <gn-ui-loading-mask
-      *ngIf="loading"
-      class="absolute inset-0"
-      [message]="'table.loading.data' | translate"
-    ></gn-ui-loading-mask>
-    <gn-ui-popup-alert
-      *ngIf="error"
-      type="warning"
-      icon="error_outline"
-      class="absolute m-2 inset-0"
-    >
-      <span translate>{{ error }}</span>
-    </gn-ui-popup-alert>
+    <gn-ui-table-view [link]="selectedLink$ | async"></gn-ui-table-view>
   </div>
 </div>

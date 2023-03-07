@@ -1,16 +1,24 @@
 import { Injectable } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { WfsEndpoint } from '@camptocamp/ogc-client'
-import { readDataset, SupportedType } from '@geonetwork-ui/data-fetcher'
+import {
+  BaseReader,
+  FetchError,
+  openDataset,
+  SupportedType,
+  SupportedTypes,
+} from '@geonetwork-ui/data-fetcher'
 import {
   extensionToFormat,
+  getFileFormat,
   getMimeTypeForFormat,
   MetadataLink,
+  MetadataLinkType,
   ProxyService,
 } from '@geonetwork-ui/util/shared'
 import type { FeatureCollection } from 'geojson'
 import { from, Observable, throwError } from 'rxjs'
-import { catchError, map, tap } from 'rxjs/operators'
+import { catchError, map, switchMap, tap } from 'rxjs/operators'
 
 marker('wfs.unreachable.cors')
 marker('wfs.unreachable.http')
@@ -80,7 +88,7 @@ export class DataService {
     )
   }
 
-  getGeoJsonDownloadUrlFromWfs(
+  private getGeoJsonDownloadUrlFromWfs(
     wfsUrl: string,
     featureType: string
   ): Observable<string> {
@@ -98,10 +106,6 @@ export class DataService {
     return this.proxy.getProxiedUrl(
       `${apiUrl}/query?f=${format}&where=1=1&outFields=*`
     )
-  }
-
-  getGeoJsonDownloadUrlFromEsriRest(apiUrl: string): string {
-    return this.getDownloadUrlFromEsriRest(apiUrl, 'geojson')
   }
 
   getDownloadLinksFromWfs(wfsLink: MetadataLink): Observable<MetadataLink[]> {
@@ -125,23 +129,22 @@ export class DataService {
     }))
   }
 
-  readDataset(
-    url: string,
-    typeHint?: SupportedType
-  ): Observable<FeatureCollection> {
-    const proxiedUrl = this.proxy.getProxiedUrl(url)
-    return from(readDataset(proxiedUrl, typeHint)).pipe(
-      catchError((error) => {
-        if (error.isCrossOriginOrNetworkRelated) {
-          return throwError(new Error('dataset.error.network'))
-        } else if (error.httpStatus) {
-          return throwError(new Error('dataset.error.http'))
-        } else if (error.parsingFailed) {
-          return throwError(new Error('dataset.error.parse'))
-        } else {
-          return throwError(new Error('dataset.error.unknown'))
-        }
-      }),
+  private interpretError(error: FetchError) {
+    if (error.isCrossOriginOrNetworkRelated) {
+      return throwError(new Error('dataset.error.network'))
+    } else if (error.httpStatus) {
+      return throwError(new Error('dataset.error.http'))
+    } else if (error.parsingFailed) {
+      return throwError(new Error('dataset.error.parse'))
+    } else {
+      return throwError(new Error('dataset.error.unknown'))
+    }
+  }
+
+  readAsGeoJson(link: MetadataLink): Observable<FeatureCollection> {
+    return this.getDataset(link).pipe(
+      catchError(this.interpretError),
+      switchMap((dataset) => dataset.selectAll().read()),
       map((features) => ({
         type: 'FeatureCollection',
         features,
@@ -149,7 +152,28 @@ export class DataService {
     )
   }
 
-  readGeoJsonDataset(url: string): Observable<FeatureCollection> {
-    return this.readDataset(url, 'geojson')
+  getDataset(link: MetadataLink): Observable<BaseReader> {
+    const linkUrl = this.proxy.getProxiedUrl(link.url)
+    if (link.type === MetadataLinkType.WFS) {
+      return this.getGeoJsonDownloadUrlFromWfs(linkUrl, link.name).pipe(
+        switchMap((url) => openDataset(url, 'geojson')),
+        catchError(this.interpretError)
+      )
+    } else if (link.type === MetadataLinkType.DOWNLOAD) {
+      const format = getFileFormat(link)
+      const supportedType =
+        SupportedTypes.indexOf(format as any) > -1
+          ? (format as SupportedType)
+          : undefined
+      return from(openDataset(linkUrl, supportedType)).pipe(
+        catchError(this.interpretError)
+      )
+    } else if (link.type === MetadataLinkType.ESRI_REST) {
+      const url = this.getDownloadUrlFromEsriRest(linkUrl, 'geojson')
+      return from(openDataset(url, 'geojson')).pipe(
+        catchError(this.interpretError)
+      )
+    }
+    return throwError('protocol not supported')
   }
 }

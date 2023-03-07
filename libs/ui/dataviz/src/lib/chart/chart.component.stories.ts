@@ -29,7 +29,7 @@ export default {
     ),
   ],
   argTypes: {
-    chartType: { control: { type: 'select', options: CHART_TYPE_VALUES } },
+    type: { control: { type: 'select', options: CHART_TYPE_VALUES } },
   },
 } as Meta<ChartComponent>
 
@@ -38,35 +38,50 @@ const Template: Story<ChartComponent> = (args: ChartComponent) => ({
   props: args,
 })
 
+const SAMPLE_DATA = [
+  {
+    id: '0001',
+    firstName: 'John',
+    lastName: 'Lennon',
+    discsSold: 10,
+    age: 65,
+  },
+  {
+    id: '0002',
+    firstName: 'Ozzy',
+    lastName: 'Osbourne',
+    discsSold: 8,
+    age: 45,
+  },
+  {
+    id: '0003',
+    firstName: 'Claude',
+    lastName: 'François',
+    discsSold: 5,
+    age: 72,
+  },
+  {
+    id: '0004',
+    firstName: 'Michael',
+    lastName: 'Jackson',
+    discsSold: 15,
+    age: 48,
+  },
+]
+
 export const Primary = Template.bind({})
 Primary.args = {
-  data: [
-    {
-      id: '0001',
-      firstName: 'John',
-      lastName: 'Lennon',
-      discsSold: '10',
-    },
-    {
-      id: '0002',
-      firstName: 'Ozzy',
-      lastName: 'Osbourne',
-      discsSold: '8',
-    },
-    {
-      id: '0003',
-      firstName: 'Claude',
-      lastName: 'François',
-      discsSold: '5',
-    },
-    {
-      id: '0004',
-      firstName: 'Michael',
-      lastName: 'Jackson',
-      discsSold: '15',
-    },
-  ],
-  xAxis: 'firstName',
-  yAxis: 'discsSold',
-  chartType: 'bar',
+  data: SAMPLE_DATA,
+  labelProperty: 'firstName',
+  valueProperty: 'discsSold',
+  secondaryValueProperty: '',
+  type: 'bar',
+}
+const options = Object.keys(SAMPLE_DATA[0])
+Primary.argTypes = {
+  labelProperty: { control: { type: 'select', options } },
+  valueProperty: { control: { type: 'select', options } },
+  secondaryValueProperty: {
+    control: { type: 'select', options: [''].concat(options) },
+  },
 }

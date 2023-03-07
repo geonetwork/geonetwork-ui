@@ -33,13 +33,13 @@ import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import { Observable, of, Subject, throwError } from 'rxjs'
 import { DataViewMapComponent } from './data-view-map.component'
 import { TranslateModule } from '@ngx-translate/core'
-import { DataService } from '../service/data.service'
 import { delay } from 'rxjs/operators'
 import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util/shared'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
 import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared/fixtures'
 import { Collection } from 'ol'
 import { Interaction } from 'ol/interaction'
+import { DataService } from '@geonetwork-ui/feature/dataviz'
 
 const mapConfigMock = {
   MAX_ZOOM: 10,
@@ -107,7 +107,7 @@ const SAMPLE_GEOJSON = {
 class DataServiceMock {
   getGeoJsonDownloadUrlFromWfs = jest.fn((url) => of(url + '?download'))
   getGeoJsonDownloadUrlFromEsriRest = jest.fn((url) => url + '?download')
-  readGeoJsonDataset = jest.fn((url) =>
+  readAsGeoJson = jest.fn(({ url }) =>
     url.indexOf('error') > -1
       ? throwError(new Error('data loading error'))
       : of(SAMPLE_GEOJSON).pipe(delay(100))
@@ -124,11 +124,6 @@ const mapStyleServiceMock = {
 
 class OpenLayersMapMock {
   _size = undefined
-  once(type, callback) {
-    if (type === 'change:size') {
-      resizeCallBack = callback
-    }
-  }
   updateSize() {
     this._size = [100, 100]
   }

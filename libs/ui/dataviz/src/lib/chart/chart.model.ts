@@ -1,8 +1,8 @@
 export const CHART_TYPE_VALUES = [
-  'column',
   'bar',
+  'bar-horizontal',
   'line',
-  'curve',
+  'line-interpolated',
   'scatter',
   'pie',
 ] as const
