@@ -46,7 +46,7 @@ export class MockDataMapComponent {}
   selector: 'gn-ui-data-view',
   template: '<div></div>',
 })
-export class MockDataTableComponent {}
+export class MockDataViewComponent {}
 
 @Component({
   selector: 'gn-ui-data-downloads',
@@ -82,7 +82,7 @@ describe('RecordMetadataComponent', () => {
       declarations: [
         RecordMetadataComponent,
         MockDataMapComponent,
-        MockDataTableComponent,
+        MockDataViewComponent,
         MockDataDownloadsComponent,
         MockDataOtherlinksComponent,
         MockDataApisComponent,
@@ -189,7 +189,7 @@ describe('RecordMetadataComponent', () => {
       })
     })
   })
-  describe('Map', () => {
+  describe('Map view', () => {
     let mapTab
     let tabGroup
     describe('when DATA link, but no MAPAPI and no GEODATA link', () => {
@@ -242,8 +242,9 @@ describe('RecordMetadataComponent', () => {
       })
     })
   })
-  describe('Table', () => {
+  describe('Data view - table and chart', () => {
     let tableTab
+    let chartTab
     let tabGroup
     describe('when MAPAPI link, but no DATA and no GEODATA link', () => {
       beforeEach(() => {
@@ -252,17 +253,21 @@ describe('RecordMetadataComponent', () => {
         facade.geoDataLinks$.next(null)
         fixture.detectChanges()
         tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
+        chartTab = fixture.debugElement.queryAll(By.css('mat-tab'))[2]
         tabGroup = fixture.debugElement.queryAll(By.css('mat-tab-group'))[0]
       })
       it('renders preview, table tab is disabled', () => {
         expect(tableTab.nativeNode.disabled).toBe(true)
       })
+      it('renders preview, chart tab is disabled', () => {
+        expect(chartTab.nativeNode.disabled).toBe(true)
+      })
       it('renders preview, map tab is selected', () => {
         expect(tabGroup.nativeNode.selectedIndex).toBe(0)
       })
-      it('does not render table component', () => {
+      it('does not render any data view component', () => {
         expect(
-          fixture.debugElement.query(By.directive(MockDataTableComponent))
+          fixture.debugElement.query(By.directive(MockDataViewComponent))
         ).toBeFalsy()
       })
     })
@@ -271,14 +276,19 @@ describe('RecordMetadataComponent', () => {
         facade.dataLinks$.next(['link'])
         fixture.detectChanges()
         tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
+        chartTab = fixture.debugElement.queryAll(By.css('mat-tab'))[2]
       })
       it('renders preview, table tab is enabled', () => {
         expect(tableTab.nativeNode.disabled).toBe(false)
       })
-      it('renders table component', () => {
+      it('renders preview, chart tab is enabled', () => {
+        expect(chartTab.nativeNode.disabled).toBe(false)
+      })
+      it('renders two data view components (for table and chart tabs)', () => {
         expect(
-          fixture.debugElement.query(By.directive(MockDataTableComponent))
-        ).toBeTruthy()
+          fixture.debugElement.queryAll(By.directive(MockDataViewComponent))
+            .length
+        ).toEqual(2)
       })
     })
     describe('when a GEODATA link present', () => {
@@ -286,14 +296,19 @@ describe('RecordMetadataComponent', () => {
         facade.geoDataLinks$.next(['link'])
         fixture.detectChanges()
         tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
+        chartTab = fixture.debugElement.queryAll(By.css('mat-tab'))[2]
       })
       it('renders preview, table tab is enabled', () => {
         expect(tableTab.nativeNode.disabled).toBe(false)
       })
-      it('renders table component', () => {
+      it('renders preview, chart tab is enabled', () => {
+        expect(chartTab.nativeNode.disabled).toBe(false)
+      })
+      it('renders two data view components (for table and chart tabs)', () => {
         expect(
-          fixture.debugElement.query(By.directive(MockDataTableComponent))
-        ).toBeTruthy()
+          fixture.debugElement.queryAll(By.directive(MockDataViewComponent))
+            .length
+        ).toEqual(2)
       })
     })
   })

@@ -9,6 +9,13 @@
     (selectValue)="selectLink($event)"
   ></gn-ui-dropdown-selector>
   <div class="relative h-full">
-    <gn-ui-table-view [link]="selectedLink$ | async"></gn-ui-table-view>
+    <gn-ui-table-view
+      *ngIf="mode === 'table'"
+      [link]="selectedLink$ | async"
+    ></gn-ui-table-view>
+    <gn-ui-chart-view
+      *ngIf="mode === 'chart'"
+      [link]="selectedLink$ | async"
+    ></gn-ui-chart-view>
   </div>
 </div>

@@ -55,6 +55,14 @@ export class MockTableViewComponent {
 }
 
 @Component({
+  selector: 'gn-ui-chart-view',
+  template: '<div></div>',
+})
+export class MockChartViewComponent {
+  @Input() link: MetadataLink
+}
+
+@Component({
   selector: 'gn-ui-dropdown-selector',
   template: '<div></div>',
 })
@@ -76,6 +84,7 @@ describe('DataViewComponent', () => {
       declarations: [
         DataViewComponent,
         MockTableViewComponent,
+        MockChartViewComponent,
         MockDropdownSelectorComponent,
       ],
       providers: [
@@ -89,28 +98,31 @@ describe('DataViewComponent', () => {
     facade = TestBed.inject(MdViewFacade)
   })
 
-  beforeEach(fakeAsync(() => {
+  beforeEach(() => {
     fixture = TestBed.createComponent(DataViewComponent)
     component = fixture.componentInstance
-    fixture.detectChanges()
-    facade.dataLinks$.next(DATALINKS_FIXTURE)
-    facade.geoDataLinks$.next(GEODATALINKS_FIXTURE)
-    flushMicrotasks()
-    fixture.detectChanges()
-
-    dropdownComponent = fixture.debugElement.query(
-      By.directive(MockDropdownSelectorComponent)
-    ).componentInstance
-    tableViewComponent = fixture.debugElement.query(
-      By.directive(MockTableViewComponent)
-    ).componentInstance
-  }))
+  })
 
   it('should create', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('initial state', () => {
+  describe('initial state in table mode', () => {
+    beforeEach(fakeAsync(() => {
+      component.mode = 'table'
+      fixture.detectChanges()
+      facade.dataLinks$.next(DATALINKS_FIXTURE)
+      facade.geoDataLinks$.next(GEODATALINKS_FIXTURE)
+      flushMicrotasks()
+      fixture.detectChanges()
+
+      dropdownComponent = fixture.debugElement.query(
+        By.directive(MockDropdownSelectorComponent)
+      ).componentInstance
+      tableViewComponent = fixture.debugElement.query(
+        By.directive(MockTableViewComponent)
+      ).componentInstance
+    }))
     describe('when component is rendered', () => {
       it('shows the dropdown with the same number of entries', () => {
         expect(dropdownComponent.choices).toEqual([
@@ -144,6 +156,22 @@ describe('DataViewComponent', () => {
       it('displays link in the table', () => {
         expect(tableViewComponent.link).toEqual(GEODATALINKS_FIXTURE[1])
       })
+    })
+  })
+  describe('use chart view component in chart mode', () => {
+    beforeEach(fakeAsync(() => {
+      component.mode = 'chart'
+      fixture.detectChanges()
+    }))
+    it('creates a chart view component to render data', () => {
+      expect(
+        fixture.debugElement.query(By.directive(MockChartViewComponent))
+      ).toBeTruthy()
+    })
+    it('does not create a table view component to render data', () => {
+      expect(
+        fixture.debugElement.query(By.directive(MockTableViewComponent))
+      ).toBeFalsy()
     })
   })
 })
