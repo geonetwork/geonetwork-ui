@@ -11,7 +11,7 @@ import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { MdViewFacade } from './state'
 import { MdViewEffects } from './state/mdview.effects'
 import { MapViewComponent } from './map-view/map-view.component'
-import { DataViewTableComponent } from './data-view-table/data-view-table.component'
+import { DataViewComponent } from './data-view/data-view.component'
 import { MD_VIEW_FEATURE_STATE_KEY, reducer } from './state/mdview.reducer'
 import { DataApisComponent } from './data-apis/data-apis.component'
 import { DataDownloadsComponent } from './data-downloads/data-downloads.component'
@@ -31,7 +31,7 @@ import { FeatureDatavizModule } from '@geonetwork-ui/feature/dataviz'
   declarations: [
     RecordMetadataComponent,
     MapViewComponent,
-    DataViewTableComponent,
+    DataViewComponent,
     DataDownloadsComponent,
     DataApisComponent,
     DataOtherlinksComponent,
@@ -60,7 +60,7 @@ import { FeatureDatavizModule } from '@geonetwork-ui/feature/dataviz'
   exports: [
     RecordMetadataComponent,
     MapViewComponent,
-    DataViewTableComponent,
+    DataViewComponent,
     DataDownloadsComponent,
     DataApisComponent,
     DataOtherlinksComponent,

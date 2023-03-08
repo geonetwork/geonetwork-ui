@@ -5,12 +5,12 @@ import { map, tap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
 
 @Component({
-  selector: 'gn-ui-data-view-table',
-  templateUrl: './data-view-table.component.html',
-  styleUrls: ['./data-view-table.component.css'],
+  selector: 'gn-ui-data-view',
+  templateUrl: './data-view.component.html',
+  styleUrls: ['./data-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataViewTableComponent {
+export class DataViewComponent {
   compatibleDataLinks$ = combineLatest([
     this.mdViewFacade.dataLinks$,
     this.mdViewFacade.geoDataLinks$,

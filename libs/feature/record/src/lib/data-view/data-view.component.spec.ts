@@ -8,7 +8,7 @@ import {
 import { By } from '@angular/platform-browser'
 import { Subject } from 'rxjs'
 import { MdViewFacade } from '../state'
-import { DataViewTableComponent } from './data-view-table.component'
+import { DataViewComponent } from './data-view.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util/shared'
 
@@ -64,9 +64,9 @@ export class MockDropdownSelectorComponent {
   @Output() selectValue = new EventEmitter()
 }
 
-describe('DataViewTableComponent', () => {
-  let component: DataViewTableComponent
-  let fixture: ComponentFixture<DataViewTableComponent>
+describe('DataViewComponent', () => {
+  let component: DataViewComponent
+  let fixture: ComponentFixture<DataViewComponent>
   let facade
   let dropdownComponent: MockDropdownSelectorComponent
   let tableViewComponent: MockTableViewComponent
@@ -74,7 +74,7 @@ describe('DataViewTableComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        DataViewTableComponent,
+        DataViewComponent,
         MockTableViewComponent,
         MockDropdownSelectorComponent,
       ],
@@ -90,7 +90,7 @@ describe('DataViewTableComponent', () => {
   })
 
   beforeEach(fakeAsync(() => {
-    fixture = TestBed.createComponent(DataViewTableComponent)
+    fixture = TestBed.createComponent(DataViewComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
     facade.dataLinks$.next(DATALINKS_FIXTURE)
