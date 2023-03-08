@@ -37,7 +37,7 @@ const sourcesServiceMock = {
 }
 
 @Component({
-  selector: 'gn-ui-data-view-map',
+  selector: 'gn-ui-map-view',
   template: '<div></div>',
 })
 export class MockDataMapComponent {}

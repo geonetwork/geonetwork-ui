@@ -67,7 +67,7 @@
               style="height: 500px"
               *ngIf="displayMap$ | async"
             >
-              <gn-ui-data-view-map></gn-ui-data-view-map>
+              <gn-ui-map-view></gn-ui-map-view>
             </div>
           </mat-tab>
           <mat-tab [disabled]="(displayData$ | async) === false">

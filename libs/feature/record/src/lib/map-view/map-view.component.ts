@@ -44,12 +44,12 @@ import { MdViewFacade } from '../state/mdview.facade'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 
 @Component({
-  selector: 'gn-ui-data-view-map',
-  templateUrl: './data-view-map.component.html',
-  styleUrls: ['./data-view-map.component.css'],
+  selector: 'gn-ui-map-view',
+  templateUrl: './map-view.component.html',
+  styleUrls: ['./map-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataViewMapComponent implements OnInit, OnDestroy {
+export class MapViewComponent implements OnInit, OnDestroy {
   mapConfig: MapConfig = getOptionalMapConfig()
   selection: Feature<Geometry>
   private subscription = new Subscription()
