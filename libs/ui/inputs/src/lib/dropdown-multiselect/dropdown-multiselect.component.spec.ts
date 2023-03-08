@@ -1,10 +1,5 @@
-import { OverlayContainer, OverlayModule } from '@angular/cdk/overlay'
-import {
-  ComponentFixture,
-  fakeAsync,
-  flush,
-  TestBed,
-} from '@angular/core/testing'
+import { OverlayModule } from '@angular/cdk/overlay'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { DropdownMultiselectComponent } from './dropdown-multiselect.component'
 import { MatIconModule } from '@angular/material/icon'
 import { By } from '@angular/platform-browser'
@@ -14,7 +9,6 @@ import { ButtonComponent } from '../button/button.component'
 describe('DropdownMultiselectComponent', () => {
   let component: DropdownMultiselectComponent
   let fixture: ComponentFixture<DropdownMultiselectComponent>
-  let overlayContainerElement: HTMLElement
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -26,8 +20,6 @@ describe('DropdownMultiselectComponent', () => {
       })
       .compileComponents()
 
-    overlayContainerElement =
-      TestBed.inject(OverlayContainer).getContainerElement()
     fixture = TestBed.createComponent(DropdownMultiselectComponent)
     component = fixture.componentInstance
     component.choices = []
@@ -129,7 +121,7 @@ describe('DropdownMultiselectComponent', () => {
 
   describe('keyboard events', () => {
     let triggerBtn: HTMLElement
-    const dispatchEvent = fakeAsync((el: HTMLElement, code: string) => {
+    async function dispatchEvent(el: HTMLElement, code: string) {
       el.dispatchEvent(
         new KeyboardEvent('keydown', {
           bubbles: true,
@@ -138,8 +130,8 @@ describe('DropdownMultiselectComponent', () => {
         })
       )
       fixture.detectChanges()
-      flush() // this makes sure that the overlay was updated
-    })
+      await Promise.resolve() // this makes sure that the overlay was updated
+    }
     const getCheckboxes = () =>
       component.checkboxes.map((de) => de.nativeElement) as HTMLInputElement[]
     const getOverlay = () =>
@@ -161,13 +153,13 @@ describe('DropdownMultiselectComponent', () => {
       })
       describe('right/down arrow, enter, space', () => {
         describe('opens the overlay and sets the focus on the first element', () => {
-          it('right', () => {
-            dispatchEvent(triggerBtn, 'ArrowRight')
+          it('right', async () => {
+            await dispatchEvent(triggerBtn, 'ArrowRight')
             expect(component.overlayOpen).toBe(true)
             expect(getCheckboxes()[0]).toBe(document.activeElement)
           })
-          it('down', () => {
-            dispatchEvent(triggerBtn, 'ArrowDown')
+          it('down', async () => {
+            await dispatchEvent(triggerBtn, 'ArrowDown')
             expect(component.overlayOpen).toBe(true)
             expect(getCheckboxes()[0]).toBe(document.activeElement)
           })
@@ -175,16 +167,16 @@ describe('DropdownMultiselectComponent', () => {
       })
       describe('up/left arrow', () => {
         describe('opens the overlay and sets the focus on the last element', () => {
-          it('up', () => {
-            dispatchEvent(triggerBtn, 'ArrowUp')
+          it('up', async () => {
+            await dispatchEvent(triggerBtn, 'ArrowUp')
             expect(component.overlayOpen).toBe(true)
             const checkboxes = getCheckboxes()
             expect(checkboxes[checkboxes.length - 1]).toBe(
               document.activeElement
             )
           })
-          it('left', () => {
-            dispatchEvent(triggerBtn, 'ArrowLeft')
+          it('left', async () => {
+            await dispatchEvent(triggerBtn, 'ArrowLeft')
             expect(component.overlayOpen).toBe(true)
             const checkboxes = getCheckboxes()
             expect(checkboxes[checkboxes.length - 1]).toBe(
@@ -202,31 +194,31 @@ describe('DropdownMultiselectComponent', () => {
       })
       describe('right/down arrow', () => {
         describe('jumps to next element', () => {
-          it('right', () => {
-            dispatchEvent(getOverlay(), 'ArrowRight')
+          it('right', async () => {
+            await dispatchEvent(getOverlay(), 'ArrowRight')
             expect(getCheckboxes()[1]).toBe(document.activeElement)
           })
-          it('down', () => {
-            dispatchEvent(getOverlay(), 'ArrowDown')
+          it('down', async () => {
+            await dispatchEvent(getOverlay(), 'ArrowDown')
             expect(getCheckboxes()[1]).toBe(document.activeElement)
           })
         })
       })
       describe('up/left arrow', () => {
         describe('jump to previous element', () => {
-          it('up', () => {
-            dispatchEvent(getOverlay(), 'ArrowUp')
+          it('up', async () => {
+            await dispatchEvent(getOverlay(), 'ArrowUp')
             expect(getCheckboxes()[2]).toBe(document.activeElement)
           })
-          it('left', () => {
-            dispatchEvent(getOverlay(), 'ArrowLeft')
+          it('left', async () => {
+            await dispatchEvent(getOverlay(), 'ArrowLeft')
             expect(getCheckboxes()[2]).toBe(document.activeElement)
           })
         })
       })
       describe('escape', () => {
-        it('closes overlay', () => {
-          dispatchEvent(getOverlay(), 'Escape')
+        it('closes overlay', async () => {
+          await dispatchEvent(getOverlay(), 'Escape')
           expect(component.overlayOpen).toBe(false)
         })
       })
@@ -234,7 +226,6 @@ describe('DropdownMultiselectComponent', () => {
   })
 
   describe('clear button', () => {
-    let emitted
     beforeEach(() => {
       component.choices = [
         { label: 'First Choice', value: 'choice1' },
