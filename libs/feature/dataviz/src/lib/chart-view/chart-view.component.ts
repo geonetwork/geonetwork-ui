@@ -3,7 +3,6 @@ import { MetadataLink } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest, EMPTY, Observable } from 'rxjs'
 import {
   catchError,
-  distinctUntilChanged,
   filter,
   finalize,
   map,
@@ -19,7 +18,19 @@ import {
   FieldAggregation,
   getJsonDataItemsProxy,
 } from '@geonetwork-ui/data-fetcher'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
+marker('chart.type.bar')
+marker('chart.type.barHorizontal')
+marker('chart.type.line')
+marker('chart.type.lineSmooth')
+marker('chart.type.pie')
+
+marker('chart.aggregation.sum')
+marker('chart.aggregation.max')
+marker('chart.aggregation.min')
+marker('chart.aggregation.average')
+marker('chart.aggregation.count')
 @Component({
   selector: 'gn-ui-chart-view',
   templateUrl: './chart-view.component.html',
@@ -36,18 +47,18 @@ export class ChartViewComponent {
   error = null
 
   typeChoices = [
-    { label: 'bar chart', value: 'bar' },
-    { label: 'bar chart (horizontal)', value: 'bar-horizontal' },
-    { label: 'line chart', value: 'line' },
-    { label: 'smooth line', value: 'line-interpolated' },
-    { label: 'pie chart', value: 'pie' },
+    { label: 'chart.type.bar', value: 'bar' },
+    { label: 'chart.type.barHorizontal', value: 'bar-horizontal' },
+    { label: 'chart.type.line', value: 'line' },
+    { label: 'chart.type.lineSmooth', value: 'line-interpolated' },
+    { label: 'chart.type.pie', value: 'pie' },
   ] as const
   aggregationChoices = [
-    { label: 'sum', value: 'sum' },
-    { label: 'max', value: 'max' },
-    { label: 'min', value: 'min' },
-    { label: 'average', value: 'average' },
-    { label: 'count', value: 'count' },
+    { label: 'chart.aggregation.sum', value: 'sum' },
+    { label: 'chart.aggregation.max', value: 'max' },
+    { label: 'chart.aggregation.min', value: 'min' },
+    { label: 'chart.aggregation.average', value: 'average' },
+    { label: 'chart.aggregation.count', value: 'count' },
   ] as const
 
   dataset$: Observable<BaseReader> = this.currentLink$.pipe(
