@@ -1,16 +1,17 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { getLinkLabel, MetadataLink } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
 
 @Component({
-  selector: 'gn-ui-data-view-table',
-  templateUrl: './data-view-table.component.html',
-  styleUrls: ['./data-view-table.component.css'],
+  selector: 'gn-ui-data-view',
+  templateUrl: './data-view.component.html',
+  styleUrls: ['./data-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataViewTableComponent {
+export class DataViewComponent {
+  @Input() mode: 'table' | 'chart'
   compatibleDataLinks$ = combineLatest([
     this.mdViewFacade.dataLinks$,
     this.mdViewFacade.geoDataLinks$,

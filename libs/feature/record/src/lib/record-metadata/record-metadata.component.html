@@ -67,7 +67,7 @@
               style="height: 500px"
               *ngIf="displayMap$ | async"
             >
-              <gn-ui-data-view-map></gn-ui-data-view-map>
+              <gn-ui-map-view></gn-ui-map-view>
             </div>
           </mat-tab>
           <mat-tab [disabled]="(displayData$ | async) === false">
@@ -75,7 +75,15 @@
               <span class="tab-header-label" translate>record.tab.data</span>
             </ng-template>
             <div class="block" *ngIf="displayData$ | async">
-              <gn-ui-data-view-table></gn-ui-data-view-table>
+              <gn-ui-data-view mode="table"></gn-ui-data-view>
+            </div>
+          </mat-tab>
+          <mat-tab [disabled]="(displayData$ | async) === false">
+            <ng-template mat-tab-label>
+              <span class="tab-header-label" translate>record.tab.chart</span>
+            </ng-template>
+            <div class="block" *ngIf="displayData$ | async">
+              <gn-ui-data-view mode="chart"></gn-ui-data-view>
             </div>
           </mat-tab>
         </mat-tab-group>

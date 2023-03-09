@@ -31,7 +31,7 @@ import { Style } from 'ol/style'
 import { MdViewFacade } from '../state/mdview.facade'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import { Observable, of, Subject, throwError } from 'rxjs'
-import { DataViewMapComponent } from './data-view-map.component'
+import { MapViewComponent } from './map-view.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { delay } from 'rxjs/operators'
 import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util/shared'
@@ -188,15 +188,15 @@ export class MockLoadingMaskComponent {
 })
 export class MockPopupAlertComponent {}
 
-describe('DataViewMapComponent', () => {
-  let component: DataViewMapComponent
-  let fixture: ComponentFixture<DataViewMapComponent>
+describe('MapViewComponent', () => {
+  let component: MapViewComponent
+  let fixture: ComponentFixture<MapViewComponent>
   let mdViewFacade
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        DataViewMapComponent,
+        MapViewComponent,
         MockMapContextComponent,
         MockDropdownSelectorComponent,
         MockExternalViewerButtonComponent,
@@ -236,7 +236,7 @@ describe('DataViewMapComponent', () => {
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DataViewMapComponent)
+    fixture = TestBed.createComponent(MapViewComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
