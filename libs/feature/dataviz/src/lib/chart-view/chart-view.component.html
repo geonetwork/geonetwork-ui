@@ -3,24 +3,24 @@
     <gn-ui-dropdown-selector
       [choices]="typeChoices"
       (selectValue)="chartType = $event"
-      title="Type"
+      [title]="'chart.dropdown.type' | translate"
     ></gn-ui-dropdown-selector>
     <gn-ui-dropdown-selector
       [choices]="xChoices$ | async"
       (selectValue)="xProperty$.next($event)"
-      title="X Axis"
+      [title]="'chart.dropdown.xAxis' | translate"
     ></gn-ui-dropdown-selector>
     <gn-ui-dropdown-selector
       *ngIf="!isCountAggregation"
       [choices]="yChoices$ | async"
       (selectValue)="yProperty$.next($event)"
-      title="Y Axis"
+      [title]="'chart.dropdown.yAxis' | translate"
       class="select-y-prop"
     ></gn-ui-dropdown-selector>
     <gn-ui-dropdown-selector
       [choices]="aggregationChoices"
       (selectValue)="aggregation$.next($event)"
-      title="Aggregation"
+      [title]="'chart.dropdown.aggregation' | translate"
     ></gn-ui-dropdown-selector>
   </div>
   <div class="relative h-full">
