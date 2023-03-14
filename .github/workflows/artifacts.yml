@@ -88,6 +88,10 @@ jobs:
         if: github.event_name != 'release'
         run: npx nx affected --target=docker-build
 
+      - name: Tag all docker images on main also as latest
+        if: github.ref_name == 'main'
+        run: docker image ls --format 'docker tag {{.Repository}}:{{.Tag}} {{.Repository}}:latest' --filter=reference='geonetwork/*' | bash -
+
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
