@@ -20,8 +20,8 @@ export class DatavizService {
     return this.repo.find()
   }
 
-  findOne(id: number) {
-    return this.repo.findOneBy({ id })
+  findOne(uuid: string) {
+    return this.repo.findOneBy({ uuid })
   }
 
   update(id: number, updateDatavizDto: UpdateDatavizDto) {

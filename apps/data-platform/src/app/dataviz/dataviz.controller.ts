@@ -66,9 +66,9 @@ export class DatavizController {
     tags: ['Dataviz'],
     summary: 'Get a dataviz configuration by id',
   })
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.datavizService.findOne(+id)
+  @Get(':uuid')
+  findOne(@Param('uuid') uuid: string) {
+    return this.datavizService.findOne(uuid)
   }
 
   @ApiOperation({
