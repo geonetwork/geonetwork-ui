@@ -61,10 +61,11 @@
       "dependsOn": ["build"],
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["docker build -f ./apps/data-platform/Dockerfile . -t geonetwork/geonetwork-ui-data-platform"]
+        "commands": [
+          "docker build -f ./apps/data-platform/Dockerfile . -t geonetwork/geonetwork-ui-data-platform"
+        ]
       }
     }
-
   },
   "tags": ["type:app"]
 }

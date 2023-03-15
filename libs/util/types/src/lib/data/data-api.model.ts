@@ -1,1 +1,1 @@
-export type AggregationTypes = 'count' | 'sum' | 'min' | "max" |"average"
+export type AggregationTypes = 'count' | 'sum' | 'min' | 'max' | 'average'

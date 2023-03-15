@@ -7,7 +7,13 @@ import {
   Param,
   Delete,
 } from '@nestjs/common'
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger'
 import { DatavizService } from './dataviz.service'
 import { CreateDatavizDto } from './dto/create-dataviz.dto'
 import { UpdateDatavizDto } from './dto/update-dataviz.dto'
@@ -19,7 +25,11 @@ export class DatavizController {
   constructor(private readonly datavizService: DatavizService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create a dataviz configuration' })
+  @ApiOperation({
+    operationId: 'createDataviz',
+    tags: ['Dataviz'],
+    summary: 'Create a dataviz configuration',
+  })
   @ApiBody({
     type: CreateDatavizDto,
     examples: {
@@ -41,21 +51,42 @@ export class DatavizController {
     return this.datavizService.create(createDatavizDto)
   }
 
+  @ApiOperation({
+    operationId: 'findAllDatavizs',
+    tags: ['Dataviz'],
+    summary: 'Get all dataviz configurations',
+  })
   @Get()
   findAll() {
     return this.datavizService.findAll()
   }
 
+  @ApiOperation({
+    operationId: 'getDatavizById',
+    tags: ['Dataviz'],
+    summary: 'Get a dataviz configuration by id',
+  })
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.datavizService.findOne(+id)
   }
 
+  @ApiOperation({
+    operationId: 'patchDataviz',
+    tags: ['Dataviz'],
+    summary: 'Patch a dataviz configuration by id',
+  })
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateDatavizDto: UpdateDatavizDto) {
     return this.datavizService.update(+id, updateDatavizDto)
   }
 
+  @ApiOperation({
+    operationId: 'deleteDataviz',
+    tags: ['Dataviz'],
+    summary: 'Delete a dataviz configuration by id',
+  })
+  @ApiParam({ name: 'id' })
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.datavizService.remove(+id)

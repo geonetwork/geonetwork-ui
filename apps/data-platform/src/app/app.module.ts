@@ -2,15 +2,13 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
 import { DatavizModule } from './dataviz/dataviz.module'
 
 @Module({
   imports: [
     DatavizModule,
     ConfigModule.forRoot({
-      isGlobal: true
+      isGlobal: true,
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -26,7 +24,5 @@ import { DatavizModule } from './dataviz/dataviz.module'
       migrations: ['dist/orm/migration/*.js'],
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

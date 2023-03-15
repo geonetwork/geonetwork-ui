@@ -19,7 +19,6 @@ async function bootstrap() {
     .setTitle('GeoNetwork Data Platform')
     .setDescription('Geonetwork Data Platform REST API definition.')
     .setVersion('1.0')
-    .addTag('Data Platform API')
     .build()
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('api', app, document)
