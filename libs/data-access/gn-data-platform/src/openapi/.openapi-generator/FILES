@@ -1,0 +1,14 @@
+.gitignore
+.openapi-generator-ignore
+README.md
+api.module.ts
+api/api.ts
+api/dataviz.api.service.ts
+configuration.ts
+encoder.ts
+git_push.sh
+index.ts
+model/createDatavizDto.api.model.ts
+model/dataviz.api.model.ts
+model/models.ts
+variables.ts
