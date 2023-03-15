@@ -60,6 +60,7 @@ export class ChartViewComponent {
     { label: 'chart.type.lineSmooth', value: 'line-interpolated' },
     { label: 'chart.type.pie', value: 'pie' },
   ] as const
+
   get aggregationChoices() {
     if (!this.yProperty$.value) {
       return [{ label: 'chart.aggregation.count', value: 'count' }]
