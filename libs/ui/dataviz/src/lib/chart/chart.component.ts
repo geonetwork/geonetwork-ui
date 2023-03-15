@@ -105,12 +105,6 @@ export class ChartComponent implements OnChanges, AfterViewInit {
     const options: ChartOptions = {
       aspectRatio: 2.5,
       parsing: {},
-      scales: {
-        x: {
-          type: this.handlesSecondaryValue() ? 'linear' : 'category',
-          position: 'bottom',
-        },
-      },
     }
     switch (this.type) {
       case 'line-interpolated':

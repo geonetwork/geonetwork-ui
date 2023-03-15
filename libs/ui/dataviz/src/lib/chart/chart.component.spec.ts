@@ -64,12 +64,6 @@ describe('ChartComponent', () => {
         options: {
           aspectRatio: 2.5,
           parsing: {},
-          scales: {
-            x: {
-              position: 'bottom',
-              type: 'category',
-            },
-          },
         },
         type: 'bar',
       })
@@ -178,12 +172,6 @@ describe('ChartComponent', () => {
         options: {
           aspectRatio: 2.5,
           parsing: {},
-          scales: {
-            x: {
-              position: 'bottom',
-              type: 'linear',
-            },
-          },
         },
         type: 'scatter',
       })
@@ -200,14 +188,6 @@ describe('ChartComponent', () => {
         expect(Chart).toHaveBeenCalledWith(
           expect.any(HTMLElement),
           expect.objectContaining({
-            options: expect.objectContaining({
-              scales: {
-                x: {
-                  position: 'bottom',
-                  type: 'category',
-                },
-              },
-            }),
             type: 'scatter',
           })
         )
