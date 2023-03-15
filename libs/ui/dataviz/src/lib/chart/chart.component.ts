@@ -7,6 +7,7 @@ import {
   OnChanges,
   ViewChild,
 } from '@angular/core'
+import { InputChartType } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
 import {
   ArcElement,
   BarController,
@@ -26,7 +27,6 @@ import {
   ScatterController,
   Tooltip,
 } from 'chart.js'
-import { InputChartType } from './chart.model'
 
 Chart.register(
   BarController,
