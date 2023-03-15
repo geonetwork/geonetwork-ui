@@ -41,5 +41,5 @@ nx g @nrwl/nest:resource dataviz --project=data-platform --directory=app --type=
 
 ## Generate Angular API client
 
-1. Run http://localhost:3333/api-yaml and copy the content in `libs/data-access/gn-data-platform/spec.yaml`
+1. Run http://localhost:3333/api-json and copy the content in `libs/data-access/gn-data-platform/spec.yaml`
 2. `npm run generate-api -- gn-data-platform json`
