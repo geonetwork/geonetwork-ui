@@ -2,7 +2,7 @@
 
 This is a NestJs backend to serve a REST API for geonetwork data platform.
 
-# Setup
+# Dev environment
 
 ## Database
 
@@ -18,18 +18,47 @@ password: 'geonetwork',
 database: 'gn-data-platform',
 ```
 
+You can change database settings by editing the project `.env` file.
+
 If the user is not superuser, then you need to add an extension within the database:
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 ```
 
-## API
+## Run
 
 Run `nx serve data-platform`
 
 This will generate the database and run the API on developement mode.
 A swagger is available at http://localhost:3333/api/
+
+# Docker
+
+## Build
+
+Build the docker image with
+
+```shell
+nx run data-platform:docker-build
+```
+
+## Run
+
+Prerequisites: You must have a database reachable from your docker network.
+
+Run the docker image with database configuration
+
+```shell
+docker run \
+  -e DB_HOST=db \
+  -e DB_PORT=55432 \
+  -e DB_USER=geonetwork \
+  -e DB_PASSWORD=geonetwork \
+  -e DB_DATABASE=gn-data-platform \
+  -e DB_SCHEMA=public \
+  geonetwork/geonetwork-ui-data-platform
+```
 
 # Contributing
 
