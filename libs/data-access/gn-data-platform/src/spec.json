@@ -5,9 +5,7 @@
       "post": {
         "operationId": "createDataviz",
         "summary": "Create a dataviz configuration",
-        "tags": [
-          "Dataviz"
-        ],
+        "tags": ["Dataviz"],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -43,9 +41,7 @@
       "get": {
         "operationId": "findAllDatavizs",
         "summary": "Get all dataviz configurations",
-        "tags": [
-          "Dataviz"
-        ],
+        "tags": ["Dataviz"],
         "parameters": [],
         "responses": {
           "200": {
@@ -58,9 +54,7 @@
       "get": {
         "operationId": "getDatavizById",
         "summary": "Get a dataviz configuration by id",
-        "tags": [
-          "Dataviz"
-        ],
+        "tags": ["Dataviz"],
         "parameters": [
           {
             "name": "id",
@@ -80,9 +74,7 @@
       "patch": {
         "operationId": "patchDataviz",
         "summary": "Patch a dataviz configuration by id",
-        "tags": [
-          "Dataviz"
-        ],
+        "tags": ["Dataviz"],
         "parameters": [
           {
             "name": "id",
@@ -112,9 +104,7 @@
       "delete": {
         "operationId": "deleteDataviz",
         "summary": "Delete a dataviz configuration by id",
-        "tags": [
-          "Dataviz"
-        ],
+        "tags": ["Dataviz"],
         "parameters": [
           {
             "name": "id",
@@ -162,10 +152,7 @@
             "description": "Configuration of default dataviz for the metadata"
           }
         },
-        "required": [
-          "uuid",
-          "config"
-        ]
+        "required": ["uuid", "config"]
       },
       "Dataviz": {
         "type": "object",
@@ -191,11 +178,7 @@
             "description": "Configuration of default dataviz for the metadata"
           }
         },
-        "required": [
-          "id",
-          "uuid",
-          "config"
-        ]
+        "required": ["id", "uuid", "config"]
       },
       "UpdateDatavizDto": {
         "type": "object",
