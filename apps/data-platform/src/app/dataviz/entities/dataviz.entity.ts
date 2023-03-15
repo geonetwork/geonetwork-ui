@@ -27,7 +27,7 @@ export class Dataviz {
     type: 'jsonb',
   })
   @ApiProperty({
-    example: { xaxis: 'time', yaxis: 'value' },
+    example: { xPorperty: 'time', yProperty: 'value', aggregation: 'sum', chartType: 'bar' },
     description: 'Configuration of default dataviz for the metadata',
   })
   config: DatavizConfigModel

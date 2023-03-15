@@ -5,6 +5,8 @@ import {
   Input,
 } from '@angular/core'
 import { MetadataLink } from '@geonetwork-ui/util/shared'
+import { AggregationTypes } from '@geonetwork-ui/util/types/data/data-api.model'
+import { InputChartType } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
 import { BehaviorSubject, combineLatest, EMPTY, Observable } from 'rxjs'
 import {
   catchError,
@@ -16,7 +18,6 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators'
-import { InputChartType } from '@geonetwork-ui/ui/dataviz'
 import { DataService } from '../service/data.service'
 import {
   BaseReader,
