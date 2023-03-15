@@ -32,8 +32,6 @@
     "build:demo": "tools/build/webcomponent/prepare-wc-pages.sh",
     "demo": "tools/build/webcomponent/prepare-wc-pages.sh --serve",
     "generate-api": "tools/generate-api.sh",
-    "generate-api:gn4": "tools/generate-api.sh gn4",
-    "generate-api:datafeeder": "tools/generate-api.sh datafeeder",
     "dev:ssr": "ng run formatter:serve-ssr",
     "serve:ssr": "node dist/formatter/server/main.js",
     "build:ssr": "ng build --configuration production && ng run formatter:server:production",

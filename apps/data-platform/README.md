@@ -38,3 +38,8 @@ A swagger is available at http://localhost:3333/api/
 ```
 nx g @nrwl/nest:resource dataviz --project=data-platform --directory=app --type=rest --crud=true
 ```
+
+## Generate Angular API client
+
+1. Run http://localhost:3333/api-yaml and copy the content in `libs/data-access/gn-data-platform/spec.yaml`
+2. `npm run generate-api -- gn-data-platform json`

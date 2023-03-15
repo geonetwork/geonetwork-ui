@@ -221,7 +221,7 @@ If you want Prettier to run on all the code and make sure everything is formatte
 GeoNetwork-UI contains auto-generated API clients for two backends: [GeoNetwork](https://github.com/geonetwork/core-geonetwork) 4 and [Datafeeder](https://github.com/georchestra/georchestra/tree/master/datafeeder).
 This relies on the [OpenAPI standard](https://www.openapis.org/) (formerly Swagger).
 
-To regenerate the clients, update the `spec.yaml` files in the `libs/data-access/<backend>/src` folder and use either `npm run generate-api:gn4` or `npm run generate-api:datafeeder`.
+To regenerate the clients, update the `spec.yaml` files in the `libs/data-access/<backend>/src` folder and use either `npm run generate-api -- gn4` or `npm run generate-api -- datafeeder`.
 
 ### i18n
 

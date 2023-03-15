@@ -6,7 +6,7 @@ The [openapi-generator](https://openapi-generator.tech/) converts the OpenAPI sp
 
 ```shell script
 curl -o libs/gn-api/src/lib/gn4/spec.yml https://localhost:8080/geonetwork/srv/api/doc.yml
-npm run generate-api:gn4
+npm run generate-api -- gn4
 ```
 
 The api `baseUrl` is stored in the api specification document, and overwritten via Angular injection:

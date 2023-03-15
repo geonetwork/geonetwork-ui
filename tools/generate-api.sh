@@ -11,7 +11,6 @@ rm -rf "$libRootPath"
   -g typescript-angular \
   -o "$libRootPath" \
   -c openapi-codegen-config.json \
-  --skip-validate-spec \
 
 sed -i "s/' | }/' }/" "$libRootPath"/**/*.ts
 sed -i "s/SetApiModel/Set/" "$libRootPath"/**/*.ts
