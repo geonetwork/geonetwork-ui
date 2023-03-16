@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+} from '@angular/core'
 import { MetadataLink } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest, EMPTY, Observable } from 'rxjs'
 import {
@@ -53,13 +58,18 @@ export class ChartViewComponent {
     { label: 'chart.type.lineSmooth', value: 'line-interpolated' },
     { label: 'chart.type.pie', value: 'pie' },
   ] as const
-  aggregationChoices = [
-    { label: 'chart.aggregation.sum', value: 'sum' },
-    { label: 'chart.aggregation.max', value: 'max' },
-    { label: 'chart.aggregation.min', value: 'min' },
-    { label: 'chart.aggregation.average', value: 'average' },
-    { label: 'chart.aggregation.count', value: 'count' },
-  ] as const
+  get aggregationChoices() {
+    if (!this.yProperty$.value) {
+      return [{ label: 'chart.aggregation.count', value: 'count' }]
+    }
+    return [
+      { label: 'chart.aggregation.sum', value: 'sum' },
+      { label: 'chart.aggregation.max', value: 'max' },
+      { label: 'chart.aggregation.min', value: 'min' },
+      { label: 'chart.aggregation.average', value: 'average' },
+      { label: 'chart.aggregation.count', value: 'count' },
+    ] as const
+  }
 
   dataset$: Observable<BaseReader> = this.currentLink$.pipe(
     filter((link) => !!link),
@@ -74,6 +84,7 @@ export class ChartViewComponent {
         }),
         finalize(() => {
           this.loading = false
+          this.changeDetector.detectChanges()
         })
       )
     }),
@@ -88,7 +99,11 @@ export class ChartViewComponent {
     ),
     tap((choices) => {
       if (!choices.find((choice) => choice.value === this.yProperty$.value)) {
-        this.yProperty$.next(choices[0].value)
+        const newProp = choices[0]?.value || ''
+        if (!newProp && this.aggregation$.value !== 'count') {
+          this.aggregation$.next('count')
+        }
+        this.yProperty$.next(newProp)
       }
     })
   )
@@ -104,19 +119,19 @@ export class ChartViewComponent {
     ),
     tap((choices) => {
       if (!choices.find((choice) => choice.value === this.xProperty$.value)) {
-        this.xProperty$.next(choices[0].value)
+        this.xProperty$.next(choices[0]?.value || '')
       }
     })
   )
   chartType: InputChartType = 'bar'
-  xProperty$ = new BehaviorSubject<string>('')
-  yProperty$ = new BehaviorSubject<string>('')
+  xProperty$ = new BehaviorSubject<string>(undefined)
+  yProperty$ = new BehaviorSubject<string>(undefined)
   aggregation$ = new BehaviorSubject<FieldAggregation[0]>('sum')
 
   chartData$ = combineLatest([
     this.dataset$,
-    this.xProperty$.pipe(filter((value) => !!value)),
-    this.yProperty$.pipe(filter((value) => !!value)),
+    this.xProperty$.pipe(filter((value) => value !== undefined)),
+    this.yProperty$.pipe(filter((value) => value !== undefined)),
     this.aggregation$,
   ]).pipe(
     switchMap(([dataset, xProp, yProp, aggregation]) => {
@@ -130,6 +145,7 @@ export class ChartViewComponent {
   )
 
   get labelProperty() {
+    if (!this.xProperty$.value) return ''
     return `distinct(${this.xProperty$.value})`
   }
   get valueProperty() {
@@ -140,5 +156,8 @@ export class ChartViewComponent {
     return this.aggregation$.value === 'count'
   }
 
-  constructor(private dataService: DataService) {}
+  constructor(
+    private dataService: DataService,
+    private changeDetector: ChangeDetectorRef
+  ) {}
 }

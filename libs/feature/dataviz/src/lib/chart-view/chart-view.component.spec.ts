@@ -15,9 +15,10 @@ import {
 } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { DataService } from '../service/data.service'
-import { of } from 'rxjs'
+import { of, throwError } from 'rxjs'
 import { By } from '@angular/platform-browser'
 import { LINK_FIXTURES } from '@geonetwork-ui/util/shared/fixtures'
+import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 
 @Component({
   selector: 'gn-ui-chart',
@@ -47,38 +48,53 @@ const SAMPLE_DATA_ITEMS = [
 const SAMPLE_CHART_DATA = [{ id: 1 }, { id: 2 }]
 
 class DatasetReaderMock {
-  constructor() {
+  constructor(private url: string) {
+    let properties = [
+      {
+        name: 'propNum1',
+        type: 'number',
+      },
+      {
+        name: 'propStr1',
+        type: 'string',
+      },
+      {
+        name: 'propStr2',
+        type: 'string',
+      },
+      {
+        name: 'propDate1',
+        type: 'date',
+      },
+      {
+        name: 'propNum2',
+        type: 'number',
+      },
+    ]
+    if (url.indexOf('no-string-props') > -1) {
+      properties = properties.filter((p) => p.type !== 'string')
+    }
+    if (url.indexOf('no-number-props') > -1) {
+      properties = properties.filter((p) => p.type !== 'number')
+    }
+    if (url.indexOf('no-date-props') > -1) {
+      properties = properties.filter((p) => p.type !== 'date')
+    }
+    this.properties = Promise.resolve(properties)
     DatasetReaderMock.instance = this
   }
   public static instance: DatasetReaderMock
-  properties = Promise.resolve([
-    {
-      name: 'propNum1',
-      type: 'number',
-    },
-    {
-      name: 'propStr1',
-      type: 'string',
-    },
-    {
-      name: 'propStr2',
-      type: 'string',
-    },
-    {
-      name: 'propDate1',
-      type: 'date',
-    },
-    {
-      name: 'propNum2',
-      type: 'number',
-    },
-  ])
+  properties: Promise<any[]>
   groupBy = jest.fn(() => this)
   aggregate = jest.fn(() => this)
-  read = jest.fn(() => Promise.resolve(SAMPLE_DATA_ITEMS))
+  read = jest.fn(() =>
+    this.url.indexOf('more-results') > -1
+      ? Promise.resolve(SAMPLE_DATA_ITEMS.concat(SAMPLE_DATA_ITEMS))
+      : Promise.resolve(SAMPLE_DATA_ITEMS)
+  )
 }
 class DataServiceMock {
-  getDataset = jest.fn(() => of(new DatasetReaderMock()))
+  getDataset = jest.fn((link) => of(new DatasetReaderMock(link.url)))
 }
 
 describe('ChartViewComponent', () => {
@@ -263,6 +279,79 @@ describe('ChartViewComponent', () => {
     it('hides the Y property field', () => {
       const select = fixture.debugElement.query(By.css('.select-y-prop'))
       expect(select).toBeFalsy()
+    })
+  })
+
+  describe('dataset reader fails', () => {
+    beforeEach(fakeAsync(() => {
+      dataService.getDataset = () =>
+        throwError(() => new Error('could not open dataset'))
+      component.link = { ...LINK_FIXTURES.dataCsv, url: 'http://changed/' }
+      flushMicrotasks()
+      fixture.detectChanges()
+    }))
+    it('does not stay in loading state', () => {
+      expect(component.loading).toBe(false)
+    })
+    it('shows error', () => {
+      expect(component.error).toBe('could not open dataset')
+    })
+  })
+
+  describe('no fitting property for x', () => {
+    beforeEach(fakeAsync(() => {
+      component.link = {
+        ...LINK_FIXTURES.dataCsv,
+        url: 'http://server.org/no-string-props/',
+      }
+      flushMicrotasks()
+      fixture.detectChanges()
+    }))
+    it('gives an empty value for X', () => {
+      expect(chartComponent.labelProperty).toBe('')
+    })
+  })
+
+  describe('no fitting property for y', () => {
+    let aggChoicesComponent: DropdownSelectorComponent
+    beforeEach(fakeAsync(() => {
+      component.aggregation$.next('sum')
+      component.link = {
+        ...LINK_FIXTURES.dataCsv,
+        url: 'http://server.org/no-number-props/no-date-props/more-results/',
+      }
+      flushMicrotasks()
+      fixture.detectChanges()
+      aggChoicesComponent = fixture.debugElement.query(
+        By.css('.aggregation-choices')
+      ).componentInstance
+    }))
+    it('switches to count aggregation', () => {
+      expect(chartComponent.valueProperty).toBe('count()')
+    })
+    it('only offers sum aggregation', () => {
+      expect(aggChoicesComponent.choices).toEqual([
+        {
+          label: 'chart.aggregation.count',
+          value: 'count',
+        },
+      ])
+    })
+    it('gives new data to the chart', () => {
+      expect(chartComponent.data).toEqual([
+        {
+          id: 1,
+        },
+        {
+          id: 2,
+        },
+        {
+          id: 1,
+        },
+        {
+          id: 2,
+        },
+      ])
     })
   })
 })
