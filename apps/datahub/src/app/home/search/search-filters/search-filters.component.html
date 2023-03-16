@@ -52,6 +52,10 @@
       [fieldName]="'format'"
       [title]="'search.filters.byFormat' | translate"
     ></gn-ui-filter-dropdown>
+    <gn-ui-filter-spatialdata
+      class="w-full"
+      [ngClass]="isOpen ? 'block' : 'hidden sm:block'"
+    ></gn-ui-filter-spatialdata>
     <div
       class="spatial-filter-toggle sm:col-span-2"
       *ngIf="isOpen && searchFacade.hasSpatialFilter$ | async"

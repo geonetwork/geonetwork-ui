@@ -1,0 +1,8 @@
+<gn-ui-dropdown-selector
+  [title]="'search.filter.spatialdata' | translate"
+  [showTitle]="false"
+  [choices]="choices"
+  (selectValue)="changeFilterBySpatialRef($event)"
+  [selected]="currentFilter$ | async"
+  ariaName=""
+></gn-ui-dropdown-selector>
