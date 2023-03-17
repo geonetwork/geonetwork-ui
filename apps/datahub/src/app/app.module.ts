@@ -27,6 +27,7 @@ import {
   getThemeConfig,
 } from '@geonetwork-ui/util/app-config'
 import {
+  AVAILABLE_LANGS,
   getDefaultLang,
   getLangFromBrowser,
   TRANSLATE_DEFAULT_CONFIG,
@@ -170,6 +171,7 @@ export class AppModule {
     router: Router,
     @Inject(DOCUMENT) private document: Document
   ) {
+    translate.addLangs(AVAILABLE_LANGS)
     translate.setDefaultLang(getDefaultLang())
     translate.use(getLangFromBrowser() || getDefaultLang())
     ThemeService.applyCssVariables(

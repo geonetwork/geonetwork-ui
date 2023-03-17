@@ -9,6 +9,8 @@ import { FileTranslateLoader } from './file.translate.loader'
 
 export const DEFAULT_LANG = 'en'
 
+export const AVAILABLE_LANGS = ['de', 'en', 'es', 'fr', 'it', 'nl', 'pt']
+
 export const LANG_3_TO_2_MAPPER = {
   eng: 'en',
   dut: 'nl',
