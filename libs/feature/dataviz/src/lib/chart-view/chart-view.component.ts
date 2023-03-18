@@ -36,6 +36,7 @@ marker('chart.aggregation.max')
 marker('chart.aggregation.min')
 marker('chart.aggregation.average')
 marker('chart.aggregation.count')
+
 @Component({
   selector: 'gn-ui-chart-view',
   templateUrl: './chart-view.component.html',
@@ -78,8 +79,7 @@ export class ChartViewComponent {
       this.loading = true
       return this.dataService.getDataset(link).pipe(
         catchError((error) => {
-          this.error = error.message
-          console.warn(error.stack || error.message)
+          this.handleError(error)
           return EMPTY
         }),
         finalize(() => {
@@ -90,8 +90,16 @@ export class ChartViewComponent {
     }),
     shareReplay(1)
   )
-  yChoices$ = this.dataset$.pipe(
-    switchMap((dataset) => dataset.properties),
+  properties$ = this.dataset$.pipe(
+    switchMap((dataset) =>
+      dataset.properties.catch((error) => {
+        this.handleError(error)
+        return []
+      })
+    ),
+    shareReplay(1)
+  )
+  yChoices$ = this.properties$.pipe(
     map((properties) =>
       properties
         .filter((prop) => prop.type === 'number' || prop.type === 'date')
@@ -107,8 +115,7 @@ export class ChartViewComponent {
       }
     })
   )
-  xChoices$ = this.dataset$.pipe(
-    switchMap((dataset) => dataset.properties),
+  xChoices$ = this.properties$.pipe(
     map((properties) =>
       properties
         .filter((prop) => prop.type === 'string')
@@ -137,7 +144,14 @@ export class ChartViewComponent {
     switchMap(([dataset, xProp, yProp, aggregation]) => {
       const fieldAgg: FieldAggregation =
         aggregation === 'count' ? ['count'] : [aggregation, yProp]
-      return dataset.groupBy(['distinct', xProp]).aggregate(fieldAgg).read()
+      return dataset
+        .groupBy(['distinct', xProp])
+        .aggregate(fieldAgg)
+        .read()
+        .catch((error) => {
+          this.handleError(error)
+          return []
+        })
     }),
     map(getJsonDataItemsProxy),
     startWith([]),
@@ -160,4 +174,10 @@ export class ChartViewComponent {
     private dataService: DataService,
     private changeDetector: ChangeDetectorRef
   ) {}
+
+  handleError(error) {
+    this.error = error.message
+    this.changeDetector.detectChanges()
+    console.warn(error.stack || error.message)
+  }
 }

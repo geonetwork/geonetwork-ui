@@ -81,6 +81,9 @@ class DatasetReaderMock {
       properties = properties.filter((p) => p.type !== 'date')
     }
     this.properties = Promise.resolve(properties)
+    if (url.indexOf('error-props') > -1) {
+      this.properties = Promise.reject(new Error('could not get props'))
+    }
     DatasetReaderMock.instance = this
   }
   public static instance: DatasetReaderMock
@@ -295,6 +298,20 @@ describe('ChartViewComponent', () => {
     })
     it('shows error', () => {
       expect(component.error).toBe('could not open dataset')
+    })
+  })
+
+  describe('dataset fails on properties info', () => {
+    beforeEach(fakeAsync(() => {
+      component.link = { ...LINK_FIXTURES.dataCsv, url: 'http://error-props/' }
+      flushMicrotasks()
+      fixture.detectChanges()
+    }))
+    it('does not stay in loading state', () => {
+      expect(component.loading).toBe(false)
+    })
+    it('shows error', () => {
+      expect(component.error).toBe('could not get props')
     })
   })
 

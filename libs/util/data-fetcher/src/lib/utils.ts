@@ -54,12 +54,16 @@ export function fetchHeaders(url: string): Promise<DatasetHeaders> {
 export function fetchDataAsText(url: string): Promise<string> {
   return useCache(
     () =>
-      sharedFetch(url).then(async (response) => {
-        if (!response.ok) {
-          throw FetchError.http(response.status)
-        }
-        return response.text()
-      }),
+      sharedFetch(url)
+        .catch((error) => {
+          throw FetchError.corsOrNetwork(error.message)
+        })
+        .then(async (response) => {
+          if (!response.ok) {
+            throw FetchError.http(response.status)
+          }
+          return response.text()
+        }),
     url,
     'asText'
   )
@@ -67,13 +71,17 @@ export function fetchDataAsText(url: string): Promise<string> {
 export function fetchDataAsArrayBuffer(url: string): Promise<ArrayBuffer> {
   return useCache(
     () =>
-      sharedFetch(url).then(async (response) => {
-        if (!response.ok) {
-          throw FetchError.http(response.status)
-        }
-        // convert to a numeric array so that we can store the response in cache
-        return Array.from(new Uint8Array(await response.arrayBuffer()))
-      }),
+      sharedFetch(url)
+        .catch((error) => {
+          throw FetchError.corsOrNetwork(error.message)
+        })
+        .then(async (response) => {
+          if (!response.ok) {
+            throw FetchError.http(response.status)
+          }
+          // convert to a numeric array so that we can store the response in cache
+          return Array.from(new Uint8Array(await response.arrayBuffer()))
+        }),
     url,
     'asArrayBuffer'
   ).then((array) => {
