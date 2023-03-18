@@ -71,7 +71,7 @@ describe('AuthService', () => {
       it('emits a value on subscribe after auth was queried', () => {
         let emitted = false
         service.authReady().subscribe(() => (emitted = true))
-        me$.next()
+        me$.next(null)
         expect(emitted).toBeTruthy()
       })
     })
