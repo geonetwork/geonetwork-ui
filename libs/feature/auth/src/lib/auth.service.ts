@@ -5,7 +5,6 @@ import {
 } from '@geonetwork-ui/data-access/gn4'
 import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n'
 import { UserModel } from '@geonetwork-ui/util/shared'
-import { USER_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 import { TranslateService } from '@ngx-translate/core'
 import { Observable } from 'rxjs'
 import { map, shareReplay } from 'rxjs/operators'
@@ -46,7 +45,6 @@ export class AuthService {
   ) {
     this.user$ = this.meApi.getMe().pipe(
       map((apiUser) => this.mapToUserModel(apiUser)),
-      map((user) => user ?? USER_FIXTURE()),
       shareReplay({ bufferSize: 1, refCount: true })
     )
   }
