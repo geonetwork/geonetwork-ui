@@ -10,7 +10,7 @@ export class CreateDatavizDto {
 
   @ApiProperty({
     example: {
-      xPorperty: 'time',
+      xProperty: 'time',
       yProperty: 'value',
       aggregation: 'sum',
       chartType: 'bar',

@@ -28,7 +28,7 @@ export class Dataviz {
   })
   @ApiProperty({
     example: {
-      xPorperty: 'time',
+      xProperty: 'time',
       yProperty: 'value',
       aggregation: 'sum',
       chartType: 'bar',

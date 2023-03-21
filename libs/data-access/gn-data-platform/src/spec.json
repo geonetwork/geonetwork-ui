@@ -144,7 +144,7 @@
           "config": {
             "type": "object",
             "example": {
-              "xPorperty": "time",
+              "xProperty": "time",
               "yProperty": "value",
               "aggregation": "sum",
               "chartType": "bar"
@@ -170,7 +170,7 @@
           "config": {
             "type": "object",
             "example": {
-              "xPorperty": "time",
+              "xProperty": "time",
               "yProperty": "value",
               "aggregation": "sum",
               "chartType": "bar"

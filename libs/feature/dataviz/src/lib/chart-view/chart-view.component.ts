@@ -4,6 +4,13 @@ import {
   Component,
   Input,
 } from '@angular/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import {
+  BaseReader,
+  FieldAggregation,
+  getJsonDataItemsProxy,
+} from '@geonetwork-ui/data-fetcher'
+import { DDChoices } from '@geonetwork-ui/ui/inputs'
 import { MetadataLink } from '@geonetwork-ui/util/shared'
 import { AggregationTypes } from '@geonetwork-ui/util/types/data/data-api.model'
 import { InputChartType } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
@@ -19,12 +26,6 @@ import {
   tap,
 } from 'rxjs/operators'
 import { DataService } from '../service/data.service'
-import {
-  BaseReader,
-  FieldAggregation,
-  getJsonDataItemsProxy,
-} from '@geonetwork-ui/data-fetcher'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 marker('chart.type.bar')
 marker('chart.type.barHorizontal')
@@ -53,13 +54,13 @@ export class ChartViewComponent {
   loading = false
   error = null
 
-  typeChoices = [
+  typeChoices: DDChoices<InputChartType> = [
     { label: 'chart.type.bar', value: 'bar' },
     { label: 'chart.type.barHorizontal', value: 'bar-horizontal' },
     { label: 'chart.type.line', value: 'line' },
     { label: 'chart.type.lineSmooth', value: 'line-interpolated' },
     { label: 'chart.type.pie', value: 'pie' },
-  ] as const
+  ]
 
   get aggregationChoices() {
     if (!this.yProperty$.value) {
@@ -71,7 +72,7 @@ export class ChartViewComponent {
       { label: 'chart.aggregation.min', value: 'min' },
       { label: 'chart.aggregation.average', value: 'average' },
       { label: 'chart.aggregation.count', value: 'count' },
-    ] as const
+    ] as DDChoices<AggregationTypes>
   }
 
   dataset$: Observable<BaseReader> = this.currentLink$.pipe(
