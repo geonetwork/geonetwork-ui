@@ -77,11 +77,11 @@ Primary.args = {
   secondaryValueProperty: '',
   type: 'bar',
 }
-const options = Object.keys(SAMPLE_DATA[0])
+const options = ['not defined'].concat(Object.keys(SAMPLE_DATA[0]))
 Primary.argTypes = {
   labelProperty: { control: { type: 'select', options } },
   valueProperty: { control: { type: 'select', options } },
   secondaryValueProperty: {
-    control: { type: 'select', options: [''].concat(options) },
+    control: { type: 'select', options },
   },
 }

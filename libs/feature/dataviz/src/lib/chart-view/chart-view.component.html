@@ -19,7 +19,9 @@
     ></gn-ui-dropdown-selector>
     <gn-ui-dropdown-selector
       [choices]="aggregationChoices"
+      class="aggregation-choices"
       (selectValue)="aggregation$.next($event)"
+      [selected]="aggregation$.value"
       [title]="'chart.dropdown.aggregation' | translate"
     ></gn-ui-dropdown-selector>
   </div>

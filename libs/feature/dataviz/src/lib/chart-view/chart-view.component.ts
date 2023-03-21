@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+} from '@angular/core'
 import { MetadataLink } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest, EMPTY, Observable } from 'rxjs'
 import {
@@ -31,6 +36,7 @@ marker('chart.aggregation.max')
 marker('chart.aggregation.min')
 marker('chart.aggregation.average')
 marker('chart.aggregation.count')
+
 @Component({
   selector: 'gn-ui-chart-view',
   templateUrl: './chart-view.component.html',
@@ -53,13 +59,18 @@ export class ChartViewComponent {
     { label: 'chart.type.lineSmooth', value: 'line-interpolated' },
     { label: 'chart.type.pie', value: 'pie' },
   ] as const
-  aggregationChoices = [
-    { label: 'chart.aggregation.sum', value: 'sum' },
-    { label: 'chart.aggregation.max', value: 'max' },
-    { label: 'chart.aggregation.min', value: 'min' },
-    { label: 'chart.aggregation.average', value: 'average' },
-    { label: 'chart.aggregation.count', value: 'count' },
-  ] as const
+  get aggregationChoices() {
+    if (!this.yProperty$.value) {
+      return [{ label: 'chart.aggregation.count', value: 'count' }]
+    }
+    return [
+      { label: 'chart.aggregation.sum', value: 'sum' },
+      { label: 'chart.aggregation.max', value: 'max' },
+      { label: 'chart.aggregation.min', value: 'min' },
+      { label: 'chart.aggregation.average', value: 'average' },
+      { label: 'chart.aggregation.count', value: 'count' },
+    ] as const
+  }
 
   dataset$: Observable<BaseReader> = this.currentLink$.pipe(
     filter((link) => !!link),
@@ -68,19 +79,27 @@ export class ChartViewComponent {
       this.loading = true
       return this.dataService.getDataset(link).pipe(
         catchError((error) => {
-          this.error = error.message
-          console.warn(error.stack || error.message)
+          this.handleError(error)
           return EMPTY
         }),
         finalize(() => {
           this.loading = false
+          this.changeDetector.detectChanges()
         })
       )
     }),
     shareReplay(1)
   )
-  yChoices$ = this.dataset$.pipe(
-    switchMap((dataset) => dataset.properties),
+  properties$ = this.dataset$.pipe(
+    switchMap((dataset) =>
+      dataset.properties.catch((error) => {
+        this.handleError(error)
+        return []
+      })
+    ),
+    shareReplay(1)
+  )
+  yChoices$ = this.properties$.pipe(
     map((properties) =>
       properties
         .filter((prop) => prop.type === 'number' || prop.type === 'date')
@@ -88,12 +107,15 @@ export class ChartViewComponent {
     ),
     tap((choices) => {
       if (!choices.find((choice) => choice.value === this.yProperty$.value)) {
-        this.yProperty$.next(choices[0].value)
+        const newProp = choices[0]?.value || ''
+        if (!newProp && this.aggregation$.value !== 'count') {
+          this.aggregation$.next('count')
+        }
+        this.yProperty$.next(newProp)
       }
     })
   )
-  xChoices$ = this.dataset$.pipe(
-    switchMap((dataset) => dataset.properties),
+  xChoices$ = this.properties$.pipe(
     map((properties) =>
       properties
         .filter((prop) => prop.type === 'string')
@@ -104,25 +126,32 @@ export class ChartViewComponent {
     ),
     tap((choices) => {
       if (!choices.find((choice) => choice.value === this.xProperty$.value)) {
-        this.xProperty$.next(choices[0].value)
+        this.xProperty$.next(choices[0]?.value || '')
       }
     })
   )
   chartType: InputChartType = 'bar'
-  xProperty$ = new BehaviorSubject<string>('')
-  yProperty$ = new BehaviorSubject<string>('')
+  xProperty$ = new BehaviorSubject<string>(undefined)
+  yProperty$ = new BehaviorSubject<string>(undefined)
   aggregation$ = new BehaviorSubject<FieldAggregation[0]>('sum')
 
   chartData$ = combineLatest([
     this.dataset$,
-    this.xProperty$.pipe(filter((value) => !!value)),
-    this.yProperty$.pipe(filter((value) => !!value)),
+    this.xProperty$.pipe(filter((value) => value !== undefined)),
+    this.yProperty$.pipe(filter((value) => value !== undefined)),
     this.aggregation$,
   ]).pipe(
     switchMap(([dataset, xProp, yProp, aggregation]) => {
       const fieldAgg: FieldAggregation =
         aggregation === 'count' ? ['count'] : [aggregation, yProp]
-      return dataset.groupBy(['distinct', xProp]).aggregate(fieldAgg).read()
+      return dataset
+        .groupBy(['distinct', xProp])
+        .aggregate(fieldAgg)
+        .read()
+        .catch((error) => {
+          this.handleError(error)
+          return []
+        })
     }),
     map(getJsonDataItemsProxy),
     startWith([]),
@@ -130,6 +159,7 @@ export class ChartViewComponent {
   )
 
   get labelProperty() {
+    if (!this.xProperty$.value) return ''
     return `distinct(${this.xProperty$.value})`
   }
   get valueProperty() {
@@ -140,5 +170,14 @@ export class ChartViewComponent {
     return this.aggregation$.value === 'count'
   }
 
-  constructor(private dataService: DataService) {}
+  constructor(
+    private dataService: DataService,
+    private changeDetector: ChangeDetectorRef
+  ) {}
+
+  handleError(error) {
+    this.error = error.message
+    this.changeDetector.detectChanges()
+    console.warn(error.stack || error.message)
+  }
 }

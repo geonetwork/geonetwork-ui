@@ -10,8 +10,6 @@ type ParseResult = {
 
 export class BaseFileReader extends BaseReader {
   private parseResult_: Promise<ParseResult>
-  private propertiesInfo_: Promise<PropertyInfo[]>
-  private datasetInfo_: Promise<DatasetInfo>
 
   protected getData(): Promise<ParseResult> {
     throw new Error('not implemented')
@@ -19,21 +17,19 @@ export class BaseFileReader extends BaseReader {
 
   load() {
     this.parseResult_ = this.getData()
-    this.propertiesInfo_ = this.parseResult_.then((result) => result.properties)
-    this.datasetInfo_ = this.parseResult_.then(
+  }
+
+  get properties(): Promise<PropertyInfo[]> {
+    return this.parseResult_.then((result) => result.properties)
+  }
+
+  get info(): Promise<DatasetInfo> {
+    return this.parseResult_.then(
       (result) =>
         ({
           itemsCount: result.items.length,
         } as DatasetInfo)
     )
-  }
-
-  get properties(): Promise<PropertyInfo[]> {
-    return this.propertiesInfo_
-  }
-
-  get info(): Promise<DatasetInfo> {
-    return this.datasetInfo_
   }
 
   async read(): Promise<DataItem[]> {
