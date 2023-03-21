@@ -7,7 +7,6 @@ import { FeatureMapModule } from '@geonetwork-ui/feature/map'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { UiMapModule } from '@geonetwork-ui/ui/map'
 import {
-  getDefaultLang,
   UtilI18nModule,
   TRANSLATE_GEONETWORK_CONFIG,
 } from '@geonetwork-ui/util/i18n'
@@ -16,7 +15,7 @@ import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateModule } from '@ngx-translate/core'
 import { storeFreeze } from 'ngrx-store-freeze'
 import { environment } from '../environments/environment'
 import { AppRoutingModule } from './app-routing.module'
@@ -57,10 +56,4 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-  constructor(translate: TranslateService) {
-    const lang = getDefaultLang()
-    translate.setDefaultLang(lang)
-    translate.use(lang)
-  }
-}
+export class AppModule {}

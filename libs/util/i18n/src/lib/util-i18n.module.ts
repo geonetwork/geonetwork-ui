@@ -21,6 +21,6 @@ import { CommonModule } from '@angular/common'
 export class UtilI18nModule {
   constructor(translate: TranslateService) {
     translate.setDefaultLang(DEFAULT_LANG)
-    translate.use(DEFAULT_LANG)
+    translate.use(translate.getBrowserLang() || DEFAULT_LANG)
   }
 }

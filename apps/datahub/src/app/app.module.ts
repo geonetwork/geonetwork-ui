@@ -27,8 +27,6 @@ import {
   getThemeConfig,
 } from '@geonetwork-ui/util/app-config'
 import {
-  getDefaultLang,
-  getLangFromBrowser,
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
@@ -43,7 +41,7 @@ import { LOGIN_URL } from '@geonetwork-ui/feature/auth'
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateModule } from '@ngx-translate/core'
 import { filter } from 'rxjs/operators'
 import { environment } from '../environments/environment'
 
@@ -167,13 +165,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(
-    translate: TranslateService,
-    router: Router,
-    @Inject(DOCUMENT) private document: Document
-  ) {
-    translate.setDefaultLang(getDefaultLang())
-    translate.use(getLangFromBrowser() || getDefaultLang())
+  constructor(router: Router, @Inject(DOCUMENT) private document: Document) {
     ThemeService.applyCssVariables(
       getThemeConfig().PRIMARY_COLOR,
       getThemeConfig().SECONDARY_COLOR,
