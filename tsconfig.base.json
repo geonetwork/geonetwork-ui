@@ -49,7 +49,8 @@
       "@geonetwork-ui/util/shared": ["libs/util/shared/src/index.ts"],
       "@geonetwork-ui/util/shared/fixtures": [
         "libs/util/shared/src/lib/fixtures/index.ts"
-      ]
+      ],
+      "@geonetwork-ui/util/types/*": ["libs/util/types/src/lib/*"]
     },
     "allowJs": true,
     "outDir": "/"

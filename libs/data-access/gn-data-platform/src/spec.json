@@ -1,0 +1,189 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/dataviz": {
+      "post": {
+        "operationId": "createDataviz",
+        "summary": "Create a dataviz configuration",
+        "tags": ["Dataviz"],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDatavizDto"
+              },
+              "examples": {
+                "default": {
+                  "$ref": "CreateDatavizDto"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Returns the created dataviz.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Dataviz"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A dataviz with the same identifier was already existing."
+          }
+        }
+      },
+      "get": {
+        "operationId": "findAllDatavizs",
+        "summary": "Get all dataviz configurations",
+        "tags": ["Dataviz"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/dataviz/{id}": {
+      "get": {
+        "operationId": "getDatavizById",
+        "summary": "Get a dataviz configuration by id",
+        "tags": ["Dataviz"],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "patch": {
+        "operationId": "patchDataviz",
+        "summary": "Patch a dataviz configuration by id",
+        "tags": ["Dataviz"],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDatavizDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteDataviz",
+        "summary": "Delete a dataviz configuration by id",
+        "tags": ["Dataviz"],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "GeoNetwork Data Platform",
+    "description": "Geonetwork Data Platform REST API definition.",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "CreateDatavizDto": {
+        "type": "object",
+        "properties": {
+          "uuid": {
+            "type": "string",
+            "example": "fdee7935-11cf-4d4d-a173-5c952542bb24",
+            "description": "Metadata uuid"
+          },
+          "config": {
+            "type": "object",
+            "example": {
+              "xProperty": "time",
+              "yProperty": "value",
+              "aggregation": "sum",
+              "chartType": "bar"
+            },
+            "description": "Configuration of default dataviz for the metadata"
+          }
+        },
+        "required": ["uuid", "config"]
+      },
+      "Dataviz": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": "3",
+            "description": "Configuration ID"
+          },
+          "uuid": {
+            "type": "string",
+            "example": "fdee7935-11cf-4d4d-a173-5c952542bb24",
+            "description": "Metadata uuid"
+          },
+          "config": {
+            "type": "object",
+            "example": {
+              "xProperty": "time",
+              "yProperty": "value",
+              "aggregation": "sum",
+              "chartType": "bar"
+            },
+            "description": "Configuration of default dataviz for the metadata"
+          }
+        },
+        "required": ["id", "uuid", "config"]
+      },
+      "UpdateDatavizDto": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  }
+}

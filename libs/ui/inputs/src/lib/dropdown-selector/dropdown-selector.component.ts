@@ -7,6 +7,11 @@ import {
   Output,
 } from '@angular/core'
 
+export type DDChoices<T> = Array<{
+  label: string
+  value: T
+}>
+
 @Component({
   selector: 'gn-ui-dropdown-selector',
   templateUrl: './dropdown-selector.component.html',
@@ -17,10 +22,7 @@ export class DropdownSelectorComponent {
   @Input() title: string
   @Input() showTitle = true
   @Input() ariaName: string
-  @Input() choices: {
-    value: any
-    label: string
-  }[]
+  @Input() choices: DDChoices<unknown>
   @Input() selected: any
   @Input() extraClass = ''
   @Output() selectValue = new EventEmitter<any>()
