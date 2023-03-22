@@ -1,4 +1,5 @@
 import { HttpClientModule } from '@angular/common/http'
+import { CHART_TYPE_VALUES } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
 import { TranslateModule } from '@ngx-translate/core'
 import {
   moduleMetadata,
@@ -9,7 +10,6 @@ import {
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
 import { ChartComponent } from './chart.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { CHART_TYPE_VALUES } from './chart.model'
 import { UiDatavizModule } from '../ui-dataviz.module'
 
 export default {
