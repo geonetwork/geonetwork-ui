@@ -28,6 +28,7 @@ class SearchServiceMock {
 const mockAggregation$ = new BehaviorSubject<any>({})
 class AggregationsServiceMock {
   getFullSearchTermAggregation = jest.fn(() => mockAggregation$)
+  getHistogramAggregation = jest.fn(() => mockAggregation$)
 }
 
 @Component({
@@ -49,6 +50,7 @@ describe('FilterDropdownComponent', () => {
   let component: FilterDropdownComponent
   let dropdown: MockDropdownComponent
   let searchService: SearchService
+  let aggregationService: AggregationsService
   let fixture: ComponentFixture<FilterDropdownComponent>
 
   beforeEach(async () => {
@@ -80,16 +82,42 @@ describe('FilterDropdownComponent', () => {
     fixture = TestBed.createComponent(FilterDropdownComponent)
     facade = TestBed.inject(SearchFacade)
     searchService = TestBed.inject(SearchService)
+    aggregationService = TestBed.inject(AggregationsService)
     component = fixture.componentInstance
     component.fieldName = 'Org'
     dropdown = fixture.debugElement.query(
       By.directive(MockDropdownComponent)
     ).componentInstance
-    fixture.detectChanges()
   })
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  describe('considers aggregation type and order inputs', () => {
+    describe('by default', () => {
+      beforeEach(() => {
+        fixture.detectChanges()
+      })
+      it('calls getFullSearchTermAggregation on the aggregationService with ascending order', () => {
+        expect(
+          aggregationService.getFullSearchTermAggregation
+        ).toHaveBeenCalledWith('Org', 'asc')
+      })
+    })
+    describe("with aggregation type input 'histogram' and descending order", () => {
+      beforeEach(() => {
+        component.aggregationType = 'histogram'
+        component.order = 'desc'
+        fixture.detectChanges()
+      })
+      it('calls getHistogramAggregation on the aggregationService with descending order', () => {
+        expect(aggregationService.getHistogramAggregation).toHaveBeenCalledWith(
+          'Org',
+          'desc'
+        )
+      })
+    })
   })
 
   describe('when selected values change', () => {
