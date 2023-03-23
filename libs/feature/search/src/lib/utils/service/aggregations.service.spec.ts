@@ -54,7 +54,7 @@ describe('AggregationsService', () => {
         .getFullSearchTermAggregation('OrgForResource')
         .subscribe((orgs) => (aggregation = orgs))
     })
-    it('should call ElasticsearchService getSearchRequestBody', () => {
+    it('should call ElasticsearchService getSearchRequestBody with terms payload', () => {
       expect(esService.getSearchRequestBody).toHaveBeenCalledWith({
         OrgForResource: {
           terms: {
@@ -74,6 +74,26 @@ describe('AggregationsService', () => {
           { doc_count: 5, key: 'Agence de test' },
           { doc_count: 3, key: 'Association pour le testing' },
         ],
+      })
+    })
+  })
+  describe('#getHistogramAggregation', () => {
+    beforeEach(() => {
+      service.getHistogramAggregation('publicationYearForResource')
+    })
+    it('should call ElasticsearchService getSearchRequestBody with histogram payload', () => {
+      expect(esService.getSearchRequestBody).toHaveBeenCalledWith({
+        publicationYearForResource: {
+          histogram: {
+            field: 'publicationYearForResource',
+            order: {
+              _key: 'asc',
+            },
+            interval: 1,
+            min_doc_count: 1,
+            format: '0',
+          },
+        },
       })
     })
   })
