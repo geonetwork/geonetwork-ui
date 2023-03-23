@@ -196,6 +196,7 @@
   "search.field.sortBy": "",
   "search.filters.byFormat": "",
   "search.filters.byOrganisation": "",
+  "search.filters.byPublicationYear": "",
   "search.filters.clear": "",
   "search.filters.maximize": "",
   "search.filters.minimize": "",
