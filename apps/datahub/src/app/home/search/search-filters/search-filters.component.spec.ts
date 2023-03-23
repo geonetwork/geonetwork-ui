@@ -182,6 +182,7 @@ describe('SearchFiltersComponent', () => {
         expect(searchService.updateFilters).toHaveBeenCalledWith({
           OrgForResource: {},
           format: {},
+          publicationYearForResource: {},
         })
       })
     })
