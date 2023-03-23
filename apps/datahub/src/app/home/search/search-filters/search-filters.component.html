@@ -54,7 +54,7 @@
     ></gn-ui-filter-dropdown>
     <gn-ui-filter-dropdown
       class="w-full"
-      [ngClass]="isOpen ? 'block' : 'hidden sm:block'"
+      [ngClass]="isOpen ? 'block' : 'hidden'"
       [fieldName]="'publicationYearForResource'"
       [title]="'search.filters.byPublicationYear' | translate"
       [aggregationType]="TYPE.HISTOGRAM"
@@ -88,7 +88,6 @@
       <gn-ui-button
         class="hidden sm:block"
         *ngIf="!isOpen"
-        [class.invisible]="(searchFacade.hasSpatialFilter$ | async) === false"
         (buttonClick)="open()"
         type="outline"
         extraClass="!p-[8px]"
