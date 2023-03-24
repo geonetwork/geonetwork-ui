@@ -196,6 +196,7 @@
   "search.field.sortBy": "Sort by:",
   "search.filters.byFormat": "Formats",
   "search.filters.byOrganisation": "Organisations",
+  "search.filters.byPublicationYear": "Publication year",
   "search.filters.clear": "Reset",
   "search.filters.maximize": "Expand",
   "search.filters.minimize": "Minimize",

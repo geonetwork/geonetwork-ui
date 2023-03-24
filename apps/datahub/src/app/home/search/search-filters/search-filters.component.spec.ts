@@ -9,7 +9,11 @@ import {
 } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
-import { SearchFilters } from '@geonetwork-ui/util/shared'
+import {
+  AggregationsOrderEnum,
+  AggregationsTypesEnum,
+  SearchFilters,
+} from '@geonetwork-ui/util/shared'
 import { BehaviorSubject } from 'rxjs'
 import { SearchFiltersComponent } from './search-filters.component'
 import { TranslateModule } from '@ngx-translate/core'
@@ -26,6 +30,16 @@ export class MockCheckToggleComponent {
   @Input() value: boolean
   @Input() color: 'primary' | 'secondary' = 'primary'
   @Output() toggled = new EventEmitter()
+}
+@Component({
+  selector: 'gn-ui-filter-dropdown', // eslint-disable-line
+  template: '<div></div>',
+})
+export class MockFilterDropdownComponent {
+  @Input() fieldName: string
+  @Input() title: string
+  @Input() order: AggregationsOrderEnum = AggregationsOrderEnum.ASC
+  @Input() aggregationType: AggregationsTypesEnum = AggregationsTypesEnum.TERMS
 }
 const state = { OrgForResource: { mel: true } } as SearchFilters
 class SearchFacadeMock {
@@ -45,7 +59,11 @@ describe('SearchFiltersComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SearchFiltersComponent, MockCheckToggleComponent],
+      declarations: [
+        SearchFiltersComponent,
+        MockCheckToggleComponent,
+        MockFilterDropdownComponent,
+      ],
       imports: [TranslateModule.forRoot(), FormsModule],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
@@ -135,6 +153,35 @@ describe('SearchFiltersComponent', () => {
     function getMoreButton(): DebugElement {
       return fixture.debugElement.query(By.css('gn-ui-button'))
     }
+    function getFilterButtons(): DebugElement {
+      return fixture.debugElement.queryAll(
+        By.directive(MockFilterDropdownComponent)
+      )
+    }
+    describe('when panel is closed', () => {
+      beforeEach(() => {
+        component.isOpen = false
+        fixture.detectChanges()
+      })
+      it('does show up', () => {
+        expect(getMoreButton()).toBeTruthy()
+      })
+      it('first filter dropdown shows up (on desktop)', () => {
+        expect(
+          getFilterButtons()[0].nativeElement.classList.entries('sm:block')
+        ).toBeTruthy()
+      })
+      it('second filter dropdown shows up (on desktop)', () => {
+        expect(
+          getFilterButtons()[1].nativeElement.classList.contains('sm:block')
+        ).toBeTruthy()
+      })
+      it('third filter dropdown does not show up (on desktop)', () => {
+        expect(
+          getFilterButtons()[2].nativeElement.classList.contains('sm:block')
+        ).toBeFalsy()
+      })
+    })
     describe('when panel is opened', () => {
       beforeEach(() => {
         component.isOpen = true
@@ -143,25 +190,20 @@ describe('SearchFiltersComponent', () => {
       it('does not show up', () => {
         expect(getMoreButton()).toBeFalsy()
       })
-    })
-    describe('when panel is closed & a spatial filter is unavailable', () => {
-      beforeEach(() => {
-        component.isOpen = false
-        searchFacade.hasSpatialFilter$.next(false)
-        fixture.detectChanges()
+      it('first filter dropdown shows up (on desktop and mobile)', () => {
+        expect(
+          getFilterButtons()[0].nativeElement.classList.entries('block')
+        ).toBeTruthy()
       })
-      it('is hidden', () => {
-        expect(getMoreButton().classes.invisible).toBeTruthy()
+      it('second filter dropdown shows up (on desktop and mobile)', () => {
+        expect(
+          getFilterButtons()[1].nativeElement.classList.contains('block')
+        ).toBeTruthy()
       })
-    })
-    describe('when panel is closed & a spatial filter is available', () => {
-      beforeEach(() => {
-        component.isOpen = false
-        searchFacade.hasSpatialFilter$.next(true)
-        fixture.detectChanges()
-      })
-      it('shows up', () => {
-        expect(getMoreButton().classes.invisible).toBeFalsy()
+      it('third filter dropdown does not show up (on desktop and mobile)', () => {
+        expect(
+          getFilterButtons()[2].nativeElement.classList.contains('block')
+        ).toBeTruthy()
       })
     })
   })
@@ -182,6 +224,7 @@ describe('SearchFiltersComponent', () => {
         expect(searchService.updateFilters).toHaveBeenCalledWith({
           OrgForResource: {},
           format: {},
+          publicationYearForResource: {},
         })
       })
     })

@@ -1,5 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
+import {
+  AggregationsOrderEnum,
+  AggregationsTypesEnum,
+} from '@geonetwork-ui/util/shared'
 import { map, pluck } from 'rxjs/operators'
 
 @Component({
@@ -9,6 +13,8 @@ import { map, pluck } from 'rxjs/operators'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchFiltersComponent {
+  ORDER = AggregationsOrderEnum
+  TYPE = AggregationsTypesEnum
   publisher$ = this.searchFacade.searchFilters$.pipe(
     pluck('OrgForResource'),
     map((orgState) => orgState && Object.keys(orgState)[0])
@@ -36,6 +42,7 @@ export class SearchFiltersComponent {
     this.searchService.updateFilters({
       OrgForResource: {},
       format: {},
+      publicationYearForResource: {},
     })
   }
 }

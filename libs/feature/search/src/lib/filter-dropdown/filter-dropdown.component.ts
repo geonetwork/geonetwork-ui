@@ -5,6 +5,10 @@ import {
   OnInit,
 } from '@angular/core'
 import { Choice } from '@geonetwork-ui/ui/inputs'
+import {
+  AggregationsOrderEnum,
+  AggregationsTypesEnum,
+} from '@geonetwork-ui/util/shared'
 import { Observable } from 'rxjs'
 import { filter, map, startWith } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
@@ -20,6 +24,8 @@ import { SearchService } from '../utils/service/search.service'
 export class FilterDropdownComponent implements OnInit {
   @Input() fieldName: string
   @Input() title: string
+  @Input() order: AggregationsOrderEnum = AggregationsOrderEnum.ASC
+  @Input() aggregationType: AggregationsTypesEnum = AggregationsTypesEnum.TERMS
 
   choices$: Observable<Choice[]>
   selected$ = this.searchFacade.searchFilters$.pipe(
@@ -42,17 +48,25 @@ export class FilterDropdownComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.choices$ = this.aggregationsService
-      .getFullSearchTermAggregation(this.fieldName)
-      .pipe(
-        map((agg) =>
-          agg.buckets.map((bucket) => ({
-            label: `${bucket.key} (${bucket.doc_count})`,
-            value: bucket.key.toString(),
-          }))
-        ),
-        filter((choices) => !!choices),
-        startWith([])
-      )
+    this.choices$ = (
+      this.aggregationType === AggregationsTypesEnum.HISTOGRAM
+        ? this.aggregationsService.getHistogramAggregation(
+            this.fieldName,
+            this.order
+          )
+        : this.aggregationsService.getFullSearchTermAggregation(
+            this.fieldName,
+            this.order
+          )
+    ).pipe(
+      map((agg) =>
+        agg.buckets.map((bucket) => ({
+          label: `${bucket.key} (${bucket.doc_count})`,
+          value: bucket.key.toString(),
+        }))
+      ),
+      filter((choices) => !!choices),
+      startWith([])
+    )
   }
 }
