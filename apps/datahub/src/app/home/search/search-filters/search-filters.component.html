@@ -64,6 +64,12 @@
       [fieldName]="'publicationYear'"
       [title]="'search.filters.byPublicationYear' | translate"
     ></gn-ui-filter-dropdown>
+    <gn-ui-filter-dropdown
+      class="w-full"
+      [ngClass]="isOpen ? 'block' : 'hidden'"
+      [fieldName]="'isSpatial'"
+      [title]="'search.filters.isSpatial' | translate"
+    ></gn-ui-filter-dropdown>
     <div
       class="spatial-filter-toggle sm:col-span-2"
       *ngIf="isOpen && searchFacade.hasSpatialFilter$ | async"

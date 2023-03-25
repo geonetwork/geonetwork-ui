@@ -54,6 +54,7 @@ describe('FieldsService', () => {
         'format',
         'publicationYear',
         'topic',
+        'isSpatial',
         'q',
       ])
     })

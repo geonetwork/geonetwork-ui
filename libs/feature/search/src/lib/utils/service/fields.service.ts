@@ -4,6 +4,7 @@ import {
   AbstractSearchField,
   FieldValue,
   FullTextSearchField,
+  IsSpatialSearchField,
   SimpleSearchField,
   TopicSearchField,
 } from './fields'
@@ -21,6 +22,7 @@ export class FieldsService {
       this.injector
     ),
     topic: new TopicSearchField(this.injector),
+    isSpatial: new IsSpatialSearchField(this.injector),
     q: new FullTextSearchField(),
   } as Record<string, AbstractSearchField>
 

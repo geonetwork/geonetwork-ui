@@ -42,6 +42,19 @@ export class ElasticsearchService {
         geometry
       ),
       _source: requestFields,
+      runtime_mappings: {
+        isSpatial: {
+          type: 'keyword',
+          script: `
+String result = 'no';
+String formats = doc.format.join('|').toLowerCase();
+if (formats.contains('geojson') || formats.contains('arcgis') || formats.contains('ogc') || formats.contains('shp')) result = 'yes';
+String protocols = doc.linkProtocol.join('|').toLowerCase();
+if (protocols.contains('esri') || protocols.contains('ogc')) result = 'yes';
+emit(result)
+`,
+        },
+      },
     }
     return payload
   }

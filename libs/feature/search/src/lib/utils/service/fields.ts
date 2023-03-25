@@ -6,6 +6,8 @@ import {
 } from '@geonetwork-ui/data-access/gn4'
 import { map, shareReplay } from 'rxjs/operators'
 import { Injector } from '@angular/core'
+import { TranslateService } from '@ngx-translate/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 export type FieldValue = string | number
 export interface FieldAvailableValue {
@@ -135,5 +137,63 @@ export class FullTextSearchField implements AbstractSearchField {
   }
   getValuesForFilter(filters: SearchFilters): FieldValue[] {
     return filters.any ? [filters.any] : []
+  }
+}
+
+export class IsSpatialSearchField implements AbstractSearchField {
+  private esService = this.injector.get(ElasticsearchService)
+  private searchApiService = this.injector.get(SearchApiService)
+  private translateService = this.injector.get(TranslateService)
+
+  constructor(protected injector: Injector) {}
+
+  getAvailableValues(): Observable<FieldAvailableValue[]> {
+    return this.searchApiService
+      .search(
+        'bucket',
+        JSON.stringify(
+          this.esService.getSearchRequestBody({
+            isSpatial: {
+              terms: {
+                size: 2,
+                field: 'isSpatial',
+              },
+            },
+          })
+        )
+      )
+      .pipe(
+        map((response) => response.aggregations.isSpatial?.buckets || []),
+        switchMap((buckets) =>
+          Promise.all(
+            buckets.map(async (bucket) => {
+              marker('search.filters.isSpatial.yes')
+              marker('search.filters.isSpatial.no')
+              const label = await firstValueFrom(
+                this.translateService.get(
+                  `search.filters.isSpatial.${bucket.key}`
+                )
+              )
+              return {
+                label: `${label} (${bucket.doc_count})`,
+                value: bucket.key.toString(),
+              }
+            })
+          )
+        )
+      )
+  }
+  getFiltersForValues(values: FieldValue[]): SearchFilters {
+    const isSpatial = {}
+    if (values.length > 0) isSpatial[values[values.length - 1]] = true
+    return {
+      isSpatial,
+    }
+  }
+  getValuesForFilter(filters: SearchFilters): FieldValue[] {
+    const filter = filters.isSpatial
+    if (!filter) return []
+    const keys = Object.keys(filter)
+    return keys.length ? [keys[0]] : []
   }
 }

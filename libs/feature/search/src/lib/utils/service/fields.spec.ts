@@ -7,16 +7,35 @@ import { lastValueFrom, of } from 'rxjs'
 import {
   AbstractSearchField,
   FullTextSearchField,
+  IsSpatialSearchField,
   SimpleSearchField,
   TopicSearchField,
 } from './fields'
 import { TestBed } from '@angular/core/testing'
 import { Injector } from '@angular/core'
+import { TranslateModule } from '@ngx-translate/core'
 
 class SearchApiServiceMock {
   search = jest.fn((bucketName, payloadString) => {
     const payload = JSON.parse(payloadString)
     const aggName = Object.keys(payload.aggregations)[0]
+    if (aggName.startsWith('is'))
+      return of({
+        aggregations: {
+          isSpatial: {
+            buckets: [
+              {
+                key: 'yes',
+                doc_count: 5,
+              },
+              {
+                key: 'no',
+                doc_count: 3,
+              },
+            ],
+          },
+        },
+      })
     return of({
       aggregations: {
         [aggName]: {
@@ -67,6 +86,7 @@ describe('search fields implementations', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [TranslateModule.forRoot()],
       providers: [
         {
           provide: SearchApiService,
@@ -253,6 +273,52 @@ describe('search fields implementations', () => {
       })
       it('returns the unique value', () => {
         expect(values).toEqual(['single value'])
+      })
+    })
+  })
+
+  describe('IsSpatialSearchField', () => {
+    beforeEach(() => {
+      searchField = new IsSpatialSearchField(injector)
+    })
+    describe('#getAvailableValues', () => {
+      let values
+      beforeEach(async () => {
+        values = await lastValueFrom(searchField.getAvailableValues())
+      })
+      it('returns the available values', () => {
+        expect(values).toEqual([
+          {
+            label: 'search.filters.isSpatial.yes (5)',
+            value: 'yes',
+          },
+          {
+            label: 'search.filters.isSpatial.no (3)',
+            value: 'no',
+          },
+        ])
+      })
+    })
+    describe('#getFiltersForValues', () => {
+      let filter
+      beforeEach(() => {
+        filter = searchField.getFiltersForValues(['yes', 'no'])
+      })
+      it('returns filter for the latest value only', () => {
+        expect(filter).toEqual({
+          isSpatial: { no: true },
+        })
+      })
+    })
+    describe('#getValuesForFilters', () => {
+      let values
+      beforeEach(() => {
+        values = searchField.getValuesForFilter({
+          isSpatial: { no: true, yes: true },
+        })
+      })
+      it('returns the first value only', () => {
+        expect(values).toEqual(['no'])
       })
     })
   })
