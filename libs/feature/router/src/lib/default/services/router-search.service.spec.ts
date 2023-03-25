@@ -1,5 +1,7 @@
+import { FieldsService, SearchFacade } from '@geonetwork-ui/feature/search'
 import { SortByEnum } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject } from 'rxjs'
+import { RouterFacade } from '../state'
 import { RouterSearchService } from './router-search.service'
 
 let state = {}
@@ -7,27 +9,45 @@ class SearchFacadeMock {
   searchFilters$ = new BehaviorSubject(state)
   sortBy$ = new BehaviorSubject('_score')
 }
+
 class RouterFacadeMock {
   setSearch = jest.fn()
   updateSearch = jest.fn()
 }
+
+class FieldsServiceMock {
+  mapping = {
+    publisher: 'OrgForResource',
+    q: 'any',
+  }
+  supportedFields = Object.keys(this.mapping)
+  getValuesForFilters = jest.fn((fieldName, filters) => {
+    const filter = filters[this.mapping[fieldName]]
+    if (!filter) return []
+    if (typeof filter === 'string') return [filter]
+    return Object.keys(filter)
+  })
+}
+
 describe('RouterSearchService', () => {
   let service: RouterSearchService
-  let routerFacade: RouterFacadeMock
-  let searchFacade: SearchFacadeMock
+  let routerFacade: RouterFacade
+  let searchFacade: SearchFacade
+  let fieldsService: FieldsService
 
   beforeEach(() => {
     state = { OrgForResource: { mel: true } }
-    routerFacade = new RouterFacadeMock()
-    searchFacade = new SearchFacadeMock()
-    service = new RouterSearchService(searchFacade as any, routerFacade as any)
+    routerFacade = new RouterFacadeMock() as any
+    searchFacade = new SearchFacadeMock() as any
+    fieldsService = new FieldsServiceMock() as any
+    service = new RouterSearchService(searchFacade, routerFacade, fieldsService)
   })
 
   it('should be created', () => {
     expect(service).toBeTruthy()
   })
   describe('#setSearch', () => {
-    it('dispatch setSearch with mapped params', () => {
+    it('dispatch setSearch with mapped params', async () => {
       const state = {
         any: 'any',
         OrgForResource: {
@@ -35,8 +55,9 @@ describe('RouterSearchService', () => {
         },
       }
       service.setFilters(state)
+      await Promise.resolve() // lets promises run
       expect(routerFacade.setSearch).toHaveBeenCalledWith({
-        q: 'any',
+        q: ['any'],
         publisher: ['Org'],
         _sort: '_score',
       })
@@ -54,7 +75,7 @@ describe('RouterSearchService', () => {
       const sort = SortByEnum.CREATE_DATE
       service.setSortAndFilters(filters, sort)
       expect(routerFacade.setSearch).toHaveBeenCalledWith({
-        q: 'any',
+        q: ['any'],
         publisher: ['Org'],
         _sort: '-createDate',
       })
@@ -79,7 +100,7 @@ describe('RouterSearchService', () => {
     })
     it('dispatch updateSearch with merged mapped params', () => {
       expect(routerFacade.updateSearch).toHaveBeenCalledWith({
-        q: 'any',
+        q: ['any'],
         publisher: ['mel'],
       })
     })

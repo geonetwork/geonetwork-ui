@@ -1,53 +1,67 @@
 import { Injectable } from '@angular/core'
-import { SearchFacade, SearchServiceI } from '@geonetwork-ui/feature/search'
+import {
+  FieldsService,
+  SearchFacade,
+  SearchServiceI,
+} from '@geonetwork-ui/feature/search'
 import { SearchFilters, SortByEnum } from '@geonetwork-ui/util/shared'
-import { first, map, withLatestFrom } from 'rxjs/operators'
-import { ROUTE_PARAMS, SearchRouteParams } from '../constants'
-import { stateToRouteParams } from '../router.mapper'
+import { first, map } from 'rxjs/operators'
+import { ROUTE_PARAMS } from '../constants'
 import { RouterFacade } from '../state/router.facade'
+import { firstValueFrom } from 'rxjs'
 
 @Injectable()
 export class RouterSearchService implements SearchServiceI {
   constructor(
     private searchFacade: SearchFacade,
-    private facade: RouterFacade
+    private facade: RouterFacade,
+    private fieldsService: FieldsService
   ) {}
 
   setSortAndFilters(filters: SearchFilters, sort: SortByEnum) {
+    const fieldSearchParams = this.fieldsService.supportedFields.reduce(
+      (prev, curr) => ({
+        ...prev,
+        [curr]: this.fieldsService.getValuesForFilters(curr, filters),
+      }),
+      {}
+    )
     this.facade.setSearch({
-      ...stateToRouteParams(filters),
-      ...this.buildSortByRouteParam(sort),
+      ...fieldSearchParams,
+      [ROUTE_PARAMS.SORT]: sort,
     })
   }
 
-  setFilters(newFilters: SearchFilters): void {
-    this.searchFacade.sortBy$
-      .pipe(
-        first(),
-        map(this.buildSortByRouteParam),
-        map((routeParams) => ({
-          ...routeParams,
-          ...stateToRouteParams(newFilters),
-        }))
-      )
-      .subscribe((routeParams) => this.facade.setSearch(routeParams))
+  async setFilters(newFilters: SearchFilters) {
+    const sortBy = await firstValueFrom(this.searchFacade.sortBy$)
+    const routeParams = this.fieldsService.supportedFields.reduce(
+      (prev, curr) => ({
+        ...prev,
+        [curr]: this.fieldsService.getValuesForFilters(curr, newFilters),
+      }),
+      { [ROUTE_PARAMS.SORT]: sortBy }
+    )
+    this.facade.setSearch(routeParams)
   }
 
-  updateFilters(params: SearchFilters): void {
-    this.searchFacade.searchFilters$
-      .pipe(
-        first(),
-        map((filters) => ({ ...filters, ...params })),
-        map((filters) => stateToRouteParams(filters))
-      )
-      .subscribe((params) => this.facade.updateSearch(params))
+  async updateFilters(newFilters: SearchFilters) {
+    const currentFilters = await firstValueFrom(
+      this.searchFacade.searchFilters$
+    )
+    const updatedFilters = { ...currentFilters, ...newFilters }
+    const newParams = this.fieldsService.supportedFields.reduce(
+      (prev, curr) => ({
+        ...prev,
+        [curr]: this.fieldsService.getValuesForFilters(curr, updatedFilters),
+      }),
+      {}
+    )
+    this.facade.updateSearch(newParams)
   }
 
-  setSortBy(sortBy: string): void {
-    this.facade.updateSearch(this.buildSortByRouteParam(sortBy))
-  }
-
-  buildSortByRouteParam(sortBy: string): SearchRouteParams {
-    return { [ROUTE_PARAMS.SORT]: sortBy }
+  setSortBy(sortBy: string) {
+    this.facade.updateSearch({
+      [ROUTE_PARAMS.SORT]: sortBy,
+    })
   }
 }

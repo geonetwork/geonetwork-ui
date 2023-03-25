@@ -4,9 +4,8 @@ import { RouterService } from '../router.service'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { RouterReducerState } from '@ngrx/router-store'
 import { select, Store } from '@ngrx/store'
-import { distinctUntilChanged, filter, map, pluck, take } from 'rxjs/operators'
+import { distinctUntilChanged, filter, map, take } from 'rxjs/operators'
 import {
-  ROUTE_PARAMS,
   ROUTER_ROUTE_DATASET,
   ROUTER_ROUTE_SEARCH,
   SearchRouteParams,
@@ -17,24 +16,12 @@ import {
   goAction,
   RouterGoActionPayload,
 } from './router.actions'
-import {
-  selectCurrentRoute,
-  selectQueryParams,
-  selectRouteParams,
-} from './router.selectors'
+import { selectCurrentRoute, selectRouteParams } from './router.selectors'
 
 @Injectable()
 export class RouterFacade {
   currentRoute$ = this.store.pipe(select(selectCurrentRoute))
-  queryParams$ = this.store.pipe(select(selectQueryParams))
   pathParams$ = this.store.pipe(select(selectRouteParams))
-
-  anySearch$ = this.queryParams$.pipe(
-    filter((params) =>
-      Object.prototype.hasOwnProperty.call(params, ROUTE_PARAMS.ANY)
-    ),
-    pluck(ROUTE_PARAMS.ANY)
-  )
 
   searchParams$ = this.currentRoute$.pipe(
     filter((route) => !!route),
