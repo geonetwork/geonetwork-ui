@@ -7,6 +7,7 @@ import {
   ToolsApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import { ElasticsearchService } from '@geonetwork-ui/util/shared'
+import { TranslateModule } from '@ngx-translate/core'
 
 class SearchApiServiceMock {
   search = jest.fn(() => EMPTY)
@@ -24,6 +25,7 @@ describe('FieldsService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [TranslateModule.forRoot()],
       providers: [
         {
           provide: SearchApiService,
