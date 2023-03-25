@@ -43,7 +43,7 @@
     <gn-ui-filter-dropdown
       class="w-full"
       [ngClass]="isOpen ? 'block' : 'hidden sm:block'"
-      [fieldName]="'OrgForResource'"
+      [fieldName]="'publisher'"
       [title]="'search.filters.byOrganisation' | translate"
     ></gn-ui-filter-dropdown>
     <gn-ui-filter-dropdown
@@ -55,10 +55,14 @@
     <gn-ui-filter-dropdown
       class="w-full"
       [ngClass]="isOpen ? 'block' : 'hidden'"
-      [fieldName]="'publicationYearForResource'"
+      [fieldName]="'topic'"
+      [title]="'search.filters.byTopic' | translate"
+    ></gn-ui-filter-dropdown>
+    <gn-ui-filter-dropdown
+      class="w-full"
+      [ngClass]="isOpen ? 'block' : 'hidden'"
+      [fieldName]="'publicationYear'"
       [title]="'search.filters.byPublicationYear' | translate"
-      [aggregationType]="TYPE.HISTOGRAM"
-      [order]="ORDER.DESC"
     ></gn-ui-filter-dropdown>
     <div
       class="spatial-filter-toggle sm:col-span-2"
