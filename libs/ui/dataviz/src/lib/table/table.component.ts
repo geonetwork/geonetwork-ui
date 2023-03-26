@@ -16,6 +16,7 @@ import {
   TableVirtualScrollDataSource,
   TableVirtualScrollModule,
 } from 'ng-table-virtual-scroll'
+import { TranslateModule } from '@ngx-translate/core'
 
 const rowIdPrefix = 'table-item-'
 
@@ -35,6 +36,7 @@ export interface TableItemModel {
     TableVirtualScrollModule,
     ScrollingModule,
     NgForOf,
+    TranslateModule,
   ],
   selector: 'gn-ui-table',
   templateUrl: './table.component.html',
