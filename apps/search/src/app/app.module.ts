@@ -8,7 +8,7 @@ import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { UiMapModule } from '@geonetwork-ui/ui/map'
 import {
   UtilI18nModule,
-  TRANSLATE_GEONETWORK_CONFIG,
+  TRANSLATE_DEFAULT_CONFIG,
 } from '@geonetwork-ui/util/i18n'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
@@ -34,7 +34,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     AppRoutingModule,
     HttpClientModule,
     UtilI18nModule,
-    TranslateModule.forRoot(TRANSLATE_GEONETWORK_CONFIG),
+    TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
     FeatureSearchModule,
     FeatureCatalogModule,
     UiLayoutModule,

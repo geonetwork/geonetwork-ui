@@ -1,18 +1,12 @@
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
-import { ApiModule } from '@geonetwork-ui/data-access/gn4'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { DEFAULT_LANG } from './i18n.constants'
 import { I18nInterceptor } from './i18n.interceptor'
 import { CommonModule } from '@angular/common'
 
 @NgModule({
-  imports: [
-    HttpClientModule,
-    ApiModule,
-    TranslateModule.forChild(),
-    CommonModule,
-  ],
+  imports: [HttpClientModule, TranslateModule.forChild(), CommonModule],
   exports: [],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: I18nInterceptor, multi: true },
