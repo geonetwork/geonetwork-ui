@@ -68,8 +68,9 @@ export class AuthService {
       groupsWithEditor,
       groupsWithReviewer,
       groupsWithUserAdmin,
+      admin,
       ...user
     } = apiUser
-    return user
+    return user as UserModel
   }
 }
