@@ -86,7 +86,8 @@ jobs:
 
       - name: Build affected docker images
         if: github.event_name != 'release'
-        run: npx nx affected --target=docker-build
+        # FIXME: excluding data-platform until it has a remote registry to be pushed
+        run: npx nx affected --target=docker-build --exclude=data-platform
 
       - name: Tag all docker images on main also as latest
         if: github.ref_name == 'main'
