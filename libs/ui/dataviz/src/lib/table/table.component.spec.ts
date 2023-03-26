@@ -4,10 +4,10 @@ import { MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { TABLE_ITEM_FIXTURE, TABLE_ITEM_FIXTURE_HAB } from './table.fixtures'
-
 import { TableComponent } from './table.component'
 import { By } from '@angular/platform-browser'
 import { TableItemSizeDirective } from 'ng-table-virtual-scroll'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('TableComponent', () => {
   let component: TableComponent
@@ -15,7 +15,12 @@ describe('TableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, MatTableModule, MatSortModule],
+      imports: [
+        NoopAnimationsModule,
+        MatTableModule,
+        MatSortModule,
+        TranslateModule.forRoot(),
+      ],
       declarations: [TableItemSizeDirective],
     })
       .overrideComponent(TableComponent, {
