@@ -5,6 +5,7 @@ import {
   FieldValue,
   FullTextSearchField,
   IsSpatialSearchField,
+  LicenseSearchField,
   SimpleSearchField,
   TopicSearchField,
 } from './fields'
@@ -24,7 +25,7 @@ export class FieldsService {
     topic: new TopicSearchField(this.injector),
     isSpatial: new IsSpatialSearchField(this.injector),
     q: new FullTextSearchField(),
-    license: new SimpleSearchField('license', 'asc', this.injector),
+    license: new LicenseSearchField(this.injector),
   } as Record<string, AbstractSearchField>
 
   get supportedFields() {

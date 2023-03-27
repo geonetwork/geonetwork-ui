@@ -1,4 +1,5 @@
 import { ElasticsearchService } from './elasticsearch.service'
+import { EsSearchParams } from '../models'
 
 describe('ElasticsearchService', () => {
   let service: ElasticsearchService
@@ -518,6 +519,93 @@ describe('ElasticsearchService', () => {
     it('when empty array', () => {
       payload = service.queryFilterOnValues('isTemplate', [])
       expect(payload).toEqual({})
+    })
+  })
+
+  describe('#registerRuntimeField', () => {
+    let query: EsSearchParams
+    beforeEach(() => {
+      service.registerRuntimeField('myField', 'emit("hello world!")')
+    })
+    describe('when a runtime field is used in an aggregation', () => {
+      beforeEach(() => {
+        query = service.getSearchRequestBody({
+          anAggregation: {
+            terms: {
+              size: 100,
+              field: 'myField',
+            },
+          },
+        })
+      })
+      it('includes the field as a runtime mapping', () => {
+        expect(query.runtime_mappings).toEqual({
+          myField: {
+            script: 'emit("hello world!")',
+            type: 'keyword',
+          },
+        })
+      })
+    })
+    describe('when a runtime field is used in a query string', () => {
+      beforeEach(() => {
+        query = service.getSearchRequestBody(undefined, 10, 0, '', undefined, {
+          any: 'hello',
+          myField: { check: true },
+        })
+      })
+      it('includes the field as a runtime mapping', () => {
+        expect(query.runtime_mappings).toEqual({
+          myField: {
+            script: 'emit("hello world!")',
+            type: 'keyword',
+          },
+        })
+      })
+    })
+    describe('when a runtime field is used for sorting', () => {
+      beforeEach(() => {
+        query = service.getSearchRequestBody(undefined, 10, 0, 'myField')
+      })
+      it('includes the field as a runtime mapping', () => {
+        expect(query.runtime_mappings).toEqual({
+          myField: {
+            script: 'emit("hello world!")',
+            type: 'keyword',
+          },
+        })
+      })
+    })
+    describe('when a runtime field is not used', () => {
+      beforeEach(() => {
+        query = service.getSearchRequestBody(
+          {
+            otherAgg: {
+              terms: {
+                size: 100,
+                field: 'otherField',
+              },
+            },
+            myField: {
+              terms: {
+                size: 10,
+                field: 'notARuntimeField',
+              },
+            },
+          },
+          10,
+          0,
+          '',
+          undefined,
+          {
+            any: 'hello',
+            otherField: 'check',
+          }
+        )
+      })
+      it('does not include the field in the query', () => {
+        expect(query.runtime_mappings).toBeUndefined()
+      })
     })
   })
 })

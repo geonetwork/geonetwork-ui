@@ -8,6 +8,7 @@ import {
   AbstractSearchField,
   FullTextSearchField,
   IsSpatialSearchField,
+  LicenseSearchField,
   SimpleSearchField,
   TopicSearchField,
 } from './fields'
@@ -66,6 +67,7 @@ class ElasticsearchServiceMock {
   getSearchRequestBody = jest.fn((aggregations) => ({
     aggregations,
   }))
+  registerRuntimeField = jest.fn()
 }
 class ToolsApiServiceMock {
   getTranslationsPackage1 = jest.fn(() =>
@@ -281,6 +283,12 @@ describe('search fields implementations', () => {
     beforeEach(() => {
       searchField = new IsSpatialSearchField(injector)
     })
+    it('registers a runtime field', () => {
+      expect(esService.registerRuntimeField).toHaveBeenCalledWith(
+        'isSpatial',
+        expect.any(String)
+      )
+    })
     describe('#getAvailableValues', () => {
       let values
       beforeEach(async () => {
@@ -320,6 +328,18 @@ describe('search fields implementations', () => {
       it('returns the first value only', () => {
         expect(values).toEqual(['no'])
       })
+    })
+  })
+
+  describe('LicenseSearchField', () => {
+    beforeEach(() => {
+      searchField = new LicenseSearchField(injector)
+    })
+    it('registers a runtime field', () => {
+      expect(esService.registerRuntimeField).toHaveBeenCalledWith(
+        'license',
+        expect.any(String)
+      )
     })
   })
 })

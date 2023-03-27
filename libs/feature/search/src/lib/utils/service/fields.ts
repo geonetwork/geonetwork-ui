@@ -30,6 +30,7 @@ export class SimpleSearchField implements AbstractSearchField {
     private order: 'asc' | 'desc' = 'asc',
     protected injector: Injector
   ) {}
+
   getAvailableValues(): Observable<FieldAvailableValue[]> {
     return this.searchApiService
       .search(
@@ -145,7 +146,17 @@ export class IsSpatialSearchField implements AbstractSearchField {
   private searchApiService = this.injector.get(SearchApiService)
   private translateService = this.injector.get(TranslateService)
 
-  constructor(protected injector: Injector) {}
+  constructor(protected injector: Injector) {
+    this.esService.registerRuntimeField(
+      'isSpatial',
+      `String result = 'no';
+String formats = doc.format.join('|').toLowerCase();
+if (formats.contains('geojson') || formats.contains('arcgis') || formats.contains('ogc') || formats.contains('shp')) result = 'yes';
+String protocols = doc.linkProtocol.join('|').toLowerCase();
+if (protocols.contains('esri') || protocols.contains('ogc')) result = 'yes';
+emit(result);`
+    )
+  }
 
   getAvailableValues(): Observable<FieldAvailableValue[]> {
     return this.searchApiService
@@ -195,5 +206,27 @@ export class IsSpatialSearchField implements AbstractSearchField {
     if (!filter) return []
     const keys = Object.keys(filter)
     return keys.length ? [keys[0]] : []
+  }
+}
+
+export class LicenseSearchField extends SimpleSearchField {
+  constructor(injector: Injector) {
+    super('license', 'asc', injector)
+    this.esService.registerRuntimeField(
+      'license',
+      `String raw = '';
+if (doc.containsKey('licenseObject.default.keyword') && doc['licenseObject.default.keyword'].length > 0)
+  raw += doc['licenseObject.default.keyword'].join('|').toLowerCase();
+if (doc.containsKey('MD_LegalConstraintsUseLimitationObject.default.keyword') && doc['MD_LegalConstraintsUseLimitationObject.default.keyword'].length > 0)
+  raw += doc['MD_LegalConstraintsUseLimitationObject.default.keyword'].join('|').toLowerCase();
+
+if (raw.contains('odbl')) emit('ODbL');
+if (raw.contains('pddl')) emit('PDDL');
+if (raw.contains('odc-by')) emit('ODC-By');
+if (raw.contains('cc0') || raw.contains('cc-0')) emit('CC-0');
+if (raw.contains('cc-by') || raw.contains('cc by')) emit('CC BY');
+if (raw.contains('open license')) emit('Open License');
+if (raw.contains('etalab')) emit('Etalab');`
+    )
   }
 }

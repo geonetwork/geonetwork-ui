@@ -29,6 +29,8 @@ export interface EsSearchParams {
   sort?: SortParams
   track_total_hits?: boolean
   _source?: RequestFields
+
+  runtime_mappings?: Record<string, unknown>
 }
 
 export type EsSearchResponse = any
