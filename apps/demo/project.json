@@ -4,6 +4,7 @@
   "projectType": "application",
   "sourceRoot": "apps/demo/src",
   "prefix": "geonetwork-ui",
+  "implicitDependencies": ["ui-*", "feature-*"],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
