@@ -24,6 +24,7 @@ export class FieldsService {
     topic: new TopicSearchField(this.injector),
     isSpatial: new IsSpatialSearchField(this.injector),
     q: new FullTextSearchField(),
+    license: new SimpleSearchField('license', 'asc', this.injector),
   } as Record<string, AbstractSearchField>
 
   get supportedFields() {

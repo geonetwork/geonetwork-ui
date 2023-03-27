@@ -54,6 +54,24 @@ if (protocols.contains('esri') || protocols.contains('ogc')) result = 'yes';
 emit(result)
 `,
         },
+        license: {
+          type: 'keyword',
+          script: `
+String raw = '';
+if (doc.containsKey('licenseObject.default.keyword') && doc['licenseObject.default.keyword'].length > 0)
+  raw += doc['licenseObject.default.keyword'].join('|').toLowerCase();
+if (doc.containsKey('MD_LegalConstraintsUseLimitationObject.default.keyword') && doc['MD_LegalConstraintsUseLimitationObject.default.keyword'].length > 0)
+  raw += doc['MD_LegalConstraintsUseLimitationObject.default.keyword'].join('|').toLowerCase();
+
+if (raw.contains('odbl')) emit('ODbL');
+if (raw.contains('pddl')) emit('PDDL');
+if (raw.contains('odc-by')) emit('ODC-By');
+if (raw.contains('cc0') || raw.contains('cc-0')) emit('CC-0');
+if (raw.contains('cc-by') || raw.contains('cc by')) emit('CC BY');
+if (raw.contains('open license')) emit('Open License');
+if (raw.contains('etalab')) emit('Etalab');
+`,
+        },
       },
     }
     return payload

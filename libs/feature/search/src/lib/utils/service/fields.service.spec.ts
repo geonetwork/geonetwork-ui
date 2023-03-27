@@ -58,6 +58,7 @@ describe('FieldsService', () => {
         'topic',
         'isSpatial',
         'q',
+        'license',
       ])
     })
   })
