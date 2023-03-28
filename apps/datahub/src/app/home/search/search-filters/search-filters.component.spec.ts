@@ -2,13 +2,18 @@ import {
   ChangeDetectionStrategy,
   Component,
   DebugElement,
+  EventEmitter,
   Input,
   NO_ERRORS_SCHEMA,
   Output,
-  EventEmitter,
 } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
+import {
+  FieldsService,
+  FilterDropdownComponent,
+  SearchFacade,
+  SearchService,
+} from '@geonetwork-ui/feature/search'
 import {
   AggregationsOrderEnum,
   AggregationsTypesEnum,
@@ -34,6 +39,14 @@ export class MockCheckToggleComponent {
 @Component({
   selector: 'gn-ui-filter-dropdown', // eslint-disable-line
   template: '<div></div>',
+  providers: [
+    // this is needed to make the ViewChildren in the main component work
+    // see: https://indepth.dev/posts/1184/angular-unit-testing-viewchild
+    {
+      provide: FilterDropdownComponent,
+      useExisting: MockFilterDropdownComponent,
+    },
+  ],
 })
 export class MockFilterDropdownComponent {
   @Input() fieldName: string
@@ -51,6 +64,13 @@ class SearchFacadeMock {
 class SearchServiceMock {
   updateFilters = jest.fn()
 }
+
+class FieldsServiceMock {
+  getFiltersForValues = jest.fn((fieldName, values) => ({
+    ['filter_' + fieldName]: {},
+  }))
+}
+
 describe('SearchFiltersComponent', () => {
   let component: SearchFiltersComponent
   let fixture: ComponentFixture<SearchFiltersComponent>
@@ -75,10 +95,16 @@ describe('SearchFiltersComponent', () => {
           provide: SearchService,
           useClass: SearchServiceMock,
         },
+        {
+          provide: FieldsService,
+          useClass: FieldsServiceMock,
+        },
       ],
     })
       .overrideComponent(SearchFiltersComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default },
+        set: {
+          changeDetection: ChangeDetectionStrategy.Default,
+        },
       })
       .compileComponents()
   })
@@ -153,7 +179,7 @@ describe('SearchFiltersComponent', () => {
     function getMoreButton(): DebugElement {
       return fixture.debugElement.query(By.css('gn-ui-button'))
     }
-    function getFilterButtons(): DebugElement {
+    function getFilterButtons(): DebugElement[] {
       return fixture.debugElement.queryAll(
         By.directive(MockFilterDropdownComponent)
       )
@@ -222,9 +248,11 @@ describe('SearchFiltersComponent', () => {
       })
       it('clear OrgForResource & format', () => {
         expect(searchService.updateFilters).toHaveBeenCalledWith({
-          OrgForResource: {},
-          format: {},
-          publicationYearForResource: {},
+          filter_format: {},
+          filter_publicationYear: {},
+          filter_isSpatial: {},
+          filter_publisher: {},
+          filter_topic: {},
         })
       })
     })
