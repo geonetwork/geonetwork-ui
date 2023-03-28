@@ -1,10 +1,9 @@
-import { MeResponseApiModel } from '@geonetwork-ui/data-access/gn4'
-
-export type UserModel = Omit<
-  MeResponseApiModel,
-  | 'hash'
-  | 'groupsWithRegisteredUser'
-  | 'groupsWithEditor'
-  | 'groupsWithReviewer'
-  | 'groupsWithUserAdmin'
->
+export interface UserModel {
+  id: string
+  profile: string
+  username: string
+  name: string
+  surname: string
+  email: string
+  organisation: string
+}

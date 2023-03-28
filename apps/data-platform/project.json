@@ -62,7 +62,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "docker build -f ./apps/data-platform/Dockerfile . -t geonetwork/geonetwork-ui-data-platform"
+          "docker build -f ./apps/data-platform/Dockerfile . -t $(tools/print-docker-tag.sh data-platform)"
         ]
       }
     }

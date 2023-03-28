@@ -1,7 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { BootstrapService } from '@geonetwork-ui/util/shared'
-import { SettingsListResponseApiModel } from '@geonetwork-ui/data-access/gn4'
+import {
+  SettingsListResponseApiModel,
+  SiteApiService,
+} from '@geonetwork-ui/data-access/gn4'
 import { Observable } from 'rxjs'
+import { shareReplay } from 'rxjs/operators'
 
 @Component({
   selector: 'gn-ui-site-title',
@@ -12,7 +15,9 @@ import { Observable } from 'rxjs'
 export class SiteTitleComponent {
   info$: Observable<SettingsListResponseApiModel>
 
-  constructor(private commonService: BootstrapService) {
-    this.info$ = commonService.siteInfoReady()
+  constructor(private siteApiService: SiteApiService) {
+    this.info$ = this.siteApiService
+      .getSiteOrPortalDescription()
+      .pipe(shareReplay(1))
   }
 }

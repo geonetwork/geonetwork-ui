@@ -3,7 +3,6 @@ import {
   LinkClassifierService,
   LinkUsage,
   MetadataRecord,
-  MetadataUrlService,
 } from '@geonetwork-ui/util/shared'
 import {
   getAsArray,
@@ -19,6 +18,7 @@ import {
   SourceWithUnknownProps,
   toDate,
 } from './atomic-operations'
+import { MetadataUrlService } from '../service/metadata-url.service'
 
 type ESResponseSource = SourceWithUnknownProps
 

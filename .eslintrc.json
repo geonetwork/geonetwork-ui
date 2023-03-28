@@ -37,14 +37,10 @@
                   "scope:shared"
                 ]
               },
-              // util libs should only depend on util and data-access libs
+              // util libs should only depend on util libs
               {
                 "sourceTag": "type:util",
-                "onlyDependOnLibsWithTags": [
-                  "type:util",
-                  "type:api",
-                  "type:data-access"
-                ]
+                "onlyDependOnLibsWithTags": ["type:util"]
               },
               // apps should depend on all kind of libs
               {

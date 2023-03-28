@@ -142,7 +142,6 @@ describe('AuthService', () => {
         surname: 'Gravin',
         email: 'florent.gravin@camptocamp.com',
         organisation: null,
-        admin: true,
       })
     })
   })

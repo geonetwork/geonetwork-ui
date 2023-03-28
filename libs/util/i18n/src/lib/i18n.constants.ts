@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http'
-import { ToolsApiService } from '@geonetwork-ui/data-access/gn4'
 import { TranslateCompiler, TranslateLoader } from '@ngx-translate/core'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
-import { Gn4TranslateLoader } from './gn4.translate.loader'
 import { FileTranslateLoader } from './file.translate.loader'
 
 export const DEFAULT_LANG = 'en'
@@ -49,17 +47,5 @@ export const TRANSLATE_DEFAULT_CONFIG = {
     useFactory: HttpLoaderFactory,
     defaultLanguage: DEFAULT_LANG,
     deps: [HttpClient],
-  },
-}
-
-export const TRANSLATE_GEONETWORK_CONFIG = {
-  compiler: {
-    provide: TranslateCompiler,
-    useClass: TranslateMessageFormatCompiler,
-  },
-  loader: {
-    provide: TranslateLoader,
-    useClass: Gn4TranslateLoader,
-    deps: [ToolsApiService],
   },
 }
