@@ -1,10 +1,15 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import {
-  AggregationsOrderEnum,
-  AggregationsTypesEnum,
-} from '@geonetwork-ui/util/shared'
-import { map, pluck } from 'rxjs/operators'
+  ChangeDetectionStrategy,
+  Component,
+  QueryList,
+  ViewChildren,
+} from '@angular/core'
+import {
+  FieldsService,
+  FilterDropdownComponent,
+  SearchFacade,
+  SearchService,
+} from '@geonetwork-ui/feature/search'
 
 @Component({
   selector: 'datahub-search-filters',
@@ -13,15 +18,13 @@ import { map, pluck } from 'rxjs/operators'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchFiltersComponent {
-  ORDER = AggregationsOrderEnum
-  TYPE = AggregationsTypesEnum
-  publisher$ = this.searchFacade.searchFilters$.pipe(
-    pluck('OrgForResource'),
-    map((orgState) => orgState && Object.keys(orgState)[0])
-  )
+  @ViewChildren(FilterDropdownComponent)
+  filters: QueryList<FilterDropdownComponent>
+
   constructor(
     public searchFacade: SearchFacade,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private fieldsService: FieldsService
   ) {}
 
   isOpen = false
@@ -39,10 +42,13 @@ export class SearchFiltersComponent {
   }
 
   clearFilters() {
-    this.searchService.updateFilters({
-      OrgForResource: {},
-      format: {},
-      publicationYearForResource: {},
-    })
+    const filters = this.filters.reduce(
+      (prev, curr) => ({
+        ...prev,
+        ...this.fieldsService.getFiltersForValues(curr.fieldName, []),
+      }),
+      {}
+    )
+    this.searchService.updateFilters(filters)
   }
 }

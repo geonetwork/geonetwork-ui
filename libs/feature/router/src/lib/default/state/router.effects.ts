@@ -2,20 +2,20 @@ import { Location } from '@angular/common'
 import { Inject, Injectable } from '@angular/core'
 import { ActivatedRouteSnapshot, Router } from '@angular/router'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
-import { SetFilters, SetSortBy } from '@geonetwork-ui/feature/search'
+import {
+  FieldsService,
+  SetFilters,
+  SetSortBy,
+} from '@geonetwork-ui/feature/search'
 import { SortByEnum } from '@geonetwork-ui/util/shared'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { navigation } from '@nrwl/angular'
 import { of } from 'rxjs'
 import { mergeMap, tap } from 'rxjs/operators'
-import {
-  getSearchFilters,
-  getSortBy,
-  routeParamsToState,
-} from '../router.mapper'
 import { ROUTER_CONFIG, RouterConfigModel } from '../router.module'
 import * as RouterActions from './router.actions'
 import { RouterFacade } from './router.facade'
+import { ROUTE_PARAMS } from '../constants'
 
 @Injectable()
 export class RouterEffects {
@@ -24,7 +24,8 @@ export class RouterEffects {
     private _router: Router,
     private _location: Location,
     private facade: RouterFacade,
-    @Inject(ROUTER_CONFIG) private routerConfig: RouterConfigModel
+    @Inject(ROUTER_CONFIG) private routerConfig: RouterConfigModel,
+    private fieldsService: FieldsService
   ) {}
 
   navigate$ = createEffect(
@@ -43,18 +44,29 @@ export class RouterEffects {
 
   syncSearchState$ = createEffect(() =>
     this.facade.searchParams$.pipe(
-      mergeMap((searchParams) =>
-        of(
-          new SetFilters(
-            routeParamsToState(getSearchFilters(searchParams)),
-            this.routerConfig.searchStateId
-          ),
+      mergeMap((searchParams) => {
+        const routeFilters = this.fieldsService.supportedFields.reduce(
+          (prev, curr) => {
+            let values = null
+            if (Array.isArray(searchParams[curr])) values = searchParams[curr]
+            else if (typeof searchParams[curr] === 'string')
+              values = [searchParams[curr]]
+            if (!values) return prev
+            return {
+              ...prev,
+              ...this.fieldsService.getFiltersForValues(curr, values),
+            }
+          },
+          {}
+        )
+        return of(
+          new SetFilters(routeFilters, this.routerConfig.searchStateId),
           new SetSortBy(
-            getSortBy(searchParams) || SortByEnum.RELEVANCY,
+            searchParams[ROUTE_PARAMS.SORT] || SortByEnum.RELEVANCY,
             this.routerConfig.searchStateId
           )
         )
-      )
+      })
     )
   )
 

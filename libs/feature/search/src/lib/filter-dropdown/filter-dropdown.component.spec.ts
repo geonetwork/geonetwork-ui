@@ -8,27 +8,28 @@ import {
 } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, EMPTY, of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
-import { AggregationsService } from '../utils/service/aggregations.service'
+import { FieldsService } from '../utils/service/fields.service'
 import { SearchService } from '../utils/service/search.service'
 import { FilterDropdownComponent } from './filter-dropdown.component'
 
-let facade: SearchFacadeMock
-
 class SearchFacadeMock {
-  updateConfigAggregations = jest.fn(() => facade)
-  requestMoreResults = jest.fn()
   searchFilters$ = new BehaviorSubject<any>({})
 }
 class SearchServiceMock {
   updateFilters = jest.fn()
 }
 
-const mockAggregation$ = new BehaviorSubject<any>({})
-class AggregationsServiceMock {
-  getFullSearchTermAggregation = jest.fn(() => mockAggregation$)
-  getHistogramAggregation = jest.fn(() => mockAggregation$)
+class FieldsServiceMock {
+  getAvailableValues = jest.fn(() => EMPTY)
+  getValuesForFilters = jest.fn((fieldName, filters) => [
+    'converted from filters',
+    filters,
+  ])
+  getFiltersForValues = jest.fn((fieldName, values) => ({
+    'converted from values': values,
+  }))
 }
 
 @Component({
@@ -47,10 +48,11 @@ export class MockDropdownComponent {
 }
 
 describe('FilterDropdownComponent', () => {
+  let facade: SearchFacadeMock
   let component: FilterDropdownComponent
   let dropdown: MockDropdownComponent
   let searchService: SearchService
-  let aggregationService: AggregationsService
+  let fieldsService: FieldsService
   let fixture: ComponentFixture<FilterDropdownComponent>
 
   beforeEach(async () => {
@@ -67,8 +69,8 @@ describe('FilterDropdownComponent', () => {
           useClass: SearchServiceMock,
         },
         {
-          provide: AggregationsService,
-          useClass: AggregationsServiceMock,
+          provide: FieldsService,
+          useClass: FieldsServiceMock,
         },
       ],
     })
@@ -80,10 +82,11 @@ describe('FilterDropdownComponent', () => {
       .compileComponents()
 
     fixture = TestBed.createComponent(FilterDropdownComponent)
-    facade = TestBed.inject(SearchFacade)
+    facade = TestBed.inject(SearchFacade) as any
     searchService = TestBed.inject(SearchService)
-    aggregationService = TestBed.inject(AggregationsService)
+    fieldsService = TestBed.inject(FieldsService)
     component = fixture.componentInstance
+
     component.fieldName = 'Org'
     dropdown = fixture.debugElement.query(
       By.directive(MockDropdownComponent)
@@ -94,67 +97,51 @@ describe('FilterDropdownComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('considers aggregation type and order inputs', () => {
-    describe('by default', () => {
-      beforeEach(() => {
-        fixture.detectChanges()
-      })
-      it('calls getFullSearchTermAggregation on the aggregationService with ascending order', () => {
-        expect(
-          aggregationService.getFullSearchTermAggregation
-        ).toHaveBeenCalledWith('Org', 'asc')
-      })
-    })
-    describe("with aggregation type input 'histogram' and descending order", () => {
-      beforeEach(() => {
-        component.aggregationType = 'histogram'
-        component.order = 'desc'
-        fixture.detectChanges()
-      })
-      it('calls getHistogramAggregation on the aggregationService with descending order', () => {
-        expect(aggregationService.getHistogramAggregation).toHaveBeenCalledWith(
-          'Org',
-          'desc'
-        )
-      })
-    })
-  })
-
   describe('when selected values change', () => {
+    const values = ['org1', 'org2', 34]
     beforeEach(() => {
-      dropdown.selectValues.emit(['org1', 'org2', 34])
+      dropdown.selectValues.emit(values)
+    })
+    it('converts values to filters', () => {
+      expect(fieldsService.getFiltersForValues).toHaveBeenCalledWith(
+        'Org',
+        values
+      )
     })
     it('calls updateSearch on the search service', () => {
       expect(searchService.updateFilters).toHaveBeenCalledWith({
-        Org: { org1: true, org2: true, 34: true },
+        'converted from values': values,
       })
     })
   })
 
   describe('available choices', () => {
-    describe('when an aggregation is available', () => {
+    describe('on init', () => {
       beforeEach(() => {
-        mockAggregation$.next({
-          buckets: [
-            { doc_count: 4, key: 'First Org' },
-            { doc_count: 2, key: 'Second Org' },
-            { doc_count: 1, key: 'Third Org' },
-          ],
-        })
+        component.ngOnInit()
+      })
+      it('reads available values', () => {
+        expect(fieldsService.getAvailableValues).toHaveBeenCalledWith('Org')
+      })
+    })
+    describe('when there are available values', () => {
+      const values = [
+        { label: 'First Org (4)', value: 'First Org' },
+        { label: 'Second Org (2)', value: 'Second Org' },
+        { label: 'Third Org (1)', value: 'Third Org' },
+      ]
+      beforeEach(() => {
+        fieldsService.getAvailableValues = () => of(values)
         component.ngOnInit()
         fixture.detectChanges()
       })
       it('reads choices from the search response', () => {
-        expect(dropdown.choices).toEqual([
-          { label: 'First Org (4)', value: 'First Org' },
-          { label: 'Second Org (2)', value: 'Second Org' },
-          { label: 'Third Org (1)', value: 'Third Org' },
-        ])
+        expect(dropdown.choices).toEqual(values)
       })
     })
-    describe('when an aggregation is not available', () => {
+    describe('no available values', () => {
       beforeEach(() => {
-        mockAggregation$.next([])
+        fieldsService.getAvailableValues = () => of([])
         component.ngOnInit()
         fixture.detectChanges()
       })
@@ -162,15 +149,14 @@ describe('FilterDropdownComponent', () => {
         expect(dropdown.choices).toEqual([])
       })
     })
-    describe('a numerical aggregation is available', () => {
+    describe('available values are numerical', () => {
+      const values = [
+        { label: '1 (4)', value: 1 },
+        { label: '2 (2)', value: 2 },
+        { label: '3 (1)', value: 3 },
+      ]
       beforeEach(() => {
-        mockAggregation$.next({
-          buckets: [
-            { doc_count: 4, key: 1 },
-            { doc_count: 2, key: 2 },
-            { doc_count: 1, key: 3 },
-          ],
-        })
+        fieldsService.getAvailableValues = () => of(values)
         component.ngOnInit()
         fixture.detectChanges()
       })
@@ -185,56 +171,21 @@ describe('FilterDropdownComponent', () => {
   })
 
   describe('selected values', () => {
-    describe('when a filter is available', () => {
-      beforeEach(() => {
-        facade.searchFilters$.next({
-          Org: {
-            'First Org': true,
-            'Second Org': true,
-          },
-        })
-        fixture.detectChanges()
-      })
-      it('reads selected values from the search filters', () => {
-        expect(dropdown.selected).toEqual(['First Org', 'Second Org'])
-      })
-      describe('then the  filter is clear', () => {
-        beforeEach(() => {
-          facade.searchFilters$.next({
-            anoterField: {
-              value1: true,
-            },
-          })
-          fixture.detectChanges()
-        })
-
-        it('it removes the filter from the dropdown', () => {
-          expect(dropdown.selected).toEqual([])
-        })
-      })
+    const filters = {
+      Org: 'bla',
+    }
+    beforeEach(() => {
+      facade.searchFilters$.next(filters)
+      fixture.detectChanges()
     })
-    describe('when a filter is not available', () => {
-      beforeEach(() => {
-        facade.searchFilters$.next({
-          anoterField: {
-            value1: true,
-          },
-        })
-        fixture.detectChanges()
-      })
-      it('uses an empty array', () => {
-        expect(dropdown.selected).toEqual([])
-      })
+    it('converts filters to values', () => {
+      expect(fieldsService.getValuesForFilters).toHaveBeenCalledWith(
+        'Org',
+        filters
+      )
+    })
+    it('shows selected values in the dropdown', () => {
+      expect(dropdown.selected).toEqual(['converted from filters', filters])
     })
   })
-  // describe('when no values are selected', () => {
-  //   beforeEach(() => {
-  //     dropdown.selectValues.emit([])
-  //   })
-  //   it('clears the filter on the search facade', () => {
-  //     expect(facade.updateFilters).toHaveBeenCalledWith({
-  //       Org: undefined
-  //     })
-  //   })
-  // })
 })

@@ -16,6 +16,7 @@ import * as fromActions from './router.actions'
 import { RouterGoActionPayload } from './router.actions'
 import * as fromEffects from './router.effects'
 import { RouterFacade } from './router.facade'
+import { TranslateModule } from '@ngx-translate/core'
 
 class SearchRouteComponent extends Component {}
 class MetadataRouteComponent extends Component {}
@@ -49,7 +50,7 @@ describe('RouterEffects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, TranslateModule.forRoot()],
       providers: [
         fromEffects.RouterEffects,
         provideMockActions(() => actions),
