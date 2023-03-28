@@ -195,6 +195,7 @@
   "search.field.any.placeholder": "ex: cadastre, littoral, antennes",
   "search.field.sortBy": "Trier par :",
   "search.filters.byFormat": "Formats",
+  "search.filters.byLicense": "Licence",
   "search.filters.byOrganisation": "Organisations",
   "search.filters.byPublicationYear": "Année de publication",
   "search.filters.byTopic": "Thème",

@@ -195,6 +195,7 @@
   "search.field.any.placeholder": "",
   "search.field.sortBy": "",
   "search.filters.byFormat": "",
+  "search.filters.byLicense": "",
   "search.filters.byOrganisation": "",
   "search.filters.byPublicationYear": "",
   "search.filters.byTopic": "",
