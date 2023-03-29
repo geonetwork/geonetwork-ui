@@ -8,7 +8,7 @@ import {
 } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { BehaviorSubject, EMPTY, of } from 'rxjs'
+import { BehaviorSubject, EMPTY, of, throwError } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { FieldsService } from '../utils/service/fields.service'
 import { SearchService } from '../utils/service/search.service'
@@ -186,6 +186,27 @@ describe('FilterDropdownComponent', () => {
     })
     it('shows selected values in the dropdown', () => {
       expect(dropdown.selected).toEqual(['converted from filters', filters])
+    })
+  })
+
+  describe('field is unsupported', () => {
+    beforeEach(() => {
+      fieldsService.getAvailableValues = () =>
+        throwError(() => new Error('blah'))
+      fieldsService.getValuesForFilters = () => {
+        throw new Error('blah')
+      }
+      fieldsService.getFiltersForValues = () => {
+        throw new Error('blah')
+      }
+      component.ngOnInit()
+      fixture.detectChanges()
+    })
+    it('still gives an array for choices', () => {
+      expect(dropdown.choices).toEqual([])
+    })
+    it('still gives an array for selected', () => {
+      expect(dropdown.selected).toEqual([])
     })
   })
 })

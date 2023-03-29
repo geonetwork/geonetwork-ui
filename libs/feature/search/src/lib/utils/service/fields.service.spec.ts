@@ -14,6 +14,7 @@ class SearchApiServiceMock {
 }
 class ElasticsearchServiceMock {
   getSearchRequestBody = jest.fn()
+  registerRuntimeField = jest.fn()
 }
 class ToolsApiServiceMock {
   getTranslationsPackage1 = jest.fn(() => EMPTY)
@@ -58,6 +59,7 @@ describe('FieldsService', () => {
         'topic',
         'isSpatial',
         'q',
+        'license',
       ])
     })
   })

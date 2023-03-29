@@ -15,6 +15,10 @@ export const METADATA_LANGUAGE = new InjectionToken<string>('metadata-language')
   providedIn: 'root',
 })
 export class ElasticsearchService {
+  // runtime fields are computed using a Painless script
+  // see: https://www.elastic.co/guide/en/elasticsearch/reference/current/runtime-mapping-fields.html
+  private runtimeFields: Record<string, string> = {}
+
   constructor(
     @Optional() @Inject(METADATA_LANGUAGE) private metadataLang: string
   ) {}
@@ -42,21 +46,53 @@ export class ElasticsearchService {
         geometry
       ),
       _source: requestFields,
-      runtime_mappings: {
-        isSpatial: {
-          type: 'keyword',
-          script: `
-String result = 'no';
-String formats = doc.format.join('|').toLowerCase();
-if (formats.contains('geojson') || formats.contains('arcgis') || formats.contains('ogc') || formats.contains('shp')) result = 'yes';
-String protocols = doc.linkProtocol.join('|').toLowerCase();
-if (protocols.contains('esri') || protocols.contains('ogc')) result = 'yes';
-emit(result)
-`,
-        },
-      },
     }
+    this.processRuntimeFields(payload)
     return payload
+  }
+
+  // payload object will be mutated
+  private processRuntimeFields(payload: EsSearchParams): EsSearchParams {
+    const addMapping = (fieldName: string) => {
+      if (!payload.runtime_mappings) payload.runtime_mappings = {}
+      payload.runtime_mappings[fieldName] = {
+        type: 'keyword',
+        script: this.runtimeFields[fieldName],
+      }
+    }
+    const lookForField = (node: unknown) => {
+      if (typeof node === 'string' && node in this.runtimeFields) {
+        addMapping(node)
+        return
+      }
+      if (Array.isArray(node)) {
+        node.forEach(lookForField)
+        return
+      }
+      if (typeof node !== 'object') return
+      if ('field' in node && typeof node.field === 'string') {
+        if (node.field in this.runtimeFields) {
+          addMapping(node.field)
+        }
+      }
+      if ('query' in node && typeof node.query === 'string') {
+        for (const runtimeField in this.runtimeFields) {
+          if (node.query.indexOf(runtimeField + ':') > -1)
+            addMapping(runtimeField)
+        }
+      }
+      for (const key in node) {
+        if (typeof node[key] === 'object') lookForField(node[key])
+      }
+    }
+    lookForField(payload.aggregations)
+    lookForField(payload.sort)
+    lookForField(payload.query)
+    return payload
+  }
+
+  registerRuntimeField(fieldName: string, expression: string) {
+    this.runtimeFields[fieldName] = expression
   }
 
   getMetadataByIdPayload(uuid: string): EsSearchParams {

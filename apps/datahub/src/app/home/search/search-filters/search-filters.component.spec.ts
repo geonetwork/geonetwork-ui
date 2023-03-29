@@ -253,6 +253,7 @@ describe('SearchFiltersComponent', () => {
           filter_isSpatial: {},
           filter_publisher: {},
           filter_topic: {},
+          filter_license: {},
         })
       })
     })
