@@ -16,7 +16,7 @@ import {
   UpdateFrequency,
   UpdateFrequencyCustom,
   ServiceOnlineResource,
-} from '../model'
+} from '@geonetwork-ui/util/types/metadata'
 import {
   findChildElement,
   findChildrenElement,

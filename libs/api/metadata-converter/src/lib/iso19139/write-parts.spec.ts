@@ -7,7 +7,7 @@ import {
 } from '../xml-utils'
 import { writeDistributions } from './write-parts'
 import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records'
-import { DatasetRecord } from '../model'
+import { DatasetRecord } from '@geonetwork-ui/util/types/metadata'
 
 describe('write parts', () => {
   let rootEl: XmlElement

@@ -1,4 +1,8 @@
-import { CatalogRecord, DatasetRecord, ServiceRecord } from '../model'
+import {
+  CatalogRecord,
+  DatasetRecord,
+  ServiceRecord,
+} from '@geonetwork-ui/util/types/metadata'
 import {
   createDocument,
   createElement,

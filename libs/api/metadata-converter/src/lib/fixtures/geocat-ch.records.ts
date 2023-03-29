@@ -1,4 +1,9 @@
-import { DatasetRecord, RecordStatus, Role, ServiceRecord } from '../model'
+import {
+  DatasetRecord,
+  RecordStatus,
+  Role,
+  ServiceRecord,
+} from '@geonetwork-ui/util/types/metadata'
 
 export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
   uniqueIdentifier: '8698bf0b-fceb-4f0f-989b-111e7c4af0a4',

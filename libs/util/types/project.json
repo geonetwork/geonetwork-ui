@@ -4,6 +4,16 @@
   "sourceRoot": "libs/util/types/src",
   "projectType": "library",
   "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/util/types",
+        "main": "libs/util/types/src/index.ts",
+        "tsConfig": "libs/util/types/tsconfig.lib.json",
+        "assets": ["libs/util/types/*.md"]
+      }
+    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
