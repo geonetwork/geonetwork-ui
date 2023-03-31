@@ -65,8 +65,9 @@ export class RecordFormComponent implements AfterViewInit {
           accessServiceProtocol: 'other',
         }
       case 'link':
+      default:
         return {
-          type,
+          type: 'link',
           linkUrl: new URL('', window.location.toString()),
         }
     }

@@ -5,8 +5,8 @@ import {
   RouterStateSnapshot,
 } from '@angular/router'
 import { Observable } from 'rxjs'
-import { CatalogRecord } from '@geonetwork-ui/metadata-converter'
 import { EditorService } from '@geonetwork-ui/feature/editor'
+import { CatalogRecord } from '@geonetwork-ui/util/types/metadata'
 
 @Injectable({
   providedIn: 'root',
