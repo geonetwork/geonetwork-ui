@@ -23,44 +23,48 @@ const jobMockNoDS: UploadJobStatusApiModel = {
   progress: 1,
 }
 
-const facadeMock = {
-  setUpload: jest.fn(),
+class FacadeMock {
+  setUpload = jest.fn()
 }
-
-const fileUploadApiServiceMock = {
-  findUploadJob: jest.fn(() => of(jobMock)),
+class FileUploadApiServiceMock {
+  findUploadJob = jest.fn(() => of(jobMock))
 }
-
-const activatedRouteMock = {
-  params: of({ id: 1 }),
+class ActivatedRouteMock {
+  params = of({ id: 1 })
 }
-
-const routerMock = {
-  navigate: jest.fn(),
+class RouterMock {
+  navigate = jest.fn()
 }
 
 describe('AnalysisProgress.PageComponent', () => {
   let component: AnalysisProgressPageComponent
   let fixture: ComponentFixture<AnalysisProgressPageComponent>
+  let facade: DatafeederFacade
+  let fileUploadService: FileUploadApiService
+  let activatedRoute: ActivatedRoute
+  let router: Router
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AnalysisProgressPageComponent],
-      imports: [],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
           provide: FileUploadApiService,
-          useValue: fileUploadApiServiceMock,
+          useClass: FileUploadApiServiceMock,
         },
         {
           provide: DatafeederFacade,
-          useValue: facadeMock,
+          useClass: FacadeMock,
         },
-        { provide: ActivatedRoute, useValue: activatedRouteMock },
-        { provide: Router, useValue: routerMock },
+        { provide: ActivatedRoute, useClass: ActivatedRouteMock },
+        { provide: Router, useClass: RouterMock },
       ],
     }).compileComponents()
+    facade = TestBed.inject(DatafeederFacade)
+    fileUploadService = TestBed.inject(FileUploadApiService)
+    activatedRoute = TestBed.inject(ActivatedRoute)
+    router = TestBed.inject(Router)
   })
 
   beforeEach(() => {
@@ -84,36 +88,30 @@ describe('AnalysisProgress.PageComponent', () => {
       }
       expectObservable(component.statusFetch$).toBe(expected, values)
     })
-    expect(fileUploadApiServiceMock.findUploadJob).toHaveBeenCalledWith(1)
-    expect(facadeMock.setUpload).toHaveBeenCalledWith(jobMock)
+    expect(fileUploadService.findUploadJob).toHaveBeenCalledWith(1)
+    expect(facade.setUpload).toHaveBeenCalledWith(jobMock)
     expect(component.progress).toBe(1)
   })
 
   describe('Analysis DONE', () => {
     describe('with dataset', () => {
-      let job
       beforeEach(() => {
-        job = jobMock
-        component.onJobFinish(job)
+        component.onJobFinish(jobMock)
       })
-
       it('route to validation page', () => {
-        expect(routerMock.navigate).toHaveBeenCalledWith(['validation'], {
-          relativeTo: activatedRouteMock,
+        expect(router.navigate).toHaveBeenCalledWith(['validation'], {
+          relativeTo: activatedRoute,
           queryParams: {},
         })
       })
     })
     describe('with no dataset', () => {
-      let job
       beforeEach(() => {
-        job = jobMockNoDS
-        component.onJobFinish(job)
+        component.onJobFinish(jobMockNoDS)
       })
-
       it('route to home page with error', () => {
-        expect(routerMock.navigate).toHaveBeenCalledWith(['/'], {
-          relativeTo: activatedRouteMock,
+        expect(router.navigate).toHaveBeenCalledWith(['/'], {
+          relativeTo: activatedRoute,
           queryParams: { error: 'analysis' },
         })
       })
@@ -121,15 +119,15 @@ describe('AnalysisProgress.PageComponent', () => {
   })
 
   describe('Analysis ERROR', () => {
-    let job
     beforeEach(() => {
-      job = { ...jobMock, status: AnalysisStatusEnumApiModel.Error }
-      component.onJobFinish(job)
+      component.onJobFinish({
+        ...jobMock,
+        status: AnalysisStatusEnumApiModel.Error,
+      })
     })
-
     it('route to home page with error', () => {
-      expect(routerMock.navigate).toHaveBeenCalledWith(['/'], {
-        relativeTo: activatedRouteMock,
+      expect(router.navigate).toHaveBeenCalledWith(['/'], {
+        relativeTo: activatedRoute,
         queryParams: { error: 'analysis' },
       })
     })
