@@ -1,16 +1,21 @@
 <div class="w-full h-full flex flex-col">
-  <div class="flex flex-row justify-between text-[13px]">
+  <div
+    class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2 justify-between text-[13px]"
+  >
     <gn-ui-dropdown-selector
+      class="basis-1/4"
       [choices]="typeChoices"
       (selectValue)="chartType = $event"
       [title]="'chart.dropdown.type' | translate"
     ></gn-ui-dropdown-selector>
     <gn-ui-dropdown-selector
+      class="basis-1/4"
       [choices]="xChoices$ | async"
       (selectValue)="xProperty$.next($event)"
       [title]="'chart.dropdown.xAxis' | translate"
     ></gn-ui-dropdown-selector>
     <gn-ui-dropdown-selector
+      class="basis-1/4"
       *ngIf="!isCountAggregation"
       [choices]="yChoices$ | async"
       (selectValue)="yProperty$.next($event)"
@@ -18,6 +23,7 @@
       class="select-y-prop"
     ></gn-ui-dropdown-selector>
     <gn-ui-dropdown-selector
+      class="basis-1/4"
       [choices]="aggregationChoices"
       class="aggregation-choices"
       (selectValue)="aggregation$.next($event)"
