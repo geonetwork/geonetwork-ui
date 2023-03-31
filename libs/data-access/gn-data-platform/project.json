@@ -1,0 +1,9 @@
+{
+  "name": "gn-data-platform",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/data-access/gn-data-platform/src",
+  "prefix": "gn-ui",
+  "targets": {},
+  "tags": ["type:data-access"]
+}
