@@ -1,0 +1,9 @@
+{
+  "name": "data-access-ogc-api-records",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/data-access/ogc-api-records/src",
+  "prefix": "gn-ui",
+  "targets": {},
+  "tags": ["type:data-access"]
+}
