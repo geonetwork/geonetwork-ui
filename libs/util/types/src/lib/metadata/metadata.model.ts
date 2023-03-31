@@ -59,6 +59,8 @@ export interface BaseRecord {
   useLimitations: Array<string>
   licenses: Array<License>
   overviews: Array<GraphicOverview>
+  extras?: Record<string, unknown>
+  landingPage?: URL
 
   // to add: iso19139.topicCategory
   // to add: canonical url
@@ -67,9 +69,15 @@ export interface BaseRecord {
 }
 
 // TODO: handle actual codelists
-export type ServiceProtocol = 'wms' | 'wfs' | 'esriRest' | 'other'
+export type ServiceProtocol =
+  | 'wms'
+  | 'wfs'
+  | 'wps'
+  | 'wmts'
+  | 'esriRest'
+  | 'other'
 
-export type DatasetDistributionType = 'service' | 'download' | 'link'
+export type DatasetDistributionType = 'service' | 'download' | 'link' | 'other'
 
 export interface DatasetServiceDistribution {
   type: 'service'
@@ -131,8 +139,8 @@ export interface DatasetRecord extends BaseRecord {
   datasetUpdated?: Date
   lineage: string // Explanation of the origin of this record (e.g: how, why)"
   distributions: Array<DatasetDistribution>
-  spatialExtents: Array<DatasetSpatialExtent> // not handled yet
-  temporalExtents: Array<DatasetTemporalExtent> // not handled yet
+  spatialExtents?: Array<DatasetSpatialExtent> // not handled yet
+  temporalExtents?: Array<DatasetTemporalExtent> // not handled yet
   spatialRepresentation?: SpatialRepresentationType
 }
 
