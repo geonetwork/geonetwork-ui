@@ -1,24 +1,35 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import {
+  ComponentFixture,
+  discardPeriodicTasks,
+  fakeAsync,
+  flush,
+  flushMicrotasks,
+  TestBed,
+  tick,
+} from '@angular/core/testing'
 import { ActivatedRoute, Router } from '@angular/router'
 import {
   AnalysisStatusEnumApiModel,
   FileUploadApiService,
   UploadJobStatusApiModel,
 } from '@geonetwork-ui/data-access/datafeeder'
-import { of } from 'rxjs'
+import { delay, of } from 'rxjs'
 import { TestScheduler } from 'rxjs/testing'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
 import { AnalysisProgressPageComponent } from './analysis-progress.page'
+import advanceTimersByTime = jest.advanceTimersByTime
+
+const JOB_ID = '1234'
 
 const jobMock: UploadJobStatusApiModel = {
-  jobId: '1234',
+  jobId: JOB_ID,
   status: AnalysisStatusEnumApiModel.Done,
   progress: 1,
   datasets: [{}],
 }
 const jobMockNoDS: UploadJobStatusApiModel = {
-  jobId: '1234',
+  jobId: JOB_ID,
   status: AnalysisStatusEnumApiModel.Done,
   progress: 1,
 }
@@ -27,14 +38,43 @@ class FacadeMock {
   setUpload = jest.fn()
 }
 class FileUploadApiServiceMock {
-  findUploadJob = jest.fn(() => of(jobMock))
+  _startTime = null
+  _delay = 0
+  _interval
+  findUploadJob = jest.fn(() => {
+    // simulate passage of time
+    if (this._startTime === null) {
+      this._startTime = Date.now()
+    }
+    const duration = Date.now() - this._startTime
+    // total duration is 4s
+    const progress = Math.min(1, Math.round(duration / 40) / 100)
+    const job = {
+      ...jobMock,
+      progress,
+      status:
+        progress === 1
+          ? AnalysisStatusEnumApiModel.Done
+          : AnalysisStatusEnumApiModel.Analyzing,
+    }
+    if (progress === 1) {
+      clearInterval(this._interval)
+    }
+    if (this._delay) {
+      return of(job).pipe(delay(this._delay))
+    } else {
+      return of(job)
+    }
+  })
 }
 class ActivatedRouteMock {
-  params = of({ id: 1 })
+  params = of({ id: JOB_ID })
 }
 class RouterMock {
   navigate = jest.fn()
 }
+
+jest.useFakeTimers()
 
 describe('AnalysisProgress.PageComponent', () => {
   let component: AnalysisProgressPageComponent
@@ -70,27 +110,66 @@ describe('AnalysisProgress.PageComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AnalysisProgressPageComponent)
     component = fixture.componentInstance
-    fixture.detectChanges()
+    jest.spyOn(component, 'onJobFinish')
   })
 
   it('should create', () => {
+    fixture.detectChanges()
     expect(component).toBeTruthy()
   })
 
-  it('fetches batch status', () => {
-    const scheduler = new TestScheduler((actual, expected) => {
-      expect(actual).toEqual(expected)
+  describe('progress monitoring', () => {
+    it('calls findUploadJob initially', async () => {
+      await component.ngOnInit()
+      expect(fileUploadService.findUploadJob).toHaveBeenCalledWith(JOB_ID)
     })
-    scheduler.run(({ expectObservable }) => {
-      const expected = '500ms (a-|)'
-      const values = {
-        a: jobMock,
-      }
-      expectObservable(component.statusFetch$).toBe(expected, values)
+    it('completes after 4s', async () => {
+      await component.ngOnInit()
+      advanceTimersByTime(4100)
+      expect(component.onJobFinish).toHaveBeenCalledTimes(1)
+      expect(component.onJobFinish).toHaveBeenCalledWith({
+        ...jobMock,
+        status: AnalysisStatusEnumApiModel.Done,
+        progress: 1,
+      })
     })
-    expect(fileUploadService.findUploadJob).toHaveBeenCalledWith(1)
-    expect(facade.setUpload).toHaveBeenCalledWith(jobMock)
-    expect(component.progress).toBe(1)
+    it('calls findUploadJob every 500ms', async () => {
+      await component.ngOnInit()
+      advanceTimersByTime(4100)
+      expect(fileUploadService.findUploadJob).toHaveBeenCalledTimes(9)
+    })
+    it('updates progress along the way', async () => {
+      await component.ngOnInit()
+      expect(component.progress).toEqual(0)
+      advanceTimersByTime(1000)
+      expect(component.progress).toEqual(0.25)
+      advanceTimersByTime(2000)
+      expect(component.progress).toEqual(0.75)
+      advanceTimersByTime(1000)
+      expect(component.progress).toEqual(1)
+      advanceTimersByTime(1000)
+      expect(component.progress).toEqual(1)
+    })
+    describe('when status request takes more than 500ms', () => {
+      beforeEach(() => {
+        ;(fileUploadService as any)._delay = 1500
+      })
+      it('completes after 4s + delay', async () => {
+        await component.ngOnInit()
+        advanceTimersByTime(5500)
+        expect(component.onJobFinish).toHaveBeenCalledTimes(1)
+        expect(component.onJobFinish).toHaveBeenCalledWith({
+          ...jobMock,
+          status: AnalysisStatusEnumApiModel.Done,
+          progress: 1,
+        })
+      })
+      it('calls findUploadJob every 2 seconds', async () => {
+        await component.ngOnInit()
+        advanceTimersByTime(4100)
+        expect(fileUploadService.findUploadJob).toHaveBeenCalledTimes(3)
+      })
+    })
   })
 
   describe('Analysis DONE', () => {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { LogService } from '@geonetwork-ui/util/shared'
 import {
@@ -6,9 +6,9 @@ import {
   FileUploadApiService,
   UploadJobStatusApiModel,
 } from '@geonetwork-ui/data-access/datafeeder'
-import { interval, Observable, Subscription } from 'rxjs'
-import { filter, mergeMap, switchMap, take, tap } from 'rxjs/operators'
+import { EMPTY, firstValueFrom, Observable, timer } from 'rxjs'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
+import { expand, switchMap } from 'rxjs/operators'
 
 const { Pending, Analyzing, Done } = AnalysisStatusEnumApiModel
 
@@ -17,9 +17,8 @@ const { Pending, Analyzing, Done } = AnalysisStatusEnumApiModel
   templateUrl: './analysis-progress.page.html',
   styleUrls: ['./analysis-progress.page.css'],
 })
-export class AnalysisProgressPageComponent implements OnInit, OnDestroy {
+export class AnalysisProgressPageComponent implements OnInit {
   progress = 0
-  private subscription: Subscription
   statusFetch$: Observable<UploadJobStatusApiModel>
 
   constructor(
@@ -30,28 +29,24 @@ export class AnalysisProgressPageComponent implements OnInit, OnDestroy {
     private fileUploadApiService: FileUploadApiService
   ) {}
 
-  ngOnInit(): void {
-    this.subscription = new Subscription()
-    this.statusFetch$ = this.activatedRoute.params.pipe(
-      mergeMap(({ id }) =>
-        interval(500).pipe(
-          switchMap(() => this.fileUploadApiService.findUploadJob(id)),
-          tap((job: UploadJobStatusApiModel) => this.facade.setUpload(job)),
-          tap((job: UploadJobStatusApiModel) => (this.progress = job.progress)),
-          filter(
-            (job: UploadJobStatusApiModel) =>
-              ![Pending, Analyzing].includes(job.status)
-          ),
-          take(1)
-        )
-      )
-    )
-
-    this.subscription.add(
-      this.statusFetch$.subscribe((job: UploadJobStatusApiModel) =>
+  async ngOnInit() {
+    const { id: jobId } = await firstValueFrom(this.activatedRoute.params)
+    this.statusFetch$ = this.fileUploadApiService.findUploadJob(jobId).pipe(
+      // this runs recursively on emitted values of the inner observable
+      // once the job is finished, we return EMPTY to stop the recursion
+      expand((job) => {
+        this.facade.setUpload(job)
+        this.progress = job.progress
+        if ([Pending, Analyzing].includes(job.status)) {
+          return timer(500).pipe(
+            switchMap(() => this.fileUploadApiService.findUploadJob(jobId))
+          )
+        }
         this.onJobFinish(job)
-      )
+        return EMPTY
+      })
     )
+    this.statusFetch$.subscribe()
   }
 
   onJobFinish(job: UploadJobStatusApiModel) {
@@ -60,9 +55,5 @@ export class AnalysisProgressPageComponent implements OnInit, OnDestroy {
       relativeTo: this.activatedRoute,
       queryParams: done ? {} : { error: 'analysis' },
     })
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe()
   }
 }
