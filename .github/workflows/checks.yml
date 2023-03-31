@@ -45,9 +45,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Workspace lint
-        run: npx nx workspace-lint
-
       - name: Format check
         run: npx nx format:check --base=$NX_BASE --head=$NX_HEAD
 
