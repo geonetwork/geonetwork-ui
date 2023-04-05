@@ -139,8 +139,8 @@ export interface DatasetRecord extends BaseRecord {
   datasetUpdated?: Date
   lineage: string // Explanation of the origin of this record (e.g: how, why)"
   distributions: Array<DatasetDistribution>
-  spatialExtents?: Array<DatasetSpatialExtent> // not handled yet
-  temporalExtents?: Array<DatasetTemporalExtent> // not handled yet
+  spatialExtents: Array<DatasetSpatialExtent> // not handled yet
+  temporalExtents: Array<DatasetTemporalExtent> // not handled yet
   spatialRepresentation?: SpatialRepresentationType
 }
 

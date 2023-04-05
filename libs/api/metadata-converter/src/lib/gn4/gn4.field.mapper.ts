@@ -246,30 +246,6 @@ export class Gn4FieldMapper {
     extras: { ...(output.extras || {}), ...value },
   })
 
-  private extraField = (fieldName: string, output, source) => ({
-    ...output,
-    ...(fieldName.endsWith('UseLimitationObject')
-      ? {
-          useLimitations: [
-            ...(output.useLimitations || []),
-            ...selectField<SourceWithUnknownProps[]>(source, fieldName).map(
-              selectTranslatedValue
-            ),
-          ],
-        }
-      : {
-          accessConstraints: [
-            ...(output.accessConstraints || []),
-            ...selectField<SourceWithUnknownProps[]>(source, fieldName).map(
-              (field) => ({
-                text: selectTranslatedValue(field),
-                type: this.getConstraintsType(fieldName),
-              })
-            ),
-          ],
-        }),
-  })
-
   private getConstraintsType(indexField: string): AccessConstraintType {
     switch (indexField) {
       case 'MD_LegalConstraintsUseLimitationObject':
