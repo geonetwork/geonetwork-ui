@@ -17,8 +17,8 @@ import {
   UpdateFrequencyCustom,
   ServiceOnlineResource,
 } from '@geonetwork-ui/util/types/metadata'
-import { getStatusFromStatusCode } from '../common/status.mapper'
-import { getUpdateFrequencyFromFrequencyCode } from '../common/update-frequency.mapper'
+import { getStatusFromStatusCode } from './codelists/status.mapper'
+import { getUpdateFrequencyFromFrequencyCode } from './codelists/update-frequency.mapper'
 import {
   findChildElement,
   findChildrenElement,
@@ -41,7 +41,7 @@ import {
   pipe,
   tap,
 } from '../function-utils'
-import { getRoleFromRoleCode } from '../common/role.mapper'
+import { getRoleFromRoleCode } from './codelists/role.mapper'
 import { matchMimeType, matchProtocol } from '../common/distribution.mapper'
 
 function extractCharacterString(): ChainableFunction<XmlElement, string> {

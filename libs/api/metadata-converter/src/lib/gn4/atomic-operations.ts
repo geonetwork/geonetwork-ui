@@ -9,7 +9,7 @@ import {
   Role,
 } from '@geonetwork-ui/util/types/metadata'
 import { matchProtocol } from '../common/distribution.mapper'
-import { getRoleFromRoleCode } from '../common/role.mapper'
+import { getRoleFromRoleCode } from '../iso19139/codelists/role.mapper'
 
 export type SourceWithUnknownProps = { [key: string]: unknown }
 
