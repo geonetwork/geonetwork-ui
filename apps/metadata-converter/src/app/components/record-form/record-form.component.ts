@@ -3,7 +3,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
 } from '@angular/core'
 import {
@@ -17,7 +16,7 @@ import {
   ServiceOnlineResource,
   ServiceOnlineResourceType,
   ServiceRecord,
-} from '@geonetwork-ui/metadata-converter'
+} from '@geonetwork-ui/util/types/metadata'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -66,8 +65,9 @@ export class RecordFormComponent implements AfterViewInit {
           accessServiceProtocol: 'other',
         }
       case 'link':
+      default:
         return {
-          type,
+          type: 'link',
           linkUrl: new URL('', window.location.toString()),
         }
     }

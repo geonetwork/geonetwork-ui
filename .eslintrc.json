@@ -56,7 +56,7 @@
               // api libs should only depend on api libs
               {
                 "sourceTag": "type:api",
-                "onlyDependOnLibsWithTags": ["type:api"],
+                "onlyDependOnLibsWithTags": ["type:api", "scope:shared"],
                 "bannedExternalImports": ["*app-config"]
               }
             ]

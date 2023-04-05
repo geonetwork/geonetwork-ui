@@ -1,4 +1,8 @@
-import { DatasetRecord, RecordStatus, Role } from '../model'
+import {
+  DatasetRecord,
+  RecordStatus,
+  Role,
+} from '@geonetwork-ui/util/types/metadata'
 
 export const GEO2FRANCE_PLU_DATASET_RECORD: DatasetRecord = {
   uniqueIdentifier: '7d002c4c-92ef-4b9f-a568-d732f740b99e',

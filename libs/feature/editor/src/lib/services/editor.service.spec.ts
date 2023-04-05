@@ -4,7 +4,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing'
-import { CatalogRecord, RecordStatus } from '@geonetwork-ui/metadata-converter'
+import { CatalogRecord, RecordStatus } from '@geonetwork-ui/util/types/metadata'
 import { readFirst } from '@nrwl/angular/testing'
 
 const SAMPLE_RECORD: CatalogRecord = {

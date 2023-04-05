@@ -16,7 +16,9 @@ import {
   UpdateFrequency,
   UpdateFrequencyCustom,
   ServiceOnlineResource,
-} from '../model'
+} from '@geonetwork-ui/util/types/metadata'
+import { getStatusFromStatusCode } from './codelists/status.mapper'
+import { getUpdateFrequencyFromFrequencyCode } from './codelists/update-frequency.mapper'
 import {
   findChildElement,
   findChildrenElement,
@@ -39,6 +41,8 @@ import {
   pipe,
   tap,
 } from '../function-utils'
+import { getRoleFromRoleCode } from './codelists/role.mapper'
+import { matchMimeType, matchProtocol } from '../common/distribution.mapper'
 
 function extractCharacterString(): ChainableFunction<XmlElement, string> {
   return pipe(
@@ -85,53 +89,6 @@ function extractUrl(): ChainableFunction<XmlElement, URL> {
 
 function extractMandatoryUrl() {
   return fallback(extractUrl(), () => new URL('http://missing'))
-}
-
-function getRoleFromRoleCode(roleCode: string): Role {
-  if (!roleCode) return Role.UNSPECIFIED
-  switch (roleCode) {
-    case 'author':
-    case 'coAuthor':
-      return Role.AUTHOR
-    case 'originator':
-      return Role.ORIGINATOR
-    case 'principalInvestigator':
-      return Role.PRINCIPAL_INVESTIGATOR
-    case 'resourceProvider':
-      return Role.RESOURCE_PROVIDER
-    case 'processor':
-      return Role.PROCESSOR
-    case 'custodian':
-      return Role.CUSTODIAN
-    case 'owner':
-      return Role.OWNER
-    case 'pointOfContact':
-      return Role.POINT_OF_CONTACT
-    case 'publisher':
-      return Role.PUBLISHER
-    case 'distributor':
-      return Role.DISTRIBUTOR
-    case 'user':
-      return Role.USER
-    case 'collaborator':
-      return Role.COLLABORATOR
-    case 'editor':
-      return Role.EDITOR
-    case 'contributor':
-      return Role.CONTRIBUTOR
-    case 'stakeholder':
-      return Role.STAKEHOLDER
-    case 'sponsor':
-      return Role.SPONSOR
-    case 'funder':
-      return Role.FUNDER
-    case 'rightsHolder':
-      return Role.RIGHTS_HOLDER
-    case 'mediator':
-      return Role.MEDIATOR
-    default:
-      return Role.OTHER
-  }
 }
 
 // from gmd:role
@@ -219,24 +176,6 @@ function extractIndividuals(): ChainableFunction<
   )
 }
 
-function getStatusFromStatusCode(statusCode: string): RecordStatus {
-  switch (statusCode) {
-    case 'completed':
-      return RecordStatus.COMPLETED
-    case 'historicalArchive':
-      return RecordStatus.REMOVED
-    case 'obsolete':
-      return RecordStatus.DEPRECATED
-    case 'onGoing':
-      return RecordStatus.ON_GOING
-    case 'planned':
-    case 'required':
-    case 'underDevelopment':
-    default:
-      return RecordStatus.UNDER_DEVELOPMENT
-  }
-}
-
 function extractStatus(): ChainableFunction<XmlElement, RecordStatus> {
   return pipe(
     findChildElement('gmd:MD_ProgressCode'),
@@ -319,19 +258,6 @@ function extractLicenses(): ChainableFunction<XmlElement, Array<License>> {
       )
     )
   )
-}
-
-function matchProtocol(protocol: string): ServiceProtocol {
-  if (/wms/i.test(protocol)) return 'wms'
-  if (/wfs/i.test(protocol)) return 'wfs'
-  if (/esri/i.test(protocol)) return 'esriRest'
-  return 'other'
-}
-
-function matchMimeType(format: string): string {
-  if (/shp|shapefile/i.test(format)) return 'x-gis/x-shapefile'
-  // TODO: check whether the format is a valid mime type
-  return format || null
 }
 
 // from gmd:MD_Distribution
@@ -423,72 +349,6 @@ function extractDatasetDistributions(): ChainableFunction<
       }
     )
   )
-}
-
-function getUpdateFrequencyFromFrequencyCode(
-  frequencyCode: string
-): UpdateFrequency {
-  switch (frequencyCode) {
-    case 'asNeeded':
-      return 'asNeeded'
-    case 'unknown':
-      return 'unknown'
-    case 'irregular':
-      return 'irregular'
-    case 'notPlanned':
-      return 'notPlanned'
-    case 'continual':
-      return 'continual'
-    case 'periodic':
-      return 'periodic'
-    case 'daily':
-      return {
-        updatedTimes: 1,
-        per: 'day',
-      }
-    case 'weekly':
-      return {
-        updatedTimes: 1,
-        per: 'week',
-      }
-    case 'fortnightly':
-      return {
-        updatedTimes: 0.5,
-        per: 'week',
-      }
-    case 'semimonthly':
-      return {
-        updatedTimes: 2,
-        per: 'month',
-      }
-    case 'monthly':
-      return {
-        updatedTimes: 1,
-        per: 'month',
-      }
-    case 'quarterly':
-      return {
-        updatedTimes: 4,
-        per: 'year',
-      }
-    case 'biannually':
-      return {
-        updatedTimes: 2,
-        per: 'year',
-      }
-    case 'annually':
-      return {
-        updatedTimes: 1,
-        per: 'year',
-      }
-    case 'biennially':
-      return {
-        updatedTimes: 0.5,
-        per: 'year',
-      }
-    default:
-      return null
-  }
 }
 
 function getUpdateFrequencyFromCustomPeriod(

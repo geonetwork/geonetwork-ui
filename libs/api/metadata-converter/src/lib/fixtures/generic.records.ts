@@ -1,4 +1,8 @@
-import { DatasetRecord, RecordStatus, Role } from '../model'
+import {
+  DatasetRecord,
+  RecordStatus,
+  Role,
+} from '@geonetwork-ui/util/types/metadata'
 
 export const GENERIC_DATASET_RECORD: DatasetRecord = {
   uniqueIdentifier: 'my-dataset-001',
