@@ -35,6 +35,7 @@ jobs:
         npx nx affected --target=build --parallel=3
 
   agents:
+    if: github.event.pull_request.draft == false
     name: Nx Cloud - Agents
     uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.11.3
     with:
