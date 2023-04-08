@@ -128,7 +128,7 @@
     "@openapitools/openapi-generator-cli": "^2.5.2",
     "@schematics/angular": "15.2.1",
     "@storybook/addon-essentials": "6.5.16",
-    "@storybook/angular": "6.5.16",
+    "@storybook/angular": "7.0.2",
     "@storybook/builder-webpack5": "6.5.16",
     "@storybook/manager-webpack5": "6.5.16",
     "@tailwindcss/line-clamp": "^0.4.2",
