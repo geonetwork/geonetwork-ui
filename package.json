@@ -128,7 +128,6 @@
     "@openapitools/openapi-generator-cli": "^2.5.2",
     "@schematics/angular": "15.2.1",
     "@storybook/addon-essentials": "7.0.2",
-    "@storybook/addon-mdx-gfm": "^7.0.2",
     "@storybook/angular": "7.0.2",
     "@tailwindcss/line-clamp": "^0.4.2",
     "@types/chroma-js": "^2.1.3",
