@@ -1,4 +1,4 @@
-import { moduleMetadata, Story, Meta } from '@storybook/angular'
+import { moduleMetadata, Meta, StoryFn, StoryObj } from '@storybook/angular'
 import { SpinningLoaderComponent } from './spinning-loader.component'
 
 export default {
@@ -11,8 +11,4 @@ export default {
   ],
 } as Meta<SpinningLoaderComponent>
 
-const Template: Story<SpinningLoaderComponent> = () => ({
-  component: SpinningLoaderComponent,
-})
-
-export const Primary = Template.bind({})
+export const Primary: StoryObj<SpinningLoaderComponent> = {}
