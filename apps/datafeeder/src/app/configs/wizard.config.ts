@@ -3,9 +3,8 @@ import { WizardFieldType } from '@geonetwork-ui/feature/editor'
 import { WizardFieldModel } from '@geonetwork-ui/feature/editor'
 import SETTINGS from '../../settings'
 
-export const DEFAULT_CHIPS_ITEMS_URL = (keys) =>
-  `https://www.pigma.org/geonetwork/srv/api/registries/vocabularies/search?type=CONTAINS&thesaurus=external.theme.inspire-theme&rows=200&q=${keys}&uri=**&lang=` +
-  '${lang}'
+export const DEFAULT_CHIPS_ITEMS_URL = (q: string): string =>
+  SETTINGS.thesaurusUrl.replace('${q}', q)
 
 export const STORAGE_KEY = 'datafeeder-state'
 
