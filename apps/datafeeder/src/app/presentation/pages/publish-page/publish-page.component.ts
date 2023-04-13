@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import {
   DataPublishingApiService,
@@ -6,8 +6,8 @@ import {
   PublishStatusEnumApiModel,
 } from '@geonetwork-ui/data-access/datafeeder'
 import { WizardService } from '@geonetwork-ui/feature/editor'
-import { interval, Observable, Subscription } from 'rxjs'
-import { filter, mergeMap, switchMap, take, tap } from 'rxjs/operators'
+import { EMPTY, firstValueFrom, Observable, timer } from 'rxjs'
+import { expand, switchMap } from 'rxjs/operators'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
 
 const { Pending, Running, Done } = PublishStatusEnumApiModel
@@ -17,9 +17,8 @@ const { Pending, Running, Done } = PublishStatusEnumApiModel
   templateUrl: './publish-page.component.html',
   styleUrls: ['./publish-page.component.css'],
 })
-export class PublishPageComponent implements OnInit, OnDestroy {
+export class PublishPageComponent implements OnInit {
   progress = 0
-  private subscription: Subscription
   private rootId: number
   statusFetch$: Observable<PublishJobStatusApiModel>
 
@@ -31,34 +30,25 @@ export class PublishPageComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.subscription = new Subscription()
-
-    this.statusFetch$ = this.activatedRoute.params.pipe(
-      mergeMap(({ id }) => {
-        this.rootId = id
-        return interval(500).pipe(
-          switchMap(() => this.publishService.getPublishingStatus(id)),
-          tap((job: PublishJobStatusApiModel) =>
-            this.facade.setPublication(job)
-          ),
-          tap(
-            (job: PublishJobStatusApiModel) =>
-              (this.progress = Math.round(job.progress * 100))
-          ),
-          filter(
-            (job: PublishJobStatusApiModel) =>
-              ![Pending, Running].includes(job.status)
-          ),
-          take(1)
-        )
+  async ngOnInit() {
+    const { id: jobId } = await firstValueFrom(this.activatedRoute.params)
+    this.rootId = jobId
+    this.statusFetch$ = this.publishService.getPublishingStatus(jobId).pipe(
+      // this runs recursively on emitted values of the inner observable
+      // once the job is finished, we return EMPTY to stop the recursion
+      expand((job) => {
+        this.facade.setPublication(job)
+        this.progress = Math.round(job.progress * 100)
+        if ([Pending, Running].includes(job.status)) {
+          return timer(500).pipe(
+            switchMap(() => this.publishService.getPublishingStatus(jobId))
+          )
+        }
+        this.onJobFinish(job)
+        return EMPTY
       })
     )
-    this.subscription.add(
-      this.statusFetch$.subscribe((job: PublishJobStatusApiModel) =>
-        this.onJobFinish(job)
-      )
-    )
+    this.statusFetch$.subscribe()
   }
 
   onJobFinish(job: PublishJobStatusApiModel) {
@@ -68,9 +58,5 @@ export class PublishPageComponent implements OnInit, OnDestroy {
       relativeTo: this.activatedRoute,
       queryParams: done ? {} : { error: 'publish' },
     })
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe()
   }
 }
