@@ -45,7 +45,7 @@ export class ChipsInputComponent implements OnInit, OnDestroy {
       }
       const url = this.url(text)
 
-      const lang = LANG_2_TO_3_MAPPER[this.translate.currentLang]
+      const lang = LANG_2_TO_3_MAPPER[this.translate.currentLang.slice(0, 2)]
       return this.http
         .get<any>(url.replace('${lang}', lang))
         .pipe(map((item) => item.map((i) => i.values[lang])))

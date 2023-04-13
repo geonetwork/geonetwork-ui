@@ -34,6 +34,7 @@ class Settings {
     { value: '50000', label: '1:50000' },
     { value: '100000', label: '1:100000' },
   ]
+  thesaurusUrl = `/geonetwork/srv/api/registries/vocabularies/search?type=CONTAINS&thesaurus=external.theme.inspire-theme&rows=200&q=$\{q}&uri=**&lang=$\{lang}`
 
   init() {
     return fetch(SETTING_API)

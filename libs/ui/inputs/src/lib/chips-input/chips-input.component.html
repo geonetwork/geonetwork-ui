@@ -6,7 +6,7 @@
   [secondaryPlaceholder]="placeholder"
   [ripple]="false"
   [animationDuration]="{ enter: '0ms', leave: '0ms' }"
-  onTextChangeDebounce="100"
+  [onTextChangeDebounce]="100"
   class="border-2 border-primary h-full rounded-lg p-2 bg-white text-sm focus:border-primary"
   [ngClass]="{ invalid: invalid }"
 >
@@ -19,6 +19,5 @@
     <ng-template let-item="item" let-index="index">
       {{ item.display }}
     </ng-template>
-    >
   </tag-input-dropdown>
 </tag-input>
