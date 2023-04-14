@@ -47,10 +47,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout branch
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.head_ref }}
           persist-credentials: false
           fetch-depth: 0
 
@@ -61,9 +60,7 @@ jobs:
           cache: 'npm'
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v2
-        with:
-          main-branch-name: 'main'
+        uses: nrwl/nx-set-shas@v3
 
       - name: Install dependencies
         run: npm ci
