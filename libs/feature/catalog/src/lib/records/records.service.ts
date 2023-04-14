@@ -11,7 +11,10 @@ export class RecordsService {
   recordsCount$: Observable<number> = this.searchApiService
     .search(
       'records-count',
-      JSON.stringify(this.esService.getSearchRequestBody())
+      JSON.stringify({
+        ...this.esService.getSearchRequestBody(),
+        track_total_hits: true,
+      })
     )
     .pipe(
       map((response) => response.hits.total.value),
