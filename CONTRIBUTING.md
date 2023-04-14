@@ -18,7 +18,9 @@ To have more flexibility using Nx tools, you should install Nx CLI.
 npm i -g @nrwl/cli
 ```
 
-This will make the `Nx` command available on your system.
+This will make the `nx` command available on your system.
+
+You can also use `npx nx`.
 
 ### Generate an application
 
@@ -134,7 +136,7 @@ way since it was loaded beforehand.
 
 ### Generate a library
 
-Run `ng g @nrwl/angular:lib my-lib` to generate a library.
+Run `nx g @nrwl/angular:lib my-lib` to generate a library.
 
 You should create your library into a folder (`ui`, `feature` ...)
 eg `nx g @nrwl/angular:lib router --directory=feature`, the name of the library will be `feature-router` in `angular.json` file.
@@ -145,47 +147,47 @@ Libraries are shareable across libraries and applications. They can be imported 
 
 ### Generate a component or other objects
 
-Run `ng generate component component-name --project=<project name>` to generate a new component. You will have to specify a project, which can be for example:
+Run `nx generate component component-name --project=<project name>` to generate a new component. You will have to specify a project, which can be for example:
 
 - `search`: application named "search"
 - `ui-layout`: presentation library with layout components
 - `feature-search`: logic library with search components
 - etc.
 
-You can also generate other kind of Angular objects with `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+You can also generate other kind of Angular objects with `nx generate directive|pipe|service|class|guard|interface|enum|module`.
 
 Recommended options to generate a component are CSS-based styling and OnPush changes detection, like so:
 
 ```shell script
-ng g c smart/fuzzy-search --project=feature-search --style=css --changeDetection=OnPush -d
+nx g c smart/fuzzy-search --project=feature-search --style=css --changeDetection=OnPush -d
 ```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+To get more help on the Angular CLI use `nx help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 ### Development server
 
-Run `ng serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
 
 ### Build
 
-Run `ng build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
 ### Running unit tests
 
-Run `ng test my-app` to execute the unit tests via [Jest](https://jestjs.io).
+Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
 
 You can test a specific lib or app or file with
 
 ```shell script
-ng test (lib_name)
-ng test --test-match=/data/dev/gn/ui/libs/common/src/lib/services/bootstrap.service.spec.ts
+nx test (lib_name)
+nx test --test-match=/data/dev/gn/ui/libs/common/src/lib/services/bootstrap.service.spec.ts
 ```
 
 Run `npm test` to execute the unit tests affected by a change.
 
 ### Running end-to-end tests
 
-Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
+Run `nx e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
 
 Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
 
