@@ -45,6 +45,7 @@ export class ElasticsearchService {
         uuids,
         geometry
       ),
+      ...(size > 0 ? { track_total_hits: true } : {}),
       _source: requestFields,
     }
     this.processRuntimeFields(payload)

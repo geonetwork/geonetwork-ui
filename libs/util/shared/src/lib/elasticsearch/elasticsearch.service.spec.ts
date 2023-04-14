@@ -67,6 +67,30 @@ describe('ElasticsearchService', () => {
     })
   })
 
+  describe('#getSearchRequestBody', () => {
+    describe('#track_total_hits', () => {
+      let size = 0
+      let payload
+      describe('when size is 0', () => {
+        beforeEach(() => {
+          payload = service.getSearchRequestBody({}, size)
+        })
+        it('request body does not contain track_total_hits', () => {
+          expect(payload).not.toHaveProperty('track_total_hits')
+        })
+      })
+      describe('when size is not 0', () => {
+        beforeEach(() => {
+          size = 10
+          payload = service.getSearchRequestBody({}, size)
+        })
+        it('request body contains track_total_hits', () => {
+          expect(payload).toHaveProperty('track_total_hits')
+          expect(payload.track_total_hits).toBe(true)
+        })
+      })
+    })
+  })
   describe('#buildPayloadQuery', () => {
     it('add any and other fields query_strings', () => {
       const query = service['buildPayloadQuery'](
