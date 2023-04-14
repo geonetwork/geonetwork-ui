@@ -110,6 +110,57 @@ describe('OrganisationsService', () => {
           .pipe(take(1))
           .subscribe((orgs) => (organisations = orgs))
       })
+      it('call search service', () => {
+        expect(searchApiServiceMock.search).toHaveBeenCalledWith(
+          'bucket',
+          JSON.stringify({
+            aggregations: {
+              contact: {
+                nested: { path: 'contactForResource' },
+                aggs: {
+                  org: {
+                    terms: {
+                      field: 'contactForResource.organisation',
+                      exclude: '',
+                      size: 5000,
+                      order: { _key: 'asc' },
+                    },
+                    aggs: {
+                      mail: {
+                        terms: {
+                          size: 50,
+                          exclude: '',
+                          field: 'contactForResource.email.keyword',
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            from: 0,
+            size: 0,
+            query: {
+              bool: {
+                must: [{ terms: { isTemplate: ['n'] } }],
+                must_not: {
+                  terms: {
+                    resourceType: [
+                      'service',
+                      'map',
+                      'map/static',
+                      'mapDigital',
+                    ],
+                  },
+                },
+                should: [],
+                filter: [],
+              },
+            },
+            _source: [],
+          })
+        )
+      })
       it('get rough organisations', () => {
         expect(organisations).toEqual([
           {

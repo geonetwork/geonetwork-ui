@@ -97,13 +97,13 @@ export class OrganisationsService {
                   terms: {
                     field: 'contactForResource.organisation',
                     exclude: '',
-                    size: 1000,
+                    size: 5000,
                     order: { _key: 'asc' },
                   },
                   aggs: {
                     mail: {
                       terms: {
-                        size: 1000,
+                        size: 50,
                         exclude: '',
                         field: 'contactForResource.email.keyword',
                       },
