@@ -8,7 +8,11 @@ import {
   ElementRef,
   TemplateRef,
 } from '@angular/core'
-import { MetadataContact, MetadataRecord } from '@geonetwork-ui/util/shared'
+import {
+  MetadataContact,
+  MetadataRecord,
+  stripHtml,
+} from '@geonetwork-ui/util/shared'
 import { fromEvent, Subscription } from 'rxjs'
 
 @Component({
@@ -21,6 +25,7 @@ export class RecordPreviewComponent implements OnInit, OnDestroy {
   @Input() favoriteTemplate: TemplateRef<{ $implicit: MetadataRecord }>
   @Output() mdSelect = new EventEmitter<MetadataRecord>()
   subscription = new Subscription()
+  abstract: string
 
   get isViewable() {
     return this.record.hasMaps
@@ -35,6 +40,7 @@ export class RecordPreviewComponent implements OnInit, OnDestroy {
   constructor(protected elementRef: ElementRef) {}
 
   ngOnInit(): void {
+    this.abstract = stripHtml(this.record?.abstract)
     this.subscription.add(
       fromEvent(this.elementRef.nativeElement, 'click').subscribe(
         (event: Event) => {
