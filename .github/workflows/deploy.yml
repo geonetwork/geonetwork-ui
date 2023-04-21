@@ -58,14 +58,14 @@ jobs:
           cache: 'npm'
 
       - name: add initial comment
-        uses: thollander/actions-comment-pull-request@v1
+        uses: thollander/actions-comment-pull-request@v2
         if: github.event_name == 'issue_comment'
         with:
           message: 'GitHub Pages links:
 
 
             🚧 building in progress... 🚧'
-          comment_includes: 'GitHub Pages links:'
+          comment_tag: github-links
           pr_number: ${{ github.event.issue.number }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -89,7 +89,7 @@ jobs:
           npx gh-pages --dist dist/ --dest ${{env.BRANCH_NAME}} --remove "${{env.BRANCH_NAME}}/**" --no-history --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
 
       - name: update PR comment
-        uses: thollander/actions-comment-pull-request@v1
+        uses: thollander/actions-comment-pull-request@v2
         if: github.event_name == 'issue_comment'
         with:
           message: 'GitHub Pages links:
@@ -97,6 +97,6 @@ jobs:
             * Demo & web components: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/demo/
 
             * UI components storybook: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/demo/'
-          comment_includes: 'GitHub Pages links:'
+          comment_tag: github-links
           pr_number: ${{ github.event.issue.number }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
