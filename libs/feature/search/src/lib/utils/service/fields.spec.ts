@@ -37,6 +37,43 @@ class SearchApiServiceMock {
           },
         },
       })
+    if (aggName === 'license')
+      return of({
+        aggregations: {
+          license: {
+            buckets: [
+              {
+                key: 'etalab',
+                doc_count: 2359,
+              },
+              {
+                key: 'unknown',
+                doc_count: 2278,
+              },
+              {
+                key: 'etalab-v2',
+                doc_count: 1489,
+              },
+              {
+                key: 'odbl',
+                doc_count: 446,
+              },
+              {
+                key: 'pddl',
+                doc_count: 300,
+              },
+              {
+                key: 'cc-by',
+                doc_count: 32,
+              },
+              {
+                key: 'odc-by',
+                doc_count: 4,
+              },
+            ],
+          },
+        },
+      })
     return of({
       aggregations: {
         [aggName]: {
@@ -340,6 +377,44 @@ describe('search fields implementations', () => {
         'license',
         expect.any(String)
       )
+    })
+    describe('#getAvailableValues', () => {
+      let values
+      beforeEach(async () => {
+        values = await lastValueFrom(searchField.getAvailableValues())
+      })
+      it('returns the available licenses, order by descending count', () => {
+        expect(values).toEqual([
+          {
+            label: 'search.filters.license.etalab (2359)',
+            value: 'etalab',
+          },
+          {
+            label: 'search.filters.license.unknown (2278)',
+            value: 'unknown',
+          },
+          {
+            label: 'search.filters.license.etalab-v2 (1489)',
+            value: 'etalab-v2',
+          },
+          {
+            label: 'search.filters.license.odbl (446)',
+            value: 'odbl',
+          },
+          {
+            label: 'search.filters.license.pddl (300)',
+            value: 'pddl',
+          },
+          {
+            label: 'search.filters.license.cc-by (32)',
+            value: 'cc-by',
+          },
+          {
+            label: 'search.filters.license.odc-by (4)',
+            value: 'odc-by',
+          },
+        ])
+      })
     })
   })
 })

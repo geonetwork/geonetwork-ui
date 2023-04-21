@@ -141,6 +141,9 @@ export class FullTextSearchField implements AbstractSearchField {
   }
 }
 
+marker('search.filters.isSpatial.yes')
+marker('search.filters.isSpatial.no')
+
 export class IsSpatialSearchField implements AbstractSearchField {
   private esService = this.injector.get(ElasticsearchService)
   private searchApiService = this.injector.get(SearchApiService)
@@ -178,8 +181,6 @@ emit(result);`
         switchMap((buckets) =>
           Promise.all(
             buckets.map(async (bucket) => {
-              marker('search.filters.isSpatial.yes')
-              marker('search.filters.isSpatial.no')
               const label = await firstValueFrom(
                 this.translateService.get(
                   `search.filters.isSpatial.${bucket.key}`
@@ -209,7 +210,20 @@ emit(result);`
   }
 }
 
+marker('search.filters.license.pddl')
+marker('search.filters.license.odbl')
+marker('search.filters.license.odc-by')
+marker('search.filters.license.cc-by-sa')
+marker('search.filters.license.cc-by')
+marker('search.filters.license.cc-zero')
+marker('search.filters.license.etalab-v2')
+marker('search.filters.license.etalab')
+marker('search.filters.license.unknown')
+
+// Note: values are inspired from https://doc.data.gouv.fr/moissonnage/licences/
 export class LicenseSearchField extends SimpleSearchField {
+  private translateService = this.injector.get(TranslateService)
+
   constructor(injector: Injector) {
     super('license', 'asc', injector)
     this.esService.registerRuntimeField(
@@ -220,13 +234,78 @@ if (doc.containsKey('licenseObject.default.keyword') && doc['licenseObject.defau
 if (doc.containsKey('MD_LegalConstraintsUseLimitationObject.default.keyword') && doc['MD_LegalConstraintsUseLimitationObject.default.keyword'].length > 0)
   raw += doc['MD_LegalConstraintsUseLimitationObject.default.keyword'].join('|').toLowerCase();
 
-if (raw.contains('odbl')) emit('ODbL');
-if (raw.contains('pddl')) emit('PDDL');
-if (raw.contains('odc-by')) emit('ODC-By');
-if (raw.contains('cc0') || raw.contains('cc-0')) emit('CC-0');
-if (raw.contains('cc-by') || raw.contains('cc by')) emit('CC BY');
-if (raw.contains('open license')) emit('Open License');
-if (raw.contains('etalab')) emit('Etalab');`
+boolean unknown = true;
+if (raw.contains('pddl') || raw.contains('public domain dedication and licence')) {
+  unknown = false;
+  emit('pddl');
+}
+if (raw.contains('odbl') || raw.contains('open database license')) {
+  unknown = false;
+  emit('odbl');
+}
+if (raw.contains('odc-by') || raw.contains('opendatacommons.org/licenses/by/summary/"')) {
+  unknown = false;
+  emit('odc-by');
+}
+
+if (raw.contains('cc-by-sa') || raw.contains('creative commons attribution share-alike')) {
+  unknown = false;
+  emit('cc-by-sa');
+} else if (raw.contains('cc-by') || raw.contains('cc by') || raw.contains('creative commons attribution')) {
+  unknown = false;
+  emit('cc-by');
+} else if (raw.contains('cc0') || raw.contains('cc-0') || raw.contains('cczero') || raw.contains('cc-zero')) {
+  unknown = false;
+  emit('cc-zero');
+}
+
+if (raw.contains('etalab') && (raw.contains('v2') || raw.contains('2.0'))) {
+  unknown = false;
+  emit('etalab-v2');
+} else if (raw.contains('open licence') || raw.contains('licence ouverte') || raw.contains('licence_ouverte')) {
+  unknown = false;
+  emit('etalab');
+}
+
+if(unknown) emit('unknown');`
     )
+  }
+
+  getAvailableValues(): Observable<FieldAvailableValue[]> {
+    return this.searchApiService
+      .search(
+        'bucket',
+        JSON.stringify(
+          this.esService.getSearchRequestBody({
+            license: {
+              terms: {
+                size: 10,
+                field: 'license',
+                order: {
+                  _count: 'desc',
+                },
+              },
+            },
+          })
+        )
+      )
+      .pipe(
+        map((response) => response.aggregations.license?.buckets || []),
+        switchMap((buckets) =>
+          Promise.all(
+            buckets.map(async (bucket) => {
+              const label = await firstValueFrom(
+                this.translateService.get(
+                  `search.filters.license.${bucket.key}`
+                )
+              )
+              return {
+                label: `${label} (${bucket.doc_count})`,
+                value: bucket.key.toString(),
+              }
+            })
+          )
+        )
+      )
   }
 }
