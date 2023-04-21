@@ -21,3 +21,7 @@ The following query parameters are supported:
 The created element will be sized to take the full width and height of the page, thus allowing precise sizing when used in an iframe.
 
 The Web Components used are the latest ones distributed on the [`wc-dist` branch](https://github.com/geonetwork/geonetwork-ui/blob/wc-dist).
+
+The HTML Embedder is available in all docker images on the following path:
+
+http://localhost:8080/APP_NAME/wc-embedder.html
