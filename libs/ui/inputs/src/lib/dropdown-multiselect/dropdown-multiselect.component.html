@@ -78,6 +78,7 @@
     </div>
     <label
       *ngFor="let choice of choices"
+      [title]="choice.label"
       class="flex px-5 py-1 w-full text-gray-900 cursor-pointer hover:text-primary-darkest hover:bg-gray-50 focus-within:text-primary-darkest focus-within:bg-gray-50 transition-colors"
     >
       <input
