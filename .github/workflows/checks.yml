@@ -85,5 +85,5 @@ jobs:
             - [ ] 🚀 Build and deploy storybook and demo on GitHub Pages
 
             - [ ] 📦 Build and push affected docker images'
-          comment_includes: 'Affected libs:'
+          comment_tag: build-options
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -11,7 +11,7 @@ All Web Components are prefixed with `gn-`.
 Web Components are made to be easily included in any context, e.g.:
 
 ```html
-<script src="gn-wc.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist/gn-wc.js"></script>
 ...
 <gn-results-list
   api-url="https://apps.titellus.net/geonetwork/srv/api"
@@ -25,7 +25,7 @@ Web Components are made to be easily included in any context, e.g.:
 
 All Angular custom elements are served by the same application `webcomponents`.
 
-Therefore, there is only one build and one javascript file for any web components `gn-wc.js`.
+Therefore, there is only one build and one javascript file for any web components called `gn-wc.js`.
 
 ```
 npm run build:demo

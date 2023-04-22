@@ -13,6 +13,9 @@ ENV ASSETS_DIRECTORY_OVERRIDE ""
 COPY dist/apps/${APP_NAME} /usr/share/nginx/html/${APP_NAME}
 COPY tools/docker/docker-entrypoint.sh /
 
+# copy Web Components HTML embedder as a bonus
+COPY tools/webcomponent/wc-embedder.html /usr/share/nginx/html/${APP_NAME}
+
 # copy default NGINX conf & put the app name in it
 COPY tools/docker/nginx.apps.conf /etc/nginx/conf.d/default.conf
 RUN sed -i "s/APP_NAME/${APP_NAME}/" /etc/nginx/conf.d/default.conf

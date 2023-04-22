@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>geonetwork-ui web component embedder</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <style>
+      body,
+      html {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        font-family: 'Open Sans', 'dataFeeder', sans-serif !important;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist/gn-wc.js"></script>
+    <script>
+      function showError(message) {
+        const errorMessage = document.createElement('div')
+        errorMessage.style.cssText = `
+width: 100%;
+height: 100%;
+color: #9f0000;
+background-color: #fdd;
+border: 1px solid #9f0000;
+border-radius: 2px;
+box-sizing: border-box;
+padding: 8px;
+  `
+        errorMessage.textContent = `An error occurred when trying to embed the web component:
+${message}`
+        document.body.append(errorMessage)
+      }
+
+      try {
+        const params = new URL(window.location).searchParams
+        const elementName = params.get('e')
+        const attributes = params.getAll('a')
+
+        const element = document.createElement(elementName)
+        for (const attr of attributes) {
+          const key = attr.split('=')[0]
+          const value = attr.replace(`${key}=`, '')
+          element.setAttribute(key, value)
+        }
+        element.style.cssText = `
+display: block;
+width: 100%;
+height: 100%;
+box-sizing: border-box;
+        `
+        document.body.append(element)
+      } catch (e) {
+        showError(e.message || e)
+      }
+    </script>
+  </body>
+</html>
