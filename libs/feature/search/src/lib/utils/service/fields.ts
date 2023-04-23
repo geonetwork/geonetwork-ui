@@ -31,34 +31,43 @@ export class SimpleSearchField implements AbstractSearchField {
     protected injector: Injector
   ) {}
 
+  protected getAggregations(): unknown {
+    return {
+      [this.esFieldName]: {
+        terms: {
+          size: 1000,
+          field: this.esFieldName,
+          order: {
+            _key: this.order,
+          },
+        },
+      },
+    }
+  }
+
+  protected async getBucketLabel(bucket): Promise<string> {
+    return bucket.key as string
+  }
+
   getAvailableValues(): Observable<FieldAvailableValue[]> {
     return this.searchApiService
       .search(
         'bucket',
         JSON.stringify(
-          this.esService.getSearchRequestBody({
-            [this.esFieldName]: {
-              terms: {
-                size: 1000,
-                field: this.esFieldName,
-                order: {
-                  _key: this.order,
-                },
-              },
-            },
-          })
+          this.esService.getSearchRequestBody(this.getAggregations())
         )
       )
       .pipe(
         map(
           (response) => response.aggregations[this.esFieldName]?.buckets || []
         ),
-        map((buckets) =>
-          buckets.map((bucket) => ({
-            label: `${bucket.key} (${bucket.doc_count})`,
+        switchMap((buckets) => {
+          const bucketPromises = buckets.map(async (bucket) => ({
+            label: `${await this.getBucketLabel(bucket)} (${bucket.doc_count})`,
             value: bucket.key.toString(),
           }))
-        )
+          return Promise.all(bucketPromises)
+        })
       )
   }
   getFiltersForValues(values: FieldValue[]): SearchFilters {
@@ -84,7 +93,7 @@ export class TopicSearchField extends SimpleSearchField {
     .pipe(shareReplay(1))
 
   constructor(injector: Injector) {
-    super('cl_topic.key', 'asc', injector)
+    super('topic', 'asc', injector)
   }
 
   private async getTopicTranslation(topicKey: string) {
@@ -93,33 +102,26 @@ export class TopicSearchField extends SimpleSearchField {
     )
   }
 
+  protected getAggregations() {
+    return {
+      topic: {
+        terms: {
+          size: 1000,
+          field: 'cl_topic.key',
+        },
+      },
+    }
+  }
+
+  protected async getBucketLabel(bucket) {
+    return (await this.getTopicTranslation(bucket.key)) || bucket.key
+  }
+
   getAvailableValues(): Observable<FieldAvailableValue[]> {
-    return this.searchApiService
-      .search(
-        'bucket',
-        JSON.stringify(
-          this.esService.getSearchRequestBody({
-            topic: {
-              terms: {
-                size: 1000,
-                field: 'cl_topic.key',
-              },
-            },
-          })
-        )
-      )
+    // sort values by alphabetical order
+    return super
+      .getAvailableValues()
       .pipe(
-        map((response) => response.aggregations.topic?.buckets || []),
-        switchMap((buckets) =>
-          Promise.all(
-            buckets.map(async (bucket) => ({
-              label: `${
-                (await this.getTopicTranslation(bucket.key)) || bucket.key
-              } (${bucket.doc_count})`,
-              value: bucket.key.toString(),
-            }))
-          )
-        ),
         map((values) =>
           values.sort((a, b) => new Intl.Collator().compare(a.label, b.label))
         )
@@ -144,12 +146,11 @@ export class FullTextSearchField implements AbstractSearchField {
 marker('search.filters.isSpatial.yes')
 marker('search.filters.isSpatial.no')
 
-export class IsSpatialSearchField implements AbstractSearchField {
-  private esService = this.injector.get(ElasticsearchService)
-  private searchApiService = this.injector.get(SearchApiService)
+export class IsSpatialSearchField extends SimpleSearchField {
   private translateService = this.injector.get(TranslateService)
 
-  constructor(protected injector: Injector) {
+  constructor(injector: Injector) {
+    super('isSpatial', 'asc', injector)
     this.esService.registerRuntimeField(
       'isSpatial',
       `String result = 'no';
@@ -161,40 +162,23 @@ emit(result);`
     )
   }
 
-  getAvailableValues(): Observable<FieldAvailableValue[]> {
-    return this.searchApiService
-      .search(
-        'bucket',
-        JSON.stringify(
-          this.esService.getSearchRequestBody({
-            isSpatial: {
-              terms: {
-                size: 2,
-                field: 'isSpatial',
-              },
-            },
-          })
-        )
-      )
-      .pipe(
-        map((response) => response.aggregations.isSpatial?.buckets || []),
-        switchMap((buckets) =>
-          Promise.all(
-            buckets.map(async (bucket) => {
-              const label = await firstValueFrom(
-                this.translateService.get(
-                  `search.filters.isSpatial.${bucket.key}`
-                )
-              )
-              return {
-                label: `${label} (${bucket.doc_count})`,
-                value: bucket.key.toString(),
-              }
-            })
-          )
-        )
-      )
+  protected getAggregations() {
+    return {
+      isSpatial: {
+        terms: {
+          size: 2,
+          field: 'isSpatial',
+        },
+      },
+    }
   }
+
+  protected async getBucketLabel(bucket) {
+    return await firstValueFrom(
+      this.translateService.get(`search.filters.isSpatial.${bucket.key}`)
+    )
+  }
+
   getFiltersForValues(values: FieldValue[]): SearchFilters {
     const isSpatial = {}
     if (values.length > 0) isSpatial[values[values.length - 1]] = true
@@ -202,6 +186,7 @@ emit(result);`
       isSpatial,
     }
   }
+
   getValuesForFilter(filters: SearchFilters): FieldValue[] {
     const filter = filters.isSpatial
     if (!filter) return []
@@ -271,41 +256,23 @@ if(unknown) emit('unknown');`
     )
   }
 
-  getAvailableValues(): Observable<FieldAvailableValue[]> {
-    return this.searchApiService
-      .search(
-        'bucket',
-        JSON.stringify(
-          this.esService.getSearchRequestBody({
-            license: {
-              terms: {
-                size: 10,
-                field: 'license',
-                order: {
-                  _count: 'desc',
-                },
-              },
-            },
-          })
-        )
-      )
-      .pipe(
-        map((response) => response.aggregations.license?.buckets || []),
-        switchMap((buckets) =>
-          Promise.all(
-            buckets.map(async (bucket) => {
-              const label = await firstValueFrom(
-                this.translateService.get(
-                  `search.filters.license.${bucket.key}`
-                )
-              )
-              return {
-                label: `${label} (${bucket.doc_count})`,
-                value: bucket.key.toString(),
-              }
-            })
-          )
-        )
-      )
+  protected getAggregations() {
+    return {
+      license: {
+        terms: {
+          size: 10,
+          field: 'license',
+          order: {
+            _count: 'desc',
+          },
+        },
+      },
+    }
+  }
+
+  protected async getBucketLabel(bucket) {
+    return await firstValueFrom(
+      this.translateService.get(`search.filters.license.${bucket.key}`)
+    )
   }
 }

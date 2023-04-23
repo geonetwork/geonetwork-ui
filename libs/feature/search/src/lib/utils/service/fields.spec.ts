@@ -383,6 +383,24 @@ describe('search fields implementations', () => {
       beforeEach(async () => {
         values = await lastValueFrom(searchField.getAvailableValues())
       })
+      it('orders results by descending count', () => {
+        expect(searchApiService.search).toHaveBeenCalledWith(
+          expect.any(String),
+          JSON.stringify({
+            aggregations: {
+              license: {
+                terms: {
+                  size: 10,
+                  field: 'license',
+                  order: {
+                    _count: 'desc',
+                  },
+                },
+              },
+            },
+          })
+        )
+      })
       it('returns the available licenses, order by descending count', () => {
         expect(values).toEqual([
           {
