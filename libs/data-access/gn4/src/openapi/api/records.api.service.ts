@@ -206,9 +206,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -293,9 +292,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json', '*/*']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -378,9 +376,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json', '*/*']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -462,9 +459,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -579,9 +575,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -589,9 +584,8 @@ export class RecordsApiService {
 
     // to determine the Content-Type header
     const consumes: string[] = ['application/json']
-    const httpContentTypeSelected:
-      | string
-      | undefined = this.configuration.selectHeaderContentType(consumes)
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes)
     if (httpContentTypeSelected !== undefined) {
       headers = headers.set('Content-Type', httpContentTypeSelected)
     }
@@ -662,9 +656,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -735,9 +728,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -809,9 +801,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -899,9 +890,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -1091,9 +1081,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -1164,9 +1153,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -1265,9 +1253,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -1389,9 +1376,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -1493,9 +1479,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -1602,9 +1587,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -1690,9 +1674,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -1757,9 +1740,8 @@ export class RecordsApiService {
         'application/json',
         'application/zip',
       ]
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -1828,9 +1810,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json', '*/*']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -1919,9 +1900,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -2010,9 +1990,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -2180,9 +2159,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -2270,9 +2248,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -2382,9 +2359,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -2455,9 +2431,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -2563,9 +2538,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -2627,9 +2601,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -2795,9 +2768,8 @@ export class RecordsApiService {
         'application/json',
         'application/xml',
       ]
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -2873,9 +2845,8 @@ export class RecordsApiService {
         'application/json',
         'application/xml',
       ]
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -3019,9 +2990,8 @@ export class RecordsApiService {
         'application/json',
         'application/xml',
       ]
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -3166,9 +3136,8 @@ export class RecordsApiService {
         'application/json',
         'application/xml',
       ]
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -3323,9 +3292,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -3477,9 +3445,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -3552,9 +3519,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -3651,9 +3617,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -3761,9 +3726,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -3836,9 +3800,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -3949,9 +3912,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -4061,9 +4023,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -4173,9 +4134,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -4285,9 +4245,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -4389,9 +4348,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json', '*/*']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -4463,9 +4421,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -4525,9 +4482,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -4596,9 +4552,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -4670,9 +4625,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -4744,9 +4698,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -4944,9 +4897,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -5034,9 +4986,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -5279,9 +5230,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -5293,9 +5243,8 @@ export class RecordsApiService {
       'application/json',
       'application/x-www-form-urlencoded',
     ]
-    const httpContentTypeSelected:
-      | string
-      | undefined = this.configuration.selectHeaderContentType(consumes)
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes)
     if (httpContentTypeSelected !== undefined) {
       headers = headers.set('Content-Type', httpContentTypeSelected)
     }
@@ -5509,9 +5458,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -5716,9 +5664,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -5830,9 +5777,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -5919,9 +5865,8 @@ export class RecordsApiService {
         'application/json',
         'application/xml',
       ]
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -6007,9 +5952,8 @@ export class RecordsApiService {
         'application/json',
         'application/xml',
       ]
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -6098,9 +6042,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json', '*/*']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -6202,9 +6145,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -6212,9 +6154,8 @@ export class RecordsApiService {
 
     // to determine the Content-Type header
     const consumes: string[] = ['application/json']
-    const httpContentTypeSelected:
-      | string
-      | undefined = this.configuration.selectHeaderContentType(consumes)
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes)
     if (httpContentTypeSelected !== undefined) {
       headers = headers.set('Content-Type', httpContentTypeSelected)
     }
@@ -6325,9 +6266,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json', '*/*']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -6411,9 +6351,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json', '*/*']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -6421,9 +6360,8 @@ export class RecordsApiService {
 
     // to determine the Content-Type header
     const consumes: string[] = ['application/json']
-    const httpContentTypeSelected:
-      | string
-      | undefined = this.configuration.selectHeaderContentType(consumes)
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes)
     if (httpContentTypeSelected !== undefined) {
       headers = headers.set('Content-Type', httpContentTypeSelected)
     }
@@ -6524,9 +6462,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -6691,9 +6628,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -6798,9 +6734,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json', '*/*']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -6937,9 +6872,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json', '*/*']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -7021,9 +6955,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -7031,9 +6964,8 @@ export class RecordsApiService {
 
     // to determine the Content-Type header
     const consumes: string[] = ['application/json']
-    const httpContentTypeSelected:
-      | string
-      | undefined = this.configuration.selectHeaderContentType(consumes)
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes)
     if (httpContentTypeSelected !== undefined) {
       headers = headers.set('Content-Type', httpContentTypeSelected)
     }
@@ -7152,9 +7084,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json', '*/*']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -7259,9 +7190,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json', '*/*']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -7269,9 +7199,8 @@ export class RecordsApiService {
 
     // to determine the Content-Type header
     const consumes: string[] = ['application/json']
-    const httpContentTypeSelected:
-      | string
-      | undefined = this.configuration.selectHeaderContentType(consumes)
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes)
     if (httpContentTypeSelected !== undefined) {
       headers = headers.set('Content-Type', httpContentTypeSelected)
     }
@@ -7374,9 +7303,8 @@ export class RecordsApiService {
         'application/json',
         'application/xml',
       ]
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -7482,9 +7410,8 @@ export class RecordsApiService {
         'application/json',
         'application/xml',
       ]
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -7590,9 +7517,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -7722,9 +7648,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -7785,9 +7710,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -7875,9 +7799,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json', '*/*']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -7948,9 +7871,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -8039,9 +7961,8 @@ export class RecordsApiService {
         'application/json',
         'application/xml',
       ]
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -8142,9 +8063,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json', 'text/plain']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -8247,9 +8167,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -8346,9 +8265,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)

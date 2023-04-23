@@ -30,9 +30,13 @@ export const PublishStepEnumApiModel = {
   DataImportFinished: 'DATA_IMPORT_FINISHED' as PublishStepEnumApiModel,
   OwsPublishingStarted: 'OWS_PUBLISHING_STARTED' as PublishStepEnumApiModel,
   OwsPublishingFinished: 'OWS_PUBLISHING_FINISHED' as PublishStepEnumApiModel,
-  MetadataPublishingStarted: 'METADATA_PUBLISHING_STARTED' as PublishStepEnumApiModel,
-  MetadataPublishingFinished: 'METADATA_PUBLISHING_FINISHED' as PublishStepEnumApiModel,
-  OwsMetadataUpdateStarted: 'OWS_METADATA_UPDATE_STARTED' as PublishStepEnumApiModel,
-  OwsMetadataUpdateFinished: 'OWS_METADATA_UPDATE_FINISHED' as PublishStepEnumApiModel,
+  MetadataPublishingStarted:
+    'METADATA_PUBLISHING_STARTED' as PublishStepEnumApiModel,
+  MetadataPublishingFinished:
+    'METADATA_PUBLISHING_FINISHED' as PublishStepEnumApiModel,
+  OwsMetadataUpdateStarted:
+    'OWS_METADATA_UPDATE_STARTED' as PublishStepEnumApiModel,
+  OwsMetadataUpdateFinished:
+    'OWS_METADATA_UPDATE_FINISHED' as PublishStepEnumApiModel,
   Completed: 'COMPLETED' as PublishStepEnumApiModel,
 }

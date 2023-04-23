@@ -41,11 +41,15 @@ export namespace StatusValueApiModel {
   export const NotificationLevelEnum = {
     StatusUserOwner: 'statusUserOwner' as NotificationLevelEnum,
     CatalogueAdministrator: 'catalogueAdministrator' as NotificationLevelEnum,
-    CatalogueProfileAdministrator: 'catalogueProfileAdministrator' as NotificationLevelEnum,
-    CatalogueProfileUserAdmin: 'catalogueProfileUserAdmin' as NotificationLevelEnum,
-    CatalogueProfileReviewer: 'catalogueProfileReviewer' as NotificationLevelEnum,
+    CatalogueProfileAdministrator:
+      'catalogueProfileAdministrator' as NotificationLevelEnum,
+    CatalogueProfileUserAdmin:
+      'catalogueProfileUserAdmin' as NotificationLevelEnum,
+    CatalogueProfileReviewer:
+      'catalogueProfileReviewer' as NotificationLevelEnum,
     CatalogueProfileEditor: 'catalogueProfileEditor' as NotificationLevelEnum,
-    CatalogueProfileRegisteredUser: 'catalogueProfileRegisteredUser' as NotificationLevelEnum,
+    CatalogueProfileRegisteredUser:
+      'catalogueProfileRegisteredUser' as NotificationLevelEnum,
     CatalogueProfileGuest: 'catalogueProfileGuest' as NotificationLevelEnum,
     RecordProfileReviewer: 'recordProfileReviewer' as NotificationLevelEnum,
     RecordUserAuthor: 'recordUserAuthor' as NotificationLevelEnum,

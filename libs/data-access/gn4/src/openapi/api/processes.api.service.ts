@@ -143,9 +143,8 @@ export class ProcessesApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -204,9 +203,8 @@ export class ProcessesApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -316,9 +314,8 @@ export class ProcessesApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json', '*/*']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -443,9 +440,8 @@ export class ProcessesApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
@@ -584,9 +580,8 @@ export class ProcessesApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = ['application/json']
-      httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(
-        httpHeaderAccepts
-      )
+      httpHeaderAcceptSelected =
+        this.configuration.selectHeaderAccept(httpHeaderAccepts)
     }
     if (httpHeaderAcceptSelected !== undefined) {
       headers = headers.set('Accept', httpHeaderAcceptSelected)
