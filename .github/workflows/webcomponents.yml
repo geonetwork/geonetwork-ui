@@ -1,5 +1,5 @@
 name: Artifacts
-run-name: 📦 Generate artifacts for ${{ github.event_name == 'issue_comment' && 'PR' || (github.event_name == 'release' && '🏷' || '🌱') }} ${{github.event_name == 'issue_comment' && github.event.issue.number || github.ref_name}}
+run-name: 🧩 Build Web Components for ${{ github.event_name == 'issue_comment' && 'PR' || (github.event_name == 'release' && '🏷' || '🌱') }} ${{github.event_name == 'issue_comment' && github.event.issue.number || github.ref_name}}
 
 # This workflow runs whenever a commit is pushed on main or a release is published
 on:
@@ -20,7 +20,7 @@ env:
 jobs:
   build-publish-script:
     needs: checks
-    name: Build and publish the gn-wc.js file on the ${{ env.PUBLISH_BRANCH }} branch
+    name: Build and publish the Web Components
     runs-on: ubuntu-latest
 
     steps:
@@ -55,7 +55,7 @@ jobs:
           tag: ${{ github.ref }}
           overwrite: true
 
-      - name: Publish web component to dist branch
+      - name: Publish web component to ${{ env.PUBLISH_BRANCH }} branch
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
