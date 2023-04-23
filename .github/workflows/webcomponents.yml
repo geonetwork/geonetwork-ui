@@ -19,7 +19,6 @@ env:
 
 jobs:
   build-publish-script:
-    needs: checks
     name: Build and publish the Web Components
     runs-on: ubuntu-latest
 
