@@ -1,5 +1,5 @@
 name: Checks
-run-name: 🩺 Quality assurance checks
+run-name: 🩺 Quality assurance checks on ${{ github.event_name == 'pull_request' && 'PR' || '🌱' }} ${{ github.event_name == 'pull_request' && github.event.number || github.ref_name }}
 env:
   NODE_VERSION: 16.17.0
 
