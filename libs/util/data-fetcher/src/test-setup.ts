@@ -1,3 +1,4 @@
+/* eslint-disable */
 import fetch from 'fetch-mock-jest'
 
 global.fetch = fetch as never
@@ -17,3 +18,10 @@ global.Headers = class {
     return this._value[name.toLowerCase()]
   }
 } as never
+
+// hide console output in CI
+if (process.env.TEST_HIDE_CONSOLE) {
+  console.log = () => {}
+  console.warn = () => {}
+  console.error = () => {}
+}

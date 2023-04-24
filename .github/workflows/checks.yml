@@ -31,7 +31,7 @@ jobs:
         npx nx-cloud record -- npx nx format:check
       parallel-commands-on-agents: |
         npx nx affected --target=lint --parallel=3
-        npx nx affected --target=test --parallel=3 --ci --code-coverage
+        TEST_HIDE_CONSOLE=1 npx nx affected --target=test --parallel=3 --ci --codeCoverage
         npx nx affected --target=build --parallel=3
       node-version: 16.17.0 # FIXME: use env.NODE_VERSION
 
