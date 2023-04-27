@@ -26,6 +26,10 @@
     margin-right: 24px;
     justify-content: left !important;
   }
+  /*hide chart tab on mobile*/
+  ::ng-deep .mat-mdc-tab.mdc-tab:nth-child(3) {
+    display: none;
+  }
 }
 .tracking-wider {
   letter-spacing: 0.88px;
