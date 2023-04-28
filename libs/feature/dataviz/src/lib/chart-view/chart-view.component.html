@@ -31,7 +31,9 @@
       [title]="'chart.dropdown.aggregation' | translate"
     ></gn-ui-dropdown-selector>
   </div>
-  <div class="relative h-full">
+  <div
+    class="relative h-full mt-2 bg-white border border-gray-300 rounded-lg overflow-hidden"
+  >
     <gn-ui-chart
       [data]="chartData$ | async"
       [type]="chartType"
