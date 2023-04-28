@@ -27,6 +27,7 @@ import {
   ScatterController,
   Tooltip,
 } from 'chart.js'
+import { truncateString } from '../utils/utils'
 
 Chart.register(
   BarController,
@@ -44,6 +45,7 @@ Chart.register(
   Legend
 )
 
+const LABEL_MAX_LENGTH = 30
 @Component({
   standalone: true,
   selector: 'gn-ui-chart',
@@ -105,6 +107,28 @@ export class ChartComponent implements OnChanges, AfterViewInit {
     const options: ChartOptions = {
       maintainAspectRatio: false, //always adapts the ratio to fill the container div with the canvas
       parsing: {},
+      scales: {
+        x: {
+          ticks: {
+            callback: function (value) {
+              return truncateString(
+                this.getLabelForValue(Number(value)),
+                LABEL_MAX_LENGTH
+              )
+            },
+          },
+        },
+        y: {
+          ticks: {
+            callback: function (value) {
+              return truncateString(
+                this.getLabelForValue(Number(value)),
+                LABEL_MAX_LENGTH
+              )
+            },
+          },
+        },
+      },
     }
     switch (this.type) {
       case 'line-interpolated':
@@ -124,6 +148,7 @@ export class ChartComponent implements OnChanges, AfterViewInit {
       case 'pie':
         return {
           ...options,
+          scales: {}, //reset pie default to not display axis, no label truncate necessary
           plugins: {
             legend: {
               position: 'left',

@@ -64,6 +64,18 @@ describe('ChartComponent', () => {
         options: {
           maintainAspectRatio: false,
           parsing: {},
+          scales: {
+            x: {
+              ticks: {
+                callback: expect.any(Function),
+              },
+            },
+            y: {
+              ticks: {
+                callback: expect.any(Function),
+              },
+            },
+          },
         },
         type: 'bar',
       })
@@ -172,6 +184,18 @@ describe('ChartComponent', () => {
         options: {
           maintainAspectRatio: false,
           parsing: {},
+          scales: {
+            x: {
+              ticks: {
+                callback: expect.any(Function),
+              },
+            },
+            y: {
+              ticks: {
+                callback: expect.any(Function),
+              },
+            },
+          },
         },
         type: 'scatter',
       })
