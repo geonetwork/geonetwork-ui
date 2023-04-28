@@ -62,7 +62,7 @@ describe('ChartComponent', () => {
           labels: ['name 1', 'name 2', 'name 3'],
         },
         options: {
-          aspectRatio: 2.5,
+          maintainAspectRatio: false,
           parsing: {},
         },
         type: 'bar',
@@ -170,7 +170,7 @@ describe('ChartComponent', () => {
           labels: ['id 1', 'id 2', 'id 3'],
         },
         options: {
-          aspectRatio: 2.5,
+          maintainAspectRatio: false,
           parsing: {},
         },
         type: 'scatter',

@@ -103,7 +103,7 @@ export class ChartComponent implements OnChanges, AfterViewInit {
 
   getOptions(): ChartOptions {
     const options: ChartOptions = {
-      aspectRatio: 2.5,
+      maintainAspectRatio: false, //always adapts the ratio to fill the container div with the canvas
       parsing: {},
     }
     switch (this.type) {
@@ -120,6 +120,16 @@ export class ChartComponent implements OnChanges, AfterViewInit {
         return {
           ...options,
           indexAxis: 'y',
+        }
+      case 'pie':
+        return {
+          ...options,
+          plugins: {
+            legend: {
+              position: 'left',
+              align: 'start',
+            },
+          },
         }
       default:
         return options
