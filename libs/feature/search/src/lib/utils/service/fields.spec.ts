@@ -255,10 +255,11 @@ describe('search fields implementations', () => {
           expect.any(String),
           JSON.stringify({
             aggregations: {
-              topic: {
+              'cl_topic.key': {
                 terms: {
                   size: 1000,
                   field: 'cl_topic.key',
+                  order: { _key: 'asc' },
                 },
               },
             },
