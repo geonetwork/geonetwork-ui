@@ -25,4 +25,12 @@ describe('truncateString', () => {
       expect(result).toEqual('')
     })
   })
+  describe('input string is null', () => {
+    const input = null
+    const truncateLength = 5
+    const result = truncateString(input, truncateLength)
+    it('returns an empty string', () => {
+      expect(result).toEqual('')
+    })
+  })
 })
