@@ -43,16 +43,6 @@ export class GnResultsListComponent
     super(injector)
   }
 
-  ngOnInit(): void {
-    setTimeout(() => {
-      // Be sure to update the source page when the state is updated
-      // timeout cause must be the last subscriber to the change
-      this.facade.isLoading$.subscribe(() => {
-        this.changeDetector.detectChanges()
-      })
-    })
-  }
-
   private setSearch_() {
     const filter = this.filter
     const query = this.query
@@ -80,8 +70,15 @@ export class GnResultsListComponent
     this.facade.setSearch(searchActionPayload)
   }
 
-  ngOnChanges(): void {
-    super.ngOnChanges()
+  init(): void {
+    super.init()
+    setTimeout(() => {
+      // Be sure to update the source page when the state is updated
+      // timeout cause must be the last subscriber to the change
+      this.facade.isLoading$.subscribe(() => {
+        this.changeDetector.detectChanges()
+      })
+    })
     this.setSearch_()
   }
 
