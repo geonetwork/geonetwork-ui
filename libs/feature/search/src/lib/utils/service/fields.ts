@@ -26,7 +26,7 @@ export class SimpleSearchField implements AbstractSearchField {
   protected searchApiService = this.injector.get(SearchApiService)
 
   constructor(
-    private esFieldName: string,
+    protected esFieldName: string,
     private order: 'asc' | 'desc' = 'asc',
     protected injector: Injector
   ) {}
@@ -93,24 +93,13 @@ export class TopicSearchField extends SimpleSearchField {
     .pipe(shareReplay(1))
 
   constructor(injector: Injector) {
-    super('topic', 'asc', injector)
+    super('cl_topic.key', 'asc', injector)
   }
 
   private async getTopicTranslation(topicKey: string) {
     return firstValueFrom(
       this.allTranslations.pipe(map((translations) => translations[topicKey]))
     )
-  }
-
-  protected getAggregations() {
-    return {
-      topic: {
-        terms: {
-          size: 1000,
-          field: 'cl_topic.key',
-        },
-      },
-    }
   }
 
   protected async getBucketLabel(bucket) {
