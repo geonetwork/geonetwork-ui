@@ -1,5 +1,6 @@
 table {
   width: 100%;
+  background: white;
 }
 th.mat-mdc-header-cell,
 td.mat-mdc-cell,
