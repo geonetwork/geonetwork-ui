@@ -4,7 +4,6 @@
       extraClass="!text-primary font-sans font-medium"
       [title]="'map.select.layer' | translate"
       [choices]="dropdownChoices$ | async"
-      [showTitle]="false"
       (selectValue)="selectLinkToDisplay($event)"
     ></gn-ui-dropdown-selector>
     <gn-ui-external-viewer-button
