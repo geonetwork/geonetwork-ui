@@ -8,7 +8,7 @@ for example to be used in an [iframe](https://developer.mozilla.org/en-US/docs/W
 To use it, specify the name and attributes of the Web Component to be created when accessing the page:
 
 ```
-wc-embedder.html?e=gn-dataset-preview&a=api-url=https://dev.geo2france.fr/geonetwork/srv/api&a=primary-color=%230f4395&a=secondary-color=%238bc832&a=main-color=%23555&a=background-color=%23fdfbff
+wc-embedder.html?e=gn-dataset-view-table&a=api-url=https://dev.geo2france.fr/geonetwork/srv/api&a=primary-color=%230f4395&a=secondary-color=%238bc832&a=main-color=%23555&a=background-color=%23fdfbff
 ```
 
 > Note the `#` being encoded to `%23`

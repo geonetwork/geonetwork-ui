@@ -29,13 +29,16 @@ import { GnSearchInputComponent } from './components/gn-search-input/gn-search-i
 import { GnDatasetViewTableComponent } from './components/gn-dataset-view-table/gn-dataset-view-table.component'
 import { GnMapViewerComponent } from './components/gn-map-viewer/gn-map-viewer.component'
 import { FeatureMapModule } from '@geonetwork-ui/feature/map'
+import { GnDatasetViewChartComponent } from './components/gn-dataset-view-chart/gn-dataset-view-chart.component'
+import { FeatureDatavizModule } from '@geonetwork-ui/feature/dataviz'
 
 const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnFacetsComponent, 'gn-facets'],
   [GnResultsListComponent, 'gn-results-list'],
   [GnAggregatedRecordsComponent, 'gn-aggregated-records'],
   [GnSearchInputComponent, 'gn-search-input'],
-  [GnDatasetViewTableComponent, 'gn-dataset-preview'],
+  [GnDatasetViewTableComponent, 'gn-dataset-view-table'],
+  [GnDatasetViewChartComponent, 'gn-dataset-view-chart'],
   [GnMapViewerComponent, 'gn-map-viewer'],
 ]
 
@@ -49,6 +52,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     GnAggregatedRecordsComponent,
     GnSearchInputComponent,
     GnDatasetViewTableComponent,
+    GnDatasetViewChartComponent,
     GnMapViewerComponent,
   ],
   imports: [
@@ -66,6 +70,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     UtilI18nModule,
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
     MatIconModule,
+    FeatureDatavizModule,
   ],
   providers: [
     {
