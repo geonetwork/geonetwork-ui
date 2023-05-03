@@ -84,10 +84,6 @@ export class ChartViewComponent {
         catchError((error) => {
           this.handleError(error)
           return EMPTY
-        }),
-        finalize(() => {
-          this.loading = false
-          this.changeDetector.detectChanges()
         })
       )
     }),
@@ -155,6 +151,9 @@ export class ChartViewComponent {
           this.handleError(error)
           return []
         })
+        .finally(() => {
+          this.loading = false
+        })
     }),
     map(getJsonDataItemsProxy),
     startWith([]),
@@ -180,6 +179,7 @@ export class ChartViewComponent {
 
   handleError(error) {
     this.error = error.message
+    this.loading = false
     this.changeDetector.detectChanges()
     console.warn(error.stack || error.message)
   }

@@ -62,8 +62,20 @@ describe('ChartComponent', () => {
           labels: ['name 1', 'name 2', 'name 3'],
         },
         options: {
-          aspectRatio: 2.5,
+          maintainAspectRatio: false,
           parsing: {},
+          scales: {
+            x: {
+              ticks: {
+                callback: expect.any(Function),
+              },
+            },
+            y: {
+              ticks: {
+                callback: expect.any(Function),
+              },
+            },
+          },
         },
         type: 'bar',
       })
@@ -170,8 +182,20 @@ describe('ChartComponent', () => {
           labels: ['id 1', 'id 2', 'id 3'],
         },
         options: {
-          aspectRatio: 2.5,
+          maintainAspectRatio: false,
           parsing: {},
+          scales: {
+            x: {
+              ticks: {
+                callback: expect.any(Function),
+              },
+            },
+            y: {
+              ticks: {
+                callback: expect.any(Function),
+              },
+            },
+          },
         },
         type: 'scatter',
       })
@@ -229,6 +253,50 @@ describe('ChartComponent', () => {
             type: 'bar',
           })
         )
+      })
+    })
+  })
+  describe('truncateString', () => {
+    let result
+    let input
+    describe('length is less than or equal to truncateLength', () => {
+      beforeEach(() => {
+        const truncateLength = 13
+        input = 'a short label'
+        result = component.truncateString(input, truncateLength)
+      })
+      it('returns the original string', () => {
+        expect(result).toEqual(input)
+      })
+    })
+    describe('length is greater than truncateLength', () => {
+      beforeEach(() => {
+        const truncateLength = 13
+        input = 'a little longer label'
+        result = component.truncateString(input, truncateLength)
+      })
+      it('truncates the string', () => {
+        expect(result).toEqual('a little long...')
+      })
+    })
+    describe('input string is empty', () => {
+      beforeEach(() => {
+        const truncateLength = 5
+        input = ''
+        result = component.truncateString(input, truncateLength)
+      })
+      it('returns an empty string', () => {
+        expect(result).toEqual('')
+      })
+    })
+    describe('input string is null', () => {
+      beforeEach(() => {
+        const truncateLength = 5
+        input = null
+        result = component.truncateString(input, truncateLength)
+      })
+      it('returns an empty string', () => {
+        expect(result).toEqual('')
       })
     })
   })

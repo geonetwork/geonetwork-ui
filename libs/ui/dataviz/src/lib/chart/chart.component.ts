@@ -44,6 +44,7 @@ Chart.register(
   Legend
 )
 
+const LABEL_MAX_LENGTH = 30
 @Component({
   standalone: true,
   selector: 'gn-ui-chart',
@@ -102,9 +103,32 @@ export class ChartComponent implements OnChanges, AfterViewInit {
   }
 
   getOptions(): ChartOptions {
+    const truncateString = this.truncateString
     const options: ChartOptions = {
-      aspectRatio: 2.5,
+      maintainAspectRatio: false, //always adapts the ratio to fill the container div with the canvas
       parsing: {},
+      scales: {
+        x: {
+          ticks: {
+            callback: function (value) {
+              return truncateString(
+                this.getLabelForValue(Number(value)),
+                LABEL_MAX_LENGTH
+              )
+            },
+          },
+        },
+        y: {
+          ticks: {
+            callback: function (value) {
+              return truncateString(
+                this.getLabelForValue(Number(value)),
+                LABEL_MAX_LENGTH
+              )
+            },
+          },
+        },
+      },
     }
     switch (this.type) {
       case 'line-interpolated':
@@ -121,9 +145,27 @@ export class ChartComponent implements OnChanges, AfterViewInit {
           ...options,
           indexAxis: 'y',
         }
+      case 'pie':
+        return {
+          ...options,
+          scales: {}, //reset pie default to not display axis, no label truncate necessary
+          plugins: {
+            legend: {
+              position: 'left',
+              align: 'start',
+            },
+          },
+        }
       default:
         return options
     }
+  }
+
+  truncateString(str: string, truncateLength: number) {
+    if (!str) return ''
+    return str.length <= truncateLength
+      ? str
+      : `${str.slice(0, truncateLength)}...`
   }
 
   getChartType(): ChartType {

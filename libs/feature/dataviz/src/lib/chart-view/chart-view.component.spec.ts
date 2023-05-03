@@ -172,6 +172,9 @@ describe('ChartViewComponent', () => {
       expect(chartComponent.type).toBe('bar')
       expect(chartComponent.data).toEqual(SAMPLE_CHART_DATA)
     })
+    it('does not stay in loading state', () => {
+      expect(component.loading).toBe(false)
+    })
   })
 
   describe('when link changes', () => {
