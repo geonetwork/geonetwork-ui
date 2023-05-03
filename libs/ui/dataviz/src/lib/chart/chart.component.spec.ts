@@ -256,4 +256,48 @@ describe('ChartComponent', () => {
       })
     })
   })
+  describe('truncateString', () => {
+    let result
+    let input
+    describe('length is less than or equal to truncateLength', () => {
+      beforeEach(() => {
+        const truncateLength = 13
+        input = 'a short label'
+        result = component.truncateString(input, truncateLength)
+      })
+      it('returns the original string', () => {
+        expect(result).toEqual(input)
+      })
+    })
+    describe('length is greater than truncateLength', () => {
+      beforeEach(() => {
+        const truncateLength = 13
+        input = 'a little longer label'
+        result = component.truncateString(input, truncateLength)
+      })
+      it('truncates the string', () => {
+        expect(result).toEqual('a little long...')
+      })
+    })
+    describe('input string is empty', () => {
+      beforeEach(() => {
+        const truncateLength = 5
+        input = ''
+        result = component.truncateString(input, truncateLength)
+      })
+      it('returns an empty string', () => {
+        expect(result).toEqual('')
+      })
+    })
+    describe('input string is null', () => {
+      beforeEach(() => {
+        const truncateLength = 5
+        input = null
+        result = component.truncateString(input, truncateLength)
+      })
+      it('returns an empty string', () => {
+        expect(result).toEqual('')
+      })
+    })
+  })
 })

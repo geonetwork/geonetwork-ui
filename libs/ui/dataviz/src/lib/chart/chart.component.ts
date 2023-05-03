@@ -27,7 +27,6 @@ import {
   ScatterController,
   Tooltip,
 } from 'chart.js'
-import { truncateString } from '../utils/utils'
 
 Chart.register(
   BarController,
@@ -104,6 +103,7 @@ export class ChartComponent implements OnChanges, AfterViewInit {
   }
 
   getOptions(): ChartOptions {
+    const truncateString = this.truncateString
     const options: ChartOptions = {
       maintainAspectRatio: false, //always adapts the ratio to fill the container div with the canvas
       parsing: {},
@@ -159,6 +159,13 @@ export class ChartComponent implements OnChanges, AfterViewInit {
       default:
         return options
     }
+  }
+
+  truncateString(str: string, truncateLength: number) {
+    if (!str) return ''
+    return str.length <= truncateLength
+      ? str
+      : `${str.slice(0, truncateLength)}...`
   }
 
   getChartType(): ChartType {
