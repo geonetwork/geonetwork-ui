@@ -19,10 +19,8 @@ export class FeatureInfoService {
   handleFeatureInfo(): void {
     const { map } = this.manager
     map.on('click', (event) => {
-      const gfiFeaturesObservables = this.mapUtils.getGFIFeaturesObservablesFromClick(
-        map,
-        event
-      )
+      const gfiFeaturesObservables =
+        this.mapUtils.getGFIFeaturesObservablesFromClick(map, event)
       const vectorFeatures$ = of(
         this.mapUtils.getVectorFeaturesFromClick(map, event)
       )

@@ -29,7 +29,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FacetBlockComponent
-  implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+  implements OnInit, AfterViewInit, OnDestroy, OnChanges
+{
   @Input() collapsed: boolean
   @Input() filter: string
   @Input() model: ModelBlock
