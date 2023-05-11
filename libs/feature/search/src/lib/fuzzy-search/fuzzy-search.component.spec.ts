@@ -166,8 +166,8 @@ describe('FuzzySearchComponent', () => {
       beforeEach(() => {
         jest.resetAllMocks()
         outputValue = null
-        component.inputSubmited.subscribe((event) => (outputValue = event))
-        jest.spyOn(component.inputSubmited, 'emit')
+        component.inputSubmitted.subscribe((event) => (outputValue = event))
+        jest.spyOn(component.inputSubmitted, 'emit')
         component.handleInputSubmission('blarg')
       })
       it('updates the search filters as well', () => {
@@ -175,8 +175,8 @@ describe('FuzzySearchComponent', () => {
           any: 'blarg',
         })
       })
-      it('emits inputSubmited', () => {
-        expect(component.inputSubmited.emit).toHaveBeenCalledWith('blarg')
+      it('emits inputSubmitted', () => {
+        expect(component.inputSubmitted.emit).toHaveBeenCalledWith('blarg')
       })
     })
   })

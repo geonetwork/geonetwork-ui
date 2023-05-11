@@ -31,7 +31,7 @@ import { SearchService } from '../utils/service/search.service'
 export class FuzzySearchComponent implements OnInit {
   @ViewChild(AutocompleteComponent) autocomplete: AutocompleteComponent
   @Output() itemSelected = new EventEmitter<MetadataRecord>()
-  @Output() inputSubmited = new EventEmitter<string>()
+  @Output() inputSubmitted = new EventEmitter<string>()
   searchInputValue$: Observable<{ title: string }>
 
   displayWithFn: (MetadataRecord) => string = (record) => record?.title
@@ -76,8 +76,8 @@ export class FuzzySearchComponent implements OnInit {
   }
 
   handleInputSubmission(any: string) {
-    if (this.inputSubmited.observers.length > 0) {
-      this.inputSubmited.emit(any)
+    if (this.inputSubmitted.observers.length > 0) {
+      this.inputSubmitted.emit(any)
     } else {
       this.searchService.updateFilters({ any })
     }
