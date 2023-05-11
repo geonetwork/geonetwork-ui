@@ -1,12 +1,15 @@
 import {
+  AfterViewChecked,
   ChangeDetectionStrategy,
   Component,
   Input,
+  ViewChild,
   ViewEncapsulation,
 } from '@angular/core'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { BaseComponent } from '../base.component'
+import { FuzzySearchComponent } from '@geonetwork-ui/feature/search'
 
 @Component({
   selector: 'wc-gn-search-input',
@@ -16,20 +19,30 @@ import { BaseComponent } from '../base.component'
   encapsulation: ViewEncapsulation.ShadowDom,
   providers: [SearchFacade, SearchService],
 })
-export class GnSearchInputComponent extends BaseComponent {
-  @Input() datahubUrl: string
+export class GnSearchInputComponent
+  extends BaseComponent
+  implements AfterViewChecked
+{
+  @Input() openOnSearch: string
+  @Input() openOnSelect: string
+  @ViewChild('searchInput') searchInput: FuzzySearchComponent
 
-  search(any: string) {
-    if (this.datahubUrl) {
-      const landingPage = `${this.datahubUrl}/home/search/?q=${any}`
-      window.open(landingPage, '_self').focus()
+  ngAfterViewChecked() {
+    if (this.openOnSearch) {
+      this.searchInput.inputSubmitted.subscribe(this.search.bind(this))
+    }
+    if (this.openOnSelect) {
+      this.searchInput.itemSelected.subscribe(this.select.bind(this))
     }
   }
 
+  search(any: string) {
+    const landingPage = this.openOnSearch.replace(/\$\{search}/, any)
+    window.open(landingPage, '_self').focus()
+  }
+
   select(record: MetadataRecord) {
-    if (this.datahubUrl) {
-      const landingPage = `${this.datahubUrl}/dataset/${record.uuid}`
-      window.open(landingPage, '_self').focus()
-    }
+    const landingPage = this.openOnSelect.replace(/\$\{uuid}/, record.uuid)
+    window.open(landingPage, '_self').focus()
   }
 }
