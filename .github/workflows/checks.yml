@@ -1,5 +1,6 @@
 name: Checks
 run-name: 🩺 Quality assurance checks on ${{ github.event_name == 'pull_request' && 'PR' || '🌱' }} ${{ github.event_name == 'pull_request' && github.event.number || github.ref_name }}
+
 env:
   NODE_VERSION: 16.17.0
 
@@ -31,9 +32,14 @@ jobs:
         npx nx-cloud record -- npx nx format:check
       parallel-commands-on-agents: |
         npx nx affected --target=lint --parallel=3
-        TEST_HIDE_CONSOLE=1 npx nx affected --target=test --parallel=3 --ci --codeCoverage
+        npx nx affected --target=test --parallel=3 --ci --codeCoverage --coverageReporters=lcov
         npx nx affected --target=build --parallel=3
       node-version: 16.17.0 # FIXME: use env.NODE_VERSION
+#      final-commands: |
+#        ls -al ./coverage/**/lcov.info
+      artifacts-path: coverage/**/lcov.info
+      environment-variables: |
+        TEST_HIDE_CONSOLE=true
 
   agents:
     if: github.event.pull_request.draft == false
@@ -42,6 +48,8 @@ jobs:
     with:
       number-of-agents: 3
       node-version: 16.17.0 # FIXME: use env.NODE_VERSION
+      environment-variables: |
+        TEST_HIDE_CONSOLE=true
 
   affected-recap:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
