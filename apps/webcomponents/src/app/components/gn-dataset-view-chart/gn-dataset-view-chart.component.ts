@@ -12,14 +12,14 @@ import { BaseComponent } from '../base.component'
 import { LinkUsage, MetadataLink } from '@geonetwork-ui/util/shared'
 
 @Component({
-  selector: 'wc-gn-dataset-view-table',
-  templateUrl: './gn-dataset-view-table.component.html',
-  styleUrls: ['./gn-dataset-view-table.component.css'],
+  selector: 'wc-gn-dataset-view-chart',
+  templateUrl: './gn-dataset-view-chart.component.html',
+  styleUrls: ['./gn-dataset-view-chart.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
   providers: [SearchFacade, SearchService],
 })
-export class GnDatasetViewTableComponent
+export class GnDatasetViewChartComponent
   extends BaseComponent
   implements OnInit
 {

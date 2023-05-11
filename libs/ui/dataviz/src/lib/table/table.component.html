@@ -1,8 +1,8 @@
-<div class="border border-gray-300 rounded-lg overflow-hidden bg-white">
+<div class="border border-gray-300 rounded-lg overflow-hidden bg-white h-full">
   <cdk-virtual-scroll-viewport
     tvsItemSize="48"
     headerHeight="56"
-    style="height: 400px"
+    style="height: calc(100% - 37px)"
   >
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
       <ng-container *ngFor="let prop of properties" [matColumnDef]="prop">
