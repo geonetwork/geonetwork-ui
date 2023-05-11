@@ -1,11 +1,4 @@
-import {
-  Component,
-  Injector,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core'
+import { Component, Injector, Input, OnChanges, OnInit } from '@angular/core'
 import {
   ElasticsearchService,
   LinkClassifierService,
