@@ -9,7 +9,7 @@
 }
 
 .shape::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   right: 0;
@@ -19,7 +19,7 @@
 }
 
 .shape::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   right: 0;

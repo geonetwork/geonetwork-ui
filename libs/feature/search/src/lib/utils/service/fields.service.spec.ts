@@ -57,6 +57,8 @@ describe('FieldsService', () => {
         'format',
         'publicationYear',
         'topic',
+        'inspireKeyword',
+        'documentStandard',
         'isSpatial',
         'q',
         'license',

@@ -55,6 +55,18 @@
     <gn-ui-filter-dropdown
       class="w-full"
       [ngClass]="isOpen ? 'block' : 'hidden'"
+      [fieldName]="'documentStandard'"
+      [title]="'search.filters.byStandard' | translate"
+    ></gn-ui-filter-dropdown>
+    <gn-ui-filter-dropdown
+      class="w-full"
+      [ngClass]="isOpen ? 'block' : 'hidden'"
+      [fieldName]="'inspireKeyword'"
+      [title]="'search.filters.byInspireKeyword' | translate"
+    ></gn-ui-filter-dropdown>
+    <gn-ui-filter-dropdown
+      class="w-full"
+      [ngClass]="isOpen ? 'block' : 'hidden'"
       [fieldName]="'topic'"
       [title]="'search.filters.byTopic' | translate"
     ></gn-ui-filter-dropdown>

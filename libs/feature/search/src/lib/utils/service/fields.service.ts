@@ -23,6 +23,16 @@ export class FieldsService {
       this.injector
     ),
     topic: new TopicSearchField(this.injector),
+    inspireKeyword: new SimpleSearchField(
+      'th_httpinspireeceuropaeutheme-theme_tree.default',
+      'asc',
+      this.injector
+    ),
+    documentStandard: new SimpleSearchField(
+      'documentStandard',
+      'asc',
+      this.injector
+    ),
     isSpatial: new IsSpatialSearchField(this.injector),
     q: new FullTextSearchField(),
     license: new LicenseSearchField(this.injector),

@@ -254,6 +254,8 @@ describe('SearchFiltersComponent', () => {
           filter_publisher: {},
           filter_topic: {},
           filter_license: {},
+          filter_documentStandard: {},
+          filter_inspireKeyword: {},
         })
       })
     })

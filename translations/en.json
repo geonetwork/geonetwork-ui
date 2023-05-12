@@ -199,6 +199,8 @@
   "search.filters.byOrganisation": "Organisations",
   "search.filters.byPublicationYear": "Publication year",
   "search.filters.byTopic": "Topic",
+  "search.filters.byStandard": "Standard",
+  "search.filters.byInspireKeyword": "INSPIRE keyword",
   "search.filters.clear": "Reset",
   "search.filters.isSpatial": "Is spatial data",
   "search.filters.isSpatial.no": "non spatial",
