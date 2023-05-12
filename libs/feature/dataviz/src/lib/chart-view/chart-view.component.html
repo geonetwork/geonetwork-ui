@@ -5,8 +5,8 @@
     <gn-ui-dropdown-selector
       class="basis-1/4"
       [choices]="typeChoices"
-      (selectValue)="chartType = $event"
-      [selected]="chartType"
+      (selectValue)="chartType$.next($event)"
+      [selected]="chartType$.value"
       [title]="'chart.dropdown.type' | translate"
     ></gn-ui-dropdown-selector>
     <gn-ui-dropdown-selector
@@ -39,7 +39,7 @@
   >
     <gn-ui-chart
       [data]="chartData$ | async"
-      [type]="chartType"
+      [type]="chartType$.value"
       [labelProperty]="labelProperty"
       [valueProperty]="valueProperty"
     ></gn-ui-chart>

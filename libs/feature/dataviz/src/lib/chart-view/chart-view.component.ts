@@ -66,7 +66,10 @@ export class ChartViewComponent {
   }
   yProperty$ = new BehaviorSubject<string>(undefined)
 
-  @Input() chartType: InputChartType = 'bar'
+  @Input() set chartType(value: InputChartType) {
+    this.chartType$.next(value)
+  }
+  chartType$ = new BehaviorSubject<InputChartType>('bar')
 
   loading = false
   error = null
