@@ -99,7 +99,7 @@
     "@angular-devkit/build-angular": "15.2.4",
     "@angular-devkit/core": "15.2.1",
     "@angular-devkit/schematics": "15.2.1",
-    "@angular-eslint/eslint-plugin": "~15.0.0",
+    "@angular-eslint/eslint-plugin": "~15.2.1",
     "@angular-eslint/eslint-plugin-template": "~15.0.0",
     "@angular-eslint/template-parser": "~15.0.0",
     "@angular/cli": "~15.2.0",
