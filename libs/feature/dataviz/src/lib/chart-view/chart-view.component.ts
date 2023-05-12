@@ -51,6 +51,23 @@ export class ChartViewComponent {
   }
   private currentLink$ = new BehaviorSubject<MetadataLink>(null)
 
+  @Input() set aggregation(value: FieldAggregation[0]) {
+    this.aggregation$.next(value)
+  }
+  aggregation$ = new BehaviorSubject<FieldAggregation[0]>('sum')
+
+  @Input() set xAxis(value: string) {
+    this.xProperty$.next(value)
+  }
+  xProperty$ = new BehaviorSubject<string>(undefined)
+
+  @Input() set yAxis(value: string) {
+    this.yProperty$.next(value)
+  }
+  yProperty$ = new BehaviorSubject<string>(undefined)
+
+  @Input() chartType: InputChartType = 'bar'
+
   loading = false
   error = null
 
@@ -129,10 +146,6 @@ export class ChartViewComponent {
       }
     })
   )
-  chartType: InputChartType = 'bar'
-  xProperty$ = new BehaviorSubject<string>(undefined)
-  yProperty$ = new BehaviorSubject<string>(undefined)
-  aggregation$ = new BehaviorSubject<FieldAggregation[0]>('sum')
 
   chartData$ = combineLatest([
     this.dataset$,
