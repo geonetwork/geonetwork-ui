@@ -33,6 +33,7 @@ jobs:
         npx nx affected --target=lint --parallel=3
         npx nx affected --target=test --parallel=3 --ci --code-coverage
         npx nx affected --target=build --parallel=3
+      node-version: 16.17.0 # FIXME: use env.NODE_VERSION
 
   agents:
     if: github.event.pull_request.draft == false
@@ -40,6 +41,7 @@ jobs:
     uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.11.3
     with:
       number-of-agents: 3
+      node-version: 16.17.0 # FIXME: use env.NODE_VERSION
 
   affected-recap:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
