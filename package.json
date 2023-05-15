@@ -155,7 +155,7 @@
     "jest-environment-jsdom": "^29.4.1",
     "jest-preset-angular": "13.0.0",
     "ngrx-store-freeze": "^0.2.4",
-    "nx": "15.8.1",
+    "nx": "15.9.2",
     "postcss": "^8.4.19",
     "prettier": "2.7.1",
     "tailwindcss": "^3.2.4",
