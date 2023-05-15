@@ -5,7 +5,8 @@
   class="grid grid-cols-1 mt-6 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3"
 >
   <gn-ui-content-ghost
-    ghostClass="h-36 mb-36"
+    class="h-[300px]"
+    ghostClass="h-full mb-36"
     *ngFor="let organisation of organisations$ | async; trackBy: trackByIndex"
     [showContent]="organisation.description !== null"
   >
