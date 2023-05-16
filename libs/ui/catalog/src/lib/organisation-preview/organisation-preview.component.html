@@ -1,22 +1,26 @@
 <a href (click)="clickOrganisation($event)">
-  <div class="group cursor-pointer rounded-lg" [title]="organisation.name">
+  <div
+    class="group cursor-pointer rounded-lg h-full flex flex-col"
+    [title]="organisation.name"
+  >
     <div
-      class="overflow-hidden bg-gray-100 rounded-lg w-full border border-gray-300 h-36 group-hover:shadow-xl group-hover:border-0"
+      class="flex-shrink-0 bg-gray-100 rounded-lg w-full border border-gray-300 h-36 group-hover:shadow-xl group-hover:border-0"
     >
       <gn-ui-thumbnail
         class="relative h-full w-full"
         [thumbnailUrl]="organisation.logoUrl"
         fit="contain"
-      ></gn-ui-thumbnail>
+      >
+      </gn-ui-thumbnail>
     </div>
-    <div class="px-3 pb-2 capitalize">
+    <div class="px-3 pb-2 capitalize flex flex-col flex-grow overflow-hidden">
       <span
-        class="mb-3 mt-5 font-title text-21 text-title group-hover:text-primary line-clamp-2 sm:line-clamp-1 sm:mt-2"
+        class="flex-shrink-0 mb-3 mt-5 font-title text-21 text-title group-hover:text-primary line-clamp-2 sm:mt-2"
       >
         {{ organisation.name }}</span
       >
       <p
-        class="abstract mt-4 mb-5 h-36 sm:mb-2 sm:h-[4.5rem] line-clamp-6 sm:line-clamp-3 sm:mt-0"
+        class="abstract mt-4 mb-5 sm:mb-2 sm:mt-0 flex-grow flex-shrink-1 overflow-hidden"
       >
         {{ organisation.description }}
       </p>
@@ -29,7 +33,7 @@
       <span>suivre</span>
     </button>
 -->
-      <div class="text-primary opacity-50 flex leading-6">
+      <div class="flex-shrink-0 text-primary opacity-50 flex leading-6">
         <mat-icon class="text-primary opacity-50 mr-1">folder_open </mat-icon>
         <span class="mx-1">{{ organisation.recordCount }}</span>
         <span translate>record.metadata.publications</span>

@@ -32,7 +32,8 @@ export default {
       ],
     }),
     componentWrapperDecorator(
-      (story) => `<div style="max-width: 700px">${story}</div>`
+      (story) =>
+        `<div class="border border-gray-300 h-[350px] w-[250px] p-[10px]" style="resize: both; overflow: auto">${story}</div>`
     ),
   ],
 } as Meta<OrganisationPreviewComponent>

@@ -1,0 +1,13 @@
+.abstract {
+  position: relative;
+}
+
+.abstract::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(0deg, white, transparent);
+  height: 10px;
+}
