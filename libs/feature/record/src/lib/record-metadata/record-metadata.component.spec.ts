@@ -5,9 +5,11 @@ import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { MapManagerService } from '@geonetwork-ui/feature/map'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import {
+  ErrorType,
   MetadataCatalogComponent,
   MetadataContactComponent,
   MetadataInfoComponent,
+  SearchResultsErrorComponent,
   UiElementsModule,
 } from '@geonetwork-ui/ui/elements'
 import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
@@ -26,6 +28,7 @@ class MdViewFacadeMock {
   apiLinks$ = new BehaviorSubject([])
   otherLinks$ = new BehaviorSubject([])
   related$ = new BehaviorSubject(null)
+  error$ = new BehaviorSubject(null)
 }
 
 const searchServiceMock = {
@@ -87,6 +90,7 @@ describe('RecordMetadataComponent', () => {
         MockDataOtherlinksComponent,
         MockDataApisComponent,
         MockRelatedComponent,
+        SearchResultsErrorComponent,
       ],
       schemas: [NO_ERRORS_SCHEMA],
       imports: [UiElementsModule, TranslateModule.forRoot()],
@@ -434,6 +438,47 @@ describe('RecordMetadataComponent', () => {
         OrgForResource: {
           orgname: true,
         },
+      })
+    })
+  })
+
+  describe('error handling', () => {
+    describe('normal', () => {
+      it('does not show errors', () => {
+        const result = fixture.debugElement.query(
+          By.directive(SearchResultsErrorComponent)
+        )
+        expect(result).toBeFalsy()
+      })
+    })
+    describe('record not found', () => {
+      beforeEach(() => {
+        facade.error$.next({ notFound: true })
+        fixture.detectChanges()
+      })
+      it('shows error', () => {
+        const result = fixture.debugElement.query(
+          By.directive(SearchResultsErrorComponent)
+        )
+
+        expect(result).toBeTruthy()
+        expect(result.componentInstance.type).toBe(ErrorType.RECORD_NOT_FOUND)
+        expect(result.componentInstance.error).toBe(undefined)
+      })
+    })
+    describe('other error', () => {
+      beforeEach(() => {
+        facade.error$.next({ otherError: 'This is an Error!' })
+        fixture.detectChanges()
+      })
+      it('shows error', () => {
+        const result = fixture.debugElement.query(
+          By.directive(SearchResultsErrorComponent)
+        )
+
+        expect(result).toBeTruthy()
+        expect(result.componentInstance.type).toBe(ErrorType.RECEIVED_ERROR)
+        expect(result.componentInstance.error).toBe('This is an Error!')
       })
     })
   })

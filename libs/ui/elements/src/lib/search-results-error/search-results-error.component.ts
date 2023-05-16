@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 export enum ErrorType {
   COULD_NOT_REACH_API,
   RECEIVED_ERROR,
+  RECORD_NOT_FOUND,
 }
 
 @Component({

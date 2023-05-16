@@ -37,7 +37,7 @@
   </ng-container>
 </div>
 
-<div class="p-4 w-80 m-auto text-[13px]">
+<div class="p-4 max-w-[600px] m-auto text-[13px]">
   <gn-ui-search-results-error
     *ngIf="(errorCode$ | async) === 0"
     [type]="errorTypes.COULD_NOT_REACH_API"
