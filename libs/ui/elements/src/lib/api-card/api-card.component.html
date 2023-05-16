@@ -13,18 +13,11 @@
         class="inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded capitalize text-primary-lightest group-hover:text-primary transition-colors"
         >{{ link.protocol }}</span
       >
-      <button
-        (click)="copyUrl()"
-        class="cursor-pointer"
-        mat-raised-button
-        [matTooltip]="'tooltip.url.copy' | translate"
-        matTooltipPosition="above"
-      >
-        <mat-icon
-          class="align-middle group-hover:text-secondary text-gray-200 transition-colors"
-          >content_copy</mat-icon
-        >
-      </button>
+      <gn-ui-copy-text-button
+        [text]="link.url"
+        [tooltipText]="'tooltip.url.copy' | translate"
+        [displayText]="false"
+      ></gn-ui-copy-text-button>
     </div>
   </div>
 </div>
