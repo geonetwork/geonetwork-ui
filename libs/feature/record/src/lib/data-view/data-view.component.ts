@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  Output,
+} from '@angular/core'
 import { getLinkLabel, MetadataLink } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
@@ -12,6 +17,9 @@ import { MdViewFacade } from '../state'
 })
 export class DataViewComponent {
   @Input() mode: 'table' | 'chart'
+  @Output() urlParams$ = new BehaviorSubject<URLSearchParams>(
+    new URLSearchParams()
+  )
   compatibleDataLinks$ = combineLatest([
     this.mdViewFacade.dataLinks$,
     this.mdViewFacade.geoDataLinks$,
@@ -32,6 +40,10 @@ export class DataViewComponent {
   selectedLink$ = new BehaviorSubject<MetadataLink>(null)
 
   constructor(private mdViewFacade: MdViewFacade) {}
+
+  setUrlParams(event: URLSearchParams) {
+    this.urlParams$.next(event)
+  }
 
   selectLink(linkAsString: string) {
     this.selectedLink$.next(JSON.parse(linkAsString) as MetadataLink)
