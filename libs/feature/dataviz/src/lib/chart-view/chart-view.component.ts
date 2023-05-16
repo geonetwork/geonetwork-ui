@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
+  Output,
 } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
@@ -18,7 +19,6 @@ import { BehaviorSubject, combineLatest, EMPTY, Observable } from 'rxjs'
 import {
   catchError,
   filter,
-  finalize,
   map,
   shareReplay,
   startWith,
@@ -70,6 +70,24 @@ export class ChartViewComponent {
     this.chartType$.next(value)
   }
   chartType$ = new BehaviorSubject<InputChartType>('bar')
+
+  @Output() urlParams$ = combineLatest([
+    this.xProperty$.pipe(filter((value) => value !== undefined)),
+    this.yProperty$.pipe(filter((value) => value !== undefined)),
+    this.aggregation$,
+    this.chartType$,
+  ]).pipe(
+    map(
+      ([xAxis, yAxis, aggregation, chartType]) =>
+        new URLSearchParams(
+          `?e=gn-dataset-view-chart
+&a=aggregation=${aggregation}
+&a=x-axis=${xAxis}
+&a=y-axis=${yAxis}
+&a=chart-type=${chartType}`
+        )
+    )
+  )
 
   loading = false
   error = null
