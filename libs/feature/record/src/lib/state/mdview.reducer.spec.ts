@@ -70,7 +70,8 @@ describe('MdView Reducer', () => {
     let action
     beforeEach(() => {
       action = MdViewActions.loadFullFailure({
-        error: 'error',
+        otherError: 'error',
+        notFound: true,
       })
     })
     it('set error', () => {
@@ -81,7 +82,7 @@ describe('MdView Reducer', () => {
       expect(state).toEqual({
         ...initialMdviewState,
         loadingFull: false,
-        error: 'error',
+        error: { otherError: 'error', notFound: true },
       })
     })
   })
