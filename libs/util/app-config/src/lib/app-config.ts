@@ -72,7 +72,12 @@ export function loadAppConfig() {
         parsed,
         'global',
         ['geonetwork4_api_url'],
-        ['proxy_path', 'metadata_language', 'login_url'],
+        [
+          'proxy_path',
+          'metadata_language',
+          'login_url',
+          'web_component_embedder_url',
+        ],
         warnings,
         errors
       )
@@ -94,6 +99,8 @@ export function loadAppConfig() {
                   ).toLowerCase()
                 : undefined,
               LOGIN_URL: parsedGlobalSection.login_url,
+              WEB_COMPONENT_EMBEDDER_URL:
+                parsedGlobalSection.web_component_embedder_url,
             } as GlobalConfig)
 
       const parsedLayersSections = parseMultiConfigSection(

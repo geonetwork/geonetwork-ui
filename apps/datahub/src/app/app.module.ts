@@ -62,6 +62,7 @@ import { DatahubRouterService } from './router/datahub-router.service'
 import { NavigationMenuComponent } from './home/navigation-menu/navigation-menu.component'
 import { FormsModule } from '@angular/forms'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
+import { WEB_COMPONENT_EMBEDDER_URL } from '@geonetwork-ui/feature/record'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
@@ -136,6 +137,10 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     {
       provide: LOGIN_URL,
       useFactory: () => getGlobalConfig().LOGIN_URL,
+    },
+    {
+      provide: WEB_COMPONENT_EMBEDDER_URL,
+      useFactory: () => getGlobalConfig().WEB_COMPONENT_EMBEDDER_URL,
     },
     {
       provide: METADATA_LANGUAGE,

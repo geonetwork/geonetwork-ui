@@ -6,6 +6,10 @@ import { combineLatest } from 'rxjs'
 import { filter, map, mergeMap, pluck } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
 
+export const WEB_COMPONENT_EMBEDDER_URL = new InjectionToken<string>(
+  'webComponentEmbedderUrl'
+)
+
 @Component({
   selector: 'gn-ui-record-metadata',
   templateUrl: './record-metadata.component.html',
