@@ -105,6 +105,11 @@ describe('MdViewFacade', () => {
     })
   })
   describe('error$', () => {
+    let values
+    beforeEach(() => {
+      values = []
+      facade.error$.subscribe((v) => values.push(v))
+    })
     it('emits the error if any', () => {
       store.setState({
         [MD_VIEW_FEATURE_STATE_KEY]: {
@@ -112,12 +117,25 @@ describe('MdViewFacade', () => {
           error: 'something went wrong',
         },
       })
-      const expected = hot('a', { a: 'something went wrong' })
-      expect(facade.error$).toBeObservable(expected)
+      expect(values).toEqual([null, 'something went wrong'])
     })
-    it('does not emit if no error', () => {
-      const expected = hot('-')
-      expect(facade.error$).toBeObservable(expected)
+    it('emits null if no error', () => {
+      expect(values).toEqual([null])
+    })
+    it('emits the error and null', () => {
+      store.setState({
+        [MD_VIEW_FEATURE_STATE_KEY]: {
+          ...initialMdviewState,
+          error: 'something went wrong',
+        },
+      })
+      store.setState({
+        [MD_VIEW_FEATURE_STATE_KEY]: {
+          ...initialMdviewState,
+          error: null,
+        },
+      })
+      expect(values).toEqual([null, 'something went wrong', null])
     })
   })
   describe('setIncompleteMetadata', () => {

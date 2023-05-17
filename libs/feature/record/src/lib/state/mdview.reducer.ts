@@ -20,14 +20,17 @@ const mdViewReducer = createReducer(
   initialMdviewState,
   on(MdViewActions.loadFullMetadata, (state) => ({
     ...state,
+    error: null,
     loadingFull: true,
   })),
   on(MdViewActions.setIncompleteMetadata, (state, { incomplete }) => ({
     ...state,
+    error: null,
     metadata: incomplete,
   })),
   on(MdViewActions.loadFullSuccess, (state, { full }) => ({
     ...state,
+    error: null,
     metadata: full,
     loadingFull: false,
   })),
