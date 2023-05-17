@@ -37,12 +37,12 @@
     </div>
   </div>
   <div
-    style="height: 648px;"
+    style="height: 648px"
     *ngIf="(displayMap$ | async) || (displayData$ | async)"
   >
     <div
       class="bg-primary-opacity-10 pt-8 overflow-visible sm:pt-5"
-      style="height: 512px;"
+      style="height: 512px"
     >
       <div class="container-lg px-4 lg:mx-auto">
         <div>
@@ -66,7 +66,7 @@
               </ng-template>
               <div
                 class="block"
-                style="height: 500px;"
+                style="height: 500px"
                 *ngIf="displayMap$ | async"
               >
                 <gn-ui-map-view></gn-ui-map-view>
@@ -129,7 +129,7 @@
 </div>
 <div
   class="p-4 max-w-[600px] m-auto text-[13px]"
-  *ngIf="(facade.error$ | async) as error"
+  *ngIf="facade.error$ | async as error"
 >
   <gn-ui-search-results-error
     *ngIf="error.notFound"
