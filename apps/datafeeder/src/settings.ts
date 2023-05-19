@@ -35,7 +35,7 @@ class Settings {
     { value: '100000', label: '1:100000' },
   ]
   thesaurusUrl = `/geonetwork/srv/api/registries/vocabularies/search?type=CONTAINS&thesaurus=external.theme.inspire-theme&rows=200&q=$\{q}&uri=**&lang=$\{lang}`
-
+  maxFileUploadSize = '-1'
   init() {
     return fetch(SETTING_API)
       .then((response) => response.json())
