@@ -5,6 +5,8 @@ import {
   UploadDataError,
   UploadDataErrorType,
 } from '../../components/svg/upload-data-error-dialog/upload-data-error-dialog.component'
+import SETTINGS from '../../../../settings'
+import { parseSizeAsMb } from './size.utils'
 
 marker('datafeeder.upload.error.title.analysis')
 marker('datafeeder.upload.error.subtitle.analysis')
@@ -16,7 +18,9 @@ marker('datafeeder.upload.error.subtitle.analysis')
 })
 export class UploadDataPageComponent implements OnInit {
   error: UploadDataError
-  maxFileSize = 30
+  get maxFileSizeMb() {
+    return parseSizeAsMb(SETTINGS.maxFileUploadSize)
+  }
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 

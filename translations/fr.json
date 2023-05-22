@@ -65,7 +65,7 @@
   "datafeeder.upload.error.subtitle.analysis": "Le fichier transféré contient-il des données géographiques valides ?",
   "datafeeder.upload.error.subtitle.cantOpenFile": "Vérifiez la validité du fichier sélectionné",
   "datafeeder.upload.error.subtitle.fileFormat": "Rappel : uniquement des SHP",
-  "datafeeder.upload.error.subtitle.fileSize": "Rappel : 30MB maximum",
+  "datafeeder.upload.error.subtitle.fileSize": "Rappel : {size} Mo maximum",
   "datafeeder.upload.error.title.analysis": "Erreur lors de l'analyse des données",
   "datafeeder.upload.error.title.cantOpenFile": "Erreur lors de l'ouverture du fichier",
   "datafeeder.upload.error.title.fileFormat": "Le format du fichier n'est pas supporté",

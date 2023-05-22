@@ -20,6 +20,7 @@ describe('UploadDataRulesComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UploadDataRulesComponent)
     component = fixture.componentInstance
+    component.maxFileSizeMb = 12
     fixture.detectChanges()
   })
 

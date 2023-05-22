@@ -21,4 +21,5 @@ export interface UploadDataError {
 })
 export class UploadDataErrorDialogComponent {
   @Input() error: UploadDataError
+  @Input() maxFileSizeMb: number
 }

@@ -65,7 +65,7 @@
   "datafeeder.upload.error.subtitle.analysis": "Check that the file contains a valid geospatial dataset",
   "datafeeder.upload.error.subtitle.cantOpenFile": "Please check that the file is valid",
   "datafeeder.upload.error.subtitle.fileFormat": "Remember: only SHP",
-  "datafeeder.upload.error.subtitle.fileSize": "Remember: 30 MB maximum",
+  "datafeeder.upload.error.subtitle.fileSize": "Remember: {size} MB maximum",
   "datafeeder.upload.error.title.analysis": "Error during the dataset analysis",
   "datafeeder.upload.error.title.cantOpenFile": "Error while opening the file",
   "datafeeder.upload.error.title.fileFormat": "The selected file format is not supported",

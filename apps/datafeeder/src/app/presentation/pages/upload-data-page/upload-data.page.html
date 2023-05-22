@@ -10,19 +10,20 @@
 
       <div class="pb-20 relative">
         <gn-ui-upload-data-component
-          [maxFileSizeMb]="maxFileSize"
+          [maxFileSizeMb]="maxFileSizeMb"
           (jobId$)="onJobIdGet($event)"
           (errors$)="onUploadError($event)"
         ></gn-ui-upload-data-component>
         <gn-ui-upload-data-error-dialog
           class="error-dialog"
           [error]="error"
+          [maxFileSizeMb]="maxFileSizeMb"
           *ngIf="error"
         ></gn-ui-upload-data-error-dialog>
       </div>
 
       <gn-ui-upload-data-rules
-        [maxFileSize]="maxFileSize"
+        [maxFileSizeMb]="maxFileSizeMb"
         [acceptedFileFormats]="['SHP']"
       >
       </gn-ui-upload-data-rules>

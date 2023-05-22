@@ -18,7 +18,9 @@
 <div class="error-dialog">
   <div class="w-1/2">
     <strong class="text-focus">{{ error && (error.title | translate) }}</strong>
-    <span class="text-help">{{ error && (error.subtitle | translate) }}</span>
+    <span class="text-help">{{
+      error && (error.subtitle | translate: { size: maxFileSizeMb.toFixed(0) })
+    }}</span>
   </div>
   <div class="illustration" *ngIf="error && error.type">
     <svg
