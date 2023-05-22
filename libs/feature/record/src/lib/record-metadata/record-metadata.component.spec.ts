@@ -464,6 +464,9 @@ describe('RecordMetadataComponent', () => {
         expect(result).toBeTruthy()
         expect(result.componentInstance.type).toBe(ErrorType.RECORD_NOT_FOUND)
         expect(result.componentInstance.error).toBe(undefined)
+        expect(result.componentInstance.recordId).toBe(
+          RECORDS_FULL_FIXTURE[0].uuid
+        )
       })
     })
     describe('other error', () => {

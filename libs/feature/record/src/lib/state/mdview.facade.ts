@@ -31,8 +31,6 @@ export class MdViewFacade {
   )
   error$ = this.store.pipe(select(MdViewSelectors.getMetadataError))
 
-  metaDataUuid$ = this.store.pipe(select(MdViewSelectors.getMetadataUuid))
-
   related$ = this.store.pipe(select(MdViewSelectors.getRelated))
 
   allLinks$ = this.metadata$.pipe(map((record) => record.links || []))
