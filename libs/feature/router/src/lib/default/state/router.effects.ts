@@ -77,10 +77,22 @@ export class RouterEffects {
   navigateToMetadata$ = createEffect(() =>
     this._actions$.pipe(
       navigation(this.routerConfig.recordRouteComponent, {
-        run: (activatedRouteSnapshot: ActivatedRouteSnapshot) =>
-          MdViewActions.loadFullMetadata({
-            uuid: activatedRouteSnapshot.params.metadataUuid,
-          }),
+        run: (activatedRouteSnapshot: ActivatedRouteSnapshot) => {
+          return of(
+            MdViewActions.setIncompleteMetadata({
+              incomplete: {
+                uuid: activatedRouteSnapshot.params.metadataUuid,
+                id: '',
+                title: '',
+                metadataUrl: '',
+              },
+            }),
+            MdViewActions.loadFullMetadata({
+              uuid: activatedRouteSnapshot.params.metadataUuid,
+            })
+          )
+        },
+
         onError(a: ActivatedRouteSnapshot, e) {
           console.error('Navigation failed', e)
         },

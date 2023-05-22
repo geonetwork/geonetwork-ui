@@ -192,7 +192,7 @@
   "search.autocomplete.error": "Suggestions could not be fetched:",
   "search.error.couldNotReachApi": "GeoNetwork API could not be reached",
   "search.error.receivedError": "An error was received",
-  "search.error.recordNotFound": "This record was not found.",
+  "search.error.recordNotFound": "This record with id { id } was not found.",
   "search.field.any.placeholder": "Search datasets, services and maps ...",
   "search.field.sortBy": "Sort by:",
   "search.filters.byFormat": "Formats",

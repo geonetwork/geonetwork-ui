@@ -15,5 +15,6 @@ export enum ErrorType {
 export class SearchResultsErrorComponent {
   @Input() type!: ErrorType
   @Input() error?: string
+  @Input() recordId?: string
   types = ErrorType
 }

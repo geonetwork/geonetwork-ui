@@ -21,7 +21,9 @@
       <mat-icon class="computer">computer</mat-icon>
       <mat-icon class="computer-question-mark">question_mark</mat-icon>
     </div>
-    <div translate>search.error.recordNotFound</div>
+    <div translate [translateParams]="{ id: recordId }">
+      search.error.recordNotFound
+    </div>
     <div *ngIf="error">{{ error }}</div>
   </div>
 </div>

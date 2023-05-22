@@ -45,6 +45,7 @@ export const Primary = Template.bind({})
 Primary.args = {
   type: ErrorType.RECEIVED_ERROR,
   error: 'something wrong happened',
+  recordId: 'thisIsAnID',
 }
 Primary.argTypes = {
   type: {
