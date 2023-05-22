@@ -5,7 +5,7 @@ import {
   ElasticsearchService,
   MetadataRecord,
 } from '@geonetwork-ui/util/shared'
-import { simpleWithAgg } from '@geonetwork-ui/util/shared/fixtures'
+import { simpleWithAgg, summaryHits } from '@geonetwork-ui/util/shared/fixtures'
 
 import { provideMockActions } from '@ngrx/effects/testing'
 import { provideMockStore } from '@ngrx/store/testing'
@@ -23,13 +23,13 @@ const full = {
 } as MetadataRecord
 
 const searchServiceMock = {
-  search: () => of(simpleWithAgg),
+  search: () => of(summaryHits as any),
   configuration: {
     basePath: 'http://geonetwork/srv/api',
   },
 }
 const esMapperMock = {
-  toRecords: () => [full],
+  toRecords: (response) => response.hits.hits.map((hit) => full),
 }
 const esServiceMock = {
   getMetadataByIdPayload: jest.fn,
@@ -66,7 +66,7 @@ describe('StationsEffects', () => {
   })
 
   describe('loadFullRecord$', () => {
-    describe('when api sucess', () => {
+    describe('when api sucess and at least one record found', () => {
       it('dispatch loadFullSuccess', () => {
         actions = hot('-a-|', {
           a: MdViewActions.loadFullMetadata({ uuid: full.uuid }),
@@ -77,16 +77,31 @@ describe('StationsEffects', () => {
         expect(effects.loadFull$).toBeObservable(expected)
       })
     })
+    describe('when api sucess and at no record found', () => {
+      beforeEach(() => {
+        searchServiceMock.search = jest.fn(() => of(simpleWithAgg))
+      })
+      it('dispatch loadFullSuccess', () => {
+        actions = hot('-a-|', {
+          a: MdViewActions.loadFullMetadata({ uuid: full.uuid }),
+        })
+        const expected = hot('-a-|', {
+          a: MdViewActions.loadFullFailure({ notFound: true }),
+        })
+        expect(effects.loadFull$).toBeObservable(expected)
+      })
+    })
+
     describe('when api fails', () => {
       beforeEach(() => {
-        searchServiceMock.search = jest.fn(() => throwError('api'))
+        searchServiceMock.search = jest.fn(() => throwError(new Error('api')))
       })
       it('dispatch loadFullFailure', () => {
         actions = hot('-a-|', {
           a: MdViewActions.loadFullMetadata({ uuid: full.uuid }),
         })
         const expected = hot('-(a|)', {
-          a: MdViewActions.loadFullFailure({ error: 'api' }),
+          a: MdViewActions.loadFullFailure({ otherError: 'api' }),
         })
         expect(effects.loadFull$).toBeObservable(expected)
       })
@@ -96,14 +111,14 @@ describe('StationsEffects', () => {
   describe('loadRelatedRecords$', () => {
     describe('when load full success', () => {
       beforeEach(() => {
-        searchServiceMock.search = jest.fn(() => of(simpleWithAgg))
+        searchServiceMock.search = jest.fn(() => of(summaryHits))
       })
       it('dispatch setRelated', () => {
         actions = hot('-a-|', {
           a: MdViewActions.loadFullSuccess({ full }),
         })
         const expected = hot('-a-|', {
-          a: MdViewActions.setRelated({ related: [full] }),
+          a: MdViewActions.setRelated({ related: [full, full, full] }),
         })
         expect(effects.loadRelatedRecords$).toBeObservable(expected)
       })

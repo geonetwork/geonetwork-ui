@@ -9,6 +9,11 @@ const relatedRecord = {
   metadataUrl: 'url',
 }
 
+const withErrorMdViewState = {
+  ...initialMdviewState,
+  error: { otherError: 'Some error' },
+}
+
 describe('MdView Reducer', () => {
   describe('undefined action', () => {
     it('should return the default state', () => {
@@ -25,9 +30,10 @@ describe('MdView Reducer', () => {
       action = MdViewActions.loadFullMetadata({ uuid: '123132132132132132' })
     })
     it('store the loading state', () => {
-      const state = reducer(initialMdviewState, action)
+      const state = reducer(withErrorMdViewState, action)
       expect(state).toEqual({
-        ...initialMdviewState,
+        ...withErrorMdViewState,
+        error: null,
         loadingFull: true,
       })
     })
@@ -40,9 +46,10 @@ describe('MdView Reducer', () => {
       })
     })
     it('saves incomplete metadata', () => {
-      const state = reducer(initialMdviewState, action)
+      const state = reducer(withErrorMdViewState, action)
       expect(state).toEqual({
-        ...initialMdviewState,
+        ...withErrorMdViewState,
+        error: null,
         metadata: RECORDS_SUMMARY_FIXTURE[0],
       })
     })
@@ -56,11 +63,12 @@ describe('MdView Reducer', () => {
     })
     it('saves full metadata ', () => {
       const state = reducer(
-        { ...initialMdviewState, loadingFull: true },
+        { ...withErrorMdViewState, loadingFull: true },
         action
       )
       expect(state).toEqual({
-        ...initialMdviewState,
+        ...withErrorMdViewState,
+        error: null,
         loadingFull: false,
         metadata: RECORDS_SUMMARY_FIXTURE[0],
       })
@@ -70,7 +78,8 @@ describe('MdView Reducer', () => {
     let action
     beforeEach(() => {
       action = MdViewActions.loadFullFailure({
-        error: 'error',
+        otherError: 'error',
+        notFound: true,
       })
     })
     it('set error', () => {
@@ -81,7 +90,7 @@ describe('MdView Reducer', () => {
       expect(state).toEqual({
         ...initialMdviewState,
         loadingFull: false,
-        error: 'error',
+        error: { otherError: 'error', notFound: true },
       })
     })
   })

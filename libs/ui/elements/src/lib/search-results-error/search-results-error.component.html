@@ -16,4 +16,14 @@
     <div translate>search.error.receivedError</div>
     <div *ngIf="error">{{ error }}</div>
   </div>
+  <div *ngIf="type === types.RECORD_NOT_FOUND">
+    <div class="relative opacity-40">
+      <mat-icon class="computer">computer</mat-icon>
+      <mat-icon class="computer-question-mark">question_mark</mat-icon>
+    </div>
+    <div translate [translateParams]="{ id: recordId }">
+      search.error.recordNotFound
+    </div>
+    <div *ngIf="error">{{ error }}</div>
+  </div>
 </div>

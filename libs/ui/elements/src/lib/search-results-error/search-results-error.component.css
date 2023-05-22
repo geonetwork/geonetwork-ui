@@ -17,3 +17,14 @@ mat-icon.question-mark2 {
   left: calc(50% + 1.6em);
   font-size: 1.4em;
 }
+
+.computer {
+  font-size: 3em;
+}
+
+.computer-question-mark {
+  position: absolute;
+  top: 0.6em;
+  left: calc(50% - 0.5em);
+  font-size: 1.2em;
+}

@@ -6,7 +6,7 @@ export const MD_VIEW_FEATURE_STATE_KEY = 'mdView'
 
 export interface MdViewState {
   loadingFull: boolean
-  error: string | null
+  error: { notFound?: boolean; otherError?: string } | null
   metadata?: MetadataRecord
   related?: MetadataRecord[]
 }
@@ -20,20 +20,23 @@ const mdViewReducer = createReducer(
   initialMdviewState,
   on(MdViewActions.loadFullMetadata, (state) => ({
     ...state,
+    error: null,
     loadingFull: true,
   })),
   on(MdViewActions.setIncompleteMetadata, (state, { incomplete }) => ({
     ...state,
+    error: null,
     metadata: incomplete,
   })),
   on(MdViewActions.loadFullSuccess, (state, { full }) => ({
     ...state,
+    error: null,
     metadata: full,
     loadingFull: false,
   })),
-  on(MdViewActions.loadFullFailure, (state, { error }) => ({
+  on(MdViewActions.loadFullFailure, (state, { otherError, notFound }) => ({
     ...state,
-    error,
+    error: { otherError, notFound },
     loadingFull: false,
   })),
   on(MdViewActions.setRelated, (state, { related }) => ({

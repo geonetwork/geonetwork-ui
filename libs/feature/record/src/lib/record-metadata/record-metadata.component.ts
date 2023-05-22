@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { SearchService } from '@geonetwork-ui/feature/search'
+import { ErrorType } from '@geonetwork-ui/ui/elements'
 import { combineLatest } from 'rxjs'
 import { filter, map, mergeMap, pluck } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
@@ -46,6 +47,8 @@ export class RecordMetadataComponent {
     filter((uuid) => !!uuid),
     mergeMap((uuid) => this.sourceService.getSourceLabel(uuid))
   )
+
+  errorTypes = ErrorType
 
   constructor(
     public facade: MdViewFacade,

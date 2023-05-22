@@ -45,10 +45,15 @@ export const Primary = Template.bind({})
 Primary.args = {
   type: ErrorType.RECEIVED_ERROR,
   error: 'something wrong happened',
+  recordId: 'thisIsAnID',
 }
 Primary.argTypes = {
   type: {
     control: 'radio',
-    options: [ErrorType.RECEIVED_ERROR, ErrorType.COULD_NOT_REACH_API],
+    options: [
+      ErrorType.RECEIVED_ERROR,
+      ErrorType.COULD_NOT_REACH_API,
+      ErrorType.RECORD_NOT_FOUND,
+    ],
   },
 }

@@ -29,10 +29,7 @@ export class MdViewFacade {
     select(MdViewSelectors.getMetadataIsIncomplete),
     filter((incomplete) => incomplete !== null)
   )
-  error$ = this.store.pipe(
-    select(MdViewSelectors.getMetadataError),
-    filter((error) => error !== null)
-  )
+  error$ = this.store.pipe(select(MdViewSelectors.getMetadataError))
 
   related$ = this.store.pipe(select(MdViewSelectors.getRelated))
 

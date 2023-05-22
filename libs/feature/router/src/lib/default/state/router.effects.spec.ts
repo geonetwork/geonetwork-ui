@@ -96,8 +96,16 @@ describe('RouterEffects', () => {
           },
         } as any),
       })
-      const expected = hot('-a', {
+      const expected = hot('-(ba)', {
         a: MdViewActions.loadFullMetadata({ uuid: 'abcdef' }),
+        b: MdViewActions.setIncompleteMetadata({
+          incomplete: {
+            uuid: 'abcdef',
+            id: '',
+            title: '',
+            metadataUrl: '',
+          },
+        }),
       })
       expect(effects.navigateToMetadata$).toBeObservable(expected)
     })

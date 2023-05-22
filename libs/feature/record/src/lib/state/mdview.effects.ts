@@ -31,9 +31,14 @@ export class MdViewEffects {
       map((response: EsSearchResponse) => {
         const records = this.esMapper.toRecords(response)
         const full = records[0]
+        if (records.length === 0) {
+          return MdViewActions.loadFullFailure({ notFound: true })
+        }
         return MdViewActions.loadFullSuccess({ full })
       }),
-      catchError((error) => of(MdViewActions.loadFullFailure({ error })))
+      catchError((error) =>
+        of(MdViewActions.loadFullFailure({ otherError: error.message }))
+      )
     )
   )
 
