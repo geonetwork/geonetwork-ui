@@ -8,6 +8,7 @@ import { getLinkLabel, MetadataLink } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
+import { DatavizConfigurationModel } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
 
 @Component({
   selector: 'gn-ui-data-view',
@@ -17,9 +18,7 @@ import { MdViewFacade } from '../state'
 })
 export class DataViewComponent {
   @Input() mode: 'table' | 'chart'
-  @Output() urlParams$ = new BehaviorSubject<URLSearchParams>(
-    new URLSearchParams()
-  )
+  @Output() chartConfig$ = new BehaviorSubject<DatavizConfigurationModel>(null)
   compatibleDataLinks$ = combineLatest([
     this.mdViewFacade.dataLinks$,
     this.mdViewFacade.geoDataLinks$,
@@ -41,8 +40,8 @@ export class DataViewComponent {
 
   constructor(private mdViewFacade: MdViewFacade) {}
 
-  setUrlParams(event: URLSearchParams) {
-    this.urlParams$.next(event)
+  setChartConfig(event: DatavizConfigurationModel) {
+    this.chartConfig$.next(event)
   }
 
   selectLink(linkAsString: string) {

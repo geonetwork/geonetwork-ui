@@ -71,22 +71,18 @@ export class ChartViewComponent {
   }
   chartType$ = new BehaviorSubject<InputChartType>('bar')
 
-  @Output() urlParams$ = combineLatest([
+  @Output() chartConfig$ = combineLatest([
     this.xProperty$.pipe(filter((value) => value !== undefined)),
     this.yProperty$.pipe(filter((value) => value !== undefined)),
     this.aggregation$,
     this.chartType$,
   ]).pipe(
-    map(
-      ([xAxis, yAxis, aggregation, chartType]) =>
-        new URLSearchParams(
-          `?e=gn-dataset-view-chart
-&a=aggregation=${aggregation}
-&a=x-axis=${xAxis}
-&a=y-axis=${yAxis}
-&a=chart-type=${chartType}`
-        )
-    )
+    map(([xProperty, yProperty, aggregation, chartType]) => ({
+      aggregation,
+      xProperty,
+      yProperty,
+      chartType,
+    }))
   )
 
   loading = false

@@ -12,6 +12,7 @@ import { BehaviorSubject, combineLatest } from 'rxjs'
 import { filter, map, mergeMap, pluck } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
+import { DatavizConfigurationModel } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
 
 export const WEB_COMPONENT_EMBEDDER_URL = new InjectionToken<string>(
   'webComponentEmbedderUrl'
@@ -89,14 +90,20 @@ export class RecordMetadataComponent {
     })
   }
 
-  setPermalinkUrl(event: URLSearchParams) {
-    if (event) {
+  setPermalinkUrl(chartConfig: DatavizConfigurationModel) {
+    if (chartConfig) {
+      const { aggregation, xProperty, yProperty, chartType } = chartConfig
       const url = new URL(`${this.wcEmbedderBaseUrl}`, window.location.origin)
-      url.search = `?a=api-url=${this.config.basePath}
+      url.search = `?e=gn-dataset-view-chart
+&a=api-url=${this.config.basePath}
 &a=primary-color=%230f4395
 &a=secondary-color=%238bc832
 &a=main-color=%23555
-&a=background-color=%23fdfbff${event.toString()}`
+&a=background-color=%23fdfbff
+&a=aggregation=${aggregation}
+&a=x-axis=${xProperty}
+&a=y-axis=${yProperty}
+&a=chart-type=${chartType}`
       this.permalinkUrl$.next(url)
     }
   }

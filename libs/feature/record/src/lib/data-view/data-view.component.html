@@ -14,7 +14,7 @@
     ></gn-ui-table-view>
     <gn-ui-chart-view
       *ngIf="mode === 'chart'"
-      (urlParams$)="setUrlParams($event)"
+      (chartConfig$)="setChartConfig($event)"
       [link]="selectedLink$ | async"
     ></gn-ui-chart-view>
   </div>
