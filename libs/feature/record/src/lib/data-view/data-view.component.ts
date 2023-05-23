@@ -41,7 +41,7 @@ export class DataViewComponent {
   constructor(private mdViewFacade: MdViewFacade) {}
 
   setChartConfig(event: DatavizConfigurationModel) {
-    this.chartConfig$.next(event)
+    this.mdViewFacade.setChartConfig(event)
   }
 
   selectLink(linkAsString: string) {

@@ -51,7 +51,6 @@ export class RecordMetadataComponent {
 
   errorTypes = ErrorType
   selectedTabIndex$ = new BehaviorSubject(0)
-  chartConfig: DatavizConfigurationModel
 
   constructor(
     public facade: MdViewFacade,
@@ -73,8 +72,5 @@ export class RecordMetadataComponent {
     this.searchService.updateFilters({
       OrgForResource: { [contactOrgName]: true },
     })
-  }
-  setChartConfig(config: DatavizConfigurationModel) {
-    this.chartConfig = config
   }
 }

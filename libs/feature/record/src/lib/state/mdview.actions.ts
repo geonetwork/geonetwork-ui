@@ -1,4 +1,5 @@
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { DatavizConfigurationModel } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
 import { createAction, props } from '@ngrx/store'
 
 export const loadFullMetadata = createAction(
@@ -24,6 +25,11 @@ export const loadFullFailure = createAction(
 export const setRelated = createAction(
   '[Metadata view] Set related records',
   props<{ related: MetadataRecord[] }>()
+)
+
+export const setChartConfig = createAction(
+  '[Metadata view] Set chart config',
+  props<{ chartConfig: DatavizConfigurationModel }>()
 )
 
 export const close = createAction('[Metadata view] close')

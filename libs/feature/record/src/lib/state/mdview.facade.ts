@@ -7,6 +7,7 @@ import { filter, map } from 'rxjs/operators'
 import * as MdViewActions from './mdview.actions'
 import * as MdViewSelectors from './mdview.selectors'
 import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
+import { DatavizConfigurationModel } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
 
 @Injectable()
 /**
@@ -32,6 +33,8 @@ export class MdViewFacade {
   error$ = this.store.pipe(select(MdViewSelectors.getMetadataError))
 
   related$ = this.store.pipe(select(MdViewSelectors.getRelated))
+
+  chartConfig$ = this.store.pipe(select(MdViewSelectors.getChartConfig))
 
   allLinks$ = this.metadata$.pipe(map((record) => record.links || []))
   apiLinks$ = this.allLinks$.pipe(
@@ -100,5 +103,8 @@ export class MdViewFacade {
   }
   close() {
     this.store.dispatch(MdViewActions.close())
+  }
+  setChartConfig(chartConfig: DatavizConfigurationModel) {
+    this.store.dispatch(MdViewActions.setChartConfig({ chartConfig }))
   }
 }
