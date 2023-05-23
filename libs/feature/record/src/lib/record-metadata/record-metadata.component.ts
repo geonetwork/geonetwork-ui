@@ -9,7 +9,7 @@ import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import { ErrorType } from '@geonetwork-ui/ui/elements'
 import { BehaviorSubject, combineLatest } from 'rxjs'
-import { filter, first, map, mergeMap, pluck } from 'rxjs/operators'
+import { filter, map, mergeMap, pluck } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 
@@ -71,16 +71,7 @@ export class RecordMetadataComponent {
     @Optional()
     @Inject(WEB_COMPONENT_EMBEDDER_URL)
     protected wcEmbedderBaseUrl: string
-  ) {
-    this.displayMap$
-      .pipe(
-        map((displayMap) => (displayMap ? 0 : 1)),
-        first()
-      )
-      .subscribe((value) => {
-        this.selectedTabIndex$.next(value)
-      })
-  }
+  ) {}
 
   onTabIndexChange(index: number): void {
     this.selectedTabIndex$.next(index)
