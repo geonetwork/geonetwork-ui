@@ -17,7 +17,6 @@ import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject, of } from 'rxjs'
 import { MdViewFacade } from '../state/mdview.facade'
 import { RecordMetadataComponent } from './record-metadata.component'
-import { Configuration } from '@geonetwork-ui/data-access/gn4'
 
 class MdViewFacadeMock {
   isPresent$ = new BehaviorSubject(false)
@@ -51,6 +50,12 @@ export class MockDataMapComponent {}
   template: '<div></div>',
 })
 export class MockDataViewComponent {}
+
+@Component({
+  selector: 'gn-ui-permalink',
+  template: '<div></div>',
+})
+export class MockPermalinkComponent {}
 
 @Component({
   selector: 'gn-ui-data-downloads',
@@ -87,6 +92,7 @@ describe('RecordMetadataComponent', () => {
         RecordMetadataComponent,
         MockDataMapComponent,
         MockDataViewComponent,
+        MockPermalinkComponent,
         MockDataDownloadsComponent,
         MockDataOtherlinksComponent,
         MockDataApisComponent,
@@ -275,6 +281,11 @@ describe('RecordMetadataComponent', () => {
           fixture.debugElement.query(By.directive(MockDataViewComponent))
         ).toBeFalsy()
       })
+      it('does not render the permalink component', () => {
+        expect(
+          fixture.debugElement.query(By.directive(MockPermalinkComponent))
+        ).toBeFalsy()
+      })
     })
     describe('when a DATA link present', () => {
       beforeEach(() => {
@@ -294,6 +305,22 @@ describe('RecordMetadataComponent', () => {
           fixture.debugElement.queryAll(By.directive(MockDataViewComponent))
             .length
         ).toEqual(2)
+      })
+      it('does not render the permalink component', () => {
+        expect(
+          fixture.debugElement.query(By.directive(MockPermalinkComponent))
+        ).toBeFalsy()
+      })
+      describe('when selectedTabIndex$ is 2 (chart tab)', () => {
+        beforeEach(() => {
+          component.selectedTabIndex$.next(2)
+          fixture.detectChanges()
+        })
+        it('renders the permalink component', () => {
+          expect(
+            fixture.debugElement.query(By.directive(MockPermalinkComponent))
+          ).toBeTruthy()
+        })
       })
     })
     describe('when a GEODATA link present', () => {

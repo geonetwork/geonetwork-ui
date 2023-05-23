@@ -15,7 +15,7 @@ import {
 } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { DataService } from '../service/data.service'
-import { of, throwError } from 'rxjs'
+import { firstValueFrom, of, throwError } from 'rxjs'
 import { By } from '@angular/platform-browser'
 import { LINK_FIXTURES } from '@geonetwork-ui/util/shared/fixtures'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
@@ -209,6 +209,10 @@ describe('ChartViewComponent', () => {
     it('uses the new value for X', () => {
       expect(chartComponent.labelProperty).toBe('distinct(propStr2)')
     })
+    it('updates xProperty of the chartConfig$', async () => {
+      const config = await firstValueFrom(component.chartConfig$)
+      expect(config.xProperty).toBe('propStr2')
+    })
   })
 
   describe('when y property changes', () => {
@@ -231,6 +235,10 @@ describe('ChartViewComponent', () => {
     it('uses the new value for Y', () => {
       expect(chartComponent.valueProperty).toBe('sum(propNum2)')
     })
+    it('updates yProperty of the chartConfig$', async () => {
+      const config = await firstValueFrom(component.chartConfig$)
+      expect(config.yProperty).toBe('propNum2')
+    })
   })
 
   describe('when chart type changes', () => {
@@ -249,6 +257,10 @@ describe('ChartViewComponent', () => {
     it('update chart', () => {
       expect(chartComponent.type).toBe('line')
     })
+    it('updates chartType of the chartConfig$', async () => {
+      const config = await firstValueFrom(component.chartConfig$)
+      expect(config.chartType).toBe('line')
+    })
   })
 
   describe('when aggregation type changes', () => {
@@ -266,6 +278,10 @@ describe('ChartViewComponent', () => {
         'propNum1',
       ])
       expect(DatasetReaderMock.instance.read).toHaveBeenCalledTimes(1)
+    })
+    it('updates aggregation of the chartConfig$', async () => {
+      const config = await firstValueFrom(component.chartConfig$)
+      expect(config.aggregation).toBe('average')
     })
   })
 

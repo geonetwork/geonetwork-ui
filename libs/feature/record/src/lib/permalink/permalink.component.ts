@@ -37,7 +37,7 @@ export class PermalinkComponent {
 &a=chart-type=${chartType}`
         return url.toString()
       }
-      return of(null)
+      return null
     })
   )
 

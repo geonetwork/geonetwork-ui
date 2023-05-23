@@ -158,4 +158,13 @@ describe('MdViewFacade', () => {
       expect(store.scannedActions$).toBeObservable(expected)
     })
   })
+  describe('setChartConfig', () => {
+    it('dispatches a setChartConfig action', () => {
+      facade.setChartConfig()
+      const expected = hot('a', {
+        a: MdViewActions.setChartConfig(),
+      })
+      expect(store.scannedActions$).toBeObservable(expected)
+    })
+  })
 })
