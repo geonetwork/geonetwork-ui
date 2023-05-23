@@ -92,15 +92,23 @@
         </div>
       </div>
     </div>
-    <div
-      *ngIf="wcEmbedderBaseUrl && (selectedTabIndex$ | async) === 2"
-      class="container-lg px-5 mt-2 lg:mx-auto"
-    >
-      <gn-ui-copy-text-button
-        [text]="permalinkUrl$ | async"
-        [tooltipText]="'tooltip.url.copy' | translate"
-      ></gn-ui-copy-text-button>
-    </div>
+  </div>
+  <div
+    *ngIf="wcEmbedderBaseUrl && (selectedTabIndex$ | async) === 2"
+    class="container-lg px-5 my-1 lg:mx-auto"
+  >
+    <gn-ui-copy-text-button
+      [text]="permalinkUrl$ | async"
+      [tooltipText]="'tooltip.url.copy' | translate"
+    ></gn-ui-copy-text-button>
+  </div>
+
+  <div
+    id="access"
+    class="container-lg px-4 lg:mx-auto"
+    *ngIf="displayDownload$ | async"
+  >
+    <gn-ui-data-downloads class="block mt-5"></gn-ui-data-downloads>
   </div>
 
   <div
