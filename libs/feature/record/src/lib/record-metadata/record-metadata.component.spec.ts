@@ -39,9 +39,6 @@ const searchServiceMock = {
 const sourcesServiceMock = {
   getSourceLabel: jest.fn(() => of('catalog label')),
 }
-class ConfigMock {
-  basePath: 'http://gn-api.url/'
-}
 
 @Component({
   selector: 'gn-ui-map-view',
@@ -102,10 +99,6 @@ describe('RecordMetadataComponent', () => {
         {
           provide: MdViewFacade,
           useClass: MdViewFacadeMock,
-        },
-        {
-          provide: Configuration,
-          useClass: ConfigMock,
         },
         {
           provide: MapManagerService,
