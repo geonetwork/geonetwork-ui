@@ -108,14 +108,6 @@
     <gn-ui-data-downloads class="block mt-5"></gn-ui-data-downloads>
   </div>
 
-  <div
-    id="access"
-    class="container-lg px-4 lg:mx-auto"
-    *ngIf="displayDownload$ | async"
-  >
-    <gn-ui-data-downloads class="block mt-5"></gn-ui-data-downloads>
-  </div>
-
   <div id="links" class="container-lg px-4 lg:mx-auto">
     <div *ngIf="displayOtherLinks | async">
       <gn-ui-data-otherlinks class="block mt-5"></gn-ui-data-otherlinks>
