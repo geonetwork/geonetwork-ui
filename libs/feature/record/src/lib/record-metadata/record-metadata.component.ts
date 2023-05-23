@@ -101,8 +101,8 @@ export class RecordMetadataComponent {
 &a=main-color=%23555
 &a=background-color=%23fdfbff
 &a=aggregation=${aggregation}
-&a=x-axis=${xProperty}
-&a=y-axis=${yProperty}
+&a=x-property=${xProperty}
+&a=y-property=${yProperty}
 &a=chart-type=${chartType}`
       this.permalinkUrl$.next(url)
     }

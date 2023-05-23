@@ -14,7 +14,7 @@
       [choices]="xChoices$ | async"
       (selectValue)="xProperty$.next($event)"
       [selected]="xProperty$.value"
-      [title]="'chart.dropdown.xAxis' | translate"
+      [title]="'chart.dropdown.xProperty' | translate"
     ></gn-ui-dropdown-selector>
     <gn-ui-dropdown-selector
       class="basis-1/4"
@@ -22,7 +22,7 @@
       [choices]="yChoices$ | async"
       (selectValue)="yProperty$.next($event)"
       [selected]="yProperty$.value"
-      [title]="'chart.dropdown.yAxis' | translate"
+      [title]="'chart.dropdown.yProperty' | translate"
       class="select-y-prop"
     ></gn-ui-dropdown-selector>
     <gn-ui-dropdown-selector

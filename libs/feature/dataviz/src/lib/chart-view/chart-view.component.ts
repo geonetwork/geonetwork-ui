@@ -56,12 +56,12 @@ export class ChartViewComponent {
   }
   aggregation$ = new BehaviorSubject<FieldAggregation[0]>('sum')
 
-  @Input() set xAxis(value: string) {
+  @Input() set xProperty(value: string) {
     this.xProperty$.next(value)
   }
   xProperty$ = new BehaviorSubject<string>(undefined)
 
-  @Input() set yAxis(value: string) {
+  @Input() set yProperty(value: string) {
     this.yProperty$.next(value)
   }
   yProperty$ = new BehaviorSubject<string>(undefined)
