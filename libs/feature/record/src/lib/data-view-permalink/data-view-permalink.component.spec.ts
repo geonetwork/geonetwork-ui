@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import {
-  PermalinkComponent,
+  DataViewPermalinkComponent,
   WEB_COMPONENT_EMBEDDER_URL,
-} from './permalink.component'
+} from './data-view-permalink.component'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { BehaviorSubject, firstValueFrom } from 'rxjs'
 import { MdViewFacade } from '../state'
@@ -41,14 +41,14 @@ export class MockCopyTextButtonComponent {
   @Input() text: string
   @Input() tooltipText: string
 }
-describe('PermalinkComponent', () => {
-  let component: PermalinkComponent
-  let fixture: ComponentFixture<PermalinkComponent>
+describe('DataViewPermalinkComponent', () => {
+  let component: DataViewPermalinkComponent
+  let fixture: ComponentFixture<DataViewPermalinkComponent>
   let facade
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PermalinkComponent, MockCopyTextButtonComponent],
+      declarations: [DataViewPermalinkComponent, MockCopyTextButtonComponent],
       imports: [TranslateModule.forRoot()],
       providers: [
         {
@@ -66,7 +66,7 @@ describe('PermalinkComponent', () => {
       ],
     }).compileComponents()
     facade = TestBed.inject(MdViewFacade)
-    fixture = TestBed.createComponent(PermalinkComponent)
+    fixture = TestBed.createComponent(DataViewPermalinkComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

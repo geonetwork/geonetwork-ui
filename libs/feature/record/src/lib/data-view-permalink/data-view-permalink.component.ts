@@ -6,7 +6,7 @@ import {
   Optional,
 } from '@angular/core'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
-import { map, of } from 'rxjs'
+import { map } from 'rxjs'
 import { MdViewFacade } from '../state'
 
 export const WEB_COMPONENT_EMBEDDER_URL = new InjectionToken<string>(
@@ -14,12 +14,12 @@ export const WEB_COMPONENT_EMBEDDER_URL = new InjectionToken<string>(
 )
 
 @Component({
-  selector: 'gn-ui-permalink',
-  templateUrl: './permalink.component.html',
-  styleUrls: ['./permalink.component.css'],
+  selector: 'gn-ui-data-view-permalink',
+  templateUrl: './data-view-permalink.component.html',
+  styleUrls: ['./data-view-permalink.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PermalinkComponent {
+export class DataViewPermalinkComponent {
   permalinkUrl$ = this.facade.chartConfig$.pipe(
     map((config) => {
       if (config) {
