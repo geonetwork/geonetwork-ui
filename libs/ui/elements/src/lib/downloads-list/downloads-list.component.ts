@@ -1,15 +1,9 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   getBadgeColor,
   getFileFormat,
-  LinkClassifierService,
   MetadataLink,
   MetadataLinkType,
 } from '@geonetwork-ui/util/shared'
@@ -17,27 +11,37 @@ import {
 marker('datahub.search.filter.all')
 marker('datahub.search.filter.others')
 
+const FILTER_FORMATS = ['all', 'csv', 'excel', 'json', 'shp', 'others'] as const
+type FilterFormat = typeof FILTER_FORMATS[number]
+
 @Component({
   selector: 'gn-ui-downloads-list',
   templateUrl: './downloads-list.component.html',
   styleUrls: ['./downloads-list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DownloadsListComponent implements OnInit {
-  constructor(
-    private linkClassifier: LinkClassifierService,
-    private translateService: TranslateService
-  ) {}
+export class DownloadsListComponent {
+  constructor(private translateService: TranslateService) {}
 
   @Input() links: MetadataLink[]
 
-  filterFormats: string[] = ['all', 'csv', 'excel', 'json', 'shp', 'others']
-  activeFilterFormats: string[] = ['all']
+  activeFilterFormats: FilterFormat[] = ['all']
 
-  filteredLinks: MetadataLink[] = []
-  filterButtons: FilterButton[]
+  get filteredLinks(): MetadataLink[] {
+    return this.links.filter((link) =>
+      this.activeFilterFormats.some((format) =>
+        this.isLinkOfFormat(link, format)
+      )
+    )
+  }
 
-  toggleFilterFormat(format: string): void {
+  get visibleFormats(): FilterFormat[] {
+    return FILTER_FORMATS.filter((format) =>
+      this.links.some((link) => this.isLinkOfFormat(link, format))
+    )
+  }
+
+  toggleFilterFormat(format: FilterFormat): void {
     if (format === 'all') {
       this.activeFilterFormats = ['all']
     } else {
@@ -45,54 +49,32 @@ export class DownloadsListComponent implements OnInit {
         ? this.activeFilterFormats.filter((f: string) => format !== f)
         : [...this.activeFilterFormats.filter((f) => f !== 'all'), format]
     }
-    this.filteredLinks = this.filterLinks(this.links)
   }
 
-  isFilterActive(filter: string): boolean {
+  isFilterActive(filter: FilterFormat): boolean {
     return this.activeFilterFormats.includes(filter)
   }
 
-  getFilterFormatTitle(format: string) {
+  getFilterFormatTitle(format: FilterFormat) {
     if (format === 'all' || format === 'others') {
       return this.translateService.instant(`datahub.search.filter.${format}`)
     }
     return format
   }
 
-  ngOnInit(): void {
-    this.filteredLinks = this.filterLinks(this.links)
-
-    this.filterButtons = this.filterFormats.map((format) => {
-      return {
-        format,
-        color: getBadgeColor(format),
-      }
-    })
-  }
-
-  filterLinks(links: MetadataLink[]) {
-    if (
-      this.activeFilterFormats.length === 0 ||
-      this.activeFilterFormats.includes('all')
-    ) {
-      return links
+  isLinkOfFormat(link: MetadataLink, format: FilterFormat): boolean {
+    if (format === 'all') {
+      return true
     }
-    let others: MetadataLink[] = []
-    if (this.activeFilterFormats.includes('others')) {
-      others = links.filter((link) => {
-        let isOther = true
-        for (const format of this.filterFormats) {
-          if (format === getFileFormat(link)) isOther = false
-        }
-        return isOther
-      })
-    }
-    const filteredLinks = links.filter((link: MetadataLink) => {
-      return this.activeFilterFormats.some(
-        (filter) => getFileFormat(link).indexOf(filter) > -1
+    if (format === 'others') {
+      const knownFormats = FILTER_FORMATS.filter(
+        (format) => format !== 'all' && format !== 'others'
       )
-    })
-    return [...filteredLinks, ...others]
+      return knownFormats.every(
+        (knownFormat) => !getFileFormat(link).includes(knownFormat)
+      )
+    }
+    return getFileFormat(link).includes(format)
   }
 
   getLinkFormat(link: MetadataLink) {
@@ -106,9 +88,4 @@ export class DownloadsListComponent implements OnInit {
   isFromWfs(link: MetadataLink) {
     return link.type === MetadataLinkType.WFS
   }
-}
-
-export type FilterButton = {
-  format: string
-  color: string | void
 }
