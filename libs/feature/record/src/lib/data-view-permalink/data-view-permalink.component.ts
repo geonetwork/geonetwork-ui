@@ -6,7 +6,7 @@ import {
   Optional,
 } from '@angular/core'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
-import { map } from 'rxjs'
+import { combineLatest, map } from 'rxjs'
 import { MdViewFacade } from '../state'
 
 export const WEB_COMPONENT_EMBEDDER_URL = new InjectionToken<string>(
@@ -20,13 +20,17 @@ export const WEB_COMPONENT_EMBEDDER_URL = new InjectionToken<string>(
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataViewPermalinkComponent {
-  permalinkUrl$ = this.facade.chartConfig$.pipe(
-    map((config) => {
+  permalinkUrl$ = combineLatest(
+    this.facade.chartConfig$,
+    this.facade.metadata$
+  ).pipe(
+    map(([config, metadata]) => {
       if (config) {
         const { aggregation, xProperty, yProperty, chartType } = config
         const url = new URL(`${this.wcEmbedderBaseUrl}`, window.location.origin)
         url.search = `?e=gn-dataset-view-chart
 &a=api-url=${this.config.basePath}
+&a=dataset-id=${metadata.uuid}
 &a=primary-color=%230f4395
 &a=secondary-color=%238bc832
 &a=main-color=%23555

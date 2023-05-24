@@ -24,8 +24,13 @@ const chartConfig2 = {
   chartType: 'line',
 }
 
+const metadata = {
+  uuid: 'md_record_1234',
+}
+
 class MdViewFacadeMock {
   chartConfig$ = new BehaviorSubject(chartConfig1)
+  metadata$ = new BehaviorSubject(metadata)
 }
 class ConfigMock {
   basePath: 'http://gn-api.url/'
@@ -79,7 +84,7 @@ describe('DataViewPermalinkComponent', () => {
     it('should generate URL based on configs', async () => {
       const url = await firstValueFrom(component.permalinkUrl$)
       expect(url).toBe(
-        `https://example.com/wc-embedder?e=gn-dataset-view-chart&a=api-url=${component.config.basePath}&a=primary-color=%230f4395&a=secondary-color=%238bc832&a=main-color=%23555&a=background-color=%23fdfbff&a=aggregation=${chartConfig1.aggregation}&a=x-property=${chartConfig1.xProperty}&a=y-property=${chartConfig1.yProperty}&a=chart-type=${chartConfig1.chartType}`
+        `https://example.com/wc-embedder?e=gn-dataset-view-chart&a=api-url=${component.config.basePath}&a=dataset-id=${metadata.uuid}&a=primary-color=%230f4395&a=secondary-color=%238bc832&a=main-color=%23555&a=background-color=%23fdfbff&a=aggregation=${chartConfig1.aggregation}&a=x-property=${chartConfig1.xProperty}&a=y-property=${chartConfig1.yProperty}&a=chart-type=${chartConfig1.chartType}`
       )
     })
   })
@@ -90,7 +95,7 @@ describe('DataViewPermalinkComponent', () => {
     it('should update URL based on configs', async () => {
       const url = await firstValueFrom(component.permalinkUrl$)
       expect(url).toBe(
-        `https://example.com/wc-embedder?e=gn-dataset-view-chart&a=api-url=${component.config.basePath}&a=primary-color=%230f4395&a=secondary-color=%238bc832&a=main-color=%23555&a=background-color=%23fdfbff&a=aggregation=${chartConfig2.aggregation}&a=x-property=${chartConfig2.xProperty}&a=y-property=${chartConfig2.yProperty}&a=chart-type=${chartConfig2.chartType}`
+        `https://example.com/wc-embedder?e=gn-dataset-view-chart&a=api-url=${component.config.basePath}&a=dataset-id=${metadata.uuid}&a=primary-color=%230f4395&a=secondary-color=%238bc832&a=main-color=%23555&a=background-color=%23fdfbff&a=aggregation=${chartConfig2.aggregation}&a=x-property=${chartConfig2.xProperty}&a=y-property=${chartConfig2.yProperty}&a=chart-type=${chartConfig2.chartType}`
       )
     })
   })
