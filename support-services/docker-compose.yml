@@ -1,0 +1,152 @@
+volumes:
+  elasticsearch_data:
+  geonetwork_data:
+  postgresql_data:
+  postgresql_initdb:
+
+services:
+  database:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: geonetwork
+      POSTGRES_PASSWORD: geonetwork
+      POSTGRES_DB: geonetwork
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.1
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    environment:
+      discovery.type: single-node
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -f http://localhost:9200/_cat/health >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+
+  kibana:
+    image: kibana:7.11.1
+    environment:
+      SERVER_NAME: 'kibana'
+      ELASTICSEARCH_URL: http://elasticsearch:9200/
+      XPACK_MONITORING_UI_CONTAINER_ELASTICSEARCH_ENABLED: 'true'
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -f http://localhost:5601/api/status >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+    ports:
+      - "5601:5601"
+
+#  TODO: include the datafeeder backend as well
+#  datafeeder:
+#    image: georchestra/datafeeder:latest
+#    depends_on:
+#      database:
+#        condition: service_healthy
+#      postgis:
+#        condition: service_healthy
+#    healthcheck:
+#      test: ["CMD-SHELL", "curl -s -f http://localhost:8080/datafeeder >/dev/null || exit 1"]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 10
+#    volumes:
+#      - georchestra_datadir:/etc/georchestra
+#      - datafeeder_uploads:/tmp/datafeeder
+#    environment:
+#      - JAVA_OPTS=-Xms512m -Xmx512m
+#      - LOGGING_LEVEL_ORG_GEORCHESTRA_DATAFEEDER=INFO
+#    ports:
+#      - "8081:8080"
+
+  geonetwork:
+    image: geonetwork:4.2.2
+    environment:
+      JAVA_OPTS: >
+        -Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+        -Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true
+        -Xms512M -Xss512M -Xmx2G -XX:+UseConcMarkSweepGC
+      ES_HOST: elasticsearch
+      ES_PROTOCOL: http
+      ES_PORT: 9200
+      KB_URL: http://kibana:5601
+      GEONETWORK_DB_TYPE: postgres
+      GEONETWORK_DB_HOST: database
+      GEONETWORK_DB_PORT: 5432
+      GEONETWORK_DB_NAME: geonetwork
+      GEONETWORK_DB_USERNAME: geonetwork
+      GEONETWORK_DB_PASSWORD: geonetwork
+    depends_on:
+      database:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -f http://localhost:8080/geonetwork/srv/eng/catalog.search >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+    volumes:
+      - geonetwork_data:/var/lib/jetty/webapps/geonetwork/WEB-INF/data/
+    ports:
+      - "8080:8080"
+
+  init:
+    image: alpine/curl
+    # only run init if volumes were cleared
+    command: sh -c "if [ ! -f /done ]; then run-parts /docker-entrypoint.d; else echo 'Nothing to do.'; exit 0; fi"
+    depends_on:
+      geonetwork:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c '[ -f /done ]'"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+    volumes:
+      - ./docker-entrypoint.d:/docker-entrypoint.d
+      - geonetwork_data:/mnt/geonetwork_data/
+
+  ogc-api-records-service:
+    image: geonetwork/gn-cloud-ogc-api-records-service:4.2.2
+    environment:
+      SPRING_PROFILES_ACTIVE: standalone
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/geonetwork
+      SPRING_DATASOURCE_USERNAME: geonetwork
+      SPRING_DATASOURCE_PASSWORD: geonetwork
+      GN_BASEURL: http://geonetwork:8080/geonetwork/api
+      GN_LEGACY_URL: http://geonetwork:8080/geonetwork
+      GN_INDEX_URL: http://elasticsearch:9200
+      SERVER_FORWARDHEADERSSTRATEGY: FRAMEWORK
+      JAVA_OPTS: -Dfile.encoding=UTF-8
+    depends_on:
+      geonetwork:
+        condition: service_healthy
+      database:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+    ports:
+      - "8081:8080"
