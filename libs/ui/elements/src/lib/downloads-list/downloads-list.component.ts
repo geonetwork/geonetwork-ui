@@ -28,11 +28,11 @@ export class DownloadsListComponent {
   activeFilterFormats: FilterFormat[] = ['all']
 
   get filteredLinks(): MetadataLink[] {
-    return this.links.filter((link) => {
-      return this.activeFilterFormats.some((format) =>
+    return this.links.filter((link) =>
+      this.activeFilterFormats.some((format) =>
         this.isLinkOfFormat(link, format)
       )
-    })
+    )
   }
 
   get visibleFormats(): FilterFormat[] {
