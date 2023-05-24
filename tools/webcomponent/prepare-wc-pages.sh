@@ -8,10 +8,8 @@ nx run webcomponents:build --output-hashing=none --skip-nx-cache --output-path=$
 
 echo '-- Publish html page for Web Component'
 mkdir -p $DIST_WC_PATH
-cat ${DIST_WC_PATH}{runtime,polyfills,main}.js > $DIST_WC_PATH'gn-wc.js'
-rm -f ${DIST_WC_PATH}main.js
-rm -f ${DIST_WC_PATH}polyfills.js
-rm -f ${DIST_WC_PATH}runtime.js
+cat ${DIST_WC_PATH}/*.js > $DIST_WC_PATH'gn-wc.js'
+find "${DIST_WC_PATH}" -name "*.js" ! -name "gn-wc.js" -exec rm -f {} +
 rm -f ${DIST_WC_PATH}styles.css
 
 for c in apps/webcomponents/src/app/components/gn-* ; do
