@@ -52,6 +52,20 @@ npx nx serve (app_name)
 
 And navigate to `http://localhost:4200/`.
 
+If you're using the standard dev configuration then you should head to the [support-services](support-services) folder and
+run `docker compose up -d` to have the required support services running locally (such as GeoNetwork).
+
+Otherwise, you can adjust the GeoNetwork instance used as a backend in the [proxy-config.js](proxy-config.js) file like so:
+
+```diff
+@@ -1,6 +1,6 @@
+ module.exports = {
+   '/geonetwork': {
+-    target: 'http://localhost:8080',
++    target: 'https://my.catalogue.org',
+     secure: true,
+```
+
 ### Build GeoNetwork-UI applications
 
 To build a specific application, use:
