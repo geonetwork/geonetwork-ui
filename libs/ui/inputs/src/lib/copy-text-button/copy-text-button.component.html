@@ -1,0 +1,26 @@
+<div class="flex">
+  <input
+    *ngIf="displayText"
+    type="text"
+    class="grow py-2 px-4 bg-gray-200 opacity-50 rounded-l-md border border-gray-300"
+    value="{{ text }}"
+    readonly
+  />
+  <button
+    type="button"
+    (click)="copyText($event)"
+    class="cursor-pointer"
+    [ngClass]="{
+      'py-2 px-4 rounded-r-md bg-gray-400 hover:bg-gray-600 focus:bg-gray-800 text-white':
+        displayText
+    }"
+    mat-raised-button
+    [matTooltip]="tooltipText"
+    matTooltipPosition="above"
+  >
+    <mat-icon
+      class="pointer-events-none align-middle group-hover:text-secondary text-gray-200 transition-colors"
+      >content_copy</mat-icon
+    >
+  </button>
+</div>

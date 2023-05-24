@@ -29,3 +29,7 @@ export const getRelated = createSelector(
   getMdViewState,
   (state: MdViewState) => state.related
 )
+export const getChartConfig = createSelector(
+  getMdViewState,
+  (state: MdViewState) => state.chartConfig
+)

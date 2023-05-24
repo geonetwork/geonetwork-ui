@@ -5,21 +5,24 @@
     <gn-ui-dropdown-selector
       class="basis-1/4"
       [choices]="typeChoices"
-      (selectValue)="chartType = $event"
+      (selectValue)="chartType$.next($event)"
+      [selected]="chartType$.value"
       [title]="'chart.dropdown.type' | translate"
     ></gn-ui-dropdown-selector>
     <gn-ui-dropdown-selector
       class="basis-1/4"
       [choices]="xChoices$ | async"
       (selectValue)="xProperty$.next($event)"
-      [title]="'chart.dropdown.xAxis' | translate"
+      [selected]="xProperty$.value"
+      [title]="'chart.dropdown.xProperty' | translate"
     ></gn-ui-dropdown-selector>
     <gn-ui-dropdown-selector
       class="basis-1/4"
       *ngIf="!isCountAggregation"
       [choices]="yChoices$ | async"
       (selectValue)="yProperty$.next($event)"
-      [title]="'chart.dropdown.yAxis' | translate"
+      [selected]="yProperty$.value"
+      [title]="'chart.dropdown.yProperty' | translate"
       class="select-y-prop"
     ></gn-ui-dropdown-selector>
     <gn-ui-dropdown-selector
@@ -36,7 +39,7 @@
   >
     <gn-ui-chart
       [data]="chartData$ | async"
-      [type]="chartType"
+      [type]="chartType$.value"
       [labelProperty]="labelProperty"
       [valueProperty]="valueProperty"
     ></gn-ui-chart>

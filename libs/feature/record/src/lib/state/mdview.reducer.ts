@@ -1,6 +1,7 @@
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { Action, createReducer, on } from '@ngrx/store'
 import * as MdViewActions from './mdview.actions'
+import { DatavizConfigurationModel } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
 
 export const MD_VIEW_FEATURE_STATE_KEY = 'mdView'
 
@@ -9,6 +10,7 @@ export interface MdViewState {
   error: { notFound?: boolean; otherError?: string } | null
   metadata?: MetadataRecord
   related?: MetadataRecord[]
+  chartConfig?: DatavizConfigurationModel
 }
 
 export const initialMdviewState: MdViewState = {
@@ -42,6 +44,10 @@ const mdViewReducer = createReducer(
   on(MdViewActions.setRelated, (state, { related }) => ({
     ...state,
     related,
+  })),
+  on(MdViewActions.setChartConfig, (state, { chartConfig }) => ({
+    ...state,
+    chartConfig,
   })),
   on(MdViewActions.close, (state) => {
     // eslint-disable-next-line

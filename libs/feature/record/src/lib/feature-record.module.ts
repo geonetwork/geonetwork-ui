@@ -26,6 +26,7 @@ import { ExternalViewerButtonComponent } from './external-viewer-button/external
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import { TableComponent } from '@geonetwork-ui/ui/dataviz'
 import { FeatureDatavizModule } from '@geonetwork-ui/feature/dataviz'
+import { DataViewPermalinkComponent } from './data-view-permalink/data-view-permalink.component'
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { FeatureDatavizModule } from '@geonetwork-ui/feature/dataviz'
     DataOtherlinksComponent,
     RelatedRecordsComponent,
     ExternalViewerButtonComponent,
+    DataViewPermalinkComponent,
   ],
   imports: [
     CommonModule,
@@ -64,6 +66,7 @@ import { FeatureDatavizModule } from '@geonetwork-ui/feature/dataviz'
     DataDownloadsComponent,
     DataApisComponent,
     DataOtherlinksComponent,
+    DataViewPermalinkComponent,
   ],
 })
 export class FeatureRecordModule {}

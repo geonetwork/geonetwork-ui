@@ -5,6 +5,7 @@ export interface GlobalConfig {
   PROXY_PATH?: string
   METADATA_LANGUAGE?: string
   LOGIN_URL?: string
+  WEB_COMPONENT_EMBEDDER_URL?: string
 }
 
 export interface LayerConfig {

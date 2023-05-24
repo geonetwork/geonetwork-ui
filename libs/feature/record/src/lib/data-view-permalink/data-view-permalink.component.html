@@ -1,0 +1,5 @@
+<gn-ui-copy-text-button
+  *ngIf="wcEmbedderBaseUrl"
+  [text]="permalinkUrl$ | async"
+  [tooltipText]="'tooltip.url.copy' | translate"
+></gn-ui-copy-text-button>

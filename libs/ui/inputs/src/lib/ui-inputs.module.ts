@@ -33,6 +33,8 @@ import {
   FormFieldTemporalExtentComponent,
 } from './form-field'
 import { CheckToggleComponent } from './check-toggle/check-toggle.component'
+import { CopyTextButtonComponent } from './copy-text-button/copy-text-button.component'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 @NgModule({
   declarations: [
@@ -56,6 +58,7 @@ import { CheckToggleComponent } from './check-toggle/check-toggle.component'
     FormFieldSpatialExtentComponent,
     FormFieldTemporalExtentComponent,
     CheckToggleComponent,
+    CopyTextButtonComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,6 +74,7 @@ import { CheckToggleComponent } from './check-toggle/check-toggle.component'
     UiWidgetsModule,
     OverlayModule,
     MatCheckboxModule,
+    MatTooltipModule,
   ],
   exports: [
     DropdownSelectorComponent,
@@ -86,6 +90,7 @@ import { CheckToggleComponent } from './check-toggle/check-toggle.component'
     ViewportIntersectorComponent,
     FormFieldComponent,
     CheckToggleComponent,
+    CopyTextButtonComponent,
   ],
 })
 export class UiInputsModule {}

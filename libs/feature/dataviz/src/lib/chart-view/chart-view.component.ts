@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
+  Output,
 } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
@@ -18,7 +19,6 @@ import { BehaviorSubject, combineLatest, EMPTY, Observable } from 'rxjs'
 import {
   catchError,
   filter,
-  finalize,
   map,
   shareReplay,
   startWith,
@@ -50,6 +50,40 @@ export class ChartViewComponent {
     this.currentLink$.next(value)
   }
   private currentLink$ = new BehaviorSubject<MetadataLink>(null)
+
+  @Input() set aggregation(value: FieldAggregation[0]) {
+    this.aggregation$.next(value)
+  }
+  aggregation$ = new BehaviorSubject<FieldAggregation[0]>('sum')
+
+  @Input() set xProperty(value: string) {
+    this.xProperty$.next(value)
+  }
+  xProperty$ = new BehaviorSubject<string>(undefined)
+
+  @Input() set yProperty(value: string) {
+    this.yProperty$.next(value)
+  }
+  yProperty$ = new BehaviorSubject<string>(undefined)
+
+  @Input() set chartType(value: InputChartType) {
+    this.chartType$.next(value)
+  }
+  chartType$ = new BehaviorSubject<InputChartType>('bar')
+
+  @Output() chartConfig$ = combineLatest([
+    this.xProperty$.pipe(filter((value) => value !== undefined)),
+    this.yProperty$.pipe(filter((value) => value !== undefined)),
+    this.aggregation$,
+    this.chartType$,
+  ]).pipe(
+    map(([xProperty, yProperty, aggregation, chartType]) => ({
+      aggregation,
+      xProperty,
+      yProperty,
+      chartType,
+    }))
+  )
 
   loading = false
   error = null
@@ -129,10 +163,6 @@ export class ChartViewComponent {
       }
     })
   )
-  chartType: InputChartType = 'bar'
-  xProperty$ = new BehaviorSubject<string>(undefined)
-  yProperty$ = new BehaviorSubject<string>(undefined)
-  aggregation$ = new BehaviorSubject<FieldAggregation[0]>('sum')
 
   chartData$ = combineLatest([
     this.dataset$,

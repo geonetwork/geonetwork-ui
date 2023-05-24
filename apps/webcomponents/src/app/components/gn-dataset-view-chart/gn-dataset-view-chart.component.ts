@@ -24,6 +24,10 @@ export class GnDatasetViewChartComponent
   implements OnInit
 {
   @Input() datasetId!: string
+  @Input() aggregation: string
+  @Input() xProperty: string
+  @Input() yProperty: string
+  @Input() chartType: string
   link: MetadataLink
   constructor(injector: Injector, private changeDetector: ChangeDetectorRef) {
     super(injector)

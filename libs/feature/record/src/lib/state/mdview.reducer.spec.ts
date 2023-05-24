@@ -9,6 +9,13 @@ const relatedRecord = {
   metadataUrl: 'url',
 }
 
+const chartConfigMock = {
+  aggregation: 'sum',
+  xProperty: 'anneeappro',
+  yProperty: 'nbre_com',
+  chartType: 'bar',
+}
+
 const withErrorMdViewState = {
   ...initialMdviewState,
   error: { otherError: 'Some error' },
@@ -106,6 +113,21 @@ describe('MdView Reducer', () => {
       expect(state).toEqual({
         ...initialMdviewState,
         related: [relatedRecord],
+      })
+    })
+  })
+  describe('setChartConfig', () => {
+    let action
+    beforeEach(() => {
+      action = MdViewActions.setChartConfig({
+        chartConfig: [chartConfigMock],
+      })
+    })
+    it('set chart config', () => {
+      const state = reducer({ ...initialMdviewState }, action)
+      expect(state).toEqual({
+        ...initialMdviewState,
+        chartConfig: [chartConfigMock],
       })
     })
   })

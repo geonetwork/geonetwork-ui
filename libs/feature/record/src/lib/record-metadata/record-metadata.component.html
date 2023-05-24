@@ -37,7 +37,7 @@
     </div>
   </div>
   <div
-    style="height: 648px"
+    style="height: 612px"
     *ngIf="(displayMap$ | async) || (displayData$ | async)"
   >
     <div
@@ -54,7 +54,7 @@
             record.metadata.preview
           </div>
           <mat-tab-group
-            (selectedIndexChange)="onTabIndexChange()"
+            (selectedIndexChange)="onTabIndexChange($event)"
             [selectedIndex]="(displayMap$ | async) ? 0 : 1"
             animationDuration="200ms"
             mat-stretch-tabs="false"
@@ -92,6 +92,12 @@
         </div>
       </div>
     </div>
+  </div>
+  <div
+    *ngIf="(selectedTabIndex$ | async) === 2"
+    class="container-lg px-5 my-1 lg:mx-auto"
+  >
+    <gn-ui-data-view-permalink></gn-ui-data-view-permalink>
   </div>
 
   <div

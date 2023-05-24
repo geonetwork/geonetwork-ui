@@ -47,8 +47,3 @@ Primary.args = {
     url: 'https//roads.com/wfs',
   },
 }
-Primary.argTypes = {
-  apiUrl: {
-    action: 'apiUrl',
-  },
-}

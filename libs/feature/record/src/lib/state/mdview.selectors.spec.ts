@@ -7,6 +7,13 @@ const relatedRecord = {
   metadataUrl: 'url',
 }
 
+const chartConfigMock = {
+  aggregation: 'sum',
+  xProperty: 'anneeappro',
+  yProperty: 'nbre_com',
+  chartType: 'bar',
+}
+
 describe('MdView Selectors', () => {
   let state
 
@@ -98,6 +105,15 @@ describe('MdView Selectors', () => {
           related: [relatedRecord],
         })
         expect(results).toEqual([relatedRecord])
+      })
+    })
+    describe('getChartConfig', () => {
+      it('returns chart config', () => {
+        const results = MdViewSelectors.getChartConfig.projector({
+          ...state,
+          chartConfig: [chartConfigMock],
+        })
+        expect(results).toEqual([chartConfigMock])
       })
     })
   })

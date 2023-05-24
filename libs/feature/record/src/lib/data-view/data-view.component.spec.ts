@@ -6,11 +6,12 @@ import {
   TestBed,
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { Subject } from 'rxjs'
+import { BehaviorSubject, Subject } from 'rxjs'
 import { MdViewFacade } from '../state'
 import { DataViewComponent } from './data-view.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util/shared'
+import { DatavizConfigurationModel } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
 
 const DATALINKS_FIXTURE: MetadataLink[] = [
   {
@@ -44,6 +45,14 @@ const GEODATALINKS_FIXTURE: MetadataLink[] = [
 class MdViewFacadeMock {
   dataLinks$ = new Subject()
   geoDataLinks$ = new Subject()
+  setChartConfig = jest.fn()
+}
+
+const chartConfigMock = {
+  aggregation: 'sum',
+  xProperty: 'anneeappro',
+  yProperty: 'nbre_com',
+  chartType: 'bar',
 }
 
 @Component({
@@ -60,6 +69,7 @@ export class MockTableViewComponent {
 })
 export class MockChartViewComponent {
   @Input() link: MetadataLink
+  @Output() chartConfig$ = new BehaviorSubject<DatavizConfigurationModel>(null)
 }
 
 @Component({
@@ -78,6 +88,7 @@ describe('DataViewComponent', () => {
   let facade
   let dropdownComponent: MockDropdownSelectorComponent
   let tableViewComponent: MockTableViewComponent
+  let chartViewComponent: MockChartViewComponent
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -162,6 +173,10 @@ describe('DataViewComponent', () => {
     beforeEach(fakeAsync(() => {
       component.mode = 'chart'
       fixture.detectChanges()
+      chartViewComponent = fixture.debugElement.query(
+        By.directive(MockChartViewComponent)
+      ).componentInstance
+      chartViewComponent.chartConfig$.next(chartConfigMock)
     }))
     it('creates a chart view component to render data', () => {
       expect(
@@ -172,6 +187,9 @@ describe('DataViewComponent', () => {
       expect(
         fixture.debugElement.query(By.directive(MockTableViewComponent))
       ).toBeFalsy()
+    })
+    it('calls setChartConfig', () => {
+      expect(facade.setChartConfig).toHaveBeenCalledWith(chartConfigMock)
     })
   })
 })

@@ -1,10 +1,4 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  Input,
-  Output,
-  EventEmitter,
-} from '@angular/core'
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
 import { MetadataLink } from '@geonetwork-ui/util/shared'
 
 @Component({
@@ -15,10 +9,4 @@ import { MetadataLink } from '@geonetwork-ui/util/shared'
 })
 export class ApiCardComponent {
   @Input() link: MetadataLink
-  @Output() apiUrl = new EventEmitter<string>()
-
-  copyUrl() {
-    navigator.clipboard.writeText(this.link.url)
-    this.apiUrl.emit(this.link.url)
-  }
 }
