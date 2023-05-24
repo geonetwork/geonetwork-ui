@@ -27,7 +27,7 @@ class MockDownloadItemComponent {
 describe('DownloadsListComponent', () => {
   let component: DownloadsListComponent
   let fixture: ComponentFixture<DownloadsListComponent>
-  let de
+  let de: DebugElement
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -66,7 +66,7 @@ describe('DownloadsListComponent', () => {
       fixture.detectChanges()
       items = de.queryAll(By.directive(MockDownloadItemComponent))
     })
-    it('contains one link', () => {
+    it('contains three links', () => {
       expect(items.length).toBe(3)
     })
   })
@@ -163,6 +163,58 @@ describe('DownloadsListComponent', () => {
       })
       it('shows no link', () => {
         expect(component.filteredLinks).toEqual([])
+      })
+    })
+  })
+
+  describe('filter buttons visibility', () => {
+    let items: DebugElement[]
+    describe('csv, json, pdf', () => {
+      beforeEach(() => {
+        component.links = [
+          LINK_FIXTURES.dataCsv,
+          LINK_FIXTURES.dataJson,
+          LINK_FIXTURES.dataPdf,
+        ]
+        fixture.detectChanges()
+        items = de.queryAll(By.css('.format-filter'))
+      })
+      it('show only all, csv, json and pdf filters', () => {
+        const displayedFormats = items.map(
+          (item) => item.attributes['data-format']
+        )
+        expect(displayedFormats).toEqual(['all', 'csv', 'json', 'others'])
+      })
+    })
+    describe('geojson, shp, excel', () => {
+      beforeEach(() => {
+        component.links = [
+          LINK_FIXTURES.geodataJsonWithMimeType,
+          LINK_FIXTURES.geodataShp,
+          LINK_FIXTURES.dataXls,
+          LINK_FIXTURES.dataXlsx,
+        ]
+        fixture.detectChanges()
+        items = de.queryAll(By.css('.format-filter'))
+      })
+      it('show only all, excel, json and shp  filters', () => {
+        const displayedFormats = items.map(
+          (item) => item.attributes['data-format']
+        )
+        expect(displayedFormats).toEqual(['all', 'excel', 'json', 'shp'])
+      })
+    })
+    describe('pdf', () => {
+      beforeEach(() => {
+        component.links = [LINK_FIXTURES.dataPdf]
+        fixture.detectChanges()
+        items = de.queryAll(By.css('.format-filter'))
+      })
+      it('show only all and others filters', () => {
+        const displayedFormats = items.map(
+          (item) => item.attributes['data-format']
+        )
+        expect(displayedFormats).toEqual(['all', 'others'])
       })
     })
   })

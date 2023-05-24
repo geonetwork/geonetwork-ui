@@ -9,14 +9,17 @@
     record.metadata.download
   </p>
   <div class="flex flex-wrap justify-start sm:justify-end sm:pb-4">
-    <span
+    <button
+      type="button"
       [class.opacity-100]="isFilterActive(format)"
-      class="bg-gray-200 cursor-pointer p-2 m-1 rounded opacity-50 text-sm sm:2"
-      (click)="toggleFilterFormat($event.target.value)"
-      [value]="format"
-      *ngFor="let format of filterFormats"
-      >{{ getFilterFormatTitle(format) }}</span
+      class="bg-gray-200 cursor-pointer p-2 m-1 rounded text-sm sm:2 format-filter"
+      [ngClass]="isFilterActive(format) ? 'opacity-100' : 'opacity-50'"
+      (click)="toggleFilterFormat(format)"
+      [attr.data-format]="format"
+      *ngFor="let format of visibleFormats"
     >
+      {{ getFilterFormatTitle(format) }}
+    </button>
   </div>
 </div>
 <div class="mb-2 sm:mb-3" *ngFor="let link of filteredLinks">
