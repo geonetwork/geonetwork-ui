@@ -1,6 +1,6 @@
 # Support services
 
-This folder contains a docker composition which can simulate an actual GeoNetwork 4 instance to be used 
+This folder contains a docker composition which can simulate an actual GeoNetwork 4 instance to be used
 for testing and development on GeoNetwork-UI.
 
 The instance is already prepared with a few sample records and offer a reproducible development and testing environment.
@@ -27,7 +27,7 @@ $ docker compose down -v
 
 GeoNetwork can be accessed on http://localhost:8080/geonetwork.
 
-Kibana can be used to inspect the ElasticSearch index and experiment with requests; it is accessible on http://localhost:5601. 
+Kibana can be used to inspect the ElasticSearch index and experiment with requests; it is accessible on http://localhost:5601.
 
 ## Regenerate the initial database state
 

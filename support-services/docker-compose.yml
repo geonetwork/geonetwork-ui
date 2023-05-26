@@ -12,7 +12,7 @@ services:
       POSTGRES_PASSWORD: geonetwork
       POSTGRES_DB: geonetwork
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      test: ['CMD-SHELL', 'pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB']
       interval: 10s
       timeout: 3s
       retries: 3
@@ -33,7 +33,11 @@ services:
       discovery.type: single-node
       ES_JAVA_OPTS: -Xms512m -Xmx512m
     healthcheck:
-      test: ["CMD-SHELL", "curl -s -f http://localhost:9200/_cat/health >/dev/null || exit 1"]
+      test:
+        [
+          'CMD-SHELL',
+          'curl -s -f http://localhost:9200/_cat/health >/dev/null || exit 1',
+        ]
       interval: 30s
       timeout: 10s
       retries: 10
@@ -50,34 +54,38 @@ services:
       elasticsearch:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "curl -s -f http://localhost:5601/api/status >/dev/null || exit 1"]
+      test:
+        [
+          'CMD-SHELL',
+          'curl -s -f http://localhost:5601/api/status >/dev/null || exit 1',
+        ]
       interval: 30s
       timeout: 10s
       retries: 10
     ports:
-      - "5601:5601"
+      - '5601:5601'
 
-#  TODO: include the datafeeder backend as well
-#  datafeeder:
-#    image: georchestra/datafeeder:latest
-#    depends_on:
-#      database:
-#        condition: service_healthy
-#      postgis:
-#        condition: service_healthy
-#    healthcheck:
-#      test: ["CMD-SHELL", "curl -s -f http://localhost:8080/datafeeder >/dev/null || exit 1"]
-#      interval: 30s
-#      timeout: 10s
-#      retries: 10
-#    volumes:
-#      - georchestra_datadir:/etc/georchestra
-#      - datafeeder_uploads:/tmp/datafeeder
-#    environment:
-#      - JAVA_OPTS=-Xms512m -Xmx512m
-#      - LOGGING_LEVEL_ORG_GEORCHESTRA_DATAFEEDER=INFO
-#    ports:
-#      - "8081:8080"
+  #  TODO: include the datafeeder backend as well
+  #  datafeeder:
+  #    image: georchestra/datafeeder:latest
+  #    depends_on:
+  #      database:
+  #        condition: service_healthy
+  #      postgis:
+  #        condition: service_healthy
+  #    healthcheck:
+  #      test: ["CMD-SHELL", "curl -s -f http://localhost:8080/datafeeder >/dev/null || exit 1"]
+  #      interval: 30s
+  #      timeout: 10s
+  #      retries: 10
+  #    volumes:
+  #      - georchestra_datadir:/etc/georchestra
+  #      - datafeeder_uploads:/tmp/datafeeder
+  #    environment:
+  #      - JAVA_OPTS=-Xms512m -Xmx512m
+  #      - LOGGING_LEVEL_ORG_GEORCHESTRA_DATAFEEDER=INFO
+  #    ports:
+  #      - "8081:8080"
 
   geonetwork:
     image: geonetwork:4.2.2
@@ -102,14 +110,18 @@ services:
       elasticsearch:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "curl -s -f http://localhost:8080/geonetwork/srv/eng/catalog.search >/dev/null || exit 1"]
+      test:
+        [
+          'CMD-SHELL',
+          'curl -s -f http://localhost:8080/geonetwork/srv/eng/catalog.search >/dev/null || exit 1',
+        ]
       interval: 30s
       timeout: 10s
       retries: 10
     volumes:
       - geonetwork_data:/var/lib/jetty/webapps/geonetwork/WEB-INF/data/
     ports:
-      - "8080:8080"
+      - '8080:8080'
 
   init:
     image: alpine/curl
@@ -121,7 +133,7 @@ services:
       elasticsearch:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "sh -c '[ -f /done ]'"]
+      test: ['CMD-SHELL', "sh -c '[ -f /done ]'"]
       interval: 5s
       timeout: 10s
       retries: 10
@@ -149,4 +161,4 @@ services:
       elasticsearch:
         condition: service_healthy
     ports:
-      - "8081:8080"
+      - '8081:8080'

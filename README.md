@@ -8,8 +8,8 @@ It also provides Web Components to embed various parts of your data catalog in t
 
 ## Requirements
 
-* GeoNetwork version 4.2.2
-* ElasticSearch version 7.11+
+- GeoNetwork version 4.2.2
+- ElasticSearch version 7.11+
 
 :warning: A bug currently in GeoNetwork 4.2.2 prevents the organizations of showing up correctly in the Datahub application.
 
@@ -30,7 +30,6 @@ index 1d7e499af7..78e682e3db 100644
                },
                "role": {
 ```
-
 
 ## Getting started
 
@@ -269,5 +268,6 @@ translations used in the different applications of the geonetwork-ui project.**
 
 ## To document
 
- How to build and run web components
+How to build and run web components
+
 - Explain unit test setup & architecture with jest
