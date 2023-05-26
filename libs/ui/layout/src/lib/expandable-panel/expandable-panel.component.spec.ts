@@ -47,7 +47,12 @@ describe('ExpandablePanelComponent', () => {
       })
       it('hides content', () => {
         const el = fixture.debugElement.query(By.css('.content'))
-        expect(el.classes['max-h-0']).toBeTruthy()
+        expect(el.styles.getPropertyValue('max-height')).toEqual('0px')
+      })
+      it('should have ease-out transition', () => {
+        const el = fixture.debugElement.query(By.css('.content'))
+        expect(el.classes['ease-out']).toBeTruthy()
+        expect(el.classes['ease-in']).toBeFalsy()
       })
     })
     describe('when not collapsed', () => {
@@ -55,9 +60,10 @@ describe('ExpandablePanelComponent', () => {
         component.collapsed = false
         fixture.detectChanges()
       })
-      it('shows content', () => {
+      it('should have ease-in transition', () => {
         const el = fixture.debugElement.query(By.css('.content'))
-        expect(el.classes['max-h-[300px]']).toBeTruthy()
+        expect(el.classes['ease-in']).toBeTruthy()
+        expect(el.classes['ease-out']).toBeFalsy()
       })
     })
   })
