@@ -3,7 +3,7 @@
 This folder contains a docker composition which can simulate an actual GeoNetwork 4 instance to be used 
 for testing and development on GeoNetwork-UI.
 
-The instance is already prepared with a few sample records and offer a reproducible environment.
+The instance is already prepared with a few sample records and offer a reproducible development and testing environment.
 
 ## Requirements
 
@@ -12,7 +12,6 @@ The instance is already prepared with a few sample records and offer a reproduci
 ## Start
 
 ```shell
-$ docker pull
 $ docker compose up -d
 ```
 

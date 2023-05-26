@@ -4,13 +4,33 @@
 
 GeoNetwork UI is a suite of Applications made to provide a modern facade to your GeoNetwork 4 catalog.
 
-It also provides Web Components to embed your catalogue in third party websites. It relies on the GeoNetwork 4 OpenAPI.
+It also provides Web Components to embed various parts of your data catalog in third party websites.
 
-The target audience is:
+## Requirements
 
-- GeoNetwork developers
-- Developers of SDI, portals
-- Website and CMS maintainers
+* GeoNetwork version 4.2.2
+* ElasticSearch version 7.11+
+
+:warning: A bug currently in GeoNetwork 4.2.2 prevents the organizations of showing up correctly in the Datahub application.
+
+As a temporary workaround, the following change is necessary in GeoNetwork data directory:
+
+```diff
+diff --git a/web/src/main/webResources/WEB-INF/data/config/index/records.json b/web/src/main/webResources/WEB-INF/data/config/index/records.json
+index 1d7e499af7..78e682e3db 100644
+--- a/web/src/main/webResources/WEB-INF/data/config/index/records.json
++++ b/web/src/main/webResources/WEB-INF/data/config/index/records.json
+@@ -1317,7 +1317,7 @@
+           "mapping": {
+             "type": "nested",
+             "properties": {
+-              "org": {
++              "organisation": {
+                 "type": "keyword"
+               },
+               "role": {
+```
+
 
 ## Getting started
 
@@ -249,6 +269,5 @@ translations used in the different applications of the geonetwork-ui project.**
 
 ## To document
 
-- How to specify the GN url to use (currently hardcoded in the dev proxy: https://apps.titellus.net/geonetwork)
-- How to build and run web components
+ How to build and run web components
 - Explain unit test setup & architecture with jest
