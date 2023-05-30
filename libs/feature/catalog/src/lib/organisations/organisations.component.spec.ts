@@ -15,7 +15,7 @@ import { ORGANISATIONS_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 import { readFirst } from '@nrwl/angular/testing'
 import { of } from 'rxjs'
 import { OrganisationsComponent } from './organisations.component'
-import { OrganisationsService } from './organisations.service'
+import { OrganisationsServiceInterface } from './service/organisations.service.interface'
 
 @Component({
   selector: 'gn-ui-organisations-sort',
@@ -44,7 +44,7 @@ class PaginationMockComponent {
 }
 
 class OrganisationsServiceMock {
-  hydratedOrganisations$ = of(ORGANISATIONS_FIXTURE)
+  organisations$ = of(ORGANISATIONS_FIXTURE)
 }
 
 class SearchServiceMock {
@@ -64,7 +64,7 @@ describe('OrganisationsComponent', () => {
   let component: OrganisationsComponent
   let fixture: ComponentFixture<OrganisationsComponent>
   let de: DebugElement
-  let organisationsService: OrganisationsService
+  let organisationsService: OrganisationsServiceInterface
   let searchService: SearchService
 
   beforeEach(async () => {
@@ -78,7 +78,7 @@ describe('OrganisationsComponent', () => {
       ],
       providers: [
         {
-          provide: OrganisationsService,
+          provide: OrganisationsServiceInterface,
           useClass: OrganisationsServiceMock,
         },
         {
@@ -92,7 +92,7 @@ describe('OrganisationsComponent', () => {
       })
       .compileComponents()
 
-    organisationsService = TestBed.inject(OrganisationsService)
+    organisationsService = TestBed.inject(OrganisationsServiceInterface)
     searchService = TestBed.inject(SearchService)
     fixture = TestBed.createComponent(OrganisationsComponent)
     component = fixture.componentInstance

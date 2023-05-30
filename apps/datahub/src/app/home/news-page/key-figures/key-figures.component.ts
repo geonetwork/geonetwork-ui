@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { startWith } from 'rxjs/operators'
 import {
-  OrganisationsService,
+  OrganisationsServiceInterface,
   RecordsService,
 } from '@geonetwork-ui/feature/catalog'
 import { ROUTER_ROUTE_SEARCH } from '@geonetwork-ui/feature/router'
@@ -24,6 +24,6 @@ export class KeyFiguresComponent {
 
   constructor(
     private catalogRecords: RecordsService,
-    private catalogOrgs: OrganisationsService
+    private catalogOrgs: OrganisationsServiceInterface
   ) {}
 }

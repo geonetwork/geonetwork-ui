@@ -3,7 +3,7 @@ import { SearchService } from '@geonetwork-ui/feature/search'
 import { Organisation } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
 import { map, startWith, tap } from 'rxjs/operators'
-import { OrganisationsService } from './organisations.service'
+import { OrganisationsServiceInterface } from './service/organisations.service.interface'
 
 @Component({
   selector: 'gn-ui-organisations',
@@ -15,7 +15,7 @@ export class OrganisationsComponent {
   @Input() itemsOnPage = 12
 
   constructor(
-    private organisationsService: OrganisationsService,
+    private organisationsService: OrganisationsServiceInterface,
     private searchService: SearchService
   ) {}
   totalPages: number
@@ -23,7 +23,7 @@ export class OrganisationsComponent {
   sortBy$ = new BehaviorSubject('name-asc')
 
   organisationsSorted$: Observable<Organisation[]> = combineLatest([
-    this.organisationsService.hydratedOrganisations$.pipe(
+    this.organisationsService.organisations$.pipe(
       startWith(Array(this.itemsOnPage).fill({}))
     ),
     this.sortBy$,
