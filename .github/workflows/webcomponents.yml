@@ -5,7 +5,7 @@ run-name: 🧩 Build Web Components for ${{ github.event_name == 'issue_comment'
 on:
   push:
     branches:
-      - main
+      - geocat
   release:
     types: [published]
 

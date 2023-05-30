@@ -8,7 +8,7 @@ env:
 on:
   push:
     branches:
-      - main
+      - geocat
   pull_request:
     types: [opened, synchronize, ready_for_review]
 
@@ -16,7 +16,7 @@ on:
 # on QA checks
 concurrency:
   group: checks-${{ github.ref }}
-  cancel-in-progress: ${{ github.ref_name != 'main' }}
+  cancel-in-progress: ${{ github.ref_name != 'geocat' }}
 
 jobs:
   format-lint-test-build:

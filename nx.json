@@ -1,6 +1,6 @@
 {
   "affected": {
-    "defaultBase": "remotes/origin/main"
+    "defaultBase": "remotes/geocat/geocat"
   },
   "npmScope": "geonetwork-ui",
   "tasksRunnerOptions": {

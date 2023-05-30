@@ -9,8 +9,8 @@ gitTag=$(git describe --exact-match --tags 2>/dev/null | sed "s/^v//") # remove 
 gitBranch=$(git symbolic-ref --short HEAD)
 gitRef=$(git rev-parse --short HEAD)
 dockerTag=${gitTag:-${gitBranch}}
-if [ ${dockerTag} == "main" ]; then
+if [ ${dockerTag} == "geocat" ]; then
   dockerTag=${dockerTag}-${gitRef}
 fi
 
-echo "geonetwork/geonetwork-ui-${appName}:${dockerTag}"
+echo "camptocamp/geocat-geonetwork-ui-${appName}:${dockerTag}"

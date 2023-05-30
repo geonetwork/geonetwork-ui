@@ -9,7 +9,7 @@ env:
 on:
   push:
     branches:
-      - main
+      - geocat
   issue_comment:
     types:
       - edited
@@ -38,7 +38,7 @@ jobs:
     name: Deploy Storybook to GitHub Pages
     runs-on: ubuntu-latest
     env:
-      BRANCH_NAME: ${{needs.checks.outputs.ref || 'main'}}
+      BRANCH_NAME: ${{needs.checks.outputs.ref || 'geocat'}}
 
     steps:
       - name: Dump GitHub event
