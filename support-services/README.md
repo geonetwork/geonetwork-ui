@@ -3,7 +3,7 @@
 This folder contains a docker composition which can simulate an actual GeoNetwork 4 instance to be used
 for testing and development on GeoNetwork-UI.
 
-The instance is already prepared with a few sample records and offer a reproducible development and testing environment.
+The instance is already prepared with a few sample records and offers a reproducible development and testing environment.
 
 ## Requirements
 
@@ -17,7 +17,13 @@ $ docker compose up -d
 
 On the first run, the database will be populated with the settings and sample records.
 
-To clear the volumes and let the database repopulate itself from scratch run:
+A quicker startup can be obtained by only targeting the `init` service:
+
+```shell
+$ docker compose up init -d
+```
+
+To clear the volumes and let the database repopulate itself from scratch, run:
 
 ```shell
 $ docker compose down -v
