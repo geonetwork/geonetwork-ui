@@ -12,10 +12,13 @@
         [style.opacity]="expandRatio"
         [innerHTML]="'datahub.header.title.html' | translate"
       ></div>
-      <gn-ui-fuzzy-search
-        class="text-[18px]"
-        (itemSelected)="onFuzzySearchSelection($event)"
-      ></gn-ui-fuzzy-search>
+      <div class="flex flex-wrap gap-4">
+        <gn-ui-fuzzy-search
+          class="text-[18px] grow"
+          (itemSelected)="onFuzzySearchSelection($event)"
+        ></gn-ui-fuzzy-search>
+        <gn-ui-location-search class="text-[18px] grow"></gn-ui-location-search>
+      </div>
       <div class="flex h-0 py-5 gap-3" [style.opacity]="-0.6 + expandRatio * 2">
         <datahub-header-badge-button
           [routerLink]="ROUTE_SEARCH"

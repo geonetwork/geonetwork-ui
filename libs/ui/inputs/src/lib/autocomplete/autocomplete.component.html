@@ -23,7 +23,7 @@
     aria-label="Trigger search"
     (click)="handleClickSearch()"
   >
-    <mat-icon>search</mat-icon>
+    <mat-icon class="material-icons-outlined">{{ icon }}</mat-icon>
   </button>
   <gn-ui-popup-alert
     *ngIf="error"

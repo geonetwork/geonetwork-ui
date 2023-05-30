@@ -9,6 +9,7 @@ import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 export default {
   title: 'Inputs/AutocompleteComponent',
@@ -21,6 +22,7 @@ export default {
         MatAutocompleteModule,
         MatIconModule,
         ReactiveFormsModule,
+        BrowserAnimationsModule,
       ],
     }),
   ],
@@ -47,6 +49,7 @@ Primary.args = {
   placeholder: 'Full text search',
   actionResult: ['Hello', 'world'],
   actionThrowsError: false,
+  icon: 'pin_drop',
 }
 Primary.argTypes = {
   itemSelected: {
@@ -57,5 +60,11 @@ Primary.argTypes = {
   },
   actionThrowsError: {
     type: 'boolean',
+  },
+  icon: {
+    control: {
+      type: 'select',
+      options: ['pin_drop', 'search', 'home'],
+    },
   },
 }
