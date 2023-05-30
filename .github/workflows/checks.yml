@@ -34,6 +34,7 @@ jobs:
         npx nx affected --target=test --parallel=3 --ci --code-coverage
         npx nx affected --target=build --parallel=3
       node-version: 16.17.0 # FIXME: use env.NODE_VERSION
+      main-branch-name: 'geocat'
 
   agents:
     if: github.event.pull_request.draft == false
@@ -63,6 +64,8 @@ jobs:
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v3
+        with:
+          main-branch-name: 'geocat'
 
       - name: Install dependencies
         run: npm ci
