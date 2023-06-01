@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { AutocompleteItem } from '@geonetwork-ui/ui/inputs'
-import { of } from 'rxjs'
+import { LocationSearchService } from './location-search.service'
+import { LocationSearchResultModel } from './location-search-result.model'
 
 @Component({
   selector: 'gn-ui-location-search',
@@ -9,17 +10,15 @@ import { of } from 'rxjs'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LocationSearchComponent {
-  displayWithFn: (any) => string = (location) => location?.name
+  constructor(private locationSearchService: LocationSearchService) {}
 
-  autoCompleteAction = (query) =>
-    of([
-      {
-        name: 'Geneve',
-      },
-      {
-        name: 'Lausanne',
-      },
-    ])
+  displayWithFn: (LocationSearchResultModel) => string = (location) => {
+    return location?.attrs.label.replace(/<[^>]*>?/gm, '')
+  }
+
+  autoCompleteAction = (query: string) => {
+    return this.locationSearchService.getLocationSearch(query)
+  }
 
   handleItemSelection(item: AutocompleteItem) {
     console.log('location', item)
