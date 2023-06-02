@@ -28,7 +28,7 @@ import { EffectsModule } from '@ngrx/effects'
 import { provideMockActions } from '@ngrx/effects/testing'
 import { Store, StoreModule } from '@ngrx/store'
 import { getTestScheduler, hot } from 'jasmine-marbles'
-import { Observable, of, throwError } from 'rxjs'
+import { firstValueFrom, Observable, of, throwError } from 'rxjs'
 import { SearchEffects } from './effects'
 import {
   initialState,
@@ -77,7 +77,7 @@ class AuthServiceMock {
   authReady = () => of(true)
 }
 class EsMapperMock {
-  toRecords = () => []
+  toRecords = () => of([])
 }
 class FavoritesServiceMock {
   myFavoritesUuid$ = of(['fav001', 'fav002', 'fav003'])

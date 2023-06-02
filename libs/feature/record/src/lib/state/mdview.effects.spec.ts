@@ -29,14 +29,14 @@ const searchServiceMock = {
   },
 }
 const esMapperMock = {
-  toRecords: (response) => response.hits.hits.map((hit) => full),
+  toRecords: (response) => of(response.hits.hits.map((hit) => full)),
 }
 const esServiceMock = {
   getMetadataByIdPayload: jest.fn,
   getRelatedRecordPayload: jest.fn,
 }
 
-describe('StationsEffects', () => {
+describe('MdViewEffects', () => {
   let actions: Observable<any>
   let effects: MdViewEffects
 
@@ -66,7 +66,7 @@ describe('StationsEffects', () => {
   })
 
   describe('loadFullRecord$', () => {
-    describe('when api sucess and at least one record found', () => {
+    describe('when api success and at least one record found', () => {
       it('dispatch loadFullSuccess', () => {
         actions = hot('-a-|', {
           a: MdViewActions.loadFullMetadata({ uuid: full.uuid }),
@@ -77,7 +77,7 @@ describe('StationsEffects', () => {
         expect(effects.loadFull$).toBeObservable(expected)
       })
     })
-    describe('when api sucess and at no record found', () => {
+    describe('when api success and at no record found', () => {
       beforeEach(() => {
         searchServiceMock.search = jest.fn(() => of(simpleWithAgg))
       })
