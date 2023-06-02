@@ -1,4 +1,4 @@
-import { firstValueFrom, Observable, of, switchMap } from 'rxjs'
+import { combineLatest, firstValueFrom, Observable, of, switchMap } from 'rxjs'
 import { ElasticsearchService, SearchFilters } from '@geonetwork-ui/util/shared'
 import {
   SearchApiService,
@@ -8,6 +8,7 @@ import { map, shareReplay } from 'rxjs/operators'
 import { Injector } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { OrganisationsServiceInterface } from '@geonetwork-ui/feature/catalog'
 
 export type FieldValue = string | number
 export interface FieldAvailableValue {
@@ -17,8 +18,8 @@ export interface FieldAvailableValue {
 
 export abstract class AbstractSearchField {
   abstract getAvailableValues(): Observable<FieldAvailableValue[]>
-  abstract getFiltersForValues(values: FieldValue[]): SearchFilters
-  abstract getValuesForFilter(filters: SearchFilters): FieldValue[]
+  abstract getFiltersForValues(values: FieldValue[]): Observable<SearchFilters>
+  abstract getValuesForFilter(filters: SearchFilters): Observable<FieldValue[]>
 }
 
 export class SimpleSearchField implements AbstractSearchField {
@@ -70,19 +71,21 @@ export class SimpleSearchField implements AbstractSearchField {
         })
       )
   }
-  getFiltersForValues(values: FieldValue[]): SearchFilters {
-    return {
+  getFiltersForValues(values: FieldValue[]): Observable<SearchFilters> {
+    return of({
       [this.esFieldName]: values.reduce((acc, val) => {
         return { ...acc, [val.toString()]: true }
       }, {}),
-    }
+    })
   }
-  getValuesForFilter(filters: SearchFilters): FieldValue[] {
+  getValuesForFilter(filters: SearchFilters): Observable<FieldValue[]> {
     const filter = filters[this.esFieldName]
-    if (!filter) return []
-    return typeof filter === 'string'
-      ? [filter]
-      : Object.keys(filter).filter((v) => filter[v])
+    if (!filter) return of([])
+    const values =
+      typeof filter === 'string'
+        ? [filter]
+        : Object.keys(filter).filter((v) => filter[v])
+    return of(values)
   }
 }
 
@@ -122,13 +125,13 @@ export class FullTextSearchField implements AbstractSearchField {
   getAvailableValues(): Observable<FieldAvailableValue[]> {
     return of([])
   }
-  getFiltersForValues(values: FieldValue[]): SearchFilters {
-    return {
+  getFiltersForValues(values: FieldValue[]): Observable<SearchFilters> {
+    return of({
       any: values[0] as string,
-    }
+    })
   }
-  getValuesForFilter(filters: SearchFilters): FieldValue[] {
-    return filters.any ? [filters.any] : []
+  getValuesForFilter(filters: SearchFilters): Observable<FieldValue[]> {
+    return of(filters.any ? [filters.any] : [])
   }
 }
 
@@ -163,24 +166,24 @@ emit(result);`
   }
 
   protected async getBucketLabel(bucket) {
-    return await firstValueFrom(
+    return firstValueFrom(
       this.translateService.get(`search.filters.isSpatial.${bucket.key}`)
     )
   }
 
-  getFiltersForValues(values: FieldValue[]): SearchFilters {
+  getFiltersForValues(values: FieldValue[]): Observable<SearchFilters> {
     const isSpatial = {}
     if (values.length > 0) isSpatial[values[values.length - 1]] = true
-    return {
+    return of({
       isSpatial,
-    }
+    })
   }
 
-  getValuesForFilter(filters: SearchFilters): FieldValue[] {
+  getValuesForFilter(filters: SearchFilters): Observable<FieldValue[]> {
     const filter = filters.isSpatial
-    if (!filter) return []
+    if (!filter) return of([])
     const keys = Object.keys(filter)
-    return keys.length ? [keys[0]] : []
+    return of(keys.length ? [keys[0]] : [])
   }
 }
 
@@ -260,8 +263,48 @@ if(unknown) emit('unknown');`
   }
 
   protected async getBucketLabel(bucket) {
-    return await firstValueFrom(
+    return firstValueFrom(
       this.translateService.get(`search.filters.license.${bucket.key}`)
+    )
+  }
+}
+
+// This will use the OrganisationsServiceInterface
+// Field values are the organization names
+export class OrganizationSearchField implements AbstractSearchField {
+  private orgsService = this.injector.get(OrganisationsServiceInterface)
+
+  constructor(private injector: Injector) {}
+
+  getFiltersForValues(values: FieldValue[]): Observable<SearchFilters> {
+    return this.orgsService.organisations$.pipe(
+      map((orgs) =>
+        values.map((name) => orgs.find((org) => org.name === name))
+      ),
+      switchMap((selectedOrgs) =>
+        this.orgsService.getFiltersForOrgs(selectedOrgs)
+      )
+    )
+  }
+
+  getValuesForFilter(filters: SearchFilters): Observable<FieldValue[]> {
+    return this.orgsService
+      .getOrgsFromFilters(filters)
+      .pipe(map((orgs) => orgs.map((org) => org.name)))
+  }
+
+  getAvailableValues(): Observable<FieldAvailableValue[]> {
+    // sort values by alphabetical order
+    return this.orgsService.organisations$.pipe(
+      map((organisations) =>
+        organisations.map((org) => ({
+          label: `${org.name} (${org.recordCount})`,
+          value: org.name,
+        }))
+      ),
+      map((values) =>
+        values.sort((a, b) => new Intl.Collator().compare(a.label, b.label))
+      )
     )
   }
 }

@@ -6,16 +6,22 @@ import {
   FullTextSearchField,
   IsSpatialSearchField,
   LicenseSearchField,
+  OrganizationSearchField,
   SimpleSearchField,
   TopicSearchField,
 } from './fields'
+import { combineLatest, Observable, of, takeLast } from 'rxjs'
+import { map, mergeScan } from 'rxjs/operators'
+
+// key is the field name
+export type FieldValues = Record<string, FieldValue[] | FieldValue>
 
 @Injectable({
   providedIn: 'root',
 })
 export class FieldsService {
   private fields = {
-    publisher: new SimpleSearchField('OrgForResource', 'asc', this.injector),
+    publisher: new OrganizationSearchField(this.injector),
     format: new SimpleSearchField('format', 'asc', this.injector),
     publicationYear: new SimpleSearchField(
       'publicationYearForResource',
@@ -44,19 +50,52 @@ export class FieldsService {
 
   constructor(private injector: Injector) {}
 
-  private getField(fieldName: string) {
+  getAvailableValues(fieldName: string) {
     if (this.supportedFields.indexOf(fieldName) === -1)
       throw new Error(`Unsupported search field: ${fieldName}`)
-    return this.fields[fieldName]
+    return this.fields[fieldName].getAvailableValues()
   }
 
-  getAvailableValues(fieldName: string) {
-    return this.getField(fieldName).getAvailableValues()
+  private getFiltersForValues(fieldName: string, values: FieldValue[]) {
+    return this.fields[fieldName].getFiltersForValues(values)
   }
-  getFiltersForValues(fieldName: string, values: FieldValue[]) {
-    return this.getField(fieldName).getFiltersForValues(values)
+  private getValuesForFilters(fieldName: string, filters: SearchFilters) {
+    return this.fields[fieldName].getValuesForFilter(filters)
   }
-  getValuesForFilters(fieldName: string, filters: SearchFilters) {
-    return this.getField(fieldName).getValuesForFilter(filters)
+
+  getFiltersForFieldValues(
+    fieldValues: FieldValues
+  ): Observable<SearchFilters> {
+    const fieldNames = Object.keys(fieldValues).filter((fieldName) =>
+      this.supportedFields.includes(fieldName)
+    )
+    if (!fieldNames.length) return of({})
+    const filtersByField$ = fieldNames.map((fieldName) => {
+      const values = Array.isArray(fieldValues[fieldName])
+        ? fieldValues[fieldName]
+        : [fieldValues[fieldName]]
+      return this.getFiltersForValues(fieldName, values as FieldValue[])
+    })
+    return combineLatest(filtersByField$).pipe(
+      map((filters) =>
+        filters.reduce((prev, curr) => ({ ...prev, ...curr }), {})
+      )
+    )
+  }
+
+  getFieldValuesForFilters(filters: SearchFilters): Observable<FieldValues> {
+    return of(...this.supportedFields).pipe(
+      mergeScan(
+        (prev, curr) =>
+          this.getValuesForFilters(curr, filters).pipe(
+            map((values) => ({
+              ...prev,
+              [curr]: values,
+            }))
+          ),
+        {} as FieldValues
+      ),
+      takeLast(1)
+    )
   }
 }
