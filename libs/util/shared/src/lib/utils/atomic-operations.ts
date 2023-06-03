@@ -41,6 +41,7 @@ export const getAsUrl = (field) => {
   // an empty string is not a valid url, even though it could be considered an empty path to the root
   if (field === '' || field === null) return null
   let url = field
+  if (field.match(/^www\./)) url = `https://${field}`
   try {
     return new URL(url, window.location.toString()).toString()
   } catch {
