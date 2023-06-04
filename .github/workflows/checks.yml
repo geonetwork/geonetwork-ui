@@ -3,6 +3,7 @@ run-name: 🩺 Quality assurance checks on ${{ github.event_name == 'pull_reques
 
 env:
   NODE_VERSION: 16.17.0
+  TEST_HIDE_CONSOLE: true
 
 # This workflow runs for Pull Requests which are not draft,
 # as well as commits going to the default branch
@@ -20,36 +21,79 @@ concurrency:
   cancel-in-progress: ${{ github.ref_name != 'main' }}
 
 jobs:
-  format-lint-test-build:
+  format-lint-test:
     if: github.event.pull_request.draft == false
-    name: Nx Cloud - Main Job
-    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.11.3
-    with:
-      number-of-agents: 3
-      init-commands: |
-        npx nx-cloud start-ci-run --stop-agents-after="build" --agent-count=3
-      parallel-commands: |
-        npx nx-cloud record -- npx nx format:check
-      parallel-commands-on-agents: |
-        npx nx affected --target=lint --parallel=3
-        npx nx affected --target=test --parallel=3 --ci --codeCoverage --coverageReporters=lcov
-        npx nx affected --target=build --parallel=3
-      node-version: 16.17.0 # FIXME: use env.NODE_VERSION
-#      final-commands: |
-#        ls -al ./coverage/**/lcov.info
-      artifacts-path: coverage/**/lcov.info
-      environment-variables: |
-        TEST_HIDE_CONSOLE=true
+    name: Format check, lint, unit tests
+    runs-on: ubuntu-latest
 
-  agents:
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v2
+        with:
+          main-branch-name: 'main'
+      - run: npm ci
+      - run: npx nx format:check
+      - run: npx nx affected -t lint --parallel=3
+      - run: npx nx affected -t test --parallel=3 --configuration=ci --ci --codeCoverage --coverageReporters=lcov
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          allow-empty: true
+
+  #      - name: Archive Code Coverage Results (on main)
+  #        if: github.event_name != 'pull_request'
+  #        uses: actions/upload-artifact@v2
+  #        with:
+  #          name: code-coverage-report
+  #          path: ./coverage/**/coverage-summary.json
+  #          if-no-files-found: error
+  #
+  #      - name: Create Code Coverage Badge (on PR)
+  #        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
+  #        uses: dkhunt27/nx-code-coverage@v1
+  #        with:
+  #          github-token: ${{ secrets.GITHUB_TOKEN }}
+  #          coverage-folder: ./coverage
+  #          coverage-base-folder: ./coverage-base
+  #          gist-token: ${{ secrets.COVERAGE_GIST_TOKEN }}
+  #          gist-id: c759fcfd4e71c8853beedbe1785fc081
+  #          color: green
+  #          named-logo: jest
+  #          no-coverage-ran: false
+
+  build-affected:
     if: github.event.pull_request.draft == false
-    name: Nx Cloud - Agents
-    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.11.3
-    with:
-      number-of-agents: 3
-      node-version: 16.17.0 # FIXME: use env.NODE_VERSION
-      environment-variables: |
-        TEST_HIDE_CONSOLE=true
+    name: Attempt to build affected apps
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v2
+        with:
+          main-branch-name: 'main'
+      - run: npm ci
+      - run: npx nx affected -t build --parallel=3
 
   affected-recap:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
