@@ -58,7 +58,6 @@
     (keydown)="handleOverlayKeydown($event)"
   >
     <div
-      *ngIf="allowSearch"
       class="border border-gray-300 rounded mb-2 mx-2 p-2 min-h-[44px] flex flex-row flex-wrap gap-2"
     >
       <button
@@ -72,12 +71,28 @@
         <div
           class="flex items-center justify-center rounded-full bg-white text-main h-[13px] w-[13px] pt-px -mt-px shrink-0"
         >
-          <mat-icon class="!h-[12px] !w-[12px] text-[12px]"> close </mat-icon>
+          <mat-icon class="!h-[12px] !w-[12px] text-[12px]"> close</mat-icon>
         </div>
       </button>
+
+      <div *ngIf="allowSearch" class="w-[50%] relative grow shrink">
+        <input
+          class="w-full px-1 truncate text-[14px]"
+          [(ngModel)]="searchInputValue"
+          [placeholder]="'multiselect.filter.placeholder' | translate"
+        />
+        <button
+          *ngIf="!!searchInputValue"
+          class="absolute top-1/2 -translate-y-1/2 right-0 px-[7px] leading-tight clear-search-input"
+          (click)="clearSearchInputValue($event)"
+        >
+          <mat-icon class="!h-[10px] !w-[12px] text-[12px]"> close </mat-icon>
+        </button>
+      </div>
     </div>
+
     <label
-      *ngFor="let choice of choices"
+      *ngFor="let choice of filteredChoicesByText"
       [title]="choice.label"
       class="flex px-5 py-1 w-full text-gray-900 cursor-pointer hover:text-primary-darkest hover:bg-gray-50 focus-within:text-primary-darkest focus-within:bg-gray-50 transition-colors"
     >

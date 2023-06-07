@@ -30,6 +30,7 @@ export class DropdownMultiselectComponent {
   @Input() selected: unknown[] = []
   @Input() allowSearch = true
   @Input() maxRows: number
+  @Input() searchInputValue = ''
   @Output() selectValues = new EventEmitter<unknown[]>()
   @ViewChild('overlayOrigin') overlayOrigin: CdkOverlayOrigin
   @ViewChild(CdkConnectedOverlay) overlay: CdkConnectedOverlay
@@ -60,11 +61,19 @@ export class DropdownMultiselectComponent {
   get hasSelectedChoices() {
     return this.selected.length > 0
   }
+
   get selectedChoices() {
     return this.choices.filter(
       (choice) => this.selected.indexOf(choice.value) > -1
     )
   }
+
+  get filteredChoicesByText() {
+    return this.choices.filter((choice) =>
+      choice.label.toLowerCase().includes(this.searchInputValue?.toLowerCase())
+    )
+  }
+
   get focusedIndex(): number | -1 {
     return this.checkboxes.reduce(
       (prev, curr, curIndex) =>
@@ -89,9 +98,11 @@ export class DropdownMultiselectComponent {
       this.checkboxes.changes.pipe(take(1)).toPromise(),
     ])
   }
+
   closeOverlay() {
     this.overlayOpen = false
   }
+
   async handleTriggerKeydown(event: KeyboardEvent) {
     const keyCode = event.code
     const isOpenKey =
@@ -112,6 +123,7 @@ export class DropdownMultiselectComponent {
       this.closeOverlay()
     }
   }
+
   handleOverlayKeydown(event: KeyboardEvent) {
     if (!this.overlayOpen) return
     const keyCode = event.code
@@ -123,12 +135,15 @@ export class DropdownMultiselectComponent {
       this.closeOverlay()
     }
   }
+
   focusFirstItem() {
     this.checkboxes.get(0).nativeElement.focus()
   }
+
   focusLastItem() {
     this.checkboxes.get(this.checkboxes.length - 1).nativeElement.focus()
   }
+
   shiftItemFocus(shift: number) {
     const index = this.focusedIndex
     if (index === -1) return
@@ -141,18 +156,25 @@ export class DropdownMultiselectComponent {
   isSelected(choice: Choice) {
     return this.selected.indexOf(choice.value) > -1
   }
+
   select(choice: Choice, selected: boolean) {
     this.selected = selected
       ? [...this.selected.filter((v) => v !== choice.value), choice.value]
       : this.selected.filter((v) => v !== choice.value)
     this.selectValues.emit(this.selected)
   }
+
   toggle(choice: Choice) {
     this.select(choice, !this.isSelected(choice))
   }
 
   clearSelection(event: Event) {
     this.selectValues.emit([])
+    event.stopPropagation()
+  }
+
+  clearSearchInputValue(event: Event) {
+    this.searchInputValue = ''
     event.stopPropagation()
   }
 }
