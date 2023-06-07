@@ -10,6 +10,7 @@ export class CopyTextButtonComponent {
   @Input() text: string
   @Input() tooltipText: string
   @Input() displayText = true
+  @Input() rows = 1
 
   copyText(event: MouseEvent) {
     navigator.clipboard.writeText(this.text)
