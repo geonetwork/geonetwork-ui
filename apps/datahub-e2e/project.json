@@ -7,9 +7,9 @@
     "e2e": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
-        "cypressConfig": "apps/datahub-e2e/cypress.json",
-        "tsConfig": "apps/datahub-e2e/tsconfig.e2e.json",
-        "devServerTarget": "datahub:serve:development"
+        "cypressConfig": "apps/datahub-e2e/cypress.config.ts",
+        "devServerTarget": "datahub:serve:development",
+        "testingType": "e2e"
       },
       "configurations": {
         "production": {
@@ -19,10 +19,10 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["apps/datahub-e2e/**/*.{js,ts}"]
-      },
-      "outputs": ["{options.outputFile}"]
+      }
     }
   },
   "tags": [],
