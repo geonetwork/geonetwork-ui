@@ -27,6 +27,7 @@ import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import { TableComponent } from '@geonetwork-ui/ui/dataviz'
 import { FeatureDatavizModule } from '@geonetwork-ui/feature/dataviz'
 import { DataViewPermalinkComponent } from './data-view-permalink/data-view-permalink.component'
+import { DataViewWebComponentComponent } from './data-view-web-component/data-view-web-component.component'
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { DataViewPermalinkComponent } from './data-view-permalink/data-view-perm
     RelatedRecordsComponent,
     ExternalViewerButtonComponent,
     DataViewPermalinkComponent,
+    DataViewWebComponentComponent,
   ],
   imports: [
     CommonModule,
@@ -67,6 +69,7 @@ import { DataViewPermalinkComponent } from './data-view-permalink/data-view-perm
     DataApisComponent,
     DataOtherlinksComponent,
     DataViewPermalinkComponent,
+    DataViewWebComponentComponent,
   ],
 })
 export class FeatureRecordModule {}

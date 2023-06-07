@@ -45,6 +45,7 @@ const baseUrl = 'https://example.com/wc-embedder'
 export class MockCopyTextButtonComponent {
   @Input() text: string
   @Input() tooltipText: string
+  @Input() rows: number
 }
 describe('DataViewPermalinkComponent', () => {
   let component: DataViewPermalinkComponent
