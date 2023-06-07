@@ -179,6 +179,8 @@
   "record.tab.chart": "Chart",
   "record.tab.data": "Table",
   "record.tab.map": "Map",
+  "record.tab.permalink": "Share",
+  "record.tab.webComponent": "Integrate",
   "record.was.created.time": "created this dataset {time}",
   "records": "records",
   "results.layout.selectOne": "Results layout",

@@ -179,6 +179,8 @@
   "record.tab.chart": "Graphique",
   "record.tab.data": "Tableau",
   "record.tab.map": "Carte",
+  "record.tab.permalink": "Partager",
+  "record.tab.webComponent": "Intégrer",
   "record.was.created.time": "a créé ce jeu de données {time}",
   "records": "enregistrements",
   "results.layout.selectOne": "Affichage des résultats",
