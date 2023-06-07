@@ -4,7 +4,8 @@
 ::ng-deep .mat-mdc-tab.mdc-tab:hover .tab-header-label {
   color: var(--color-primary-darkest);
 }
-::ng-deep .mat-mdc-tab.mdc-tab.mdc-tab--active .tab-header-label {
+::ng-deep .mat-mdc-tab.mdc-tab.mdc-tab--active .tab-header-label,
+::ng-deep .mat-mdc-tab.mdc-tab.mdc-tab--active .tab-header-label-gray {
   opacity: 100%;
   font-weight: bold;
 }
@@ -13,11 +14,6 @@
 }
 ::ng-deep .mdc-tab__ripple::before {
   background-color: transparent !important;
-}
-@media only screen and (min-width: 640px) {
-  ::ng-deep mat-tab-header {
-    margin-left: 8rem;
-  }
 }
 @media only screen and (max-width: 639px) {
   /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
@@ -37,4 +33,8 @@
 
 .tab-header-label {
   @apply uppercase text-sm text-primary opacity-75 hover:text-primary-darker;
+}
+
+.tab-header-label-gray {
+  @apply text-sm text-gray-700 opacity-75 hover:text-gray-900;
 }
