@@ -52,10 +52,10 @@ export class MockDataMapComponent {}
 export class MockDataViewComponent {}
 
 @Component({
-  selector: 'gn-ui-data-view-permalink',
+  selector: 'gn-ui-data-view-share',
   template: '<div></div>',
 })
-export class MockDataViewPermalinkComponent {}
+export class MockDataViewShareComponent {}
 
 @Component({
   selector: 'gn-ui-data-downloads',
@@ -92,7 +92,7 @@ describe('RecordMetadataComponent', () => {
         RecordMetadataComponent,
         MockDataMapComponent,
         MockDataViewComponent,
-        MockDataViewPermalinkComponent,
+        MockDataViewShareComponent,
         MockDataDownloadsComponent,
         MockDataOtherlinksComponent,
         MockDataApisComponent,
@@ -283,9 +283,7 @@ describe('RecordMetadataComponent', () => {
       })
       it('does not render the permalink component', () => {
         expect(
-          fixture.debugElement.query(
-            By.directive(MockDataViewPermalinkComponent)
-          )
+          fixture.debugElement.query(By.directive(MockDataViewShareComponent))
         ).toBeFalsy()
       })
     })
@@ -310,9 +308,7 @@ describe('RecordMetadataComponent', () => {
       })
       it('does not render the permalink component', () => {
         expect(
-          fixture.debugElement.query(
-            By.directive(MockDataViewPermalinkComponent)
-          )
+          fixture.debugElement.query(By.directive(MockDataViewShareComponent))
         ).toBeFalsy()
       })
       describe('when selectedTabIndex$ is 2 (chart tab)', () => {
@@ -322,9 +318,7 @@ describe('RecordMetadataComponent', () => {
         })
         it('renders the permalink component', () => {
           expect(
-            fixture.debugElement.query(
-              By.directive(MockDataViewPermalinkComponent)
-            )
+            fixture.debugElement.query(By.directive(MockDataViewShareComponent))
           ).toBeTruthy()
         })
       })

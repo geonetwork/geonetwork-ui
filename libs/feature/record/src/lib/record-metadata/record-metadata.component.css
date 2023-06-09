@@ -4,8 +4,7 @@
 ::ng-deep .mat-mdc-tab.mdc-tab:hover .tab-header-label {
   color: var(--color-primary-darkest);
 }
-::ng-deep .mat-mdc-tab.mdc-tab.mdc-tab--active .tab-header-label,
-::ng-deep .mat-mdc-tab.mdc-tab.mdc-tab--active .tab-header-label-gray {
+::ng-deep .mat-mdc-tab.mdc-tab.mdc-tab--active .tab-header-label {
   opacity: 100%;
   font-weight: bold;
 }
@@ -33,8 +32,4 @@
 
 .tab-header-label {
   @apply uppercase text-sm text-primary opacity-75 hover:text-primary-darker;
-}
-
-.tab-header-label-gray {
-  @apply text-sm text-gray-700 opacity-75 hover:text-gray-900;
 }
