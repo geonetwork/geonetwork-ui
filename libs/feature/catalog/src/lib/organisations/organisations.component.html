@@ -12,7 +12,7 @@
   >
     <gn-ui-organisation-preview
       [organisation]="organisation"
-      (clickedOrganisation)="searchByOrganisation($event)"
+      (clickedOrganisation)="orgSelect.emit($event)"
     ></gn-ui-organisation-preview>
   </gn-ui-content-ghost>
 </div>
