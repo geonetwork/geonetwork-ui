@@ -39,7 +39,7 @@ export class NavigationMenuComponent {
   activeLink$ = this.routerFacade.currentRoute$.pipe(
     map(
       (route) =>
-        this.tabLinks.find((tab) => tab.link === route.url[0].path) || {
+        this.tabLinks.find((tab) => tab.link === route.url[0]?.path) || {
           link: '',
           label: '',
         }

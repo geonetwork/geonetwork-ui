@@ -39,7 +39,7 @@ export class HomeHeaderComponent {
   ) {}
 
   displaySortBadges$ = this.routerFacade.currentRoute$.pipe(
-    map((route) => route.url[0].path === ROUTER_ROUTE_NEWS)
+    map((route) => route.url[0]?.path === ROUTER_ROUTE_NEWS)
   )
 
   isAuthenticated$ = this.authService

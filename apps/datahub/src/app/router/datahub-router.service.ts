@@ -29,16 +29,16 @@ export class DatahubRouterService {
     return [
       {
         path: '',
-        redirectTo: `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_NEWS}`,
+        redirectTo: ROUTER_ROUTE_NEWS,
         pathMatch: 'full',
       },
       {
         path: ROUTER_ROUTE_HOME,
-        redirectTo: `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_SEARCH}`,
-        pathMatch: 'full',
+        redirectTo: ``,
+        pathMatch: 'prefix',
       },
       {
-        path: ROUTER_ROUTE_HOME,
+        path: '',
         component: HomePageComponent,
         data: {
           shouldDetach: true,
@@ -75,6 +75,6 @@ export class DatahubRouterService {
   }
 
   getSearchRoute(): string {
-    return `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_SEARCH}`
+    return `${ROUTER_ROUTE_SEARCH}`
   }
 }

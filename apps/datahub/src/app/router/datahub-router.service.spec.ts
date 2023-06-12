@@ -15,16 +15,16 @@ const RouterMock = {
 const expectedRoutes = [
   {
     path: '',
-    redirectTo: 'home/news',
+    redirectTo: 'news',
     pathMatch: 'full',
   },
   {
     path: 'home',
-    redirectTo: 'home/search',
-    pathMatch: 'full',
+    redirectTo: '',
+    pathMatch: 'prefix',
   },
   {
-    path: 'home',
+    path: '',
     component: HomePageComponent,
     data: {
       shouldDetach: true,
