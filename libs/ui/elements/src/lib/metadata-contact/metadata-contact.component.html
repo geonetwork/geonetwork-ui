@@ -4,19 +4,22 @@
   </p>
   <div class="flex mb-1">
     <div
-      class="text-primary font-title text-21 mr-2 cursor-pointer hover:opacity-50"
+      class="text-primary font-title text-21 mr-2 cursor-pointer hover:underline"
       (click)="onContactClick()"
     >
       {{ shownContact.organisation }}
     </div>
-    <div *ngIf="shownContact.website">
-      <a [href]="shownContact.website" target="_blank"
-        ><mat-icon
-          class="text-primary opacity-25 cursor-pointer hover:opacity-75 transition-all"
-          >open_in_new</mat-icon
-        ></a
-      >
-    </div>
   </div>
-  <p class="text-gray-700 text-sm mb-2">{{ shownContact.email }}</p>
+  <p class="text-gray-700 text-sm">{{ shownContact.email }}</p>
+  <div *ngIf="shownContact.website" class="mb-2">
+    <a
+      [href]="shownContact.website"
+      target="_blank"
+      class="text-primary text-sm cursor-pointer hover:underline transition-all"
+      >{{ shownContact.website }}
+      <mat-icon class="!w-[12px] !h-[12px] !text-[12px] opacity-75"
+        >open_in_new</mat-icon
+      >
+    </a>
+  </div>
 </div>
