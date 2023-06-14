@@ -83,4 +83,8 @@ export class OrganisationsComponent {
   trackByIndex(index: number) {
     return index
   }
+
+  getOrganisationTargetUrl(organisation: Organisation): string {
+    return this.searchService.getOrganisationTargetUrl(organisation)
+  }
 }

@@ -12,6 +12,7 @@
   >
     <gn-ui-organisation-preview
       [organisation]="organisation"
+      [organisationUrl]="getOrganisationTargetUrl(organisation)"
       (clickedOrganisation)="searchByOrganisation($event)"
     ></gn-ui-organisation-preview>
   </gn-ui-content-ghost>

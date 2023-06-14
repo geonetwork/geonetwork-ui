@@ -17,6 +17,7 @@ import {
   ResultsLayoutConfigItem,
   ResultsLayoutConfigModel,
 } from '@geonetwork-ui/ui/search'
+import { SearchService } from '../utils/service/search.service'
 
 export type ResultsListShowMoreStrategy = 'auto' | 'button' | 'none'
 
@@ -38,10 +39,14 @@ export class ResultsListContainerComponent implements OnInit {
 
   errorTypes = ErrorType
 
+  getMetadataRecordTargetUrl =
+    this.searchService.getMetadataRecordTargetUrl.bind(this.searchService)
+
   constructor(
     public facade: SearchFacade,
     @Inject(RESULTS_LAYOUT_CONFIG)
-    private resultsLayoutConfig: ResultsLayoutConfigModel
+    private resultsLayoutConfig: ResultsLayoutConfigModel,
+    private searchService: SearchService
   ) {}
 
   ngOnInit(): void {

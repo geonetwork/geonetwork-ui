@@ -21,6 +21,7 @@ import { fromEvent, Subscription } from 'rxjs'
 })
 export class RecordPreviewComponent implements OnInit, OnDestroy {
   @Input() record: MetadataRecord
+  @Input() metadataRecordTargetUrl: string
   @Input() linkTarget = '_blank'
   @Input() favoriteTemplate: TemplateRef<{ $implicit: MetadataRecord }>
   @Output() mdSelect = new EventEmitter<MetadataRecord>()

@@ -10,6 +10,7 @@
         [layoutConfig]="layoutConfig"
         (mdSelect)="mdSelect.emit($event)"
         [favoriteTemplate]="favoriteTemplate"
+        [metadataRecordTargetUrl]="getMetadataRecordTargetUrl(record)"
       ></gn-ui-results-list-item>
     </div>
   </div>

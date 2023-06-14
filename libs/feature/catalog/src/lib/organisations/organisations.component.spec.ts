@@ -16,6 +16,8 @@ import { readFirst } from '@nrwl/angular/testing'
 import { of } from 'rxjs'
 import { OrganisationsComponent } from './organisations.component'
 import { OrganisationsService } from './organisations.service'
+import { ROUTER_ROUTE_HOME } from 'apps/datahub/src/app/router/constants'
+import { ROUTER_ROUTE_SEARCH } from 'libs/feature/router/src/lib/default/constants'
 
 @Component({
   selector: 'gn-ui-organisations-sort',
@@ -49,6 +51,10 @@ class OrganisationsServiceMock {
 
 class SearchServiceMock {
   setFilters = jest.fn()
+
+  getOrganisationTargetUrl = jest.fn((e) =>
+    encodeURI(`${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_SEARCH}?publisher=${e.name}`)
+  )
 }
 
 const organisationMock = {
@@ -124,6 +130,13 @@ describe('OrganisationsComponent', () => {
       })
       it('should pass 6th organisation (sorted by name-asc) on page to 6th ui preview component', () => {
         expect(orgPreviewComponents[5].organisation.name).toEqual('é Data Org')
+      })
+      it('should organisation Href be equal to search with publisher', () => {
+        expect(
+          searchService.getOrganisationTargetUrl(
+            orgPreviewComponents[0].organisation
+          )
+        ).toEqual('home/search?publisher=A%20Data%20Org')
       })
     })
     describe('pass params to ui pagination component', () => {

@@ -25,6 +25,7 @@ export class ResultsListItemComponent implements OnChanges, AfterViewInit {
   @Input() layoutConfig: ResultsLayoutConfigItem
   @Input() record: MetadataRecord
   @Input() favoriteTemplate: TemplateRef<{ $implicit: MetadataRecord }>
+  @Input() metadataRecordTargetUrl: string
   @Output() mdSelect = new EventEmitter<MetadataRecord>()
   initialized = false
 
@@ -51,6 +52,8 @@ export class ResultsListItemComponent implements OnChanges, AfterViewInit {
       this.cardRef.createComponent<RecordPreviewComponent>(resolver)
     componentFactory.instance.record = this.record
     componentFactory.instance.favoriteTemplate = this.favoriteTemplate
+    componentFactory.instance.metadataRecordTargetUrl =
+      this.metadataRecordTargetUrl
     componentFactory.instance.mdSelect.subscribe((record) =>
       this.mdSelect.emit(record)
     )

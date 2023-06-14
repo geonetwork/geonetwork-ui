@@ -15,6 +15,7 @@ import { Organisation } from '@geonetwork-ui/util/shared'
 })
 export class OrganisationPreviewComponent {
   @Input() organisation: Organisation
+  @Input() organisationUrl: string
   @Output() clickedOrganisation = new EventEmitter<Organisation>()
 
   clickOrganisation(event: Event) {

@@ -10,6 +10,7 @@ import { BehaviorSubject, of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { ResultsListContainerComponent } from './results-list.container.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { SearchService } from '../utils/service/search.service'
 
 @Component({
   selector: 'gn-ui-results-list',
@@ -35,6 +36,9 @@ class SearchFacadeMock {
   scroll = jest.fn()
   error$ = of(null)
 }
+class SearchServiceMock {
+  getMetadataRecordTargetUrl = jest.fn()
+}
 
 describe('ResultsListContainerComponent', () => {
   let component: ResultsListContainerComponent
@@ -54,6 +58,10 @@ describe('ResultsListContainerComponent', () => {
         {
           provide: SearchFacade,
           useClass: SearchFacadeMock,
+        },
+        {
+          provide: SearchService,
+          useClass: SearchServiceMock,
         },
         {
           provide: RESULTS_LAYOUT_CONFIG,

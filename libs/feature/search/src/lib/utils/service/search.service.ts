@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core'
 import { SearchFacade } from '../../state/search.facade'
-import { SearchFilters, SortByEnum } from '@geonetwork-ui/util/shared'
+import {
+  Organisation,
+  SearchFilters,
+  SortByEnum,
+  MetadataRecord,
+} from '@geonetwork-ui/util/shared'
 import { first, map } from 'rxjs/operators'
 
 export interface SearchServiceI {
@@ -8,6 +13,8 @@ export interface SearchServiceI {
   setFilters: (params: SearchFilters) => void
   setSortAndFilters: (filters: SearchFilters, sort: SortByEnum) => void
   setSortBy: (sort: string) => void
+  getOrganisationTargetUrl: (organisation: Organisation) => string
+  getMetadataRecordTargetUrl: (record: MetadataRecord) => string
 }
 
 @Injectable()
@@ -34,5 +41,13 @@ export class SearchService implements SearchServiceI {
 
   setSortBy(sort: string): void {
     this.facade.setSortBy(sort)
+  }
+
+  getOrganisationTargetUrl(organisation: Organisation): string {
+    return null
+  }
+
+  getMetadataRecordTargetUrl(record: MetadataRecord): string {
+    return null
   }
 }

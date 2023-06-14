@@ -3,6 +3,7 @@
     [records]="facade.results$ | async"
     [layoutConfig]="layoutConfig$ | async"
     [favoriteTemplate]="favoriteToggle"
+    [getMetadataRecordTargetUrl]="getMetadataRecordTargetUrl"
     (mdSelect)="onMetadataSelection($event)"
   ></gn-ui-results-list>
 
