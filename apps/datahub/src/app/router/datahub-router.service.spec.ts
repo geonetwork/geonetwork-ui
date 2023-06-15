@@ -14,11 +14,6 @@ const RouterMock = {
 
 const expectedRoutes = [
   {
-    path: '',
-    redirectTo: 'news',
-    pathMatch: 'full',
-  },
-  {
     path: 'home',
     redirectTo: '',
     pathMatch: 'prefix',
@@ -30,6 +25,11 @@ const expectedRoutes = [
       shouldDetach: true,
     },
     children: [
+      {
+        path: '',
+        redirectTo: 'news',
+        pathMatch: 'prefix',
+      },
       {
         path: 'news',
         component: NewsPageComponent,
