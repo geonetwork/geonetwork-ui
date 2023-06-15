@@ -51,8 +51,6 @@ describe('header', () => {
       cy.get('[data-cy="addMoreBtn"]').trigger('click')
       cy.get('gn-ui-results-list-item').should('not.eq', '@initialList')
     })
-
-    // TODO : add a dataset to favorite/vote for dataset (?) (needs login)
   })
 
   describe('button link actions', () => {
