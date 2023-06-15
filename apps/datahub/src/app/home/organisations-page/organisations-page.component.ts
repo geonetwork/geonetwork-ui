@@ -16,8 +16,8 @@ export class OrganisationsPageComponent {
   ) {}
 
   searchByOrganisation(organisation: Organisation) {
-    this.searchService.setFilters(
-      this.orgsService.getFiltersForOrg(organisation)
-    )
+    this.orgsService
+      .getFiltersForOrgs([organisation])
+      .subscribe((filters) => this.searchService.setFilters(filters))
   }
 }
