@@ -225,6 +225,7 @@
   "table.loading.data": "Loading data...",
   "table.object.count": "objects in this dataset",
   "table.select.data": "Data source",
+  "tooltip.html.copy": "Copy HTML",
   "tooltip.url.copy": "Copy URL",
   "tooltip.url.open": "Open URL",
   "wfs.featuretype.notfound": "No matching feature type was found in the WFS service",
