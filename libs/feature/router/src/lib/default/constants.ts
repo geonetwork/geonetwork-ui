@@ -6,4 +6,4 @@ export const ROUTER_ROUTE_DATASET = 'dataset'
 export enum ROUTE_PARAMS {
   SORT = '_sort',
 }
-export type SearchRouteParams = Record<string, string | string[]>
+export type SearchRouteParams = Record<string, string | string[] | number>

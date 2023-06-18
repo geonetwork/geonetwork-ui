@@ -4,12 +4,16 @@ import { Component } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { Params, Router } from '@angular/router'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
-import { SetFilters, SetSortBy } from '@geonetwork-ui/feature/search'
+import {
+  FieldsService,
+  SetFilters,
+  SetSortBy,
+} from '@geonetwork-ui/feature/search'
 import { provideMockActions } from '@ngrx/effects/testing'
 import { routerNavigationAction } from '@ngrx/router-store'
 import { Action } from '@ngrx/store'
 import { hot } from 'jasmine-marbles'
-import { BehaviorSubject, Observable } from 'rxjs'
+import { BehaviorSubject, Observable, of } from 'rxjs'
 import { ROUTER_CONFIG } from '../router.module'
 
 import * as fromActions from './router.actions'
@@ -27,15 +31,36 @@ const routerConfigMock = {
   recordRouteComponent: MetadataRouteComponent,
 }
 
-const routerFacadeMock = {
-  searchParams$: new BehaviorSubject<Params>({
+class RouterFacadeMock {
+  searchParams$ = new BehaviorSubject<Params>({
     q: 'any',
     _sort: '-createDate',
-  }),
+  })
+}
+
+class FieldsServiceMock {
+  mapping = {
+    publisher: 'OrgForResource',
+    q: 'any',
+  }
+  getFiltersForFieldValues = jest.fn((fieldValues) =>
+    of(
+      Object.keys(fieldValues).reduce((prev, curr) => {
+        const filterName = this.mapping[curr]
+        if (!filterName) return prev
+        const values = fieldValues[curr]
+        return {
+          ...prev,
+          [filterName]: values,
+        }
+      }, {})
+    )
+  )
 }
 
 describe('RouterEffects', () => {
   let router: Router
+  let routerFacade: RouterFacadeMock
   let location: Location
   let effects: fromEffects.RouterEffects
   let actions: Observable<Action>
@@ -68,13 +93,18 @@ describe('RouterEffects', () => {
         },
         {
           provide: RouterFacade,
-          useValue: routerFacadeMock,
+          useClass: RouterFacadeMock,
+        },
+        {
+          provide: FieldsService,
+          useClass: FieldsServiceMock,
         },
       ],
     })
 
     effects = TestBed.inject(fromEffects.RouterEffects)
     router = TestBed.inject(Router)
+    routerFacade = TestBed.inject(RouterFacade) as any
     location = TestBed.inject(Location)
   })
 
@@ -176,7 +206,7 @@ describe('RouterEffects', () => {
   describe('syncSearchState$', () => {
     describe('when a sort value in the route', () => {
       beforeEach(() => {
-        actions = hot('-a', { a: routerFacadeMock.searchParams$ })
+        actions = hot('-a', { a: routerFacade.searchParams$ })
       })
       it('dispatches SetFilters and SortBy actions', () => {
         const expected = hot('(ab)', {
@@ -188,8 +218,10 @@ describe('RouterEffects', () => {
     })
     describe('when no sort value in the route', () => {
       beforeEach(() => {
-        routerFacadeMock.searchParams$.next({ q: 'any' })
-        actions = hot('-a', { a: routerFacadeMock.searchParams$ })
+        routerFacade.searchParams$.next({
+          q: 'any',
+        })
+        actions = hot('-a', { a: routerFacade.searchParams$ })
       })
       it('dispatches SetFilters and SortBy actions with default sort value', () => {
         const expected = hot('(ab)', {

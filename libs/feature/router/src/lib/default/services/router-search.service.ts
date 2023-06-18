@@ -5,8 +5,7 @@ import {
   SearchServiceI,
 } from '@geonetwork-ui/feature/search'
 import { SearchFilters, SortByEnum } from '@geonetwork-ui/util/shared'
-import { first, map } from 'rxjs/operators'
-import { ROUTE_PARAMS } from '../constants'
+import { ROUTE_PARAMS, SearchRouteParams } from '../constants'
 import { RouterFacade } from '../state/router.facade'
 import { firstValueFrom } from 'rxjs'
 
@@ -19,29 +18,23 @@ export class RouterSearchService implements SearchServiceI {
   ) {}
 
   setSortAndFilters(filters: SearchFilters, sort: SortByEnum) {
-    const fieldSearchParams = this.fieldsService.supportedFields.reduce(
-      (prev, curr) => ({
-        ...prev,
-        [curr]: this.fieldsService.getValuesForFilters(curr, filters),
-      }),
-      {}
-    )
-    this.facade.setSearch({
-      ...fieldSearchParams,
-      [ROUTE_PARAMS.SORT]: sort,
+    this.fieldsService.getFieldValuesForFilters(filters).subscribe((values) => {
+      this.facade.setSearch({
+        ...values,
+        [ROUTE_PARAMS.SORT]: sort,
+      })
     })
   }
 
   async setFilters(newFilters: SearchFilters) {
     const sortBy = await firstValueFrom(this.searchFacade.sortBy$)
-    const routeParams = this.fieldsService.supportedFields.reduce(
-      (prev, curr) => ({
-        ...prev,
-        [curr]: this.fieldsService.getValuesForFilters(curr, newFilters),
-      }),
-      { [ROUTE_PARAMS.SORT]: sortBy }
+    const fieldSearchParams = await firstValueFrom(
+      this.fieldsService.getFieldValuesForFilters(newFilters)
     )
-    this.facade.setSearch(routeParams)
+    this.facade.setSearch({
+      ...fieldSearchParams,
+      [ROUTE_PARAMS.SORT]: sortBy,
+    })
   }
 
   async updateFilters(newFilters: SearchFilters) {
@@ -49,14 +42,10 @@ export class RouterSearchService implements SearchServiceI {
       this.searchFacade.searchFilters$
     )
     const updatedFilters = { ...currentFilters, ...newFilters }
-    const newParams = this.fieldsService.supportedFields.reduce(
-      (prev, curr) => ({
-        ...prev,
-        [curr]: this.fieldsService.getValuesForFilters(curr, updatedFilters),
-      }),
-      {}
+    const newParams = await firstValueFrom(
+      this.fieldsService.getFieldValuesForFilters(updatedFilters)
     )
-    this.facade.updateSearch(newParams)
+    this.facade.updateSearch(newParams as SearchRouteParams)
   }
 
   setSortBy(sortBy: string) {
