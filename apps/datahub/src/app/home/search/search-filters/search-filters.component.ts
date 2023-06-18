@@ -42,13 +42,15 @@ export class SearchFiltersComponent {
   }
 
   clearFilters() {
-    const filters = this.filters.reduce(
-      (prev, curr) => ({
-        ...prev,
-        ...this.fieldsService.getFiltersForValues(curr.fieldName, []),
-      }),
+    const fieldNames = this.filters.map((component) => component.fieldName)
+    const fieldValues = fieldNames.reduce(
+      (prev, curr) => ({ ...prev, [curr]: [] }),
       {}
     )
-    this.searchService.updateFilters(filters)
+    this.fieldsService
+      .getFiltersForFieldValues(fieldValues)
+      .subscribe((filters) => {
+        this.searchService.updateFilters(filters)
+      })
   }
 }

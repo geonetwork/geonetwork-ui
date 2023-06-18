@@ -19,7 +19,7 @@ import {
   AggregationsTypesEnum,
   SearchFilters,
 } from '@geonetwork-ui/util/shared'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, of } from 'rxjs'
 import { SearchFiltersComponent } from './search-filters.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
@@ -66,9 +66,17 @@ class SearchServiceMock {
 }
 
 class FieldsServiceMock {
-  getFiltersForValues = jest.fn((fieldName, values) => ({
-    ['filter_' + fieldName]: {},
-  }))
+  getFiltersForFieldValues = jest.fn((fieldValues) =>
+    of(
+      Object.keys(fieldValues).reduce(
+        (prev, curr) => ({
+          ...prev,
+          ['filter_' + curr]: {},
+        }),
+        {}
+      )
+    )
+  )
 }
 
 describe('SearchFiltersComponent', () => {
