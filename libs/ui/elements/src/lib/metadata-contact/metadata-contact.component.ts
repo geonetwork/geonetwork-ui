@@ -5,7 +5,7 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataContact, MetadataRecord } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-metadata-contact',
@@ -15,13 +15,13 @@ import { MetadataRecord } from '@geonetwork-ui/util/shared'
 })
 export class MetadataContactComponent {
   @Input() metadata: MetadataRecord
-  @Output() contact = new EventEmitter<string>()
+  @Output() contact = new EventEmitter<MetadataContact>()
 
   get shownContact() {
     return this.metadata.resourceContacts?.[0]
   }
 
   onContactClick() {
-    this.contact.emit(this.shownContact.organisation)
+    this.contact.emit(this.shownContact)
   }
 }

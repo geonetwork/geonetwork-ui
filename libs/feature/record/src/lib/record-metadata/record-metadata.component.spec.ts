@@ -1,7 +1,10 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { SourcesService } from '@geonetwork-ui/feature/catalog'
+import {
+  OrganisationsServiceInterface,
+  SourcesService,
+} from '@geonetwork-ui/feature/catalog'
 import { MapManagerService } from '@geonetwork-ui/feature/map'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import {
@@ -31,12 +34,20 @@ class MdViewFacadeMock {
   error$ = new BehaviorSubject(null)
 }
 
-const searchServiceMock = {
-  setFilters: jest.fn(),
-  updateFilters: jest.fn(),
+class SearchServiceMock {
+  setFilters = jest.fn()
+  updateFilters = jest.fn()
 }
-const sourcesServiceMock = {
-  getSourceLabel: jest.fn(() => of('catalog label')),
+class SourcesServiceMock {
+  getSourceLabel = jest.fn(() => of('catalog label'))
+}
+
+class OrganisationsServiceMock {
+  getFiltersForOrgs = jest.fn((orgs) =>
+    of({
+      orgs: orgs.reduce((prev, curr) => ({ ...prev, [curr.name]: true }), {}),
+    })
+  )
 }
 
 @Component({
@@ -85,6 +96,8 @@ describe('RecordMetadataComponent', () => {
   let component: RecordMetadataComponent
   let fixture: ComponentFixture<RecordMetadataComponent>
   let facade
+  let searchService: SearchService
+  let sourcesService: SourcesService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -112,15 +125,21 @@ describe('RecordMetadataComponent', () => {
         },
         {
           provide: SearchService,
-          useValue: searchServiceMock,
+          useClass: SearchServiceMock,
         },
         {
           provide: SourcesService,
-          useValue: sourcesServiceMock,
+          useClass: SourcesServiceMock,
+        },
+        {
+          provide: OrganisationsServiceInterface,
+          useClass: OrganisationsServiceMock,
         },
       ],
     }).compileComponents()
     facade = TestBed.inject(MdViewFacade)
+    searchService = TestBed.inject(SearchService)
+    sourcesService = TestBed.inject(SourcesService)
   })
 
   beforeEach(() => {
@@ -159,7 +178,7 @@ describe('RecordMetadataComponent', () => {
         expect(metadataContact.metadata).toHaveProperty('contact')
       })
       it('shows the metadata catalog', () => {
-        expect(sourcesServiceMock.getSourceLabel).toBeCalledWith(
+        expect(sourcesService.getSourceLabel).toBeCalledWith(
           RECORDS_FULL_FIXTURE[0].catalogUuid
         )
         expect(catalogComponent.sourceLabel).toEqual('catalog label')
@@ -454,16 +473,20 @@ describe('RecordMetadataComponent', () => {
   describe('#onInfoKeywordClick', () => {
     it('call searchService for any', () => {
       component.onInfoKeywordClick('any')
-      expect(searchServiceMock.updateFilters).toHaveBeenCalledWith({
+      expect(searchService.updateFilters).toHaveBeenCalledWith({
         any: 'any',
       })
     })
   })
   describe('#onContactClick', () => {
     it('call update search for OrgForResource', () => {
-      component.onContactClick('orgname')
-      expect(searchServiceMock.updateFilters).toHaveBeenCalledWith({
-        OrgForResource: {
+      component.onContactClick({
+        name: 'john doe',
+        email: 'joh@doe.com',
+        organisation: 'orgname',
+      })
+      expect(searchService.updateFilters).toHaveBeenCalledWith({
+        orgs: {
           orgname: true,
         },
       })
