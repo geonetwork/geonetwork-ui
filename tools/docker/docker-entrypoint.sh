@@ -54,6 +54,13 @@ else
   echo "[INFO] No custom assets found at ${CUSTOM_ASSETS_PATH}"
 fi
 
+if [[ -z "${CUSTOM_SCRIPTS_DIRECTORY}" ]]; then
+  echo "[INFO] No CUSTOM_SCRIPTS_DIRECTORY env variable set"
+else
+  cd /docker-entrypoint.d
+  ./launch-scripts.sh
+fi
+
 echo "[INFO] docker-entrypoint.sh ended successfully."
 
 exec "$@"
