@@ -1,4 +1,10 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  ViewChild,
+  ElementRef,
+} from '@angular/core'
 
 @Component({
   selector: 'gn-ui-expandable-panel',
@@ -9,8 +15,17 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
 export class ExpandablePanelComponent {
   @Input() title: string
   @Input() collapsed = true
+  @ViewChild('contentDiv') contentDiv: ElementRef
+  maxHeight = this.setMaxHeight()
 
   toggle(): void {
     this.collapsed = !this.collapsed
+    this.maxHeight = this.setMaxHeight()
+  }
+
+  setMaxHeight() {
+    return `${
+      this.collapsed ? '0' : this.contentDiv.nativeElement.scrollHeight
+    }px`
   }
 }

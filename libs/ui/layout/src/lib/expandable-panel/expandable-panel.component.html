@@ -14,7 +14,9 @@
 </div>
 <div
   class="content duration-500 overflow-hidden transition-[max-height]"
-  [ngClass]="collapsed ? 'max-h-0 ease-out' : 'ease-in max-h-[300px]'"
+  [ngClass]="collapsed ? 'ease-out' : 'ease-in'"
+  [style.maxHeight]="maxHeight"
+  #contentDiv
 >
   <ng-content></ng-content>
 </div>
