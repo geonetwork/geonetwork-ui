@@ -80,20 +80,20 @@ describe('DataViewWebComponentComponent', () => {
       const html = await firstValueFrom(component.webComponentHtml$)
       expect(html).toBe(
         `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist/gn-wc.js"></script>
-        <gn-dataset-view-chart
-          api-url="http://localhost/undefined"
-          dataset-id="${metadata.uuid}"
-          aggregation="${chartConfig1.aggregation}"
-          x-property="${chartConfig1.xProperty}"
-          y-property="${chartConfig1.yProperty}"
-          chart-type="${chartConfig1.chartType}"
-          primary-color="#0f4395"
-          secondary-color="#8bc832"
-          main-color="#555"
-          background-color="#fdfbff"
-          main-font="'Inter', sans-serif"
-          title-font="'DM Serif Display', serif"
-        ></gn-dataset-view-chart>`
+<gn-dataset-view-chart
+        api-url="http://localhost/undefined"
+        dataset-id="${metadata.uuid}"
+        aggregation="${chartConfig1.aggregation}"
+        x-property="${chartConfig1.xProperty}"
+        y-property="${chartConfig1.yProperty}"
+        chart-type="${chartConfig1.chartType}"
+        primary-color="#0f4395"
+        secondary-color="#8bc832"
+        main-color="#555"
+        background-color="#fdfbff"
+        main-font="'Inter', sans-serif"
+        title-font="'DM Serif Display', serif"
+></gn-dataset-view-chart>`
       )
     })
   })
@@ -105,20 +105,20 @@ describe('DataViewWebComponentComponent', () => {
       const html = await firstValueFrom(component.webComponentHtml$)
       expect(html).toBe(
         `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist/gn-wc.js"></script>
-        <gn-dataset-view-chart
-          api-url="http://localhost/undefined"
-          dataset-id="${metadata.uuid}"
-          aggregation="${chartConfig2.aggregation}"
-          x-property="${chartConfig2.xProperty}"
-          y-property="${chartConfig2.yProperty}"
-          chart-type="${chartConfig2.chartType}"
-          primary-color="#0f4395"
-          secondary-color="#8bc832"
-          main-color="#555"
-          background-color="#fdfbff"
-          main-font="'Inter', sans-serif"
-          title-font="'DM Serif Display', serif"
-        ></gn-dataset-view-chart>`
+<gn-dataset-view-chart
+        api-url="http://localhost/undefined"
+        dataset-id="${metadata.uuid}"
+        aggregation="${chartConfig2.aggregation}"
+        x-property="${chartConfig2.xProperty}"
+        y-property="${chartConfig2.yProperty}"
+        chart-type="${chartConfig2.chartType}"
+        primary-color="#0f4395"
+        secondary-color="#8bc832"
+        main-color="#555"
+        background-color="#fdfbff"
+        main-font="'Inter', sans-serif"
+        title-font="'DM Serif Display', serif"
+></gn-dataset-view-chart>`
       )
     })
   })

@@ -18,23 +18,23 @@ export class DataViewWebComponentComponent {
       if (config) {
         const { aggregation, xProperty, yProperty, chartType } = config
         return `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist/gn-wc.js"></script>
-        <gn-dataset-view-chart
-          api-url="${new URL(
-            this.config.basePath,
-            window.location.origin
-          ).toString()}"
-          dataset-id="${metadata.uuid}"
-          aggregation="${aggregation}"
-          x-property="${xProperty}"
-          y-property="${yProperty}"
-          chart-type="${chartType}"
-          primary-color="#0f4395"
-          secondary-color="#8bc832"
-          main-color="#555"
-          background-color="#fdfbff"
-          main-font="'Inter', sans-serif"
-          title-font="'DM Serif Display', serif"
-        ></gn-dataset-view-chart>`
+<gn-dataset-view-chart
+        api-url="${new URL(
+          this.config.basePath,
+          window.location.origin
+        ).toString()}"
+        dataset-id="${metadata.uuid}"
+        aggregation="${aggregation}"
+        x-property="${xProperty}"
+        y-property="${yProperty}"
+        chart-type="${chartType}"
+        primary-color="#0f4395"
+        secondary-color="#8bc832"
+        main-color="#555"
+        background-color="#fdfbff"
+        main-font="'Inter', sans-serif"
+        title-font="'DM Serif Display', serif"
+></gn-dataset-view-chart>`
       }
       return null
     })
