@@ -41,22 +41,25 @@ describe('DataViewShareComponent', () => {
     it('should create', () => {
       expect(component).toBeTruthy()
     })
-    it('does not render a tab group', () => {
+    it('renders a tab group', () => {
       expect(
         fixture.debugElement.queryAll(By.css('mat-tab-group'))[0]
-      ).toBeFalsy()
+      ).toBeTruthy()
+    })
+    it('only renders one tab', () => {
+      expect(fixture.debugElement.queryAll(By.css('mat-tab')).length).toEqual(1)
     })
     it('does not render a data view permalink component', () => {
       expect(
         fixture.debugElement.query(By.directive(MockDataViewPermalinkComponent))
       ).toBeFalsy()
     })
-    it('does not render a data view web component component', () => {
+    it('renders a data view web component component', () => {
       expect(
         fixture.debugElement.query(
           By.directive(MockDataViewWebComponentComponent)
         )
-      ).toBeFalsy()
+      ).toBeTruthy()
     })
   })
   describe('if a WEB_COMPONENT_EMBEDDER_URL is defined', () => {

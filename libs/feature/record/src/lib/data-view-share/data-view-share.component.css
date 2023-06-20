@@ -5,3 +5,6 @@
 .tab-header-label-gray {
   @apply text-sm text-gray-700 opacity-75 hover:text-gray-900;
 }
+.single-tab-header-label-gray {
+  @apply text-sm text-gray-900;
+}

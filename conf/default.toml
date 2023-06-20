@@ -24,7 +24,7 @@ proxy_path = ""
 # This optional URL should point to the static html page wc-embedder.html which allows to display a web component (like chart and table) via a permalink. 
 # URLs can be indicated from the root of the same server starting with a "/" or as an external URL. Be conscious of potential CORS issues when using an external URL.
 # The default location in the dockerized datahub app for example is "/datahub/wc-embedder.html".
-# If the URL is indicated, two widgets are displayed in the datahub UI, one displaying the permalink and one displaying the web component HTML.
+# If the URL is not indicated, no permalinks will show up in the UI.
 # web_component_embedder_url = "/datahub/wc-embedder.html"
 
 ### VISUAL THEME
