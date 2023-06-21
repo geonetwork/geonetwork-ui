@@ -18,18 +18,20 @@ export class RouterSearchService implements SearchServiceI {
   ) {}
 
   setSortAndFilters(filters: SearchFilters, sort: SortByEnum) {
-    this.fieldsService.getFieldValuesForFilters(filters).subscribe((values) => {
-      this.facade.setSearch({
-        ...values,
-        [ROUTE_PARAMS.SORT]: sort,
+    this.fieldsService
+      .readFieldValuesFromFilters(filters)
+      .subscribe((values) => {
+        this.facade.setSearch({
+          ...values,
+          [ROUTE_PARAMS.SORT]: sort,
+        })
       })
-    })
   }
 
   async setFilters(newFilters: SearchFilters) {
     const sortBy = await firstValueFrom(this.searchFacade.sortBy$)
     const fieldSearchParams = await firstValueFrom(
-      this.fieldsService.getFieldValuesForFilters(newFilters)
+      this.fieldsService.readFieldValuesFromFilters(newFilters)
     )
     this.facade.setSearch({
       ...fieldSearchParams,
@@ -43,7 +45,7 @@ export class RouterSearchService implements SearchServiceI {
     )
     const updatedFilters = { ...currentFilters, ...newFilters }
     const newParams = await firstValueFrom(
-      this.fieldsService.getFieldValuesForFilters(updatedFilters)
+      this.fieldsService.readFieldValuesFromFilters(updatedFilters)
     )
     this.facade.updateSearch(newParams as SearchRouteParams)
   }

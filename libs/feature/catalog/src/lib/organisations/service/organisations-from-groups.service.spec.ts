@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing'
 import { firstValueFrom, of } from 'rxjs'
-import { take } from 'rxjs/operators'
 import { OrganisationsFromGroupsService } from './organisations-from-groups.service'
 import {
   GroupsApiService,
@@ -30,6 +29,10 @@ const groupsAggregationMock = {
         {
           key: '22',
           doc_count: 20,
+        },
+        {
+          key: '-1', // this has no matching group
+          doc_count: 8,
         },
       ],
     },
@@ -102,9 +105,7 @@ describe('OrganisationsFromGroupsService', () => {
     let organisations
     beforeEach(() => {
       organisations = null
-      service.organisations$
-        .pipe(take(2))
-        .subscribe((orgs) => (organisations = orgs))
+      service.organisations$.subscribe((orgs) => (organisations = orgs))
     })
     it('get organisations with record count', () => {
       expect(organisations).toEqual([sampleOrgA, sampleOrgB, sampleOrgC])
@@ -196,6 +197,26 @@ describe('OrganisationsFromGroupsService', () => {
             organisation: 'Ifremer',
           },
         ],
+      })
+    })
+    describe('when a non existent group is the owner', () => {
+      beforeEach(async () => {
+        const source = {
+          ...ES_FIXTURE_FULL_RESPONSE.hits.hits[0]._source,
+          groupOwner: '-1',
+        }
+        record = await firstValueFrom(
+          service.addOrganisationToRecordFromSource(source, {
+            title: 'Surval - Données par paramètre',
+            uuid: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
+          } as MetadataRecord)
+        )
+      })
+      it('does nothing', () => {
+        expect(record).toMatchObject({
+          title: 'Surval - Données par paramètre',
+          uuid: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
+        })
       })
     })
   })

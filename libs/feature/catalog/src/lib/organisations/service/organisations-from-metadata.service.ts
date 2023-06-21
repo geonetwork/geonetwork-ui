@@ -171,10 +171,10 @@ export class OrganisationsFromMetadataService
   }
 
   getOrgsFromFilters(filters: SearchFilters): Observable<Organisation[]> {
+    if (!('OrgForResource' in filters)) return of([])
     return this.organisations$.pipe(
       map((orgs) => {
-        const orgNames =
-          'OrgForResource' in filters ? Object.keys(filters.OrgForResource) : []
+        const orgNames = Object.keys(filters.OrgForResource)
         return orgNames.map((name) => orgs.find((org) => org.name === name))
       })
     )

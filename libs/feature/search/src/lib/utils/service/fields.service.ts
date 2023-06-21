@@ -10,7 +10,7 @@ import {
   SimpleSearchField,
   TopicSearchField,
 } from './fields'
-import { combineLatest, Observable, of, takeLast } from 'rxjs'
+import { combineLatest, forkJoin, Observable, of, takeLast } from 'rxjs'
 import { map, mergeScan } from 'rxjs/operators'
 
 // key is the field name
@@ -63,7 +63,7 @@ export class FieldsService {
     return this.fields[fieldName].getValuesForFilter(filters)
   }
 
-  getFiltersForFieldValues(
+  buildFiltersFromFieldValues(
     fieldValues: FieldValues
   ): Observable<SearchFilters> {
     const fieldNames = Object.keys(fieldValues).filter((fieldName) =>
@@ -76,26 +76,23 @@ export class FieldsService {
         : [fieldValues[fieldName]]
       return this.getFiltersForValues(fieldName, values as FieldValue[])
     })
-    return combineLatest(filtersByField$).pipe(
+    return forkJoin(filtersByField$).pipe(
       map((filters) =>
         filters.reduce((prev, curr) => ({ ...prev, ...curr }), {})
       )
     )
   }
 
-  getFieldValuesForFilters(filters: SearchFilters): Observable<FieldValues> {
-    return of(...this.supportedFields).pipe(
-      mergeScan(
-        (prev, curr) =>
-          this.getValuesForFilters(curr, filters).pipe(
-            map((values) => ({
-              ...prev,
-              [curr]: values,
-            }))
-          ),
-        {} as FieldValues
-      ),
-      takeLast(1)
+  readFieldValuesFromFilters(filters: SearchFilters): Observable<FieldValues> {
+    const fieldValues$ = this.supportedFields.map((fieldName) =>
+      this.getValuesForFilters(fieldName, filters).pipe(
+        map((values) => ({ [fieldName]: values }))
+      )
+    )
+    return forkJoin(fieldValues$).pipe(
+      map((fieldValues) =>
+        fieldValues.reduce((prev, curr) => ({ ...prev, ...curr }), {})
+      )
     )
   }
 }

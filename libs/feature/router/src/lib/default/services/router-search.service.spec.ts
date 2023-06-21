@@ -20,7 +20,7 @@ class FieldsServiceMock {
     OrgForResource: 'publisher',
     any: 'q',
   }
-  getFieldValuesForFilters = jest.fn((filters) =>
+  readFieldValuesFromFilters = jest.fn((filters) =>
     of(
       Object.keys(filters).reduce((prev, curr) => {
         const fieldName = this.mapping[curr]

@@ -96,11 +96,11 @@ describe('FieldsService', () => {
         )
       })
     })
-    describe('#getFiltersForFieldValues', () => {
+    describe('#buildFiltersFromFieldValues', () => {
       let filters
       beforeEach(async () => {
         filters = await lastValueFrom(
-          service.getFiltersForFieldValues({
+          service.buildFiltersFromFieldValues({
             publisher: ['aa', 'bb'],
             format: ['cc', 'dd'],
             publicationYear: '2022',
@@ -125,7 +125,7 @@ describe('FieldsService', () => {
       describe('when no field value matches', () => {
         beforeEach(async () => {
           filters = await lastValueFrom(
-            service.getFiltersForFieldValues({
+            service.buildFiltersFromFieldValues({
               unknownField: 'abcd',
               unknownField2: ['efgh', 'ijkl'],
             })
@@ -136,11 +136,11 @@ describe('FieldsService', () => {
         })
       })
     })
-    describe('#getFieldValuesForFilters', () => {
+    describe('#readFieldValuesFromFilters', () => {
       let values
       beforeEach(async () => {
         values = await lastValueFrom(
-          service.getFieldValuesForFilters({
+          service.readFieldValuesFromFilters({
             format: { ascii: true, png: true },
           })
         )

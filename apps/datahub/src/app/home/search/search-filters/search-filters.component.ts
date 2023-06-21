@@ -48,7 +48,7 @@ export class SearchFiltersComponent {
       {}
     )
     this.fieldsService
-      .getFiltersForFieldValues(fieldValues)
+      .buildFiltersFromFieldValues(fieldValues)
       .subscribe((filters) => {
         this.searchService.updateFilters(filters)
       })

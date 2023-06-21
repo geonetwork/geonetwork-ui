@@ -25,7 +25,7 @@ export class FilterDropdownComponent implements OnInit {
   choices$: Observable<Choice[]>
   selected$ = this.searchFacade.searchFilters$.pipe(
     switchMap((filters) =>
-      this.fieldsService.getFieldValuesForFilters(filters)
+      this.fieldsService.readFieldValuesFromFilters(filters)
     ),
     map((fieldValues) => fieldValues[this.fieldName]),
     filter((selected) => !!selected),
@@ -35,7 +35,7 @@ export class FilterDropdownComponent implements OnInit {
 
   onSelectedValues(values: (string | number)[]) {
     this.fieldsService
-      .getFiltersForFieldValues({ [this.fieldName]: values })
+      .buildFiltersFromFieldValues({ [this.fieldName]: values })
       .subscribe((filters) => this.searchService.updateFilters(filters))
   }
 

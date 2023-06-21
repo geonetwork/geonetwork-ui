@@ -16,7 +16,7 @@ import {
   selectField,
   SourceWithUnknownProps,
 } from '@geonetwork-ui/util/shared'
-import { combineLatest, Observable } from 'rxjs'
+import { combineLatest, forkJoin, Observable, of } from 'rxjs'
 import { map, shareReplay } from 'rxjs/operators'
 import { OrganisationsServiceInterface } from './organisations.service.interface'
 import { TranslateService } from '@ngx-translate/core'
@@ -49,10 +49,8 @@ export class OrganisationsFromGroupsService
       map((response) => response.aggregations.groups.buckets),
       shareReplay()
     )
-  organisations$ = combineLatest([this.groupsAggregation$, this.groups$]).pipe(
-    map(([groupsAgg, groups]) => {
-      return this.mapGroups(groupsAgg, groups)
-    }),
+  organisations$ = forkJoin([this.groupsAggregation$, this.groups$]).pipe(
+    map(([groupsAgg, groups]) => this.mapGroups(groupsAgg, groups)),
     shareReplay()
   )
   organisationsCount$ = this.organisations$.pipe(map((orgs) => orgs.length))
@@ -65,17 +63,19 @@ export class OrganisationsFromGroupsService
   ) {}
 
   private mapGroups(groupBuckets: any[], groups: GroupApiModel[]) {
-    return groupBuckets.map(({ key, doc_count }) => {
-      const group = groups.find((g) => g.id.toString() === key)
-      const lang3 = LANG_2_TO_3_MAPPER[this.translateService.currentLang]
-      return {
-        name: group.label[lang3],
-        recordCount: doc_count,
-        ...(group.email && { email: group.email }),
-        ...(group.description && { description: group.description }),
-        ...(group.logo && { logoUrl: `${IMAGE_URL}${group.logo}` }),
-      } as Organisation
-    })
+    return groupBuckets
+      .filter(({ key }) => !!groups.find((g) => g.id.toString() === key))
+      .map(({ key, doc_count }) => {
+        const group = groups.find((g) => g.id.toString() === key)
+        const lang3 = LANG_2_TO_3_MAPPER[this.translateService.currentLang]
+        return {
+          name: group.label[lang3],
+          recordCount: doc_count,
+          ...(group.email && { email: group.email }),
+          ...(group.description && { description: group.description }),
+          ...(group.logo && { logoUrl: `${IMAGE_URL}${group.logo}` }),
+        } as Organisation
+      })
   }
 
   getFiltersForOrgs(organisations: Organisation[]): Observable<SearchFilters> {
@@ -96,10 +96,10 @@ export class OrganisationsFromGroupsService
   }
 
   getOrgsFromFilters(filters: SearchFilters): Observable<Organisation[]> {
-    return combineLatest([this.groups$, this.organisations$]).pipe(
+    if (!('groupOwner' in filters)) return of([])
+    return forkJoin([this.groups$, this.organisations$]).pipe(
       map(([groups, orgs]) => {
-        const groupIds =
-          'groupOwner' in filters ? Object.keys(filters.groupOwner) : []
+        const groupIds = Object.keys(filters.groupOwner)
         const lang3 = LANG_2_TO_3_MAPPER[this.translateService.currentLang]
         return groupIds.map((id) => {
           const group = groups.find((group) => group.id.toString() === id)
@@ -136,6 +136,7 @@ export class OrganisationsFromGroupsService
     return this.groups$.pipe(
       map((groups) => {
         const group = groups.find((g) => g.id === groupId)
+        if (!group) return record
         const contact = this.mapContactFromGroup(group, lang3)
         return {
           ...record,

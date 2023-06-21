@@ -66,7 +66,7 @@ class SearchServiceMock {
 }
 
 class FieldsServiceMock {
-  getFiltersForFieldValues = jest.fn((fieldValues) =>
+  buildFiltersFromFieldValues = jest.fn((fieldValues) =>
     of(
       Object.keys(fieldValues).reduce(
         (prev, curr) => ({

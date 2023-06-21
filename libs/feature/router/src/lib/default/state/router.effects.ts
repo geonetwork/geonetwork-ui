@@ -46,7 +46,7 @@ export class RouterEffects {
     this.facade.searchParams$.pipe(
       mergeMap((searchParams) => {
         return this.fieldsService
-          .getFiltersForFieldValues(searchParams)
+          .buildFiltersFromFieldValues(searchParams)
           .pipe(map((filters) => [searchParams, filters]))
       }),
       mergeMap(([searchParams, filters]) =>

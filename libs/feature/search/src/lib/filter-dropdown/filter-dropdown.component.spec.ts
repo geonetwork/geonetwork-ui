@@ -28,12 +28,12 @@ class SearchServiceMock {
 
 class FieldsServiceMock {
   getAvailableValues = jest.fn(() => EMPTY)
-  getFiltersForFieldValues = jest.fn((fieldValues) =>
+  buildFiltersFromFieldValues = jest.fn((fieldValues) =>
     of({
       'converted from values': fieldValues,
     })
   )
-  getFieldValuesForFilters = jest.fn((filters) =>
+  readFieldValuesFromFilters = jest.fn((filters) =>
     of(
       Object.keys(filters).reduce(
         (prev, curr) => ({
@@ -123,7 +123,7 @@ describe('FilterDropdownComponent', () => {
       tick()
     }))
     it('converts values to filters', () => {
-      expect(fieldsService.getFiltersForFieldValues).toHaveBeenCalledWith({
+      expect(fieldsService.buildFiltersFromFieldValues).toHaveBeenCalledWith({
         Org: values,
       })
     })
@@ -200,7 +200,7 @@ describe('FilterDropdownComponent', () => {
       fixture.detectChanges()
     })
     it('converts filters to values', () => {
-      expect(fieldsService.getFieldValuesForFilters).toHaveBeenCalledWith(
+      expect(fieldsService.readFieldValuesFromFilters).toHaveBeenCalledWith(
         filters
       )
     })
@@ -213,10 +213,10 @@ describe('FilterDropdownComponent', () => {
     beforeEach(() => {
       fieldsService.getAvailableValues = () =>
         throwError(() => new Error('blah'))
-      fieldsService.getFieldValuesForFilters = () => {
+      fieldsService.readFieldValuesFromFilters = () => {
         throw new Error('blah')
       }
-      fieldsService.getFiltersForFieldValues = () => {
+      fieldsService.buildFiltersFromFieldValues = () => {
         throw new Error('blah')
       }
       component.ngOnInit()
