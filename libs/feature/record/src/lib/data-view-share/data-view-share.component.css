@@ -1,0 +1,10 @@
+::ng-deep .mat-mdc-tab.mdc-tab.mdc-tab--active .tab-header-label-gray {
+  opacity: 100%;
+  font-weight: bold;
+}
+.tab-header-label-gray {
+  @apply text-sm text-gray-700 opacity-75 hover:text-gray-900;
+}
+.single-tab-header-label-gray {
+  @apply text-sm text-gray-900;
+}

@@ -14,11 +14,6 @@
 ::ng-deep .mdc-tab__ripple::before {
   background-color: transparent !important;
 }
-@media only screen and (min-width: 640px) {
-  ::ng-deep mat-tab-header {
-    margin-left: 8rem;
-  }
-}
 @media only screen and (max-width: 639px) {
   /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
   ::ng-deep .mat-mdc-tab.mdc-tab {

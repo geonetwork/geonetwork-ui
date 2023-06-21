@@ -1,0 +1,30 @@
+<div class="container-lg px-5 my-1 lg:mx-auto">
+  <mat-tab-group
+    [selectedIndex]="0"
+    animationDuration="0ms"
+    mat-stretch-tabs="false"
+    mat-align-tabs="start"
+    [disableRipple]="!wcEmbedderBaseUrl"
+  >
+    <mat-tab *ngIf="wcEmbedderBaseUrl">
+      <ng-template mat-tab-label>
+        <span class="tab-header-label-gray" translate>share.tab.permalink</span>
+      </ng-template>
+      <gn-ui-data-view-permalink></gn-ui-data-view-permalink>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span
+          [class]="
+            wcEmbedderBaseUrl
+              ? 'tab-header-label-gray'
+              : 'single-tab-header-label-gray'
+          "
+          translate
+          >share.tab.webComponent</span
+        >
+      </ng-template>
+      <gn-ui-data-view-web-component></gn-ui-data-view-web-component>
+    </mat-tab>
+  </mat-tab-group>
+</div>
