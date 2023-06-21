@@ -27,7 +27,7 @@ import { Choice } from './dropdown-multiselect.model'
 export class DropdownMultiselectComponent {
   @Input() title: string
   @Input() choices: Choice[]
-  @Input() selected: unknown[]
+  @Input() selected: unknown[] = []
   @Input() allowSearch = true
   @Input() maxRows: number
   @Output() selectValues = new EventEmitter<unknown[]>()

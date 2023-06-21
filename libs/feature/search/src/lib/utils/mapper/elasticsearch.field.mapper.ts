@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core'
 import {
-  LinkClassifierService,
-  LinkUsage,
-  MetadataRecord,
-} from '@geonetwork-ui/util/shared'
-import {
   getAsArray,
   getAsUrl,
   getFirstValue,
-  mapContact,
-  mapLink,
+  LinkClassifierService,
+  LinkUsage,
+  MetadataLink,
+  MetadataLinkType,
+  MetadataRecord,
   selectFallback,
   selectFallbackFields,
   selectField,
@@ -17,7 +15,7 @@ import {
   selectTranslatedValue,
   SourceWithUnknownProps,
   toDate,
-} from './atomic-operations'
+} from '@geonetwork-ui/util/shared'
 import { MetadataUrlService } from '../service/metadata-url.service'
 
 type ESResponseSource = SourceWithUnknownProps
@@ -103,7 +101,9 @@ export class ElasticsearchFieldMapper {
       const rawLinks = getAsArray(
         selectField<SourceWithUnknownProps[]>(source, 'link')
       )
-      const links = rawLinks.map(mapLink).filter((v) => v !== null)
+      const links = rawLinks
+        .map((link) => this.mapLink(link))
+        .filter((v) => v !== null)
       return {
         ...output,
         links,
@@ -115,22 +115,6 @@ export class ElasticsearchFieldMapper {
         ),
       }
     },
-    contact: (output, source) => ({
-      ...output,
-      contact: mapContact(
-        getFirstValue(selectField(source, 'contact')),
-        source
-      ),
-    }),
-    contactForResource: (output, source) => ({
-      ...output,
-      resourceContacts: [
-        ...(output.resourceContacts || []),
-        ...getAsArray(selectField(source, 'contactForResource')).map(
-          (contact) => mapContact(contact, source)
-        ),
-      ],
-    }),
     sourceCatalogue: (output, source) => ({
       ...output,
       catalogUuid: selectFallback(
@@ -199,5 +183,59 @@ export class ElasticsearchFieldMapper {
 
   getMappingFn(fieldName: string) {
     return fieldName in this.fields ? this.fields[fieldName] : this.genericField
+  }
+
+  getLinkType(url: string, protocol?: string): MetadataLinkType {
+    if (!protocol) return MetadataLinkType.OTHER
+    if (/^ESRI:REST/.test(protocol) && /FeatureServer/.test(url))
+      return MetadataLinkType.ESRI_REST
+    if (/^OGC:WMS/.test(protocol)) return MetadataLinkType.WMS
+    if (/^OGC:WFS/.test(protocol)) return MetadataLinkType.WFS
+    if (/^OGC:WMTS/.test(protocol)) return MetadataLinkType.WMTS
+    if (/^WWW:DOWNLOAD/.test(protocol)) return MetadataLinkType.DOWNLOAD
+    if (protocol === 'WWW:LINK:LANDING_PAGE')
+      return MetadataLinkType.LANDING_PAGE
+    return MetadataLinkType.OTHER
+  }
+
+  mapLink(sourceLink: SourceWithUnknownProps): MetadataLink | null {
+    const url = getAsUrl(selectField<string>(sourceLink, 'url'))
+    // no url: fail early
+    if (url === null) {
+      // TODO: collect errors at the record level?
+      console.warn('A link without valid URL was found', sourceLink)
+      return null
+    }
+
+    const protocolMatch = /^(https?|ftp):/.test(url)
+    if (!protocolMatch) {
+      // TODO: collect errors at the record level?
+      console.warn(
+        'A link with an unsupported protocol URL was found; supported protocols are HTTP, HTTPS and FTP',
+        sourceLink
+      )
+      return null
+    }
+
+    const name = selectField<string>(sourceLink, 'name')
+    const description = selectField<string>(sourceLink, 'description')
+    const label = description || name
+    const protocol = selectField<string>(sourceLink, 'protocol')
+
+    const mimeTypeMatches =
+      protocol && protocol.match(/^WWW:DOWNLOAD:(.+\/.+)$/)
+    const mimeType = mimeTypeMatches && mimeTypeMatches[1]
+
+    const type = this.getLinkType(url, protocol)
+
+    return {
+      url,
+      type,
+      ...(name && { name }),
+      ...(description && { description }),
+      ...(label && { label }),
+      ...(protocol && { protocol }),
+      ...(mimeType && { mimeType }),
+    }
   }
 }

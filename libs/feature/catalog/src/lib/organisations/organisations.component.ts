@@ -1,9 +1,14 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { SearchService } from '@geonetwork-ui/feature/search'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core'
 import { Organisation } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
 import { map, startWith, tap } from 'rxjs/operators'
-import { OrganisationsService } from './organisations.service'
+import { OrganisationsServiceInterface } from './service/organisations.service.interface'
 
 @Component({
   selector: 'gn-ui-organisations',
@@ -13,17 +18,15 @@ import { OrganisationsService } from './organisations.service'
 })
 export class OrganisationsComponent {
   @Input() itemsOnPage = 12
+  @Output() orgSelect = new EventEmitter<Organisation>()
 
-  constructor(
-    private organisationsService: OrganisationsService,
-    private searchService: SearchService
-  ) {}
+  constructor(private organisationsService: OrganisationsServiceInterface) {}
   totalPages: number
   currentPage$ = new BehaviorSubject(1)
   sortBy$ = new BehaviorSubject('name-asc')
 
   organisationsSorted$: Observable<Organisation[]> = combineLatest([
-    this.organisationsService.hydratedOrganisations$.pipe(
+    this.organisationsService.organisations$.pipe(
       startWith(Array(this.itemsOnPage).fill({}))
     ),
     this.sortBy$,
@@ -71,12 +74,6 @@ export class OrganisationsComponent {
         return direction * valueA.localeCompare(valueB)
       }
       return direction * Math.sign(valueA - valueB)
-    })
-  }
-
-  searchByOrganisation(organisation: Organisation) {
-    this.searchService.setFilters({
-      OrgForResource: { [organisation.name]: true },
     })
   }
 

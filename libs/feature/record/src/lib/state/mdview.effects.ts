@@ -28,8 +28,10 @@ export class MdViewEffects {
           JSON.stringify(this.esService.getMetadataByIdPayload(uuid))
         )
       ),
-      map((response: EsSearchResponse) => {
-        const records = this.esMapper.toRecords(response)
+      switchMap((response: EsSearchResponse) =>
+        this.esMapper.toRecords(response)
+      ),
+      map((records) => {
         const full = records[0]
         if (records.length === 0) {
           return MdViewActions.loadFullFailure({ notFound: true })
@@ -53,8 +55,10 @@ export class MdViewEffects {
           )
         )
       ),
-      map((response: EsSearchResponse) => {
-        const related = this.esMapper.toRecords(response)
+      switchMap((response: EsSearchResponse) =>
+        this.esMapper.toRecords(response)
+      ),
+      map((related) => {
         return MdViewActions.setRelated({ related })
       }),
       catchError((error) => of(MdViewActions.setRelated({ related: null })))

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { KeyFiguresComponent } from './key-figures.component'
 import { of } from 'rxjs'
 import {
-  OrganisationsService,
+  OrganisationsServiceInterface,
   RecordsService,
 } from '@geonetwork-ui/feature/catalog'
 import { TranslateModule } from '@ngx-translate/core'
@@ -32,7 +32,7 @@ describe('KeyFiguresComponent', () => {
           useClass: RecordsServiceMock,
         },
         {
-          provide: OrganisationsService,
+          provide: OrganisationsServiceInterface,
           useClass: OrganisationsServiceMock,
         },
       ],

@@ -56,10 +56,12 @@ const esServiceMock = {
   buildAutocompletePayload: jest.fn(() => ({ fakeQuery: '' })),
 }
 const elasticsearchMapperMock = {
-  toRecords: jest.fn(() => [
-    { uuid: '123', title: 'abc' },
-    { uuid: '456', title: 'def' },
-  ]),
+  toRecords: jest.fn(() =>
+    of([
+      { uuid: '123', title: 'abc' },
+      { uuid: '456', title: 'def' },
+    ])
+  ),
 }
 
 describe('FuzzySearchComponent', () => {

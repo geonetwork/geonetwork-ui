@@ -8,11 +8,11 @@
     class="h-[300px]"
     ghostClass="h-full mb-36"
     *ngFor="let organisation of organisations$ | async; trackBy: trackByIndex"
-    [showContent]="organisation.description !== null"
+    [showContent]="!!organisation.name"
   >
     <gn-ui-organisation-preview
       [organisation]="organisation"
-      (clickedOrganisation)="searchByOrganisation($event)"
+      (clickedOrganisation)="orgSelect.emit($event)"
     ></gn-ui-organisation-preview>
   </gn-ui-content-ghost>
 </div>

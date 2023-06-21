@@ -1,7 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-
 import { MetadataContactComponent } from './metadata-contact.component'
 
 describe('MetadataContactComponent', () => {
@@ -50,7 +49,12 @@ describe('MetadataContactComponent', () => {
         By.css('.text-primary.font-title')
       ).nativeElement
       el.click()
-      expect(component.contact.emit).toHaveBeenCalledWith('Worldcorp')
+      expect(component.contact.emit).toHaveBeenCalledWith({
+        name: 'john',
+        organisation: 'Worldcorp',
+        email: 'john@world.co',
+        website: 'https://john.world.co',
+      })
     })
   })
   describe('content', () => {

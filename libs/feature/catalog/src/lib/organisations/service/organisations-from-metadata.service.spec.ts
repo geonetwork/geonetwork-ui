@@ -1,10 +1,34 @@
 import { TestBed } from '@angular/core/testing'
-import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
-import { of } from 'rxjs'
+import {
+  GroupsApiService,
+  SearchApiService,
+} from '@geonetwork-ui/data-access/gn4'
+import { firstValueFrom, lastValueFrom, of } from 'rxjs'
 import { take } from 'rxjs/operators'
-import { GroupService } from '../group/group.service'
+import { OrganisationsFromMetadataService } from './organisations-from-metadata.service'
+import {
+  ES_FIXTURE_FULL_RESPONSE,
+  GROUPS_FIXTURE,
+} from '@geonetwork-ui/util/shared/fixtures'
+import { MetadataRecord, Organisation } from '@geonetwork-ui/util/shared'
 
-import { OrganisationsService } from './organisations.service'
+const sampleOrgA: Organisation = {
+  description: 'A description for ARE',
+  emails: ['rolf.giezendanner@are.admin.ch', 'john.doe@are.admin.ch'],
+  email: 'rolf.giezendanner@are.admin.ch',
+  logoUrl:
+    '/geonetwork/images/harvesting/047a5cb4-b942-41dc-9ffa-ffd229da064d.png',
+  name: 'ARE',
+  recordCount: 5,
+}
+const sampleOrgB: Organisation = {
+  emails: ['christian.meier@bakom.admin.ch'],
+  email: 'christian.meier@bakom.admin.ch',
+  logoUrl: '/geonetwork/images/harvesting/bakom.png',
+  name: 'BAKOM',
+  recordCount: 1,
+  description: null,
+}
 
 const organisationsAggregationMock = {
   aggregations: {
@@ -12,32 +36,32 @@ const organisationsAggregationMock = {
       org: {
         buckets: [
           {
-            key: 'Agence de test',
+            key: 'ARE',
             doc_count: 5,
             mail: {
               doc_count_error_upper_bound: 0,
               sum_other_doc_count: 0,
               buckets: [
                 {
-                  key: 'test@agence.com',
+                  key: 'rolf.giezendanner@are.admin.ch',
                   doc_count: 3,
                 },
                 {
-                  key: 'test2@agence.com',
+                  key: 'john.doe@are.admin.ch',
                   doc_count: 1,
                 },
               ],
             },
           },
           {
-            key: 'Association pour le testing',
+            key: 'BAKOM',
             doc_count: 1,
             mail: {
               doc_count_error_upper_bound: 0,
               sum_other_doc_count: 0,
               buckets: [
                 {
-                  key: 'testing@assoc.net',
+                  key: 'christian.meier@bakom.admin.ch',
                   doc_count: 1,
                 },
               ],
@@ -49,69 +73,49 @@ const organisationsAggregationMock = {
   },
 }
 
-const searchApiServiceMock = {
-  search: jest.fn(() => of(organisationsAggregationMock)),
+class SearchApiServiceMock {
+  search = jest.fn(() => of(organisationsAggregationMock))
 }
 
-const groupsApiMock = [
-  {
-    name: 'agence de test',
-    label: { eng: 'AGENCE-DE-TEST' },
-    description: 'une agence',
-    email: 'test@test.net',
-    logo: 'logo-ag.png',
-  },
-  {
-    name: 'agence',
-    label: { eng: 'AGENCE-DE-TEST' },
-    description: 'une agence',
-    logo: 'logo-ag.png',
-  },
-  {
-    name: 'association',
-    label: { eng: 'Association National du testing' },
-    description: 'une association',
-    logo: 'logo-asso.png',
-    email: 'testing@assoc.net',
-  },
-]
-
-const groupServiceMock = {
-  groups$: of(groupsApiMock),
+class GoupsApiServiceMock {
+  getGroups = jest.fn(() => of(GROUPS_FIXTURE))
 }
 
-describe('OrganisationsService', () => {
-  let service: OrganisationsService
+describe('OrganisationsFromMetadataService', () => {
+  let service: OrganisationsFromMetadataService
+  let searchService: SearchApiService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        OrganisationsFromMetadataService,
         {
-          provide: SearchApiService,
-          useValue: searchApiServiceMock,
+          provide: GroupsApiService,
+          useClass: GoupsApiServiceMock,
         },
         {
-          provide: GroupService,
-          useValue: groupServiceMock,
+          provide: SearchApiService,
+          useClass: SearchApiServiceMock,
         },
       ],
     })
-    service = TestBed.inject(OrganisationsService)
+    service = TestBed.inject(OrganisationsFromMetadataService)
+    searchService = TestBed.inject(SearchApiService)
   })
 
   it('should be created', () => {
     expect(service).toBeTruthy()
   })
-  describe('hydratedOrganisations$', () => {
+  describe('organisations$', () => {
     let organisations
     describe('initially', () => {
       beforeEach(() => {
-        service.hydratedOrganisations$
+        service.organisations$
           .pipe(take(1))
           .subscribe((orgs) => (organisations = orgs))
       })
       it('call search service', () => {
-        expect(searchApiServiceMock.search).toHaveBeenCalledWith(
+        expect(searchService.search).toHaveBeenCalledWith(
           'bucket',
           JSON.stringify({
             aggregations: {
@@ -165,16 +169,16 @@ describe('OrganisationsService', () => {
         expect(organisations).toEqual([
           {
             description: null,
-            emails: ['test@agence.com', 'test2@agence.com'],
+            emails: ['rolf.giezendanner@are.admin.ch', 'john.doe@are.admin.ch'],
             logoUrl: null,
-            name: 'Agence de test',
+            name: 'ARE',
             recordCount: 5,
           },
           {
             description: null,
-            emails: ['testing@assoc.net'],
+            emails: ['christian.meier@bakom.admin.ch'],
             logoUrl: null,
-            name: 'Association pour le testing',
+            name: 'BAKOM',
             recordCount: 1,
           },
         ])
@@ -183,29 +187,12 @@ describe('OrganisationsService', () => {
     describe('when groups tick', () => {
       beforeEach(() => {
         organisations = null
-        service.hydratedOrganisations$
+        service.organisations$
           .pipe(take(2))
           .subscribe((orgs) => (organisations = orgs))
       })
       it('get organisations hydrated from groups via name or email mapping', () => {
-        expect(organisations).toEqual([
-          {
-            description: 'une agence',
-            email: 'test@test.net',
-            emails: ['test@agence.com', 'test2@agence.com'],
-            logoUrl: '/geonetwork/images/harvesting/logo-ag.png',
-            name: 'Agence de test',
-            recordCount: 5,
-          },
-          {
-            description: 'une association',
-            email: 'testing@assoc.net',
-            emails: ['testing@assoc.net'],
-            logoUrl: '/geonetwork/images/harvesting/logo-asso.png',
-            name: 'Association pour le testing',
-            recordCount: 1,
-          },
-        ])
+        expect(organisations).toEqual([sampleOrgA, sampleOrgB])
       })
     })
   })
@@ -252,6 +239,86 @@ describe('OrganisationsService', () => {
           false
         )
       ).toBeTruthy()
+    })
+  })
+  describe('#getFiltersForOrgs', () => {
+    let filters
+    beforeEach(async () => {
+      filters = await firstValueFrom(
+        service.getFiltersForOrgs([sampleOrgA, sampleOrgB])
+      )
+    })
+    it('generates filters', () => {
+      expect(filters).toEqual({
+        OrgForResource: { ARE: true, BAKOM: true },
+      })
+    })
+  })
+  describe('#getOrgsFromFilters', () => {
+    let orgs
+    beforeEach(async () => {
+      orgs = await lastValueFrom(
+        service.getOrgsFromFilters({
+          OrgForResource: {
+            ARE: true, // org A
+            BAKOM: true, // org B
+          },
+        })
+      )
+    })
+    it('generates filters', () => {
+      expect(orgs).toEqual([sampleOrgA, sampleOrgB])
+    })
+  })
+  describe('#addOrganisationToRecordFromSource', () => {
+    let record
+    beforeEach(async () => {
+      const source = {
+        ...ES_FIXTURE_FULL_RESPONSE.hits.hits[0]._source,
+      }
+      record = await lastValueFrom(
+        service.addOrganisationToRecordFromSource(source, {
+          title: 'Surval - Données par paramètre',
+          uuid: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
+        } as MetadataRecord)
+      )
+    })
+    it('adds contacts to the record (using the groups)', () => {
+      expect(record).toMatchObject({
+        title: 'Surval - Données par paramètre',
+        uuid: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
+        contact: {
+          name: "Cellule d'administration Quadrige",
+          organisation: 'Ifremer',
+          email: 'q2suppor@ifremer.fr',
+          website: 'https://www.ifremer.fr/',
+          logoUrl:
+            'http://localhost/geonetwork/images/logos/81e8a591-7815-4d2f-a7da-5673192e74c9.png',
+        },
+        resourceContacts: [
+          {
+            email: 'q2_support@ifremer.fr',
+            logoUrl:
+              'http://localhost/geonetwork/images/logos/81e8a591-7815-4d2f-a7da-5673192e74c9.png',
+            name: "Cellule d'Administration Quadrige",
+            organisation: 'Ifremer',
+          },
+          {
+            email: 'q2_support@ifremer.fr',
+            logoUrl:
+              'http://localhost/geonetwork/images/logos/81e8a591-7815-4d2f-a7da-5673192e74c9.png',
+            name: 'Quadrige',
+            organisation: 'Ifremer',
+          },
+          {
+            email: 'q2_support@ifremer.fr',
+            logoUrl:
+              'http://localhost/geonetwork/images/logos/81e8a591-7815-4d2f-a7da-5673192e74c9.png',
+            name: 'Quadrige',
+            organisation: 'Ifremer',
+          },
+        ],
+      })
     })
   })
 })

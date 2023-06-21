@@ -1,6 +1,6 @@
 import { FieldsService, SearchFacade } from '@geonetwork-ui/feature/search'
 import { SortByEnum } from '@geonetwork-ui/util/shared'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, of } from 'rxjs'
 import { RouterFacade } from '../state'
 import { RouterSearchService } from './router-search.service'
 
@@ -17,16 +17,27 @@ class RouterFacadeMock {
 
 class FieldsServiceMock {
   mapping = {
-    publisher: 'OrgForResource',
-    q: 'any',
+    OrgForResource: 'publisher',
+    any: 'q',
   }
-  supportedFields = Object.keys(this.mapping)
-  getValuesForFilters = jest.fn((fieldName, filters) => {
-    const filter = filters[this.mapping[fieldName]]
-    if (!filter) return []
-    if (typeof filter === 'string') return [filter]
-    return Object.keys(filter)
-  })
+  readFieldValuesFromFilters = jest.fn((filters) =>
+    of(
+      Object.keys(filters).reduce((prev, curr) => {
+        const fieldName = this.mapping[curr]
+        const filter = filters[curr]
+        let values = []
+        if (typeof filter === 'string') {
+          values = [filter]
+        } else if (filter) {
+          values = Object.keys(filter)
+        }
+        return {
+          ...prev,
+          [fieldName]: values,
+        }
+      }, {})
+    )
+  )
 }
 
 describe('RouterSearchService', () => {
@@ -54,8 +65,7 @@ describe('RouterSearchService', () => {
           Org: true,
         },
       }
-      service.setFilters(state)
-      await Promise.resolve() // lets promises run
+      await service.setFilters(state)
       expect(routerFacade.setSearch).toHaveBeenCalledWith({
         q: ['any'],
         publisher: ['Org'],

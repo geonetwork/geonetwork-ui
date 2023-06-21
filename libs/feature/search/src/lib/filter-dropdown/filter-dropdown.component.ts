@@ -5,7 +5,7 @@ import {
   OnInit,
 } from '@angular/core'
 import { Choice } from '@geonetwork-ui/ui/inputs'
-import { Observable, of } from 'rxjs'
+import { Observable, of, switchMap } from 'rxjs'
 import { catchError, filter, map, startWith } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
@@ -24,19 +24,19 @@ export class FilterDropdownComponent implements OnInit {
 
   choices$: Observable<Choice[]>
   selected$ = this.searchFacade.searchFilters$.pipe(
-    map((filters) =>
-      this.fieldsService.getValuesForFilters(this.fieldName, filters)
+    switchMap((filters) =>
+      this.fieldsService.readFieldValuesFromFilters(filters)
     ),
+    map((fieldValues) => fieldValues[this.fieldName]),
     filter((selected) => !!selected),
+    startWith([]),
     catchError(() => of([]))
   )
 
   onSelectedValues(values: (string | number)[]) {
-    const filters = this.fieldsService.getFiltersForValues(
-      this.fieldName,
-      values
-    )
-    this.searchService.updateFilters(filters)
+    this.fieldsService
+      .buildFiltersFromFieldValues({ [this.fieldName]: values })
+      .subscribe((filters) => this.searchService.updateFilters(filters))
   }
 
   constructor(

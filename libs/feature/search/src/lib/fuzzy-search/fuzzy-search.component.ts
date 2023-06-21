@@ -17,7 +17,7 @@ import {
   MetadataRecord,
 } from '@geonetwork-ui/util/shared'
 import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, switchMap } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { ElasticsearchMapper } from '../utils/mapper'
 import { SearchService } from '../utils/service/search.service'
@@ -43,7 +43,9 @@ export class FuzzySearchComponent implements OnInit {
         JSON.stringify(this.esService.buildAutocompletePayload(query))
       )
       .pipe(
-        map((response: EsSearchResponse) => this.esMapper.toRecords(response))
+        switchMap((response: EsSearchResponse) =>
+          this.esMapper.toRecords(response)
+        )
       )
 
   constructor(

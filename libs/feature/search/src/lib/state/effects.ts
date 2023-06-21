@@ -143,8 +143,12 @@ export class SearchEffects {
                 )
               )
           ),
-          switchMap((response: EsSearchResponse) => {
-            const records = this.esMapper.toRecords(response)
+          switchMap((response: EsSearchResponse) =>
+            this.esMapper
+              .toRecords(response)
+              .pipe(map((records) => [records, response]))
+          ),
+          switchMap(([records, response]) => {
             const aggregations = response.aggregations
             return [
               new AddResults(records, action.id),

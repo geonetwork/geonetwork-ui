@@ -6,7 +6,12 @@ import {
   NO_ERRORS_SCHEMA,
   Output,
 } from '@angular/core'
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { BehaviorSubject, EMPTY, of, throwError } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
@@ -23,13 +28,22 @@ class SearchServiceMock {
 
 class FieldsServiceMock {
   getAvailableValues = jest.fn(() => EMPTY)
-  getValuesForFilters = jest.fn((fieldName, filters) => [
-    'converted from filters',
-    filters,
-  ])
-  getFiltersForValues = jest.fn((fieldName, values) => ({
-    'converted from values': values,
-  }))
+  buildFiltersFromFieldValues = jest.fn((fieldValues) =>
+    of({
+      'converted from values': fieldValues,
+    })
+  )
+  readFieldValuesFromFilters = jest.fn((filters) =>
+    of(
+      Object.keys(filters).reduce(
+        (prev, curr) => ({
+          ...prev,
+          [curr]: ['converted from filters', filters[curr]],
+        }),
+        {}
+      )
+    )
+  )
 }
 
 @Component({
@@ -97,20 +111,27 @@ describe('FilterDropdownComponent', () => {
     expect(component).toBeTruthy()
   })
 
+  it('provides selected values initially', () => {
+    fixture.detectChanges()
+    expect(dropdown.selected).toEqual([])
+  })
+
   describe('when selected values change', () => {
     const values = ['org1', 'org2', 34]
-    beforeEach(() => {
+    beforeEach(fakeAsync(() => {
       dropdown.selectValues.emit(values)
-    })
+      tick()
+    }))
     it('converts values to filters', () => {
-      expect(fieldsService.getFiltersForValues).toHaveBeenCalledWith(
-        'Org',
-        values
-      )
+      expect(fieldsService.buildFiltersFromFieldValues).toHaveBeenCalledWith({
+        Org: values,
+      })
     })
     it('calls updateSearch on the search service', () => {
       expect(searchService.updateFilters).toHaveBeenCalledWith({
-        'converted from values': values,
+        'converted from values': {
+          Org: values,
+        },
       })
     })
   })
@@ -179,13 +200,12 @@ describe('FilterDropdownComponent', () => {
       fixture.detectChanges()
     })
     it('converts filters to values', () => {
-      expect(fieldsService.getValuesForFilters).toHaveBeenCalledWith(
-        'Org',
+      expect(fieldsService.readFieldValuesFromFilters).toHaveBeenCalledWith(
         filters
       )
     })
     it('shows selected values in the dropdown', () => {
-      expect(dropdown.selected).toEqual(['converted from filters', filters])
+      expect(dropdown.selected).toEqual(['converted from filters', 'bla'])
     })
   })
 
@@ -193,10 +213,10 @@ describe('FilterDropdownComponent', () => {
     beforeEach(() => {
       fieldsService.getAvailableValues = () =>
         throwError(() => new Error('blah'))
-      fieldsService.getValuesForFilters = () => {
+      fieldsService.readFieldValuesFromFilters = () => {
         throw new Error('blah')
       }
-      fieldsService.getFiltersForValues = () => {
+      fieldsService.buildFiltersFromFieldValues = () => {
         throw new Error('blah')
       }
       component.ngOnInit()
