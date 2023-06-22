@@ -26,11 +26,6 @@
             "glob": "*",
             "input": "conf",
             "output": "assets/configuration/"
-          },
-          {
-            "glob": "*",
-            "input": "apps/datahub/docker-entrypoint.d",
-            "output": "docker-entrypoint.d/"
           }
         ],
         "styles": [
