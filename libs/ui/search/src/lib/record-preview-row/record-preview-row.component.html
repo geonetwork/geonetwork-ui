@@ -9,7 +9,7 @@
     >
       <gn-ui-thumbnail
         class="relative h-full w-full object-cover object-left-top"
-        [thumbnailUrl]="record.thumbnailUrl"
+        [thumbnailUrl]="record.thumbnailUrl || contact.logoUrl"
       ></gn-ui-thumbnail>
     </div>
   </div>
