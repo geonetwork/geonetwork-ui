@@ -28,22 +28,22 @@ export class DatahubRouterService {
   buildRoutes(): Routes {
     return [
       {
+        path: ROUTER_ROUTE_HOME,
+        redirectTo: ``,
+        pathMatch: 'prefix',
+      },
+      {
         path: '',
-        redirectTo: `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_NEWS}`,
-        pathMatch: 'full',
-      },
-      {
-        path: ROUTER_ROUTE_HOME,
-        redirectTo: `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_SEARCH}`,
-        pathMatch: 'full',
-      },
-      {
-        path: ROUTER_ROUTE_HOME,
         component: HomePageComponent,
         data: {
           shouldDetach: true,
         },
         children: [
+          {
+            path: '',
+            redirectTo: ROUTER_ROUTE_NEWS,
+            pathMatch: 'prefix',
+          },
           {
             path: ROUTER_ROUTE_NEWS,
             component: NewsPageComponent,
