@@ -46,8 +46,7 @@ const organizationsServiceFactory = (
     : new OrganisationsFromMetadataService(
         esService,
         searchApiService,
-        groupsApiService,
-        translateService
+        groupsApiService
       )
 
 @NgModule({

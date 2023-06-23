@@ -17,11 +17,9 @@ import {
   selectField,
   SourceWithUnknownProps,
 } from '@geonetwork-ui/util/shared'
-import { combineLatest, forkJoin, Observable, of } from 'rxjs'
-import { filter, map, shareReplay, startWith } from 'rxjs/operators'
+import { combineLatest, Observable, of } from 'rxjs'
+import { filter, map, shareReplay, startWith, takeLast } from 'rxjs/operators'
 import { OrganisationsServiceInterface } from './organisations.service.interface'
-import { TranslateService } from '@ngx-translate/core'
-import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n'
 
 const IMAGE_URL = '/geonetwork/images/harvesting/'
 
@@ -78,8 +76,7 @@ export class OrganisationsFromMetadataService
   constructor(
     private esService: ElasticsearchService,
     private searchApiService: SearchApiService,
-    private groupsApiService: GroupsApiService,
-    private translateService: TranslateService
+    private groupsApiService: GroupsApiService
   ) {}
 
   equalsNormalizedStrings(
@@ -167,13 +164,12 @@ export class OrganisationsFromMetadataService
   }
 
   private mapContactFromOrganisation(
-    organisation: Organisation,
-    lang3: string
+    organisation: Organisation
   ): MetadataContact {
     const logoUrl = getAsUrl(`${organisation.logoUrl}`)
     return {
-      name: organisation.name[lang3],
-      organisation: organisation.name[lang3],
+      name: organisation.name,
+      organisation: organisation.name,
       email: organisation.email,
       ...(organisation.logoUrl && logoUrl && { logoUrl }),
     } as MetadataContact
@@ -202,30 +198,35 @@ export class OrganisationsFromMetadataService
     source: SourceWithUnknownProps,
     record: MetadataRecord
   ): Observable<MetadataRecord> {
-    return forkJoin([
-      of({
-        ...record,
-        resourceContacts: [
-          ...getAsArray(selectField(source, 'contactForResource')).map(
-            (contact) => mapContact(contact, source)
-          ),
-        ],
-        contact: {
-          ...mapContact(getFirstValue(selectField(source, 'contact')), source),
-        },
-      }),
-      this.organisations$,
-    ]).pipe(
-      map(([record, organisations]) => {
+    const metadataRecord = {
+      ...record,
+      resourceContacts: [
+        ...getAsArray(selectField(source, 'contactForResource')).map(
+          (contact) => mapContact(contact)
+        ),
+      ],
+      contact: {
+        ...mapContact(getFirstValue(selectField(source, 'contact'))),
+      },
+    }
+
+    return this.organisations$.pipe(
+      takeLast(1),
+      map((organisations) => {
         const org = organisations.filter(
-          (o) => o.name === record.contact.organisation
+          (o) => o.name === metadataRecord.resourceContacts[0]?.organisation
         )[0]
+
         if (org) {
-          const lang3 = LANG_2_TO_3_MAPPER[this.translateService.currentLang]
-          record.contact = this.mapContactFromOrganisation(org, lang3)
-          record.resourceContacts = [record.contact, ...record.resourceContacts]
+          const contactFromOrg = this.mapContactFromOrganisation(org)
+          metadataRecord.contact = contactFromOrg
+          metadataRecord.resourceContacts = [
+            contactFromOrg,
+            ...metadataRecord.resourceContacts,
+          ]
         }
-        return record
+
+        return metadataRecord
       })
     )
   }

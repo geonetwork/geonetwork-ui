@@ -11,7 +11,6 @@ import {
   GROUPS_FIXTURE,
 } from '@geonetwork-ui/util/shared/fixtures'
 import { MetadataRecord, Organisation } from '@geonetwork-ui/util/shared'
-import { TranslateService } from '@ngx-translate/core'
 
 const sampleOrgA: Organisation = {
   description: 'A description for ARE',
@@ -82,11 +81,6 @@ class GoupsApiServiceMock {
   getGroups = jest.fn(() => of(GROUPS_FIXTURE))
 }
 
-class TranslateServiceMock {
-  currentLang = 'fr'
-  get = jest.fn((key) => of(key))
-}
-
 describe('OrganisationsFromMetadataService', () => {
   let service: OrganisationsFromMetadataService
   let searchService: SearchApiService
@@ -102,10 +96,6 @@ describe('OrganisationsFromMetadataService', () => {
         {
           provide: SearchApiService,
           useClass: SearchApiServiceMock,
-        },
-        {
-          provide: TranslateService,
-          useClass: TranslateServiceMock,
         },
       ],
     })
