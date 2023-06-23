@@ -1,18 +1,33 @@
 <div *ngIf="(error$ | async) === null" class="search-results relative">
-  <gn-ui-results-list [records]="facade.results$ | async" [layoutConfig]="layoutConfig$ | async"
-    [favoriteTemplate]="favoriteToggle" (mdSelect)="onMetadataSelection($event)"></gn-ui-results-list>
+  <gn-ui-results-list
+    [records]="facade.results$ | async"
+    [layoutConfig]="layoutConfig$ | async"
+    [favoriteTemplate]="favoriteToggle"
+    (mdSelect)="onMetadataSelection($event)"
+  ></gn-ui-results-list>
 
-  <ng-container *ngIf="
+  <ng-container
+    *ngIf="
       (facade.isLoading$ | async) === false &&
       (facade.isEndOfResults$ | async) === false
-    ">
+    "
+  >
     <div class="show-more h-[100px] pt-[30px]" *ngIf="showMore === 'button'">
-      <gn-ui-button data-cy="addMoreBtn" type="secondary" (buttonClick)="onShowMore()" extraClass="m-auto !p-[22px]">
-        <span class="uppercase font-medium tracking-widest" translate>results.showMore</span>
+      <gn-ui-button
+        data-cy="addMoreBtn"
+        type="secondary"
+        (buttonClick)="onShowMore()"
+        extraClass="m-auto !p-[22px]"
+      >
+        <span class="uppercase font-medium tracking-widest" translate
+          >results.showMore</span
+        >
       </gn-ui-button>
     </div>
     <div class="show-more h-[100px]" *ngIf="showMore === 'auto'">
-      <gn-ui-viewport-intersector (entersViewport)="onShowMore()"></gn-ui-viewport-intersector>
+      <gn-ui-viewport-intersector
+        (entersViewport)="onShowMore()"
+      ></gn-ui-viewport-intersector>
     </div>
   </ng-container>
 
@@ -24,10 +39,16 @@
 </div>
 
 <div class="p-4 max-w-[600px] m-auto text-[13px]">
-  <gn-ui-search-results-error *ngIf="(errorCode$ | async) === 0" [type]="errorTypes.COULD_NOT_REACH_API">
+  <gn-ui-search-results-error
+    *ngIf="(errorCode$ | async) === 0"
+    [type]="errorTypes.COULD_NOT_REACH_API"
+  >
   </gn-ui-search-results-error>
-  <gn-ui-search-results-error *ngIf="(error$ | async) !== null && (errorCode$ | async) !== 0"
-    [type]="errorTypes.RECEIVED_ERROR" [error]="errorMessage$ | async"></gn-ui-search-results-error>
+  <gn-ui-search-results-error
+    *ngIf="(error$ | async) !== null && (errorCode$ | async) !== 0"
+    [type]="errorTypes.RECEIVED_ERROR"
+    [error]="errorMessage$ | async"
+  ></gn-ui-search-results-error>
 </div>
 
 <ng-template #favoriteToggle let-record>
