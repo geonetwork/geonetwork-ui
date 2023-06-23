@@ -1,3 +1,6 @@
+import 'cypress-real-events'
+import { find } from 'cypress/types/lodash'
+
 describe('datasets', () => {
   beforeEach(() => {
     cy.visit('/home/search')
@@ -98,7 +101,7 @@ describe('datasets', () => {
     })
   })
 
-  describe.only('list actions', () => {
+  describe('list actions', () => {
     beforeEach(() => {
       cy.get('datahub-search-filters')
         .find('gn-ui-filter-dropdown')
@@ -113,7 +116,6 @@ describe('datasets', () => {
         .click()
       cy.get('@filters').filter(':visible').should('have.length', 8)
     })
-    // FOR ORGANIZATIONS, APPLY SAME TESTS FOR ALL BUTTONS
     describe('have the right options in filters', () => {
       beforeEach(() => {
         cy.get('datahub-search-filters')
@@ -212,121 +214,426 @@ describe('datasets', () => {
     })
 
     describe('filter the list on click on options', () => {
+      let filterLength
       beforeEach(() => {
+        cy.visit('/home/search')
         cy.get('[data-cy="addMoreBtn"]').trigger('click')
-        cy.get('@filters').first().click()
-      })
-      it('first option added', () => {
-        let expectedCount
-        const regex = /\(\d+\)/g
-        cy.get('[id^=dropdown-multiselect-]')
-          .find('label')
-          .eq(7)
-          .find('span')
-          .invoke('text')
-          .then((val) => {
-            expectedCount = Number(
-              val.match(regex)[0].replace('(', '').replace(')', '')
-            )
-            cy.get('[id^=dropdown-multiselect-]')
-              .find('label')
-              .eq(7)
-              .find('input')
-              .click()
-            cy.get('gn-ui-results-list-item').should(
-              'have.length',
-              expectedCount
-            )
+        cy.get('@filters')
+          .its('length')
+          .then((len) => {
+            filterLength = len
           })
       })
-      it('suplem. option added', () => {
-        let expectedCount
-        const regex = /\(\d+\)/g
-        cy.get('[id^=dropdown-multiselect-]')
-          .find('label')
-          .eq(7)
-          .as('provider1')
-          .find('span')
-          .invoke('text')
-          .then((val) => {
-            expectedCount = Number(
-              val.match(regex)[0].replace('(', '').replace(')', '')
-            )
-            cy.get('@provider1').find('input').click()
-            cy.get('[id^=dropdown-multiselect-]')
-              .find('label')
-              .eq(8)
-              .as('provider2')
-              .find('span')
-              .invoke('text')
-              .then((val) => {
-                expectedCount =
-                  expectedCount +
-                  Number(val.match(regex)[0].replace('(', '').replace(')', ''))
-                cy.get('@provider2').find('input').click()
+      it('first option then second option', () => {
+        for (let i = 0; i < filterLength; i++) {
+          cy.visit('/home/search')
+          cy.get('[data-cy="addMoreBtn"]').trigger('click')
+          cy.get('datahub-search-filters')
+            .children('div')
+            .children('div')
+            .eq(1)
+            .find('gn-ui-button')
+            .click()
+          cy.get('@filters').eq(i).click()
+          let expectedCount
+          const regex = /\(\d+\)/g
+          cy.get('[id^=dropdown-multiselect-]').each(($dropdown) => {
+            const label = $dropdown.prev('label')
 
-                cy.get('gn-ui-results-list-item').should(
-                  'have.length',
-                  expectedCount
-                )
-              })
+            if (label.text() !== '') {
+              cy.wrap($dropdown).select('OptionValue')
+              cy.get('[id^=dropdown-multiselect-]')
+                .find('label')
+                .eq(0)
+                .find('span')
+                .invoke('text')
+                .then((val) => {
+                  expectedCount = Number(
+                    val.match(regex)[0].replace('(', '').replace(')', '')
+                  )
+                  cy.get('[id^=dropdown-multiselect-]')
+                    .find('label')
+                    .eq(0)
+                    .find('input')
+                    .click()
+                  cy.get('gn-ui-results-list-item').should(
+                    'have.length',
+                    expectedCount
+                  )
+
+                  cy.get('[id^=dropdown-multiselect-]')
+                    .find('label')
+                    .eq(1)
+                    .as('provider2')
+                    .find('span')
+                    .invoke('text')
+                    .then((val) => {
+                      expectedCount =
+                        expectedCount +
+                        Number(
+                          val.match(regex)[0].replace('(', '').replace(')', '')
+                        )
+                      cy.get('@provider2').find('input').click()
+
+                      cy.get('gn-ui-results-list-item').should(
+                        'have.length',
+                        expectedCount
+                      )
+                    })
+                })
+            } else {
+              cy.log('Skipping dropdown with no label')
+            }
           })
+        }
       })
     })
-    describe.only('filter the list upon removal of options', () => {
+    describe('filter the list upon removal of options', () => {
+      let filterLength
+      beforeEach(() => {
+        cy.get('@filters')
+          .its('length')
+          .then((len) => {
+            filterLength = len
+          })
+      })
+      it('from option list', () => {
+        for (let i = 0; i < filterLength; i++) {
+          cy.visit('/home/search')
+          cy.get('[data-cy="addMoreBtn"]').trigger('click')
+          cy.get('datahub-search-filters')
+            .children('div')
+            .children('div')
+            .eq(1)
+            .find('gn-ui-button')
+            .click()
+          cy.get('@filters').eq(i).click()
+          cy.get('[id^=dropdown-multiselect-]').each(($dropdown) => {
+            const label = $dropdown.prev('label')
+
+            if (label.text() !== '') {
+              cy.get('[id^=dropdown-multiselect-]')
+                .find('label')
+                .eq(0)
+                .find('input')
+                .as('opt1')
+                .click()
+              cy.get('[id^=dropdown-multiselect-]')
+                .find('label')
+                .eq(1)
+                .find('input')
+                .as('opt2')
+                .click()
+              cy.get('gn-ui-results-list-item').then(($element) => {
+                const initialLength = $element.length
+                cy.wrap(initialLength).as('initialLength')
+                cy.get('@opt2').click()
+                cy.get('gn-ui-results-list-item').then(($element) => {
+                  cy.get('@initialLength').then((initialLength) => {
+                    expect($element.length).to.be.lessThan(
+                      Number(initialLength)
+                    )
+                    expect($element.length).to.be.greaterThan(0)
+                  })
+                })
+              })
+            } else {
+              cy.log('Skipping dropdown with no label')
+            }
+          })
+        }
+      })
+      it('from selected options block', () => {
+        for (let i = 0; i < filterLength; i++) {
+          cy.visit('/home/search')
+          cy.get('[data-cy="addMoreBtn"]').trigger('click')
+          cy.get('datahub-search-filters')
+            .children('div')
+            .children('div')
+            .eq(1)
+            .find('gn-ui-button')
+            .click()
+          cy.get('@filters').eq(i).click()
+          cy.get('[id^=dropdown-multiselect-]').each(($dropdown) => {
+            const label = $dropdown.prev('label')
+
+            if (label.text() !== '') {
+              cy.get('gn-ui-results-list-item').then(($element) => {
+                const initialLength = $element.length
+                cy.wrap(initialLength).as('initialLength')
+                cy.get('[id^=dropdown-multiselect-]')
+                  .find('label')
+                  .eq(0)
+                  .find('input')
+                  .click()
+                cy.get('[id^=dropdown-multiselect-]')
+                  .find('label')
+                  .eq(1)
+                  .find('input')
+                  .click()
+                cy.get('[id^=dropdown-multiselect-]')
+                  .children('div')
+                  .first()
+                  .find('button')
+                  .first()
+                  .click()
+                cy.get('gn-ui-results-list-item').then(($element) => {
+                  cy.get('@initialLength').then((initialLength) => {
+                    expect($element.length).to.be.lessThan(
+                      Number(initialLength)
+                    )
+                    expect($element.length).to.be.greaterThan(0)
+                  })
+                })
+              })
+            } else {
+              cy.log('Skipping dropdown with no label')
+            }
+          })
+        }
+      })
+
+      it('from filter clear button', () => {
+        for (let i = 0; i < filterLength; i++) {
+          cy.visit('/home/search')
+          cy.get('[data-cy="addMoreBtn"]').trigger('click')
+          cy.get('datahub-search-filters')
+            .children('div')
+            .children('div')
+            .eq(1)
+            .find('gn-ui-button')
+            .click()
+          cy.get('@filters').eq(i).click()
+          cy.get('[id^=dropdown-multiselect-]').each(($dropdown) => {
+            const label = $dropdown.prev('label')
+
+            if (label.text() !== '') {
+              cy.get('gn-ui-results-list-item').then(($element) => {
+                const initialLength = $element.length
+                cy.wrap(initialLength).as('initialLength')
+                cy.get('[id^=dropdown-multiselect-]')
+                  .find('label')
+                  .eq(0)
+                  .find('input')
+                  .click()
+                cy.get('[id^=dropdown-multiselect-]')
+                  .find('label')
+                  .eq(1)
+                  .find('input')
+                  .click()
+                cy.get('[id^=dropdown-multiselect-]')
+                  .children('div')
+                  .first()
+                  .find('button')
+                  .first()
+                  .click()
+                cy.get('gn-ui-results-list-item').then(($element) => {
+                  cy.get('@initialLength').then((initialLength) => {
+                    expect($element.length).to.be.lessThan(
+                      Number(initialLength)
+                    )
+                    expect($element.length).to.be.greaterThan(0)
+                  })
+                })
+              })
+            } else {
+              cy.log('Skipping dropdown with no label')
+            }
+          })
+        }
+      })
+
+      it.only('from cross button', () => {
+        cy.visit('/home/search')
+        cy.get('[data-cy="addMoreBtn"]').realClick()
+        cy.get('datahub-search-filters')
+          .children('div')
+          .children('div')
+          .eq(1)
+          .find('gn-ui-button')
+          .click()
+        cy.get('@filters').eq(1).click()
+        cy.get('gn-ui-results-list-item').then(($element) => {
+          const initialLength = $element.length
+          cy.wrap(initialLength).as('initialLength')
+          cy.get('[id^=dropdown-multiselect-]')
+            .find('label')
+            .eq(0)
+            .find('input')
+            .click()
+          cy.get('[id^=dropdown-multiselect-]')
+            .find('label')
+            .eq(1)
+            .find('input')
+            .click()
+          cy.get('@filters')
+            .eq(1)
+            .find('gn-ui-button')
+            .children('button')
+            .realClick()
+          cy.get('@filters')
+            .eq(1)
+            .find('gn-ui-button')
+            .children('button')
+            .children('button')
+            .realClick()
+          cy.get('[data-cy="addMoreBtn"]').click()
+          cy.get('gn-ui-results-list-item').then(($element) => {
+            cy.get('@initialLength').then((initialLength) => {
+              expect($element.length).to.equal(initialLength)
+            })
+          })
+        })
+      })
+    })
+
+    describe('multiple filters', () => {
+      let listLength
       beforeEach(() => {
         cy.get('[data-cy="addMoreBtn"]').trigger('click')
-        cy.get('@filters').first().click()
+        cy.get('gn-ui-results-list-item')
+          .its('length')
+          .then((len) => {
+            listLength = len
+          })
+      })
+      it('should change on adding new filter', () => {
+        cy.get('@filters').eq(1).click()
+        cy.get('[id^=dropdown-multiselect-]')
+          .find('label')
+          .eq(0)
+          .find('input')
+          .click()
+        cy.get('gn-ui-results-list-item').then(($element) => {
+          const newLength = $element.length
+          cy.wrap(newLength).as('newLength')
+          cy.get('@newLength').should('be.lessThan', Number(listLength))
+          cy.get('@filters').eq(1).realClick()
+          cy.get('@filters').eq(0).realClick()
+          cy.get('[id^=dropdown-multiselect-]')
+            .find('label')
+            .eq(2)
+            .find('input')
+            .click()
+          cy.get('gn-ui-results-list-item').then(($element) => {
+            cy.get('@newLength').then((newLength) => {
+              expect($element.length).to.be.lessThan(Number(newLength))
+            })
+          })
+        })
+      })
+      it('should change the list once on removing one filter', () => {
+        cy.get('@filters').eq(1).click()
+        cy.get('[id^=dropdown-multiselect-]')
+          .find('label')
+          .eq(0)
+          .find('input')
+          .click()
+        cy.get('@filters').eq(1).realClick()
+        cy.get('@filters').eq(0).realClick()
         cy.get('[id^=dropdown-multiselect-]')
           .find('label')
           .eq(2)
           .find('input')
-          .as('opt1')
           .click()
+        cy.get('gn-ui-results-list-item').then(($element) => {
+          const newLength = $element.length
+          cy.wrap(newLength).as('newLength')
+          cy.get('[id^=dropdown-multiselect-]')
+            .find('label')
+            .eq(2)
+            .find('input')
+            .click()
+          cy.get('gn-ui-results-list-item').then(($element) => {
+            cy.get('@newLength').then((newLength) => {
+              expect($element.length).to.be.greaterThan(Number(newLength))
+            })
+          })
+        })
+      })
+    })
+
+    describe('sort and clear filters', () => {
+      let listLength
+      beforeEach(() => {
+        cy.get('[data-cy="addMoreBtn"]').trigger('click')
+        cy.get('gn-ui-results-list-item')
+          .its('length')
+          .then((len) => {
+            listLength = len
+          })
+        cy.get('datahub-search-filters')
+          .children('div')
+          .children('div')
+          .eq(1)
+          .find('gn-ui-button')
+          .click()
+      })
+      it('should clear all applied filters on click', () => {
+        cy.get('@filters').eq(0).click()
         cy.get('[id^=dropdown-multiselect-]')
           .find('label')
-          .eq(3)
+          .eq(0)
           .find('input')
-          .as('opt2')
-          .click()
-        cy.get('gn-ui-results-list-item').then(($element) => {
-          const initialLength = $element.length
-          cy.wrap(initialLength).as('initialLength')
-        })
-      })
-      it('from option list', () => {
-        cy.get('@opt2').click()
-        cy.get('gn-ui-results-list-item').then(($element) => {
-          cy.get('@initialLength').then((initialLength) => {
-            expect($element.length).to.be.lessThan(Number(initialLength))
-            expect($element.length).to.be.greaterThan(0)
-          })
-        })
-      })
-      it('from selected options block', () => {
+          .click({ force: true })
+        cy.get('@filters').eq(0).realClick()
+        cy.get('@filters').eq(1).realClick()
         cy.get('[id^=dropdown-multiselect-]')
-          .children('div')
-          .first()
-          .find('button')
-          .first()
-          .click()
+          .find('label')
+          .eq(0)
+          .find('input')
+          .realClick()
+        cy.get('gn-ui-results-list-item').should(
+          'have.length.lessThan',
+          listLength
+        )
+        cy.get('@filters').eq(1).realClick()
+        cy.get('[data-cy="clearFilters"]').realClick()
         cy.get('gn-ui-results-list-item').then(($element) => {
-          cy.get('@initialLength').then((initialLength) => {
-            expect($element.length).to.be.lessThan(Number(initialLength))
-            expect($element.length).to.be.greaterThan(0)
-          })
+          expect($element.length).to.equal(Number(listLength))
         })
       })
-      it.only('from removal cross', () => {
-        cy.get('[id^=dropdown-multiselect-]').invoke('remove')
-        cy.get('@filters').first().click({ force: true })
-        cy.get('@filters').first().click({ force: true })
-        // cy.get('@filters')
-        //   .first()
-        //   .find('mat-icon')
-        //   .should('have.text', 'expand_less')
-        //   .parent('button')
-        //   .click({ force: true })
+      it('should sort the list by popularity', () => {
+        cy.get('gn-ui-results-list-item').as('initialList')
+        cy.get('datahub-search-filters')
+          .find('gn-ui-dropdown-selector')
+          .find('select')
+          .select(2)
+        cy.get('gn-ui-results-list-item').should('not.eq', '@initialList')
+        cy.get('gn-ui-favorite-star')
+          .find('span')
+          .invoke('text')
+          .then(($element) => {
+            let outputOrder = false
+            for (let i = 0; i < $element.length - 1; i++) {
+              if (parseInt($element[i]) < parseInt($element[i + 1])) {
+                outputOrder = false
+              } else {
+                outputOrder = true
+              }
+              expect(outputOrder).to.be.true
+            }
+          })
+      })
+      it('should sort the list by date', () => {
+        cy.get('gn-ui-results-list-item').as('initialList')
+        cy.get('datahub-search-filters')
+          .find('gn-ui-dropdown-selector')
+          .find('select')
+          .select(1)
+        cy.get('gn-ui-results-list-item').should('not.eq', '@initialList')
+      })
+      it('should sort the list by relevance', () => {
+        cy.get('datahub-search-filters')
+          .find('gn-ui-dropdown-selector')
+          .find('select')
+          .select(1)
+        cy.get('gn-ui-results-list-item').as('initialList')
+        cy.get('datahub-search-filters')
+          .find('gn-ui-dropdown-selector')
+          .find('select')
+          .select(0)
+        cy.get('gn-ui-results-list-item').should('not.eq', '@initialList')
       })
     })
   })

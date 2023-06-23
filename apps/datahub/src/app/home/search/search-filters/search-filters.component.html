@@ -1,147 +1,72 @@
-<div
-  class="bg-primary text-white p-5 shadow-xl rounded-lg grid grid-cols-6 gap-4 transition-[height] duration-100"
-  [ngClass]="{ 'sm:bg-white sm:text-main': !isOpen }"
->
-  <div
-    class="sm:col-span-4 grid grid-cols-1 sm:grid-cols-2 gap-7 sm:gap-4 sm:grid-rows-auto"
-    [ngClass]="
+<div class="bg-primary text-white p-5 shadow-xl rounded-lg grid grid-cols-6 gap-4 transition-[height] duration-100"
+  [ngClass]="{ 'sm:bg-white sm:text-main': !isOpen }">
+  <div class="sm:col-span-4 grid grid-cols-1 sm:grid-cols-2 gap-7 sm:gap-4 sm:grid-rows-auto" [ngClass]="
       isOpen
         ? 'col-span-6 mb-7 sm:mb-0'
         : 'col-span-4 sm:col-span-3 lg:col-span-4'
-    "
-  >
+    ">
     <div class="sm:col-span-2" [ngClass]="isOpen ? 'flex' : 'flex sm:hidden'">
       <div class="w-full flex flex-row justify-between">
-        <div
-          class="flex flex-col sm:flex-row items-baseline justify-start gap-2"
-        >
+        <div class="flex flex-col sm:flex-row items-baseline justify-start gap-2">
           <h2 class="text-xl mr-4 font-title" translate>
             search.filters.title
           </h2>
-          <button
-            type="button"
-            class="text-sm opacity-80 hover:opacity-100 transition-opacity clear-btn"
-            translate=""
-            (click)="clearFilters()"
-          >
+          <button type="button" class="text-sm opacity-80 hover:opacity-100 transition-opacity clear-btn" translate=""
+            (click)="clearFilters()" data-cy="clearFilters">
             search.filters.clear
           </button>
         </div>
         <span class="shrink-0 sm:hidden">
-          <button
-            type="button"
-            *ngIf="isOpen"
-            class="text-white opacity-60 hover:opacity-90 border-0 bg-transparent"
-            (click)="close()"
-          >
+          <button type="button" *ngIf="isOpen" class="text-white opacity-60 hover:opacity-90 border-0 bg-transparent"
+            (click)="close()">
             <span class="text-sm" translate>search.filters.minimize</span>
             <mat-icon class="ml-1 align-middle leading-none">remove</mat-icon>
           </button>
         </span>
       </div>
     </div>
-    <gn-ui-filter-dropdown
-      class="w-full"
-      [ngClass]="isOpen ? 'block' : 'hidden sm:block'"
-      [fieldName]="'publisher'"
-      [title]="'search.filters.byOrganisation' | translate"
-    ></gn-ui-filter-dropdown>
-    <gn-ui-filter-dropdown
-      class="w-full"
-      [ngClass]="isOpen ? 'block' : 'hidden sm:block'"
-      [fieldName]="'format'"
-      [title]="'search.filters.byFormat' | translate"
-    ></gn-ui-filter-dropdown>
-    <gn-ui-filter-dropdown
-      class="w-full"
-      [ngClass]="isOpen ? 'block' : 'hidden'"
-      [fieldName]="'documentStandard'"
-      [title]="'search.filters.byStandard' | translate"
-    ></gn-ui-filter-dropdown>
-    <gn-ui-filter-dropdown
-      class="w-full"
-      [ngClass]="isOpen ? 'block' : 'hidden'"
-      [fieldName]="'inspireKeyword'"
-      [title]="'search.filters.byInspireKeyword' | translate"
-    ></gn-ui-filter-dropdown>
-    <gn-ui-filter-dropdown
-      class="w-full"
-      [ngClass]="isOpen ? 'block' : 'hidden'"
-      [fieldName]="'topic'"
-      [title]="'search.filters.byTopic' | translate"
-    ></gn-ui-filter-dropdown>
-    <gn-ui-filter-dropdown
-      class="w-full"
-      [ngClass]="isOpen ? 'block' : 'hidden'"
-      [fieldName]="'publicationYear'"
-      [title]="'search.filters.byPublicationYear' | translate"
-    ></gn-ui-filter-dropdown>
-    <gn-ui-filter-dropdown
-      class="w-full"
-      [ngClass]="isOpen ? 'block' : 'hidden'"
-      [fieldName]="'isSpatial'"
-      [title]="'search.filters.isSpatial' | translate"
-    ></gn-ui-filter-dropdown>
-    <gn-ui-filter-dropdown
-      class="w-full"
-      [ngClass]="isOpen ? 'block' : 'hidden'"
-      [fieldName]="'license'"
-      [title]="'search.filters.byLicense' | translate"
-    ></gn-ui-filter-dropdown>
-    <div
-      class="spatial-filter-toggle sm:col-span-2"
-      *ngIf="isOpen && searchFacade.hasSpatialFilter$ | async"
-    >
-      <gn-ui-check-toggle
-        [title]="'search.filters.useSpatialFilterHelp' | translate"
-        [label]="'search.filters.useSpatialFilter' | translate"
-        [color]="'secondary'"
+    <gn-ui-filter-dropdown class="w-full" [ngClass]="isOpen ? 'block' : 'hidden sm:block'" [fieldName]="'publisher'"
+      [title]="'search.filters.byOrganisation' | translate"></gn-ui-filter-dropdown>
+    <gn-ui-filter-dropdown class="w-full" [ngClass]="isOpen ? 'block' : 'hidden sm:block'" [fieldName]="'format'"
+      [title]="'search.filters.byFormat' | translate"></gn-ui-filter-dropdown>
+    <gn-ui-filter-dropdown class="w-full" [ngClass]="isOpen ? 'block' : 'hidden'" [fieldName]="'documentStandard'"
+      [title]="'search.filters.byStandard' | translate"></gn-ui-filter-dropdown>
+    <gn-ui-filter-dropdown class="w-full" [ngClass]="isOpen ? 'block' : 'hidden'" [fieldName]="'inspireKeyword'"
+      [title]="'search.filters.byInspireKeyword' | translate"></gn-ui-filter-dropdown>
+    <gn-ui-filter-dropdown class="w-full" [ngClass]="isOpen ? 'block' : 'hidden'" [fieldName]="'topic'"
+      [title]="'search.filters.byTopic' | translate"></gn-ui-filter-dropdown>
+    <gn-ui-filter-dropdown class="w-full" [ngClass]="isOpen ? 'block' : 'hidden'" [fieldName]="'publicationYear'"
+      [title]="'search.filters.byPublicationYear' | translate"></gn-ui-filter-dropdown>
+    <gn-ui-filter-dropdown class="w-full" [ngClass]="isOpen ? 'block' : 'hidden'" [fieldName]="'isSpatial'"
+      [title]="'search.filters.isSpatial' | translate"></gn-ui-filter-dropdown>
+    <gn-ui-filter-dropdown class="w-full" [ngClass]="isOpen ? 'block' : 'hidden'" [fieldName]="'license'"
+      [title]="'search.filters.byLicense' | translate"></gn-ui-filter-dropdown>
+    <div class="spatial-filter-toggle sm:col-span-2" *ngIf="isOpen && searchFacade.hasSpatialFilter$ | async">
+      <gn-ui-check-toggle [title]="'search.filters.useSpatialFilterHelp' | translate"
+        [label]="'search.filters.useSpatialFilter' | translate" [color]="'secondary'"
         [value]="searchFacade.spatialFilterEnabled$ | async"
-        (toggled)="toggleSpatialFilter($event)"
-      ></gn-ui-check-toggle>
+        (toggled)="toggleSpatialFilter($event)"></gn-ui-check-toggle>
     </div>
   </div>
-  <div
-    class="col-span-2 flex flex-col justify-between"
-    [ngClass]="{ 'sm:col-span-3 lg:col-span-2': !isOpen }"
-  >
-    <div
-      class="flex flex-row"
-      [ngClass]="
+  <div class="col-span-2 flex flex-col justify-between" [ngClass]="{ 'sm:col-span-3 lg:col-span-2': !isOpen }">
+    <div class="flex flex-row" [ngClass]="
         isOpen
           ? 'justify-start sm:justify-end'
           : 'justify-end sm:justify-between'
-      "
-    >
-      <gn-ui-button
-        class="hidden sm:block"
-        *ngIf="!isOpen"
-        (buttonClick)="open()"
-        type="outline"
-        extraClass="!p-[8px]"
-      >
+      ">
+      <gn-ui-button class="hidden sm:block" *ngIf="!isOpen" (buttonClick)="open()" type="outline" extraClass="!p-[8px]">
         <mat-icon>more_horiz</mat-icon>
       </gn-ui-button>
-      <button
-        type="button"
-        *ngIf="!isOpen"
-        class="text-white opacity-60 hover:opacity-90 border-0 bg-transparent sm:hidden"
-        (click)="open()"
-      >
+      <button type="button" *ngIf="!isOpen"
+        class="text-white opacity-60 hover:opacity-90 border-0 bg-transparent sm:hidden" (click)="open()">
         <span class="text-sm" translate>search.filters.maximize</span>
         <mat-icon class="ml-1 align-middle leading-none">add</mat-icon>
       </button>
-      <gn-ui-sort-by
-        [ngClass]="isOpen ? 'block text-white mb-1' : 'hidden sm:block'"
-      ></gn-ui-sort-by>
+      <gn-ui-sort-by [ngClass]="isOpen ? 'block text-white mb-1' : 'hidden sm:block'"></gn-ui-sort-by>
     </div>
     <div class="text-right">
-      <button
-        type="button"
-        *ngIf="isOpen"
-        class="text-white opacity-60 hover:opacity-90 border-0 bg-transparent hidden sm:inline"
-        (click)="close()"
-      >
+      <button type="button" *ngIf="isOpen"
+        class="text-white opacity-60 hover:opacity-90 border-0 bg-transparent hidden sm:inline" (click)="close()">
         <span class="text-sm" translate>search.filters.minimize</span>
         <mat-icon class="ml-1 align-middle leading-none">remove</mat-icon>
       </button>
