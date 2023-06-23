@@ -213,7 +213,7 @@ describe('datasets', () => {
       })
     })
 
-    describe('filter the list on click on options', () => {
+    describe.only('filter the list on click on options', () => {
       let filterLength
       beforeEach(() => {
         cy.visit('/home/search')
@@ -241,7 +241,6 @@ describe('datasets', () => {
             const label = $dropdown.prev('label')
 
             if (label.text() !== '') {
-              cy.wrap($dropdown).select('OptionValue')
               cy.get('[id^=dropdown-multiselect-]')
                 .find('label')
                 .eq(0)
@@ -443,7 +442,7 @@ describe('datasets', () => {
         }
       })
 
-      it.only('from cross button', () => {
+      it('from cross button', () => {
         cy.visit('/home/search')
         cy.get('[data-cy="addMoreBtn"]').realClick()
         cy.get('datahub-search-filters')
