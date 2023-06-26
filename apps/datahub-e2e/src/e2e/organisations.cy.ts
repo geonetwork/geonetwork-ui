@@ -52,12 +52,7 @@ describe('organisations', () => {
           const text = $element.text().trim()
           expect(parseInt(text)).to.not.be.NaN
         })
-      cy.get('@txtProvi')
-        .children('div')
-        .children('span')
-        .eq(1)
-        .its('text')
-        .should('have.length.above', 0)
+      cy.get('@txtProvi').children('div').should('have.length.above', 0)
     })
     it('should display navigation options', () => {
       cy.get('gn-ui-pagination')
@@ -118,10 +113,7 @@ describe('organisations', () => {
         .find('gn-ui-dropdown-selector')
         .find('select')
         .as('filter')
-      cy.get('gn-ui-pagination')
-        .children('div')
-        .children('div')
-        .as('pagination')
+      cy.get('gn-ui-pagination').children('div').as('pagination')
       cy.get('gn-ui-organisations')
         .children('div')
         .first()
@@ -171,7 +163,7 @@ describe('organisations', () => {
             })
         })
     })
-    it.only('should filter the list by dataset count', () => {
+    it('should filter the list by dataset count', () => {
       const thirdOrder = []
       const updatedOrder = []
       const initialOrder = []
@@ -204,13 +196,73 @@ describe('organisations', () => {
         })
     })
     it('should navigate to next page with button', () => {
-      cy.get('@pagination')
+      const page1 = []
+      const page2 = []
+      cy.get('@txtProvi')
+        .children('span')
+        .each(($span) => {
+          page1.push($span.text())
+        })
+        .then(() => {
+          cy.get('@pagination')
+            .children('div')
+            .first()
+            .find('gn-ui-button')
+            .click()
+          cy.get('@txtProvi')
+            .children('span')
+            .each(($span) => {
+              page2.push($span.text())
+            })
+            .then(() => {
+              expect(page1).to.not.equal(page2)
+            })
+        })
     })
-    it('should navigate between pages with arrows', () => {
-      cy.get('@pagination')
+    it.only('should navigate between pages with arrows', () => {
+      const page1 = []
+      const page2 = []
+      cy.get('@txtProvi')
+        .children('span')
+        .each(($span) => {
+          page1.push($span.text())
+        })
+        .then(() => {
+          cy.get('@pagination')
+            .children('div')
+            .eq(1)
+            .find('gn-ui-button')
+            .eq(1)
+            .click()
+          cy.get('@txtProvi')
+            .children('span')
+            .each(($span) => {
+              page2.push($span.text())
+            })
+            .then(() => {
+              expect(page1).to.not.equal(page2)
+            })
+        })
     })
     it('should navigate between pages with number typed', () => {
-      cy.get('@pagination')
+      const page1 = []
+      const page2 = []
+      cy.get('@txtProvi')
+        .children('span')
+        .each(($span) => {
+          page1.push($span.text())
+        })
+        .then(() => {
+          cy.get('@pagination').children('div').eq(1).find('input').type('2')
+          cy.get('@txtProvi')
+            .children('span')
+            .each(($span) => {
+              page2.push($span.text())
+            })
+            .then(() => {
+              expect(page1).to.not.equal(page2)
+            })
+        })
     })
   })
 })
