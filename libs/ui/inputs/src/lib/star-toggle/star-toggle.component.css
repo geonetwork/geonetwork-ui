@@ -12,7 +12,7 @@ mat-icon {
 }
 
 .star-toggle-overlay {
-  stroke: #f43f5e;
+  stroke: var(--color-primary);
   stroke-width: 3.5px;
   stroke-linecap: round;
   position: absolute;
