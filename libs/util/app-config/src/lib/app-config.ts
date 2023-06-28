@@ -109,26 +109,6 @@ export function loadAppConfig() {
                 parsedGlobalSection.web_component_embedder_url,
             } as GlobalConfig)
 
-      const parsedSearchParams = parseMultiConfigSection(
-        parsed,
-        'search_preset',
-        ['name'],
-        [
-          '_sort',
-          'any',
-          'organisation',
-          'format',
-          'standard',
-          'inspireKeyword',
-          'topic',
-          'publicationYear',
-          'spatial',
-          'license',
-        ],
-        warnings,
-        errors
-      )
-
       const parsedLayersSections = parseMultiConfigSection(
         parsed,
         'map_layer',
@@ -212,6 +192,25 @@ export function loadAppConfig() {
         'search',
         [],
         ['filter_geometry_data', 'filter_geometry_url', 'search_preset'],
+        warnings,
+        errors
+      )
+      const parsedSearchParams = parseMultiConfigSection(
+        parsed,
+        'search_preset',
+        ['name'],
+        [
+          '_sort',
+          'any',
+          'organisation',
+          'format',
+          'standard',
+          'inspireKeyword',
+          'topic',
+          'publicationYear',
+          'spatial',
+          'license',
+        ],
         warnings,
         errors
       )
