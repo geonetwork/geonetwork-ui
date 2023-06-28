@@ -1,7 +1,14 @@
-import { ChangeDetectionStrategy, Component, ElementRef } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Inject,
+  Optional,
+} from '@angular/core'
 import { RecordPreviewComponent } from '../record-preview/record-preview.component'
 import { TranslateService } from '@ngx-translate/core'
 import Duration from 'duration-relativetimeformat'
+import { IRightClickToken, RIGHT_CLICK_TOKEN } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-record-preview-feed',
@@ -14,7 +21,10 @@ export class RecordPreviewFeedComponent extends RecordPreviewComponent {
 
   constructor(
     protected elementRef: ElementRef,
-    private translate: TranslateService
+    private translate: TranslateService,
+    @Optional()
+    @Inject(RIGHT_CLICK_TOKEN)
+    private rightClickService: IRightClickToken
   ) {
     super(elementRef)
   }
@@ -30,5 +40,11 @@ export class RecordPreviewFeedComponent extends RecordPreviewComponent {
   }
   get time() {
     return this.timeFormat.format(this.record.createdOn, Date.now())
+  }
+
+  getTargetUrl() {
+    return this.rightClickService?.datasetUrl
+      ? `${this.rightClickService?.datasetUrl}${this.record.uuid}`
+      : null
   }
 }

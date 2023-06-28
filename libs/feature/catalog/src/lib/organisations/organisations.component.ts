@@ -2,10 +2,16 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Inject,
   Input,
+  Optional,
   Output,
 } from '@angular/core'
-import { Organisation } from '@geonetwork-ui/util/shared'
+import {
+  IRightClickToken,
+  Organisation,
+  RIGHT_CLICK_TOKEN,
+} from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
 import { map, startWith, tap } from 'rxjs/operators'
 import { OrganisationsServiceInterface } from './service/organisations.service.interface'
@@ -20,7 +26,13 @@ export class OrganisationsComponent {
   @Input() itemsOnPage = 12
   @Output() orgSelect = new EventEmitter<Organisation>()
 
-  constructor(private organisationsService: OrganisationsServiceInterface) {}
+  constructor(
+    private organisationsService: OrganisationsServiceInterface,
+    @Optional()
+    @Inject(RIGHT_CLICK_TOKEN)
+    private rightClickToken: IRightClickToken
+  ) {}
+
   totalPages: number
   currentPage$ = new BehaviorSubject(1)
   sortBy$ = new BehaviorSubject('name-asc')
@@ -79,5 +91,11 @@ export class OrganisationsComponent {
 
   trackByIndex(index: number) {
     return index
+  }
+
+  getOrganisationUrl(organisation: Organisation) {
+    return this.rightClickToken?.organisationUrl
+      ? `${this.rightClickToken?.organisationUrl}${organisation.name}`
+      : null
   }
 }

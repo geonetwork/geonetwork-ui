@@ -3,7 +3,7 @@
 >
   <a
     class="record-container block rounded-lg bg-white border border-white card-shadow"
-    [href]="record.metadataUrl"
+    [attr.href]="getTargetUrl()"
     [target]="linkTarget"
   >
     <div
