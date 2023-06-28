@@ -40,4 +40,8 @@ describe('RecordPreviewDatahubComponent', () => {
   it('abstract is stripped', () => {
     expect(component.abstract).toBe('abstract')
   })
+
+  it('should not have href if RightClickToken not provided', () => {
+    expect(component.getTargetUrl()).toBe(null)
+  })
 })

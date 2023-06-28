@@ -198,5 +198,8 @@ describe('OrganisationsComponent', () => {
         expect(orgSelected).toEqual([organisationMock])
       })
     })
+    it('should not have href if RightClickToken not provided', () => {
+      expect(component.getOrganisationUrl(organisationMock)).toBe(null)
+    })
   })
 })
