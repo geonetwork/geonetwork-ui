@@ -21,7 +21,7 @@ proxy_path = ""
 #  - ${lang2}, ${lang3}: indicates if and where the current language should be part of the login URL in language 2 or 3 letter code
 # Example to use the georchestra login page:
 # login_url = "/cas/login?service=${current_url}"
-# This optional URL should point to the static html page wc-embedder.html which allows to display a web component (like chart and table) via a permalink. 
+# This optional URL should point to the static html page wc-embedder.html which allows to display a web component (like chart and table) via a permalink.
 # URLs can be indicated from the root of the same server starting with a "/" or as an external URL. Be conscious of potential CORS issues when using an external URL.
 # The default location in the dockerized datahub app for example is "/datahub/wc-embedder.html".
 # If the URL is not indicated, no permalinks will show up in the UI.
@@ -63,6 +63,21 @@ background_color = "#fdfbff"
 # Note: if the GeoJSON object contains multiple features, only the geometry of the first one will be kept!
 # filter_geometry_url = "https://my.domain.org/assets/boundary.geojson"
 # filter_geometry_data = '{ "coordinates": [...], "type": "Polygon" }'
+# [[search_preset]]
+# _sort = "-createDate"
+# name = 'filterByOrgs'
+# any = 'Carto'
+# organisation = ['DREAL', 'atmo Hauts-de-France']
+# format = ['ESRI Shapefile']
+# standard = ['iso19115-3.2018']
+# #inspireKeyword = []
+# topic = ['boundaries']
+# publicationYear = ['2023', '2022']
+# spatial = ['yes']
+# license = ['unknown']
+# [[search_preset]]
+# name = 'Wind turbines'
+# any = 'wind'
 
 ### MAP SETTINGS
 

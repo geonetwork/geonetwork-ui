@@ -14,35 +14,41 @@ import {
   SearchConfig,
   ThemeConfig,
 } from './model'
+import { RawCustomSearchFilters } from '@geonetwork-ui/util/shared'
 
 const MISSING_CONFIG_ERROR = `Application configuration was not initialized correctly.
-This error might show up in case of an invalid/malformed configuration file. 
+This error might show up in case of an invalid/malformed configuration file.
 
 Note: make sure that you have called \`loadAppConfig\` from '@geonetwork-ui/util/app-config' before starting the Angular application.`
 
 let globalConfig: GlobalConfig = null
+
 export function getGlobalConfig(): GlobalConfig {
   if (globalConfig === null) throw new Error(MISSING_CONFIG_ERROR)
   return globalConfig
 }
 
 let themeConfig: ThemeConfig = null
+
 export function getThemeConfig(): ThemeConfig {
   if (themeConfig === null) throw new Error(MISSING_CONFIG_ERROR)
   return themeConfig
 }
 
 let mapConfig: MapConfig = null
+
 export function getOptionalMapConfig(): MapConfig | null {
   return mapConfig
 }
 
 let searchConfig: SearchConfig = null
+
 export function getOptionalSearchConfig(): SearchConfig | null {
   return searchConfig
 }
 
 let customTranslations: CustomTranslationsAllLanguages = null
+
 export function getCustomTranslations(langCode: string): CustomTranslations {
   if (customTranslations === null) throw new Error(MISSING_CONFIG_ERROR)
   return langCode in customTranslations ? customTranslations[langCode] : {}
@@ -102,6 +108,26 @@ export function loadAppConfig() {
               WEB_COMPONENT_EMBEDDER_URL:
                 parsedGlobalSection.web_component_embedder_url,
             } as GlobalConfig)
+
+      const parsedSearchParams = parseMultiConfigSection(
+        parsed,
+        'search_preset',
+        ['name'],
+        [
+          '_sort',
+          'any',
+          'organisation',
+          'format',
+          'standard',
+          'inspireKeyword',
+          'topic',
+          'publicationYear',
+          'spatial',
+          'license',
+        ],
+        warnings,
+        errors
+      )
 
       const parsedLayersSections = parseMultiConfigSection(
         parsed,
@@ -185,7 +211,7 @@ export function loadAppConfig() {
         parsed,
         'search',
         [],
-        ['filter_geometry_data', 'filter_geometry_url'],
+        ['filter_geometry_data', 'filter_geometry_url', 'search_preset'],
         warnings,
         errors
       )
@@ -195,7 +221,24 @@ export function loadAppConfig() {
           : ({
               FILTER_GEOMETRY_DATA: parsedSearchSection.filter_geometry_data,
               FILTER_GEOMETRY_URL: parsedSearchSection.filter_geometry_url,
-            } as SearchConfig)
+              SEARCH_PRESET: parsedSearchParams.map(
+                (param) =>
+                  ({
+                    _sort: param._sort,
+                    name: param.name,
+                    any: param.any,
+                    OrgForResource: param.organisation,
+                    format: param.format,
+                    documentStandard: param.standard,
+                    'th_httpinspireeceuropaeutheme-theme_tree.default':
+                      param.inspireKeyword,
+                    'cl_topic.key': param.topic,
+                    publicationYearForResource: param.publicationYear,
+                    isSpatial: param.spatial,
+                    license: param.license,
+                  } as RawCustomSearchFilters)
+              ),
+            } as any)
 
       customTranslations = parseTranslationsConfigSection(
         parsed,

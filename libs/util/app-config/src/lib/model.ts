@@ -40,6 +40,11 @@ export interface ThemeConfig {
 export interface SearchConfig {
   FILTER_GEOMETRY_URL?: string
   FILTER_GEOMETRY_DATA?: string
+  SEARCH_PRESET?: {
+    _sort: string
+    _filters: unknown
+    name: string
+  }[]
 }
 
 export type CustomTranslations = { [translationKey: string]: string }
