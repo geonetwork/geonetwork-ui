@@ -1,6 +1,4 @@
 import 'cypress-real-events'
-import { find } from 'cypress/types/lodash'
-import { transformExtent } from 'ol/proj'
 
 describe('organisations', () => {
   beforeEach(() => {
@@ -219,7 +217,7 @@ describe('organisations', () => {
             })
         })
     })
-    it.only('should navigate between pages with arrows', () => {
+    it.only('should go to next page with arrow', () => {
       const page1 = []
       const page2 = []
       cy.get('@txtProvi')

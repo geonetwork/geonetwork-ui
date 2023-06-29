@@ -1,74 +1,38 @@
 <div *ngIf="(facade.error$ | async) === null">
-  <div
-    id="about"
-    class="container-lg px-4 mb-9 mt-8 sm:mb-16 sm:mt-10 lg:mx-auto"
-  >
-    <gn-ui-metadata-info
-      class="sm:block"
-      *ngIf="(facade.isPresent$ | async) === false"
-      [metadata]="{}"
-      [incomplete]="true"
-    >
+  <div id="about" class="container-lg px-4 mb-9 mt-8 sm:mb-16 sm:mt-10 lg:mx-auto">
+    <gn-ui-metadata-info class="sm:block" *ngIf="(facade.isPresent$ | async) === false" [metadata]="{}"
+      [incomplete]="true">
     </gn-ui-metadata-info>
-    <div
-      *ngIf="(facade.isPresent$ | async) === true"
-      class="grid gap-8 grid-cols-1 sm:gap-6 sm:grid-cols-3"
-    >
+    <div *ngIf="(facade.isPresent$ | async) === true" class="grid gap-8 grid-cols-1 sm:gap-6 sm:grid-cols-3">
       <div class="sm:col-span-2">
-        <gn-ui-metadata-info
-          class="sm:block"
-          [metadata]="facade.metadata$ | async"
-          [incomplete]="facade.isIncomplete$ | async"
-          [notFound]="facade.error?.notFound"
-          [landingPages]="facade.landingPageLinks$ | async"
-          (keyword)="onInfoKeywordClick($event)"
-        >
+        <gn-ui-metadata-info class="sm:block" [metadata]="facade.metadata$ | async"
+          [incomplete]="facade.isIncomplete$ | async" [notFound]="facade.error?.notFound"
+          [landingPages]="facade.landingPageLinks$ | async" (keyword)="onInfoKeywordClick($event)">
         </gn-ui-metadata-info>
       </div>
       <div>
-        <gn-ui-metadata-contact
-          (contact)="onContactClick($event)"
-          [metadata]="facade.metadata$ | async"
-        >
+        <gn-ui-metadata-contact (contact)="onContactClick($event)" [metadata]="facade.metadata$ | async">
         </gn-ui-metadata-contact>
         <gn-ui-metadata-catalog [sourceLabel]="sourceLabel$ | async">
         </gn-ui-metadata-catalog>
       </div>
     </div>
   </div>
-  <div
-    style="height: 612px"
-    *ngIf="(displayMap$ | async) || (displayData$ | async)"
-  >
-    <div
-      class="bg-primary-opacity-10 pt-8 overflow-visible sm:pt-5"
-      style="height: 512px"
-    >
+  <div style="height: 612px" *ngIf="(displayMap$ | async) || (displayData$ | async)" id="preview">
+    <div class="bg-primary-opacity-10 pt-8 overflow-visible sm:pt-5" style="height: 512px">
       <div class="container-lg px-4 lg:mx-auto">
         <div>
-          <div
-            class="text-[28px] text-title font-title transform sm:translate-y-10"
-            translate
-            id="preview"
-          >
+          <div class="text-[28px] text-title font-title transform sm:translate-y-10" translate id="preview">
             record.metadata.preview
           </div>
-          <mat-tab-group
-            (selectedIndexChange)="onTabIndexChange($event)"
-            [selectedIndex]="(displayMap$ | async) ? 0 : 1"
-            animationDuration="200ms"
-            mat-stretch-tabs="false"
-            mat-align-tabs="start"
-          >
+          <mat-tab-group (selectedIndexChange)="onTabIndexChange($event)"
+            [selectedIndex]="(displayMap$ | async) ? 0 : 1" animationDuration="200ms" mat-stretch-tabs="false"
+            mat-align-tabs="start">
             <mat-tab [disabled]="(displayMap$ | async) === false">
               <ng-template mat-tab-label>
                 <span class="tab-header-label" translate>record.tab.map</span>
               </ng-template>
-              <div
-                class="block"
-                style="height: 500px"
-                *ngIf="displayMap$ | async"
-              >
+              <div class="block" style="height: 500px" *ngIf="displayMap$ | async">
                 <gn-ui-map-view></gn-ui-map-view>
               </div>
             </mat-tab>
@@ -93,18 +57,11 @@
       </div>
     </div>
   </div>
-  <div
-    *ngIf="(selectedTabIndex$ | async) === 2"
-    class="container-lg px-5 my-1 lg:mx-auto"
-  >
+  <div *ngIf="(selectedTabIndex$ | async) === 2" class="container-lg px-5 my-1 lg:mx-auto">
     <gn-ui-data-view-permalink></gn-ui-data-view-permalink>
   </div>
 
-  <div
-    id="access"
-    class="container-lg px-4 lg:mx-auto"
-    *ngIf="displayDownload$ | async"
-  >
+  <div id="access" class="container-lg px-4 lg:mx-auto" *ngIf="displayDownload$ | async">
     <gn-ui-data-downloads class="block mt-5"></gn-ui-data-downloads>
   </div>
 
@@ -122,9 +79,7 @@
     <div>
       <div class="h-48 overflow-visible">
         <div class="container-lg px-4 lg:mx-auto">
-          <gn-ui-related-records
-            [records]="facade.related$ | async"
-          ></gn-ui-related-records>
+          <gn-ui-related-records [records]="facade.related$ | async"></gn-ui-related-records>
         </div>
       </div>
     </div>
@@ -133,18 +88,9 @@
     </div>
   </div>
 </div>
-<div
-  class="p-4 max-w-[600px] m-auto text-[13px]"
-  *ngIf="facade.error$ | async as error"
->
-  <gn-ui-search-results-error
-    *ngIf="error.notFound"
-    [type]="errorTypes.RECORD_NOT_FOUND"
-    [recordId]="(facade.metadata$ | async).uuid"
-  ></gn-ui-search-results-error>
-  <gn-ui-search-results-error
-    *ngIf="error.otherError"
-    [type]="errorTypes.RECEIVED_ERROR"
-    [error]="error.otherError"
-  ></gn-ui-search-results-error>
+<div class="p-4 max-w-[600px] m-auto text-[13px]" *ngIf="facade.error$ | async as error">
+  <gn-ui-search-results-error *ngIf="error.notFound" [type]="errorTypes.RECORD_NOT_FOUND"
+    [recordId]="(facade.metadata$ | async).uuid"></gn-ui-search-results-error>
+  <gn-ui-search-results-error *ngIf="error.otherError" [type]="errorTypes.RECEIVED_ERROR"
+    [error]="error.otherError"></gn-ui-search-results-error>
 </div>
