@@ -74,7 +74,7 @@ $ docker run -p 8080:80 \
 
 #### Adding custom scripts when deploying Datahub
 
-You can deploy custom sh scripts when deploying a container by setting the environment variable `CUSTOM_SCRIPTS_DIRECTORY` pointing to a mounted volume.
+You can deploy custom executable sh scripts when deploying a container by setting the environment variable `CUSTOM_SCRIPTS_DIRECTORY` pointing to a mounted volume.
 
 It can be used to deploy custom header by example.
 
