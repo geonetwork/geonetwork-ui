@@ -129,16 +129,20 @@ describe('parse utils', () => {
             },
           },
           'test',
-          ['mandatory1.path.local'],
-          ['mandatory1.path.global'],
+          ['mandatory1'],
+          [],
           warnings,
           errors
         )
       })
-      it('returns an object with flattened properties', () => {
+      it('returns the nested object as is', () => {
         expect(result).toEqual({
-          ['mandatory1.path.local']: '/aaa/bbb',
-          ['mandatory1.path.global']: 'https://hello',
+          mandatory1: {
+            path: {
+              local: '/aaa/bbb',
+              global: 'https://hello',
+            },
+          },
         })
       })
     })

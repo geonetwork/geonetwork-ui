@@ -212,16 +212,6 @@ export function loadAppConfig() {
                 sort: param.sort,
                 name: param.name,
                 filters: param.filters,
-                // any: param.any,
-                // OrgForResource: param.organisation,
-                // format: param.format,
-                // documentStandard: param.standard,
-                // 'th_httpinspireeceuropaeutheme-theme_tree.default':
-                //   param.inspireKeyword,
-                // 'cl_topic.key': param.topic,
-                // publicationYearForResource: param.publicationYear,
-                // isSpatial: param.spatial,
-                // license: param.license,
               })),
             } as any)
 
