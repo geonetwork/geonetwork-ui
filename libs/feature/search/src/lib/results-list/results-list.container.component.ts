@@ -82,5 +82,4 @@ export class ResultsListContainerComponent implements OnInit {
     if (!this.recordUrlTemplate) return null
     return this.recordUrlTemplate.replace('${uuid}', metadata.uuid)
   }
-
 }
