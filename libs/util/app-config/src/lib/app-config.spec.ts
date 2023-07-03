@@ -161,13 +161,15 @@ describe('app config utils', () => {
           SEARCH_PRESET: [
             {
               name: 'filterByOrgs',
-              _sort: '-createDate',
-              any: 'Carto',
-              OrgForResource: ['Org1', 'Org2'],
-              'cl_topic.key': ['boundaries'],
-              format: ['ESRI Shapefile'],
-              isSpatial: ['yes'],
-              publicationYearForResource: ['2023', '2022'],
+              sort: '-createDate',
+              filters: {
+                q: 'Carto',
+                organisation: ['Org1', 'Org2'],
+                topic: ['boundaries'],
+                format: ['ESRI Shapefile'],
+                spatial: ['yes'],
+                publicationYear: ['2023', '2022'],
+              },
             },
           ],
         })

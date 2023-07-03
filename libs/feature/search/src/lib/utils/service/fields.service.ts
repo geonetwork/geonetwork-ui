@@ -10,8 +10,8 @@ import {
   SimpleSearchField,
   TopicSearchField,
 } from './fields'
-import { combineLatest, forkJoin, Observable, of, takeLast } from 'rxjs'
-import { map, mergeScan } from 'rxjs/operators'
+import { forkJoin, Observable, of } from 'rxjs'
+import { map } from 'rxjs/operators'
 
 // key is the field name
 export type FieldValues = Record<string, FieldValue[] | FieldValue>

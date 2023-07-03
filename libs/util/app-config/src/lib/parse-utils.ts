@@ -54,7 +54,7 @@ export function parseConfigSection(
     return null
   }
 
-  const sectionConf = flatten('', fullConfigObj[sectionName])
+  const sectionConf = fullConfigObj[sectionName] as Record<string, string>
   const keysCheck = checkKeys(sectionConf, mandatoryKeys, optionalKeys)
 
   if (keysCheck.missing.length) {

@@ -6,11 +6,15 @@ import {
   RouterFacade,
   ROUTER_ROUTE_SEARCH,
 } from '@geonetwork-ui/feature/router'
-import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
+import {
+  FieldsService,
+  SearchFacade,
+  SearchService,
+} from '@geonetwork-ui/feature/search'
 import { SortByEnum } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { readFirst } from '@nrwl/angular/testing'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, of } from 'rxjs'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants'
 import { HeaderBadgeButtonComponent } from '../header-badge-button/header-badge-button.component'
 import { HomeHeaderComponent } from './home-header.component'
@@ -23,14 +27,14 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
   getOptionalSearchConfig: () => ({
     SEARCH_PRESET: [
       {
-        _sort: '-createDate',
+        sort: '-createDate',
         name: 'sortCeatedDateAndOrg',
-        OrgForResource: ['DREAL'],
+        filters: { publisher: ['DREAL'] },
       },
       {
-        _sort: '-createDate',
+        sort: '-createDate',
         name: 'filterCarto',
-        any: 'Cartographie',
+        filters: { q: 'Cartographie' },
       },
     ],
   }),
@@ -57,6 +61,10 @@ class searchServiceMock {
 class AuthServiceMock {
   authReady = jest.fn(() => this._authSubject$)
   _authSubject$ = new BehaviorSubject({})
+}
+
+class FieldsServiceMock {
+  buildFiltersFromFieldValues = jest.fn(() => of({ thisIs: 'a fake filter' }))
 }
 
 describe('HeaderComponent', () => {
@@ -88,6 +96,10 @@ describe('HeaderComponent', () => {
         {
           provide: AuthService,
           useClass: AuthServiceMock,
+        },
+        {
+          provide: FieldsService,
+          useClass: FieldsServiceMock,
         },
       ],
     }).compileComponents()
@@ -208,7 +220,7 @@ describe('HeaderComponent', () => {
         })
         it('should redirect correctly', () => {
           expect(searchService.setSortAndFilters).toHaveBeenCalledWith(
-            { OrgForResource: { DREAL: true } },
+            { thisIs: 'a fake filter' },
             SortByEnum.CREATE_DATE
           )
         })

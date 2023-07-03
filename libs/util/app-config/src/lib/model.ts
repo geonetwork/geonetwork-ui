@@ -37,14 +37,16 @@ export interface ThemeConfig {
   FONTS_STYLESHEET_URL?: string
 }
 
+export interface SearchPreset {
+  sort: string
+  name: string
+  filters: Record<string, string[] | string>
+}
+
 export interface SearchConfig {
   FILTER_GEOMETRY_URL?: string
   FILTER_GEOMETRY_DATA?: string
-  SEARCH_PRESET?: {
-    _sort: string
-    _filters: unknown
-    name: string
-  }[]
+  SEARCH_PRESET?: SearchPreset[]
 }
 
 export type CustomTranslations = { [translationKey: string]: string }

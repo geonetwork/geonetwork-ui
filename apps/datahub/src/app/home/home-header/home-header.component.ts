@@ -5,20 +5,22 @@ import {
   RouterFacade,
   ROUTER_ROUTE_SEARCH,
 } from '@geonetwork-ui/feature/router'
-import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
+import {
+  FieldValues,
+  FieldsService,
+  SearchFacade,
+  SearchService,
+} from '@geonetwork-ui/feature/search'
 import {
   getOptionalSearchConfig,
   getThemeConfig,
   SearchConfig,
+  SearchPreset,
 } from '@geonetwork-ui/util/app-config'
-import {
-  MetadataRecord,
-  RawCustomSearchFilters,
-  SearchFilters,
-  SortByEnum,
-} from '@geonetwork-ui/util/shared'
+import { MetadataRecord, SortByEnum } from '@geonetwork-ui/util/shared'
 import { map } from 'rxjs/operators'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants'
+import { lastValueFrom } from 'rxjs'
 
 marker('datahub.header.myfavorites')
 marker('datahub.header.lastRecords')
@@ -45,7 +47,8 @@ export class HomeHeaderComponent {
     public routerFacade: RouterFacade,
     public searchFacade: SearchFacade,
     private searchService: SearchService,
-    private authService: AuthService
+    private authService: AuthService,
+    private fieldsService: FieldsService
   ) {}
 
   displaySortBadges$ = this.routerFacade.currentRoute$.pipe(
@@ -60,25 +63,6 @@ export class HomeHeaderComponent {
     .authReady()
     .pipe(map((user) => !!user?.id))
 
-  private mapArrayIntoSearchFiltersObject(
-    customSearchParameters: RawCustomSearchFilters
-  ): SearchFilters {
-    const searchFilters = {}
-    for (const [key, value] of Object.entries(customSearchParameters)) {
-      if (value instanceof Array) {
-        const searchFilterProperty = {}
-        customSearchParameters[key].forEach((element) => {
-          searchFilterProperty[element] = true
-        })
-        searchFilters[key] = searchFilterProperty
-      } else if (key === 'any' && value) {
-        searchFilters[key] = value
-      }
-    }
-
-    return searchFilters
-  }
-
   onFuzzySearchSelection(record: MetadataRecord) {
     this.routerFacade.goToMetadata(record)
   }
@@ -91,10 +75,15 @@ export class HomeHeaderComponent {
     this.searchService.setSortAndFilters({}, sort)
   }
 
-  clearSearchAndFilterAndSort(customSearchParameters: any): void {
+  async clearSearchAndFilterAndSort(customSearchParameters: SearchPreset) {
+    const searchFilters = await lastValueFrom(
+      this.fieldsService.buildFiltersFromFieldValues(
+        customSearchParameters.filters
+      )
+    )
     this.searchService.setSortAndFilters(
-      this.mapArrayIntoSearchFiltersObject(customSearchParameters),
-      customSearchParameters._sort
+      searchFilters,
+      customSearchParameters.sort as SortByEnum
     )
   }
 }

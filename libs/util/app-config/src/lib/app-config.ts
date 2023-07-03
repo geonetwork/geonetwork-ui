@@ -14,7 +14,6 @@ import {
   SearchConfig,
   ThemeConfig,
 } from './model'
-import { RawCustomSearchFilters } from '@geonetwork-ui/util/shared'
 
 const MISSING_CONFIG_ERROR = `Application configuration was not initialized correctly.
 This error might show up in case of an invalid/malformed configuration file.
@@ -199,18 +198,7 @@ export function loadAppConfig() {
         parsed,
         'search_preset',
         ['name'],
-        [
-          '_sort',
-          'any',
-          'organisation',
-          'format',
-          'standard',
-          'inspireKeyword',
-          'topic',
-          'publicationYear',
-          'spatial',
-          'license',
-        ],
+        ['sort', 'filters'],
         warnings,
         errors
       )
@@ -220,23 +208,21 @@ export function loadAppConfig() {
           : ({
               FILTER_GEOMETRY_DATA: parsedSearchSection.filter_geometry_data,
               FILTER_GEOMETRY_URL: parsedSearchSection.filter_geometry_url,
-              SEARCH_PRESET: parsedSearchParams.map(
-                (param) =>
-                  ({
-                    _sort: param._sort,
-                    name: param.name,
-                    any: param.any,
-                    OrgForResource: param.organisation,
-                    format: param.format,
-                    documentStandard: param.standard,
-                    'th_httpinspireeceuropaeutheme-theme_tree.default':
-                      param.inspireKeyword,
-                    'cl_topic.key': param.topic,
-                    publicationYearForResource: param.publicationYear,
-                    isSpatial: param.spatial,
-                    license: param.license,
-                  } as RawCustomSearchFilters)
-              ),
+              SEARCH_PRESET: parsedSearchParams.map((param) => ({
+                sort: param.sort,
+                name: param.name,
+                filters: param.filters,
+                // any: param.any,
+                // OrgForResource: param.organisation,
+                // format: param.format,
+                // documentStandard: param.standard,
+                // 'th_httpinspireeceuropaeutheme-theme_tree.default':
+                //   param.inspireKeyword,
+                // 'cl_topic.key': param.topic,
+                // publicationYearForResource: param.publicationYear,
+                // isSpatial: param.spatial,
+                // license: param.license,
+              })),
             } as any)
 
       customTranslations = parseTranslationsConfigSection(
