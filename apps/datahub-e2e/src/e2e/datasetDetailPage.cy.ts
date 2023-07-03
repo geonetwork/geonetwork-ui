@@ -1,4 +1,5 @@
 import 'cypress-real-events'
+import fs from 'fs/promises'
 
 describe('organisations', () => {
   beforeEach(() => {
@@ -276,43 +277,64 @@ describe('organisations', () => {
           .find('gn-ui-download-item')
           .should('have.length.gt', 0)
       })
-      it('should have at least the "all" and "others" filter buttons', () => {
-        cy.get('gn-ui-data-downloads')
-          .find('gn-ui-button')
-          .children('button')
-          .then((btn) => {
-            const buttons = btn.text()
-            const btnList = []
-            buttons.split(' ').map((btnVal) => btnList.push(btnVal.trim()))
-            console.log(btnList)
-            expect(btnList).to.include('All')
-            expect(btnList).to.include('Others')
-          })
+      it('should have one button per download type + all and others', () => {
+        cy.get('[data-cy="download-format"]').then((format) => {
+          const formatString = format.text()
+          cy.get('gn-ui-data-downloads')
+            .find('gn-ui-button')
+            .children('button')
+            .then((btn) => {
+              const buttons = btn.text()
+              let btnList = []
+              buttons.split(' ').map((btnVal) => btnList.push(btnVal.trim()))
+              btnList = btnList.filter((item) => item !== '')
+              expect(btnList).to.include('All')
+              btnList.forEach((format) => {
+                const allowedFormats = ['csv', 'excel', 'json', 'shp']
+                if (allowedFormats.includes(format)) {
+                  expect(formatString).to.contain(format)
+                } else if (!allowedFormats.includes(format)) {
+                  if (format == 'geojson') {
+                    expect(formatString).to.contain('json')
+                  } else {
+                    expect(btnList).to.include('Others')
+                  }
+                }
+              })
+            })
+        })
       })
-      it.only('should have one button per download type', () => {
-        cy.get('gn-ui-data-downloads')
-          .find('gn-ui-download-item')
-          .find('a')
-          .children('div')
-          .children('div')
-          .find('span')
+      describe.only('functionnalities', () => {
+        it('filtrates the download list on format filter click', () => {
+          cy.get('gn-ui-data-downloads')
+            .find('gn-ui-button')
+            .children('button')
+            .eq(1)
+            .as('filterFormat')
+          cy.get('@filterFormat').click()
+          cy.get('@filterFormat').then((btn) => {
+            const filterFormat = btn.text().trim()
+            cy.get('[data-cy="download-format"]')
+              .filter(':visible')
+              .then((format) => {
+                const formatOutput = format.text().trim()
+                expect(formatOutput).to.eq(filterFormat)
+              })
+          })
+        })
+        it.only('downloads a file on click', () => {
+          cy.get('gn-ui-data-downloads')
+            .find('gn-ui-download-item')
+            .first()
+            .click()
 
-        cy.get('gn-ui-data-downloads')
-          .find('gn-ui-button')
-          .children('button')
-          .then((btn) => {
-            const buttons = btn.text()
-            const btnList = []
-            buttons.split(' ').map((btnVal) => btnList.push(btnVal.trim()))
-            console.log(btnList)
-            expect(btnList).to.include('All')
-            expect(btnList).to.include('Others')
+          cy.exec('ls cypress/downloads').then((result) => {
+            const fileList = result.stdout.split('\n')
+
+            const isFileDownloaded = fileList[0]
+            expect(/\S/.test(isFileDownloaded)).to.be.true
           })
-      })
-    })
-    describe('functionnalities', () => {
-      it('', () => {
-        cy.get('gn-ui-data-downloads').find('gn-ui-download-item')
+        })
       })
     })
   })
