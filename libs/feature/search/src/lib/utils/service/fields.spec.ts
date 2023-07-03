@@ -528,6 +528,7 @@ describe('search fields implementations', () => {
           searchField.getFiltersForValues([
             'Municipalité de Köniz',
             'Office fédéral de la communication OFCOM',
+            'Non existent org',
           ])
         )
       })

@@ -279,7 +279,9 @@ export class OrganizationSearchField implements AbstractSearchField {
   getFiltersForValues(values: FieldValue[]): Observable<SearchFilters> {
     return this.orgsService.organisations$.pipe(
       map((orgs) =>
-        values.map((name) => orgs.find((org) => org.name === name))
+        values
+          .map((name) => orgs.find((org) => org.name === name))
+          .filter((org) => org !== undefined)
       ),
       switchMap((selectedOrgs) =>
         this.orgsService.getFiltersForOrgs(selectedOrgs)
