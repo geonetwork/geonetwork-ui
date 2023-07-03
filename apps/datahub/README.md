@@ -72,6 +72,19 @@ $ docker run -p 8080:80 \
              geonetwork/geonetwork-ui-datahub
 ```
 
+#### Adding custom scripts when deploying Datahub
+
+You can deploy custom executable sh scripts when deploying a container by setting the environment variable `CUSTOM_SCRIPTS_DIRECTORY` pointing to a mounted volume.
+
+It can be used to deploy custom header by example.
+
+```bash
+$ docker run -p 8080:80 \
+             -v /home/user/my-scripts:/some/random/path \
+             -e CUSTOM_SCRIPTS_DIRECTORY=/some/random/path \
+             geonetwork/geonetwork-ui-datahub
+```
+
 ### From the ZIP archive
 
 Each release of GeoNetwork-UI comes with ZIP archives of all applications: https://github.com/geonetwork/geonetwork-ui/releases

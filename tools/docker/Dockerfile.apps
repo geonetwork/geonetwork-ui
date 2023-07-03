@@ -9,6 +9,7 @@ ENV GN4_API_URL ""
 ENV PROXY_PATH ""
 ENV CONFIG_DIRECTORY_OVERRIDE ""
 ENV ASSETS_DIRECTORY_OVERRIDE ""
+ENV CUSTOM_SCRIPTS_DIRECTORY ""
 
 COPY dist/apps/${APP_NAME} /usr/share/nginx/html/${APP_NAME}
 COPY tools/docker/docker-entrypoint.sh /
