@@ -4,6 +4,7 @@ import {
   Inject,
   Input,
   OnInit,
+  Optional,
   Output,
 } from '@angular/core'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
@@ -17,6 +18,7 @@ import {
   ResultsLayoutConfigItem,
   ResultsLayoutConfigModel,
 } from '@geonetwork-ui/ui/search'
+import { RECORD_URL_TOKEN } from '../feature-search.module'
 
 export type ResultsListShowMoreStrategy = 'auto' | 'button' | 'none'
 
@@ -37,11 +39,15 @@ export class ResultsListContainerComponent implements OnInit {
   errorMessage$: Observable<string>
 
   errorTypes = ErrorType
+  recordUrlGetter = this.getRecordUrl.bind(this)
 
   constructor(
     public facade: SearchFacade,
     @Inject(RESULTS_LAYOUT_CONFIG)
-    private resultsLayoutConfig: ResultsLayoutConfigModel
+    private resultsLayoutConfig: ResultsLayoutConfigModel,
+    @Optional()
+    @Inject(RECORD_URL_TOKEN)
+    private recordUrlTemplate: string
   ) {}
 
   ngOnInit(): void {
@@ -71,4 +77,10 @@ export class ResultsListContainerComponent implements OnInit {
   onShowMore() {
     this.facade.scroll()
   }
+
+  getRecordUrl(metadata: MetadataRecord) {
+    if (!this.recordUrlTemplate) return null
+    return this.recordUrlTemplate.replace('${uuid}', metadata.uuid)
+  }
+
 }

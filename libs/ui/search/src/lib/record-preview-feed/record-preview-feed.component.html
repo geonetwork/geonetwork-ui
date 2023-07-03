@@ -3,7 +3,7 @@
 >
   <a
     class="record-container block rounded-lg bg-white border border-white card-shadow"
-    [attr.href]="getTargetUrl()"
+    [attr.href]="linkHref"
     [target]="linkTarget"
   >
     <div
@@ -30,20 +30,18 @@
         />
       </div>
       <div class="flex flex-col overflow-hidden items-start">
-        <a
+        <span
           *ngIf="hasOrganization"
-          href="#"
-          class="font-bold transition duration-200 text-primary hover:text-primary-darker truncate max-w-full"
+          class="font-bold transition duration-200 text-primary truncate max-w-full"
         >
           {{ contact.organisation }}
-        </a>
-        <a
+        </span>
+        <span
           *ngIf="hasOnlyPerson"
-          href="#"
-          class="font-bold transition duration-200 text-primary hover:text-primary-darker truncate max-w-full"
+          class="font-bold transition duration-200 text-primary truncate max-w-full"
         >
           {{ contact.name }}
-        </a>
+        </span>
         <p class="text-gray-900">
           <span translate [translateParams]="{ time }"
             >record.was.created.time</span

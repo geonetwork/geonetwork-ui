@@ -7,14 +7,11 @@ import {
   Optional,
   Output,
 } from '@angular/core'
-import {
-  IRightClickToken,
-  Organisation,
-  RIGHT_CLICK_TOKEN,
-} from '@geonetwork-ui/util/shared'
+import { Organisation } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
 import { map, startWith, tap } from 'rxjs/operators'
 import { OrganisationsServiceInterface } from './service/organisations.service.interface'
+import { ORGANIZATION_URL_TOKEN } from '../feature-catalog.module'
 
 @Component({
   selector: 'gn-ui-organisations',
@@ -29,8 +26,8 @@ export class OrganisationsComponent {
   constructor(
     private organisationsService: OrganisationsServiceInterface,
     @Optional()
-    @Inject(RIGHT_CLICK_TOKEN)
-    private rightClickToken: IRightClickToken
+    @Inject(ORGANIZATION_URL_TOKEN)
+    private urlTemplate: string
   ) {}
 
   totalPages: number
@@ -94,8 +91,7 @@ export class OrganisationsComponent {
   }
 
   getOrganisationUrl(organisation: Organisation) {
-    return this.rightClickToken?.organisationUrl
-      ? `${this.rightClickToken?.organisationUrl}${organisation.name}`
-      : null
+    if (!this.urlTemplate) return null
+    return this.urlTemplate.replace('${name}', organisation.name)
   }
 }

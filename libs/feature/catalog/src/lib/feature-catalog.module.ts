@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core'
+import { InjectionToken, NgModule } from '@angular/core'
 import { SiteTitleComponent } from './site-title/site-title.component'
 import { UiCatalogModule } from '@geonetwork-ui/ui/catalog'
 import {
@@ -23,6 +23,11 @@ import {
   OrganizationsStrategy,
 } from '@geonetwork-ui/util/shared'
 import { OrganisationsFromGroupsService } from './organisations/service/organisations-from-groups.service'
+
+// expects the replacement key ${name}
+export const ORGANIZATION_URL_TOKEN = new InjectionToken<string>(
+  'organization-url-token'
+)
 
 const organizationsServiceFactory = (
   strategy: OrganizationsStrategy,

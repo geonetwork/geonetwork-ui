@@ -202,4 +202,14 @@ describe('OrganisationsComponent', () => {
       expect(component.getOrganisationUrl(organisationMock)).toBe(null)
     })
   })
+  describe('ORGANIZATION_URL_TOKEN provided', () => {
+    beforeEach(() => {
+      component['urlTemplate'] = '/my/link/${name}/open'
+    })
+    it('sets href based on given url template', () => {
+      expect(component.getOrganisationUrl(organisationMock)).toBe(
+        '/my/link/My Org/open'
+      )
+    })
+  })
 })

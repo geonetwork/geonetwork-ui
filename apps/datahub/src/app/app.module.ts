@@ -4,7 +4,10 @@ import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
 import { Router, RouterModule } from '@angular/router'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
-import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
+import {
+  FeatureCatalogModule,
+  ORGANIZATION_URL_TOKEN,
+} from '@geonetwork-ui/feature/catalog'
 import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
 import {
   DefaultRouterModule,
@@ -16,6 +19,7 @@ import {
 import {
   FeatureSearchModule,
   FILTER_GEOMETRY,
+  RECORD_URL_TOKEN,
 } from '@geonetwork-ui/feature/search'
 import {
   THUMBNAIL_PLACEHOLDER,
@@ -34,10 +38,8 @@ import {
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import {
-  IRightClickToken,
   METADATA_LANGUAGE,
   PROXY_PATH,
-  RIGHT_CLICK_TOKEN,
   ThemeService,
   UtilSharedModule,
   getGeometryFromGeoJSON,
@@ -70,11 +72,6 @@ import { WEB_COMPONENT_EMBEDDER_URL } from '@geonetwork-ui/feature/record'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
-
-export const RIGHT_CLICK_TOKEN_VALUE: IRightClickToken = {
-  datasetUrl: `${ROUTER_ROUTE_DATASET}/`,
-  organisationUrl: `${ROUTER_ROUTE_SEARCH}?${ROUTE_PARAMS.PUBLISHER}=`,
-}
 @NgModule({
   declarations: [
     AppComponent,
@@ -174,7 +171,11 @@ export const RIGHT_CLICK_TOKEN_VALUE: IRightClickToken = {
         return null
       },
     },
-    { provide: RIGHT_CLICK_TOKEN, useValue: RIGHT_CLICK_TOKEN_VALUE },
+    { provide: RECORD_URL_TOKEN, useValue: `${ROUTER_ROUTE_DATASET}/\${uuid}` },
+    {
+      provide: ORGANIZATION_URL_TOKEN,
+      useValue: `${ROUTER_ROUTE_SEARCH}?${ROUTE_PARAMS.PUBLISHER}=\${name}`,
+    },
   ],
   bootstrap: [AppComponent],
 })

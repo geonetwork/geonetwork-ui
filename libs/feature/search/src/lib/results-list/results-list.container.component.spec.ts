@@ -10,6 +10,7 @@ import { BehaviorSubject, of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { ResultsListContainerComponent } from './results-list.container.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 
 @Component({
   selector: 'gn-ui-results-list',
@@ -150,6 +151,24 @@ describe('ResultsListContainerComponent', () => {
       })
       it('loading spinner is shown', () => {
         expect(getLoadingEl()).toBeTruthy()
+      })
+    })
+  })
+
+  describe('record url', () => {
+    describe('without templates', () => {
+      it('returns null', () => {
+        expect(component.getRecordUrl(RECORDS_FULL_FIXTURE[0])).toBe(null)
+      })
+    })
+    describe('with templates', () => {
+      beforeEach(() => {
+        component['recordUrlTemplate'] = '/my/record/${uuid}/open'
+      })
+      it('returns actual urls', () => {
+        expect(component.getRecordUrl(RECORDS_FULL_FIXTURE[0])).toBe(
+          '/my/record/cf5048f6-5bbf-4e44-ba74-e6f429af51ea/open'
+        )
       })
     })
   })

@@ -23,6 +23,7 @@ export class RecordPreviewComponent implements OnInit, OnDestroy {
   @Input() record: MetadataRecord
   @Input() linkTarget = '_blank'
   @Input() favoriteTemplate: TemplateRef<{ $implicit: MetadataRecord }>
+  @Input() linkHref: string = null
   @Output() mdSelect = new EventEmitter<MetadataRecord>()
   subscription = new Subscription()
   abstract: string
