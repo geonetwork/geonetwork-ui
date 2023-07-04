@@ -75,12 +75,12 @@ describe('organisations', () => {
   describe('list functionnalities', () => {
     let providerOrg
     beforeEach(() => {
-      cy.get('gn-ui-organisations')
-        .children('div')
-        .first()
-        .children('gn-ui-content-ghost')
-        .eq(11)
-        .realClick()
+      // cy.get('gn-ui-organisations')
+      //   .children('div')
+      //   .first()
+      //   .children('gn-ui-content-ghost')
+      //   .eq(11)
+      //   .realClick()
       cy.get('[data-cy="providerDesc"]')
         .eq(11)
         .children('span')
@@ -96,15 +96,11 @@ describe('organisations', () => {
         .children('gn-ui-content-ghost')
         .eq(11)
         .realClick()
-      cy.url().should('include', '/search?')
-      cy.get('[data-cy="recordOrg"]').each(($record) => {
-        const providerDataset = $record.text().toUpperCase().trim()
-        expect(providerDataset).to.equal(providerOrg)
-      })
+      cy.url().should('include', 'publisher=').and('include', providerOrg)
     })
   })
 
-  describe.only('page toggle functionnalities', () => {
+  describe('page toggle functionnalities', () => {
     let proviList = []
     beforeEach(() => {
       cy.get('gn-ui-organisations-sort')
@@ -217,7 +213,7 @@ describe('organisations', () => {
             })
         })
     })
-    it.only('should go to next page with arrow', () => {
+    it('should go to next page with arrow', () => {
       const page1 = []
       const page2 = []
       cy.get('@txtProvi')

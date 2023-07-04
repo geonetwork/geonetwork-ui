@@ -1,3 +1,4 @@
+/* eslint-disable cypress/no-unnecessary-waiting */
 import 'cypress-real-events'
 import fs from 'fs/promises'
 
@@ -73,6 +74,7 @@ describe('organisations', () => {
         cy.get('gn-ui-record-metadata')
           .find('[id="about"]')
           .find('gn-ui-metadata-contact')
+          .children('div')
           .children('div')
           .children('div')
           .should('have.length', 2)
@@ -198,6 +200,7 @@ describe('organisations', () => {
           .children('div')
           .eq(1)
           .click()
+        cy.wait(2000)
         cy.get('@prevSection').find('gn-ui-table').should('be.visible')
         cy.get('@prevSection')
           .find('tbody')
@@ -270,7 +273,7 @@ describe('organisations', () => {
     })
   })
 
-  describe.only('DOWNLOADS : display & functions', () => {
+  describe('DOWNLOADS : display & functions', () => {
     describe('display', () => {
       it('should have at least one download button', () => {
         cy.get('gn-ui-data-downloads')
@@ -304,7 +307,7 @@ describe('organisations', () => {
             })
         })
       })
-      describe.only('functionnalities', () => {
+      describe('functionnalities', () => {
         it('filtrates the download list on format filter click', () => {
           cy.get('gn-ui-data-downloads')
             .find('gn-ui-button')
@@ -322,7 +325,7 @@ describe('organisations', () => {
               })
           })
         })
-        it.only('downloads a file on click', () => {
+        it('downloads a file on click', () => {
           cy.get('gn-ui-data-downloads')
             .find('gn-ui-download-item')
             .first()
@@ -335,6 +338,70 @@ describe('organisations', () => {
             expect(/\S/.test(isFileDownloaded)).to.be.true
           })
         })
+      })
+    })
+  })
+
+  describe('LINKS : display & functions', () => {
+    describe('display', () => {
+      it('should have external, API and internal links with one option', () => {
+        cy.get('gn-ui-data-otherlinks')
+          .find('gn-ui-link-card')
+          .should('have.length.gt', 0)
+        cy.get('gn-ui-data-apis')
+          .find('gn-ui-api-card')
+          .should('have.length.gt', 0)
+        cy.get('#related-records')
+          .find('gn-ui-related-records')
+          .find('gn-ui-related-record-card')
+          .should('have.length.gt', 0)
+      })
+    })
+    describe('functionnalities', () => {
+      it('goes to external link on click', () => {
+        let targetLink
+        cy.get('gn-ui-data-otherlinks')
+          .find('gn-ui-link-card')
+          .first()
+          .children('a')
+          .as('proviLink')
+
+        cy.get('@proviLink')
+          .invoke('attr', 'href')
+          .then((link) => {
+            targetLink = link
+            cy.get('@proviLink').invoke('removeAttr', 'target').click()
+            cy.url().should('include', targetLink)
+          })
+      })
+      it('copies the API path on click', () => {
+        cy.get('gn-ui-data-apis')
+          .find('gn-ui-api-card')
+          .first()
+          .find('gn-ui-copy-text-button')
+          .click()
+        cy.window().then((win) => {
+          win.navigator.clipboard.readText().then((text) => {
+            expect(text).to.eq('https://www.geo2france.fr/geoserver/insee/ows')
+          })
+        })
+      })
+      it('goes to dataset on click', () => {
+        let targetLink
+        cy.get('#related-records')
+          .find('gn-ui-related-records')
+          .find('gn-ui-related-record-card')
+          .first()
+          .children('a')
+          .as('proviLink')
+
+        cy.get('@proviLink')
+          .invoke('attr', 'href')
+          .then((link) => {
+            targetLink = link
+            cy.get('@proviLink').invoke('removeAttr', 'target').click()
+            cy.url().should('include', targetLink)
+          })
       })
     })
   })

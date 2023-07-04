@@ -223,7 +223,7 @@ describe('datasets', () => {
       })
     })
 
-    describe.only('filter the list on click on options', () => {
+    describe('filter the list on click on options', () => {
       let filterLength
       beforeEach(() => {
         cy.visit('/home/search')
