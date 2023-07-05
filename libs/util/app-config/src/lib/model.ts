@@ -47,6 +47,7 @@ export interface SearchConfig {
   FILTER_GEOMETRY_URL?: string
   FILTER_GEOMETRY_DATA?: string
   SEARCH_PRESET?: SearchPreset[]
+  ADVANCED_FILTERS?: []
 }
 
 export type CustomTranslations = { [translationKey: string]: string }
