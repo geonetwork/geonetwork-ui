@@ -25,6 +25,21 @@ import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 import { FormsModule } from '@angular/forms'
 
+jest.mock('@geonetwork-ui/util/app-config', () => ({
+  getOptionalSearchConfig: () => ({
+    ADVANCED_FILTERS: [
+      'publisher',
+      'format',
+      'isSpatial',
+      'documentStandard',
+      'inspireKeyword',
+      'license',
+      'topic',
+      'publicationYear',
+    ],
+  }),
+}))
+
 @Component({
   selector: 'gn-ui-check-toggle', // eslint-disable-line
   template: '<div></div>',
@@ -234,7 +249,7 @@ describe('SearchFiltersComponent', () => {
           getFilterButtons()[1].nativeElement.classList.contains('block')
         ).toBeTruthy()
       })
-      it('third filter dropdown does not show up (on desktop and mobile)', () => {
+      it('third filter dropdown shows up (on desktop and mobile)', () => {
         expect(
           getFilterButtons()[2].nativeElement.classList.contains('block')
         ).toBeTruthy()

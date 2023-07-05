@@ -41,52 +41,11 @@
       </div>
     </div>
     <gn-ui-filter-dropdown
+      *ngFor="let filter of searchConfig; let i = index"
       class="w-full"
-      [ngClass]="isOpen ? 'block' : 'hidden sm:block'"
-      [fieldName]="'publisher'"
-      [title]="'search.filters.byOrganisation' | translate"
-    ></gn-ui-filter-dropdown>
-    <gn-ui-filter-dropdown
-      class="w-full"
-      [ngClass]="isOpen ? 'block' : 'hidden sm:block'"
-      [fieldName]="'format'"
-      [title]="'search.filters.byFormat' | translate"
-    ></gn-ui-filter-dropdown>
-    <gn-ui-filter-dropdown
-      class="w-full"
-      [ngClass]="isOpen ? 'block' : 'hidden'"
-      [fieldName]="'documentStandard'"
-      [title]="'search.filters.byStandard' | translate"
-    ></gn-ui-filter-dropdown>
-    <gn-ui-filter-dropdown
-      class="w-full"
-      [ngClass]="isOpen ? 'block' : 'hidden'"
-      [fieldName]="'inspireKeyword'"
-      [title]="'search.filters.byInspireKeyword' | translate"
-    ></gn-ui-filter-dropdown>
-    <gn-ui-filter-dropdown
-      class="w-full"
-      [ngClass]="isOpen ? 'block' : 'hidden'"
-      [fieldName]="'topic'"
-      [title]="'search.filters.byTopic' | translate"
-    ></gn-ui-filter-dropdown>
-    <gn-ui-filter-dropdown
-      class="w-full"
-      [ngClass]="isOpen ? 'block' : 'hidden'"
-      [fieldName]="'publicationYear'"
-      [title]="'search.filters.byPublicationYear' | translate"
-    ></gn-ui-filter-dropdown>
-    <gn-ui-filter-dropdown
-      class="w-full"
-      [ngClass]="isOpen ? 'block' : 'hidden'"
-      [fieldName]="'isSpatial'"
-      [title]="'search.filters.isSpatial' | translate"
-    ></gn-ui-filter-dropdown>
-    <gn-ui-filter-dropdown
-      class="w-full"
-      [ngClass]="isOpen ? 'block' : 'hidden'"
-      [fieldName]="'license'"
-      [title]="'search.filters.byLicense' | translate"
+      [ngClass]="getClassForFilter(i)"
+      [fieldName]="filter.fieldName"
+      [title]="filter.title | translate"
     ></gn-ui-filter-dropdown>
     <div
       class="spatial-filter-toggle sm:col-span-2"

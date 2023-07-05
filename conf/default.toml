@@ -63,6 +63,10 @@ background_color = "#fdfbff"
 # Note: if the GeoJSON object contains multiple features, only the geometry of the first one will be kept!
 # filter_geometry_url = "https://my.domain.org/assets/boundary.geojson"
 # filter_geometry_data = '{ "coordinates": [...], "type": "Polygon" }'
+# The advanced search filters available to the user can be customized with this setting.
+# The following fields can be used for filtering: 'publisher', 'format', 'publicationYear', 'standard', 'inspireKeyword', 'topic', 'isSpatial', 'license'
+# any other field will be ignored
+# advanced_filters = ['publisher', 'format', 'publicationYear', 'topic', 'isSpatial', 'license']
 
 # One or several search presets can be defined here; every search preset is composed of:
 # - a name (which can be a translation key)

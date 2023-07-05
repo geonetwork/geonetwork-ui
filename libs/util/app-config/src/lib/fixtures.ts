@@ -37,6 +37,7 @@ fonts_stylesheet_url = "https://fonts.googleapis.com/css2?family=Open+Sans"
 
 [search]
 filter_geometry_url = 'https://my.domain.org/geom.json'
+advanced_filters = ['publicationYear', 'documentStandard', 'inspireKeyword', 'topic', 'license']
 
 [[search_preset]]
 sort = "-createDate"

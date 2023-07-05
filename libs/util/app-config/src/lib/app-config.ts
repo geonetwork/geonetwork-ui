@@ -190,7 +190,12 @@ export function loadAppConfig() {
         parsed,
         'search',
         [],
-        ['filter_geometry_data', 'filter_geometry_url', 'search_preset'],
+        [
+          'filter_geometry_data',
+          'filter_geometry_url',
+          'search_preset',
+          'advanced_filters',
+        ],
         warnings,
         errors
       )
@@ -213,7 +218,8 @@ export function loadAppConfig() {
                 name: param.name,
                 filters: param.filters,
               })),
-            } as any)
+              ADVANCED_FILTERS: parsedSearchSection.advanced_filters,
+            } as SearchConfig)
 
       customTranslations = parseTranslationsConfigSection(
         parsed,

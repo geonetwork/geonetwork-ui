@@ -172,6 +172,13 @@ describe('app config utils', () => {
               },
             },
           ],
+          ADVANCED_FILTERS: [
+            'publicationYear',
+            'documentStandard',
+            'inspireKeyword',
+            'topic',
+            'license',
+          ],
         })
       })
     })
