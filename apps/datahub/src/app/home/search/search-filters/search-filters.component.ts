@@ -44,7 +44,7 @@ export class SearchFiltersComponent implements OnInit {
       ]
     )
       .filter((adv_filter) => {
-        if (this.fieldsService.supportedFields.includes(adv_filter)) {
+        if (this.fieldsService.supportedFields?.includes(adv_filter)) {
           return true
         } else {
           console.warn(

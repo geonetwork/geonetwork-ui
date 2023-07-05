@@ -92,6 +92,18 @@ class FieldsServiceMock {
       )
     )
   )
+  public get supportedFields() {
+    return [
+      'publisher',
+      'format',
+      'isSpatial',
+      'documentStandard',
+      'inspireKeyword',
+      'license',
+      'topic',
+      'publicationYear',
+    ]
+  }
 }
 
 describe('SearchFiltersComponent', () => {
