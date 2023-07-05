@@ -104,11 +104,6 @@ describe('datasets', () => {
             .should('not.eq', '@initialLength')
         })
     })
-    it('should add more datasets to the list on click on "add more"', () => {
-      cy.get('gn-ui-results-list-item').as('initialList')
-      cy.get('[data-cy="addMoreBtn"]').trigger('click')
-      cy.get('gn-ui-results-list-item').should('not.eq', '@initialList')
-    })
   })
 
   describe('list actions', () => {

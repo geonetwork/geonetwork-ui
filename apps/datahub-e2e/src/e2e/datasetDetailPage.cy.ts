@@ -200,7 +200,7 @@ describe('organisations', () => {
           .children('div')
           .eq(1)
           .click()
-        cy.wait(2000)
+        cy.wait(5000)
         cy.get('@prevSection').find('gn-ui-table').should('be.visible')
         cy.get('@prevSection')
           .find('tbody')

@@ -10,14 +10,14 @@ describe('header', () => {
         .should('eq', 'decoration-primary')
     })
     it('should display the news feed', () => {
-      cy.get('gn-ui-results-list')
+      cy.get('gn-ui-results-list').should('be.visible')
     })
     it('should display the "show more" button', () => {
-      cy.get('[data-cy="addMoreBtn"]')
+      cy.get('[data-cy="addMoreBtn"]').should('be.visible')
     })
     it('should display the orga and dataset link buttons', () => {
-      cy.get('[ng-reflect-title="datasets"]')
-      cy.get('[ng-reflect-title="organisations"]')
+      cy.get('[ng-reflect-title="datasets"]').should('be.visible')
+      cy.get('[ng-reflect-title="organisations"]').should('be.visible')
     })
 
     describe('news feed display', () => {
@@ -47,9 +47,16 @@ describe('header', () => {
       cy.url().should('include', '/dataset/')
     })
     it('adds more datasets to the news feed upon clicking on "show more"', () => {
-      cy.get('gn-ui-results-list-item').as('initialList')
-      cy.get('[data-cy="addMoreBtn"]').trigger('click')
-      cy.get('gn-ui-results-list-item').should('not.eq', '@initialList')
+      let initialList
+      let newList
+      cy.get('gn-ui-results-list-item').then((firstlist) => {
+        initialList = firstlist
+        cy.get('[data-cy="addMoreBtn"]').trigger('click')
+        cy.get('gn-ui-results-list-item').then((secondlist) => {
+          newList = secondlist
+          expect(newList).to.not.equal(initialList)
+        })
+      })
     })
   })
 

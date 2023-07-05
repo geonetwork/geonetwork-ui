@@ -15,7 +15,7 @@ describe('organisations', () => {
         .should('eq', 'decoration-primary')
     })
     it('should display the welcome panel', () => {
-      cy.get('gn-ui-organisations-sort')
+      cy.get('gn-ui-organisations-sort').should('be.visible')
       cy.get('gn-ui-organisations-sort')
         .find('p')
         .its('text')
@@ -75,12 +75,6 @@ describe('organisations', () => {
   describe('list functionnalities', () => {
     let providerOrg
     beforeEach(() => {
-      // cy.get('gn-ui-organisations')
-      //   .children('div')
-      //   .first()
-      //   .children('gn-ui-content-ghost')
-      //   .eq(11)
-      //   .realClick()
       cy.get('[data-cy="providerDesc"]')
         .eq(11)
         .children('span')
@@ -95,7 +89,7 @@ describe('organisations', () => {
         .first()
         .children('gn-ui-content-ghost')
         .eq(11)
-        .realClick()
+        .click()
       cy.url().should('include', 'publisher=').and('include', providerOrg)
     })
   })
@@ -118,18 +112,11 @@ describe('organisations', () => {
 
     it('should filter the list A to Z / Z to A', () => {
       cy.get('@filter').select(1)
-      function isOrderedZtoA(arr) {
+      function isOrdered(arr, type) {
         for (let i = 0; i < arr.length - 1; i++) {
-          if (arr[i].localeCompare(arr[i + 1]) < 0) {
+          if (arr[i].localeCompare(arr[i + 1]) < 0 && type == 'ZA') {
             return false
-          }
-        }
-        return true
-      }
-
-      function isOrderedAtoZ(arr) {
-        for (let i = 0; i < arr.length - 1; i++) {
-          if (arr[i].localeCompare(arr[i + 1]) > 0) {
+          } else if (arr[i].localeCompare(arr[i + 1]) > 0 && type == 'AZ') {
             return false
           }
         }
@@ -143,7 +130,7 @@ describe('organisations', () => {
         })
         .then(() => {
           proviList = proviList.map((elmt) => elmt.trim())
-          expect(isOrderedZtoA(proviList)).to.be.true
+          expect(isOrdered(proviList, 'ZA')).to.be.true
           proviList = []
           cy.get('@filter').select(0)
           cy.get('@txtProvi')
@@ -153,7 +140,7 @@ describe('organisations', () => {
             })
             .then(() => {
               proviList = proviList.map((elmt) => elmt.trim())
-              expect(isOrderedAtoZ(proviList)).to.be.true
+              expect(isOrdered(proviList, 'AZ')).to.be.true
             })
         })
     })

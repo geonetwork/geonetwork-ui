@@ -3,7 +3,7 @@ describe('header', () => {
 
   describe('general display', () => {
     it('should display the title', () => {
-      cy.get('[data-cy="dh-title"]')
+      cy.get('[data-cy="dh-title"]').should('be.visible')
     })
     it('should display the header image', () => {
       cy.get('header')
@@ -11,9 +11,9 @@ describe('header', () => {
         .and('include', 'header_bg.webp')
     })
     it('should display the search bar, button and placeholder', () => {
-      cy.get('gn-ui-fuzzy-search')
+      cy.get('gn-ui-fuzzy-search').should('be.visible')
       cy.get('gn-ui-autocomplete').should('have.length.gt', 0)
-      cy.get('mat-icon').contains('search')
+      cy.get('mat-icon').contains('search').should('be.visible')
     })
     it('display three buttons that go to other pages on click', () => {
       cy.get('datahub-navigation-menu')
