@@ -6,11 +6,15 @@ import {
   RouterFacade,
   ROUTER_ROUTE_SEARCH,
 } from '@geonetwork-ui/feature/router'
-import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
+import {
+  FieldsService,
+  SearchFacade,
+  SearchService,
+} from '@geonetwork-ui/feature/search'
 import { SortByEnum } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { readFirst } from '@nrwl/angular/testing'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, of } from 'rxjs'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants'
 import { HeaderBadgeButtonComponent } from '../header-badge-button/header-badge-button.component'
 import { HomeHeaderComponent } from './home-header.component'
@@ -20,24 +24,38 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
     HEADER_BACKGROUND: 'red',
   }),
+  getOptionalSearchConfig: () => ({
+    SEARCH_PRESET: [
+      {
+        sort: '-createDate',
+        name: 'sortCeatedDateAndOrg',
+        filters: { publisher: ['DREAL'] },
+      },
+      {
+        sort: '-createDate',
+        name: 'filterCarto',
+        filters: { q: 'Cartographie' },
+      },
+    ],
+  }),
 }))
 
-const routerFacadeMock = {
-  goToMetadata: jest.fn(),
-  anySearch$: new BehaviorSubject('scot'),
-  currentRoute$: new BehaviorSubject({}),
+class routerFacadeMock {
+  goToMetadata = jest.fn()
+  anySearch$ = new BehaviorSubject('scot')
+  currentRoute$ = new BehaviorSubject({})
 }
 
-const searchFacadeMock = {
-  setFavoritesOnly: jest.fn(),
-  setSortBy: jest.fn(),
+class searchFacadeMock {
+  setFavoritesOnly = jest.fn()
+  setSortBy = jest.fn()
 }
 
-const searchServiceMock = {
-  updateSearchFilters: jest.fn(),
-  setSearch: jest.fn(),
-  setSortBy: jest.fn(),
-  setSortAndFilters: jest.fn(),
+class searchServiceMock {
+  updateSearchFilters = jest.fn()
+  setSearch = jest.fn()
+  setSortBy = jest.fn()
+  setSortAndFilters = jest.fn()
 }
 
 class AuthServiceMock {
@@ -45,10 +63,17 @@ class AuthServiceMock {
   _authSubject$ = new BehaviorSubject({})
 }
 
+class FieldsServiceMock {
+  buildFiltersFromFieldValues = jest.fn(() => of({ thisIs: 'a fake filter' }))
+}
+
 describe('HeaderComponent', () => {
   let component: HomeHeaderComponent
   let fixture: ComponentFixture<HomeHeaderComponent>
   let authService: AuthService
+  let searchService: SearchService
+  let searchFacade: SearchFacade
+  let routerFacade: RouterFacade
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -58,23 +83,30 @@ describe('HeaderComponent', () => {
       providers: [
         {
           provide: RouterFacade,
-          useValue: routerFacadeMock,
+          useClass: routerFacadeMock,
         },
         {
           provide: SearchFacade,
-          useValue: searchFacadeMock,
+          useClass: searchFacadeMock,
         },
         {
           provide: SearchService,
-          useValue: searchServiceMock,
+          useClass: searchServiceMock,
         },
         {
           provide: AuthService,
           useClass: AuthServiceMock,
         },
+        {
+          provide: FieldsService,
+          useClass: FieldsServiceMock,
+        },
       ],
     }).compileComponents()
     authService = TestBed.inject(AuthService)
+    searchService = TestBed.inject(SearchService)
+    searchFacade = TestBed.inject(SearchFacade)
+    routerFacade = TestBed.inject(RouterFacade)
   })
 
   beforeEach(() => {
@@ -119,25 +151,25 @@ describe('HeaderComponent', () => {
         component.listFavorites(true)
       })
       it('calls searchFacade setFavoritesOnly with correct value', () => {
-        expect(searchFacadeMock.setFavoritesOnly).toHaveBeenCalledWith(true)
+        expect(searchFacade.setFavoritesOnly).toHaveBeenCalledWith(true)
       })
     })
   })
   describe('sort badges', () => {
     describe('navigate to search route', () => {
       beforeEach(() => {
-        routerFacadeMock.currentRoute$.next({
+        ;(routerFacade.currentRoute$ as any).next({
           url: [{ path: ROUTER_ROUTE_SEARCH }],
         })
       })
-      it('does not display sort badges on search route', async () => {
+      it('displays sort badges on search route', async () => {
         const displaySortBadges = await readFirst(component.displaySortBadges$)
-        expect(displaySortBadges).toEqual(false)
+        expect(displaySortBadges).toEqual(true)
       })
     })
     describe('navigate to news route', () => {
       beforeEach(() => {
-        routerFacadeMock.currentRoute$.next({
+        ;(routerFacade.currentRoute$ as any).next({
           url: [{ path: ROUTER_ROUTE_NEWS }],
         })
       })
@@ -154,7 +186,7 @@ describe('HeaderComponent', () => {
           latestBadge.nativeElement.click()
         })
         it('resets filters and sort', () => {
-          expect(searchServiceMock.setSortAndFilters).toHaveBeenCalledWith(
+          expect(searchService.setSortAndFilters).toHaveBeenCalledWith(
             {},
             SortByEnum.CREATE_DATE
           )
@@ -168,9 +200,28 @@ describe('HeaderComponent', () => {
           mostPopularBadge.nativeElement.click()
         })
         it('resets filters and sort', () => {
-          expect(searchServiceMock.setSortAndFilters).toHaveBeenCalledWith(
+          expect(searchService.setSortAndFilters).toHaveBeenCalledWith(
             {},
             SortByEnum.POPULARITY
+          )
+        })
+      })
+
+      describe('given predefined search params', () => {
+        it('should render badges', () => {
+          const allBadges = fixture.debugElement.queryAll(By.css('.badge-btn'))
+          expect(allBadges.length).toBe(4)
+        })
+        beforeEach(() => {
+          const firstCustomBadge = fixture.debugElement.queryAll(
+            By.css('.badge-btn')
+          )[2]
+          firstCustomBadge.nativeElement.click()
+        })
+        it('should redirect correctly', () => {
+          expect(searchService.setSortAndFilters).toHaveBeenCalledWith(
+            { thisIs: 'a fake filter' },
+            SortByEnum.CREATE_DATE
           )
         })
       })

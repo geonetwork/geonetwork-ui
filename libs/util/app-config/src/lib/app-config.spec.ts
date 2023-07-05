@@ -158,6 +158,20 @@ describe('app config utils', () => {
       it('returns the search config', () => {
         expect(getOptionalSearchConfig()).toEqual({
           FILTER_GEOMETRY_URL: 'https://my.domain.org/geom.json',
+          SEARCH_PRESET: [
+            {
+              name: 'filterByOrgs',
+              sort: '-createDate',
+              filters: {
+                q: 'Carto',
+                organisation: ['Org1', 'Org2'],
+                topic: ['boundaries'],
+                format: ['ESRI Shapefile'],
+                spatial: ['yes'],
+                publicationYear: ['2023', '2022'],
+              },
+            },
+          ],
         })
       })
     })

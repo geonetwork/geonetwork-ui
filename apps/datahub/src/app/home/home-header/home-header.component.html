@@ -25,23 +25,34 @@
           [toggled]="searchFacade.favoritesOnly$ | async"
           (action)="listFavorites($event)"
         ></datahub-header-badge-button>
-        <div *ngIf="displaySortBadges$ | async">
+        <div>
           <button
             type="button"
-            class="badge-btn bg-primary-opacity-25 hover-bg-primary-opacity-75"
+            class="badge-btn bg-primary-opacity-50 hover-bg-primary-opacity-100"
             (click)="clearSearchAndSort(SORT_BY_PARAMS.CREATE_DATE)"
           >
             <span translate="">datahub.header.lastRecords</span>
           </button>
         </div>
-        <div *ngIf="displaySortBadges$ | async">
+        <div>
           <button
             type="button"
-            class="badge-btn bg-primary-opacity-25 hover-bg-primary-opacity-75"
+            class="badge-btn bg-primary-opacity-50 hover-bg-primary-opacity-100"
             (click)="clearSearchAndSort(SORT_BY_PARAMS.POPULARITY)"
           >
             <span translate="">datahub.header.popularRecords</span>
           </button>
+        </div>
+        <div *ngFor="let preset of searchConfig?.SEARCH_PRESET">
+          <div>
+            <button
+              type="button"
+              class="badge-btn bg-primary-opacity-50 hover-bg-primary-opacity-100"
+              (click)="clearSearchAndFilterAndSort(preset)"
+            >
+              <span translate="">{{ preset['name'] }}</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

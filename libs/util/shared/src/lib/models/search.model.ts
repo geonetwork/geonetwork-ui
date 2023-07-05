@@ -3,6 +3,11 @@ export interface SearchFilters {
   [x: string]: any
 }
 
+export interface RawCustomSearchFilters {
+  any?: string
+  [x: string]: any
+}
+
 type SearchFiltersFields = {
   [key: string]: SearchFiltersFields | SearchFiltersFieldsLeaf
 }

@@ -5,11 +5,22 @@ import {
   RouterFacade,
   ROUTER_ROUTE_SEARCH,
 } from '@geonetwork-ui/feature/router'
-import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
-import { getThemeConfig } from '@geonetwork-ui/util/app-config'
+import {
+  FieldValues,
+  FieldsService,
+  SearchFacade,
+  SearchService,
+} from '@geonetwork-ui/feature/search'
+import {
+  getOptionalSearchConfig,
+  getThemeConfig,
+  SearchConfig,
+  SearchPreset,
+} from '@geonetwork-ui/util/app-config'
 import { MetadataRecord, SortByEnum } from '@geonetwork-ui/util/shared'
 import { map } from 'rxjs/operators'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants'
+import { lastValueFrom } from 'rxjs'
 
 marker('datahub.header.myfavorites')
 marker('datahub.header.lastRecords')
@@ -30,16 +41,22 @@ export class HomeHeaderComponent {
 
   ROUTE_SEARCH = `${ROUTER_ROUTE_SEARCH}`
   SORT_BY_PARAMS = SortByEnum
+  searchConfig: SearchConfig = getOptionalSearchConfig()
 
   constructor(
     public routerFacade: RouterFacade,
     public searchFacade: SearchFacade,
     private searchService: SearchService,
-    private authService: AuthService
+    private authService: AuthService,
+    private fieldsService: FieldsService
   ) {}
 
   displaySortBadges$ = this.routerFacade.currentRoute$.pipe(
-    map((route) => route.url[0].path === ROUTER_ROUTE_NEWS)
+    map(
+      (route) =>
+        route.url[0].path === ROUTER_ROUTE_NEWS ||
+        route.url[0].path === ROUTER_ROUTE_SEARCH
+    )
   )
 
   isAuthenticated$ = this.authService
@@ -56,5 +73,17 @@ export class HomeHeaderComponent {
 
   clearSearchAndSort(sort: SortByEnum): void {
     this.searchService.setSortAndFilters({}, sort)
+  }
+
+  async clearSearchAndFilterAndSort(customSearchParameters: SearchPreset) {
+    const searchFilters = await lastValueFrom(
+      this.fieldsService.buildFiltersFromFieldValues(
+        customSearchParameters.filters
+      )
+    )
+    this.searchService.setSortAndFilters(
+      searchFilters,
+      customSearchParameters.sort as SortByEnum
+    )
   }
 }

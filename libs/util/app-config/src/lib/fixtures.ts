@@ -38,6 +38,16 @@ fonts_stylesheet_url = "https://fonts.googleapis.com/css2?family=Open+Sans"
 [search]
 filter_geometry_url = 'https://my.domain.org/geom.json'
 
+[[search_preset]]
+sort = "-createDate"
+name = 'filterByOrgs'
+filters.q = 'Carto'
+filters.organisation = ['Org1', 'Org2']
+filters.format = ['ESRI Shapefile']
+filters.topic = ['boundaries']
+filters.publicationYear = ['2023', '2022']
+filters.spatial = ['yes']
+
 [translations.en]
 "my.first.key" = 'First label.'
 "my.second.key" = """

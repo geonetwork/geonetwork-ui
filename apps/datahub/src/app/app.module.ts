@@ -184,7 +184,7 @@ export class AppModule {
     ThemeService.generateBgOpacityClasses(
       'primary',
       getThemeConfig().PRIMARY_COLOR,
-      [10, 25, 75]
+      [10, 25, 50, 75, 100]
     )
   }
 }
