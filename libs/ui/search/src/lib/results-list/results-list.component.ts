@@ -23,5 +23,6 @@ export class ResultsListComponent {
   @Input() layoutConfig: ResultsLayoutConfigItem =
     DEFAULT_RESULTS_LAYOUT_CONFIG['CARD']
   @Input() favoriteTemplate: TemplateRef<{ $implicit: MetadataRecord }>
+  @Input() recordUrlGetter: (MetadataRecord) => string
   @Output() mdSelect = new EventEmitter<MetadataRecord>()
 }

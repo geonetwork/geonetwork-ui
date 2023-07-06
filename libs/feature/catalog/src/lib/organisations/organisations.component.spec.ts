@@ -198,5 +198,18 @@ describe('OrganisationsComponent', () => {
         expect(orgSelected).toEqual([organisationMock])
       })
     })
+    it('should not have href if RightClickToken not provided', () => {
+      expect(component.getOrganisationUrl(organisationMock)).toBe(null)
+    })
+  })
+  describe('ORGANIZATION_URL_TOKEN provided', () => {
+    beforeEach(() => {
+      component['urlTemplate'] = '/my/link/${name}/open'
+    })
+    it('sets href based on given url template', () => {
+      expect(component.getOrganisationUrl(organisationMock)).toBe(
+        '/my/link/My Org/open'
+      )
+    })
   })
 })

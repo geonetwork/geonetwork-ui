@@ -4,15 +4,22 @@ import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
 import { Router, RouterModule } from '@angular/router'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
-import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
+import {
+  FeatureCatalogModule,
+  ORGANIZATION_URL_TOKEN,
+} from '@geonetwork-ui/feature/catalog'
 import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
 import {
   DefaultRouterModule,
+  ROUTER_ROUTE_DATASET,
+  ROUTER_ROUTE_SEARCH,
+  ROUTE_PARAMS,
   RouterService,
 } from '@geonetwork-ui/feature/router'
 import {
   FeatureSearchModule,
   FILTER_GEOMETRY,
+  RECORD_URL_TOKEN,
 } from '@geonetwork-ui/feature/search'
 import {
   THUMBNAIL_PLACEHOLDER,
@@ -42,7 +49,6 @@ import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { TranslateModule } from '@ngx-translate/core'
-import { filter } from 'rxjs/operators'
 import { environment } from '../environments/environment'
 
 import { AppComponent } from './app.component'
@@ -66,7 +72,6 @@ import { WEB_COMPONENT_EMBEDDER_URL } from '@geonetwork-ui/feature/record'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -165,6 +170,11 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
         }
         return null
       },
+    },
+    { provide: RECORD_URL_TOKEN, useValue: `${ROUTER_ROUTE_DATASET}/\${uuid}` },
+    {
+      provide: ORGANIZATION_URL_TOKEN,
+      useValue: `${ROUTER_ROUTE_SEARCH}?${ROUTE_PARAMS.PUBLISHER}=\${name}`,
     },
   ],
   bootstrap: [AppComponent],

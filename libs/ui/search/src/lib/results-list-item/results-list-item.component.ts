@@ -25,6 +25,7 @@ export class ResultsListItemComponent implements OnChanges, AfterViewInit {
   @Input() layoutConfig: ResultsLayoutConfigItem
   @Input() record: MetadataRecord
   @Input() favoriteTemplate: TemplateRef<{ $implicit: MetadataRecord }>
+  @Input() linkHref: string
   @Output() mdSelect = new EventEmitter<MetadataRecord>()
   initialized = false
 
@@ -54,6 +55,7 @@ export class ResultsListItemComponent implements OnChanges, AfterViewInit {
     componentFactory.instance.mdSelect.subscribe((record) =>
       this.mdSelect.emit(record)
     )
+    componentFactory.instance.linkHref = this.linkHref
     componentFactory.changeDetectorRef.detectChanges()
   }
 }

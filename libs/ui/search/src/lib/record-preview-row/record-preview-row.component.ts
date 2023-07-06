@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, ElementRef } from '@angular/core'
 import { RecordPreviewComponent } from '../record-preview/record-preview.component'
 
 @Component({
@@ -7,4 +7,8 @@ import { RecordPreviewComponent } from '../record-preview/record-preview.compone
   styleUrls: ['./record-preview-row.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RecordPreviewRowComponent extends RecordPreviewComponent {}
+export class RecordPreviewRowComponent extends RecordPreviewComponent {
+  constructor(protected elementRef: ElementRef) {
+    super(elementRef)
+  }
+}

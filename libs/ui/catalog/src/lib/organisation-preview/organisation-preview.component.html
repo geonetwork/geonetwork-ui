@@ -1,4 +1,4 @@
-<a href (click)="clickOrganisation($event)">
+<a href (click)="clickOrganisation($event)" [attr.href]="organisationUrl">
   <div
     class="group cursor-pointer rounded-lg h-full flex flex-col"
     [title]="organisation.name"

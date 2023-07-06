@@ -10,6 +10,7 @@
         [layoutConfig]="layoutConfig"
         (mdSelect)="mdSelect.emit($event)"
         [favoriteTemplate]="favoriteTemplate"
+        [linkHref]="recordUrlGetter(record)"
       ></gn-ui-results-list-item>
     </div>
   </div>

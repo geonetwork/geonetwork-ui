@@ -29,6 +29,9 @@ export const FILTER_GEOMETRY = new InjectionToken<Promise<Geometry>>(
   'filter-geometry'
 )
 
+// expects the replacement key ${uuid}
+export const RECORD_URL_TOKEN = new InjectionToken<string>('record-url-token')
+
 @NgModule({
   declarations: [
     SortByComponent,
