@@ -16,7 +16,7 @@ import {
   selectField,
   SourceWithUnknownProps,
 } from '@geonetwork-ui/util/shared'
-import { combineLatest, forkJoin, Observable, of } from 'rxjs'
+import { forkJoin, Observable, of } from 'rxjs'
 import { map, shareReplay } from 'rxjs/operators'
 import { OrganisationsServiceInterface } from './organisations.service.interface'
 import { TranslateService } from '@ngx-translate/core'
@@ -132,7 +132,7 @@ export class OrganisationsFromGroupsService
     const groupId = parseInt(selectField(source, 'groupOwner'))
     const resourceContacts = getAsArray(
       selectField(source, 'contactForResource')
-    ).map((contact) => mapContact(contact))
+    ).map((contact) => mapContact(contact, source))
     return this.groups$.pipe(
       map((groups) => {
         const group = groups.find((g) => g.id === groupId)

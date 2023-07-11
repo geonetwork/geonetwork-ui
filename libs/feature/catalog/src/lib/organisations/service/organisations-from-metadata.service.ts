@@ -164,14 +164,17 @@ export class OrganisationsFromMetadataService
   }
 
   private mapContactFromOrganisation(
-    organisation: Organisation
+    organisation: Organisation,
+    contact: MetadataContact
   ): MetadataContact {
-    const logoUrl = getAsUrl(`${organisation.logoUrl}`)
+    const logoUrl = organisation.logoUrl
+      ? getAsUrl(`${organisation.logoUrl}`)
+      : contact.logoUrl
     return {
       name: organisation.name,
       organisation: organisation.name,
       email: organisation.email,
-      ...(organisation.logoUrl && logoUrl && { logoUrl }),
+      logoUrl: logoUrl,
     } as MetadataContact
   }
 
@@ -202,11 +205,11 @@ export class OrganisationsFromMetadataService
       ...record,
       resourceContacts: [
         ...getAsArray(selectField(source, 'contactForResource')).map(
-          (contact) => mapContact(contact)
+          (contact) => mapContact(contact, source)
         ),
       ],
       contact: {
-        ...mapContact(getFirstValue(selectField(source, 'contact'))),
+        ...mapContact(getFirstValue(selectField(source, 'contact')), source),
       },
     }
 
@@ -218,10 +221,13 @@ export class OrganisationsFromMetadataService
         )[0]
 
         if (org) {
-          const contactFromOrg = this.mapContactFromOrganisation(org)
+          const contactFromOrg = this.mapContactFromOrganisation(
+            org,
+            metadataRecord.contact
+          )
           metadataRecord.contact = contactFromOrg
           metadataRecord.resourceContacts = [
-            contactFromOrg,
+            contactFromOrg, // FIXME: this should go into an organization field
             ...metadataRecord.resourceContacts,
           ]
         }

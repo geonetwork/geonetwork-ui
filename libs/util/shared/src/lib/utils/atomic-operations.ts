@@ -50,15 +50,16 @@ export const getAsUrl = (field) => {
 }
 
 export const mapLogo = (source: SourceWithUnknownProps) => {
-  const logo = selectField(source, 'logoUrl')
+  const logo = selectFallbackFields(source, 'logoUrl', 'logo')
   return logo ? getAsUrl(`/geonetwork${logo}`) : null
 }
 
 export const mapContact = (
-  sourceContact: SourceWithUnknownProps
+  sourceContact: SourceWithUnknownProps,
+  sourceRecord: SourceWithUnknownProps
 ): MetadataContact => {
   const website = getAsUrl(selectField<string>(sourceContact, 'website'))
-  const logoUrl = mapLogo(sourceContact)
+  const logoUrl = mapLogo(sourceContact) || mapLogo(sourceRecord)
   const address = selectField<string>(sourceContact, 'address')
   const phone = selectField<string>(sourceContact, 'phone')
   return {
