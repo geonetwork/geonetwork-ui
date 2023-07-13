@@ -64,8 +64,8 @@ export class ElasticsearchFieldMapper {
         selectFallback(
           selectFallbackFields(
             getFirstValue(selectField(source, 'overview')),
-            'data',
-            'url'
+            'url',
+            'data'
           ),
           ''
         )

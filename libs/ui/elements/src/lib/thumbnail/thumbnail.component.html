@@ -10,6 +10,8 @@
     [ngClass]="objectFit === 'contain' ? 'h-4/5' : 'h-full'"
     [ngStyle]="{ objectFit: objectFit }"
     alt="thumbnail"
+    loading="lazy"
+    (load)="setObjectFit($event)"
     [src]="imgUrl | safe: 'url'"
   />
 </div>
