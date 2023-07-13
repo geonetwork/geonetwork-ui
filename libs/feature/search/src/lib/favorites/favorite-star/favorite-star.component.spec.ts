@@ -115,9 +115,7 @@ describe('FavoriteStarComponent', () => {
       describe('if record is not part of favorite', () => {
         beforeEach(() => {
           ;(favoritesService as any).myFavoritesUuid$.next([
-            'aaa',
-            'bbb',
-            'ccc',
+            component.record.uuid,
           ])
           starToggle.newValue.emit(true)
           fixture.detectChanges()
@@ -138,7 +136,6 @@ describe('FavoriteStarComponent', () => {
         beforeEach(() => {
           ;(favoritesService as any).myFavoritesUuid$.next([
             'aaa',
-            'bbb',
             component.record.uuid,
           ])
           starToggle.newValue.emit(false)
@@ -150,6 +147,15 @@ describe('FavoriteStarComponent', () => {
           ])
           expect(favoritesService.addToFavorites).not.toHaveBeenCalled()
         })
+        beforeEach(() => {
+          component.record = {
+            ...RECORDS_SUMMARY_FIXTURE[0],
+            favoriteCount: 42,
+          }
+          ;(favoritesService as any).myFavoritesUuid$.next(['aaa'])
+          starToggle.newValue.emit(false)
+          fixture.detectChanges()
+        })
         it('decrease record favorite count by one', () => {
           expect(favoriteCountEl.textContent).toEqual(
             (component.record.favoriteCount - 1).toString()
@@ -158,11 +164,7 @@ describe('FavoriteStarComponent', () => {
       })
       describe('two subsequent changes', () => {
         beforeEach(() => {
-          ;(favoritesService as any).myFavoritesUuid$.next([
-            'aaa',
-            'bbb',
-            component.record.uuid,
-          ])
+          ;(favoritesService as any).myFavoritesUuid$.next(['aaa'])
           starToggle.newValue.emit(false)
           starToggle.newValue.emit(true)
           fixture.detectChanges()

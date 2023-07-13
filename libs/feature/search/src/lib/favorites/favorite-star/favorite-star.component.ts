@@ -10,7 +10,7 @@ import {
 } from '@angular/core'
 import { FavoritesService } from '../favorites.service'
 import { MetadataRecord } from '@geonetwork-ui/util/shared'
-import { map } from 'rxjs/operators'
+import { first, map, pairwise, take } from 'rxjs/operators'
 import { AuthService } from '@geonetwork-ui/feature/auth'
 import tippy from 'tippy.js'
 import { TranslateService } from '@ngx-translate/core'
@@ -49,6 +49,7 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   @ViewChild(StarToggleComponent, { read: ElementRef })
   starToggleRef: ElementRef
   subscription: Subscription
+  countSubscription: Subscription
 
   get hasFavoriteCount() {
     return this.favoriteCount !== null
@@ -74,10 +75,34 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
         })
       }
     })
+    this.countSubscription = this.favoritesService.myFavoritesUuid$
+      .pipe(pairwise())
+      .subscribe((fav) => {
+        const oldFavs = fav[0]
+        const newFavs = fav[1]
+        let editedDs = []
+        if (oldFavs.length < newFavs.length) {
+          editedDs.push(newFavs.slice(-1)[0])
+        } else {
+          const deletedFav = oldFavs.filter((fav) => !newFavs.includes(fav))[0]
+          editedDs.push(deletedFav)
+        }
+        editedDs.forEach((ds) => {
+          if (this.hasFavoriteCount && editedDs.includes(this.record.uuid)) {
+            if (newFavs.includes(ds)) {
+              this.favoriteCount += 1
+            } else {
+              this.favoriteCount += -1
+            }
+          }
+        })
+        editedDs = []
+      })
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe()
+    this.countSubscription.unsubscribe()
   }
 
   toggleFavorite(isFavorite) {
@@ -87,9 +112,6 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
       : this.favoritesService.removeFromFavorites([this.record.uuid])
     ).subscribe({
       complete: () => {
-        if (this.hasFavoriteCount) {
-          this.favoriteCount += isFavorite ? 1 : -1
-        }
         this.loading = false
         this.changeDetector.detectChanges()
       },

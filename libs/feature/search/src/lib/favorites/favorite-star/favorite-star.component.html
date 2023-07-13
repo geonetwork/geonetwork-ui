@@ -1,10 +1,7 @@
 <div>
   <span class="align-text-top mr-1.5 favorite-count" *ngIf="hasFavoriteCount">{{
     favoriteCount
-  }}</span>
-  <gn-ui-star-toggle
-    [toggled]="isFavorite$ | async"
-    (newValue)="toggleFavorite($event)"
-    [disabled]="loading || (isAnonymous$ | async)"
-  ></gn-ui-star-toggle>
+    }}</span>
+  <gn-ui-star-toggle [toggled]="isFavorite$ | async" (newValue)="toggleFavorite($event)"
+    [disabled]="loading || (isAnonymous$ | async)"></gn-ui-star-toggle>
 </div>
