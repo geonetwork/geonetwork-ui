@@ -33,6 +33,7 @@ marker('dataset.error.unknown')
 interface WfsDownloadUrls {
   all: { [format: string]: string }
   geojson: string
+  gml: { featureUrl: string; namespace: string }
 }
 
 @Injectable({
@@ -83,12 +84,26 @@ export class DataService {
                 outputCrs: 'EPSG:4326',
               })
             : null,
+          gml:
+            featureType.outputFormats.find((f) =>
+              f.toLowerCase().includes('gml')
+            ) && featureType.otherCrs.includes('EPSG:4326')
+              ? {
+                  featureUrl: endpoint.getFeatureUrl(featureType.name, {
+                    outputFormat: featureType.outputFormats.find((f) =>
+                      f.toLowerCase().includes('gml')
+                    ),
+                    outputCrs: 'EPSG:4326',
+                  }),
+                  namespace: featureType.name,
+                }
+              : null,
         }
       })
     )
   }
 
-  private getGeoJsonDownloadUrlFromWfs(
+  private getDownloasdUrlsFromWfs(
     wfsUrl: string,
     featureType: string
   ): Observable<string> {
@@ -109,6 +124,7 @@ export class DataService {
   }
 
   getDownloadLinksFromWfs(wfsLink: MetadataLink): Observable<MetadataLink[]> {
+    // Pour DL toutes les données
     return this.getDownloadUrlsFromWfs(wfsLink.url, wfsLink.name).pipe(
       map((urls) => urls.all),
       map((urls) =>
@@ -155,8 +171,13 @@ export class DataService {
   getDataset(link: MetadataLink): Observable<BaseReader> {
     const linkUrl = this.proxy.getProxiedUrl(link.url)
     if (link.type === MetadataLinkType.WFS) {
-      return this.getGeoJsonDownloadUrlFromWfs(linkUrl, link.name).pipe(
-        switchMap((url) => openDataset(url, 'geojson')),
+      return this.getDownloadUrlsFromWfs(linkUrl, link.name).pipe(
+        switchMap((urls) => {
+          if (urls.geojson) return openDataset(urls.geojson, 'geojson')
+          if (urls.gml)
+            return openDataset(urls.gml.featureUrl, 'gml', urls.gml.namespace)
+          return null
+        }),
         catchError(this.interpretError)
       )
     } else if (link.type === MetadataLinkType.DOWNLOAD) {
