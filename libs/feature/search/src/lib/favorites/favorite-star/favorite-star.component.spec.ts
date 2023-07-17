@@ -131,6 +131,11 @@ describe('FavoriteStarComponent', () => {
             (component.record.favoriteCount + 1).toString()
           )
         })
+        it('adds the record to myFavoritesUuid$', async () => {
+          await expect(favoritesService.myFavoritesUuid$['_value'][0]).toBe(
+            component.record.uuid
+          )
+        })
       })
       describe('if record is part of favorite', () => {
         beforeEach(() => {
@@ -159,6 +164,12 @@ describe('FavoriteStarComponent', () => {
         it('decrease record favorite count by one', () => {
           expect(favoriteCountEl.textContent).toEqual(
             (component.record.favoriteCount - 1).toString()
+          )
+        })
+        it('removes the record from myFavoritesUuid$', async () => {
+          console.log(favoritesService.myFavoritesUuid$)
+          await expect(favoritesService.myFavoritesUuid$['_value'][0]).not.toBe(
+            component.record.uuid
           )
         })
       })
