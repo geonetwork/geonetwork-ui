@@ -24,7 +24,7 @@ marker('wfs.unreachable.cors')
 marker('wfs.unreachable.http')
 marker('wfs.unreachable.unknown')
 marker('wfs.featuretype.notfound')
-marker('wfs.geojson.notsupported')
+marker('wfs.geojsongml.notsupported')
 marker('dataset.error.network')
 marker('dataset.error.http')
 marker('dataset.error.parse')
@@ -87,7 +87,7 @@ export class DataService {
           gml:
             featureType.outputFormats.find((f) =>
               f.toLowerCase().includes('gml')
-            ) && featureType.otherCrs.includes('EPSG:4326')
+            ) && featureType.otherCrs?.includes('EPSG:4326')
               ? {
                   featureUrl: endpoint.getFeatureUrl(featureType.name, {
                     outputFormat: featureType.outputFormats.find((f) =>
@@ -103,7 +103,7 @@ export class DataService {
     )
   }
 
-  private getDownloasdUrlsFromWfs(
+  /* private getGeoJsonDownloadUrlFromWfs(
     wfsUrl: string,
     featureType: string
   ): Observable<string> {
@@ -115,7 +115,7 @@ export class DataService {
         }
       })
     )
-  }
+  }*/
 
   private getDownloadUrlFromEsriRest(apiUrl: string, format: string): string {
     return this.proxy.getProxiedUrl(
@@ -177,6 +177,11 @@ export class DataService {
           if (urls.gml)
             return openDataset(urls.gml.featureUrl, 'gml', urls.gml.namespace)
           return null
+        }),
+        tap((url) => {
+          if (url === null) {
+            throw new Error('wfs.geojsongml.notsupported')
+          }
         }),
         catchError(this.interpretError)
       )

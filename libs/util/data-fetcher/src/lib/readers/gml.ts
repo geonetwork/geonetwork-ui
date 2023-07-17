@@ -2,7 +2,7 @@ import { BaseFileReader } from './base-file'
 import { DataItem } from '@geonetwork-ui/data-fetcher'
 import { PropertyInfo } from '../model'
 import { fetchDataAsText, processItemProperties } from '../utils'
-import { WFS, GeoJSON } from 'ol/format'
+import { GeoJSON, WFS } from 'ol/format'
 
 export function parseGml(
   text: string,
@@ -15,17 +15,24 @@ export function parseGml(
   const regex = new RegExp(`xmlns:${splittedNamespace[0]}=["']([^'"]*)["']`)
   const match = regex.exec(text)
 
-  if (match[1]) {
+  if (match && match.length >= 2) {
     const wf = new WFS({
       featureNS: match[1],
       featureType: splittedNamespace[1],
       version: '2.0.0',
     })
 
-    const geojsonItem = new GeoJSON().writeFeaturesObject(wf.readFeatures(text))
+    let features
+    try {
+      features = wf.readFeatures(text)
+    } catch (e) {
+      throw Error("Couldn't parse WFS with GML features")
+    }
+
+    const geojsonItem = new GeoJSON().writeFeaturesObject(features)
     return processItemProperties(geojsonItem.features, true)
   }
-  throw Error("Couldn't retrieve namespace")
+  throw Error("Couldn't retrieve namespace url")
 }
 
 export class GmlReader extends BaseFileReader {

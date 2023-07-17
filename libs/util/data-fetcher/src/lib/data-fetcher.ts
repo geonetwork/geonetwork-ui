@@ -51,9 +51,10 @@ export async function openDataset(
  */
 export async function readDataset(
   url: string,
-  typeHint?: SupportedType
+  typeHint?: SupportedType,
+  options?: any
 ): Promise<DataItem[]> {
-  const reader = await openDataset(url, typeHint)
+  const reader = await openDataset(url, typeHint, options)
   try {
     return await reader.read()
   } catch (e: any) {
