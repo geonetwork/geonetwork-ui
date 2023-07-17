@@ -16,7 +16,7 @@ import {
   selectField,
   SourceWithUnknownProps,
 } from '@geonetwork-ui/util/shared'
-import { combineLatest, forkJoin, Observable, of } from 'rxjs'
+import { forkJoin, Observable, of } from 'rxjs'
 import { map, shareReplay } from 'rxjs/operators'
 import { OrganisationsServiceInterface } from './organisations.service.interface'
 import { TranslateService } from '@ngx-translate/core'
@@ -114,7 +114,7 @@ export class OrganisationsFromGroupsService
     lang3: string
   ): MetadataContact {
     const website = getAsUrl(group.website)
-    const logoUrl = getAsUrl(`/geonetwork/images/harvesting/${group.logo}`)
+    const logoUrl = getAsUrl(`${IMAGE_URL}${group.logo}`)
     return {
       name: group.label[lang3],
       organisation: group.label[lang3],

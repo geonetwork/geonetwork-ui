@@ -7,8 +7,10 @@ import {
 import {
   ElasticsearchService,
   getAsArray,
+  getAsUrl,
   getFirstValue,
   mapContact,
+  MetadataContact,
   MetadataRecord,
   Organisation,
   SearchFilters,
@@ -16,7 +18,7 @@ import {
   SourceWithUnknownProps,
 } from '@geonetwork-ui/util/shared'
 import { combineLatest, Observable, of } from 'rxjs'
-import { filter, map, shareReplay, startWith } from 'rxjs/operators'
+import { filter, map, shareReplay, startWith, takeLast } from 'rxjs/operators'
 import { OrganisationsServiceInterface } from './organisations.service.interface'
 
 const IMAGE_URL = '/geonetwork/images/harvesting/'
@@ -161,6 +163,21 @@ export class OrganisationsFromMetadataService
     })
   }
 
+  private mapContactFromOrganisation(
+    organisation: Organisation,
+    contact: MetadataContact
+  ): MetadataContact {
+    const logoUrl = organisation.logoUrl
+      ? getAsUrl(`${organisation.logoUrl}`)
+      : contact.logoUrl
+    return {
+      name: organisation.name,
+      organisation: organisation.name,
+      email: organisation.email,
+      logoUrl: logoUrl,
+    } as MetadataContact
+  }
+
   getFiltersForOrgs(organisations: Organisation[]): Observable<SearchFilters> {
     return of({
       OrgForResource: organisations.reduce(
@@ -184,17 +201,39 @@ export class OrganisationsFromMetadataService
     source: SourceWithUnknownProps,
     record: MetadataRecord
   ): Observable<MetadataRecord> {
-    return of({
+    const metadataRecord = {
       ...record,
       resourceContacts: [
         ...getAsArray(selectField(source, 'contactForResource')).map(
           (contact) => mapContact(contact, source)
         ),
       ],
-      contact: mapContact(
-        getFirstValue(selectField(source, 'contact')),
-        source
-      ),
-    })
+      contact: {
+        ...mapContact(getFirstValue(selectField(source, 'contact')), source),
+      },
+    }
+
+    return this.organisations$.pipe(
+      takeLast(1),
+      map((organisations) => {
+        const org = organisations.filter(
+          (o) => o.name === metadataRecord.resourceContacts[0]?.organisation
+        )[0]
+
+        if (org) {
+          const contactFromOrg = this.mapContactFromOrganisation(
+            org,
+            metadataRecord.contact
+          )
+          metadataRecord.contact = contactFromOrg
+          metadataRecord.resourceContacts = [
+            contactFromOrg, // FIXME: this should go into an organization field
+            ...metadataRecord.resourceContacts,
+          ]
+        }
+
+        return metadataRecord
+      })
+    )
   }
 }

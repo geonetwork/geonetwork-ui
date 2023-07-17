@@ -58,4 +58,23 @@ export const GROUPS_FIXTURE = deepFreeze([
       eng: 'Municipality of Köniz',
     },
   },
+  {
+    logo: 'ifremer.png',
+    website: 'www.ifremer.ch',
+    defaultCategory: null,
+    allowedCategories: [],
+    enableAllowedCategories: false,
+    id: 348385324,
+    email: 'ifremer.ifremer@ifremer.admin.ch',
+    referrer: null,
+    description: '',
+    name: 'Ifremer',
+    label: {
+      ger: 'Ifremer',
+      ita: 'Ifremer',
+      fre: 'Ifremer',
+      roh: 'Ifremer',
+      eng: 'Ifremer',
+    },
+  },
 ])
