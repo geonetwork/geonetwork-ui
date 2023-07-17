@@ -90,7 +90,7 @@ export class OrganisationsComponent {
     return index
   }
 
-  getOrganisationUrl(organisation: Organisation) {
+  getOrganisationUrl(organisation: Organisation): string {
     if (!this.urlTemplate) return null
     return this.urlTemplate.replace('${name}', organisation.name)
   }

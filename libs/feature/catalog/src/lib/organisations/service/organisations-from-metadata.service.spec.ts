@@ -29,6 +29,14 @@ const sampleOrgB: Organisation = {
   recordCount: 1,
   description: null,
 }
+const sampleOrgC: Organisation = {
+  emails: ['ifremer.ifremer@ifremer.admin.ch'],
+  email: 'ifremer.ifremer@ifremer.admin.ch',
+  logoUrl: '/geonetwork/images/harvesting/ifremer.png',
+  name: 'Ifremer',
+  recordCount: 1,
+  description: null,
+}
 
 const organisationsAggregationMock = {
   aggregations: {
@@ -62,6 +70,20 @@ const organisationsAggregationMock = {
               buckets: [
                 {
                   key: 'christian.meier@bakom.admin.ch',
+                  doc_count: 1,
+                },
+              ],
+            },
+          },
+          {
+            key: 'Ifremer',
+            doc_count: 1,
+            mail: {
+              doc_count_error_upper_bound: 0,
+              sum_other_doc_count: 0,
+              buckets: [
+                {
+                  key: 'ifremer.ifremer@ifremer.admin.ch',
                   doc_count: 1,
                 },
               ],
@@ -181,6 +203,13 @@ describe('OrganisationsFromMetadataService', () => {
             name: 'BAKOM',
             recordCount: 1,
           },
+          {
+            description: null,
+            emails: ['ifremer.ifremer@ifremer.admin.ch'],
+            logoUrl: null,
+            name: 'Ifremer',
+            recordCount: 1,
+          },
         ])
       })
     })
@@ -192,7 +221,7 @@ describe('OrganisationsFromMetadataService', () => {
           .subscribe((orgs) => (organisations = orgs))
       })
       it('get organisations hydrated from groups via name or email mapping', () => {
-        expect(organisations).toEqual([sampleOrgA, sampleOrgB])
+        expect(organisations).toEqual([sampleOrgA, sampleOrgB, sampleOrgC])
       })
     })
   })
@@ -245,12 +274,12 @@ describe('OrganisationsFromMetadataService', () => {
     let filters
     beforeEach(async () => {
       filters = await firstValueFrom(
-        service.getFiltersForOrgs([sampleOrgA, sampleOrgB])
+        service.getFiltersForOrgs([sampleOrgA, sampleOrgB, sampleOrgC])
       )
     })
     it('generates filters', () => {
       expect(filters).toEqual({
-        OrgForResource: { ARE: true, BAKOM: true },
+        OrgForResource: { ARE: true, BAKOM: true, Ifremer: true },
       })
     })
   })
@@ -288,14 +317,18 @@ describe('OrganisationsFromMetadataService', () => {
         title: 'Surval - Données par paramètre',
         uuid: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
         contact: {
-          name: "Cellule d'administration Quadrige",
-          organisation: 'Ifremer',
-          email: 'q2suppor@ifremer.fr',
-          website: 'https://www.ifremer.fr/',
-          logoUrl:
-            'http://localhost/geonetwork/images/logos/81e8a591-7815-4d2f-a7da-5673192e74c9.png',
+          name: 'Ifremer',
+          email: 'ifremer.ifremer@ifremer.admin.ch',
+          logoUrl: 'http://localhost/geonetwork/images/harvesting/ifremer.png',
         },
         resourceContacts: [
+          {
+            email: 'ifremer.ifremer@ifremer.admin.ch',
+            logoUrl:
+              'http://localhost/geonetwork/images/harvesting/ifremer.png',
+            name: 'Ifremer',
+            organisation: 'Ifremer',
+          },
           {
             email: 'q2_support@ifremer.fr',
             logoUrl:
