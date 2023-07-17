@@ -77,7 +77,7 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
     })
     this.countSubscription = this.favoritesService.myFavoritesUuid$
       .pipe(pairwise())
-      .subscribe((fav) => {
+      .subscribe(([oldFavs, newFavs]) => {
         const oldFavs = fav[0]
         const newFavs = fav[1]
         let editedDs = []
