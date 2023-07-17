@@ -1,6 +1,5 @@
 import { BaseFileReader } from './base-file'
-import { DataItem } from '@geonetwork-ui/data-fetcher'
-import { PropertyInfo } from '../model'
+import { DataItem, PropertyInfo } from '../model'
 import { fetchDataAsText, processItemProperties } from '../utils'
 import { GeoJSON, WFS } from 'ol/format'
 
