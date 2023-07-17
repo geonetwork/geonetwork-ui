@@ -229,7 +229,7 @@
   "tooltip.url.copy": "Copier l'URL",
   "tooltip.url.open": "Ouvrir l'URL",
   "wfs.featuretype.notfound": "La classe d'objet n'a pas été trouvée dans le service WFS",
-  "wfs.geojson.notsupported": "Le service WFS ne supporte pas le format GeoJSON",
+  "wfs.geojsongml.notsupported": "Le service WFS ne supporte pas le format GeoJSON ou GML",
   "wfs.unreachable.cors": "Le service WFS n'est pas accessible en raison de limitations CORS",
   "wfs.unreachable.http": "Le service WFS a retourné une erreur HTTP",
   "wfs.unreachable.unknown": "Le service WFS n'est pas accessible"

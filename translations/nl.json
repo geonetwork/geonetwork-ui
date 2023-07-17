@@ -229,7 +229,7 @@
   "tooltip.url.copy": "",
   "tooltip.url.open": "",
   "wfs.featuretype.notfound": "",
-  "wfs.geojson.notsupported": "",
+  "wfs.geojsongml.notsupported": "",
   "wfs.unreachable.cors": "",
   "wfs.unreachable.http": "",
   "wfs.unreachable.unknown": ""
