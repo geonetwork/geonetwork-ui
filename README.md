@@ -188,7 +188,7 @@ You can test the datahub app by page :
 
 ##### To run the tests with the interface :
 
-Start docker from 'support-services', and then :
+Start docker from 'support-services', and then in the 'geonetwork-ui' folder :
 
 ```shell script
 npx nx e2e datahub-e2e --port='cypress-auto' --watch
@@ -198,7 +198,7 @@ Then select the file(s) you want to test in the interface.
 
 ##### To run the tests without interface :
 
-Start docker from 'support-services', and then :
+Start docker from 'support-services', and then from the e2e appropriate folder :
 
 --> ALl tests :
 
