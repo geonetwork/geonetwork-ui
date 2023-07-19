@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { WfsEndpoint } from '@camptocamp/ogc-client'
+import { WfsEndpoint, WfsVersion } from '@camptocamp/ogc-client'
 import {
   BaseReader,
   FetchError,
@@ -33,7 +33,7 @@ marker('dataset.error.unknown')
 interface WfsDownloadUrls {
   all: { [format: string]: string }
   geojson: string
-  gml: { featureUrl: string; namespace: string }
+  gml: { featureUrl: string; namespace: string; wfsVersion: WfsVersion }
 }
 
 @Injectable({
@@ -96,26 +96,13 @@ export class DataService {
                     outputCrs: 'EPSG:4326',
                   }),
                   namespace: featureType.name,
+                  wfsVersion: endpoint.getVersion(),
                 }
               : null,
         }
       })
     )
   }
-
-  /* private getGeoJsonDownloadUrlFromWfs(
-    wfsUrl: string,
-    featureType: string
-  ): Observable<string> {
-    return this.getDownloadUrlsFromWfs(wfsUrl, featureType).pipe(
-      map((urls) => urls.geojson),
-      tap((url) => {
-        if (url === null) {
-          throw new Error('wfs.geojson.notsupported')
-        }
-      })
-    )
-  }*/
 
   private getDownloadUrlFromEsriRest(apiUrl: string, format: string): string {
     return this.proxy.getProxiedUrl(
@@ -175,7 +162,10 @@ export class DataService {
         switchMap((urls) => {
           if (urls.geojson) return openDataset(urls.geojson, 'geojson')
           if (urls.gml)
-            return openDataset(urls.gml.featureUrl, 'gml', urls.gml.namespace)
+            return openDataset(urls.gml.featureUrl, 'gml', {
+              namespace: urls.gml.namespace,
+              wfsVersion: urls.gml.wfsVersion,
+            })
           return null
         }),
         tap((url) => {

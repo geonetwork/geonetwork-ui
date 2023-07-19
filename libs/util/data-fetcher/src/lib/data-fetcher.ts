@@ -7,11 +7,12 @@ import { DataItem, DatasetHeaders, FetchError, SupportedType } from './model'
 import { inferDatasetType } from './utils'
 import { BaseReader } from './readers/base'
 import { GmlReader } from './readers/gml'
+import { WfsVersion } from '@camptocamp/ogc-client'
 
 export async function openDataset(
   url: string,
   typeHint?: SupportedType,
-  options?: any
+  options?: { namespace: string; wfsVersion: WfsVersion }
 ): Promise<BaseReader> {
   const fileType = await inferDatasetType(url, typeHint)
   let reader: BaseReader
@@ -30,7 +31,7 @@ export async function openDataset(
         reader = new ExcelReader(url)
         break
       case 'gml':
-        reader = new GmlReader(url, options)
+        reader = new GmlReader(url, options.namespace, options.wfsVersion)
         break
     }
     reader.load()
