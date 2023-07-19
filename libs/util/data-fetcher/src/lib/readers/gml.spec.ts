@@ -85,7 +85,7 @@ describe('Gml parsing', () => {
     describe('valid CSV with id', () => {
       it('returns a parsed object', () => {
         expect(
-          parseGml(singleFeatureValidGml, 'ms:n_mat_eolien_p_r32')
+          parseGml(singleFeatureValidGml, 'ms:n_mat_eolien_p_r32', '2.0.0')
         ).toEqual({
           items: [
             {
@@ -171,7 +171,7 @@ describe('Gml parsing', () => {
     describe('invalid namespace', () => {
       it('throws a relevant error', () => {
         expect(() =>
-          parseGml(singleFeatureValidGml, 'ws:wrongNamespace')
+          parseGml(singleFeatureValidGml, 'ws:wrongNamespace', '2.0.0')
         ).toThrowError("Couldn't retrieve namespace url")
       })
     })
@@ -252,7 +252,8 @@ describe('Gml parsing', () => {
       </ms:n_mat_eolien_p_r32>
     </wfs:member>
 </wfs:FeatureCollection>`,
-            'ms:n_mat_eolien_p_r32'
+            'ms:n_mat_eolien_p_r32',
+            '2.0.0'
           )
         ).toThrowError("Couldn't parse WFS with GML features")
       })
@@ -280,7 +281,8 @@ describe('Gml parsing', () => {
       )
       reader = new GmlReader(
         'http://localfile/fixtures/wfs-gml.xml',
-        'ms:n_mat_eolien_p_r32'
+        'ms:n_mat_eolien_p_r32',
+        '2.0.0'
       )
       reader.load()
     })

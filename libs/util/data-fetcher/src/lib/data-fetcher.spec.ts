@@ -348,7 +348,7 @@ describe('data-fetcher', () => {
         const gml = await readDataset(
           'http://localfile/fixtures/wfs-gml.xml',
           'gml',
-          'ms:n_mat_eolien_p_r32'
+          { namespace: 'ms:n_mat_eolien_p_r32', wfsVersion: '2.0.0' }
         )
         expect(gml[0]).toEqual({
           type: 'Feature',

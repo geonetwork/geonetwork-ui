@@ -87,7 +87,9 @@ export class DataService {
           gml:
             featureType.outputFormats.find((f) =>
               f.toLowerCase().includes('gml')
-            ) && featureType.otherCrs?.includes('EPSG:4326')
+            ) &&
+            (featureType.defaultCrs === 'EPSG:4326' ||
+              featureType.otherCrs?.includes('EPSG:4326'))
               ? {
                   featureUrl: endpoint.getFeatureUrl(featureType.name, {
                     outputFormat: featureType.outputFormats.find((f) =>
