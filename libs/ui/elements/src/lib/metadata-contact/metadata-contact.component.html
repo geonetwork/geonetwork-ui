@@ -10,7 +10,7 @@
       {{ shownContact.organisation }}
     </div>
   </div>
-  <a [href]="'mailto:' + shownContact.email" class="text-gray-700 text-sm">{{
+  <a [href]="'mailto:' + shownContact.email" class="text-gray-700 text-sm" target="_blank">{{
     shownContact.email
   }}</a>
   <div *ngIf="shownContact.website" class="mb-2">
