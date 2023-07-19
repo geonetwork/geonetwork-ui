@@ -212,28 +212,35 @@ export class OrganisationsFromMetadataService
         ...mapContact(getFirstValue(selectField(source, 'contact')), source),
       },
     }
-
-    return this.organisations$.pipe(
+    return combineLatest([
+      this.organisationsWithoutGroups$,
+      this.groups$,
+    ]).pipe(
       takeLast(1),
-      map((organisations) => {
-        const org = organisations.filter(
-          (o) => o.name === metadataRecord.resourceContacts[0]?.organisation
-        )[0]
+      map(
+        ([organisations, groups]) => {
+          const org = organisations.filter(
+            (o) => o.name === metadataRecord.resourceContacts[0]?.organisation
+          )[0]
 
-        if (org) {
-          const contactFromOrg = this.mapContactFromOrganisation(
-            org,
-            metadataRecord.contact
-          )
-          metadataRecord.contact = contactFromOrg
-          metadataRecord.resourceContacts = [
-            contactFromOrg, // FIXME: this should go into an organization field
-            ...metadataRecord.resourceContacts,
-          ]
+          if (org) {
+            const orgWithGroup = this.mapWithGroups([org], groups)[0]
+            const contactFromOrg = this.mapContactFromOrganisation(
+              orgWithGroup,
+              metadataRecord.contact
+            )
+            metadataRecord.contact = contactFromOrg
+            metadataRecord.resourceContacts = [
+              contactFromOrg, // FIXME: this should go into an organization field
+              ...metadataRecord.resourceContacts,
+            ]
+          }
+
+          return metadataRecord
         }
-
-        return metadataRecord
-      })
+      )
     )
+
+
   }
 }
