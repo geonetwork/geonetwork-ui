@@ -3,7 +3,7 @@
     class="h-full container-lg mx-auto flex flex-col justify-center relative"
   >
     <gn-ui-favorite-star
-      *ngIf="metadata && metadata.id"
+      *ngIf="metadata?.id"
       [record]="metadata"
       class="absolute text-background top-[0.85em] right-[0.85em]"
       [style.color]="foregroundColor"
