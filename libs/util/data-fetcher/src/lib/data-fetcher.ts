@@ -6,10 +6,13 @@ import { ExcelReader } from './readers/excel'
 import { DataItem, DatasetHeaders, FetchError, SupportedType } from './model'
 import { inferDatasetType } from './utils'
 import { BaseReader } from './readers/base'
+import { GmlReader } from './readers/gml'
+import { WfsVersion } from '@camptocamp/ogc-client'
 
 export async function openDataset(
   url: string,
-  typeHint?: SupportedType
+  typeHint?: SupportedType,
+  options?: { namespace: string; wfsVersion: WfsVersion }
 ): Promise<BaseReader> {
   const fileType = await inferDatasetType(url, typeHint)
   let reader: BaseReader
@@ -26,6 +29,9 @@ export async function openDataset(
         break
       case 'excel':
         reader = new ExcelReader(url)
+        break
+      case 'gml':
+        reader = new GmlReader(url, options.namespace, options.wfsVersion)
         break
     }
     reader.load()
@@ -46,9 +52,10 @@ export async function openDataset(
  */
 export async function readDataset(
   url: string,
-  typeHint?: SupportedType
+  typeHint?: SupportedType,
+  options?: any
 ): Promise<DataItem[]> {
-  const reader = await openDataset(url, typeHint)
+  const reader = await openDataset(url, typeHint, options)
   try {
     return await reader.read()
   } catch (e: any) {

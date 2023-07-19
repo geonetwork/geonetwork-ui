@@ -63,14 +63,22 @@ export const ExcelMimeTypes = [
   'application/vnd.ms-excel', // .xls
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xslx
 ] as const
+export const GmlMimeTypes = ['application/gml+xml'] as const
 
 export type SupportedMimeType =
   | typeof CsvMimeTypes[number]
   | typeof JsonMimeTypes[number]
   | typeof GeoJsonMimeTypes[number]
   | typeof ExcelMimeTypes[number]
+  | typeof GmlMimeTypes[number]
 
-export const SupportedTypes = ['csv', 'json', 'geojson', 'excel'] as const
+export const SupportedTypes = [
+  'csv',
+  'json',
+  'geojson',
+  'excel',
+  'gml',
+] as const
 export type SupportedType = typeof SupportedTypes[number]
 
 export const AllMimeTypes = {
@@ -78,6 +86,7 @@ export const AllMimeTypes = {
   json: JsonMimeTypes,
   geojson: GeoJsonMimeTypes,
   excel: ExcelMimeTypes,
+  gml: GmlMimeTypes,
 }
 
 export interface DatasetHeaders {

@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import fetchMock from 'fetch-mock-jest'
 import fs from 'fs'
 import path from 'path'
@@ -46,6 +49,10 @@ describe('data-fetcher', () => {
             body = fs.readFileSync(filePath, null) // as arraybuffer
             contentType =
               'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            break
+          case '.xml':
+            body = fs.readFileSync(filePath, null) // as arraybuffer
+            contentType = 'text/xml; subtype="gml/3.2.1";charset=UTF-8'
             break
         }
         return {
@@ -333,6 +340,67 @@ describe('data-fetcher', () => {
               'MULTIPOLYGON (((756783.4911681091 6943693.466001436, 756973.9557157363 6943699.033945308, 757071.0605141836 6943710.784083098, 757306.3095355278 6943701.600258818, 757320.4355607403 6943672.737612311, 757354.0916407352 6943616.762834985, 757355.5828327122 6943580.821844398, 757346.3269744576 6943548.564972184, 757324.4667942899 6943512.822329184, 757293.7168386498 6943487.933692504, 757280.9447310865 6943464.688769508, 757277.1234141111 6943437.774987674, 757284.1406655983 6943417.954808124, 757296.5619476133 6943399.885143167, 757298.1904209342 6943380.110736016, 757314.2194736927 6943363.806842901, 757332.2583315391 6943372.63570071, 757373.2519701455 6943334.562767278, 757380.101431174 6943294.983439544, 757157.3195574313 6943291.486489333, 756914.6110583611 6943268.398177572, 756853.2672335848 6943448.560780707, 756832.2154494472 6943508.021309288, 756803.9938767474 6943569.33915255, 756779.3953241408 6943634.219057551, 756783.4911681091 6943693.466001436)))',
           },
           type: 'Feature',
+        })
+      })
+    })
+    describe('Gml file', () => {
+      it('returns the objects in the file', async () => {
+        const gml = await readDataset(
+          'http://localfile/fixtures/wfs-gml.xml',
+          'gml',
+          { namespace: 'ms:n_mat_eolien_p_r32', wfsVersion: '2.0.0' }
+        )
+        expect(gml[0]).toEqual({
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [1.548145, 50.054755, 0],
+          },
+          properties: {
+            boundedBy: [1.548145, 50.054755, 1.548145, 50.054755],
+            id_map: 1862,
+            id_mat: 1862,
+            nom_parc: 'PARC EOLIEN DE CHASSE MAREE II',
+            id_eolienn: 'L1.1',
+            x_rgf93: 595929,
+            y_rgf93: 6996108,
+            puissanc_2: 2,
+            code_com: 80360,
+            nom_commun: 'FRESSENNEVILLE',
+            code_arron: 801,
+            departemen: 'SO',
+            secteur: 'E - SECTEUR OUEST SOMME',
+            id_sre: 'E-P',
+            ht_max: 127,
+            ht_mat: 0,
+            type_proce: 'PC',
+            etat_proce: 'AB',
+            contentieu: 0,
+            etat_mat: 'NCO',
+            en_service: 'NON',
+            etat_eolie: 'AB',
+            alt_base: null,
+            code_icpe: undefined,
+            date_crea: undefined,
+            date_decis: null,
+            date_depot: undefined,
+            date_maj: null,
+            date_prod: undefined,
+            date_real: undefined,
+            diam_rotor: null,
+            exploitant: undefined,
+            gardesol: null,
+            ht_nacelle: null,
+            id_parc: undefined,
+            id_pc: undefined,
+            n_parcel: undefined,
+            operateur: undefined,
+            precis_pos: undefined,
+            srce_geom: undefined,
+            sys_coord: undefined,
+            x_pc: null,
+            y_pc: null,
+          },
         })
       })
     })

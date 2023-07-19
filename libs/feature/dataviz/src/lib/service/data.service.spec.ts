@@ -42,10 +42,11 @@ jest.mock('@camptocamp/ogc-client', () => ({
         ? null
         : {
             name,
+            otherCrs: ['EPSG:4326'],
             outputFormats:
               name.indexOf('nojson') > -1
-                ? ['csv', 'xls']
-                : ['csv', 'xls', 'json'],
+                ? ['csv', 'xls', 'gml']
+                : ['csv', 'xls', 'json', 'gml'],
           }
     }
     getFeatureTypes() {
@@ -67,6 +68,10 @@ jest.mock('@camptocamp/ogc-client', () => ({
           name: 'ft3',
         },
       ]
+    }
+
+    getVersion(): '1.0.0' | '1.1.0' | '2.0.0' {
+      return '2.0.0'
     }
   },
 }))
@@ -123,7 +128,7 @@ jest.mock('@geonetwork-ui/data-fetcher', () => ({
         resolve(dataset)
       })
   ),
-  SupportedTypes: ['csv', 'geojson', 'json', 'excel'],
+  SupportedTypes: ['csv', 'geojson', 'json', 'excel', 'gml'],
 }))
 
 describe('DataService', () => {
@@ -240,6 +245,14 @@ describe('DataService', () => {
               url: 'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=json',
               type: MetadataLinkType.WFS,
             },
+            {
+              description: 'Lieu de surveillance (ligne)',
+              mimeType: 'gml',
+              name: 'surval_parametre_ligne',
+              protocol: 'OGC:WFS',
+              url: 'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=gml',
+              type: MetadataLinkType.WFS,
+            },
           ])
         })
       })
@@ -267,6 +280,14 @@ describe('DataService', () => {
               name: 'nojson_type',
               protocol: 'OGC:WFS',
               url: 'http://local/wfs?GetFeature&FeatureType=nojson_type&format=xls',
+              type: MetadataLinkType.WFS,
+            },
+            {
+              description: 'Lieu de surveillance (ligne)',
+              mimeType: 'gml',
+              name: 'nojson_type',
+              protocol: 'OGC:WFS',
+              url: 'http://local/wfs?GetFeature&FeatureType=nojson_type&format=gml',
               type: MetadataLinkType.WFS,
             },
           ])
@@ -306,6 +327,14 @@ describe('DataService', () => {
               url: 'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=json',
               type: MetadataLinkType.WFS,
             },
+            {
+              description: 'Lieu de surveillance (ligne)',
+              mimeType: 'gml',
+              name: '',
+              protocol: 'OGC:WFS',
+              url: 'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=gml',
+              type: MetadataLinkType.WFS,
+            },
           ])
         })
       })
@@ -315,8 +344,9 @@ describe('DataService', () => {
       describe('WFS with GeoJSON support', () => {
         it('returns an url', async () => {
           const url = await service
-            .getGeoJsonDownloadUrlFromWfs('http://local/wfs', 'abcd')
+            .getDownloadUrlsFromWfs('http://local/wfs', 'abcd')
             .toPromise()
+            .then((urls) => urls.geojson)
           expect(url).toEqual(
             'http://local/wfs?GetFeature&FeatureType=abcd&format=application/json'
           )
@@ -326,18 +356,19 @@ describe('DataService', () => {
         it('returns an observable that errors with a relevant error', async () => {
           try {
             await service
-              .getGeoJsonDownloadUrlFromWfs('http://local/wfs', 'nojsontype')
+              .getDownloadUrlsFromWfs('http://local/wfs', 'nojsontype')
               .toPromise()
           } catch (e) {
-            expect(e.message).toBe('wfs.geojson.notsupported')
+            expect(e.message).toBe('wfs.geojsongml.notsupported')
           }
         })
       })
       describe('WFS with only one feature type, no feature type name specified', () => {
         it('returns one valid link using the only feature type', async () => {
           const url = await service
-            .getGeoJsonDownloadUrlFromWfs('http://unique-feature-type/wfs', '')
+            .getDownloadUrlsFromWfs('http://unique-feature-type/wfs', '')
             .toPromise()
+            .then((urls) => urls.geojson)
           expect(url).toEqual(
             'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=application/json'
           )
@@ -501,15 +532,16 @@ describe('DataService', () => {
 
     describe('#getGeoJsonDownloadUrlFromWfs', () => {
       it('creates a WFS endpoint with a proxied url', () => {
-        service.getGeoJsonDownloadUrlFromWfs('http://local/wfs', 'abcd')
+        service.getDownloadUrlsFromWfs('http://local/wfs', 'abcd')
         expect(newEndpointCall).toHaveBeenCalledWith(
           'http://proxy.local/?url=http%3A%2F%2Flocal%2Fwfs'
         )
       })
       it('returns a proxied url', async () => {
         const url = await service
-          .getGeoJsonDownloadUrlFromWfs('http://local/wfs', 'abcd')
+          .getDownloadUrlsFromWfs('http://local/wfs', 'abcd')
           .toPromise()
+          .then((urls) => urls.geojson)
         expect(url).toEqual(
           'http://proxy.local/?url=http%3A%2F%2Flocal%2Fwfs?GetFeature&FeatureType=abcd&format=application/json'
         )

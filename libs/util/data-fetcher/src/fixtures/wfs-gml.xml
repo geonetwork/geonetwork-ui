@@ -1,0 +1,587 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+<wfs:FeatureCollection
+  xmlns:ms="http://mapserver.gis.umn.edu/mapserver"
+  xmlns:gml="http://www.opengis.net/gml/3.2"
+  xmlns:wfs="http://www.opengis.net/wfs/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://mapserver.gis.umn.edu/mapserver https://ogc.geo-ide.developpement-durable.gouv.fr/wxs?map=/opt/data/carto/geoide-catalogue/1.4/org_38148/aab5f309-86ca-4e8b-8411-c8a02963b673.internet.map&amp;SERVICE=WFS&amp;VERSION=2.0.0&amp;REQUEST=DescribeFeatureType&amp;TYPENAME=ms:n_mat_eolien_p_r32&amp;OUTPUTFORMAT=application%2Fgml%2Bxml%3B%20version%3D3.2 http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"
+  timeStamp="2023-07-17T11:23:51" numberMatched="unknown" numberReturned="10"
+  next="https://ogc.geo-ide.developpement-durable.gouv.fr/wxs?map=/opt/data/carto/geoide-catalogue/1.4/org_38148/aab5f309-86ca-4e8b-8411-c8a02963b673.internet.map&amp;SERVICE=WFS&amp;REQUEST=GetFeature&amp;VERSION=2.0.0&amp;TYPENAMES=ms%3An_mat_eolien_p_r32&amp;OUTPUTFORMAT=application%2Fgml%2Bxml%3B%20version%3D3.2&amp;COUNT=10&amp;SRSNAME=EPSG%3A4326&amp;STARTINDEX=10">
+  <wfs:boundedBy>
+    <gml:Envelope srsName="urn:ogc:def:crs:EPSG::4326">
+      <gml:lowerCorner>50.054713 1.548145</gml:lowerCorner>
+      <gml:upperCorner>50.432854 2.097876</gml:upperCorner>
+    </gml:Envelope>
+  </wfs:boundedBy>
+  <!-- WARNING: No featureid defined for typename 'n_mat_eolien_p_r32'. Output will not validate. -->
+  <wfs:member>
+    <ms:n_mat_eolien_p_r32>
+      <gml:boundedBy>
+        <gml:Envelope srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:lowerCorner>50.054755 1.548145</gml:lowerCorner>
+          <gml:upperCorner>50.054755 1.548145</gml:upperCorner>
+        </gml:Envelope>
+      </gml:boundedBy>
+      <ms:geometry>
+        <gml:Point gml:id=".1" srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:pos>50.054755 1.548145</gml:pos>
+        </gml:Point>
+      </ms:geometry>
+      <ms:id_map>1862</ms:id_map>
+      <ms:id_mat>1862</ms:id_mat>
+      <ms:code_icpe></ms:code_icpe>
+      <ms:id_parc></ms:id_parc>
+      <ms:nom_parc>PARC EOLIEN DE CHASSE MAREE II</ms:nom_parc>
+      <ms:id_pc></ms:id_pc>
+      <ms:operateur></ms:operateur>
+      <ms:exploitant></ms:exploitant>
+      <ms:date_crea></ms:date_crea>
+      <ms:id_eolienn>L1.1</ms:id_eolienn>
+      <ms:x_rgf93>595929.000000000000000</ms:x_rgf93>
+      <ms:y_rgf93>6996108.000000000000000</ms:y_rgf93>
+      <ms:x_pc></ms:x_pc>
+      <ms:y_pc></ms:y_pc>
+      <ms:sys_coord></ms:sys_coord>
+      <ms:alt_base></ms:alt_base>
+      <ms:n_parcel></ms:n_parcel>
+      <ms:puissanc_2>2.000000000000000</ms:puissanc_2>
+      <ms:code_com>80360</ms:code_com>
+      <ms:nom_commun>FRESSENNEVILLE</ms:nom_commun>
+      <ms:code_arron>801</ms:code_arron>
+      <ms:departemen>SO</ms:departemen>
+      <ms:secteur>E - SECTEUR OUEST SOMME</ms:secteur>
+      <ms:id_sre>E-P</ms:id_sre>
+      <ms:ht_max>127.000000000000000</ms:ht_max>
+      <ms:ht_mat>0.000000000000000</ms:ht_mat>
+      <ms:ht_nacelle></ms:ht_nacelle>
+      <ms:diam_rotor></ms:diam_rotor>
+      <ms:gardesol></ms:gardesol>
+      <ms:type_proce>PC</ms:type_proce>
+      <ms:etat_proce>AB</ms:etat_proce>
+      <ms:date_depot></ms:date_depot>
+      <ms:date_decis></ms:date_decis>
+      <ms:contentieu>0</ms:contentieu>
+      <ms:etat_mat>NCO</ms:etat_mat>
+      <ms:date_real></ms:date_real>
+      <ms:date_prod></ms:date_prod>
+      <ms:en_service>NON</ms:en_service>
+      <ms:etat_eolie>AB</ms:etat_eolie>
+      <ms:date_maj></ms:date_maj>
+      <ms:srce_geom></ms:srce_geom>
+      <ms:precis_pos></ms:precis_pos>
+    </ms:n_mat_eolien_p_r32>
+  </wfs:member>
+  <wfs:member>
+    <ms:n_mat_eolien_p_r32>
+      <gml:boundedBy>
+        <gml:Envelope srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:lowerCorner>50.054734 1.554773</gml:lowerCorner>
+          <gml:upperCorner>50.054734 1.554773</gml:upperCorner>
+        </gml:Envelope>
+      </gml:boundedBy>
+      <ms:geometry>
+        <gml:Point gml:id=".1" srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:pos>50.054734 1.554773</gml:pos>
+        </gml:Point>
+      </ms:geometry>
+      <ms:id_map>1863</ms:id_map>
+      <ms:id_mat>1863</ms:id_mat>
+      <ms:code_icpe></ms:code_icpe>
+      <ms:id_parc></ms:id_parc>
+      <ms:nom_parc>PARC EOLIEN DE CHASSE MAREE II</ms:nom_parc>
+      <ms:id_pc></ms:id_pc>
+      <ms:operateur></ms:operateur>
+      <ms:exploitant></ms:exploitant>
+      <ms:date_crea></ms:date_crea>
+      <ms:id_eolienn>L1.2</ms:id_eolienn>
+      <ms:x_rgf93>596404.000000000000000</ms:x_rgf93>
+      <ms:y_rgf93>6996097.000000000000000</ms:y_rgf93>
+      <ms:x_pc></ms:x_pc>
+      <ms:y_pc></ms:y_pc>
+      <ms:sys_coord></ms:sys_coord>
+      <ms:alt_base></ms:alt_base>
+      <ms:n_parcel></ms:n_parcel>
+      <ms:puissanc_2>2.000000000000000</ms:puissanc_2>
+      <ms:code_com>80360</ms:code_com>
+      <ms:nom_commun>FRESSENNEVILLE</ms:nom_commun>
+      <ms:code_arron>801</ms:code_arron>
+      <ms:departemen>SO</ms:departemen>
+      <ms:secteur>E - SECTEUR OUEST SOMME</ms:secteur>
+      <ms:id_sre>E-P</ms:id_sre>
+      <ms:ht_max>127.000000000000000</ms:ht_max>
+      <ms:ht_mat>0.000000000000000</ms:ht_mat>
+      <ms:ht_nacelle></ms:ht_nacelle>
+      <ms:diam_rotor></ms:diam_rotor>
+      <ms:gardesol></ms:gardesol>
+      <ms:type_proce>PC</ms:type_proce>
+      <ms:etat_proce>AB</ms:etat_proce>
+      <ms:date_depot></ms:date_depot>
+      <ms:date_decis></ms:date_decis>
+      <ms:contentieu>0</ms:contentieu>
+      <ms:etat_mat>NCO</ms:etat_mat>
+      <ms:date_real></ms:date_real>
+      <ms:date_prod></ms:date_prod>
+      <ms:en_service>NON</ms:en_service>
+      <ms:etat_eolie>AB</ms:etat_eolie>
+      <ms:date_maj></ms:date_maj>
+      <ms:srce_geom></ms:srce_geom>
+      <ms:precis_pos></ms:precis_pos>
+    </ms:n_mat_eolien_p_r32>
+  </wfs:member>
+  <wfs:member>
+    <ms:n_mat_eolien_p_r32>
+      <gml:boundedBy>
+        <gml:Envelope srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:lowerCorner>50.054713 1.560648</gml:lowerCorner>
+          <gml:upperCorner>50.054713 1.560648</gml:upperCorner>
+        </gml:Envelope>
+      </gml:boundedBy>
+      <ms:geometry>
+        <gml:Point gml:id=".1" srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:pos>50.054713 1.560648</gml:pos>
+        </gml:Point>
+      </ms:geometry>
+      <ms:id_map>1864</ms:id_map>
+      <ms:id_mat>1864</ms:id_mat>
+      <ms:code_icpe></ms:code_icpe>
+      <ms:id_parc></ms:id_parc>
+      <ms:nom_parc>PARC EOLIEN DE CHASSE MAREE II</ms:nom_parc>
+      <ms:id_pc></ms:id_pc>
+      <ms:operateur></ms:operateur>
+      <ms:exploitant></ms:exploitant>
+      <ms:date_crea></ms:date_crea>
+      <ms:id_eolienn>L1.3</ms:id_eolienn>
+      <ms:x_rgf93>596825.000000000000000</ms:x_rgf93>
+      <ms:y_rgf93>6996087.000000000000000</ms:y_rgf93>
+      <ms:x_pc></ms:x_pc>
+      <ms:y_pc></ms:y_pc>
+      <ms:sys_coord></ms:sys_coord>
+      <ms:alt_base></ms:alt_base>
+      <ms:n_parcel></ms:n_parcel>
+      <ms:puissanc_2>2.000000000000000</ms:puissanc_2>
+      <ms:code_com>80360</ms:code_com>
+      <ms:nom_commun>FRESSENNEVILLE</ms:nom_commun>
+      <ms:code_arron>801</ms:code_arron>
+      <ms:departemen>SO</ms:departemen>
+      <ms:secteur>E - SECTEUR OUEST SOMME</ms:secteur>
+      <ms:id_sre>E-P</ms:id_sre>
+      <ms:ht_max>127.000000000000000</ms:ht_max>
+      <ms:ht_mat>0.000000000000000</ms:ht_mat>
+      <ms:ht_nacelle></ms:ht_nacelle>
+      <ms:diam_rotor></ms:diam_rotor>
+      <ms:gardesol></ms:gardesol>
+      <ms:type_proce>PC</ms:type_proce>
+      <ms:etat_proce>AB</ms:etat_proce>
+      <ms:date_depot></ms:date_depot>
+      <ms:date_decis></ms:date_decis>
+      <ms:contentieu>0</ms:contentieu>
+      <ms:etat_mat>NCO</ms:etat_mat>
+      <ms:date_real></ms:date_real>
+      <ms:date_prod></ms:date_prod>
+      <ms:en_service>NON</ms:en_service>
+      <ms:etat_eolie>AB</ms:etat_eolie>
+      <ms:date_maj></ms:date_maj>
+      <ms:srce_geom></ms:srce_geom>
+      <ms:precis_pos></ms:precis_pos>
+    </ms:n_mat_eolien_p_r32>
+  </wfs:member>
+  <wfs:member>
+    <ms:n_mat_eolien_p_r32>
+      <gml:boundedBy>
+        <gml:Envelope srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:lowerCorner>50.165413 1.769240</gml:lowerCorner>
+          <gml:upperCorner>50.165413 1.769240</gml:upperCorner>
+        </gml:Envelope>
+      </gml:boundedBy>
+      <ms:geometry>
+        <gml:Point gml:id=".1" srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:pos>50.165413 1.769240</gml:pos>
+        </gml:Point>
+      </ms:geometry>
+      <ms:id_map>1913</ms:id_map>
+      <ms:id_mat>1913</ms:id_mat>
+      <ms:code_icpe></ms:code_icpe>
+      <ms:id_parc></ms:id_parc>
+      <ms:nom_parc>PARC EOLIEN DE SAILLY-FLIBEAUCOURT</ms:nom_parc>
+      <ms:id_pc></ms:id_pc>
+      <ms:operateur>CITAWIND</ms:operateur>
+      <ms:exploitant></ms:exploitant>
+      <ms:date_crea></ms:date_crea>
+      <ms:id_eolienn>E2</ms:id_eolienn>
+      <ms:x_rgf93>611968.000000000000000</ms:x_rgf93>
+      <ms:y_rgf93>7008159.000000000000000</ms:y_rgf93>
+      <ms:x_pc></ms:x_pc>
+      <ms:y_pc></ms:y_pc>
+      <ms:sys_coord></ms:sys_coord>
+      <ms:alt_base></ms:alt_base>
+      <ms:n_parcel></ms:n_parcel>
+      <ms:puissanc_2>2.000000000000000</ms:puissanc_2>
+      <ms:code_com>80692</ms:code_com>
+      <ms:nom_commun>SAILLY FLIBEAUCOURT</ms:nom_commun>
+      <ms:code_arron>801</ms:code_arron>
+      <ms:departemen>SO</ms:departemen>
+      <ms:secteur>E - SECTEUR OUEST SOMME</ms:secteur>
+      <ms:id_sre>E-P</ms:id_sre>
+      <ms:ht_max>130.000000000000000</ms:ht_max>
+      <ms:ht_mat>0.000000000000000</ms:ht_mat>
+      <ms:ht_nacelle></ms:ht_nacelle>
+      <ms:diam_rotor></ms:diam_rotor>
+      <ms:gardesol></ms:gardesol>
+      <ms:type_proce>PC</ms:type_proce>
+      <ms:etat_proce>RE</ms:etat_proce>
+      <ms:date_depot></ms:date_depot>
+      <ms:date_decis></ms:date_decis>
+      <ms:contentieu>0</ms:contentieu>
+      <ms:etat_mat>NCO</ms:etat_mat>
+      <ms:date_real></ms:date_real>
+      <ms:date_prod></ms:date_prod>
+      <ms:en_service>NON</ms:en_service>
+      <ms:etat_eolie>RE</ms:etat_eolie>
+      <ms:date_maj></ms:date_maj>
+      <ms:srce_geom></ms:srce_geom>
+      <ms:precis_pos></ms:precis_pos>
+    </ms:n_mat_eolien_p_r32>
+  </wfs:member>
+  <wfs:member>
+    <ms:n_mat_eolien_p_r32>
+      <gml:boundedBy>
+        <gml:Envelope srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:lowerCorner>50.163691 1.773029</gml:lowerCorner>
+          <gml:upperCorner>50.163691 1.773029</gml:upperCorner>
+        </gml:Envelope>
+      </gml:boundedBy>
+      <ms:geometry>
+        <gml:Point gml:id=".1" srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:pos>50.163691 1.773029</gml:pos>
+        </gml:Point>
+      </ms:geometry>
+      <ms:id_map>1914</ms:id_map>
+      <ms:id_mat>1914</ms:id_mat>
+      <ms:code_icpe></ms:code_icpe>
+      <ms:id_parc></ms:id_parc>
+      <ms:nom_parc>PARC EOLIEN DE SAILLY-FLIBEAUCOURT</ms:nom_parc>
+      <ms:id_pc></ms:id_pc>
+      <ms:operateur>CITAWIND</ms:operateur>
+      <ms:exploitant></ms:exploitant>
+      <ms:date_crea></ms:date_crea>
+      <ms:id_eolienn>E3</ms:id_eolienn>
+      <ms:x_rgf93>612236.000000000000000</ms:x_rgf93>
+      <ms:y_rgf93>7007963.000000000000000</ms:y_rgf93>
+      <ms:x_pc></ms:x_pc>
+      <ms:y_pc></ms:y_pc>
+      <ms:sys_coord></ms:sys_coord>
+      <ms:alt_base></ms:alt_base>
+      <ms:n_parcel></ms:n_parcel>
+      <ms:puissanc_2>2.000000000000000</ms:puissanc_2>
+      <ms:code_com>80637</ms:code_com>
+      <ms:nom_commun>PORT LE GRAND</ms:nom_commun>
+      <ms:code_arron>801</ms:code_arron>
+      <ms:departemen>SO</ms:departemen>
+      <ms:secteur>E - SECTEUR OUEST SOMME</ms:secteur>
+      <ms:id_sre>E-P</ms:id_sre>
+      <ms:ht_max>130.000000000000000</ms:ht_max>
+      <ms:ht_mat>0.000000000000000</ms:ht_mat>
+      <ms:ht_nacelle></ms:ht_nacelle>
+      <ms:diam_rotor></ms:diam_rotor>
+      <ms:gardesol></ms:gardesol>
+      <ms:type_proce>PC</ms:type_proce>
+      <ms:etat_proce>RE</ms:etat_proce>
+      <ms:date_depot></ms:date_depot>
+      <ms:date_decis></ms:date_decis>
+      <ms:contentieu>0</ms:contentieu>
+      <ms:etat_mat>NCO</ms:etat_mat>
+      <ms:date_real></ms:date_real>
+      <ms:date_prod></ms:date_prod>
+      <ms:en_service>NON</ms:en_service>
+      <ms:etat_eolie>RE</ms:etat_eolie>
+      <ms:date_maj></ms:date_maj>
+      <ms:srce_geom></ms:srce_geom>
+      <ms:precis_pos></ms:precis_pos>
+    </ms:n_mat_eolien_p_r32>
+  </wfs:member>
+  <wfs:member>
+    <ms:n_mat_eolien_p_r32>
+      <gml:boundedBy>
+        <gml:Envelope srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:lowerCorner>50.166925 1.765931</gml:lowerCorner>
+          <gml:upperCorner>50.166925 1.765931</gml:upperCorner>
+        </gml:Envelope>
+      </gml:boundedBy>
+      <ms:geometry>
+        <gml:Point gml:id=".1" srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:pos>50.166925 1.765931</gml:pos>
+        </gml:Point>
+      </ms:geometry>
+      <ms:id_map>1915</ms:id_map>
+      <ms:id_mat>1915</ms:id_mat>
+      <ms:code_icpe></ms:code_icpe>
+      <ms:id_parc></ms:id_parc>
+      <ms:nom_parc>PARC EOLIEN DE SAILLY-FLIBEAUCOURT</ms:nom_parc>
+      <ms:id_pc></ms:id_pc>
+      <ms:operateur>CITAWIND</ms:operateur>
+      <ms:exploitant></ms:exploitant>
+      <ms:date_crea></ms:date_crea>
+      <ms:id_eolienn>E1</ms:id_eolienn>
+      <ms:x_rgf93>611734.000000000000000</ms:x_rgf93>
+      <ms:y_rgf93>7008331.000000000000000</ms:y_rgf93>
+      <ms:x_pc></ms:x_pc>
+      <ms:y_pc></ms:y_pc>
+      <ms:sys_coord></ms:sys_coord>
+      <ms:alt_base></ms:alt_base>
+      <ms:n_parcel></ms:n_parcel>
+      <ms:puissanc_2>2.000000000000000</ms:puissanc_2>
+      <ms:code_com>80692</ms:code_com>
+      <ms:nom_commun>SAILLY FLIBEAUCOURT</ms:nom_commun>
+      <ms:code_arron>801</ms:code_arron>
+      <ms:departemen>SO</ms:departemen>
+      <ms:secteur>E - SECTEUR OUEST SOMME</ms:secteur>
+      <ms:id_sre>E-P</ms:id_sre>
+      <ms:ht_max>130.000000000000000</ms:ht_max>
+      <ms:ht_mat>0.000000000000000</ms:ht_mat>
+      <ms:ht_nacelle></ms:ht_nacelle>
+      <ms:diam_rotor></ms:diam_rotor>
+      <ms:gardesol></ms:gardesol>
+      <ms:type_proce>PC</ms:type_proce>
+      <ms:etat_proce>RE</ms:etat_proce>
+      <ms:date_depot></ms:date_depot>
+      <ms:date_decis></ms:date_decis>
+      <ms:contentieu>0</ms:contentieu>
+      <ms:etat_mat>NCO</ms:etat_mat>
+      <ms:date_real></ms:date_real>
+      <ms:date_prod></ms:date_prod>
+      <ms:en_service>NON</ms:en_service>
+      <ms:etat_eolie>RE</ms:etat_eolie>
+      <ms:date_maj></ms:date_maj>
+      <ms:srce_geom></ms:srce_geom>
+      <ms:precis_pos></ms:precis_pos>
+    </ms:n_mat_eolien_p_r32>
+  </wfs:member>
+  <wfs:member>
+    <ms:n_mat_eolien_p_r32>
+      <gml:boundedBy>
+        <gml:Envelope srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:lowerCorner>50.431863 2.084312</gml:lowerCorner>
+          <gml:upperCorner>50.431863 2.084312</gml:upperCorner>
+        </gml:Envelope>
+      </gml:boundedBy>
+      <ms:geometry>
+        <gml:Point gml:id=".1" srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:pos>50.431863 2.084312</gml:pos>
+        </gml:Point>
+      </ms:geometry>
+      <ms:id_map>2473</ms:id_map>
+      <ms:id_mat>2473</ms:id_mat>
+      <ms:code_icpe></ms:code_icpe>
+      <ms:id_parc></ms:id_parc>
+      <ms:nom_parc>PARC EOLIEN DE BOIS RUMEZ</ms:nom_parc>
+      <ms:id_pc></ms:id_pc>
+      <ms:operateur>SIIF ENERGIES</ms:operateur>
+      <ms:exploitant></ms:exploitant>
+      <ms:date_crea></ms:date_crea>
+      <ms:id_eolienn>AU5</ms:id_eolienn>
+      <ms:x_rgf93>634847.000000000000000</ms:x_rgf93>
+      <ms:y_rgf93>7037527.000000000000000</ms:y_rgf93>
+      <ms:x_pc>2.08431124746452</ms:x_pc>
+      <ms:y_pc>50.4318629965766</ms:y_pc>
+      <ms:sys_coord>EPSG:4326</ms:sys_coord>
+      <ms:alt_base>0.000000000000000</ms:alt_base>
+      <ms:n_parcel></ms:n_parcel>
+      <ms:puissanc_2>2.750000000000000</ms:puissanc_2>
+      <ms:code_com>62050</ms:code_com>
+      <ms:nom_commun>AUCHY LES HESDIN</ms:nom_commun>
+      <ms:code_arron>624</ms:code_arron>
+      <ms:departemen>PA</ms:departemen>
+      <ms:secteur>A - SECTEUR HAUT-ARTOIS / TERNOIS</ms:secteur>
+      <ms:id_sre>A-NPdC</ms:id_sre>
+      <ms:ht_max>126.000000000000000</ms:ht_max>
+      <ms:ht_mat>0.000000000000000</ms:ht_mat>
+      <ms:ht_nacelle>80.000000000000000</ms:ht_nacelle>
+      <ms:diam_rotor>92.000000000000000</ms:diam_rotor>
+      <ms:gardesol>34.000000000000000</ms:gardesol>
+      <ms:type_proce>PC</ms:type_proce>
+      <ms:etat_proce>RE</ms:etat_proce>
+      <ms:date_depot></ms:date_depot>
+      <ms:date_decis>2008-06-19</ms:date_decis>
+      <ms:contentieu>0</ms:contentieu>
+      <ms:etat_mat>NCO</ms:etat_mat>
+      <ms:date_real></ms:date_real>
+      <ms:date_prod></ms:date_prod>
+      <ms:en_service>NON</ms:en_service>
+      <ms:etat_eolie>RE</ms:etat_eolie>
+      <ms:date_maj>2013-05-30</ms:date_maj>
+      <ms:srce_geom></ms:srce_geom>
+      <ms:precis_pos></ms:precis_pos>
+    </ms:n_mat_eolien_p_r32>
+  </wfs:member>
+  <wfs:member>
+    <ms:n_mat_eolien_p_r32>
+      <gml:boundedBy>
+        <gml:Envelope srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:lowerCorner>50.428167 2.088286</gml:lowerCorner>
+          <gml:upperCorner>50.428167 2.088286</gml:upperCorner>
+        </gml:Envelope>
+      </gml:boundedBy>
+      <ms:geometry>
+        <gml:Point gml:id=".1" srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:pos>50.428167 2.088286</gml:pos>
+        </gml:Point>
+      </ms:geometry>
+      <ms:id_map>2474</ms:id_map>
+      <ms:id_mat>2474</ms:id_mat>
+      <ms:code_icpe></ms:code_icpe>
+      <ms:id_parc></ms:id_parc>
+      <ms:nom_parc>PARC EOLIEN DE BOIS RUMEZ</ms:nom_parc>
+      <ms:id_pc></ms:id_pc>
+      <ms:operateur>SIIF ENERGIES</ms:operateur>
+      <ms:exploitant></ms:exploitant>
+      <ms:date_crea></ms:date_crea>
+      <ms:id_eolienn>AU4</ms:id_eolienn>
+      <ms:x_rgf93>635125.000000000000000</ms:x_rgf93>
+      <ms:y_rgf93>7037112.000000000000000</ms:y_rgf93>
+      <ms:x_pc>2.08828634086615</ms:x_pc>
+      <ms:y_pc>50.4281672144003</ms:y_pc>
+      <ms:sys_coord>EPSG:4326</ms:sys_coord>
+      <ms:alt_base>0.000000000000000</ms:alt_base>
+      <ms:n_parcel></ms:n_parcel>
+      <ms:puissanc_2>2.750000000000000</ms:puissanc_2>
+      <ms:code_com>62050</ms:code_com>
+      <ms:nom_commun>AUCHY LES HESDIN</ms:nom_commun>
+      <ms:code_arron>624</ms:code_arron>
+      <ms:departemen>PA</ms:departemen>
+      <ms:secteur>A - SECTEUR HAUT-ARTOIS / TERNOIS</ms:secteur>
+      <ms:id_sre>A-NPdC</ms:id_sre>
+      <ms:ht_max>126.000000000000000</ms:ht_max>
+      <ms:ht_mat>0.000000000000000</ms:ht_mat>
+      <ms:ht_nacelle>80.000000000000000</ms:ht_nacelle>
+      <ms:diam_rotor>92.000000000000000</ms:diam_rotor>
+      <ms:gardesol>34.000000000000000</ms:gardesol>
+      <ms:type_proce>PC</ms:type_proce>
+      <ms:etat_proce>RE</ms:etat_proce>
+      <ms:date_depot></ms:date_depot>
+      <ms:date_decis>2008-06-19</ms:date_decis>
+      <ms:contentieu>0</ms:contentieu>
+      <ms:etat_mat>NCO</ms:etat_mat>
+      <ms:date_real></ms:date_real>
+      <ms:date_prod></ms:date_prod>
+      <ms:en_service>NON</ms:en_service>
+      <ms:etat_eolie>RE</ms:etat_eolie>
+      <ms:date_maj>2013-05-30</ms:date_maj>
+      <ms:srce_geom></ms:srce_geom>
+      <ms:precis_pos></ms:precis_pos>
+    </ms:n_mat_eolien_p_r32>
+  </wfs:member>
+  <wfs:member>
+    <ms:n_mat_eolien_p_r32>
+      <gml:boundedBy>
+        <gml:Envelope srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:lowerCorner>50.430257 2.097876</gml:lowerCorner>
+          <gml:upperCorner>50.430257 2.097876</gml:upperCorner>
+        </gml:Envelope>
+      </gml:boundedBy>
+      <ms:geometry>
+        <gml:Point gml:id=".1" srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:pos>50.430257 2.097876</gml:pos>
+        </gml:Point>
+      </ms:geometry>
+      <ms:id_map>2475</ms:id_map>
+      <ms:id_mat>2475</ms:id_mat>
+      <ms:code_icpe></ms:code_icpe>
+      <ms:id_parc></ms:id_parc>
+      <ms:nom_parc>PARC EOLIEN DE BOIS RUMEZ</ms:nom_parc>
+      <ms:id_pc></ms:id_pc>
+      <ms:operateur>SIIF ENERGIES</ms:operateur>
+      <ms:exploitant></ms:exploitant>
+      <ms:date_crea></ms:date_crea>
+      <ms:id_eolienn>AU3</ms:id_eolienn>
+      <ms:x_rgf93>635810.000000000000000</ms:x_rgf93>
+      <ms:y_rgf93>7037337.000000000000000</ms:y_rgf93>
+      <ms:x_pc>2.0978737355266</ms:x_pc>
+      <ms:y_pc>50.4302545387714</ms:y_pc>
+      <ms:sys_coord>EPSG:4326</ms:sys_coord>
+      <ms:alt_base>0.000000000000000</ms:alt_base>
+      <ms:n_parcel></ms:n_parcel>
+      <ms:puissanc_2>2.750000000000000</ms:puissanc_2>
+      <ms:code_com>62050</ms:code_com>
+      <ms:nom_commun>AUCHY LES HESDIN</ms:nom_commun>
+      <ms:code_arron>624</ms:code_arron>
+      <ms:departemen>PA</ms:departemen>
+      <ms:secteur>A - SECTEUR HAUT-ARTOIS / TERNOIS</ms:secteur>
+      <ms:id_sre>A-NPdC</ms:id_sre>
+      <ms:ht_max>126.000000000000000</ms:ht_max>
+      <ms:ht_mat>0.000000000000000</ms:ht_mat>
+      <ms:ht_nacelle>80.000000000000000</ms:ht_nacelle>
+      <ms:diam_rotor>92.000000000000000</ms:diam_rotor>
+      <ms:gardesol>34.000000000000000</ms:gardesol>
+      <ms:type_proce>PC</ms:type_proce>
+      <ms:etat_proce>RE</ms:etat_proce>
+      <ms:date_depot></ms:date_depot>
+      <ms:date_decis>2008-06-19</ms:date_decis>
+      <ms:contentieu>0</ms:contentieu>
+      <ms:etat_mat>NCO</ms:etat_mat>
+      <ms:date_real></ms:date_real>
+      <ms:date_prod></ms:date_prod>
+      <ms:en_service>NON</ms:en_service>
+      <ms:etat_eolie>RE</ms:etat_eolie>
+      <ms:date_maj>2013-05-30</ms:date_maj>
+      <ms:srce_geom></ms:srce_geom>
+      <ms:precis_pos></ms:precis_pos>
+    </ms:n_mat_eolien_p_r32>
+  </wfs:member>
+  <wfs:member>
+    <ms:n_mat_eolien_p_r32>
+      <gml:boundedBy>
+        <gml:Envelope srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:lowerCorner>50.432854 2.095792</gml:lowerCorner>
+          <gml:upperCorner>50.432854 2.095792</gml:upperCorner>
+        </gml:Envelope>
+      </gml:boundedBy>
+      <ms:geometry>
+        <gml:Point gml:id=".1" srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:pos>50.432854 2.095792</gml:pos>
+        </gml:Point>
+      </ms:geometry>
+      <ms:id_map>2476</ms:id_map>
+      <ms:id_mat>2476</ms:id_mat>
+      <ms:code_icpe></ms:code_icpe>
+      <ms:id_parc></ms:id_parc>
+      <ms:nom_parc>PARC EOLIEN DE BOIS RUMEZ</ms:nom_parc>
+      <ms:id_pc></ms:id_pc>
+      <ms:operateur>SIIF ENERGIES</ms:operateur>
+      <ms:exploitant></ms:exploitant>
+      <ms:date_crea></ms:date_crea>
+      <ms:id_eolienn>AU2</ms:id_eolienn>
+      <ms:x_rgf93>635665.000000000000000</ms:x_rgf93>
+      <ms:y_rgf93>7037628.000000000000000</ms:y_rgf93>
+      <ms:x_pc>2.09579055699266</ms:x_pc>
+      <ms:y_pc>50.4328579440707</ms:y_pc>
+      <ms:sys_coord>EPSG:4326</ms:sys_coord>
+      <ms:alt_base>0.000000000000000</ms:alt_base>
+      <ms:n_parcel></ms:n_parcel>
+      <ms:puissanc_2>2.750000000000000</ms:puissanc_2>
+      <ms:code_com>62050</ms:code_com>
+      <ms:nom_commun>AUCHY LES HESDIN</ms:nom_commun>
+      <ms:code_arron>624</ms:code_arron>
+      <ms:departemen>PA</ms:departemen>
+      <ms:secteur>A - SECTEUR HAUT-ARTOIS / TERNOIS</ms:secteur>
+      <ms:id_sre>A-NPdC</ms:id_sre>
+      <ms:ht_max>126.000000000000000</ms:ht_max>
+      <ms:ht_mat>0.000000000000000</ms:ht_mat>
+      <ms:ht_nacelle>80.000000000000000</ms:ht_nacelle>
+      <ms:diam_rotor>92.000000000000000</ms:diam_rotor>
+      <ms:gardesol>34.000000000000000</ms:gardesol>
+      <ms:type_proce>PC</ms:type_proce>
+      <ms:etat_proce>RE</ms:etat_proce>
+      <ms:date_depot></ms:date_depot>
+      <ms:date_decis>2008-06-19</ms:date_decis>
+      <ms:contentieu>0</ms:contentieu>
+      <ms:etat_mat>NCO</ms:etat_mat>
+      <ms:date_real></ms:date_real>
+      <ms:date_prod></ms:date_prod>
+      <ms:en_service>NON</ms:en_service>
+      <ms:etat_eolie>RE</ms:etat_eolie>
+      <ms:date_maj>2013-05-30</ms:date_maj>
+      <ms:srce_geom></ms:srce_geom>
+      <ms:precis_pos></ms:precis_pos>
+    </ms:n_mat_eolien_p_r32>
+  </wfs:member>
+</wfs:FeatureCollection>
