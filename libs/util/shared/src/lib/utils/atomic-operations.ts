@@ -1,4 +1,4 @@
-import { MetadataContact } from '../models'
+import { MetadataContact, MetadataRecord } from '../models'
 
 export type SourceWithUnknownProps = { [key: string]: unknown }
 
@@ -52,6 +52,20 @@ export const getAsUrl = (field) => {
 export const mapLogo = (source: SourceWithUnknownProps) => {
   const logo = selectFallbackFields(source, 'logoUrl', 'logo')
   return logo ? getAsUrl(`/geonetwork${logo}`) : null
+}
+
+export const hydrateWithRecordLogo = (
+  record: MetadataRecord,
+  source: SourceWithUnknownProps
+): MetadataRecord => {
+  const recordLogo = mapLogo(source)
+  if (recordLogo) {
+    if (record.contact) record.contact.logoUrl ??= recordLogo
+    record.resourceContacts?.map((r) => {
+      r.logoUrl ??= recordLogo
+    })
+  }
+  return record
 }
 
 export const mapContact = (

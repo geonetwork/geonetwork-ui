@@ -8,6 +8,7 @@ import {
   ElasticsearchService,
   getAsArray,
   getAsUrl,
+  hydrateWithRecordLogo,
   mapContact,
   MetadataContact,
   MetadataRecord,
@@ -136,13 +137,16 @@ export class OrganisationsFromGroupsService
     return this.groups$.pipe(
       map((groups) => {
         const group = groups.find((g) => g.id === groupId)
-        if (!group) return record
+        if (!group) return hydrateWithRecordLogo(record, source)
         const contact = this.mapContactFromGroup(group, lang3)
-        return {
-          ...record,
-          contact,
-          resourceContacts: [contact, ...resourceContacts],
-        }
+        return hydrateWithRecordLogo(
+          {
+            ...record,
+            contact,
+            resourceContacts: [contact, ...resourceContacts],
+          },
+          source
+        )
       })
     )
   }
