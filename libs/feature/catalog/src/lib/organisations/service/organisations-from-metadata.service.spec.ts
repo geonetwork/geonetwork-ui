@@ -336,13 +336,6 @@ describe('OrganisationsFromMetadataService', () => {
             email: 'q2_support@ifremer.fr',
             logoUrl:
               'http://localhost/geonetwork/images/logos/81e8a591-7815-4d2f-a7da-5673192e74c9.png',
-            name: "Cellule d'Administration Quadrige",
-            organisation: 'Ifremer',
-          },
-          {
-            email: 'q2_support@ifremer.fr',
-            logoUrl:
-              'http://localhost/geonetwork/images/logos/81e8a591-7815-4d2f-a7da-5673192e74c9.png',
             name: 'Quadrige',
             organisation: 'Ifremer',
           },

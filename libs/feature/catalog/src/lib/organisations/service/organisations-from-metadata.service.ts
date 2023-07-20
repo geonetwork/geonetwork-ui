@@ -180,10 +180,7 @@ export class OrganisationsFromMetadataService
       website: metadataRecord.resourceContacts[0].website,
     } as MetadataContact
 
-    metadataRecord.resourceContacts = [
-      mappedOrg,
-      ...metadataRecord.resourceContacts,
-    ]
+    metadataRecord.resourceContacts[0] = mappedOrg
 
     return metadataRecord
   }
