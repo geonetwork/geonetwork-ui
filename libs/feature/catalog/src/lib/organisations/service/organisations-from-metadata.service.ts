@@ -10,6 +10,7 @@ import {
   getAsUrl,
   getFirstValue,
   mapContact,
+  MetadataContact,
   MetadataRecord,
   Organisation,
   SearchFilters,
@@ -163,6 +164,29 @@ export class OrganisationsFromMetadataService
     })
   }
 
+  private hydrateResourceContactWithOrg(
+    metadataRecord: MetadataRecord,
+    organisation: Organisation
+  ): MetadataRecord {
+    const firstResourceContact = metadataRecord.resourceContacts[0]
+    const logoUrl =
+      firstResourceContact.logoUrl ||
+      (organisation.logoUrl ? getAsUrl(`${organisation.logoUrl}`) : null)
+    const mappedOrg = {
+      name: organisation.name,
+      organisation: organisation.name,
+      email: organisation.email || firstResourceContact.email,
+      logoUrl: logoUrl,
+      website: metadataRecord.resourceContacts[0].website,
+    } as MetadataContact
+
+    metadataRecord.resourceContacts = [
+      mappedOrg,
+      ...metadataRecord.resourceContacts,
+    ]
+
+    return metadataRecord
+  }
   getFiltersForOrgs(organisations: Organisation[]): Observable<SearchFilters> {
     return of({
       OrgForResource: organisations.reduce(
@@ -204,19 +228,9 @@ export class OrganisationsFromMetadataService
         const org = organisations.filter(
           (o) => o.name === metadataRecord.resourceContacts[0]?.organisation
         )[0]
-
-        if (
-          org &&
-          !metadataRecord.resourceContacts?.[0].logoUrl &&
-          org.logoUrl
-        ) {
-          const logoUrl = getAsUrl(`${org.logoUrl}`)
-          metadataRecord.resourceContacts[0].logoUrl = logoUrl // FIXME: this should go into an organization field
-          metadataRecord.resourceContacts[0].email ??= org.email
-          metadataRecord.contact.email ??= org.email
-        }
-
-        return metadataRecord
+        return org
+          ? this.hydrateResourceContactWithOrg(metadataRecord, org)
+          : metadataRecord
       })
     )
   }
