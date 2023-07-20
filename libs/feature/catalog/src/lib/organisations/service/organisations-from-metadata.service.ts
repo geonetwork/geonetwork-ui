@@ -10,7 +10,6 @@ import {
   getAsUrl,
   getFirstValue,
   mapContact,
-  MetadataContact,
   MetadataRecord,
   Organisation,
   SearchFilters,
@@ -163,21 +162,6 @@ export class OrganisationsFromMetadataService
     })
   }
 
-  private mapContactFromOrganisation(
-    organisation: Organisation,
-    contact: MetadataContact
-  ): MetadataContact {
-    const logoUrl = organisation.logoUrl
-      ? getAsUrl(`${organisation.logoUrl}`)
-      : contact.logoUrl
-    return {
-      name: organisation.name,
-      organisation: organisation.name,
-      email: organisation.email,
-      logoUrl: logoUrl,
-    } as MetadataContact
-  }
-
   getFiltersForOrgs(organisations: Organisation[]): Observable<SearchFilters> {
     return of({
       OrgForResource: organisations.reduce(
@@ -212,35 +196,24 @@ export class OrganisationsFromMetadataService
         ...mapContact(getFirstValue(selectField(source, 'contact')), source),
       },
     }
-    return combineLatest([
-      this.organisationsWithoutGroups$,
-      this.groups$,
-    ]).pipe(
+    return combineLatest([this.organisationsWithoutGroups$, this.groups$]).pipe(
       takeLast(1),
-      map(
-        ([organisations, groups]) => {
-          const org = organisations.filter(
-            (o) => o.name === metadataRecord.resourceContacts[0]?.organisation
-          )[0]
+      map(([organisations, groups]) => {
+        const org = organisations.filter(
+          (o) => o.name === metadataRecord.resourceContacts[0]?.organisation
+        )[0]
 
-          if (org) {
-            const orgWithGroup = this.mapWithGroups([org], groups)[0]
-            const contactFromOrg = this.mapContactFromOrganisation(
-              orgWithGroup,
-              metadataRecord.contact
-            )
-            metadataRecord.contact = contactFromOrg
-            metadataRecord.resourceContacts = [
-              contactFromOrg, // FIXME: this should go into an organization field
-              ...metadataRecord.resourceContacts,
-            ]
-          }
-
-          return metadataRecord
+        if (org) {
+          const orgWithGroup = this.mapWithGroups([org], groups)[0]
+          const logoUrl = orgWithGroup.logoUrl
+            ? getAsUrl(`${orgWithGroup.logoUrl}`)
+            : metadataRecord.contact.logoUrl
+          metadataRecord.contact.logoUrl = logoUrl
+          metadataRecord.resourceContacts[0].logoUrl = logoUrl
         }
-      )
+
+        return metadataRecord
+      })
     )
-
-
   }
 }

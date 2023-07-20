@@ -317,22 +317,17 @@ describe('OrganisationsFromMetadataService', () => {
         title: 'Surval - Données par paramètre',
         uuid: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
         contact: {
-          name: 'Ifremer',
-          email: 'ifremer.ifremer@ifremer.admin.ch',
+          name: "Cellule d'administration Quadrige",
+          organisation: 'Ifremer',
+          email: 'q2suppor@ifremer.fr',
+          website: 'https://www.ifremer.fr/',
           logoUrl: 'http://localhost/geonetwork/images/harvesting/ifremer.png',
         },
         resourceContacts: [
           {
-            email: 'ifremer.ifremer@ifremer.admin.ch',
-            logoUrl:
-              'http://localhost/geonetwork/images/harvesting/ifremer.png',
-            name: 'Ifremer',
-            organisation: 'Ifremer',
-          },
-          {
             email: 'q2_support@ifremer.fr',
             logoUrl:
-              'http://localhost/geonetwork/images/logos/81e8a591-7815-4d2f-a7da-5673192e74c9.png',
+              'http://localhost/geonetwork/images/harvesting/ifremer.png',
             name: "Cellule d'Administration Quadrige",
             organisation: 'Ifremer',
           },
