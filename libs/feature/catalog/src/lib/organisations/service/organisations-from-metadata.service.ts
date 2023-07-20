@@ -10,15 +10,14 @@ import {
   getAsUrl,
   getFirstValue,
   mapContact,
-  MetadataContact,
   MetadataRecord,
   Organisation,
   SearchFilters,
   selectField,
   SourceWithUnknownProps,
 } from '@geonetwork-ui/util/shared'
-import { combineLatest, Observable, of } from 'rxjs'
-import { filter, map, shareReplay, startWith, takeLast } from 'rxjs/operators'
+import { combineLatest, Observable, of, takeLast } from 'rxjs'
+import { filter, map, shareReplay, startWith } from 'rxjs/operators'
 import { OrganisationsServiceInterface } from './organisations.service.interface'
 
 const IMAGE_URL = '/geonetwork/images/harvesting/'
@@ -70,7 +69,8 @@ export class OrganisationsFromMetadataService
   ]).pipe(
     map(([organisations, groups]) => {
       return !groups ? organisations : this.mapWithGroups(organisations, groups)
-    })
+    }),
+    shareReplay()
   )
 
   constructor(
@@ -163,21 +163,6 @@ export class OrganisationsFromMetadataService
     })
   }
 
-  private mapContactFromOrganisation(
-    organisation: Organisation,
-    contact: MetadataContact
-  ): MetadataContact {
-    const logoUrl = organisation.logoUrl
-      ? getAsUrl(`${organisation.logoUrl}`)
-      : contact.logoUrl
-    return {
-      name: organisation.name,
-      organisation: organisation.name,
-      email: organisation.email,
-      logoUrl: logoUrl,
-    } as MetadataContact
-  }
-
   getFiltersForOrgs(organisations: Organisation[]): Observable<SearchFilters> {
     return of({
       OrgForResource: organisations.reduce(
@@ -220,16 +205,9 @@ export class OrganisationsFromMetadataService
           (o) => o.name === metadataRecord.resourceContacts[0]?.organisation
         )[0]
 
-        if (org) {
-          const contactFromOrg = this.mapContactFromOrganisation(
-            org,
-            metadataRecord.contact
-          )
-          metadataRecord.contact = contactFromOrg
-          metadataRecord.resourceContacts = [
-            contactFromOrg, // FIXME: this should go into an organization field
-            ...metadataRecord.resourceContacts,
-          ]
+        if (org && !record.resourceContacts?.[0].logoUrl && org.logoUrl) {
+          const logoUrl = getAsUrl(`${org.logoUrl}`)
+          metadataRecord.resourceContacts[0].logoUrl = logoUrl // FIXME: this should go into an organization field
         }
 
         return metadataRecord
