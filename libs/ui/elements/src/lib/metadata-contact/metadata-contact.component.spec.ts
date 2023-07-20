@@ -58,9 +58,9 @@ describe('MetadataContactComponent', () => {
     })
   })
   describe('content', () => {
-    let ps
+    let email
     beforeEach(() => {
-      ps = fixture.debugElement.queryAll(By.css('p'))
+      email = fixture.debugElement.query(By.css('a'))
     })
     it('displays the contact name', () => {
       const el = fixture.debugElement.query(
@@ -69,10 +69,10 @@ describe('MetadataContactComponent', () => {
       expect(el.innerHTML).toBe(' Worldcorp ')
     })
     it('displays the contact email', () => {
-      expect(ps[1].nativeElement.innerHTML).toBe('john@world.co')
+      expect(email.attributes.href).toBe('mailto:john@world.co')
     })
     it('displays a link to the contact website', () => {
-      const a = fixture.debugElement.query(By.css('a'))
+      const a = fixture.debugElement.query(By.css('.contact-website'))
       expect(a.attributes.href).toBe('https://john.world.co')
       expect(a.attributes.target).toBe('_blank')
     })

@@ -10,12 +10,17 @@
       {{ shownContact.organisation }}
     </div>
   </div>
-  <p class="text-gray-700 text-sm">{{ shownContact.email }}</p>
+  <a
+    [href]="'mailto:' + shownContact.email"
+    class="text-gray-700 text-sm"
+    target="_blank"
+    >{{ shownContact.email }}</a
+  >
   <div *ngIf="shownContact.website" class="mb-2">
     <a
       [href]="shownContact.website"
       target="_blank"
-      class="text-primary text-sm cursor-pointer hover:underline transition-all"
+      class="contact-website text-primary text-sm cursor-pointer hover:underline transition-all"
       >{{ shownContact.website }}
       <mat-icon class="!w-[12px] !h-[12px] !text-[12px] opacity-75"
         >open_in_new</mat-icon
