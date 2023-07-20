@@ -55,11 +55,10 @@ export const mapLogo = (source: SourceWithUnknownProps) => {
 }
 
 export const mapContact = (
-  sourceContact: SourceWithUnknownProps,
-  sourceRecord: SourceWithUnknownProps
+  sourceContact: SourceWithUnknownProps
 ): MetadataContact => {
   const website = getAsUrl(selectField<string>(sourceContact, 'website'))
-  const logoUrl = mapLogo(sourceContact) || mapLogo(sourceRecord)
+  const logoUrl = mapLogo(sourceContact)
   const address = selectField<string>(sourceContact, 'address')
   const phone = selectField<string>(sourceContact, 'phone')
   return {

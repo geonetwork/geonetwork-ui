@@ -10,6 +10,7 @@ import {
   getAsUrl,
   getFirstValue,
   mapContact,
+  mapLogo,
   MetadataContact,
   MetadataRecord,
   Organisation,
@@ -184,6 +185,20 @@ export class OrganisationsFromMetadataService
 
     return metadataRecord
   }
+
+  private hydrateWithRecordLogo(
+    record: MetadataRecord,
+    source: SourceWithUnknownProps
+  ) {
+    const recordLogo = mapLogo(source)
+    if (recordLogo) {
+      record.contact.logoUrl ??= recordLogo
+      record.resourceContacts?.map((r) => {
+        r.logoUrl ??= recordLogo
+      })
+    }
+    return record
+  }
   getFiltersForOrgs(organisations: Organisation[]): Observable<SearchFilters> {
     return of({
       OrgForResource: organisations.reduce(
@@ -211,11 +226,11 @@ export class OrganisationsFromMetadataService
       ...record,
       resourceContacts: [
         ...getAsArray(selectField(source, 'contactForResource')).map(
-          (contact) => mapContact(contact, source)
+          (contact) => mapContact(contact)
         ),
       ],
       contact: {
-        ...mapContact(getFirstValue(selectField(source, 'contact')), source),
+        ...mapContact(getFirstValue(selectField(source, 'contact'))),
       },
     }
 
@@ -225,9 +240,13 @@ export class OrganisationsFromMetadataService
         const org = organisations.filter(
           (o) => o.name === metadataRecord.resourceContacts[0]?.organisation
         )[0]
-        return org
-          ? this.hydrateResourceContactWithOrg(metadataRecord, org)
-          : metadataRecord
+
+        return this.hydrateWithRecordLogo(
+          org
+            ? this.hydrateResourceContactWithOrg(metadataRecord, org)
+            : metadataRecord,
+          source
+        )
       })
     )
   }

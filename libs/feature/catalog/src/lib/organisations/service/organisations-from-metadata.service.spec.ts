@@ -328,7 +328,7 @@ describe('OrganisationsFromMetadataService', () => {
           {
             email: 'ifremer.ifremer@ifremer.admin.ch',
             logoUrl:
-              'http://localhost/geonetwork/images/logos/81e8a591-7815-4d2f-a7da-5673192e74c9.png',
+              'http://localhost/geonetwork/images/harvesting/ifremer.png',
             name: 'Ifremer',
             organisation: 'Ifremer',
           },

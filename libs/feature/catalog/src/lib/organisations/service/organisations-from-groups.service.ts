@@ -132,7 +132,7 @@ export class OrganisationsFromGroupsService
     const groupId = parseInt(selectField(source, 'groupOwner'))
     const resourceContacts = getAsArray(
       selectField(source, 'contactForResource')
-    ).map((contact) => mapContact(contact, source))
+    ).map((contact) => mapContact(contact))
     return this.groups$.pipe(
       map((groups) => {
         const group = groups.find((g) => g.id === groupId)
