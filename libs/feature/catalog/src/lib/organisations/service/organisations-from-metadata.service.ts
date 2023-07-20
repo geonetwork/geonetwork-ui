@@ -205,9 +205,15 @@ export class OrganisationsFromMetadataService
           (o) => o.name === metadataRecord.resourceContacts[0]?.organisation
         )[0]
 
-        if (org && !record.resourceContacts?.[0].logoUrl && org.logoUrl) {
+        if (
+          org &&
+          !metadataRecord.resourceContacts?.[0].logoUrl &&
+          org.logoUrl
+        ) {
           const logoUrl = getAsUrl(`${org.logoUrl}`)
           metadataRecord.resourceContacts[0].logoUrl = logoUrl // FIXME: this should go into an organization field
+          metadataRecord.resourceContacts[0].email ??= org.email
+          metadataRecord.contact.email ??= org.email
         }
 
         return metadataRecord
