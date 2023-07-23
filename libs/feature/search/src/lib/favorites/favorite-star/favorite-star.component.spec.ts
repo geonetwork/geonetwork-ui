@@ -117,24 +117,36 @@ describe('FavoriteStarComponent', () => {
           ;(favoritesService as any).myFavoritesUuid$.next([
             component.record.uuid,
           ])
-          starToggle.newValue.emit(true)
           fixture.detectChanges()
         })
-        it('adds record to favorites', () => {
-          expect(favoritesService.addToFavorites).toHaveBeenCalledWith([
-            component.record.uuid,
-          ])
-          expect(favoritesService.removeFromFavorites).not.toHaveBeenCalled()
+        describe('if change is made from this component', () => {
+          beforeEach(() => {
+            starToggle.newValue.emit(true)
+            fixture.detectChanges()
+          })
+          it('adds record to favorites', () => {
+            expect(favoritesService.addToFavorites).toHaveBeenCalledWith([
+              component.record.uuid,
+            ])
+            expect(favoritesService.removeFromFavorites).not.toHaveBeenCalled()
+          })
+          it('increase record favorite count by one', () => {
+            expect(favoriteCountEl.textContent).toEqual(
+              (component.record.favoriteCount + 1).toString()
+            )
+          })
+          it('adds the record to myFavoritesUuid$', async () => {
+            await expect(favoritesService.myFavoritesUuid$['_value'][0]).toBe(
+              component.record.uuid
+            )
+          })
         })
-        it('increase record favorite count by one', () => {
-          expect(favoriteCountEl.textContent).toEqual(
-            (component.record.favoriteCount + 1).toString()
-          )
-        })
-        it('adds the record to myFavoritesUuid$', async () => {
-          await expect(favoritesService.myFavoritesUuid$['_value'][0]).toBe(
-            component.record.uuid
-          )
+        describe('if change is made from another component', () => {
+          it('adds the record to myFavoritesUuid$', async () => {
+            await expect(favoritesService.myFavoritesUuid$['_value'][0]).toBe(
+              component.record.uuid
+            )
+          })
         })
       })
       describe('if record is part of favorite', () => {
@@ -143,36 +155,47 @@ describe('FavoriteStarComponent', () => {
             'aaa',
             component.record.uuid,
           ])
-          starToggle.newValue.emit(false)
           fixture.detectChanges()
         })
-        it('removes record from favorites', () => {
-          expect(favoritesService.removeFromFavorites).toHaveBeenCalledWith([
-            component.record.uuid,
-          ])
-          expect(favoritesService.addToFavorites).not.toHaveBeenCalled()
+        describe('if change is made from this component', () => {
+          beforeEach(() => {
+            component.record = {
+              ...RECORDS_SUMMARY_FIXTURE[0],
+              favoriteCount: 42,
+            }
+            ;(favoritesService as any).myFavoritesUuid$.next(['aaa'])
+            starToggle.newValue.emit(false)
+            fixture.detectChanges()
+          })
+          it('removes record from favorites', () => {
+            expect(favoritesService.removeFromFavorites).toHaveBeenCalledWith([
+              component.record.uuid,
+            ])
+            expect(favoritesService.addToFavorites).not.toHaveBeenCalled()
+          })
+          it('decrease record favorite count by one', () => {
+            expect(favoriteCountEl.textContent).toEqual(
+              (component.record.favoriteCount - 1).toString()
+            )
+          })
         })
-        beforeEach(() => {
-          component.record = {
-            ...RECORDS_SUMMARY_FIXTURE[0],
-            favoriteCount: 42,
-          }
-          ;(favoritesService as any).myFavoritesUuid$.next(['aaa'])
-          starToggle.newValue.emit(false)
-          fixture.detectChanges()
-        })
-        it('decrease record favorite count by one', () => {
-          expect(favoriteCountEl.textContent).toEqual(
-            (component.record.favoriteCount - 1).toString()
-          )
-        })
-        it('removes the record from myFavoritesUuid$', async () => {
-          console.log(favoritesService.myFavoritesUuid$)
-          await expect(favoritesService.myFavoritesUuid$['_value'][0]).not.toBe(
-            component.record.uuid
-          )
+        describe('if change is made from another component', () => {
+          beforeEach(() => {
+            component.record = {
+              ...RECORDS_SUMMARY_FIXTURE[0],
+              favoriteCount: 42,
+            }
+            ;(favoritesService as any).myFavoritesUuid$.next(['aaa'])
+            fixture.detectChanges()
+          })
+          it('removes the record from myFavoritesUuid$', async () => {
+            await expect(
+              favoritesService.myFavoritesUuid$['_value'][0]
+            ).not.toBe(component.record.uuid)
+          })
         })
       })
+
       describe('two subsequent changes', () => {
         beforeEach(() => {
           ;(favoritesService as any).myFavoritesUuid$.next(['aaa'])
