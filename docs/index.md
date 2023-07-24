@@ -3,23 +3,35 @@
 layout: home
 
 hero:
-  name: "GeoNetwork-UI Documentation"
-  text: "Documentation of various aspects of the project"
-  tagline: My great project tagline
+  name: "GeoNetwork-UI"
+  text: "Documentation"
+  tagline: Re-invent your open source data platform.
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: Why?
+      link: guide/why
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: Getting started
+      link: guide/getting-started
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - icon: 🔗
+    title: Connect
+    details: Connect geonetwork-ui platform to your favorite dataset
+  - icon: 📦
+    title: Prepare
+    details: Arrange the dataset to make it talks.
+  - icon: 💫
+    title: Publish
+    details: Make your dataset public and available.
+  - icon: 🔎
+    title: Explore
+    details: Explore your data through a powerfull search engine. Tables, maps and dataviz charts.
+  - icon: 🤝
+    title: Share
+    details: Share your work.
+  - icon: 💡
+    title: Promote
+    details: Promote your data.
 ---
 
