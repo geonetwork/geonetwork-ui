@@ -34,6 +34,8 @@ export class DropdownMultiselectComponent {
   @Output() selectValues = new EventEmitter<unknown[]>()
   @ViewChild('overlayOrigin') overlayOrigin: CdkOverlayOrigin
   @ViewChild(CdkConnectedOverlay) overlay: CdkConnectedOverlay
+  @ViewChild('overlayContainer', { read: ElementRef })
+  overlayContainer: ElementRef
   @ViewChildren('checkBox', { read: ElementRef })
   checkboxes: QueryList<ElementRef>
   overlayPositions: ConnectedPosition[] = [
@@ -128,8 +130,12 @@ export class DropdownMultiselectComponent {
     if (!this.overlayOpen) return
     const keyCode = event.code
     if (keyCode === 'ArrowDown' || keyCode === 'ArrowRight') {
-      this.shiftItemFocus(1)
+      event.preventDefault()
+      if (document.activeElement['type'] !== 'checkbox') {
+        this.focusFirstItem()
+      } else this.shiftItemFocus(1)
     } else if (keyCode === 'ArrowLeft' || keyCode === 'ArrowUp') {
+      event.preventDefault()
       this.shiftItemFocus(-1)
     } else if (keyCode === 'Escape') {
       this.closeOverlay()
@@ -176,5 +182,9 @@ export class DropdownMultiselectComponent {
   clearSearchInputValue(event: Event) {
     this.searchInputValue = ''
     event.stopPropagation()
+  }
+
+  scrollToTopOfModal() {
+    this.overlayContainer.nativeElement.scroll(0, -40)
   }
 }

@@ -272,6 +272,11 @@ describe('DropdownMultiselectComponent', () => {
     })
   })
   describe('search', () => {
+    const getOverlay = () =>
+      document.querySelector('.overlay-container') as HTMLElement
+    const getOverlaySearchInput = () =>
+      document.querySelector('.overlaySearchInput') as HTMLElement
+
     beforeEach(() => {
       component.choices = [
         { label: 'First Choice', value: 'choice1' },
@@ -279,11 +284,20 @@ describe('DropdownMultiselectComponent', () => {
         { label: 'Third Choice', value: 'choice3' },
       ]
       component.openOverlay()
+      fixture.detectChanges()
     })
 
     describe('no text input filter', () => {
       it('displays all choices', () => {
         expect(component.filteredChoicesByText.length).toBe(3)
+      })
+      it('search field is focused', () => {
+        expect(getOverlaySearchInput().classList).toContain(
+          'overlaySearchInput'
+        )
+      })
+      it('overlay is on top', () => {
+        expect(getOverlay().offsetTop).toBe(0)
       })
     })
 
