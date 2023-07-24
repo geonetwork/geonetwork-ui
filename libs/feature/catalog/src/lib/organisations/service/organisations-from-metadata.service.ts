@@ -9,7 +9,7 @@ import {
   getAsArray,
   getAsUrl,
   getFirstValue,
-  hydrateWithRecordLogo,
+  hydrateContactsWithRecordLogo,
   mapContact,
   MetadataContact,
   MetadataRecord,
@@ -165,35 +165,28 @@ export class OrganisationsFromMetadataService
     })
   }
 
-  private hydrateContactsWithRecordLogo(
-    metadataRecord: MetadataRecord,
-    organisation: Organisation
-  ): MetadataRecord {
-    const firstResourceContact = metadataRecord.resourceContacts[0]
+  private hydrateFirstResourceContactWithOrganisation(
+    firstResourceContact: MetadataContact,
+    contactOrganisation: Organisation
+  ): MetadataContact {
     const logoUrl =
-      metadataRecord.contact.logoUrl ||
       firstResourceContact.logoUrl ||
-      (organisation.logoUrl ? getAsUrl(`${organisation.logoUrl}`) : null)
-    const mappedOrg = {
-      name:
-        metadataRecord.contact?.name ||
-        firstResourceContact.name ||
-        organisation.name,
-      organisation: organisation.name,
-      email:
-        metadataRecord.contact?.email ||
-        firstResourceContact.email ||
-        organisation.email,
-      logoUrl: logoUrl,
-      website:
-        metadataRecord.contact?.website ||
-        metadataRecord.resourceContacts[0].website,
-    } as MetadataContact
+      (contactOrganisation.logoUrl
+        ? getAsUrl(`${contactOrganisation.logoUrl}`)
+        : null)
 
-    metadataRecord.contact = mappedOrg
-    metadataRecord.resourceContacts[0] = mappedOrg
+    const organisation = contactOrganisation.name
+    const name = firstResourceContact.name || contactOrganisation.name
+    const email = firstResourceContact.email || contactOrganisation.email
+    const { website } = firstResourceContact
 
-    return metadataRecord
+    return {
+      name,
+      organisation,
+      email,
+      logoUrl,
+      website,
+    }
   }
 
   getFiltersForOrgs(organisations: Organisation[]): Observable<SearchFilters> {
@@ -219,29 +212,37 @@ export class OrganisationsFromMetadataService
     source: SourceWithUnknownProps,
     record: MetadataRecord
   ): Observable<MetadataRecord> {
-    const metadataRecord = {
+    const resourceContacts = getAsArray(
+      selectField(source, 'contactForResource')
+    ).map((contact) => mapContact(contact))
+    const contact = mapContact(getFirstValue(selectField(source, 'contact')))
+    const metadataRecord: MetadataRecord = {
       ...record,
-      resourceContacts: [
-        ...getAsArray(selectField(source, 'contactForResource')).map(
-          (contact) => mapContact(contact)
-        ),
-      ],
-      contact: {
-        ...mapContact(getFirstValue(selectField(source, 'contact'))),
-      },
+      resourceContacts,
+      contact,
     }
+    const [firstResourceContact, ...otherResourceContacts] = resourceContacts
 
     return this.organisations$.pipe(
       takeLast(1),
       map((organisations) => {
-        const org = organisations.filter(
-          (o) => o.name === metadataRecord.resourceContacts[0]?.organisation
+        const recordOrganisation = organisations.filter(
+          (org) => org.name === firstResourceContact?.organisation
         )[0]
 
-        return hydrateWithRecordLogo(
-          org
-            ? this.hydrateContactsWithRecordLogo(metadataRecord, org)
-            : metadataRecord,
+        return hydrateContactsWithRecordLogo(
+          {
+            ...metadataRecord,
+            ...(recordOrganisation && {
+              resourceContacts: [
+                this.hydrateFirstResourceContactWithOrganisation(
+                  firstResourceContact,
+                  recordOrganisation
+                ),
+                ...otherResourceContacts,
+              ],
+            }),
+          },
           source
         )
       })

@@ -54,7 +54,7 @@ export const mapLogo = (source: SourceWithUnknownProps) => {
   return logo ? getAsUrl(`/geonetwork${logo}`) : null
 }
 
-export const hydrateWithRecordLogo = (
+export const hydrateContactsWithRecordLogo = (
   record: MetadataRecord,
   source: SourceWithUnknownProps
 ): MetadataRecord => {
