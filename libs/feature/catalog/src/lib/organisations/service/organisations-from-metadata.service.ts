@@ -9,6 +9,7 @@ import {
   getAsArray,
   getAsUrl,
   getFirstValue,
+  hydrateContactsWithRecordLogo,
   mapContact,
   MetadataContact,
   MetadataRecord,
@@ -17,8 +18,8 @@ import {
   selectField,
   SourceWithUnknownProps,
 } from '@geonetwork-ui/util/shared'
-import { combineLatest, Observable, of } from 'rxjs'
-import { filter, map, shareReplay, startWith, takeLast } from 'rxjs/operators'
+import { combineLatest, Observable, of, takeLast } from 'rxjs'
+import { filter, map, shareReplay, startWith } from 'rxjs/operators'
 import { OrganisationsServiceInterface } from './organisations.service.interface'
 
 const IMAGE_URL = '/geonetwork/images/harvesting/'
@@ -70,7 +71,8 @@ export class OrganisationsFromMetadataService
   ]).pipe(
     map(([organisations, groups]) => {
       return !groups ? organisations : this.mapWithGroups(organisations, groups)
-    })
+    }),
+    shareReplay()
   )
 
   constructor(
@@ -163,19 +165,28 @@ export class OrganisationsFromMetadataService
     })
   }
 
-  private mapContactFromOrganisation(
-    organisation: Organisation,
-    contact: MetadataContact
+  private hydrateFirstResourceContactWithOrganisation(
+    firstResourceContact: MetadataContact,
+    contactOrganisation: Organisation
   ): MetadataContact {
-    const logoUrl = organisation.logoUrl
-      ? getAsUrl(`${organisation.logoUrl}`)
-      : contact.logoUrl
+    const logoUrl =
+      firstResourceContact.logoUrl ||
+      (contactOrganisation.logoUrl
+        ? getAsUrl(`${contactOrganisation.logoUrl}`)
+        : null)
+
+    const organisation = contactOrganisation.name
+    const name = firstResourceContact.name || contactOrganisation.name
+    const email = firstResourceContact.email || contactOrganisation.email
+    const { website } = firstResourceContact
+
     return {
-      name: organisation.name,
-      organisation: organisation.name,
-      email: organisation.email,
-      logoUrl: logoUrl,
-    } as MetadataContact
+      name,
+      organisation,
+      email,
+      logoUrl,
+      website,
+    }
   }
 
   getFiltersForOrgs(organisations: Organisation[]): Observable<SearchFilters> {
@@ -201,38 +212,39 @@ export class OrganisationsFromMetadataService
     source: SourceWithUnknownProps,
     record: MetadataRecord
   ): Observable<MetadataRecord> {
-    const metadataRecord = {
+    const resourceContacts = getAsArray(
+      selectField(source, 'contactForResource')
+    ).map((contact) => mapContact(contact))
+    const contact = mapContact(getFirstValue(selectField(source, 'contact')))
+    const metadataRecord: MetadataRecord = {
       ...record,
-      resourceContacts: [
-        ...getAsArray(selectField(source, 'contactForResource')).map(
-          (contact) => mapContact(contact, source)
-        ),
-      ],
-      contact: {
-        ...mapContact(getFirstValue(selectField(source, 'contact')), source),
-      },
+      resourceContacts,
+      contact,
     }
+    const [firstResourceContact, ...otherResourceContacts] = resourceContacts
 
     return this.organisations$.pipe(
       takeLast(1),
       map((organisations) => {
-        const org = organisations.filter(
-          (o) => o.name === metadataRecord.resourceContacts[0]?.organisation
+        const recordOrganisation = organisations.filter(
+          (org) => org.name === firstResourceContact?.organisation
         )[0]
 
-        if (org) {
-          const contactFromOrg = this.mapContactFromOrganisation(
-            org,
-            metadataRecord.contact
-          )
-          metadataRecord.contact = contactFromOrg
-          metadataRecord.resourceContacts = [
-            contactFromOrg, // FIXME: this should go into an organization field
-            ...metadataRecord.resourceContacts,
-          ]
-        }
-
-        return metadataRecord
+        return hydrateContactsWithRecordLogo(
+          {
+            ...metadataRecord,
+            ...(recordOrganisation && {
+              resourceContacts: [
+                this.hydrateFirstResourceContactWithOrganisation(
+                  firstResourceContact,
+                  recordOrganisation
+                ),
+                ...otherResourceContacts,
+              ],
+            }),
+          },
+          source
+        )
       })
     )
   }

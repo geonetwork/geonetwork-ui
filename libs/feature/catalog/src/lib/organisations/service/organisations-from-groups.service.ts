@@ -8,6 +8,7 @@ import {
   ElasticsearchService,
   getAsArray,
   getAsUrl,
+  hydrateContactsWithRecordLogo,
   mapContact,
   MetadataContact,
   MetadataRecord,
@@ -132,17 +133,20 @@ export class OrganisationsFromGroupsService
     const groupId = parseInt(selectField(source, 'groupOwner'))
     const resourceContacts = getAsArray(
       selectField(source, 'contactForResource')
-    ).map((contact) => mapContact(contact, source))
+    ).map((contact) => mapContact(contact))
     return this.groups$.pipe(
       map((groups) => {
         const group = groups.find((g) => g.id === groupId)
-        if (!group) return record
+        if (!group) return hydrateContactsWithRecordLogo(record, source)
         const contact = this.mapContactFromGroup(group, lang3)
-        return {
-          ...record,
-          contact,
-          resourceContacts: [contact, ...resourceContacts],
-        }
+        return hydrateContactsWithRecordLogo(
+          {
+            ...record,
+            contact,
+            resourceContacts: [contact, ...resourceContacts],
+          },
+          source
+        )
       })
     )
   }
