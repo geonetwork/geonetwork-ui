@@ -165,22 +165,32 @@ export class OrganisationsFromMetadataService
     })
   }
 
-  private hydrateResourceContactWithOrg(
+  private hydrateContactsWithRecordLogo(
     metadataRecord: MetadataRecord,
     organisation: Organisation
   ): MetadataRecord {
     const firstResourceContact = metadataRecord.resourceContacts[0]
     const logoUrl =
+      metadataRecord.contact.logoUrl ||
       firstResourceContact.logoUrl ||
       (organisation.logoUrl ? getAsUrl(`${organisation.logoUrl}`) : null)
     const mappedOrg = {
-      name: organisation.name,
+      name:
+        metadataRecord.contact?.name ||
+        firstResourceContact.name ||
+        organisation.name,
       organisation: organisation.name,
-      email: organisation.email || firstResourceContact.email,
+      email:
+        metadataRecord.contact?.email ||
+        firstResourceContact.email ||
+        organisation.email,
       logoUrl: logoUrl,
-      website: metadataRecord.resourceContacts[0].website,
+      website:
+        metadataRecord.contact?.website ||
+        metadataRecord.resourceContacts[0].website,
     } as MetadataContact
 
+    metadataRecord.contact = mappedOrg
     metadataRecord.resourceContacts[0] = mappedOrg
 
     return metadataRecord
@@ -230,7 +240,7 @@ export class OrganisationsFromMetadataService
 
         return hydrateWithRecordLogo(
           org
-            ? this.hydrateResourceContactWithOrg(metadataRecord, org)
+            ? this.hydrateContactsWithRecordLogo(metadataRecord, org)
             : metadataRecord,
           source
         )
