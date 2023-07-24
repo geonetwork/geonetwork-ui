@@ -15,6 +15,11 @@
         "production": {
           "devServerTarget": "datahub:serve:production"
         }
+      },
+      "env": {
+        "browserPermissions": {
+          "write": "allow"
+        }
       }
     },
     "lint": {

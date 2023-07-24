@@ -191,25 +191,19 @@ You can test the datahub app by page :
 Start docker from 'support-services', and then in the 'geonetwork-ui' folder :
 
 ```shell script
-npx nx e2e datahub-e2e --port='cypress-auto' --watch
+ng e2e frontend-e2e --watch
 ```
 
 Then select the file(s) you want to test in the interface.
 
 ##### To run the tests without interface :
 
-Start docker from 'support-services', and then from the e2e appropriate folder :
+Start docker from 'support-services', and then in the 'geonetwork-ui' folder :
 
 --> ALl tests :
 
 ```shell script
-npx cypress run
-```
-
---> One test :
-
-```shell script
-npx cypress run --record --spec "cypress/e2e/my-spec.cy.ts"
+ng e2e frontend-e2e
 ```
 
 ## Project structure

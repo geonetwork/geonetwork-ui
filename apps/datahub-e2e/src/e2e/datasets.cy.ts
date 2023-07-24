@@ -1,3 +1,4 @@
+/* eslint-disable cypress/no-unnecessary-waiting */
 import 'cypress-real-events'
 import { find } from 'cypress/types/lodash'
 
@@ -87,11 +88,13 @@ describe('datasets', () => {
           cy.wrap(initialLength).as('initialLength')
           cy.get('@favoriteStar').trigger('mouseenter')
           cy.get('[id="tippy-1"]').find('a').click()
+          cy.get('.form-group').invoke('css', 'display', 'block')
+          cy.wait(4000)
           cy.url().should('include', 'signin')
-          cy.get('input').filter(':visible').as('login')
-          cy.get('@login').first().type('admin')
-          cy.get('@login').eq(1).type('admin')
-          cy.get('[name="gnSigninForm"').find('button').click()
+          cy.get('input').as('login')
+          cy.get('@login').eq(1).type('admin', { force: true })
+          cy.get('@login').eq(2).type('admin', { force: true })
+          cy.get('[name="gnSigninForm"]').find('button').realClick()
           cy.url().should('include', '/home/search')
           cy.get('@favoriteStar').find('span').invoke('text').as('initialCount')
           cy.get('@favoriteStar')

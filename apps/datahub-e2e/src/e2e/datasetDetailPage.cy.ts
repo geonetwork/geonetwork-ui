@@ -2,7 +2,7 @@
 import 'cypress-real-events'
 import fs from 'fs/promises'
 
-describe('organisations', () => {
+describe('dataset pages', () => {
   beforeEach(() => {
     // dataset without API, preview or downloads
     // cy.visit('/dataset/011963da-afc0-494c-a2cc-5cbd59e122e4')
@@ -330,7 +330,7 @@ describe('organisations', () => {
             .find('gn-ui-download-item')
             .first()
             .click()
-
+          cy.wait(3000)
           cy.exec('ls cypress/downloads').then((result) => {
             const fileList = result.stdout.split('\n')
 
@@ -376,10 +376,10 @@ describe('organisations', () => {
       })
       it('copies the API path on click', () => {
         cy.get('gn-ui-data-apis')
-          .find('gn-ui-api-card')
-          .first()
           .find('gn-ui-copy-text-button')
-          .click()
+          .find('button')
+          .first()
+          .click({ force: true })
         cy.window().then((win) => {
           win.navigator.clipboard.readText().then((text) => {
             expect(text).to.eq('https://www.geo2france.fr/geoserver/insee/ows')
