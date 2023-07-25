@@ -1,4 +1,4 @@
-![Workflow status](https://github.com/geonetwork/geonetwork-ui/workflows/Build/badge.svg)
+![Workflow status](https://github.com/geonetwork/geonetwork-ui/workflows/Build/badge.svg) &nbsp;&nbsp; [![Coverage Status](https://coveralls.io/repos/github/geonetwork/geonetwork-ui/badge.svg?branch=main)](https://coveralls.io/github/geonetwork/geonetwork-ui?branch=main)
 
 # GeoNetwork UI
 
