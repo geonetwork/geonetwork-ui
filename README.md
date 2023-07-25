@@ -191,7 +191,7 @@ You can test the datahub app by page :
 Start docker from 'support-services', and then in the 'geonetwork-ui' folder :
 
 ```shell script
-ng e2e frontend-e2e --watch
+ng e2e appname --watch
 ```
 
 Then select the file(s) you want to test in the interface.
@@ -203,7 +203,7 @@ Start docker from 'support-services', and then in the 'geonetwork-ui' folder :
 --> ALl tests :
 
 ```shell script
-ng e2e frontend-e2e
+ng e2e appname
 ```
 
 ## Project structure

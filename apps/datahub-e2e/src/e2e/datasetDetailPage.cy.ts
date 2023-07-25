@@ -203,6 +203,8 @@ describe('dataset pages', () => {
         cy.wait(5000)
         cy.get('@prevSection').find('gn-ui-table').should('be.visible')
         cy.get('@prevSection')
+          .find('gn-ui-table')
+          .find('table')
           .find('tbody')
           .children('tr')
           .should('have.length.gt', 0)
