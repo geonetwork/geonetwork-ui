@@ -22,11 +22,9 @@
           style="width: 42px; height: 42px; font-size: 42px; margin: 10px"
           >{{ hasOnlyPerson ? 'face' : 'home_work' }}</mat-icon
         >
-        <img
+        <gn-ui-thumbnail
           *ngIf="hasLogo"
-          [src]="contact.logoUrl"
-          alt="Organization logo"
-          class="object-contain w-full h-full"
+          [thumbnailUrl]="contact.logoUrl"
         />
       </div>
       <div class="flex flex-col overflow-hidden items-start">

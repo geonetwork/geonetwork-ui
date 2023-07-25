@@ -67,10 +67,10 @@ describe('ThumbnailComponent', () => {
         expect(img.nativeElement.src).toEqual(url)
       })
       it('sets object cover to contain', () => {
-        expect(img.nativeElement.style.objectFit).toEqual('contain')
+        expect(img.nativeElement.style.objectFit).toEqual('')
       })
       it('sets img height to 100%', () => {
-        expect(img.nativeElement.classList.contains('h-4/5')).toBeTruthy()
+        expect(img.nativeElement.classList.contains('h-full')).toBeTruthy()
       })
     })
     describe('When an url is given and fit is set to "contain"', () => {

@@ -30,7 +30,7 @@ export class ThumbnailComponent implements AfterViewInit, OnDestroy {
     this.imgUrl = url || this.placeholderUrl
     this.isPlaceholder = !url
   }
-  @Input() fit: 'cover' | 'contain' = 'contain'
+  @Input() fit: 'cover' | 'contain' | 'scale-down'
   @ViewChild('imageElement') imgElement: ElementRef<HTMLImageElement>
   imgUrl: string
   placeholderUrl = this.optionalPlaceholderUrl || DEFAULT_PLACEHOLDER
@@ -67,13 +67,13 @@ export class ThumbnailComponent implements AfterViewInit, OnDestroy {
   }
 
   setObjectFit(e) {
-    if (e && e.target) {
-      if (
-        e.target.naturalWidth > e.target.parentElement.clientWidth ||
-        e.target.naturalHeight > e.target.parentElement.clientHeight
-      ) {
-        this.fit = 'cover'
-      }
+    const cw = e?.target?.parentElement.clientWidth
+    const ch = e?.target?.parentElement.clientHeight
+    if (!this.fit && cw > 0 && ch > 0) {
+      this.fit =
+        e.target.naturalWidth > cw || e.target.naturalHeight > ch
+          ? 'cover'
+          : 'scale-down'
     }
   }
 }
