@@ -12,7 +12,7 @@ import pt from '../../../../../translations/pt.json'
 export class EmbeddedTranslateLoader implements TranslateLoader {
   getTranslation(lang: string): Observable<any> {
     const langs = { de, en, es, fr, it, nl, pt }
-    const translations = langs[lang.substr(0, 2)]
+    const translations = langs[lang.substring(0, 2)]
     return of(translations).pipe(map(dropEmptyTranslations))
   }
 }

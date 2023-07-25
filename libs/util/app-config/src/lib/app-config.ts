@@ -14,6 +14,11 @@ import {
   SearchConfig,
   ThemeConfig,
 } from './model'
+import { TranslateCompiler, TranslateLoader } from '@ngx-translate/core'
+import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
+import { HttpClient } from '@angular/common/http'
+import { DEFAULT_LANG } from '@geonetwork-ui/util/i18n'
+import { FileWithOverridesTranslateLoader } from './i18n/file-with-overrides.translate.loader'
 
 const MISSING_CONFIG_ERROR = `Application configuration was not initialized correctly.
 This error might show up in case of an invalid/malformed configuration file.
@@ -248,4 +253,19 @@ export function _reset() {
   globalConfig = null
   themeConfig = null
   customTranslations = null
+}
+
+export const TRANSLATE_WITH_OVERRIDES_CONFIG = {
+  compiler: {
+    provide: TranslateCompiler,
+    useClass: TranslateMessageFormatCompiler,
+  },
+  loader: {
+    provide: TranslateLoader,
+    useFactory: function HttpLoaderFactory(http: HttpClient) {
+      return new FileWithOverridesTranslateLoader(http, './assets/i18n/')
+    },
+    defaultLanguage: DEFAULT_LANG,
+    deps: [HttpClient],
+  },
 }

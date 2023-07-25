@@ -131,6 +131,26 @@ You'll need manual configuration to make the application running:
   }
   ```
 
+  5. Use the following configuration to allow loading custom translations from the config file:
+
+  ```ts
+  import {
+    // ...
+    TRANSLATE_WITH_OVERRIDES_CONFIG,
+  } from '@geonetwork-ui/util/app-config'
+
+  @NgModule({
+    // ...
+    imports: [
+      // ...
+      UtilI18nModule,
+      TranslateModule.forRoot(TRANSLATE_WITH_OVERRIDES_CONFIG),
+    ],
+  })
+  export class AppModule {
+    // ...
+  ```
+
 Please note that the app configuration is available to be used anywhere else in the application in a synchronous
 way since it was loaded beforehand.
 
