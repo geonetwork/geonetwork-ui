@@ -18,7 +18,7 @@ import {
   MatAutocompleteSelectedEvent,
   MatAutocompleteTrigger,
 } from '@angular/material/autocomplete'
-import { Observable, of, ReplaySubject, Subscription } from 'rxjs'
+import { merge, Observable, of, ReplaySubject, Subscription } from 'rxjs'
 import {
   catchError,
   debounceTime,
@@ -26,6 +26,7 @@ import {
   filter,
   finalize,
   first,
+  map,
   switchMap,
   take,
   tap,
@@ -72,27 +73,30 @@ export class AutocompleteComponent
         this.updateInputValue(value.currentValue)
       }
     }
-    if (this.inputRef) {
-      this.inputRef.nativeElement.value = value?.currentValue?.title
-        ? value.currentValue.title
-        : ''
-    }
   }
 
   ngOnInit(): void {
-    this.suggestions$ = this.control.valueChanges.pipe(
-      tap(() => (this.error = null)),
-      filter((value) => value.length > 2),
-      debounceTime(400),
-      distinctUntilChanged(),
-      tap(() => (this.searching = true)),
-      switchMap((value) => this.action(value)),
+    this.suggestions$ = merge(
+      this.control.valueChanges.pipe(
+        filter((value) => typeof value === 'string'),
+        filter((value: string) => value.length > 2),
+        debounceTime(400),
+        distinctUntilChanged(),
+        tap(() => (this.searching = true))
+      ),
+      this.control.valueChanges.pipe(
+        filter((value) => typeof value === 'object' && value.title),
+        map((item) => item.title)
+      )
+    ).pipe(
+      switchMap((value) => (value ? this.action(value) : of([]))),
       catchError((error: Error) => {
         this.error = error.message
         return of([])
       }),
       finalize(() => (this.searching = false))
     )
+
     this.subscription = this.control.valueChanges.subscribe((any) => {
       if (any !== '') {
         this.cancelEnter = false
@@ -114,6 +118,9 @@ export class AutocompleteComponent
   updateInputValue(value: AutocompleteItem) {
     if (value) {
       this.control.setValue(value)
+    }
+    if (this.inputRef) {
+      this.inputRef.nativeElement.value = (value as any)?.title || ''
     }
   }
 
