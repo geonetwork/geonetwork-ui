@@ -4,17 +4,6 @@
   "sourceRoot": "libs/api/metadata-converter/src",
   "projectType": "library",
   "targets": {
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/api/metadata-converter",
-        "tsConfig": "libs/api/metadata-converter/tsconfig.lib.json",
-        "packageJson": "libs/api/metadata-converter/package.json",
-        "main": "libs/api/metadata-converter/src/index.ts",
-        "assets": ["libs/api/metadata-converter/*.md"]
-      }
-    },
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
