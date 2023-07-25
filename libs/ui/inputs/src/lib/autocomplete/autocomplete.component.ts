@@ -72,6 +72,11 @@ export class AutocompleteComponent
         this.updateInputValue(value.currentValue)
       }
     }
+    if (this.inputRef) {
+      this.inputRef.nativeElement.value = value?.currentValue?.title
+        ? value.currentValue.title
+        : ''
+    }
   }
 
   ngOnInit(): void {
