@@ -6,6 +6,10 @@ GeoNetwork UI is a suite of Applications made to provide a modern facade to your
 
 It also provides Web Components to embed various parts of your data catalog in third party websites.
 
+## Documentation
+
+To check out docs, visit [gn-ui.dev](https://geonetwork.github.io/geonetwork-ui/doc-website/docs/guide/getting-started.html)
+
 ## Requirements
 
 - GeoNetwork version 4.2.2
