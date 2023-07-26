@@ -8,7 +8,7 @@ It also provides Web Components to embed various parts of your data catalog in t
 
 ## Documentation
 
-To check out docs, visit [gn-ui.dev](https://geonetwork.github.io/geonetwork-ui/doc-website/docs/guide/getting-started.html)
+To check out docs, visit [gn-ui.dev](https://geonetwork.github.io/geonetwork-ui/main/docs/guide/getting-started.html)
 
 ## Requirements
 
