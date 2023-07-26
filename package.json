@@ -1,6 +1,6 @@
 {
   "name": "geonetwork-ui",
-  "version": "1.0.1",
+  "version": "1.1.0-dev",
   "engines": {
     "node": ">=14.17.0"
   },
@@ -36,7 +36,10 @@
     "serve:ssr": "node dist/formatter/server/main.js",
     "build:ssr": "ng build --configuration production && ng run formatter:server:production",
     "prerender": "ng run formatter:prerender",
-    "i18n:extract": "ngx-translate-extract -s --fi '  ' --input ./apps ./libs --output ./translations/{en,de,fr,it,es,nl,pt}.json --clean --format json && npm run format:write"
+    "i18n:extract": "ngx-translate-extract -s --fi '  ' --input ./apps ./libs --output ./translations/{en,de,fr,it,es,nl,pt}.json --clean --format json && npm run format:write",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "private": true,
   "dependencies": {
@@ -161,7 +164,8 @@
     "tailwindcss": "^3.2.4",
     "ts-jest": "^29.0.5",
     "ts-node": "10.9.1",
-    "typescript": "~4.9.5"
+    "typescript": "~4.9.5",
+    "vitepress": "^1.0.0-beta.6"
   },
   "overrides": {
     "jasmine-marbles": {
