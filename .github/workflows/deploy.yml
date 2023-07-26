@@ -97,9 +97,11 @@ jobs:
         with:
           message: 'GitHub Pages links:
 
-            * Demo & web components: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/demo/
+            * (Documentation)[https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/docs/]
 
-            * UI components storybook: https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/demo/'
+            * (Demo & web components)[https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/demo/]
+
+            * (UI components storybook)[https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/demo/]'
           comment_tag: github-links
           pr_number: ${{ github.event.issue.number }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
