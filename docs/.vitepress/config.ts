@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+const packageJson = require('../../package.json')
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -15,7 +16,7 @@ export default defineConfig({
       },
       { text: 'Applications', link: '/apps/datahub', activeMatch: '/apps/' },
       {
-        text: 'Version XXX',
+        text: `Version ${packageJson.version}`,
         link: 'https://github.com/geonetwork/geonetwork-ui/releases',
       },
     ],

@@ -33,6 +33,12 @@ This will create a commit changing the version and an associated tag.
 
 > Note that `npm version` can also automatically upgrade the version, e.g. calling `npm version minor`.
 
+Once the version commit and tags are done, run the following command to upgrade to an intermediary dev version:
+
+```shell
+$ npm version 1.3.7-dev --no-git-tag-version
+```
+
 ## Releases
 
 ### When and what to release
