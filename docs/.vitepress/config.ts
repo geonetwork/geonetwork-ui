@@ -7,10 +7,13 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/why', activeMatch: '/guide/' },
-      { text: 'Reference', link: '/reference/', activeMatch: '/reference/' },
-      { text: 'Applications', link: '/apps/', activeMatch: '/apps/' },
+      {
+        text: 'Reference',
+        link: '/reference/principles',
+        activeMatch: '/reference/',
+      },
+      { text: 'Applications', link: '/apps/datahub', activeMatch: '/apps/' },
       {
         text: 'Version XXX',
         link: 'https://github.com/geonetwork/geonetwork-ui/releases',

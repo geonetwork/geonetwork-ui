@@ -3,8 +3,8 @@
 layout: home
 
 hero:
-  name: "GeoNetwork-UI"
-  text: "Documentation"
+  name: 'GeoNetwork-UI'
+  text: 'Documentation'
   tagline: Re-invent your open source data platform.
   actions:
     - theme: brand
@@ -34,4 +34,3 @@ features:
     title: Promote
     details: Promote your data.
 ---
-

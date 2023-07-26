@@ -2,10 +2,8 @@
 outline: deep
 ---
 
-# Chapter 1
+# Pivot Format
 
-Chapter 1
+## Chapter 1
 
-# Chapter 2
-
-Chapter 2
+## Chapter 2
