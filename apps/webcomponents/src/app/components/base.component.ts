@@ -80,7 +80,7 @@ export class BaseComponent implements OnChanges, OnInit {
         JSON.stringify(this.esService.getMetadataByIdPayload(uuid))
       )
     )
-      .then((response) => this.esMapper.toRecords(response))
+      .then((response) => firstValueFrom(this.esMapper.toRecords(response)))
       .then((records) => records[0])
     const dataLinks = record.links.filter((link) =>
       usages.some((usage) => this.linkClassifier.hasUsage(link, usage))
