@@ -15,6 +15,7 @@
   >
     <div class="show-more h-[100px] pt-[30px]" *ngIf="showMore === 'button'">
       <gn-ui-button
+        data-cy="addMoreBtn"
         type="secondary"
         (buttonClick)="onShowMore()"
         extraClass="m-auto !p-[22px]"
@@ -42,7 +43,8 @@
   <gn-ui-search-results-error
     *ngIf="(errorCode$ | async) === 0"
     [type]="errorTypes.COULD_NOT_REACH_API"
-  ></gn-ui-search-results-error>
+  >
+  </gn-ui-search-results-error>
   <gn-ui-search-results-error
     *ngIf="(error$ | async) !== null && (errorCode$ | async) !== 0"
     [type]="errorTypes.RECEIVED_ERROR"

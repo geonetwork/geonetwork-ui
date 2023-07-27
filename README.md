@@ -162,6 +162,8 @@ Lastly, even if authenticated requests were cleared regarding CORS rules, it wou
 
 ### Tests
 
+#### Unit tests
+
 Run `npm test` to execute the affected unit tests via Jest.
 Affected code is compared to origin/main.
 
@@ -177,6 +179,35 @@ npm run test
 npm run test:all
 npx nx test (lib_name)
 npx nx test --test-match=/data/dev/gn/ui/libs/common/src/lib/services/bootstrap.service.spec.ts
+```
+
+#### End-to-end-tests
+
+You can test the datahub app by page :
+
+- home page
+- search page
+- organisations page
+- dataset pages
+
+##### To run the tests with the interface :
+
+Start docker from 'support-services', and then in the 'geonetwork-ui' folder :
+
+```shell script
+npx nx e2e appname --watch
+```
+
+Then select the file(s) you want to test in the interface.
+
+##### To run the tests without interface :
+
+Start docker from 'support-services', and then in the 'geonetwork-ui' folder :
+
+--> ALl tests :
+
+```shell script
+npx nx e2e appname
 ```
 
 ## Project structure

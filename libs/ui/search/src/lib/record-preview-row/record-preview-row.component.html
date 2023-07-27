@@ -21,17 +21,20 @@
     <div class="mb-3 mt-5 sm:mt-2">
       <div
         class="font-title text-21 text-title line-clamp-2 col-start-1 col-span-2 sm:line-clamp-1 group-hover:text-primary"
+        data-cy="recordTitle"
       >
         {{ record.title }}
       </div>
     </div>
     <div
       class="abstract mt-4 mb-5 h-36 line-clamp-6 col-start-1 col-span-2 row-start-3 sm:mb-2 sm:h-[4.5rem] sm:line-clamp-3 sm:row-start-2 sm:mt-0"
+      data-cy="recordAbstract"
     >
       {{ abstract }}
     </div>
     <div
       class="text-primary opacity-45 uppercase col-start-1 col-span-2 row-start-2 sm:truncate sm:row-start-3 sm:col-span-1"
+      data-cy="recordOrg"
     >
       {{ contact?.organisation }}
     </div>
@@ -51,6 +54,7 @@
     </div>
     <div
       class="text-right col-start-2 row-start-4 sm:absolute sm:col-start-2 sm:row-start-1 sm:top-[-1.125em] sm:right-[0.4em]"
+      data-cy="recordFav"
     >
       <ng-container
         [ngTemplateOutlet]="favoriteTemplate"
