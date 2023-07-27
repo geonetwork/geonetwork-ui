@@ -78,7 +78,8 @@ describe('ElasticsearchMapper', () => {
             abstract: 'The grid is based on proposal ',
             id: '12456',
             metadataUrl: 'url',
-            thumbnailUrl: 'data:image/png;base64,',
+            thumbnailUrl:
+              'https://sdi.eea.europa.eu/public/catalogue-graphic-overview/20e9e1a1-83c1-4f13-89ef-c19767d6ee18f.png',
             title: 'EEA reference grid for Germany (10km), May 2013',
             uuid: '20e9e1a1-83c1-4f13-89ef-c19767d6ee18f',
             catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
@@ -90,7 +91,8 @@ describe('ElasticsearchMapper', () => {
             abstract: 'Reference layer of the rivers sensitive areas, ',
             id: '12442',
             metadataUrl: 'url',
-            thumbnailUrl: 'data:image/png;base64,',
+            thumbnailUrl:
+              'https://sdi.eea.europa.eu/public/catalogue-graphic-overview/5b35f06e-8c6b-4907-b8f4-39541d170360.png',
             title:
               'Urban Waste Water Treatment Directive, Sensitive areas - rivers reported under UWWTD data call 2015, Nov. 2017',
             uuid: '5b35f06e-8c6b-4907-b8f4-39541d170360',
@@ -128,7 +130,9 @@ describe('ElasticsearchMapper', () => {
       describe('overview', () => {
         it('when data', async () => {
           const summary = await firstValueFrom(service.toRecord(hit))
-          expect(summary.thumbnailUrl).toBe('data:image/png;base64,')
+          expect(summary.thumbnailUrl).toBe(
+            'https://sdi.eea.europa.eu/public/catalogue-graphic-overview/20e9e1a1-83c1-4f13-89ef-c19767d6ee18f.png'
+          )
         })
         it('when no data and url', async () => {
           hit._source.overview = {

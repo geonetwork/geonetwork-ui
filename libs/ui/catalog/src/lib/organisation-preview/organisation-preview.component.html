@@ -4,12 +4,12 @@
     [title]="organisation.name"
   >
     <div
-      class="flex-shrink-0 bg-gray-100 rounded-lg w-full border border-gray-300 h-36 group-hover:shadow-xl group-hover:border-0"
+      class="flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden w-full border border-gray-300 h-36 group-hover:shadow-xl group-hover:border-0"
     >
       <gn-ui-thumbnail
         class="relative h-full w-full"
         [thumbnailUrl]="organisation.logoUrl"
-        fit="contain"
+        [fit]="'contain'"
       >
       </gn-ui-thumbnail>
     </div>
@@ -24,15 +24,6 @@
       >
         {{ organisation.description }}
       </p>
-      <!--
-    <button
-      translate
-      class="flex items-center justify-center capitalize bg-[#c2cfe3] text-white p-1 rounded text-sm my-2 p-0 pr-1"
-    >
-      <mat-icon class="flex text-base">add </mat-icon>
-      <span>suivre</span>
-    </button>
--->
       <div class="flex-shrink-0 text-primary opacity-50 flex leading-6">
         <mat-icon class="text-primary opacity-50 mr-1">folder_open </mat-icon>
         <span class="mx-1">{{ organisation.recordCount }}</span>

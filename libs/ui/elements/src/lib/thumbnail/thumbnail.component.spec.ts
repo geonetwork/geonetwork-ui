@@ -96,6 +96,50 @@ describe('ThumbnailComponent', () => {
       })
     })
   })
+  describe('When different size of img are provided', () => {
+    beforeEach(() => {
+      component.thumbnailUrl = 'http://test.com/img.png'
+      fixture.detectChanges()
+      Object.defineProperties(component.imgElement.nativeElement, {
+        naturalWidth: {
+          value: 100,
+        },
+        naturalHeight: {
+          value: 100,
+        },
+      })
+    })
+    it('When container is bigger than image, img displayed as scale-down', () => {
+      Object.defineProperties(component.containerElement.nativeElement, {
+        clientWidth: {
+          value: 150,
+        },
+        clientHeight: {
+          value: 150,
+        },
+      })
+      component.setObjectFit()
+      fixture.detectChanges()
+      expect(component.imgElement.nativeElement.style.objectFit).toEqual(
+        'scale-down'
+      )
+    })
+    it('When container is smaller than image, img displayed as cover', () => {
+      Object.defineProperties(component.containerElement.nativeElement, {
+        clientWidth: {
+          value: 50,
+        },
+        clientHeight: {
+          value: 150,
+        },
+      })
+      component.setObjectFit()
+      fixture.detectChanges()
+      expect(component.imgElement.nativeElement.style.objectFit).toEqual(
+        'cover'
+      )
+    })
+  })
   describe('When no url is given and a custom placeholder is provided', () => {
     const placeholderUrl = 'http://localhost/assets/img/placeholder.svg'
     let img
