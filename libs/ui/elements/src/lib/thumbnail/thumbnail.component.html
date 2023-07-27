@@ -12,7 +12,7 @@
     [ngStyle]="{ objectFit: objectFit }"
     alt="thumbnail"
     loading="lazy"
-    (load)="setObjectFit($event)"
+    (load)="setObjectFit()"
     [src]="imgUrl | safe: 'url'"
   />
 </div>

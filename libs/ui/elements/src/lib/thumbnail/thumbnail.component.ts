@@ -67,7 +67,7 @@ export class ThumbnailComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  setObjectFit(e) {
+  setObjectFit() {
     const cw = this.containerElement?.nativeElement?.clientWidth
     const ch = this.containerElement?.nativeElement?.clientHeight
     if (
