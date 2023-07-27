@@ -5,7 +5,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { MatIconModule } from '@angular/material/icon'
 import { By } from '@angular/platform-browser'
 import { of, throwError } from 'rxjs'
-import { AutocompleteComponent } from './autocomplete.component'
+import {
+  AutocompleteComponent,
+  AutocompleteItem,
+} from './autocomplete.component'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 
 describe('AutocompleteComponent', () => {
@@ -67,6 +70,14 @@ describe('AutocompleteComponent', () => {
       it('does not show an error popup', () => {
         const popup = fixture.debugElement.query(By.css('gn-ui-popup-alert'))
         expect(popup).toBeFalsy()
+      })
+    })
+    describe('when clicking a predefined button', () => {
+      beforeEach(() => {
+        component.updateInputValue({ title: 'cc' } as AutocompleteItem)
+      })
+      it('calls the action with object given as input', () => {
+        expect(component.action).toHaveBeenCalledWith('cc')
       })
     })
     describe('when writing text with 2 chars or less', () => {
