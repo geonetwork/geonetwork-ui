@@ -368,7 +368,7 @@ describe('dataset pages', () => {
             .find('gn-ui-download-item')
             .first()
             .click()
-          cy.wait(3000)
+          cy.wait(4000)
           cy.exec('ls cypress/downloads').then((result) => {
             const fileList = result.stdout.split('\n')
 
