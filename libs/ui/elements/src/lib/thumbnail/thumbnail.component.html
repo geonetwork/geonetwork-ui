@@ -1,7 +1,8 @@
 <div
-  class="h-full w-full relative shrink-0 overflow-hidden"
+  #containerElement
+  class="h-full w-full relative shrink-0 overflow-hidden flex items-center bg-gray-100"
   [ngClass]="{
-    'bg-white flex flex-col justify-center': objectFit === 'contain'
+    'bg-white': !isPlaceholder
   }"
 >
   <img
