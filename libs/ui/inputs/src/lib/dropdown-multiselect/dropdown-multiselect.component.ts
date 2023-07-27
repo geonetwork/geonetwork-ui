@@ -30,9 +30,14 @@ export class DropdownMultiselectComponent {
   @Input() selected: unknown[] = []
   @Input() allowSearch = true
   @Input() maxRows: number
+  @Input() searchInputValue = ''
   @Output() selectValues = new EventEmitter<unknown[]>()
   @ViewChild('overlayOrigin') overlayOrigin: CdkOverlayOrigin
   @ViewChild(CdkConnectedOverlay) overlay: CdkConnectedOverlay
+  @ViewChild('overlayContainer', { read: ElementRef })
+  overlayContainer: ElementRef
+  @ViewChild('searchFieldInput')
+  searchFieldInput: ElementRef<HTMLInputElement>
   @ViewChildren('checkBox', { read: ElementRef })
   checkboxes: QueryList<ElementRef>
   overlayPositions: ConnectedPosition[] = [
@@ -60,11 +65,19 @@ export class DropdownMultiselectComponent {
   get hasSelectedChoices() {
     return this.selected.length > 0
   }
+
   get selectedChoices() {
     return this.choices.filter(
       (choice) => this.selected.indexOf(choice.value) > -1
     )
   }
+
+  get filteredChoicesByText() {
+    return this.choices.filter((choice) =>
+      choice.label.toLowerCase().includes(this.searchInputValue?.toLowerCase())
+    )
+  }
+
   get focusedIndex(): number | -1 {
     return this.checkboxes.reduce(
       (prev, curr, curIndex) =>
@@ -75,6 +88,12 @@ export class DropdownMultiselectComponent {
 
   constructor(private scrollStrategies: ScrollStrategyOptions) {}
 
+  private setFocus() {
+    setTimeout(() => {
+      this.searchFieldInput.nativeElement.focus()
+    }, 0)
+  }
+
   openOverlay() {
     this.overlayWidth =
       this.overlayOrigin.elementRef.nativeElement.getBoundingClientRect()
@@ -83,15 +102,19 @@ export class DropdownMultiselectComponent {
       ? `${this.maxRows * 29 + 60}px`
       : 'none'
     this.overlayOpen = true
+    this.setFocus()
+
     // this will wait for the checkboxes to be referenced and the overlay to be attached
     return Promise.all([
       this.overlay.attach.pipe(take(1)).toPromise(),
       this.checkboxes.changes.pipe(take(1)).toPromise(),
     ])
   }
+
   closeOverlay() {
     this.overlayOpen = false
   }
+
   async handleTriggerKeydown(event: KeyboardEvent) {
     const keyCode = event.code
     const isOpenKey =
@@ -112,23 +135,31 @@ export class DropdownMultiselectComponent {
       this.closeOverlay()
     }
   }
+
   handleOverlayKeydown(event: KeyboardEvent) {
     if (!this.overlayOpen) return
     const keyCode = event.code
     if (keyCode === 'ArrowDown' || keyCode === 'ArrowRight') {
-      this.shiftItemFocus(1)
+      event.preventDefault()
+      if (document.activeElement['type'] !== 'checkbox') {
+        this.focusFirstItem()
+      } else this.shiftItemFocus(1)
     } else if (keyCode === 'ArrowLeft' || keyCode === 'ArrowUp') {
+      event.preventDefault()
       this.shiftItemFocus(-1)
     } else if (keyCode === 'Escape') {
       this.closeOverlay()
     }
   }
+
   focusFirstItem() {
     this.checkboxes.get(0).nativeElement.focus()
   }
+
   focusLastItem() {
     this.checkboxes.get(this.checkboxes.length - 1).nativeElement.focus()
   }
+
   shiftItemFocus(shift: number) {
     const index = this.focusedIndex
     if (index === -1) return
@@ -141,12 +172,14 @@ export class DropdownMultiselectComponent {
   isSelected(choice: Choice) {
     return this.selected.indexOf(choice.value) > -1
   }
+
   select(choice: Choice, selected: boolean) {
     this.selected = selected
       ? [...this.selected.filter((v) => v !== choice.value), choice.value]
       : this.selected.filter((v) => v !== choice.value)
     this.selectValues.emit(this.selected)
   }
+
   toggle(choice: Choice) {
     this.select(choice, !this.isSelected(choice))
   }
@@ -154,5 +187,11 @@ export class DropdownMultiselectComponent {
   clearSelection(event: Event) {
     this.selectValues.emit([])
     event.stopPropagation()
+  }
+
+  clearSearchInputValue(event: Event) {
+    this.searchInputValue = ''
+    event.stopPropagation()
+    this.setFocus()
   }
 }

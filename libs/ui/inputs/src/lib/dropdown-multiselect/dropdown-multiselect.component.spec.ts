@@ -5,6 +5,8 @@ import { MatIconModule } from '@angular/material/icon'
 import { By } from '@angular/platform-browser'
 import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
 import { ButtonComponent } from '../button/button.component'
+import { TranslateModule } from '@ngx-translate/core'
+import { FormsModule } from '@angular/forms'
 
 describe('DropdownMultiselectComponent', () => {
   let component: DropdownMultiselectComponent
@@ -13,7 +15,12 @@ describe('DropdownMultiselectComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DropdownMultiselectComponent, ButtonComponent],
-      imports: [OverlayModule, MatIconModule],
+      imports: [
+        OverlayModule,
+        MatIconModule,
+        TranslateModule.forRoot(),
+        FormsModule,
+      ],
     })
       .overrideComponent(DropdownMultiselectComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
@@ -121,6 +128,7 @@ describe('DropdownMultiselectComponent', () => {
 
   describe('keyboard events', () => {
     let triggerBtn: HTMLElement
+
     async function dispatchEvent(el: HTMLElement, code: string) {
       el.dispatchEvent(
         new KeyboardEvent('keydown', {
@@ -132,6 +140,7 @@ describe('DropdownMultiselectComponent', () => {
       fixture.detectChanges()
       await Promise.resolve() // this makes sure that the overlay was updated
     }
+
     const getCheckboxes = () =>
       component.checkboxes.map((de) => de.nativeElement) as HTMLInputElement[]
     const getOverlay = () =>
@@ -259,6 +268,71 @@ describe('DropdownMultiselectComponent', () => {
       })
       it('is displayed', () => {
         expect(component.selectValues.emit).toHaveBeenCalledWith([])
+      })
+    })
+  })
+  describe('search', () => {
+    const getOverlay = () =>
+      document.querySelector('.overlay-container') as HTMLElement
+    const getOverlaySearchInput = () =>
+      document.querySelector('.overlaySearchInput') as HTMLElement
+
+    beforeEach(() => {
+      component.choices = [
+        { label: 'First Choice', value: 'choice1' },
+        { label: 'Second Choice', value: 'choice2' },
+        { label: 'Third Choice', value: 'choice3' },
+      ]
+      component.openOverlay()
+      fixture.detectChanges()
+    })
+
+    describe('no text input filter', () => {
+      it('displays all choices', () => {
+        expect(component.filteredChoicesByText.length).toBe(3)
+      })
+      it('search field is focused', () => {
+        expect(getOverlaySearchInput().classList).toContain(
+          'overlaySearchInput'
+        )
+      })
+      it('overlay is on top', () => {
+        expect(getOverlay().offsetTop).toBe(0)
+      })
+    })
+
+    describe('with matching text input filter', () => {
+      it('displays matching choices', () => {
+        component.searchInputValue = 'Sec'
+        expect(component.filteredChoicesByText.length).toBe(1)
+        expect(component.filteredChoicesByText).toContain(component.choices[1])
+      })
+      it('displays matching choices case insensitive', () => {
+        component.searchInputValue = 'SEC'
+        expect(component.filteredChoicesByText.length).toBe(1)
+        expect(component.filteredChoicesByText).toContain(component.choices[1])
+      })
+    })
+
+    describe('with not matching text input filter', () => {
+      it('displays no choices', () => {
+        component.searchInputValue = 'XYZ'
+        expect(component.filteredChoicesByText.length).toBe(0)
+      })
+    })
+
+    describe('clearing the filter with x', () => {
+      beforeEach(() => {
+        component.searchInputValue = 'XYZ'
+        fixture.detectChanges()
+        const clearBtn = fixture.debugElement.query(
+          By.css('.clear-search-input')
+        )
+        clearBtn.nativeElement.click()
+      })
+
+      it('displays all choices', () => {
+        expect(component.filteredChoicesByText.length).toBe(3)
       })
     })
   })
