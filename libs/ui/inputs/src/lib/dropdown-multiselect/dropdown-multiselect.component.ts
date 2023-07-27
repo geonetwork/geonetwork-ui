@@ -36,6 +36,8 @@ export class DropdownMultiselectComponent {
   @ViewChild(CdkConnectedOverlay) overlay: CdkConnectedOverlay
   @ViewChild('overlayContainer', { read: ElementRef })
   overlayContainer: ElementRef
+  @ViewChild('searchFieldInput')
+  searchFieldInput: ElementRef<HTMLInputElement>
   @ViewChildren('checkBox', { read: ElementRef })
   checkboxes: QueryList<ElementRef>
   overlayPositions: ConnectedPosition[] = [
@@ -86,6 +88,12 @@ export class DropdownMultiselectComponent {
 
   constructor(private scrollStrategies: ScrollStrategyOptions) {}
 
+  private setFocus() {
+    setTimeout(() => {
+      this.searchFieldInput.nativeElement.focus()
+    }, 0)
+  }
+
   openOverlay() {
     this.overlayWidth =
       this.overlayOrigin.elementRef.nativeElement.getBoundingClientRect()
@@ -94,6 +102,8 @@ export class DropdownMultiselectComponent {
       ? `${this.maxRows * 29 + 60}px`
       : 'none'
     this.overlayOpen = true
+    this.setFocus()
+
     // this will wait for the checkboxes to be referenced and the overlay to be attached
     return Promise.all([
       this.overlay.attach.pipe(take(1)).toPromise(),
@@ -182,9 +192,6 @@ export class DropdownMultiselectComponent {
   clearSearchInputValue(event: Event) {
     this.searchInputValue = ''
     event.stopPropagation()
-  }
-
-  scrollToTopOfModal() {
-    this.overlayContainer.nativeElement.scroll(0, -40)
+    this.setFocus()
   }
 }

@@ -35,7 +35,6 @@ import {
 import { CheckToggleComponent } from './check-toggle/check-toggle.component'
 import { CopyTextButtonComponent } from './copy-text-button/copy-text-button.component'
 import { MatTooltipModule } from '@angular/material/tooltip'
-import { A11yModule } from '@angular/cdk/a11y'
 
 @NgModule({
   declarations: [
@@ -76,7 +75,6 @@ import { A11yModule } from '@angular/cdk/a11y'
     OverlayModule,
     MatCheckboxModule,
     MatTooltipModule,
-    A11yModule,
   ],
   exports: [
     DropdownSelectorComponent,
