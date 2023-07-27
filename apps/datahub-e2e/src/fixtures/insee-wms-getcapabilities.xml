@@ -1,0 +1,2071 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WMS_Capabilities xmlns:inspire_vs="http://inspire.ec.europa.eu/schemas/inspire_vs/1.0" xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0" version="1.3.0" updateSequence="14569" xmlns="http://www.opengis.net/wms" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wms https://www.geo2france.fr/geoserver/schemas/wms/1.3.0/capabilities_1_3_0.xsd http://inspire.ec.europa.eu/schemas/inspire_vs/1.0 https://inspire.ec.europa.eu/schemas/inspire_vs/1.0/inspire_vs.xsd">
+  <Service>
+    <Name>WMS</Name>
+    <Title>Service WMS de Geo2France</Title>
+    <Abstract>Service WMS mis en ligne par la plateforme Geo2France sur le territoire de la Région Hauts-de-France.</Abstract>
+    <KeywordList>
+      <Keyword>Hauts-de-France</Keyword>
+      <Keyword>WMS</Keyword>
+      <Keyword>Picardie</Keyword>
+      <Keyword>Nord Pas de Calais</Keyword>
+    </KeywordList>
+    <OnlineResource xlink:type="simple" xlink:href="http://geoserver.org/"/>
+    <ContactInformation>
+      <ContactPersonPrimary>
+        <ContactPerson>Administrateur Géo2France</ContactPerson>
+        <ContactOrganization>Geo2France</ContactOrganization>
+      </ContactPersonPrimary>
+      <ContactPosition>administrateur</ContactPosition>
+      <ContactAddress>
+        <AddressType/>
+        <Address>4 rue Germain Bleuet</Address>
+        <City>Amiens</City>
+        <StateOrProvince/>
+        <PostCode>80000</PostCode>
+        <Country>France</Country>
+      </ContactAddress>
+      <ContactVoiceTelephone/>
+      <ContactFacsimileTelephone/>
+      <ContactElectronicMailAddress>contact@geo2france.fr</ContactElectronicMailAddress>
+    </ContactInformation>
+    <Fees>NONE</Fees>
+    <AccessConstraints>NONE</AccessConstraints>
+  </Service>
+  <Capability>
+    <Request>
+      <GetCapabilities>
+        <Format>text/xml</Format>
+        <DCPType>
+          <HTTP>
+            <Get>
+              <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?SERVICE=WMS&amp;"/>
+            </Get>
+            <Post>
+              <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?SERVICE=WMS&amp;"/>
+            </Post>
+          </HTTP>
+        </DCPType>
+      </GetCapabilities>
+      <GetMap>
+        <Format>image/png</Format>
+        <Format>application/atom+xml</Format>
+        <Format>application/geopackage+sqlite3</Format>
+        <Format>application/json;type=utfgrid</Format>
+        <Format>application/pdf</Format>
+        <Format>application/rss+xml</Format>
+        <Format>application/vnd.google-earth.kml+xml</Format>
+        <Format>application/vnd.google-earth.kml+xml;mode=networklink</Format>
+        <Format>application/vnd.google-earth.kmz</Format>
+        <Format>image/geotiff</Format>
+        <Format>image/geotiff8</Format>
+        <Format>image/gif</Format>
+        <Format>image/jpeg</Format>
+        <Format>image/png; mode=8bit</Format>
+        <Format>image/svg+xml</Format>
+        <Format>image/tiff</Format>
+        <Format>image/tiff8</Format>
+        <Format>image/vnd.jpeg-png</Format>
+        <Format>image/vnd.jpeg-png8</Format>
+        <Format>text/html; subtype=openlayers</Format>
+        <Format>text/html; subtype=openlayers2</Format>
+        <Format>text/html; subtype=openlayers3</Format>
+        <DCPType>
+          <HTTP>
+            <Get>
+              <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?SERVICE=WMS&amp;"/>
+            </Get>
+          </HTTP>
+        </DCPType>
+      </GetMap>
+      <GetFeatureInfo>
+        <Format>text/plain</Format>
+        <Format>application/vnd.ogc.gml</Format>
+        <Format>text/xml</Format>
+        <Format>application/vnd.ogc.gml/3.1.1</Format>
+        <Format>text/xml; subtype=gml/3.1.1</Format>
+        <Format>text/html</Format>
+        <Format>application/json</Format>
+        <DCPType>
+          <HTTP>
+            <Get>
+              <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?SERVICE=WMS&amp;"/>
+            </Get>
+          </HTTP>
+        </DCPType>
+      </GetFeatureInfo>
+    </Request>
+    <Exception>
+      <Format>XML</Format>
+      <Format>INIMAGE</Format>
+      <Format>BLANK</Format>
+      <Format>JSON</Format>
+    </Exception>
+    <Layer>
+      <Title>Service WMS de Geo2France</Title>
+      <Abstract>Service WMS mis en ligne par la plateforme Geo2France sur le territoire de la Région Hauts-de-France.</Abstract>
+      <!--Limited list of EPSG projections:-->
+      <CRS>EPSG:2154</CRS>
+      <CRS>EPSG:3857</CRS>
+      <CRS>EPSG:3942</CRS>
+      <CRS>EPSG:3943</CRS>
+      <CRS>EPSG:3944</CRS>
+      <CRS>EPSG:3945</CRS>
+      <CRS>EPSG:3946</CRS>
+      <CRS>EPSG:3947</CRS>
+      <CRS>EPSG:3948</CRS>
+      <CRS>EPSG:3949</CRS>
+      <CRS>EPSG:3950</CRS>
+      <CRS>EPSG:4171</CRS>
+      <CRS>EPSG:4258</CRS>
+      <CRS>EPSG:4326</CRS>
+      <CRS>EPSG:23030</CRS>
+      <CRS>EPSG:23031</CRS>
+      <CRS>EPSG:23032</CRS>
+      <CRS>EPSG:27561</CRS>
+      <CRS>EPSG:27562</CRS>
+      <CRS>EPSG:27563</CRS>
+      <CRS>EPSG:27564</CRS>
+      <CRS>EPSG:27571</CRS>
+      <CRS>EPSG:27572</CRS>
+      <CRS>EPSG:27573</CRS>
+      <CRS>EPSG:27574</CRS>
+      <CRS>EPSG:32630</CRS>
+      <CRS>EPSG:32631</CRS>
+      <CRS>EPSG:32632</CRS>
+      <CRS>EPSG:900913</CRS>
+      <CRS>EPSG:31370</CRS>
+      <CRS>EPSG:3812</CRS>
+      <CRS>CRS:84</CRS>
+      <EX_GeographicBoundingBox>
+        <westBoundLongitude>1.2336997276636186</westBoundLongitude>
+        <eastBoundLongitude>4.858330088885997</eastBoundLongitude>
+        <southBoundLatitude>48.78232630108645</southBoundLatitude>
+        <northBoundLatitude>51.09560738973376</northBoundLatitude>
+      </EX_GeographicBoundingBox>
+      <BoundingBox CRS="CRS:84" minx="1.2336997276636186" miny="48.78232630108645" maxx="4.858330088885997" maxy="51.09560738973376"/>
+      <BoundingBox CRS="EPSG:2154" minx="570226.0263263492" miny="6853582.6873292215" maxx="836534.389644025" maxy="7112660.290085572"/>
+      <BoundingBox CRS="EPSG:3857" minx="137334.82547531428" miny="6238007.108312912" maxx="540826.8316004287" maxy="6638223.01937403"/>
+      <BoundingBox CRS="EPSG:3942" minx="1569267.8060101895" miny="1955530.7338947193" maxx="1837542.7107078051" maxy="2216858.1777886082"/>
+      <BoundingBox CRS="EPSG:3943" minx="1569531.2420034613" miny="2843763.6592663014" maxx="1837265.5105488712" maxy="3104487.8372244406"/>
+      <BoundingBox CRS="EPSG:3944" minx="1569750.705291103" miny="3732182.7476249253" maxx="1837034.5738987047" maxy="3992393.077298666"/>
+      <BoundingBox CRS="EPSG:3945" minx="1569926.9984499463" miny="4620750.97556449" maxx="1836849.0563795865" maxy="4880535.210759643"/>
+      <BoundingBox CRS="EPSG:3946" minx="1570060.9139012943" miny="5509431.919778248" maxx="1836708.1242990263" maxy="5768876.174597668"/>
+      <BoundingBox CRS="EPSG:3947" minx="1570153.2366159987" miny="6398189.767507583" maxx="1836610.9518038568" maxy="6657378.535054349"/>
+      <BoundingBox CRS="EPSG:3948" minx="1570204.7469298257" miny="7286989.330382445" maxx="1836556.717918292" maxy="7546005.4958094545"/>
+      <BoundingBox CRS="EPSG:3949" minx="1570216.2234785948" miny="8175796.061950477" maxx="1836544.603455972" maxy="8434720.90962329"/>
+      <BoundingBox CRS="EPSG:3950" minx="1570188.4462633852" miny="9064576.079221427" maxx="1836573.7877951663" maxy="9323489.293740522"/>
+      <BoundingBox CRS="EPSG:4171" minx="48.78232634284084" miny="1.2336997276636184" maxx="51.0956074298024" maxy="4.858330088885998"/>
+      <BoundingBox CRS="EPSG:4258" minx="48.78232634284084" miny="1.2336997276636184" maxx="51.0956074298024" maxy="4.858330088885998"/>
+      <BoundingBox CRS="EPSG:4326" minx="48.78232630108645" miny="1.2336997276636186" maxx="51.09560738973376" maxy="4.858330088885997"/>
+      <BoundingBox CRS="EPSG:23030" minx="796511.908328981" miny="5412123.193713543" maxx="1077142.224158662" maxy="5690103.718429666"/>
+      <BoundingBox CRS="EPSG:23031" minx="370339.4172721369" miny="5403466.779106706" maxx="636603.1580213" maxy="5662308.138026746"/>
+      <BoundingBox CRS="EPSG:23032" minx="-70207.5951017848" miny="5411736.681703289" maxx="210110.61879825895" maxy="5689401.921360245"/>
+      <BoundingBox CRS="EPSG:27561" minx="518960.5636231436" miny="120206.3275127748" maxx="785287.474428558" maxy="380452.73968119407"/>
+      <BoundingBox CRS="EPSG:27562" minx="518917.6380966158" miny="420436.99502585176" maxx="785387.8820672191" maxy="680955.3699922203"/>
+      <BoundingBox CRS="EPSG:27563" minx="518688.26133164304" miny="721023.2157305472" maxx="785914.6154748877" maxy="982419.8740674914"/>
+      <BoundingBox CRS="EPSG:27564" minx="-81367.3218631847" miny="922964.4353031798" maxx="186813.54628558893" maxy="1185398.8155368557"/>
+      <BoundingBox CRS="EPSG:27571" minx="518960.5636231436" miny="1120206.3275127748" maxx="785287.474428558" maxy="1380452.739681194"/>
+      <BoundingBox CRS="EPSG:27572" minx="536101.6947900378" miny="2420432.640769762" maxx="802563.6152660212" maxy="2681506.458111542"/>
+      <BoundingBox CRS="EPSG:27573" minx="518688.26133164304" miny="3721023.215730547" maxx="785914.6154748877" maxy="3982419.8740674914"/>
+      <BoundingBox CRS="EPSG:27574" minx="-81367.3218631847" miny="4922964.43530318" maxx="186813.54628558893" maxy="5185398.815536856"/>
+      <BoundingBox CRS="EPSG:32630" minx="796409.1337292739" miny="5411908.207325733" maxx="1077037.2378690871" maxy="5689886.5371700805"/>
+      <BoundingBox CRS="EPSG:32631" minx="370248.97807112726" miny="5403259.509152773" maxx="636511.1573574047" maxy="5662099.316032387"/>
+      <BoundingBox CRS="EPSG:32632" minx="-70285.16616325814" miny="5411535.987384902" maxx="210031.6395130839" maxy="5689199.830015183"/>
+      <BoundingBox CRS="EPSG:900913" minx="137334.82547531428" miny="6238007.108312912" maxx="540826.8316004287" maxy="6638223.01937403"/>
+      <BoundingBox CRS="EPSG:31370" minx="-80413.39217416933" miny="-58926.31726684235" maxx="185994.79748584752" maxy="203022.90762281045"/>
+      <BoundingBox CRS="EPSG:3812" minx="419614.8633200403" miny="441081.3616151307" maxx="686021.4928253053" maxy="702996.8927262962"/>
+      <Layer queryable="1" opaque="0">
+        <Name>filosofi2015_200m_hdf</Name>
+        <Title>INSEE - Nombre de ménages à bas revenus</Title>
+        <Abstract>Nombre de ménages à bas revenus</Abstract>
+        <KeywordList>
+          <Keyword>insee</Keyword>
+          <Keyword>ménage</Keyword>
+          <Keyword>ménages</Keyword>
+          <Keyword>revenus</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.3323360702207558</westBoundLongitude>
+          <eastBoundLongitude>4.287291886685442</eastBoundLongitude>
+          <southBoundLatitude>48.836350455397316</southBoundLatitude>
+          <northBoundLatitude>51.09560738973376</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.3323360702207558" miny="48.836350455397316" maxx="4.287291886685442" maxy="51.09560738973376"/>
+        <BoundingBox CRS="EPSG:2154" minx="582885.0" miny="6860772.0" maxx="790397.1875" maxy="7111141.0"/>
+        <BoundingBox CRS="EPSG:3857" minx="148314.97290248575" miny="6247138.978339257" maxx="477259.14970795676" maxy="6638223.02614963"/>
+        <BoundingBox CRS="EPSG:3942" minx="1581604.9078333746" miny="1962680.7042396348" maxx="1791385.47853492" maxy="2215441.767119517"/>
+        <BoundingBox CRS="EPSG:3943" minx="1581938.0890069758" miny="2850920.246267903" maxx="1791128.251116698" maxy="3103048.2552394955"/>
+        <BoundingBox CRS="EPSG:3944" minx="1582229.5296271658" miny="3739347.9462927403" maxx="1790903.2447692566" maxy="3990930.396208463"/>
+        <BoundingBox CRS="EPSG:3945" minx="1582480.032414237" miny="4627926.752998235" maxx="1790709.839757507" maxy="4879049.489429602"/>
+        <BoundingBox CRS="EPSG:3946" minx="1582690.3860639906" miny="5516620.214680905" maxx="1790547.4271777708" maxy="5767367.459807777"/>
+        <BoundingBox CRS="EPSG:3947" minx="1582820.2467099617" miny="6405383.201379622" maxx="1790447.1487982783" maxy="6655856.566904798"/>
+        <BoundingBox CRS="EPSG:3948" minx="1582868.6443850393" miny="7294180.092221776" maxx="1790409.7531231267" maxy="7544480.404432112"/>
+        <BoundingBox CRS="EPSG:3949" minx="1582880.8757287944" miny="8182986.3663853705" maxx="1790400.275069615" maxy="8433192.30420773"/>
+        <BoundingBox CRS="EPSG:3950" minx="1582857.6458460519" miny="9071768.097759377" maxx="1790418.170293011" maxy="9321956.79002704"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.83635045539731" miny="1.3323360702207558" maxx="51.09560738973377" maxy="4.287291886685443"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.83635045539731" miny="1.3323360702207558" maxx="51.09560738973377" maxy="4.287291886685443"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.836350495251786" miny="1.332336070220756" maxx="51.09560742795914" maxy="4.287291886685444"/>
+        <BoundingBox CRS="EPSG:23030" minx="803486.6090948089" miny="5418838.293035113" maxx="1030543.3850343284" maxy="5685256.730857465"/>
+        <BoundingBox CRS="EPSG:23031" minx="383002.08261119365" miny="5410654.783230491" maxx="590466.224757783" maxy="5660770.958019457"/>
+        <BoundingBox CRS="EPSG:23032" minx="-57083.41013437824" miny="5420914.155471246" maxx="170102.5286578046" maxy="5687459.946794274"/>
+        <BoundingBox CRS="EPSG:27561" minx="529571.840585837" miny="126971.23156850661" maxx="739037.7394495897" maxy="378880.24653708114"/>
+        <BoundingBox CRS="EPSG:27562" minx="529396.3133894986" miny="427188.32299265196" maxx="739119.2626449844" maxy="679428.1900188619"/>
+        <BoundingBox CRS="EPSG:27563" minx="529050.5356746112" miny="727775.5480848007" maxx="739521.0923749199" maxy="980937.2379353446"/>
+        <BoundingBox CRS="EPSG:27564" minx="-71077.56758364837" miny="929727.3058884146" maxx="140259.1186138446" maxy="1183947.5909137204"/>
+        <BoundingBox CRS="EPSG:27571" minx="529571.840585837" miny="1126971.2315685067" maxx="739037.7394495897" maxy="1378880.2465370812"/>
+        <BoundingBox CRS="EPSG:27572" minx="545870.0126634729" miny="2426671.2739836345" maxx="756335.4074885936" maxy="2679525.6251361906"/>
+        <BoundingBox CRS="EPSG:27573" minx="529050.5356746112" miny="3727775.5480848006" maxx="739521.0923749199" maxy="3980937.2379353447"/>
+        <BoundingBox CRS="EPSG:27574" minx="-71077.56758364837" miny="4929727.305888414" maxx="140259.1186138446" maxy="5183947.59091372"/>
+        <BoundingBox CRS="EPSG:32630" minx="803383.8080158832" miny="5418623.258488261" maxx="1030438.7386355597" maxy="5685039.665620497"/>
+        <BoundingBox CRS="EPSG:32631" minx="382911.5906574263" miny="5410447.487714662" maxx="590374.5213704625" maxy="5660562.305635291"/>
+        <BoundingBox CRS="EPSG:32632" minx="-57161.025996520184" miny="5420713.4028684525" maxx="170023.75276398682" maxy="5687257.875969476"/>
+        <BoundingBox CRS="EPSG:900913" minx="148314.97290248575" miny="6247138.978339257" maxx="477259.14970795676" maxy="6638223.02614963"/>
+        <BoundingBox CRS="EPSG:31370" minx="-67560.13275866228" miny="-52400.546378606" maxx="144365.79987718625" maxy="201544.31049691234"/>
+        <BoundingBox CRS="EPSG:3812" minx="432390.62105788005" miny="447572.4587517495" maxx="644288.8624490628" maxy="701493.8972853152"/>
+        <Style>
+          <Name>polygon</Name>
+          <Title>A boring default style</Title>
+          <Abstract>A sample style that just prints out a transparent red interior with a red outline</Abstract>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=filosofi2015_200m_hdf"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>filosofi2015_200m_menage_erbm</Name>
+        <Title>INSEE - Familles mono parentales</Title>
+        <Abstract>Familles mono parentales 2015</Abstract>
+        <KeywordList>
+          <Keyword>insee</Keyword>
+          <Keyword>famille</Keyword>
+          <Keyword>monoparentale</Keyword>
+          <Keyword>carroyage</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.3470117895801896</westBoundLongitude>
+          <eastBoundLongitude>4.280475667485361</eastBoundLongitude>
+          <southBoundLatitude>48.83353134121504</southBoundLatitude>
+          <northBoundLatitude>51.08587693454064</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.3470117895801896" miny="48.83353134121504" maxx="4.280475667485361" maxy="51.08587693454064"/>
+        <BoundingBox CRS="EPSG:2154" minx="583893.20302342" miny="6860438.18347524" maxx="789936.056948988" maxy="7110055.31366684"/>
+        <BoundingBox CRS="EPSG:3857" minx="149948.66650860288" miny="6246662.21167414" maxx="476500.3716574683" maxy="6636498.446239349"/>
+        <BoundingBox CRS="EPSG:3942" minx="1582625.9060362673" miny="1962345.9911854202" maxx="1790917.9250360555" maxy="2214344.267084108"/>
+        <BoundingBox CRS="EPSG:3943" minx="1582955.8106390885" miny="2850585.850894591" maxx="1790662.3276131907" maxy="3101953.831748811"/>
+        <BoundingBox CRS="EPSG:3944" minx="1583244.343036632" miny="3739013.763003075" maxx="1790438.779829805" maxy="3989838.662539681"/>
+        <BoundingBox CRS="EPSG:3945" minx="1583492.2986914054" miny="4627592.677976988" maxx="1790246.665385265" maxy="4877960.066293519"/>
+        <BoundingBox CRS="EPSG:3946" minx="1583700.4591833677" miny="5516286.145886621" maxx="1790085.3787384857" maxy="5766279.975219334"/>
+        <BoundingBox CRS="EPSG:3947" minx="1583828.9550610306" miny="6405049.19541935" maxx="1789985.804289177" maxy="6654770.49086857"/>
+        <BoundingBox CRS="EPSG:3948" minx="1583876.8295614808" miny="7293846.21425691" maxx="1789948.6829684572" maxy="7543395.207357289"/>
+        <BoundingBox CRS="EPSG:3949" minx="1583888.8510558233" miny="8182652.513510385" maxx="1789939.335266534" maxy="8432107.642561575"/>
+        <BoundingBox CRS="EPSG:3950" minx="1583865.7185195498" miny="9071434.169073256" maxx="1789957.2196640999" maxy="9320872.32706768"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.83353134121504" miny="1.3470117895801896" maxx="51.08587693454064" maxy="4.280475667485361"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.83353134121504" miny="1.3470117895801896" maxx="51.08587693454064" maxy="4.280475667485361"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.83353138107111" miny="1.3470117895801899" maxx="51.08587697277449" maxy="4.280475667485362"/>
+        <BoundingBox CRS="EPSG:23030" minx="804576.6422334176" miny="5418583.928865374" maxx="1030108.897009036" maxy="5684136.059983725"/>
+        <BoundingBox CRS="EPSG:23031" minx="384009.9276995527" miny="5410321.035589746" maxx="590005.370226983" maxy="5659686.493128537"/>
+        <BoundingBox CRS="EPSG:23032" minx="-56101.583781058434" miny="5420617.075495005" maxx="169556.4814693142" maxy="5686293.231246296"/>
+        <BoundingBox CRS="EPSG:27561" minx="530586.3751294916" miny="126645.3032127847" maxx="738579.7925674238" maxy="377792.4429345534"/>
+        <BoundingBox CRS="EPSG:27562" minx="530413.9597997946" miny="426862.72176101874" maxx="738660.700789761" maxy="678338.1604802979"/>
+        <BoundingBox CRS="EPSG:27563" minx="530073.7821181648" miny="727449.5528239013" maxx="739060.8410298052" maxy="979842.3839218006"/>
+        <BoundingBox CRS="EPSG:27564" minx="-70048.63207758164" miny="929400.5426222712" maxx="139796.93291393315" maxy="1182847.5294999194"/>
+        <BoundingBox CRS="EPSG:27571" minx="530586.3751294916" miny="1126645.3032127847" maxx="738579.7925674238" maxy="1377792.4429345534"/>
+        <BoundingBox CRS="EPSG:27572" minx="546890.8771389559" miny="2426348.6760215387" maxx="755877.8442093735" maxy="2678434.2367452304"/>
+        <BoundingBox CRS="EPSG:27573" minx="530073.7821181648" miny="3727449.552823901" maxx="739060.8410298052" maxy="3979842.3839218006"/>
+        <BoundingBox CRS="EPSG:27574" minx="-70048.63207758164" miny="4929400.542622271" maxx="139796.93291393315" maxy="5182847.529499919"/>
+        <BoundingBox CRS="EPSG:32630" minx="804473.8329183338" miny="5418368.894705905" maxx="1030004.2529470619" maxy="5683919.002531546"/>
+        <BoundingBox CRS="EPSG:32631" minx="383919.4299217892" miny="5410113.741936794" maxx="589913.6694070584" maxy="5659477.846093007"/>
+        <BoundingBox CRS="EPSG:32632" minx="-56179.20383966272" miny="5420416.324113908" maxx="169477.70823320543" maxy="5686091.165801332"/>
+        <BoundingBox CRS="EPSG:900913" minx="149948.66650860288" miny="6246662.21167414" maxx="476500.3716574683" maxy="6636498.446239349"/>
+        <BoundingBox CRS="EPSG:31370" minx="-66558.21568069208" miny="-52726.43263889663" maxx="143886.984043429" maxy="200441.48729729373"/>
+        <BoundingBox CRS="EPSG:3812" minx="433392.567879539" miny="447246.52562468336" maxx="643810.1639294317" maxy="700391.1864865443"/>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/57a9d28a-e400-46dd-99b7-2c123135d6e6"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/57a9d28a-e400-46dd-99b7-2c123135d6e6"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/57a9d28a-e400-46dd-99b7-2c123135d6e6/formatters/xml"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/57a9d28a-e400-46dd-99b7-2c123135d6e6/formatters/xml"/>
+        </MetadataURL>
+        <Style>
+          <Name>familles_mp</Name>
+          <Title>familles_mp</Title>
+          <LegendURL width="77" height="100">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=filosofi2015_200m_menage_erbm"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>menages_5_individus</Name>
+          <Title>menages_5_individus</Title>
+          <LegendURL width="77" height="100">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=filosofi2015_200m_menage_erbm&amp;style=menages_5_individus"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>insee_ind_25</Name>
+        <Title>INSEE - Part des moins de 25 ans (2010)</Title>
+        <Abstract>Part des individus âgés de moins de 25 ans dans la population totale, par "rectangle INSEE", en Région Hauts-de-France. La taille du cercle représente le nombre de total des individus. Les aplats de couleurs représentent la part des individus de moins de 25 ans dans la population totale des individus. Le "rectangle" est l'objet élémentaire des données carroyées à 200 mètres de l'INSEE relatives à l'âge des individus.
+Source : données carroyées à 200 mètres de l'INSEE, millésime 2010. Mise en ligne et représentation : PPIGE.</Abstract>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>insee_ind_25</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.2946002501505778</westBoundLongitude>
+          <eastBoundLongitude>4.336925588755108</eastBoundLongitude>
+          <southBoundLatitude>48.784047480936614</southBoundLatitude>
+          <northBoundLatitude>51.08365187058239</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.2946002501505778" miny="48.784047480936614" maxx="4.336925588755108" maxy="51.08365187058239"/>
+        <BoundingBox CRS="EPSG:2154" minx="580205.2937215319" miny="6855009.94685985" maxx="793905.8473085839" maxy="7109806.870505964"/>
+        <BoundingBox CRS="EPSG:3857" minx="144114.24062760692" miny="6238297.899527868" maxx="482784.34814853687" maxy="6636104.137381719"/>
+        <BoundingBox CRS="EPSG:3942" minx="1578898.2134088366" miny="1956871.6529339587" maxx="1794930.6928410833" maxy="2214093.1371590286"/>
+        <BoundingBox CRS="EPSG:3943" minx="1579238.4880641876" miny="2845123.9127178476" maxx="1794663.8970852057" maxy="3101703.4020197387"/>
+        <BoundingBox CRS="EPSG:3944" minx="1579536.0791786152" miny="3733562.357298139" maxx="1794430.5635469866" maxy="3989588.844596183"/>
+        <BoundingBox CRS="EPSG:3945" minx="1579791.807367664" miny="4622149.971766554" maxx="1794230.0488073141" maxy="4877710.773422932"/>
+        <BoundingBox CRS="EPSG:3946" minx="1580006.4789297893" miny="5510850.340326629" maxx="1794061.7206766927" maxy="5766031.12237734"/>
+        <BoundingBox CRS="EPSG:3947" minx="1580138.1091786192" miny="6399617.935106848" maxx="1793958.4922877382" maxy="6654522.620300098"/>
+        <BoundingBox CRS="EPSG:3948" minx="1580185.6739192298" miny="7288417.151234441" maxx="1793921.166307602" maxy="7543148.888724864"/>
+        <BoundingBox CRS="EPSG:3949" minx="1580196.2823284173" miny="8177223.972183381" maxx="1793912.8121162402" maxy="8431862.76937232"/>
+        <BoundingBox CRS="EPSG:3950" minx="1580170.6544806096" miny="9066004.506511828" maxx="1793932.8651537346" maxy="9320628.795297451"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.784047480936614" miny="1.2946002501505778" maxx="51.0836518705824" maxy="4.336925588755109"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.784047480936614" miny="1.2946002501505778" maxx="51.0836518705824" maxy="4.336925588755109"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.784047520820415" miny="1.294600250150578" maxx="51.08365190881818" maxy="4.336925588755109"/>
+        <BoundingBox CRS="EPSG:23030" minx="800926.0970902599" miny="5412878.652739884" maxx="1034512.0248593501" maxy="5684217.171277662"/>
+        <BoundingBox CRS="EPSG:23031" minx="380318.2142417624" miny="5404894.187548197" maxx="593977.7633403227" maxy="5659444.327885615"/>
+        <BoundingBox CRS="EPSG:23032" minx="-60225.24971941474" miny="5414887.939238302" maxx="173488.1241389275" maxy="5686352.364229911"/>
+        <BoundingBox CRS="EPSG:27561" minx="526908.0745704487" miny="121187.9697875535" maxx="742601.5698651025" maxy="377582.51695855893"/>
+        <BoundingBox CRS="EPSG:27562" minx="526726.6912511842" miny="421400.492251668" maxx="742679.0415610698" maxy="678123.4147611845"/>
+        <BoundingBox CRS="EPSG:27563" minx="526368.6668897688" miny="721969.7571749962" maxx="743084.6748924202" maxy="979622.0469490379"/>
+        <BoundingBox CRS="EPSG:27564" minx="-73772.51665660446" miny="923899.6260451528" maxx="143830.71650337795" maxy="1182622.6653434592"/>
+        <BoundingBox CRS="EPSG:27571" minx="526908.0745704487" miny="1121187.9697875534" maxx="742601.5698651025" maxy="1377582.516958559"/>
+        <BoundingBox CRS="EPSG:27572" minx="543204.3879375776" miny="2420875.53288126" maxx="759912.2892751261" maxy="2678231.3015572904"/>
+        <BoundingBox CRS="EPSG:27573" minx="526368.6668897688" miny="3721969.757174996" maxx="743084.6748924202" maxy="3979622.046949038"/>
+        <BoundingBox CRS="EPSG:27574" minx="-73772.51665660446" miny="4923899.626045153" maxx="143830.71650337795" maxy="5182622.66534346"/>
+        <BoundingBox CRS="EPSG:32630" minx="800823.3098202364" miny="5412663.661152562" maxx="1034407.3420699454" maxy="5684000.106164602"/>
+        <BoundingBox CRS="EPSG:32631" minx="380227.7369178017" miny="5404686.92561503" maxx="593886.0361140118" maxy="5659235.683633781"/>
+        <BoundingBox CRS="EPSG:32632" minx="-60302.84628212941" miny="5414687.2180972835" maxx="173409.33301671548" maxy="5686150.296871353"/>
+        <BoundingBox CRS="EPSG:900913" minx="144114.24062760692" miny="6238297.899527868" maxx="482784.34814853687" maxy="6636104.137381719"/>
+        <BoundingBox CRS="EPSG:31370" minx="-70354.2920012759" miny="-58225.72942471597" maxx="147842.70163975202" maxy="200266.36616654508"/>
+        <BoundingBox CRS="EPSG:3812" minx="429597.0875971614" miny="441747.6833197513" maxx="647765.8830655096" maxy="700215.6781718777"/>
+        <Attribution>
+          <Title>INSEE</Title>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.insee.fr/fr/statistiques/2520034"/>
+          <LogoURL height="273" width="1117">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.insee.fr/static/img/logo_com_externe_semi_bold.png"/>
+          </LogoURL>
+        </Attribution>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/?uuid=23081658c5144a8d9ea30ac8a026736f"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/?uuid=23081658c5144a8d9ea30ac8a026736f"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://open.isogeo.com/s/cc1ba385918d40cc8078063121873550/pp/m0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70/resources/23081658c5144a8d9ea30ac8a026736f.xml?proxyUrl=https%3A%2F%2Fopen.isogeo.com%2Fs%2Fcc1ba385918d40cc8078063121873550%2Fpp%2Fm0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70%2F"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://open.isogeo.com/s/cc1ba385918d40cc8078063121873550/pp/m0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70/resources/23081658c5144a8d9ea30ac8a026736f.xml?proxyUrl=https%3A%2F%2Fopen.isogeo.com%2Fs%2Fcc1ba385918d40cc8078063121873550%2Fpp%2Fm0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70%2F"/>
+        </MetadataURL>
+        <Style>
+          <Name>insee_ind_25</Name>
+          <Title>insee_ind_25</Title>
+          <LegendURL width="341" height="120">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=insee_ind_25"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>insee_ind_65</Name>
+        <Title>INSEE - Part des plus de 65 ans (2010)</Title>
+        <Abstract>Part des individus âgés de plus de 65 ans dans la population totale, par "rectangle INSEE", en Région Hauts-de-France. La taille du cercle représente le nombre de total des individus. Les aplats de couleurs représentent la part des individus de plus de 65 ans dans la population totale des individus. Le "rectangle" est l'objet élémentaire des données carroyées à 200 mètres de l'INSEE relatives à l'âge des individus.
+Données issues des "données carroyées à 200 mètres" de l'INSEE (millésime 2010). Indicateur calculé par PPIGE.</Abstract>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>insee_ind_65</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.2946002501505778</westBoundLongitude>
+          <eastBoundLongitude>4.336925588755108</eastBoundLongitude>
+          <southBoundLatitude>48.784047480936614</southBoundLatitude>
+          <northBoundLatitude>51.08365187058239</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.2946002501505778" miny="48.784047480936614" maxx="4.336925588755108" maxy="51.08365187058239"/>
+        <BoundingBox CRS="EPSG:2154" minx="580205.2937215319" miny="6855009.94685985" maxx="793905.8473085839" maxy="7109806.870505964"/>
+        <BoundingBox CRS="EPSG:3857" minx="144114.24062760692" miny="6238297.899527868" maxx="482784.34814853687" maxy="6636104.137381719"/>
+        <BoundingBox CRS="EPSG:3942" minx="1578898.2134088366" miny="1956871.6529339587" maxx="1794930.6928410833" maxy="2214093.1371590286"/>
+        <BoundingBox CRS="EPSG:3943" minx="1579238.4880641876" miny="2845123.9127178476" maxx="1794663.8970852057" maxy="3101703.4020197387"/>
+        <BoundingBox CRS="EPSG:3944" minx="1579536.0791786152" miny="3733562.357298139" maxx="1794430.5635469866" maxy="3989588.844596183"/>
+        <BoundingBox CRS="EPSG:3945" minx="1579791.807367664" miny="4622149.971766554" maxx="1794230.0488073141" maxy="4877710.773422932"/>
+        <BoundingBox CRS="EPSG:3946" minx="1580006.4789297893" miny="5510850.340326629" maxx="1794061.7206766927" maxy="5766031.12237734"/>
+        <BoundingBox CRS="EPSG:3947" minx="1580138.1091786192" miny="6399617.935106848" maxx="1793958.4922877382" maxy="6654522.620300098"/>
+        <BoundingBox CRS="EPSG:3948" minx="1580185.6739192298" miny="7288417.151234441" maxx="1793921.166307602" maxy="7543148.888724864"/>
+        <BoundingBox CRS="EPSG:3949" minx="1580196.2823284173" miny="8177223.972183381" maxx="1793912.8121162402" maxy="8431862.76937232"/>
+        <BoundingBox CRS="EPSG:3950" minx="1580170.6544806096" miny="9066004.506511828" maxx="1793932.8651537346" maxy="9320628.795297451"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.784047480936614" miny="1.2946002501505778" maxx="51.0836518705824" maxy="4.336925588755109"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.784047480936614" miny="1.2946002501505778" maxx="51.0836518705824" maxy="4.336925588755109"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.784047520820415" miny="1.294600250150578" maxx="51.08365190881818" maxy="4.336925588755109"/>
+        <BoundingBox CRS="EPSG:23030" minx="800926.0970902599" miny="5412878.652739884" maxx="1034512.0248593501" maxy="5684217.171277662"/>
+        <BoundingBox CRS="EPSG:23031" minx="380318.2142417624" miny="5404894.187548197" maxx="593977.7633403227" maxy="5659444.327885615"/>
+        <BoundingBox CRS="EPSG:23032" minx="-60225.24971941474" miny="5414887.939238302" maxx="173488.1241389275" maxy="5686352.364229911"/>
+        <BoundingBox CRS="EPSG:27561" minx="526908.0745704487" miny="121187.9697875535" maxx="742601.5698651025" maxy="377582.51695855893"/>
+        <BoundingBox CRS="EPSG:27562" minx="526726.6912511842" miny="421400.492251668" maxx="742679.0415610698" maxy="678123.4147611845"/>
+        <BoundingBox CRS="EPSG:27563" minx="526368.6668897688" miny="721969.7571749962" maxx="743084.6748924202" maxy="979622.0469490379"/>
+        <BoundingBox CRS="EPSG:27564" minx="-73772.51665660446" miny="923899.6260451528" maxx="143830.71650337795" maxy="1182622.6653434592"/>
+        <BoundingBox CRS="EPSG:27571" minx="526908.0745704487" miny="1121187.9697875534" maxx="742601.5698651025" maxy="1377582.516958559"/>
+        <BoundingBox CRS="EPSG:27572" minx="543204.3879375776" miny="2420875.53288126" maxx="759912.2892751261" maxy="2678231.3015572904"/>
+        <BoundingBox CRS="EPSG:27573" minx="526368.6668897688" miny="3721969.757174996" maxx="743084.6748924202" maxy="3979622.046949038"/>
+        <BoundingBox CRS="EPSG:27574" minx="-73772.51665660446" miny="4923899.626045153" maxx="143830.71650337795" maxy="5182622.66534346"/>
+        <BoundingBox CRS="EPSG:32630" minx="800823.3098202364" miny="5412663.661152562" maxx="1034407.3420699454" maxy="5684000.106164602"/>
+        <BoundingBox CRS="EPSG:32631" minx="380227.7369178017" miny="5404686.92561503" maxx="593886.0361140118" maxy="5659235.683633781"/>
+        <BoundingBox CRS="EPSG:32632" minx="-60302.84628212941" miny="5414687.2180972835" maxx="173409.33301671548" maxy="5686150.296871353"/>
+        <BoundingBox CRS="EPSG:900913" minx="144114.24062760692" miny="6238297.899527868" maxx="482784.34814853687" maxy="6636104.137381719"/>
+        <BoundingBox CRS="EPSG:31370" minx="-70354.2920012759" miny="-58225.72942471597" maxx="147842.70163975202" maxy="200266.36616654508"/>
+        <BoundingBox CRS="EPSG:3812" minx="429597.0875971614" miny="441747.6833197513" maxx="647765.8830655096" maxy="700215.6781718777"/>
+        <Attribution>
+          <Title>INSEE</Title>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.insee.fr/fr/statistiques/2520034"/>
+          <LogoURL height="273" width="1117">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.insee.fr/static/img/logo_com_externe_semi_bold.png"/>
+          </LogoURL>
+        </Attribution>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/?uuid=77148bd3ed834529920fb0399883f92b"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/?uuid=77148bd3ed834529920fb0399883f92b"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://open.isogeo.com/s/cc1ba385918d40cc8078063121873550/pp/m0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70/resources/77148bd3ed834529920fb0399883f92b.xml?proxyUrl=https%3A%2F%2Fopen.isogeo.com%2Fs%2Fcc1ba385918d40cc8078063121873550%2Fpp%2Fm0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70%2F"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://open.isogeo.com/s/cc1ba385918d40cc8078063121873550/pp/m0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70/resources/77148bd3ed834529920fb0399883f92b.xml?proxyUrl=https%3A%2F%2Fopen.isogeo.com%2Fs%2Fcc1ba385918d40cc8078063121873550%2Fpp%2Fm0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70%2F"/>
+        </MetadataURL>
+        <Style>
+          <Name>insee_ind_65</Name>
+          <Title>insee_ind_65</Title>
+          <LegendURL width="341" height="120">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=insee_ind_65"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>insee_ind_c</Name>
+        <Title>INSEE - Répartition de la population (2010)</Title>
+        <Abstract>Nombre d'individus résidant dans les "carreaux INSEE", représentés en cercles proportionnels, en Région Hauts-de-France. Le "carreau" est l'objet élémentaire des données carroyées à 200 mètres de l'INSEE.
+Source : données carroyées à 200 mètres de l'INSEE (millésime 2010). Mise en ligne et représentation : PPIGE.</Abstract>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>insee_ind_c</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.2891891495799057</westBoundLongitude>
+          <eastBoundLongitude>4.355749510027013</eastBoundLongitude>
+          <southBoundLatitude>48.78251499734759</southBoundLatitude>
+          <northBoundLatitude>51.08370864752072</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.2891891495799057" miny="48.78251499734759" maxx="4.355749510027013" maxy="51.08370864752072"/>
+        <BoundingBox CRS="EPSG:2154" minx="579825.1894562738" miny="6854847.379285456" maxx="795228.2101770664" maxy="7109812.121927158"/>
+        <BoundingBox CRS="EPSG:3857" minx="143511.8796674485" miny="6238038.993826515" maxx="484879.8174792578" maxy="6636114.198721714"/>
+        <BoundingBox CRS="EPSG:3942" minx="1578513.9579101286" miny="1956707.270852128" maxx="1796267.4835263467" maxy="2214098.5308339265"/>
+        <BoundingBox CRS="EPSG:3943" minx="1578855.313081662" miny="2844960.0015524896" maxx="1795996.931831299" maxy="3101708.7612298056"/>
+        <BoundingBox CRS="EPSG:3944" minx="1579153.84929685" miny="3733398.859050885" maxx="1795760.3134596727" maxy="3989594.1716489214"/>
+        <BoundingBox CRS="EPSG:3945" minx="1579410.3897736971" miny="4621986.829553511" maxx="1795556.975937189" maxy="4877716.070572974"/>
+        <BoundingBox CRS="EPSG:3946" minx="1579625.7433677225" miny="5510687.498358723" maxx="1795386.2781771026" maxy="5766036.391828099"/>
+        <BoundingBox CRS="EPSG:3947" minx="1579757.7645313565" miny="6399455.268221019" maxx="1795281.6186442631" maxy="6654527.93816183"/>
+        <BoundingBox CRS="EPSG:3948" minx="1579805.4246176046" miny="7288254.532261677" maxx="1795243.8122670292" maxy="7543154.334105326"/>
+        <BoundingBox CRS="EPSG:3949" minx="1579816.012207428" miny="8177061.351286168" maxx="1795235.3847235327" maxy="8431868.341213485"/>
+        <BoundingBox CRS="EPSG:3950" minx="1579790.2496254405" miny="9065841.834820291" maxx="1795255.7635341918" maxy="9320634.492597679"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.78251499734759" miny="1.2891891495799055" maxx="51.08370864752073" maxy="4.355749510027012"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.78251499734759" miny="1.2891891495799055" maxx="51.08370864752073" maxy="4.355749510027012"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.78251503723225" miny="1.2891891495799057" maxx="51.08370868575648" maxy="4.355749510027012"/>
+        <BoundingBox CRS="EPSG:23030" minx="800547.3865056776" miny="5412686.740334744" maxx="1035847.4980625665" maxy="5684331.993475968"/>
+        <BoundingBox CRS="EPSG:23031" minx="379938.0083007767" miny="5404731.621135682" maxx="595300.0551294357" maxy="5659450.158494395"/>
+        <BoundingBox CRS="EPSG:23032" minx="-60618.52360081277" miny="5414622.1849014005" maxx="174804.81127849052" maxy="5686389.2474800795"/>
+        <BoundingBox CRS="EPSG:27561" minx="526528.7206935151" miny="121022.42411540796" maxx="743925.5573531304" maxy="377600.4438334864"/>
+        <BoundingBox CRS="EPSG:27562" minx="526346.395706675" miny="421234.65703540435" maxx="744003.57432824" maxy="678139.9279119427"/>
+        <BoundingBox CRS="EPSG:27563" minx="525986.512968224" miny="721803.2400009495" maxx="744412.788694614" maxy="979637.0999854051"/>
+        <BoundingBox CRS="EPSG:27564" minx="-74156.61976216605" miny="923732.3558890023" maxx="145163.44091878601" maxy="1182636.6405329774"/>
+        <BoundingBox CRS="EPSG:27571" minx="526528.7206935151" miny="1121022.424115408" maxx="743925.5573531304" maxy="1377600.4438334864"/>
+        <BoundingBox CRS="EPSG:27572" minx="542824.0809358963" miny="2420708.568514952" maxx="761237.290292478" maxy="2678251.747843397"/>
+        <BoundingBox CRS="EPSG:27573" minx="525986.512968224" miny="3721803.2400009492" maxx="744412.788694614" maxy="3979637.099985405"/>
+        <BoundingBox CRS="EPSG:27574" minx="-74156.61976216605" miny="4923732.355889002" maxx="145163.44091878601" maxy="5182636.640532977"/>
+        <BoundingBox CRS="EPSG:32630" minx="800444.6015665501" miny="5412471.750506878" maxx="1035742.8060484428" maxy="5684114.925259569"/>
+        <BoundingBox CRS="EPSG:32631" minx="379847.53313833405" miny="5404524.360004155" maxx="595208.3199444704" maxy="5659241.514364641"/>
+        <BoundingBox CRS="EPSG:32632" minx="-60696.118226512335" miny="5414421.465753538" maxx="174726.0141470331" maxy="5686187.179793249"/>
+        <BoundingBox CRS="EPSG:900913" minx="143511.8796674485" miny="6238038.993826515" maxx="484879.8174792578" maxy="6636114.198721714"/>
+        <BoundingBox CRS="EPSG:31370" minx="-70737.73673123642" miny="-58411.35019594245" maxx="149161.9040218354" maxy="200279.106396663"/>
+        <BoundingBox CRS="EPSG:3812" minx="429213.6622238142" miny="441562.20384381135" maxx="649085.0766730356" maxy="700228.3783207145"/>
+        <Attribution>
+          <Title>INSEE</Title>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.insee.fr/fr/statistiques/2520034"/>
+          <LogoURL height="273" width="1117">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.insee.fr/static/img/logo_com_externe_semi_bold.png"/>
+          </LogoURL>
+        </Attribution>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/?uuid=d5180e611de64555ab095ed635dcd6da"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/?uuid=d5180e611de64555ab095ed635dcd6da"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://open.isogeo.com/s/cc1ba385918d40cc8078063121873550/pp/m0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70/resources/d5180e611de64555ab095ed635dcd6da.xml?proxyUrl=https%3A%2F%2Fopen.isogeo.com%2Fs%2Fcc1ba385918d40cc8078063121873550%2Fpp%2Fm0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70%2F"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://open.isogeo.com/s/cc1ba385918d40cc8078063121873550/pp/m0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70/resources/d5180e611de64555ab095ed635dcd6da.xml?proxyUrl=https%3A%2F%2Fopen.isogeo.com%2Fs%2Fcc1ba385918d40cc8078063121873550%2Fpp%2Fm0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70%2F"/>
+        </MetadataURL>
+        <Style>
+          <Name>insee_ind_c</Name>
+          <Title>insee_ind_c</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=insee_ind_c"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>insee_ind_ha</Name>
+        <Title>INSEE - Densité de population (2010)</Title>
+        <Abstract>Densité de population en nombre d'individus par hectare, par "carreau INSEE" en Région Hauts-de-France. Le "carreau" est l'objet élémentaire des données carroyées à 200 mètres de l'INSEE.
+Source : données carroyées à 200 mètres de l'INSEE  (millésime 2010). Mise en ligne et représentation : PPIGE.</Abstract>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>insee_ind_ha</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.287850872529687</westBoundLongitude>
+          <eastBoundLongitude>4.356286909085227</eastBoundLongitude>
+          <southBoundLatitude>48.78232630108645</southBoundLatitude>
+          <northBoundLatitude>51.08450089003093</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.287850872529687" miny="48.78232630108645" maxx="4.356286909085227" maxy="51.08450089003093"/>
+        <BoundingBox CRS="EPSG:2154" minx="579733.0707581027" miny="6854828.303237316" maxx="795264.4460450944" maxy="7109900.526092611"/>
+        <BoundingBox CRS="EPSG:3857" minx="143362.90334767787" miny="6238007.115051128" maxx="484939.64046877116" maxy="6636254.591892576"/>
+        <BoundingBox CRS="EPSG:3942" minx="1578420.684553351" miny="1956687.9045925718" maxx="1796304.2339879188" maxy="2214187.895254475"/>
+        <BoundingBox CRS="EPSG:3943" minx="1578762.3357813614" miny="2844940.708288366" maxx="1796033.5519356471" maxy="3101797.8755275025"/>
+        <BoundingBox CRS="EPSG:3944" minx="1579061.1344724032" miny="3733379.6316081444" maxx="1795796.816728151" maxy="3989683.0673047383"/>
+        <BoundingBox CRS="EPSG:3945" minx="1579317.9045046968" miny="4621967.660902698" maxx="1795593.3756193353" maxy="4877804.778462924"/>
+        <BoundingBox CRS="EPSG:3946" minx="1579533.4553811853" miny="5510668.381611788" maxx="1795422.5872564048" maxy="5766124.942233756"/>
+        <BoundingBox CRS="EPSG:3947" minx="1579665.5909005334" miny="6399436.181958622" maxx="1795317.8773518726" maxy="6654616.3763132235"/>
+        <BoundingBox CRS="EPSG:3948" minx="1579713.2808866384" miny="7288235.454562318" maxx="1795280.061730273" maxy="7543242.705285176"/>
+        <BoundingBox CRS="EPSG:3949" minx="1579723.870093068" miny="8177042.276245252" maxx="1795271.6360210201" maxy="8431956.673299197"/>
+        <BoundingBox CRS="EPSG:3950" minx="1579698.081393798" miny="9065822.756648514" maxx="1795292.0275298422" maxy="9320722.81291684"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.78232630108646" miny="1.287850872529687" maxx="51.08450089003094" maxy="4.356286909085228"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.78232630108646" miny="1.287850872529687" maxx="51.08450089003094" maxy="4.356286909085228"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.78232634097123" miny="1.2878508725296873" maxx="51.084500928265996" maxy="4.356286909085227"/>
+        <BoundingBox CRS="EPSG:23030" minx="800448.6582535885" miny="5412660.511771647" maxx="1035885.2601223121" maxy="5684423.146263915"/>
+        <BoundingBox CRS="EPSG:23031" minx="379845.88028300495" miny="5404712.551866078" maxx="595336.2979912527" maxy="5659538.48436803"/>
+        <BoundingBox CRS="EPSG:23032" minx="-60712.208628532826" miny="5414600.308335242" maxx="174847.96000866918" maxy="5686485.092831827"/>
+        <BoundingBox CRS="EPSG:27561" minx="526436.1094392566" miny="121002.62791253143" maxx="743961.9779264233" maxy="377689.01003886084"/>
+        <BoundingBox CRS="EPSG:27562" minx="526253.5043790895" miny="421214.80120105494" maxx="744039.9941429382" maxy="678228.6747712095"/>
+        <BoundingBox CRS="EPSG:27563" minx="525893.1146857528" miny="721783.2761772131" maxx="744449.2903557854" maxy="979726.2390218269"/>
+        <BoundingBox CRS="EPSG:27564" minx="-74250.53415955693" miny="923712.2821094792" maxx="145200.05686092193" maxy="1182726.2030694194"/>
+        <BoundingBox CRS="EPSG:27571" minx="526436.1094392566" miny="1121002.6279125314" maxx="743961.9779264233" maxy="1377689.0100388608"/>
+        <BoundingBox CRS="EPSG:27572" minx="542730.9276793659" miny="2420688.438809657" maxx="761273.7664411359" maxy="2678340.6014443147"/>
+        <BoundingBox CRS="EPSG:27573" minx="525893.1146857528" miny="3721783.276177213" maxx="744449.2903557854" maxy="3979726.239021827"/>
+        <BoundingBox CRS="EPSG:27574" minx="-74250.53415955693" miny="4923712.282109479" maxx="145200.05686092193" maxy="5182726.20306942"/>
+        <BoundingBox CRS="EPSG:32630" minx="800345.8740456521" miny="5412445.52223553" maxx="1035780.5678225564" maxy="5684206.077416052"/>
+        <BoundingBox CRS="EPSG:32631" minx="379755.40564689436" miny="5404505.290855234" maxx="595244.5625805828" maxy="5659329.839806373"/>
+        <BoundingBox CRS="EPSG:32632" minx="-60789.80280986428" miny="5414399.589313915" maxx="174769.16266695393" maxy="5686283.024698802"/>
+        <BoundingBox CRS="EPSG:900913" minx="143362.90334767787" miny="6238007.115051128" maxx="484939.64046877116" maxy="6636254.591892576"/>
+        <BoundingBox CRS="EPSG:31370" minx="-70830.2641169006" miny="-58431.06337648351" maxx="149199.57847260268" maxy="200369.10796116013"/>
+        <BoundingBox CRS="EPSG:3812" minx="429121.13737478555" miny="441542.4946250327" maxx="649122.7415786239" maxy="700318.3696772845"/>
+        <Attribution>
+          <Title>INSEE</Title>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.insee.fr/fr/statistiques/2520034"/>
+          <LogoURL height="273" width="1117">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.insee.fr/static/img/logo_com_externe_semi_bold.png"/>
+          </LogoURL>
+        </Attribution>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/?uuid=2049f1c2a7f0459a89a527788b2c5ef5"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/?uuid=2049f1c2a7f0459a89a527788b2c5ef5"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://open.isogeo.com/s/cc1ba385918d40cc8078063121873550/pp/m0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70/resources/2049f1c2a7f0459a89a527788b2c5ef5.xml?proxyUrl=https%3A%2F%2Fopen.isogeo.com%2Fs%2Fcc1ba385918d40cc8078063121873550%2Fpp%2Fm0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70%2F"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://open.isogeo.com/s/cc1ba385918d40cc8078063121873550/pp/m0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70/resources/2049f1c2a7f0459a89a527788b2c5ef5.xml?proxyUrl=https%3A%2F%2Fopen.isogeo.com%2Fs%2Fcc1ba385918d40cc8078063121873550%2Fpp%2Fm0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70%2F"/>
+        </MetadataURL>
+        <Style>
+          <Name>insee_ind_ha</Name>
+          <Title>insee_ind_ha</Title>
+          <LegendURL width="173" height="120">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=insee_ind_ha"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>insee_men_5ind</Name>
+        <Title>INSEE - Part des ménages de plus de 5 individus (2010)</Title>
+        <Abstract>Part des ménages de plus de 5 individus par "rectangle INSEE", en Région Hauts-de-France. La taille du cercle représente le nombre total de ménages. Les aplats de couleurs représentent la part des ménages de plus de 5 individus dans la population totale des ménages du cercle. Le "rectangle" est l'objet élémentaire des données carroyées à 200 mètres de l'INSEE relatives aux ménages.
+Source : données carroyées à 200 mètres de l'INSEE (millésime 2010). Mise en ligne et représentation : PPIGE.</Abstract>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>insee_men_5ind</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.294954750836265</westBoundLongitude>
+          <eastBoundLongitude>4.336844918948364</eastBoundLongitude>
+          <southBoundLatitude>48.784086448221224</southBoundLatitude>
+          <northBoundLatitude>51.079794676519484</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.294954750836265" miny="48.784086448221224" maxx="4.336844918948364" maxy="51.079794676519484"/>
+        <BoundingBox CRS="EPSG:2154" minx="580220.9139370577" miny="6855013.95790235" maxx="793907.4627503688" maxy="7109376.744608239"/>
+        <BoundingBox CRS="EPSG:3857" minx="144153.70346342347" miny="6238304.482965481" maxx="482775.36802672764" maxy="6635420.63981461"/>
+        <BoundingBox CRS="EPSG:3942" minx="1578914.7344104599" miny="1956875.7188277394" maxx="1794931.7530986953" maxy="2213658.3183141155"/>
+        <BoundingBox CRS="EPSG:3943" minx="1579254.7966513205" miny="2845127.964679105" maxx="1794665.0845537605" maxy="3101269.8049379373"/>
+        <BoundingBox CRS="EPSG:3944" minx="1579552.1846630308" miny="3733566.396805933" maxx="1794431.8758622326" maxy="3989156.316001327"/>
+        <BoundingBox CRS="EPSG:3945" minx="1579807.7188091956" miny="4622154.000270644" maxx="1794231.4837077097" maxy="4877279.162986408"/>
+        <BoundingBox CRS="EPSG:3946" minx="1580022.2051469982" miny="5510854.35924807" maxx="1794063.2759966932" maxy="5765600.2826666385"/>
+        <BoundingBox CRS="EPSG:3947" minx="1580153.7388305229" miny="6399621.948243801" maxx="1793960.1081199257" maxy="6654092.403432993"/>
+        <BoundingBox CRS="EPSG:3948" minx="1580201.2987497344" miny="7288421.162462048" maxx="1793922.7804447836" maxy="7542719.149543045"/>
+        <BoundingBox CRS="EPSG:3949" minx="1580211.9071286384" miny="8177227.98274527" maxx="1793914.4250769804" maxy="8431433.369105441"/>
+        <BoundingBox CRS="EPSG:3950" minx="1580186.283948656" miny="9066008.517627321" maxx="1793934.477446265" maxy="9320199.597953113"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.78408644822123" miny="1.2949547508362649" maxx="51.079794676519484" maxy="4.336844918948365"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.78408644822123" miny="1.2949547508362649" maxx="51.079794676519484" maxy="4.336844918948365"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.78408648810501" miny="1.2949547508362649" maxx="51.07979471475864" maxy="4.336844918948364"/>
+        <BoundingBox CRS="EPSG:23030" minx="800975.9413255563" miny="5412883.875117455" maxx="1034513.3204690362" maxy="5683788.423340848"/>
+        <BoundingBox CRS="EPSG:23031" minx="380333.836582418" miny="5404898.196919676" maxx="593979.3761791044" maxy="5659015.257687"/>
+        <BoundingBox CRS="EPSG:23032" minx="-60209.301917245146" miny="5414891.81653429" maxx="173455.2768312493" maxy="5685922.050276865"/>
+        <BoundingBox CRS="EPSG:27561" minx="526926.993367617" miny="121192.1030483238" maxx="742603.1469899563" maxy="377153.30966564524"/>
+        <BoundingBox CRS="EPSG:27562" minx="526745.9029625537" miny="421404.6359871788" maxx="742680.6238184405" maxy="677693.1364652433"/>
+        <BoundingBox CRS="EPSG:27563" minx="526388.2323581676" miny="721973.9213687803" maxx="743086.2661553528" maxy="979189.6605342021"/>
+        <BoundingBox CRS="EPSG:27564" minx="-73752.65665634949" miny="923903.8116234527" maxx="143832.31682829055" maxy="1182188.0696901323"/>
+        <BoundingBox CRS="EPSG:27571" minx="526926.993367617" miny="1121192.103048324" maxx="742603.1469899563" maxy="1377153.3096656452"/>
+        <BoundingBox CRS="EPSG:27572" minx="543224.8787873173" miny="2420879.7230475964" maxx="759913.8595795648" maxy="2677801.033110727"/>
+        <BoundingBox CRS="EPSG:27573" minx="526388.2323581676" miny="3721973.9213687805" maxx="743086.2661553528" maxy="3979189.660534202"/>
+        <BoundingBox CRS="EPSG:27574" minx="-73752.65665634949" miny="4923903.811623452" maxx="143832.31682829055" maxy="5182188.0696901325"/>
+        <BoundingBox CRS="EPSG:32630" minx="800873.1531388266" miny="5412668.883475504" maxx="1034408.6376778042" maxy="5683571.36088679"/>
+        <BoundingBox CRS="EPSG:32631" minx="380243.3591693054" miny="5404690.9349602675" maxx="593887.6489452464" maxy="5658806.615707395"/>
+        <BoundingBox CRS="EPSG:32632" minx="-60286.89855627052" miny="5414691.095375003" maxx="173376.48592466494" maxy="5685719.984741154"/>
+        <BoundingBox CRS="EPSG:900913" minx="144153.70346342347" miny="6238304.482965481" maxx="482775.36802672764" maxy="6635420.63981461"/>
+        <BoundingBox CRS="EPSG:31370" minx="-70338.58721262575" miny="-58221.74493012391" maxx="147836.87362441875" maxy="199837.00574539136"/>
+        <BoundingBox CRS="EPSG:3812" minx="429612.791873361" miny="441751.667961081" maxx="647760.1003854752" maxy="699786.3218367146"/>
+        <Attribution>
+          <Title>INSEE</Title>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.insee.fr/fr/statistiques/2520034"/>
+          <LogoURL height="273" width="1117">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.insee.fr/static/img/logo_com_externe_semi_bold.png"/>
+          </LogoURL>
+        </Attribution>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/?uuid=6b15ccce01a34535b7af1df29dfc82ec"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/?uuid=6b15ccce01a34535b7af1df29dfc82ec"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://open.isogeo.com/s/cc1ba385918d40cc8078063121873550/pp/m0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70/resources/6b15ccce01a34535b7af1df29dfc82ec.xml?proxyUrl=https%3A%2F%2Fopen.isogeo.com%2Fs%2Fcc1ba385918d40cc8078063121873550%2Fpp%2Fm0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70%2F"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://open.isogeo.com/s/cc1ba385918d40cc8078063121873550/pp/m0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70/resources/6b15ccce01a34535b7af1df29dfc82ec.xml?proxyUrl=https%3A%2F%2Fopen.isogeo.com%2Fs%2Fcc1ba385918d40cc8078063121873550%2Fpp%2Fm0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70%2F"/>
+        </MetadataURL>
+        <Style>
+          <Name>insee_men_5ind</Name>
+          <Title>insee_men_5ind</Title>
+          <LegendURL width="630" height="120">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=insee_men_5ind"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>insee_men_basr</Name>
+        <Title>INSEE - Part des ménages à bas revenus (2010)</Title>
+        <Abstract>Pourcentage de ménages dont le revenu fiscal est inférieur à 60 % du revenu médian français (seuil de bas revenu) par "rectangle INSEE", en Région Hauts-de-France. La taille du cercle représente le nombre de total des ménages. Les aplats de couleurs représentent la part des ménages à bas revenus dans la population totale des ménages. Le "rectangle" est l'objet élémentaire des données carroyées à 200 mètres de l'INSEE relatives aux ménages.
+Source : données carroyées à 200 mètres de l'INSEE (millésime 2010).
+Représentation et mise en ligne : Géo2France</Abstract>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>insee_men_basr</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.294539594255599</westBoundLongitude>
+          <eastBoundLongitude>4.33695059620756</eastBoundLongitude>
+          <southBoundLatitude>48.78402194640779</southBoundLatitude>
+          <northBoundLatitude>51.08374311943579</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.294539594255599" miny="48.78402194640779" maxx="4.33695059620756" maxy="51.08374311943579"/>
+        <BoundingBox CRS="EPSG:2154" minx="580201.251520576" miny="6855007.190606722" maxx="793907.431829397" maxy="7109817.048331977"/>
+        <BoundingBox CRS="EPSG:3857" minx="144107.48844426422" miny="6238293.585527776" maxx="482787.13196541" maxy="6636120.307434334"/>
+        <BoundingBox CRS="EPSG:3942" minx="1578894.1098663043" miny="1956868.8698180062" maxx="1794932.3081962448" maxy="2214103.425875181"/>
+        <BoundingBox CRS="EPSG:3943" minx="1579234.3999688984" miny="2845121.1366908" maxx="1794665.5048229168" maxy="3101713.6618619915"/>
+        <BoundingBox CRS="EPSG:3944" minx="1579532.005002256" miny="3733559.587395257" maxx="1794432.164301278" maxy="3989599.0791906198"/>
+        <BoundingBox CRS="EPSG:3945" minx="1579787.7456130115" miny="4622147.207041297" maxx="1794231.643198675" maxy="4877720.986325923"/>
+        <BoundingBox CRS="EPSG:3946" minx="1580002.4281300209" miny="5510847.579850362" maxx="1794063.309312424" maxy="5766041.317076753"/>
+        <BoundingBox CRS="EPSG:3947" minx="1580134.064253519" miny="6399615.177331224" maxx="1793960.0780527669" maxy="6654532.800906035"/>
+        <BoundingBox CRS="EPSG:3948" minx="1580181.6296651661" miny="7288414.394600718" maxx="1793922.7521700258" maxy="7543159.059308173"/>
+        <BoundingBox CRS="EPSG:3949" minx="1580192.2375166295" miny="8177221.215840251" maxx="1793914.3985508636" maxy="8431872.933190215"/>
+        <BoundingBox CRS="EPSG:3950" minx="1580166.6079060626" miny="9066001.749624588" maxx="1793934.452626271" maxy="9320638.95554228"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.7840219464078" miny="1.2945395942555988" maxx="51.08374311943579" maxy="4.336950596207561"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.7840219464078" miny="1.2945395942555988" maxx="51.08374311943579" maxy="4.336950596207561"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.78402198629162" miny="1.2945395942555986" maxx="51.0837431576715" maxy="4.336950596207561"/>
+        <BoundingBox CRS="EPSG:23030" minx="800921.2625626646" miny="5412875.586483516" maxx="1034513.8294197281" maxy="5684227.450926852"/>
+        <BoundingBox CRS="EPSG:23031" minx="380314.17018468014" miny="5404891.432058924" maxx="593979.3493002877" maxy="5659454.486417496"/>
+        <BoundingBox CRS="EPSG:23032" minx="-60229.51414884708" miny="5414885.064004853" maxx="173490.51667312958" maxy="5686362.8522233935"/>
+        <BoundingBox CRS="EPSG:27561" minx="526903.9619625548" miny="121185.18178751381" maxx="742603.1808515617" maxy="377592.6885878723"/>
+        <BoundingBox CRS="EPSG:27562" minx="526722.5626417178" miny="421397.7006360566" maxx="742680.6504864263" maxy="678133.6100079597"/>
+        <BoundingBox CRS="EPSG:27563" minx="526364.5119843272" miny="721966.9554072842" maxx="743086.285294398" maxy="979632.2902830156"/>
+        <BoundingBox CRS="EPSG:27564" minx="-73776.69734089599" miny="923896.812600157" maxx="143832.33034583266" maxy="1182632.959618243"/>
+        <BoundingBox CRS="EPSG:27571" minx="526903.9619625548" miny="1121185.181787514" maxx="742603.1808515617" maxy="1377592.6885878723"/>
+        <BoundingBox CRS="EPSG:27572" minx="543200.2291008078" miny="2420872.7292688875" maxx="759913.9063826823" maxy="2678241.50139765"/>
+        <BoundingBox CRS="EPSG:27573" minx="526364.5119843272" miny="3721966.955407284" maxx="743086.285294398" maxy="3979632.2902830155"/>
+        <BoundingBox CRS="EPSG:27574" minx="-73776.69734089599" miny="4923896.812600157" maxx="143832.33034583266" maxy="5182632.959618242"/>
+        <BoundingBox CRS="EPSG:32630" minx="800818.475336758" miny="5412660.594921713" maxx="1034409.1466135258" maxy="5684010.385747113"/>
+        <BoundingBox CRS="EPSG:32631" minx="380223.69288357947" miny="5404684.170142295" maxx="593887.6220631188" maxy="5659245.842113346"/>
+        <BoundingBox CRS="EPSG:32632" minx="-60307.110689696274" miny="5414684.342878822" maxx="173411.72553844942" maxy="5686160.784818745"/>
+        <BoundingBox CRS="EPSG:900913" minx="144107.48844426422" miny="6238293.585527776" maxx="482787.13196541" maxy="6636120.307434334"/>
+        <BoundingBox CRS="EPSG:31370" minx="-70358.38999129075" miny="-58228.51430199295" maxx="147844.45829981193" maxy="200276.598330196"/>
+        <BoundingBox CRS="EPSG:3812" minx="429592.9899219152" miny="441744.8986275246" maxx="647767.6386427464" maxy="700225.9098518636"/>
+        <Attribution>
+          <Title>INSEE</Title>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.insee.fr/fr/statistiques/2520034"/>
+          <LogoURL height="273" width="1117">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.insee.fr/static/img/logo_com_externe_semi_bold.png"/>
+          </LogoURL>
+        </Attribution>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/?uuid=e4cb10426c074a7f8f21e861fbd492ee"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/?uuid=e4cb10426c074a7f8f21e861fbd492ee"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://open.isogeo.com/s/cc1ba385918d40cc8078063121873550/pp/m0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70/resources/e4cb10426c074a7f8f21e861fbd492ee.xml?proxyUrl=https%3A%2F%2Fopen.isogeo.com%2Fs%2Fcc1ba385918d40cc8078063121873550%2Fpp%2Fm0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70%2F"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://open.isogeo.com/s/cc1ba385918d40cc8078063121873550/pp/m0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70/resources/e4cb10426c074a7f8f21e861fbd492ee.xml?proxyUrl=https%3A%2F%2Fopen.isogeo.com%2Fs%2Fcc1ba385918d40cc8078063121873550%2Fpp%2Fm0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70%2F"/>
+        </MetadataURL>
+        <Style>
+          <Name>insee_men_basr</Name>
+          <Title>insee_men_basr</Title>
+          <LegendURL width="354" height="120">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=insee_men_basr"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>insee_men_basr_carreaux</Name>
+        <Title>INSEE - part des ménages à bas revenus (carreaux - 2010)</Title>
+        <Abstract>Pourcentage de ménages dont le revenu fiscal est inférieur à 60 % du revenu médian français (seuil de bas revenu) par "rectangle INSEE", en Région Hauts-de-France. La taille du cercle représente le nombre de total des ménages. Les aplats de couleurs représentent la part des ménages à bas revenus dans la population totale des ménages. Le "rectangle" est l'objet élémentaire des données carroyées à 200 mètres de l'INSEE relatives aux ménages.
+Source : données carroyées à 200 mètres de l'INSEE (millésime 2010).
+Représentation et mise en ligne : Géo2France</Abstract>
+        <KeywordList>
+          <Keyword>insee</Keyword>
+          <Keyword>revenus</Keyword>
+          <Keyword>carreaux</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.347011789580191</westBoundLongitude>
+          <eastBoundLongitude>4.280475667485366</eastBoundLongitude>
+          <southBoundLatitude>48.83353134121507</southBoundLatitude>
+          <northBoundLatitude>51.08587693454064</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.347011789580191" miny="48.83353134121507" maxx="4.280475667485366" maxy="51.08587693454064"/>
+        <BoundingBox CRS="EPSG:2154" minx="583893.2030234201" miny="6860438.183475244" maxx="789936.0569489883" maxy="7110055.313666841"/>
+        <BoundingBox CRS="EPSG:3857" minx="149948.66650860303" miny="6246662.204933903" maxx="476500.3716574688" maxy="6636498.439463679"/>
+        <BoundingBox CRS="EPSG:3942" minx="1582625.9060362673" miny="1962345.9911854246" maxx="1790917.9250360557" maxy="2214344.267084108"/>
+        <BoundingBox CRS="EPSG:3943" minx="1582955.8106390885" miny="2850585.850894595" maxx="1790662.327613191" maxy="3101953.831748812"/>
+        <BoundingBox CRS="EPSG:3944" minx="1583244.3430366323" miny="3739013.763003078" maxx="1790438.7798298055" maxy="3989838.662539681"/>
+        <BoundingBox CRS="EPSG:3945" minx="1583492.2986914054" miny="4627592.677976992" maxx="1790246.6653852654" maxy="4877960.066293519"/>
+        <BoundingBox CRS="EPSG:3946" minx="1583700.459183368" miny="5516286.145886624" maxx="1790085.3787384862" maxy="5766279.975219334"/>
+        <BoundingBox CRS="EPSG:3947" minx="1583828.9550610306" miny="6405049.195419356" maxx="1789985.8042891773" maxy="6654770.490868571"/>
+        <BoundingBox CRS="EPSG:3948" minx="1583876.829561481" miny="7293846.214256915" maxx="1789948.6829684577" maxy="7543395.20735729"/>
+        <BoundingBox CRS="EPSG:3949" minx="1583888.8510558233" miny="8182652.513510389" maxx="1789939.3352665342" maxy="8432107.642561577"/>
+        <BoundingBox CRS="EPSG:3950" minx="1583865.71851955" miny="9071434.169073263" maxx="1789957.2196641003" maxy="9320872.327067683"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.83353134121508" miny="1.347011789580191" maxx="51.08587693454065" maxy="4.280475667485367"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.83353134121508" miny="1.347011789580191" maxx="51.08587693454065" maxy="4.280475667485367"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.83353134121508" miny="1.347011789580191" maxx="51.08587693454065" maxy="4.280475667485367"/>
+        <BoundingBox CRS="EPSG:23030" minx="804483.1531525359" miny="5418566.886270635" maxx="1030020.7499665873" maxy="5684125.3816774255"/>
+        <BoundingBox CRS="EPSG:23031" minx="383915.80991148704" miny="5410311.3594213" maxx="589916.4734048683" maxy="5659683.206739405"/>
+        <BoundingBox CRS="EPSG:23032" minx="-56196.5127159314" miny="5420614.399150434" maxx="169467.59229440527" maxy="5686297.641292455"/>
+        <BoundingBox CRS="EPSG:27561" minx="530586.3751294917" miny="126645.30321278966" maxx="738579.7925674242" maxy="377792.44293455407"/>
+        <BoundingBox CRS="EPSG:27562" minx="530413.9597997947" miny="426862.72176102374" maxx="738660.7007897615" maxy="678338.1604802986"/>
+        <BoundingBox CRS="EPSG:27563" minx="530073.7821181649" miny="727449.5528239048" maxx="739060.8410298056" maxy="979842.3839218013"/>
+        <BoundingBox CRS="EPSG:27564" minx="-70048.63207758153" miny="929400.5426222768" maxx="139796.93291393347" maxy="1182847.5294999194"/>
+        <BoundingBox CRS="EPSG:27571" minx="530586.3751294917" miny="1126645.3032127896" maxx="738579.7925674242" maxy="1377792.442934554"/>
+        <BoundingBox CRS="EPSG:27572" minx="546837.9014720259" miny="2426687.5136365723" maxx="755821.1914239767" maxy="2678768.580462478"/>
+        <BoundingBox CRS="EPSG:27573" minx="530073.7821181649" miny="3727449.552823905" maxx="739060.8410298056" maxy="3979842.383921801"/>
+        <BoundingBox CRS="EPSG:27574" minx="-70048.63207758153" miny="4929400.542622277" maxx="139796.93291393347" maxy="5182847.529499919"/>
+        <BoundingBox CRS="EPSG:32630" minx="804473.8331696868" miny="5418368.890277189" maxx="1030004.2533694543" maxy="5683918.998286461"/>
+        <BoundingBox CRS="EPSG:32631" minx="383919.4298296912" miny="5410113.7375069605" maxx="589913.6694783962" maxy="5659477.841840534"/>
+        <BoundingBox CRS="EPSG:32632" minx="-56179.20428308239" miny="5420416.3196857525" maxx="169477.7079602591" maxy="5686091.161556613"/>
+        <BoundingBox CRS="EPSG:900913" minx="149948.66650860303" miny="6246662.204933903" maxx="476500.3716574688" maxy="6636498.439463679"/>
+        <BoundingBox CRS="EPSG:31370" minx="-66549.02480206772" miny="-52730.67478284426" maxx="143902.39840408188" maxy="200444.2105816342"/>
+        <BoundingBox CRS="EPSG:3812" minx="433392.5678795391" miny="447246.52562468767" maxx="643810.163929432" maxy="700391.186486545"/>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/urn:isogeo:metadata:uuid:e4cb1042-6c07-4a7f-8f21-e861fbd492ee"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/urn:isogeo:metadata:uuid:e4cb1042-6c07-4a7f-8f21-e861fbd492ee"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/urn:isogeo:metadata:uuid:e4cb1042-6c07-4a7f-8f21-e861fbd492ee/formatters/xml"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/urn:isogeo:metadata:uuid:e4cb1042-6c07-4a7f-8f21-e861fbd492ee/formatters/xml"/>
+        </MetadataURL>
+        <Style>
+          <Name>insee_bas_revenu_carreau</Name>
+          <Title>insee_bas_revenu_carreau</Title>
+          <LegendURL width="81" height="180">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=insee_men_basr_carreaux"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>insee_men_occ5</Name>
+        <Title>INSEE - Nombre de ménages présents depuis 5 ans ou plus dans leur logement actuel (2010)</Title>
+        <Abstract>Nombre de ménages présents depuis 5 ans ou plus dans leur logement actuel, par "rectangle INSEE" en Région Hauts-de-France. La taille des cercles proportionnels est relative au nombre de ménages. Le nombre de ménages présents depuis 5 ans ou plus dans leur logement actuel est indiqué dans chaque cercle. Le "rectangle" est l'objet élémentaire des données carroyées à 200 mètres de l'INSEE relatives aux ménages.
+Source : données carroyées à 200 mètres de l'INSEE (millésime 2010). Mise en ligne et représentation : PPIGE.</Abstract>
+        <KeywordList>
+          <Keyword>insee</Keyword>
+          <Keyword>ménages</Keyword>
+          <Keyword>logement</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.2943865745238343</westBoundLongitude>
+          <eastBoundLongitude>4.337078638893969</eastBoundLongitude>
+          <southBoundLatitude>48.78397296457852</southBoundLatitude>
+          <northBoundLatitude>51.08376697804023</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.2943865745238343" miny="48.78397296457852" maxx="4.337078638893969" maxy="51.08376697804023"/>
+        <BoundingBox CRS="EPSG:2154" minx="580190.5569425989" miny="6855001.964144388" maxx="793916.3821811939" maxy="7109819.710788253"/>
+        <BoundingBox CRS="EPSG:3857" minx="144090.45436564283" miny="6238285.310166179" maxx="482801.3856120608" maxy="6636124.535381924"/>
+        <BoundingBox CRS="EPSG:3942" minx="1578883.2942157558" miny="1956863.587513452" maxx="1794941.3597029673" maxy="2214106.1172387614"/>
+        <BoundingBox CRS="EPSG:3943" minx="1579223.61570304" miny="2845115.8689538264" maxx="1794674.5301021826" maxy="3101716.345695549"/>
+        <BoundingBox CRS="EPSG:3944" minx="1579521.2482891148" miny="3733554.332373126" maxx="1794441.1665597246" maxy="3989601.756442197"/>
+        <BoundingBox CRS="EPSG:3945" minx="1579777.0126946864" miny="4622141.962916654" maxx="1794240.6255809544" maxy="4877723.657925346"/>
+        <BoundingBox CRS="EPSG:3946" minx="1579991.7153213534" miny="5510842.344840636" maxx="1794072.2749023137" maxy="5766043.983935951"/>
+        <BoundingBox CRS="EPSG:3947" minx="1580123.3628073141" miny="6399609.947955999" maxx="1793969.034101341" maxy="6654535.465744259"/>
+        <BoundingBox CRS="EPSG:3948" minx="1580170.930687318" miny="7288409.167337858" maxx="1793931.7060483168" maxy="7543161.724902183"/>
+        <BoundingBox CRS="EPSG:3949" minx="1580181.5377428466" miny="8177215.989076511" maxx="1793923.3529931575" maxy="8431875.600322362"/>
+        <BoundingBox CRS="EPSG:3950" minx="1580155.9041352377" miny="9065996.521778164" maxx="1793943.4103138917" maxy="9320641.62498024"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.783972964578524" miny="1.2943865745238339" maxx="51.083766978040245" maxy="4.33707863889397"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.783972964578524" miny="1.2943865745238339" maxx="51.083766978040245" maxy="4.33707863889397"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.78397300446237" miny="1.2943865745238339" maxx="51.08376701627595" maxy="4.337078638893971"/>
+        <BoundingBox CRS="EPSG:23030" minx="800910.406660296" miny="5412869.535670137" maxx="1034523.1975936735" maxy="5684230.84731309"/>
+        <BoundingBox CRS="EPSG:23031" minx="380303.4722652809" miny="5404886.206925441" maxx="593988.3016103157" maxy="5659457.158823507"/>
+        <BoundingBox CRS="EPSG:23032" minx="-60240.63142626232" miny="5414879.146600205" maxx="173499.63908005133" maxy="5686366.398130132"/>
+        <BoundingBox CRS="EPSG:27561" minx="526893.2690242014" miny="121179.871475571" maxx="742612.1816877245" maxy="377595.43126603495"/>
+        <BoundingBox CRS="EPSG:27562" minx="526711.8417200925" miny="421392.3818455109" maxx="742689.6506480786" maxy="678136.3496980792"/>
+        <BoundingBox CRS="EPSG:27563" minx="526353.7371513243" miny="721961.6155967822" maxx="743095.3051685162" maxy="979635.0330076215"/>
+        <BoundingBox CRS="EPSG:27564" minx="-73787.52827155091" miny="923891.4492801828" maxx="143841.37807534044" maxy="1182635.7085719951"/>
+        <BoundingBox CRS="EPSG:27571" minx="526893.2690242014" miny="1121179.871475571" maxx="742612.1816877245" maxy="1377595.431266035"/>
+        <BoundingBox CRS="EPSG:27572" minx="543189.5003774362" miny="2420867.3787157554" maxx="759922.9219901849" maxy="2678244.267678201"/>
+        <BoundingBox CRS="EPSG:27573" minx="526353.7371513243" miny="3721961.6155967824" maxx="743095.3051685162" maxy="3979635.0330076218"/>
+        <BoundingBox CRS="EPSG:27574" minx="-73787.52827155091" miny="4923891.449280183" maxx="143841.37807534044" maxy="5182635.708571995"/>
+        <BoundingBox CRS="EPSG:32630" minx="800807.619504774" miny="5412654.544162161" maxx="1034418.5147157854" maxy="5684013.782096094"/>
+        <BoundingBox CRS="EPSG:32631" minx="380212.99502491514" miny="5404678.945039699" maxx="593896.5743171563" maxy="5659248.514509478"/>
+        <BoundingBox CRS="EPSG:32632" minx="-60318.22791180771" miny="5414678.4255079655" maxx="173420.84790334583" maxy="5686164.330705669"/>
+        <BoundingBox CRS="EPSG:900913" minx="144090.45436564283" miny="6238285.310166179" maxx="482801.3856120608" maxy="6636124.535381924"/>
+        <BoundingBox CRS="EPSG:31370" minx="-70369.19141226914" miny="-58233.8984556105" maxx="147853.4326919305" maxy="200279.4651848469"/>
+        <BoundingBox CRS="EPSG:3812" minx="429582.1891147271" miny="441739.5154556132" maxx="647776.6126985541" maxy="700228.775564525"/>
+        <Attribution>
+          <Title>INSEE</Title>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.insee.fr/fr/statistiques/2520034"/>
+          <LogoURL height="273" width="1117">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.insee.fr/static/img/logo_com_externe_semi_bold.png"/>
+          </LogoURL>
+        </Attribution>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/?uuid=d8ef13e4ab8849bda4bd42871b97e973"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/?uuid=d8ef13e4ab8849bda4bd42871b97e973"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://open.isogeo.com/s/cc1ba385918d40cc8078063121873550/pp/m0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70/resources/d8ef13e4ab8849bda4bd42871b97e973.xml?proxyUrl=https%3A%2F%2Fopen.isogeo.com%2Fs%2Fcc1ba385918d40cc8078063121873550%2Fpp%2Fm0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70%2F"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://open.isogeo.com/s/cc1ba385918d40cc8078063121873550/pp/m0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70/resources/d8ef13e4ab8849bda4bd42871b97e973.xml?proxyUrl=https%3A%2F%2Fopen.isogeo.com%2Fs%2Fcc1ba385918d40cc8078063121873550%2Fpp%2Fm0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70%2F"/>
+        </MetadataURL>
+        <Style>
+          <Name>insee_men_occ5</Name>
+          <Title>insee_men_occ5</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=insee_men_occ5"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>insee_men_prop</Name>
+        <Title>INSEE - Part des ménages propriétaires (2010)</Title>
+        <Abstract>Part des ménages propriétaires en % du nombre total de ménages par "rectangle INSEE", en Région Hauts-de-France. La taille du cercle représente le nombre de total des ménages. Les aplats de couleurs représentent la part des ménages propriétaires dans la population totale des ménages. Le "rectangle" est l'objet élémentaire des données carroyées à 200 mètres de l'INSEE relatives aux ménages.
+Source : données carroyées à 200 mètres de l'INSEE  (millésime 2010). Représentation et mise en ligne : Géo2France</Abstract>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>insee_men_prop</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.294539594255599</westBoundLongitude>
+          <eastBoundLongitude>4.33695059620756</eastBoundLongitude>
+          <southBoundLatitude>48.78402194640779</southBoundLatitude>
+          <northBoundLatitude>51.08374311943579</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.294539594255599" miny="48.78402194640779" maxx="4.33695059620756" maxy="51.08374311943579"/>
+        <BoundingBox CRS="EPSG:2154" minx="580201.251520576" miny="6855007.190606722" maxx="793907.431829397" maxy="7109817.048331977"/>
+        <BoundingBox CRS="EPSG:3857" minx="144107.48844426422" miny="6238293.585527776" maxx="482787.13196541" maxy="6636120.307434334"/>
+        <BoundingBox CRS="EPSG:3942" minx="1578894.1098663043" miny="1956868.8698180062" maxx="1794932.3081962448" maxy="2214103.425875181"/>
+        <BoundingBox CRS="EPSG:3943" minx="1579234.3999688984" miny="2845121.1366908" maxx="1794665.5048229168" maxy="3101713.6618619915"/>
+        <BoundingBox CRS="EPSG:3944" minx="1579532.005002256" miny="3733559.587395257" maxx="1794432.164301278" maxy="3989599.0791906198"/>
+        <BoundingBox CRS="EPSG:3945" minx="1579787.7456130115" miny="4622147.207041297" maxx="1794231.643198675" maxy="4877720.986325923"/>
+        <BoundingBox CRS="EPSG:3946" minx="1580002.4281300209" miny="5510847.579850362" maxx="1794063.309312424" maxy="5766041.317076753"/>
+        <BoundingBox CRS="EPSG:3947" minx="1580134.064253519" miny="6399615.177331224" maxx="1793960.0780527669" maxy="6654532.800906035"/>
+        <BoundingBox CRS="EPSG:3948" minx="1580181.6296651661" miny="7288414.394600718" maxx="1793922.7521700258" maxy="7543159.059308173"/>
+        <BoundingBox CRS="EPSG:3949" minx="1580192.2375166295" miny="8177221.215840251" maxx="1793914.3985508636" maxy="8431872.933190215"/>
+        <BoundingBox CRS="EPSG:3950" minx="1580166.6079060626" miny="9066001.749624588" maxx="1793934.452626271" maxy="9320638.95554228"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.7840219464078" miny="1.2945395942555988" maxx="51.08374311943579" maxy="4.336950596207561"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.7840219464078" miny="1.2945395942555988" maxx="51.08374311943579" maxy="4.336950596207561"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.78402198629162" miny="1.2945395942555986" maxx="51.0837431576715" maxy="4.336950596207561"/>
+        <BoundingBox CRS="EPSG:23030" minx="800921.2625626646" miny="5412875.586483516" maxx="1034513.8294197281" maxy="5684227.450926852"/>
+        <BoundingBox CRS="EPSG:23031" minx="380314.17018468014" miny="5404891.432058924" maxx="593979.3493002877" maxy="5659454.486417496"/>
+        <BoundingBox CRS="EPSG:23032" minx="-60229.51414884708" miny="5414885.064004853" maxx="173490.51667312958" maxy="5686362.8522233935"/>
+        <BoundingBox CRS="EPSG:27561" minx="526903.9619625548" miny="121185.18178751381" maxx="742603.1808515617" maxy="377592.6885878723"/>
+        <BoundingBox CRS="EPSG:27562" minx="526722.5626417178" miny="421397.7006360566" maxx="742680.6504864263" maxy="678133.6100079597"/>
+        <BoundingBox CRS="EPSG:27563" minx="526364.5119843272" miny="721966.9554072842" maxx="743086.285294398" maxy="979632.2902830156"/>
+        <BoundingBox CRS="EPSG:27564" minx="-73776.69734089599" miny="923896.812600157" maxx="143832.33034583266" maxy="1182632.959618243"/>
+        <BoundingBox CRS="EPSG:27571" minx="526903.9619625548" miny="1121185.181787514" maxx="742603.1808515617" maxy="1377592.6885878723"/>
+        <BoundingBox CRS="EPSG:27572" minx="543200.2291008078" miny="2420872.7292688875" maxx="759913.9063826823" maxy="2678241.50139765"/>
+        <BoundingBox CRS="EPSG:27573" minx="526364.5119843272" miny="3721966.955407284" maxx="743086.285294398" maxy="3979632.2902830155"/>
+        <BoundingBox CRS="EPSG:27574" minx="-73776.69734089599" miny="4923896.812600157" maxx="143832.33034583266" maxy="5182632.959618242"/>
+        <BoundingBox CRS="EPSG:32630" minx="800818.475336758" miny="5412660.594921713" maxx="1034409.1466135258" maxy="5684010.385747113"/>
+        <BoundingBox CRS="EPSG:32631" minx="380223.69288357947" miny="5404684.170142295" maxx="593887.6220631188" maxy="5659245.842113346"/>
+        <BoundingBox CRS="EPSG:32632" minx="-60307.110689696274" miny="5414684.342878822" maxx="173411.72553844942" maxy="5686160.784818745"/>
+        <BoundingBox CRS="EPSG:900913" minx="144107.48844426422" miny="6238293.585527776" maxx="482787.13196541" maxy="6636120.307434334"/>
+        <BoundingBox CRS="EPSG:31370" minx="-70358.38999129075" miny="-58228.51430199295" maxx="147844.45829981193" maxy="200276.598330196"/>
+        <BoundingBox CRS="EPSG:3812" minx="429592.9899219152" miny="441744.8986275246" maxx="647767.6386427464" maxy="700225.9098518636"/>
+        <Attribution>
+          <Title>INSEE</Title>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.insee.fr/fr/statistiques/2520034"/>
+          <LogoURL height="273" width="1117">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.insee.fr/static/img/logo_com_externe_semi_bold.png"/>
+          </LogoURL>
+        </Attribution>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/?uuid=dff71c19d4514b0bada532ac2bd7ce4d"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/?uuid=dff71c19d4514b0bada532ac2bd7ce4d"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://open.isogeo.com/s/cc1ba385918d40cc8078063121873550/pp/m0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70/resources/dff71c19d4514b0bada532ac2bd7ce4d.xml?proxyUrl=https%3A%2F%2Fopen.isogeo.com%2Fs%2Fcc1ba385918d40cc8078063121873550%2Fpp%2Fm0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70%2F"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://open.isogeo.com/s/cc1ba385918d40cc8078063121873550/pp/m0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70/resources/dff71c19d4514b0bada532ac2bd7ce4d.xml?proxyUrl=https%3A%2F%2Fopen.isogeo.com%2Fs%2Fcc1ba385918d40cc8078063121873550%2Fpp%2Fm0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70%2F"/>
+        </MetadataURL>
+        <Style>
+          <Name>insee_men_prop</Name>
+          <Title>insee_men_prop</Title>
+          <LegendURL width="354" height="120">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=insee_men_prop"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>nb_men_bas_revenus</Name>
+        <Title>Nombre de ménages à bas revenus - Données carroyées de l'INSEE (filosofi 2015)</Title>
+        <Abstract>Données carroyées de l'INSEE (filosofi 2015) - Nombre de ménage à bas revenus</Abstract>
+        <KeywordList>
+          <Keyword>insee</Keyword>
+          <Keyword>filosofi</Keyword>
+          <Keyword>2015</Keyword>
+          <Keyword>carroyage</Keyword>
+          <Keyword>carreau</Keyword>
+          <Keyword>ménage</Keyword>
+          <Keyword>revenus</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.3485999974288396</westBoundLongitude>
+          <eastBoundLongitude>4.278899089114847</eastBoundLongitude>
+          <southBoundLatitude>48.834530791385994</southBoundLatitude>
+          <northBoundLatitude>51.08489655955638</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.3485999974288396" miny="48.834530791385994" maxx="4.278899089114847" maxy="51.08489655955638"/>
+        <BoundingBox CRS="EPSG:2154" minx="584002.5055378933" miny="6860547.148507459" maxx="789827.075047366" maxy="7109945.993537578"/>
+        <BoundingBox CRS="EPSG:3857" minx="150125.46499758848" miny="6246831.234934718" maxx="476324.86775606696" maxy="6636324.70932738"/>
+        <BoundingBox CRS="EPSG:3942" minx="1582736.5800598483" miny="1962455.9393112638" maxx="1790807.614874713" maxy="2214233.753197126"/>
+        <BoundingBox CRS="EPSG:3943" minx="1583066.1330417907" miny="2850695.5368702244" maxx="1790552.3590260523" maxy="3101843.6286146087"/>
+        <BoundingBox CRS="EPSG:3944" minx="1583354.3536718832" miny="3739123.224594486" maxx="1790329.1132754465" maxy="3989728.731196667"/>
+        <BoundingBox CRS="EPSG:3945" minx="1583602.036628904" miny="4627701.952244716" maxx="1790137.2620962462" maxy="4877850.36852945"/>
+        <BoundingBox CRS="EPSG:3946" minx="1583809.962724283" miny="5516395.269196297" maxx="1789976.2007066566" maxy="5766170.47355822"/>
+        <BoundingBox CRS="EPSG:3947" minx="1583938.3355159424" miny="6405158.220681283" maxx="1789876.7486057857" maxy="6654661.13019576"/>
+        <BoundingBox CRS="EPSG:3948" minx="1583986.2006140824" miny="7293955.194456323" maxx="1789839.6446869327" maxy="7543285.932528163"/>
+        <BoundingBox CRS="EPSG:3949" minx="1583998.245763849" miny="8182761.48230111" maxx="1789830.2812671512" maxy="8431998.419039762"/>
+        <BoundingBox CRS="EPSG:3950" minx="1583975.1693043753" miny="9071543.159452854" maxx="1789848.117466658" maxy="9320763.1209988"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.83453079138601" miny="1.3485999974288396" maxx="51.08489655955638" maxy="4.278899089114848"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.83453079138601" miny="1.3485999974288396" maxx="51.08489655955638" maxy="4.278899089114848"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.834530831241516" miny="1.3485999974288396" maxx="51.084896597791094" maxy="4.278899089114848"/>
+        <BoundingBox CRS="EPSG:23030" minx="804694.1491133939" miny="5418701.212871276" maxx="1029991.2184337502" maxy="5684018.037783634"/>
+        <BoundingBox CRS="EPSG:23031" minx="384119.30069649586" miny="5410429.970555763" maxx="589896.3437092408" maxy="5659577.284514301"/>
+        <BoundingBox CRS="EPSG:23032" minx="-55983.523656687816" miny="5420734.37787116" maxx="169439.23521812225" maxy="5686175.105822844"/>
+        <BoundingBox CRS="EPSG:27561" minx="530696.3000099488" miny="126755.127297118" maxx="738469.7706105083" maxy="377682.3116056735"/>
+        <BoundingBox CRS="EPSG:27562" minx="530524.2163102414" miny="426972.66335891606" maxx="738550.7273735427" maxy="678227.8706257762"/>
+        <BoundingBox CRS="EPSG:27563" minx="530184.6395107498" miny="727559.8680018289" maxx="738950.6692647958" maxy="979731.6765705593"/>
+        <BoundingBox CRS="EPSG:27564" minx="-69937.16272029302" miny="929511.2979646677" maxx="139686.45274912706" maxy="1182736.348560033"/>
+        <BoundingBox CRS="EPSG:27571" minx="530696.3000099488" miny="1126755.127297118" maxx="738469.7706105083" maxy="1377682.3116056735"/>
+        <BoundingBox CRS="EPSG:27572" minx="547001.4575981454" miny="2426458.941639174" maxx="755767.5478618324" maxy="2678323.6240189946"/>
+        <BoundingBox CRS="EPSG:27573" minx="530184.6395107498" miny="3727559.868001829" maxx="738950.6692647958" maxy="3979731.6765705594"/>
+        <BoundingBox CRS="EPSG:27574" minx="-69937.16272029302" miny="4929511.297964668" maxx="139686.45274912706" maxy="5182736.348560032"/>
+        <BoundingBox CRS="EPSG:32630" minx="804591.3389212217" miny="5418486.1777936565" maxx="1029886.5753441784" maxy="5683800.9812600985"/>
+        <BoundingBox CRS="EPSG:32631" minx="384028.80230686365" miny="5410222.676265678" maxx="589804.6435927125" maxy="5659368.638014361"/>
+        <BoundingBox CRS="EPSG:32632" minx="-56061.144347122405" miny="5420533.625857523" maxx="169360.46253344312" maxy="5685973.040926031"/>
+        <BoundingBox CRS="EPSG:900913" minx="150125.46499758848" miny="6246831.234934718" maxx="476324.86775606696" maxy="6636324.70932738"/>
+        <BoundingBox CRS="EPSG:31370" minx="-66446.73620637506" miny="-52615.532119559124" maxx="143776.3747205304" maxy="200330.28823639452"/>
+        <BoundingBox CRS="EPSG:3812" minx="433504.0351920126" miny="447357.4139145889" maxx="643699.5668073522" maxy="700279.9995640808"/>
+        <Style>
+          <Name>nb_menages_bas_rev_cercles_prop</Name>
+          <Title>nb_menages_bas_rev_cercles_prop</Title>
+          <LegendURL width="119" height="40">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=nb_men_bas_revenus"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>cluster_points</Name>
+          <Title>Cluster - aggregation</Title>
+          <Abstract>A sample style that aggregates points</Abstract>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=nb_men_bas_revenus&amp;style=cluster_points"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>insee_nb_menages_pauvres_carte_de_chaleur</Name>
+          <Title>Carte de chaleur - mÃ©nages pauvres</Title>
+          <Abstract>A heatmap surface showing population density</Abstract>
+          <LegendURL width="30" height="151">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=nb_men_bas_revenus&amp;style=insee_nb_menages_pauvres_carte_de_chaleur"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>part_men_5_ind_plus</Name>
+        <Title>Part ménages de 5 individus ou plus - Données carroyées de l'INSEE (filosofi 2015)</Title>
+        <Abstract>Données carroyées de l'INSEE (filosofi 2015) - Part des ménages de 5 individus ou plus</Abstract>
+        <KeywordList>
+          <Keyword>insee</Keyword>
+          <Keyword>filosofi</Keyword>
+          <Keyword>2015</Keyword>
+          <Keyword>population</Keyword>
+          <Keyword>ménage</Keyword>
+          <Keyword>carroyage</Keyword>
+          <Keyword>carreau</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.347011789580191</westBoundLongitude>
+          <eastBoundLongitude>4.280475667485366</eastBoundLongitude>
+          <southBoundLatitude>48.83353134121507</southBoundLatitude>
+          <northBoundLatitude>51.08587693454064</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.347011789580191" miny="48.83353134121507" maxx="4.280475667485366" maxy="51.08587693454064"/>
+        <BoundingBox CRS="EPSG:2154" minx="583893.2030234201" miny="6860438.183475244" maxx="789936.0569489883" maxy="7110055.313666841"/>
+        <BoundingBox CRS="EPSG:3857" minx="149948.66650860306" miny="6246662.2116741445" maxx="476500.37165746896" maxy="6636498.446239349"/>
+        <BoundingBox CRS="EPSG:3942" minx="1582625.9060362673" miny="1962345.9911854246" maxx="1790917.9250360557" maxy="2214344.267084108"/>
+        <BoundingBox CRS="EPSG:3943" minx="1582955.8106390885" miny="2850585.850894595" maxx="1790662.327613191" maxy="3101953.831748812"/>
+        <BoundingBox CRS="EPSG:3944" minx="1583244.3430366323" miny="3739013.763003078" maxx="1790438.7798298055" maxy="3989838.662539681"/>
+        <BoundingBox CRS="EPSG:3945" minx="1583492.2986914054" miny="4627592.677976992" maxx="1790246.6653852654" maxy="4877960.066293519"/>
+        <BoundingBox CRS="EPSG:3946" minx="1583700.459183368" miny="5516286.145886624" maxx="1790085.3787384862" maxy="5766279.975219334"/>
+        <BoundingBox CRS="EPSG:3947" minx="1583828.9550610306" miny="6405049.195419356" maxx="1789985.8042891773" maxy="6654770.490868571"/>
+        <BoundingBox CRS="EPSG:3948" minx="1583876.829561481" miny="7293846.214256915" maxx="1789948.6829684577" maxy="7543395.20735729"/>
+        <BoundingBox CRS="EPSG:3949" minx="1583888.8510558233" miny="8182652.513510389" maxx="1789939.3352665342" maxy="8432107.642561577"/>
+        <BoundingBox CRS="EPSG:3950" minx="1583865.71851955" miny="9071434.169073263" maxx="1789957.2196641003" maxy="9320872.327067683"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.83353134121508" miny="1.347011789580191" maxx="51.08587693454065" maxy="4.280475667485367"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.83353134121508" miny="1.347011789580191" maxx="51.08587693454065" maxy="4.280475667485367"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.83353138107115" miny="1.3470117895801912" maxx="51.0858769727745" maxy="4.2804756674853675"/>
+        <BoundingBox CRS="EPSG:23030" minx="804576.6422334176" miny="5418583.928865378" maxx="1030108.8970090363" maxy="5684136.059983725"/>
+        <BoundingBox CRS="EPSG:23031" minx="384009.92769955285" miny="5410321.035589753" maxx="590005.3702269834" maxy="5659686.493128537"/>
+        <BoundingBox CRS="EPSG:23032" minx="-56101.58378105797" miny="5420617.075495008" maxx="169556.48146931455" maxy="5686293.231246296"/>
+        <BoundingBox CRS="EPSG:27561" minx="530586.3751294917" miny="126645.30321278966" maxx="738579.7925674242" maxy="377792.44293455407"/>
+        <BoundingBox CRS="EPSG:27562" minx="530413.9597997947" miny="426862.72176102374" maxx="738660.7007897615" maxy="678338.1604802986"/>
+        <BoundingBox CRS="EPSG:27563" minx="530073.7821181649" miny="727449.5528239048" maxx="739060.8410298056" maxy="979842.3839218013"/>
+        <BoundingBox CRS="EPSG:27564" minx="-70048.63207758153" miny="929400.5426222768" maxx="139796.93291393347" maxy="1182847.5294999194"/>
+        <BoundingBox CRS="EPSG:27571" minx="530586.3751294917" miny="1126645.3032127896" maxx="738579.7925674242" maxy="1377792.442934554"/>
+        <BoundingBox CRS="EPSG:27572" minx="546890.877138956" miny="2426348.6760215433" maxx="755877.8442093738" maxy="2678434.2367452313"/>
+        <BoundingBox CRS="EPSG:27573" minx="530073.7821181649" miny="3727449.552823905" maxx="739060.8410298056" maxy="3979842.383921801"/>
+        <BoundingBox CRS="EPSG:27574" minx="-70048.63207758153" miny="4929400.542622277" maxx="139796.93291393347" maxy="5182847.529499919"/>
+        <BoundingBox CRS="EPSG:32630" minx="804473.8329183338" miny="5418368.894705908" maxx="1030004.252947062" maxy="5683919.002531546"/>
+        <BoundingBox CRS="EPSG:32631" minx="383919.4299217893" miny="5410113.7419368" maxx="589913.6694070587" maxy="5659477.846093008"/>
+        <BoundingBox CRS="EPSG:32632" minx="-56179.20383966237" miny="5420416.324113911" maxx="169477.70823320578" maxy="5686091.165801333"/>
+        <BoundingBox CRS="EPSG:900913" minx="149948.66650860306" miny="6246662.2116741445" maxx="476500.37165746896" maxy="6636498.446239349"/>
+        <BoundingBox CRS="EPSG:31370" minx="-66558.21568069188" miny="-52726.432638892904" maxx="143886.98404342937" maxy="200441.48729729373"/>
+        <BoundingBox CRS="EPSG:3812" minx="433392.5678795391" miny="447246.52562468767" maxx="643810.163929432" maxy="700391.186486545"/>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/f019130a-872c-4716-80f5-29aeb8eddc94"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/f019130a-872c-4716-80f5-29aeb8eddc94"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/f019130a-872c-4716-80f5-29aeb8eddc94/formatters/xml"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/f019130a-872c-4716-80f5-29aeb8eddc94/formatters/xml"/>
+        </MetadataURL>
+        <Style>
+          <Name>insee_part_men_5_ind_ou_plus</Name>
+          <Title>insee_part_men_5_ind_ou_plus</Title>
+          <LegendURL width="93" height="100">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=part_men_5_ind_plus"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>part_men_bas_revenus</Name>
+        <Title>Part des ménages à bas revenus - Données carroyées de l'INSEE (filosofi 2015)</Title>
+        <Abstract>Données carroyées de l'INSEE (filosofi 2015) - Part des ménages à bas revenus</Abstract>
+        <KeywordList>
+          <Keyword>insee</Keyword>
+          <Keyword>filosofi</Keyword>
+          <Keyword>2015</Keyword>
+          <Keyword>population</Keyword>
+          <Keyword>revenus</Keyword>
+          <Keyword>carroyage</Keyword>
+          <Keyword>carreau</Keyword>
+          <Keyword>ménage</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.347011789580191</westBoundLongitude>
+          <eastBoundLongitude>4.280475667485366</eastBoundLongitude>
+          <southBoundLatitude>48.83353134121507</southBoundLatitude>
+          <northBoundLatitude>51.08587693454064</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.347011789580191" miny="48.83353134121507" maxx="4.280475667485366" maxy="51.08587693454064"/>
+        <BoundingBox CRS="EPSG:2154" minx="583893.2030234201" miny="6860438.183475244" maxx="789936.0569489883" maxy="7110055.313666841"/>
+        <BoundingBox CRS="EPSG:3857" minx="149948.66650860306" miny="6246662.2116741445" maxx="476500.37165746896" maxy="6636498.446239349"/>
+        <BoundingBox CRS="EPSG:3942" minx="1582625.9060362673" miny="1962345.9911854246" maxx="1790917.9250360557" maxy="2214344.267084108"/>
+        <BoundingBox CRS="EPSG:3943" minx="1582955.8106390885" miny="2850585.850894595" maxx="1790662.327613191" maxy="3101953.831748812"/>
+        <BoundingBox CRS="EPSG:3944" minx="1583244.3430366323" miny="3739013.763003078" maxx="1790438.7798298055" maxy="3989838.662539681"/>
+        <BoundingBox CRS="EPSG:3945" minx="1583492.2986914054" miny="4627592.677976992" maxx="1790246.6653852654" maxy="4877960.066293519"/>
+        <BoundingBox CRS="EPSG:3946" minx="1583700.459183368" miny="5516286.145886624" maxx="1790085.3787384862" maxy="5766279.975219334"/>
+        <BoundingBox CRS="EPSG:3947" minx="1583828.9550610306" miny="6405049.195419356" maxx="1789985.8042891773" maxy="6654770.490868571"/>
+        <BoundingBox CRS="EPSG:3948" minx="1583876.829561481" miny="7293846.214256915" maxx="1789948.6829684577" maxy="7543395.20735729"/>
+        <BoundingBox CRS="EPSG:3949" minx="1583888.8510558233" miny="8182652.513510389" maxx="1789939.3352665342" maxy="8432107.642561577"/>
+        <BoundingBox CRS="EPSG:3950" minx="1583865.71851955" miny="9071434.169073263" maxx="1789957.2196641003" maxy="9320872.327067683"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.83353134121508" miny="1.347011789580191" maxx="51.08587693454065" maxy="4.280475667485367"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.83353134121508" miny="1.347011789580191" maxx="51.08587693454065" maxy="4.280475667485367"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.83353138107115" miny="1.3470117895801912" maxx="51.0858769727745" maxy="4.2804756674853675"/>
+        <BoundingBox CRS="EPSG:23030" minx="804576.6422334176" miny="5418583.928865378" maxx="1030108.8970090363" maxy="5684136.059983725"/>
+        <BoundingBox CRS="EPSG:23031" minx="384009.92769955285" miny="5410321.035589753" maxx="590005.3702269834" maxy="5659686.493128537"/>
+        <BoundingBox CRS="EPSG:23032" minx="-56101.58378105797" miny="5420617.075495008" maxx="169556.48146931455" maxy="5686293.231246296"/>
+        <BoundingBox CRS="EPSG:27561" minx="530586.3751294917" miny="126645.30321278966" maxx="738579.7925674242" maxy="377792.44293455407"/>
+        <BoundingBox CRS="EPSG:27562" minx="530413.9597997947" miny="426862.72176102374" maxx="738660.7007897615" maxy="678338.1604802986"/>
+        <BoundingBox CRS="EPSG:27563" minx="530073.7821181649" miny="727449.5528239048" maxx="739060.8410298056" maxy="979842.3839218013"/>
+        <BoundingBox CRS="EPSG:27564" minx="-70048.63207758153" miny="929400.5426222768" maxx="139796.93291393347" maxy="1182847.5294999194"/>
+        <BoundingBox CRS="EPSG:27571" minx="530586.3751294917" miny="1126645.3032127896" maxx="738579.7925674242" maxy="1377792.442934554"/>
+        <BoundingBox CRS="EPSG:27572" minx="546890.877138956" miny="2426348.6760215433" maxx="755877.8442093738" maxy="2678434.2367452313"/>
+        <BoundingBox CRS="EPSG:27573" minx="530073.7821181649" miny="3727449.552823905" maxx="739060.8410298056" maxy="3979842.383921801"/>
+        <BoundingBox CRS="EPSG:27574" minx="-70048.63207758153" miny="4929400.542622277" maxx="139796.93291393347" maxy="5182847.529499919"/>
+        <BoundingBox CRS="EPSG:32630" minx="804473.8329183338" miny="5418368.894705908" maxx="1030004.252947062" maxy="5683919.002531546"/>
+        <BoundingBox CRS="EPSG:32631" minx="383919.4299217893" miny="5410113.7419368" maxx="589913.6694070587" maxy="5659477.846093008"/>
+        <BoundingBox CRS="EPSG:32632" minx="-56179.20383966237" miny="5420416.324113911" maxx="169477.70823320578" maxy="5686091.165801333"/>
+        <BoundingBox CRS="EPSG:900913" minx="149948.66650860306" miny="6246662.2116741445" maxx="476500.37165746896" maxy="6636498.446239349"/>
+        <BoundingBox CRS="EPSG:31370" minx="-66558.21568069188" miny="-52726.432638892904" maxx="143886.98404342937" maxy="200441.48729729373"/>
+        <BoundingBox CRS="EPSG:3812" minx="433392.5678795391" miny="447246.52562468767" maxx="643810.163929432" maxy="700391.186486545"/>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/5b3cf86c-3180-4038-bdbc-664245a690a9"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/5b3cf86c-3180-4038-bdbc-664245a690a9"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/5b3cf86c-3180-4038-bdbc-664245a690a9/formatters/xml"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/5b3cf86c-3180-4038-bdbc-664245a690a9/formatters/xml"/>
+        </MetadataURL>
+        <Style>
+          <Name>insee_part_men_bas_revenus</Name>
+          <Title>insee_part_men_bas_revenus</Title>
+          <LegendURL width="93" height="100">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=part_men_bas_revenus"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>part_men_prop</Name>
+        <Title>Part ménages propriétaires - Données carroyées de l'INSEE (filosofi 2015)</Title>
+        <Abstract>Données carroyées de l'INSEE (filosofi 2015) - part des ménages propriétaires</Abstract>
+        <KeywordList>
+          <Keyword>filosofi</Keyword>
+          <Keyword>insee</Keyword>
+          <Keyword>2015</Keyword>
+          <Keyword>population</Keyword>
+          <Keyword>carroyage</Keyword>
+          <Keyword>carreau</Keyword>
+          <Keyword>ménage</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.347011789580191</westBoundLongitude>
+          <eastBoundLongitude>4.280475667485366</eastBoundLongitude>
+          <southBoundLatitude>48.83353134121507</southBoundLatitude>
+          <northBoundLatitude>51.08587693454064</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.347011789580191" miny="48.83353134121507" maxx="4.280475667485366" maxy="51.08587693454064"/>
+        <BoundingBox CRS="EPSG:2154" minx="583893.2030234201" miny="6860438.183475244" maxx="789936.0569489883" maxy="7110055.313666841"/>
+        <BoundingBox CRS="EPSG:3857" minx="149948.66650860306" miny="6246662.2116741445" maxx="476500.37165746896" maxy="6636498.446239349"/>
+        <BoundingBox CRS="EPSG:3942" minx="1582625.9060362673" miny="1962345.9911854246" maxx="1790917.9250360557" maxy="2214344.267084108"/>
+        <BoundingBox CRS="EPSG:3943" minx="1582955.8106390885" miny="2850585.850894595" maxx="1790662.327613191" maxy="3101953.831748812"/>
+        <BoundingBox CRS="EPSG:3944" minx="1583244.3430366323" miny="3739013.763003078" maxx="1790438.7798298055" maxy="3989838.662539681"/>
+        <BoundingBox CRS="EPSG:3945" minx="1583492.2986914054" miny="4627592.677976992" maxx="1790246.6653852654" maxy="4877960.066293519"/>
+        <BoundingBox CRS="EPSG:3946" minx="1583700.459183368" miny="5516286.145886624" maxx="1790085.3787384862" maxy="5766279.975219334"/>
+        <BoundingBox CRS="EPSG:3947" minx="1583828.9550610306" miny="6405049.195419356" maxx="1789985.8042891773" maxy="6654770.490868571"/>
+        <BoundingBox CRS="EPSG:3948" minx="1583876.829561481" miny="7293846.214256915" maxx="1789948.6829684577" maxy="7543395.20735729"/>
+        <BoundingBox CRS="EPSG:3949" minx="1583888.8510558233" miny="8182652.513510389" maxx="1789939.3352665342" maxy="8432107.642561577"/>
+        <BoundingBox CRS="EPSG:3950" minx="1583865.71851955" miny="9071434.169073263" maxx="1789957.2196641003" maxy="9320872.327067683"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.83353134121508" miny="1.347011789580191" maxx="51.08587693454065" maxy="4.280475667485367"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.83353134121508" miny="1.347011789580191" maxx="51.08587693454065" maxy="4.280475667485367"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.83353138107115" miny="1.3470117895801912" maxx="51.0858769727745" maxy="4.2804756674853675"/>
+        <BoundingBox CRS="EPSG:23030" minx="804576.6422334176" miny="5418583.928865378" maxx="1030108.8970090363" maxy="5684136.059983725"/>
+        <BoundingBox CRS="EPSG:23031" minx="384009.92769955285" miny="5410321.035589753" maxx="590005.3702269834" maxy="5659686.493128537"/>
+        <BoundingBox CRS="EPSG:23032" minx="-56101.58378105797" miny="5420617.075495008" maxx="169556.48146931455" maxy="5686293.231246296"/>
+        <BoundingBox CRS="EPSG:27561" minx="530586.3751294917" miny="126645.30321278966" maxx="738579.7925674242" maxy="377792.44293455407"/>
+        <BoundingBox CRS="EPSG:27562" minx="530413.9597997947" miny="426862.72176102374" maxx="738660.7007897615" maxy="678338.1604802986"/>
+        <BoundingBox CRS="EPSG:27563" minx="530073.7821181649" miny="727449.5528239048" maxx="739060.8410298056" maxy="979842.3839218013"/>
+        <BoundingBox CRS="EPSG:27564" minx="-70048.63207758153" miny="929400.5426222768" maxx="139796.93291393347" maxy="1182847.5294999194"/>
+        <BoundingBox CRS="EPSG:27571" minx="530586.3751294917" miny="1126645.3032127896" maxx="738579.7925674242" maxy="1377792.442934554"/>
+        <BoundingBox CRS="EPSG:27572" minx="546890.877138956" miny="2426348.6760215433" maxx="755877.8442093738" maxy="2678434.2367452313"/>
+        <BoundingBox CRS="EPSG:27573" minx="530073.7821181649" miny="3727449.552823905" maxx="739060.8410298056" maxy="3979842.383921801"/>
+        <BoundingBox CRS="EPSG:27574" minx="-70048.63207758153" miny="4929400.542622277" maxx="139796.93291393347" maxy="5182847.529499919"/>
+        <BoundingBox CRS="EPSG:32630" minx="804473.8329183338" miny="5418368.894705908" maxx="1030004.252947062" maxy="5683919.002531546"/>
+        <BoundingBox CRS="EPSG:32631" minx="383919.4299217893" miny="5410113.7419368" maxx="589913.6694070587" maxy="5659477.846093008"/>
+        <BoundingBox CRS="EPSG:32632" minx="-56179.20383966237" miny="5420416.324113911" maxx="169477.70823320578" maxy="5686091.165801333"/>
+        <BoundingBox CRS="EPSG:900913" minx="149948.66650860306" miny="6246662.2116741445" maxx="476500.37165746896" maxy="6636498.446239349"/>
+        <BoundingBox CRS="EPSG:31370" minx="-66558.21568069188" miny="-52726.432638892904" maxx="143886.98404342937" maxy="200441.48729729373"/>
+        <BoundingBox CRS="EPSG:3812" minx="433392.5678795391" miny="447246.52562468767" maxx="643810.163929432" maxy="700391.186486545"/>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/64b765ab-5b8f-493a-b166-64aeea44ec41"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/64b765ab-5b8f-493a-b166-64aeea44ec41"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/64b765ab-5b8f-493a-b166-64aeea44ec41/formatters/xml"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/64b765ab-5b8f-493a-b166-64aeea44ec41/formatters/xml"/>
+        </MetadataURL>
+        <Style>
+          <Name>insee_part_men_prop</Name>
+          <Title>insee_part_men_prop</Title>
+          <LegendURL width="77" height="100">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=part_men_prop"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>part_moins_25_ans</Name>
+        <Title>Part des moins de 25 ans - Données carroyées de l'INSEE (filosofi 2015)</Title>
+        <Abstract>Données carroyées de l'INSEE (filosofi 2015) - part des moins de 25 ans</Abstract>
+        <KeywordList>
+          <Keyword>carroyage</Keyword>
+          <Keyword>carreau</Keyword>
+          <Keyword>insee</Keyword>
+          <Keyword>filosofi</Keyword>
+          <Keyword>2015</Keyword>
+          <Keyword>population</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.347011789580191</westBoundLongitude>
+          <eastBoundLongitude>4.280475667485366</eastBoundLongitude>
+          <southBoundLatitude>48.83353134121507</southBoundLatitude>
+          <northBoundLatitude>51.08587693454064</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.347011789580191" miny="48.83353134121507" maxx="4.280475667485366" maxy="51.08587693454064"/>
+        <BoundingBox CRS="EPSG:2154" minx="583893.2030234201" miny="6860438.183475244" maxx="789936.0569489883" maxy="7110055.313666841"/>
+        <BoundingBox CRS="EPSG:3857" minx="149948.66650860306" miny="6246662.2116741445" maxx="476500.37165746896" maxy="6636498.446239349"/>
+        <BoundingBox CRS="EPSG:3942" minx="1582625.9060362673" miny="1962345.9911854246" maxx="1790917.9250360557" maxy="2214344.267084108"/>
+        <BoundingBox CRS="EPSG:3943" minx="1582955.8106390885" miny="2850585.850894595" maxx="1790662.327613191" maxy="3101953.831748812"/>
+        <BoundingBox CRS="EPSG:3944" minx="1583244.3430366323" miny="3739013.763003078" maxx="1790438.7798298055" maxy="3989838.662539681"/>
+        <BoundingBox CRS="EPSG:3945" minx="1583492.2986914054" miny="4627592.677976992" maxx="1790246.6653852654" maxy="4877960.066293519"/>
+        <BoundingBox CRS="EPSG:3946" minx="1583700.459183368" miny="5516286.145886624" maxx="1790085.3787384862" maxy="5766279.975219334"/>
+        <BoundingBox CRS="EPSG:3947" minx="1583828.9550610306" miny="6405049.195419356" maxx="1789985.8042891773" maxy="6654770.490868571"/>
+        <BoundingBox CRS="EPSG:3948" minx="1583876.829561481" miny="7293846.214256915" maxx="1789948.6829684577" maxy="7543395.20735729"/>
+        <BoundingBox CRS="EPSG:3949" minx="1583888.8510558233" miny="8182652.513510389" maxx="1789939.3352665342" maxy="8432107.642561577"/>
+        <BoundingBox CRS="EPSG:3950" minx="1583865.71851955" miny="9071434.169073263" maxx="1789957.2196641003" maxy="9320872.327067683"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.83353134121508" miny="1.347011789580191" maxx="51.08587693454065" maxy="4.280475667485367"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.83353134121508" miny="1.347011789580191" maxx="51.08587693454065" maxy="4.280475667485367"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.83353138107115" miny="1.3470117895801912" maxx="51.0858769727745" maxy="4.2804756674853675"/>
+        <BoundingBox CRS="EPSG:23030" minx="804576.6422334176" miny="5418583.928865378" maxx="1030108.8970090363" maxy="5684136.059983725"/>
+        <BoundingBox CRS="EPSG:23031" minx="384009.92769955285" miny="5410321.035589753" maxx="590005.3702269834" maxy="5659686.493128537"/>
+        <BoundingBox CRS="EPSG:23032" minx="-56101.58378105797" miny="5420617.075495008" maxx="169556.48146931455" maxy="5686293.231246296"/>
+        <BoundingBox CRS="EPSG:27561" minx="530586.3751294917" miny="126645.30321278966" maxx="738579.7925674242" maxy="377792.44293455407"/>
+        <BoundingBox CRS="EPSG:27562" minx="530413.9597997947" miny="426862.72176102374" maxx="738660.7007897615" maxy="678338.1604802986"/>
+        <BoundingBox CRS="EPSG:27563" minx="530073.7821181649" miny="727449.5528239048" maxx="739060.8410298056" maxy="979842.3839218013"/>
+        <BoundingBox CRS="EPSG:27564" minx="-70048.63207758153" miny="929400.5426222768" maxx="139796.93291393347" maxy="1182847.5294999194"/>
+        <BoundingBox CRS="EPSG:27571" minx="530586.3751294917" miny="1126645.3032127896" maxx="738579.7925674242" maxy="1377792.442934554"/>
+        <BoundingBox CRS="EPSG:27572" minx="546890.877138956" miny="2426348.6760215433" maxx="755877.8442093738" maxy="2678434.2367452313"/>
+        <BoundingBox CRS="EPSG:27573" minx="530073.7821181649" miny="3727449.552823905" maxx="739060.8410298056" maxy="3979842.383921801"/>
+        <BoundingBox CRS="EPSG:27574" minx="-70048.63207758153" miny="4929400.542622277" maxx="139796.93291393347" maxy="5182847.529499919"/>
+        <BoundingBox CRS="EPSG:32630" minx="804473.8329183338" miny="5418368.894705908" maxx="1030004.252947062" maxy="5683919.002531546"/>
+        <BoundingBox CRS="EPSG:32631" minx="383919.4299217893" miny="5410113.7419368" maxx="589913.6694070587" maxy="5659477.846093008"/>
+        <BoundingBox CRS="EPSG:32632" minx="-56179.20383966237" miny="5420416.324113911" maxx="169477.70823320578" maxy="5686091.165801333"/>
+        <BoundingBox CRS="EPSG:900913" minx="149948.66650860306" miny="6246662.2116741445" maxx="476500.37165746896" maxy="6636498.446239349"/>
+        <BoundingBox CRS="EPSG:31370" minx="-66558.21568069188" miny="-52726.432638892904" maxx="143886.98404342937" maxy="200441.48729729373"/>
+        <BoundingBox CRS="EPSG:3812" minx="433392.5678795391" miny="447246.52562468767" maxx="643810.163929432" maxy="700391.186486545"/>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/3a4b10da-9ba8-420a-91c7-447b9fbdced7"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/3a4b10da-9ba8-420a-91c7-447b9fbdced7"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/3a4b10da-9ba8-420a-91c7-447b9fbdced7/formatters/xml"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/3a4b10da-9ba8-420a-91c7-447b9fbdced7/formatters/xml"/>
+        </MetadataURL>
+        <Style>
+          <Name>insee_part_moins_25_ans</Name>
+          <Title>insee_part_moins_25_ans</Title>
+          <LegendURL width="93" height="100">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=part_moins_25_ans"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>part_plus_de_65_ans</Name>
+        <Title>Part des plus de 65 ans - Données carroyées de l'INSEE (filosofi 2015)</Title>
+        <Abstract>Données carroyées de l'INSEE (filosofi 2015) - part des plus de 65 ans</Abstract>
+        <KeywordList>
+          <Keyword>insee</Keyword>
+          <Keyword>carreau</Keyword>
+          <Keyword>carroyage</Keyword>
+          <Keyword>filosofi</Keyword>
+          <Keyword>2015</Keyword>
+          <Keyword>population</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.347011789580191</westBoundLongitude>
+          <eastBoundLongitude>4.280475667485366</eastBoundLongitude>
+          <southBoundLatitude>48.83353134121507</southBoundLatitude>
+          <northBoundLatitude>51.08587693454064</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.347011789580191" miny="48.83353134121507" maxx="4.280475667485366" maxy="51.08587693454064"/>
+        <BoundingBox CRS="EPSG:2154" minx="583893.2030234201" miny="6860438.183475244" maxx="789936.0569489883" maxy="7110055.313666841"/>
+        <BoundingBox CRS="EPSG:3857" minx="149948.66650860306" miny="6246662.2116741445" maxx="476500.37165746896" maxy="6636498.446239349"/>
+        <BoundingBox CRS="EPSG:3942" minx="1582625.9060362673" miny="1962345.9911854246" maxx="1790917.9250360557" maxy="2214344.267084108"/>
+        <BoundingBox CRS="EPSG:3943" minx="1582955.8106390885" miny="2850585.850894595" maxx="1790662.327613191" maxy="3101953.831748812"/>
+        <BoundingBox CRS="EPSG:3944" minx="1583244.3430366323" miny="3739013.763003078" maxx="1790438.7798298055" maxy="3989838.662539681"/>
+        <BoundingBox CRS="EPSG:3945" minx="1583492.2986914054" miny="4627592.677976992" maxx="1790246.6653852654" maxy="4877960.066293519"/>
+        <BoundingBox CRS="EPSG:3946" minx="1583700.459183368" miny="5516286.145886624" maxx="1790085.3787384862" maxy="5766279.975219334"/>
+        <BoundingBox CRS="EPSG:3947" minx="1583828.9550610306" miny="6405049.195419356" maxx="1789985.8042891773" maxy="6654770.490868571"/>
+        <BoundingBox CRS="EPSG:3948" minx="1583876.829561481" miny="7293846.214256915" maxx="1789948.6829684577" maxy="7543395.20735729"/>
+        <BoundingBox CRS="EPSG:3949" minx="1583888.8510558233" miny="8182652.513510389" maxx="1789939.3352665342" maxy="8432107.642561577"/>
+        <BoundingBox CRS="EPSG:3950" minx="1583865.71851955" miny="9071434.169073263" maxx="1789957.2196641003" maxy="9320872.327067683"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.83353134121508" miny="1.347011789580191" maxx="51.08587693454065" maxy="4.280475667485367"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.83353134121508" miny="1.347011789580191" maxx="51.08587693454065" maxy="4.280475667485367"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.83353138107115" miny="1.3470117895801912" maxx="51.0858769727745" maxy="4.2804756674853675"/>
+        <BoundingBox CRS="EPSG:23030" minx="804576.6422334176" miny="5418583.928865378" maxx="1030108.8970090363" maxy="5684136.059983725"/>
+        <BoundingBox CRS="EPSG:23031" minx="384009.92769955285" miny="5410321.035589753" maxx="590005.3702269834" maxy="5659686.493128537"/>
+        <BoundingBox CRS="EPSG:23032" minx="-56101.58378105797" miny="5420617.075495008" maxx="169556.48146931455" maxy="5686293.231246296"/>
+        <BoundingBox CRS="EPSG:27561" minx="530586.3751294917" miny="126645.30321278966" maxx="738579.7925674242" maxy="377792.44293455407"/>
+        <BoundingBox CRS="EPSG:27562" minx="530413.9597997947" miny="426862.72176102374" maxx="738660.7007897615" maxy="678338.1604802986"/>
+        <BoundingBox CRS="EPSG:27563" minx="530073.7821181649" miny="727449.5528239048" maxx="739060.8410298056" maxy="979842.3839218013"/>
+        <BoundingBox CRS="EPSG:27564" minx="-70048.63207758153" miny="929400.5426222768" maxx="139796.93291393347" maxy="1182847.5294999194"/>
+        <BoundingBox CRS="EPSG:27571" minx="530586.3751294917" miny="1126645.3032127896" maxx="738579.7925674242" maxy="1377792.442934554"/>
+        <BoundingBox CRS="EPSG:27572" minx="546890.877138956" miny="2426348.6760215433" maxx="755877.8442093738" maxy="2678434.2367452313"/>
+        <BoundingBox CRS="EPSG:27573" minx="530073.7821181649" miny="3727449.552823905" maxx="739060.8410298056" maxy="3979842.383921801"/>
+        <BoundingBox CRS="EPSG:27574" minx="-70048.63207758153" miny="4929400.542622277" maxx="139796.93291393347" maxy="5182847.529499919"/>
+        <BoundingBox CRS="EPSG:32630" minx="804473.8329183338" miny="5418368.894705908" maxx="1030004.252947062" maxy="5683919.002531546"/>
+        <BoundingBox CRS="EPSG:32631" minx="383919.4299217893" miny="5410113.7419368" maxx="589913.6694070587" maxy="5659477.846093008"/>
+        <BoundingBox CRS="EPSG:32632" minx="-56179.20383966237" miny="5420416.324113911" maxx="169477.70823320578" maxy="5686091.165801333"/>
+        <BoundingBox CRS="EPSG:900913" minx="149948.66650860306" miny="6246662.2116741445" maxx="476500.37165746896" maxy="6636498.446239349"/>
+        <BoundingBox CRS="EPSG:31370" minx="-66558.21568069188" miny="-52726.432638892904" maxx="143886.98404342937" maxy="200441.48729729373"/>
+        <BoundingBox CRS="EPSG:3812" minx="433392.5678795391" miny="447246.52562468767" maxx="643810.163929432" maxy="700391.186486545"/>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/de270e22-bc34-49df-8b4f-7ffe9b40bcf0"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/de270e22-bc34-49df-8b4f-7ffe9b40bcf0"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/de270e22-bc34-49df-8b4f-7ffe9b40bcf0/formatters/xml"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/de270e22-bc34-49df-8b4f-7ffe9b40bcf0/formatters/xml"/>
+        </MetadataURL>
+        <Style>
+          <Name>insee_part_plus_65_ans</Name>
+          <Title>insee_part_plus_65_ans</Title>
+          <LegendURL width="77" height="100">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=part_plus_de_65_ans"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>rect_m_l93_hdf_attri</Name>
+        <Title>INSEE - Données carroyées à 200 mètres (2010)</Title>
+        <Abstract>"Les données carroyées à 200 mètres de l'INSEE sont issues des déclarations de revenus, de la taxe d'habitation et du fichier d'imposition fournis à l'INSEE par la Direction générale des finances publiques (...) Afin de garantir la confidentialité et la qualité des statistiques publiées, l'INSEE a élaboré un découpage du territoire en rectangles de taille variable par agrégation de carreaux de 200 mètres. La population de ces rectangles est toujours d'au moins 11 ménages fiscaux".
+
+Extrait de la "documentation complète des données à 200 mètres" de l'INSEE (millésime 2010).
+
+La couche de données "INSEE - Données carroyées à 200 mètres" est une extraction exhaustive des **rectangles** INSEE sur le territoire de la Région Hauts-de-France réalisée par Géo2France.</Abstract>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>rect_m_l93_hdf_attri</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.2909619855119239</westBoundLongitude>
+          <eastBoundLongitude>4.348967156046717</eastBoundLongitude>
+          <southBoundLatitude>48.782367017643395</southBoundLatitude>
+          <northBoundLatitude>51.08449788416573</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.2909619855119239" miny="48.782367017643395" maxx="4.348967156046717" maxy="51.08449788416573"/>
+        <BoundingBox CRS="EPSG:2154" minx="579951.6737886025" miny="6854828.303237316" maxx="794750.2124602906" maxy="7109900.526092611"/>
+        <BoundingBox CRS="EPSG:3857" minx="143709.23086066075" miny="6238013.993788693" maxx="484124.8092877917" maxy="6636254.059219128"/>
+        <BoundingBox CRS="EPSG:3942" minx="1578641.67014444" miny="1956688.259463036" maxx="1795784.3919229629" maxy="2214187.8688904047"/>
+        <BoundingBox CRS="EPSG:3943" minx="1578982.701073692" miny="2844940.9817237905" maxx="1795515.1699689627" maxy="3101797.855229685"/>
+        <BoundingBox CRS="EPSG:3944" minx="1579280.9573201076" miny="3733379.825299985" maxx="1795279.7116699826" maxy="3989683.0529378243"/>
+        <BoundingBox CRS="EPSG:3945" minx="1579537.26126617" miny="4621967.776478967" maxx="1795077.3678008064" maxy="4877804.769896803"/>
+        <BoundingBox CRS="EPSG:3946" minx="1579752.420945134" miny="5510668.420641069" maxx="1794907.5004681316" maxy="5766124.93934324"/>
+        <BoundingBox CRS="EPSG:3947" minx="1579884.3168320814" miny="6399436.184506878" maxx="1794803.354985345" maxy="6654616.338666623"/>
+        <BoundingBox CRS="EPSG:3948" minx="1579931.9206257004" miny="7288235.462317685" maxx="1794765.7427698262" maxy="7543242.59079469"/>
+        <BoundingBox CRS="EPSG:3949" minx="1579942.4910503668" miny="8177042.28910761" maxx="1794757.361858493" maxy="8431956.48355087"/>
+        <BoundingBox CRS="EPSG:3950" minx="1579916.7496673507" miny="9065822.774520835" maxx="1794777.6426466552" maxy="9320722.549444685"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.7823670176434" miny="1.2909619855119239" maxx="51.08449788416573" maxy="4.348967156046718"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.7823670176434" miny="1.2909619855119239" maxx="51.08449788416573" maxy="4.348967156046718"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.78236705752815" miny="1.2909619855119236" maxx="51.084497922400786" maxy="4.348967156046718"/>
+        <BoundingBox CRS="EPSG:23030" minx="800666.2184301089" miny="5412677.576580309" maxx="1035370.96862598" maxy="5684380.527094219"/>
+        <BoundingBox CRS="EPSG:23031" minx="380064.47089737665" miny="5404712.56362134" maxx="594822.1291463528" maxy="5659538.143125806"/>
+        <BoundingBox CRS="EPSG:23032" minx="-60493.51013221196" miny="5414640.548553985" maxx="174336.09930345486" maxy="5686466.892314195"/>
+        <BoundingBox CRS="EPSG:27561" minx="526654.2573654156" miny="121004.33377842761" maxx="743447.717670835" maxy="377684.0746262671"/>
+        <BoundingBox CRS="EPSG:27562" minx="526472.192226298" miny="421216.6247006634" maxx="743525.4548835838" maxy="678224.2959674827"/>
+        <BoundingBox CRS="EPSG:27563" minx="526112.8695110255" miny="721785.2279219837" maxx="743933.2891044663" maxy="979722.4398958979"/>
+        <BoundingBox CRS="EPSG:27564" minx="-74029.65972658075" miny="923714.332908293" maxx="144682.21125342904" maxy="1182722.8349890523"/>
+        <BoundingBox CRS="EPSG:27571" minx="526654.2573654156" miny="1121004.3337784277" maxx="743447.717670835" maxy="1377684.074626267"/>
+        <BoundingBox CRS="EPSG:27572" minx="542949.6131331228" miny="2420690.912711226" maxx="760759.2331860522" maxy="2678334.6931194956"/>
+        <BoundingBox CRS="EPSG:27573" minx="526112.8695110255" miny="3721785.2279219837" maxx="743933.2891044663" maxy="3979722.439895898"/>
+        <BoundingBox CRS="EPSG:27574" minx="-74029.65972658075" miny="4923714.332908293" maxx="144682.21125342904" maxy="5182722.834989052"/>
+        <BoundingBox CRS="EPSG:32630" minx="800563.4328874643" miny="5412462.586651683" maxx="1035266.2797717985" maxy="5684163.459440977"/>
+        <BoundingBox CRS="EPSG:32631" minx="379973.995006723" miny="5404505.302657758" maxx="594730.3967981924" maxy="5659329.498477983"/>
+        <BoundingBox CRS="EPSG:32632" minx="-60571.10531224555" miny="5414439.829068835" maxx="174257.30429780373" maxy="5686264.824357271"/>
+        <BoundingBox CRS="EPSG:900913" minx="143709.23086066075" miny="6238013.993788693" maxx="484124.8092877917" maxy="6636254.059219128"/>
+        <BoundingBox CRS="EPSG:31370" minx="-70611.58461997498" miny="-58422.12551788241" maxx="148686.60967150546" maxy="200364.79306894634"/>
+        <BoundingBox CRS="EPSG:3812" minx="429339.8156510914" miny="441551.37792587205" maxx="648609.7759750618" maxy="700314.0778191575"/>
+        <Attribution>
+          <Title>INSEE</Title>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.insee.fr/fr/statistiques/2520034"/>
+          <LogoURL height="273" width="1117">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.insee.fr/static/img/logo_com_externe_semi_bold.png"/>
+          </LogoURL>
+        </Attribution>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/?uuid=0028c222d0d2424fb92a8846b5f03e27"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/?uuid=0028c222d0d2424fb92a8846b5f03e27"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://open.isogeo.com/s/cc1ba385918d40cc8078063121873550/pp/m0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70/resources/0028c222d0d2424fb92a8846b5f03e27.xml?proxyUrl=https%3A%2F%2Fopen.isogeo.com%2Fs%2Fcc1ba385918d40cc8078063121873550%2Fpp%2Fm0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70%2F"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://open.isogeo.com/s/cc1ba385918d40cc8078063121873550/pp/m0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70/resources/0028c222d0d2424fb92a8846b5f03e27.xml?proxyUrl=https%3A%2F%2Fopen.isogeo.com%2Fs%2Fcc1ba385918d40cc8078063121873550%2Fpp%2Fm0_ZBCtJU3nJj1S3Q2FIAa6u_KZ70%2F"/>
+        </MetadataURL>
+        <Style>
+          <Name>insee_carreaux</Name>
+          <Title>insee_carreaux</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=rect_m_l93_hdf_attri"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>polygon_transparent</Name>
+          <Title>Polygone transparent</Title>
+          <Abstract>A style that draws a polygon with no fill</Abstract>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=rect_m_l93_hdf_attri&amp;style=polygon_transparent"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>rectangles_200m_menage_erbm</Name>
+        <Title>INSEE - Part des ménages présents depuis plus de 5 ans</Title>
+        <Abstract>Part des ménages présents depuis 5 ans ou plus dans leur logement actuel.</Abstract>
+        <KeywordList>
+          <Keyword>insee</Keyword>
+          <Keyword>logement</Keyword>
+          <Keyword>ménage</Keyword>
+          <Keyword>ménages</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.3416494256918972</westBoundLongitude>
+          <eastBoundLongitude>4.858330088885997</eastBoundLongitude>
+          <southBoundLatitude>48.81057566682718</southBoundLatitude>
+          <northBoundLatitude>51.08459838610111</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.3416494256918972" miny="48.81057566682718" maxx="4.858330088885997" maxy="51.08459838610111"/>
+        <BoundingBox CRS="EPSG:2154" minx="583513.211637961" miny="6858192.18282671" maxx="830538.770192725" maxy="7109901.75810114"/>
+        <BoundingBox CRS="EPSG:3857" minx="149351.73089110994" miny="6242780.961956599" maxx="540826.831600429" maxy="6636271.869322025"/>
+        <BoundingBox CRS="EPSG:3942" minx="1582242.0254658456" miny="1960059.2386457978" maxx="1831963.0934123313" maxy="2214189.89893468"/>
+        <BoundingBox CRS="EPSG:3943" minx="1582572.9502579933" miny="2848309.203570987" maxx="1831592.2991705702" maxy="3101799.701242985"/>
+        <BoundingBox CRS="EPSG:3944" minx="1582862.3688047475" miny="3736746.344721" maxx="1831268.0154981674" maxy="3989684.7193871825"/>
+        <BoundingBox CRS="EPSG:3945" minx="1583111.0791186925" miny="4625333.630770153" maxx="1830989.348245209" maxy="4877806.261084884"/>
+        <BoundingBox CRS="EPSG:3946" minx="1583319.8652876208" miny="5514034.629547115" maxx="1830755.4188605899" maxy="5766126.259417954"/>
+        <BoundingBox CRS="EPSG:3947" minx="1583448.3941035569" miny="6402801.866041051" maxx="1830611.4244886865" maxy="6654619.454728053"/>
+        <BoundingBox CRS="EPSG:3948" minx="1583495.6911163733" miny="7291599.63539271" maxx="1830558.4572931177" maxy="7543249.550668971"/>
+        <BoundingBox CRS="EPSG:3949" minx="1583507.0319402162" miny="8180405.994915386" maxx="1830545.781905217" maxy="8431967.208273992"/>
+        <BoundingBox CRS="EPSG:3950" minx="1583483.1174001745" miny="9069187.033923648" maxx="1830572.6130464536" maxy="9320736.96264837"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.810575666827184" miny="1.3416494256918972" maxx="51.08459838610111" maxy="4.858330088885999"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.810575666827184" miny="1.3416494256918972" maxx="51.08459838610111" maxy="4.858330088885999"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.81057570669616" miny="1.3416494256918972" maxx="51.084598424336086" maxy="4.8583300888859995"/>
+        <BoundingBox CRS="EPSG:23030" minx="804210.707740715" miny="5416312.788445811" maxx="1070902.25454064" maxy="5687357.43294337"/>
+        <BoundingBox CRS="EPSG:23031" minx="383628.28716485924" miny="5408075.25197375" maxx="630605.1052030157" maxy="5659556.602446613"/>
+        <BoundingBox CRS="EPSG:23032" minx="-56661.43819240236" miny="5415201.579425195" maxx="209955.64334350347" maxy="5686171.695739089"/>
+        <BoundingBox CRS="EPSG:27561" minx="530208.3692632108" miny="124396.25110225238" maxx="779204.9552036978" maxy="378034.2345977557"/>
+        <BoundingBox CRS="EPSG:27562" minx="530035.1014911616" miny="424612.2193921449" maxx="779306.5574337463" maxy="678530.8025953097"/>
+        <BoundingBox CRS="EPSG:27563" minx="529693.163184004" miny="725192.4111703681" maxx="779820.7555818913" maxy="979983.4005775325"/>
+        <BoundingBox CRS="EPSG:27564" minx="-70431.12438781248" miny="927135.1485841633" maxx="180701.4575663539" maxy="1182949.8740599"/>
+        <BoundingBox CRS="EPSG:27571" minx="530208.3692632108" miny="1124396.2511022524" maxx="779204.9552036978" maxy="1378034.2345977556"/>
+        <BoundingBox CRS="EPSG:27572" minx="546512.4797119657" miny="2424097.0674430747" maxx="796529.9070271628" maxy="2678747.6485095015"/>
+        <BoundingBox CRS="EPSG:27573" minx="529693.163184004" miny="3725192.411170368" maxx="779820.7555818913" maxy="3979983.4005775326"/>
+        <BoundingBox CRS="EPSG:27574" minx="-70431.12438781248" miny="4927135.148584163" maxx="180701.4575663539" maxy="5182949.8740599"/>
+        <BoundingBox CRS="EPSG:32630" minx="804107.9004520376" miny="5416097.769832581" maxx="1070797.3334910169" maxy="5687140.28091996"/>
+        <BoundingBox CRS="EPSG:32631" minx="383537.79126605164" miny="5407867.964606273" maxx="630513.1610963586" maxy="5659347.806419272"/>
+        <BoundingBox CRS="EPSG:32632" minx="-56739.05377525813" miny="5415000.8745232895" maxx="209876.6848155901" maxy="5685969.630637096"/>
+        <BoundingBox CRS="EPSG:900913" minx="149351.73089110994" miny="6242780.961956599" maxx="540826.831600429" maxy="6636271.869322025"/>
+        <BoundingBox CRS="EPSG:31370" minx="-66982.55074752151" miny="-55783.63487113826" maxx="184387.4278675324" maxy="200295.79945434257"/>
+        <BoundingBox CRS="EPSG:3812" minx="432968.4730192189" miny="444305.19029673433" maxx="684310.3698099108" maxy="700245.4594763599"/>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/04bcec79-5b25-4b16-b635-73115f7456e4"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/04bcec79-5b25-4b16-b635-73115f7456e4"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/04bcec79-5b25-4b16-b635-73115f7456e4/formatters/xml"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/04bcec79-5b25-4b16-b635-73115f7456e4/formatters/xml"/>
+        </MetadataURL>
+        <Style>
+          <Name>part_menage_5ans</Name>
+          <Title>part_menage_5ans</Title>
+          <LegendURL width="77" height="100">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=rectangles_200m_menage_erbm"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>repatition_pop</Name>
+        <Title>Répartition de la population - Données carroyées de l'INSEE (filosofi 2015)</Title>
+        <Abstract>Données carroyées de l'INSEE (filosofi 2015) - répartition de la population</Abstract>
+        <KeywordList>
+          <Keyword>insee</Keyword>
+          <Keyword>filosofi</Keyword>
+          <Keyword>2015</Keyword>
+          <Keyword>population</Keyword>
+          <Keyword>carroyage</Keyword>
+          <Keyword>carreau</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.3485999974288396</westBoundLongitude>
+          <eastBoundLongitude>4.278899089114847</eastBoundLongitude>
+          <southBoundLatitude>48.834530791385994</southBoundLatitude>
+          <northBoundLatitude>51.08489655955638</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.3485999974288396" miny="48.834530791385994" maxx="4.278899089114847" maxy="51.08489655955638"/>
+        <BoundingBox CRS="EPSG:2154" minx="584002.5055378933" miny="6860547.148507459" maxx="789827.075047366" maxy="7109945.993537578"/>
+        <BoundingBox CRS="EPSG:3857" minx="150125.46499758848" miny="6246831.234934718" maxx="476324.86775606696" maxy="6636324.70932738"/>
+        <BoundingBox CRS="EPSG:3942" minx="1582736.5800598483" miny="1962455.9393112638" maxx="1790807.614874713" maxy="2214233.753197126"/>
+        <BoundingBox CRS="EPSG:3943" minx="1583066.1330417907" miny="2850695.5368702244" maxx="1790552.3590260523" maxy="3101843.6286146087"/>
+        <BoundingBox CRS="EPSG:3944" minx="1583354.3536718832" miny="3739123.224594486" maxx="1790329.1132754465" maxy="3989728.731196667"/>
+        <BoundingBox CRS="EPSG:3945" minx="1583602.036628904" miny="4627701.952244716" maxx="1790137.2620962462" maxy="4877850.36852945"/>
+        <BoundingBox CRS="EPSG:3946" minx="1583809.962724283" miny="5516395.269196297" maxx="1789976.2007066566" maxy="5766170.47355822"/>
+        <BoundingBox CRS="EPSG:3947" minx="1583938.3355159424" miny="6405158.220681283" maxx="1789876.7486057857" maxy="6654661.13019576"/>
+        <BoundingBox CRS="EPSG:3948" minx="1583986.2006140824" miny="7293955.194456323" maxx="1789839.6446869327" maxy="7543285.932528163"/>
+        <BoundingBox CRS="EPSG:3949" minx="1583998.245763849" miny="8182761.48230111" maxx="1789830.2812671512" maxy="8431998.419039762"/>
+        <BoundingBox CRS="EPSG:3950" minx="1583975.1693043753" miny="9071543.159452854" maxx="1789848.117466658" maxy="9320763.1209988"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.83453079138601" miny="1.3485999974288396" maxx="51.08489655955638" maxy="4.278899089114848"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.83453079138601" miny="1.3485999974288396" maxx="51.08489655955638" maxy="4.278899089114848"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.834530831241516" miny="1.3485999974288396" maxx="51.084896597791094" maxy="4.278899089114848"/>
+        <BoundingBox CRS="EPSG:23030" minx="804694.1491133939" miny="5418701.212871276" maxx="1029991.2184337502" maxy="5684018.037783634"/>
+        <BoundingBox CRS="EPSG:23031" minx="384119.30069649586" miny="5410429.970555763" maxx="589896.3437092408" maxy="5659577.284514301"/>
+        <BoundingBox CRS="EPSG:23032" minx="-55983.523656687816" miny="5420734.37787116" maxx="169439.23521812225" maxy="5686175.105822844"/>
+        <BoundingBox CRS="EPSG:27561" minx="530696.3000099488" miny="126755.127297118" maxx="738469.7706105083" maxy="377682.3116056735"/>
+        <BoundingBox CRS="EPSG:27562" minx="530524.2163102414" miny="426972.66335891606" maxx="738550.7273735427" maxy="678227.8706257762"/>
+        <BoundingBox CRS="EPSG:27563" minx="530184.6395107498" miny="727559.8680018289" maxx="738950.6692647958" maxy="979731.6765705593"/>
+        <BoundingBox CRS="EPSG:27564" minx="-69937.16272029302" miny="929511.2979646677" maxx="139686.45274912706" maxy="1182736.348560033"/>
+        <BoundingBox CRS="EPSG:27571" minx="530696.3000099488" miny="1126755.127297118" maxx="738469.7706105083" maxy="1377682.3116056735"/>
+        <BoundingBox CRS="EPSG:27572" minx="547001.4575981454" miny="2426458.941639174" maxx="755767.5478618324" maxy="2678323.6240189946"/>
+        <BoundingBox CRS="EPSG:27573" minx="530184.6395107498" miny="3727559.868001829" maxx="738950.6692647958" maxy="3979731.6765705594"/>
+        <BoundingBox CRS="EPSG:27574" minx="-69937.16272029302" miny="4929511.297964668" maxx="139686.45274912706" maxy="5182736.348560032"/>
+        <BoundingBox CRS="EPSG:32630" minx="804591.3389212217" miny="5418486.1777936565" maxx="1029886.5753441784" maxy="5683800.9812600985"/>
+        <BoundingBox CRS="EPSG:32631" minx="384028.80230686365" miny="5410222.676265678" maxx="589804.6435927125" maxy="5659368.638014361"/>
+        <BoundingBox CRS="EPSG:32632" minx="-56061.144347122405" miny="5420533.625857523" maxx="169360.46253344312" maxy="5685973.040926031"/>
+        <BoundingBox CRS="EPSG:900913" minx="150125.46499758848" miny="6246831.234934718" maxx="476324.86775606696" maxy="6636324.70932738"/>
+        <BoundingBox CRS="EPSG:31370" minx="-66446.73620637506" miny="-52615.532119559124" maxx="143776.3747205304" maxy="200330.28823639452"/>
+        <BoundingBox CRS="EPSG:3812" minx="433504.0351920126" miny="447357.4139145889" maxx="643699.5668073522" maxy="700279.9995640808"/>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/68f7b322-1c12-4a2b-89a0-db61a12f91fb"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/68f7b322-1c12-4a2b-89a0-db61a12f91fb"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/68f7b322-1c12-4a2b-89a0-db61a12f91fb/formatters/xml"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/68f7b322-1c12-4a2b-89a0-db61a12f91fb/formatters/xml"/>
+        </MetadataURL>
+        <Style>
+          <Name>insee_repartition_pop</Name>
+          <Title>insee_repartition_pop</Title>
+          <LegendURL width="119" height="40">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=repatition_pop"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>zone_emploi_2020_insee_hdf</Name>
+        <Title>Zones d'emploi 2020</Title>
+        <Abstract>Zones d'emploi 2020 de l'INSEE.</Abstract>
+        <KeywordList>
+          <Keyword>insee</Keyword>
+          <Keyword>emploi</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.2336997276636186</westBoundLongitude>
+          <eastBoundLongitude>4.285483821285559</eastBoundLongitude>
+          <southBoundLatitude>48.826383279532514</southBoundLatitude>
+          <northBoundLatitude>51.08959357653562</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.2336997276636186" miny="48.826383279532514" maxx="4.285483821285559" maxy="51.08959357653562"/>
+        <BoundingBox CRS="EPSG:2154" minx="575941.0333808537" miny="6859807.972293392" maxx="790280.9590193445" maxy="7110480.031251958"/>
+        <BoundingBox CRS="EPSG:3857" minx="137334.82547531428" miny="6245453.456602898" maxx="477057.87678832066" maxy="6637157.123480706"/>
+        <BoundingBox CRS="EPSG:3942" minx="1574586.3006459496" miny="1961698.1764364298" maxx="1791267.1337957447" maxy="2214772.8156138035"/>
+        <BoundingBox CRS="EPSG:3943" minx="1574938.945973435" miny="2849942.2873190977" maxx="1791010.4316573536" maxy="3102381.358644153"/>
+        <BoundingBox CRS="EPSG:3944" minx="1575247.383052795" miny="3738374.1752905273" maxx="1790785.9048268013" maxy="3990265.3150264104"/>
+        <BoundingBox CRS="EPSG:3945" minx="1575512.4619092527" miny="4626956.79703201" maxx="1790592.9345334969" maxy="4878385.988846507"/>
+        <BoundingBox CRS="EPSG:3946" minx="1575735.0177286656" miny="5515653.708632702" maxx="1790430.912814149" maxy="5766705.309603697"/>
+        <BoundingBox CRS="EPSG:3947" minx="1575872.2685294938" miny="6404418.713772734" maxx="1790330.975423005" maxy="6655196.6639413"/>
+        <BoundingBox CRS="EPSG:3948" minx="1575923.1842937015" miny="7293216.152371921" maxx="1790293.8716946545" maxy="7543823.696322858"/>
+        <BoundingBox CRS="EPSG:3949" minx="1575935.7966527843" miny="8182022.673682274" maxx="1790284.6450023018" maxy="8432538.526904244"/>
+        <BoundingBox CRS="EPSG:3950" minx="1575910.852278647" miny="9070804.357487591" maxx="1790302.7518459237" maxy="9321305.68541675"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.82638327953252" miny="1.2336997276636188" maxx="51.08959357653563" maxy="4.285483821285559"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.82638327953252" miny="1.2336997276636188" maxx="51.08959357653563" maxy="4.285483821285559"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.82638331939262" miny="1.2336997276636186" maxx="51.08959361476624" maxy="4.285483821285559"/>
+        <BoundingBox CRS="EPSG:23030" minx="796628.5786692619" miny="5417333.93822009" maxx="1030504.0976292331" maxy="5684588.087306023"/>
+        <BoundingBox CRS="EPSG:23031" minx="376057.9901390548" miny="5409691.364722802" maxx="590350.5814924873" maxy="5660122.556086639"/>
+        <BoundingBox CRS="EPSG:23032" minx="-64107.31501638715" miny="5419961.00317896" maxx="169933.8484278177" maxy="5687378.9587939"/>
+        <BoundingBox CRS="EPSG:27561" minx="522647.4981956766" miny="125953.02514226644" maxx="738930.7107873925" maxy="378219.5618488065"/>
+        <BoundingBox CRS="EPSG:27562" minx="522455.16697433806" miny="426165.8041672354" maxx="739011.1692558744" maxy="678765.9773787677"/>
+        <BoundingBox CRS="EPSG:27563" minx="522075.8762268746" miny="726746.1579357358" maxx="739411.6302810955" maxy="980271.9082771913"/>
+        <BoundingBox CRS="EPSG:27564" minx="-78087.49713624452" miny="928691.2681509443" maxx="140148.47092563016" maxy="1183278.9572897975"/>
+        <BoundingBox CRS="EPSG:27571" minx="522647.4981956766" miny="1125953.0251422664" maxx="738930.7107873925" maxy="1378219.5618488065"/>
+        <BoundingBox CRS="EPSG:27572" minx="538930.9081617154" miny="2425628.105601614" maxx="756230.1837123914" maxy="2678863.0745336204"/>
+        <BoundingBox CRS="EPSG:27573" minx="522075.8762268746" miny="3726746.157935736" maxx="739411.6302810955" maxy="3980271.908277191"/>
+        <BoundingBox CRS="EPSG:27574" minx="-78087.49713624452" miny="4928691.268150944" maxx="140148.47092563016" maxy="5183278.957289797"/>
+        <BoundingBox CRS="EPSG:32630" minx="796525.8187126638" miny="5417118.922526646" maxx="1030399.4498512236" maxy="5684371.026427599"/>
+        <BoundingBox CRS="EPSG:32631" minx="375967.5378408855" miny="5409484.075973202" maxx="590258.8782994109" maxy="5659913.909940529"/>
+        <BoundingBox CRS="EPSG:32632" minx="-64184.8980369902" miny="5419760.255199655" maxx="169855.07340567035" maxy="5687176.885161611"/>
+        <BoundingBox CRS="EPSG:900913" minx="137334.82547531428" miny="6245453.456602898" maxx="477057.87678832066" maxy="6637157.123480706"/>
+        <BoundingBox CRS="EPSG:31370" minx="-74525.14274048072" miny="-53362.86366692651" maxx="144238.39993919744" maxy="201022.09842771292"/>
+        <BoundingBox CRS="EPSG:3812" minx="425425.7520403407" miny="446610.13505205483" maxx="644161.5329111181" maxy="700970.9572991782"/>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/9b838206-f064-48e4-99e4-89bb2172787a"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/9b838206-f064-48e4-99e4-89bb2172787a"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/9b838206-f064-48e4-99e4-89bb2172787a/formatters/xml"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/9b838206-f064-48e4-99e4-89bb2172787a/formatters/xml"/>
+        </MetadataURL>
+        <Style>
+          <Name>contour_orange</Name>
+          <Title>contour_orange</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zone_emploi_2020_insee_hdf"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>contour_rouge</Name>
+          <Title>contour_rouge</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zone_emploi_2020_insee_hdf&amp;style=contour_rouge"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>aplat_orange</Name>
+          <Title>aplat_orange</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zone_emploi_2020_insee_hdf&amp;style=aplat_orange"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>contour_bleu</Name>
+          <Title>contour_bleu</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zone_emploi_2020_insee_hdf&amp;style=contour_bleu"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>aplat_bleu</Name>
+          <Title>aplat_bleu</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zone_emploi_2020_insee_hdf&amp;style=aplat_bleu"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>contour_blanc</Name>
+          <Title>contour_blanc</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zone_emploi_2020_insee_hdf&amp;style=contour_blanc"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>aplat_rouge</Name>
+          <Title>aplat_rouge</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zone_emploi_2020_insee_hdf&amp;style=aplat_rouge"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>contour_jaune</Name>
+          <Title>contour_jaune</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zone_emploi_2020_insee_hdf&amp;style=contour_jaune"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>aplat_jaune</Name>
+          <Title>aplat_jaune</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zone_emploi_2020_insee_hdf&amp;style=aplat_jaune"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>contour_noir</Name>
+          <Title>contour_noir</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zone_emploi_2020_insee_hdf&amp;style=contour_noir"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0">
+        <Name>zones_emploi2010</Name>
+        <Title>Zones d'emploi 2010</Title>
+        <Abstract>Zones d'emploi 2010 de l'INSEE.</Abstract>
+        <KeywordList>
+          <Keyword>features</Keyword>
+          <Keyword>zones_emploi2010</Keyword>
+        </KeywordList>
+        <CRS>EPSG:2154</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>1.347217189036857</westBoundLongitude>
+          <eastBoundLongitude>4.285589467078466</eastBoundLongitude>
+          <southBoundLatitude>48.82764887582164</southBoundLatitude>
+          <northBoundLatitude>51.089678673814696</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="1.347217189036857" miny="48.82764887582164" maxx="4.285589467078466" maxy="51.089678673814696"/>
+        <BoundingBox CRS="EPSG:2154" minx="583916.500000011" miny="6859783.50000094" maxx="790288.39999999" maxy="7110478.80000027"/>
+        <BoundingBox CRS="EPSG:3857" minx="149971.53147152832" miny="6245667.459531894" maxx="477069.63722419145" maxy="6637172.2053596685"/>
+        <BoundingBox CRS="EPSG:3942" minx="1582648.7598200408" miny="1961686.471801033" maxx="1791274.6544246813" maxy="2214772.414145828"/>
+        <BoundingBox CRS="EPSG:3943" minx="1582978.7587156422" miny="2849927.6608411307" maxx="1791017.931505167" maxy="3102380.766651812"/>
+        <BoundingBox CRS="EPSG:3944" minx="1583267.390125347" miny="3738356.6804871373" maxx="1790793.3865365875" maxy="3990264.536400616"/>
+        <BoundingBox CRS="EPSG:3945" minx="1583515.4494907125" miny="4626936.485251737" maxx="1790600.4006977007" maxy="4878385.027318998"/>
+        <BoundingBox CRS="EPSG:3946" minx="1583723.7183651195" miny="5515630.629200626" maxx="1790438.3659754337" maxy="5766704.168757059"/>
+        <BoundingBox CRS="EPSG:3947" minx="1583852.1606863143" miny="6404394.146364763" maxx="1790338.423562226" maxy="6655194.059793246"/>
+        <BoundingBox CRS="EPSG:3948" minx="1583899.812573277" miny="7293191.4283695575" maxx="1790301.322979628" maxy="7543818.291737677"/>
+        <BoundingBox CRS="EPSG:3949" minx="1583911.6227469274" miny="8181997.788737297" maxx="1790292.1016109218" maxy="8432530.379322743"/>
+        <BoundingBox CRS="EPSG:3950" minx="1583888.2899159135" miny="9070779.30729995" maxx="1790310.215914997" maxy="9321294.850389812"/>
+        <BoundingBox CRS="EPSG:4171" minx="48.827648875821644" miny="1.347217189036857" maxx="51.089678673814696" maxy="4.285589467078466"/>
+        <BoundingBox CRS="EPSG:4258" minx="48.827648875821644" miny="1.347217189036857" maxx="51.089678673814696" maxy="4.285589467078466"/>
+        <BoundingBox CRS="EPSG:4326" minx="48.82764891568103" miny="1.3472171890368572" maxx="51.089678712045234" maxy="4.2855894670784656"/>
+        <BoundingBox CRS="EPSG:23030" minx="804566.0357617761" miny="5417932.394040732" maxx="1030513.4917360274" maxy="5684587.475904135"/>
+        <BoundingBox CRS="EPSG:23031" minx="384032.7301120316" miny="5409666.51531298" maxx="590358.0355282756" maxy="5660108.872371363"/>
+        <BoundingBox CRS="EPSG:23032" minx="-56130.67423280049" miny="5419935.992901314" maxx="169941.15654506616" maxy="5686713.660678737"/>
+        <BoundingBox CRS="EPSG:27561" minx="530606.3304540702" miny="125990.78491954606" maxx="738938.3853954845" maxy="378218.4043046769"/>
+        <BoundingBox CRS="EPSG:27562" minx="530433.7344221186" miny="426207.84518522845" maxx="739018.8228827539" maxy="678764.808984541"/>
+        <BoundingBox CRS="EPSG:27563" minx="530093.4100990639" miny="726792.8115141544" maxx="739419.2791391268" maxy="980270.7257459462"/>
+        <BoundingBox CRS="EPSG:27564" minx="-70029.08628197286" miny="928741.450492617" maxx="140156.12728307286" maxy="1183277.7624124757"/>
+        <BoundingBox CRS="EPSG:27571" minx="530606.3304540702" miny="1125990.784919546" maxx="738938.3853954845" maxy="1378218.404304677"/>
+        <BoundingBox CRS="EPSG:27572" minx="546909.3919447487" miny="2425693.8758609616" maxx="756237.9100646026" maxy="2678861.9282860137"/>
+        <BoundingBox CRS="EPSG:27573" minx="530093.4100990639" miny="3726792.8115141545" maxx="739419.2791391268" maxy="3980270.725745946"/>
+        <BoundingBox CRS="EPSG:27574" minx="-70029.08628197286" miny="4928741.450492617" maxx="140156.12728307286" maxy="5183277.762412475"/>
+        <BoundingBox CRS="EPSG:32630" minx="804463.2271162003" miny="5417717.364169714" maxx="1030408.8438535118" maxy="5684370.415016108"/>
+        <BoundingBox CRS="EPSG:32631" minx="383942.23211238615" miny="5409459.225427351" maxx="590266.3322784018" maxy="5659900.223082082"/>
+        <BoundingBox CRS="EPSG:32632" minx="-56208.293600240606" miny="5419735.245048763" maxx="169862.38148981694" maxy="5686511.593467863"/>
+        <BoundingBox CRS="EPSG:900913" minx="149971.53147152832" miny="6245667.459531894" maxx="477069.63722419145" maxy="6637172.2053596685"/>
+        <BoundingBox CRS="EPSG:31370" minx="-66547.80283111345" miny="-53387.47380099911" maxx="144245.8012092787" maxy="200863.45442054886"/>
+        <BoundingBox CRS="EPSG:3812" minx="433403.04999525624" miny="446585.5258575507" maxx="644168.9342648225" maxy="700813.1536581232"/>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/b5471688-38b8-4e63-aac6-80eaff70f7ea"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/b5471688-38b8-4e63-aac6-80eaff70f7ea"/>
+        </MetadataURL>
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/b5471688-38b8-4e63-aac6-80eaff70f7ea/formatters/xml"/>
+        </MetadataURL>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://www.geo2france.fr/geonetwork/srv/api/records/b5471688-38b8-4e63-aac6-80eaff70f7ea/formatters/xml"/>
+        </MetadataURL>
+        <Style>
+          <Name>polygon_bleu</Name>
+          <Title>Polygone bleu</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zones_emploi2010"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>polygon_rouge</Name>
+          <Title>Polygone rouge</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zones_emploi2010&amp;style=polygon_rouge"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>polygon_violet</Name>
+          <Title>Polygone violet</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zones_emploi2010&amp;style=polygon_violet"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>contour_rouge</Name>
+          <Title>contour_rouge</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zones_emploi2010&amp;style=contour_rouge"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>polygon_blanc</Name>
+          <Title>Polygon white with no fill</Title>
+          <Abstract>A style that draws a polygon with no fill</Abstract>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zones_emploi2010&amp;style=polygon_blanc"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>contour_gris</Name>
+          <Title>contour gris</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zones_emploi2010&amp;style=contour_gris"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>contour_orange</Name>
+          <Title>contour_orange</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zones_emploi2010&amp;style=contour_orange"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>contour_blanc</Name>
+          <Title>contour_blanc</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zones_emploi2010&amp;style=contour_blanc"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>polygon_vert</Name>
+          <Title>Polygone vert</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zones_emploi2010&amp;style=polygon_vert"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>contour_jaune</Name>
+          <Title>contour_jaune</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zones_emploi2010&amp;style=contour_jaune"/>
+          </LegendURL>
+        </Style>
+        <Style>
+          <Name>contour_noir</Name>
+          <Title>contour_noir</Title>
+          <LegendURL width="20" height="20">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geo2france.fr/geoserver/insee/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=zones_emploi2010&amp;style=contour_noir"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+    </Layer>
+  </Capability>
+</WMS_Capabilities>

@@ -72,7 +72,7 @@ describe('organisations', () => {
     })
   })
 
-  describe('list functionnalities', () => {
+  describe('list features', () => {
     let providerOrg
     beforeEach(() => {
       cy.get('[data-cy="providerDesc"]')
@@ -94,7 +94,7 @@ describe('organisations', () => {
     })
   })
 
-  describe('page toggle functionnalities', () => {
+  describe('page toggle features', () => {
     let proviList = []
     beforeEach(() => {
       cy.get('gn-ui-organisations-sort')

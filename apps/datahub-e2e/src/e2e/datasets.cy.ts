@@ -169,7 +169,7 @@ describe('datasets', () => {
               const uniqueListOptions = [...new Set(listOptions)]
 
               uniqueListOptions.forEach((item) => {
-                expect(dropdownOptions.includes(item)).to.be.true
+                expect(dropdownOptions).to.include(item)
               })
             })
         })

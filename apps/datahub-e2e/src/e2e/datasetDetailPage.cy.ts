@@ -12,6 +12,42 @@ describe('dataset pages', () => {
     // cy.visit('/dataset/8698bf0b-fceb-4f0f-989b-111e7c4af0a4')
     // dataset with pretty much everything
     cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
+
+    cy.intercept(
+      'GET',
+      '/geoserver/insee/ows?SERVICE=WMS&REQUEST=GetCapabilities',
+      {
+        fixture: 'insee-wms-getcapabilities.xml',
+      }
+    )
+    cy.intercept(
+      'GET',
+      '/geoserver/insee/ows?SERVICE=WMS&REQUEST=GetCapabilities',
+      {
+        fixture: 'insee-wfs-getcapabilities.xml',
+      }
+    )
+    cy.intercept(
+      'GET',
+      '/geoserver/insee/ows?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&LAYERS=rectangles_200m_menage_erbm*',
+      {
+        fixture: 'insee-rectangles_200m_menage_erbm.png',
+      }
+    )
+    cy.intercept(
+      'GET',
+      '/geoserver/insee/ows?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=application%2Fjson*',
+      {
+        fixture: 'insee-rectangles_200m_menage_erbm.json',
+      }
+    )
+    cy.intercept(
+      'GET',
+      '/explore/dataset/population-millesimee-communes-francaises/download?format=csv&timezone=Europe/Berlin&use_labels_for_header=false',
+      {
+        fixture: 'population-millesimee-communes-francaises.csv',
+      }
+    )
   })
 
   describe('GENERAL : display & functions', () => {
@@ -115,7 +151,7 @@ describe('dataset pages', () => {
           .find('gn-ui-expandable-panel')
       })
     })
-    describe('functionnalities', () => {
+    describe('features', () => {
       let targetLink
       let keyword
       it('should go to provider website on click', () => {
@@ -200,7 +236,7 @@ describe('dataset pages', () => {
           .children('div')
           .eq(1)
           .click()
-        cy.wait(5000)
+        cy.wait(1000)
         cy.get('@prevSection').find('gn-ui-table').should('be.visible')
         cy.get('@prevSection')
           .find('gn-ui-table')
@@ -227,7 +263,7 @@ describe('dataset pages', () => {
         })
       })
     })
-    describe('functionnalities', () => {
+    describe('features', () => {
       it('MAP : should open a popup on layer click', () => {
         cy.get('@prevSection').find('canvas').realClick()
         cy.request({
@@ -309,8 +345,8 @@ describe('dataset pages', () => {
             })
         })
       })
-      describe('functionnalities', () => {
-        it('filtrates the download list on format filter click', () => {
+      describe('features', () => {
+        it('filters the download list on format filter click', () => {
           cy.get('gn-ui-data-downloads')
             .find('gn-ui-button')
             .children('button')
@@ -359,9 +395,8 @@ describe('dataset pages', () => {
           .should('have.length.gt', 0)
       })
     })
-    describe('functionnalities', () => {
+    describe('features', () => {
       it('goes to external link on click', () => {
-        let targetLink
         cy.get('gn-ui-data-otherlinks')
           .find('gn-ui-link-card')
           .first()
@@ -371,9 +406,9 @@ describe('dataset pages', () => {
         cy.get('@proviLink')
           .invoke('attr', 'href')
           .then((link) => {
-            targetLink = link
-            cy.get('@proviLink').invoke('removeAttr', 'target').click()
-            cy.url().should('include', targetLink)
+            expect(link).to.eq(
+              'https://www.data.gouv.fr/fr/datasets/donnees-carroyees-a-200-m-sur-la-population/'
+            )
           })
       })
       it('copies the API path on click', () => {
@@ -382,11 +417,16 @@ describe('dataset pages', () => {
           .find('button')
           .first()
           .click({ force: true })
-        cy.window().then((win) => {
-          win.navigator.clipboard.readText().then((text) => {
-            expect(text).to.eq('https://www.geo2france.fr/geoserver/insee/ows')
+        cy.get('body')
+          .click()
+          .window()
+          .then((win) => {
+            win.navigator.clipboard.readText().then((text) => {
+              expect(text).to.eq(
+                'https://www.geo2france.fr/geoserver/insee/ows'
+              )
+            })
           })
-        })
       })
       it('goes to dataset on click', () => {
         let targetLink
