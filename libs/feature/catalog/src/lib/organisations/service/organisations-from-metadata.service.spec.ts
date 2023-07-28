@@ -26,7 +26,7 @@ const sampleOrgB: Organisation = {
   email: 'christian.meier@bakom.admin.ch',
   logoUrl: '/geonetwork/images/harvesting/bakom.png',
   name: 'BAKOM',
-  recordCount: 1,
+  recordCount: 2,
   description: null,
 }
 const sampleOrgC: Organisation = {
@@ -68,14 +68,14 @@ const organisationsAggregationMock = {
           },
           {
             key: 'BAKOM',
-            doc_count: 1,
+            doc_count: 17,
             mail: {
               doc_count_error_upper_bound: 0,
               sum_other_doc_count: 0,
               buckets: [
                 {
                   key: 'christian.meier@bakom.admin.ch',
-                  doc_count: 1,
+                  doc_count: 17,
                 },
               ],
             },
@@ -111,6 +111,24 @@ const organisationsAggregationMock = {
           },
         ],
       },
+    },
+    orgForResource: {
+      doc_count_error_upper_bound: 0,
+      sum_other_doc_count: 0,
+      buckets: [
+        {
+          key: 'ARE',
+          doc_count: 5,
+        },
+        {
+          key: 'BAKOM',
+          doc_count: 2,
+        },
+        {
+          key: 'IFremerWrongName',
+          doc_count: 17,
+        },
+      ],
     },
   },
 }
@@ -190,6 +208,16 @@ describe('OrganisationsFromMetadataService', () => {
                   },
                 },
               },
+              orgForResource: {
+                terms: {
+                  size: 5000,
+                  exclude: '',
+                  field: 'OrgForResource',
+                  order: {
+                    _key: 'asc',
+                  },
+                },
+              },
             },
             from: 0,
             size: 0,
@@ -228,7 +256,7 @@ describe('OrganisationsFromMetadataService', () => {
             emails: ['christian.meier@bakom.admin.ch'],
             logoUrl: 'https://ids.fr/geonetwork/images/harvesting/logo_min.png',
             name: 'BAKOM',
-            recordCount: 1,
+            recordCount: 2,
           },
           {
             description: null,
