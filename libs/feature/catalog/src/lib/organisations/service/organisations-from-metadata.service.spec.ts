@@ -60,6 +60,11 @@ const organisationsAggregationMock = {
                 },
               ],
             },
+            logoUrl: {
+              doc_count_error_upper_bound: 0,
+              sum_other_doc_count: 0,
+              buckets: [],
+            },
           },
           {
             key: 'BAKOM',
@@ -70,6 +75,16 @@ const organisationsAggregationMock = {
               buckets: [
                 {
                   key: 'christian.meier@bakom.admin.ch',
+                  doc_count: 1,
+                },
+              ],
+            },
+            logoUrl: {
+              doc_count_error_upper_bound: 0,
+              sum_other_doc_count: 0,
+              buckets: [
+                {
+                  key: 'https://ids.fr/geonetwork/images/harvesting/logo_min.png',
                   doc_count: 1,
                 },
               ],
@@ -87,6 +102,11 @@ const organisationsAggregationMock = {
                   doc_count: 1,
                 },
               ],
+            },
+            logoUrl: {
+              doc_count_error_upper_bound: 0,
+              sum_other_doc_count: 0,
+              buckets: [],
             },
           },
         ],
@@ -159,6 +179,13 @@ describe('OrganisationsFromMetadataService', () => {
                           field: 'contactForResource.email.keyword',
                         },
                       },
+                      logoUrl: {
+                        terms: {
+                          size: 1,
+                          exclude: '',
+                          field: 'contactForResource.logo.keyword',
+                        },
+                      },
                     },
                   },
                 },
@@ -192,21 +219,21 @@ describe('OrganisationsFromMetadataService', () => {
           {
             description: null,
             emails: ['rolf.giezendanner@are.admin.ch', 'john.doe@are.admin.ch'],
-            logoUrl: null,
+            logoUrl: undefined,
             name: 'ARE',
             recordCount: 5,
           },
           {
             description: null,
             emails: ['christian.meier@bakom.admin.ch'],
-            logoUrl: null,
+            logoUrl: 'https://ids.fr/geonetwork/images/harvesting/logo_min.png',
             name: 'BAKOM',
             recordCount: 1,
           },
           {
             description: null,
             emails: ['ifremer.ifremer@ifremer.admin.ch'],
-            logoUrl: null,
+            logoUrl: undefined,
             name: 'Ifremer',
             recordCount: 1,
           },
