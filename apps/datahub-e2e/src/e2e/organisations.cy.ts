@@ -80,7 +80,7 @@ describe('organisations', () => {
         .children('span')
         .invoke('text')
         .then((txt) => {
-          providerOrg = txt.toUpperCase().trim()
+          providerOrg = txt.trim()
         })
     })
     it('should access the related datasets on click', () => {
@@ -90,7 +90,9 @@ describe('organisations', () => {
         .children('gn-ui-content-ghost')
         .eq(11)
         .click()
-      cy.url().should('include', 'publisher=').and('include', providerOrg)
+      cy.url()
+        .should('include', 'publisher=')
+        .and('include', encodeURIComponent(providerOrg))
     })
   })
 

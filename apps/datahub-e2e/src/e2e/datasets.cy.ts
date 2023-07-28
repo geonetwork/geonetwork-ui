@@ -4,7 +4,7 @@ import { find } from 'cypress/types/lodash'
 
 describe('datasets', () => {
   beforeEach(() => {
-    cy.visit('/home/search')
+    cy.visit('/search')
     cy.viewport(1700, 1200)
   })
 
@@ -39,7 +39,7 @@ describe('datasets', () => {
 
   describe('display of dataset previews', () => {
     beforeEach(() => {
-      cy.get('gn-ui-record-preview-row').children('div').first().as('dataset')
+      cy.get('gn-ui-record-preview-row').children('a').first().as('dataset')
     })
     it('should display the image', () => {
       cy.get('@dataset').find('gn-ui-thumbnail').should('be.visible')
@@ -72,7 +72,7 @@ describe('datasets', () => {
 
   describe('list actions', () => {
     beforeEach(() => {
-      cy.get('gn-ui-record-preview-row').children('div').first().as('dataset')
+      cy.get('gn-ui-record-preview-row').children('a').first().as('dataset')
     })
     it('should open the dataset page on click', () => {
       cy.get('@dataset').click()
@@ -95,7 +95,7 @@ describe('datasets', () => {
           cy.get('@login').eq(1).type('admin', { force: true })
           cy.get('@login').eq(2).type('admin', { force: true })
           cy.get('[name="gnSigninForm"]').find('button').realClick()
-          cy.url().should('include', '/home/search')
+          cy.url().should('include', '/search')
           cy.get('@favoriteStar').find('span').invoke('text').as('initialCount')
           cy.get('@favoriteStar')
             .find('gn-ui-star-toggle')
@@ -122,7 +122,7 @@ describe('datasets', () => {
         .eq(1)
         .find('gn-ui-button')
         .click()
-      cy.get('@filters').filter(':visible').should('have.length', 8)
+      cy.get('@filters').filter(':visible').should('have.length', 6)
     })
     describe('have the right options in filters', () => {
       beforeEach(() => {
@@ -176,47 +176,29 @@ describe('datasets', () => {
       })
       it('should have an accurate count of data per org', () => {
         const dropdownOptions = []
-        const listOptions = []
 
-        cy.get('[id^=dropdown-multiselect-]').then((dropdown) => {
-          const options = dropdown.find('label')
-          const regex = /\(\d+\)/g
-          options.map((index, element) => {
-            dropdownOptions.push([
-              Cypress.$(element).text().replace(regex, '').trim(),
-              Number(
-                Cypress.$(element)
-                  .text()
-                  .match(regex)[0]
-                  .replace('(', '')
-                  .replace(')', '')
-              ),
-            ])
+        cy.get('[id^=dropdown-multiselect-]')
+          .find('label')
+          .each((element) => {
+            dropdownOptions.push(Cypress.$(element).text().trim())
           })
-        })
-
-        cy.get('[data-cy="recordOrg"]')
-          .invoke('text')
-          .then((value) => {
-            const listProv = value.split('  ').map((item) => item.trim())
-            const occurrences = {}
-
-            for (let i = 0; i < listProv.length; i++) {
-              const str = listProv[i]
-              occurrences[str] = occurrences[str] ? occurrences[str] + 1 : 1
-            }
-
-            for (const str in occurrences) {
-              listOptions.push([str, Number(occurrences[str])])
-            }
-
-            listOptions.forEach((item) => {
-              expect(
-                dropdownOptions.find(
-                  (opt) => opt[0] === item[0] && opt[1] === item[1]
-                )
-              ).to.not.be.undefined
-            })
+          .then(() => {
+            expect(dropdownOptions).to.eql([
+              'Agence wallonne du Patrimoine (SPW - Territoire, Logement, Patrimoine, Énergie - Agence wallonne du Patrimoine) (1)',
+              'atmo Hauts-de-France (1)',
+              'Bundesamt für Raumentwicklung (2)',
+              "Canton du Valais - Service de l'environnement (SEN) - Protection des sols (1)",
+              'Cellule informatique et géomatique (SPW - Intérieur et Action sociale - Direction fonctionnelle et d’appui) (1)',
+              "Direction de l'Action sociale (SPW - Intérieur et Action sociale - Département de l'Action sociale - Direction de l'Action sociale) (1)",
+              'DREAL (1)',
+              "DREAL HdF (Direction Régionale de l'Environnement de l'Aménagement et du Logement des Hauts de France) (54)",
+              'Géo2France (1)',
+              "Helpdesk carto du SPW (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (2)",
+              'Métropole Européenne de Lille (1)',
+              'Région Hauts-de-France (2)',
+              'Service public de Wallonie (SPW) (2)',
+              "Société Publique de Gestion de l'Eau (SPGE) (2)",
+            ])
           })
       })
     })
@@ -224,7 +206,7 @@ describe('datasets', () => {
     describe('filter the list on click on options', () => {
       let filterLength
       beforeEach(() => {
-        cy.visit('/home/search')
+        cy.visit('/search')
         cy.get('[data-cy="addMoreBtn"]').trigger('click')
         cy.get('@filters')
           .its('length')
@@ -234,7 +216,7 @@ describe('datasets', () => {
       })
       it('first option then second option', () => {
         for (let i = 0; i < filterLength; i++) {
-          cy.visit('/home/search')
+          cy.visit('/search')
           cy.get('[data-cy="addMoreBtn"]').trigger('click')
           cy.get('datahub-search-filters')
             .children('div')
@@ -306,7 +288,7 @@ describe('datasets', () => {
       })
       it('from option list', () => {
         for (let i = 0; i < filterLength; i++) {
-          cy.visit('/home/search')
+          cy.visit('/search')
           cy.get('[data-cy="addMoreBtn"]').trigger('click')
           cy.get('datahub-search-filters')
             .children('div')
@@ -352,7 +334,7 @@ describe('datasets', () => {
       })
       it('from selected options block', () => {
         for (let i = 0; i < filterLength; i++) {
-          cy.visit('/home/search')
+          cy.visit('/search')
           cy.get('[data-cy="addMoreBtn"]').trigger('click')
           cy.get('datahub-search-filters')
             .children('div')
@@ -402,7 +384,7 @@ describe('datasets', () => {
 
       it('from filter clear button', () => {
         for (let i = 0; i < filterLength; i++) {
-          cy.visit('/home/search')
+          cy.visit('/search')
           cy.get('[data-cy="addMoreBtn"]').trigger('click')
           cy.get('datahub-search-filters')
             .children('div')
@@ -451,7 +433,7 @@ describe('datasets', () => {
       })
 
       it('from cross button', () => {
-        cy.visit('/home/search')
+        cy.visit('/search')
         cy.get('[data-cy="addMoreBtn"]').realClick()
         cy.get('datahub-search-filters')
           .children('div')
