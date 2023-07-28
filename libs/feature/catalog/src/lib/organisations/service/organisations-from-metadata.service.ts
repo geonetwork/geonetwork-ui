@@ -49,8 +49,16 @@ export class OrganisationsFromMetadataService
       .search('bucket', JSON.stringify(this.getAggregationSearchRequest()))
       .pipe(
         filter((response) => !!response.aggregations.contact.org),
+        tap((response) =>
+          response.aggregations.contact.org.buckets.forEach(
+            (r) =>
+              (r.doc_count =
+                response.aggregations.orgForResource.buckets.find(
+                  (org) => org.key === r.key
+                )?.doc_count || r.doc_count)
+          )
+        ),
         map((response) => response.aggregations.contact.org.buckets),
-        tap((res) => console.log(res)),
         shareReplay()
       )
   private organisationsWithoutGroups$: Observable<Organisation[]> =
@@ -142,6 +150,16 @@ export class OrganisationsFromMetadataService
                 },
               },
             },
+          },
+        },
+      },
+      orgForResource: {
+        terms: {
+          size: 5000,
+          exclude: '',
+          field: 'OrgForResource',
+          order: {
+            _key: 'asc',
           },
         },
       },
