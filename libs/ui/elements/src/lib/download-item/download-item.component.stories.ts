@@ -8,13 +8,18 @@ import { DownloadItemComponent } from './download-item.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiElementsModule } from '../ui-elements.module'
 import { MetadataLinkType } from '@geonetwork-ui/util/shared'
+import { TranslateModule } from '@ngx-translate/core'
 
 export default {
   title: 'Elements/DownloadsListItemComponent',
   component: DownloadItemComponent,
   decorators: [
     moduleMetadata({
-      imports: [UiElementsModule, BrowserAnimationsModule],
+      imports: [
+        UiElementsModule,
+        BrowserAnimationsModule,
+        TranslateModule.forRoot(),
+      ],
     }),
     componentWrapperDecorator(
       (story) => `<div style="max-width: 800px">${story}</div>`

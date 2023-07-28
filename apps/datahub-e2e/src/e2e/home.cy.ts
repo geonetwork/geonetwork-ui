@@ -62,12 +62,12 @@ describe('header', () => {
 
   describe('button link actions', () => {
     it('goes to the dataset page upon clicking', () => {
-      cy.get('[href="/home/search"]').click()
-      cy.url().should('include', '/home/search')
+      cy.get('[href="/search"]').click()
+      cy.url().should('include', '/search')
     })
     it('goes to the organisations page upon clicking', () => {
-      cy.get('[href="/home/organisations"]').click()
-      cy.url().should('include', '/home/organisations')
+      cy.get('[href="/organisations"]').click()
+      cy.url().should('include', '/organisations')
     })
   })
 })
