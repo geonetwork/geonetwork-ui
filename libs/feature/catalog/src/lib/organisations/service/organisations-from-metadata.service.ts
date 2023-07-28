@@ -63,9 +63,7 @@ export class OrganisationsFromMetadataService
             .filter((mail) => !!mail),
           recordCount: bucket.doc_count,
           description: null,
-          logoUrl: bucket.logoUrl.buckets
-            .map((bucket) => bucket.key)
-            .filter((logo) => !!logo)[0],
+          logoUrl: bucket.logoUrl.buckets[0]?.key,
         }))
       )
     )
