@@ -18,8 +18,9 @@ import {
   selectField,
   SourceWithUnknownProps,
 } from '@geonetwork-ui/util/shared'
+
 import { combineLatest, Observable, of, takeLast } from 'rxjs'
-import { filter, map, shareReplay, startWith } from 'rxjs/operators'
+import { filter, map, shareReplay, startWith, tap } from 'rxjs/operators'
 import { OrganisationsServiceInterface } from './organisations.service.interface'
 
 const IMAGE_URL = '/geonetwork/images/harvesting/'
@@ -30,6 +31,9 @@ type ESBucket = {
 }
 interface OrganisationAggsBucket extends ESBucket {
   mail: {
+    buckets: ESBucket[]
+  }
+  logoUrl: {
     buckets: ESBucket[]
   }
 }
@@ -46,6 +50,7 @@ export class OrganisationsFromMetadataService
       .pipe(
         filter((response) => !!response.aggregations.contact.org),
         map((response) => response.aggregations.contact.org.buckets),
+        tap((res) => console.log(res)),
         shareReplay()
       )
   private organisationsWithoutGroups$: Observable<Organisation[]> =
@@ -58,7 +63,7 @@ export class OrganisationsFromMetadataService
             .filter((mail) => !!mail),
           recordCount: bucket.doc_count,
           description: null,
-          logoUrl: null,
+          logoUrl: bucket.logoUrl.buckets[0]?.key,
         }))
       )
     )
@@ -127,6 +132,13 @@ export class OrganisationsFromMetadataService
                   size: 50,
                   exclude: '',
                   field: 'contactForResource.email.keyword',
+                },
+              },
+              logoUrl: {
+                terms: {
+                  size: 1,
+                  exclude: '',
+                  field: 'contactForResource.logo.keyword',
                 },
               },
             },
