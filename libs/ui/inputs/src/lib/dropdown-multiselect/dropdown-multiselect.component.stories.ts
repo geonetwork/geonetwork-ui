@@ -1,19 +1,20 @@
 import {
+  componentWrapperDecorator,
   Meta,
   moduleMetadata,
   Story,
-  componentWrapperDecorator,
 } from '@storybook/angular'
 import { DropdownMultiselectComponent } from './dropdown-multiselect.component'
 import { OverlayModule } from '@angular/cdk/overlay'
 import { MatCheckboxModule } from '@angular/material/checkbox'
+import { TranslateModule } from '@ngx-translate/core'
 
 export default {
   title: 'Inputs/DropdownMultiselectComponent',
   component: DropdownMultiselectComponent,
   decorators: [
     moduleMetadata({
-      imports: [OverlayModule, MatCheckboxModule],
+      imports: [OverlayModule, MatCheckboxModule, TranslateModule.forRoot()],
     }),
     componentWrapperDecorator(
       (story) => `
