@@ -4,8 +4,6 @@ import {
   Component,
   Injector,
   Input,
-  OnChanges,
-  OnInit,
   ViewEncapsulation,
 } from '@angular/core'
 import {
@@ -28,10 +26,7 @@ import { BaseComponent } from '../base.component'
   encapsulation: ViewEncapsulation.ShadowDom,
   providers: [SearchFacade],
 })
-export class GnResultsListComponent
-  extends BaseComponent
-  implements OnInit, OnChanges
-{
+export class GnResultsListComponent extends BaseComponent {
   @Input() layout = 'CARD'
   @Input() size = '10' // will be converted to number later
   @Input() query: string
@@ -87,5 +82,10 @@ export class GnResultsListComponent
       const landingPage = this.catalogUrl.replace(/{uuid}/, metadata.uuid)
       window.open(landingPage, '_blank').focus()
     }
+  }
+
+  changes(): void {
+    super.changes()
+    this.setSearch_()
   }
 }

@@ -55,6 +55,8 @@ export class BaseComponent implements OnChanges, OnInit {
   ngOnChanges() {
     if (!this.isInitialized && this.apiUrl) {
       this.init()
+    } else {
+      this.changes()
     }
   }
 
@@ -71,6 +73,10 @@ export class BaseComponent implements OnChanges, OnInit {
     )
     this.facade.init(this.searchId)
     this.isInitialized = true
+  }
+
+  changes() {
+    // to override
   }
 
   async getRecordLink(uuid: string, usages: LinkUsage[]) {
