@@ -46,3 +46,5 @@ Thumbs.db
 
 docs/.vitepress/dist
 docs/.vitepress/cache
+
+apps/*-e2e/cypress/**
