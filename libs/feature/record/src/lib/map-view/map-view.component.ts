@@ -190,7 +190,7 @@ export class MapViewComponent implements OnInit, OnDestroy {
         }))
       )
     }
-    return throwError('protocol not supported')
+    return throwError(() => 'protocol not supported')
   }
 
   selectLinkToDisplay(link: number) {

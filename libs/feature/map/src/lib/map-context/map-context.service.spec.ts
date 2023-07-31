@@ -22,6 +22,7 @@ import {
   MAP_CTX_FIXTURE,
   MAP_CTX_LAYER_GEOJSON_FIXTURE,
   MAP_CTX_LAYER_GEOJSON_REMOTE_FIXTURE,
+  MAP_CTX_LAYER_WFS_FIXTURE,
   MAP_CTX_LAYER_WMS_FIXTURE,
   MAP_CTX_LAYER_XYZ_FIXTURE,
 } from './map-context.fixtures'
@@ -61,6 +62,7 @@ describe('MapContextService', () => {
 
   describe('#createLayer', () => {
     let layerModel, layer
+
     describe('XYZ', () => {
       beforeEach(() => {
         layerModel = MAP_CTX_LAYER_XYZ_FIXTURE
@@ -83,10 +85,11 @@ describe('MapContextService', () => {
         )
       })
     })
+
     describe('WMS', () => {
       beforeEach(() => {
-        layerModel = MAP_CTX_LAYER_WMS_FIXTURE
-        layer = service.createLayer(layerModel)
+        ;(layerModel = MAP_CTX_LAYER_WMS_FIXTURE),
+          (layer = service.createLayer(layerModel))
       })
       it('create a tile layer', () => {
         expect(layer).toBeTruthy()
@@ -101,16 +104,40 @@ describe('MapContextService', () => {
         const params = source.getParams()
         expect(params.LAYERS).toBe(layerModel.name)
       })
-      it('set correct url', () => {
+      it('set correct url without existing REQUEST and SERVICE params', () => {
         const source = layer.getSource()
         const urls = source.getUrls()
         expect(urls.length).toBe(1)
-        expect(urls[0]).toEqual(layerModel.url)
+        expect(urls[0]).toBe(
+          'https://www.geograndest.fr/geoserver/region-grand-est/ows'
+        )
       })
       it('set WMS gutter of 20px', () => {
         const source = layer.getSource()
         const gutter = source.gutter_
         expect(gutter).toBe(20)
+      })
+    })
+
+    describe('WFS', () => {
+      beforeEach(() => {
+        ;(layerModel = MAP_CTX_LAYER_WFS_FIXTURE),
+          (layer = service.createLayer(layerModel))
+      })
+      it('create a vector layer', () => {
+        expect(layer).toBeTruthy()
+        expect(layer).toBeInstanceOf(VectorLayer)
+      })
+      it('create a Vector source', () => {
+        const source = layer.getSource()
+        expect(source).toBeInstanceOf(VectorSource)
+      })
+      it('set correct url load function', () => {
+        const source = layer.getSource()
+        const urlLoader = source.getUrl()
+        expect(urlLoader([10, 20, 30, 40])).toBe(
+          'https://www.geograndest.fr/geoserver/region-grand-est/ows?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application%2Fjson&typename=ms%3Acommune_actuelle_3857&srsname=EPSG%3A3857&bbox=10%2C20%2C30%2C40%2CEPSG%3A3857'
+        )
       })
     })
 
@@ -288,7 +315,7 @@ describe('MapContextService', () => {
         const layerWMSUrl = (map.getLayers().item(1) as TileLayer<TileWMS>)
           .getSource()
           .getUrls()[0]
-        expect(layerWMSUrl).toEqual('https://some-wms-server')
+        expect(layerWMSUrl).toEqual('https://some-wms-server/')
       })
       it('add one WFS layer from config on top of baselayer', () => {
         const layerWFSSource = (
