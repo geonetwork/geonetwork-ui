@@ -135,7 +135,7 @@ class OpenLayersMapMock {
   }
 }
 
-class InteractionsMock implements Collection<Interaction> {}
+class InteractionsMock extends Collection<Interaction> {}
 
 class mapManagerMock {
   map = new OpenLayersMapMock()

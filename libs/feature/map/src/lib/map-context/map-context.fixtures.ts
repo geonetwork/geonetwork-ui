@@ -14,8 +14,13 @@ export const MAP_CTX_LAYER_XYZ_FIXTURE: MapContextLayerModel = {
 }
 export const MAP_CTX_LAYER_WMS_FIXTURE: MapContextLayerModel = {
   type: MapContextLayerTypeEnum.WMS,
-  url: 'https://www.geograndest.fr/geoserver/region-grand-est/ows?',
+  url: 'https://www.geograndest.fr/geoserver/region-grand-est/ows?REQUEST=GetCapabilities&SERVICE=WMS',
   name: 'commune_actuelle_3857',
+}
+export const MAP_CTX_LAYER_WFS_FIXTURE: MapContextLayerModel = {
+  type: MapContextLayerTypeEnum.WFS,
+  url: 'https://www.geograndest.fr/geoserver/region-grand-est/ows?REQUEST=GetCapabilities&SERVICE=WFS&VERSION=1.1.0',
+  name: 'ms:commune_actuelle_3857',
 }
 export const MAP_CTX_LAYER_GEOJSON_FIXTURE: MapContextLayerGeojsonModel = {
   type: MapContextLayerTypeEnum.GEOJSON,

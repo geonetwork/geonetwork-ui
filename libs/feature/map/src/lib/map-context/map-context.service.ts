@@ -22,6 +22,7 @@ import { LayerConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 import { FeatureCollection } from 'geojson'
 import { fromLonLat } from 'ol/proj'
 import WMTS from 'ol/source/WMTS'
+import { removeSearchParams } from '@geonetwork-ui/util/shared'
 
 export const DEFAULT_BASELAYER_CONTEXT: MapContextLayerXyzModel = {
   type: MapContextLayerTypeEnum.XYZ,
@@ -80,7 +81,7 @@ export class MapContextService {
       case MapContextLayerTypeEnum.WMS:
         return new TileLayer({
           source: new TileWMS({
-            url: layerModel.url,
+            url: removeSearchParams(layerModel.url, ['request', 'service']),
             params: { LAYERS: layerModel.name },
             gutter: 20,
           }),
@@ -94,11 +95,21 @@ export class MapContextService {
           source: new VectorSource({
             format: new GeoJSON(),
             url: function (extent) {
-              return `${
-                layerModel.url
-              }?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json&typename=${
-                layerModel.name
-              }&srsname=EPSG:3857&bbox=${extent.join(',')},EPSG:3857`
+              const urlObj = new URL(
+                removeSearchParams(layerModel.url, [
+                  'service',
+                  'version',
+                  'request',
+                ])
+              )
+              urlObj.searchParams.set('service', 'WFS')
+              urlObj.searchParams.set('version', '1.1.0')
+              urlObj.searchParams.set('request', 'GetFeature')
+              urlObj.searchParams.set('outputFormat', 'application/json')
+              urlObj.searchParams.set('typename', layerModel.name)
+              urlObj.searchParams.set('srsname', 'EPSG:3857')
+              urlObj.searchParams.set('bbox', `${extent.join(',')},EPSG:3857`)
+              return urlObj.toString()
             },
             strategy: bboxStrategy,
           }),
