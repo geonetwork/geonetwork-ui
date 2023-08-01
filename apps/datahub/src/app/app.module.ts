@@ -25,7 +25,6 @@ import {
   THUMBNAIL_PLACEHOLDER,
   UiElementsModule,
 } from '@geonetwork-ui/ui/elements'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import {
@@ -69,6 +68,9 @@ import { NavigationMenuComponent } from './home/navigation-menu/navigation-menu.
 import { FormsModule } from '@angular/forms'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { WEB_COMPONENT_EMBEDDER_URL } from '@geonetwork-ui/feature/record'
+import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { LANGUAGE_PLACEHOLDER } from 'libs/ui/widgets/src/lib/language-switcher/language-switcher.component'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
@@ -120,11 +122,12 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     UiSearchModule,
     UtilSharedModule,
     MatIconModule,
-    UiInputsModule,
     UiLayoutModule,
     UiElementsModule,
     UiDatavizModule,
     FormsModule,
+    UiWidgetsModule,
+    UiInputsModule,
   ],
   providers: [
     { provide: RouterService, useClass: DatahubRouterService },
@@ -154,6 +157,10 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     {
       provide: THUMBNAIL_PLACEHOLDER,
       useFactory: () => getThemeConfig().THUMBNAIL_PLACEHOLDER,
+    },
+    {
+      provide: LANGUAGE_PLACEHOLDER,
+      useFactory: () => getGlobalConfig().LANGUAGES,
     },
     {
       provide: FILTER_GEOMETRY,

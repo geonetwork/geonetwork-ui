@@ -50,6 +50,9 @@ let customTranslations: CustomTranslationsAllLanguages = null
 
 export function getCustomTranslations(langCode: string): CustomTranslations {
   if (customTranslations === null) throw new Error(MISSING_CONFIG_ERROR)
+  console.log(
+    langCode in customTranslations ? customTranslations[langCode] : {}
+  )
   return langCode in customTranslations ? customTranslations[langCode] : {}
 }
 
@@ -82,6 +85,7 @@ export function loadAppConfig() {
           'metadata_language',
           'login_url',
           'web_component_embedder_url',
+          'languages',
         ],
         warnings,
         errors
@@ -106,6 +110,7 @@ export function loadAppConfig() {
               LOGIN_URL: parsedGlobalSection.login_url,
               WEB_COMPONENT_EMBEDDER_URL:
                 parsedGlobalSection.web_component_embedder_url,
+              LANGUAGES: parsedGlobalSection.languages,
             } as GlobalConfig)
 
       const parsedLayersSections = parseMultiConfigSection(

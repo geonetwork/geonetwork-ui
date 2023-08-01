@@ -14,6 +14,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core'
+import { TranslateService } from '@ngx-translate/core'
 import { animationFrameScheduler, fromEvent, Subscription } from 'rxjs'
 import { throttleTime } from 'rxjs/operators'
 

@@ -1,0 +1,9 @@
+<gn-ui-dropdown-selector
+  [title]="'languages'"
+  [choices]="languageList"
+  (selectValue)="changeLanguage($event)"
+  [selected]="currentLang"
+  ariaName="languages"
+  [showTitle]="false"
+>
+</gn-ui-dropdown-selector>

@@ -26,6 +26,9 @@ proxy_path = ""
 # The default location in the dockerized datahub app for example is "/datahub/wc-embedder.html".
 # If the URL is not indicated, no permalinks will show up in the UI.
 # web_component_embedder_url = "/datahub/wc-embedder.html"
+# TODO: Description
+# TODO: List of available languages?
+languages = ['en', 'fr', 'de']
 
 ### VISUAL THEME
 
@@ -152,7 +155,6 @@ background_color = "#fdfbff"
 #
 # [translations.en]
 # results.sortBy.dateStamp = "Last time someone changed something"
-# [translations.fr]
 # results.sortBy.dateStamp = "Dernière fois que quelqu'un a modifié quelque chose"
 #
 # Note:

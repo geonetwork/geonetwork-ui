@@ -16,7 +16,6 @@ import { TextInputComponent } from './text-input/text-input.component'
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { MatIconModule } from '@angular/material/icon'
 import { NavigationButtonComponent } from './navigation-button/navigation-button.component'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { StarToggleComponent } from './star-toggle/star-toggle.component'
 import { DropdownMultiselectComponent } from './dropdown-multiselect/dropdown-multiselect.component'
 import { OverlayModule } from '@angular/cdk/overlay'
@@ -71,7 +70,6 @@ import { MatTooltipModule } from '@angular/material/tooltip'
     UtilSharedModule,
     MatAutocompleteModule,
     MatIconModule,
-    UiWidgetsModule,
     OverlayModule,
     MatCheckboxModule,
     MatTooltipModule,

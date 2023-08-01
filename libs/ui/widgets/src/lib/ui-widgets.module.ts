@@ -15,6 +15,8 @@ import { PopupAlertComponent } from './popup-alert/popup-alert.component'
 import { BadgeComponent } from './badge/badge.component'
 import { MatIconModule } from '@angular/material/icon'
 import { SpinningLoaderComponent } from './spinning-loader/spinning-loader.component'
+import { LanguageSwitcherComponent } from './language-switcher/language-switcher.component'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { SpinningLoaderComponent } from './spinning-loader/spinning-loader.compo
     PopupAlertComponent,
     BadgeComponent,
     SpinningLoaderComponent,
+    LanguageSwitcherComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +40,7 @@ import { SpinningLoaderComponent } from './spinning-loader/spinning-loader.compo
     UtilSharedModule,
     MatProgressSpinnerModule,
     MatIconModule,
+    UiInputsModule,
   ],
   exports: [
     ProgressBarComponent,
@@ -45,6 +49,7 @@ import { SpinningLoaderComponent } from './spinning-loader/spinning-loader.compo
     PopupAlertComponent,
     BadgeComponent,
     SpinningLoaderComponent,
+    LanguageSwitcherComponent,
   ],
 })
 export class UiWidgetsModule {}
