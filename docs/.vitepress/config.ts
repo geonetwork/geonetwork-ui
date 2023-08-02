@@ -86,6 +86,7 @@ function sidebarReference() {
       text: 'Architecture',
       items: [
         { text: 'Principles', link: '/reference/principles' },
+        { text: 'Internationalization', link: '/reference/i18n' },
         { text: 'ElasticSearch index', link: '/reference/elasticsearch' },
         { text: 'Organizations', link: '/reference/organizations' },
         { text: 'State management', link: '/reference/state-management' },
