@@ -68,9 +68,11 @@ import { NavigationMenuComponent } from './home/navigation-menu/navigation-menu.
 import { FormsModule } from '@angular/forms'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { WEB_COMPONENT_EMBEDDER_URL } from '@geonetwork-ui/feature/record'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import {
+  UiWidgetsModule,
+  LANGUAGE_PLACEHOLDER,
+} from '@geonetwork-ui/ui/widgets'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { LANGUAGE_PLACEHOLDER } from 'libs/ui/widgets/src/lib/language-switcher/language-switcher.component'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
