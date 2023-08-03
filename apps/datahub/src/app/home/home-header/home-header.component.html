@@ -75,6 +75,7 @@
     ></datahub-navigation-menu>
   </div>
   <gn-ui-language-switcher
-    class="absolute top-0 left-0"
+    *ngIf="showLanguageSwitcher"
+    class="language-switcher absolute top-0 left-0"
   ></gn-ui-language-switcher>
 </header>

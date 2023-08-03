@@ -19,26 +19,39 @@ import { ROUTER_ROUTE_NEWS } from '../../router/constants'
 import { HeaderBadgeButtonComponent } from '../header-badge-button/header-badge-button.component'
 import { HomeHeaderComponent } from './home-header.component'
 import resetAllMocks = jest.resetAllMocks
+import { _setLanguages } from '@geonetwork-ui/util/app-config'
 
-jest.mock('@geonetwork-ui/util/app-config', () => ({
-  getThemeConfig: () => ({
-    HEADER_BACKGROUND: 'red',
-  }),
-  getOptionalSearchConfig: () => ({
-    SEARCH_PRESET: [
-      {
-        sort: '-createDate',
-        name: 'sortCeatedDateAndOrg',
-        filters: { publisher: ['DREAL'] },
-      },
-      {
-        sort: '-createDate',
-        name: 'filterCarto',
-        filters: { q: 'Cartographie' },
-      },
-    ],
-  }),
-}))
+jest.mock('@geonetwork-ui/util/app-config', () => {
+  let _languages = ['pt', 'de']
+  return {
+    getThemeConfig: () => ({
+      HEADER_BACKGROUND: 'red',
+    }),
+    getOptionalSearchConfig: () => ({
+      SEARCH_PRESET: [
+        {
+          sort: '-createDate',
+          name: 'sortCeatedDateAndOrg',
+          filters: { publisher: ['DREAL'] },
+        },
+        {
+          sort: '-createDate',
+          name: 'filterCarto',
+          filters: { q: 'Cartographie' },
+        },
+      ],
+    }),
+    getGlobalConfig() {
+      return {
+        LANGUAGES: _languages,
+      }
+    },
+
+    _setLanguages(lang) {
+      _languages = lang
+    },
+  }
+})
 
 class routerFacadeMock {
   goToMetadata = jest.fn()
@@ -76,6 +89,7 @@ describe('HeaderComponent', () => {
   let routerFacade: RouterFacade
 
   beforeEach(async () => {
+    _setLanguages(['fr', 'de'])
     await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [HomeHeaderComponent, HeaderBadgeButtonComponent],
@@ -223,6 +237,43 @@ describe('HeaderComponent', () => {
             { thisIs: 'a fake filter' },
             SortByEnum.CREATE_DATE
           )
+        })
+      })
+
+      describe('language switcher', () => {
+        describe('given predefined languages', () => {
+          it('should display language switcher', () => {
+            const languageSwitcher = fixture.debugElement.queryAll(
+              By.css('.language-switcher')
+            )[0]
+            expect(languageSwitcher).toBeTruthy()
+          })
+        })
+        describe('given predefined languages as empty Array', () => {
+          beforeEach(() => {
+            _setLanguages([])
+            fixture = TestBed.createComponent(HomeHeaderComponent)
+            fixture.detectChanges()
+          })
+          it('should not display language switcher', () => {
+            const languageSwitcher = fixture.debugElement.queryAll(
+              By.css('.language-switcher')
+            )[0]
+            expect(languageSwitcher).toBeFalsy()
+          })
+        })
+        describe('no predefined languages', () => {
+          beforeEach(() => {
+            _setLanguages(undefined)
+            fixture = TestBed.createComponent(HomeHeaderComponent)
+            fixture.detectChanges()
+          })
+          it('should not display language switcher', () => {
+            const languageSwitcher = fixture.debugElement.queryAll(
+              By.css('.language-switcher')
+            )[0]
+            expect(languageSwitcher).toBeFalsy()
+          })
         })
       })
     })
