@@ -6,7 +6,6 @@ import {
   ROUTER_ROUTE_SEARCH,
 } from '@geonetwork-ui/feature/router'
 import {
-  FieldValues,
   FieldsService,
   SearchFacade,
   SearchService,
