@@ -1,17 +1,14 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   Inject,
   InjectionToken,
   Input,
-  OnDestroy,
   Optional,
   ViewChild,
 } from '@angular/core'
-import { fromEvent, Subscription } from 'rxjs'
+import { Subscription } from 'rxjs'
 
 export const THUMBNAIL_PLACEHOLDER = new InjectionToken<string>(
   'thumbnail-placeholder'
@@ -25,18 +22,24 @@ const DEFAULT_PLACEHOLDER =
   templateUrl: './thumbnail.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ThumbnailComponent implements AfterViewInit, OnDestroy {
-  @Input() set thumbnailUrl(url: string) {
-    this.imgUrl = url || this.placeholderUrl
-    this.isPlaceholder = !url
+export class ThumbnailComponent {
+  @Input() set thumbnailUrl(url: string[]) {
+    // console.log([url])
+    this.urls = url
+    this.urls.push(this.placeholderUrl)
+    this.imgUrl = this.urls[0]
+    console.log(this.urls)
   }
   @Input() fit: 'cover' | 'contain' | 'scale-down' = 'cover'
+  @Input() fits: ('cover' | 'contain' | 'scale-down')[]
   @ViewChild('imageElement') imgElement: ElementRef<HTMLImageElement>
   @ViewChild('containerElement') containerElement: ElementRef<HTMLDivElement>
   imgUrl: string
+  urls: string[]
   placeholderUrl = this.optionalPlaceholderUrl || DEFAULT_PLACEHOLDER
   isPlaceholder = false
   sub: Subscription
+  index: number = 1
 
   get objectFit() {
     return this.isPlaceholder ? 'scale-down' : this.fit
@@ -45,26 +48,16 @@ export class ThumbnailComponent implements AfterViewInit, OnDestroy {
   constructor(
     @Optional()
     @Inject(THUMBNAIL_PLACEHOLDER)
-    private optionalPlaceholderUrl: string,
-    private changeDetector: ChangeDetectorRef
+    private optionalPlaceholderUrl: string
   ) {}
 
-  ngAfterViewInit() {
-    this.sub = fromEvent(this.imgElement.nativeElement, 'error').subscribe(() =>
-      this.useFallback()
-    )
-  }
-
-  ngOnDestroy() {
-    this.sub.unsubscribe()
-  }
-
   useFallback() {
-    if (!this.isPlaceholder) {
-      this.isPlaceholder = true
-      this.imgUrl = this.placeholderUrl
-      this.changeDetector.detectChanges()
-    }
+    if (this.index >= this.urls.length) return
+    let next = this.urls[this.index]
+    this.fit = this.fits[this.index] || 'cover'
+    this.imgUrl = next
+    this.index++
+    this.isPlaceholder = this.index === this.urls.length
   }
 
   setObjectFit() {

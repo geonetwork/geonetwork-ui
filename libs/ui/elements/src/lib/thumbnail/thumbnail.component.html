@@ -14,5 +14,6 @@
     loading="lazy"
     (load)="setObjectFit()"
     [src]="imgUrl | safe: 'url'"
+    (error)="useFallback()"
   />
 </div>
