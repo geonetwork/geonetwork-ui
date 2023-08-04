@@ -187,7 +187,7 @@
   "results.records.hits.empty.help.html": "Suggestions : <ul class='list-disc list-inside'><li>Essayez d'autres mots clés</li><li>Cherchez moins de mots</li></ul>",
   "results.records.hits.found": "{hits, plural, =0{Aucune correspondance.} one{1 enregistrement trouvé.} other{{hits} résultats.}}",
   "results.showMore": "Plus de résultats...",
-  "results.sortBy.dateStamp": "Date",
+  "results.sortBy.dateStamp": "Plus récent",
   "results.sortBy.popularity": "Popularité",
   "results.sortBy.relevancy": "Pertinence",
   "search.autocomplete.error": "Les suggestions ne peuvent pas être récupérées",
