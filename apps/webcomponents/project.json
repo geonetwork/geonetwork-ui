@@ -14,15 +14,7 @@
         "main": "apps/webcomponents/src/main.ts",
         "polyfills": "apps/webcomponents/src/polyfills.ts",
         "tsConfig": "apps/webcomponents/tsconfig.app.json",
-        "assets": [
-          "apps/webcomponents/src/favicon.ico",
-          "apps/webcomponents/src/assets",
-          {
-            "glob": "*",
-            "input": "translations",
-            "output": "assets/i18n/"
-          }
-        ],
+        "assets": [],
         "styles": [],
         "scripts": [],
         "allowedCommonJsDependencies": [

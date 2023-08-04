@@ -12,7 +12,7 @@ import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import {
-  TRANSLATE_DEFAULT_CONFIG,
+  TRANSLATE_EMBEDDED_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import { EffectsModule } from '@ngrx/effects'
@@ -68,7 +68,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot(),
     UtilI18nModule,
-    TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+    TranslateModule.forRoot(TRANSLATE_EMBEDDED_CONFIG),
     MatIconModule,
     FeatureDatavizModule,
   ],
