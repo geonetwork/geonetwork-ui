@@ -18,6 +18,7 @@
     "strictFunctionTypes": false,
     "strictPropertyInitialization": false,
     "noImplicitAny": false,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "paths": {
       "@geonetwork-ui/data-access/datafeeder": [
