@@ -6,6 +6,7 @@ export interface GlobalConfig {
   METADATA_LANGUAGE?: string
   LOGIN_URL?: string
   WEB_COMPONENT_EMBEDDER_URL?: string
+  LANGUAGES?: string[]
 }
 
 export interface LayerConfig {

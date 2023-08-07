@@ -69,6 +69,7 @@ import { NavigationMenuComponent } from './home/navigation-menu/navigation-menu.
 import { FormsModule } from '@angular/forms'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { WEB_COMPONENT_EMBEDDER_URL } from '@geonetwork-ui/feature/record'
+import { LANGUAGES_LIST, UiCatalogModule } from '@geonetwork-ui/ui/catalog'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
@@ -120,11 +121,12 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     UiSearchModule,
     UtilSharedModule,
     MatIconModule,
-    UiInputsModule,
     UiLayoutModule,
     UiElementsModule,
     UiDatavizModule,
     FormsModule,
+    UiInputsModule,
+    UiCatalogModule,
   ],
   providers: [
     { provide: RouterService, useClass: DatahubRouterService },
@@ -154,6 +156,10 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     {
       provide: THUMBNAIL_PLACEHOLDER,
       useFactory: () => getThemeConfig().THUMBNAIL_PLACEHOLDER,
+    },
+    {
+      provide: LANGUAGES_LIST,
+      useFactory: () => getGlobalConfig().LANGUAGES,
     },
     {
       provide: FILTER_GEOMETRY,
