@@ -2,16 +2,13 @@ import {
   Component,
   Inject,
   InjectionToken,
-  Input,
   OnInit,
   Optional,
 } from '@angular/core'
 import { LANGUAGE_STORAGE_KEY } from '@geonetwork-ui/util/i18n'
 import { TranslateService } from '@ngx-translate/core'
 
-export const LANGUAGE_PLACEHOLDER = new InjectionToken<string[]>(
-  'language-placeholder'
-)
+export const LANGUAGES_LIST = new InjectionToken<string[]>('languages-list')
 
 const DEFAULT_LANGUAGES = ['en', 'fr']
 
@@ -21,11 +18,11 @@ const DEFAULT_LANGUAGES = ['en', 'fr']
   styleUrls: ['./language-switcher.component.css'],
 })
 export class LanguageSwitcherComponent implements OnInit {
-  @Input() languageList = this.languagePlaceholder || DEFAULT_LANGUAGES
+  languageList = this.languagePlaceholder || DEFAULT_LANGUAGES
 
   constructor(
     @Optional()
-    @Inject(LANGUAGE_PLACEHOLDER)
+    @Inject(LANGUAGES_LIST)
     private languagePlaceholder,
     private translate: TranslateService
   ) {}
@@ -35,12 +32,11 @@ export class LanguageSwitcherComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.languageList.forEach((language, index) => {
-      this.languageList[index] = {
-        label: `language.${language}`,
-        value: language,
-      }
-    })
+    const languages = this.languagePlaceholder || DEFAULT_LANGUAGES
+    this.languageList = languages.map((language) => ({
+      label: `language.${language}`,
+      value: language,
+    }))
   }
 
   changeLanguage(value) {

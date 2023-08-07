@@ -26,6 +26,7 @@ proxy_path = ""
 # The default location in the dockerized datahub app for example is "/datahub/wc-embedder.html".
 # If the URL is not indicated, no permalinks will show up in the UI.
 # web_component_embedder_url = "/datahub/wc-embedder.html"
+
 # This optional parameter defines the languages that will be provided in a dropdown for the user to translate the UI.
 # Available languages are listed here: (https://github.com/geonetwork/geonetwork-ui/blob/main/libs/util/i18n/src/lib/i18n.constants.ts).
 # More information about the translation can be found in the docs (https://geonetwork.github.io/geonetwork-ui/main/docs/reference/i18n.html)

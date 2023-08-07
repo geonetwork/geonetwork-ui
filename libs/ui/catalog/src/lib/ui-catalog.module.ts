@@ -7,12 +7,14 @@ import { MatIconModule } from '@angular/material/icon'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { OrganisationsSortComponent } from './organisations-sort/organisations-sort.component'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { LanguageSwitcherComponent } from './language-switcher/language-switcher.component'
 
 @NgModule({
   declarations: [
     CatalogTitleComponent,
     OrganisationPreviewComponent,
     OrganisationsSortComponent,
+    LanguageSwitcherComponent,
   ],
   imports: [
     CommonModule,
@@ -25,6 +27,7 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
     CatalogTitleComponent,
     OrganisationPreviewComponent,
     OrganisationsSortComponent,
+    LanguageSwitcherComponent,
   ],
 })
 export class UiCatalogModule {}
