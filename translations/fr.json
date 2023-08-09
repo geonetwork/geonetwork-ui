@@ -191,6 +191,7 @@
   "record.metadata.updateStatus": "Statut de mise à jour",
   "record.metadata.updatedOn": "Dernière mise à jour",
   "record.metadata.usage": "Conditions d'utilisation",
+  "record.metadata.noUsage": "Aucune condition d'utilisation spécifiée pour ces données",
   "record.more.details": "Détails",
   "record.tab.chart": "Graphique",
   "record.tab.data": "Tableau",

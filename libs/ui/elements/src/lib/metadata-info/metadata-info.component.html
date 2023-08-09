@@ -13,7 +13,7 @@
   </gn-ui-content-ghost>
 </div>
 
-<ng-container *ngIf="metadata.keywords">
+<ng-container *ngIf="metadata.keywords?.length">
   <p class="mb-3 font-medium text-primary text-sm" translate>
     record.metadata.keywords
   </p>
@@ -68,6 +68,9 @@
     </gn-ui-badge>
     <span *ngFor="let constraint of metadata.constraints">
       {{ constraint }}
+    </span>
+    <span class="noUsage" *ngIf="!metadata.constraints">
+      {{ 'record.metadata.noUsage' | translate }}
     </span>
   </div>
 </gn-ui-expandable-panel>
