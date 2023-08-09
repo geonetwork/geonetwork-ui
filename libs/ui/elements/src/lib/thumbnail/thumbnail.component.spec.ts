@@ -39,7 +39,7 @@ describe('ThumbnailComponent', () => {
     describe('When no url is given', () => {
       let img
       beforeEach(fakeAsync(() => {
-        component.thumbnailUrl = undefined
+        component.images = []
         fixture.detectChanges()
         img = de.query(By.css('img'))
         tick(10)
@@ -56,7 +56,7 @@ describe('ThumbnailComponent', () => {
       const url = 'http://test.com/img.png'
       let img
       beforeEach(() => {
-        component.thumbnailUrl = url
+        component.images = [{ url }]
         fixture.detectChanges()
         img = de.query(By.css('img'))
       })
@@ -77,8 +77,7 @@ describe('ThumbnailComponent', () => {
       const url = 'http://test.com/img.png'
       let img
       beforeEach(() => {
-        component.thumbnailUrl = url
-        component.fit = 'contain'
+        component.images = [{ url, objectFit: 'contain' }]
         fixture.detectChanges()
         img = de.query(By.css('img'))
       })
@@ -98,7 +97,7 @@ describe('ThumbnailComponent', () => {
   })
   describe('When different size of img are provided', () => {
     beforeEach(() => {
-      component.thumbnailUrl = 'http://test.com/img.png'
+      component.images = [{ url: 'http://test.com/img.png' }]
       fixture.detectChanges()
       Object.defineProperties(component.imgElement.nativeElement, {
         naturalWidth: {
@@ -145,7 +144,7 @@ describe('ThumbnailComponent', () => {
     let img
     beforeEach(() => {
       component.placeholderUrl = placeholderUrl
-      component.thumbnailUrl = undefined
+      component.images = []
       fixture.detectChanges()
       img = de.query(By.css('img'))
     })
@@ -161,7 +160,7 @@ describe('ThumbnailComponent', () => {
     const placeholderUrl = 'http://localhost/assets/img/placeholder.png'
     let img
     beforeEach(() => {
-      component.thumbnailUrl = url
+      component.images = [{ url }]
       component.placeholderUrl = placeholderUrl
       fixture.detectChanges()
       img = de.query(By.css('img'))
@@ -173,6 +172,41 @@ describe('ThumbnailComponent', () => {
     })
     it('sets object cover to scale-down', () => {
       expect(img.nativeElement.style.objectFit).toEqual('scale-down')
+    })
+  })
+  describe('image url return 404', () => {
+    const url = 'http://test.com/img.png'
+    const orgLogoUrl = 'http://test.com./orgLogo.png'
+    const placeholderUrl = 'http://localhost/assets/img/placeholder.png'
+    let img
+    beforeEach(() => {
+      component.images = [{ url }]
+      component.placeholderUrl = placeholderUrl
+      fixture.detectChanges()
+      img = de.query(By.css('img'))
+      img.nativeElement.dispatchEvent(new Event('error'))
+      fixture.detectChanges()
+    })
+
+    it('displays placeholder', () => {
+      expect(img.nativeElement.src).toEqual(placeholderUrl)
+    })
+    it('displays organisation logo if provided', () => {
+      component.images = [{ url }, { url: orgLogoUrl }]
+      fixture.detectChanges()
+      img = de.query(By.css('img'))
+      img.nativeElement.dispatchEvent(new Event('error'))
+      fixture.detectChanges()
+      expect(img.nativeElement.src).toEqual(orgLogoUrl)
+    })
+    describe('if organisation logo also return 404', () => {
+      beforeEach(() => {
+        img.nativeElement.dispatchEvent(new Event('error'))
+        fixture.detectChanges()
+      })
+      it('displays placeholder', () => {
+        expect(img.nativeElement.src).toEqual(placeholderUrl)
+      })
     })
   })
 })

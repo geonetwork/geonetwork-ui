@@ -8,8 +8,7 @@
     >
       <gn-ui-thumbnail
         class="relative h-full w-full"
-        [thumbnailUrl]="organisation.logoUrl"
-        [fit]="'contain'"
+        [images]="[{ url: organisation.logoUrl, objectFit: 'contain' }]"
       >
       </gn-ui-thumbnail>
     </div>
