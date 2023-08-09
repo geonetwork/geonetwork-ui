@@ -50,9 +50,6 @@ let customTranslations: CustomTranslationsAllLanguages = null
 
 export function getCustomTranslations(langCode: string): CustomTranslations {
   if (customTranslations === null) throw new Error(MISSING_CONFIG_ERROR)
-  console.log(
-    langCode in customTranslations ? customTranslations[langCode] : {}
-  )
   return langCode in customTranslations ? customTranslations[langCode] : {}
 }
 
