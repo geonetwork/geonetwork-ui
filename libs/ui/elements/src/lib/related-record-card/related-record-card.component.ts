@@ -9,4 +9,8 @@ import { MetadataRecord } from '@geonetwork-ui/util/shared'
 })
 export class RelatedRecordCardComponent {
   @Input() record: MetadataRecord
+
+  get imageUrls() {
+    return [{ url: this.record.thumbnailUrl }]
+  }
 }

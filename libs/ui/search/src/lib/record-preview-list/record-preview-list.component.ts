@@ -7,4 +7,8 @@ import { RecordPreviewComponent } from '../record-preview/record-preview.compone
   styleUrls: ['./record-preview-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RecordPreviewListComponent extends RecordPreviewComponent {}
+export class RecordPreviewListComponent extends RecordPreviewComponent {
+  get imageUrls() {
+    return [{ url: this.record.thumbnailUrl }]
+  }
+}

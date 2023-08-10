@@ -18,6 +18,10 @@ export class OrganisationPreviewComponent {
   @Input() organisationUrl: string
   @Output() clickedOrganisation = new EventEmitter<Organisation>()
 
+  get imageUrls() {
+    return [{ url: this.organisation.logoUrl, objectFit: 'contain' }]
+  }
+
   clickOrganisation(event: Event) {
     event.preventDefault()
     this.clickedOrganisation.emit(this.organisation)

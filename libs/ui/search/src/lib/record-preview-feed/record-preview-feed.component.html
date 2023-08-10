@@ -24,7 +24,7 @@
         >
         <gn-ui-thumbnail
           *ngIf="hasLogo"
-          [images]="[{ url: contact.logoUrl }]"
+          [images]="contactLogoUrls"
         ></gn-ui-thumbnail>
       </div>
       <div class="flex flex-col overflow-hidden items-start">
@@ -61,7 +61,7 @@
       <gn-ui-thumbnail
         *ngIf="record.thumbnailUrl"
         class="block mt-3 w-full h-[136px] border border-gray-100 rounded-lg overflow-hidden"
-        [images]="[{ url: record.thumbnailUrl }]"
+        [images]="thumbnailImageUrls"
       ></gn-ui-thumbnail>
       <div class="flex flex-row mt-3" *ngIf="isDownloadable || isViewable">
         <mat-icon
