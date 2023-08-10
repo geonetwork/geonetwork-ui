@@ -174,9 +174,36 @@ describe('ThumbnailComponent', () => {
       expect(img.nativeElement.style.objectFit).toEqual('scale-down')
     })
   })
-  describe('image url return 404', () => {
+
+  describe('thumbnail image url returns 404 and organisation logo exists', () => {
     const url = 'http://test.com/img.png'
-    const orgLogoUrl = 'http://test.com./orgLogo.png'
+    const orgLogoUrl = 'http://test.com/orgLogo.png'
+    const placeholderUrl = 'http://localhost/assets/img/placeholder.png'
+    let img
+    beforeEach(() => {
+      component.images = [{ url }, { url: orgLogoUrl }]
+      component.placeholderUrl = placeholderUrl
+      fixture.detectChanges()
+      img = de.query(By.css('img'))
+      img.nativeElement.dispatchEvent(new Event('error'))
+      fixture.detectChanges()
+    })
+    it('displays organisation logo', () => {
+      expect(img.nativeElement.src).toEqual(orgLogoUrl)
+    })
+
+    describe('if organisation logo also returns 404', () => {
+      beforeEach(() => {
+        img.nativeElement.dispatchEvent(new Event('error'))
+        fixture.detectChanges()
+      })
+      it('displays placeholder', () => {
+        expect(img.nativeElement.src).toEqual(placeholderUrl)
+      })
+    })
+  })
+  describe('thumbnail image url returns 404 and no organisation logo', () => {
+    const url = 'http://test.com/img.png'
     const placeholderUrl = 'http://localhost/assets/img/placeholder.png'
     let img
     beforeEach(() => {
@@ -190,23 +217,6 @@ describe('ThumbnailComponent', () => {
 
     it('displays placeholder', () => {
       expect(img.nativeElement.src).toEqual(placeholderUrl)
-    })
-    it('displays organisation logo if provided', () => {
-      component.images = [{ url }, { url: orgLogoUrl }]
-      fixture.detectChanges()
-      img = de.query(By.css('img'))
-      img.nativeElement.dispatchEvent(new Event('error'))
-      fixture.detectChanges()
-      expect(img.nativeElement.src).toEqual(orgLogoUrl)
-    })
-    describe('if organisation logo also return 404', () => {
-      beforeEach(() => {
-        img.nativeElement.dispatchEvent(new Event('error'))
-        fixture.detectChanges()
-      })
-      it('displays placeholder', () => {
-        expect(img.nativeElement.src).toEqual(placeholderUrl)
-      })
     })
   })
 })

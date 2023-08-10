@@ -35,6 +35,7 @@ export class ThumbnailComponent implements OnInit {
   placeholderUrl = this.optionalPlaceholderUrl || DEFAULT_PLACEHOLDER
   isPlaceholder = false
   fit: 'cover' | 'contain' | 'scale-down' = 'cover'
+  imagesMutation = []
 
   get objectFit() {
     return this.isPlaceholder ? 'scale-down' : this.fit
@@ -47,11 +48,12 @@ export class ThumbnailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.images.length === 0) {
+    this.imagesMutation = [...this.images]
+    if (this.imagesMutation.length === 0) {
       this.setPlaceholder()
       return
     }
-    this.setNewSrcImage(this.images[0])
+    this.setNewSrcImage(this.imagesMutation[0])
   }
 
   private setNewSrcImage(image: GnUiThumbnailImageObject) {
@@ -65,9 +67,9 @@ export class ThumbnailComponent implements OnInit {
   }
 
   useFallback() {
-    if (this.images.length > 1) {
-      this.images.shift()
-      this.setNewSrcImage(this.images[0])
+    if (this.imagesMutation.length > 1) {
+      this.imagesMutation.shift()
+      this.setNewSrcImage(this.imagesMutation[0])
     } else {
       this.setPlaceholder()
     }
