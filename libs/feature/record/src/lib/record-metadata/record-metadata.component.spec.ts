@@ -492,6 +492,13 @@ describe('RecordMetadataComponent', () => {
       })
     })
   })
+  describe('#openLightbox', () => {
+    it('create lightbox on button click', () => {
+      component.openLightbox('http://logo')
+      fixture.detectChanges()
+      expect(component.lightboxInstance.visible()).toBeTruthy()
+    })
+  })
 
   describe('error handling', () => {
     describe('normal', () => {

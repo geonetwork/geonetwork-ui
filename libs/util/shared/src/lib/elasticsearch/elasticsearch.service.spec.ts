@@ -483,6 +483,7 @@ describe('ElasticsearchService', () => {
           'contactForResource.organisation',
           'contact.organisation',
           'userSavedCount',
+          'cl_status.default',
         ],
         query: {
           bool: {

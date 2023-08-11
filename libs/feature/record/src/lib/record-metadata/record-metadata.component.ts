@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  ViewChild,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 import {
   OrganisationsServiceInterface,
   SourcesService,
@@ -61,7 +56,10 @@ export class RecordMetadataComponent {
   errorTypes = ErrorType
   selectedTabIndex$ = new BehaviorSubject(0)
 
-  @ViewChild('lightbox') lightbox: ElementRef
+  lightbox$ = this.facade.metadata$.pipe(
+    map((metadata) => metadata?.thumbnailUrl)
+  )
+  lightboxInstance: any
 
   constructor(
     public facade: MdViewFacade,
@@ -86,10 +84,8 @@ export class RecordMetadataComponent {
       .subscribe((filters) => this.searchService.updateFilters(filters))
   }
 
-  openLightbox() {
-    const instance = basicLightbox.create(
-      `<img src="${this.lightbox.nativeElement.src}"/>`
-    )
-    instance.show()
+  openLightbox(src: string) {
+    this.lightboxInstance = basicLightbox.create(`<img src="${src}"/>`)
+    this.lightboxInstance.show()
   }
 }

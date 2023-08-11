@@ -27,7 +27,8 @@
       </div>
       <div>
         <div
-          *ngIf="(facade.metadata$ | async).thumbnailUrl"
+          *ngIf="lightbox$ | async as lightbox"
+          data-cy="record-thumbnail"
           class="flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden w-full border border-gray-300 h-36 group-hover:shadow-xl group-hover:border-0 mb-3"
         >
           <gn-ui-thumbnail
@@ -40,18 +41,11 @@
               class="absolute bottom-2 right-2"
               [type]="'outline'"
               [extraClass]="'!p-1'"
-              (buttonClick)="openLightbox()"
+              (buttonClick)="openLightbox(lightbox)"
             >
               <mat-icon>zoom_out_map</mat-icon>
             </gn-ui-button>
           </div>
-
-          <img
-            #lightbox
-            [src]="(facade.metadata$ | async).thumbnailUrl"
-            alt=""
-            class="hidden"
-          />
         </div>
         <gn-ui-metadata-contact
           (contact)="onContactClick($event)"
