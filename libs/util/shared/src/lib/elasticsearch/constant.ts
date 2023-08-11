@@ -18,6 +18,7 @@ export const ES_SOURCE_SUMMARY = [
   'contactForResource.organisation',
   'contact.organisation',
   'userSavedCount',
+  'cl_status.default',
 ]
 
 export const ES_SOURCE_BRIEF = [

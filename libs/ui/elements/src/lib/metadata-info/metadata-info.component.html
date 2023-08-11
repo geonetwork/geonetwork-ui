@@ -1,9 +1,14 @@
-<p
-  class="text-[28px] text-title text-center mb-6 font-title sm:text-left"
-  translate
->
-  record.metadata.about
-</p>
+<div class="flex justify-between items-center mb-6">
+  <p
+    class="text-[28px] text-title text-center font-title sm:text-left"
+    translate
+  >
+    record.metadata.about
+  </p>
+  <gn-ui-badge *ngIf="metadata.updateStatus" class="opacity-45"
+    ><span class="uppercase">{{ metadata.updateStatus }}</span></gn-ui-badge
+  >
+</div>
 <div class="mb-6 md-description sm:mb-4 sm:pr-16">
   <gn-ui-content-ghost ghostClass="h-32" [showContent]="fieldReady('abstract')">
     <p
