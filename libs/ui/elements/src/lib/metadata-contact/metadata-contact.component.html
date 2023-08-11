@@ -27,12 +27,12 @@
       >
     </a>
   </div>
-  <div class="flex" *ngIf="shownContact.name">
+  <div class="flex" *ngIf="shownContact.phone && shownContact.name">
     <div class="text-gray-700 shrink mr-2">
       <mat-icon>person_outline</mat-icon>
     </div>
     <div>
-      <p>{{ shownContact.name }} richard</p>
+      <p>{{ shownContact.name }}</p>
       <p class="text-gray-700">{{ shownContact.phone }}</p>
     </div>
   </div>

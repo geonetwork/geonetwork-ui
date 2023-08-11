@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  ViewChild,
+} from '@angular/core'
 import {
   OrganisationsServiceInterface,
   SourcesService,
@@ -8,7 +13,8 @@ import { ErrorType } from '@geonetwork-ui/ui/elements'
 import { BehaviorSubject, combineLatest } from 'rxjs'
 import { filter, map, mergeMap, pluck } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
-import { MetadataContact, Organisation } from '@geonetwork-ui/util/shared'
+import { MetadataContact } from '@geonetwork-ui/util/shared'
+import * as basicLightbox from 'basiclightbox'
 
 @Component({
   selector: 'gn-ui-record-metadata',
@@ -55,6 +61,8 @@ export class RecordMetadataComponent {
   errorTypes = ErrorType
   selectedTabIndex$ = new BehaviorSubject(0)
 
+  @ViewChild('lightbox') lightbox: ElementRef
+
   constructor(
     public facade: MdViewFacade,
     private searchService: SearchService,
@@ -76,5 +84,12 @@ export class RecordMetadataComponent {
     this.orgsService
       .getFiltersForOrgs([{ name: contact.organisation }])
       .subscribe((filters) => this.searchService.updateFilters(filters))
+  }
+
+  openLightbox() {
+    const instance = basicLightbox.create(
+      `<img src="${this.lightbox.nativeElement.src}"/>`
+    )
+    instance.show()
   }
 }
