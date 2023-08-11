@@ -208,7 +208,7 @@ export class OrganisationsFromMetadataService
     const organisation = contactOrganisation.name
     const name = firstResourceContact.name || contactOrganisation.name
     const email = firstResourceContact.email || contactOrganisation.email
-    const { website } = firstResourceContact
+    const { website, address, phone } = firstResourceContact
 
     return {
       name,
@@ -216,6 +216,8 @@ export class OrganisationsFromMetadataService
       email,
       logoUrl,
       website,
+      address,
+      phone,
     }
   }
 

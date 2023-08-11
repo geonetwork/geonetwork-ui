@@ -192,6 +192,7 @@
   "record.metadata.updatedOn": "Updated On",
   "record.metadata.usage": "Usage & constraints",
   "record.metadata.noUsage": "No usage conditions specified for this record.",
+  "record.metadata.implantation": "Location",
   "record.more.details": "Read more",
   "record.tab.chart": "Chart",
   "record.tab.data": "Table",

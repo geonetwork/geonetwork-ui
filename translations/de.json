@@ -192,6 +192,7 @@
   "record.metadata.updatedOn": "Zuletzt aktualisiert am",
   "record.metadata.usage": "Nutzung und Einschränkungen",
   "record.metadata.noUsage": "Für diesen Datensatz sind keine Verwendungsbedingungen angegeben.",
+  "record.metadata.implantation": "",
   "record.more.details": "Weitere Details",
   "record.tab.chart": "Diagramm",
   "record.tab.data": "Tabelle",

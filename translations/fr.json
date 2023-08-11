@@ -192,6 +192,7 @@
   "record.metadata.updatedOn": "Dernière mise à jour",
   "record.metadata.usage": "Conditions d'utilisation",
   "record.metadata.noUsage": "Aucune condition d'utilisation spécifiée pour ces données",
+  "record.metadata.implantation": "Etablissement",
   "record.more.details": "Détails",
   "record.tab.chart": "Graphique",
   "record.tab.data": "Tableau",

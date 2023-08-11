@@ -1,8 +1,8 @@
 import {
-  Component,
   ChangeDetectionStrategy,
-  Input,
+  Component,
   EventEmitter,
+  Input,
   Output,
 } from '@angular/core'
 import { MetadataContact, MetadataRecord } from '@geonetwork-ui/util/shared'

@@ -27,4 +27,32 @@
       >
     </a>
   </div>
+  <div class="flex" *ngIf="shownContact.name">
+    <div class="text-gray-700 shrink mr-2">
+      <mat-icon>person_outline</mat-icon>
+    </div>
+    <div>
+      <p>{{ shownContact.name }} richard</p>
+      <p class="text-gray-700">{{ shownContact.phone }}</p>
+    </div>
+  </div>
+  <div class="flex" *ngIf="shownContact.address">
+    <div class="text-gray-700 shrink mr-2">
+      <mat-icon>place</mat-icon>
+    </div>
+    <div>
+      <p>{{ 'record.metadata.implantation' | translate }}</p>
+      <p class="text-gray-700">{{ shownContact.address }}</p>
+    </div>
+  </div>
+  <div
+    *ngIf="shownContact.logoUrl"
+    class="flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden w-full border border-gray-300 h-36 group-hover:shadow-xl group-hover:border-0 mt-2"
+  >
+    <gn-ui-thumbnail
+      class="relative h-full w-full"
+      [thumbnailUrl]="shownContact.logoUrl"
+      fit="contain"
+    ></gn-ui-thumbnail>
+  </div>
 </div>
