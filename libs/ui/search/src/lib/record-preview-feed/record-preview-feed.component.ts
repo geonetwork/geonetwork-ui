@@ -12,14 +12,6 @@ import Duration from 'duration-relativetimeformat'
 export class RecordPreviewFeedComponent extends RecordPreviewComponent {
   timeFormat = new Duration(this.translate.currentLang, {})
 
-  get contactLogoUrls() {
-    return [{ url: this.contact.logoUrl }]
-  }
-
-  get thumbnailImageUrls() {
-    return [{ url: this.record.thumbnailUrl }]
-  }
-
   constructor(
     protected elementRef: ElementRef,
     private translate: TranslateService
