@@ -1,6 +1,6 @@
 import { propagateToDocumentOnly } from './event'
 
-describe('blockEventFromBubbling', () => {
+describe('propagateToDocumentOnly', () => {
   let childComponent: HTMLElement
   let parentComponent: HTMLElement
   let parentClickHandler
@@ -27,7 +27,7 @@ describe('blockEventFromBubbling', () => {
     setTimeout(done)
   })
 
-  it('doess not propagate event to parent', () => {
+  it('does not propagate event to parent', () => {
     expect(parentClickHandler).not.toHaveBeenCalled()
   })
 
