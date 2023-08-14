@@ -29,10 +29,6 @@ export class AddLayerRecordPreviewComponent extends RecordPreviewComponent {
     ) as MetadataLink[]
   }
 
-  get imageUrls() {
-    return [{ url: this.record.thumbnailUrl }]
-  }
-
   constructor(
     protected elementRef: ElementRef,
     private linkClassifier: LinkClassifierService,

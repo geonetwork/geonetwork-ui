@@ -39,7 +39,7 @@ describe('ThumbnailComponent', () => {
     describe('When no url is given', () => {
       let img
       beforeEach(fakeAsync(() => {
-        component.images = []
+        component.thumbnailUrl = null
         fixture.detectChanges()
         img = de.query(By.css('img'))
         tick(10)
@@ -56,7 +56,7 @@ describe('ThumbnailComponent', () => {
       const url = 'http://test.com/img.png'
       let img
       beforeEach(() => {
-        component.images = [{ url }]
+        component.thumbnailUrl = url
         fixture.detectChanges()
         img = de.query(By.css('img'))
       })
@@ -77,7 +77,8 @@ describe('ThumbnailComponent', () => {
       const url = 'http://test.com/img.png'
       let img
       beforeEach(() => {
-        component.images = [{ url, objectFit: 'contain' }]
+        component.thumbnailUrl = url
+        component.fit = 'contain'
         fixture.detectChanges()
         img = de.query(By.css('img'))
       })
@@ -97,7 +98,7 @@ describe('ThumbnailComponent', () => {
   })
   describe('When different size of img are provided', () => {
     beforeEach(() => {
-      component.images = [{ url: 'http://test.com/img.png' }]
+      component.thumbnailUrl = 'http://test.com/img.png'
       fixture.detectChanges()
       Object.defineProperties(component.imgElement.nativeElement, {
         naturalWidth: {
@@ -144,7 +145,7 @@ describe('ThumbnailComponent', () => {
     let img
     beforeEach(() => {
       component.placeholderUrl = placeholderUrl
-      component.images = []
+      component.thumbnailUrl = null
       fixture.detectChanges()
       img = de.query(By.css('img'))
     })
@@ -160,7 +161,7 @@ describe('ThumbnailComponent', () => {
     const placeholderUrl = 'http://localhost/assets/img/placeholder.png'
     let img
     beforeEach(() => {
-      component.images = [{ url }]
+      component.thumbnailUrl = url
       component.placeholderUrl = placeholderUrl
       fixture.detectChanges()
       img = de.query(By.css('img'))
@@ -181,7 +182,8 @@ describe('ThumbnailComponent', () => {
     const placeholderUrl = 'http://localhost/assets/img/placeholder.png'
     let img
     beforeEach(() => {
-      component.images = [{ url }, { url: orgLogoUrl }]
+      component.thumbnailUrl = [url, orgLogoUrl]
+      component.fit = ['cover', 'contain']
       component.placeholderUrl = placeholderUrl
       fixture.detectChanges()
       img = de.query(By.css('img'))
@@ -190,6 +192,7 @@ describe('ThumbnailComponent', () => {
     })
     it('displays organisation logo', () => {
       expect(img.nativeElement.src).toEqual(orgLogoUrl)
+      expect(img.nativeElement.style.objectFit).toEqual('contain')
     })
 
     describe('if organisation logo also returns 404', () => {
@@ -199,6 +202,7 @@ describe('ThumbnailComponent', () => {
       })
       it('displays placeholder', () => {
         expect(img.nativeElement.src).toEqual(placeholderUrl)
+        expect(img.nativeElement.style.objectFit).toEqual('scale-down')
       })
     })
   })
@@ -207,7 +211,7 @@ describe('ThumbnailComponent', () => {
     const placeholderUrl = 'http://localhost/assets/img/placeholder.png'
     let img
     beforeEach(() => {
-      component.images = [{ url }]
+      component.thumbnailUrl = url
       component.placeholderUrl = placeholderUrl
       fixture.detectChanges()
       img = de.query(By.css('img'))
