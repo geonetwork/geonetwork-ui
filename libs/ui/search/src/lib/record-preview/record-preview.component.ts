@@ -9,6 +9,7 @@ import {
   TemplateRef,
 } from '@angular/core'
 import {
+  propagateToDocumentOnly,
   MetadataContact,
   MetadataRecord,
   stripHtml,
@@ -46,7 +47,7 @@ export class RecordPreviewComponent implements OnInit, OnDestroy {
       fromEvent(this.elementRef.nativeElement, 'click').subscribe(
         (event: Event) => {
           event.preventDefault()
-          event.stopPropagation()
+          propagateToDocumentOnly(event)
           this.mdSelect.emit(this.record)
         }
       )

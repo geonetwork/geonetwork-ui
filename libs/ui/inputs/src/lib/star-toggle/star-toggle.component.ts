@@ -7,6 +7,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core'
+import { propagateToDocumentOnly } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-star-toggle',
@@ -30,7 +31,7 @@ export class StarToggleComponent {
       }
       this.newValue.emit(this.toggled)
     }
-    event.stopPropagation()
+    propagateToDocumentOnly(event)
     event.preventDefault()
   }
 }

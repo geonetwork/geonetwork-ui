@@ -17,6 +17,7 @@ import {
 } from '@angular/cdk/overlay'
 import { take } from 'rxjs/operators'
 import { Choice } from './dropdown-multiselect.model'
+import { propagateToDocumentOnly } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-dropdown-multiselect',
@@ -186,12 +187,12 @@ export class DropdownMultiselectComponent {
 
   clearSelection(event: Event) {
     this.selectValues.emit([])
-    event.stopPropagation()
+    propagateToDocumentOnly(event)
   }
 
   clearSearchInputValue(event: Event) {
     this.searchInputValue = ''
-    event.stopPropagation()
+    propagateToDocumentOnly(event)
     this.setFocus()
   }
 }
