@@ -5,6 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
+import { propagateToDocumentOnly } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-button',
@@ -69,6 +70,6 @@ export class ButtonComponent {
   handleClick(event: Event) {
     this.buttonClick.emit()
     event.preventDefault()
-    event.stopPropagation()
+    propagateToDocumentOnly(event)
   }
 }
