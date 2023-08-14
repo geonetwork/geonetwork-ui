@@ -39,7 +39,7 @@ describe('ThumbnailComponent', () => {
     describe('When no url is given', () => {
       let img
       beforeEach(fakeAsync(() => {
-        component.thumbnailUrl = undefined
+        component.thumbnailUrl = null
         fixture.detectChanges()
         img = de.query(By.css('img'))
         tick(10)
@@ -145,7 +145,7 @@ describe('ThumbnailComponent', () => {
     let img
     beforeEach(() => {
       component.placeholderUrl = placeholderUrl
-      component.thumbnailUrl = undefined
+      component.thumbnailUrl = null
       fixture.detectChanges()
       img = de.query(By.css('img'))
     })
@@ -173,6 +173,54 @@ describe('ThumbnailComponent', () => {
     })
     it('sets object cover to scale-down', () => {
       expect(img.nativeElement.style.objectFit).toEqual('scale-down')
+    })
+  })
+
+  describe('thumbnail image url returns 404 and organisation logo exists', () => {
+    const url = 'http://test.com/img.png'
+    const orgLogoUrl = 'http://test.com/orgLogo.png'
+    const placeholderUrl = 'http://localhost/assets/img/placeholder.png'
+    let img
+    beforeEach(() => {
+      component.thumbnailUrl = [url, orgLogoUrl]
+      component.fit = ['cover', 'contain']
+      component.placeholderUrl = placeholderUrl
+      fixture.detectChanges()
+      img = de.query(By.css('img'))
+      img.nativeElement.dispatchEvent(new Event('error'))
+      fixture.detectChanges()
+    })
+    it('displays organisation logo', () => {
+      expect(img.nativeElement.src).toEqual(orgLogoUrl)
+      expect(img.nativeElement.style.objectFit).toEqual('contain')
+    })
+
+    describe('if organisation logo also returns 404', () => {
+      beforeEach(() => {
+        img.nativeElement.dispatchEvent(new Event('error'))
+        fixture.detectChanges()
+      })
+      it('displays placeholder', () => {
+        expect(img.nativeElement.src).toEqual(placeholderUrl)
+        expect(img.nativeElement.style.objectFit).toEqual('scale-down')
+      })
+    })
+  })
+  describe('thumbnail image url returns 404 and no organisation logo', () => {
+    const url = 'http://test.com/img.png'
+    const placeholderUrl = 'http://localhost/assets/img/placeholder.png'
+    let img
+    beforeEach(() => {
+      component.thumbnailUrl = url
+      component.placeholderUrl = placeholderUrl
+      fixture.detectChanges()
+      img = de.query(By.css('img'))
+      img.nativeElement.dispatchEvent(new Event('error'))
+      fixture.detectChanges()
+    })
+
+    it('displays placeholder', () => {
+      expect(img.nativeElement.src).toEqual(placeholderUrl)
     })
   })
 })

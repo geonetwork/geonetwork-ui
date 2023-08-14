@@ -8,11 +8,12 @@
   <img
     #imageElement
     class="relative w-full object-center"
-    [ngClass]="objectFit === 'contain' ? 'h-4/5' : 'h-full'"
-    [ngStyle]="{ objectFit: objectFit }"
+    [ngClass]="imgFit === 'contain' ? 'h-4/5' : 'h-full'"
+    [ngStyle]="{ objectFit: imgFit }"
     alt="thumbnail"
     loading="lazy"
     (load)="setObjectFit()"
     [src]="imgUrl | safe: 'url'"
+    (error)="useFallback()"
   />
 </div>
