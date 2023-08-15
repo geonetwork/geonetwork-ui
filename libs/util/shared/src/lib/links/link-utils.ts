@@ -107,9 +107,24 @@ export function getFileFormat(link: MetadataLink): string {
   for (const format in FORMATS) {
     for (const alias of FORMATS[format].extensions) {
       if (checkFileFormat(link, alias)) return format
+      if (isFormatInQueryParam(link, alias)) return format
     }
   }
   return ''
+}
+
+export function isFormatInQueryParam(
+  link: MetadataLink,
+  alias: string
+): boolean {
+  const url = link.url.split('?').pop()
+  const queryParams = new URLSearchParams(url)
+  for (const [key, value] of queryParams.entries()) {
+    if (key === 'format' || key === 'f') {
+      return value === alias
+    }
+  }
+  return false
 }
 
 export function mimeTypeToFormat(mimeType: string): string {
