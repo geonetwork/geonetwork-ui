@@ -87,6 +87,7 @@ export class ChartViewComponent {
 
   loading = false
   error = null
+  errorInfo = null
 
   typeChoices: DDChoices<InputChartType> = [
     { label: 'chart.type.bar', value: 'bar' },
@@ -208,9 +209,10 @@ export class ChartViewComponent {
   ) {}
 
   handleError(error) {
-    this.error = error.message
+    this.error = error.type
+    this.errorInfo = error.info
     this.loading = false
     this.changeDetector.detectChanges()
-    console.warn(error.stack || error.message)
+    console.warn(error.stack || error.type)
   }
 }

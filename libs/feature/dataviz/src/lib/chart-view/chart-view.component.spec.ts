@@ -19,6 +19,7 @@ import { firstValueFrom, of, throwError } from 'rxjs'
 import { By } from '@angular/platform-browser'
 import { LINK_FIXTURES } from '@geonetwork-ui/util/shared/fixtures'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
+import { FetchError } from '@geonetwork-ui/data-fetcher'
 
 @Component({
   selector: 'gn-ui-chart',
@@ -82,7 +83,9 @@ class DatasetReaderMock {
     }
     this.properties = Promise.resolve(properties)
     if (url.indexOf('error-props') > -1) {
-      this.properties = Promise.reject(new Error('could not get props'))
+      this.properties = Promise.reject(
+        new FetchError('unknown', 'could not get props')
+      )
     }
     DatasetReaderMock.instance = this
   }
@@ -307,7 +310,7 @@ describe('ChartViewComponent', () => {
   describe('dataset reader fails', () => {
     beforeEach(fakeAsync(() => {
       dataService.getDataset = () =>
-        throwError(() => new Error('could not open dataset'))
+        throwError(() => new FetchError('http', 'could not open dataset'))
       component.link = { ...LINK_FIXTURES.dataCsv, url: 'http://changed/' }
       flushMicrotasks()
       fixture.detectChanges()
@@ -316,7 +319,8 @@ describe('ChartViewComponent', () => {
       expect(component.loading).toBe(false)
     })
     it('shows error', () => {
-      expect(component.error).toBe('could not open dataset')
+      expect(component.error).toBe('http')
+      expect(component.errorInfo).toBe('could not open dataset')
     })
   })
 
@@ -330,7 +334,8 @@ describe('ChartViewComponent', () => {
       expect(component.loading).toBe(false)
     })
     it('shows error', () => {
-      expect(component.error).toBe('could not get props')
+      expect(component.error).toBe('unknown')
+      expect(component.errorInfo).toBe('could not get props')
     })
   })
 

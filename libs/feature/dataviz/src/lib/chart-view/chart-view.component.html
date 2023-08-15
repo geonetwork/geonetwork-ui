@@ -54,7 +54,9 @@
       icon="error_outline"
       class="absolute m-2 inset-0"
     >
-      <span translate>{{ error }}</span>
+      <span translate [translateParams]="{ info: errorInfo }"
+        >dataset.error.{{ error }}</span
+      >
     </gn-ui-popup-alert>
   </div>
 </div>
