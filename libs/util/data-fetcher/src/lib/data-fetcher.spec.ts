@@ -143,9 +143,7 @@ describe('data-fetcher', () => {
       it('throws a relevant error', () => {
         return expect(readDataset('http://bla/abcd.gif')).rejects.toMatchObject(
           {
-            message: expect.stringContaining(
-              'content type could not be inferred'
-            ),
+            type: expect.stringContaining('unknown'),
             contentTypeError: true,
           }
         )
@@ -430,9 +428,7 @@ describe('data-fetcher', () => {
         expect(
           readDataset('http://localfile/fixtures/unrecognized.txt?noheader')
         ).rejects.toMatchObject({
-          message: expect.stringContaining(
-            'content type could not be inferred'
-          ),
+          type: expect.stringContaining('unknown'),
           contentTypeError: true,
         })
       })

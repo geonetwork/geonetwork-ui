@@ -6,25 +6,22 @@ export class FetchError {
   constructor(
     public type: 'http' | 'network' | 'parse' | 'unsupportedType' | 'unknown',
     public info: string,
-    public httpStatus = 0,
-    public isCrossOriginOrNetworkRelated = false,
-    public parsingFailed = false,
-    public contentTypeError = false
+    public httpStatus = 0
   ) {}
   static http(code: number) {
     return new FetchError('http', '', code)
   }
   static corsOrNetwork(message: string) {
-    return new FetchError('network', message, 0, true)
+    return new FetchError('network', message, 0)
   }
   static parsingFailed(info: string) {
-    return new FetchError('parse', info, 0, false, true)
+    return new FetchError('parse', info, 0)
   }
   static unsupportedType(mimeType: string) {
-    return new FetchError('unsupportedType', mimeType, 0, false, false, true)
+    return new FetchError('unsupportedType', mimeType, 0)
   }
   static unknownType() {
-    return new FetchError('unknown', '', 0, false, false, true)
+    return new FetchError('unknown', '', 0)
   }
 }
 
