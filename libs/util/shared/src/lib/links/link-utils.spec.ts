@@ -77,31 +77,90 @@ describe('link utils', () => {
         expect(getFileFormat(LINK_FIXTURES.dataZip)).toEqual('zip')
       })
     })
-  })
-  describe('#getFileFormat', () => {
-    it('from link url', () => {
-      expect(
-        getFileFormat({
-          name: 'Cities',
-          label: 'Cities',
-          protocol: 'WWW:DOWNLOAD',
-          url: 'http://example.com/data.geojson',
-          type: MetadataLinkType.DOWNLOAD,
+
+    // format name, file extension, mime type
+    const toTest = [
+      ['geojson', 'geojson', 'application/geo+json'],
+      [
+        'excel',
+        'xlsx',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      ],
+      ['csv', 'csv', 'application/csv'],
+    ]
+
+    describe.each(toTest)(
+      'format=%s, extension=%s, mime-type=%s',
+      (format, extension, mimeType) => {
+        it('from link name (extension)', () => {
+          expect(
+            getFileFormat({
+              name: `cities.${format}`,
+              label: 'Cities',
+              protocol: 'WWW:DOWNLOAD',
+              url: 'http://example.com/data',
+              type: MetadataLinkType.DOWNLOAD,
+            })
+          ).toEqual(format)
         })
-      ).toEqual('geojson')
-    })
-    it('from mime type', () => {
-      expect(
-        getFileFormat({
-          name: 'Cities',
-          label: 'Cities',
-          protocol: 'WWW:DOWNLOAD:application/vnd.geo+json',
-          mimeType: 'application/vnd.geo+json',
-          url: 'http://example.com/data',
-          type: MetadataLinkType.DOWNLOAD,
+        it('from link url (extension)', () => {
+          expect(
+            getFileFormat({
+              name: 'Cities',
+              label: 'Cities',
+              protocol: 'WWW:DOWNLOAD',
+              url: `http://example.com/data.${extension}`,
+              type: MetadataLinkType.DOWNLOAD,
+            })
+          ).toEqual(format)
         })
-      ).toEqual('geojson')
-    })
+        it('from link url (ending)', () => {
+          expect(
+            getFileFormat({
+              name: 'Cities',
+              label: 'Cities',
+              protocol: 'WWW:DOWNLOAD',
+              url: `http://example.com/data/${extension}`,
+              type: MetadataLinkType.DOWNLOAD,
+            })
+          ).toEqual(format)
+        })
+        it('from link url (format= param)', () => {
+          expect(
+            getFileFormat({
+              name: 'Cities',
+              label: 'Cities',
+              protocol: 'WWW:DOWNLOAD',
+              url: `http://example.com/data?format=${extension}&abc=123`,
+              type: MetadataLinkType.DOWNLOAD,
+            })
+          ).toEqual(format)
+        })
+        it('from link url (f= param)', () => {
+          expect(
+            getFileFormat({
+              name: 'Cities',
+              label: 'Cities',
+              protocol: 'WWW:DOWNLOAD',
+              url: `http://example.com/data?aa=bb&f=${extension}&abc=123`,
+              type: MetadataLinkType.DOWNLOAD,
+            })
+          ).toEqual(format)
+        })
+        it('from mime type', () => {
+          expect(
+            getFileFormat({
+              name: 'Cities',
+              label: 'Cities',
+              protocol: `WWW:DOWNLOAD:${mimeType}`,
+              mimeType,
+              url: 'http://example.com/data',
+              type: MetadataLinkType.DOWNLOAD,
+            })
+          ).toEqual(format)
+        })
+      }
+    )
   })
   describe('#extensionToFormat for an XLS extension', () => {
     it('returns excel format', () => {
