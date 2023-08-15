@@ -76,6 +76,12 @@ export const FORMATS = {
     color: '#673ab7',
     mimeTypes: ['image/jpg'],
   },
+  svg: {
+    extensions: ['svg'],
+    priority: 9,
+    color: '#d98294',
+    mimeTypes: ['image/svg+xml'],
+  },
 }
 
 export function sortPriority(link: MetadataLink): number {
