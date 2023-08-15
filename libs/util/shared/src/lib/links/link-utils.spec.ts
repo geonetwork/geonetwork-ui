@@ -87,6 +87,7 @@ describe('link utils', () => {
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       ],
       ['csv', 'csv', 'application/csv'],
+      ['svg', 'svg', 'image/svg+xml'],
     ]
 
     describe.each(toTest)(
