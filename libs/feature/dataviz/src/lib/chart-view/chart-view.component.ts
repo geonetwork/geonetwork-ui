@@ -8,6 +8,7 @@ import {
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   BaseReader,
+  FetchError,
   FieldAggregation,
   getJsonDataItemsProxy,
 } from '@geonetwork-ui/data-fetcher'
@@ -26,6 +27,7 @@ import {
   tap,
 } from 'rxjs/operators'
 import { DataService } from '../service/data.service'
+import { TranslateService } from '@ngx-translate/core'
 
 marker('chart.type.bar')
 marker('chart.type.barHorizontal')
@@ -205,14 +207,23 @@ export class ChartViewComponent {
 
   constructor(
     private dataService: DataService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private translateService: TranslateService
   ) {}
 
-  handleError(error) {
-    this.error = error.type
-    this.errorInfo = error.info
+  handleError(error: FetchError | Error) {
+    if (error instanceof FetchError) {
+      this.error = this.translateService.get(`dataset.error.${error.type}`, {
+        info: error.info,
+      })
+      console.warn(error.message)
+    } else {
+      this.error = this.translateService.get(error.message) // check that it works...
+      console.warn(error.stack)
+    }
+    // this.error = error.type
+    // this.errorInfo = error.info
     this.loading = false
     this.changeDetector.detectChanges()
-    console.warn(error.stack || error.type)
   }
 }

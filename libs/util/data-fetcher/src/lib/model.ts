@@ -3,11 +3,16 @@ import type { Feature } from 'geojson'
 export type DataItem = Feature
 
 export class FetchError {
+  message: string
+  stack = null
+
   constructor(
     public type: 'http' | 'network' | 'parse' | 'unsupportedType' | 'unknown',
     public info: string,
     public httpStatus = 0
-  ) {}
+  ) {
+    this.message = `An error happened in the data fetcher, type: ${type}, info: ${info}`
+  }
   static http(code: number) {
     return new FetchError('http', '', code)
   }
