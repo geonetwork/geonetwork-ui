@@ -1,6 +1,5 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
 import 'cypress-real-events'
-import fs from 'fs/promises'
 
 describe('dataset pages', () => {
   beforeEach(() => {
@@ -116,7 +115,7 @@ describe('dataset pages', () => {
           .find('gn-ui-metadata-contact')
           .children('div')
           .children('a')
-          .eq(1)
+          .eq(0)
           .invoke('text')
           .should('include', '@')
         cy.get('gn-ui-record-metadata')
@@ -418,6 +417,7 @@ describe('dataset pages', () => {
           .find('button')
           .first()
           .click({ force: true })
+        // eslint-disable-next-line cypress/unsafe-to-chain-command
         cy.wait(500)
           .get('body')
           .focus()
