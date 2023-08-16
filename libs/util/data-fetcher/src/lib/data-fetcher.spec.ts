@@ -90,8 +90,9 @@ describe('data-fetcher', () => {
         return expect(
           readDataset('http://bla/abcd.json')
         ).rejects.toMatchObject({
-          message: expect.stringContaining('random network problem'),
-          isCrossOriginOrNetworkRelated: true,
+          info: expect.stringContaining('random network problem'),
+          type: 'network',
+          httpStatus: 0,
         })
       })
     })
@@ -106,7 +107,6 @@ describe('data-fetcher', () => {
         return expect(
           readDataset('http://bla/abcd.json')
         ).rejects.toMatchObject({
-          message: expect.stringContaining('HTTP error'),
           httpStatus: 403,
         })
       })
@@ -126,8 +126,9 @@ describe('data-fetcher', () => {
       })
       it('throws a relevant error', () => {
         return expect(readDataset('http://bla/abcd')).rejects.toMatchObject({
-          message: expect.stringContaining('content type is unsupported'),
-          contentTypeError: true,
+          httpStatus: 0,
+          info: 'application/unsupported',
+          type: 'unsupportedType',
         })
       })
     })
@@ -144,7 +145,6 @@ describe('data-fetcher', () => {
         return expect(readDataset('http://bla/abcd.gif')).rejects.toMatchObject(
           {
             type: expect.stringContaining('unknown'),
-            contentTypeError: true,
           }
         )
       })
@@ -429,7 +429,6 @@ describe('data-fetcher', () => {
           readDataset('http://localfile/fixtures/unrecognized.txt?noheader')
         ).rejects.toMatchObject({
           type: expect.stringContaining('unknown'),
-          contentTypeError: true,
         })
       })
     })
