@@ -86,5 +86,7 @@ export class RecordMetadataComponent {
   openLightbox(src: string) {
     const lightboxInstance = basicLightbox.create(`<img src="${src}"/>`)
     lightboxInstance.show()
+    //returns for test only
+    return lightboxInstance
   }
 }
