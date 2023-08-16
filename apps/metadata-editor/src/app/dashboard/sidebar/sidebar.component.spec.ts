@@ -9,7 +9,7 @@ import { By } from '@angular/platform-browser'
 import { AuthService } from '@geonetwork-ui/feature/auth'
 import { UserModel } from '@geonetwork-ui/util/shared'
 import { USER_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
-import { LetModule } from '@ngrx/component'
+import { LetDirective } from '@ngrx/component'
 import { BehaviorSubject } from 'rxjs'
 
 import { SidebarComponent } from './sidebar.component'
@@ -46,7 +46,7 @@ describe('SidebarComponent', () => {
         UserPreviewComponent,
         DashboardMenuMockComponent,
       ],
-      imports: [LetModule],
+      imports: [LetDirective],
       providers: [{ provide: AuthService, useClass: AuthServiceMock }],
       schemas: [NO_ERRORS_SCHEMA],
     })

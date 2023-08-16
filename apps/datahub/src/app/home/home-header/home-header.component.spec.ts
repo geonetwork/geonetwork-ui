@@ -13,7 +13,7 @@ import {
 } from '@geonetwork-ui/feature/search'
 import { SortByEnum } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
-import { readFirst } from '@nrwl/angular/testing'
+import { readFirst } from '@nx/angular/testing'
 import { BehaviorSubject, of } from 'rxjs'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants'
 import { HeaderBadgeButtonComponent } from '../header-badge-button/header-badge-button.component'

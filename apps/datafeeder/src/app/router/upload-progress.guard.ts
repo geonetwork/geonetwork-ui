@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core'
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  Router,
-  RouterStateSnapshot,
-} from '@angular/router'
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router'
 import {
   FileUploadApiService,
   AnalysisStatusEnumApiModel,
@@ -13,7 +8,7 @@ import { Observable, of } from 'rxjs'
 import { catchError, filter, map } from 'rxjs/operators'
 
 @Injectable({ providedIn: 'root' })
-export class UploadProgressGuard implements CanActivate {
+export class UploadProgressGuard  {
   constructor(
     private router: Router,
     private fileUploadApiService: FileUploadApiService

@@ -17,7 +17,7 @@ import {
   MapUtilsService,
   mouseWheelZoomCondition,
 } from './map-utils.service'
-import { readFirst } from '@nrwl/angular/testing'
+import { readFirst } from '@nx/angular/testing'
 import {
   defaults,
   DragPan,

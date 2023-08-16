@@ -87,7 +87,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": [
           "apps/webcomponents/src/**/*.ts",
@@ -97,7 +97,7 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/webcomponents"],
       "options": {
         "jestConfig": "apps/webcomponents/jest.config.ts",

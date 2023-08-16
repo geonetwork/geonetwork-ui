@@ -35,6 +35,7 @@ interface MapContextLayerWfsModel {
 
 interface LayerXyzModel {
   type: 'xyz'
+  name?: string
 }
 interface LayerXyzModelWithUrl extends LayerXyzModel {
   url: string

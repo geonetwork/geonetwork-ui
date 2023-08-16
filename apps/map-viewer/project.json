@@ -84,7 +84,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": [
           "apps/map-viewer/src/**/*.ts",
@@ -93,7 +93,7 @@
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/map-viewer"],
       "options": {
         "jestConfig": "apps/map-viewer/jest.config.ts",

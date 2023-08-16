@@ -5,7 +5,7 @@ import {
   UserselectionsApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import { of, throwError } from 'rxjs'
-import { readFirst } from '@nrwl/angular/testing'
+import { readFirst } from '@nx/angular/testing'
 import { delay } from 'rxjs/operators'
 import { fakeAsync, tick } from '@angular/core/testing'
 

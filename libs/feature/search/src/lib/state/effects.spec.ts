@@ -44,7 +44,7 @@ import {
 import { HttpErrorResponse } from '@angular/common/http'
 import { delay } from 'rxjs/operators'
 import { FavoritesService } from '../favorites/favorites.service'
-import { readFirst } from '@nrwl/angular/testing'
+import { readFirst } from '@nx/angular/testing'
 import { ElasticsearchService } from '@geonetwork-ui/util/shared'
 import { FILTER_GEOMETRY } from '../feature-search.module'
 

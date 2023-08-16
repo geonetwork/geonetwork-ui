@@ -5,7 +5,7 @@ import {
   ROUTER_ROUTE_SEARCH,
 } from '@geonetwork-ui/feature/router'
 import { TranslateModule } from '@ngx-translate/core'
-import { readFirst } from '@nrwl/angular/testing'
+import { readFirst } from '@nx/angular/testing'
 import { BehaviorSubject } from 'rxjs'
 import {
   ROUTER_ROUTE_NEWS,
