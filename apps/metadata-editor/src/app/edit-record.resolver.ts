@@ -7,7 +7,7 @@ import { CatalogRecord } from '@geonetwork-ui/util/types/metadata'
 @Injectable({
   providedIn: 'root',
 })
-export class EditRecordResolver  {
+export class EditRecordResolver {
   constructor(private editorService: EditorService) {}
 
   resolve(
