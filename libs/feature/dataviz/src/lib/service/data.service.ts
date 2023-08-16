@@ -135,11 +135,11 @@ export class DataService {
   }
 
   private interpretError(error: FetchError) {
-    if (error.isCrossOriginOrNetworkRelated) {
+    if (error.type === 'network') {
       return throwError(() => new Error('dataset.error.network'))
-    } else if (error.httpStatus) {
+    } else if (error.type === 'http') {
       return throwError(() => new Error('dataset.error.http'))
-    } else if (error.parsingFailed) {
+    } else if (error.type === 'parse') {
       return throwError(() => new Error('dataset.error.parse'))
     } else {
       return throwError(() => new Error('dataset.error.unknown'))
