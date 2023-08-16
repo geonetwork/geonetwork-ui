@@ -1,8 +1,7 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular'
+import { Meta, moduleMetadata } from '@storybook/angular'
 import { DEFAULT_RESULTS_LAYOUT_CONFIG } from '@geonetwork-ui/ui/search'
 import { GnResultsListComponent } from './gn-results-list.component'
 import { WebcomponentsModule } from '../../webcomponents.module'
-import { ResultsListShowMoreStrategy } from '@geonetwork-ui/feature/search'
 
 export default {
   title: 'Angular Components/GnResultsListComponent',
@@ -27,12 +26,8 @@ export default {
   },
 } as Meta<GnResultsListComponent>
 
-const Template: Story<GnResultsListComponent> = (
-  args: GnResultsListComponent
-) => ({
-  component: GnResultsListComponent,
-  props: args,
-})
+/*
+type Story = StoryObj<GnResultsListComponent>
 
 const defaultArgs = {
   apiUrl: 'https://apps.titellus.net/geonetwork/srv/api',
@@ -46,26 +41,30 @@ const defaultArgs = {
   showMore: 'none' as ResultsListShowMoreStrategy,
 }
 
-export const AsList = Template.bind({})
-AsList.args = {
-  ...defaultArgs,
-  layout: 'LIST',
+export const AsList: Story = {
+  args: {
+    ...defaultArgs,
+    layout: 'LIST',
+  },
+}
+export const AsCard: Story = {
+  args: {
+    ...defaultArgs,
+    layout: 'CARD',
+  },
 }
 
-export const AsCard = Template.bind({})
-AsCard.args = {
-  ...defaultArgs,
-  layout: 'CARD',
+export const AsText: Story = {
+  args: {
+    ...defaultArgs,
+    layout: 'TEXT',
+  },
 }
 
-export const AsText = Template.bind({})
-AsText.args = {
-  ...defaultArgs,
-  layout: 'TEXT',
+export const AsTitle: Story = {
+  args: {
+    ...defaultArgs,
+    layout: 'TITLE',
+  },
 }
-
-export const AsTitle = Template.bind({})
-AsTitle.args = {
-  ...defaultArgs,
-  layout: 'TITLE',
-}
+*/

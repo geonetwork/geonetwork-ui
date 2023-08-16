@@ -1,29 +1,21 @@
-import { moduleMetadata, Story, Meta } from '@storybook/angular'
+import { Meta, StoryObj } from '@storybook/angular'
 import { TextAreaComponent } from './text-area.component'
 
 export default {
   title: 'Inputs/TextAreaComponent',
   component: TextAreaComponent,
-  decorators: [
-    moduleMetadata({
-      imports: [],
-    }),
-  ],
+  decorators: [],
 } as Meta<TextAreaComponent>
 
-const Template: Story<TextAreaComponent> = (args: TextAreaComponent) => ({
-  component: TextAreaComponent,
-  props: args,
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  value: '',
-  placeholder: 'Put something here!',
-  required: false,
-}
-Primary.argTypes = {
-  valueChange: {
-    action: 'valueChange',
+export const Primary: StoryObj<TextAreaComponent> = {
+  args: {
+    value: '',
+    placeholder: 'Put something here!',
+    required: false,
+  },
+  argTypes: {
+    valueChange: {
+      action: 'valueChange',
+    },
   },
 }

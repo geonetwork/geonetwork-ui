@@ -1,27 +1,31 @@
 import { HttpClientModule } from '@angular/common/http'
-import { CHART_TYPE_VALUES } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
 import { TranslateModule } from '@ngx-translate/core'
 import {
-  moduleMetadata,
-  Story,
-  Meta,
+  applicationConfig,
   componentWrapperDecorator,
+  Meta,
+  moduleMetadata,
+  StoryObj,
 } from '@storybook/angular'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
 import { ChartComponent } from './chart.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiDatavizModule } from '../ui-dataviz.module'
+import { importProvidersFrom } from '@angular/core'
+import { CHART_TYPE_VALUES } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
 
-export default {
+const meta: Meta<ChartComponent> = {
   title: 'Dataviz/ChartComponent',
   component: ChartComponent,
   decorators: [
     moduleMetadata({
-      imports: [
-        UiDatavizModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+      imports: [TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)],
+    }),
+    applicationConfig({
+      providers: [
+        importProvidersFrom(UiDatavizModule),
+        importProvidersFrom(BrowserAnimationsModule),
+        importProvidersFrom(HttpClientModule),
       ],
     }),
     componentWrapperDecorator(
@@ -31,12 +35,9 @@ export default {
   argTypes: {
     type: { control: { type: 'select', options: CHART_TYPE_VALUES } },
   },
-} as Meta<ChartComponent>
+}
 
-const Template: Story<ChartComponent> = (args: ChartComponent) => ({
-  component: ChartComponent,
-  props: args,
-})
+export default meta
 
 const SAMPLE_DATA = [
   {
@@ -68,20 +69,21 @@ const SAMPLE_DATA = [
     age: 48,
   },
 ]
-
-export const Primary = Template.bind({})
-Primary.args = {
-  data: SAMPLE_DATA,
-  labelProperty: 'firstName',
-  valueProperty: 'discsSold',
-  secondaryValueProperty: '',
-  type: 'bar',
-}
 const options = ['not defined'].concat(Object.keys(SAMPLE_DATA[0]))
-Primary.argTypes = {
-  labelProperty: { control: { type: 'select', options } },
-  valueProperty: { control: { type: 'select', options } },
-  secondaryValueProperty: {
-    control: { type: 'select', options },
+
+export const Primary: StoryObj<ChartComponent> = {
+  args: {
+    data: SAMPLE_DATA,
+    labelProperty: 'firstName',
+    valueProperty: 'discsSold',
+    secondaryValueProperty: '',
+    type: 'bar',
+  },
+  argTypes: {
+    labelProperty: { control: { type: 'select', options } },
+    valueProperty: { control: { type: 'select', options } },
+    secondaryValueProperty: {
+      control: { type: 'select', options },
+    },
   },
 }

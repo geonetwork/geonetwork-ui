@@ -4,15 +4,15 @@ import { FeatureMapModule } from '@geonetwork-ui/feature/map'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { UiMapModule } from '@geonetwork-ui/ui/map'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
-import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
 import {
+  applicationConfig,
   componentWrapperDecorator,
   Meta,
   moduleMetadata,
-  Story,
 } from '@storybook/angular'
 import { GeoTableViewComponent } from './geo-table-view.component'
+import { importProvidersFrom } from '@angular/core'
 
 export default {
   title: 'Map/GeoTable',
@@ -20,12 +20,15 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [
-        HttpClientModule,
         UiMapModule,
         UiLayoutModule,
         FeatureMapModule,
-        BrowserAnimationsModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+      ],
+    }),
+    applicationConfig({
+      providers: [
+        importProvidersFrom(BrowserAnimationsModule, HttpClientModule),
       ],
     }),
     componentWrapperDecorator(
@@ -34,14 +37,8 @@ export default {
   ],
 } as Meta<GeoTableViewComponent>
 
-const Template: Story<GeoTableViewComponent> = (
-  args: GeoTableViewComponent
-) => ({
-  component: GeoTableViewComponent,
-  props: args,
-})
-
-export const POINTS = Template.bind({})
-POINTS.args = {
-  data: FEATURE_COLLECTION_POINT_FIXTURE_4326,
-}
+/*export const POINTS: StoryObj<GeoTableViewComponent> = {
+  args: {
+    data: FEATURE_COLLECTION_POINT_FIXTURE_4326,
+  },
+}*/

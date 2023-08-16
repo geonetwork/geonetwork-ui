@@ -3,34 +3,38 @@ import {
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import { TranslateModule } from '@ngx-translate/core'
-import { Meta, moduleMetadata, Story } from '@storybook/angular'
+import {
+  applicationConfig,
+  Meta,
+  moduleMetadata,
+  StoryObj,
+} from '@storybook/angular'
 import { MetadataInfoComponent } from './metadata-info.component'
-import { UiElementsModule } from '../ui-elements.module'
 import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
+import { UtilSharedModule } from '@geonetwork-ui/util/shared'
+import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
 
 export default {
   title: 'Elements/MetadataInfoComponent',
   component: MetadataInfoComponent,
   decorators: [
     moduleMetadata({
+      declarations: [ContentGhostComponent],
       imports: [
-        UiElementsModule,
         UtilI18nModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+        UtilSharedModule,
       ],
+    }),
+    applicationConfig({
+      providers: [],
     }),
   ],
 } as Meta<MetadataInfoComponent>
 
-const Template: Story<MetadataInfoComponent> = (
-  args: MetadataInfoComponent
-) => ({
-  component: MetadataInfoComponent,
-  props: args,
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  metadata: RECORDS_FULL_FIXTURE[0],
-  incomplete: false,
+export const Primary: StoryObj<MetadataInfoComponent> = {
+  args: {
+    metadata: RECORDS_FULL_FIXTURE[0],
+    incomplete: false,
+  },
 }

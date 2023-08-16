@@ -1,26 +1,27 @@
 import { HttpClientModule } from '@angular/common/http'
 import { TranslateModule } from '@ngx-translate/core'
 import {
-  moduleMetadata,
-  Story,
-  Meta,
+  applicationConfig,
   componentWrapperDecorator,
+  Meta,
+  StoryObj,
 } from '@storybook/angular'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
 import { TableComponent } from './table.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiDatavizModule } from '../ui-dataviz.module'
+import { importProvidersFrom } from '@angular/core'
 
 export default {
   title: 'Layout/TableComponent',
   component: TableComponent,
   decorators: [
-    moduleMetadata({
-      imports: [
-        UiDatavizModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+    applicationConfig({
+      providers: [
+        importProvidersFrom(UiDatavizModule),
+        importProvidersFrom(BrowserAnimationsModule),
+        importProvidersFrom(HttpClientModule),
+        importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
       ],
     }),
     componentWrapperDecorator(
@@ -29,28 +30,24 @@ export default {
   ],
 } as Meta<TableComponent>
 
-const Template: Story<TableComponent> = (args: TableComponent) => ({
-  component: TableComponent,
-  props: args,
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  data: [
-    {
-      id: '0001',
-      firstName: 'John',
-      lastName: 'Lennon',
-    },
-    {
-      id: '0002',
-      firstName: 'Ozzy',
-      lastName: 'Osbourne',
-    },
-    {
-      id: '0003',
-      firstName: 'Claude',
-      lastName: 'François',
-    },
-  ],
+export const Primary: StoryObj<TableComponent> = {
+  args: {
+    data: [
+      {
+        id: '0001',
+        firstName: 'John',
+        lastName: 'Lennon',
+      },
+      {
+        id: '0002',
+        firstName: 'Ozzy',
+        lastName: 'Osbourne',
+      },
+      {
+        id: '0003',
+        firstName: 'Claude',
+        lastName: 'François',
+      },
+    ],
+  },
 }

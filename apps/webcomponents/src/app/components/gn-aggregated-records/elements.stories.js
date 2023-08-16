@@ -8,6 +8,7 @@ const Template = ({ template }) => {
   }
 }
 
+/*
 export const ByKeywords = Template.bind({})
 
 ByKeywords.args = {
@@ -22,3 +23,4 @@ ByKeywords.args = {
   aggregation-query-string="+isTemplate:n"
 ></gn-aggregated-records>`,
 }
+*/

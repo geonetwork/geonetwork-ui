@@ -1,28 +1,38 @@
-import { moduleMetadata, Story, Meta } from '@storybook/angular'
+import {
+  applicationConfig,
+  Meta,
+  moduleMetadata,
+  StoryObj,
+} from '@storybook/angular'
 import { RecordPreviewCardComponent } from './record-preview-card.component'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
+import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
+import { importProvidersFrom } from '@angular/core'
+import { HttpClientModule } from '@angular/common/http'
+import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { MatIconModule } from '@angular/material/icon'
+import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 
 export default {
   title: 'Search/RecordPreviewCardComponent',
   component: RecordPreviewCardComponent,
   decorators: [
     moduleMetadata({
-      imports: [UtilSharedModule, UiElementsModule],
+      declarations: [ThumbnailComponent],
+      imports: [UiDatavizModule, MatIconModule, UtilSharedModule],
+    }),
+    applicationConfig({
+      providers: [
+        importProvidersFrom(HttpClientModule, BrowserAnimationsModule),
+      ],
     }),
   ],
 } as Meta<RecordPreviewCardComponent>
 
-const Template: Story<RecordPreviewCardComponent> = (
-  args: RecordPreviewCardComponent
-) => ({
-  component: RecordPreviewCardComponent,
-  props: args,
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  record: RECORDS_SUMMARY_FIXTURE[0],
-  linkTarget: '_blank',
+export const Primary: StoryObj<RecordPreviewCardComponent> = {
+  args: {
+    record: RECORDS_SUMMARY_FIXTURE[0],
+    linkTarget: '_blank',
+  },
 }

@@ -1,23 +1,28 @@
 import { TranslateModule } from '@ngx-translate/core'
 import {
-  moduleMetadata,
-  Story,
-  Meta,
   componentWrapperDecorator,
+  Meta,
+  moduleMetadata,
+  StoryObj,
 } from '@storybook/angular'
 import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import { PaginationComponent } from './pagination.component'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { MatIcon } from '@angular/material/icon'
+import { FormsModule } from '@angular/forms'
 
 export default {
   title: 'Layout/PaginationComponent',
   component: PaginationComponent,
   decorators: [
     moduleMetadata({
+      declarations: [ButtonComponent, MatIcon],
       imports: [
         UtilI18nModule,
+        FormsModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
       ],
     }),
@@ -27,13 +32,9 @@ export default {
   ],
 } as Meta<PaginationComponent>
 
-const Template: Story<PaginationComponent> = (args: PaginationComponent) => ({
-  component: PaginationComponent,
-  props: args,
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  currentPage: 1,
-  nPages: 10,
+export const Primary: StoryObj<PaginationComponent> = {
+  args: {
+    currentPage: 1,
+    nPages: 10,
+  },
 }

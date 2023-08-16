@@ -1,12 +1,14 @@
-import { moduleMetadata, Story, Meta } from '@storybook/angular'
+import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
 import { ContentGhostComponent } from './content-ghost.component'
+import { importProvidersFrom } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
 
 export default {
   title: 'Elements/ContentGhostComponent',
   component: ContentGhostComponent,
   decorators: [
-    moduleMetadata({
-      imports: [],
+    applicationConfig({
+      providers: [importProvidersFrom(BrowserModule)],
     }),
   ],
 } as Meta<ContentGhostComponent>
@@ -15,16 +17,14 @@ type Args = ContentGhostComponent & { content: string }
 
 const content = 'My content'
 
-const Template: Story<ContentGhostComponent> = (args: Args) => ({
-  component: ContentGhostComponent,
-  props: args,
-  template: `<div class="border border-gray-500 overflow-auto p-2" style="resize: both; width: 600px; height: 250px">
+export const Primary: StoryObj<ContentGhostComponent> = {
+  args: {
+    showContent: false,
+    ghostClass: 'h-full',
+  },
+  render: (args) => ({
+    template: `<div class="border border-gray-500 overflow-auto p-2" style="resize: both; width: 600px; height: 250px">
     <gn-ui-content-ghost [showContent]="showContent">${content}</gn-ui-content-ghost>
   </div>`,
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  showContent: false,
-  ghostClass: 'h-full',
+  }),
 }

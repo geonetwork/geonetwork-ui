@@ -1,30 +1,28 @@
-import { moduleMetadata, Story, Meta } from '@storybook/angular'
+import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
 import { StepBarComponent } from './step-bar.component'
+import { importProvidersFrom } from '@angular/core'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 export default {
   title: 'Widgets/StepBarComponent',
   component: StepBarComponent,
   decorators: [
-    moduleMetadata({
-      imports: [],
+    applicationConfig({
+      providers: [importProvidersFrom(BrowserAnimationsModule)],
     }),
   ],
 } as Meta<StepBarComponent>
 
-const Template: Story<StepBarComponent> = (args: StepBarComponent) => ({
-  component: StepBarComponent,
-  props: args,
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  steps: 6,
-  currentStep: 1,
-  type: 'default',
-}
-Primary.argTypes = {
-  type: {
-    control: 'select',
-    options: ['primary', 'secondary', 'default'],
+export const Primary: StoryObj<StepBarComponent> = {
+  args: {
+    steps: 6,
+    currentStep: 1,
+    type: 'default',
+  },
+  argTypes: {
+    type: {
+      control: 'select',
+      options: ['primary', 'secondary', 'default'],
+    },
   },
 }

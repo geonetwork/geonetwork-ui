@@ -1,18 +1,16 @@
-import { moduleMetadata, Story, Meta } from '@storybook/angular'
+import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
 import { SpinningLoaderComponent } from './spinning-loader.component'
+import { importProvidersFrom } from '@angular/core'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 export default {
   title: 'Widgets/SpinningLoaderComponent',
   component: SpinningLoaderComponent,
   decorators: [
-    moduleMetadata({
-      imports: [],
+    applicationConfig({
+      providers: [importProvidersFrom(BrowserAnimationsModule)],
     }),
   ],
 } as Meta<SpinningLoaderComponent>
 
-const Template: Story<SpinningLoaderComponent> = () => ({
-  component: SpinningLoaderComponent,
-})
-
-export const Primary = Template.bind({})
+export const Primary: StoryObj<SpinningLoaderComponent> = {}

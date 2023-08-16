@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular'
+import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
 import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
@@ -19,15 +19,9 @@ export default {
   ],
 } as Meta<ResultsHitsNumberComponent>
 
-const Template: Story<ResultsHitsNumberComponent> = (
-  args: ResultsHitsNumberComponent
-) => ({
-  component: ResultsHitsNumberComponent,
-  props: args,
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  hits: { value: 32 },
-  loading: false,
+export const Primary: StoryObj<ResultsHitsNumberComponent> = {
+  args: {
+    hits: { value: 32 },
+    loading: false,
+  },
 }

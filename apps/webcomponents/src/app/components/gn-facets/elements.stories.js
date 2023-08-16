@@ -1,5 +1,3 @@
-import { ES_FIXTURE_AGGS_REQUEST } from '@geonetwork-ui/util/shared'
-
 export default {
   title: 'Web Components/GnFacets',
 }
@@ -10,6 +8,7 @@ const Template = ({ template }) => {
   }
 }
 
+/*
 export const SimpleTerms = Template.bind({})
 
 SimpleTerms.args = {
@@ -22,3 +21,4 @@ SimpleTerms.args = {
   facet-config='${JSON.stringify(ES_FIXTURE_AGGS_REQUEST)}'
 ></gn-facets>`,
 }
+*/

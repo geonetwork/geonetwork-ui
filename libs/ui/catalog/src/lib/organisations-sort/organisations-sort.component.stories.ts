@@ -1,25 +1,25 @@
 import { TranslateModule } from '@ngx-translate/core'
 import {
-  moduleMetadata,
-  Story,
-  Meta,
   componentWrapperDecorator,
+  Meta,
+  moduleMetadata,
+  StoryObj,
 } from '@storybook/angular'
 import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import { OrganisationsSortComponent } from './organisations-sort.component'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 
 export default {
   title: 'Catalog/OrganisationsSortComponent',
   component: OrganisationsSortComponent,
   decorators: [
     moduleMetadata({
+      declarations: [DropdownSelectorComponent],
       imports: [
         UtilI18nModule,
-        UiInputsModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
       ],
     }),
@@ -29,11 +29,4 @@ export default {
   ],
 } as Meta<OrganisationsSortComponent>
 
-const Template: Story<OrganisationsSortComponent> = (
-  args: OrganisationsSortComponent
-) => ({
-  component: OrganisationsSortComponent,
-  props: args,
-})
-
-export const Primary = Template.bind({})
+export const Primary: StoryObj<OrganisationsSortComponent> = {}
