@@ -24,7 +24,7 @@ You can also use `npx nx`.
 
 ### Generate an application
 
-Run `nx g @nrwl/angular:app my-app` to generate an application.
+Run `nx g @nx/angular:app my-app` to generate an application.
 
 > You can use any of the plugins above to generate applications as well.
 
@@ -136,10 +136,10 @@ way since it was loaded beforehand.
 
 ### Generate a library
 
-Run `nx g @nrwl/angular:lib my-lib` to generate a library.
+Run `nx g @nx/angular:lib my-lib` to generate a library.
 
 You should create your library into a folder (`ui`, `feature` ...)
-eg `nx g @nrwl/angular:lib router --directory=feature`, the name of the library will be `feature-router` in `angular.json` file.
+eg `nx g @nx/angular:lib router --directory=feature`, the name of the library will be `feature-router` in `angular.json` file.
 
 > You can also use any of the plugins above to generate libraries as well.
 

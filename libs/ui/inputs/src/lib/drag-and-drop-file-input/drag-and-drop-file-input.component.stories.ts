@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular'
+import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
 import { DragAndDropFileInputComponent } from './drag-and-drop-file-input.component'
 import { TranslateModule } from '@ngx-translate/core'
 import {
@@ -21,20 +21,14 @@ export default {
   ],
 } as Meta<DragAndDropFileInputComponent>
 
-const Template: Story<DragAndDropFileInputComponent> = (
-  args: DragAndDropFileInputComponent
-) => ({
-  component: DragAndDropFileInputComponent,
-  props: args,
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  placeholder: 'Drag and drop file',
-  accept: '*',
-}
-Primary.argTypes = {
-  fileChange: {
-    action: 'fileChange',
+export const Primary: StoryObj<DragAndDropFileInputComponent> = {
+  args: {
+    placeholder: 'Drag and drop file',
+    accept: '*',
+  },
+  argTypes: {
+    fileChange: {
+      action: 'fileChange',
+    },
   },
 }

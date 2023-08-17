@@ -25,9 +25,9 @@ export class ElasticsearchService {
 
   getSearchRequestBody(
     aggregations: any = {},
-    size: number = 0,
-    from: number = 0,
-    sortBy: string = '',
+    size = 0,
+    from = 0,
+    sortBy = '',
     requestFields: RequestFields = [],
     searchFilters: SearchFilters = {},
     configFilters: StateConfigFilters = {},
@@ -109,7 +109,7 @@ export class ElasticsearchService {
   getRelatedRecordPayload(
     title: string,
     uuid: string,
-    size: number = 6,
+    size = 6,
     _source = ES_SOURCE_SUMMARY
   ): EsSearchParams {
     return {

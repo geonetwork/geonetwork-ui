@@ -8,9 +8,9 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "es2020",
+    "target": "es2021",
     "module": "esnext",
-    "lib": ["es2019", "dom", "dom.iterable"],
+    "lib": ["es2021", "dom", "dom.iterable"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
@@ -41,6 +41,9 @@
       "@geonetwork-ui/ui/elements": ["libs/ui/elements/src/index.ts"],
       "@geonetwork-ui/ui/inputs": ["libs/ui/inputs/src/index.ts"],
       "@geonetwork-ui/ui/layout": ["libs/ui/layout/src/index.ts"],
+      "@geonetwork-ui/ui/libs/copy-text-button": [
+        "libs/ui/inputs/src/lib/copy-text-button/copy-text-button.component.ts"
+      ],
       "@geonetwork-ui/ui/map": ["libs/ui/map/src/index.ts"],
       "@geonetwork-ui/ui/search": ["libs/ui/search/src/index.ts"],
       "@geonetwork-ui/ui/widgets": ["libs/ui/widgets/src/index.ts"],

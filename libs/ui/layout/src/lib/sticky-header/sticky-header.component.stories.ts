@@ -1,19 +1,24 @@
 import {
-  moduleMetadata,
-  Story,
-  Meta,
+  applicationConfig,
   componentWrapperDecorator,
+  Meta,
+  moduleMetadata,
+  StoryObj,
 } from '@storybook/angular'
 import { UiLayoutModule } from '../ui-layout.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { StickyHeaderComponent } from './sticky-header.component'
+import { importProvidersFrom } from '@angular/core'
 
 export default {
   title: 'Layout/Sticky Header',
   component: StickyHeaderComponent,
   decorators: [
     moduleMetadata({
-      imports: [UiLayoutModule, BrowserAnimationsModule],
+      imports: [UiLayoutModule],
+    }),
+    applicationConfig({
+      providers: [importProvidersFrom(BrowserAnimationsModule)],
     }),
     componentWrapperDecorator(
       (story) =>
@@ -24,15 +29,15 @@ export default {
     </p>
     ${story}
     <p class='m-4'>
-      Illud tamen clausos vehementer angebat quod captis navigiis, 
-      quae frumenta vehebant per flumen, Isauri quidem alimentorum 
-      copiis adfluebant, ipsi vero solitarum rerum cibos iam consumendo 
+      Illud tamen clausos vehementer angebat quod captis navigiis,
+      quae frumenta vehebant per flumen, Isauri quidem alimentorum
+      copiis adfluebant, ipsi vero solitarum rerum cibos iam consumendo
       inediae propinquantis aerumnas exitialis horrebant.
     </p>
     <p class='m-4'>
-      Illud tamen clausos vehementer angebat quod captis navigiis, 
-      quae frumenta vehebant per flumen, Isauri quidem alimentorum 
-      copiis adfluebant, ipsi vero solitarum rerum cibos iam consumendo 
+      Illud tamen clausos vehementer angebat quod captis navigiis,
+      quae frumenta vehebant per flumen, Isauri quidem alimentorum
+      copiis adfluebant, ipsi vero solitarum rerum cibos iam consumendo
       inediae propinquantis aerumnas exitialis horrebant.
     </p>
   </div>
@@ -41,10 +46,14 @@ export default {
   ],
 } as Meta<StickyHeaderComponent>
 
-const Template: Story<StickyHeaderComponent> = (
-  args: StickyHeaderComponent
-) => ({
-  template: `
+export const Primary: StoryObj<StickyHeaderComponent> = {
+  args: {
+    minHeightPx: 100,
+    fullHeightPx: 230,
+  },
+  render: (args) => ({
+    props: args,
+    template: `
     <gn-ui-sticky-header
       minHeightPx='${args.minHeightPx}'
       fullHeightPx='${args.fullHeightPx}'>
@@ -58,10 +67,5 @@ const Template: Story<StickyHeaderComponent> = (
         </div>
       </ng-template>
     </gn-ui-sticky-header>`,
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  minHeightPx: 100,
-  fullHeightPx: 230,
+  }),
 }

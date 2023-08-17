@@ -1,20 +1,25 @@
 import {
+  applicationConfig,
   componentWrapperDecorator,
   Meta,
   moduleMetadata,
-  Story,
+  StoryObj,
 } from '@storybook/angular'
 import { ExpandablePanelButtonComponent } from './expandable-panel-button.component'
 import { UiLayoutModule } from '../ui-layout.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatIconModule } from '@angular/material/icon'
+import { importProvidersFrom } from '@angular/core'
 
 export default {
   title: 'Layout/Expandable Panel Button',
   component: ExpandablePanelButtonComponent,
   decorators: [
     moduleMetadata({
-      imports: [UiLayoutModule, BrowserAnimationsModule, MatIconModule],
+      imports: [UiLayoutModule, MatIconModule],
+    }),
+    applicationConfig({
+      providers: [importProvidersFrom(BrowserAnimationsModule)],
     }),
     componentWrapperDecorator(
       (story) => `
@@ -30,28 +35,32 @@ type ExpandablePanelButtonTemplate = ExpandablePanelButtonComponent & {
   titleTemplateString: string
 }
 
-const Template: Story<ExpandablePanelButtonTemplate> = (
-  args: ExpandablePanelButtonTemplate
-) => ({
-  template: `
+export const Primary: StoryObj<ExpandablePanelButtonTemplate> = {
+  args: {
+    titleTemplateString:
+      "<mat-icon class='mr-4'>key</mat-icon> Open this menu to find out more",
+  },
+  render: (args) => ({
+    props: args,
+    template: `
     <gn-ui-expandable-panel-button [titleTemplate]='title'>
       <div class='bg-gray-50 p-3'>
         <p>
-          Illud tamen clausos vehementer angebat quod captis navigiis, 
-          quae frumenta vehebant per flumen, Isauri quidem alimentorum 
-          copiis adfluebant, ipsi vero solitarum rerum cibos iam consumendo 
+          Illud tamen clausos vehementer angebat quod captis navigiis,
+          quae frumenta vehebant per flumen, Isauri quidem alimentorum
+          copiis adfluebant, ipsi vero solitarum rerum cibos iam consumendo
           inediae propinquantis aerumnas exitialis horrebant.
         </p><br><br>
         <p>
-          Illud tamen clausos vehementer angebat quod captis navigiis, 
-          quae frumenta vehebant per flumen, Isauri quidem alimentorum 
-          copiis adfluebant, ipsi vero solitarum rerum cibos iam consumendo 
+          Illud tamen clausos vehementer angebat quod captis navigiis,
+          quae frumenta vehebant per flumen, Isauri quidem alimentorum
+          copiis adfluebant, ipsi vero solitarum rerum cibos iam consumendo
           inediae propinquantis aerumnas exitialis horrebant.
         </p><br><br>
         <p>
-          Illud tamen clausos vehementer angebat quod captis navigiis, 
-          quae frumenta vehebant per flumen, Isauri quidem alimentorum 
-          copiis adfluebant, ipsi vero solitarum rerum cibos iam consumendo 
+          Illud tamen clausos vehementer angebat quod captis navigiis,
+          quae frumenta vehebant per flumen, Isauri quidem alimentorum
+          copiis adfluebant, ipsi vero solitarum rerum cibos iam consumendo
           inediae propinquantis aerumnas exitialis horrebant.
         </p>
       </div>
@@ -60,10 +69,5 @@ const Template: Story<ExpandablePanelButtonTemplate> = (
       ${args.titleTemplateString}
     </ng-template>
 `,
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  titleTemplateString:
-    "<mat-icon class='mr-4'>key</mat-icon> Open this menu to find out more",
+  }),
 }

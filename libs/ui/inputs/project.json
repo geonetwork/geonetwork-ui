@@ -6,7 +6,7 @@
   "prefix": "gn-ui",
   "targets": {
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/ui/inputs"],
       "options": {
         "jestConfig": "libs/ui/inputs/jest.config.ts",
@@ -14,7 +14,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": [
           "libs/ui/inputs/src/**/*.ts",

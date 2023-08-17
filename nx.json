@@ -5,7 +5,7 @@
   "npmScope": "geonetwork-ui",
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/nx-cloud",
+      "runner": "nx-cloud",
       "options": {
         "cacheableOperations": [
           "build",
@@ -21,7 +21,20 @@
   },
   "defaultProject": "search",
   "generators": {
-    "@nrwl/angular": {
+    "@nx/angular:application": {
+      "style": "css",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nx/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nx/angular:component": {
+      "style": "css"
+    },
+    "@nx/angular": {
       "application": {
         "linter": "eslint"
       },
@@ -31,19 +44,6 @@
       "storybook-configuration": {
         "linter": "eslint"
       }
-    },
-    "@nrwl/angular:application": {
-      "style": "css",
-      "linter": "eslint",
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "linter": "eslint",
-      "unitTestRunner": "jest"
-    },
-    "@nrwl/angular:component": {
-      "style": "css"
     }
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",

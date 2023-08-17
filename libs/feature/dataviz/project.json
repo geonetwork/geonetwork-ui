@@ -6,7 +6,7 @@
   "prefix": "gn-ui",
   "targets": {
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/feature/dataviz"],
       "options": {
         "jestConfig": "libs/feature/dataviz/jest.config.ts",
@@ -14,7 +14,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": [
           "libs/feature/dataviz/src/**/*.ts",

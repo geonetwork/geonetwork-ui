@@ -3,7 +3,7 @@ import { MapContainerComponent } from './map-container.component'
 import { MapFacade } from '../+state/map.facade'
 import { of } from 'rxjs'
 import { MAP_CTX_LAYER_XYZ_FIXTURE } from '../map-context/map-context.fixtures'
-import { readFirst } from '@nrwl/angular/testing'
+import { readFirst } from '@nx/angular/testing'
 import { DEFAULT_BASELAYER_CONTEXT } from '../map-context/map-context.service'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 

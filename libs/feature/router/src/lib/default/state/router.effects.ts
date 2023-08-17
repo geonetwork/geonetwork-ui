@@ -9,7 +9,7 @@ import {
 } from '@geonetwork-ui/feature/search'
 import { SortByEnum } from '@geonetwork-ui/util/shared'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { navigation } from '@nrwl/angular'
+import { navigation } from '@ngrx/router-store/data-persistence'
 import { of } from 'rxjs'
 import { map, mergeMap, tap } from 'rxjs/operators'
 import { ROUTER_CONFIG, RouterConfigModel } from '../router.module'

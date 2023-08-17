@@ -1,11 +1,14 @@
 import {
-  moduleMetadata,
-  Story,
-  Meta,
+  applicationConfig,
   componentWrapperDecorator,
+  Meta,
+  moduleMetadata,
+  StoryObj,
 } from '@storybook/angular'
 import { LoadingMaskComponent } from './loading-mask.component'
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MatProgressSpinner } from '@angular/material/progress-spinner'
+import { importProvidersFrom } from '@angular/core'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 const sampleBackground =
   'url(https://geonetwork-opensource.org/_images/gn-map.png)'
@@ -15,7 +18,10 @@ export default {
   component: LoadingMaskComponent,
   decorators: [
     moduleMetadata({
-      imports: [MatProgressSpinnerModule],
+      declarations: [MatProgressSpinner],
+    }),
+    applicationConfig({
+      providers: [importProvidersFrom(BrowserAnimationsModule)],
     }),
     componentWrapperDecorator(
       (story) => `
@@ -26,12 +32,8 @@ export default {
   ],
 } as Meta<LoadingMaskComponent>
 
-const Template: Story<LoadingMaskComponent> = (args: LoadingMaskComponent) => ({
-  component: LoadingMaskComponent,
-  props: args,
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  message: 'Loading some data, please wait...',
+export const Primary: StoryObj<LoadingMaskComponent> = {
+  args: {
+    message: 'Loading some data, please wait...',
+  },
 }

@@ -130,53 +130,50 @@ describe('organisations', () => {
         .each(($span) => {
           proviList.push($span.text())
         })
-        .then(() => {
+      cy.then(() => {
+        proviList = proviList.map((elmt) => elmt.trim())
+        expect(isOrdered(proviList, 'ZA')).to.be.true
+        proviList = []
+        cy.get('@filter').select(0)
+        cy.get('@txtProvi')
+          .children('span')
+          .each(($span) => {
+            proviList.push($span.text())
+          })
+        cy.then(() => {
           proviList = proviList.map((elmt) => elmt.trim())
-          expect(isOrdered(proviList, 'ZA')).to.be.true
-          proviList = []
-          cy.get('@filter').select(0)
-          cy.get('@txtProvi')
-            .children('span')
-            .each(($span) => {
-              proviList.push($span.text())
-            })
-            .then(() => {
-              proviList = proviList.map((elmt) => elmt.trim())
-              expect(isOrdered(proviList, 'AZ')).to.be.true
-            })
+          expect(isOrdered(proviList, 'AZ')).to.be.true
         })
+      })
     })
     it('should filter the list by dataset count', () => {
       const thirdOrder = []
       const updatedOrder = []
       const initialOrder = []
       cy.get('@filter').select(0)
-      cy.get('[data-cy="orgaName"]')
-        .each((item) => {
+      cy.get('[data-cy="orgaName"]').each((item) => {
+        const text = item.text().trim()
+        initialOrder.push(text)
+      })
+      cy.then(() => {
+        cy.get('@filter').select(2)
+        cy.get('[data-cy="orgaName"]').each((item) => {
           const text = item.text().trim()
-          initialOrder.push(text)
+          updatedOrder.push(text)
         })
-        .then(() => {
-          cy.get('@filter').select(2)
-          cy.get('[data-cy="orgaName"]')
-            .each((item) => {
-              const text = item.text().trim()
-              updatedOrder.push(text)
-            })
-            .then(() => {
-              expect(initialOrder).to.not.equal(updatedOrder)
-              cy.get('@filter').select(3)
-              cy.get('[data-cy="orgaName"]')
-                .each((item) => {
-                  const text = item.text().trim()
-                  thirdOrder.push(text)
-                })
-                .then(() => {
-                  expect(initialOrder).to.not.equal(thirdOrder)
-                  expect(updatedOrder).to.not.equal(thirdOrder)
-                })
-            })
+        cy.then(() => {
+          expect(initialOrder).to.not.equal(updatedOrder)
+          cy.get('@filter').select(3)
+          cy.get('[data-cy="orgaName"]').each((item) => {
+            const text = item.text().trim()
+            thirdOrder.push(text)
+          })
+          cy.then(() => {
+            expect(initialOrder).to.not.equal(thirdOrder)
+            expect(updatedOrder).to.not.equal(thirdOrder)
+          })
         })
+      })
     })
     it('should navigate to next page with button', () => {
       const page1 = []
@@ -186,21 +183,21 @@ describe('organisations', () => {
         .each(($span) => {
           page1.push($span.text())
         })
-        .then(() => {
-          cy.get('@pagination')
-            .children('div')
-            .first()
-            .find('gn-ui-button')
-            .click()
-          cy.get('@txtProvi')
-            .children('span')
-            .each(($span) => {
-              page2.push($span.text())
-            })
-            .then(() => {
-              expect(page1).to.not.equal(page2)
-            })
+      cy.then(() => {
+        cy.get('@pagination')
+          .children('div')
+          .first()
+          .find('gn-ui-button')
+          .click()
+        cy.get('@txtProvi')
+          .children('span')
+          .each(($span) => {
+            page2.push($span.text())
+          })
+        cy.then(() => {
+          expect(page1).to.not.equal(page2)
         })
+      })
     })
     it('should go to next page with arrow', () => {
       const page1 = []
@@ -210,22 +207,22 @@ describe('organisations', () => {
         .each(($span) => {
           page1.push($span.text())
         })
-        .then(() => {
-          cy.get('@pagination')
-            .children('div')
-            .eq(1)
-            .find('gn-ui-button')
-            .eq(1)
-            .click()
-          cy.get('@txtProvi')
-            .children('span')
-            .each(($span) => {
-              page2.push($span.text())
-            })
-            .then(() => {
-              expect(page1).to.not.equal(page2)
-            })
+      cy.then(() => {
+        cy.get('@pagination')
+          .children('div')
+          .eq(1)
+          .find('gn-ui-button')
+          .eq(1)
+          .click()
+        cy.get('@txtProvi')
+          .children('span')
+          .each(($span) => {
+            page2.push($span.text())
+          })
+        cy.then(() => {
+          expect(page1).to.not.equal(page2)
         })
+      })
     })
     it('should navigate between pages with number typed', () => {
       const page1 = []
@@ -235,17 +232,17 @@ describe('organisations', () => {
         .each(($span) => {
           page1.push($span.text())
         })
-        .then(() => {
-          cy.get('@pagination').children('div').eq(1).find('input').type('2')
-          cy.get('@txtProvi')
-            .children('span')
-            .each(($span) => {
-              page2.push($span.text())
-            })
-            .then(() => {
-              expect(page1).to.not.equal(page2)
-            })
+      cy.then(() => {
+        cy.get('@pagination').children('div').eq(1).find('input').type('2')
+        cy.get('@txtProvi')
+          .children('span')
+          .each(($span) => {
+            page2.push($span.text())
+          })
+        cy.then(() => {
+          expect(page1).to.not.equal(page2)
         })
+      })
     })
   })
 })

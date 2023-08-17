@@ -1,4 +1,4 @@
-import { moduleMetadata, Story, Meta } from '@storybook/angular'
+import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
 import { NavigationButtonComponent } from './navigation-button.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatIconModule } from '@angular/material/icon'
@@ -18,9 +18,9 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [
-        MatIconModule,
         UtilI18nModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+        MatIconModule,
       ],
     }),
   ],
@@ -30,15 +30,14 @@ type ButtonComponentWithContent = NavigationButtonComponent & {
   content: string
 }
 
-const Template: Story<ButtonComponentWithContent> = (args) => ({
-  component: NavigationButtonComponent,
-  props: args,
-  template:
-    '<gn-ui-navigation-button [label]=label [icon]=icon></gn-ui-navigation-button>',
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  label: 'Retours aux résultats',
-  icon: 'navigate_before',
+export const Primary: StoryObj<ButtonComponentWithContent> = {
+  args: {
+    label: 'Retours aux résultats',
+    icon: 'navigate_before',
+  },
+  render: (args) => ({
+    props: args,
+    template:
+      '<gn-ui-navigation-button [label]=label [icon]=icon></gn-ui-navigation-button>',
+  }),
 }

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
 import {
   ActivatedRouteSnapshot,
-  CanActivate,
   Router,
   RouterStateSnapshot,
 } from '@angular/router'
@@ -15,7 +14,7 @@ import { catchError, mapTo, tap } from 'rxjs/operators'
 import { DatafeederFacade } from '../store/datafeeder.facade'
 
 @Injectable({ providedIn: 'root' })
-export class PublicationLockGuard implements CanActivate {
+export class PublicationLockGuard {
   constructor(
     private router: Router,
     private publishService: DataPublishingApiService,

@@ -3,28 +3,40 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
 import { TranslateModule } from '@ngx-translate/core'
 import {
+  applicationConfig,
   componentWrapperDecorator,
   Meta,
   moduleMetadata,
-  Story,
+  StoryObj,
 } from '@storybook/angular'
 import { ChartViewComponent } from './chart-view.component'
 import { ChartComponent, UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
 import { MetadataLinkType } from '@geonetwork-ui/util/shared'
+import { importProvidersFrom } from '@angular/core'
+import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
+import { MatProgressSpinner } from '@angular/material/progress-spinner'
 
 export default {
   title: 'Smart/Dataviz/ChartView',
   component: ChartViewComponent,
   decorators: [
     moduleMetadata({
+      declarations: [
+        DropdownSelectorComponent,
+        LoadingMaskComponent,
+        MatProgressSpinner,
+      ],
       imports: [
         ChartComponent,
-        HttpClientModule,
-        UiDatavizModule,
-        UiWidgetsModule,
-        BrowserAnimationsModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+      ],
+    }),
+    applicationConfig({
+      providers: [
+        importProvidersFrom(UiDatavizModule),
+        importProvidersFrom(BrowserAnimationsModule),
+        importProvidersFrom(HttpClientModule),
       ],
     }),
     componentWrapperDecorator(
@@ -52,21 +64,17 @@ type ChartViewComponentInputs = {
   link: string
 }
 
-const Template: Story<ChartViewComponentInputs> = (
-  args: ChartViewComponentInputs
-) => ({
-  component: ChartViewComponent,
-  props: {
-    link: LINKS[args.link],
+export const Primary: StoryObj<ChartViewComponentInputs> = {
+  args: {
+    link: 'wfs',
   },
-})
-export const Primary = Template.bind({})
-Primary.args = {
-  link: 'wfs',
-}
-Primary.argTypes = {
-  link: {
-    control: 'radio',
-    options: Object.keys(LINKS),
+  argTypes: {
+    link: {
+      control: 'radio',
+      options: Object.keys(LINKS),
+    },
   },
+  render: (args) => ({
+    props: { ...args, link: LINKS[args.link] },
+  }),
 }

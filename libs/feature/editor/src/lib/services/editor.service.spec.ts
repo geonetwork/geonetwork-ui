@@ -5,7 +5,7 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing'
 import { CatalogRecord, RecordStatus } from '@geonetwork-ui/util/types/metadata'
-import { readFirst } from '@nrwl/angular/testing'
+import { readFirst } from '@nx/angular/testing'
 
 const SAMPLE_RECORD: CatalogRecord = {
   uniqueIdentifier: '1234-5678',

@@ -2,7 +2,7 @@ import {
   componentWrapperDecorator,
   Meta,
   moduleMetadata,
-  Story,
+  StoryObj,
 } from '@storybook/angular'
 import { AnchorLinkDirective } from './anchor-link.directive'
 
@@ -50,26 +50,26 @@ export default {
 </div>`
     ),
   ],
-} as Meta
+} as Meta<AnchorLinkDirective>
 
-const Template: Story = (args: { targetId: string }) => ({
-  props: args,
-  template: `
+export const Primary: StoryObj<AnchorLinkDirective> = {
+  args: {
+    targetId: 'header-1',
+  },
+  argTypes: {
+    targetId: {
+      control: 'select',
+      options: ['header-1', 'header-2', 'my-cat', 'invalid-selector'],
+    },
+  },
+  render: (args) => ({
+    props: args,
+    template: `
     <div class='cursor-pointer'
          gnUiAnchorLink="${args.targetId}"
          gnUiAnchorLinkDisabledClass="opacity-50 cursor-default"
          gnUiAnchorLinkEnabledClass="hover:underline">
       A link to ${args.targetId}
     </div>`,
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  targetId: 'header-1',
-}
-Primary.argTypes = {
-  targetId: {
-    control: 'select',
-    options: ['header-1', 'header-2', 'my-cat', 'invalid-selector'],
-  },
+  }),
 }

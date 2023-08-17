@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular'
+import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
 import { FacetBlockComponent } from './facet-block.component'
 import { BLOCK_MODEL_FIXTURE } from '../fixtures'
 import { TranslateModule } from '@ngx-translate/core'
@@ -24,30 +24,26 @@ export default {
   ],
 } as Meta<FacetBlockComponent>
 
-const Template: Story<FacetBlockComponent> = (args: FacetBlockComponent) => ({
-  component: FacetBlockComponent,
-  props: args,
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  collapsed: false,
-  filter: '',
-  model: BLOCK_MODEL_FIXTURE,
-  selectedPaths: [
-    ['tag', 'Austria'],
-    ['tag', 'Denmark'],
-    ['tag', 'Germany'],
-  ],
-}
-Primary.argTypes = {
-  filterChange: {
-    action: 'filterChange',
+export const Primary: StoryObj<FacetBlockComponent> = {
+  args: {
+    collapsed: false,
+    filter: '',
+    model: BLOCK_MODEL_FIXTURE,
+    selectedPaths: [
+      ['tag', 'Austria'],
+      ['tag', 'Denmark'],
+      ['tag', 'Germany'],
+    ],
   },
-  itemChange: {
-    action: 'itemChange',
-  },
-  more: {
-    action: 'more',
+  argTypes: {
+    filterChange: {
+      action: 'filterChange',
+    },
+    itemChange: {
+      action: 'itemChange',
+    },
+    more: {
+      action: 'more',
+    },
   },
 }

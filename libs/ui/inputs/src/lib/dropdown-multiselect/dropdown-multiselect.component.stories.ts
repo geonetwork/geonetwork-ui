@@ -2,18 +2,20 @@ import {
   componentWrapperDecorator,
   Meta,
   moduleMetadata,
-  Story,
+  StoryObj,
 } from '@storybook/angular'
 import { DropdownMultiselectComponent } from './dropdown-multiselect.component'
 import { OverlayModule } from '@angular/cdk/overlay'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { TranslateModule } from '@ngx-translate/core'
+import { MatIcon } from '@angular/material/icon'
 
 export default {
   title: 'Inputs/DropdownMultiselectComponent',
   component: DropdownMultiselectComponent,
   decorators: [
     moduleMetadata({
+      declarations: [MatIcon],
       imports: [OverlayModule, MatCheckboxModule, TranslateModule.forRoot()],
     }),
     componentWrapperDecorator(
@@ -49,45 +51,39 @@ export default {
   ],
 } as Meta<DropdownMultiselectComponent>
 
-const Template: Story<DropdownMultiselectComponent> = (
-  args: DropdownMultiselectComponent
-) => ({
-  component: DropdownMultiselectComponent,
-  props: args,
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  title: 'my title',
-  choices: [
-    {
-      label: 'My Choice 1',
-      value: 'choice1',
+export const Primary: StoryObj<DropdownMultiselectComponent> = {
+  args: {
+    title: 'my title',
+    choices: [
+      {
+        label: 'My Choice 1',
+        value: 'choice1',
+      },
+      {
+        label:
+          'My Choice 2 (very, very, very, very, very, very long text coming up)',
+        value: 'choice2',
+      },
+      {
+        label: 'My Choice 3 (very long text coming up)',
+        value: { name: 'choice3' },
+      },
+      {
+        label: 'My Numerical choice',
+        value: 1234,
+      },
+      {
+        label: 'My boolean choice',
+        value: false,
+      },
+    ],
+    selected: ['choice1'],
+    allowSearch: true,
+    maxRows: 4,
+  },
+  argTypes: {
+    selectValues: {
+      action: 'selectValues',
     },
-    {
-      label:
-        'My Choice 2 (very, very, very, very, very, very long text coming up)',
-      value: 'choice2',
-    },
-    {
-      label: 'My Choice 3 (very long text coming up)',
-      value: { name: 'choice3' },
-    },
-    {
-      label: 'My Numerical choice',
-      value: 1234,
-    },
-    {
-      label: 'My boolean choice',
-      value: false,
-    },
-  ],
-  selected: ['choice1'],
-  allowSearch: true,
-  maxRows: 4,
-}
-Primary.argTypes = {
-  selectValues: {
-    action: 'selectValues',
   },
 }

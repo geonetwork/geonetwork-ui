@@ -2,6 +2,7 @@ export default {
   title: 'Web Components/GnResultsListComponent',
 }
 
+/*
 const Template = ({ template }) => {
   return {
     template,
@@ -55,3 +56,4 @@ AsTitle.args = {
   background-color="#fdfbff"
   layout="TITLE"></gn-results-list>`,
 }
+*/

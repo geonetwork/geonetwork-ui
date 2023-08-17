@@ -118,7 +118,7 @@ export class DataImportValidationMapPanelComponent
     })
   }
 
-  getSecondaryColor(opacity: number = 1) {
+  getSecondaryColor(opacity = 1) {
     const secondaryColor =
       ThemeService.getColor('secondary') || DEFAULT_PRIMARY_COLOR
     const [r, g, b] = Array.from(asArray(secondaryColor))

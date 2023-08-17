@@ -1,29 +1,27 @@
-import { moduleMetadata, Story, Meta } from '@storybook/angular'
+import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
 import { ProgressBarComponent } from './progress-bar.component'
+import { importProvidersFrom } from '@angular/core'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 export default {
   title: 'Widgets/ProgressBarComponent',
   component: ProgressBarComponent,
   decorators: [
-    moduleMetadata({
-      imports: [],
+    applicationConfig({
+      providers: [importProvidersFrom(BrowserAnimationsModule)],
     }),
   ],
 } as Meta<ProgressBarComponent>
 
-const Template: Story<ProgressBarComponent> = (args: ProgressBarComponent) => ({
-  component: ProgressBarComponent,
-  props: args,
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  value: 30,
-  type: 'default',
-}
-Primary.argTypes = {
-  type: {
-    control: 'select',
-    options: ['primary', 'secondary', 'default'],
+export const Primary: StoryObj<ProgressBarComponent> = {
+  args: {
+    value: 30,
+    type: 'default',
+  },
+  argTypes: {
+    type: {
+      control: 'select',
+      options: ['primary', 'secondary', 'default'],
+    },
   },
 }

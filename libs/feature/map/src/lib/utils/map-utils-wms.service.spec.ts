@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing'
-import { readFirst } from '@nrwl/angular/testing'
+import { readFirst } from '@nx/angular/testing'
 
 import { MapUtilsWMSService } from './map-utils-wms.service'
 

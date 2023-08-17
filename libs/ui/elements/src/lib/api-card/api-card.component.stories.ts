@@ -4,27 +4,33 @@ import {
 } from '@geonetwork-ui/util/i18n'
 import { TranslateModule } from '@ngx-translate/core'
 import {
-  moduleMetadata,
-  Story,
-  Meta,
+  applicationConfig,
   componentWrapperDecorator,
+  Meta,
+  moduleMetadata,
+  StoryObj,
 } from '@storybook/angular'
 import { ApiCardComponent } from './api-card.component'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { UiElementsModule } from '../ui-elements.module'
 import { MetadataLinkType } from '@geonetwork-ui/util/shared'
+import { MatIconModule } from '@angular/material/icon'
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { CopyTextButtonComponent } from '@geonetwork-ui/ui/libs/copy-text-button'
 
 export default {
   title: 'Elements/ApiCardComponent',
   component: ApiCardComponent,
   decorators: [
     moduleMetadata({
+      declarations: [CopyTextButtonComponent],
       imports: [
-        UiElementsModule,
-        BrowserAnimationsModule,
         UtilI18nModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+        MatIconModule,
+        MatTooltipModule,
       ],
+    }),
+    applicationConfig({
+      providers: [],
     }),
     componentWrapperDecorator(
       (story) => `<div style="max-width: 800px">${story}</div>`
@@ -32,18 +38,14 @@ export default {
   ],
 } as Meta<ApiCardComponent>
 
-const Template: Story<ApiCardComponent> = (args: ApiCardComponent) => ({
-  component: ApiCardComponent,
-  props: args,
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  link: {
-    protocol: 'OGC:WFS',
-    type: MetadataLinkType.WFS,
-    name: "Scot en cours d'élaboration ou de révision",
-    description: 'A file that contains all roads',
-    url: 'https//roads.com/wfs',
+export const Primary: StoryObj<ApiCardComponent> = {
+  args: {
+    link: {
+      protocol: 'OGC:WFS',
+      type: MetadataLinkType.WFS,
+      name: "Scot en cours d'élaboration ou de révision",
+      description: 'A file that contains all roads',
+      url: 'https//roads.com/wfs',
+    },
   },
 }

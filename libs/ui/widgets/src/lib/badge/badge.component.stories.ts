@@ -1,35 +1,23 @@
-import {
-  componentWrapperDecorator,
-  Meta,
-  moduleMetadata,
-  Story,
-} from '@storybook/angular'
+import { componentWrapperDecorator, Meta, StoryObj } from '@storybook/angular'
 import { BadgeComponent } from './badge.component'
 
 export default {
   title: 'Widgets/BadgeComponent',
   component: BadgeComponent,
-  decorators: [
-    componentWrapperDecorator(BadgeComponent),
-    moduleMetadata({
-      imports: [],
-    }),
-  ],
+  decorators: [componentWrapperDecorator(BadgeComponent)],
 } as Meta<BadgeComponent>
 
 interface BadgeComponentContent extends Partial<BadgeComponent> {
   content: string
 }
-const Template: Story<BadgeComponentContent> = (
-  args: BadgeComponentContent
-) => ({
-  component: BadgeComponent,
-  props: args,
-  template: '<gn-ui-badge>{{content}}</gn-ui-badge>',
-})
 
-export const Primary = Template.bind({})
-Primary.args = {
-  clickable: true,
-  content: 'My custom badge',
+export const Primary: StoryObj<BadgeComponentContent> = {
+  args: {
+    clickable: true,
+    content: 'My custom badge',
+  },
+  render: (args) => ({
+    props: args,
+    template: `<gn-ui-badge>{{content}}</gn-ui-badge>`,
+  }),
 }

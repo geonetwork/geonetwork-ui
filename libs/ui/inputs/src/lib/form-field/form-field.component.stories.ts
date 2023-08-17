@@ -1,18 +1,42 @@
 import {
+  componentWrapperDecorator,
+  Meta,
   moduleMetadata,
   Story,
-  Meta,
-  componentWrapperDecorator,
 } from '@storybook/angular'
 import { FormFieldComponent } from './form-field.component'
 import { TranslateModule } from '@ngx-translate/core'
+import { MatIcon } from '@angular/material/icon'
+import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
+import { FormFieldFileComponent } from './form-field-file/form-field-file.component'
+import { FormFieldTemporalExtentComponent } from './form-field-temporal-extent/form-field-temporal-extent.component'
+import {
+  TRANSLATE_DEFAULT_CONFIG,
+  UtilI18nModule,
+} from '@geonetwork-ui/util/i18n'
+import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component'
 
 export default {
   title: 'Inputs/FormFieldComponent',
   component: FormFieldComponent,
   decorators: [
     moduleMetadata({
-      imports: [TranslateModule.forRoot()],
+      declarations: [
+        MatIcon,
+        FormFieldSimpleComponent,
+        FormFieldSpatialExtentComponent,
+        FormFieldFileComponent,
+        FormFieldTemporalExtentComponent,
+        FormFieldRichComponent,
+      ],
+      imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        UtilI18nModule,
+        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+      ],
     }),
     componentWrapperDecorator(
       (story) => `

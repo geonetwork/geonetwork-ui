@@ -1,4 +1,9 @@
-import { moduleMetadata, Story, Meta } from '@storybook/angular'
+import {
+  applicationConfig,
+  Meta,
+  moduleMetadata,
+  StoryObj,
+} from '@storybook/angular'
 import { DEFAULT_RESULTS_LAYOUT_CONFIG } from './results-layout.config'
 import { ResultsListComponent } from './results-list.component'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
@@ -8,12 +13,12 @@ import { RecordPreviewCardComponent } from '../record-preview-card/record-previe
 import { RecordPreviewTextComponent } from '../record-preview-text/record-preview-text.component'
 import { RecordPreviewTitleComponent } from '../record-preview-title/record-preview-title.component'
 import { ResultsListItemComponent } from '../results-list-item/results-list-item.component'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import { TranslateModule } from '@ngx-translate/core'
+import { importProvidersFrom } from '@angular/core'
 
 export default {
   title: 'Search/ResultsListComponent',
@@ -28,11 +33,12 @@ export default {
         ResultsListItemComponent,
       ],
       imports: [
-        UtilSharedModule,
         UtilI18nModule,
-        UiElementsModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
       ],
+    }),
+    applicationConfig({
+      providers: [importProvidersFrom(UtilSharedModule)],
     }),
   ],
 } as Meta<ResultsListComponent>
@@ -41,24 +47,21 @@ type ResultsListComponentWithKey = ResultsListComponent & {
   layoutConfigKey: string
 }
 
-const Template: Story<ResultsListComponentWithKey> = (
-  args: ResultsListComponentWithKey
-) => ({
-  component: ResultsListComponent,
-  props: {
-    ...args,
-    layoutConfig: DEFAULT_RESULTS_LAYOUT_CONFIG[args.layoutConfigKey],
+export const Primary: StoryObj<ResultsListComponentWithKey> = {
+  args: {
+    records: RECORDS_SUMMARY_FIXTURE,
+    layoutConfigKey: 'CARD',
   },
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  records: RECORDS_SUMMARY_FIXTURE,
-  layoutConfigKey: 'CARD',
-}
-Primary.argTypes = {
-  layoutConfigKey: {
-    control: 'radio',
-    options: Object.keys(DEFAULT_RESULTS_LAYOUT_CONFIG),
+  argTypes: {
+    layoutConfigKey: {
+      control: 'radio',
+      options: Object.keys(DEFAULT_RESULTS_LAYOUT_CONFIG),
+    },
   },
+  render: (args) => ({
+    props: {
+      ...args,
+      layoutConfig: DEFAULT_RESULTS_LAYOUT_CONFIG[args.layoutConfigKey],
+    },
+  }),
 }

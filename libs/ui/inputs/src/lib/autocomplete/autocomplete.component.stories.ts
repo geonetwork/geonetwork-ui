@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular'
+import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
 import { AutocompleteComponent } from './autocomplete.component'
 import { of, throwError } from 'rxjs'
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
@@ -31,31 +31,30 @@ type AutocompleteComponentWithActionResult = AutocompleteComponent & {
   actionThrowsError: boolean
 }
 
-const Template: Story<AutocompleteComponentWithActionResult> = (args) => ({
-  component: AutocompleteComponent,
-  props: {
-    ...args,
-    action: () =>
-      args.actionThrowsError
-        ? throwError(new Error('Something went terribly wrong!'))
-        : of(args.actionResult),
+export const Primary: StoryObj<AutocompleteComponentWithActionResult> = {
+  args: {
+    placeholder: 'Full text search',
+    actionResult: ['Hello', 'world'],
+    actionThrowsError: false,
   },
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  placeholder: 'Full text search',
-  actionResult: ['Hello', 'world'],
-  actionThrowsError: false,
-}
-Primary.argTypes = {
-  itemSelected: {
-    action: 'itemSelected',
+  argTypes: {
+    itemSelected: {
+      action: 'itemSelected',
+    },
+    inputSubmitted: {
+      action: 'inputSubmitted',
+    },
+    actionThrowsError: {
+      type: 'boolean',
+    },
   },
-  inputSubmitted: {
-    action: 'inputSubmitted',
-  },
-  actionThrowsError: {
-    type: 'boolean',
-  },
+  render: (args) => ({
+    props: {
+      ...args,
+      action: () =>
+        args.actionThrowsError
+          ? throwError(new Error('Something went terribly wrong!'))
+          : of(args.actionResult),
+    },
+  }),
 }

@@ -1,28 +1,44 @@
-import { moduleMetadata, Story, Meta } from '@storybook/angular'
+import {
+  applicationConfig,
+  Meta,
+  moduleMetadata,
+  StoryObj,
+} from '@storybook/angular'
 import { RecordPreviewTextComponent } from './record-preview-text.component'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
+import { importProvidersFrom } from '@angular/core'
+import { RecordPreviewTitleComponent } from '../record-preview-title/record-preview-title.component'
+import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
+import { TranslateModule } from '@ngx-translate/core'
+import { HttpClientModule } from '@angular/common/http'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 
 export default {
   title: 'Search/RecordPreviewTextComponent',
   component: RecordPreviewTextComponent,
   decorators: [
     moduleMetadata({
-      imports: [UtilSharedModule, UiElementsModule],
+      declarations: [ThumbnailComponent],
+      imports: [
+        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+        UtilSharedModule,
+        UiDatavizModule,
+      ],
+    }),
+    applicationConfig({
+      providers: [
+        importProvidersFrom(HttpClientModule, BrowserAnimationsModule),
+      ],
     }),
   ],
 } as Meta<RecordPreviewTextComponent>
 
-const Template: Story<RecordPreviewTextComponent> = (
-  args: RecordPreviewTextComponent
-) => ({
-  component: RecordPreviewTextComponent,
-  props: args,
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  record: RECORDS_SUMMARY_FIXTURE[0],
-  linkTarget: '_blank',
+export const Primary: StoryObj<RecordPreviewTitleComponent> = {
+  args: {
+    record: RECORDS_SUMMARY_FIXTURE[0],
+    linkTarget: '_blank',
+  },
 }

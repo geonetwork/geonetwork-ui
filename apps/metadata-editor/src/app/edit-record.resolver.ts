@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core'
-import {
-  ActivatedRouteSnapshot,
-  Resolve,
-  RouterStateSnapshot,
-} from '@angular/router'
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { Observable } from 'rxjs'
 import { EditorService } from '@geonetwork-ui/feature/editor'
 import { CatalogRecord } from '@geonetwork-ui/util/types/metadata'
@@ -11,7 +7,7 @@ import { CatalogRecord } from '@geonetwork-ui/util/types/metadata'
 @Injectable({
   providedIn: 'root',
 })
-export class EditRecordResolver implements Resolve<CatalogRecord> {
+export class EditRecordResolver {
   constructor(private editorService: EditorService) {}
 
   resolve(

@@ -1,5 +1,6 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular'
+import { applicationConfig, Meta, moduleMetadata } from '@storybook/angular'
 import { GnAggregatedRecordsComponent } from './gn-aggregated-records.component'
+import { importProvidersFrom } from '@angular/core'
 import { WebcomponentsModule } from '../../webcomponents.module'
 
 export default {
@@ -8,6 +9,9 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [WebcomponentsModule],
+    }),
+    applicationConfig({
+      providers: [importProvidersFrom(WebcomponentsModule)],
     }),
   ],
   argTypes: {
@@ -21,21 +25,15 @@ export default {
   },
 } as Meta<GnAggregatedRecordsComponent>
 
-const Template: Story<GnAggregatedRecordsComponent> = (
-  args: GnAggregatedRecordsComponent
-) => ({
-  component: GnAggregatedRecordsComponent,
-  props: args,
-})
-
-export const ByKeywords = Template.bind({})
-ByKeywords.args = {
-  aggregationField: 'tag.default',
-  aggregationMaxCount: 20,
-  aggregationQueryString: '+isTemplate:n',
-  apiUrl: 'https://apps.titellus.net/geonetwork/srv/api',
-  primaryColor: '#e73f51',
-  secondaryColor: '#c2e9dc',
-  mainColor: '#212029',
-  backgroundColor: '#fdfbff',
-}
+/*export const ByKeywords: StoryObj<GnAggregatedRecordsComponent> = {
+  args: {
+    aggregationField: 'tag.default',
+    aggregationMaxCount: 20,
+    aggregationQueryString: '+isTemplate:n',
+    apiUrl: 'https://apps.titellus.net/geonetwork/srv/api',
+    primaryColor: '#e73f51',
+    secondaryColor: '#c2e9dc',
+    mainColor: '#212029',
+    backgroundColor: '#fdfbff',
+  },
+}*/

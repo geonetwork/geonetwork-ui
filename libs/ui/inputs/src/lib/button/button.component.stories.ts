@@ -1,4 +1,4 @@
-import { moduleMetadata, Story, Meta } from '@storybook/angular'
+import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
 import { ButtonComponent } from './button.component'
 import { TranslateModule } from '@ngx-translate/core'
 import {
@@ -21,23 +21,22 @@ export default {
 
 type ButtonComponentWithContent = ButtonComponent & { content: string }
 
-const Template: Story<ButtonComponentWithContent> = (args) => ({
-  component: ButtonComponent,
-  props: args,
-  template:
-    '<gn-ui-button [type]="type" [disabled]="disabled" [extraClass]="extraClass">{{content}}</gn-ui-button>',
-})
-
-export const Primary = Template.bind({})
-Primary.args = {
-  type: 'default',
-  disabled: false,
-  extraClass: '',
-  content: 'My button',
-}
-Primary.argTypes = {
-  type: {
-    control: 'radio',
-    options: ['primary', 'secondary', 'default', 'outline', 'light'],
+export const Primary: StoryObj<ButtonComponentWithContent> = {
+  args: {
+    type: 'default',
+    disabled: false,
+    extraClass: '',
+    content: 'My button',
   },
+  argTypes: {
+    type: {
+      control: 'radio',
+      options: ['primary', 'secondary', 'default', 'outline', 'light'],
+    },
+  },
+  render: (args) => ({
+    props: args,
+    template:
+      '<gn-ui-button [type]="type" [disabled]="disabled" [extraClass]="extraClass">{{ content }}</gn-ui-button>',
+  }),
 }
