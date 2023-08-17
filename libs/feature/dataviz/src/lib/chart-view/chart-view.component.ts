@@ -213,16 +213,17 @@ export class ChartViewComponent {
 
   handleError(error: FetchError | Error) {
     if (error instanceof FetchError) {
-      this.error = this.translateService.get(`dataset.error.${error.type}`, {
-        info: error.info,
-      })
+      this.error = this.translateService.instant(
+        `dataset.error.${error.type}`,
+        {
+          info: error.info,
+        }
+      )
       console.warn(error.message)
     } else {
-      this.error = this.translateService.get(error.message) // check that it works...
+      this.error = this.translateService.instant(error.message) // check that it works...
       console.warn(error.stack)
     }
-    // this.error = error.type
-    // this.errorInfo = error.info
     this.loading = false
     this.changeDetector.detectChanges()
   }

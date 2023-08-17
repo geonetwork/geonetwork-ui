@@ -9,9 +9,10 @@ import {
   startWith,
   switchMap,
 } from 'rxjs/operators'
-import { DataItem } from '@geonetwork-ui/data-fetcher'
+import { DataItem, FetchError } from '@geonetwork-ui/data-fetcher'
 import { DataService } from '../service/data.service'
 import { TableItemModel } from '@geonetwork-ui/ui/dataviz'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-table-view',
@@ -41,8 +42,7 @@ export class TableViewComponent {
           }))
         ),
         catchError((error) => {
-          this.error = error.message
-          console.warn(error.stack || error.message)
+          this.handleError(error)
           return of([] as TableItemModel[])
         }),
         finalize(() => {
@@ -54,7 +54,10 @@ export class TableViewComponent {
     shareReplay(1)
   )
 
-  constructor(private dataService: DataService) {}
+  constructor(
+    private dataService: DataService,
+    private translateService: TranslateService
+  ) {}
 
   fetchData(link: MetadataLink): Observable<DataItem[]> {
     return this.dataService
@@ -64,5 +67,22 @@ export class TableViewComponent {
 
   onTableSelect(event) {
     console.log(event)
+  }
+
+  handleError(error: FetchError | Error) {
+    if (error instanceof FetchError) {
+      this.error = this.translateService.instant(
+        `dataset.error.${error.type}`,
+        {
+          info: error.info,
+        }
+      )
+      console.warn(error.message)
+    } else {
+      console.log('normal error')
+      this.error = this.translateService.instant(error.message) // check that it works...
+      console.warn(error.stack)
+    }
+    this.loading = false
   }
 }

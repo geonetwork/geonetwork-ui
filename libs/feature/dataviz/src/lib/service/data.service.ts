@@ -51,13 +51,23 @@ export class DataService {
       new WfsEndpoint(this.proxy.getProxiedUrl(wfsUrl)).isReady()
     ).pipe(
       catchError((error: FetchError | Error) => {
-        if (error.isCrossOriginRelated) {
-          // FIXME
-          throw new Error(`wfs.unreachable.cors`)
-        } else if (error.httpStatus) {
-          throw new Error(`wfs.unreachable.http`)
-        } else {
+        if (error instanceof Error) {
           throw new Error(`wfs.unreachable.unknown`)
+        } else {
+          if (error.type === 'network') {
+            throw new Error(`wfs.unreachable.cors`)
+          }
+          if (error.type === 'http') {
+            throw new Error(`wfs.unreachable.http`)
+          }
+          if (error.type === 'parse') {
+            throw new Error(`wfs.unreachable.parse`)
+          }
+          if (error.type === 'unsupportedType') {
+            throw new Error(`wfs.unreachable.unsupportedType`)
+          } else {
+            throw new Error(`wfs.unreachable.unknown`)
+          }
         }
       }),
       map((endpoint) => {

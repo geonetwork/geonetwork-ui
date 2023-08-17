@@ -11,6 +11,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  NO_ERRORS_SCHEMA,
   Output,
 } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
@@ -123,6 +124,7 @@ describe('ChartViewComponent', () => {
           useClass: DataServiceMock,
         },
       ],
+      schemas: [NO_ERRORS_SCHEMA],
     })
       .overrideComponent(ChartViewComponent, {
         set: {
@@ -310,7 +312,7 @@ describe('ChartViewComponent', () => {
   describe('dataset reader fails', () => {
     beforeEach(fakeAsync(() => {
       dataService.getDataset = () =>
-        throwError(() => new FetchError('http', 'could not open dataset'))
+        throwError(() => new Error('could not open dataset'))
       component.link = { ...LINK_FIXTURES.dataCsv, url: 'http://changed/' }
       flushMicrotasks()
       fixture.detectChanges()
@@ -319,8 +321,7 @@ describe('ChartViewComponent', () => {
       expect(component.loading).toBe(false)
     })
     it('shows error', () => {
-      expect(component.error).toBe('http')
-      expect(component.errorInfo).toBe('could not open dataset')
+      expect(component.error).toBe('could not open dataset')
     })
   })
 
@@ -334,8 +335,7 @@ describe('ChartViewComponent', () => {
       expect(component.loading).toBe(false)
     })
     it('shows error', () => {
-      expect(component.error).toBe('unknown')
-      expect(component.errorInfo).toBe('could not get props')
+      expect(component.error).toBe('dataset.error.unknown')
     })
   })
 
