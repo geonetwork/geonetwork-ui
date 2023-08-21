@@ -59,6 +59,7 @@ export class RecordMetadataComponent {
   lightbox$ = this.facade.metadata$.pipe(
     map((metadata) => metadata?.thumbnailUrl)
   )
+  lightboxInstance: any
 
   constructor(
     public facade: MdViewFacade,
@@ -84,9 +85,7 @@ export class RecordMetadataComponent {
   }
 
   openLightbox(src: string) {
-    const lightboxInstance = basicLightbox.create(`<img src="${src}"/>`)
-    lightboxInstance.show()
-    //returns for test only
-    return lightboxInstance
+    this.lightboxInstance = basicLightbox.create(`<img src="${src}"/>`)
+    this.lightboxInstance.show()
   }
 }

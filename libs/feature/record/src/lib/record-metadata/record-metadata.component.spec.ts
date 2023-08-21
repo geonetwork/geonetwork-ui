@@ -494,9 +494,9 @@ describe('RecordMetadataComponent', () => {
   })
   describe('#openLightbox', () => {
     it('create lightbox on button click', () => {
-      const lightboxInstance = component.openLightbox('http://logo')
+      component.openLightbox('http://logo')
       fixture.detectChanges()
-      expect(lightboxInstance.visible()).toBeTruthy()
+      expect(component.lightboxInstance.visible()).toBeTruthy()
     })
   })
 
