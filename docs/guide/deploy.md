@@ -6,9 +6,10 @@ outline: deep
 
 After building your app, you can deploy it in any HTTP server (e.g Nginx, Apache, Azure Static Website with Blob storage ...).
 
-Move the content of `dist/` folder into your server and adjust your configuration file (if needed).  
+Move the content of `dist/` folder into your server and adjust your configuration file (if needed).
 
-## Reverse Proxy
+## Web Server
+
 Geonetwork-UI apps are using path based routing strategy. HTTP server needs some modifications to make application work
 
 If resource is not available, the request must be redirected to angular's `index.html`.
@@ -33,12 +34,14 @@ server{
 ### Apache
 
 For Apache, you will need to activate the rewrite module :
+
 ```bash
 a2enmod rewrite
 systemctl restart apache2
 ```
 
 Then there's two solutions. You will need to add thoses lines in a `.htaccess` file along the `index.html` or in a directory rule inside your `httpd.conf`
+
 ```bash
 RewriteEngine On
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
