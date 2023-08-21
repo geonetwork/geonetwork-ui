@@ -14,7 +14,12 @@ import TileWMS from 'ol/source/TileWMS'
 import VectorSource from 'ol/source/Vector'
 import { Options, optionsFromCapabilities } from 'ol/source/WMTS'
 import { DragPan, MouseWheelZoom, defaults, Interaction } from 'ol/interaction'
-import { mouseOnly, platformModifierKeyOnly } from 'ol/events/condition'
+import {
+  mouseOnly,
+  noModifierKeys,
+  platformModifierKeyOnly,
+  primaryAction,
+} from 'ol/events/condition'
 import WMTSCapabilities from 'ol/format/WMTSCapabilities'
 import { from, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -220,7 +225,8 @@ export function dragPanCondition(
   if (!dragPanCondition) {
     this.getMap().dispatchEvent('mapmuted')
   }
-  return dragPanCondition
+  // combine the condition with the default DragPan conditions
+  return dragPanCondition && noModifierKeys(event) && primaryAction(event)
 }
 
 export function mouseWheelZoomCondition(

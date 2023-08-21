@@ -26,6 +26,7 @@ import {
   PinchRotate,
 } from 'ol/interaction'
 import { MetadataLinkType } from '@geonetwork-ui/util/shared'
+import MapBrowserEvent from 'ol/MapBrowserEvent'
 
 const wmsUtilsMock = {
   getLayerLonLatBBox: jest.fn(() => of([1.33, 48.81, 4.3, 51.1])),
@@ -262,6 +263,47 @@ describe('MapUtilsService', () => {
       it('with no PinchRotate interaction', () => {
         expect(pinchRotate).toBeFalsy()
       })
+    })
+  })
+
+  describe('#dragPanCondition', () => {
+    let interaction: DragPan
+    beforeEach(() => {
+      interaction = new DragPan()
+      const map = new Map({})
+      map.addInteraction(interaction)
+    })
+
+    it('returns true for a left click without modifier key', () => {
+      const nativeEvent = {
+        type: 'pointer',
+        pointerType: 'mouse',
+        isPrimary: true,
+        button: 0,
+      }
+      const event = new MapBrowserEvent(
+        'pointer',
+        interaction.getMap(),
+        nativeEvent as PointerEvent
+      )
+
+      expect(dragPanCondition.bind(interaction)(event)).toBe(true)
+    })
+    it('returns false for a left click with modifier key', () => {
+      const nativeEvent = {
+        type: 'pointer',
+        pointerType: 'mouse',
+        isPrimary: true,
+        button: 0,
+        shiftKey: true,
+      }
+      const event = new MapBrowserEvent(
+        'pointer',
+        interaction.getMap(),
+        nativeEvent as PointerEvent
+      )
+
+      expect(dragPanCondition.bind(interaction)(event)).toBe(false)
     })
   })
 
