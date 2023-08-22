@@ -253,6 +253,63 @@ describe('ElasticsearchMapper', () => {
               expect.any(Object)
             )
           })
+          describe('link is multilingual (+ name / description)', () => {
+            beforeEach(() => {
+              hit._source.link = [
+                {
+                  descriptionObject: {
+                    default: 'Download this file!',
+                    langfre: 'Téléchargez ce fichier!',
+                  },
+                  nameObject: {
+                    default: 'My file',
+                    langfre: 'Mon fichier',
+                  },
+                  protocol: 'MY-PROTOCOL',
+                  urlObject: {
+                    default: 'https://my.website/services/static/data.csv',
+                    langfre: 'https://my.website/services/static/data.csv',
+                  },
+                },
+              ]
+            })
+            it('parse the link correctly', async () => {
+              const summary = await firstValueFrom(service.toRecord(hit))
+              expect(summary.links).toEqual([
+                {
+                  protocol: 'MY-PROTOCOL',
+                  name: 'My file',
+                  label: 'Download this file!',
+                  description: 'Download this file!',
+                  url: 'https://my.website/services/static/data.csv',
+                  type: MetadataLinkType.OTHER,
+                },
+              ])
+            })
+          })
+          describe('link is multilingual (no name and description)', () => {
+            beforeEach(() => {
+              hit._source.link = [
+                {
+                  protocol: 'MY-PROTOCOL',
+                  urlObject: {
+                    default: 'https://my.website/services/static/data.csv',
+                    langfre: 'https://my.website/services/static/data.csv',
+                  },
+                },
+              ]
+            })
+            it('parse the link correctly', async () => {
+              const summary = await firstValueFrom(service.toRecord(hit))
+              expect(summary.links).toEqual([
+                {
+                  protocol: 'MY-PROTOCOL',
+                  url: 'https://my.website/services/static/data.csv',
+                  type: MetadataLinkType.OTHER,
+                },
+              ])
+            })
+          })
         })
       })
 
