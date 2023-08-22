@@ -32,7 +32,7 @@
   *ngIf="metadata.lineage"
   [title]="'record.metadata.origin' | translate"
 >
-  <p class="mb-5 pt-4 whitespace-pre-line break-words">
+  <p class="mb-5 pt-4 whitespace-pre-line break-words" gnUiLinkify>
     {{ metadata.lineage }}
   </p>
   <div
@@ -66,7 +66,7 @@
     <gn-ui-badge *ngIf="metadata.isOpenData">
       <span translate>record.metadata.isOpenData</span>
     </gn-ui-badge>
-    <span *ngFor="let constraint of metadata.constraints">
+    <span *ngFor="let constraint of metadata.constraints" gnUiLinkify>
       {{ constraint }}
     </span>
     <span class="noUsage" *ngIf="!metadata.constraints">
