@@ -15,7 +15,6 @@ export class GnUiLinkifyDirective implements OnInit {
 
   private processLinks() {
     const container = this.el.nativeElement
-    const linkRegex = /(\bhttps?:\/\/\S+\b)/g
 
     const nodes = Array.from(container.childNodes)
     nodes.forEach((node) => {
