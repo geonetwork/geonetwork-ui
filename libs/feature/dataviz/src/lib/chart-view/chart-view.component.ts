@@ -221,7 +221,7 @@ export class ChartViewComponent {
       )
       console.warn(error.message)
     } else {
-      this.error = this.translateService.instant(error.message) // check that it works...
+      this.error = this.translateService.instant(error.message)
       console.warn(error.stack)
     }
     this.loading = false

@@ -79,8 +79,7 @@ export class TableViewComponent {
       )
       console.warn(error.message)
     } else {
-      console.log('normal error')
-      this.error = this.translateService.instant(error.message) // check that it works...
+      this.error = this.translateService.instant(error.message)
       console.warn(error.stack)
     }
     this.loading = false
