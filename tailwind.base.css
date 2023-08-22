@@ -14,6 +14,10 @@
   .badge-btn {
     @apply flex items-center justify-center px-4 py-1 text-white rounded;
   }
+
+  .card-icon {
+    @apply text-primary opacity-25 group-hover:text-secondary group-hover:opacity-100 transition-colors transition-opacity;
+  }
 }
 
 html {
