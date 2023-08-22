@@ -199,7 +199,20 @@ export class ElasticsearchFieldMapper {
   }
 
   mapLink(sourceLink: SourceWithUnknownProps): MetadataLink | null {
-    const url = getAsUrl(selectField<string>(sourceLink, 'url'))
+    const url = getAsUrl(
+      selectFallback(
+        selectTranslatedField<string>(sourceLink, 'urlObject'),
+        selectField<string>(sourceLink, 'url')
+      )
+    )
+    const name = selectFallback(
+      selectTranslatedField<string>(sourceLink, 'nameObject'),
+      selectField<string>(sourceLink, 'name')
+    )
+    const description = selectFallback(
+      selectTranslatedField<string>(sourceLink, 'descriptionObject'),
+      selectField<string>(sourceLink, 'description')
+    )
     // no url: fail early
     if (url === null) {
       // TODO: collect errors at the record level?
@@ -217,8 +230,6 @@ export class ElasticsearchFieldMapper {
       return null
     }
 
-    const name = selectField<string>(sourceLink, 'name')
-    const description = selectField<string>(sourceLink, 'description')
     const label = description || name
     const protocol = selectField<string>(sourceLink, 'protocol')
 
@@ -226,7 +237,7 @@ export class ElasticsearchFieldMapper {
       protocol && protocol.match(/^WWW:DOWNLOAD:(.+\/.+)$/)
     const mimeType = mimeTypeMatches && mimeTypeMatches[1]
 
-    const type = this.getLinkType(url, protocol)
+    const type = this.getLinkType(url.toString(), protocol)
 
     return {
       url,
