@@ -14,14 +14,15 @@ jest.mock('@camptocamp/ogc-client', () => ({
     isReady() {
       if (this.url.indexOf('error.http') > -1) {
         return Promise.reject({
-          message: 'Something went wrong',
+          type: 'http',
+          info: 'Something went wrong',
           httpStatus: 403,
         })
       }
       if (this.url.indexOf('error.cors') > -1) {
         return Promise.reject({
-          message: 'Something went wrong',
-          isCrossOriginRelated: true,
+          type: 'network',
+          info: 'Something went wrong',
         })
       }
       if (this.url.indexOf('error') > -1) {
@@ -96,28 +97,29 @@ jest.mock('@geonetwork-ui/data-fetcher', () => ({
       new Promise((resolve, reject) => {
         if (url.indexOf('error.parse') > -1) {
           reject({
-            message: 'Something went wrong',
-            parsingFailed: true,
+            type: 'parse',
+            info: 'Something went wrong',
           })
           return
         }
         if (url.indexOf('error.http') > -1) {
           reject({
-            message: 'Something went wrong',
+            type: 'http',
+            info: 'Something went wrong',
             httpStatus: 404,
           })
           return
         }
         if (url.indexOf('error.network') > -1) {
           reject({
-            message: 'Something went wrong',
-            isCrossOriginOrNetworkRelated: true,
+            type: 'network',
+            info: 'Something went wrong',
           })
           return
         }
         if (url.indexOf('error') > -1) {
           reject({
-            message: 'Something went wrong',
+            info: 'Something went wrong',
           })
           return
         }
@@ -427,7 +429,10 @@ describe('DataService', () => {
               })
               .toPromise()
           } catch (e) {
-            expect(e.message).toBe('dataset.error.parse')
+            expect(e).toStrictEqual({
+              info: 'Something went wrong',
+              type: 'parse',
+            })
           }
         })
       })
@@ -442,7 +447,10 @@ describe('DataService', () => {
               })
               .toPromise()
           } catch (e) {
-            expect(e.message).toBe('dataset.error.network')
+            expect(e).toStrictEqual({
+              info: 'Something went wrong',
+              type: 'network',
+            })
           }
         })
       })
@@ -457,7 +465,11 @@ describe('DataService', () => {
               })
               .toPromise()
           } catch (e) {
-            expect(e.message).toBe('dataset.error.http')
+            expect(e).toStrictEqual({
+              info: 'Something went wrong',
+              type: 'http',
+              httpStatus: 404,
+            })
           }
         })
       })
@@ -472,7 +484,9 @@ describe('DataService', () => {
               })
               .toPromise()
           } catch (e) {
-            expect(e.message).toBe('dataset.error.unknown')
+            expect(e).toStrictEqual({
+              info: 'Something went wrong',
+            })
           }
         })
       })

@@ -11,6 +11,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  NO_ERRORS_SCHEMA,
   Output,
 } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
@@ -19,6 +20,7 @@ import { firstValueFrom, of, throwError } from 'rxjs'
 import { By } from '@angular/platform-browser'
 import { LINK_FIXTURES } from '@geonetwork-ui/util/shared/fixtures'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
+import { FetchError } from '@geonetwork-ui/data-fetcher'
 
 @Component({
   selector: 'gn-ui-chart',
@@ -82,7 +84,9 @@ class DatasetReaderMock {
     }
     this.properties = Promise.resolve(properties)
     if (url.indexOf('error-props') > -1) {
-      this.properties = Promise.reject(new Error('could not get props'))
+      this.properties = Promise.reject(
+        new FetchError('unknown', 'could not get props')
+      )
     }
     DatasetReaderMock.instance = this
   }
@@ -120,6 +124,7 @@ describe('ChartViewComponent', () => {
           useClass: DataServiceMock,
         },
       ],
+      schemas: [NO_ERRORS_SCHEMA],
     })
       .overrideComponent(ChartViewComponent, {
         set: {
@@ -330,7 +335,7 @@ describe('ChartViewComponent', () => {
       expect(component.loading).toBe(false)
     })
     it('shows error', () => {
-      expect(component.error).toBe('could not get props')
+      expect(component.error).toBe('dataset.error.unknown')
     })
   })
 

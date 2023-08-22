@@ -28,6 +28,7 @@ marker('wfs.geojsongml.notsupported')
 marker('dataset.error.network')
 marker('dataset.error.http')
 marker('dataset.error.parse')
+marker('dataset.error.unsupportedType')
 marker('dataset.error.unknown')
 
 interface WfsDownloadUrls {
@@ -49,13 +50,24 @@ export class DataService {
     return from(
       new WfsEndpoint(this.proxy.getProxiedUrl(wfsUrl)).isReady()
     ).pipe(
-      catchError((error) => {
-        if (error.isCrossOriginRelated) {
-          throw new Error(`wfs.unreachable.cors`)
-        } else if (error.httpStatus) {
-          throw new Error(`wfs.unreachable.http`)
-        } else {
+      catchError((error: FetchError | Error) => {
+        if (error instanceof Error) {
           throw new Error(`wfs.unreachable.unknown`)
+        } else {
+          if (error.type === 'network') {
+            throw new Error(`wfs.unreachable.cors`)
+          }
+          if (error.type === 'http') {
+            throw new Error(`wfs.unreachable.http`)
+          }
+          if (error.type === 'parse') {
+            throw new Error(`wfs.unreachable.parse`)
+          }
+          if (error.type === 'unsupportedType') {
+            throw new Error(`wfs.unreachable.unsupportedType`)
+          } else {
+            throw new Error(`wfs.unreachable.unknown`)
+          }
         }
       }),
       map((endpoint) => {
@@ -134,21 +146,8 @@ export class DataService {
     }))
   }
 
-  private interpretError(error: FetchError) {
-    if (error.isCrossOriginOrNetworkRelated) {
-      return throwError(() => new Error('dataset.error.network'))
-    } else if (error.httpStatus) {
-      return throwError(() => new Error('dataset.error.http'))
-    } else if (error.parsingFailed) {
-      return throwError(() => new Error('dataset.error.parse'))
-    } else {
-      return throwError(() => new Error('dataset.error.unknown'))
-    }
-  }
-
   readAsGeoJson(link: MetadataLink): Observable<FeatureCollection> {
     return this.getDataset(link).pipe(
-      catchError(this.interpretError),
       switchMap((dataset) => dataset.selectAll().read()),
       map((features) => ({
         type: 'FeatureCollection',
@@ -174,8 +173,7 @@ export class DataService {
           if (url === null) {
             throw new Error('wfs.geojsongml.notsupported')
           }
-        }),
-        catchError(this.interpretError)
+        })
       )
     } else if (link.type === MetadataLinkType.DOWNLOAD) {
       const format = getFileFormat(link)
@@ -183,14 +181,10 @@ export class DataService {
         SupportedTypes.indexOf(format as any) > -1
           ? (format as SupportedType)
           : undefined
-      return from(openDataset(linkUrl, supportedType)).pipe(
-        catchError(this.interpretError)
-      )
+      return from(openDataset(linkUrl, supportedType)).pipe()
     } else if (link.type === MetadataLinkType.ESRI_REST) {
       const url = this.getDownloadUrlFromEsriRest(linkUrl, 'geojson')
-      return from(openDataset(url, 'geojson')).pipe(
-        catchError(this.interpretError)
-      )
+      return from(openDataset(url, 'geojson')).pipe()
     }
     return throwError('protocol not supported')
   }

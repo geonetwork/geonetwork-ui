@@ -20,6 +20,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 import { DataService } from '../service/data.service'
 import { LINK_FIXTURES } from '@geonetwork-ui/util/shared/fixtures'
+import { FetchError } from '@geonetwork-ui/data-fetcher'
 
 const SAMPLE_DATA_ITEMS = [
   { type: 'Feature', properties: { id: 1 } },
@@ -33,7 +34,7 @@ class DatasetReaderMock {
 class DataServiceMock {
   getDataset = jest.fn(({ url }) =>
     url.indexOf('error') > -1
-      ? throwError(new Error('data loading error'))
+      ? throwError(new FetchError('unknown', 'data loading error'))
       : of(new DatasetReaderMock())
   )
 }
@@ -156,17 +157,27 @@ describe('TableViewComponent', () => {
   })
   describe('error when loading data', () => {
     beforeEach(fakeAsync(() => {
-      component.link = {
-        url: 'http://abcd.com/wfs/error',
-        name: 'featuretype',
-        protocol: 'OGC:WFS',
-        type: MetadataLinkType.WFS,
-      }
+      dataService.getDataset = () =>
+        throwError(() => new Error('data loading error'))
+      component.link = { ...LINK_FIXTURES.dataCsv, url: 'http://changed/' }
       flushMicrotasks()
       fixture.detectChanges()
     }))
     it('shows an error warning', () => {
       expect(component.error).toEqual('data loading error')
+    })
+  })
+  describe('FetchError when loading data', () => {
+    beforeEach(fakeAsync(() => {
+      component.link = {
+        url: 'http://abcd.com/wfs/error',
+        type: MetadataLinkType.DOWNLOAD,
+      }
+      flushMicrotasks()
+      fixture.detectChanges()
+    }))
+    it('shows an error warning', () => {
+      expect(component.error).toEqual('dataset.error.unknown')
     })
   })
 })

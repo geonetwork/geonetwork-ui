@@ -3,48 +3,30 @@ import type { Feature } from 'geojson'
 export type DataItem = Feature
 
 export class FetchError {
+  message: string
+  stack = null
+
   constructor(
-    public message,
-    public httpStatus = 0,
-    public isCrossOriginOrNetworkRelated = false,
-    public parsingFailed = false,
-    public contentTypeError = false
-  ) {}
+    public type: 'http' | 'network' | 'parse' | 'unsupportedType' | 'unknown',
+    public info: string,
+    public httpStatus = 0
+  ) {
+    this.message = `An error happened in the data fetcher, type: ${type}, info: ${info}`
+  }
   static http(code: number) {
-    return new FetchError('Received HTTP error', code)
+    return new FetchError('http', '', code)
   }
   static corsOrNetwork(message: string) {
-    return new FetchError(
-      `Data could not be fetched (probably because of CORS limitations or a network error); error message is: ${message}`,
-      0,
-      true
-    )
+    return new FetchError('network', message, 0)
   }
   static parsingFailed(info: string) {
-    return new FetchError(
-      `The received file could not be parsed for the following reason: ${info}`,
-      0,
-      false,
-      true
-    )
+    return new FetchError('parse', info, 0)
   }
   static unsupportedType(mimeType: string) {
-    return new FetchError(
-      `The following content type is unsupported: ${mimeType}`,
-      0,
-      false,
-      false,
-      true
-    )
+    return new FetchError('unsupportedType', mimeType, 0)
   }
   static unknownType() {
-    return new FetchError(
-      'The content type could not be inferred and was not hinted, abandoning',
-      0,
-      false,
-      false,
-      true
-    )
+    return new FetchError('unknown', '', 0)
   }
 }
 
