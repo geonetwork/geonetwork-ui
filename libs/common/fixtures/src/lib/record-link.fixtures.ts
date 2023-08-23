@@ -1,4 +1,4 @@
-import { deepFreeze } from '../utils'
+import { deepFreeze } from './utils/freeze'
 
 export const RECORD_LINK_FIXTURE_WMS = deepFreeze({
   description: 'Lieu de surveillance (point)',

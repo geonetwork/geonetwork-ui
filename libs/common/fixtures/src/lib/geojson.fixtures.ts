@@ -1,5 +1,5 @@
 import type { FeatureCollection } from 'geojson'
-import { deepFreeze } from '../utils'
+import { deepFreeze } from './utils/freeze'
 
 export const FEATURE_COLLECTION_POLYGON_FIXTURE_4326: FeatureCollection =
   deepFreeze({

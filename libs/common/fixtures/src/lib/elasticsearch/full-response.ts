@@ -1,4 +1,4 @@
-import { deepFreeze } from '../../utils'
+import { deepFreeze } from '../utils/freeze'
 
 export const ES_FIXTURE_FULL_RESPONSE = deepFreeze({
   took: 1,

@@ -1,4 +1,4 @@
-import { deepFreeze } from '../../utils'
+import { deepFreeze } from '../utils/freeze'
 
 export const ES_FIXTURE_AGGS_REQUEST = deepFreeze({
   'tag.default': { terms: { field: 'tag.default', include: '.*', size: 10 } },

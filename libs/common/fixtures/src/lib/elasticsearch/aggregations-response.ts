@@ -1,4 +1,4 @@
-import { deepFreeze } from '../../utils'
+import { deepFreeze } from '../utils/freeze'
 
 const BUCKETS = deepFreeze([
   { key: 'Hungary', doc_count: 20 },
@@ -46,6 +46,23 @@ export const ES_FIXTURE_AGGS_RESPONSE = deepFreeze({
       '2.0E7': { key: 20000000, doc_count: 9 },
       '6.0E7': { key: 60000000, doc_count: 8 },
     },
+  },
+  resolutionScaleDenominatorArray: {
+    meta: { collapsed: true },
+    buckets: [
+      { key: 0, doc_count: 2 },
+      { key: 10000, doc_count: 291 },
+      { key: 20000, doc_count: 1 },
+      { key: 50000, doc_count: 9 },
+      { key: 100000, doc_count: 135 },
+      { key: 250000, doc_count: 54 },
+      { key: 1000000, doc_count: 55 },
+      { key: 2000000, doc_count: 3 },
+      { key: 3000000, doc_count: 10 },
+      { key: 10000000, doc_count: 93 },
+      { key: 20000000, doc_count: 9 },
+      { key: 60000000, doc_count: 8 },
+    ],
   },
 })
 

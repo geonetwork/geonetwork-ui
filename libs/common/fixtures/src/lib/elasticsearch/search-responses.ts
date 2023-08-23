@@ -1,4 +1,4 @@
-import { deepFreeze } from '../../utils'
+import { deepFreeze } from '../utils/freeze'
 
 export const aggsOnly = deepFreeze({
   took: 7,
@@ -61,7 +61,7 @@ export const aggsOnly = deepFreeze({
   },
 })
 
-export const hitsOnly: unknown = deepFreeze({
+export const hitsOnly = deepFreeze({
   hits: {
     max_score: 1,
     hits: [

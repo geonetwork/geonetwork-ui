@@ -1,4 +1,4 @@
-import { deepFreeze } from '../../utils'
+import { deepFreeze } from '../utils/freeze'
 
 export const ES_FIXTURE_REQUEST_WITH_AGGS = deepFreeze({
   from: 0,

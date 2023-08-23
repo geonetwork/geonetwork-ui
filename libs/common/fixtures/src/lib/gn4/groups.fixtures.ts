@@ -60,14 +60,14 @@ export const GROUPS_FIXTURE = deepFreeze([
   },
   {
     logo: 'ifremer.png',
-    website: 'www.ifremer.ch',
+    website: 'www.ifremer.fr',
     defaultCategory: null,
     allowedCategories: [],
     enableAllowedCategories: false,
     id: 348385324,
-    email: 'ifremer.ifremer@ifremer.admin.ch',
+    email: 'ifremer.ifremer@ifremer.admin.fr',
     referrer: null,
-    description: '',
+    description: "Institut français de recherche pour l'exploitation de la mer",
     name: 'Ifremer',
     label: {
       ger: 'Ifremer',
