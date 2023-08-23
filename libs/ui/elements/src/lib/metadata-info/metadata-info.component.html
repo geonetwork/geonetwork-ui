@@ -8,7 +8,7 @@
   <gn-ui-content-ghost ghostClass="h-32" [showContent]="fieldReady('abstract')">
     <p
       class="whitespace-pre-line break-words"
-      [innerHTML]="metadata.abstract | safe: 'html'"
+      [innerHTML]="getAbstract() | safe: 'html'"
     ></p>
   </gn-ui-content-ghost>
 </div>

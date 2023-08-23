@@ -1,16 +1,13 @@
 /* eslint-disable @angular-eslint/directive-selector */
-import { Directive, ElementRef, Renderer2, OnInit } from '@angular/core'
+import { Directive, ElementRef, Renderer2, AfterViewInit } from '@angular/core'
 
 @Directive({
   selector: '[gnUiLinkify]',
 })
-export class GnUiLinkifyDirective implements OnInit {
+export class GnUiLinkifyDirective implements AfterViewInit {
   constructor(private el: ElementRef, private renderer: Renderer2) {}
-
-  ngOnInit() {
-    setTimeout(() => {
-      this.processLinks()
-    }, 0)
+  ngAfterViewInit() {
+    this.processLinks()
   }
 
   private processLinks() {

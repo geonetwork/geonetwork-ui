@@ -30,4 +30,11 @@ export class MetadataInfoComponent {
   onKeywordClick(keyword: string) {
     this.keyword.emit(keyword)
   }
+
+  getAbstract() {
+    return this.metadata.abstract.replace(/(\bhttps?:\/\/\S+\b)/g, (match) => {
+      return `<a href="${match}" target="_blank"
+                  class="text-primary cursor-pointer hover:underline">${match} <mat-icon class="mat-icon !w-[12px] !h-[14px] !text-[14px] opacity-75 material-icons">open_in_new</mat-icon></a>`
+    })
+  }
 }
