@@ -1,6 +1,6 @@
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
-import { DatavizConfigurationModel } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
+import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/dataviz-configuration.model'
 import { createAction, props } from '@ngrx/store'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
 export const loadFullMetadata = createAction(
   '[Metadata view] Load full metadata',
@@ -9,12 +9,12 @@ export const loadFullMetadata = createAction(
 
 export const setIncompleteMetadata = createAction(
   '[Metadata view] Set incomplete metadata',
-  props<{ incomplete: MetadataRecord }>()
+  props<{ incomplete: Partial<CatalogRecord> }>()
 )
 
 export const loadFullSuccess = createAction(
   '[Metadata view] Load full success',
-  props<{ full: MetadataRecord }>()
+  props<{ full: CatalogRecord }>()
 )
 
 export const loadFullFailure = createAction(
@@ -24,7 +24,7 @@ export const loadFullFailure = createAction(
 
 export const setRelated = createAction(
   '[Metadata view] Set related records',
-  props<{ related: MetadataRecord[] }>()
+  props<{ related: CatalogRecord[] }>()
 )
 
 export const setChartConfig = createAction(

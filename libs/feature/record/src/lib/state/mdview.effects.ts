@@ -1,42 +1,28 @@
 import { Injectable } from '@angular/core'
-import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
-import { ElasticsearchMapper } from '@geonetwork-ui/feature/search'
-import {
-  ElasticsearchService,
-  EsSearchResponse,
-} from '@geonetwork-ui/util/shared'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { of } from 'rxjs'
 import { catchError, map, switchMap } from 'rxjs/operators'
 import * as MdViewActions from './mdview.actions'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
 
 @Injectable()
 export class MdViewEffects {
   constructor(
     private actions$: Actions,
-    private searchService: SearchApiService,
-    private esService: ElasticsearchService,
-    private esMapper: ElasticsearchMapper
+    private recordsRepository: RecordsRepositoryInterface
   ) {}
 
   loadFull$ = createEffect(() =>
     this.actions$.pipe(
       ofType(MdViewActions.loadFullMetadata),
       switchMap(({ uuid }) =>
-        this.searchService.search(
-          'bucket',
-          JSON.stringify(this.esService.getMetadataByIdPayload(uuid))
-        )
+        this.recordsRepository.getByUniqueIdentifier(uuid)
       ),
-      switchMap((response: EsSearchResponse) =>
-        this.esMapper.toRecords(response)
-      ),
-      map((records) => {
-        const full = records[0]
-        if (records.length === 0) {
+      map((record) => {
+        if (record === null) {
           return MdViewActions.loadFullFailure({ notFound: true })
         }
-        return MdViewActions.loadFullSuccess({ full })
+        return MdViewActions.loadFullSuccess({ full: record })
       }),
       catchError((error) =>
         of(MdViewActions.loadFullFailure({ otherError: error.message }))
@@ -47,17 +33,7 @@ export class MdViewEffects {
   loadRelatedRecords$ = createEffect(() =>
     this.actions$.pipe(
       ofType(MdViewActions.loadFullSuccess),
-      switchMap(({ full }) =>
-        this.searchService.search(
-          'bucket',
-          JSON.stringify(
-            this.esService.getRelatedRecordPayload(full.title, full.uuid, 3)
-          )
-        )
-      ),
-      switchMap((response: EsSearchResponse) =>
-        this.esMapper.toRecords(response)
-      ),
+      switchMap(({ full }) => this.recordsRepository.getSimilarRecords(full)),
       map((related) => {
         return MdViewActions.setRelated({ related })
       }),

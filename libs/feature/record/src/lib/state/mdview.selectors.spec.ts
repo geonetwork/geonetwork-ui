@@ -3,8 +3,7 @@ import * as MdViewSelectors from './mdview.selectors'
 const relatedRecord = {
   title: 'title',
   id: 'id',
-  uuid: 'uuid',
-  metadataUrl: 'url',
+  uniqueIdentifier: 'uuid',
 }
 
 const chartConfigMock = {
@@ -20,7 +19,7 @@ describe('MdView Selectors', () => {
   beforeEach(() => {
     state = {
       metadata: {
-        uuid: '321321321321',
+        uniqueIdentifier: '321321321321',
         title: 'title',
         abstract: 'abstract',
       },

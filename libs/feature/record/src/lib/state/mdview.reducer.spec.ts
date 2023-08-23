@@ -1,13 +1,6 @@
-import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 import * as MdViewActions from './mdview.actions'
 import { initialMdviewState, reducer } from './mdview.reducer'
-
-const relatedRecord = {
-  title: 'title',
-  id: 'id',
-  uuid: 'uuid',
-  metadataUrl: 'url',
-}
+import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 
 const chartConfigMock = {
   aggregation: 'sum',
@@ -34,7 +27,9 @@ describe('MdView Reducer', () => {
   describe('loadFullMetadata', () => {
     let action
     beforeEach(() => {
-      action = MdViewActions.loadFullMetadata({ uuid: '123132132132132132' })
+      action = MdViewActions.loadFullMetadata({
+        uniqueIdentifier: '123132132132132132',
+      })
     })
     it('store the loading state', () => {
       const state = reducer(withErrorMdViewState, action)
@@ -48,8 +43,12 @@ describe('MdView Reducer', () => {
   describe('setIncompleteMetadata', () => {
     let action
     beforeEach(() => {
+      const { uniqueIdentifier, title, ...rest } = DATASET_RECORDS[0]
       action = MdViewActions.setIncompleteMetadata({
-        incomplete: RECORDS_SUMMARY_FIXTURE[0],
+        incomplete: {
+          uniqueIdentifier,
+          title,
+        },
       })
     })
     it('saves incomplete metadata', () => {
@@ -57,7 +56,11 @@ describe('MdView Reducer', () => {
       expect(state).toEqual({
         ...withErrorMdViewState,
         error: null,
-        metadata: RECORDS_SUMMARY_FIXTURE[0],
+        metadata: {
+          title:
+            'A very interesting dataset (un jeu de données très intéressant)',
+          uniqueIdentifier: 'my-dataset-001',
+        },
       })
     })
   })
@@ -65,7 +68,7 @@ describe('MdView Reducer', () => {
     let action
     beforeEach(() => {
       action = MdViewActions.loadFullSuccess({
-        full: RECORDS_SUMMARY_FIXTURE[0],
+        full: DATASET_RECORDS[0],
       })
     })
     it('saves full metadata ', () => {
@@ -77,7 +80,7 @@ describe('MdView Reducer', () => {
         ...withErrorMdViewState,
         error: null,
         loadingFull: false,
-        metadata: RECORDS_SUMMARY_FIXTURE[0],
+        metadata: DATASET_RECORDS[0],
       })
     })
   })
@@ -105,14 +108,14 @@ describe('MdView Reducer', () => {
     let action
     beforeEach(() => {
       action = MdViewActions.setRelated({
-        related: [relatedRecord],
+        related: [DATASET_RECORDS[1]],
       })
     })
     it('set related records', () => {
       const state = reducer({ ...initialMdviewState }, action)
       expect(state).toEqual({
         ...initialMdviewState,
-        related: [relatedRecord],
+        related: [DATASET_RECORDS[1]],
       })
     })
   })
@@ -140,9 +143,9 @@ describe('MdView Reducer', () => {
       const state = reducer(
         {
           ...initialMdviewState,
-          related: [relatedRecord],
+          related: [DATASET_RECORDS[1]],
           loadingFull: false,
-          metadata: RECORDS_SUMMARY_FIXTURE[0],
+          metadata: DATASET_RECORDS[0],
         },
         action
       )
