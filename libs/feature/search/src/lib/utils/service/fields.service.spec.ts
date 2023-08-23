@@ -1,16 +1,14 @@
 import { TestBed } from '@angular/core/testing'
 import { FieldsService } from './fields.service'
 import { EMPTY, lastValueFrom, of } from 'rxjs'
-import {
-  SearchApiService,
-  ToolsApiService,
-} from '@geonetwork-ui/data-access/gn4'
-import { ElasticsearchService } from '@geonetwork-ui/util/shared'
+import { ToolsApiService } from '@geonetwork-ui/data-access/gn4'
 import { TranslateModule } from '@ngx-translate/core'
-import { OrganisationsServiceInterface } from '@geonetwork-ui/feature/catalog'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { ElasticsearchService } from '@geonetwork-ui/api/repository/gn4'
 
-class SearchApiServiceMock {
-  search = jest.fn(() => EMPTY)
+class RecordsRepositoryMock {
+  aggregate = jest.fn(() => EMPTY)
 }
 class ElasticsearchServiceMock {
   getSearchRequestBody = jest.fn()
@@ -31,15 +29,14 @@ class OrganisationsServiceMock {
 
 describe('FieldsService', () => {
   let service: FieldsService
-  let searchApiService: SearchApiService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       providers: [
         {
-          provide: SearchApiService,
-          useClass: SearchApiServiceMock,
+          provide: RecordsRepositoryInterface,
+          useClass: RecordsRepositoryMock,
         },
         {
           provide: ElasticsearchService,
@@ -50,12 +47,11 @@ describe('FieldsService', () => {
           useClass: ToolsApiServiceMock,
         },
         {
-          provide: OrganisationsServiceInterface,
+          provide: OrganizationsServiceInterface,
           useClass: OrganisationsServiceMock,
         },
       ],
     })
-    searchApiService = TestBed.inject(SearchApiService)
   })
 
   it('should be created', () => {

@@ -1,8 +1,4 @@
-import {
-  SearchApiService,
-  ToolsApiService,
-} from '@geonetwork-ui/data-access/gn4'
-import { ElasticsearchService, Organisation } from '@geonetwork-ui/util/shared'
+import { ToolsApiService } from '@geonetwork-ui/data-access/gn4'
 import { lastValueFrom, of } from 'rxjs'
 import {
   AbstractSearchField,
@@ -16,118 +12,110 @@ import {
 import { TestBed } from '@angular/core/testing'
 import { Injector } from '@angular/core'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { OrganisationsServiceInterface } from '@geonetwork-ui/feature/catalog'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { Organization } from '@geonetwork-ui/common/domain/record'
+import { ElasticsearchService } from '@geonetwork-ui/api/repository/gn4'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
 
-class SearchApiServiceMock {
-  search = jest.fn((bucketName, payloadString) => {
-    const payload = JSON.parse(payloadString)
-    const aggName = Object.keys(payload.aggregations)[0]
+class ElasticsearchServiceMock {
+  registerRuntimeField = jest.fn()
+}
+
+class RecordsRepositoryMock {
+  aggregate = jest.fn((aggregations) => {
+    const aggName = Object.keys(aggregations)[0]
     if (aggName.startsWith('is'))
       return of({
-        aggregations: {
-          isSpatial: {
-            buckets: [
-              {
-                key: 'yes',
-                doc_count: 5,
-              },
-              {
-                key: 'no',
-                doc_count: 3,
-              },
-            ],
-          },
+        [aggName]: {
+          buckets: [
+            {
+              term: 'yes',
+              count: 5,
+            },
+            {
+              term: 'no',
+              count: 3,
+            },
+          ],
         },
       })
     if (aggName === 'license')
       return of({
-        aggregations: {
-          license: {
-            buckets: [
-              {
-                key: 'etalab',
-                doc_count: 2359,
-              },
-              {
-                key: 'unknown',
-                doc_count: 2278,
-              },
-              {
-                key: 'etalab-v2',
-                doc_count: 1489,
-              },
-              {
-                key: 'odbl',
-                doc_count: 446,
-              },
-              {
-                key: 'pddl',
-                doc_count: 300,
-              },
-              {
-                key: 'cc-by',
-                doc_count: 32,
-              },
-              {
-                key: 'odc-by',
-                doc_count: 4,
-              },
-            ],
-          },
+        license: {
+          buckets: [
+            {
+              term: 'etalab',
+              count: 2359,
+            },
+            {
+              term: 'unknown',
+              count: 2278,
+            },
+            {
+              term: 'etalab-v2',
+              count: 1489,
+            },
+            {
+              term: 'odbl',
+              count: 446,
+            },
+            {
+              term: 'pddl',
+              count: 300,
+            },
+            {
+              term: 'cc-by',
+              count: 32,
+            },
+            {
+              term: 'odc-by',
+              count: 4,
+            },
+          ],
         },
       })
     if (aggName === 'groupOwner')
       return of({
-        aggregations: {
-          groupOwner: {
-            buckets: [
-              {
-                key: '20',
-                doc_count: 2359,
-              },
-              {
-                key: '10',
-                doc_count: 2278,
-              },
-              {
-                key: '30',
-                doc_count: 1489,
-              },
-            ],
-          },
-        },
-      })
-    return of({
-      aggregations: {
-        [aggName]: {
+        groupOwner: {
           buckets: [
             {
-              key: 'First value',
-              doc_count: 5,
+              term: '20',
+              count: 2359,
             },
             {
-              key: 'Second value',
-              doc_count: 3,
+              term: '10',
+              count: 2278,
             },
             {
-              key: 'Third value',
-              doc_count: 12,
-            },
-            {
-              key: 'Fourth value',
-              doc_count: 1,
+              term: '30',
+              count: 1489,
             },
           ],
         },
+      })
+    return of({
+      [aggName]: {
+        buckets: [
+          {
+            term: 'First value',
+            count: 5,
+          },
+          {
+            term: 'Second value',
+            count: 3,
+          },
+          {
+            term: 'Third value',
+            count: 12,
+          },
+          {
+            term: 'Fourth value',
+            count: 1,
+          },
+        ],
       },
     })
   })
-}
-class ElasticsearchServiceMock {
-  getSearchRequestBody = jest.fn((aggregations) => ({
-    aggregations,
-  }))
-  registerRuntimeField = jest.fn()
 }
 
 class ToolsApiServiceMock {
@@ -140,20 +128,17 @@ class ToolsApiServiceMock {
   )
 }
 
-const sampleOrgs: Organisation[] = [
+const sampleOrgs: Organization[] = [
   {
-    email: 'christian.meier@bakom.admin.ch',
     name: 'Office fédéral de la communication OFCOM',
     recordCount: 10,
   },
   {
-    email: 'rolf.giezendanner@are.admin.ch',
     name: 'Office fédéral du développement territorial ARE',
     description: 'A description for ARE',
     recordCount: 20,
   },
   {
-    email: 'reto.jau@koeniz.ch',
     name: 'Municipalité de Köniz',
     description: 'A description for Köniz Municipality',
     recordCount: 30,
@@ -178,7 +163,7 @@ class TranslateServiceMock {
 describe('search fields implementations', () => {
   let searchField: AbstractSearchField
   let esService: ElasticsearchService
-  let searchApiService: SearchApiService
+  let repository: RecordsRepositoryInterface
   let toolsService: ToolsApiService
   let injector: Injector
 
@@ -187,8 +172,8 @@ describe('search fields implementations', () => {
       imports: [TranslateModule.forRoot()],
       providers: [
         {
-          provide: SearchApiService,
-          useClass: SearchApiServiceMock,
+          provide: RecordsRepositoryInterface,
+          useClass: RecordsRepositoryMock,
         },
         {
           provide: ElasticsearchService,
@@ -203,13 +188,13 @@ describe('search fields implementations', () => {
           useClass: TranslateServiceMock,
         },
         {
-          provide: OrganisationsServiceInterface,
+          provide: OrganizationsServiceInterface,
           useClass: OrganisationsServiceMock,
         },
       ],
     })
     esService = TestBed.inject(ElasticsearchService)
-    searchApiService = TestBed.inject(SearchApiService)
+    repository = TestBed.inject(RecordsRepositoryInterface)
     toolsService = TestBed.inject(ToolsApiService)
     injector = TestBed.inject(Injector)
   })
@@ -224,22 +209,14 @@ describe('search fields implementations', () => {
         values = await lastValueFrom(searchField.getAvailableValues())
       })
       it('calls search with a simple terms aggregation', () => {
-        expect(searchApiService.search).toHaveBeenCalledWith(
-          expect.any(String),
-          JSON.stringify({
-            aggregations: {
-              myField: {
-                terms: {
-                  size: 1000,
-                  field: 'myField',
-                  order: {
-                    _key: 'desc',
-                  },
-                },
-              },
-            },
-          })
-        )
+        expect(repository.aggregate).toHaveBeenCalledWith({
+          myField: {
+            type: 'terms',
+            limit: 1000,
+            field: 'myField',
+            sort: ['desc', 'key'],
+          },
+        })
       })
       it('returns a list of values from the buckets', () => {
         expect(values).toEqual([
@@ -323,20 +300,14 @@ describe('search fields implementations', () => {
         values = await lastValueFrom(searchField.getAvailableValues())
       })
       it('calls search with a simple unsorted terms', () => {
-        expect(searchApiService.search).toHaveBeenCalledWith(
-          expect.any(String),
-          JSON.stringify({
-            aggregations: {
-              'cl_topic.key': {
-                terms: {
-                  size: 1000,
-                  field: 'cl_topic.key',
-                  order: { _key: 'asc' },
-                },
-              },
-            },
-          })
-        )
+        expect(repository.aggregate).toHaveBeenCalledWith({
+          'cl_topic.key': {
+            type: 'terms',
+            limit: 1000,
+            field: 'cl_topic.key',
+            sort: ['asc', 'key'],
+          },
+        })
       })
       it('returns a list of values sorted by translated labels', () => {
         expect(values).toEqual([
@@ -465,22 +436,14 @@ describe('search fields implementations', () => {
         values = await lastValueFrom(searchField.getAvailableValues())
       })
       it('orders results by descending count', () => {
-        expect(searchApiService.search).toHaveBeenCalledWith(
-          expect.any(String),
-          JSON.stringify({
-            aggregations: {
-              license: {
-                terms: {
-                  size: 10,
-                  field: 'license',
-                  order: {
-                    _count: 'desc',
-                  },
-                },
-              },
-            },
-          })
-        )
+        expect(repository.aggregate).toHaveBeenCalledWith({
+          license: {
+            type: 'terms',
+            limit: 10,
+            field: 'license',
+            sort: ['desc', 'count'],
+          },
+        })
       })
       it('returns the available licenses, order by descending count', () => {
         expect(values).toEqual([

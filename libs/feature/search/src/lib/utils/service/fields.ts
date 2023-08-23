@@ -1,14 +1,19 @@
-import { combineLatest, firstValueFrom, Observable, of, switchMap } from 'rxjs'
-import { ElasticsearchService, SearchFilters } from '@geonetwork-ui/util/shared'
-import {
-  SearchApiService,
-  ToolsApiService,
-} from '@geonetwork-ui/data-access/gn4'
+import { firstValueFrom, Observable, of, switchMap } from 'rxjs'
+import { ToolsApiService } from '@geonetwork-ui/data-access/gn4'
 import { map, shareReplay } from 'rxjs/operators'
 import { Injector } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { OrganisationsServiceInterface } from '@geonetwork-ui/feature/catalog'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import {
+  AggregationBuckets,
+  AggregationsParams,
+  FieldFilterByExpression,
+  FieldFilters,
+  TermBucket,
+} from '@geonetwork-ui/common/domain/search'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { ElasticsearchService } from '@geonetwork-ui/api/repository/gn4'
 
 export type FieldValue = string | number
 export interface FieldAvailableValue {
@@ -18,13 +23,15 @@ export interface FieldAvailableValue {
 
 export abstract class AbstractSearchField {
   abstract getAvailableValues(): Observable<FieldAvailableValue[]>
-  abstract getFiltersForValues(values: FieldValue[]): Observable<SearchFilters>
-  abstract getValuesForFilter(filters: SearchFilters): Observable<FieldValue[]>
+  abstract getFiltersForValues(values: FieldValue[]): Observable<FieldFilters>
+  abstract getValuesForFilter(filters: FieldFilters): Observable<FieldValue[]>
 }
 
 export class SimpleSearchField implements AbstractSearchField {
+  protected repository = this.injector.get(RecordsRepositoryInterface)
+
+  // FIXME: this is required to register runtime fields; abstract this as well
   protected esService = this.injector.get(ElasticsearchService)
-  protected searchApiService = this.injector.get(SearchApiService)
 
   constructor(
     protected esFieldName: string,
@@ -32,53 +39,44 @@ export class SimpleSearchField implements AbstractSearchField {
     protected injector: Injector
   ) {}
 
-  protected getAggregations(): unknown {
+  protected getAggregations(): AggregationsParams {
     return {
       [this.esFieldName]: {
-        terms: {
-          size: 1000,
-          field: this.esFieldName,
-          order: {
-            _key: this.order,
-          },
-        },
+        type: 'terms',
+        field: this.esFieldName,
+        limit: 1000,
+        sort: [this.order, 'key'],
       },
     }
   }
 
-  protected async getBucketLabel(bucket): Promise<string> {
-    return bucket.key as string
+  protected async getBucketLabel(bucket: TermBucket): Promise<string> {
+    return bucket.term as string
   }
 
   getAvailableValues(): Observable<FieldAvailableValue[]> {
-    return this.searchApiService
-      .search(
-        'bucket',
-        JSON.stringify(
-          this.esService.getSearchRequestBody(this.getAggregations())
-        )
-      )
-      .pipe(
-        map(
-          (response) => response.aggregations[this.esFieldName]?.buckets || []
-        ),
-        switchMap((buckets) => {
-          const bucketPromises = buckets.map(async (bucket) => ({
-            label: `${await this.getBucketLabel(bucket)} (${bucket.doc_count})`,
-            value: bucket.key.toString(),
-          }))
-          return Promise.all(bucketPromises)
-        })
-      )
+    return this.repository.aggregate(this.getAggregations()).pipe(
+      map(
+        (response) =>
+          (response[this.esFieldName] as AggregationBuckets).buckets || []
+      ),
+      switchMap((buckets: TermBucket[]) => {
+        const bucketPromises = buckets.map(async (bucket) => ({
+          label: `${await this.getBucketLabel(bucket)} (${bucket.count})`,
+          value: bucket.term.toString(),
+        }))
+        return Promise.all(bucketPromises)
+      })
+    )
   }
-  getFiltersForValues(values: FieldValue[]): Observable<SearchFilters> {
+  getFiltersForValues(values: FieldValue[]): Observable<FieldFilters> {
     return of({
       [this.esFieldName]: values.reduce((acc, val) => {
         return { ...acc, [val.toString()]: true }
       }, {}),
     })
   }
-  getValuesForFilter(filters: SearchFilters): Observable<FieldValue[]> {
+  getValuesForFilter(filters: FieldFilters): Observable<FieldValue[]> {
     const filter = filters[this.esFieldName]
     if (!filter) return of([])
     const values =
@@ -105,8 +103,8 @@ export class TopicSearchField extends SimpleSearchField {
     )
   }
 
-  protected async getBucketLabel(bucket) {
-    return (await this.getTopicTranslation(bucket.key)) || bucket.key
+  protected async getBucketLabel(bucket: TermBucket) {
+    return (await this.getTopicTranslation(bucket.term)) || bucket.term
   }
 
   getAvailableValues(): Observable<FieldAvailableValue[]> {
@@ -125,13 +123,13 @@ export class FullTextSearchField implements AbstractSearchField {
   getAvailableValues(): Observable<FieldAvailableValue[]> {
     return of([])
   }
-  getFiltersForValues(values: FieldValue[]): Observable<SearchFilters> {
+  getFiltersForValues(values: FieldValue[]): Observable<FieldFilters> {
     return of({
       any: values[0] as string,
     })
   }
-  getValuesForFilter(filters: SearchFilters): Observable<FieldValue[]> {
-    return of(filters.any ? [filters.any] : [])
+  getValuesForFilter(filters: FieldFilters): Observable<FieldValue[]> {
+    return of(filters.any ? [filters.any as FieldFilterByExpression] : [])
   }
 }
 
@@ -154,24 +152,24 @@ emit(result);`
     )
   }
 
-  protected getAggregations() {
+  protected getAggregations(): AggregationsParams {
     return {
       isSpatial: {
-        terms: {
-          size: 2,
-          field: 'isSpatial',
-        },
+        type: 'terms',
+        limit: 2,
+        field: 'isSpatial',
+        sort: ['asc', 'key'],
       },
     }
   }
 
-  protected async getBucketLabel(bucket) {
+  protected async getBucketLabel(bucket: TermBucket) {
     return firstValueFrom(
-      this.translateService.get(`search.filters.isSpatial.${bucket.key}`)
+      this.translateService.get(`search.filters.isSpatial.${bucket.term}`)
     )
   }
 
-  getFiltersForValues(values: FieldValue[]): Observable<SearchFilters> {
+  getFiltersForValues(values: FieldValue[]): Observable<FieldFilters> {
     const isSpatial = {}
     if (values.length > 0) isSpatial[values[values.length - 1]] = true
     return of({
@@ -179,7 +177,7 @@ emit(result);`
     })
   }
 
-  getValuesForFilter(filters: SearchFilters): Observable<FieldValue[]> {
+  getValuesForFilter(filters: FieldFilters): Observable<FieldValue[]> {
     const filter = filters.isSpatial
     if (!filter) return of([])
     const keys = Object.keys(filter)
@@ -248,35 +246,32 @@ if(unknown) emit('unknown');`
     )
   }
 
-  protected getAggregations() {
+  protected getAggregations(): AggregationsParams {
     return {
       license: {
-        terms: {
-          size: 10,
-          field: 'license',
-          order: {
-            _count: 'desc',
-          },
-        },
+        type: 'terms',
+        limit: 10,
+        field: 'license',
+        sort: ['desc', 'count'],
       },
     }
   }
 
-  protected async getBucketLabel(bucket) {
+  protected async getBucketLabel(bucket: TermBucket) {
     return firstValueFrom(
-      this.translateService.get(`search.filters.license.${bucket.key}`)
+      this.translateService.get(`search.filters.license.${bucket.term}`)
     )
   }
 }
 
-// This will use the OrganisationsServiceInterface
+// This will use the OrganizationsServiceInterface
 // Field values are the organization names
 export class OrganizationSearchField implements AbstractSearchField {
-  private orgsService = this.injector.get(OrganisationsServiceInterface)
+  private orgsService = this.injector.get(OrganizationsServiceInterface)
 
   constructor(private injector: Injector) {}
 
-  getFiltersForValues(values: FieldValue[]): Observable<SearchFilters> {
+  getFiltersForValues(values: FieldValue[]): Observable<FieldFilters> {
     return this.orgsService.organisations$.pipe(
       map((orgs) =>
         values
@@ -289,7 +284,7 @@ export class OrganizationSearchField implements AbstractSearchField {
     )
   }
 
-  getValuesForFilter(filters: SearchFilters): Observable<FieldValue[]> {
+  getValuesForFilter(filters: FieldFilters): Observable<FieldValue[]> {
     return this.orgsService
       .getOrgsFromFilters(filters)
       .pipe(map((orgs) => orgs.map((org) => org.name)))
