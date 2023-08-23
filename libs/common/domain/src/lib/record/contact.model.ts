@@ -1,5 +1,4 @@
 import { Organization } from './organization.model'
-import _default from 'chart.js/dist/plugins/plugin.tooltip'
 
 export const RoleValues = [
   'unspecified',
