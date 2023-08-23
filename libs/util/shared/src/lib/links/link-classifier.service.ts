@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core'
-import { MetadataLink, MetadataLinkType } from '../models'
-
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
 export enum LinkUsage {
   API = 'api',
   MAP_API = 'mapapi',
@@ -15,17 +14,23 @@ export enum LinkUsage {
   providedIn: 'root',
 })
 export class LinkClassifierService {
-  getUsagesForLink(link: MetadataLink): LinkUsage[] {
+  getUsagesForLink(link: DatasetDistribution): LinkUsage[] {
     switch (link.type) {
-      case MetadataLinkType.ESRI_REST:
-      case MetadataLinkType.WFS:
-        return [LinkUsage.API, LinkUsage.DOWNLOAD, LinkUsage.GEODATA]
-      case MetadataLinkType.WMS:
-      case MetadataLinkType.WMTS:
-        return [LinkUsage.API, LinkUsage.MAP_API]
-      case MetadataLinkType.LANDING_PAGE:
-        return [LinkUsage.LANDING_PAGE]
-      case MetadataLinkType.DOWNLOAD: {
+      case 'service': {
+        switch (link.accessServiceProtocol) {
+          case 'esriRest':
+          case 'wfs':
+            return [LinkUsage.API, LinkUsage.DOWNLOAD, LinkUsage.GEODATA]
+          case 'wms':
+          case 'wmts':
+            return [LinkUsage.API, LinkUsage.MAP_API]
+          default:
+            return [LinkUsage.UNKNOWN]
+        }
+      }
+      case 'link':
+        return [LinkUsage.UNKNOWN]
+      case 'download': {
         switch (link.mimeType) {
           case 'application/json':
           case 'text/csv':
@@ -47,19 +52,17 @@ export class LinkClassifierService {
         }
         return [LinkUsage.DOWNLOAD]
       }
-      case MetadataLinkType.OTHER:
-        return [LinkUsage.UNKNOWN]
     }
   }
 
-  hasUsage(link: MetadataLink, usage: LinkUsage) {
+  hasUsage(link: DatasetDistribution, usage: LinkUsage) {
     return this.getUsagesForLink(link).indexOf(usage) > -1
   }
 
-  private hasFileExtension(extensions: string[], link: MetadataLink) {
+  private hasFileExtension(extensions: string[], link: DatasetDistribution) {
     return (
       new RegExp(`[./](${extensions.join('|')})`, 'i').test(link.name) ||
-      new RegExp(`[./](${extensions.join('|')})`, 'i').test(link.url)
+      new RegExp(`[./](${extensions.join('|')})`, 'i').test(link.url.toString())
     )
   }
 }
