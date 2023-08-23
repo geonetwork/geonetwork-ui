@@ -1,4 +1,4 @@
-import { UpdateFrequency } from '@geonetwork-ui/util/types/metadata'
+import { UpdateFrequency } from '@geonetwork-ui/common/domain/record'
 
 export function getUpdateFrequencyFromFrequencyCode(
   frequencyCode: string

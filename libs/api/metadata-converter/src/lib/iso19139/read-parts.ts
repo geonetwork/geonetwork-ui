@@ -2,21 +2,20 @@ import {
   AccessConstraint,
   AccessConstraintType,
   DatasetDistribution,
-  GraphicOverview,
   DatasetSpatialExtent,
   DatasetTemporalExtent,
+  GraphicOverview,
   Individual,
   License,
   Organization,
   RecordKind,
   RecordStatus,
   Role,
-  ServiceProtocol,
+  ServiceOnlineResource,
   SpatialRepresentationType,
   UpdateFrequency,
   UpdateFrequencyCustom,
-  ServiceOnlineResource,
-} from '@geonetwork-ui/util/types/metadata'
+} from '@geonetwork-ui/common/domain/record'
 import { getStatusFromStatusCode } from './codelists/status.mapper'
 import { getUpdateFrequencyFromFrequencyCode } from './codelists/update-frequency.mapper'
 import {
@@ -39,7 +38,6 @@ import {
   map,
   mapArray,
   pipe,
-  tap,
 } from '../function-utils'
 import { getRoleFromRoleCode } from './codelists/role.mapper'
 import { matchMimeType, matchProtocol } from '../common/distribution.mapper'
@@ -323,7 +321,7 @@ function extractDatasetDistributions(): ChainableFunction<
           const hasIdentifier = protocol === 'wms' || protocol === 'wfs'
           return {
             type: 'service',
-            accessServiceUrl: url,
+            url: url,
             accessServiceProtocol: protocol,
             ...(name && hasIdentifier && { identifierInService: name }),
             ...(name && { name }),
@@ -333,7 +331,7 @@ function extractDatasetDistributions(): ChainableFunction<
           const mimeType = format
           return {
             type: 'download',
-            downloadUrl: url,
+            url: url,
             ...(name && { name }),
             ...(description && { description }),
             ...(mimeType && { mimeType }),
@@ -341,7 +339,7 @@ function extractDatasetDistributions(): ChainableFunction<
         } else {
           return {
             type: 'link',
-            linkUrl: url,
+            url: url,
             ...(name && { name }),
             ...(description && { description }),
           }
@@ -724,7 +722,7 @@ export function extractServiceOnlineResources(): ChainableFunction<
       if (isLink) {
         return {
           type: 'link',
-          linkUrl: url,
+          url: url,
           ...(name && { name }),
           ...(description && { description }),
         }

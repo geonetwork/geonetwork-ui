@@ -1,5 +1,5 @@
 import { Individual } from './contact.model'
-import { Organization } from './organisation.model'
+import { Organization } from './organization.model'
 
 type Uuid = string
 
@@ -18,13 +18,14 @@ export type UpdateFrequency = UpdateFrequencyCode | UpdateFrequencyCustom
 
 export type RecordKind = 'dataset' | 'service'
 
-export enum RecordStatus {
-  COMPLETED = 'COMPLETED',
-  ON_GOING = 'ON_GOING',
-  UNDER_DEVELOPMENT = 'UNDER_DEVELOPMENT',
-  DEPRECATED = 'DEPRECATED',
-  REMOVED = 'REMOVED',
-}
+export const RecordStatusValues = [
+  'completed',
+  'ongoing',
+  'under_development',
+  'deprecated',
+  'removed',
+]
+export type RecordStatus = typeof RecordStatusValues[number]
 
 export type AccessConstraintType = 'security' | 'privacy' | 'legal' | 'other'
 export interface AccessConstraint {
@@ -77,11 +78,11 @@ export type ServiceProtocol =
   | 'esriRest'
   | 'other'
 
-export type DatasetDistributionType = 'service' | 'download' | 'link' | 'other'
+export type DatasetDistributionType = 'service' | 'download' | 'link'
 
 export interface DatasetServiceDistribution {
   type: 'service'
-  accessServiceUrl: URL
+  url: URL
   accessServiceProtocol: ServiceProtocol
   identifierInService?: string
   name?: string
@@ -90,7 +91,7 @@ export interface DatasetServiceDistribution {
 
 export interface DatasetDownloadDistribution {
   type: 'download'
-  downloadUrl: URL
+  url: URL
   mimeType?: string
   sizeBytes?: number
   // removed because what's the use? encoding can be exposed by the file server or
@@ -102,7 +103,7 @@ export interface DatasetDownloadDistribution {
 
 export interface OnlineLinkResource {
   type: 'link'
-  linkUrl: URL
+  url: URL
   name?: string
   description?: string
 }
@@ -133,6 +134,7 @@ export interface DatasetTemporalExtent {
 
 export interface DatasetRecord extends BaseRecord {
   kind: 'dataset'
+  contactsForResource: Array<Individual>
   status: RecordStatus
   updateFrequency: UpdateFrequency
   datasetCreated?: Date

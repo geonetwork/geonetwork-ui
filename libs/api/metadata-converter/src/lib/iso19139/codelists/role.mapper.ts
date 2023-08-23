@@ -1,48 +1,48 @@
-import { Role } from '@geonetwork-ui/util/types/metadata'
+import { Role } from '@geonetwork-ui/common/domain/record'
 
 export function getRoleFromRoleCode(roleCode: string): Role {
-  if (!roleCode) return Role.UNSPECIFIED
+  if (!roleCode) return 'unspecified'
   switch (roleCode) {
     case 'author':
     case 'coAuthor':
-      return Role.AUTHOR
+      return 'author'
     case 'originator':
-      return Role.ORIGINATOR
+      return 'originator'
     case 'principalInvestigator':
-      return Role.PRINCIPAL_INVESTIGATOR
+      return 'principal_investigator'
     case 'resourceProvider':
-      return Role.RESOURCE_PROVIDER
+      return 'resource_provider'
     case 'processor':
-      return Role.PROCESSOR
+      return 'processor'
     case 'custodian':
-      return Role.CUSTODIAN
+      return 'custodian'
     case 'owner':
-      return Role.OWNER
+      return 'owner'
     case 'pointOfContact':
-      return Role.POINT_OF_CONTACT
+      return 'point_of_contact'
     case 'publisher':
-      return Role.PUBLISHER
+      return 'publisher'
     case 'distributor':
-      return Role.DISTRIBUTOR
+      return 'distributor'
     case 'user':
-      return Role.USER
+      return 'user'
     case 'collaborator':
-      return Role.COLLABORATOR
+      return 'collaborator'
     case 'editor':
-      return Role.EDITOR
+      return 'editor'
     case 'contributor':
-      return Role.CONTRIBUTOR
+      return 'contributor'
     case 'stakeholder':
-      return Role.STAKEHOLDER
+      return 'stakeholder'
     case 'sponsor':
-      return Role.SPONSOR
+      return 'sponsor'
     case 'funder':
-      return Role.FUNDER
+      return 'funder'
     case 'rightsHolder':
-      return Role.RIGHTS_HOLDER
+      return 'rights_holder'
     case 'mediator':
-      return Role.MEDIATOR
+      return 'mediator'
     default:
-      return Role.OTHER
+      return 'other'
   }
 }

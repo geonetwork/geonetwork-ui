@@ -1,8 +1,4 @@
-import {
-  DatasetRecord,
-  RecordStatus,
-  Role,
-} from '@geonetwork-ui/util/types/metadata'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/record'
 
 export const GENERIC_DATASET_RECORD: DatasetRecord = {
   uniqueIdentifier: 'my-dataset-001',
@@ -16,7 +12,7 @@ export const GENERIC_DATASET_RECORD: DatasetRecord = {
   contacts: [
     {
       email: 'bob@org.net',
-      role: Role.AUTHOR,
+      role: 'author',
       organization: {
         name: 'MyOrganization',
         website: new URL('https://www.my.org/info'),
@@ -29,7 +25,7 @@ export const GENERIC_DATASET_RECORD: DatasetRecord = {
     },
     {
       email: 'john@org2.com',
-      role: Role.CUSTODIAN,
+      role: 'custodian',
       organization: {
         name: 'Another Organization',
         website: new URL('https://www.another.org/docs'),
@@ -37,7 +33,8 @@ export const GENERIC_DATASET_RECORD: DatasetRecord = {
       position: 'manager',
     },
   ],
-  status: RecordStatus.ON_GOING,
+  contactsForResource: [],
+  status: 'ongoing',
   recordCreated: new Date('2022-02-01T15:12:00'),
   recordUpdated: new Date('2022-02-01T15:12:00'),
   datasetCreated: new Date('2022-09-01T14:18:19'),
@@ -66,27 +63,27 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
   distributions: [
     {
       type: 'download',
-      downloadUrl: new URL('http://my-org.net/download/1.zip'),
+      url: new URL('http://my-org.net/download/1.zip'),
       mimeType: 'x-gis/x-shapefile',
       name: 'Direct download',
       description: 'Dataset downloaded as a shapefile',
     },
     {
       type: 'download',
-      downloadUrl: new URL('http://my-org.net/download/2.geojson'),
+      url: new URL('http://my-org.net/download/2.geojson'),
       mimeType: 'application/geo+json',
       name: 'Direct download',
     },
     {
       type: 'link',
-      linkUrl: new URL('https://my-org.net/docs/1234.pdf'),
+      url: new URL('https://my-org.net/docs/1234.pdf'),
       name: 'Documentation',
       description:
         'A link to the online documentation in PDF; please forgive the typos.',
     },
     {
       type: 'service',
-      accessServiceUrl: new URL('https://my-org.net/wfs'),
+      url: new URL('https://my-org.net/wfs'),
       accessServiceProtocol: 'wfs',
       name: 'my:featuretype', // FIXME: same as identifier otherwise it will be lost in iso...
       description: 'This WFS service offers direct download capability',

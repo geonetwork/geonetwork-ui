@@ -1,4 +1,4 @@
-import { ServiceProtocol } from '@geonetwork-ui/util/types/metadata'
+import { ServiceProtocol } from '@geonetwork-ui/common/domain/record'
 
 export function matchProtocol(protocol: string): ServiceProtocol {
   if (/wms/i.test(protocol)) return 'wms'

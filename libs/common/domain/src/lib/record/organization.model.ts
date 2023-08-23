@@ -3,4 +3,5 @@ export interface Organization {
   description?: string
   website?: URL
   logoUrl?: URL
+  recordCount?: number
 }
