@@ -45,7 +45,6 @@ import {
 } from '../function-utils'
 import format from 'date-fns/format'
 import { readKind } from './read-parts'
-import { description } from 'commander'
 
 function writeCharacterString(
   text: string
