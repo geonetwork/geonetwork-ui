@@ -16,12 +16,13 @@ export class LastCreatedComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.searchFacade.setConfigRequestFields({
-      includes: [...ES_SOURCE_BRIEF, 'createDate', 'changeDate'],
-    })
-    this.searchFacade.setPagination(0, 10)
-    this.searchFacade.setSortBy('-createDate')
-    this.searchFacade.setResultsLayout('FEED')
+    this.searchFacade
+      .setConfigRequestFields({
+        includes: [...ES_SOURCE_BRIEF, 'createDate', 'changeDate'],
+      })
+      .setPagination(0, 10)
+      .setSortBy('-createDate')
+      .setResultsLayout('FEED')
   }
 
   onMetadataSelection(metadata: MetadataRecord): void {

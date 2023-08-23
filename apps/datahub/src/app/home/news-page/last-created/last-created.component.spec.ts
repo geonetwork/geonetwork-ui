@@ -10,10 +10,10 @@ import { RouterFacade } from '@geonetwork-ui/feature/router'
 class SearchFacadeMock {
   init = jest.fn()
   results$ = of(summaryHits)
-  setPagination = jest.fn()
-  setSortBy = jest.fn()
-  setConfigRequestFields = jest.fn()
-  setResultsLayout = jest.fn()
+  setPagination = jest.fn(() => this)
+  setSortBy = jest.fn(() => this)
+  setConfigRequestFields = jest.fn(() => this)
+  setResultsLayout = jest.fn(() => this)
 }
 class RouterFacadeMock {
   goToMetadata = jest.fn()
