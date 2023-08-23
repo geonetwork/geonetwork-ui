@@ -80,7 +80,7 @@ The feature branches can be declared in any module, application or library ones.
 > - There can be only one root state for the whole application.
 > - There must be a root state if some modules declare a feature state.
 
-## NgRx fondamentals
+## NgRx fundamentals
 
 For more information, please refer to the [official documentation](https://ngrx.io/guide/store).
 
@@ -143,7 +143,7 @@ The state types are defined in the reducer file, along with the initial state ob
 The search state is a core component of `geonetwork-ui`, as it handles the interaction with GeoNetwork Search API (which forwards the request to Elasticsearch).
 Many components/applications of `geonetwork-ui` rely on the search state, which is declared in the `FeatureSearchModule` module.
 
-The search state is responsible to store:
+The search state is responsible for storing:
 
 - any search parameters
   - aggregations
@@ -207,7 +207,7 @@ this.searchFacade
 - Subscribing to search results
 
 ```typescript
-this.searchFacade.$results.subscribe((results) => {
+this.searchFacade.results$.subscribe((results) => {
   // do my stuff
 })
 ```
