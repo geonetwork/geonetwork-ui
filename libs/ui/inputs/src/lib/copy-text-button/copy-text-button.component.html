@@ -16,7 +16,6 @@
   <button
     type="button"
     (click)="copyText($event)"
-    class="cursor-pointer"
     [ngClass]="{
       'py-2 px-4 rounded-r-md bg-gray-400 hover:bg-gray-600 focus:bg-gray-800 text-white':
         displayText
@@ -25,8 +24,7 @@
     [matTooltip]="tooltipText"
     matTooltipPosition="above"
   >
-    <mat-icon
-      class="pointer-events-none align-middle group-hover:text-secondary text-gray-200 transition-colors"
+    <mat-icon class="pointer-events-none align-middle card-icon"
       >content_copy</mat-icon
     >
   </button>
