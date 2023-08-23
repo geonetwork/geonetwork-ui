@@ -21,7 +21,7 @@ export default {
 
 export const Primary: StoryObj<ResultsHitsNumberComponent> = {
   args: {
-    hits: { value: 32 },
+    hits: 32,
     loading: false,
   },
 }

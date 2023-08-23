@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core'
-import { EsRequestAggTerm, SearchFilters } from '@geonetwork-ui/util/shared'
 import { FacetSelectEvent, ModelBlock } from '@geonetwork-ui/ui/search'
 import { combineLatest, Observable } from 'rxjs'
 import { map, take } from 'rxjs/operators'
 import { SearchFacade } from '../../state/search.facade'
 import { FacetsService } from '../facets.service'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { FieldFilters } from '@geonetwork-ui/common/domain/search'
+import { EsRequestAggTerm } from '@geonetwork-ui/api/metadata-converter'
 
 marker('facets.block.title.OrgForResource')
 marker('facets.block.title.availableInServices')
@@ -59,7 +60,7 @@ export class FacetsContainerComponent implements OnInit {
     })
   }
 
-  private updateFilters(filters: SearchFilters, facetEvent: FacetSelectEvent) {
+  private updateFilters(filters: FieldFilters, facetEvent: FacetSelectEvent) {
     const { item, block } = facetEvent
     const { path } = item
     const pathValue = this.facets.computeItemPathValue(block, item)

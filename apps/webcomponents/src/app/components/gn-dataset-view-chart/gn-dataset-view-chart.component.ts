@@ -9,7 +9,8 @@ import {
 } from '@angular/core'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { BaseComponent } from '../base.component'
-import { LinkUsage, MetadataLink } from '@geonetwork-ui/util/shared'
+import { LinkUsage } from '@geonetwork-ui/util/shared'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'wc-gn-dataset-view-chart',
@@ -28,7 +29,7 @@ export class GnDatasetViewChartComponent
   @Input() xProperty: string
   @Input() yProperty: string
   @Input() chartType: string
-  link: MetadataLink
+  link: DatasetDistribution
   constructor(injector: Injector, private changeDetector: ChangeDetectorRef) {
     super(injector)
   }

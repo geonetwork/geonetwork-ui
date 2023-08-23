@@ -2,14 +2,14 @@
   class="h-40 bg-white transition duration-200 border border-gray-200 rounded-md hover:bg-gray-50 hover:border-primary hover:text-primary"
 >
   <a
-    [href]="record.metadataUrl"
+    [href]="record.landingPage"
     [target]="linkTarget"
     [title]="record.abstract"
   >
     <div class="h-full flex flex-row items-center shadow-sm">
       <gn-ui-thumbnail
         class="w-40 h-full shrink-0 border-r border-gray-200 bg-gray-100"
-        [thumbnailUrl]="record.thumbnailUrl"
+        [thumbnailUrl]="record.overviews?.[0]?.url.toString()"
       ></gn-ui-thumbnail>
 
       <div class="grow h-full px-6 py-4 flex flex-col overflow-hidden">
@@ -23,7 +23,7 @@
         <div class="flex flex-row items-center">
           <div
             class="text-gray-500 text-xs truncate capitalize border-r mr-4 pr-4"
-            *ngIf="record.updateFrequency"
+            *ngIf="record.kind === 'dataset'"
           >
             <span translate>{{ record.updateFrequency }}</span>
           </div>

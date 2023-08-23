@@ -1,7 +1,6 @@
 import { DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-
 import { FacetBlockStubComponent } from '../facet-block/facet-block.component'
 import { BLOCK_MODEL_FIXTURE } from '../fixtures'
 import { FacetListComponent } from './facet-list.component'

@@ -48,13 +48,11 @@ describe('AddLayerFromCatalogComponent', () => {
   describe('initialization', () => {
     it('should initialize the facade', () => {
       expect(searchFacade.init).toHaveBeenCalledWith('map-add-layer')
-      expect(searchFacade.setConfigRequestFields).toHaveBeenCalledWith({
-        includes: expect.arrayContaining(['link']),
-      })
+      expect(searchFacade.setConfigRequestFields).toHaveBeenCalledWith(
+        expect.arrayContaining(['link'])
+      )
       expect(searchFacade.setFilters).toHaveBeenCalledWith({
-        availableInServices: {
-          query_string: '+linkProtocol:/OGC:WMS.*/',
-        },
+        availableInServices: '+linkProtocol:/OGC:WMS.*/',
       })
     })
   })

@@ -1,4 +1,4 @@
-import { AggregationsTypesEnum } from '@geonetwork-ui/util/shared'
+import { AggregationsTypes } from '@geonetwork-ui/common/domain/search'
 
 export type FacetPath = string[]
 
@@ -18,7 +18,7 @@ export interface ModelItem extends HasPath {
 export interface ModelBlock extends HasPath {
   key: string
   items: ModelItem[]
-  type: AggregationsTypesEnum
+  type: AggregationsTypes
   size: number
   more: boolean
   includeFilter: boolean

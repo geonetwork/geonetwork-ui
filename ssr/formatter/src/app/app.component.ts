@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { map } from 'rxjs/operators'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-root',
@@ -14,7 +14,7 @@ import { map } from 'rxjs/operators'
   styles: [],
 })
 export class AppComponent implements OnInit {
-  metadata: MetadataRecord
+  metadata: CatalogRecord
 
   constructor(private http: HttpClient) {}
   ngOnInit(): void {

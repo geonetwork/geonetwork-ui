@@ -14,16 +14,15 @@ import {
   SearchFacade,
   SearchService,
 } from '@geonetwork-ui/feature/search'
-import {
-  AggregationsOrderEnum,
-  AggregationsTypesEnum,
-  SearchFilters,
-} from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, of } from 'rxjs'
 import { SearchFiltersComponent } from './search-filters.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 import { FormsModule } from '@angular/forms'
+import {
+  AggregationsTypes,
+  FieldFilters,
+} from '@geonetwork-ui/common/domain/search'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getOptionalSearchConfig: () => ({
@@ -66,10 +65,8 @@ export class MockCheckToggleComponent {
 export class MockFilterDropdownComponent {
   @Input() fieldName: string
   @Input() title: string
-  @Input() order: AggregationsOrderEnum = AggregationsOrderEnum.ASC
-  @Input() aggregationType: AggregationsTypesEnum = AggregationsTypesEnum.TERMS
 }
-const state = { OrgForResource: { mel: true } } as SearchFilters
+const state = { OrgForResource: { mel: true } } as FieldFilters
 class SearchFacadeMock {
   searchFilters$ = new BehaviorSubject(state)
   hasSpatialFilter$ = new BehaviorSubject(false)

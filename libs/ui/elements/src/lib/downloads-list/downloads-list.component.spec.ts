@@ -7,18 +7,18 @@ import {
 } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { LinkClassifierService, MetadataLink } from '@geonetwork-ui/util/shared'
-import { LINK_FIXTURES } from '@geonetwork-ui/util/shared/fixtures'
+import { LinkClassifierService } from '@geonetwork-ui/util/shared'
+import { LINK_FIXTURES } from '@geonetwork-ui/common/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
-
 import { DownloadsListComponent } from './downloads-list.component'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-download-item',
   template: ``,
 })
 class MockDownloadItemComponent {
-  @Input() link: MetadataLink
+  @Input() link: DatasetDistribution
   @Input() color: string
   @Input() format: string
   @Input() isFromWfs: boolean

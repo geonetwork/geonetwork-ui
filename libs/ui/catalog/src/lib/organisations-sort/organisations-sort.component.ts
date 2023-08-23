@@ -5,11 +5,7 @@ import {
   Output,
 } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-
-marker('organisations.sortBy.nameAsc')
-marker('organisations.sortBy.nameDesc')
-marker('organisations.sortBy.recordCountAsc')
-marker('organisations.sortBy.recordCountDesc')
+import { SortByField } from '@geonetwork-ui/common/domain/search'
 
 @Component({
   selector: 'gn-ui-organisations-sort',
@@ -18,27 +14,27 @@ marker('organisations.sortBy.recordCountDesc')
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrganisationsSortComponent {
-  choices = [
+  choices: { value: string; label: string }[] = [
     {
-      value: 'name-asc',
-      label: 'organisations.sortBy.nameAsc',
+      value: JSON.stringify(['asc', 'name']),
+      label: marker('organisations.sortBy.nameAsc'),
     },
     {
-      value: 'name-desc',
-      label: 'organisations.sortBy.nameDesc',
+      value: JSON.stringify(['desc', 'name']),
+      label: marker('organisations.sortBy.nameDesc'),
     },
     {
-      value: 'recordCount-asc',
-      label: 'organisations.sortBy.recordCountAsc',
+      value: JSON.stringify(['asc', 'recordCount']),
+      label: marker('organisations.sortBy.recordCountAsc'),
     },
     {
-      value: 'recordCount-desc',
-      label: 'organisations.sortBy.recordCountDesc',
+      value: JSON.stringify(['desc', 'recordCount']),
+      label: marker('organisations.sortBy.recordCountDesc'),
     },
   ]
-  @Output() sortBy = new EventEmitter<string>()
+  @Output() sortBy = new EventEmitter<SortByField>()
 
   selectOrderToDisplay(selectValue: string) {
-    this.sortBy.emit(selectValue)
+    this.sortBy.emit(JSON.parse(selectValue) as SortByField)
   }
 }

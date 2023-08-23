@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordPreviewFeedComponent } from './record-preview-feed.component'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { ORGANISATIONS_FIXTURE } from '@geonetwork-ui/common/fixtures'
 
 describe('RecordPreviewFeedComponent', () => {
   let component: RecordPreviewFeedComponent
@@ -17,13 +19,14 @@ describe('RecordPreviewFeedComponent', () => {
     fixture = TestBed.createComponent(RecordPreviewFeedComponent)
     component = fixture.componentInstance
     component.record = {
-      id: '139',
-      uuid: 'd2f30aa4-867e-40b9-9c37-3cb21f541008',
+      uniqueIdentifier: 'd2f30aa4-867e-40b9-9c37-3cb21f541008',
       title: 'abcd',
       abstract: '<b>abstract</b>',
-      metadataUrl: '/abcd.html',
-      thumbnailUrl: '/abcd.jpg',
-    }
+      landingPage: new URL('http://localhost/abcd.html'),
+      overviews: [{ url: new URL('http://localhost/abcd.jpg') }],
+      ownerOrganization: ORGANISATIONS_FIXTURE[0],
+      contacts: [],
+    } as CatalogRecord
     fixture.detectChanges()
   })
 

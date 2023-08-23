@@ -58,19 +58,9 @@ describe('ResultsHitsNumberComponent', () => {
     it('does display', () => {
       expect(de.query(By.css('.w-full'))).toBeTruthy()
     })
-    describe('when hits is null', () => {
-      beforeEach(() => {
-        fixture.detectChanges()
-      })
-      it('does not display content', () => {
-        expect(de.query(By.css('span'))).toBeFalsy()
-      })
-    })
     describe('when hits has results', () => {
       beforeEach(() => {
-        component.hits = {
-          value: 10,
-        }
+        component.hits = 10
         fixture.detectChanges()
       })
       it('display the hits number', () => {
@@ -82,9 +72,7 @@ describe('ResultsHitsNumberComponent', () => {
     })
     describe('when hits has 0 results', () => {
       beforeEach(() => {
-        component.hits = {
-          value: 0,
-        }
+        component.hits = 0
         fixture.detectChanges()
       })
       it('display that no record has been found', () => {

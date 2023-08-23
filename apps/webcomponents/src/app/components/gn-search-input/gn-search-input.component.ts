@@ -7,9 +7,9 @@ import {
   ViewEncapsulation,
 } from '@angular/core'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { BaseComponent } from '../base.component'
 import { FuzzySearchComponent } from '@geonetwork-ui/feature/search'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'wc-gn-search-input',
@@ -41,8 +41,11 @@ export class GnSearchInputComponent
     window.open(landingPage, '_self').focus()
   }
 
-  select(record: MetadataRecord) {
-    const landingPage = this.openOnSelect.replace(/\$\{uuid}/, record.uuid)
+  select(record: CatalogRecord) {
+    const landingPage = this.openOnSelect.replace(
+      /\$\{uuid}/,
+      record.uniqueIdentifier
+    )
     window.open(landingPage, '_self').focus()
   }
 }

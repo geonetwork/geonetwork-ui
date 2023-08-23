@@ -1,6 +1,5 @@
-import { SortByEnum } from '@geonetwork-ui/util/shared'
+import { SortByEnum } from '@geonetwork-ui/common/domain/search'
 import { BehaviorSubject } from 'rxjs'
-
 import { SearchService } from './search.service'
 
 const state = { Org: 'mel' }

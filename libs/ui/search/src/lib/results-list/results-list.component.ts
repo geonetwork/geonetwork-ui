@@ -6,11 +6,11 @@ import {
   Output,
   TemplateRef,
 } from '@angular/core'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import {
   DEFAULT_RESULTS_LAYOUT_CONFIG,
   ResultsLayoutConfigItem,
 } from './results-layout.config'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-results-list',
@@ -19,10 +19,10 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResultsListComponent {
-  @Input() records: MetadataRecord[]
+  @Input() records: CatalogRecord[]
   @Input() layoutConfig: ResultsLayoutConfigItem =
     DEFAULT_RESULTS_LAYOUT_CONFIG['CARD']
-  @Input() favoriteTemplate: TemplateRef<{ $implicit: MetadataRecord }>
-  @Input() recordUrlGetter: (MetadataRecord) => string
-  @Output() mdSelect = new EventEmitter<MetadataRecord>()
+  @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
+  @Input() recordUrlGetter: (record: CatalogRecord) => string
+  @Output() mdSelect = new EventEmitter<CatalogRecord>()
 }

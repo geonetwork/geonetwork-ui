@@ -11,12 +11,9 @@ import {
   SearchFacade,
   SearchStateParams,
 } from '@geonetwork-ui/feature/search'
-import {
-  MetadataRecord,
-  SearchFilters,
-  StateConfigFilters,
-} from '@geonetwork-ui/util/shared'
+import { FieldFilters } from '@geonetwork-ui/common/domain/search'
 import { BaseComponent } from '../base.component'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'wc-gn-results-list-component',
@@ -42,15 +39,14 @@ export class GnResultsListComponent extends BaseComponent {
     const filter = this.filter
     const query = this.query
     const searchActionPayload: SearchStateParams = {
-      size: parseInt(this.size),
-      from: 0,
+      limit: parseInt(this.size),
+      offset: 0,
       filters: {},
     }
     if (query) {
       try {
         // we assume it's an object
-        const queryFilters: SearchFilters = JSON.parse(query)
-        searchActionPayload.filters = queryFilters
+        searchActionPayload.filters = JSON.parse(query)
       } catch (e) {
         // we assume it's a string
         searchActionPayload.filters = {
@@ -59,7 +55,7 @@ export class GnResultsListComponent extends BaseComponent {
       }
     }
     if (filter) {
-      const configFilters: StateConfigFilters = JSON.parse(filter)
+      const configFilters: FieldFilters = JSON.parse(filter)
       this.facade.setConfigFilters(configFilters)
     }
     this.facade.setSearch(searchActionPayload)
@@ -77,9 +73,12 @@ export class GnResultsListComponent extends BaseComponent {
     this.setSearch_()
   }
 
-  onMdClick(metadata: MetadataRecord) {
+  onMdClick(metadata: CatalogRecord) {
     if (this.catalogUrl) {
-      const landingPage = this.catalogUrl.replace(/{uuid}/, metadata.uuid)
+      const landingPage = this.catalogUrl.replace(
+        /{uuid}/,
+        metadata.uniqueIdentifier
+      )
       window.open(landingPage, '_blank').focus()
     }
   }

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { OL_FEATURE_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
+import { OL_FEATURE_FIXTURE } from '@geonetwork-ui/common/fixtures'
 import { Feature } from 'ol'
 import { Geometry } from 'ol/geom'
 

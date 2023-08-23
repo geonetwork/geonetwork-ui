@@ -17,10 +17,12 @@ import {
   SearchConfig,
   SearchPreset,
 } from '@geonetwork-ui/util/app-config'
-import { MetadataRecord, SortByEnum } from '@geonetwork-ui/util/shared'
+import { SortByEnum, SortByField } from '@geonetwork-ui/common/domain/search'
 import { map } from 'rxjs/operators'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants'
 import { lastValueFrom } from 'rxjs'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { sortByFromString } from '@geonetwork-ui/util/shared'
 
 marker('datahub.header.myfavorites')
 marker('datahub.header.lastRecords')
@@ -64,7 +66,7 @@ export class HomeHeaderComponent {
     .authReady()
     .pipe(map((user) => !!user?.id))
 
-  onFuzzySearchSelection(record: MetadataRecord) {
+  onFuzzySearchSelection(record: CatalogRecord) {
     this.routerFacade.goToMetadata(record)
   }
 
@@ -72,7 +74,7 @@ export class HomeHeaderComponent {
     this.searchFacade.setFavoritesOnly(toggled)
   }
 
-  clearSearchAndSort(sort: SortByEnum): void {
+  clearSearchAndSort(sort: SortByField): void {
     this.searchService.setSortAndFilters({}, sort)
   }
 
@@ -84,7 +86,7 @@ export class HomeHeaderComponent {
     )
     this.searchService.setSortAndFilters(
       searchFilters,
-      customSearchParameters.sort as SortByEnum
+      sortByFromString(customSearchParameters.sort)
     )
   }
 }

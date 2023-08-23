@@ -4,7 +4,6 @@ import { BLOCK_MODEL_FIXTURE } from '../fixtures'
 import { FacetItemComponent } from '../facet-item/facet-item.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { FacetBlockComponent } from '../facet-block/facet-block.component'
-import { AggregationsTypesEnum } from '@geonetwork-ui/util/shared'
 import { FormsModule } from '@angular/forms'
 import {
   TRANSLATE_DEFAULT_CONFIG,
@@ -39,7 +38,7 @@ export const Primary: StoryObj<FacetListComponent> = {
           { value: 'Agriculture', count: 2, path: ['theme', 'Agriculture'] },
         ],
         path: ['theme'],
-        type: AggregationsTypesEnum.FILTERS,
+        type: 'filters',
         size: 4,
         more: false,
         includeFilter: true,

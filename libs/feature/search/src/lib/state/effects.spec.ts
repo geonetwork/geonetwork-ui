@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing'
 import { AuthService } from '@geonetwork-ui/feature/auth'
-import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import {
   AddResults,
   ClearError,

@@ -4,16 +4,17 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing'
-import { CatalogRecord, RecordStatus } from '@geonetwork-ui/util/types/metadata'
-import { readFirst } from '@nx/angular/testing'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { firstValueFrom } from 'rxjs'
 
 const SAMPLE_RECORD: CatalogRecord = {
   uniqueIdentifier: '1234-5678',
   kind: 'dataset',
   title: 'my title',
   abstract: 'my abstract',
-  status: RecordStatus.ON_GOING,
+  status: 'ongoing',
   contacts: [],
+  contactsForResource: [],
   ownerOrganization: {
     name: 'bla',
   },
@@ -74,7 +75,7 @@ describe('EditorService', () => {
     let fields
     beforeEach(async () => {
       service.setCurrentRecord(SAMPLE_RECORD)
-      fields = await readFirst(service.fields$)
+      fields = await firstValueFrom(service.fields$)
     })
     it('updates the fields$ values', () => {
       expect(fields).toEqual([

@@ -23,7 +23,7 @@ export class DataViewWebComponentComponent {
           this.config.basePath,
           window.location.origin
         ).toString()}"
-        dataset-id="${metadata.uuid}"
+        dataset-id="${metadata.uniqueIdentifier}"
         aggregation="${aggregation}"
         x-property="${xProperty}"
         y-property="${yProperty}"
@@ -36,7 +36,7 @@ export class DataViewWebComponentComponent {
         title-font="'DM Serif Display', serif"
 ></gn-dataset-view-chart>`
       }
-      return null
+      return ''
     })
   )
 

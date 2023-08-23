@@ -25,9 +25,9 @@ import { from, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { MapContextLayerModel } from '../..'
 import { MapUtilsWMSService } from './map-utils-wms.service'
-import { MetadataLink } from '@geonetwork-ui/util/shared'
 import Collection from 'ol/Collection'
 import MapBrowserEvent from 'ol/MapBrowserEvent'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
 
 const FEATURE_PROJECTION = 'EPSG:3857'
 const DATA_PROJECTION = 'EPSG:4326'
@@ -163,7 +163,9 @@ export class MapUtilsService {
     )
   }
 
-  getWmtsOptionsFromCapabilities(link: MetadataLink): Observable<Options> {
+  getWmtsOptionsFromCapabilities(
+    link: DatasetDistribution
+  ): Observable<Options> {
     const getCapabilitiesUrl = new URL(link.url, window.location.toString())
     getCapabilitiesUrl.searchParams.set('SERVICE', 'WMTS')
     getCapabilitiesUrl.searchParams.set('REQUEST', 'GetCapabilities')

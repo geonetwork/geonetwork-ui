@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { EsRequestAggTerm } from '@geonetwork-ui/util/shared'
 import { FacetSelectEvent, ModelBlock } from '../facets.model'
+// Revisit facets: these should not use the ES formats!
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { EsRequestAggTerm } from '@geonetwork-ui/api/metadata-converter'
 
 @Component({
   selector: 'gn-ui-facet-list',

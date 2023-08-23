@@ -15,7 +15,7 @@ There are also many [community plugins](https://nx.dev/nx-community) you could a
 To have more flexibility using Nx tools, you should install Nx CLI.
 
 ```shell
-npm i -g @nrwl/cli
+npm i -g @nx/cli
 ```
 
 This will make the `nx` command available on your system.

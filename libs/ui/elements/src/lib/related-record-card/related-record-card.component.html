@@ -1,12 +1,12 @@
 <a
   class="w-72 h-96 overflow-hidden rounded-lg bg-white cursor-pointer block hover:-translate-y-2 duration-[180ms]"
-  [routerLink]="['/dataset', record.uuid]"
+  [routerLink]="['/dataset', record.uniqueIdentifier]"
   target="_blank"
 >
   <div class="h-52 bg-gray-100">
     <gn-ui-thumbnail
       class="h-52 w-full object-cover"
-      [thumbnailUrl]="record.thumbnailUrl"
+      [thumbnailUrl]="record.overviews?.[0].url.toString()"
     ></gn-ui-thumbnail>
   </div>
   <div class="flex flex-col justify-between h-44 px-5 pt-4 pb-6">

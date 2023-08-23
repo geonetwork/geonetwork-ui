@@ -1,10 +1,7 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import {
-  OrganisationsServiceInterface,
-  SourcesService,
-} from '@geonetwork-ui/feature/catalog'
+import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { MapManagerService } from '@geonetwork-ui/feature/map'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import {
@@ -15,15 +12,23 @@ import {
   SearchResultsErrorComponent,
   UiElementsModule,
 } from '@geonetwork-ui/ui/elements'
-import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject, of } from 'rxjs'
 import { MdViewFacade } from '../state/mdview.facade'
 import { RecordMetadataComponent } from './record-metadata.component'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+
+const SAMPLE_RECORD = {
+  ...DATASET_RECORDS[0],
+  extras: {
+    catalogUuid: 'catalog-0001',
+  },
+}
 
 class MdViewFacadeMock {
   isPresent$ = new BehaviorSubject(false)
-  metadata$ = new BehaviorSubject(RECORDS_FULL_FIXTURE[0])
+  metadata$ = new BehaviorSubject(SAMPLE_RECORD)
   mapApiLinks$ = new BehaviorSubject([])
   dataLinks$ = new BehaviorSubject([])
   geoDataLinks$ = new BehaviorSubject([])
@@ -132,7 +137,7 @@ describe('RecordMetadataComponent', () => {
           useClass: SourcesServiceMock,
         },
         {
-          provide: OrganisationsServiceInterface,
+          provide: OrganizationsServiceInterface,
           useClass: OrganisationsServiceMock,
         },
       ],
@@ -175,11 +180,11 @@ describe('RecordMetadataComponent', () => {
         expect(metadataInfo.metadata).toHaveProperty('abstract')
       })
       it('shows the metadata contact', () => {
-        expect(metadataContact.metadata).toHaveProperty('contact')
+        expect(metadataContact.metadata).toHaveProperty('contacts')
       })
       it('shows the metadata catalog', () => {
         expect(sourcesService.getSourceLabel).toBeCalledWith(
-          RECORDS_FULL_FIXTURE[0].catalogUuid
+          SAMPLE_RECORD.extras.catalogUuid
         )
         expect(catalogComponent.sourceLabel).toEqual('catalog label')
       })
@@ -481,13 +486,19 @@ describe('RecordMetadataComponent', () => {
   describe('#onContactClick', () => {
     it('call update search for OrgForResource', () => {
       component.onContactClick({
-        name: 'john doe',
+        firstName: 'john',
+        role: 'point_of_contact',
         email: 'joh@doe.com',
-        organisation: 'orgname',
+        organization: {
+          name: 'MyOrganization',
+          website: new URL('https://www.my.org/info'),
+          logoUrl: new URL('https://www.my.org/logo.png'),
+          description: 'A generic organization',
+        },
       })
       expect(searchService.updateFilters).toHaveBeenCalledWith({
         orgs: {
-          orgname: true,
+          MyOrganization: true,
         },
       })
     })
@@ -516,7 +527,7 @@ describe('RecordMetadataComponent', () => {
         expect(result.componentInstance.type).toBe(ErrorType.RECORD_NOT_FOUND)
         expect(result.componentInstance.error).toBe(undefined)
         expect(result.componentInstance.recordId).toBe(
-          RECORDS_FULL_FIXTURE[0].uuid
+          SAMPLE_RECORD.uniqueIdentifier
         )
       })
     })

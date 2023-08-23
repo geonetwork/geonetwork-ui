@@ -1,5 +1,6 @@
 import { HttpClientModule } from '@angular/common/http'
 import { TranslateModule } from '@ngx-translate/core'
+import { CHART_TYPE_VALUES } from '@geonetwork-ui/common/domain/dataviz-configuration.model'
 import {
   applicationConfig,
   componentWrapperDecorator,
@@ -12,7 +13,6 @@ import { ChartComponent } from './chart.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiDatavizModule } from '../ui-dataviz.module'
 import { importProvidersFrom } from '@angular/core'
-import { CHART_TYPE_VALUES } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
 
 const meta: Meta<ChartComponent> = {
   title: 'Dataviz/ChartComponent',

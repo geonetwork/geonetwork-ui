@@ -1,14 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import {
-  OrganisationsServiceInterface,
-  SourcesService,
-} from '@geonetwork-ui/feature/catalog'
+import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import { ErrorType } from '@geonetwork-ui/ui/elements'
 import { BehaviorSubject, combineLatest } from 'rxjs'
 import { filter, map, mergeMap, pluck } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
-import { MetadataContact, Organisation } from '@geonetwork-ui/util/shared'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { Individual } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-record-metadata',
@@ -47,7 +45,7 @@ export class RecordMetadataComponent {
   )
 
   sourceLabel$ = this.facade.metadata$.pipe(
-    pluck('catalogUuid'),
+    map((record) => record?.extras?.catalogUuid as string),
     filter((uuid) => !!uuid),
     mergeMap((uuid) => this.sourceService.getSourceLabel(uuid))
   )
@@ -59,7 +57,7 @@ export class RecordMetadataComponent {
     public facade: MdViewFacade,
     private searchService: SearchService,
     private sourceService: SourcesService,
-    private orgsService: OrganisationsServiceInterface
+    private orgsService: OrganizationsServiceInterface
   ) {}
 
   onTabIndexChange(index: number): void {
@@ -72,9 +70,9 @@ export class RecordMetadataComponent {
   onInfoKeywordClick(keyword: string) {
     this.searchService.updateFilters({ any: keyword })
   }
-  onContactClick(contact: MetadataContact) {
+  onContactClick(contact: Individual) {
     this.orgsService
-      .getFiltersForOrgs([{ name: contact.organisation }])
+      .getFiltersForOrgs([contact.organization])
       .subscribe((filters) => this.searchService.updateFilters(filters))
   }
 }

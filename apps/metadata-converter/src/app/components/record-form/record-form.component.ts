@@ -11,12 +11,12 @@ import {
   DatasetDistributionType,
   DatasetRecord,
   RecordKind,
-  RecordStatus,
-  Role,
+  RecordStatusValues,
+  RoleValues,
   ServiceOnlineResource,
   ServiceOnlineResourceType,
   ServiceRecord,
-} from '@geonetwork-ui/util/types/metadata'
+} from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -27,8 +27,8 @@ export class RecordFormComponent implements AfterViewInit {
   @Input() record: CatalogRecord
   @Output() recordChanged = new EventEmitter<CatalogRecord>()
 
-  statusOptions = Object.keys(RecordStatus)
-  roleOptions = Object.keys(Role)
+  statusOptions = RecordStatusValues
+  roleOptions = RoleValues
 
   get isDatasetRecord() {
     return this.record.kind === 'dataset'
@@ -56,19 +56,19 @@ export class RecordFormComponent implements AfterViewInit {
       case 'download':
         return {
           type,
-          downloadUrl: new URL('', window.location.toString()),
+          url: new URL('', window.location.toString()),
         }
       case 'service':
         return {
           type,
-          accessServiceUrl: new URL('', window.location.toString()),
+          url: new URL('', window.location.toString()),
           accessServiceProtocol: 'other',
         }
       case 'link':
       default:
         return {
           type: 'link',
-          linkUrl: new URL('', window.location.toString()),
+          url: new URL('', window.location.toString()),
         }
     }
   }
@@ -86,7 +86,7 @@ export class RecordFormComponent implements AfterViewInit {
       case 'link':
         return {
           type,
-          linkUrl: new URL('', window.location.toString()),
+          url: new URL('', window.location.toString()),
         }
     }
   }
@@ -114,7 +114,7 @@ export class RecordFormComponent implements AfterViewInit {
       this.record = {
         ...record,
         kind: 'dataset',
-        status: RecordStatus.UNDER_DEVELOPMENT,
+        status: 'under_development',
         updateFrequency: 'unknown',
         lineage: '',
         overviews: [],

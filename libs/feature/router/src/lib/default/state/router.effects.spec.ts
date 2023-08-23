@@ -130,10 +130,8 @@ describe('RouterEffects', () => {
         a: MdViewActions.loadFullMetadata({ uuid: 'abcdef' }),
         b: MdViewActions.setIncompleteMetadata({
           incomplete: {
-            uuid: 'abcdef',
-            id: '',
+            uniqueIdentifier: 'abcdef',
             title: '',
-            metadataUrl: '',
           },
         }),
       })
@@ -211,7 +209,7 @@ describe('RouterEffects', () => {
       it('dispatches SetFilters and SortBy actions', () => {
         const expected = hot('(ab)', {
           a: new SetFilters({ any: 'any' }, 'main'),
-          b: new SetSortBy('-createDate', 'main'),
+          b: new SetSortBy(['desc', 'createDate'], 'main'),
         })
         expect(effects.syncSearchState$).toBeObservable(expected)
       })
@@ -226,7 +224,7 @@ describe('RouterEffects', () => {
       it('dispatches SetFilters and SortBy actions with default sort value', () => {
         const expected = hot('(ab)', {
           a: new SetFilters({ any: 'any' }, 'main'),
-          b: new SetSortBy('_score', 'main'),
+          b: new SetSortBy(['desc', '_score'], 'main'),
         })
         expect(effects.syncSearchState$).toBeObservable(expected)
       })

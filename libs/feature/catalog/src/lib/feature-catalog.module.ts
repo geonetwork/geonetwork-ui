@@ -13,16 +13,14 @@ import { OrganisationsComponent } from './organisations/organisations.component'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
-  OrganisationsFromMetadataService,
-  OrganisationsServiceInterface,
-} from './organisations/service'
-import {
-  ElasticsearchService,
+  OrganizationsFromMetadataService,
   ORGANIZATIONS_STRATEGY,
+  OrganizationsFromGroupsService,
   OrganizationsStrategy,
-} from '@geonetwork-ui/util/shared'
-import { OrganisationsFromGroupsService } from './organisations/service/organisations-from-groups.service'
+  ElasticsearchService,
+} from '@geonetwork-ui/api/repository/gn4'
 
 // expects the replacement key ${name}
 export const ORGANIZATION_URL_TOKEN = new InjectionToken<string>(
@@ -37,13 +35,13 @@ const organizationsServiceFactory = (
   translateService: TranslateService
 ) =>
   strategy === 'groups'
-    ? new OrganisationsFromGroupsService(
+    ? new OrganizationsFromGroupsService(
         esService,
         searchApiService,
         groupsApiService,
         translateService
       )
-    : new OrganisationsFromMetadataService(
+    : new OrganizationsFromMetadataService(
         esService,
         searchApiService,
         groupsApiService
@@ -67,7 +65,7 @@ const organizationsServiceFactory = (
   exports: [SiteTitleComponent, SourceLabelComponent, OrganisationsComponent],
   providers: [
     {
-      provide: OrganisationsServiceInterface,
+      provide: OrganizationsServiceInterface,
       useFactory: organizationsServiceFactory,
       deps: [
         ORGANIZATIONS_STRATEGY,

@@ -13,9 +13,6 @@ import {
   getJsonDataItemsProxy,
 } from '@geonetwork-ui/data-fetcher'
 import { DDChoices } from '@geonetwork-ui/ui/inputs'
-import { MetadataLink } from '@geonetwork-ui/util/shared'
-import { AggregationTypes } from '@geonetwork-ui/util/types/data/data-api.model'
-import { InputChartType } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
 import { BehaviorSubject, combineLatest, EMPTY, Observable } from 'rxjs'
 import {
   catchError,
@@ -27,6 +24,11 @@ import {
   tap,
 } from 'rxjs/operators'
 import { DataService } from '../service/data.service'
+import {
+  AggregationTypes,
+  InputChartType,
+} from '@geonetwork-ui/common/domain/dataviz-configuration.model'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
 import { TranslateService } from '@ngx-translate/core'
 
 marker('chart.type.bar')
@@ -48,10 +50,10 @@ marker('chart.aggregation.count')
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChartViewComponent {
-  @Input() set link(value: MetadataLink) {
+  @Input() set link(value: DatasetDistribution) {
     this.currentLink$.next(value)
   }
-  private currentLink$ = new BehaviorSubject<MetadataLink>(null)
+  private currentLink$ = new BehaviorSubject<DatasetDistribution>(null)
 
   @Input() set aggregation(value: FieldAggregation[0]) {
     this.aggregation$.next(value)

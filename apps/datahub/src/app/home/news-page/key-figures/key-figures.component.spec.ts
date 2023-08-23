@@ -1,14 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { KeyFiguresComponent } from './key-figures.component'
 import { of } from 'rxjs'
-import {
-  OrganisationsServiceInterface,
-  RecordsService,
-} from '@geonetwork-ui/feature/catalog'
+import { RecordsService } from '@geonetwork-ui/feature/catalog'
 import { TranslateModule } from '@ngx-translate/core'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { RouterTestingModule } from '@angular/router/testing'
 import { By } from '@angular/platform-browser'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 
 class RecordsServiceMock {
   recordsCount$ = of(1234)
@@ -32,7 +30,7 @@ describe('KeyFiguresComponent', () => {
           useClass: RecordsServiceMock,
         },
         {
-          provide: OrganisationsServiceInterface,
+          provide: OrganizationsServiceInterface,
           useClass: OrganisationsServiceMock,
         },
       ],

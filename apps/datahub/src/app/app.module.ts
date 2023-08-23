@@ -36,7 +36,6 @@ import {
 } from '@geonetwork-ui/util/app-config'
 import { UtilI18nModule } from '@geonetwork-ui/util/i18n'
 import {
-  METADATA_LANGUAGE,
   PROXY_PATH,
   ThemeService,
   UtilSharedModule,
@@ -48,7 +47,6 @@ import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { TranslateModule } from '@ngx-translate/core'
 import { environment } from '../environments/environment'
-
 import { AppComponent } from './app.component'
 import { HeaderBadgeButtonComponent } from './home/header-badge-button/header-badge-button.component'
 import { HomeHeaderComponent } from './home/home-header/home-header.component'
@@ -68,6 +66,7 @@ import { FormsModule } from '@angular/forms'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { WEB_COMPONENT_EMBEDDER_URL } from '@geonetwork-ui/feature/record'
 import { LANGUAGES_LIST, UiCatalogModule } from '@geonetwork-ui/ui/catalog'
+import { METADATA_LANGUAGE } from '@geonetwork-ui/api/repository'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191

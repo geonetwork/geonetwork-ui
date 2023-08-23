@@ -7,7 +7,6 @@ import {
 } from '@storybook/angular'
 import { DownloadItemComponent } from './download-item.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MetadataLinkType } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { importProvidersFrom } from '@angular/core'
 import { MatIcon } from '@angular/material/icon'
@@ -32,11 +31,10 @@ export default {
 export const Primary: StoryObj<DownloadItemComponent> = {
   args: {
     link: {
-      protocol: 'WWW:DOWNLOAD',
       name: 'allroads.geojson',
-      type: MetadataLinkType.DOWNLOAD,
+      type: 'download',
       description: 'A file that contains all roads',
-      url: 'https//roads.com/allroads.geojson',
+      url: new URL('https://roads.com/allroads.geojson'),
     },
   },
   argTypes: {

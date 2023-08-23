@@ -24,7 +24,7 @@
         >
         <gn-ui-thumbnail
           *ngIf="hasLogo"
-          [thumbnailUrl]="contact.logoUrl"
+          [thumbnailUrl]="record.ownerOrganization.logoUrl.toString()"
         ></gn-ui-thumbnail>
       </div>
       <div class="flex flex-col overflow-hidden items-start">
@@ -32,13 +32,13 @@
           *ngIf="hasOrganization"
           class="font-bold transition duration-200 text-primary truncate max-w-full"
         >
-          {{ contact.organisation }}
+          {{ record.ownerOrganization.name }}
         </span>
         <span
           *ngIf="hasOnlyPerson"
           class="font-bold transition duration-200 text-primary truncate max-w-full"
         >
-          {{ contact.name }}
+          {{ contact.firstName }} {{ contact.lastName }}
         </span>
         <p class="text-gray-900">
           <span translate [translateParams]="{ time }"
@@ -59,9 +59,9 @@
       </h1>
       <p class="text-gray-900 line-clamp-3">{{ abstract }}</p>
       <gn-ui-thumbnail
-        *ngIf="record.thumbnailUrl"
+        *ngIf="record.overviews?.[0]"
         class="block mt-3 w-full h-[136px] border border-gray-100 rounded-lg overflow-hidden"
-        [thumbnailUrl]="record.thumbnailUrl"
+        [thumbnailUrl]="record.overviews?.[0]?.url.toString()"
       ></gn-ui-thumbnail>
       <div class="flex flex-row mt-3" *ngIf="isDownloadable || isViewable">
         <mat-icon

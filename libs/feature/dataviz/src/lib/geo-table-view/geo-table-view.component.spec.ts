@@ -11,7 +11,7 @@ import {
   MapContextLayerTypeEnum,
   MapManagerService,
 } from '@geonetwork-ui/feature/map'
-import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared/fixtures'
+import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/common/fixtures'
 import { Map } from 'ol'
 import GeoJSON from 'ol/format/GeoJSON'
 import TileLayer from 'ol/layer/Tile'

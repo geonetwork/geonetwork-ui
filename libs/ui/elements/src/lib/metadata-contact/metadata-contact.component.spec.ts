@@ -18,16 +18,21 @@ describe('MetadataContactComponent', () => {
     fixture = TestBed.createComponent(MetadataContactComponent)
     component = fixture.componentInstance
     component.metadata = {
-      resourceContacts: [
+      kind: 'dataset',
+      ownerOrganization: {
+        name: 'Worldcorp',
+        website: new URL('https://john.world.co'),
+      },
+      contactsForResource: [
         {
           name: 'john',
-          organisation: 'Worldcorp',
+          organization: 'Worldcorp',
           email: 'john@world.co',
           website: 'https://john.world.co',
         },
         {
           name: 'billy',
-          organisation: 'small corp',
+          organization: 'small corp',
           email: 'billy@small.co',
           website: 'https://billy.small.co',
         },
@@ -42,18 +47,16 @@ describe('MetadataContactComponent', () => {
   describe('on contact click', () => {
     beforeEach(() => {
       jest.resetAllMocks()
-      jest.spyOn(component.contact, 'emit')
+      jest.spyOn(component.organizationClick, 'emit')
     })
     it('emit contact click with contact name', () => {
       const el = fixture.debugElement.query(
         By.css('.text-primary.font-title')
       ).nativeElement
       el.click()
-      expect(component.contact.emit).toHaveBeenCalledWith({
-        name: 'john',
-        organisation: 'Worldcorp',
-        email: 'john@world.co',
-        website: 'https://john.world.co',
+      expect(component.organizationClick.emit).toHaveBeenCalledWith({
+        name: 'Worldcorp',
+        website: new URL('https://john.world.co'),
       })
     })
   })
@@ -73,7 +76,7 @@ describe('MetadataContactComponent', () => {
     })
     it('displays a link to the contact website', () => {
       const a = fixture.debugElement.query(By.css('.contact-website'))
-      expect(a.attributes.href).toBe('https://john.world.co')
+      expect(a.attributes.href).toBe('https://john.world.co/')
       expect(a.attributes.target).toBe('_blank')
     })
   })

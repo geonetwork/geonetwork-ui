@@ -3,14 +3,14 @@
   class="h-10 w-full border-b border-gray-200 transition duration-200 rounded-sm hover:text-primary"
 >
   <a
-    [href]="record.metadataUrl"
+    [href]="record.landingPage"
     [target]="linkTarget"
     [title]="record.abstract"
   >
     <div class="h-full flex flex-row items-center">
       <gn-ui-thumbnail
         class="w-10 h-full shrink-0 border-r border-gray-200 bg-gray-100"
-        [thumbnailUrl]="record.thumbnailUrl"
+        [thumbnailUrl]="record.overviews?.[0]?.url.toString()"
       ></gn-ui-thumbnail>
 
       <div class="grow px-3 py-1 flex flex-col overflow-hidden">

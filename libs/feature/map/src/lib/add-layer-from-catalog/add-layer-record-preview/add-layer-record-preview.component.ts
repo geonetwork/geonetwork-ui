@@ -4,8 +4,6 @@ import {
   getLinkLabel,
   LinkClassifierService,
   LinkUsage,
-  MetadataLink,
-  MetadataLinkType,
 } from '@geonetwork-ui/util/shared'
 import { Observable, of, throwError } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -15,6 +13,10 @@ import {
   MapContextLayerModel,
   MapContextLayerTypeEnum,
 } from '../../map-context/map-context.model'
+import {
+  DatasetDistribution,
+  DatasetRecord,
+} from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-add-layer-record-preview',
@@ -23,10 +25,10 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddLayerRecordPreviewComponent extends RecordPreviewComponent {
-  get mapLinks(): MetadataLink[] {
-    return this.record.links.filter((link) =>
+  get mapLinks(): DatasetDistribution[] {
+    return (this.record as DatasetRecord).distributions.filter((link) =>
       this.linkClassifier.hasUsage(link, LinkUsage.MAP_API)
-    ) as MetadataLink[]
+    ) as DatasetDistribution[]
   }
 
   constructor(
@@ -38,19 +40,25 @@ export class AddLayerRecordPreviewComponent extends RecordPreviewComponent {
     super(elementRef)
   }
 
-  async handleLinkClick(link: MetadataLink) {
+  async handleLinkClick(link: DatasetDistribution) {
     const layer = await this.getLayerFromLink(link).toPromise()
     this.mapFacade.addLayer({ ...layer, title: this.record.title })
   }
 
-  getLayerFromLink(link: MetadataLink): Observable<MapContextLayerModel> {
-    if (link.type === MetadataLinkType.WMS) {
+  getLayerFromLink(
+    link: DatasetDistribution
+  ): Observable<MapContextLayerModel> {
+    if (link.type !== 'service')
+      return throwError(
+        () => 'map layer could not be built for this distribution'
+      )
+    if (link.accessServiceProtocol === 'wms') {
       return of({
-        url: link.url,
+        url: link.url.toString(),
         type: MapContextLayerTypeEnum.WMS,
         name: link.name,
       })
-    } else if (link.type === MetadataLinkType.WMTS) {
+    } else if (link.accessServiceProtocol === 'wmts') {
       return this.mapUtils.getWmtsOptionsFromCapabilities(link).pipe(
         map((options) => ({
           type: MapContextLayerTypeEnum.WMTS,
@@ -58,10 +66,10 @@ export class AddLayerRecordPreviewComponent extends RecordPreviewComponent {
         }))
       )
     }
-    return throwError('protocol not supported')
+    return throwError(() => 'protocol not supported')
   }
 
-  getLinkLabel(link: MetadataLink) {
+  getLinkLabel(link: DatasetDistribution) {
     return getLinkLabel(link)
   }
 }

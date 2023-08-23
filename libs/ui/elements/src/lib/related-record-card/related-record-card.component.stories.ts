@@ -19,6 +19,7 @@ import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
+import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 
 export default {
   title: 'Elements/RelatedRecordCardComponent',
@@ -49,18 +50,6 @@ export default {
 
 export const Primary: StoryObj<RelatedRecordCardComponent> = {
   args: {
-    record: {
-      thumbnailUrl:
-        'https://www.geo2france.fr/public/vignettes_geonetwork/arrondissements_hdf.JPG',
-      title: 'Arrondissements de la région Hauts-de-France',
-      uuid: 'd90835e0-2763-49f1-a251-cd64c8a4bbf4',
-      metadataUrl:
-        '/geonetwork/srv/api/../fre/catalog.search#/metadata/d90835e0-2763-49f1-a251-cd64c8a4bbf4',
-      abstract:
-        "Découpage géographique des arrondissements des Hauts-de-France. L'arrondissement, subdivision des départements, est une circonscription administrative qui depuis mars 2015 est composé de regroupement de communes.",
-      id: '40697',
-      hasDownloads: true,
-      hasMaps: true,
-    },
+    record: DATASET_RECORDS[0],
   },
 }

@@ -9,7 +9,8 @@ import {
 } from '@angular/core'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { BaseComponent } from '../base.component'
-import { LinkUsage, MetadataLink } from '@geonetwork-ui/util/shared'
+import { LinkUsage } from '@geonetwork-ui/util/shared'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'wc-gn-dataset-view-table',
@@ -24,7 +25,7 @@ export class GnDatasetViewTableComponent
   implements OnInit
 {
   @Input() datasetId!: string
-  link: MetadataLink
+  link: DatasetDistribution
   constructor(injector: Injector, private changeDetector: ChangeDetectorRef) {
     super(injector)
   }

@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { OrganisationsPageComponent } from './organisations-page.component'
 import { SearchService } from '@geonetwork-ui/feature/search'
-import { OrganisationsServiceInterface } from '@geonetwork-ui/feature/catalog'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { of } from 'rxjs'
 
 class SearchServiceMock {
@@ -22,7 +22,7 @@ describe('OrganisationsPageComponent', () => {
   let component: OrganisationsPageComponent
   let fixture: ComponentFixture<OrganisationsPageComponent>
   let searchService: SearchService
-  let orgsService: OrganisationsServiceInterface
+  let orgsService: OrganizationsServiceInterface
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -34,14 +34,14 @@ describe('OrganisationsPageComponent', () => {
           useClass: SearchServiceMock,
         },
         {
-          provide: OrganisationsServiceInterface,
+          provide: OrganizationsServiceInterface,
           useClass: OrganisationsServiceMock,
         },
       ],
     }).compileComponents()
 
     searchService = TestBed.inject(SearchService)
-    orgsService = TestBed.inject(OrganisationsServiceInterface)
+    orgsService = TestBed.inject(OrganizationsServiceInterface)
 
     fixture = TestBed.createComponent(OrganisationsPageComponent)
     component = fixture.componentInstance

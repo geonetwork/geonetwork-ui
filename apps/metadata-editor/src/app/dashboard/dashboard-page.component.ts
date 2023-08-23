@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { Router } from '@angular/router'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { DashboardSearchService } from './dashboard-search.service'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'md-editor-dashboard',
@@ -24,7 +24,7 @@ export class DashboardPageComponent {
   createRecord() {
     this.router.navigate(['/create'])
   }
-  editRecord(record: MetadataRecord) {
-    this.router.navigate(['/edit', record.uuid])
+  editRecord(record: CatalogRecord) {
+    this.router.navigate(['/edit', record.uniqueIdentifier])
   }
 }

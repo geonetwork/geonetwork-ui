@@ -11,9 +11,9 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { RecordPreviewComponent } from '../record-preview/record-preview.component'
 import { ResultsLayoutConfigItem } from '../results-list/results-layout.config'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-results-list-item',
@@ -23,10 +23,10 @@ import { ResultsLayoutConfigItem } from '../results-list/results-layout.config'
 })
 export class ResultsListItemComponent implements OnChanges, AfterViewInit {
   @Input() layoutConfig: ResultsLayoutConfigItem
-  @Input() record: MetadataRecord
-  @Input() favoriteTemplate: TemplateRef<{ $implicit: MetadataRecord }>
+  @Input() record: CatalogRecord
+  @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
   @Input() linkHref: string
-  @Output() mdSelect = new EventEmitter<MetadataRecord>()
+  @Output() mdSelect = new EventEmitter<CatalogRecord>()
   initialized = false
 
   @ViewChild('card', { read: ViewContainerRef }) cardRef: ViewContainerRef
