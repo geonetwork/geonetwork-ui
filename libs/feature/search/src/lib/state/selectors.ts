@@ -17,7 +17,7 @@ export const getSearchFilters = createSelector(
 
 export const getSearchSortBy = createSelector(
   getSearchStateSearch,
-  (state: SearchStateSearch) => state.params.sortBy
+  (state: SearchStateSearch) => state.params.sort
 )
 
 export const getSearchResultsLayout = createSelector(
@@ -47,38 +47,32 @@ export const getSearchResultsAggregations = createSelector(
 
 export const getSearchResultsHits = createSelector(
   getSearchStateSearch,
-  (state: SearchStateSearch) => state.results.hits
+  (state: SearchStateSearch) => state.results.count
 )
 
 export const isEndOfResults = createSelector(
   getSearchStateSearch,
   (state: SearchStateSearch) => {
-    return (
-      state.results.hits &&
-      state.params.from + state.params.size >= state.results.hits.value
-    )
+    return state.params.offset + state.params.limit >= state.results.count
   }
 )
 
 export const totalPages = createSelector(
   getSearchStateSearch,
   (state: SearchStateSearch) => {
-    return (
-      state.results.hits &&
-      Math.ceil(state.results.hits.value / state.params.size)
-    )
+    return Math.ceil(state.results.count / state.params.limit)
   }
 )
 
 export const currentPage = createSelector(
   getSearchStateSearch,
   (state: SearchStateSearch) =>
-    Math.ceil(state.params.from / state.params.size) + 1
+    Math.ceil(state.params.offset / state.params.limit) + 1
 )
 
 export const getSize = createSelector(
   getSearchStateSearch,
-  (state: SearchStateSearch) => state.params.size
+  (state: SearchStateSearch) => state.params.limit
 )
 
 export const getFavoritesOnly = createSelector(

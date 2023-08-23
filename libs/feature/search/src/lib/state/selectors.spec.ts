@@ -2,10 +2,9 @@ import { DEFAULT_SEARCH_KEY } from './actions'
 import { initialState } from './reducer'
 import * as fromSelectors from './selectors'
 import {
-  ES_FIXTURE_AGGS_REQUEST,
-  ES_FIXTURE_AGGS_RESPONSE,
-} from '@geonetwork-ui/util/shared/fixtures'
-import { currentPage, getSpatialFilterEnabled, totalPages } from './selectors'
+  SAMPLE_AGGREGATIONS_PARAMS,
+  SAMPLE_AGGREGATIONS_RESULTS,
+} from '@geonetwork-ui/common/fixtures'
 
 const initialStateSearch = initialState[DEFAULT_SEARCH_KEY]
 
@@ -33,10 +32,10 @@ describe('Search Selectors', () => {
         ...initialStateSearch,
         params: {
           ...initialStateSearch.params,
-          sortBy: 'title',
+          sort: ['asc', 'title'],
         },
       })
-      expect(result).toEqual('title')
+      expect(result).toEqual(['asc', 'title'])
     })
   })
 
@@ -46,10 +45,10 @@ describe('Search Selectors', () => {
         ...initialStateSearch,
         config: {
           ...initialStateSearch.config,
-          aggregations: ES_FIXTURE_AGGS_REQUEST,
+          aggregations: SAMPLE_AGGREGATIONS_PARAMS,
         },
       })
-      expect(result).toEqual(ES_FIXTURE_AGGS_REQUEST)
+      expect(result).toEqual(SAMPLE_AGGREGATIONS_PARAMS)
     })
   })
 
@@ -83,14 +82,12 @@ describe('Search Selectors', () => {
         ...initialStateSearch,
         params: {
           ...initialStateSearch.params,
-          from: 0,
-          size: 20,
+          offset: 0,
+          limit: 20,
         },
         results: {
           ...initialStateSearch.results,
-          hits: {
-            value: 62,
-          },
+          count: 62,
         },
       })
       expect(result).toEqual(false)
@@ -99,14 +96,12 @@ describe('Search Selectors', () => {
         ...initialStateSearch,
         params: {
           ...initialStateSearch.params,
-          from: 60,
-          size: 20,
+          offset: 60,
+          limit: 20,
         },
         results: {
           ...initialStateSearch.results,
-          hits: {
-            value: 62,
-          },
+          count: 62,
         },
       })
       expect(endResult).toEqual(true)
@@ -115,14 +110,12 @@ describe('Search Selectors', () => {
         ...initialStateSearch,
         params: {
           ...initialStateSearch.params,
-          from: 40,
-          size: 20,
+          offset: 40,
+          limit: 20,
         },
         results: {
           ...initialStateSearch.results,
-          hits: {
-            value: 60,
-          },
+          count: 60,
         },
       })
       expect(exactEndOfResult).toEqual(true)
@@ -135,14 +128,12 @@ describe('Search Selectors', () => {
         ...initialStateSearch,
         params: {
           ...initialStateSearch.params,
-          from: 0,
-          size: 20,
+          offset: 0,
+          limit: 20,
         },
         results: {
           ...initialStateSearch.results,
-          hits: {
-            value: 62,
-          },
+          count: 62,
         },
       })
       expect(result).toEqual(4)
@@ -155,8 +146,8 @@ describe('Search Selectors', () => {
         ...initialStateSearch,
         params: {
           ...initialStateSearch.params,
-          from: 0,
-          size: 20,
+          offset: 0,
+          limit: 20,
         },
       })
       expect(result).toEqual(1)
@@ -165,8 +156,8 @@ describe('Search Selectors', () => {
         ...initialStateSearch,
         params: {
           ...initialStateSearch.params,
-          from: 20,
-          size: 20,
+          offset: 20,
+          limit: 20,
         },
       })
       expect(secondPage).toEqual(2)
@@ -175,7 +166,7 @@ describe('Search Selectors', () => {
 
   describe('getSearchResultsAggregations', () => {
     it('should return search aggregations results', () => {
-      const aggregations = ES_FIXTURE_AGGS_RESPONSE
+      const aggregations = SAMPLE_AGGREGATIONS_RESULTS
       const result = fromSelectors.getSearchResultsAggregations.projector({
         ...initialStateSearch,
         results: {

@@ -1,21 +1,18 @@
-import {
-  RequestFields,
-  MetadataRecord,
-  RESULTS_PAGE_SIZE,
-  SearchFilters,
-  StateConfigFilters,
-} from '@geonetwork-ui/util/shared'
 import * as fromActions from './actions'
 import { DEFAULT_SEARCH_KEY } from './actions'
-import { ES_SOURCE_SUMMARY } from '@geonetwork-ui/util/shared'
+import {
+  Aggregations,
+  AggregationsParams,
+  FieldFilters,
+  FieldName,
+  SearchParams,
+} from '@geonetwork-ui/common/domain/search'
+import { DEFAULT_PAGE_SIZE, FIELDS_SUMMARY } from '../constants'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
 export const SEARCH_FEATURE_KEY = 'searchState'
 
-export interface SearchStateParams {
-  filters?: SearchFilters
-  sortBy?: string
-  size?: number
-  from?: number
+export type SearchStateParams = SearchParams & {
   favoritesOnly?: boolean
   useSpatialFilter?: boolean
 }
@@ -27,18 +24,15 @@ export type SearchError = {
 
 export interface SearchStateSearch {
   config: {
-    aggregations?: any
-    filters?: StateConfigFilters
-    source?: RequestFields
+    aggregations: AggregationsParams
+    filters: FieldFilters
+    source: FieldName[]
   }
   params: SearchStateParams
   results: {
-    hits: {
-      value: number
-      eq?: string
-    }
-    records: MetadataRecord[]
-    aggregations: any
+    count: number
+    records: CatalogRecord[]
+    aggregations: Aggregations
   }
   resultsLayout?: string
   loadingMore: boolean
@@ -51,17 +45,18 @@ export const initSearch = (): SearchStateSearch => {
   return {
     config: {
       filters: {},
-      source: { includes: ES_SOURCE_SUMMARY },
+      source: FIELDS_SUMMARY,
+      aggregations: {},
     },
     params: {
       filters: {},
-      size: RESULTS_PAGE_SIZE,
-      from: 0,
+      limit: DEFAULT_PAGE_SIZE,
+      offset: 0,
       favoritesOnly: false,
       useSpatialFilter: true,
     },
     results: {
-      hits: null,
+      count: 0,
       records: [],
       aggregations: {},
     },
@@ -142,7 +137,7 @@ export function reducerSearch(
         ...state,
         params: {
           ...state.params,
-          sortBy: action.sortBy,
+          sort: action.sortBy,
         },
       }
     }
@@ -156,13 +151,13 @@ export function reducerSearch(
       }
     }
     case fromActions.SET_PAGINATION: {
-      const { from, size } = action
+      const { offset, limit } = action
       return {
         ...state,
         params: {
           ...state.params,
-          from,
-          size,
+          limit,
+          offset,
         },
       }
     }
@@ -171,18 +166,18 @@ export function reducerSearch(
         ...state,
         params: {
           ...state.params,
-          from: 0,
+          offset: 0,
         },
       }
     case fromActions.SCROLL:
     case fromActions.PAGINATE: {
-      const delta = (action as fromActions.Paginate).delta || state.params.size
-      const from = Math.max(0, state.params.from + delta)
+      const delta = (action as fromActions.Paginate).delta || state.params.limit
+      const offset = Math.max(0, state.params.offset + delta)
       return {
         ...state,
         params: {
           ...state.params,
-          from,
+          offset,
         },
       }
     }
@@ -222,7 +217,7 @@ export function reducerSearch(
         ...state,
         results: {
           ...state.results,
-          hits: action.payload,
+          count: action.payload,
         },
       }
     }
@@ -262,40 +257,51 @@ export function reducerSearch(
         },
       }
     }
-    case fromActions.UPDATE_REQUEST_AGGREGATION_TERM: {
+    case fromActions.REQUEST_MORE_ON_AGGREGATION: {
       const config = state.config
-      const aggregations = config.aggregations
-      const terms = aggregations[action.key].terms
-      const { increment, ...patch } = action.patch
-
-      if (increment) {
-        patch.size = (terms.size || 0) + increment
-      }
+      const aggregation = config.aggregations[action.aggregationName]
+      if (aggregation.type !== 'terms') return state
       return {
         ...state,
         config: {
           ...config,
           aggregations: {
-            ...aggregations,
-            [action.key]: {
-              terms: {
-                ...terms,
-                ...patch,
-              },
+            ...config.aggregations,
+            [action.aggregationName]: {
+              ...aggregation,
+              limit: aggregation.limit + action.increment,
+            },
+          },
+        },
+      }
+    }
+    case fromActions.SET_INCLUDE_ON_AGGREGATION: {
+      const config = state.config
+      const aggregation = config.aggregations[action.aggregationName]
+      if (aggregation.type !== 'terms') return state
+      return {
+        ...state,
+        config: {
+          ...config,
+          aggregations: {
+            ...config.aggregations,
+            [action.aggregationName]: {
+              ...aggregation,
+              filter: action.include,
             },
           },
         },
       }
     }
     case fromActions.PATCH_RESULTS_AGGREGATIONS: {
-      const clone = JSON.parse(JSON.stringify(state.results.aggregations))
-      clone[action.key].buckets = action.payload[action.key].buckets
-
       return {
         ...state,
         results: {
           ...state.results,
-          aggregations: clone,
+          aggregations: {
+            ...state.results.aggregations,
+            [action.aggregationName]: action.payload,
+          },
         },
       }
     }

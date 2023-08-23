@@ -1,15 +1,16 @@
-import {
-  EsRequestAggTermPatch,
-  MetadataRecord,
-  RequestFields,
-  SearchFilters,
-  StateConfigFilters,
-} from '@geonetwork-ui/util/shared'
 import { Action } from '@ngrx/store'
 import { SearchStateParams } from './reducer'
+import {
+  Aggregation,
+  Aggregations,
+  AggregationsParams,
+  FieldFilters,
+  FieldName,
+  SortByField,
+} from '@geonetwork-ui/common/domain/search'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
 export const ADD_SEARCH = '[Search] Add search instance'
-
 export const SET_FILTERS = '[Search] Set Filters'
 export const SET_CONFIG_FILTERS = '[Search] Set config filters'
 export const UPDATE_FILTERS = '[Search] Update Filters'
@@ -56,7 +57,7 @@ export class AddSearch implements Action {
 export class SetConfigFilters extends AbstractAction implements Action {
   readonly type = SET_CONFIG_FILTERS
 
-  constructor(public payload: StateConfigFilters, id?: string) {
+  constructor(public payload: FieldFilters, id?: string) {
     super(id)
   }
 }
@@ -64,7 +65,7 @@ export class SetConfigFilters extends AbstractAction implements Action {
 export class SetFilters extends AbstractAction implements Action {
   readonly type = SET_FILTERS
 
-  constructor(public payload: SearchFilters, id?: string) {
+  constructor(public payload: FieldFilters, id?: string) {
     super(id)
   }
 }
@@ -72,7 +73,7 @@ export class SetFilters extends AbstractAction implements Action {
 export class UpdateFilters extends AbstractAction implements Action {
   readonly type = UPDATE_FILTERS
 
-  constructor(public payload: SearchFilters, id?: string) {
+  constructor(public payload: FieldFilters, id?: string) {
     super(id)
   }
 }
@@ -93,14 +94,14 @@ export class SetFavoritesOnly extends AbstractAction implements Action {
 }
 export class SetSortBy extends AbstractAction implements Action {
   readonly type = SET_SORT_BY
-  constructor(public sortBy: string, id?: string) {
+  constructor(public sortBy: SortByField, id?: string) {
     super(id)
   }
 }
 
 export class SetPagination extends AbstractAction implements Action {
   readonly type = SET_PAGINATION
-  constructor(public from: number, public size: number, id?: string) {
+  constructor(public offset: number, public limit: number, id?: string) {
     super(id)
   }
 }
@@ -138,7 +139,7 @@ export class SetResultsLayout extends AbstractAction implements Action {
 export class AddResults extends AbstractAction implements Action {
   readonly type = ADD_RESULTS
 
-  constructor(public payload: MetadataRecord[], id?: string) {
+  constructor(public payload: CatalogRecord[], id?: string) {
     super(id)
   }
 }
@@ -162,61 +163,55 @@ export class RequestMoreResults extends AbstractAction implements Action {
 export class SetResultsAggregations extends AbstractAction implements Action {
   readonly type = SET_RESULTS_AGGREGATIONS
 
-  constructor(public payload: any, id?: string) {
+  constructor(public payload: Aggregations, id?: string) {
     super(id)
   }
 }
 
 export class SetResultsHits extends AbstractAction implements Action {
   readonly type = SET_RESULTS_HITS
-  constructor(public payload: any, id?: string) {
+  constructor(public payload: number, id?: string) {
     super(id)
   }
 }
 
 export class SetConfigAggregations extends AbstractAction implements Action {
   readonly type = SET_CONFIG_AGGREGATIONS
-  constructor(public payload: any, id?: string) {
+  constructor(public payload: AggregationsParams, id?: string) {
     super(id)
   }
 }
 
 export class UpdateConfigAggregations extends AbstractAction implements Action {
   readonly type = UPDATE_CONFIG_AGGREGATIONS
-  constructor(public payload: any, id?: string) {
+  constructor(public payload: AggregationsParams, id?: string) {
     super(id)
   }
 }
 
 export class SetConfigRequestFields extends AbstractAction implements Action {
   readonly type = SET_CONFIG_REQUEST_FIELDS
-  constructor(public payload: RequestFields, id?: string) {
+  constructor(public payload: FieldName[], id?: string) {
     super(id)
   }
 }
 
 export class RequestMoreOnAggregation extends AbstractAction implements Action {
   readonly type = REQUEST_MORE_ON_AGGREGATION
-  constructor(public key: string, public increment: number, id?: string) {
+  constructor(
+    public aggregationName: string,
+    public increment: number,
+    id?: string
+  ) {
     super(id)
   }
 }
 
 export class SetIncludeOnAggregation extends AbstractAction implements Action {
   readonly type = SET_INCLUDE_ON_AGGREGATION
-  constructor(public key: string, public include: string, id?: string) {
-    super(id)
-  }
-}
-
-export class UpdateRequestAggregationTerm
-  extends AbstractAction
-  implements Action
-{
-  readonly type = UPDATE_REQUEST_AGGREGATION_TERM
   constructor(
-    public key: string,
-    public patch: EsRequestAggTermPatch,
+    public aggregationName: string,
+    public include: string,
     id?: string
   ) {
     super(id)
@@ -226,7 +221,11 @@ export class UpdateRequestAggregationTerm
 export class PatchResultsAggregations extends AbstractAction implements Action {
   readonly type = PATCH_RESULTS_AGGREGATIONS
 
-  constructor(public key: string, public payload: any, id?: string) {
+  constructor(
+    public aggregationName: string,
+    public payload: Aggregation,
+    id?: string
+  ) {
     super(id)
   }
 }
@@ -276,7 +275,6 @@ export type SearchActions =
   | SetConfigRequestFields
   | RequestMoreOnAggregation
   | SetIncludeOnAggregation
-  | UpdateRequestAggregationTerm
   | PatchResultsAggregations
   | SetError
   | ClearError
