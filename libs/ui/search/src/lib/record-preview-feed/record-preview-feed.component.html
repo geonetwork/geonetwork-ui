@@ -24,7 +24,7 @@
         >
         <gn-ui-thumbnail
           *ngIf="hasLogo"
-          [thumbnailUrl]="record.ownerOrganization.logoUrl.toString()"
+          [thumbnailUrl]="record.ownerOrganization?.logoUrl?.toString()"
         ></gn-ui-thumbnail>
       </div>
       <div class="flex flex-col overflow-hidden items-start">
