@@ -31,7 +31,7 @@ import { GnMapViewerComponent } from './components/gn-map-viewer/gn-map-viewer.c
 import { FeatureMapModule } from '@geonetwork-ui/feature/map'
 import { GnDatasetViewChartComponent } from './components/gn-dataset-view-chart/gn-dataset-view-chart.component'
 import { FeatureDatavizModule } from '@geonetwork-ui/feature/dataviz'
-import { EmbeddedTranslateLoader } from 'libs/util/i18n/src/lib/embedded.translate.loader'
+import { EmbeddedTranslateLoader } from '@geonetwork-ui/util/i18n'
 
 const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnFacetsComponent, 'gn-facets'],
