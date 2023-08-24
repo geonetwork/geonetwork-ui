@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http'
 import { TranslateCompiler, TranslateLoader } from '@ngx-translate/core'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
 import { FileTranslateLoader } from './file.translate.loader'
-import { EmbeddedTranslateLoader } from './embedded.translate.loader'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 marker('language.en')
@@ -69,12 +68,5 @@ export const TRANSLATE_DEFAULT_CONFIG = {
     useFactory: HttpLoaderFactory,
     defaultLanguage: DEFAULT_LANG,
     deps: [HttpClient],
-  },
-}
-export const TRANSLATE_EMBEDDED_CONFIG = {
-  compiler: COMPILER_CONFIG,
-  loader: {
-    provide: TranslateLoader,
-    useClass: EmbeddedTranslateLoader,
   },
 }

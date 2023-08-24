@@ -12,13 +12,13 @@ import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import {
-  TRANSLATE_EMBEDDED_CONFIG,
+  TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { AppComponent } from './app.component'
 import { AppOverlayContainer } from './AppOverlayContainer'
 import { apiConfiguration, BaseComponent } from './components/base.component'
@@ -31,6 +31,7 @@ import { GnMapViewerComponent } from './components/gn-map-viewer/gn-map-viewer.c
 import { FeatureMapModule } from '@geonetwork-ui/feature/map'
 import { GnDatasetViewChartComponent } from './components/gn-dataset-view-chart/gn-dataset-view-chart.component'
 import { FeatureDatavizModule } from '@geonetwork-ui/feature/dataviz'
+import { EmbeddedTranslateLoader } from 'libs/util/i18n/src/lib/embedded.translate.loader'
 
 const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnFacetsComponent, 'gn-facets'],
@@ -68,7 +69,13 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot(),
     UtilI18nModule,
-    TranslateModule.forRoot(TRANSLATE_EMBEDDED_CONFIG),
+    TranslateModule.forRoot({
+      ...TRANSLATE_DEFAULT_CONFIG,
+      loader: {
+        provide: TranslateLoader,
+        useClass: EmbeddedTranslateLoader,
+      },
+    }),
     MatIconModule,
     FeatureDatavizModule,
   ],
