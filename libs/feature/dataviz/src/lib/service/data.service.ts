@@ -169,7 +169,7 @@ export class DataService {
 
   getDataset(link: DatasetDistribution): Observable<BaseReader> {
     const linkUrl = this.proxy.getProxiedUrl(link.url.toString())
-    if (link.type === 'service' && link.accessServiceProtocol === 'wms') {
+    if (link.type === 'service' && link.accessServiceProtocol === 'wfs') {
       return this.getDownloadUrlsFromWfs(linkUrl, link.name).pipe(
         switchMap((urls) => {
           if (urls.geojson) return openDataset(urls.geojson, 'geojson')
@@ -200,6 +200,6 @@ export class DataService {
       const url = this.getDownloadUrlFromEsriRest(linkUrl, 'geojson')
       return from(openDataset(url, 'geojson')).pipe()
     }
-    return throwError('protocol not supported')
+    return throwError(() => 'protocol not supported')
   }
 }

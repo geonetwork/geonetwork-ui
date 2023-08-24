@@ -69,7 +69,7 @@ export class TableViewComponent {
     console.log(event)
   }
 
-  handleError(error: FetchError | Error) {
+  handleError(error: FetchError | Error | string) {
     if (error instanceof FetchError) {
       this.error = this.translateService.instant(
         `dataset.error.${error.type}`,
@@ -78,9 +78,12 @@ export class TableViewComponent {
         }
       )
       console.warn(error.message)
-    } else {
+    } else if (error instanceof Error) {
       this.error = this.translateService.instant(error.message)
-      console.warn(error.stack)
+      console.warn(error.stack || error)
+    } else {
+      this.error = this.translateService.instant(error)
+      console.warn(error)
     }
     this.loading = false
   }
