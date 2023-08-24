@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Injector,
   ViewEncapsulation,
 } from '@angular/core'
 import { BaseComponent } from '../base.component'

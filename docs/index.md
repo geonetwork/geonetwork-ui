@@ -20,7 +20,7 @@ features:
     details: Connect geonetwork-ui platform to your favorite dataset
   - icon: 📦
     title: Prepare
-    details: Arrange the dataset to make it talks.
+    details: Arrange the dataset to make it talk.
   - icon: 💫
     title: Publish
     details: Make your dataset public and available.

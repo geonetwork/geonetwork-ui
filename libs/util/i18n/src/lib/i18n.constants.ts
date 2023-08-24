@@ -57,11 +57,12 @@ export function HttpLoaderFactory(http: HttpClient) {
 export function getLangFromBrowser() {
   return navigator.language.substr(0, 2)
 }
+const COMPILER_CONFIG = {
+  provide: TranslateCompiler,
+  useClass: TranslateMessageFormatCompiler,
+}
 export const TRANSLATE_DEFAULT_CONFIG = {
-  compiler: {
-    provide: TranslateCompiler,
-    useClass: TranslateMessageFormatCompiler,
-  },
+  compiler: COMPILER_CONFIG,
   loader: {
     provide: TranslateLoader,
     useFactory: HttpLoaderFactory,
