@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TranslateModule } from '@ngx-translate/core'
 import { ButtonComponent } from '../button/button.component'
-
 import { DropdownSelectorComponent } from './dropdown-selector.component'
+import { OverlayModule } from '@angular/cdk/overlay'
+import { MatIconModule } from '@angular/material/icon'
 
 describe('DropdownSelectorComponent', () => {
   let component: DropdownSelectorComponent
@@ -10,7 +11,7 @@ describe('DropdownSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
+      imports: [OverlayModule, MatIconModule, TranslateModule.forRoot()],
       declarations: [DropdownSelectorComponent, ButtonComponent],
     }).compileComponents()
   })
@@ -24,37 +25,89 @@ describe('DropdownSelectorComponent', () => {
       { label: 'B', value: 'b' },
       { label: 'C', value: 'c' },
     ]
+    fixture.detectChanges()
   })
 
   it('should create', () => {
-    fixture.detectChanges()
     expect(component).toBeTruthy()
   })
 
-  describe('items array', () => {
-    let choicesEl
-    let selectEl
+  describe('items selection', () => {
+    let emitted
     beforeEach(() => {
       component.selected = 'b'
-      fixture.detectChanges()
-      choicesEl = fixture.nativeElement.querySelectorAll('option')
-      selectEl = fixture.nativeElement.querySelector('select')
-    })
-    it('shows one element per item in the dropdown', () => {
-      expect(choicesEl.length).toBe(component.choices.length)
-    })
-    it('displays the active element as such', () => {
-      expect(selectEl.value).toBe('b')
-      expect(choicesEl[0].selected).toBeFalsy()
-      expect(choicesEl[1].selected).toBeTruthy()
-      expect(choicesEl[2].selected).toBeFalsy()
-    })
-    it('emits the value of the clicked item', () => {
-      let emitted
+      emitted = null
       component.selectValue.subscribe((v) => (emitted = v))
-      selectEl.value = component.choices[0].value
-      selectEl.dispatchEvent(new Event('change'))
-      expect(emitted).toBe(component.choices[0].value)
+    })
+    describe('when clicking an item with selectedValueExpectedAsObject', () => {
+      it('emits the correct item as Json object', () => {
+        component.onSelectValue({ label: 'A', value: 'a' })
+        expect(emitted).toEqual('a')
+      })
+    })
+
+    describe('when an existing value is provided', () => {
+      beforeEach(() => {
+        component.selected = 'b'
+      })
+      it('selects the corresponding choice', () => {
+        expect(component.selectedChoice).toEqual({ label: 'B', value: 'b' })
+      })
+    })
+
+    describe('when no selected value is provided', () => {
+      beforeEach(() => {
+        component.selected = undefined
+      })
+      it('selects the first choice', () => {
+        expect(component.selectedChoice).toEqual({ label: 'A', value: 'a' })
+      })
+    })
+
+    describe('when the selected value is not part of the choices', () => {
+      beforeEach(() => {
+        component.selected = 'blarg'
+      })
+      it('selects the first choice', () => {
+        expect(component.selectedChoice).toEqual({ label: 'A', value: 'a' })
+      })
+    })
+  })
+
+  describe('overlay sizing', () => {
+    describe('width', () => {
+      beforeEach(() => {
+        const originEl: HTMLElement =
+          component.overlayOrigin.elementRef.nativeElement
+        originEl.getBoundingClientRect = () =>
+          ({
+            width: 25,
+            height: 20,
+          } as any)
+        component.openOverlay()
+      })
+      it('sets the width according to the toggle element', () => {
+        expect(component.overlayWidth).toBe('25px')
+      })
+    })
+    describe('max height (with maxRows set)', () => {
+      beforeEach(() => {
+        component.maxRows = 10
+        component.openOverlay()
+      })
+      it('sets the max height according to the max rows input', () => {
+        expect(component.overlayMaxHeight).toMatch('350px')
+      })
+    })
+    describe('max height (with maxRows unset)', () => {
+      beforeEach(() => {
+        component.maxRows = undefined
+        component.openOverlay()
+      })
+      it('sets the max height according to the max rows input', () => {
+        // we don't need the exact measurement, just to make sure it's an actual value
+        expect(component.overlayMaxHeight).toBe('none')
+      })
     })
   })
 })

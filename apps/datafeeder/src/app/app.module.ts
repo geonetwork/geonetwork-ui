@@ -36,6 +36,7 @@ import { SummarizeIllustrationComponent } from './presentation/components/svg/su
 import { SummarizeBackgroundComponent } from './presentation/components/svg/summarize-background/summarize-background.component'
 import { DATAFEEDER_STATE_KEY, reducer } from './store/datafeeder.reducer'
 import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
+import { MatIconModule } from '@angular/material/icon'
 
 export function apiConfigurationFactory() {
   return new Configuration({
@@ -72,6 +73,7 @@ export function apiConfigurationFactory() {
     UiInputsModule,
     UiWidgetsModule,
     HttpClientModule,
+    MatIconModule,
     UtilI18nModule,
     FeatureEditorModule,
     ApiModule.forRoot(apiConfigurationFactory),

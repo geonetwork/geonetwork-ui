@@ -5,11 +5,13 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { DropdownSelectorComponent } from './dropdown-selector.component'
+import { OverlayModule } from '@angular/cdk/overlay'
 import { TranslateModule } from '@ngx-translate/core'
 import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
+import { MatCheckboxModule } from '@angular/material/checkbox'
 
 export default {
   title: 'Inputs/DropdownSelectorComponent',
@@ -19,6 +21,8 @@ export default {
       declarations: [],
       imports: [
         UtilI18nModule,
+        OverlayModule,
+        MatCheckboxModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
       ],
     }),

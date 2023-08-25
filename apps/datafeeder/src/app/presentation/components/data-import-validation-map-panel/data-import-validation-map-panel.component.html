@@ -23,6 +23,7 @@
         [choices]="footerList"
         (selectValue)="selectValue($event)"
         [selected]="selectedValue"
+        [extraBtnClass]="'secondary min-w-full'"
         ariaName="search-sort-by"
         *ngIf="footerList.length > 0"
       >
