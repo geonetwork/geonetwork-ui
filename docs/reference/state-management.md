@@ -12,7 +12,7 @@ It's based on [NgRx](https://ngrx.io/), which takes advantage of [RxJs](https://
 
 The state is a **tree**, it's a combination of several feature branches.
 
-```text
+```txt
 - search
 - map
 - mdview
@@ -25,7 +25,7 @@ Each feature state has a **key** (the name of the branch in the tree), and a **t
 
 Eg. `SearchState`:
 
-```text
+```txt
 + map
 + search
   - configuration

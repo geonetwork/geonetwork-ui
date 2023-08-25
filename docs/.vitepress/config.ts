@@ -40,6 +40,8 @@ export default defineConfig({
       provider: 'local',
     },
   },
+
+  ignoreDeadLinks: 'localhostLinks',
 })
 
 function sidebarGuide() {
