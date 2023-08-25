@@ -3,7 +3,7 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { SortByEnum, SortByField } from '@geonetwork-ui/common/domain/search'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
-import { map } from 'rxjs/operators'
+import { filter, map } from 'rxjs/operators'
 
 @Component({
   selector: 'gn-ui-sort-by',
@@ -24,7 +24,10 @@ export class SortByComponent {
       value: SortByEnum.POPULARITY.join(','),
     },
   ]
-  currentSortBy$ = this.facade.sortBy$.pipe(map((sortBy) => sortBy.join(',')))
+  currentSortBy$ = this.facade.sortBy$.pipe(
+    filter((sortBy) => !!sortBy),
+    map((sortBy) => sortBy.join(','))
+  )
 
   constructor(
     private facade: SearchFacade,
