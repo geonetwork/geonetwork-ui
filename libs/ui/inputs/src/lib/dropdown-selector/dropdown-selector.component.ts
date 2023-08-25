@@ -6,13 +6,17 @@ import {
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnInit,
   Output,
+  QueryList,
   ViewChild,
+  ViewChildren,
 } from '@angular/core'
 import { Choice } from '../dropdown-multiselect/dropdown-multiselect.model'
+import { take } from 'rxjs/operators'
 
 export type DDChoices = Array<{
   label: string
@@ -58,6 +62,9 @@ export class DropdownSelectorComponent implements OnInit {
       offsetY: -8,
     },
   ]
+  @ViewChildren('choiceInputs', { read: ElementRef })
+  choiceInputs: QueryList<ElementRef>
+
   get selectedChoice(): Choice {
     return (
       this.choices.find((choice) => choice.value === this.selected) ??
@@ -98,9 +105,82 @@ export class DropdownSelectorComponent implements OnInit {
       ? `${this.maxRows * 29 + 60}px`
       : 'none'
     this.overlayOpen = true
+    return Promise.all([
+      this.overlay.attach.pipe(take(1)).toPromise(),
+      this.choiceInputs.changes.pipe(take(1)).toPromise(),
+    ])
   }
 
   closeOverlay() {
     this.overlayOpen = false
+  }
+
+  focusFirstItem() {
+    this.choiceInputs.get(0).nativeElement.focus()
+  }
+
+  focusLastItem() {
+    this.choiceInputs.get(this.choiceInputs.length - 1).nativeElement.focus()
+  }
+
+  async handleTriggerKeydown(event: KeyboardEvent) {
+    const keyCode = event.code
+    const isOpenKey =
+      keyCode === 'ArrowDown' ||
+      keyCode === 'ArrowUp' ||
+      keyCode === 'ArrowLeft' ||
+      keyCode === 'ArrowRight' ||
+      keyCode === 'Enter' ||
+      keyCode === 'Space'
+    const isCloseKey = keyCode === 'Escape'
+    if (isOpenKey) {
+      event.preventDefault()
+      if (!this.overlayOpen) {
+        await this.openOverlay()
+      }
+      if (keyCode === 'ArrowLeft' || keyCode === 'ArrowUp') this.focusLastItem()
+      else this.focusFirstItem()
+    } else if (this.overlayOpen && isCloseKey) {
+      event.preventDefault()
+      this.closeOverlay()
+    }
+  }
+
+  handleOverlayKeydown(event: KeyboardEvent) {
+    if (!this.overlayOpen) return
+    const keyCode = event.code
+    if (keyCode === 'ArrowDown' || keyCode === 'ArrowRight') {
+      event.preventDefault()
+      this.shiftItemFocus(1)
+    } else if (keyCode === 'ArrowLeft' || keyCode === 'ArrowUp') {
+      event.preventDefault()
+      this.shiftItemFocus(-1)
+    } else if (keyCode === 'Escape') {
+      this.closeOverlay()
+    }
+  }
+
+  shiftItemFocus(shift: number) {
+    const index = this.focusedIndex
+    if (index === -1) return
+    const max = this.choiceInputs.length
+    // modulo, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder
+    const newIndex = (((index + shift) % max) + max) % max
+    this.choiceInputs.get(newIndex).nativeElement.focus()
+  }
+
+  get focusedIndex(): number | -1 {
+    return this.choiceInputs.reduce(
+      (prev, curr, curIndex) =>
+        curr.nativeElement === document.activeElement ? curIndex : prev,
+      -1
+    )
+  }
+
+  selectIfEnter(event: KeyboardEvent, choice: Choice) {
+    if (event.code === 'Enter') {
+      event.preventDefault()
+      this.onSelectValue(choice)
+    }
   }
 }

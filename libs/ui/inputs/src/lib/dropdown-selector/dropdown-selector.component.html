@@ -18,6 +18,7 @@
     (buttonClick)="openOverlay()"
     cdkOverlayOrigin
     #overlayOrigin="cdkOverlayOrigin"
+    (keydown)="handleTriggerKeydown($event)"
   >
     <div class="grow flex items-center mr-2 gap-2 overflow-hidden">
       <div class="text-left font-medium truncate py-1">
@@ -51,6 +52,7 @@
     [attr.id]="id"
     [attr.aria-multiselectable]="true"
     [attr.aria-label]="title"
+    (keydown)="handleOverlayKeydown($event)"
   >
     <label
       *ngFor="let choice of choices"
@@ -58,10 +60,12 @@
       class="flex px-5 py-1 w-full text-gray-900 cursor-pointer hover:text-primary-darkest hover:bg-gray-50 focus-within:text-primary-darkest focus-within:bg-gray-50 transition-colors"
     >
       <input
+        #choiceInputs
         class="w-[0px] h-[18px] align-text-top shrink-0"
         type="text"
         [checked]="isSelected(choice)"
         (click)="onSelectValue(choice)"
+        (keydown)="selectIfEnter($event, choice)"
       />
       <span class="text-[14px]">
         {{ choice.label | translate }}
