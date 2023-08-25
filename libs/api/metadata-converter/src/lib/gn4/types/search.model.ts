@@ -7,11 +7,6 @@ export interface SearchFilters {
 
 type SearchFiltersFieldsLeaf = Record<string, boolean>
 
-export interface StateConfigFilters {
-  custom?: SearchFilters
-  elastic?: any
-}
-
 export interface Organisation {
   name: string
   description?: string

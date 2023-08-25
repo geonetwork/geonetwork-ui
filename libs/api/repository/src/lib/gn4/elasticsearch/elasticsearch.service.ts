@@ -17,7 +17,6 @@ import {
   RequestFields,
   SearchFilters,
   SortParams,
-  StateConfigFilters,
   TermsAggregationResult,
 } from '@geonetwork-ui/api/metadata-converter'
 
@@ -40,7 +39,7 @@ export class ElasticsearchService {
     sortBy: SortByField = null,
     requestFields: RequestFields = [],
     searchFilters: SearchFilters = {},
-    configFilters: StateConfigFilters = {},
+    configFilters: SearchFilters = {},
     uuids?: string[],
     geometry?: Geometry
   ): EsSearchParams {
@@ -180,7 +179,7 @@ export class ElasticsearchService {
 
   private buildPayloadQuery(
     { any, ...fieldSearchFilters }: SearchFilters,
-    configFilters: StateConfigFilters,
+    configFilters: SearchFilters,
     uuids?: string[],
     geometry?: Geometry
   ) {
@@ -198,7 +197,6 @@ export class ElasticsearchService {
       ]),
     }
     const should = [] as Record<string, unknown>[]
-    const filter = this.buildPayloadFilter(configFilters)
 
     if (any) {
       must.push({
@@ -254,34 +252,16 @@ export class ElasticsearchService {
         must,
         must_not,
         should,
-        filter,
+        filter: [],
       },
     }
-  }
-
-  private buildPayloadFilter({ custom, elastic }: StateConfigFilters) {
-    const query = []
-    if (elastic) {
-      if (!Array.isArray(elastic)) {
-        query.push(elastic)
-      } else {
-        query.push(...elastic)
-      }
-    } else if (custom) {
-      query.push({
-        query_string: {
-          query: this.stateFiltersToQueryString(custom),
-        },
-      })
-    }
-    return query
   }
 
   buildMoreOnAggregationPayload(
     aggregations: any,
     key: string,
     searchFilters: SearchFilters,
-    configFilters: StateConfigFilters
+    configFilters: SearchFilters
   ): EsSearchParams {
     return {
       aggregations: { [key]: aggregations[key] },
