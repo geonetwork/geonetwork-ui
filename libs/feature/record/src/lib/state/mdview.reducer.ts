@@ -1,15 +1,15 @@
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
 import { Action, createReducer, on } from '@ngrx/store'
 import * as MdViewActions from './mdview.actions'
-import { DatavizConfigurationModel } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
+import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/dataviz-configuration.model'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
 export const MD_VIEW_FEATURE_STATE_KEY = 'mdView'
 
 export interface MdViewState {
   loadingFull: boolean
   error: { notFound?: boolean; otherError?: string } | null
-  metadata?: MetadataRecord
-  related?: MetadataRecord[]
+  metadata?: Partial<CatalogRecord>
+  related?: CatalogRecord[]
   chartConfig?: DatavizConfigurationModel
 }
 

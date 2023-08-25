@@ -7,7 +7,6 @@ import {
 import { DEFAULT_RESULTS_LAYOUT_CONFIG } from './results-layout.config'
 import { ResultsListComponent } from './results-list.component'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
-import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 import { RecordPreviewListComponent } from '../record-preview-list/record-preview-list.component'
 import { RecordPreviewCardComponent } from '../record-preview-card/record-preview-card.component'
 import { RecordPreviewTextComponent } from '../record-preview-text/record-preview-text.component'
@@ -19,6 +18,7 @@ import {
 } from '@geonetwork-ui/util/i18n'
 import { TranslateModule } from '@ngx-translate/core'
 import { importProvidersFrom } from '@angular/core'
+import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 
 export default {
   title: 'Search/ResultsListComponent',
@@ -49,7 +49,7 @@ type ResultsListComponentWithKey = ResultsListComponent & {
 
 export const Primary: StoryObj<ResultsListComponentWithKey> = {
   args: {
-    records: RECORDS_SUMMARY_FIXTURE,
+    records: DATASET_RECORDS,
     layoutConfigKey: 'CARD',
   },
   argTypes: {

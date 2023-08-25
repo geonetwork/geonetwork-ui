@@ -4,11 +4,12 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { getLinkLabel, MetadataLink } from '@geonetwork-ui/util/shared'
+import { getLinkLabel } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
-import { DatavizConfigurationModel } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
+import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/dataviz-configuration.model'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-data-view',
@@ -36,7 +37,7 @@ export class DataViewComponent {
       }))
     )
   )
-  selectedLink$ = new BehaviorSubject<MetadataLink>(null)
+  selectedLink$ = new BehaviorSubject<DatasetDistribution>(null)
 
   constructor(private mdViewFacade: MdViewFacade) {}
 
@@ -45,6 +46,8 @@ export class DataViewComponent {
   }
 
   selectLink(linkAsString: string) {
-    this.selectedLink$.next(JSON.parse(linkAsString) as MetadataLink)
+    const link: DatasetDistribution = JSON.parse(linkAsString)
+    link.url = new URL(link.url)
+    this.selectedLink$.next(link)
   }
 }

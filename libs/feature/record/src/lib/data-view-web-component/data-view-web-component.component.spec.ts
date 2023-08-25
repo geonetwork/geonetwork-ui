@@ -21,7 +21,7 @@ const chartConfig2 = {
 }
 
 const metadata = {
-  uuid: 'md_record_1234',
+  uniqueIdentifier: 'md_record_1234',
 }
 
 class MdViewFacadeMock {
@@ -82,7 +82,7 @@ describe('DataViewWebComponentComponent', () => {
         `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist/gn-wc.js"></script>
 <gn-dataset-view-chart
         api-url="http://localhost/undefined"
-        dataset-id="${metadata.uuid}"
+        dataset-id="${metadata.uniqueIdentifier}"
         aggregation="${chartConfig1.aggregation}"
         x-property="${chartConfig1.xProperty}"
         y-property="${chartConfig1.yProperty}"
@@ -107,7 +107,7 @@ describe('DataViewWebComponentComponent', () => {
         `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist/gn-wc.js"></script>
 <gn-dataset-view-chart
         api-url="http://localhost/undefined"
-        dataset-id="${metadata.uuid}"
+        dataset-id="${metadata.uniqueIdentifier}"
         aggregation="${chartConfig2.aggregation}"
         x-property="${chartConfig2.xProperty}"
         y-property="${chartConfig2.yProperty}"

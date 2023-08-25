@@ -1,19 +1,19 @@
-import { RecordStatus } from '@geonetwork-ui/util/types/metadata'
+import { RecordStatus } from '@geonetwork-ui/common/domain/record'
 
 export function getStatusFromStatusCode(statusCode: string): RecordStatus {
   switch (statusCode) {
     case 'completed':
-      return RecordStatus.COMPLETED
+      return 'completed'
     case 'historicalArchive':
-      return RecordStatus.REMOVED
+      return 'removed'
     case 'obsolete':
-      return RecordStatus.DEPRECATED
+      return 'deprecated'
     case 'onGoing':
-      return RecordStatus.ON_GOING
+      return 'ongoing'
     case 'planned':
     case 'required':
     case 'underDevelopment':
     default:
-      return RecordStatus.UNDER_DEVELOPMENT
+      return 'under_development'
   }
 }

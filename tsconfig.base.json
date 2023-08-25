@@ -21,6 +21,15 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "paths": {
+      "@geonetwork-ui/api/metadata-converter": [
+        "libs/api/metadata-converter/src/index.ts"
+      ],
+      "@geonetwork-ui/api/repository": ["libs/api/repository/src/index.ts"],
+      "@geonetwork-ui/api/repository/gn4": [
+        "libs/api/repository/src/lib/gn4/index.ts"
+      ],
+      "@geonetwork-ui/common/domain/*": ["libs/common/domain/src/lib/*"],
+      "@geonetwork-ui/common/fixtures": ["libs/common/fixtures/src/index.ts"],
       "@geonetwork-ui/data-access/datafeeder": [
         "libs/data-access/datafeeder/src/index.ts"
       ],
@@ -34,9 +43,6 @@
       "@geonetwork-ui/feature/record": ["libs/feature/record/src/index.ts"],
       "@geonetwork-ui/feature/router": ["libs/feature/router/src/index.ts"],
       "@geonetwork-ui/feature/search": ["libs/feature/search/src/index.ts"],
-      "@geonetwork-ui/metadata-converter": [
-        "libs/api/metadata-converter/src/index.ts"
-      ],
       "@geonetwork-ui/ui/catalog": ["libs/ui/catalog/src/index.ts"],
       "@geonetwork-ui/ui/dataviz": ["libs/ui/dataviz/src/index.ts"],
       "@geonetwork-ui/ui/elements": ["libs/ui/elements/src/index.ts"],
@@ -50,11 +56,7 @@
       "@geonetwork-ui/ui/widgets": ["libs/ui/widgets/src/index.ts"],
       "@geonetwork-ui/util/app-config": ["libs/util/app-config/src/index.ts"],
       "@geonetwork-ui/util/i18n": ["libs/util/i18n/src/index.ts"],
-      "@geonetwork-ui/util/shared": ["libs/util/shared/src/index.ts"],
-      "@geonetwork-ui/util/shared/fixtures": [
-        "libs/util/shared/src/lib/fixtures/index.ts"
-      ],
-      "@geonetwork-ui/util/types/*": ["libs/util/types/src/lib/*"]
+      "@geonetwork-ui/util/shared": ["libs/util/shared/src/index.ts"]
     },
     "allowJs": true,
     "outDir": "/"

@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { TestBed } from '@angular/core/testing'
-import { FEATURE_COLLECTION_POLYGON_FIXTURE_4326 } from '@geonetwork-ui/util/shared/fixtures'
+import { FEATURE_COLLECTION_POLYGON_FIXTURE_4326 } from '@geonetwork-ui/common/fixtures'
 import Feature from 'ol/Feature'
 import { Polygon } from 'ol/geom'
 import ImageLayer from 'ol/layer/Image'
@@ -25,7 +25,7 @@ import {
   MouseWheelZoom,
   PinchRotate,
 } from 'ol/interaction'
-import { MetadataLinkType } from '@geonetwork-ui/util/shared'
+import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/record'
 import MapBrowserEvent from 'ol/MapBrowserEvent'
 
 const wmsUtilsMock = {
@@ -309,9 +309,10 @@ describe('MapUtilsService', () => {
 
   const SAMPLE_WMTS_LINK = {
     name: 'GEOGRAPHICALGRIDSYSTEMS.ETATMAJOR10',
-    url: 'http://my.server.org/wmts',
-    type: MetadataLinkType.WMTS,
-  }
+    url: new URL('http://my.server.org/wmts'),
+    type: 'service',
+    accessServiceProtocol: 'wmts',
+  } as DatasetServiceDistribution
   const SAMPLE_WMTS_CAPABILITIES = `<?xml version="1.0" encoding="UTF-8"?>
 <Capabilities xmlns="http://www.opengis.net/wmts/1.0" xmlns:gml="http://www.opengis.net/gml" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.0" xsi:schemaLocation="http://www.opengis.net/wmts/1.0 http://schemas.opengis.net/wmts/1.0/wmtsGetCapabilities_response.xsd">
   <ows:OperationsMetadata>

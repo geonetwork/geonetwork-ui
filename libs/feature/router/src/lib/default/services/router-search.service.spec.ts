@@ -1,5 +1,5 @@
 import { FieldsService, SearchFacade } from '@geonetwork-ui/feature/search'
-import { SortByEnum } from '@geonetwork-ui/util/shared'
+import { SortByEnum, SortByField } from '@geonetwork-ui/common/domain/search'
 import { BehaviorSubject, of } from 'rxjs'
 import { RouterFacade } from '../state'
 import { RouterSearchService } from './router-search.service'
@@ -7,7 +7,7 @@ import { RouterSearchService } from './router-search.service'
 let state = {}
 class SearchFacadeMock {
   searchFilters$ = new BehaviorSubject(state)
-  sortBy$ = new BehaviorSubject('_score')
+  sortBy$: BehaviorSubject<SortByField> = new BehaviorSubject(['asc', '_score'])
 }
 
 class RouterFacadeMock {
@@ -96,7 +96,7 @@ describe('RouterSearchService', () => {
     it('dispatch sortBy', () => {
       service.setSortBy(SortByEnum.RELEVANCY)
       expect(routerFacade.updateSearch).toHaveBeenCalledWith({
-        _sort: SortByEnum.RELEVANCY,
+        _sort: '-_score',
       })
     })
   })

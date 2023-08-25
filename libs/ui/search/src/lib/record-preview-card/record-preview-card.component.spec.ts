@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 import { RecordPreviewCardComponent } from './record-preview-card.component'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
 describe('RecordPreviewCardComponent', () => {
   let component: RecordPreviewCardComponent
@@ -18,13 +19,12 @@ describe('RecordPreviewCardComponent', () => {
     fixture = TestBed.createComponent(RecordPreviewCardComponent)
     component = fixture.componentInstance
     component.record = {
-      id: '139',
-      uuid: 'd2f30aa4-867e-40b9-9c37-3cb21f541008',
+      uniqueIdentifier: 'd2f30aa4-867e-40b9-9c37-3cb21f541008',
       title: 'abcd',
       abstract: 'Abcd',
-      metadataUrl: '/abcd.html',
-      thumbnailUrl: '/abcd.jpg',
-    }
+      landingPage: new URL('http://localhost/abcd.html'),
+      overviews: [{ url: new URL('http://localhost/abcd.jpg') }],
+    } as CatalogRecord
     fixture.detectChanges()
   })
 

@@ -1,12 +1,10 @@
 <div *ngIf="!loading" class="w-full">
-  <ng-container *ngIf="hits">
-    <span translate [translateParams]="{ hits: hits.value }"
-      >results.records.hits.found</span
-    >
-    <p
-      *ngIf="hits.value === 0"
-      class="mt-4"
-      [innerHtml]="'results.records.hits.empty.help.html' | translate"
-    ></p>
-  </ng-container>
+  <span translate [translateParams]="{ hits: hits }"
+    >results.records.hits.found</span
+  >
+  <p
+    *ngIf="hits === 0"
+    class="mt-4"
+    [innerHtml]="'results.records.hits.empty.help.html' | translate"
+  ></p>
 </div>

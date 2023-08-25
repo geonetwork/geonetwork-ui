@@ -10,9 +10,9 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { MetadataInfoComponent } from './metadata-info.component'
-import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
+import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 
 export default {
   title: 'Elements/MetadataInfoComponent',
@@ -34,7 +34,7 @@ export default {
 
 export const Primary: StoryObj<MetadataInfoComponent> = {
   args: {
-    metadata: RECORDS_FULL_FIXTURE[0],
+    metadata: DATASET_RECORDS[0],
     incomplete: false,
   },
 }

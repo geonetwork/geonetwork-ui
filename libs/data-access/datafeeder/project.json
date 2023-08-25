@@ -5,5 +5,5 @@
   "sourceRoot": "libs/data-access/datafeeder/src",
   "prefix": "gn-ui",
   "targets": {},
-  "tags": ["type:data-access"]
+  "tags": ["type:data-access", "type:api"]
 }

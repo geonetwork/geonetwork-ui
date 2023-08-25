@@ -11,14 +11,13 @@ import {
   SearchFacade,
   SearchService,
 } from '@geonetwork-ui/feature/search'
-import { SortByEnum } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
-import { readFirst } from '@nx/angular/testing'
-import { BehaviorSubject, of } from 'rxjs'
+import { BehaviorSubject, firstValueFrom, of } from 'rxjs'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants'
 import { HeaderBadgeButtonComponent } from '../header-badge-button/header-badge-button.component'
 import { HomeHeaderComponent } from './home-header.component'
 import resetAllMocks = jest.resetAllMocks
+import { SortByEnum } from '@geonetwork-ui/common/domain/search'
 import { _setLanguages } from '@geonetwork-ui/util/app-config'
 
 jest.mock('@geonetwork-ui/util/app-config', () => {
@@ -35,7 +34,7 @@ jest.mock('@geonetwork-ui/util/app-config', () => {
           filters: { publisher: ['DREAL'] },
         },
         {
-          sort: '-createDate',
+          sort: 'title',
           name: 'filterCarto',
           filters: { q: 'Cartographie' },
         },
@@ -146,7 +145,9 @@ describe('HeaderComponent', () => {
           })
         })
         it('displays favoriteBadge when authenticated', async () => {
-          const isAuthenticated = await readFirst(component.isAuthenticated$)
+          const isAuthenticated = await firstValueFrom(
+            component.isAuthenticated$
+          )
           expect(isAuthenticated).toEqual(true)
         })
       })
@@ -155,7 +156,9 @@ describe('HeaderComponent', () => {
           ;(authService as any)._authSubject$.next(null)
         })
         it('does NOT display favoriteBadge when NOT authenticated', async () => {
-          const isAuthenticated = await readFirst(component.isAuthenticated$)
+          const isAuthenticated = await firstValueFrom(
+            component.isAuthenticated$
+          )
           expect(isAuthenticated).toEqual(false)
         })
       })
@@ -177,7 +180,9 @@ describe('HeaderComponent', () => {
         })
       })
       it('displays sort badges on search route', async () => {
-        const displaySortBadges = await readFirst(component.displaySortBadges$)
+        const displaySortBadges = await firstValueFrom(
+          component.displaySortBadges$
+        )
         expect(displaySortBadges).toEqual(true)
       })
     })
@@ -188,7 +193,9 @@ describe('HeaderComponent', () => {
         })
       })
       it('displays sort badges on news route', async () => {
-        const displaySortBadges = await readFirst(component.displaySortBadges$)
+        const displaySortBadges = await firstValueFrom(
+          component.displaySortBadges$
+        )
         expect(displaySortBadges).toEqual(true)
       })
 

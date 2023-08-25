@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { summaryHits } from '@geonetwork-ui/util/shared/fixtures'
+import { summaryHits } from '@geonetwork-ui/common/fixtures'
 import { of } from 'rxjs'
 import { LastCreatedComponent } from './last-created.component'
-
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
@@ -65,16 +64,16 @@ describe('LastCreatedComponent', () => {
 
     it('Should set the correct params in the facade', () => {
       expect(facade.setPagination).toHaveBeenCalledWith(0, 10)
-      expect(facade.setSortBy).toHaveBeenCalledWith('-createDate')
-      expect(facade.setConfigRequestFields).toHaveBeenCalledWith({
-        includes: expect.arrayContaining([
+      expect(facade.setSortBy).toHaveBeenCalledWith(['desc', 'createDate'])
+      expect(facade.setConfigRequestFields).toHaveBeenCalledWith(
+        expect.arrayContaining([
           'uuid',
           'id',
           'title',
           'createDate',
           'changeDate',
-        ]),
-      })
+        ])
+      )
     })
   })
 })

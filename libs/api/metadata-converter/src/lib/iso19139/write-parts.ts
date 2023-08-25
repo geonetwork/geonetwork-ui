@@ -13,7 +13,7 @@ import {
   ServiceRecord,
   UpdateFrequencyCode,
   UpdateFrequencyCustom,
-} from '@geonetwork-ui/util/types/metadata'
+} from '@geonetwork-ui/common/domain/record'
 import {
   addAttribute,
   appendChildren,
@@ -45,7 +45,6 @@ import {
 } from '../function-utils'
 import format from 'date-fns/format'
 import { readKind } from './read-parts'
-import { description } from 'commander'
 
 function writeCharacterString(
   text: string
@@ -97,15 +96,15 @@ function writeDate(date: Date): ChainableFunction<XmlElement, XmlElement> {
 
 function getProgressCode(status: RecordStatus): string {
   switch (status) {
-    case RecordStatus.COMPLETED:
+    case 'completed':
       return 'completed'
-    case RecordStatus.DEPRECATED:
+    case 'deprecated':
       return 'deprecated'
-    case RecordStatus.ON_GOING:
+    case 'ongoing':
       return 'onGoing'
-    case RecordStatus.REMOVED:
+    case 'removed':
       return 'removed'
-    case RecordStatus.UNDER_DEVELOPMENT:
+    case 'under_development':
       return 'underDevelopment'
     default:
       throw new Error(
@@ -116,47 +115,47 @@ function getProgressCode(status: RecordStatus): string {
 
 function getRoleCode(role: Role): string {
   switch (role) {
-    case Role.AUTHOR:
+    case 'author':
       return 'author'
-    case Role.COLLABORATOR:
+    case 'collaborator':
       return 'collaborator'
-    case Role.CONTRIBUTOR:
+    case 'contributor':
       return 'contributor'
-    case Role.CUSTODIAN:
+    case 'custodian':
       return 'custodian'
-    case Role.DISTRIBUTOR:
+    case 'distributor':
       return 'distributor'
-    case Role.EDITOR:
+    case 'editor':
       return 'editor'
-    case Role.FUNDER:
+    case 'funder':
       return 'funder'
-    case Role.MEDIATOR:
+    case 'mediator':
       return 'mediator'
-    case Role.ORIGINATOR:
+    case 'originator':
       return 'originator'
-    case Role.OTHER:
+    case 'other':
       return 'other'
-    case Role.OWNER:
+    case 'owner':
       return 'owner'
-    case Role.POINT_OF_CONTACT:
+    case 'point_of_contact':
       return 'pointOfContact'
-    case Role.PRINCIPAL_INVESTIGATOR:
+    case 'principal_investigator':
       return 'principalInvestigator'
-    case Role.PROCESSOR:
+    case 'processor':
       return 'processor'
-    case Role.PUBLISHER:
+    case 'publisher':
       return 'publisher'
-    case Role.RESOURCE_PROVIDER:
+    case 'resource_provider':
       return 'resourceProvider'
-    case Role.RIGHTS_HOLDER:
+    case 'rights_holder':
       return 'rightsHolder'
-    case Role.SPONSOR:
+    case 'sponsor':
       return 'sponsor'
-    case Role.STAKEHOLDER:
+    case 'stakeholder':
       return 'stakeholder'
-    case Role.UNSPECIFIED:
+    case 'unspecified':
       return 'unspecified'
-    case Role.USER:
+    case 'user':
       return 'user'
     default:
       throw new Error(`Could not determine role code from role: ${role}`)
@@ -548,17 +547,17 @@ function createDistribution(distribution: DatasetDistribution) {
 
   let linkageUrl, name, functionCode, protocol
   if (distribution.type === 'service') {
-    linkageUrl = distribution.accessServiceUrl.toString()
+    linkageUrl = distribution.url.toString()
     name = distribution.identifierInService // this is for GeoNetwork to know the layer name
     functionCode = 'download'
     protocol = getDistributionProtocol(distribution)
   } else if (distribution.type === 'download') {
-    linkageUrl = distribution.downloadUrl.toString()
+    linkageUrl = distribution.url.toString()
     name = distribution.name
     functionCode = 'download'
     protocol = 'WWW:DOWNLOAD'
   } else {
-    linkageUrl = distribution.linkUrl.toString()
+    linkageUrl = distribution.url.toString()
     name = distribution.name
     functionCode = 'information'
     protocol = 'WWW:LINK'
@@ -618,6 +617,15 @@ function findOrCreateIdentification() {
   }
 }
 
+function findOrCreateDistribution() {
+  return (rootEl: XmlElement) => {
+    return findNestedChildOrCreate(
+      'gmd:distributionInfo',
+      'gmd:MD_Distribution'
+    )(rootEl)
+  }
+}
+
 export function writeUniqueIdentifier(
   record: CatalogRecord,
   rootEl: XmlElement
@@ -655,12 +663,12 @@ export function writeOwnerOrganization(
         ? {
             ...ownerContact,
             // owner responsible party is always point of contact
-            role: Role.POINT_OF_CONTACT,
+            role: 'point_of_contact',
           }
         : {
             organization: record.ownerOrganization,
             email: '',
-            role: Role.POINT_OF_CONTACT,
+            role: 'point_of_contact',
           }
     )
   )(rootEl)
@@ -904,7 +912,7 @@ function createOnlineResource(onlineResource: ServiceOnlineResource) {
     protocol = getServiceEndpointProtocol(onlineResource)
     functionCode = 'download'
   } else {
-    linkageUrl = onlineResource.linkUrl.toString()
+    linkageUrl = onlineResource.url.toString()
     functionCode = 'information'
     protocol = 'WWW:LINK'
   }

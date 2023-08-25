@@ -15,7 +15,7 @@ There are also many [community plugins](https://nx.dev/nx-community) you could a
 To have more flexibility using Nx tools, you should install Nx CLI.
 
 ```shell
-npm i -g @nrwl/cli
+npm i -g @nx/cli
 ```
 
 This will make the `nx` command available on your system.
@@ -129,6 +129,26 @@ You'll need manual configuration to make the application running:
       )
     }
   }
+  ```
+
+  5. Use the following configuration to allow loading custom translations from the config file:
+
+  ```ts
+  import {
+    // ...
+    TRANSLATE_WITH_OVERRIDES_CONFIG,
+  } from '@geonetwork-ui/util/app-config'
+
+  @NgModule({
+    // ...
+    imports: [
+      // ...
+      UtilI18nModule,
+      TranslateModule.forRoot(TRANSLATE_WITH_OVERRIDES_CONFIG),
+    ],
+  })
+  export class AppModule {
+    // ...
   ```
 
 Please note that the app configuration is available to be used anywhere else in the application in a synchronous

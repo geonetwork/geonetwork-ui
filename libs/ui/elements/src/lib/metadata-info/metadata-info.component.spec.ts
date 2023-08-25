@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
-import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
 import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
 import { MetadataInfoComponent } from './metadata-info.component'
+import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 
 describe('MetadataInfoComponent', () => {
   let component: MetadataInfoComponent
@@ -20,7 +20,7 @@ describe('MetadataInfoComponent', () => {
     fixture = TestBed.createComponent(MetadataInfoComponent)
     component = fixture.componentInstance
     component.incomplete = false
-    component.metadata = RECORDS_FULL_FIXTURE[0]
+    component.metadata = DATASET_RECORDS[0]
     fixture.detectChanges()
   })
 

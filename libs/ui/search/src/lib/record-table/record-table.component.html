@@ -22,14 +22,16 @@
     </div>
     <div class="record-table-col">
       <span class="badge-btn btn-active text-sm">{{
-        getStatus(record.isPublishedToAll)
+        getStatus(record.extras?.isPublishedToAll)
       }}</span>
     </div>
     <div class="record-table-col flex items-center gap-2">
       <mat-icon class="material-icons-outlined"> person </mat-icon>
-      <span class="text-gray-800">{{ formatUserInfo(record.ownerInfo) }}</span>
+      <span class="text-gray-800">{{
+        formatUserInfo(record.extras?.ownerInfo)
+      }}</span>
     </div>
-    <div class="record-table-col">{{ dateToString(record.updatedOn) }}</div>
-    <div class="record-table-col">{{ dateToString(record.createdOn) }}</div>
+    <div class="record-table-col">{{ dateToString(record.recordUpdated) }}</div>
+    <div class="record-table-col">{{ dateToString(record.recordCreated) }}</div>
   </div>
 </div>

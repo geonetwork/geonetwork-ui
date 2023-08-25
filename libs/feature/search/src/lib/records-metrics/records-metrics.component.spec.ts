@@ -1,29 +1,33 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { RecordsMetricsComponent } from './records-metrics.component'
 import { TranslateModule } from '@ngx-translate/core'
 import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing'
-import { aggsOnly as aggsOnlyFixture } from '@geonetwork-ui/util/shared/fixtures'
+  aggsOnly as aggsOnlyFixture,
+  SAMPLE_AGGREGATIONS_RESULTS,
+} from '@geonetwork-ui/common/fixtures'
+import { of } from 'rxjs'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+
+class RecordsRepositoryMock {
+  aggregate = jest.fn(() => of(SAMPLE_AGGREGATIONS_RESULTS))
+}
 
 describe('RecordsMetricsComponent', () => {
   let component: RecordsMetricsComponent
   let fixture: ComponentFixture<RecordsMetricsComponent>
-  let httpMock: HttpTestingController
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [RecordsMetricsComponent],
-      imports: [
-        UiSearchModule,
-        TranslateModule.forRoot(),
-        HttpClientTestingModule,
+      imports: [UiSearchModule, TranslateModule.forRoot()],
+      providers: [
+        {
+          provide: RecordsRepositoryInterface,
+          useClass: RecordsRepositoryMock,
+        },
       ],
     }).compileComponents()
-    httpMock = TestBed.inject(HttpTestingController)
   })
 
   beforeEach(() => {
@@ -38,34 +42,16 @@ describe('RecordsMetricsComponent', () => {
 
   describe('fetching record counts', () => {
     it('parses the aggregation buckets', () => {
-      component.field = 'myfield'
+      component.field = 'myField'
       component.count = 4
       component.queryString = '+filter=abcd'
       fixture.detectChanges()
 
       let results = null
       component.results$.subscribe((value) => (results = value))
-      const req = httpMock.expectOne((req) => req.url.indexOf(`_search`) > -1)
-      expect(JSON.parse(req.request.body)).toMatchObject({
-        query: { query_string: { query: '+filter=abcd' } },
-        aggs: {
-          results: {
-            terms: {
-              field: 'myfield',
-              size: 4,
-            },
-          },
-        },
-      })
-      req.flush(aggsOnlyFixture)
-
       expect(results.length).toBe(
-        aggsOnlyFixture.aggregations.results.buckets.length
+        SAMPLE_AGGREGATIONS_RESULTS.myField.buckets.length
       )
-    })
-
-    afterEach(() => {
-      httpMock.verify()
     })
   })
 })

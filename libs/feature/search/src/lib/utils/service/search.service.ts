@@ -1,25 +1,25 @@
 import { Injectable } from '@angular/core'
 import { SearchFacade } from '../../state/search.facade'
-import { SearchFilters, SortByEnum } from '@geonetwork-ui/util/shared'
+import { FieldFilters, SortByField } from '@geonetwork-ui/common/domain/search'
 import { first, map } from 'rxjs/operators'
 
 export interface SearchServiceI {
-  updateFilters: (params: SearchFilters) => void
-  setFilters: (params: SearchFilters) => void
-  setSortAndFilters: (filters: SearchFilters, sort: SortByEnum) => void
-  setSortBy: (sort: string) => void
+  updateFilters: (params: FieldFilters) => void
+  setFilters: (params: FieldFilters) => void
+  setSortAndFilters: (filters: FieldFilters, sort: SortByField) => void
+  setSortBy: (sort: SortByField) => void
 }
 
 @Injectable()
 export class SearchService implements SearchServiceI {
   constructor(private facade: SearchFacade) {}
 
-  setSortAndFilters(filters: SearchFilters, sort: SortByEnum) {
+  setSortAndFilters(filters: FieldFilters, sort: SortByField) {
     this.setFilters(filters)
     this.setSortBy(sort)
   }
 
-  updateFilters(params: SearchFilters) {
+  updateFilters(params: FieldFilters) {
     this.facade.searchFilters$
       .pipe(
         first(),
@@ -28,11 +28,11 @@ export class SearchService implements SearchServiceI {
       .subscribe((filters) => this.facade.setFilters(filters))
   }
 
-  setFilters(params: SearchFilters) {
+  setFilters(params: FieldFilters) {
     this.facade.setFilters(params)
   }
 
-  setSortBy(sort: string): void {
+  setSortBy(sort: SortByField): void {
     this.facade.setSortBy(sort)
   }
 }

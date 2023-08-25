@@ -8,35 +8,42 @@ import {
   Output,
   TemplateRef,
 } from '@angular/core'
-import {
-  propagateToDocumentOnly,
-  MetadataContact,
-  MetadataRecord,
-  stripHtml,
-} from '@geonetwork-ui/util/shared'
+import { propagateToDocumentOnly, stripHtml } from '@geonetwork-ui/util/shared'
 import { fromEvent, Subscription } from 'rxjs'
+import {
+  CatalogRecord,
+  DatasetRecord,
+  Individual,
+  Organization,
+} from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-record-preview',
   template: '',
 })
 export class RecordPreviewComponent implements OnInit, OnDestroy {
-  @Input() record: MetadataRecord
+  @Input() record: CatalogRecord
   @Input() linkTarget = '_blank'
-  @Input() favoriteTemplate: TemplateRef<{ $implicit: MetadataRecord }>
+  @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
   @Input() linkHref: string = null
-  @Output() mdSelect = new EventEmitter<MetadataRecord>()
+  @Output() mdSelect = new EventEmitter<CatalogRecord>()
   subscription = new Subscription()
   abstract: string
 
   get isViewable() {
-    return this.record.hasMaps
+    return this.record.extras?.hasMaps // FIXME: this isn't assigned anymore, find a replacement
   }
   get isDownloadable() {
-    return this.record.hasDownloads
+    return this.record.extras?.hasDownloads // FIXME: this isn't assigned anymore, find a replacement
   }
-  get contact(): MetadataContact {
-    return this.record.resourceContacts?.[0] || this.record.contact
+  get contact(): Individual {
+    return (
+      (this.record as DatasetRecord).contactsForResource?.[0] ||
+      this.record.contacts[0]
+    )
+  }
+  get organization(): Organization {
+    return this.record.ownerOrganization
   }
 
   constructor(protected elementRef: ElementRef) {}

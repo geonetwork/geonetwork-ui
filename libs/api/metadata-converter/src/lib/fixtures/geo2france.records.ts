@@ -1,8 +1,4 @@
-import {
-  DatasetRecord,
-  RecordStatus,
-  Role,
-} from '@geonetwork-ui/util/types/metadata'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/record'
 
 export const GEO2FRANCE_PLU_DATASET_RECORD: DatasetRecord = {
   uniqueIdentifier: '7d002c4c-92ef-4b9f-a568-d732f740b99e',
@@ -14,12 +10,13 @@ export const GEO2FRANCE_PLU_DATASET_RECORD: DatasetRecord = {
   contacts: [
     {
       email: 'sig@agglo-compiegne.fr',
-      role: Role.POINT_OF_CONTACT,
+      role: 'point_of_contact',
       organization: {
         name: 'GeoCompiegnois',
       },
     },
   ],
+  contactsForResource: [],
   recordCreated: new Date('2022-04-15T14:18:19'),
   recordUpdated: new Date('2022-04-15T14:18:19'),
   datasetUpdated: new Date('2022-03-29'),
@@ -52,7 +49,7 @@ Malgré l'attention portée à la création de ces données, il est rappelé que
   distributions: [
     {
       type: 'download',
-      downloadUrl: new URL(
+      url: new URL(
         'http://geo.compiegnois.fr/documents/metiers/urba/docurba/60036_PLU_20220329.zip'
       ),
       name: 'Télécharger les données géographiques et les pièces écrites disponibles', // name or desc?
@@ -73,6 +70,6 @@ Ce lot de données produit en 2019, a été numérisé à partir du PCI Vecteur 
   // data quality?
   spatialExtents: [],
   temporalExtents: [],
-  status: RecordStatus.COMPLETED,
+  status: 'completed',
   updateFrequency: 'unknown',
 }

@@ -38,10 +38,10 @@
   <div
     class="py-4 px-6 rounded bg-gray-100 grid grid-cols-2 gap-y-[10px] gap-x-[20px] text-gray-700 info-grid"
   >
-    <div *ngIf="metadata.updatedOn">
+    <div *ngIf="metadata.recordUpdated">
       <p class="text-sm" translate>record.metadata.updatedOn</p>
       <p class="text-primary font-medium mt-2">
-        {{ metadata.updatedOn && metadata.updatedOn.toLocaleString() }}
+        {{ metadata.recordUpdated && metadata.recordUpdated.toLocaleString() }}
       </p>
     </div>
     <div *ngIf="metadata.updateFrequency">
@@ -50,41 +50,38 @@
         {{ metadata.updateFrequency }}
       </p>
     </div>
-    <div *ngIf="metadata.updateStatus">
+    <div *ngIf="metadata.status">
       <p class="text-sm" translate>record.metadata.updateStatus</p>
       <p class="text-primary font-medium mt-2">
-        {{ metadata.updateStatus }}
+        {{ metadata.status }}
       </p>
     </div>
   </div>
 </gn-ui-expandable-panel>
-<gn-ui-expandable-panel
-  *ngIf="hasUsage"
-  [title]="'record.metadata.usage' | translate"
->
+<gn-ui-expandable-panel [title]="'record.metadata.usage' | translate">
   <div class="py-4 px-6 rounded bg-gray-100 text-gray-700 flex flex-wrap gap-2">
-    <gn-ui-badge *ngIf="metadata.isOpenData">
+    <gn-ui-badge *ngIf="metadata.extras?.isOpenData">
       <span translate>record.metadata.isOpenData</span>
     </gn-ui-badge>
-    <span *ngFor="let constraint of metadata.constraints" gnUiLinkify>
-      {{ constraint }}
+    <span *ngFor="let usage of usages" gnUiLinkify>
+      {{ usage }}
     </span>
-    <span class="noUsage" *ngIf="!metadata.constraints">
+    <span class="noUsage" *ngIf="!hasUsage">
       {{ 'record.metadata.noUsage' | translate }}
     </span>
   </div>
 </gn-ui-expandable-panel>
 <gn-ui-expandable-panel
-  *ngIf="landingPages && landingPages.length > 0"
+  *ngIf="metadata.landingPage"
   [title]="'record.metadata.details' | translate"
 >
   <div class="py-5 px-5 rounded bg-gray-100 text-gray-700">
     <p class="text-sm" translate>record.metadata.sheet</p>
-    <a [href]="landingPages[0].url" target="_blank">
+    <a [href]="metadata.landingPage" target="_blank">
       <mat-icon class="inline-block align-bottom pt-1.5 text-xs text-black"
         >open_in_new</mat-icon
       >
-      <span class="text-primary">{{ landingPages[0].url }}</span>
+      <span class="text-primary">{{ metadata.landingPage }}</span>
     </a>
   </div>
 </gn-ui-expandable-panel>

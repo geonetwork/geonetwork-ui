@@ -7,7 +7,6 @@ import {
   tick,
 } from '@angular/core/testing'
 import { TableViewComponent } from './table-view.component'
-import { MetadataLinkType } from '@geonetwork-ui/util/shared'
 import { of, throwError } from 'rxjs'
 import {
   ChangeDetectionStrategy,
@@ -19,7 +18,7 @@ import {
 import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 import { DataService } from '../service/data.service'
-import { LINK_FIXTURES } from '@geonetwork-ui/util/shared/fixtures'
+import { LINK_FIXTURES } from '@geonetwork-ui/common/fixtures'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
 
 const SAMPLE_DATA_ITEMS = [
@@ -33,8 +32,8 @@ class DatasetReaderMock {
 }
 class DataServiceMock {
   getDataset = jest.fn(({ url }) =>
-    url.indexOf('error') > -1
-      ? throwError(new FetchError('unknown', 'data loading error'))
+    url.toString().indexOf('error') > -1
+      ? throwError(() => new FetchError('unknown', 'data loading error'))
       : of(new DatasetReaderMock())
   )
 }
@@ -159,7 +158,10 @@ describe('TableViewComponent', () => {
     beforeEach(fakeAsync(() => {
       dataService.getDataset = () =>
         throwError(() => new Error('data loading error'))
-      component.link = { ...LINK_FIXTURES.dataCsv, url: 'http://changed/' }
+      component.link = {
+        ...LINK_FIXTURES.dataCsv,
+        url: new URL('http://changed/'),
+      }
       flushMicrotasks()
       fixture.detectChanges()
     }))
@@ -170,8 +172,8 @@ describe('TableViewComponent', () => {
   describe('FetchError when loading data', () => {
     beforeEach(fakeAsync(() => {
       component.link = {
-        url: 'http://abcd.com/wfs/error',
-        type: MetadataLinkType.DOWNLOAD,
+        url: new URL('http://abcd.com/wfs/error'),
+        type: 'download',
       }
       flushMicrotasks()
       fixture.detectChanges()

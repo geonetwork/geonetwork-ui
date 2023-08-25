@@ -12,7 +12,6 @@ import {
 } from '@storybook/angular'
 import { LinkCardComponent } from './link-card.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MetadataLinkType } from '@geonetwork-ui/util/shared'
 import { importProvidersFrom } from '@angular/core'
 import { MatIcon } from '@angular/material/icon'
 
@@ -39,12 +38,11 @@ export default {
 export const Primary: StoryObj<LinkCardComponent> = {
   args: {
     link: {
-      protocol: 'WWW:LINK',
-      type: MetadataLinkType.OTHER,
+      type: 'link',
       name: 'Consulter sur Géoclip',
       description:
         'Lorem ipsum dolor sit amet, consect etur adipiscing elit. Donec id condim entum ex. Etiam sed molestie est.',
-      url: 'https//example.com/someurlpath',
+      url: new URL('https://example.com/someurlpath'),
     },
   },
 }

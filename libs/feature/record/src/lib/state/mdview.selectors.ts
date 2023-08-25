@@ -7,7 +7,8 @@ export const getMdViewState = createFeatureSelector<MdViewState>(
 
 export const getMetadataUuid = createSelector(
   getMdViewState,
-  (state: MdViewState) => (state.metadata ? state.metadata.uuid : null)
+  (state: MdViewState) =>
+    state.metadata ? state.metadata.uniqueIdentifier : null
 )
 export const getMetadata = createSelector(
   getMdViewState,

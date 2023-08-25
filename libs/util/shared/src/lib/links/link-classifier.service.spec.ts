@@ -1,5 +1,5 @@
 import { LinkClassifierService, LinkUsage } from './link-classifier.service'
-import { LINK_FIXTURES } from '../fixtures/link.fixtures'
+import { LINK_FIXTURES } from '@geonetwork-ui/common/fixtures'
 
 describe('LinkClassifierService', () => {
   let service: LinkClassifierService
@@ -94,9 +94,9 @@ describe('LinkClassifierService', () => {
       })
     })
     describe('for a landing page', () => {
-      it('returns landingpage usage', () => {
+      it('returns unknown usage', () => {
         expect(service.getUsagesForLink(LINK_FIXTURES.landingPage)).toEqual([
-          LinkUsage.LANDING_PAGE,
+          LinkUsage.UNKNOWN,
         ])
       })
     })

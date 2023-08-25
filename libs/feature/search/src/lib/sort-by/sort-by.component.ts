@@ -1,12 +1,9 @@
 import { Component } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { SortByEnum } from '@geonetwork-ui/util/shared'
+import { SortByEnum, SortByField } from '@geonetwork-ui/common/domain/search'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
-
-marker('results.sortBy.relevancy')
-marker('results.sortBy.dateStamp')
-marker('results.sortBy.popularity')
+import { filter, map } from 'rxjs/operators'
 
 @Component({
   selector: 'gn-ui-sort-by',
@@ -15,32 +12,29 @@ marker('results.sortBy.popularity')
 export class SortByComponent {
   choices = [
     {
-      label: 'results.sortBy.relevancy',
-      value: SortByEnum.RELEVANCY,
+      label: marker('results.sortBy.relevancy'),
+      value: SortByEnum.RELEVANCY.join(','),
     },
     {
-      label: 'results.sortBy.dateStamp',
-      value: SortByEnum.CREATE_DATE,
+      label: marker('results.sortBy.dateStamp'),
+      value: SortByEnum.CREATE_DATE.join(','),
     },
     {
-      label: 'results.sortBy.popularity',
-      value: SortByEnum.POPULARITY,
+      label: marker('results.sortBy.popularity'),
+      value: SortByEnum.POPULARITY.join(','),
     },
   ]
-  currentSortBy$ = this.facade.sortBy$
+  currentSortBy$ = this.facade.sortBy$.pipe(
+    filter((sortBy) => !!sortBy),
+    map((sortBy) => sortBy.join(','))
+  )
 
   constructor(
     private facade: SearchFacade,
     private searchService: SearchService
   ) {}
 
-  changeSortBy(criteria: any) {
-    if (typeof criteria === 'string') {
-      this.searchService.setSortBy(criteria)
-    } else {
-      throw new Error(
-        `Unexpected SortBy value received: ${JSON.stringify(criteria)}`
-      )
-    }
+  changeSortBy(criteriaAsString: string) {
+    this.searchService.setSortBy(criteriaAsString.split(',') as SortByField)
   }
 }

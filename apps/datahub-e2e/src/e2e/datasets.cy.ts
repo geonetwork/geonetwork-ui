@@ -186,18 +186,18 @@ describe('datasets', () => {
           expect(dropdownOptions).to.eql([
             'Agence wallonne du Patrimoine (SPW - Territoire, Logement, Patrimoine, Énergie - Agence wallonne du Patrimoine) (1)',
             'atmo Hauts-de-France (1)',
-            'Bundesamt für Raumentwicklung (2)',
+            'Bundesamt für Raumentwicklung (1)',
             "Canton du Valais - Service de l'environnement (SEN) - Protection des sols (1)",
             'Cellule informatique et géomatique (SPW - Intérieur et Action sociale - Direction fonctionnelle et d’appui) (1)',
             "Direction de l'Action sociale (SPW - Intérieur et Action sociale - Département de l'Action sociale - Direction de l'Action sociale) (1)",
             'DREAL (1)',
-            "DREAL HdF (Direction Régionale de l'Environnement de l'Aménagement et du Logement des Hauts de France) (54)",
+            "DREAL HdF (Direction Régionale de l'Environnement de l'Aménagement et du Logement des Hauts de France) (1)",
             'Géo2France (1)',
             "Helpdesk carto du SPW (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (2)",
             'Métropole Européenne de Lille (1)',
             'Région Hauts-de-France (2)',
             'Service public de Wallonie (SPW) (2)',
-            "Société Publique de Gestion de l'Eau (SPGE) (2)",
+            "Société Publique de Gestion de l'Eau (SPGE) (1)",
           ])
         })
       })

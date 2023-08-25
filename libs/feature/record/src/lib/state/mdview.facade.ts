@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
-
 import { select, Store } from '@ngrx/store'
 import { filter, map } from 'rxjs/operators'
-
 import * as MdViewActions from './mdview.actions'
 import * as MdViewSelectors from './mdview.selectors'
 import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
-import { DatavizConfigurationModel } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
+import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/dataviz-configuration.model'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
 @Injectable()
 /**
@@ -36,7 +34,9 @@ export class MdViewFacade {
 
   chartConfig$ = this.store.pipe(select(MdViewSelectors.getChartConfig))
 
-  allLinks$ = this.metadata$.pipe(map((record) => record.links || []))
+  allLinks$ = this.metadata$.pipe(
+    map((record) => ('distributions' in record ? record.distributions : []))
+  )
   apiLinks$ = this.allLinks$.pipe(
     map((links) =>
       links.filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.API))
@@ -68,12 +68,8 @@ export class MdViewFacade {
       )
     )
   )
-  landingPageLinks$ = this.allLinks$.pipe(
-    map((links) =>
-      links.filter((link) =>
-        this.linkClassifier.hasUsage(link, LinkUsage.LANDING_PAGE)
-      )
-    )
+  landingPageLinks$ = this.metadata$.pipe(
+    map((record) => ('landingPage' in record ? [record.landingPage] : []))
   )
   otherLinks$ = this.allLinks$.pipe(
     map((links) =>
@@ -92,7 +88,7 @@ export class MdViewFacade {
    * This will show an incomplete record (e.g. from a search result) as a preview
    * Note: the full record will not be loaded automatically; use the `loadFull` method for that
    */
-  setIncompleteMetadata(incomplete: MetadataRecord) {
+  setIncompleteMetadata(incomplete: CatalogRecord) {
     this.store.dispatch(MdViewActions.setIncompleteMetadata({ incomplete }))
   }
   /**

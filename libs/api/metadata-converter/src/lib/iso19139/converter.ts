@@ -2,7 +2,7 @@ import {
   CatalogRecord,
   DatasetRecord,
   ServiceRecord,
-} from '@geonetwork-ui/util/types/metadata'
+} from '@geonetwork-ui/common/domain/record'
 import {
   createDocument,
   createElement,
@@ -104,6 +104,7 @@ export function toModel(xml: string): CatalogRecord {
       abstract,
       ownerOrganization,
       contacts,
+      contactsForResource: [], // FIXME: is that really useful??
       keywords,
       themes,
       accessConstraints,

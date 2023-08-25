@@ -8,7 +8,6 @@ import {
 import { FormsModule } from '@angular/forms'
 import { By } from '@angular/platform-browser'
 import { TranslateModule } from '@ngx-translate/core'
-
 import { FacetItemStubComponent } from '../facet-item/facet-item.component'
 import { BLOCK_MODEL_FIXTURE, EMPTY_BLOCK_MODEL_FIXTURE } from '../fixtures'
 import { FacetBlockComponent } from './facet-block.component'

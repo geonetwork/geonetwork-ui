@@ -5,7 +5,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core'
-import { MetadataLink } from '@geonetwork-ui/util/shared'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-download-item',
@@ -14,13 +14,13 @@ import { MetadataLink } from '@geonetwork-ui/util/shared'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DownloadItemComponent {
-  @Input() link: MetadataLink
+  @Input() link: DatasetDistribution
   @Input() color: string
   @Input() format: string
   @Input() isFromWfs: boolean
   @Output() exportUrl = new EventEmitter<string>()
 
   openUrl() {
-    this.exportUrl.emit(this.link.url)
+    this.exportUrl.emit(this.link.url.toString())
   }
 }

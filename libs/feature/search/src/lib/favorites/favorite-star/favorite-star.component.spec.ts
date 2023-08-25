@@ -4,11 +4,11 @@ import { BehaviorSubject, of, throwError } from 'rxjs'
 import { AuthService } from '@geonetwork-ui/feature/auth'
 import { FavoritesService } from '../favorites.service'
 import { StarToggleComponent } from '@geonetwork-ui/ui/inputs'
-import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
 import { By } from '@angular/platform-browser'
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import tippy from 'tippy.js'
+import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 
 tippy = jest.fn()
 class AuthServiceMock {
@@ -78,7 +78,10 @@ describe('FavoriteStarComponent', () => {
   describe('Favorite count', () => {
     describe('when a record has a favorite count', () => {
       beforeEach(() => {
-        component.record = { ...RECORDS_SUMMARY_FIXTURE[0], favoriteCount: 42 }
+        component.record = {
+          ...DATASET_RECORDS[0],
+          extras: { favoriteCount: 42 },
+        }
         fixture.detectChanges()
       })
       it('shows the amount of favorites on the record', () => {
@@ -87,13 +90,13 @@ describe('FavoriteStarComponent', () => {
         ).nativeElement
         expect(favoriteCountHTMLEl).toBeTruthy()
         expect(favoriteCountHTMLEl.textContent).toEqual(
-          component.record.favoriteCount.toString()
+          component.record.extras.favoriteCount.toString()
         )
       })
     })
     describe('when a record does not have a favorite count', () => {
       beforeEach(() => {
-        component.record = { ...RECORDS_SUMMARY_FIXTURE[0] }
+        component.record = { ...DATASET_RECORDS[0] }
         fixture.detectChanges()
       })
       it('does not show the amount of favorites on the record', () => {
@@ -137,7 +140,10 @@ describe('FavoriteStarComponent', () => {
   })
   describe('On favorite click', () => {
     beforeEach(() => {
-      component.record = { ...RECORDS_SUMMARY_FIXTURE[0], favoriteCount: 42 }
+      component.record = {
+        ...DATASET_RECORDS[0],
+        extras: { favoriteCount: 42 },
+      }
       fixture.detectChanges()
     })
     describe('When the record is already in favorites', () => {
@@ -147,7 +153,7 @@ describe('FavoriteStarComponent', () => {
       })
       it('removes record from favorites', () => {
         expect(favoritesService.removeFromFavorites).toHaveBeenCalledWith([
-          component.record.uuid,
+          component.record.uniqueIdentifier,
         ])
         expect(favoritesService.addToFavorites).not.toHaveBeenCalled()
       })
@@ -159,7 +165,7 @@ describe('FavoriteStarComponent', () => {
       })
       it('adds record to favorites', () => {
         expect(favoritesService.addToFavorites).toHaveBeenCalledWith([
-          component.record.uuid,
+          component.record.uniqueIdentifier,
         ])
         expect(favoritesService.removeFromFavorites).not.toHaveBeenCalled()
       })
@@ -168,7 +174,10 @@ describe('FavoriteStarComponent', () => {
 
   describe('On favorites array update', () => {
     beforeEach(() => {
-      component.record = { ...RECORDS_SUMMARY_FIXTURE[0], favoriteCount: 42 }
+      component.record = {
+        ...DATASET_RECORDS[0],
+        extras: { favoriteCount: 42 },
+      }
       fixture.detectChanges()
       favoriteCountHTMLEl = fixture.debugElement.query(
         By.css('.favorite-count')
@@ -177,13 +186,13 @@ describe('FavoriteStarComponent', () => {
     describe('When my record is part of the updates', () => {
       beforeEach(() => {
         ;(favoritesService as any).myFavoritesUuid$.next([
-          component.record.uuid,
+          component.record.uniqueIdentifier,
         ])
         fixture.detectChanges()
       })
       it('increase record favorite count by one', () => {
         expect(favoriteCountHTMLEl.textContent).toEqual(
-          (component.record.favoriteCount + 1).toString()
+          (component.record.extras.favoriteCount + 1).toString()
         )
       })
     })
@@ -194,7 +203,7 @@ describe('FavoriteStarComponent', () => {
       })
       it('increase record favorite count by one', () => {
         expect(favoriteCountHTMLEl.textContent).toEqual(
-          component.record.favoriteCount.toString()
+          component.record.extras.favoriteCount.toString()
         )
       })
     })
@@ -202,7 +211,10 @@ describe('FavoriteStarComponent', () => {
 
   describe('two subsequent changes', () => {
     beforeEach(() => {
-      component.record = { ...RECORDS_SUMMARY_FIXTURE[0], favoriteCount: 42 }
+      component.record = {
+        ...DATASET_RECORDS[0],
+        extras: { favoriteCount: 42 },
+      }
       ;(favoritesService as any).myFavoritesUuid$.next(['aaa'])
       starToggle.newValue.emit(false)
       starToggle.newValue.emit(true)
@@ -210,28 +222,31 @@ describe('FavoriteStarComponent', () => {
     })
     it('removes and adds record to favorites', () => {
       expect(favoritesService.removeFromFavorites).toHaveBeenCalledWith([
-        component.record.uuid,
+        component.record.uniqueIdentifier,
       ])
       expect(favoritesService.addToFavorites).toHaveBeenCalledWith([
-        component.record.uuid,
+        component.record.uniqueIdentifier,
       ])
     })
     it('record favorite count stays the same', () => {
       expect(favoriteCountHTMLEl.textContent).toEqual(
-        component.record.favoriteCount.toString()
+        component.record.extras.favoriteCount.toString()
       )
     })
   })
   describe('if favorite modification fails', () => {
     beforeEach(() => {
-      component.record = { ...RECORDS_SUMMARY_FIXTURE[0], favoriteCount: 42 }
+      component.record = {
+        ...DATASET_RECORDS[0],
+        extras: { favoriteCount: 42 },
+      }
       favoritesService.addToFavorites = () => throwError('blargz')
       starToggle.newValue.emit(true)
       fixture.detectChanges()
     })
     it('does not change record favorite count', () => {
       expect(favoriteCountHTMLEl.textContent).toEqual(
-        component.record.favoriteCount.toString()
+        component.record.extras.favoriteCount.toString()
       )
     })
   })

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
-import { ES_SOURCE_BRIEF, MetadataRecord } from '@geonetwork-ui/util/shared'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { FIELDS_BRIEF, SearchFacade } from '@geonetwork-ui/feature/search'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'datahub-last-created',
@@ -17,15 +17,13 @@ export class LastCreatedComponent implements OnInit {
 
   ngOnInit() {
     this.searchFacade
-      .setConfigRequestFields({
-        includes: [...ES_SOURCE_BRIEF, 'createDate', 'changeDate'],
-      })
+      .setConfigRequestFields([...FIELDS_BRIEF, 'createDate', 'changeDate'])
       .setPagination(0, 10)
-      .setSortBy('-createDate')
+      .setSortBy(['desc', 'createDate'])
       .setResultsLayout('FEED')
   }
 
-  onMetadataSelection(metadata: MetadataRecord): void {
+  onMetadataSelection(metadata: CatalogRecord): void {
     this.routerFacade.goToMetadata(metadata)
   }
 }

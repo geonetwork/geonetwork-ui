@@ -97,7 +97,13 @@ describe('header', () => {
     })
   })
 
-  describe('filter search actions', () => {
+  describe('filter and sort', () => {
+    beforeEach(() => {
+      cy.visit('/search')
+      cy.get('gn-ui-record-preview-row').as('initialList')
+      cy.visit('/news')
+    })
+
     it('should create two filter buttons upon loading page', () => {
       cy.get('gn-ui-fuzzy-search')
         .next()
@@ -105,18 +111,12 @@ describe('header', () => {
         .should('have.length', 2)
     })
 
-    beforeEach(() => {
-      cy.visit('/search')
-      cy.get('gn-ui-record-preview-row').as('initialList')
-      cy.visit('/news')
-    })
-
-    it('should filter results by latest date', () => {
+    it('should sort results by latest date', () => {
       cy.get('gn-ui-fuzzy-search').next().find('button').first().click()
       cy.get('gn-ui-record-preview-row').should('not.eq', '@initialList')
       cy.get('select#sort-by- option:selected').should(
         'have.value',
-        '-createDate'
+        'desc,createDate'
       )
     })
     it('should filter results by popularity', () => {
@@ -124,7 +124,7 @@ describe('header', () => {
       cy.get('gn-ui-record-preview-row').should('not.eq', '@initialList')
       cy.get('select#sort-by- option:selected').should(
         'have.value',
-        '-userSavedCount'
+        'desc,userSavedCount'
       )
     })
   })

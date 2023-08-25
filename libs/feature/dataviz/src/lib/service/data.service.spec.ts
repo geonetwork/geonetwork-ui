@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing'
 import { DataService } from './data.service'
 import { openDataset } from '@geonetwork-ui/data-fetcher'
-import { MetadataLinkType, PROXY_PATH } from '@geonetwork-ui/util/shared'
+import { PROXY_PATH } from '@geonetwork-ui/util/shared'
+import { firstValueFrom, lastValueFrom } from 'rxjs'
 
 const newEndpointCall = jest.fn()
 
@@ -154,19 +155,21 @@ describe('DataService', () => {
       const link = {
         description: 'Lieu de surveillance (ligne)',
         name: 'surval_parametre_ligne',
-        protocol: 'OGC:WFS',
-        url: 'https://www.ifremer.fr/services/wfs/surveillance_littorale',
-        type: MetadataLinkType.WFS,
+        url: new URL(
+          'https://www.ifremer.fr/services/wfs/surveillance_littorale'
+        ),
+        type: 'service',
+        accessServiceProtocol: 'wfs',
       }
       describe('WFS unreachable (CORS)', () => {
         it('throws a relevant error', async () => {
           try {
-            await service
-              .getDownloadLinksFromWfs({
+            await lastValueFrom(
+              service.getDownloadLinksFromWfs({
                 ...link,
-                url: 'http://error.cors/wfs',
+                url: new URL('http://error.cors/wfs'),
               })
-              .toPromise()
+            )
           } catch (e) {
             expect(e.message).toBe('wfs.unreachable.cors')
           }
@@ -175,12 +178,12 @@ describe('DataService', () => {
       describe('WFS unreachable (HTTP error)', () => {
         it('throws a relevant error', async () => {
           try {
-            await service
-              .getDownloadLinksFromWfs({
+            await lastValueFrom(
+              service.getDownloadLinksFromWfs({
                 ...link,
-                url: 'http://error.http/wfs',
+                url: new URL('http://error.http/wfs'),
               })
-              .toPromise()
+            )
           } catch (e) {
             expect(e.message).toBe('wfs.unreachable.http')
           }
@@ -189,12 +192,12 @@ describe('DataService', () => {
       describe('WFS unreachable (unknown)', () => {
         it('throws a relevant error', async () => {
           try {
-            await service
-              .getDownloadLinksFromWfs({
+            await lastValueFrom(
+              service.getDownloadLinksFromWfs({
                 ...link,
-                url: 'http://error/wfs',
+                url: new URL('http://error/wfs'),
               })
-              .toPromise()
+            )
           } catch (e) {
             expect(e.message).toBe('wfs.unreachable.unknown')
           }
@@ -203,12 +206,12 @@ describe('DataService', () => {
       describe('WFS with unknown feature type', () => {
         it('throws a relevant error', async () => {
           try {
-            await service
-              .getDownloadLinksFromWfs({
+            await lastValueFrom(
+              service.getDownloadLinksFromWfs({
                 ...link,
                 name: 'featuretype_missing',
               })
-              .toPromise()
+            )
           } catch (e) {
             expect(e.message).toBe('wfs.featuretype.notfound')
           }
@@ -216,126 +219,149 @@ describe('DataService', () => {
       })
       describe('WFS with GeoJSON support', () => {
         it('returns a list of links', async () => {
-          const urls = await service
-            .getDownloadLinksFromWfs({
+          const urls = await lastValueFrom(
+            service.getDownloadLinksFromWfs({
               ...link,
-              url: 'http://local/wfs',
+              url: new URL('http://local/wfs'),
             })
-            .toPromise()
+          )
           expect(urls).toEqual([
             {
               description: 'Lieu de surveillance (ligne)',
               mimeType: 'text/csv',
               name: 'surval_parametre_ligne',
-              protocol: 'OGC:WFS',
-              url: 'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=csv',
-              type: MetadataLinkType.WFS,
+              url: new URL(
+                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=csv'
+              ),
+              type: 'service',
+              accessServiceProtocol: 'wfs',
             },
             {
               description: 'Lieu de surveillance (ligne)',
               mimeType: 'application/vnd.ms-excel',
               name: 'surval_parametre_ligne',
-              protocol: 'OGC:WFS',
-              url: 'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=xls',
-              type: MetadataLinkType.WFS,
+              url: new URL(
+                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=xls'
+              ),
+              type: 'service',
+              accessServiceProtocol: 'wfs',
             },
             {
               description: 'Lieu de surveillance (ligne)',
               mimeType: 'application/json',
               name: 'surval_parametre_ligne',
-              protocol: 'OGC:WFS',
-              url: 'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=json',
-              type: MetadataLinkType.WFS,
+              url: new URL(
+                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=json'
+              ),
+              type: 'service',
+              accessServiceProtocol: 'wfs',
             },
             {
               description: 'Lieu de surveillance (ligne)',
               mimeType: 'gml',
               name: 'surval_parametre_ligne',
-              protocol: 'OGC:WFS',
-              url: 'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=gml',
-              type: MetadataLinkType.WFS,
+              url: new URL(
+                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=gml'
+              ),
+              type: 'service',
+              accessServiceProtocol: 'wfs',
             },
           ])
         })
       })
       describe('WFS without GeoJSON support', () => {
         it('returns a list of links (without geojson)', async () => {
-          const urls = await service
-            .getDownloadLinksFromWfs({
+          const urls = await lastValueFrom(
+            service.getDownloadLinksFromWfs({
               ...link,
-              url: 'http://local/wfs',
+              url: new URL('http://local/wfs'),
               name: 'nojson_type',
             })
-            .toPromise()
+          )
           expect(urls).toEqual([
             {
               description: 'Lieu de surveillance (ligne)',
               mimeType: 'text/csv',
               name: 'nojson_type',
-              protocol: 'OGC:WFS',
-              url: 'http://local/wfs?GetFeature&FeatureType=nojson_type&format=csv',
-              type: MetadataLinkType.WFS,
+              url: new URL(
+                'http://local/wfs?GetFeature&FeatureType=nojson_type&format=csv'
+              ),
+              type: 'service',
+              accessServiceProtocol: 'wfs',
             },
             {
               description: 'Lieu de surveillance (ligne)',
               mimeType: 'application/vnd.ms-excel',
               name: 'nojson_type',
-              protocol: 'OGC:WFS',
-              url: 'http://local/wfs?GetFeature&FeatureType=nojson_type&format=xls',
-              type: MetadataLinkType.WFS,
+              url: new URL(
+                'http://local/wfs?GetFeature&FeatureType=nojson_type&format=xls'
+              ),
+              type: 'service',
+              accessServiceProtocol: 'wfs',
             },
             {
               description: 'Lieu de surveillance (ligne)',
               mimeType: 'gml',
               name: 'nojson_type',
-              protocol: 'OGC:WFS',
-              url: 'http://local/wfs?GetFeature&FeatureType=nojson_type&format=gml',
-              type: MetadataLinkType.WFS,
+              url: new URL(
+                'http://local/wfs?GetFeature&FeatureType=nojson_type&format=gml'
+              ),
+              type: 'service',
+              accessServiceProtocol: 'wfs',
             },
           ])
         })
       })
       describe('WFS with only one feature type, no feature type name specified', () => {
         it('returns a list of links using the only feature type', async () => {
-          const urls = await service
-            .getDownloadLinksFromWfs({
+          const urls = await lastValueFrom(
+            service.getDownloadLinksFromWfs({
               ...link,
-              url: 'http://unique-feature-type/wfs',
+              url: new URL('http://unique-feature-type/wfs'),
               name: '',
             })
-            .toPromise()
+          )
           expect(urls).toEqual([
             {
               description: 'Lieu de surveillance (ligne)',
               mimeType: 'text/csv',
               name: '',
-              protocol: 'OGC:WFS',
-              url: 'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=csv',
-              type: MetadataLinkType.WFS,
+              url: new URL(
+                'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=csv'
+              ),
+              type: 'service',
+              accessServiceProtocol: 'wfs',
             },
             {
               description: 'Lieu de surveillance (ligne)',
               mimeType: 'application/vnd.ms-excel',
               name: '',
-              protocol: 'OGC:WFS',
-              url: 'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=xls',
-              type: MetadataLinkType.WFS,
+              url: new URL(
+                'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=xls'
+              ),
+              type: 'service',
+              accessServiceProtocol: 'wfs',
             },
             {
               description: 'Lieu de surveillance (ligne)',
               mimeType: 'application/json',
               name: '',
-              protocol: 'OGC:WFS',
-              url: 'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=json',
-              type: MetadataLinkType.WFS,
+              url: new URL(
+                'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=json'
+              ),
+
+              type: 'service',
+              accessServiceProtocol: 'wfs',
             },
             {
               description: 'Lieu de surveillance (ligne)',
               mimeType: 'gml',
               name: '',
-              protocol: 'OGC:WFS',
-              url: 'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=gml',
-              type: MetadataLinkType.WFS,
+              url: new URL(
+                'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=gml'
+              ),
+              type: 'service',
+              accessServiceProtocol: 'wfs',
             },
           ])
         })
@@ -345,10 +371,9 @@ describe('DataService', () => {
     describe('#getGeoJsonDownloadUrlFromWfs', () => {
       describe('WFS with GeoJSON support', () => {
         it('returns an url', async () => {
-          const url = await service
-            .getDownloadUrlsFromWfs('http://local/wfs', 'abcd')
-            .toPromise()
-            .then((urls) => urls.geojson)
+          const url = await lastValueFrom(
+            service.getDownloadUrlsFromWfs('http://local/wfs', 'abcd')
+          ).then((urls) => urls.geojson)
           expect(url).toEqual(
             'http://local/wfs?GetFeature&FeatureType=abcd&format=application/json'
           )
@@ -357,9 +382,9 @@ describe('DataService', () => {
       describe('WFS without GeoJSON support', () => {
         it('returns an observable that errors with a relevant error', async () => {
           try {
-            await service
-              .getDownloadUrlsFromWfs('http://local/wfs', 'nojsontype')
-              .toPromise()
+            await lastValueFrom(
+              service.getDownloadUrlsFromWfs('http://local/wfs', 'nojsontype')
+            )
           } catch (e) {
             expect(e.message).toBe('wfs.geojsongml.notsupported')
           }
@@ -367,10 +392,9 @@ describe('DataService', () => {
       })
       describe('WFS with only one feature type, no feature type name specified', () => {
         it('returns one valid link using the only feature type', async () => {
-          const url = await service
-            .getDownloadUrlsFromWfs('http://unique-feature-type/wfs', '')
-            .toPromise()
-            .then((urls) => urls.geojson)
+          const url = await lastValueFrom(
+            service.getDownloadUrlsFromWfs('http://unique-feature-type/wfs', '')
+          ).then((urls) => urls.geojson)
           expect(url).toEqual(
             'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=application/json'
           )
@@ -393,25 +417,29 @@ describe('DataService', () => {
       it('returns links with formats for link', () => {
         expect(
           service.getDownloadLinksFromEsriRest({
-            protocol: 'ESRI:REST',
             name: 'myrestlayer',
-            url: 'https://my.esri.server/FeatureServer',
-            type: MetadataLinkType.ESRI_REST,
+            url: new URL('https://my.esri.server/FeatureServer'),
+            type: 'service',
+            accessServiceProtocol: 'esriRest',
           })
         ).toEqual([
           {
-            protocol: 'ESRI:REST',
             name: 'myrestlayer',
             mimeType: 'application/json',
-            url: 'https://my.esri.server/FeatureServer/query?f=json&where=1=1&outFields=*',
-            type: MetadataLinkType.ESRI_REST,
+            url: new URL(
+              'https://my.esri.server/FeatureServer/query?f=json&where=1=1&outFields=*'
+            ),
+            type: 'service',
+            accessServiceProtocol: 'esriRest',
           },
           {
-            protocol: 'ESRI:REST',
             name: 'myrestlayer',
             mimeType: 'application/geo+json',
-            url: 'https://my.esri.server/FeatureServer/query?f=geojson&where=1=1&outFields=*',
-            type: MetadataLinkType.ESRI_REST,
+            url: new URL(
+              'https://my.esri.server/FeatureServer/query?f=geojson&where=1=1&outFields=*'
+            ),
+            type: 'service',
+            accessServiceProtocol: 'esriRest',
           },
         ])
       })
@@ -421,13 +449,13 @@ describe('DataService', () => {
       describe('parse failure', () => {
         it('returns an observable that errors with a relevant error', async () => {
           try {
-            await service
-              .getDataset({
-                url: 'http://error.parse/geojson',
+            await lastValueFrom(
+              service.getDataset({
+                url: new URL('http://error.parse/geojson'),
                 mimeType: 'application/geo+json',
-                type: MetadataLinkType.DOWNLOAD,
+                type: 'download',
               })
-              .toPromise()
+            )
           } catch (e) {
             expect(e).toStrictEqual({
               info: 'Something went wrong',
@@ -439,13 +467,13 @@ describe('DataService', () => {
       describe('CORS or network error', () => {
         it('returns an observable that errors with a relevant error', async () => {
           try {
-            await service
-              .getDataset({
-                url: 'http://error.network/xls',
+            await lastValueFrom(
+              service.getDataset({
+                url: new URL('http://error.network/xls'),
                 mimeType: 'application/vnd.ms-excel',
-                type: MetadataLinkType.DOWNLOAD,
+                type: 'download',
               })
-              .toPromise()
+            )
           } catch (e) {
             expect(e).toStrictEqual({
               info: 'Something went wrong',
@@ -457,13 +485,13 @@ describe('DataService', () => {
       describe('HTTP error', () => {
         it('returns an observable that errors with a relevant error', async () => {
           try {
-            await service
-              .getDataset({
-                url: 'http://error.http/csv',
+            await lastValueFrom(
+              service.getDataset({
+                url: new URL('http://error.http/csv'),
                 mimeType: 'text/csv',
-                type: MetadataLinkType.DOWNLOAD,
+                type: 'download',
               })
-              .toPromise()
+            )
           } catch (e) {
             expect(e).toStrictEqual({
               info: 'Something went wrong',
@@ -476,13 +504,13 @@ describe('DataService', () => {
       describe('unknown error', () => {
         it('returns an observable that errors with a relevant error', async () => {
           try {
-            await service
-              .getDataset({
-                url: 'http://error/xls',
+            await lastValueFrom(
+              service.getDataset({
+                url: new URL('http://error/xls'),
                 mimeType: 'application/vnd.ms-excel',
-                type: MetadataLinkType.DOWNLOAD,
+                type: 'download',
               })
-              .toPromise()
+            )
           } catch (e) {
             expect(e).toStrictEqual({
               info: 'Something went wrong',
@@ -493,9 +521,9 @@ describe('DataService', () => {
       describe('valid file', () => {
         it('calls DataFetcher.openDataset', () => {
           service.getDataset({
-            url: 'http://sample/geojson',
+            url: new URL('http://sample/geojson'),
             mimeType: 'text/csv',
-            type: MetadataLinkType.DOWNLOAD,
+            type: 'download',
           })
           expect(openDataset).toHaveBeenCalledWith(
             'http://sample/geojson',
@@ -503,13 +531,13 @@ describe('DataService', () => {
           )
         })
         it('returns an observable that emits the array of features', async () => {
-          const result = await service
-            .getDataset({
-              url: 'http://sample/csv',
+          const result = await lastValueFrom(
+            service.getDataset({
+              url: new URL('http://sample/csv'),
               mimeType: 'text/csv',
-              type: MetadataLinkType.DOWNLOAD,
+              type: 'download',
             })
-            .toPromise()
+          )
           await expect(result.read()).resolves.toEqual(SAMPLE_GEOJSON.features)
         })
       })
@@ -518,13 +546,13 @@ describe('DataService', () => {
     describe('#readGeoJsonDataset', () => {
       describe('valid file', () => {
         it('returns an observable that emits the feature collection', async () => {
-          const result = await service
-            .readAsGeoJson({
-              url: 'http://sample/geojson',
+          const result = await lastValueFrom(
+            service.readAsGeoJson({
+              url: new URL('http://sample/geojson'),
               mimeType: 'application/geo+json',
-              type: MetadataLinkType.DOWNLOAD,
+              type: 'download',
             })
-            .toPromise()
+          )
           expect(result).toEqual(SAMPLE_GEOJSON)
         })
       })
@@ -552,10 +580,9 @@ describe('DataService', () => {
         )
       })
       it('returns a proxied url', async () => {
-        const url = await service
-          .getDownloadUrlsFromWfs('http://local/wfs', 'abcd')
-          .toPromise()
-          .then((urls) => urls.geojson)
+        const url = await lastValueFrom(
+          service.getDownloadUrlsFromWfs('http://local/wfs', 'abcd')
+        ).then((urls) => urls.geojson)
         expect(url).toEqual(
           'http://proxy.local/?url=http%3A%2F%2Flocal%2Fwfs?GetFeature&FeatureType=abcd&format=application/json'
         )
@@ -578,9 +605,9 @@ describe('DataService', () => {
     describe('#readGeoJsonDataset', () => {
       it('calls DataFetcher.openDataset with a proxied url', () => {
         service.getDataset({
-          url: 'http://sample/geojson',
+          url: new URL('http://sample/geojson'),
           mimeType: 'text/csv',
-          type: MetadataLinkType.DOWNLOAD,
+          type: 'download',
         })
         expect(openDataset).toHaveBeenCalledWith(
           'http://proxy.local/?url=http%3A%2F%2Fsample%2Fgeojson',
@@ -589,9 +616,9 @@ describe('DataService', () => {
       })
       it('does not apply the proxy twice', () => {
         service.getDataset({
-          url: 'http://proxy.local/?url=http%3A%2F%2Fsample%2Fgeojson',
+          url: new URL('http://proxy.local/?url=http%3A%2F%2Fsample%2Fgeojson'),
           mimeType: 'text/csv',
-          type: MetadataLinkType.DOWNLOAD,
+          type: 'download',
         })
         expect(openDataset).toHaveBeenCalledWith(
           'http://proxy.local/?url=http%3A%2F%2Fsample%2Fgeojson',

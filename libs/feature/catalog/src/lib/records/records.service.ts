@@ -1,29 +1,22 @@
 import { Injectable } from '@angular/core'
-import { ElasticsearchService } from '@geonetwork-ui/util/shared'
-import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
-import { Observable, of, throwError } from 'rxjs'
+import { Observable, of } from 'rxjs'
 import { catchError, map, shareReplay } from 'rxjs/operators'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecordsService {
-  recordsCount$: Observable<number> = this.searchApiService
-    .search(
-      'records-count',
-      JSON.stringify({
-        ...this.esService.getSearchRequestBody(),
-        track_total_hits: true,
-      })
-    )
+  recordsCount$: Observable<number> = this.recordsRepository
+    .search({
+      limit: 0,
+      offset: 0,
+    })
     .pipe(
-      map((response) => response.hits.total.value),
+      map((response) => response.count),
       shareReplay(1),
       catchError(() => of(0))
     )
 
-  constructor(
-    private esService: ElasticsearchService,
-    private searchApiService: SearchApiService
-  ) {}
+  constructor(private recordsRepository: RecordsRepositoryInterface) {}
 }

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
-import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util/shared'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-external-viewer-button',
@@ -9,7 +9,7 @@ import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util/shared'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExternalViewerButtonComponent {
-  @Input() link: MetadataLink
+  @Input() link: DatasetDistribution
   @Input() mapConfig: MapConfig
 
   get externalViewer() {
@@ -24,18 +24,25 @@ export class ExternalViewerButtonComponent {
 
   get supportedLinkLayerType() {
     if (!this.link) return null
-    return this.link.type === MetadataLinkType.WMS
-      ? 'wms'
-      : this.link.type === MetadataLinkType.WFS
-      ? 'wfs'
-      : null
+    if (this.link.type === 'service') {
+      if (this.link.accessServiceProtocol === 'wms') {
+        return 'wms'
+      }
+      if (this.link.accessServiceProtocol === 'wfs') {
+        return 'wfs'
+      }
+    }
+    return null
   }
 
   openInExternalViewer() {
     const templateUrl = this.mapConfig.EXTERNAL_VIEWER_URL_TEMPLATE
     const url = templateUrl
       .replace('${layer_name}', `${this.link.name}`)
-      .replace('${service_url}', `${encodeURIComponent(this.link.url)}`)
+      .replace(
+        '${service_url}',
+        `${encodeURIComponent(this.link.url.toString())}`
+      )
       .replace('${service_type}', `${this.supportedLinkLayerType}`)
     window
       .open(

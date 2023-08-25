@@ -5,7 +5,10 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { MetadataLink, MetadataRecord } from '@geonetwork-ui/util/shared'
+import {
+  DatasetDistribution,
+  DatasetRecord,
+} from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-metadata-info',
@@ -14,13 +17,27 @@ import { MetadataLink, MetadataRecord } from '@geonetwork-ui/util/shared'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MetadataInfoComponent {
-  @Input() metadata: MetadataRecord
+  @Input() metadata: Partial<DatasetRecord>
   @Input() incomplete: boolean
-  @Input() landingPages: MetadataLink[]
   @Output() keyword = new EventEmitter<string>()
 
   get hasUsage() {
-    return 'isOpenData' in this.metadata || this.metadata.constraints?.length
+    return (
+      ('extras' in this.metadata && 'isOpenData' in this.metadata.extras) ||
+      this.metadata.useLimitations?.length ||
+      this.metadata.accessConstraints?.length
+    )
+  }
+
+  get usages(): string[] {
+    let array = []
+    if (this.metadata.useLimitations?.length) {
+      array = array.concat(this.metadata.useLimitations)
+    }
+    if (this.metadata.accessConstraints?.length) {
+      array = array.concat(this.metadata.accessConstraints.map((c) => c.text))
+    }
+    return array
   }
 
   fieldReady(propName: string) {

@@ -1,6 +1,6 @@
-import { FEATURE_COLLECTION_POLYGON_FIXTURE_4326 } from '../fixtures'
 import { getGeometryFromGeoJSON } from './geojson'
 import { GeometryCollection } from 'geojson'
+import { FEATURE_COLLECTION_POLYGON_FIXTURE_4326 } from '@geonetwork-ui/common/fixtures'
 
 describe('geojson utils', () => {
   describe('getGeometryFromGeoJSON', () => {

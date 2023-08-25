@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'datahub-search-page',
@@ -19,7 +19,7 @@ export class SearchPageComponent implements OnInit {
     this.searchFacade.setResultsLayout('ROW')
   }
 
-  onMetadataSelection(metadata: MetadataRecord): void {
+  onMetadataSelection(metadata: CatalogRecord): void {
     this.searchRouter.goToMetadata(metadata)
   }
 }

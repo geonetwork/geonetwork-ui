@@ -67,10 +67,16 @@ export class ThumbnailComponent implements OnInit, OnChanges {
     const urls = Array.isArray(this.thumbnailUrl)
       ? this.thumbnailUrl
       : [this.thumbnailUrl]
-    this.images = urls.map((url, index) => ({
-      url,
-      fit: (Array.isArray(this.fit) ? this.fit[index] : this.fit) || 'cover',
-    }))
+    this.images = urls
+      .map((url, index) => ({
+        url,
+        fit: (Array.isArray(this.fit) ? this.fit[index] : this.fit) || 'cover',
+      }))
+      .filter((img) => !!img.url)
+    if (!this.images.length) {
+      this.setPlaceholder()
+      return
+    }
     this.setNewSrcImage(this.images[0])
   }
 

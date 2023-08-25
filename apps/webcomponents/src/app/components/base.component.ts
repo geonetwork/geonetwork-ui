@@ -1,17 +1,15 @@
 import { Component, Injector, Input, OnChanges, OnInit } from '@angular/core'
 import {
-  ElasticsearchService,
   LinkClassifierService,
   LinkUsage,
   ThemeService,
 } from '@geonetwork-ui/util/shared'
 import { Configuration, SearchApiService } from '@geonetwork-ui/data-access/gn4'
-import {
-  ElasticsearchMapper,
-  SearchFacade,
-} from '@geonetwork-ui/feature/search'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { TranslateService } from '@ngx-translate/core'
 import { firstValueFrom } from 'rxjs'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
 
 export const apiConfiguration = new Configuration()
 
@@ -33,16 +31,14 @@ export class BaseComponent implements OnChanges, OnInit {
   facade: SearchFacade
   translate: TranslateService
   searchService: SearchApiService
-  esService: ElasticsearchService
-  esMapper: ElasticsearchMapper
+  recordsRepository: RecordsRepositoryInterface
   linkClassifier: LinkClassifierService
 
   constructor(private injector: Injector) {
     this.facade = injector.get(SearchFacade)
     this.translate = injector.get(TranslateService)
     this.searchService = injector.get(SearchApiService)
-    this.esService = injector.get(ElasticsearchService)
-    this.esMapper = injector.get(ElasticsearchMapper)
+    this.recordsRepository = injector.get(RecordsRepositoryInterface)
     this.linkClassifier = injector.get(LinkClassifierService)
   }
 
@@ -79,16 +75,17 @@ export class BaseComponent implements OnChanges, OnInit {
     // to override
   }
 
-  async getRecordLink(uuid: string, usages: LinkUsage[]) {
+  async getRecordLink(
+    uuid: string,
+    usages: LinkUsage[]
+  ): Promise<DatasetDistribution | null> {
     const record = await firstValueFrom(
-      this.searchService.search(
-        'bucket',
-        JSON.stringify(this.esService.getMetadataByIdPayload(uuid))
-      )
+      this.recordsRepository.getByUniqueIdentifier(uuid)
     )
-      .then((response) => firstValueFrom(this.esMapper.toRecords(response)))
-      .then((records) => records[0])
-    const dataLinks = record.links.filter((link) =>
+    if (record?.kind !== 'dataset') {
+      return null
+    }
+    const dataLinks = record.distributions.filter((link) =>
       usages.some((usage) => this.linkClassifier.hasUsage(link, usage))
     )
     return dataLinks[0]

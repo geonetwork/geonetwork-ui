@@ -1,14 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
-import {
-  getFileFormat,
-  MetadataLink,
-  MetadataLinkType,
-  sortPriority,
-} from '@geonetwork-ui/util/shared'
+import { getFileFormat, sortPriority } from '@geonetwork-ui/util/shared'
 import { combineLatest, of } from 'rxjs'
 import { catchError, map, switchMap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
+import {
+  DatasetDistribution,
+  DatasetServiceDistribution,
+} from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-data-downloads',
@@ -24,15 +23,25 @@ export class DataDownloadsComponent {
   links$ = this.facade.downloadLinks$.pipe(
     switchMap((links) => {
       const wfsLinks = links.filter(
-        (link) => link.type === MetadataLinkType.WFS
+        (link) =>
+          link.type === 'service' && link.accessServiceProtocol === 'wfs'
       )
       const esriRestLinks = links
-        .filter((link) => link.type === MetadataLinkType.ESRI_REST)
-        .flatMap((link) => this.dataService.getDownloadLinksFromEsriRest(link))
+        .filter(
+          (link) =>
+            link.type === 'service' && link.accessServiceProtocol === 'esriRest'
+        )
+        .flatMap((link) =>
+          this.dataService.getDownloadLinksFromEsriRest(
+            link as DatasetServiceDistribution
+          )
+        )
       const otherLinks = links.filter(
         (link) =>
-          link.type !== MetadataLinkType.WFS &&
-          link.type !== MetadataLinkType.ESRI_REST
+          link.type !== 'service' ||
+          (link.type === 'service' &&
+            link.accessServiceProtocol !== 'esriRest' &&
+            link.accessServiceProtocol !== 'wfs')
       )
 
       this.error = null
@@ -40,9 +49,11 @@ export class DataDownloadsComponent {
       return combineLatest(
         wfsLinks.length > 0
           ? wfsLinks.map((link) =>
-              this.dataService.getDownloadLinksFromWfs(link)
+              this.dataService.getDownloadLinksFromWfs(
+                link as DatasetServiceDistribution
+              )
             )
-          : [of([] as MetadataLink[])]
+          : [of([] as DatasetDistribution[])]
       ).pipe(
         map(flattenArray),
         map(removeLinksWithUnknownFormat),
@@ -80,6 +91,6 @@ const removeDuplicateLinks = (wfsDownloadLinks) =>
   )
 
 const sortLinks = (allLinks) =>
-  allLinks.sort((a: MetadataLink, b: MetadataLink): number => {
+  allLinks.sort((a: DatasetDistribution, b: DatasetDistribution): number => {
     return sortPriority(b) - sortPriority(a)
   })

@@ -1,27 +1,28 @@
-<div *ngIf="shownContact" class="mb-6 sm:mb-12">
+<div *ngIf="shownOrganization" class="mb-6 sm:mb-12">
   <p class="text-gray-700 text-xs mb-3 uppercase" translate>
     record.metadata.contact
   </p>
   <div class="flex mb-1">
     <div
       class="text-primary font-title text-21 mr-2 cursor-pointer hover:underline"
-      (click)="onContactClick()"
+      (click)="onOrganizationClick()"
     >
-      {{ shownContact.organisation }}
+      {{ shownOrganization.name }}
     </div>
   </div>
   <a
-    [href]="'mailto:' + shownContact.email"
+    *ngIf="contacts.length"
+    [href]="'mailto:' + contacts[0].email"
     class="text-gray-700 text-sm hover:underline"
     target="_blank"
-    >{{ shownContact.email }}</a
+    >{{ contacts[0].email }}</a
   >
-  <div *ngIf="shownContact.website" class="mb-2">
+  <div *ngIf="shownOrganization.website" class="mb-2">
     <a
-      [href]="shownContact.website"
+      [href]="shownOrganization.website"
       target="_blank"
       class="contact-website text-primary text-sm cursor-pointer hover:underline transition-all"
-      >{{ shownContact.website }}
+      >{{ shownOrganization.website }}
       <mat-icon class="!w-[12px] !h-[12px] !text-[12px] opacity-75"
         >open_in_new</mat-icon
       >

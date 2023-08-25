@@ -223,4 +223,37 @@ describe('ThumbnailComponent', () => {
       expect(img.nativeElement.src).toEqual(placeholderUrl)
     })
   })
+
+  describe('several thumbnails urls', () => {
+    const url = 'http://test.com/img.png'
+    const placeholderUrl = 'http://localhost/assets/img/placeholder.png'
+    let img
+
+    describe('at least one is truthy', () => {
+      beforeEach(() => {
+        component.placeholderUrl = placeholderUrl
+        component.thumbnailUrl = [null, undefined, url]
+        component.fit = ['cover', 'contain', 'contain']
+        fixture.detectChanges()
+        img = de.query(By.css('img'))
+      })
+      it('uses the truthy url', () => {
+        expect(img.nativeElement.src).toEqual(url)
+        expect(img.nativeElement.style.objectFit).toEqual('contain')
+      })
+    })
+
+    describe('no truthy url', () => {
+      beforeEach(() => {
+        component.placeholderUrl = placeholderUrl
+        component.thumbnailUrl = [null, undefined]
+        component.fit = ['cover', 'contain']
+        fixture.detectChanges()
+        img = de.query(By.css('img'))
+      })
+      it('uses the truthy url', () => {
+        expect(img.nativeElement.src).toEqual(placeholderUrl)
+      })
+    })
+  })
 })

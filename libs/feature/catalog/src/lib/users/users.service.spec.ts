@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing'
 import { UsersApiService } from '@geonetwork-ui/data-access/gn4'
-import { USERS_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
+import { USERS_FIXTURE } from '@geonetwork-ui/common/fixtures'
 import { of } from 'rxjs'
 
 import { UsersService } from './users.service'

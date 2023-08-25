@@ -112,7 +112,7 @@ or display full metadata records.** For example:
 ```typescript
 import { Component } from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/search'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   // ...
@@ -120,7 +120,7 @@ import { MetadataRecord } from '@geonetwork-ui/util/shared'
 export class MainSearchComponent {
   constructor(private searchRouter: RouterFacade) {}
 
-  onMetadataSelection(metadata: MetadataRecord): void {
+  onMetadataSelection(metadata: CatalogRecord): void {
     this.searchRouter.goToMetadata(metadata)
   }
 }

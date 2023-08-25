@@ -19,15 +19,13 @@
           class="sm:block"
           [metadata]="facade.metadata$ | async"
           [incomplete]="facade.isIncomplete$ | async"
-          [notFound]="facade.error?.notFound"
-          [landingPages]="facade.landingPageLinks$ | async"
           (keyword)="onInfoKeywordClick($event)"
         >
         </gn-ui-metadata-info>
       </div>
       <div>
         <gn-ui-metadata-contact
-          (contact)="onContactClick($event)"
+          (organizationClick)="onOrganizationClick($event)"
           [metadata]="facade.metadata$ | async"
         >
         </gn-ui-metadata-contact>
@@ -139,7 +137,7 @@
   <gn-ui-search-results-error
     *ngIf="error.notFound"
     [type]="errorTypes.RECORD_NOT_FOUND"
-    [recordId]="(facade.metadata$ | async).uuid"
+    [recordId]="(facade.metadata$ | async).uniqueIdentifier"
   ></gn-ui-search-results-error>
   <gn-ui-search-results-error
     *ngIf="error.otherError"

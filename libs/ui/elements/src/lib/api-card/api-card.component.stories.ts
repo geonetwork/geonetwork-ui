@@ -11,7 +11,6 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { ApiCardComponent } from './api-card.component'
-import { MetadataLinkType } from '@geonetwork-ui/util/shared'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { CopyTextButtonComponent } from '@geonetwork-ui/ui/libs/copy-text-button'
@@ -41,11 +40,11 @@ export default {
 export const Primary: StoryObj<ApiCardComponent> = {
   args: {
     link: {
-      protocol: 'OGC:WFS',
-      type: MetadataLinkType.WFS,
+      type: 'service',
+      accessServiceProtocol: 'wfs',
       name: "Scot en cours d'élaboration ou de révision",
       description: 'A file that contains all roads',
-      url: 'https//roads.com/wfs',
+      url: new URL('https://roads.com/wfs'),
     },
   },
 }

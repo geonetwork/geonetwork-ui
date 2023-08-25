@@ -1,10 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AddLayerRecordPreviewComponent } from './add-layer-record-preview.component'
 import { MapFacade } from '../../+state/map.facade'
-import {
-  LINK_FIXTURES,
-  RECORDS_FULL_FIXTURE,
-} from '@geonetwork-ui/util/shared/fixtures'
+import { DATASET_RECORDS, LINK_FIXTURES } from '@geonetwork-ui/common/fixtures'
 import { of } from 'rxjs'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { MapUtilsService } from '../../utils'
@@ -41,7 +38,7 @@ describe('AddLayerRecordPreviewComponent', () => {
     mapFacade = TestBed.inject(MapFacade)
     fixture = TestBed.createComponent(AddLayerRecordPreviewComponent)
     component = fixture.componentInstance
-    component.record = RECORDS_FULL_FIXTURE[0]
+    component.record = DATASET_RECORDS[0]
     fixture.detectChanges()
   })
 
@@ -56,7 +53,8 @@ describe('AddLayerRecordPreviewComponent', () => {
     it('adds a layer', () => {
       expect(mapFacade.addLayer).toHaveBeenCalledWith({
         name: 'mylayer',
-        title: 'Surval - Données par paramètre',
+        title:
+          'A very interesting dataset (un jeu de données très intéressant)',
         type: 'wms',
         url: 'https://my.ogc.server/wms',
       })

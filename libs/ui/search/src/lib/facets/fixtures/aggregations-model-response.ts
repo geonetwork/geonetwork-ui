@@ -1,4 +1,3 @@
-import { AggregationsTypesEnum } from '@geonetwork-ui/util/shared'
 import { ModelBlock, ModelItem } from '../facets.model'
 
 export const BLOCK_MODEL_FIXTURE: ModelBlock = {
@@ -27,7 +26,7 @@ export const BLOCK_MODEL_FIXTURE: ModelBlock = {
     { value: 'Slovakia', count: 17, path: ['tag', 'Slovakia'] },
   ],
   path: ['tag'],
-  type: AggregationsTypesEnum.TERMS,
+  type: 'terms',
   size: 21,
   more: true,
   includeFilter: true,
@@ -37,7 +36,7 @@ export const EMPTY_BLOCK_MODEL_FIXTURE: ModelBlock = {
   key: 'emptytag',
   items: [],
   path: ['emptytag'],
-  type: AggregationsTypesEnum.TERMS,
+  type: 'terms',
   size: 21,
   more: true,
   includeFilter: false,

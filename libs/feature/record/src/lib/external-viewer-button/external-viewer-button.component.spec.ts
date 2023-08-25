@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { MAP_CONFIG_FIXTURE } from '@geonetwork-ui/util/app-config'
 import { ExternalViewerButtonComponent } from './external-viewer-button.component'
-import { MetadataLinkType } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatIconModule } from '@angular/material/icon'
 
@@ -48,10 +47,12 @@ describe('ExternalViewerButtonComponent', () => {
     beforeEach(() => {
       component.mapConfig = MAP_CONFIG_FIXTURE
       component.link = {
-        url: 'http://example.com/ows?service=wms&request=getcapabilities',
+        url: new URL(
+          'http://example.com/ows?service=wms&request=getcapabilities'
+        ),
         name: 'layername',
-        protocol: 'OGC:WMS',
-        type: MetadataLinkType.WMS,
+        type: 'service',
+        accessServiceProtocol: 'wms',
       }
       fixture.detectChanges()
     })
@@ -100,10 +101,9 @@ describe('ExternalViewerButtonComponent', () => {
     beforeEach(() => {
       component.mapConfig = MAP_CONFIG_FIXTURE
       component.link = {
-        url: 'http://example.com/',
+        url: new URL('http://example.com/'),
         name: 'layername',
-        protocol: 'NOT:WMS',
-        type: MetadataLinkType.OTHER,
+        type: 'link',
       }
       fixture.detectChanges()
     })

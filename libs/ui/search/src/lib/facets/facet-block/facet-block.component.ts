@@ -12,7 +12,6 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core'
-import { AggregationsTypesEnum } from '@geonetwork-ui/util/shared'
 import { fromEvent, Subscription } from 'rxjs'
 import { debounceTime } from 'rxjs/operators'
 import {
@@ -68,7 +67,7 @@ export class FacetBlockComponent
   }
 
   countItems() {
-    return this.model.type === AggregationsTypesEnum.FILTERS
+    return this.model.type === 'filters'
       ? this.model.items.reduce((sum, current) => sum + current.count, 0)
       : this.model.items.length
   }

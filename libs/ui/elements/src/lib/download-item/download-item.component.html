@@ -7,9 +7,9 @@
   <div class="grow-1 w-full overflow-hidden">
     <div
       class="text-21 text-black truncate font-title w-11/12"
-      [title]="link.label"
+      [title]="link.description || link.name"
     >
-      {{ link.label }}
+      {{ link.description || link.name }}
     </div>
     <div class="pt-1">
       <span

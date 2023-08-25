@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
-import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
+import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-record-table',
@@ -8,8 +8,8 @@ import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
   styleUrls: ['./record-table.component.css'],
 })
 export class RecordTableComponent {
-  @Input() records: MetadataRecord[] = RECORDS_SUMMARY_FIXTURE
-  @Output() recordSelect = new EventEmitter<MetadataRecord>()
+  @Input() records: CatalogRecord[] = DATASET_RECORDS
+  @Output() recordSelect = new EventEmitter<CatalogRecord>()
 
   dateToString(date: Date): string {
     return date?.toLocaleDateString(undefined, {
@@ -20,12 +20,12 @@ export class RecordTableComponent {
     })
   }
 
-  getStatus(isPublishedToAll: boolean) {
-    return isPublishedToAll === true ? 'published' : 'not published'
+  getStatus(isPublishedToAll: boolean | unknown) {
+    return isPublishedToAll ? 'published' : 'not published'
   }
 
-  formatUserInfo(userInfo: string): string {
-    const infos = userInfo?.split('|')
+  formatUserInfo(userInfo: string | unknown): string {
+    const infos = (typeof userInfo === 'string' ? userInfo : '').split('|')
     if (infos && infos.length === 4) {
       return `${infos[2]} ${infos[1]}`
     }

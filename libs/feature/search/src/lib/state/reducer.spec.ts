@@ -1,8 +1,11 @@
 import {
-  ES_FIXTURE_AGGS_REQUEST,
-  ES_FIXTURE_AGGS_RESPONSE,
-  ES_FIXTURE_AGGS_RESPONSE_MORE,
-} from '@geonetwork-ui/util/shared/fixtures'
+  SAMPLE_AGGREGATIONS_PARAMS,
+  SAMPLE_AGGREGATIONS_RESULTS,
+  HISTOGRAM_AGGREGATION,
+  SAMPLE_AGGREGATION_MORE_RESULTS,
+  TERMS_AGGREGATION,
+} from '@geonetwork-ui/common/fixtures'
+import { DEFAULT_PAGE_SIZE } from '../constants'
 import * as fromActions from './actions'
 import { DEFAULT_SEARCH_KEY } from './actions'
 import {
@@ -11,7 +14,7 @@ import {
   reducerSearch,
   SearchStateParams,
 } from './reducer'
-import { RESULTS_PAGE_SIZE } from '@geonetwork-ui/util/shared'
+import { TermsAggregationParams } from '@geonetwork-ui/common/domain/search'
 
 const initialStateSearch = initialState[DEFAULT_SEARCH_KEY]
 
@@ -50,13 +53,13 @@ describe('Search Reducer', () => {
   describe('SetConfigFilters action', () => {
     it('set config filters', () => {
       const action = new fromActions.SetConfigFilters({
-        custom: { any: 'blah', other: 'Some value' },
-        elastic: {},
+        any: 'blah',
+        other: 'Some value',
       })
       const state = reducerSearch(initialStateSearch, action)
       expect(state.config.filters).toEqual({
-        custom: { any: 'blah', other: 'Some value' },
-        elastic: {},
+        any: 'blah',
+        other: 'Some value',
       })
     })
   })
@@ -124,8 +127,9 @@ describe('Search Reducer', () => {
   describe('SetSearch action', () => {
     it('should set search params', () => {
       const searchParams: SearchStateParams = {
-        size: 12,
-        sortBy: 'asc',
+        limit: 12,
+        offset: 0,
+        sort: ['asc', 'tag'],
         filters: {
           any: 'tag:river',
         },
@@ -139,14 +143,14 @@ describe('Search Reducer', () => {
 
   describe('SetSortBy action', () => {
     it('should set sort by params', () => {
-      const action = new fromActions.SetSortBy('fieldA')
+      const action = new fromActions.SetSortBy(['desc', 'fieldA'])
       const state = reducerSearch(initialStateSearch, action)
-      expect(state.params.sortBy).toEqual('fieldA')
+      expect(state.params.sort).toEqual(['desc', 'fieldA'])
     })
   })
 
   describe('SetFavoritesOnly action', () => {
-    it('should set favoritsOnly param to true', () => {
+    it('should set favoritesOnly param to true', () => {
       const action = new fromActions.SetFavoritesOnly(true)
       const state = reducerSearch(initialStateSearch, action)
       expect(state.params.favoritesOnly).toEqual(true)
@@ -157,8 +161,8 @@ describe('Search Reducer', () => {
     it('should set from and size', () => {
       const action = new fromActions.SetPagination(12, 15)
       const state = reducerSearch(initialStateSearch, action)
-      expect(state.params.from).toEqual(12)
-      expect(state.params.size).toEqual(15)
+      expect(state.params.offset).toEqual(12)
+      expect(state.params.limit).toEqual(15)
     })
   })
 
@@ -166,16 +170,16 @@ describe('Search Reducer', () => {
     it('should set from property and keep size', () => {
       const action = new fromActions.Paginate(30)
       const state = reducerSearch(initialStateSearch, action)
-      expect(state.params.from).toEqual(30)
-      expect(state.params.size).toEqual(RESULTS_PAGE_SIZE)
+      expect(state.params.offset).toEqual(30)
+      expect(state.params.limit).toEqual(DEFAULT_PAGE_SIZE)
     })
   })
   describe('Scroll action', () => {
     it('increment `from` property with `size` value', () => {
       const action = new fromActions.Scroll()
       const state = reducerSearch(initialStateSearch, action)
-      expect(state.params.from).toEqual(RESULTS_PAGE_SIZE)
-      expect(state.params.size).toEqual(RESULTS_PAGE_SIZE)
+      expect(state.params.offset).toEqual(DEFAULT_PAGE_SIZE)
+      expect(state.params.limit).toEqual(DEFAULT_PAGE_SIZE)
     })
   })
 
@@ -228,9 +232,7 @@ describe('Search Reducer', () => {
           ...initialStateSearch,
           results: {
             ...initialStateSearch.results,
-            hits: {
-              value: 200,
-            },
+            count: 200,
             records: [{ title: 'abcd' } as any],
           },
         },
@@ -238,7 +240,7 @@ describe('Search Reducer', () => {
       )
       expect(state.results).toEqual({
         aggregations: {},
-        hits: { value: 200 },
+        count: 200,
         records: [],
       })
     })
@@ -254,64 +256,71 @@ describe('Search Reducer', () => {
 
   describe('SetResultsAggregations action', () => {
     it('should replace the aggregations in the result', () => {
-      const payload = ES_FIXTURE_AGGS_RESPONSE
+      const payload = SAMPLE_AGGREGATIONS_RESULTS
       const action = new fromActions.SetResultsAggregations(payload)
       const state = reducerSearch(
         {
           ...initialStateSearch,
           results: {
             ...initialStateSearch.results,
-            aggregations: { someKey: 'someValue' },
+            aggregations: { someKey: { buckets: [] } },
           },
         },
         action
       )
-      expect(state.results.aggregations).toEqual(ES_FIXTURE_AGGS_RESPONSE)
+      expect(state.results.aggregations).toEqual(SAMPLE_AGGREGATIONS_RESULTS)
     })
   })
 
   describe('SetConfigAggregations action', () => {
     it('should replace the aggregations in the config', () => {
-      const payload = ES_FIXTURE_AGGS_REQUEST
+      const payload = SAMPLE_AGGREGATIONS_PARAMS
       const action = new fromActions.SetConfigAggregations(payload)
       const state = reducerSearch(
         {
           ...initialStateSearch,
           config: {
             ...initialStateSearch.config,
-            aggregations: { someKey: 'someValue' },
+            aggregations: {
+              someKey: {
+                type: 'terms',
+                field: 'someKey',
+                limit: 10,
+                sort: ['desc', 'key'],
+              },
+            },
           },
         },
         action
       )
-      expect(state.config.aggregations).toEqual(ES_FIXTURE_AGGS_REQUEST)
+      expect(state.config.aggregations).toEqual(SAMPLE_AGGREGATIONS_PARAMS)
     })
   })
 
   describe('UpdateConfigAggregations action', () => {
     it('should augment the aggregations in the config', () => {
-      const payload = { newAgg: { terms: { field: 'abcd' } } }
+      const payload = { newAgg: HISTOGRAM_AGGREGATION }
       const action = new fromActions.UpdateConfigAggregations(payload)
       const state = reducerSearch(
         {
           ...initialStateSearch,
           config: {
             ...initialStateSearch.config,
-            aggregations: { someKey: 'someValue' },
+            aggregations: { someKey: TERMS_AGGREGATION },
           },
         },
         action
       )
       expect(state.config.aggregations).toEqual({
-        someKey: 'someValue',
-        ...payload,
+        someKey: TERMS_AGGREGATION,
+        newAgg: HISTOGRAM_AGGREGATION,
       })
     })
   })
 
   describe('SetConfigRequestFields action', () => {
     it('should replace the _source in the config', () => {
-      const payload = { includes: ['title', 'abstract'] }
+      const payload = ['title', 'abstract']
       const action = new fromActions.SetConfigRequestFields(payload)
       const state = reducerSearch(
         {
@@ -319,96 +328,100 @@ describe('Search Reducer', () => {
         },
         action
       )
-      expect(state.config.source).toEqual({ includes: ['title', 'abstract'] })
+      expect(state.config.source).toEqual(['title', 'abstract'])
+    })
+  })
+  describe('RequestMoreOnAggregation action', () => {
+    it('should update the limit of the terms aggregation', () => {
+      const action = new fromActions.RequestMoreOnAggregation('myField', 20)
+      const state = reducerSearch(
+        {
+          ...initialStateSearch,
+          config: {
+            ...initialStateSearch.config,
+            aggregations: SAMPLE_AGGREGATIONS_PARAMS,
+          },
+        },
+        action
+      )
+      const aggregation = state.config.aggregations[
+        'myField'
+      ] as TermsAggregationParams
+      expect(aggregation.limit).toEqual(70)
+    })
+    it('should not update other kinds of aggregations', () => {
+      const action = new fromActions.RequestMoreOnAggregation(
+        'myValueField',
+        20
+      )
+      const initialState = {
+        ...initialStateSearch,
+        config: {
+          ...initialStateSearch.config,
+          aggregations: SAMPLE_AGGREGATIONS_PARAMS,
+        },
+      }
+      const state = reducerSearch(initialState, action)
+      expect(state).toBe(initialState)
     })
   })
 
-  describe('UpdateRequestAggregationTerm action', () => {
-    describe('RequestMoreOnAggregation action', () => {
-      it('should replace the aggregations in the config with an updated size', () => {
-        const action = new fromActions.UpdateRequestAggregationTerm(
-          'tag.default',
-          { increment: 20 }
-        )
-        const state = reducerSearch(
-          {
-            ...initialStateSearch,
-            config: {
-              ...initialStateSearch.config,
-              aggregations: ES_FIXTURE_AGGS_REQUEST,
-            },
+  describe('SetIncludeOnAggregation action', () => {
+    it('should update the filter of the terms aggregation', () => {
+      const action = new fromActions.SetIncludeOnAggregation(
+        'myField',
+        '.*bla.*'
+      )
+      const state = reducerSearch(
+        {
+          ...initialStateSearch,
+          config: {
+            ...initialStateSearch.config,
+            aggregations: SAMPLE_AGGREGATIONS_PARAMS,
           },
-          action
-        )
-        const clone = JSON.parse(JSON.stringify(ES_FIXTURE_AGGS_REQUEST))
-        clone['tag.default'].terms.size = 30
-        expect(state.config.aggregations).toEqual(clone)
-      })
-      it('when intial size is Nan', () => {
-        const action = new fromActions.UpdateRequestAggregationTerm(
-          'tag.default',
-          { increment: 20 }
-        )
-        const state = reducerSearch(
-          {
-            ...initialStateSearch,
-            config: {
-              ...initialStateSearch.config,
-              aggregations: {
-                'tag.default': {
-                  terms: { field: 'tag.default' },
-                },
-              },
-            },
-          },
-          action
-        )
-        expect(state.config.aggregations['tag.default'].terms.size).toEqual(20)
-      })
+        },
+        action
+      )
+      const aggregation = state.config.aggregations[
+        'myField'
+      ] as TermsAggregationParams
+      expect(aggregation.filter).toEqual('.*bla.*')
     })
-
-    describe('SetIncludeOnAggregation action', () => {
-      it('should replace the aggregations in the config with an updated include', () => {
-        const action = new fromActions.UpdateRequestAggregationTerm(
-          'tag.default',
-          { include: '.*Land.*' }
-        )
-        const state = reducerSearch(
-          {
-            ...initialStateSearch,
-            config: {
-              ...initialStateSearch.config,
-              aggregations: ES_FIXTURE_AGGS_REQUEST,
-            },
-          },
-          action
-        )
-        const clone = JSON.parse(JSON.stringify(ES_FIXTURE_AGGS_REQUEST))
-        clone['tag.default'].terms.include = '.*Land.*'
-        expect(state.config.aggregations).toEqual(clone)
-      })
+    it('should not update other kinds of aggregations', () => {
+      const action = new fromActions.SetIncludeOnAggregation(
+        'myValueField',
+        '.*bla.*'
+      )
+      const initialState = {
+        ...initialStateSearch,
+        config: {
+          ...initialStateSearch.config,
+          aggregations: SAMPLE_AGGREGATIONS_PARAMS,
+        },
+      }
+      const state = reducerSearch(initialState, action)
+      expect(state).toBe(initialState)
     })
   })
 
   describe('PatchResultsAggregations action', () => {
     it('should replace the aggregations buckets for the key in the result', () => {
-      const payload = ES_FIXTURE_AGGS_RESPONSE_MORE
       const action = new fromActions.PatchResultsAggregations(
-        'tag.default',
-        payload
+        'myField',
+        SAMPLE_AGGREGATION_MORE_RESULTS
       )
       const state = reducerSearch(
         {
           ...initialStateSearch,
           results: {
             ...initialStateSearch.results,
-            aggregations: ES_FIXTURE_AGGS_RESPONSE,
+            aggregations: SAMPLE_AGGREGATIONS_RESULTS,
           },
         },
         action
       )
-      expect(state.results.aggregations['tag.default'].buckets).toEqual(
-        ES_FIXTURE_AGGS_RESPONSE_MORE['tag.default'].buckets
+      expect(state.results.aggregations['myField']).toEqual(
+        SAMPLE_AGGREGATION_MORE_RESULTS
       )
     })
   })

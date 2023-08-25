@@ -11,10 +11,10 @@
     <div class="flex flex-row justify-between">
       <span
         class="bg-primary-opacity-25 inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded capitalize text-primary-lightest group-hover:bg-primary transition-colors"
-        >{{ link.protocol }}</span
+        >{{ link.accessServiceProtocol.toUpperCase() }}</span
       >
       <gn-ui-copy-text-button
-        [text]="link.url"
+        [text]="link.url.toString()"
         [tooltipText]="'tooltip.url.copy' | translate"
         [displayText]="false"
       ></gn-ui-copy-text-button>

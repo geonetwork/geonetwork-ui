@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
-import { ES_SOURCE_BRIEF } from '@geonetwork-ui/util/shared'
-import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
+import {
+  FIELDS_BRIEF,
+  SearchFacade,
+  SearchService,
+} from '@geonetwork-ui/feature/search'
 import {
   RESULTS_LAYOUT_CONFIG,
   ResultsLayoutConfigItem,
@@ -33,13 +36,9 @@ export class AddLayerFromCatalogComponent implements OnInit {
 
   ngOnInit() {
     this.searchFacade.init('map-add-layer')
-    this.searchFacade.setConfigRequestFields({
-      includes: [...ES_SOURCE_BRIEF, 'link'],
-    })
+    this.searchFacade.setConfigRequestFields([...FIELDS_BRIEF, 'link'])
     this.searchFacade.setFilters({
-      availableInServices: {
-        query_string: '+linkProtocol:/OGC:WMS.*/',
-      },
+      availableInServices: '+linkProtocol:/OGC:WMS.*/',
     })
   }
 }

@@ -7,15 +7,15 @@ import { BehaviorSubject } from 'rxjs'
 import { SearchService } from '../utils/service/search.service'
 import { SortByComponent } from './sort-by.component'
 
-const sortBySubject = new BehaviorSubject('title')
-const facadeMock = {
-  sortBy$: sortBySubject,
-  setSortBy: jest.fn(),
+const sortBySubject = new BehaviorSubject(['asc', 'title'])
+class FacadeMock {
+  sortBy$ = sortBySubject
+  setSortBy = jest.fn()
 }
 
-const searchServiceMock = {
-  updateSearchFilters: jest.fn(),
-  setSortBy: jest.fn(),
+class SearchServiceMock {
+  updateSearchFilters = jest.fn()
+  setSortBy = jest.fn()
 }
 
 @Component({
@@ -30,6 +30,7 @@ export class MockDropdownSelectorComponent {
 describe('SortByComponent', () => {
   let component: SortByComponent
   let fixture: ComponentFixture<SortByComponent>
+  let searchService: SearchService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -39,14 +40,15 @@ describe('SortByComponent', () => {
       providers: [
         {
           provide: SearchFacade,
-          useValue: facadeMock,
+          useClass: FacadeMock,
         },
         {
           provide: SearchService,
-          useValue: searchServiceMock,
+          useClass: SearchServiceMock,
         },
       ],
     }).compileComponents()
+    searchService = TestBed.inject(SearchService)
   })
 
   beforeEach(() => {
@@ -68,33 +70,23 @@ describe('SortByComponent', () => {
     it('choices from component', () => {
       expect(dropDownComponent.choices).toEqual(component.choices)
     })
-    it('initialized with state value', () => {
-      expect(dropDownComponent.selected).toEqual('title')
+    it('initialized with state value (stringified)', () => {
+      expect(dropDownComponent.selected).toEqual('asc,title')
     })
     it('updated from state', () => {
-      sortBySubject.next('_score')
+      sortBySubject.next(['desc', '_score'])
       fixture.detectChanges()
-      expect(dropDownComponent.selected).toEqual('_score')
+      expect(dropDownComponent.selected).toEqual('desc,_score')
     })
   })
   describe('#changeSortBy', () => {
     let sort
-    describe('when sort is a string', () => {
-      beforeEach(() => {
-        sort = '_score'
-        component.changeSortBy(sort)
-      })
-      it('dispatch search action', () => {
-        expect(searchServiceMock.setSortBy).toHaveBeenCalledWith(sort)
-      })
+    beforeEach(() => {
+      sort = ['desc', '_score']
+      component.changeSortBy('desc,_score') // criteria is stringified when going through the dropdown component
     })
-    describe('when sort is not a string', () => {
-      beforeEach(() => {
-        sort = { title: 'desc' }
-      })
-      it('dispatch search action', () => {
-        expect(() => component.changeSortBy(sort)).toThrowError()
-      })
+    it('dispatch search action', () => {
+      expect(searchService.setSortBy).toHaveBeenCalledWith(sort)
     })
   })
 })

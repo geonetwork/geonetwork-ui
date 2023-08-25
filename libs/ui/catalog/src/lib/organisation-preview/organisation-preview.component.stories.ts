@@ -50,8 +50,9 @@ export const Primary: StoryObj<OrganisationPreviewComponent> = {
       name: 'Agglo du Saint Quentinois',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      logoUrl:
-        'https://www.declic-mobilites.org/images/neoentreprises/e/65/agglomeration_du_saint_quentinois_00269100_120312697-20180412122249.png',
+      logoUrl: new URL(
+        'https://www.declic-mobilites.org/images/neoentreprises/e/65/agglomeration_du_saint_quentinois_00269100_120312697-20180412122249.png'
+      ),
       recordCount: 12,
     },
   },

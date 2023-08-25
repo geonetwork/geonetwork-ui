@@ -7,12 +7,11 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { AuthService } from '@geonetwork-ui/feature/auth'
-import { UserModel } from '@geonetwork-ui/util/shared'
-import { USER_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
+import { USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
 import { LetDirective } from '@ngrx/component'
 import { BehaviorSubject } from 'rxjs'
-
 import { SidebarComponent } from './sidebar.component'
+import { UserModel } from '@geonetwork-ui/common/domain/user.model'
 
 @Component({
   // eslint-disable-next-line

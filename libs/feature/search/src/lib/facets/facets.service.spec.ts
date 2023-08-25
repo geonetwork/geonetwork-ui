@@ -1,8 +1,7 @@
-import { AggregationsTypesEnum } from '@geonetwork-ui/util/shared'
 import {
   ES_FIXTURE_AGGS_REQUEST,
   ES_FIXTURE_AGGS_RESPONSE,
-} from '@geonetwork-ui/util/shared/fixtures'
+} from '@geonetwork-ui/common/fixtures'
 import { ModelBlock, ModelItem } from '@geonetwork-ui/ui/search'
 import { SEARCH_STATE_FILTERS_FIXTURE } from '../state/fixtures/search-state.fixtures'
 import { FacetsService } from './facets.service'
@@ -131,7 +130,7 @@ describe('FacetsService', () => {
         key: '',
         more: false,
         size: 0,
-        type: AggregationsTypesEnum.TERMS,
+        type: 'terms',
         path: ['tag.default'],
       }
       item = {
@@ -174,7 +173,7 @@ describe('FacetsService', () => {
 
     describe('when it is a filter', () => {
       beforeEach(() => {
-        block = { ...block, type: AggregationsTypesEnum.FILTERS }
+        block = { ...block, type: 'filters' }
         item = { ...item, query_string: '+linkProtocol:/OGC:WMS.*/' }
       })
       describe('when it is selected', () => {

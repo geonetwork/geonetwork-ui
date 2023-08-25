@@ -1,12 +1,7 @@
 import { Injectable } from '@angular/core'
-import {
-  AggregationsTypesEnum,
-  LogService,
-  parse,
-  PARSE_DELIMITER,
-  SearchFilters,
-} from '@geonetwork-ui/util/shared'
+import { LogService, parse, PARSE_DELIMITER } from '@geonetwork-ui/util/shared'
 import { FacetPath, ModelBlock, ModelItem } from '@geonetwork-ui/ui/search'
+import { FieldFilter, FieldFilters } from '@geonetwork-ui/common/domain/search'
 
 @Injectable({
   providedIn: 'root',
@@ -39,11 +34,11 @@ export class FacetsService {
             path: [...path, responseAgg.meta?.field || key],
             meta: responseAgg.meta,
           }
-          if (AggregationsTypesEnum.TERMS in requestAgg) {
+          if ('terms' in requestAgg) {
             blockModel = {
               ...blockModel,
-              type: AggregationsTypesEnum.TERMS,
-              size: requestAgg[AggregationsTypesEnum.TERMS].size,
+              type: 'terms',
+              size: requestAgg['terms'].size,
               more: responseAgg.sum_other_doc_count > 0,
               includeFilter: requestAgg.terms.include !== undefined,
               excludeFilter: requestAgg.terms.exclude !== undefined,
@@ -62,14 +57,14 @@ export class FacetsService {
                 blockModel.items.push(itemModel)
               }
             })
-          } else if (AggregationsTypesEnum.HISTOGRAM in requestAgg) {
+          } else if ('histogram' in requestAgg) {
             blockModel = {
               ...blockModel,
-              type: AggregationsTypesEnum.HISTOGRAM,
-              size: requestAgg[AggregationsTypesEnum.HISTOGRAM].size,
+              type: 'histogram',
+              size: requestAgg['histogram'].size,
             }
 
-            if (requestAgg[AggregationsTypesEnum.HISTOGRAM].keyed) {
+            if (requestAgg['histogram'].keyed) {
               const entries = Object.entries(responseAgg.buckets)
               for (let p = 0; p < entries.length; p++) {
                 const entry: [string, AggEntry] = entries[p] as [
@@ -83,8 +78,7 @@ export class FacetsService {
                 const lowerBound = entry[1].key
                 const onlyOneBucket = entries.length === 1
                 const upperBound = onlyOneBucket
-                  ? lowerBound +
-                    Number(requestAgg[AggregationsTypesEnum.HISTOGRAM].interval)
+                  ? lowerBound + Number(requestAgg['histogram'].interval)
                   : nextEntry
                   ? nextEntry[1].key
                   : '*'
@@ -109,8 +103,8 @@ export class FacetsService {
                   'min_doc_count: 1}}'
               )
             }
-          } else if (AggregationsTypesEnum.FILTERS in requestAgg) {
-            const type = AggregationsTypesEnum.FILTERS
+          } else if ('filters' in requestAgg) {
+            const type = 'filters'
             blockModel = {
               ...blockModel,
               type,
@@ -158,10 +152,7 @@ export class FacetsService {
     let value: unknown = !inverted
 
     if (selected) {
-      if (
-        type === AggregationsTypesEnum.FILTERS ||
-        type === AggregationsTypesEnum.HISTOGRAM
-      ) {
+      if (type === 'filters' || type === 'histogram') {
         value = item.query_string
         if (inverted) {
           value = `-(${value})`
@@ -182,10 +173,10 @@ export class FacetsService {
    * @param value of the updated item
    */
   computeNewFiltersFromState(
-    filters: SearchFilters,
+    filters: FieldFilters,
     path: FacetPath,
     value: unknown
-  ): SearchFilters {
+  ): FieldFilters {
     const clone = JSON.parse(JSON.stringify(filters))
     const getter = parse(path.join(PARSE_DELIMITER))
     if (value === null) {
@@ -200,20 +191,24 @@ export class FacetsService {
   /**
    * Remove a filter in the state object, depending on the given path, which
    * could be deep in the parameter tree.
-   *
+   * FIXME: revisit because filters cannot be recursive anymore!!!
    * @param filters state
    * @param path to remove from state
    */
-  private removePathFromFilters_(filters: SearchFilters, path: FacetPath) {
+  private removePathFromFilters_(
+    filters: FieldFilters | FieldFilter,
+    path: FacetPath
+  ) {
     const head = path[0]
     const tail = path.slice(1)
+    if (typeof filters !== 'object') return
     for (const prop of Object.keys(filters)) {
       if (prop in filters) {
         if (head.toString() === prop && tail.length === 0) {
           delete filters[prop]
         } else {
           if ('object' === typeof filters[prop]) {
-            this.removePathFromFilters_(filters[prop], tail)
+            this.removePathFromFilters_(filters[prop] as FieldFilter, tail)
             if (0 === Object.keys(filters[prop]).length) {
               delete filters[prop]
             }

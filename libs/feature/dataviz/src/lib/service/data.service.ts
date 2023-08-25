@@ -12,13 +12,15 @@ import {
   extensionToFormat,
   getFileFormat,
   getMimeTypeForFormat,
-  MetadataLink,
-  MetadataLinkType,
   ProxyService,
 } from '@geonetwork-ui/util/shared'
 import type { FeatureCollection } from 'geojson'
 import { from, Observable, throwError } from 'rxjs'
 import { catchError, map, switchMap, tap } from 'rxjs/operators'
+import {
+  DatasetDistribution,
+  DatasetServiceDistribution,
+} from '@geonetwork-ui/common/domain/record'
 
 marker('wfs.unreachable.cors')
 marker('wfs.unreachable.http')
@@ -124,29 +126,38 @@ export class DataService {
     )
   }
 
-  getDownloadLinksFromWfs(wfsLink: MetadataLink): Observable<MetadataLink[]> {
+  getDownloadLinksFromWfs(
+    wfsLink: DatasetServiceDistribution
+  ): Observable<DatasetDistribution[]> {
     // Pour DL toutes les données
-    return this.getDownloadUrlsFromWfs(wfsLink.url, wfsLink.name).pipe(
+    return this.getDownloadUrlsFromWfs(
+      wfsLink.url.toString(),
+      wfsLink.name
+    ).pipe(
       map((urls) => urls.all),
       map((urls) =>
         Object.keys(urls).map((format) => ({
           ...wfsLink,
-          url: urls[format],
+          url: new URL(urls[format]),
           mimeType: getMimeTypeForFormat(extensionToFormat(format)) || format,
         }))
       )
     )
   }
 
-  getDownloadLinksFromEsriRest(esriRestLink: MetadataLink): MetadataLink[] {
+  getDownloadLinksFromEsriRest(
+    esriRestLink: DatasetServiceDistribution
+  ): DatasetDistribution[] {
     return ['json', 'geojson'].map((format) => ({
       ...esriRestLink,
-      url: this.getDownloadUrlFromEsriRest(esriRestLink.url, format),
+      url: new URL(
+        this.getDownloadUrlFromEsriRest(esriRestLink.url.toString(), format)
+      ),
       mimeType: getMimeTypeForFormat(extensionToFormat(format)) || format,
     }))
   }
 
-  readAsGeoJson(link: MetadataLink): Observable<FeatureCollection> {
+  readAsGeoJson(link: DatasetDistribution): Observable<FeatureCollection> {
     return this.getDataset(link).pipe(
       switchMap((dataset) => dataset.selectAll().read()),
       map((features) => ({
@@ -156,9 +167,9 @@ export class DataService {
     )
   }
 
-  getDataset(link: MetadataLink): Observable<BaseReader> {
-    const linkUrl = this.proxy.getProxiedUrl(link.url)
-    if (link.type === MetadataLinkType.WFS) {
+  getDataset(link: DatasetDistribution): Observable<BaseReader> {
+    const linkUrl = this.proxy.getProxiedUrl(link.url.toString())
+    if (link.type === 'service' && link.accessServiceProtocol === 'wfs') {
       return this.getDownloadUrlsFromWfs(linkUrl, link.name).pipe(
         switchMap((urls) => {
           if (urls.geojson) return openDataset(urls.geojson, 'geojson')
@@ -175,17 +186,20 @@ export class DataService {
           }
         })
       )
-    } else if (link.type === MetadataLinkType.DOWNLOAD) {
+    } else if (link.type === 'download') {
       const format = getFileFormat(link)
       const supportedType =
         SupportedTypes.indexOf(format as any) > -1
           ? (format as SupportedType)
           : undefined
       return from(openDataset(linkUrl, supportedType)).pipe()
-    } else if (link.type === MetadataLinkType.ESRI_REST) {
+    } else if (
+      link.type === 'service' &&
+      link.accessServiceProtocol === 'esriRest'
+    ) {
       const url = this.getDownloadUrlFromEsriRest(linkUrl, 'geojson')
       return from(openDataset(url, 'geojson')).pipe()
     }
-    return throwError('protocol not supported')
+    return throwError(() => 'protocol not supported')
   }
 }

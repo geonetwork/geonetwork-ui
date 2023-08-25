@@ -36,6 +36,7 @@
         [disabled]="currentPage === 1"
         [type]="'light'"
         extraClass="!p-[3px]"
+        data-cy="prev-page"
       >
         <mat-icon>navigate_before</mat-icon>
       </gn-ui-button>
@@ -45,6 +46,7 @@
         [disabled]="currentPage === nPages"
         [type]="'light'"
         extraClass="!p-[3px]"
+        data-cy="next-page"
       >
         <mat-icon>navigate_next</mat-icon>
       </gn-ui-button>

@@ -36,33 +36,16 @@
           You can add filters for the search in your
           <b><i>gn-results-list</i></b> web component
         </p>
-        <p>eg. Filter on <i>service</i> records:</p>
+        <p>eg. Filter on <i>dataset</i> records:</p>
         <ul>
           <li>
-            <p>With Elasticsearch syntax</p>
-            <code>
-              {"elastic": [{ "term": { "cl_hierarchyLevel.key": "service" } }]}
-            </code>
-          </li>
-          <li>
-            <p>With GN configuration</p>
-            <code>
-              {"custom": { "cl_hierarchyLevel.key": { "service": true } }}
-            </code>
+            <p>With GNUI syntax</p>
+            <code> {"cl_hierarchyLevel.key": { "service": true } } </code>
           </li>
         </ul>
       </div>
 
-      <h1>Filter on services</h1>
-      <h2>elasticsearch object</h2>
-      <gn-results-list
-        api-url="https://apps.titellus.net/geonetwork/srv/api"
-        size="5"
-        layout="TITLE"
-        search-id="elastic"
-        filter='{"elastic": [{ "term": { "cl_hierarchyLevel.key": "service" } }]}'
-      ></gn-results-list>
-      <h2>custom object</h2>
+      <h1>Filter on datasets</h1>
       <gn-results-list
         api-url="https://apps.titellus.net/geonetwork/srv/api"
         size="5"
@@ -70,7 +53,7 @@
         search-id="custom"
         primary-color="#0f4395"
         main-font="'Inter', sans-serif"
-        filter='{"custom": { "cl_hierarchyLevel.key": { "service": true } }}'
+        filter='{"cl_hierarchyLevel.key": { "dataset": true } }'
       ></gn-results-list>
     </main>
   </body>

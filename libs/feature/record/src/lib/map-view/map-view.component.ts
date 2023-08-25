@@ -15,12 +15,7 @@ import {
   MapUtilsService,
 } from '@geonetwork-ui/feature/map'
 import { getOptionalMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
-import {
-  getLinkLabel,
-  MetadataLink,
-  MetadataLinkType,
-  ProxyService,
-} from '@geonetwork-ui/util/shared'
+import { getLinkLabel, ProxyService } from '@geonetwork-ui/util/shared'
 import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
 import { StyleLike } from 'ol/style/Style'
@@ -42,6 +37,7 @@ import {
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-map-view',
@@ -164,14 +160,19 @@ export class MapViewComponent implements OnInit, OnDestroy {
     this.selection = null
   }
 
-  getLayerFromLink(link: MetadataLink): Observable<MapContextLayerModel> {
-    if (link.type === MetadataLinkType.WMS) {
+  getLayerFromLink(
+    link: DatasetDistribution
+  ): Observable<MapContextLayerModel> {
+    if (link.type === 'service' && link.accessServiceProtocol === 'wms') {
       return of({
-        url: link.url,
+        url: link.url.toString(),
         type: MapContextLayerTypeEnum.WMS,
         name: link.name,
       })
-    } else if (link.type === MetadataLinkType.WMTS) {
+    } else if (
+      link.type === 'service' &&
+      link.accessServiceProtocol === 'wmts'
+    ) {
       return this.mapUtils.getWmtsOptionsFromCapabilities(link).pipe(
         map((options) => ({
           type: MapContextLayerTypeEnum.WMTS,
@@ -179,9 +180,10 @@ export class MapViewComponent implements OnInit, OnDestroy {
         }))
       )
     } else if (
-      link.type === MetadataLinkType.WFS ||
-      link.type === MetadataLinkType.DOWNLOAD ||
-      link.type === MetadataLinkType.ESRI_REST
+      (link.type === 'service' &&
+        (link.accessServiceProtocol === 'wfs' ||
+          link.accessServiceProtocol === 'esriRest')) ||
+      link.type === 'download'
     ) {
       return this.dataService.readAsGeoJson(link).pipe(
         map((data) => ({

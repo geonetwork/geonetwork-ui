@@ -7,11 +7,12 @@ import {
   Optional,
   Output,
 } from '@angular/core'
-import { Organisation } from '@geonetwork-ui/util/shared'
+import { Organization } from '@geonetwork-ui/common/domain/record'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
 import { map, startWith, tap } from 'rxjs/operators'
-import { OrganisationsServiceInterface } from './service/organisations.service.interface'
 import { ORGANIZATION_URL_TOKEN } from '../feature-catalog.module'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { SortByField } from '@geonetwork-ui/common/domain/search'
 
 @Component({
   selector: 'gn-ui-organisations',
@@ -21,10 +22,10 @@ import { ORGANIZATION_URL_TOKEN } from '../feature-catalog.module'
 })
 export class OrganisationsComponent {
   @Input() itemsOnPage = 12
-  @Output() orgSelect = new EventEmitter<Organisation>()
+  @Output() orgSelect = new EventEmitter<Organization>()
 
   constructor(
-    private organisationsService: OrganisationsServiceInterface,
+    private organisationsService: OrganizationsServiceInterface,
     @Optional()
     @Inject(ORGANIZATION_URL_TOKEN)
     private urlTemplate: string
@@ -32,9 +33,9 @@ export class OrganisationsComponent {
 
   totalPages: number
   currentPage$ = new BehaviorSubject(1)
-  sortBy$ = new BehaviorSubject('name-asc')
+  sortBy$: BehaviorSubject<SortByField> = new BehaviorSubject(['asc', 'name'])
 
-  organisationsSorted$: Observable<Organisation[]> = combineLatest([
+  organisationsSorted$: Observable<Organization[]> = combineLatest([
     this.organisationsService.organisations$.pipe(
       startWith(Array(this.itemsOnPage).fill({}))
     ),
@@ -45,7 +46,7 @@ export class OrganisationsComponent {
     )
   )
 
-  organisations$: Observable<Organisation[]> = combineLatest([
+  organisations$: Observable<Organization[]> = combineLatest([
     this.organisationsSorted$,
     this.currentPage$,
   ]).pipe(
@@ -65,17 +66,24 @@ export class OrganisationsComponent {
     this.currentPage$.next(page)
   }
 
-  protected setSortBy(value: string): void {
+  protected setSortBy(value: SortByField): void {
     this.sortBy$.next(value)
   }
 
   private sortOrganisations(
-    organisations: Organisation[],
-    sortBy: string
-  ): Organisation[] {
-    const sortParts = sortBy.split('-')
-    const attribute = sortParts[0]
-    const direction = sortParts[1] === 'asc' ? 1 : -1
+    organisations: Organization[],
+    sortBy: SortByField
+  ): Organization[] {
+    let order: 'asc' | 'desc'
+    let attribute: string
+    if (Array.isArray(sortBy[0])) {
+      order = sortBy[0][0]
+      attribute = sortBy[0][1]
+    } else {
+      order = sortBy[0]
+      attribute = sortBy[1] as string
+    }
+    const direction = order === 'asc' ? 1 : -1
     return [...organisations].sort((a, b) => {
       const valueA = a[attribute]
       const valueB = b[attribute]
@@ -90,7 +98,7 @@ export class OrganisationsComponent {
     return index
   }
 
-  getOrganisationUrl(organisation: Organisation): string {
+  getOrganisationUrl(organisation: Organization): string {
     if (!this.urlTemplate) return null
     return this.urlTemplate.replace('${name}', organisation.name)
   }

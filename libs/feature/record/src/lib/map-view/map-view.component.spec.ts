@@ -34,12 +34,12 @@ import { Observable, of, Subject, throwError } from 'rxjs'
 import { MapViewComponent } from './map-view.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { delay } from 'rxjs/operators'
-import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util/shared'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
-import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/util/shared/fixtures'
+import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/common/fixtures'
 import { Collection } from 'ol'
 import { Interaction } from 'ol/interaction'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
 
 const mapConfigMock = {
   MAX_ZOOM: 10,
@@ -105,21 +105,21 @@ const SAMPLE_GEOJSON = {
 }
 
 class DataServiceMock {
-  getGeoJsonDownloadUrlFromWfs = jest.fn((url) => of(url + '?download'))
-  getGeoJsonDownloadUrlFromEsriRest = jest.fn((url) => url + '?download')
+  getDownloadUrlsFromWfs = jest.fn((url) => of(url.toString() + '?download'))
+  getDownloadUrlFromEsriRest = jest.fn((url) => url + '?download')
   readAsGeoJson = jest.fn(({ url }) =>
-    url.indexOf('error') > -1
+    url.toString().indexOf('error') > -1
       ? throwError(new Error('data loading error'))
       : of(SAMPLE_GEOJSON).pipe(delay(100))
   )
 }
 
-const mapStyleServiceMock = {
-  createDefaultStyle: jest.fn(() => [new Style()]),
-  styles: {
+class MapStyleServiceMock {
+  createDefaultStyle = jest.fn(() => [new Style()])
+  styles = {
     default: DEFAULT_STYLE_FIXTURE,
     defaultHL: DEFAULT_STYLE_HL_FIXTURE,
-  },
+  }
 }
 
 class OpenLayersMapMock {
@@ -141,9 +141,9 @@ class mapManagerMock {
   map = new OpenLayersMapMock()
 }
 
-const featureInfoServiceMock = {
-  handleFeatureInfo: jest.fn(),
-  features$: new Subject(),
+class FeatureInfoServiceMock {
+  handleFeatureInfo = jest.fn()
+  features$ = new Subject()
 }
 
 @Component({
@@ -170,7 +170,7 @@ export class MockDropdownSelectorComponent {
   template: '<div></div>',
 })
 export class MockExternalViewerButtonComponent {
-  @Input() link: MetadataLink
+  @Input() link: DatasetDistribution
   @Input() mapConfig: MapConfig
 }
 
@@ -192,6 +192,8 @@ describe('MapViewComponent', () => {
   let component: MapViewComponent
   let fixture: ComponentFixture<MapViewComponent>
   let mdViewFacade
+  let mapUtilsService
+  let featureInfoService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -219,7 +221,7 @@ describe('MapViewComponent', () => {
         },
         {
           provide: MapStyleService,
-          useValue: mapStyleServiceMock,
+          useClass: MapStyleServiceMock,
         },
         {
           provide: MapManagerService,
@@ -227,12 +229,14 @@ describe('MapViewComponent', () => {
         },
         {
           provide: FeatureInfoService,
-          useValue: featureInfoServiceMock,
+          useClass: FeatureInfoServiceMock,
         },
       ],
       imports: [TranslateModule.forRoot()],
     }).compileComponents()
     mdViewFacade = TestBed.inject(MdViewFacade)
+    mapUtilsService = TestBed.inject(MapUtilsService)
+    featureInfoService = TestBed.inject(FeatureInfoService)
   })
 
   beforeEach(() => {
@@ -297,18 +301,16 @@ describe('MapViewComponent', () => {
       beforeEach(() => {
         mdViewFacade.mapApiLinks$.next([
           {
-            url: 'http://abcd.com/',
+            url: new URL('http://abcd.com/'),
             name: 'layer1',
-            label: 'layer1',
-            protocol: 'OGC:WMS--1-3-0',
-            type: MetadataLinkType.WMS,
+            type: 'service',
+            accessServiceProtocol: 'wms',
           },
           {
-            url: 'http://abcd.com/',
+            url: new URL('http://abcd.com/'),
             name: 'layer2',
-            label: 'layer2',
-            protocol: 'OGC:WMS--1-1-0',
-            type: MetadataLinkType.WMS,
+            type: 'service',
+            accessServiceProtocol: 'wms',
           },
         ])
         mdViewFacade.geoDataLinks$.next([])
@@ -340,11 +342,10 @@ describe('MapViewComponent', () => {
       })
       it('provides first (selected) link to the external viewer component', () => {
         expect(externalViewerButtonComponent.link).toEqual({
-          url: 'http://abcd.com/',
-          label: 'layer1',
+          url: new URL('http://abcd.com/'),
           name: 'layer1',
-          protocol: 'OGC:WMS--1-3-0',
-          type: MetadataLinkType.WMS,
+          type: 'service',
+          accessServiceProtocol: 'wms',
         })
       })
     })
@@ -353,27 +354,23 @@ describe('MapViewComponent', () => {
       beforeEach(() => {
         mdViewFacade.mapApiLinks$.next([
           {
-            url: 'http://abcd.com/',
+            url: new URL('http://abcd.com/'),
             name: 'layer1',
-            label: 'layer1',
-            protocol: 'OGC:WMS',
-            type: MetadataLinkType.WMS,
+            type: 'service',
+            accessServiceProtocol: 'wms',
           },
         ])
         mdViewFacade.geoDataLinks$.next([
           {
-            url: 'http://abcd.com/wfs',
+            url: new URL('http://abcd.com/wfs'),
             name: 'featuretype',
-            label: 'featuretype',
-            protocol: 'OGC:WFS--2-0-0',
-            type: MetadataLinkType.WFS,
+            type: 'service',
+            accessServiceProtocol: 'wfs',
           },
           {
-            url: 'http://abcd.com/data.geojson',
+            url: new URL('http://abcd.com/data.geojson'),
             name: 'data.geojson',
-            label: 'data.geojson',
-            protocol: 'WWW:DOWNLOAD',
-            type: MetadataLinkType.DOWNLOAD,
+            type: 'download',
           },
         ])
         fixture.detectChanges()
@@ -396,11 +393,10 @@ describe('MapViewComponent', () => {
       })
       it('provides first (selected) link to the external viewer component', () => {
         expect(externalViewerButtonComponent.link).toEqual({
-          url: 'http://abcd.com/',
+          url: new URL('http://abcd.com/'),
           name: 'layer1',
-          label: 'layer1',
-          protocol: 'OGC:WMS',
-          type: MetadataLinkType.WMS,
+          type: 'service',
+          accessServiceProtocol: 'wms',
         })
       })
     })
@@ -410,10 +406,10 @@ describe('MapViewComponent', () => {
         mdViewFacade.mapApiLinks$.next([])
         mdViewFacade.geoDataLinks$.next([
           {
-            url: 'http://abcd.com/wfs',
+            url: new URL('http://abcd.com/wfs'),
             name: 'featuretype',
-            protocol: 'OGC:WFS',
-            type: MetadataLinkType.WFS,
+            type: 'service',
+            accessServiceProtocol: 'wfs',
           },
         ])
         tick(200)
@@ -436,10 +432,10 @@ describe('MapViewComponent', () => {
       beforeEach(fakeAsync(() => {
         mdViewFacade.mapApiLinks$.next([
           {
-            url: 'http://abcd.com/wmts',
+            url: new URL('http://abcd.com/wmts'),
             name: 'orthophoto',
-            protocol: 'OGC:WMTS',
-            type: MetadataLinkType.WMTS,
+            type: 'service',
+            accessServiceProtocol: 'wmts',
           },
         ])
         mdViewFacade.geoDataLinks$.next([])
@@ -464,10 +460,12 @@ describe('MapViewComponent', () => {
         mdViewFacade.mapApiLinks$.next([])
         mdViewFacade.geoDataLinks$.next([
           {
-            protocol: 'ESRI:REST',
             name: 'mes_hdf',
-            url: 'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/FeatureServer/0',
-            type: MetadataLinkType.ESRI_REST,
+            url: new URL(
+              'https://services8.arcgis.com/rxZzohbySMKHTNcy/arcgis/rest/services/mes_hdf/FeatureServer/0'
+            ),
+            type: 'service',
+            accessServiceProtocol: 'esriRest',
           },
         ])
         tick(200)
@@ -491,10 +489,10 @@ describe('MapViewComponent', () => {
         mdViewFacade.mapApiLinks$.next([])
         mdViewFacade.geoDataLinks$.next([
           {
-            url: 'http://abcd.com/wfs/error',
+            url: new URL('http://abcd.com/wfs/error'),
             name: 'featuretype',
-            protocol: 'OGC:WFS',
-            type: MetadataLinkType.WFS,
+            type: 'service',
+            accessServiceProtocol: 'wfs',
           },
         ])
       })
@@ -509,10 +507,9 @@ describe('MapViewComponent', () => {
           mdViewFacade.mapApiLinks$.next([])
           mdViewFacade.geoDataLinks$.next([
             {
-              url: 'http://abcd.com/data.geojson',
+              url: new URL('http://abcd.com/data.geojson'),
               name: 'data.geojson',
-              protocol: 'WWW:DOWNLOAD--https',
-              type: MetadataLinkType.DOWNLOAD,
+              type: 'download',
             },
           ])
           fixture.detectChanges()
@@ -533,10 +530,9 @@ describe('MapViewComponent', () => {
           mdViewFacade.mapApiLinks$.next([])
           mdViewFacade.geoDataLinks$.next([
             {
-              url: 'http://abcd.com/data.geojson',
+              url: new URL('http://abcd.com/data.geojson'),
               name: 'data.geojson',
-              protocol: 'WWW:DOWNLOAD--https',
-              type: MetadataLinkType.DOWNLOAD,
+              type: 'download',
             },
           ])
           fixture.detectChanges()
@@ -568,20 +564,17 @@ describe('MapViewComponent', () => {
         mdViewFacade.mapApiLinks$.next([])
         mdViewFacade.geoDataLinks$.next([
           {
-            url: 'http://abcd.com/data.geojson',
+            url: new URL('http://abcd.com/data.geojson'),
             name: 'data.geojson',
-            label: 'data.geojson',
-            protocol: 'WWW:DOWNLOAD',
-            type: MetadataLinkType.DOWNLOAD,
+            type: 'download',
           },
         ])
         mdViewFacade.mapApiLinks$.next([
           {
-            url: 'http://abcd.com/',
+            url: new URL('http://abcd.com/'),
             name: 'layer',
-            label: 'layer',
-            protocol: 'OGC:WMS',
-            type: MetadataLinkType.WMS,
+            type: 'service',
+            accessServiceProtocol: 'wms',
           },
         ])
         mdViewFacade.geoDataLinks$.next([])
@@ -609,46 +602,45 @@ describe('MapViewComponent', () => {
       })
       it('provides first (selected) link to the external viewer component', () => {
         expect(externalViewerButtonComponent.link).toEqual({
-          url: 'http://abcd.com/',
+          url: new URL('http://abcd.com/'),
           name: 'layer',
-          label: 'layer',
-          protocol: 'OGC:WMS',
-          type: MetadataLinkType.WMS,
+          type: 'service',
+          accessServiceProtocol: 'wms',
         })
       })
     })
 
     describe('when selecting a layer', () => {
-      beforeEach(inject([MapUtilsService], (mapUtils) => {
-        mapUtils._returnImmediately = false
+      beforeEach(() => {
+        mapUtilsService._returnImmediately = false
         mdViewFacade.mapApiLinks$.next([
           {
-            url: 'http://abcd.com/',
+            url: new URL('http://abcd.com/'),
             name: 'layer1',
-            protocol: 'OGC:WMS',
-            type: MetadataLinkType.WMS,
+            type: 'service',
+            accessServiceProtocol: 'wms',
           },
           {
-            url: 'http://abcd.com/',
+            url: new URL('http://abcd.com/'),
             name: 'layer2',
-            protocol: 'OGC:WMS',
-            type: MetadataLinkType.WMS,
+            type: 'service',
+            accessServiceProtocol: 'wms',
           },
         ])
         mdViewFacade.geoDataLinks$.next([])
         dropdownComponent.selectValue.emit(1)
         fixture.detectChanges()
-      }))
+      })
       describe('while extent is not ready', () => {
         it('does not emit a map context', () => {
           expect(mapComponent.context).toBeFalsy()
         })
       })
       describe('when extent is received', () => {
-        beforeEach(inject([MapUtilsService], (mapUtils) => {
-          mapUtils._observer.next([-100, -200, 100, 200])
+        beforeEach(() => {
+          mapUtilsService._observer.next([-100, -200, 100, 200])
           fixture.detectChanges()
-        }))
+        })
         it('emits a new map context with the selected layer and the computed extent', () => {
           expect(mapComponent.context).toEqual({
             layers: [
@@ -665,16 +657,16 @@ describe('MapViewComponent', () => {
         })
         it('provides selected link to the external viewer component', () => {
           expect(externalViewerButtonComponent.link).toEqual({
-            url: 'http://abcd.com/',
+            url: new URL('http://abcd.com/'),
             name: 'layer2',
-            protocol: 'OGC:WMS',
-            type: MetadataLinkType.WMS,
+            type: 'service',
+            accessServiceProtocol: 'wms',
           })
         })
       })
       describe('when extent could not be determined', () => {
         beforeEach(inject([MapUtilsService], (mapUtils) => {
-          mapUtils._observer.next(null)
+          mapUtilsService._observer.next(null)
           fixture.detectChanges()
         }))
         it('emits a new map context with the selected layer and extent null', () => {
@@ -693,16 +685,16 @@ describe('MapViewComponent', () => {
         })
         it('provides selected link to the external viewer component', () => {
           expect(externalViewerButtonComponent.link).toEqual({
-            url: 'http://abcd.com/',
+            url: new URL('http://abcd.com/'),
             name: 'layer2',
-            protocol: 'OGC:WMS',
-            type: MetadataLinkType.WMS,
+            type: 'service',
+            accessServiceProtocol: 'wms',
           })
         })
       })
       describe('when extent computation fails', () => {
         beforeEach(inject([MapUtilsService], (mapUtils) => {
-          mapUtils._observer.error('extent computation failed')
+          mapUtilsService._observer.error('extent computation failed')
           fixture.detectChanges()
         }))
         it('emits a new map context with the selected layer and a default view', () => {
@@ -719,16 +711,16 @@ describe('MapViewComponent', () => {
         })
         it('provides selected link to the external viewer component', () => {
           expect(externalViewerButtonComponent.link).toEqual({
-            url: 'http://abcd.com/',
+            url: new URL('http://abcd.com/'),
             name: 'layer2',
-            protocol: 'OGC:WMS',
-            type: MetadataLinkType.WMS,
+            type: 'service',
+            accessServiceProtocol: 'wms',
           })
         })
       })
       describe('selecting another layer, while extent is not ready', () => {
         beforeEach(inject([MapUtilsService], (mapUtils) => {
-          mapUtils._observer.next([-10, -20, 10, 20])
+          mapUtilsService._observer.next([-10, -20, 10, 20])
           dropdownComponent.selectValue.emit(0)
           fixture.detectChanges()
         }))
@@ -746,10 +738,6 @@ describe('MapViewComponent', () => {
   })
 
   describe('prioritizePageScroll', () => {
-    let mapUtilsService
-    beforeEach(inject([MapUtilsService], (mapUtils) => {
-      mapUtilsService = mapUtils
-    }))
     it('calls prioritzePageScroll with interactions', () => {
       expect(mapUtilsService.prioritizePageScroll).toHaveBeenCalledWith(
         expect.any(InteractionsMock)
@@ -785,7 +773,7 @@ describe('MapViewComponent', () => {
           fixture.debugElement.injector.get(ChangeDetectorRef)
         jest.spyOn(changeDetectorRef.constructor.prototype, 'detectChanges')
         jest.spyOn(component, 'resetSelection')
-        featureInfoServiceMock.features$.next(selectionFeatures)
+        featureInfoService.features$.next(selectionFeatures)
       })
       it('reset the selection first', () => {
         expect(component.resetSelection).toHaveBeenCalled()

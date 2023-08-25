@@ -10,7 +10,6 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { TableViewComponent } from './table-view.component'
-import { MetadataLinkType } from '@geonetwork-ui/util/shared'
 import { TableComponent, UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
 import { importProvidersFrom } from '@angular/core'
@@ -45,13 +44,18 @@ const LINKS = {
   wfs: {
     description: 'US states',
     name: 'topp:states',
-    url: 'https://ahocevar.com/geoserver/wfs?service=WFS&version=1.1.0&request=GetCapabilities',
-    type: MetadataLinkType.WFS,
+    url: new URL(
+      'https://ahocevar.com/geoserver/wfs?service=WFS&version=1.1.0&request=GetCapabilities'
+    ),
+    type: 'service',
+    accessServiceProtocol: 'wfs',
   },
   csv: {
     description: 'France departments',
-    url: 'https://www.data.gouv.fr/fr/datasets/r/70cef74f-70b1-495a-8500-c089229c0254',
-    type: MetadataLinkType.DOWNLOAD,
+    url: new URL(
+      'https://www.data.gouv.fr/fr/datasets/r/70cef74f-70b1-495a-8500-c089229c0254'
+    ),
+    type: 'download',
   },
 }
 

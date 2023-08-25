@@ -65,7 +65,7 @@
       lastName: 'last',
       email: 'email@domain.com',
       organization: { name: 'org' },
-      role: 'UNSPECIFIED'
+      role: 'unspecified'
     }"
   >
     <ng-template #contactTpl let-get="getValue" let-set="setValue">
@@ -322,8 +322,8 @@
             *ngIf="get().type === 'service'"
             label="Access Service URL"
             [type]="'url'"
-            [fieldValue]="get().accessServiceUrl"
-            (fieldValueChange)="set($event, 'accessServiceUrl')"
+            [fieldValue]="get().url"
+            (fieldValueChange)="set($event, 'url')"
             (confirm)="emitChangedRecord()"
           ></gn-ui-record-field-simple>
           <gn-ui-record-field-simple
@@ -344,8 +344,8 @@
             *ngIf="get().type === 'download'"
             label="Download URL"
             [type]="'url'"
-            [fieldValue]="get().downloadUrl"
-            (fieldValueChange)="set($event, 'downloadUrl')"
+            [fieldValue]="get().url"
+            (fieldValueChange)="set($event, 'url')"
             (confirm)="emitChangedRecord()"
           ></gn-ui-record-field-simple>
           <gn-ui-record-field-simple
@@ -367,8 +367,8 @@
             *ngIf="get().type === 'link'"
             label="Link URL"
             [type]="'url'"
-            [fieldValue]="get().linkUrl"
-            (fieldValueChange)="set($event, 'linkUrl')"
+            [fieldValue]="get().url"
+            (fieldValueChange)="set($event, 'url')"
             (confirm)="emitChangedRecord()"
           ></gn-ui-record-field-simple>
           <gn-ui-record-field-simple

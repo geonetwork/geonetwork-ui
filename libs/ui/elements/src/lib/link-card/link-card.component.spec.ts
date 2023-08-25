@@ -2,9 +2,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatIconModule } from '@angular/material/icon'
 import { TranslateModule } from '@ngx-translate/core'
-
 import { LinkCardComponent } from './link-card.component'
-import { MetadataLinkType } from '@geonetwork-ui/util/shared'
 
 describe('LinkCardComponent', () => {
   let component: LinkCardComponent
@@ -22,12 +20,11 @@ describe('LinkCardComponent', () => {
     fixture = TestBed.createComponent(LinkCardComponent)
     component = fixture.componentInstance
     component.link = {
-      protocol: 'WWW:LINK',
       name: 'Consulter sur Géoclip',
       description:
         'Lorem ipsum dolor sit amet, consect etur adipiscing elit. Donec id condim entum ex. Etiam sed molestie est.',
-      url: 'https//example.com/someurlpath',
-      type: MetadataLinkType.OTHER,
+      url: new URL('https://example.com/someurlpath'),
+      type: 'link',
     }
     fixture.detectChanges()
   })

@@ -1,5 +1,4 @@
 import { Injectable, Injector } from '@angular/core'
-import { SearchFilters } from '@geonetwork-ui/util/shared'
 import {
   AbstractSearchField,
   FieldValue,
@@ -12,6 +11,7 @@ import {
 } from './fields'
 import { forkJoin, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
+import { FieldFilters } from '@geonetwork-ui/common/domain/search'
 
 // key is the field name
 export type FieldValues = Record<string, FieldValue[] | FieldValue>
@@ -59,13 +59,13 @@ export class FieldsService {
   private getFiltersForValues(fieldName: string, values: FieldValue[]) {
     return this.fields[fieldName].getFiltersForValues(values)
   }
-  private getValuesForFilters(fieldName: string, filters: SearchFilters) {
+  private getValuesForFilters(fieldName: string, filters: FieldFilters) {
     return this.fields[fieldName].getValuesForFilter(filters)
   }
 
   buildFiltersFromFieldValues(
     fieldValues: FieldValues
-  ): Observable<SearchFilters> {
+  ): Observable<FieldFilters> {
     const fieldNames = Object.keys(fieldValues).filter((fieldName) =>
       this.supportedFields.includes(fieldName)
     )
@@ -83,7 +83,7 @@ export class FieldsService {
     )
   }
 
-  readFieldValuesFromFilters(filters: SearchFilters): Observable<FieldValues> {
+  readFieldValuesFromFilters(filters: FieldFilters): Observable<FieldValues> {
     const fieldValues$ = this.supportedFields.map((fieldName) =>
       this.getValuesForFilters(fieldName, filters).pipe(
         map((values) => ({ [fieldName]: values }))

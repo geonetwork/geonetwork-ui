@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
-import { MetadataLink } from '@geonetwork-ui/util/shared'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-api-card',
@@ -8,5 +8,5 @@ import { MetadataLink } from '@geonetwork-ui/util/shared'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ApiCardComponent {
-  @Input() link: MetadataLink
+  @Input() link: DatasetServiceDistribution
 }

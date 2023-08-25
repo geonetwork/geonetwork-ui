@@ -9,11 +9,11 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { ContentGhostComponent } from '@geonetwork-ui/ui/elements'
-import { Organisation } from '@geonetwork-ui/util/shared'
-import { ORGANISATIONS_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
+import { Organization } from '@geonetwork-ui/common/domain/record'
 import { firstValueFrom, of } from 'rxjs'
+import { ORGANISATIONS_FIXTURE } from '@geonetwork-ui/common/fixtures'
 import { OrganisationsComponent } from './organisations.component'
-import { OrganisationsServiceInterface } from './service/organisations.service.interface'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 
 @Component({
   selector: 'gn-ui-organisations-sort',
@@ -27,8 +27,8 @@ class OrganisationsSortMockComponent {
   template: '<div></div>',
 })
 class OrganisationPreviewMockComponent {
-  @Input() organisation: Organisation
-  @Output() clickedOrganisation = new EventEmitter<Organisation>()
+  @Input() organisation: Organization
+  @Output() clickedOrganisation = new EventEmitter<Organization>()
 }
 
 @Component({
@@ -48,7 +48,7 @@ class OrganisationsServiceMock {
 const organisationMock = {
   name: 'My Org',
   description: 'A good description',
-  logoUrl: 'https://somedomain.org',
+  logoUrl: new URL('https://somedomain.org'),
   recordCount: 12,
 }
 
@@ -70,7 +70,7 @@ describe('OrganisationsComponent', () => {
       ],
       providers: [
         {
-          provide: OrganisationsServiceInterface,
+          provide: OrganizationsServiceInterface,
           useClass: OrganisationsServiceMock,
         },
       ],
@@ -157,14 +157,14 @@ describe('OrganisationsComponent', () => {
         setSortBySpy = jest.spyOn(component, 'setSortBy')
         de.query(
           By.directive(OrganisationsSortMockComponent)
-        ).triggerEventHandler('sortBy', 'recordCount-desc')
+        ).triggerEventHandler('sortBy', ['desc', 'recordCount'])
         fixture.detectChanges()
         orgPreviewComponents = de
           .queryAll(By.directive(OrganisationPreviewMockComponent))
           .map((debugElement) => debugElement.componentInstance)
       })
       it('should call setSortBy', () => {
-        expect(setSortBySpy).toHaveBeenCalledWith('recordCount-desc')
+        expect(setSortBySpy).toHaveBeenCalledWith(['desc', 'recordCount'])
       })
       it('should have organisation with max recordCount at first position in observable', async () => {
         const organisations = await firstValueFrom(component.organisations$)

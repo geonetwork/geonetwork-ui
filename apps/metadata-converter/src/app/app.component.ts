@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core'
-import { CatalogRecord } from '@geonetwork-ui/util/types/metadata'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 import { StatusComponent } from './components/status/status.component'
 import { RecordOutputXmlComponent } from './components/record-output-xml/record-output-xml.component'
 import { RecordFormComponent } from './components/record-form/record-form.component'

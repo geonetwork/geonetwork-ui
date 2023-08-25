@@ -10,35 +10,30 @@ import { BehaviorSubject, Subject } from 'rxjs'
 import { MdViewFacade } from '../state'
 import { DataViewComponent } from './data-view.component'
 import { TranslateModule } from '@ngx-translate/core'
-import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util/shared'
-import { DatavizConfigurationModel } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
+import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/dataviz-configuration.model'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
 
-const DATALINKS_FIXTURE: MetadataLink[] = [
+const DATALINKS_FIXTURE: DatasetDistribution[] = [
   {
-    label: 'CSV file',
     description: 'CSV file',
     name: 'some_file_name.csv',
-    protocol: 'WWW:DOWNLOAD',
-    url: 'https://test.org/some_file_name.csv',
-    type: MetadataLinkType.DOWNLOAD,
+    url: new URL('https://test.org/some_file_name.csv'),
+    type: 'download',
   },
 ]
-const GEODATALINKS_FIXTURE: MetadataLink[] = [
+const GEODATALINKS_FIXTURE: DatasetDistribution[] = [
   {
-    label: 'Geojson file',
     description: 'Geojson file',
     name: 'some_file_name.geojson',
-    protocol: 'WWW:DOWNLOAD',
-    url: 'https://test.org/some_file_name.geojson',
-    type: MetadataLinkType.DOWNLOAD,
+    url: new URL('https://test.org/some_file_name.geojson'),
+    type: 'download',
   },
   {
-    label: 'Service WFS',
     description: 'Service WFS',
     name: 'abc:featureType',
-    protocol: 'OGC:WFS',
-    url: 'https://test.org/wfs',
-    type: MetadataLinkType.WFS,
+    url: new URL('https://test.org/wfs'),
+    type: 'service',
+    accessServiceProtocol: 'wfs',
   },
 ]
 
@@ -60,7 +55,7 @@ const chartConfigMock = {
   template: '<div></div>',
 })
 export class MockTableViewComponent {
-  @Input() link: MetadataLink
+  @Input() link: DatasetDistribution
 }
 
 @Component({
@@ -68,7 +63,7 @@ export class MockTableViewComponent {
   template: '<div></div>',
 })
 export class MockChartViewComponent {
-  @Input() link: MetadataLink
+  @Input() link: DatasetDistribution
   @Output() chartConfig$ = new BehaviorSubject<DatavizConfigurationModel>(null)
 }
 

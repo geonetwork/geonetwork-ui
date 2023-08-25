@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-related-record-card',
@@ -8,5 +8,5 @@ import { MetadataRecord } from '@geonetwork-ui/util/shared'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RelatedRecordCardComponent {
-  @Input() record: MetadataRecord
+  @Input() record: CatalogRecord
 }

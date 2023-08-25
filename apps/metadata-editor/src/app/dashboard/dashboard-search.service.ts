@@ -24,11 +24,9 @@ export class DashboardSearchService {
   ) {
     this.facade.init('editor')
     this.facade
-      .setConfigRequestFields({
-        includes,
-      })
+      .setConfigRequestFields(includes)
       .setPagination(0, 10)
-      .setSortBy('changeDate')
+      .setSortBy(['desc', 'changeDate'])
 
     combineLatest([
       this.dashboardFacade.activeMenu$,

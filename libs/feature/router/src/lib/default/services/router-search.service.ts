@@ -4,10 +4,11 @@ import {
   SearchFacade,
   SearchServiceI,
 } from '@geonetwork-ui/feature/search'
-import { SearchFilters, SortByEnum } from '@geonetwork-ui/util/shared'
+import { FieldFilters, SortByField } from '@geonetwork-ui/common/domain/search'
 import { ROUTE_PARAMS, SearchRouteParams } from '../constants'
 import { RouterFacade } from '../state/router.facade'
 import { firstValueFrom } from 'rxjs'
+import { sortByToString } from '@geonetwork-ui/util/shared'
 
 @Injectable()
 export class RouterSearchService implements SearchServiceI {
@@ -17,29 +18,29 @@ export class RouterSearchService implements SearchServiceI {
     private fieldsService: FieldsService
   ) {}
 
-  setSortAndFilters(filters: SearchFilters, sort: SortByEnum) {
+  setSortAndFilters(filters: FieldFilters, sortBy: SortByField) {
     this.fieldsService
       .readFieldValuesFromFilters(filters)
       .subscribe((values) => {
         this.facade.setSearch({
           ...values,
-          [ROUTE_PARAMS.SORT]: sort,
+          [ROUTE_PARAMS.SORT]: sortByToString(sortBy),
         })
       })
   }
 
-  async setFilters(newFilters: SearchFilters) {
+  async setFilters(newFilters: FieldFilters) {
     const sortBy = await firstValueFrom(this.searchFacade.sortBy$)
     const fieldSearchParams = await firstValueFrom(
       this.fieldsService.readFieldValuesFromFilters(newFilters)
     )
     this.facade.setSearch({
       ...fieldSearchParams,
-      [ROUTE_PARAMS.SORT]: sortBy,
+      [ROUTE_PARAMS.SORT]: sortBy ? sortByToString(sortBy) : undefined,
     })
   }
 
-  async updateFilters(newFilters: SearchFilters) {
+  async updateFilters(newFilters: FieldFilters) {
     const currentFilters = await firstValueFrom(
       this.searchFacade.searchFilters$
     )
@@ -50,9 +51,9 @@ export class RouterSearchService implements SearchServiceI {
     this.facade.updateSearch(newParams as SearchRouteParams)
   }
 
-  setSortBy(sortBy: string) {
+  setSortBy(sortBy: SortByField) {
     this.facade.updateSearch({
-      [ROUTE_PARAMS.SORT]: sortBy,
+      [ROUTE_PARAMS.SORT]: sortByToString(sortBy),
     })
   }
 }

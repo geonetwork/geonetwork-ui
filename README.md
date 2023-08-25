@@ -257,12 +257,19 @@ Libraries are organized in the following fashion:
    - `data-access-gn4` contains an auto-generated API client for the GeoNetwork 4 backend
    - `data-access-datafeeder` contains an auto-generated API client for the Datafeeder backend
 
-4. Libraries providing common services or shared models are in the `util` folder:
+4. Libraries providing various utilities in the `util` folder:
 
-   - `util-i18n` for translation and internationalization
+   - `util-data-fetcher` for fetching and querying datasets
+   - `util-app-config` for parsing and validating application configurations
    - `util-shared` for shared models and types, test fixtures, app-wide settings etc.
+   - `util-i18n` for translation and internationalization
 
-5. Libraries providing low-level functionalities that can be used both in front and backend are in the `api` folder:
+5. Libraries providing common services or shared models are in the `util` folder:
+
+   - `common-domain` contains many definitions used across the whole project
+   - `common-fixtures` contains test fixtures
+
+6. Libraries providing low-level functionalities that can be used both in front and backend are in the `api` folder:
    - `api-metadata-converter` for providing a pivot metadata model and conversion to interoperable formats
 
 #### `webcomponents`: Embeddable webcomponents

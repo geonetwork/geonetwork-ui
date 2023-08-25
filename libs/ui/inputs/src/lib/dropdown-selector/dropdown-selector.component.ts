@@ -7,9 +7,9 @@ import {
   Output,
 } from '@angular/core'
 
-export type DDChoices<T> = Array<{
+export type DDChoices = Array<{
   label: string
-  value: T
+  value: string
 }>
 
 @Component({
@@ -22,7 +22,7 @@ export class DropdownSelectorComponent {
   @Input() title: string
   @Input() showTitle = true
   @Input() ariaName: string
-  @Input() choices: DDChoices<unknown>
+  @Input() choices: DDChoices
   @Input() selected: any
   @Input() extraClass = ''
   @Output() selectValue = new EventEmitter<any>()

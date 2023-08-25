@@ -1,72 +1,36 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { AutocompleteComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import {
-  ElasticsearchService,
-  MetadataRecord,
-} from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject, of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
-import { ElasticsearchMapper } from '../utils/mapper'
 import { SearchService } from '../utils/service/search.service'
-
 import { FuzzySearchComponent } from './fuzzy-search.component'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import {
+  DATASET_RECORDS,
+  SAMPLE_SEARCH_RESULTS,
+} from '@geonetwork-ui/common/fixtures'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
 
-const searchFacadeMock = {
-  setFilters: jest.fn(),
-  searchFilters$: new BehaviorSubject({ any: 'scot' }),
-}
-
-const searchApiServiceMock = {
-  configuration: {
-    basePath: '/api',
-  },
-  search: jest.fn(() =>
-    of({
-      hits: {
-        hits: [
-          {
-            _source: {
-              uuid: '123',
-              resourceTitleObject: {
-                default: 'abc',
-              },
-            },
-          },
-          {
-            _source: {
-              uuid: '456',
-              resourceTitleObject: {
-                default: 'def',
-              },
-            },
-          },
-        ],
-      },
-    })
-  ),
+class SearchFacadeMock {
+  setFilters = jest.fn()
+  searchFilters$ = new BehaviorSubject({ any: 'scot' })
 }
 
-const searchServiceMock = {
-  updateFilters: jest.fn(),
+class SearchServiceMock {
+  updateFilters = jest.fn()
 }
-const esServiceMock = {
-  buildAutocompletePayload: jest.fn(() => ({ fakeQuery: '' })),
-}
-const elasticsearchMapperMock = {
-  toRecords: jest.fn(() =>
-    of([
-      { uuid: '123', title: 'abc' },
-      { uuid: '456', title: 'def' },
-    ])
-  ),
+
+class RecordsRepositoryMock {
+  fuzzySearch = jest.fn(() => of(SAMPLE_SEARCH_RESULTS))
 }
 
 describe('FuzzySearchComponent', () => {
   let component: FuzzySearchComponent
   let fixture: ComponentFixture<FuzzySearchComponent>
+  let searchFacade: SearchFacadeMock
+  let searchService: SearchService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -74,27 +38,22 @@ describe('FuzzySearchComponent', () => {
       providers: [
         {
           provide: SearchFacade,
-          useValue: searchFacadeMock,
-        },
-        {
-          provide: ElasticsearchService,
-          useValue: esServiceMock,
-        },
-        {
-          provide: ElasticsearchMapper,
-          useValue: elasticsearchMapperMock,
-        },
-        {
-          provide: SearchApiService,
-          useValue: searchApiServiceMock,
+          useClass: SearchFacadeMock,
         },
         {
           provide: SearchService,
-          useValue: searchServiceMock,
+          useClass: SearchServiceMock,
+        },
+        {
+          provide: RecordsRepositoryInterface,
+          useClass: RecordsRepositoryMock,
         },
       ],
       imports: [UiInputsModule, TranslateModule.forRoot()],
     }).compileComponents()
+
+    searchService = TestBed.inject(SearchService)
+    searchFacade = TestBed.inject(SearchFacade) as any
   })
 
   beforeEach(() => {
@@ -118,12 +77,12 @@ describe('FuzzySearchComponent', () => {
       expect(autocompleteCpt.value).toEqual({ title: 'scot' })
     })
     it('any value is changed on search filter update', () => {
-      searchFacadeMock.searchFilters$.next({ any: 'river' })
+      searchFacade.searchFilters$.next({ any: 'river' })
       fixture.detectChanges()
       expect(autocompleteCpt.value).toEqual({ title: 'river' })
     })
     it('object is changed on search filter update, only any is passed', () => {
-      searchFacadeMock.searchFilters$.next({
+      searchFacade.searchFilters$.next({
         any: 'river',
         OrgForResource: { ADUGA: true },
       })
@@ -131,7 +90,7 @@ describe('FuzzySearchComponent', () => {
       expect(autocompleteCpt.value).toEqual({ title: 'river' })
     })
     it('no any is present in search filter, empty object is passed', () => {
-      searchFacadeMock.searchFilters$.next({
+      searchFacade.searchFilters$.next({
         OrgForResource: { ADUGA: true },
       })
       fixture.detectChanges()
@@ -144,11 +103,8 @@ describe('FuzzySearchComponent', () => {
       emitted = null
       component.autocomplete.action('').subscribe((e) => (emitted = e))
     })
-    it('emits an array of MetadataRecord', () => {
-      expect(emitted).toEqual([
-        { uuid: '123', title: 'abc' },
-        { uuid: '456', title: 'def' },
-      ])
+    it('emits an array of CatalogRecord', () => {
+      expect(emitted).toEqual(DATASET_RECORDS)
     })
   })
 
@@ -159,7 +115,7 @@ describe('FuzzySearchComponent', () => {
         component.handleInputSubmission('blarg')
       })
       it('updates the search filters', () => {
-        expect(searchServiceMock.updateFilters).toHaveBeenCalledWith({
+        expect(searchService.updateFilters).toHaveBeenCalledWith({
           any: 'blarg',
         })
       })
@@ -173,7 +129,7 @@ describe('FuzzySearchComponent', () => {
         component.handleInputSubmission('blarg')
       })
       it('updates the search filters as well', () => {
-        expect(searchServiceMock.updateFilters).not.toHaveBeenCalledWith({
+        expect(searchService.updateFilters).not.toHaveBeenCalledWith({
           any: 'blarg',
         })
       })
@@ -187,12 +143,12 @@ describe('FuzzySearchComponent', () => {
     describe('when no output defined', () => {
       beforeEach(() => {
         component.handleItemSelection({
-          uuid: '123',
+          uniqueIdentifier: '123',
           title: 'abc',
-        } as MetadataRecord)
+        } as CatalogRecord)
       })
       it('changes the search filters', () => {
-        expect(searchFacadeMock.setFilters).toHaveBeenCalledWith({ any: 'abc' })
+        expect(searchFacade.setFilters).toHaveBeenCalledWith({ any: 'abc' })
       })
     })
     describe('when output is defined', () => {
@@ -202,18 +158,18 @@ describe('FuzzySearchComponent', () => {
         outputValue = null
         component.itemSelected.subscribe((event) => (outputValue = event))
         component.handleItemSelection({
-          uuid: '123',
+          uniqueIdentifier: '123',
           title: 'abc',
-        } as MetadataRecord)
+        } as CatalogRecord)
       })
       it('does not change the search filters', () => {
-        expect(searchFacadeMock.setFilters).not.toHaveBeenCalledWith({
+        expect(searchFacade.setFilters).not.toHaveBeenCalledWith({
           any: 'abc',
         })
       })
       it('emit the event', () => {
         expect(outputValue).toEqual({
-          uuid: '123',
+          uniqueIdentifier: '123',
           title: 'abc',
         })
       })
