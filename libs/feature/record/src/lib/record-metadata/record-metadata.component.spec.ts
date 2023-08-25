@@ -485,16 +485,11 @@ describe('RecordMetadataComponent', () => {
   })
   describe('#onContactClick', () => {
     it('call update search for OrgForResource', () => {
-      component.onContactClick({
-        firstName: 'john',
-        role: 'point_of_contact',
-        email: 'joh@doe.com',
-        organization: {
-          name: 'MyOrganization',
-          website: new URL('https://www.my.org/info'),
-          logoUrl: new URL('https://www.my.org/logo.png'),
-          description: 'A generic organization',
-        },
+      component.onOrganizationClick({
+        name: 'MyOrganization',
+        website: new URL('https://www.my.org/info'),
+        logoUrl: new URL('https://www.my.org/logo.png'),
+        description: 'A generic organization',
       })
       expect(searchService.updateFilters).toHaveBeenCalledWith({
         orgs: {

@@ -16,25 +16,25 @@ import { SortByField } from '@geonetwork-ui/common/domain/search'
 export class OrganisationsSortComponent {
   choices: { value: string; label: string }[] = [
     {
-      value: JSON.stringify(['asc', 'name']),
+      value: 'asc,name',
       label: marker('organisations.sortBy.nameAsc'),
     },
     {
-      value: JSON.stringify(['desc', 'name']),
+      value: 'desc,name',
       label: marker('organisations.sortBy.nameDesc'),
     },
     {
-      value: JSON.stringify(['asc', 'recordCount']),
+      value: 'asc,recordCount',
       label: marker('organisations.sortBy.recordCountAsc'),
     },
     {
-      value: JSON.stringify(['desc', 'recordCount']),
+      value: 'desc,recordCount',
       label: marker('organisations.sortBy.recordCountDesc'),
     },
   ]
   @Output() sortBy = new EventEmitter<SortByField>()
 
   selectOrderToDisplay(selectValue: string) {
-    this.sortBy.emit(JSON.parse(selectValue) as SortByField)
+    this.sortBy.emit(selectValue.split(',') as SortByField)
   }
 }

@@ -6,7 +6,7 @@ import { BehaviorSubject, combineLatest } from 'rxjs'
 import { filter, map, mergeMap, pluck } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { Individual } from '@geonetwork-ui/common/domain/record'
+import { Individual, Organization } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-record-metadata',
@@ -70,9 +70,9 @@ export class RecordMetadataComponent {
   onInfoKeywordClick(keyword: string) {
     this.searchService.updateFilters({ any: keyword })
   }
-  onContactClick(contact: Individual) {
+  onOrganizationClick(org: Organization) {
     this.orgsService
-      .getFiltersForOrgs([contact.organization])
+      .getFiltersForOrgs([org])
       .subscribe((filters) => this.searchService.updateFilters(filters))
   }
 }

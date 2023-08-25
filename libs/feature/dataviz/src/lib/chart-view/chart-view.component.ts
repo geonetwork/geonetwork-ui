@@ -93,7 +93,7 @@ export class ChartViewComponent {
   error = null
   errorInfo = null
 
-  typeChoices: DDChoices<InputChartType> = [
+  typeChoices: DDChoices = [
     { label: 'chart.type.bar', value: 'bar' },
     { label: 'chart.type.barHorizontal', value: 'bar-horizontal' },
     { label: 'chart.type.line', value: 'line' },
@@ -111,7 +111,7 @@ export class ChartViewComponent {
       { label: 'chart.aggregation.min', value: 'min' },
       { label: 'chart.aggregation.average', value: 'average' },
       { label: 'chart.aggregation.count', value: 'count' },
-    ] as DDChoices<AggregationTypes>
+    ] as DDChoices
   }
 
   dataset$: Observable<BaseReader> = this.currentLink$.pipe(

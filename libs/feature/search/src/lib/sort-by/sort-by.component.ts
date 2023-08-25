@@ -13,20 +13,18 @@ export class SortByComponent {
   choices = [
     {
       label: marker('results.sortBy.relevancy'),
-      value: JSON.stringify(SortByEnum.RELEVANCY),
+      value: SortByEnum.RELEVANCY.join(','),
     },
     {
       label: marker('results.sortBy.dateStamp'),
-      value: JSON.stringify(SortByEnum.CREATE_DATE),
+      value: SortByEnum.CREATE_DATE.join(','),
     },
     {
       label: marker('results.sortBy.popularity'),
-      value: JSON.stringify(SortByEnum.POPULARITY),
+      value: SortByEnum.POPULARITY.join(','),
     },
   ]
-  currentSortBy$ = this.facade.sortBy$.pipe(
-    map((sortBy) => JSON.stringify(sortBy))
-  )
+  currentSortBy$ = this.facade.sortBy$.pipe(map((sortBy) => sortBy.join(',')))
 
   constructor(
     private facade: SearchFacade,
@@ -34,6 +32,6 @@ export class SortByComponent {
   ) {}
 
   changeSortBy(criteriaAsString: string) {
-    this.searchService.setSortBy(JSON.parse(criteriaAsString) as SortByField)
+    this.searchService.setSortBy(criteriaAsString.split(',') as SortByField)
   }
 }
