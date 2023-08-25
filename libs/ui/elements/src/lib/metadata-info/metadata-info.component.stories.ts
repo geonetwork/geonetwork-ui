@@ -10,8 +10,8 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { MetadataInfoComponent } from './metadata-info.component'
-import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
+import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/util-shared/fixtures'
+import { UtilSharedModule } from '@geonetwork-ui/util-shared'
 import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
 
 export default {

@@ -5,7 +5,7 @@ import { MdViewFacade } from './mdview.facade'
 import {
   RECORDS_FULL_FIXTURE,
   RECORDS_SUMMARY_FIXTURE,
-} from '@geonetwork-ui/util/shared/fixtures'
+} from '@geonetwork-ui/util-shared/fixtures'
 import * as MdViewActions from './mdview.actions'
 import { hot } from 'jasmine-marbles'
 

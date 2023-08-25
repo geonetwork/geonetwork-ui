@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
+import { UtilSharedModule } from '@geonetwork-ui/util-shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { NgxDropzoneModule } from 'ngx-dropzone'
 import { ColorScaleComponent } from './color-scale/color-scale.component'

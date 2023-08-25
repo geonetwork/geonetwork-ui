@@ -15,7 +15,7 @@ import {
   selectTranslatedValue,
   SourceWithUnknownProps,
   toDate,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 import { MetadataUrlService } from '../service/metadata-url.service'
 
 type ESResponseSource = SourceWithUnknownProps

@@ -4,7 +4,7 @@ import {
   RequestFields,
   SearchFilters,
   StateConfigFilters,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 import { Action } from '@ngrx/store'
 import { SearchStateParams } from './reducer'
 

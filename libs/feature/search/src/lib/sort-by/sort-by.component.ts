@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { SortByEnum } from '@geonetwork-ui/util/shared'
+import { SortByEnum } from '@geonetwork-ui/util-shared'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 

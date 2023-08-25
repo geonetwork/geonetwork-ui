@@ -5,12 +5,12 @@ import {
   DEFAULT_RESULTS_LAYOUT_CONFIG,
   RESULTS_LAYOUT_CONFIG,
 } from '@geonetwork-ui/ui/search'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util-shared'
 import { BehaviorSubject, of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { ResultsListContainerComponent } from './results-list.container.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
+import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/util-shared/fixtures'
 
 @Component({
   selector: 'gn-ui-results-list',

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser'
 
 import { AppComponent } from './app.component'
 import { FeatureMapModule } from '@geonetwork-ui/feature/map'
-import { ThemeService } from '@geonetwork-ui/util/shared'
+import { ThemeService } from '@geonetwork-ui/util-shared'
 import { TranslateModule } from '@ngx-translate/core'
 import {
   TRANSLATE_DEFAULT_CONFIG,

@@ -9,7 +9,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core'
-import { ThemeService } from '@geonetwork-ui/util/shared'
+import { ThemeService } from '@geonetwork-ui/util-shared'
 import type { Feature } from 'geojson'
 import { asArray, asString } from 'ol/color'
 import { isEmpty } from 'ol/extent'

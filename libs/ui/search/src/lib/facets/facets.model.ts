@@ -1,4 +1,4 @@
-import { AggregationsTypesEnum } from '@geonetwork-ui/util/shared'
+import { AggregationsTypesEnum } from '@geonetwork-ui/util-shared'
 
 export type FacetPath = string[]
 

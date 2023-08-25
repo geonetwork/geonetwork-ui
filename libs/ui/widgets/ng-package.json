@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../../dist/libs/ui/widgets",
+  "lib": {
+    "entryFile": "src/index.ts"
+  },
+  "allowedNonPeerDependencies": [
+    "@angular/material",
+    "@angular/material-moment-adapter",
+    "ngx-chips",
+    "@ngx-translate/core",
+    "@ngx-translate/http-loader",
+    "ngx-dropzone",
+    "@types/geojson",
+    "@bartholomej/ngx-translate-extract",
+    "@biesbjerg/ngx-translate-extract-marker",
+    "chroma-js"
+  ]
+}

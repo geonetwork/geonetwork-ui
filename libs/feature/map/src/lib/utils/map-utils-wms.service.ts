@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { WmsEndpoint, WmsLayerFull } from '@camptocamp/ogc-client'
 import { MapContextLayerWmsModel } from '../map-context/map-context.model'
-import { ProxyService } from '@geonetwork-ui/util/shared'
+import { ProxyService } from '@geonetwork-ui/util-shared'
 import { from, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { LONLAT_CRS_CODES } from './projections'

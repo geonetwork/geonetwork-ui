@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { UserModel } from '@geonetwork-ui/util/shared'
+import { UserModel } from '@geonetwork-ui/util-shared'
 
 @Component({
   selector: 'gn-ui-user-preview',

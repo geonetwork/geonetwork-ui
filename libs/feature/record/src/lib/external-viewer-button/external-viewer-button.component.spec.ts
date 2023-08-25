@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { MAP_CONFIG_FIXTURE } from '@geonetwork-ui/util/app-config'
 import { ExternalViewerButtonComponent } from './external-viewer-button.component'
-import { MetadataLinkType } from '@geonetwork-ui/util/shared'
+import { MetadataLinkType } from '@geonetwork-ui/util-shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatIconModule } from '@angular/material/icon'
 

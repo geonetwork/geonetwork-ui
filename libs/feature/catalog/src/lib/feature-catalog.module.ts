@@ -21,7 +21,7 @@ import {
   ElasticsearchService,
   ORGANIZATIONS_STRATEGY,
   OrganizationsStrategy,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 import { OrganisationsFromGroupsService } from './organisations/service/organisations-from-groups.service'
 
 // expects the replacement key ${name}

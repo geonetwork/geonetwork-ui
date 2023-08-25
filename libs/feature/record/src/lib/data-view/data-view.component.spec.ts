@@ -10,7 +10,7 @@ import { BehaviorSubject, Subject } from 'rxjs'
 import { MdViewFacade } from '../state'
 import { DataViewComponent } from './data-view.component'
 import { TranslateModule } from '@ngx-translate/core'
-import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util/shared'
+import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util-shared'
 import { DatavizConfigurationModel } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
 
 const DATALINKS_FIXTURE: MetadataLink[] = [

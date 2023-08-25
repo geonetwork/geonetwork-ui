@@ -7,7 +7,7 @@ import {
   tick,
 } from '@angular/core/testing'
 import { TableViewComponent } from './table-view.component'
-import { MetadataLinkType } from '@geonetwork-ui/util/shared'
+import { MetadataLinkType } from '@geonetwork-ui/util-shared'
 import { of, throwError } from 'rxjs'
 import {
   ChangeDetectionStrategy,
@@ -19,7 +19,7 @@ import {
 import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 import { DataService } from '../service/data.service'
-import { LINK_FIXTURES } from '@geonetwork-ui/util/shared/fixtures'
+import { LINK_FIXTURES } from '@geonetwork-ui/util-shared/fixtures'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
 
 const SAMPLE_DATA_ITEMS = [

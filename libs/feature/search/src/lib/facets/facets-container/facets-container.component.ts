@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { EsRequestAggTerm, SearchFilters } from '@geonetwork-ui/util/shared'
+import { EsRequestAggTerm, SearchFilters } from '@geonetwork-ui/util-shared'
 import { FacetSelectEvent, ModelBlock } from '@geonetwork-ui/ui/search'
 import { combineLatest, Observable } from 'rxjs'
 import { map, take } from 'rxjs/operators'

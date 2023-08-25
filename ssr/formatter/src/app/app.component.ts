@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util-shared'
 import { map } from 'rxjs/operators'
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ThemeService } from '@geonetwork-ui/util/shared'
+import { ThemeService } from '@geonetwork-ui/util-shared'
 
 @Component({
   selector: 'gn-ui-root',

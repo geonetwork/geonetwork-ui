@@ -5,7 +5,7 @@ import {
   parse,
   PARSE_DELIMITER,
   SearchFilters,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 import { FacetPath, ModelBlock, ModelItem } from '@geonetwork-ui/ui/search'
 
 @Injectable({

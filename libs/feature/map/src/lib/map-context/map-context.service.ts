@@ -22,7 +22,7 @@ import { LayerConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 import { FeatureCollection } from 'geojson'
 import { fromLonLat } from 'ol/proj'
 import WMTS from 'ol/source/WMTS'
-import { removeSearchParams } from '@geonetwork-ui/util/shared'
+import { removeSearchParams } from '@geonetwork-ui/util-shared'
 
 export const DEFAULT_BASELAYER_CONTEXT: MapContextLayerXyzModel = {
   type: MapContextLayerTypeEnum.XYZ,

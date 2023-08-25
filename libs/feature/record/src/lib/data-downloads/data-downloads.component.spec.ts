@@ -7,7 +7,7 @@ import {
 import { BehaviorSubject, of, throwError } from 'rxjs'
 import { MdViewFacade } from '../state'
 import { DataDownloadsComponent } from './data-downloads.component'
-import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util/shared'
+import { MetadataLink, MetadataLinkType } from '@geonetwork-ui/util-shared'
 import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { DataService } from '@geonetwork-ui/feature/dataviz'

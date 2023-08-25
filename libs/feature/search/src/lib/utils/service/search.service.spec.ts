@@ -1,4 +1,4 @@
-import { SortByEnum } from '@geonetwork-ui/util/shared'
+import { SortByEnum } from '@geonetwork-ui/util-shared'
 import { BehaviorSubject } from 'rxjs'
 
 import { SearchService } from './search.service'

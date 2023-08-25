@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { Router } from '@angular/router'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util-shared'
 import { DashboardSearchService } from './dashboard-search.service'
 
 @Component({

@@ -7,8 +7,8 @@ import {
 } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { LinkClassifierService, MetadataLink } from '@geonetwork-ui/util/shared'
-import { LINK_FIXTURES } from '@geonetwork-ui/util/shared/fixtures'
+import { LinkClassifierService, MetadataLink } from '@geonetwork-ui/util-shared'
+import { LINK_FIXTURES } from '@geonetwork-ui/util-shared/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
 
 import { DownloadsListComponent } from './downloads-list.component'

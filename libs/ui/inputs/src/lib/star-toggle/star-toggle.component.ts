@@ -7,7 +7,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core'
-import { propagateToDocumentOnly } from '@geonetwork-ui/util/shared'
+import { propagateToDocumentOnly } from '@geonetwork-ui/util-shared'
 
 @Component({
   selector: 'gn-ui-star-toggle',

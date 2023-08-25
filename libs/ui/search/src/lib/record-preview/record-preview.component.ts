@@ -13,7 +13,7 @@ import {
   MetadataContact,
   MetadataRecord,
   stripHtml,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 import { fromEvent, Subscription } from 'rxjs'
 
 @Component({

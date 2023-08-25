@@ -5,7 +5,7 @@ import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchPageComponent } from './search-page.component'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
-import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
+import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/util-shared/fixtures'
 
 const RouterFacadeMock = {
   goToMetadata: jest.fn(),

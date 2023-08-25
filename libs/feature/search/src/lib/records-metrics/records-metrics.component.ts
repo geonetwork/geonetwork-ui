@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
-import { EsSearchResponse, RecordMetric } from '@geonetwork-ui/util/shared'
+import { EsSearchResponse, RecordMetric } from '@geonetwork-ui/util-shared'
 import { Observable } from 'rxjs'
 import { map, share } from 'rxjs/operators'
 

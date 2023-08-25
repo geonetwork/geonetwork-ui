@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { TestBed } from '@angular/core/testing'
-import { FEATURE_COLLECTION_POLYGON_FIXTURE_4326 } from '@geonetwork-ui/util/shared/fixtures'
+import { FEATURE_COLLECTION_POLYGON_FIXTURE_4326 } from '@geonetwork-ui/util-shared/fixtures'
 import Feature from 'ol/Feature'
 import { Polygon } from 'ol/geom'
 import ImageLayer from 'ol/layer/Image'
@@ -25,7 +25,7 @@ import {
   MouseWheelZoom,
   PinchRotate,
 } from 'ol/interaction'
-import { MetadataLinkType } from '@geonetwork-ui/util/shared'
+import { MetadataLinkType } from '@geonetwork-ui/util-shared'
 import MapBrowserEvent from 'ol/MapBrowserEvent'
 
 const wmsUtilsMock = {

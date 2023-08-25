@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { MetadataLink, MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataLink, MetadataRecord } from '@geonetwork-ui/util-shared'
 
 @Component({
   selector: 'gn-ui-metadata-info',

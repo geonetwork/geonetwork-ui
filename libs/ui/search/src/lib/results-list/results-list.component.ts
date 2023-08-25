@@ -6,7 +6,7 @@ import {
   Output,
   TemplateRef,
 } from '@angular/core'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util-shared'
 import {
   DEFAULT_RESULTS_LAYOUT_CONFIG,
   ResultsLayoutConfigItem,

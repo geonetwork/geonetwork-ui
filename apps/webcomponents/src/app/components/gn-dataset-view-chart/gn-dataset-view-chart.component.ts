@@ -9,7 +9,7 @@ import {
 } from '@angular/core'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { BaseComponent } from '../base.component'
-import { LinkUsage, MetadataLink } from '@geonetwork-ui/util/shared'
+import { LinkUsage, MetadataLink } from '@geonetwork-ui/util-shared'
 
 @Component({
   selector: 'wc-gn-dataset-view-chart',

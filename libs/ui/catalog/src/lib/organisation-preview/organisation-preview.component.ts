@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { Organisation } from '@geonetwork-ui/util/shared'
+import { Organisation } from '@geonetwork-ui/util-shared'
 
 @Component({
   selector: 'gn-ui-organisation-preview',

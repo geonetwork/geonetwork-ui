@@ -8,10 +8,10 @@ outline: deep
 
 ### Stopping click event propagation
 
-In order to stop click event propagation you should use `propagateToDocumentOnly` from `@geonetwork-ui/util/shared` instead of `event.stopPropagation` to ensure that the document receives the event.
+In order to stop click event propagation you should use `propagateToDocumentOnly` from `@geonetwork-ui/util-shared` instead of `event.stopPropagation` to ensure that the document receives the event.
 
 ```ts
-import { propagateToDocumentOnly } from '@geonetwork-ui/util/shared'
+import { propagateToDocumentOnly } from '@geonetwork-ui/util-shared'
 
 // ...
 

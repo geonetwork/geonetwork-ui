@@ -15,7 +15,7 @@ import {
   MetadataLink,
   MetadataLinkType,
   ProxyService,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 import type { FeatureCollection } from 'geojson'
 import { from, Observable, throwError } from 'rxjs'
 import { catchError, map, switchMap, tap } from 'rxjs/operators'

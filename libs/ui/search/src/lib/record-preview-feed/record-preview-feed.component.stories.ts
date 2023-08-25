@@ -5,7 +5,7 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
-import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
+import { RECORDS_FULL_FIXTURE } from '@geonetwork-ui/util-shared/fixtures'
 import { RecordPreviewFeedComponent } from './record-preview-feed.component'
 import { importProvidersFrom } from '@angular/core'
 import { action } from '@storybook/addon-actions'
@@ -15,7 +15,7 @@ import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatIconModule } from '@angular/material/icon'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
+import { UtilSharedModule } from '@geonetwork-ui/util-shared'
 
 export default {
   title: 'Search/RecordPreviewFeedComponent',

@@ -12,7 +12,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core'
-import { AggregationsTypesEnum } from '@geonetwork-ui/util/shared'
+import { AggregationsTypesEnum } from '@geonetwork-ui/util-shared'
 import { fromEvent, Subscription } from 'rxjs'
 import { debounceTime } from 'rxjs/operators'
 import {

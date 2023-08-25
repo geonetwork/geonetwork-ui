@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
-import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/util/shared/fixtures'
+import { MetadataRecord } from '@geonetwork-ui/util-shared'
+import { RECORDS_SUMMARY_FIXTURE } from '@geonetwork-ui/util-shared/fixtures'
 
 @Component({
   selector: 'gn-ui-record-table',

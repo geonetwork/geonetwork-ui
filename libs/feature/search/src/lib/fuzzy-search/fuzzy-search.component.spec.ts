@@ -5,7 +5,7 @@ import { AutocompleteComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import {
   ElasticsearchService,
   MetadataRecord,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject, of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'

@@ -11,7 +11,7 @@ import {
   SearchFacade,
   SearchService,
 } from '@geonetwork-ui/feature/search'
-import { SortByEnum } from '@geonetwork-ui/util/shared'
+import { SortByEnum } from '@geonetwork-ui/util-shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { readFirst } from '@nx/angular/testing'
 import { BehaviorSubject, of } from 'rxjs'

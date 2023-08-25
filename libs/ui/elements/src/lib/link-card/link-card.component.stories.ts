@@ -12,7 +12,7 @@ import {
 } from '@storybook/angular'
 import { LinkCardComponent } from './link-card.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MetadataLinkType } from '@geonetwork-ui/util/shared'
+import { MetadataLinkType } from '@geonetwork-ui/util-shared'
 import { importProvidersFrom } from '@angular/core'
 import { MatIcon } from '@angular/material/icon'
 

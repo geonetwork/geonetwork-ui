@@ -1,0 +1,7 @@
+# npm-publishable-dep
+
+This library was generated with [Nx](https://nx.dev).
+
+## Running unit tests
+
+Run `nx test npm-publishable-dep` to execute the unit tests.

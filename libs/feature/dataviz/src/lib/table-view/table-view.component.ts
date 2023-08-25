@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { MetadataLink } from '@geonetwork-ui/util/shared'
+import { MetadataLink } from '@geonetwork-ui/util-shared'
 import { BehaviorSubject, Observable, of } from 'rxjs'
 import {
   catchError,

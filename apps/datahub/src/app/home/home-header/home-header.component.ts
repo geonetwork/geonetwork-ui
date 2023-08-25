@@ -17,7 +17,7 @@ import {
   SearchConfig,
   SearchPreset,
 } from '@geonetwork-ui/util/app-config'
-import { MetadataRecord, SortByEnum } from '@geonetwork-ui/util/shared'
+import { MetadataRecord, SortByEnum } from '@geonetwork-ui/util-shared'
 import { map } from 'rxjs/operators'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants'
 import { lastValueFrom } from 'rxjs'

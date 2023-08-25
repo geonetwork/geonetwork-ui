@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { SearchFacade } from '../../state/search.facade'
-import { SearchFilters, SortByEnum } from '@geonetwork-ui/util/shared'
+import { SearchFilters, SortByEnum } from '@geonetwork-ui/util-shared'
 import { first, map } from 'rxjs/operators'
 
 export interface SearchServiceI {

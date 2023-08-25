@@ -10,9 +10,9 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { TableViewComponent } from './table-view.component'
-import { MetadataLinkType } from '@geonetwork-ui/util/shared'
+import { MetadataLinkType } from '@geonetwork-ui/util-shared'
 import { TableComponent, UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
-import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
+import { LoadingMaskComponent } from '@geonetwork-ui/ui-widgets'
 import { importProvidersFrom } from '@angular/core'
 import { MatProgressSpinner } from '@angular/material/progress-spinner'
 

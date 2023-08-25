@@ -8,7 +8,7 @@ import { ErrorType } from '@geonetwork-ui/ui/elements'
 import { BehaviorSubject, combineLatest } from 'rxjs'
 import { filter, map, mergeMap, pluck } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
-import { MetadataContact, Organisation } from '@geonetwork-ui/util/shared'
+import { MetadataContact, Organisation } from '@geonetwork-ui/util-shared'
 
 @Component({
   selector: 'gn-ui-record-metadata',

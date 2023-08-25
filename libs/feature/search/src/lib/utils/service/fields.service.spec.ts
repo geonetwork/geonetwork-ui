@@ -5,7 +5,7 @@ import {
   SearchApiService,
   ToolsApiService,
 } from '@geonetwork-ui/data-access/gn4'
-import { ElasticsearchService } from '@geonetwork-ui/util/shared'
+import { ElasticsearchService } from '@geonetwork-ui/util-shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { OrganisationsServiceInterface } from '@geonetwork-ui/feature/catalog'
 

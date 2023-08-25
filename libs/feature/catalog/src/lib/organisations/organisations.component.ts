@@ -7,7 +7,7 @@ import {
   Optional,
   Output,
 } from '@angular/core'
-import { Organisation } from '@geonetwork-ui/util/shared'
+import { Organisation } from '@geonetwork-ui/util-shared'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
 import { map, startWith, tap } from 'rxjs/operators'
 import { OrganisationsServiceInterface } from './service/organisations.service.interface'

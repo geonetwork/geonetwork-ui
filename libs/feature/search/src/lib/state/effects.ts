@@ -5,7 +5,7 @@ import { ElasticsearchMapper } from '../utils/mapper'
 import {
   ElasticsearchService,
   EsSearchResponse,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
 import { from, of } from 'rxjs'

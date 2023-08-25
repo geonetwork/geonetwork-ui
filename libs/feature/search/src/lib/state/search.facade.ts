@@ -3,7 +3,7 @@ import {
   RequestFields,
   SearchFilters,
   StateConfigFilters,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 import { select, Store } from '@ngrx/store'
 import { from, Observable, of } from 'rxjs'
 import {

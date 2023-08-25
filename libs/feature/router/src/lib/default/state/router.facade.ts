@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
 import { RouterService } from '../router.service'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util-shared'
 import { RouterReducerState } from '@ngrx/router-store'
 import { select, Store } from '@ngrx/store'
 import { distinctUntilChanged, filter, map, take } from 'rxjs/operators'

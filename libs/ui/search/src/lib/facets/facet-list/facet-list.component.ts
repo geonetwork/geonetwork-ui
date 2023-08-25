@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { EsRequestAggTerm } from '@geonetwork-ui/util/shared'
+import { EsRequestAggTerm } from '@geonetwork-ui/util-shared'
 import { FacetSelectEvent, ModelBlock } from '../facets.model'
 
 @Component({

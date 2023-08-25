@@ -9,7 +9,7 @@ import {
   AutocompleteComponent,
   AutocompleteItem,
 } from './autocomplete.component'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { UiWidgetsModule } from '@geonetwork-ui/ui-widgets'
 
 describe('AutocompleteComponent', () => {
   let component: AutocompleteComponent

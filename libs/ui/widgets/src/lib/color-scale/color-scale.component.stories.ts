@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/angular'
 import { ColorScaleComponent } from './color-scale.component'
-import { ThemeService } from '@geonetwork-ui/util/shared'
+import { ThemeService } from '@geonetwork-ui/util-shared'
 
 export default {
   title: 'Widgets/ColorScaleComponent',

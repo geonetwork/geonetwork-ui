@@ -4,7 +4,7 @@ import {
   LinkClassifierService,
   LinkUsage,
   ThemeService,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 import { Configuration, SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import {
   ElasticsearchMapper,

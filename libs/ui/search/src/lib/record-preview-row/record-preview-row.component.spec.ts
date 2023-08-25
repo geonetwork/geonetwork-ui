@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
+import { UtilSharedModule } from '@geonetwork-ui/util-shared'
 
 import { RecordPreviewRowComponent } from './record-preview-row.component'
 

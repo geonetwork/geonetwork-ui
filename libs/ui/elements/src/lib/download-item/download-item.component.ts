@@ -5,7 +5,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core'
-import { MetadataLink } from '@geonetwork-ui/util/shared'
+import { MetadataLink } from '@geonetwork-ui/util-shared'
 
 @Component({
   selector: 'gn-ui-download-item',

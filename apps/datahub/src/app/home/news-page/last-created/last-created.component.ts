@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
-import { ES_SOURCE_BRIEF, MetadataRecord } from '@geonetwork-ui/util/shared'
+import { ES_SOURCE_BRIEF, MetadataRecord } from '@geonetwork-ui/util-shared'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 

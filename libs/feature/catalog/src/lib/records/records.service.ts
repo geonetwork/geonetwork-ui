@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { ElasticsearchService } from '@geonetwork-ui/util/shared'
+import { ElasticsearchService } from '@geonetwork-ui/util-shared'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { Observable, of, throwError } from 'rxjs'
 import { catchError, map, shareReplay } from 'rxjs/operators'

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing'
 import { RecordsService } from './records.service'
-import { aggsOnly } from '@geonetwork-ui/util/shared/fixtures'
+import { aggsOnly } from '@geonetwork-ui/util-shared/fixtures'
 import {
   HttpClientTestingModule,
   HttpTestingController,

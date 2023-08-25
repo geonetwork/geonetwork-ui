@@ -17,7 +17,7 @@ import {
 } from '@angular/cdk/overlay'
 import { take } from 'rxjs/operators'
 import { Choice } from './dropdown-multiselect.model'
-import { propagateToDocumentOnly } from '@geonetwork-ui/util/shared'
+import { propagateToDocumentOnly } from '@geonetwork-ui/util-shared'
 
 @Component({
   selector: 'gn-ui-dropdown-multiselect',

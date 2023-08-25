@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 import { ApiModule, Configuration } from '@geonetwork-ui/data-access/datafeeder'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { UiWidgetsModule } from '@geonetwork-ui/ui-widgets'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { environment } from '../environments/environment'

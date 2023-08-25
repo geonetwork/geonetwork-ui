@@ -1,4 +1,4 @@
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util-shared'
 import { Action, createReducer, on } from '@ngrx/store'
 import * as MdViewActions from './mdview.actions'
 import { DatavizConfigurationModel } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'

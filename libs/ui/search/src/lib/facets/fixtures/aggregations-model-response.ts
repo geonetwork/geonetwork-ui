@@ -1,4 +1,4 @@
-import { AggregationsTypesEnum } from '@geonetwork-ui/util/shared'
+import { AggregationsTypesEnum } from '@geonetwork-ui/util-shared'
 import { ModelBlock, ModelItem } from '../facets.model'
 
 export const BLOCK_MODEL_FIXTURE: ModelBlock = {

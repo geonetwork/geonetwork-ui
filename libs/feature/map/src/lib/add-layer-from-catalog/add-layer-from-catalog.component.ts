@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
-import { ES_SOURCE_BRIEF } from '@geonetwork-ui/util/shared'
+import { ES_SOURCE_BRIEF } from '@geonetwork-ui/util-shared'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import {
   RESULTS_LAYOUT_CONFIG,

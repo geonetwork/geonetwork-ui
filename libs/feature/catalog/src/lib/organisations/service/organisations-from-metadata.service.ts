@@ -17,7 +17,7 @@ import {
   SearchFilters,
   selectField,
   SourceWithUnknownProps,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 
 import { combineLatest, Observable, of, takeLast } from 'rxjs'
 import { filter, map, shareReplay, startWith, tap } from 'rxjs/operators'

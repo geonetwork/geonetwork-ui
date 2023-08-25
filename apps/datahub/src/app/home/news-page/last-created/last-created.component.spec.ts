@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { summaryHits } from '@geonetwork-ui/util/shared/fixtures'
+import { summaryHits } from '@geonetwork-ui/util-shared/fixtures'
 import { of } from 'rxjs'
 import { LastCreatedComponent } from './last-created.component'
 

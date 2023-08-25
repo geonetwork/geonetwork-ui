@@ -6,7 +6,7 @@ import {
   tick,
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
+import { UtilSharedModule } from '@geonetwork-ui/util-shared'
 import { ThumbnailComponent } from './thumbnail.component'
 
 describe('ThumbnailComponent', () => {

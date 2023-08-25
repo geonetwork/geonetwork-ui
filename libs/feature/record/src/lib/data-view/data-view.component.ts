@@ -4,7 +4,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { getLinkLabel, MetadataLink } from '@geonetwork-ui/util/shared'
+import { getLinkLabel, MetadataLink } from '@geonetwork-ui/util-shared'
 import { BehaviorSubject, combineLatest } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'

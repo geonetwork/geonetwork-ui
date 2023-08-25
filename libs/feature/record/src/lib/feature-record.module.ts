@@ -18,7 +18,7 @@ import { DataDownloadsComponent } from './data-downloads/data-downloads.componen
 import { RecordMetadataComponent } from './record-metadata/record-metadata.component'
 import { MatTabsModule } from '@angular/material/tabs'
 import { MatIconModule } from '@angular/material/icon'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { UiWidgetsModule } from '@geonetwork-ui/ui-widgets'
 import { TranslateModule } from '@ngx-translate/core'
 import { DataOtherlinksComponent } from './data-otherlinks/data-otherlinks.component'
 import { RelatedRecordsComponent } from './related-records/related-records.component'

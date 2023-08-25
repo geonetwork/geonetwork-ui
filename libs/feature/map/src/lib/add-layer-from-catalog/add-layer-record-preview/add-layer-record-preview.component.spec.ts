@@ -4,7 +4,7 @@ import { MapFacade } from '../../+state/map.facade'
 import {
   LINK_FIXTURES,
   RECORDS_FULL_FIXTURE,
-} from '@geonetwork-ui/util/shared/fixtures'
+} from '@geonetwork-ui/util-shared/fixtures'
 import { of } from 'rxjs'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { MapUtilsService } from '../../utils'

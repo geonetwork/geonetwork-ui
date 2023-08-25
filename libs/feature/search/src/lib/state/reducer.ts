@@ -4,10 +4,10 @@ import {
   RESULTS_PAGE_SIZE,
   SearchFilters,
   StateConfigFilters,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 import * as fromActions from './actions'
 import { DEFAULT_SEARCH_KEY } from './actions'
-import { ES_SOURCE_SUMMARY } from '@geonetwork-ui/util/shared'
+import { ES_SOURCE_SUMMARY } from '@geonetwork-ui/util-shared'
 
 export const SEARCH_FEATURE_KEY = 'searchState'
 

@@ -15,7 +15,7 @@ import {
   MetadataRecord,
   SearchFilters,
   StateConfigFilters,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 import { BaseComponent } from '../base.component'
 
 @Component({

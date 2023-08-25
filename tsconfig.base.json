@@ -46,14 +46,19 @@
       ],
       "@geonetwork-ui/ui/map": ["libs/ui/map/src/index.ts"],
       "@geonetwork-ui/ui/search": ["libs/ui/search/src/index.ts"],
-      "@geonetwork-ui/ui/widgets": ["libs/ui/widgets/src/index.ts"],
+      "@geonetwork-ui/ui-widgets": ["libs/ui/widgets/src/index.ts"],
       "@geonetwork-ui/util/app-config": ["libs/util/app-config/src/index.ts"],
       "@geonetwork-ui/util/i18n": ["libs/util/i18n/src/index.ts"],
-      "@geonetwork-ui/util/shared": ["libs/util/shared/src/index.ts"],
-      "@geonetwork-ui/util/shared/fixtures": [
+      "@geonetwork-ui/util-shared": ["libs/util/shared/src/index.ts"],
+      "@geonetwork-ui/util-shared/fixtures": [
         "libs/util/shared/src/lib/fixtures/index.ts"
       ],
-      "@geonetwork-ui/util/types/*": ["libs/util/types/src/lib/*"]
+      "@geonetwork-ui/util/types/*": ["libs/util/types/src/lib/*"],
+      "@geonetwork-ui/utils/publishable": [
+        "libs/utils/publishable/src/index.ts"
+      ],
+      "@gnui/publishable": ["libs/npm/publishable/src/index.ts"],
+      "@gnui/publishable-dep": ["libs/npm/publishable-dep/src/index.ts"]
     },
     "allowJs": true,
     "outDir": "/"

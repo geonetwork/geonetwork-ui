@@ -18,7 +18,7 @@ import {
   AggregationsOrderEnum,
   AggregationsTypesEnum,
   SearchFilters,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 import { BehaviorSubject, of } from 'rxjs'
 import { SearchFiltersComponent } from './search-filters.component'
 import { TranslateModule } from '@ngx-translate/core'

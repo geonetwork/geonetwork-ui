@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core'
 import { FavoritesService } from '../favorites.service'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util-shared'
 import { first, map, pairwise, take } from 'rxjs/operators'
 import { AuthService } from '@geonetwork-ui/feature/auth'
 import tippy from 'tippy.js'

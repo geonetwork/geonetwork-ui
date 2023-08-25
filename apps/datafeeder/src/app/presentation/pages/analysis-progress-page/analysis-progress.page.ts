@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { LogService } from '@geonetwork-ui/util/shared'
+import { LogService } from '@geonetwork-ui/util-shared'
 import {
   AnalysisStatusEnumApiModel,
   FileUploadApiService,

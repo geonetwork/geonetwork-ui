@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing'
-import { LINK_FIXTURES } from '@geonetwork-ui/util/shared/fixtures'
+import { LINK_FIXTURES } from '@geonetwork-ui/util-shared/fixtures'
 import { ElasticsearchFieldMapper } from './elasticsearch.field.mapper'
 import { MetadataUrlService } from '../service/metadata-url.service'
 

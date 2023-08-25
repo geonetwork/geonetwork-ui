@@ -1,5 +1,5 @@
 import { Injectable, Injector } from '@angular/core'
-import { SearchFilters } from '@geonetwork-ui/util/shared'
+import { SearchFilters } from '@geonetwork-ui/util-shared'
 import {
   AbstractSearchField,
   FieldValue,

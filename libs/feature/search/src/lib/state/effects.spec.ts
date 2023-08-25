@@ -40,12 +40,12 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import {
   ES_FIXTURE_AGGS_REQUEST,
   simpleWithAgg,
-} from '@geonetwork-ui/util/shared/fixtures'
+} from '@geonetwork-ui/util-shared/fixtures'
 import { HttpErrorResponse } from '@angular/common/http'
 import { delay } from 'rxjs/operators'
 import { FavoritesService } from '../favorites/favorites.service'
 import { readFirst } from '@nx/angular/testing'
-import { ElasticsearchService } from '@geonetwork-ui/util/shared'
+import { ElasticsearchService } from '@geonetwork-ui/util-shared'
 import { FILTER_GEOMETRY } from '../feature-search.module'
 
 const defaultSearchState = initialState[DEFAULT_SEARCH_KEY]

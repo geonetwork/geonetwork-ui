@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { Organisation } from '@geonetwork-ui/util/shared'
+import { Organisation } from '@geonetwork-ui/util-shared'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import { OrganisationsServiceInterface } from '@geonetwork-ui/feature/catalog'
 

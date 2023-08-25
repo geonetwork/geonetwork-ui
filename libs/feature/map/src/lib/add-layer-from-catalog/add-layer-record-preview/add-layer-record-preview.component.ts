@@ -6,7 +6,7 @@ import {
   LinkUsage,
   MetadataLink,
   MetadataLinkType,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 import { Observable, of, throwError } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { MapUtilsService } from '../../utils'

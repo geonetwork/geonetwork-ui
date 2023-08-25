@@ -6,7 +6,7 @@ import {
   getFileFormat,
   MetadataLink,
   MetadataLinkType,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 
 marker('datahub.search.filter.all')
 marker('datahub.search.filter.others')

@@ -18,7 +18,7 @@ import { importProvidersFrom } from '@angular/core'
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
+import { UtilSharedModule } from '@geonetwork-ui/util-shared'
 
 export default {
   title: 'Elements/RelatedRecordCardComponent',

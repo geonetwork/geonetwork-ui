@@ -4,7 +4,7 @@ import {
   Organisation,
   SearchFilters,
   SourceWithUnknownProps,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 
 export abstract class OrganisationsServiceInterface {
   public abstract organisations$: Observable<Organisation[]>

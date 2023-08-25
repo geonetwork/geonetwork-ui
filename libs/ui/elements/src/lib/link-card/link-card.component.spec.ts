@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { TranslateModule } from '@ngx-translate/core'
 
 import { LinkCardComponent } from './link-card.component'
-import { MetadataLinkType } from '@geonetwork-ui/util/shared'
+import { MetadataLinkType } from '@geonetwork-ui/util-shared'
 
 describe('LinkCardComponent', () => {
   let component: LinkCardComponent

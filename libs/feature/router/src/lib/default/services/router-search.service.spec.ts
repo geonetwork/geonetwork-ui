@@ -1,5 +1,5 @@
 import { FieldsService, SearchFacade } from '@geonetwork-ui/feature/search'
-import { SortByEnum } from '@geonetwork-ui/util/shared'
+import { SortByEnum } from '@geonetwork-ui/util-shared'
 import { BehaviorSubject, of } from 'rxjs'
 import { RouterFacade } from '../state'
 import { RouterSearchService } from './router-search.service'

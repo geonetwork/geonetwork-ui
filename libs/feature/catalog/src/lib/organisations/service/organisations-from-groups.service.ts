@@ -16,7 +16,7 @@ import {
   SearchFilters,
   selectField,
   SourceWithUnknownProps,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 import { forkJoin, Observable, of } from 'rxjs'
 import { map, shareReplay } from 'rxjs/operators'
 import { OrganisationsServiceInterface } from './organisations.service.interface'

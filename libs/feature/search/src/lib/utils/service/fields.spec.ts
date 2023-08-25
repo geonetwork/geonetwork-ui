@@ -2,7 +2,7 @@ import {
   SearchApiService,
   ToolsApiService,
 } from '@geonetwork-ui/data-access/gn4'
-import { ElasticsearchService, Organisation } from '@geonetwork-ui/util/shared'
+import { ElasticsearchService, Organisation } from '@geonetwork-ui/util-shared'
 import { lastValueFrom, of } from 'rxjs'
 import {
   AbstractSearchField,

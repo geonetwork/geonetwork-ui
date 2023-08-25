@@ -20,7 +20,7 @@ import {
   MetadataLink,
   MetadataLinkType,
   ProxyService,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
 import { StyleLike } from 'ol/style/Style'

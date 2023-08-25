@@ -12,7 +12,7 @@ import {
 import { TableViewComponent } from './table-view/table-view.component'
 import { ChartViewComponent } from './chart-view/chart-view.component'
 import { TranslateModule } from '@ngx-translate/core'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { UiWidgetsModule } from '@geonetwork-ui/ui-widgets'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 
 @NgModule({

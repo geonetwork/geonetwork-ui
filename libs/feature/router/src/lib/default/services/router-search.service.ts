@@ -4,7 +4,7 @@ import {
   SearchFacade,
   SearchServiceI,
 } from '@geonetwork-ui/feature/search'
-import { SearchFilters, SortByEnum } from '@geonetwork-ui/util/shared'
+import { SearchFilters, SortByEnum } from '@geonetwork-ui/util-shared'
 import { ROUTE_PARAMS, SearchRouteParams } from '../constants'
 import { RouterFacade } from '../state/router.facade'
 import { firstValueFrom } from 'rxjs'

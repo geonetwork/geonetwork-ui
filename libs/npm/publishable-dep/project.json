@@ -1,0 +1,51 @@
+{
+  "name": "npm-publishable-dep",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/npm/publishable-dep/src",
+  "prefix": "geonetwork-ui",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/npm/publishable-dep/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/npm/publishable-dep/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/npm/publishable-dep/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/npm/publishable-dep/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/npm/publishable-dep/**/*.ts",
+          "libs/npm/publishable-dep/**/*.html",
+          "libs/npm/publishable-dep/package.json"
+        ]
+      }
+    }
+  }
+}

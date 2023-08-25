@@ -112,7 +112,7 @@ or display full metadata records.** For example:
 ```typescript
 import { Component } from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/search'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util-shared'
 
 @Component({
   // ...

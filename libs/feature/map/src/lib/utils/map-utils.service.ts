@@ -25,7 +25,7 @@ import { from, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { MapContextLayerModel } from '../..'
 import { MapUtilsWMSService } from './map-utils-wms.service'
-import { MetadataLink } from '@geonetwork-ui/util/shared'
+import { MetadataLink } from '@geonetwork-ui/util-shared'
 import Collection from 'ol/Collection'
 import MapBrowserEvent from 'ol/MapBrowserEvent'
 

@@ -1,5 +1,5 @@
 import { combineLatest, firstValueFrom, Observable, of, switchMap } from 'rxjs'
-import { ElasticsearchService, SearchFilters } from '@geonetwork-ui/util/shared'
+import { ElasticsearchService, SearchFilters } from '@geonetwork-ui/util-shared'
 import {
   SearchApiService,
   ToolsApiService,

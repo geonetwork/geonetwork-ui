@@ -5,7 +5,7 @@ import {
   MetadataLink,
   MetadataLinkType,
   sortPriority,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 import { combineLatest, of } from 'rxjs'
 import { catchError, map, switchMap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'

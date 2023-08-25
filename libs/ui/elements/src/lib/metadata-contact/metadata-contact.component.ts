@@ -5,7 +5,7 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core'
-import { MetadataContact, MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataContact, MetadataRecord } from '@geonetwork-ui/util-shared'
 
 @Component({
   selector: 'gn-ui-metadata-contact',

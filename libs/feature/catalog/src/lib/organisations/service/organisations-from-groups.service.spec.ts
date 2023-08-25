@@ -9,8 +9,8 @@ import { TranslateService } from '@ngx-translate/core'
 import {
   ES_FIXTURE_FULL_RESPONSE,
   GROUPS_FIXTURE,
-} from '@geonetwork-ui/util/shared/fixtures'
-import { MetadataRecord, Organisation } from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared/fixtures'
+import { MetadataRecord, Organisation } from '@geonetwork-ui/util-shared'
 
 const groupsAggregationMock = {
   aggregations: {

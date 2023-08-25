@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core'
-import { MetadataRecord } from '@geonetwork-ui/util/shared'
+import { MetadataRecord } from '@geonetwork-ui/util-shared'
 
 import { select, Store } from '@ngrx/store'
 import { filter, map } from 'rxjs/operators'
 
 import * as MdViewActions from './mdview.actions'
 import * as MdViewSelectors from './mdview.selectors'
-import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
+import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util-shared'
 import { DatavizConfigurationModel } from '@geonetwork-ui/util/types/data/dataviz-configuration.model'
 
 @Injectable()

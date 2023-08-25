@@ -15,7 +15,7 @@ import {
   ElasticsearchService,
   EsSearchResponse,
   MetadataRecord,
-} from '@geonetwork-ui/util/shared'
+} from '@geonetwork-ui/util-shared'
 import { Observable } from 'rxjs'
 import { map, switchMap } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'

@@ -5,7 +5,7 @@ import { RecordFormComponent } from './components/record-form/record-form.compon
 import { RecordOutputXmlComponent } from './components/record-output-xml/record-output-xml.component'
 import { FormsModule } from '@angular/forms'
 import { StatusComponent } from './components/status/status.component'
-import { ThemeService } from '@geonetwork-ui/util/shared'
+import { ThemeService } from '@geonetwork-ui/util-shared'
 import { RecordFieldSimpleComponent } from './components/record-field-simple/record-field-simple.component'
 import { RecordFieldGroupComponent } from './components/record-field-group/record-field-group.component'
 import { RecordFieldArrayComponent } from './components/record-field-array/record-field-array.component'

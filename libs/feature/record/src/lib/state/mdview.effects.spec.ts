@@ -4,8 +4,8 @@ import { ElasticsearchMapper } from '@geonetwork-ui/feature/search'
 import {
   ElasticsearchService,
   MetadataRecord,
-} from '@geonetwork-ui/util/shared'
-import { simpleWithAgg, summaryHits } from '@geonetwork-ui/util/shared/fixtures'
+} from '@geonetwork-ui/util-shared'
+import { simpleWithAgg, summaryHits } from '@geonetwork-ui/util-shared/fixtures'
 
 import { provideMockActions } from '@ngrx/effects/testing'
 import { provideMockStore } from '@ngrx/store/testing'

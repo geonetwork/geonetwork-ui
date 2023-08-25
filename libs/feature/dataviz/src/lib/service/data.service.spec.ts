@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing'
 import { DataService } from './data.service'
 import { openDataset } from '@geonetwork-ui/data-fetcher'
-import { MetadataLinkType, PROXY_PATH } from '@geonetwork-ui/util/shared'
+import { MetadataLinkType, PROXY_PATH } from '@geonetwork-ui/util-shared'
 
 const newEndpointCall = jest.fn()
 

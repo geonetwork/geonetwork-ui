@@ -1,0 +1,27 @@
+{
+  "name": "@geonetwork-ui/ui-widgets",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^16.1.0",
+    "@angular/core": "^16.1.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "@angular/material": "16.0.4",
+    "@angular/material-moment-adapter": "16.0.4",
+    "ngx-chips": "3.0.0",
+    "@ngx-translate/core": "~14.0.0",
+    "@ngx-translate/http-loader": "~7.0.0",
+    "ngx-dropzone": "^3.0.0",
+    "@types/geojson": "^7946.0.7",
+    "@bartholomej/ngx-translate-extract": "^8.0.2",
+    "@biesbjerg/ngx-translate-extract-marker": "^1.0.0",
+    "chroma-js": "^2.1.2"
+  },
+  "sideEffects": false,
+  "nx": {
+    "implicitDependencies": [
+      "@geonetwork-ui/util-shared"
+    ]
+  }
+}
