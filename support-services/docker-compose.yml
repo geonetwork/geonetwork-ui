@@ -88,12 +88,8 @@ services:
   #      - "8081:8080"
 
   geonetwork:
-    image: geonetwork:4.2.2
+    image: geonetwork:${GEONETWORK_VERSION}
     environment:
-      JAVA_OPTS: >
-        -Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
-        -Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true
-        -Xms512M -Xss512M -Xmx2G -XX:+UseConcMarkSweepGC
       ES_HOST: elasticsearch
       ES_PROTOCOL: http
       ES_PORT: 9200
@@ -126,7 +122,9 @@ services:
   init:
     image: alpine/curl
     # only run init if volumes were cleared
-    command: sh -c "if [ ! -f /done ]; then run-parts /docker-entrypoint.d; else echo 'Nothing to do.'; exit 0; fi"
+    command: sh -c "if [ ! -f /done ]; then run-parts /docker-entrypoint.d --exit-on-error; else echo 'Nothing to do.'; exit 0; fi"
+    environment:
+      GEONETWORK_VERSION: ${GEONETWORK_VERSION}
     depends_on:
       geonetwork:
         condition: service_healthy
