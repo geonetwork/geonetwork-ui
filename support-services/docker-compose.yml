@@ -65,28 +65,6 @@ services:
     ports:
       - '5601:5601'
 
-  #  TODO: include the datafeeder backend as well
-  #  datafeeder:
-  #    image: georchestra/datafeeder:latest
-  #    depends_on:
-  #      database:
-  #        condition: service_healthy
-  #      postgis:
-  #        condition: service_healthy
-  #    healthcheck:
-  #      test: ["CMD-SHELL", "curl -s -f http://localhost:8080/datafeeder >/dev/null || exit 1"]
-  #      interval: 30s
-  #      timeout: 10s
-  #      retries: 10
-  #    volumes:
-  #      - georchestra_datadir:/etc/georchestra
-  #      - datafeeder_uploads:/tmp/datafeeder
-  #    environment:
-  #      - JAVA_OPTS=-Xms512m -Xmx512m
-  #      - LOGGING_LEVEL_ORG_GEORCHESTRA_DATAFEEDER=INFO
-  #    ports:
-  #      - "8081:8080"
-
   geonetwork:
     image: geonetwork:${GEONETWORK_VERSION}
     environment:
