@@ -13,16 +13,15 @@ export const FIELDS_SUMMARY: FieldName[] = [
   'logo',
   'codelist_status_text',
   'linkProtocol',
-  'contactForResource.organisation',
-  'contact.organisation',
+  'contactForResource*.organisation*',
+  'contact*.organisation*',
   'userSavedCount',
 ]
 
 export const FIELDS_BRIEF: FieldName[] = [
   ...FIELDS_SUMMARY,
   'resourceTypeObject',
-  'Org',
-  'OrgForResource',
+  'Org*',
 ]
 
 export const QUERY_FIELDS: FieldName[] = [

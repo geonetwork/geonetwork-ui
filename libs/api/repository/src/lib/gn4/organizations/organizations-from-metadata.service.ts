@@ -3,6 +3,7 @@ import {
   GroupApiModel,
   GroupsApiService,
   SearchApiService,
+  SiteApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import {
   FieldFilterByValues,
@@ -19,9 +20,12 @@ import {
   getAsUrl,
   mapOrganization,
   MetadataObject,
+  selectFallback,
   selectField,
+  selectTranslatedField,
+  SourceWithUnknownProps,
 } from '@geonetwork-ui/api/metadata-converter'
-import { combineLatest, Observable, of, takeLast } from 'rxjs'
+import { combineLatest, Observable, of, switchMap, takeLast } from 'rxjs'
 import { filter, map, shareReplay, startWith, tap } from 'rxjs/operators'
 
 const IMAGE_URL = '/geonetwork/images/harvesting/'
@@ -48,26 +52,35 @@ interface IncompleteOrganization {
 export class OrganizationsFromMetadataService
   implements OrganizationsServiceInterface
 {
+  geonetworkVersion$ = this.siteApiService.getSiteOrPortalDescription().pipe(
+    map((info) => info['system/platform/version']),
+    shareReplay(1)
+  )
+
   private groups$: Observable<GroupApiModel[]> = this.groupsApiService
     .getGroups()
     .pipe(shareReplay())
   private organisationsAggs$: Observable<OrganizationAggsBucket[]> =
-    this.searchApiService
-      .search('bucket', JSON.stringify(this.getAggregationSearchRequest()))
-      .pipe(
-        filter((response) => !!response.aggregations.contact.org),
-        tap((response) =>
-          response.aggregations.contact.org.buckets.forEach(
-            (r) =>
-              (r.doc_count =
-                response.aggregations.orgForResource.buckets.find(
-                  (org) => org.key === r.key
-                )?.doc_count || r.doc_count)
-          )
-        ),
-        map((response) => response.aggregations.contact.org.buckets),
-        shareReplay()
-      )
+    this.geonetworkVersion$.pipe(
+      switchMap((version) =>
+        this.searchApiService.search(
+          'bucket',
+          JSON.stringify(this.getAggregationSearchRequest(version))
+        )
+      ),
+      filter((response) => !!response.aggregations.contact.org),
+      tap((response) =>
+        response.aggregations.contact.org.buckets.forEach(
+          (r) =>
+            (r.doc_count =
+              response.aggregations.orgForResource.buckets.find(
+                (org) => org.key === r.key
+              )?.doc_count || r.doc_count)
+        )
+      ),
+      map((response) => response.aggregations.contact.org.buckets),
+      shareReplay()
+    )
   private organisationsWithoutGroups$: Observable<IncompleteOrganization[]> =
     this.organisationsAggs$.pipe(
       map((buckets) =>
@@ -100,7 +113,8 @@ export class OrganizationsFromMetadataService
   constructor(
     private esService: ElasticsearchService,
     private searchApiService: SearchApiService,
-    private groupsApiService: GroupsApiService
+    private groupsApiService: GroupsApiService,
+    private siteApiService: SiteApiService
   ) {}
 
   equalsNormalizedStrings(
@@ -129,7 +143,7 @@ export class OrganizationsFromMetadataService
     }
   }
 
-  private getAggregationSearchRequest() {
+  private getAggregationSearchRequest(gnVersion: string) {
     return this.esService.getSearchRequestBody({
       contact: {
         nested: {
@@ -138,7 +152,9 @@ export class OrganizationsFromMetadataService
         aggs: {
           org: {
             terms: {
-              field: 'contactForResource.organisation',
+              field: gnVersion.startsWith('4.2.2')
+                ? 'contactForResource.organisation'
+                : 'contactForResource.organisationObject.default.keyword',
               exclude: '',
               size: 5000,
               order: { _key: 'asc' },
@@ -148,7 +164,12 @@ export class OrganizationsFromMetadataService
                 terms: {
                   size: 50,
                   exclude: '',
-                  field: 'contactForResource.email.keyword',
+                  field:
+                    gnVersion.startsWith('4.2.2') ||
+                    gnVersion.startsWith('4.2.3') ||
+                    gnVersion.startsWith('4.2.4')
+                      ? 'contactForResource.email.keyword'
+                      : 'contactForResource.email',
                 },
               },
               logoUrl: {
@@ -166,7 +187,9 @@ export class OrganizationsFromMetadataService
         terms: {
           size: 5000,
           exclude: '',
-          field: 'OrgForResource',
+          field: gnVersion.startsWith('4.2.2')
+            ? 'OrgForResource'
+            : 'OrgForResourceObject.default',
           order: {
             _key: 'asc',
           },
@@ -206,25 +229,42 @@ export class OrganizationsFromMetadataService
   }
 
   getFiltersForOrgs(organisations: Organization[]): Observable<FieldFilters> {
-    return of({
-      OrgForResource: organisations.reduce(
-        (prev, curr) => ({ ...prev, [curr.name]: true }),
-        {}
-      ),
-    })
+    return this.geonetworkVersion$.pipe(
+      map((gnVersion) => {
+        const fieldName = gnVersion.startsWith('4.2.2')
+          ? 'OrgForResource'
+          : 'OrgForResourceObject.default'
+        return {
+          [fieldName]: organisations.reduce(
+            (prev, curr) => ({ ...prev, [curr.name]: true }),
+            {}
+          ),
+        }
+      })
+    )
   }
 
   getOrgsFromFilters(filters: FieldFilters): Observable<Organization[]> {
-    if (!('OrgForResource' in filters)) return of([])
-    return this.organisations$.pipe(
-      map((orgs: IncompleteOrganization[]) => {
-        const orgNames = Object.keys(
-          filters['OrgForResource'] as FieldFilterByValues
-        )
-        return orgNames.map((name) =>
-          orgs.find(
-            (org: Organization | IncompleteOrganization) => org.name === name
-          )
+    return this.geonetworkVersion$.pipe(
+      switchMap((gnVersion) => {
+        const fieldName = gnVersion.startsWith('4.2.2')
+          ? 'OrgForResource'
+          : 'OrgForResourceObject.default'
+
+        if (!(fieldName in filters)) return of([])
+
+        return this.organisations$.pipe(
+          map((orgs: IncompleteOrganization[]) => {
+            const orgNames = Object.keys(
+              filters[fieldName] as FieldFilterByValues
+            )
+            return orgNames.map((name) =>
+              orgs.find(
+                (org: Organization | IncompleteOrganization) =>
+                  org.name === name
+              )
+            )
+          })
         )
       })
     )
@@ -234,9 +274,17 @@ export class OrganizationsFromMetadataService
     source: MetadataObject,
     record: CatalogRecord
   ): Observable<CatalogRecord> {
-    const contacts = getAsArray(selectField(source, 'contact'))
-    const resourceContacts = getAsArray(
-      selectField(source, 'contactForResource')
+    const contacts: SourceWithUnknownProps[] = getAsArray(
+      selectFallback(
+        selectTranslatedField(source, 'contactObject'),
+        selectField(source, 'contact')
+      )
+    )
+    const resourceContacts: SourceWithUnknownProps[] = getAsArray(
+      selectFallback(
+        selectTranslatedField(source, 'contactForResourceObject'),
+        selectField(source, 'contactForResource')
+      )
     )
     const allContactOrgs = resourceContacts
       .concat(contacts)
