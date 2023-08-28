@@ -30,6 +30,17 @@ describe('LinkClassifierService', () => {
         ])
       })
     })
+    describe('for a WFS link (registered as download)', () => {
+      it('returns download, data and API usage', () => {
+        expect(
+          service.getUsagesForLink({
+            name: 'mylayer',
+            type: 'download',
+            url: new URL('https://my.ogc.server/wfs?abcd'),
+          })
+        ).toEqual([LinkUsage.DOWNLOAD, LinkUsage.GEODATA])
+      })
+    })
     describe('for a ESRI REST feature service link', () => {
       it('returns download and API usage', () => {
         expect(service.getUsagesForLink(LINK_FIXTURES.geodataRest)).toEqual([

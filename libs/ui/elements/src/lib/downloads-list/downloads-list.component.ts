@@ -62,6 +62,9 @@ export class DownloadsListComponent {
     if (format === 'all') {
       return true
     }
+    if (getFileFormat(link) === null) {
+      return format === 'others'
+    }
     if (format === 'others') {
       const knownFormats = FILTER_FORMATS.filter(
         (format) => format !== 'all' && format !== 'others'

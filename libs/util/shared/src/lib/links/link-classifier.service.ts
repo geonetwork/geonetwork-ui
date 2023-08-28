@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
+import { getFileFormat } from './link-utils'
 export enum LinkUsage {
   API = 'api',
   MAP_API = 'mapapi',
@@ -31,38 +32,24 @@ export class LinkClassifierService {
       case 'link':
         return [LinkUsage.UNKNOWN]
       case 'download': {
-        switch (link.mimeType) {
-          case 'application/json':
-          case 'text/csv':
-          case 'application/csv':
-          case 'application/vnd.ms-excel':
-          case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+        switch (getFileFormat(link)) {
+          case 'json':
+          case 'csv':
+          case 'excel':
             return [LinkUsage.DOWNLOAD, LinkUsage.DATA]
-          case 'application/geo+json':
-          case 'application/vnd.geo+json':
+          case 'geojson':
             return [LinkUsage.DOWNLOAD, LinkUsage.GEODATA]
+          default:
+            if (link.url.toString().match(/\/wfs/i)) {
+              return [LinkUsage.DOWNLOAD, LinkUsage.GEODATA]
+            }
+            return [LinkUsage.DOWNLOAD]
         }
-
-        // fallback: look for extension
-        if (this.hasFileExtension(['json', 'csv', 'xls'], link)) {
-          return [LinkUsage.DOWNLOAD, LinkUsage.DATA]
-        }
-        if (this.hasFileExtension(['geojson', 'wfs'], link)) {
-          return [LinkUsage.DOWNLOAD, LinkUsage.GEODATA]
-        }
-        return [LinkUsage.DOWNLOAD]
       }
     }
   }
 
   hasUsage(link: DatasetDistribution, usage: LinkUsage) {
     return this.getUsagesForLink(link).indexOf(usage) > -1
-  }
-
-  private hasFileExtension(extensions: string[], link: DatasetDistribution) {
-    return (
-      new RegExp(`[./](${extensions.join('|')})`, 'i').test(link.name) ||
-      new RegExp(`[./](${extensions.join('|')})`, 'i').test(link.url.toString())
-    )
   }
 }
