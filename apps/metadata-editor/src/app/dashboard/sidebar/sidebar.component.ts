@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { AuthService } from '@geonetwork-ui/feature/auth'
 
 @Component({
   selector: 'md-editor-sidebar',
@@ -7,6 +6,4 @@ import { AuthService } from '@geonetwork-ui/feature/auth'
   styleUrls: ['./sidebar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SidebarComponent {
-  constructor(public authService: AuthService) {}
-}
+export class SidebarComponent {}

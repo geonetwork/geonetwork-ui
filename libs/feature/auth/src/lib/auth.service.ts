@@ -63,7 +63,6 @@ export class AuthService {
   private mapToUserModel(apiUser: MeResponseApiModel): UserModel {
     if (!apiUser) return null
     const {
-      hash,
       groupsWithRegisteredUser,
       groupsWithEditor,
       groupsWithReviewer,

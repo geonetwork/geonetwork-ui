@@ -44,16 +44,23 @@ describe('UserPreviewComponent', () => {
     ).componentInstance
     expect(avatar).toBeTruthy()
   })
+  describe('compute correct information', () => {
+    it('compute user full name', () => {
+      expect(component.userFullName).toEqual('Arnaud De Maison')
+    })
+    it('compute gravatar icon', () => {
+      expect(component.userProfileIcon).toEqual(
+        'https://www.gravatar.com/avatar/dbdffd183622800bcf8587328daf43a6?d=mp'
+      )
+    })
+  })
   describe('displays user info', () => {
     let elts
     beforeEach(() => {
-      elts = fixture.debugElement.queryAll(By.css('figcaption > div'))
+      elts = fixture.debugElement.queryAll(By.css('figure > div'))
     })
     it('displays user name', () => {
-      expect(elts[0].nativeElement.textContent).toEqual(' Arnaud De Maison ')
-    })
-    it('displays profile', () => {
-      expect(elts[1].nativeElement.textContent).toEqual('Administrator')
+      expect(elts[0].nativeElement['matTooltip']).toEqual('Arnaud De Maison')
     })
   })
 })

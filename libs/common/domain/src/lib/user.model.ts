@@ -6,4 +6,5 @@ export interface UserModel {
   surname: string
   email: string
   organisation: string
+  hash?: string
 }
