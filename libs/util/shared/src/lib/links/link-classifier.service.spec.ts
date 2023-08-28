@@ -1,5 +1,6 @@
 import { LinkClassifierService, LinkUsage } from './link-classifier.service'
 import { LINK_FIXTURES } from '../fixtures/link.fixtures'
+import { MetadataLinkType } from '../models'
 
 describe('LinkClassifierService', () => {
   let service: LinkClassifierService
@@ -28,6 +29,17 @@ describe('LinkClassifierService', () => {
           LinkUsage.DOWNLOAD,
           LinkUsage.GEODATA,
         ])
+      })
+    })
+    describe('for a WFS link (registered as download)', () => {
+      it('returns download, data and API usage', () => {
+        expect(
+          service.getUsagesForLink({
+            name: 'mylayer',
+            type: MetadataLinkType.DOWNLOAD,
+            url: 'https://my.ogc.server/wfs?abcd',
+          })
+        ).toEqual([LinkUsage.DOWNLOAD, LinkUsage.GEODATA])
       })
     })
     describe('for a ESRI REST feature service link', () => {
