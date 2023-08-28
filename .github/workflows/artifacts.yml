@@ -6,7 +6,7 @@ run-name: 📦 Generate artifacts for ${{ github.event_name == 'issue_comment' &
 on:
   push:
     branches:
-      - main
+      - 1.1.x
   release:
     types: [published]
   issue_comment:
@@ -59,7 +59,7 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
         with:
-          main-branch-name: 'main'
+          main-branch-name: '1.1.x'
 
       - name: Install dependencies
         run: npm ci
@@ -89,9 +89,9 @@ jobs:
         # FIXME: excluding data-platform until it has a remote registry to be pushed
         run: npx nx affected --target=docker-build --exclude=data-platform
 
-      - name: Tag all docker images on main also as latest
-        if: github.event_name == 'push' # only happens when pushing on the main branch
-        run: docker image ls --format 'docker tag {{.Repository}}:{{.Tag}} {{.Repository}}:latest' --filter=reference='geonetwork/*' | bash -
+      # - name: Tag all docker images on main also as latest
+      #   if: github.event_name == 'push' # only happens when pushing on the main branch
+      #   run: docker image ls --format 'docker tag {{.Repository}}:{{.Tag}} {{.Repository}}:latest' --filter=reference='geonetwork/*' | bash -
 
       - name: Login to DockerHub
         uses: docker/login-action@v2
