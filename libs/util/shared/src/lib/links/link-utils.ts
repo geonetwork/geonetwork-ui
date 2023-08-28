@@ -82,7 +82,9 @@ export const FORMATS = {
     color: '#d98294',
     mimeTypes: ['image/svg+xml'],
   },
-}
+} as const
+
+type FileFormat = keyof typeof FORMATS
 
 export function sortPriority(link: DatasetDistribution): number {
   const linkFormat = getFileFormat(link)
@@ -97,26 +99,26 @@ export function sortPriority(link: DatasetDistribution): number {
   return 0
 }
 
-export function extensionToFormat(extension: string): string {
+export function extensionToFormat(extension: string): FileFormat {
   for (const format in FORMATS) {
     for (const alias of FORMATS[format].extensions) {
-      if (alias === extension.toLowerCase()) return format
+      if (alias === extension.toLowerCase()) return format as FileFormat
     }
   }
   return undefined
 }
 
-export function getFileFormat(link: DatasetDistribution): string {
+export function getFileFormat(link: DatasetDistribution): FileFormat {
   if ('mimeType' in link) {
     return mimeTypeToFormat(link.mimeType)
   }
   for (const format in FORMATS) {
     for (const alias of FORMATS[format].extensions) {
-      if (checkFileFormat(link, alias)) return format
-      if (isFormatInQueryParam(link, alias)) return format
+      if (checkFileFormat(link, alias)) return format as FileFormat
+      if (isFormatInQueryParam(link, alias)) return format as FileFormat
     }
   }
-  return ''
+  return null
 }
 
 export function isFormatInQueryParam(
@@ -132,10 +134,10 @@ export function isFormatInQueryParam(
   return false
 }
 
-export function mimeTypeToFormat(mimeType: string): string {
+export function mimeTypeToFormat(mimeType: string): FileFormat {
   for (const format in FORMATS) {
     for (const mt of FORMATS[format].mimeTypes) {
-      if (mimeType === mt) return format
+      if (mimeType === mt) return format as FileFormat
     }
   }
   return undefined
@@ -143,7 +145,7 @@ export function mimeTypeToFormat(mimeType: string): string {
 
 export function checkFileFormat(
   link: DatasetDistribution,
-  format: string
+  format: FileFormat
 ): boolean {
   return (
     ('name' in link && new RegExp(`[./]${format}`, 'i').test(link.name)) ||
@@ -152,7 +154,7 @@ export function checkFileFormat(
   )
 }
 
-export function getBadgeColor(linkFormat: string): string {
+export function getBadgeColor(linkFormat: FileFormat): string {
   for (const format in FORMATS) {
     for (const alias of FORMATS[format].extensions) {
       if (new RegExp(`${alias}`, 'i').test(linkFormat))
@@ -190,6 +192,6 @@ export function getLinkLabel(link: DatasetDistribution): string {
   return format ? `${label} (${format})` : label
 }
 
-export function getMimeTypeForFormat(format: string): string | null {
+export function getMimeTypeForFormat(format: FileFormat): string | null {
   return format in FORMATS ? FORMATS[format.toLowerCase()].mimeTypes[0] : null
 }
