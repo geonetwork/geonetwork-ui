@@ -20,6 +20,7 @@ import { CreatePageComponent } from './create/create-page.component'
 import { DashboardModule } from './dashboard/dashboard.module'
 import { EditPageComponent } from './edit/edit-page.component'
 import { SignInPageComponent } from './sign-in/sign-in-page.component'
+import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { SignInPageComponent } from './sign-in/sign-in-page.component'
     UtilI18nModule,
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
     MatProgressSpinnerModule,
+    FeatureCatalogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
