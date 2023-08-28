@@ -1,4 +1,4 @@
-version: "3.1"
+version: '3.1'
 
 volumes:
   datafeeder_uploads:
@@ -8,7 +8,7 @@ services:
   smtp:
     image: camptocamp/smtp-sink:latest
     ports:
-      - "2025:25"
+      - '2025:25'
     restart: always
 
   database:
@@ -17,7 +17,7 @@ services:
       - POSTGRES_USER=georchestra
       - POSTGRES_PASSWORD=georchestra
     ports:
-      - "15432:5432"
+      - '15432:5432'
 
   ldap:
     image: georchestra/ldap:latest
@@ -39,7 +39,7 @@ services:
       - XMS=256M
       - XMX=1G
     ports:
-      - "38080:8080"
+      - '38080:8080'
 
   geoserver:
     image: georchestra/geoserver:latest
@@ -51,7 +51,7 @@ services:
       - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
       - XMS=256M
     ports:
-      - "18080:8080"
+      - '18080:8080'
 
   geonetwork:
     image: georchestra/geonetwork:latest
@@ -69,7 +69,7 @@ services:
       - JAVA_OPTIONS=-Duser.home=/tmp/jetty -Dgeorchestra.datadir=/etc/georchestra -Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
       - XMS=256M
     ports:
-      - "8080:8080"
+      - '8080:8080'
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.15.1
@@ -82,10 +82,9 @@ services:
         hard: 65536
     environment:
       discovery.type: single-node
-      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+      ES_JAVA_OPTS: '-Xms1g -Xmx1g'
     volumes:
       - elasticsearch_data:/usr/share/elasticsearch/data
-
 
   datafeeder:
     image: georchestra/datafeeder:latest
@@ -101,4 +100,3 @@ services:
       - LOGGING_LEVEL_ORG_GEORCHESTRA_DATAFEEDER=INFO
     ports:
       - 8181:8080
-

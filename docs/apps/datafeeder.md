@@ -12,7 +12,7 @@ The front-end part is built with Geonetwork-UI components
 
 ## Usage
 
-The easiest way to deploy datafeeder locally is to use the docker composition in `support-services/datafeeder`. 
+The easiest way to deploy datafeeder locally is to use the docker composition in `support-services/datafeeder`.
 
 ```shell
 cd support-services/datafeeder
@@ -22,12 +22,13 @@ docker compose up -d
 With this composition, you'll need to use `proxy-config-dev.js`. To do so, the nx command must be executed with the `--proxy-config proxy-config-dev.js` argument.
 
 In `geonetwork-ui/` directory, run :
+
 ```shell
 npx nx run datafeeder:serve --proxy-config proxy-config-dev.js
 ```
 
-## Configuration 
+## Configuration
 
 ### Adding projections and encodings
 
-The datafeeder configuration can be edited by modifying the `frontend-config.json` file in `support-services/datafeeder/datadir/datafeeder/` folder. 
+The datafeeder configuration can be edited by modifying the `frontend-config.json` file in `support-services/datafeeder/datadir/datafeeder/` folder.

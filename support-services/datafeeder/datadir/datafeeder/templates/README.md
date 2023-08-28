@@ -22,37 +22,37 @@ from: Georchestra Importer Application
 subject:
 body:
 
-Dear ${user.name}, 
+Dear ${user.name},
 ....
 ```
 
 The following variables are resolved against the job's user, dataset, or publishing attributes:
 
-* `${user.name}`:
-* `${user.lastName}`:
-* `${user.email}`:
-* `${job.id}`:
-* `${job.createdAt}`:
-* `${job.error}`:
-* `${job.analizeStatus}`:
-* `${job.publishStatus}`:
-* `${dataset.name}`:
-* `${dataset.featureCount}`:
-* `${dataset.encoding}`:
-* `${dataset.nativeBounds}`:
-* `${publish.tableName}`:
-* `${publish.layerName}`:
-* `${publish.workspace}`:
-* `${publish.srs}`:
-* `${publish.encoding}`:
-* `${metadata.id}`:
-* `${metadata.title}`:
-* `${metadata.abstract}`:
-* `${metadata.creationDate}`:
-* `${metadata.lineage}`:
-* `${metadata.latLonBoundingBox}`:
-* `${metadata.keywords}`:
-* `${metadata.scale}`:
+- `${user.name}`:
+- `${user.lastName}`:
+- `${user.email}`:
+- `${job.id}`:
+- `${job.createdAt}`:
+- `${job.error}`:
+- `${job.analizeStatus}`:
+- `${job.publishStatus}`:
+- `${dataset.name}`:
+- `${dataset.featureCount}`:
+- `${dataset.encoding}`:
+- `${dataset.nativeBounds}`:
+- `${publish.tableName}`:
+- `${publish.layerName}`:
+- `${publish.workspace}`:
+- `${publish.srs}`:
+- `${publish.encoding}`:
+- `${metadata.id}`:
+- `${metadata.title}`:
+- `${metadata.abstract}`:
+- `${metadata.creationDate}`:
+- `${metadata.lineage}`:
+- `${metadata.latLonBoundingBox}`:
+- `${metadata.keywords}`:
+- `${metadata.scale}`:
 
-Additionally, any other <code>${property}</code> will be resolved against the application context 
+Additionally, any other <code>${property}</code> will be resolved against the application context
 (for example, any property specified in `default.properties` or `datafeeder.properties`).

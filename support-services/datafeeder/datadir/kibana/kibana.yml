@@ -1,5 +1,5 @@
-server.basePath: "/geonetwork/dashboards"
+server.basePath: '/geonetwork/dashboards'
 server.rewriteBasePath: false
-kibana.index: ".dashboards"
+kibana.index: '.dashboards'
 # https://github.com/elastic/kibana/issues/12918
-server.host: "0.0.0.0"
+server.host: '0.0.0.0'
