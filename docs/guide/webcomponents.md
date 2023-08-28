@@ -61,7 +61,7 @@ e.g: http://localhost:8001/webcomponents/gn-results-list.sample.html
 
 ## Create a new Web Component
 
-The architecture is designed so you can export an Angular component to a custom element (eg Web Component),
+The architecture is designed so that you can export an Angular component to a custom element (e.g. Web Component),
 that is encapsulated with its style in a shadow DOM element, and can be embedded in any website.
 
 To export content as a Web Component you have to:
@@ -89,7 +89,7 @@ const CUSTOM_ELEMENTS: any[] = [
 ```
 
 - Add stories for storybook to run it (angular and element stories)
-- Add a sample HTML file to show how to use it in a third party web page `${webcomponent_name}.sample.html` eg. gn-results-list.sample.html
+- Add a sample HTML file to show how to use it in a third party web page `${webcomponent_name}.sample.html` e.g. gn-results-list.sample.html
 
 ## Update Web Component inputs
 

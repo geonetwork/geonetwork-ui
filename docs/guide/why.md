@@ -2,15 +2,13 @@
 outline: deep
 ---
 
-# Why geonetwork-ui ?
+# Why GeoNetwork-UI ?
 
-L’ouverture et la démocratisation du partage et de la réutilisation des données publiques ont transformé le paysage du catalogage de données en France et en Europe.
+The GeoNetwork-UI project has been conceived as a way to depart from the long-standing GeoNetwork web-ui application based on AngularJS,
+and offer new functionalities and better user experience on top of the existing GeoNetwork API. Its core functionalities are
+a **powerful search engine**, various **data visualization** components, and a better support for **non-geographic and open data** resources.
 
-Une solution de catalogage moderne doit
+Read the [Vision](./vision.html) section to understand better which approach is being adopted for this project and why.
 
-- Unifier les notions de Opendata et de données géographiques qui représentent 2 écosystèmes trop disjoints.
-- Proposer des usages modernes et innovants pour la valorisation des données publiées.
-- Fournir un moteur de recherche performant et redimensionnable, qui trouve l’information à la fois dans les métadonnées et les données.
-- Valoriser la réutilisation des données via des API de recherche, analyse et exploration.
-
-Geonetwork-ui répond à ces besoins en mettant l’accent sur **l’expérience utilisateur**.
+GeoNetwork-UI offers different applications suited to different use-cases. Applications are documented
+in the [corresponding section](../apps/datahub.html).

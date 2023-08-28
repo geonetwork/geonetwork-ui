@@ -2,7 +2,7 @@
 outline: deep
 ---
 
-# Elastisearch Index
+# Elasticsearch Index
 
 ## Chapter 1
 

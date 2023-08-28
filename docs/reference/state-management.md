@@ -88,7 +88,7 @@ For more information, please refer to the [official documentation](https://ngrx.
 
 You can update the state only through **Actions**, which are a combination of
 
-- a `type`, it's a string with the following pattern `"[state_name] action_description"` (eg. `[Search] Set filters'`)
+- a `type`, it's a string with the following pattern `"[state_name] action_description"` (e.g. `[Search] Set filters'`)
 - a `payload`, could be any input to change the state (eg: filters)
 
 ### Listen to state changes
@@ -100,7 +100,7 @@ You can create your own selectors to listen to specific changes within the state
 
 To handle state change side effects, for instance for asynchronous actions, you can use **Effects**.
 
-An effect is a subscription to an Observable (mostly to other actions) which often dispatches other actions. (eg `Load` action can dispatch `LoadSuccess` or `LoadFailure` action through effects).
+An effect is a subscription to an Observable (mostly to other actions) which often dispatches other actions. (e.g. `Load` action can dispatch `LoadSuccess` or `LoadFailure` action through effects).
 
 ### Facades
 
@@ -158,7 +158,7 @@ The actions & effects are responsible for triggering a search request to the bac
 
 As you could have several searches within the application, search state is not a singleton, there is no unique service to handle the search state.
 
-You have to initiate one state per search you want to have (eg feeds, search, etc...)
+You have to initiate one state per search you want to have (e.g. feeds, search, etc...)
 
 ### Search containers
 
@@ -186,7 +186,7 @@ To create a search state, the best way is to use a search container directive. Y
 Adding such a directive in your code automatically
 
 - initializes a search state with the id `newsfeed`.
-- instanciates a new `SearchFacade` object for the `newsfeed` state.
+- instantiates a new `SearchFacade` object for the `newsfeed` state.
 - injects the dedicated `SearchService`, corresponding to the container type.
 - encapsulates all DOM tree underneath the directive scope. It means that every component within the container DOM, which inject the `SearchService` will get the implementation provided by the container directive.
 
