@@ -9,6 +9,6 @@ export class AvatarComponent {
   @Input() avatarUrl?: string
 
   hideImage() {
-    this.avatarUrl = null
+    this.avatarUrl = 'https://www.gravatar.com/avatar/?d=mp'
   }
 }
