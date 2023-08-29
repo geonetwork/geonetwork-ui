@@ -26,7 +26,14 @@ declare namespace Cypress {
 Cypress.Commands.add(
   'loginGN',
   (username: string, password: string, redirect = true) => {
-    cy.visit('/geonetwork')
+    cy.visit('http://localhost:8080/geonetwork/srv/eng/catalog.search#/home')
+    cy.get('.cookie-warning-actions').then(($cookie) => {
+      if ($cookie.is(':visible')) {
+        $cookie.find('button').eq(0).click()
+        cy.scrollTo('top')
+      }
+    })
+    cy.wait(250)
     cy.get('li.signin-dropdown').click()
     cy.get('#inputUsername').type(username)
     cy.get('#inputPassword').type(password)
@@ -36,7 +43,7 @@ Cypress.Commands.add(
 )
 
 Cypress.Commands.add('signOutGN', () => {
-  cy.visit('/geonetwork')
+  cy.visit('http://localhost:8080/geonetwork/srv/eng/catalog.search#/home')
   cy.get('a[title="User details"]').click()
   cy.get('a[title="Sign out"]').click()
 })
