@@ -8,7 +8,8 @@ export const USER_FIXTURE = (): UserModel => ({
   surname: 'De Maison',
   email: 'a.demaison@geo2france.fr',
   organisation: 'Région Hauts-de-France',
-  profile_icon: 'http://icon_service.com/girafe',
+  profile_icon:
+    'https://www.gravatar.com/avatar/dbdffd183622800bcf8587328daf43a6?d=mp',
 })
 
 export const USERS_FIXTURE = (): UserModel[] => [
