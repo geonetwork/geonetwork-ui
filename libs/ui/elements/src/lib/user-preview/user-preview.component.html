@@ -3,6 +3,9 @@
     class="w-12 h-12 border border-primary rounded-full capitalize"
     [matTooltip]="userFullName"
   >
-    <gn-ui-avatar [avatarUrl]="userProfileIcon"></gn-ui-avatar>
+    <gn-ui-avatar
+      [avatarUrl]="user.profile_icon"
+      [avatarPlaceholder]="placeholder"
+    ></gn-ui-avatar>
   </div>
 </figure>

@@ -32,6 +32,7 @@ describe('UserPreviewComponent', () => {
     fixture = TestBed.createComponent(UserPreviewComponent)
     component = fixture.componentInstance
     component.user = user
+    component.avatarPlaceholder = 'https://www.gravatar.com/avatar/?d=mp'
     fixture.detectChanges()
   })
 
@@ -48,9 +49,9 @@ describe('UserPreviewComponent', () => {
     it('compute user full name', () => {
       expect(component.userFullName).toEqual('Arnaud De Maison')
     })
-    it('compute gravatar icon', () => {
-      expect(component.userProfileIcon).toEqual(
-        'https://www.gravatar.com/avatar/dbdffd183622800bcf8587328daf43a6?d=mp'
+    it('avatar placeholder is good', () => {
+      expect(component.avatarPlaceholder).toEqual(
+        'https://www.gravatar.com/avatar/?d=mp'
       )
     })
   })

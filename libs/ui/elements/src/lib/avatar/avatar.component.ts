@@ -7,8 +7,9 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 })
 export class AvatarComponent {
   @Input() avatarUrl?: string
+  @Input() avatarPlaceholder?: string
 
   hideImage() {
-    this.avatarUrl = 'https://www.gravatar.com/avatar/?d=mp'
+    this.avatarUrl = this.avatarPlaceholder
   }
 }
