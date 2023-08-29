@@ -4,6 +4,7 @@
   [ngClass]="{
     'bg-white': !isPlaceholder
   }"
+  [attr.data-cy-is-placeholder]="isPlaceholder.toString()"
 >
   <img
     #imageElement

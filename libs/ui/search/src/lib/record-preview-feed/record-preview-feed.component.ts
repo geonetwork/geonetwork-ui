@@ -20,13 +20,10 @@ export class RecordPreviewFeedComponent extends RecordPreviewComponent {
   }
 
   get hasOrganization() {
-    return true // FIXME: this doesn't make sense anymore, there should always be an owner org
+    return !!this.record.ownerOrganization
   }
   get hasLogo() {
-    return (
-      'logoUrl' in this.record.ownerOrganization &&
-      !!this.record.ownerOrganization.logoUrl
-    )
+    return !!this.record.ownerOrganization?.logoUrl
   }
   get hasOnlyPerson() {
     return false // FIXME: this doesn't make sense anymore, there should always be an owner org

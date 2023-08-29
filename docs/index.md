@@ -26,7 +26,7 @@ features:
     details: Make your dataset public and available.
   - icon: 🔎
     title: Explore
-    details: Explore your data through a powerfull search engine. Tables, maps and dataviz charts.
+    details: Explore your data through a powerful search engine. Tables, maps and dataviz charts.
   - icon: 🤝
     title: Share
     details: Share your work.

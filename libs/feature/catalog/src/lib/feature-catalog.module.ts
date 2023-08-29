@@ -5,6 +5,7 @@ import {
   ApiModule,
   GroupsApiService,
   SearchApiService,
+  SiteApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import { CommonModule } from '@angular/common'
 import { SourceLabelComponent } from './source-label/source-label.component'
@@ -32,7 +33,8 @@ const organizationsServiceFactory = (
   esService: ElasticsearchService,
   searchApiService: SearchApiService,
   groupsApiService: GroupsApiService,
-  translateService: TranslateService
+  translateService: TranslateService,
+  siteApiService: SiteApiService
 ) =>
   strategy === 'groups'
     ? new OrganizationsFromGroupsService(
@@ -44,7 +46,8 @@ const organizationsServiceFactory = (
     : new OrganizationsFromMetadataService(
         esService,
         searchApiService,
-        groupsApiService
+        groupsApiService,
+        siteApiService
       )
 
 @NgModule({
@@ -73,6 +76,7 @@ const organizationsServiceFactory = (
         SearchApiService,
         GroupsApiService,
         TranslateService,
+        SiteApiService,
       ],
     },
   ],

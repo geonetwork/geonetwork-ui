@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing'
 import {
   GroupsApiService,
   SearchApiService,
+  SiteApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import { firstValueFrom, lastValueFrom, of } from 'rxjs'
 import { take } from 'rxjs/operators'
@@ -37,6 +38,8 @@ const sampleOrgC: Organization = {
   description: "Institut français de recherche pour l'exploitation de la mer",
   website: new URL('https://www.ifremer.fr/'),
 }
+
+let geonetworkVersion: string
 
 const organisationsAggregationMock = {
   aggregations: {
@@ -141,248 +144,259 @@ class GoupsApiServiceMock {
   getGroups = jest.fn(() => of(GROUPS_FIXTURE))
 }
 
-describe('OrganizationsFromMetadataService', () => {
-  let service: OrganizationsFromMetadataService
-  let searchService: SearchApiService
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        OrganizationsFromMetadataService,
-        {
-          provide: GroupsApiService,
-          useClass: GoupsApiServiceMock,
-        },
-        {
-          provide: SearchApiService,
-          useClass: SearchApiServiceMock,
-        },
-      ],
+class SiteApiServiceMock {
+  getSiteOrPortalDescription = jest.fn(() =>
+    of({
+      'system/platform/version': geonetworkVersion,
     })
-    service = TestBed.inject(OrganizationsFromMetadataService)
-    searchService = TestBed.inject(SearchApiService)
-  })
+  )
+}
 
-  it('should be created', () => {
-    expect(service).toBeTruthy()
-  })
-  describe('organisations$', () => {
-    let organisations
-    describe('initially', () => {
-      beforeEach(() => {
-        service.organisations$
-          .pipe(take(1))
-          .subscribe((orgs) => (organisations = orgs))
+describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
+  'OrganizationsFromMetadataService (gn v%s)',
+  (gnVersion) => {
+    let service: OrganizationsFromMetadataService
+    let searchService: SearchApiService
+
+    beforeEach(() => {
+      geonetworkVersion = gnVersion
+    })
+
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        providers: [
+          OrganizationsFromMetadataService,
+          {
+            provide: GroupsApiService,
+            useClass: GoupsApiServiceMock,
+          },
+          {
+            provide: SearchApiService,
+            useClass: SearchApiServiceMock,
+          },
+          {
+            provide: SiteApiService,
+            useClass: SiteApiServiceMock,
+          },
+        ],
       })
-      it('call search service', () => {
-        expect(searchService.search).toHaveBeenCalledWith(
-          'bucket',
-          JSON.stringify({
-            aggregations: {
-              contact: {
-                nested: { path: 'contactForResource' },
-                aggs: {
-                  org: {
-                    terms: {
-                      field: 'contactForResource.organisation',
-                      exclude: '',
-                      size: 5000,
-                      order: { _key: 'asc' },
-                    },
-                    aggs: {
-                      mail: {
-                        terms: {
-                          size: 50,
-                          exclude: '',
-                          field: 'contactForResource.email.keyword',
-                        },
+      service = TestBed.inject(OrganizationsFromMetadataService)
+      searchService = TestBed.inject(SearchApiService)
+    })
+
+    it('should be created', () => {
+      expect(service).toBeTruthy()
+    })
+
+    let contactOrgField: string
+    let orgField: string
+    let emailField: string
+
+    beforeEach(() => {
+      contactOrgField = geonetworkVersion.startsWith('4.2.2')
+        ? 'organisation'
+        : 'organisationObject.default.keyword'
+      orgField = geonetworkVersion.startsWith('4.2.2')
+        ? 'OrgForResource'
+        : 'OrgForResourceObject.default'
+      emailField = geonetworkVersion.startsWith('4.2.5')
+        ? 'email'
+        : 'email.keyword'
+    })
+
+    describe('organisations$', () => {
+      let organisations
+      describe('initially', () => {
+        beforeEach(() => {
+          service.organisations$
+            .pipe(take(1))
+            .subscribe((orgs) => (organisations = orgs))
+        })
+        it('call search service', () => {
+          expect(searchService.search).toHaveBeenCalledWith(
+            'bucket',
+            JSON.stringify({
+              aggregations: {
+                contact: {
+                  nested: { path: 'contactForResource' },
+                  aggs: {
+                    org: {
+                      terms: {
+                        field: `contactForResource.${contactOrgField}`,
+                        exclude: '',
+                        size: 5000,
+                        order: { _key: 'asc' },
                       },
-                      logoUrl: {
-                        terms: {
-                          size: 1,
-                          exclude: '',
-                          field: 'contactForResource.logo.keyword',
+                      aggs: {
+                        mail: {
+                          terms: {
+                            size: 50,
+                            exclude: '',
+                            field: `contactForResource.${emailField}`,
+                          },
+                        },
+                        logoUrl: {
+                          terms: {
+                            size: 1,
+                            exclude: '',
+                            field: `contactForResource.logo.keyword`,
+                          },
                         },
                       },
                     },
                   },
                 },
-              },
-              orgForResource: {
-                terms: {
-                  size: 5000,
-                  exclude: '',
-                  field: 'OrgForResource',
-                  order: {
-                    _key: 'asc',
-                  },
-                },
-              },
-            },
-            from: 0,
-            size: 0,
-            query: {
-              bool: {
-                must: [{ terms: { isTemplate: ['n'] } }],
-                must_not: {
+                orgForResource: {
                   terms: {
-                    resourceType: [
-                      'service',
-                      'map',
-                      'map/static',
-                      'mapDigital',
-                    ],
+                    size: 5000,
+                    exclude: '',
+                    field: orgField,
+                    order: {
+                      _key: 'asc',
+                    },
                   },
                 },
-                should: [],
-                filter: [],
               },
+              from: 0,
+              size: 0,
+              query: {
+                bool: {
+                  must: [{ terms: { isTemplate: ['n'] } }],
+                  must_not: {
+                    terms: {
+                      resourceType: [
+                        'service',
+                        'map',
+                        'map/static',
+                        'mapDigital',
+                      ],
+                    },
+                  },
+                  should: [],
+                  filter: [],
+                },
+              },
+              _source: [],
+            })
+          )
+        })
+        it('get rough organisations', () => {
+          expect(organisations).toEqual([
+            {
+              emails: [
+                'rolf.giezendanner@are.admin.ch',
+                'john.doe@are.admin.ch',
+              ],
+              name: 'ARE',
+              recordCount: 5,
             },
-            _source: [],
+            {
+              emails: ['christian.meier@bakom.admin.ch'],
+              logoUrl: new URL(
+                'https://ids.fr/geonetwork/images/harvesting/logo_min.png'
+              ),
+              name: 'BAKOM',
+              recordCount: 2,
+            },
+            {
+              emails: ['ifremer.ifremer@ifremer.admin.ch'],
+              name: 'Ifremer',
+              recordCount: 1,
+            },
+          ])
+        })
+      })
+      describe('when groups tick', () => {
+        beforeEach(() => {
+          organisations = null
+          service.organisations$
+            .pipe(take(2))
+            .subscribe((orgs) => (organisations = orgs))
+        })
+        it('get organisations hydrated from groups via name or email mapping', () => {
+          expect(organisations).toEqual([sampleOrgA, sampleOrgB, sampleOrgC])
+        })
+      })
+    })
+    describe('#normalizeString', () => {
+      it('should match "ATMO Haut de France" and "ATMO Haut-de-France"', () => {
+        expect(service.normalizeString('ATMO Haut de France')).toEqual(
+          service.normalizeString('ATMO Haut-de-France')
+        )
+      })
+      it('should match "ATMO Haut de France" and "ATMOHautdeFrance"', () => {
+        expect(service.normalizeString('ATMO Haut de France')).toEqual(
+          service.normalizeString('ATMOHautdeFrance')
+        )
+      })
+      it('should NOT match "ATMO Haut de France" and "ATMO HDF"', () => {
+        expect(service.normalizeString('ATMO Haut de France')).not.toEqual(
+          service.normalizeString('ATMO HDF')
+        )
+      })
+    })
+    describe('#compareNormalizedString', () => {
+      it('should match "ATMO Haut de France" and "ATMO Haut-de-France"', () => {
+        expect(
+          service.equalsNormalizedStrings(
+            'ATMO Haut de France',
+            'ATMO Haut-de-France'
+          )
+        ).toBeTruthy()
+      })
+      it('should NOT match "ATMO Haut de France" and "ATMO Haut-de-France" (not replacing special chars)', () => {
+        expect(
+          service.equalsNormalizedStrings(
+            'ATMO Haut de France',
+            'ATMO Haut-de-France',
+            false
+          )
+        ).toBeFalsy()
+      })
+      it('should match email adresses (not replacing special chars)', () => {
+        expect(
+          service.equalsNormalizedStrings(
+            'Some.user@C2C.com',
+            'some.user@c2c.com',
+            false
+          )
+        ).toBeTruthy()
+      })
+    })
+    describe('#getFiltersForOrgs', () => {
+      let filters
+      beforeEach(async () => {
+        filters = await firstValueFrom(
+          service.getFiltersForOrgs([sampleOrgA, sampleOrgB, sampleOrgC])
+        )
+      })
+      it('generates filters', () => {
+        expect(filters).toEqual({
+          [orgField]: { ARE: true, BAKOM: true, Ifremer: true },
+        })
+      })
+    })
+    describe('#getOrgsFromFilters', () => {
+      let orgs
+      beforeEach(async () => {
+        orgs = await lastValueFrom(
+          service.getOrgsFromFilters({
+            [orgField]: {
+              ARE: true, // org A
+              BAKOM: true, // org B
+            },
           })
         )
       })
-      it('get rough organisations', () => {
-        expect(organisations).toEqual([
-          {
-            emails: ['rolf.giezendanner@are.admin.ch', 'john.doe@are.admin.ch'],
-            name: 'ARE',
-            recordCount: 5,
-          },
-          {
-            emails: ['christian.meier@bakom.admin.ch'],
-            logoUrl: new URL(
-              'https://ids.fr/geonetwork/images/harvesting/logo_min.png'
-            ),
-            name: 'BAKOM',
-            recordCount: 2,
-          },
-          {
-            emails: ['ifremer.ifremer@ifremer.admin.ch'],
-            name: 'Ifremer',
-            recordCount: 1,
-          },
-        ])
+      it('generates filters', () => {
+        expect(orgs).toEqual([sampleOrgA, sampleOrgB])
       })
     })
-    describe('when groups tick', () => {
-      beforeEach(() => {
-        organisations = null
-        service.organisations$
-          .pipe(take(2))
-          .subscribe((orgs) => (organisations = orgs))
-      })
-      it('get organisations hydrated from groups via name or email mapping', () => {
-        expect(organisations).toEqual([sampleOrgA, sampleOrgB, sampleOrgC])
-      })
-    })
-  })
-  describe('#normalizeString', () => {
-    it('should match "ATMO Haut de France" and "ATMO Haut-de-France"', () => {
-      expect(service.normalizeString('ATMO Haut de France')).toEqual(
-        service.normalizeString('ATMO Haut-de-France')
-      )
-    })
-    it('should match "ATMO Haut de France" and "ATMOHautdeFrance"', () => {
-      expect(service.normalizeString('ATMO Haut de France')).toEqual(
-        service.normalizeString('ATMOHautdeFrance')
-      )
-    })
-    it('should NOT match "ATMO Haut de France" and "ATMO HDF"', () => {
-      expect(service.normalizeString('ATMO Haut de France')).not.toEqual(
-        service.normalizeString('ATMO HDF')
-      )
-    })
-  })
-  describe('#compareNormalizedString', () => {
-    it('should match "ATMO Haut de France" and "ATMO Haut-de-France"', () => {
-      expect(
-        service.equalsNormalizedStrings(
-          'ATMO Haut de France',
-          'ATMO Haut-de-France'
-        )
-      ).toBeTruthy()
-    })
-    it('should NOT match "ATMO Haut de France" and "ATMO Haut-de-France" (not replacing special chars)', () => {
-      expect(
-        service.equalsNormalizedStrings(
-          'ATMO Haut de France',
-          'ATMO Haut-de-France',
-          false
-        )
-      ).toBeFalsy()
-    })
-    it('should match email adresses (not replacing special chars)', () => {
-      expect(
-        service.equalsNormalizedStrings(
-          'Some.user@C2C.com',
-          'some.user@c2c.com',
-          false
-        )
-      ).toBeTruthy()
-    })
-  })
-  describe('#getFiltersForOrgs', () => {
-    let filters
-    beforeEach(async () => {
-      filters = await firstValueFrom(
-        service.getFiltersForOrgs([sampleOrgA, sampleOrgB, sampleOrgC])
-      )
-    })
-    it('generates filters', () => {
-      expect(filters).toEqual({
-        OrgForResource: { ARE: true, BAKOM: true, Ifremer: true },
-      })
-    })
-  })
-  describe('#getOrgsFromFilters', () => {
-    let orgs
-    beforeEach(async () => {
-      orgs = await lastValueFrom(
-        service.getOrgsFromFilters({
-          OrgForResource: {
-            ARE: true, // org A
-            BAKOM: true, // org B
-          },
-        })
-      )
-    })
-    it('generates filters', () => {
-      expect(orgs).toEqual([sampleOrgA, sampleOrgB])
-    })
-  })
-  describe('#addOrganizationToRecordFromSource', () => {
-    let record
-    beforeEach(async () => {
-      const source = {
-        ...ES_FIXTURE_FULL_RESPONSE.hits.hits[0]._source,
-      }
-      record = await lastValueFrom(
-        service.addOrganizationToRecordFromSource(source, {
-          title: 'Surval - Données par paramètre',
-          uniqueIdentifier: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
-        } as CatalogRecord)
-      )
-    })
-    it('adds an owner organization to the record (using the org of the first resource contact)', () => {
-      expect(record).toMatchObject({
-        title: 'Surval - Données par paramètre',
-        uniqueIdentifier: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
-        ownerOrganization: {
-          logoUrl: new URL(
-            'http://localhost/geonetwork/images/harvesting/ifremer.png'
-          ),
-          name: 'Ifremer',
-          description:
-            "Institut français de recherche pour l'exploitation de la mer",
-        },
-      })
-    })
-    describe('when no resource contacts', () => {
+    describe('#addOrganizationToRecordFromSource', () => {
+      let record
       beforeEach(async () => {
         const source = {
           ...ES_FIXTURE_FULL_RESPONSE.hits.hits[0]._source,
-          contactForResource: [],
         }
         record = await lastValueFrom(
           service.addOrganizationToRecordFromSource(source, {
@@ -391,7 +405,7 @@ describe('OrganizationsFromMetadataService', () => {
           } as CatalogRecord)
         )
       })
-      it('uses the contacts array', () => {
+      it('adds an owner organization to the record (using the org of the first resource contact)', () => {
         expect(record).toMatchObject({
           title: 'Surval - Données par paramètre',
           uniqueIdentifier: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
@@ -405,6 +419,34 @@ describe('OrganizationsFromMetadataService', () => {
           },
         })
       })
+      describe('when no resource contacts', () => {
+        beforeEach(async () => {
+          const source = {
+            ...ES_FIXTURE_FULL_RESPONSE.hits.hits[0]._source,
+            contactForResource: [],
+          }
+          record = await lastValueFrom(
+            service.addOrganizationToRecordFromSource(source, {
+              title: 'Surval - Données par paramètre',
+              uniqueIdentifier: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
+            } as CatalogRecord)
+          )
+        })
+        it('uses the contacts array', () => {
+          expect(record).toMatchObject({
+            title: 'Surval - Données par paramètre',
+            uniqueIdentifier: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
+            ownerOrganization: {
+              logoUrl: new URL(
+                'http://localhost/geonetwork/images/harvesting/ifremer.png'
+              ),
+              name: 'Ifremer',
+              description:
+                "Institut français de recherche pour l'exploitation de la mer",
+            },
+          })
+        })
+      })
     })
-  })
-})
+  }
+)

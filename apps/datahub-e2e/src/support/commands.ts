@@ -12,22 +12,34 @@
 declare namespace Cypress {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface Chainable<Subject> {
-    login(email: string, password: string): void
+    login(): void
   }
 }
-//
-// -- This is a parent command --
-Cypress.Commands.add('login', (email, password) => {
-  console.log('Custom command example: Login', email, password)
+
+Cypress.Commands.add('login', () => {
+  // ignore error coming from GN
+  Cypress.on('uncaught:exception', (err) => {
+    if (err.message.includes('Jsonix')) return false
+    if (err.message.includes('postMessage')) return false
+  })
+
+  cy.visit('/geonetwork/srv/eng/catalog.signin?debug')
+  cy.get('#inputUsername').type('admin', { force: true })
+  cy.get('#inputPassword').type('admin', { force: true })
+  cy.get('[name="gnSigninForm"]').submit()
 })
+
+// -- This is a parent command --
+// Cypress.Commands.add('login', (email, password) => { ... })
+//
 //
 // -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
+// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
 //
 //
 // -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
+// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
 //
 //
 // -- This will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })

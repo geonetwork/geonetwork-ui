@@ -79,6 +79,7 @@
         (buttonClick)="open()"
         type="outline"
         extraClass="!p-[8px]"
+        data-cy="filters-expand"
       >
         <mat-icon>more_horiz</mat-icon>
       </gn-ui-button>
@@ -87,6 +88,7 @@
         *ngIf="!isOpen"
         class="text-white opacity-60 hover:opacity-90 border-0 bg-transparent sm:hidden"
         (click)="open()"
+        data-cy="filters-expand"
       >
         <span class="text-sm" translate>search.filters.maximize</span>
         <mat-icon class="ml-1 align-middle leading-none">add</mat-icon>
@@ -101,6 +103,7 @@
         *ngIf="isOpen"
         class="text-white opacity-60 hover:opacity-90 border-0 bg-transparent hidden sm:inline"
         (click)="close()"
+        data-cy="filters-collapse"
       >
         <span class="text-sm" translate>search.filters.minimize</span>
         <mat-icon class="ml-1 align-middle leading-none">remove</mat-icon>

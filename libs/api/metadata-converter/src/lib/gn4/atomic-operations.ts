@@ -64,7 +64,10 @@ export const mapOrganization = (
   const website = getAsUrl(selectField<string>(sourceContact, 'website'))
   const logoUrl = getAsUrl(selectField<string>(sourceContact, 'logo'))
   return {
-    name: selectField<string>(sourceContact, 'organisation'),
+    name: selectFallback(
+      selectTranslatedField<string>(sourceContact, 'organisationObject'),
+      selectField<string>(sourceContact, 'organisation')
+    ),
     ...(logoUrl && { logoUrl }),
     ...(website && { website }),
   }
