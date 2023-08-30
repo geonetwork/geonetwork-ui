@@ -20,28 +20,32 @@
           <span translate="">new record</span>
         </button>
       </div>
+      <div *ngIf="searchFacade.resultsHits$ | async as totalHits">
+        <div
+          *ngIf="searchFacade.results$ | async as results"
+          translate
+          class="text-gray-500"
+          [translateParams]="{
+            displayed: results.length,
+            hits: totalHits
+          }"
+        >
+          results.records.hits.displayedOn
+        </div>
+      </div>
       <div
         class="shadow rounded bg-white grow"
         *ngIf="searchFacade.results$ | async as results"
       >
         <gn-ui-record-table
           [records]="results"
+          [totalHits]="searchFacade.resultsHits$"
           (recordSelect)="editRecord($event)"
         ></gn-ui-record-table>
         <div
           class="px-5 py-5 flex justify-center gap-8 items-baseline"
           *ngIf="searchFacade.resultsHits$ | async as hits"
         >
-          <div
-            translate
-            class="text-gray-500"
-            [translateParams]="{
-              displayed: results.length,
-              hits: hits.value
-            }"
-          >
-            results.records.hits.displayedOn
-          </div>
           <div class="grow">
             <gn-ui-pagination-buttons
               [currentPage]="searchFacade.currentPage$ | async"

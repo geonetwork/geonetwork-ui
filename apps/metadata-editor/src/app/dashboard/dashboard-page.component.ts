@@ -16,7 +16,9 @@ export class DashboardPageComponent {
     private router: Router,
     public searchFacade: SearchFacade,
     private dashSearchService: DashboardSearchService
-  ) {}
+  ) {
+    console.log('searchFacade', searchFacade)
+  }
 
   paginate(page: number) {
     this.dashSearchService.paginate(page)

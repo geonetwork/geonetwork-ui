@@ -11,8 +11,7 @@ const includes = [
   'createDate',
   'changeDate',
   'userinfo',
-  'cl_status',
-  'isPublishedToAll',
+  'format*',
 ]
 
 @Injectable()
@@ -25,7 +24,7 @@ export class DashboardSearchService {
     this.facade.init('editor')
     this.facade
       .setConfigRequestFields(includes)
-      .setPagination(0, 10)
+      .setPagination(0, 15)
       .setSortBy(['desc', 'changeDate'])
 
     combineLatest([

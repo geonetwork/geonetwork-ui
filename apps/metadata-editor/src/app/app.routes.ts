@@ -7,6 +7,11 @@ import { EditRecordResolver } from './edit-record.resolver'
 
 export const appRoutes: Route[] = [
   { path: '', component: DashboardPageComponent },
+  {
+    path: 'records',
+    redirectTo: 'records/all', // children
+  },
+  { path: 'records/all', component: DashboardPageComponent },
   { path: 'sign-in', component: SignInPageComponent },
   { path: 'create', component: CreatePageComponent },
   {
