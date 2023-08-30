@@ -1,11 +1,11 @@
 <figure class="text-center">
-  <div class="w-20 h-20 mx-auto">
-    <gn-ui-avatar></gn-ui-avatar>
+  <div
+    class="w-12 h-12 border border-primary rounded-full capitalize"
+    [matTooltip]="userFullName"
+  >
+    <gn-ui-avatar
+      [avatarUrl]="user.profileIcon"
+      [avatarPlaceholder]="avatarPlaceholder"
+    ></gn-ui-avatar>
   </div>
-  <figcaption class="font-medium mt-4">
-    <div class="font-semibold capitalize">
-      {{ user.name }} {{ user.surname }}
-    </div>
-    <div class="text-gray-500 capitalize">{{ user.profile }}</div>
-  </figcaption>
 </figure>

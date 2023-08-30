@@ -3,6 +3,7 @@ import { Subject } from 'rxjs'
 import { TestBed } from '@angular/core/testing'
 import { MeApiService } from '@geonetwork-ui/data-access/gn4'
 import { TranslateService } from '@ngx-translate/core'
+import { AvatarServiceInterface } from './avatar/avatar.service.interface'
 
 const userMock = {
   id: '21737',
@@ -11,7 +12,7 @@ const userMock = {
   name: 'Florent',
   surname: 'Gravin',
   email: 'florent.gravin@camptocamp.com',
-  hash: '79efeb7b1f8faa9609b73d9bc89b6417',
+  hash: 'girafe',
   organisation: null,
   admin: true,
   groupsWithRegisteredUser: [],
@@ -26,6 +27,10 @@ const translateServiceMock = {
 const me$ = new Subject()
 const meApiMock = {
   getMe: () => me$,
+}
+class AvatarServiceInterfaceMock {
+  placeholder = 'http://placeholder.com'
+  getProfileIcon = jest.fn((hash: string) => `http://icon_service.com/${hash}`)
 }
 
 let windowLocation
@@ -53,6 +58,10 @@ describe('AuthService', () => {
         {
           provide: TranslateService,
           useValue: translateServiceMock,
+        },
+        {
+          provide: AvatarServiceInterface,
+          useClass: AvatarServiceInterfaceMock,
         },
       ],
     })
@@ -141,6 +150,7 @@ describe('AuthService', () => {
         name: 'Florent',
         surname: 'Gravin',
         email: 'florent.gravin@camptocamp.com',
+        profileIcon: 'http://icon_service.com/girafe',
         organisation: null,
       })
     })

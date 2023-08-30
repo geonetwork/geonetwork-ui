@@ -8,6 +8,7 @@ import { UserModel } from '@geonetwork-ui/common/domain/user.model'
 import { TranslateService } from '@ngx-translate/core'
 import { Observable } from 'rxjs'
 import { map, shareReplay } from 'rxjs/operators'
+import { AvatarServiceInterface } from './avatar/avatar.service.interface'
 
 export const DEFAULT_GN4_LOGIN_URL = `/geonetwork/srv/\${lang3}/catalog.signin?redirect=\${current_url}`
 export const LOGIN_URL = new InjectionToken<string>('loginUrl')
@@ -41,7 +42,8 @@ export class AuthService {
     @Inject(LOGIN_URL)
     private baseLoginUrlToken: string,
     private meApi: MeApiService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private avatarService: AvatarServiceInterface
   ) {
     this.user$ = this.meApi.getMe().pipe(
       map((apiUser) => this.mapToUserModel(apiUser)),
@@ -71,6 +73,7 @@ export class AuthService {
       admin,
       ...user
     } = apiUser
-    return user as UserModel
+    const icon = this.avatarService.getProfileIcon(apiUser.hash)
+    return { ...user, profileIcon: icon } as UserModel
   }
 }

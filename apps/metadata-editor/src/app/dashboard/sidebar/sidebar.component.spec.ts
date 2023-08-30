@@ -5,7 +5,6 @@ import {
   NO_ERRORS_SCHEMA,
 } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { By } from '@angular/platform-browser'
 import { AuthService } from '@geonetwork-ui/feature/auth'
 import { USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
 import { LetDirective } from '@ngrx/component'
@@ -61,13 +60,5 @@ describe('SidebarComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
-  })
-  describe('when a user is logged', () => {
-    it('displays the user preview', () => {
-      const avatar = fixture.debugElement.query(
-        By.directive(UserPreviewComponent)
-      )
-      expect(avatar.componentInstance.user).toBe(user)
-    })
   })
 })

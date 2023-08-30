@@ -7,8 +7,9 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 })
 export class AvatarComponent {
   @Input() avatarUrl?: string
+  @Input() avatarPlaceholder?: string
 
   hideImage() {
-    this.avatarUrl = null
+    this.avatarUrl = this.avatarPlaceholder
   }
 }

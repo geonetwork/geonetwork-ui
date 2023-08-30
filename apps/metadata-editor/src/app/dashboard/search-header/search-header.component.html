@@ -1,4 +1,4 @@
-<div class="py-3 flex justify-around w-full">
+<div class="py-3 px-12 flex justify-between w-full">
   <div class="w-2/3">
     <gn-ui-fuzzy-search></gn-ui-fuzzy-search>
   </div>
@@ -16,5 +16,12 @@
     <button>
       <mat-icon class="icon-btn material-icons-outlined">settings</mat-icon>
     </button>
+    <ng-container *ngrxLet="authService.user$ as user">
+      <gn-ui-user-preview
+        *ngIf="user && user.name"
+        [user]="user"
+        [avatarPlaceholder]="placeholder"
+      ></gn-ui-user-preview>
+    </ng-container>
   </div>
 </div>

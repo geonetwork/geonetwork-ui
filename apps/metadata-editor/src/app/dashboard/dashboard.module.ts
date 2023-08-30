@@ -17,6 +17,10 @@ import { DashboardMenuComponent } from './dashboard-menu/dashboard-menu.componen
 import { DashboardPageComponent } from './dashboard-page.component'
 import { SearchHeaderComponent } from './search-header/search-header.component'
 import { SidebarComponent } from './sidebar/sidebar.component'
+import {
+  AvatarServiceInterface,
+  GravatarService,
+} from '@geonetwork-ui/feature/auth'
 
 @NgModule({
   declarations: [
@@ -37,5 +41,11 @@ import { SidebarComponent } from './sidebar/sidebar.component'
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
   ],
   exports: [DashboardPageComponent],
+  providers: [
+    {
+      provide: AvatarServiceInterface,
+      useClass: GravatarService,
+    },
+  ],
 })
 export class DashboardModule {}

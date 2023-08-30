@@ -53,6 +53,7 @@ describe('AvatarComponent', () => {
     describe('When the url is on error', () => {
       beforeEach(() => {
         component.avatarUrl = 'url'
+        component.avatarPlaceholder = 'urlBis'
         initDebugElements()
         jest.spyOn(component, 'hideImage')
         img.triggerEventHandler('error')
@@ -60,13 +61,10 @@ describe('AvatarComponent', () => {
       })
       it('calls hideImage()', () => {
         expect(component.hideImage).toHaveBeenCalled()
-        expect(component.avatarUrl).toBeNull()
+        expect(component.avatarUrl).toEqual('urlBis')
       })
       it('the <img> is not displayed', () => {
-        expect(img).toBeFalsy()
-      })
-      it('the fallback is displayed', () => {
-        expect(fallback).toBeTruthy()
+        expect(img.attributes.src).toEqual('urlBis')
       })
     })
     describe('When no url is given', () => {
