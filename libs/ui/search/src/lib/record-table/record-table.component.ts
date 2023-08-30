@@ -1,6 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
+import {
+  CatalogRecord,
+  DatasetDistribution,
+  DatasetRecord,
+} from '@geonetwork-ui/common/domain/record'
+import { FileFormat, getFileFormat } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-record-table',
@@ -8,7 +12,7 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
   styleUrls: ['./record-table.component.css'],
 })
 export class RecordTableComponent {
-  @Input() records: CatalogRecord[] = DATASET_RECORDS
+  @Input() records: CatalogRecord[] = []
   @Input() totalHits?: number
   @Output() recordSelect = new EventEmitter<CatalogRecord>()
 
@@ -31,5 +35,15 @@ export class RecordTableComponent {
       return `${infos[2]} ${infos[1]}`
     }
     return undefined
+  }
+
+  getRecordFormats(record: CatalogRecord): FileFormat[] {
+    if (record.kind === 'service') {
+      return []
+    }
+    const types = new Set(
+      record.distributions.map((distribution) => getFileFormat(distribution))
+    )
+    return Array.from(types).filter((elm) => elm)
   }
 }

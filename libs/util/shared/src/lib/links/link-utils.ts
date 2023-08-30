@@ -84,7 +84,7 @@ export const FORMATS = {
   },
 } as const
 
-type FileFormat = keyof typeof FORMATS
+export type FileFormat = keyof typeof FORMATS
 
 export function sortPriority(link: DatasetDistribution): number {
   const linkFormat = getFileFormat(link)
