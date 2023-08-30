@@ -8,6 +8,7 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
+/* eslint-disable cypress/no-unnecessary-waiting */
 // eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace Cypress {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -33,6 +34,7 @@ Cypress.Commands.add(
         cy.scrollTo('top')
       }
     })
+
     cy.wait(250)
     cy.get('li.signin-dropdown').click()
     cy.get('#inputUsername').type(username)
