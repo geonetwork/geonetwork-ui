@@ -74,6 +74,6 @@ export class AuthService {
       ...user
     } = apiUser
     const icon = this.avatarService.getProfileIcon(apiUser.hash)
-    return { ...user, profile_icon: icon } as UserModel
+    return { ...user, profileIcon: icon } as UserModel
   }
 }

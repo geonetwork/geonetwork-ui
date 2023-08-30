@@ -150,7 +150,7 @@ describe('AuthService', () => {
         name: 'Florent',
         surname: 'Gravin',
         email: 'florent.gravin@camptocamp.com',
-        profile_icon: 'http://icon_service.com/girafe',
+        profileIcon: 'http://icon_service.com/girafe',
         organisation: null,
       })
     })
