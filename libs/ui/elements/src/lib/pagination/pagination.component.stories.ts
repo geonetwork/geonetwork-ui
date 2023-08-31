@@ -15,7 +15,7 @@ import { MatIcon } from '@angular/material/icon'
 import { FormsModule } from '@angular/forms'
 
 export default {
-  title: 'Layout/PaginationComponent',
+  title: 'Elements/PaginationComponent',
   component: PaginationComponent,
   decorators: [
     moduleMetadata({
