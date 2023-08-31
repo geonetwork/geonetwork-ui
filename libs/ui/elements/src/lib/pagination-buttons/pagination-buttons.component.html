@@ -9,7 +9,7 @@
     </gn-ui-button>
     <ng-container *ngFor="let page of visiblePages">
       <ng-container *ngIf="page === '...'">
-        <span class="pagination-separator">{{ page }}</span>
+        <span class="mx-[5px]">{{ page }}</span>
       </ng-container>
       <ng-container *ngIf="page !== '...'">
         <gn-ui-button
