@@ -25,7 +25,7 @@ export class PaginationButtonsComponent implements OnChanges {
     const maxVisiblePages = 5
     const halfVisible = Math.floor(maxVisiblePages / 2)
     const startPage = Math.max(this.currentPage - halfVisible, 1)
-    const endPage = Math.min(startPage + maxVisiblePages - 1, this.totalPages)
+    const endPage = Math.min(this.currentPage + halfVisible, this.totalPages)
 
     const visiblePages: (number | '...')[] = []
     if (startPage > 1) {
