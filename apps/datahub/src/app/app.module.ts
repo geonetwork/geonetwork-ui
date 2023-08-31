@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common'
-import { Inject, NgModule } from '@angular/core'
+import { importProvidersFrom, Inject, NgModule } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
 import { Router, RouterModule } from '@angular/router'
@@ -41,7 +41,7 @@ import {
   UtilSharedModule,
   getGeometryFromGeoJSON,
 } from '@geonetwork-ui/util/shared'
-import { LOGIN_URL } from '@geonetwork-ui/feature/auth'
+import { FeatureAuthModule, LOGIN_URL } from '@geonetwork-ui/feature/auth'
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
@@ -127,6 +127,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   ],
   providers: [
     { provide: RouterService, useClass: DatahubRouterService },
+    importProvidersFrom(FeatureAuthModule),
     {
       provide: Configuration,
       useFactory: () =>

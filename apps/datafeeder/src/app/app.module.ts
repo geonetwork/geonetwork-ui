@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser'
-import { NgModule } from '@angular/core'
+import { importProvidersFrom, NgModule } from '@angular/core'
 import { ApiModule, Configuration } from '@geonetwork-ui/data-access/datafeeder'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { StoreModule } from '@ngrx/store'
@@ -35,6 +35,7 @@ import { SummarizePageComponent } from './presentation/pages/summarize-page/summ
 import { SummarizeIllustrationComponent } from './presentation/components/svg/summarize-illustration/summarize-illustration.component'
 import { SummarizeBackgroundComponent } from './presentation/components/svg/summarize-background/summarize-background.component'
 import { DATAFEEDER_STATE_KEY, reducer } from './store/datafeeder.reducer'
+import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 
 export function apiConfigurationFactory() {
   return new Configuration({
@@ -80,6 +81,7 @@ export function apiConfigurationFactory() {
     }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
+  providers: [importProvidersFrom(FeatureAuthModule)],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
