@@ -1,6 +1,7 @@
 import { importProvidersFrom, NgModule } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
+import { RouterModule } from '@angular/router'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
@@ -9,6 +10,8 @@ import { LetDirective } from '@ngrx/component'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { TranslateModule } from '@ngx-translate/core'
+import { appRoutes } from '../app.routes'
+import { AllRecordsModule } from '../records/all-records-list.component.module'
 import {
   EDITOR_DASHBOARD_FEATURE_STATE_KEY,
   reducer,
@@ -27,6 +30,7 @@ import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
     DashboardMenuComponent,
   ],
   imports: [
+    AllRecordsModule,
     BrowserModule,
     MatIconModule,
     FeatureSearchModule,
@@ -36,6 +40,7 @@ import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
     StoreModule.forFeature(EDITOR_DASHBOARD_FEATURE_STATE_KEY, reducer),
     EffectsModule.forFeature(),
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+    RouterModule.forChild(appRoutes),
   ],
   exports: [DashboardPageComponent],
   providers: [importProvidersFrom(FeatureAuthModule)],

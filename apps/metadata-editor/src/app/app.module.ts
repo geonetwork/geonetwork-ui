@@ -3,7 +3,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
 import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
-import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
+import {
+  FeatureSearchModule,
+  SearchFacade,
+} from '@geonetwork-ui/feature/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
@@ -21,6 +24,7 @@ import { DashboardModule } from './dashboard/dashboard.module'
 import { EditPageComponent } from './edit/edit-page.component'
 import { SignInPageComponent } from './sign-in/sign-in-page.component'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
+import { DashboardSearchService } from './dashboard/dashboard-search.service'
 
 @NgModule({
   declarations: [
@@ -44,7 +48,7 @@ import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
     MatProgressSpinnerModule,
     FeatureCatalogModule,
   ],
-  providers: [],
+  providers: [SearchFacade, DashboardSearchService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

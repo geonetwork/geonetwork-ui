@@ -1,17 +1,14 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { Component } from '@angular/core'
 import { Router } from '@angular/router'
-import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
-import { DashboardSearchService } from './dashboard-search.service'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
-
+import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { DashboardSearchService } from '../dashboard/dashboard-search.service'
 @Component({
-  selector: 'md-editor-dashboard',
-  templateUrl: './dashboard-page.component.html',
-  styleUrls: ['./dashboard-page.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [SearchFacade, SearchService, DashboardSearchService],
+  selector: 'md-editor-all-records-list',
+  templateUrl: './all-records-list.component.html',
+  styleUrls: ['./all-records-list.component.css'],
 })
-export class DashboardPageComponent {
+export class AllRecordsComponent {
   constructor(
     private router: Router,
     public searchFacade: SearchFacade,

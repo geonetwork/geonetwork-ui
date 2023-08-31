@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-3">
   <button
-    (click)="setActive('my-org')"
+    (click)="onClick('/records/my-org', 'my-org')"
     class="menu-item"
     role="buton"
     [class.btn-active]="isActive$('my-org') | async"
@@ -9,7 +9,7 @@
     <span translate="">editor.dashboard.myOrg</span>
   </button>
   <button
-    (click)="setActive('catalog')"
+    (click)="onClick('/records/all', 'catalog')"
     class="menu-item"
     role="buton"
     [class.btn-active]="isActive$('catalog') | async"
@@ -19,7 +19,7 @@
   </button>
   <div class="menu-title" translate="">editor.dashboard.mySpace</div>
   <button
-    (click)="setActive('my-records')"
+    (click)="onClick('/records/my-records', 'my-records')"
     class="menu-item"
     role="buton"
     [class.btn-active]="isActive$('my-records') | async"
@@ -28,7 +28,7 @@
     <span translate="">editor.dashboard.myRecords</span>
   </button>
   <button
-    (click)="setActive('my-draft')"
+    (click)="onClick('/records/my-draft', 'my-draft')"
     class="menu-item"
     role="buton"
     [class.btn-active]="isActive$('my-draft') | async"
@@ -37,7 +37,7 @@
     <span translate="">editor.dashboard.myDraft</span>
   </button>
   <button
-    (click)="setActive('my-library')"
+    (click)="onClick('/records/my-library', 'my-library')"
     class="menu-item"
     role="buton"
     [class.btn-active]="isActive$('my-library') | async"

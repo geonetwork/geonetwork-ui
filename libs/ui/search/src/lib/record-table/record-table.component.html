@@ -1,8 +1,8 @@
-<div class="grid grid-cols-[repeat(5,minmax(0,max-content))] gap-x-4 gap-y-1">
-  <div *ngIf="totalHits">
+<div>
+  <div *ngIf="totalHits" class="">
     <div
       translate
-      class="text-gray-500"
+      class="my-8 ml-4 block text-gray-500"
       [translateParams]="{
         displayed: records.length,
         hits: totalHits
@@ -10,46 +10,50 @@
     >
       results.records.hits.displayedOn
     </div>
-  </div>
-  <div class="contents text-sm">
-    <div translate="" class="record-table-header text-gray-400">
-      record.metadata.title
-    </div>
-    <div translate="" class="record-table-header text-gray-400">
-      record.metadata.formats
-    </div>
-    <div translate="" class="record-table-header text-gray-400">
-      record.metadata.author
-    </div>
-    <div translate="" class="record-table-header text-gray-400">
-      record.metadata.completion
-    </div>
-    <div translate="" class="record-table-header text-gray-400">
-      record.metadata.createdOn
-    </div>
-  </div>
-  <div
-    class="contents hover:text-gray-900 text-gray-800 cursor-pointer"
-    (click)="recordSelect.emit(record)"
-    *ngFor="let record of records"
-  >
-    <div class="record-table-col text-16">
-      {{ record.title }}
-    </div>
-    <div class="record-table-col text-16">
-      <span class="badge-btn btn-active text-sm">{{
-        getStatus(record.extras?.isPublishedToAll)
-      }}</span>
-    </div>
-    <div class="record-table-col flex items-center gap-2 text-16">
-      <mat-icon class="material-icons-outlined"> person </mat-icon>
-      <span class="">{{ formatUserInfo(record.extras?.ownerInfo) }}</span>
-    </div>
-    <div class="record-table-col text-16">
-      {{ dateToString(record.recordUpdated) }}
-    </div>
-    <div class="record-table-col text-16">
-      {{ dateToString(record.recordCreated) }}
+    <div
+      class="grid grid-cols-[repeat(5,minmax(0,max-content))] gap-x-4 gap-y-1"
+    >
+      <div class="contents text-sm">
+        <div translate="" class="record-table-header text-gray-400">
+          record.metadata.title
+        </div>
+        <div translate="" class="record-table-header text-gray-400">
+          record.metadata.formats
+        </div>
+        <div translate="" class="record-table-header text-gray-400">
+          record.metadata.author
+        </div>
+        <div translate="" class="record-table-header text-gray-400">
+          record.metadata.completion
+        </div>
+        <div translate="" class="record-table-header text-gray-400">
+          record.metadata.createdOn
+        </div>
+      </div>
+      <div
+        class="contents hover:text-gray-900 text-gray-800 cursor-pointer"
+        (click)="recordSelect.emit(record)"
+        *ngFor="let record of records"
+      >
+        <div [title]="record.title" class="record-table-col text-16">
+          {{ record.title }}
+        </div>
+        <div class="record-table-col text-16">
+          <span class="badge-btn btn-active text-sm">{{
+            getStatus(record.extras?.isPublishedToAll)
+          }}</span>
+        </div>
+        <div class="record-table-col flex items-center gap-2 text-16">
+          <mat-icon class="material-icons-outlined"> person </mat-icon>
+          <span class="">{{ formatUserInfo(record.extras?.ownerInfo) }}</span>
+        </div>
+        <div class="record-table-col text-16">
+          {{ dateToString(record.recordUpdated) }}
+        </div>
+        <div class="record-table-col text-16">
+          {{ dateToString(record.recordCreated) }}
+        </div>
+      </div>
     </div>
   </div>
 </div>
