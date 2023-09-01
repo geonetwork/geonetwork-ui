@@ -30,12 +30,12 @@ export class RecordTableComponent {
 }
 @Component({
   // eslint-disable-next-line
-  selector: 'gn-ui-pagination',
+  selector: 'gn-ui-pagination-buttons',
   template: '',
 })
-export class PaginationComponent {
+export class PaginationButtonsComponent {
   @Input() currentPage = 1
-  @Input() nPages = 1
+  @Input() totalPages = 1
   @Input() hideButton = false
   @Output() newCurrentPageEvent = new EventEmitter<number>()
 }
@@ -64,7 +64,7 @@ describe('DashboardPageComponent', () => {
       schemas: [NO_ERRORS_SCHEMA],
       declarations: [
         DashboardPageComponent,
-        PaginationComponent,
+        PaginationButtonsComponent,
         RecordTableComponent,
       ],
       providers: [
@@ -117,7 +117,7 @@ describe('DashboardPageComponent', () => {
         By.directive(RecordTableComponent)
       ).componentInstance
       pagination = fixture.debugElement.query(
-        By.directive(PaginationComponent)
+        By.directive(PaginationButtonsComponent)
       ).componentInstance
     })
     it('displays record table', () => {
@@ -126,7 +126,7 @@ describe('DashboardPageComponent', () => {
     it('displays pagination', () => {
       expect(pagination).toBeTruthy()
       expect(pagination.currentPage).toEqual(currentPage)
-      expect(pagination.nPages).toEqual(totalPages)
+      expect(pagination.totalPages).toEqual(totalPages)
     })
     describe('when click on a record', () => {
       beforeEach(() => {

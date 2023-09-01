@@ -24,6 +24,7 @@ import { FormsModule } from '@angular/forms'
 import { AvatarComponent } from './avatar/avatar.component'
 import { UserPreviewComponent } from './user-preview/user-preview.component'
 import { GnUiLinkifyDirective } from './metadata-info/linkify.directive'
+import { PaginationButtonsComponent } from './pagination-buttons/pagination-buttons.component'
 
 @NgModule({
   imports: [
@@ -55,6 +56,7 @@ import { GnUiLinkifyDirective } from './metadata-info/linkify.directive'
     AvatarComponent,
     UserPreviewComponent,
     GnUiLinkifyDirective,
+    PaginationButtonsComponent,
   ],
   exports: [
     MetadataInfoComponent,
@@ -71,6 +73,7 @@ import { GnUiLinkifyDirective } from './metadata-info/linkify.directive'
     ThumbnailComponent,
     AvatarComponent,
     UserPreviewComponent,
+    PaginationButtonsComponent,
   ],
 })
 export class UiElementsModule {}

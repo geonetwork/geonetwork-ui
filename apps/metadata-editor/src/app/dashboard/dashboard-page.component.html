@@ -43,12 +43,11 @@
             results.records.hits.displayedOn
           </div>
           <div class="grow">
-            <gn-ui-pagination
-              hideButton="true"
+            <gn-ui-pagination-buttons
               [currentPage]="searchFacade.currentPage$ | async"
-              [nPages]="searchFacade.totalPages$ | async"
+              [totalPages]="searchFacade.totalPages$ | async"
               (newCurrentPageEvent)="paginate($event)"
-            ></gn-ui-pagination>
+            ></gn-ui-pagination-buttons>
           </div>
         </div>
       </div>
