@@ -12,6 +12,7 @@ import {
   CatalogRecord,
   DatasetRecord,
 } from '@geonetwork-ui/common/domain/record'
+import { TranslateService } from '@ngx-translate/core'
 
 class MetadataUrlServiceMock {
   translate = undefined
@@ -31,6 +32,10 @@ class OrganisationsServiceMock {
   )
 }
 
+const translateServiceMock = {
+  currentLang: 'de',
+}
+
 describe('Gn4MetadataMapper', () => {
   let service: Gn4MetadataMapper
 
@@ -45,6 +50,10 @@ describe('Gn4MetadataMapper', () => {
         {
           provide: OrganizationsServiceInterface,
           useClass: OrganisationsServiceMock,
+        },
+        {
+          provide: TranslateService,
+          useValue: translateServiceMock,
         },
       ],
     })
@@ -634,7 +643,7 @@ describe('Gn4MetadataMapper', () => {
               updatedTimes: 1,
             },
             useLimitations: [
-              'Restriction lié à l’exercice du droit moral',
+              'Einschränkung im Zusammenhang mit der Ausübung moralischer Rechte',
               "Restriction légale d'utilisation à préciser",
             ],
             spatialExtents: [],

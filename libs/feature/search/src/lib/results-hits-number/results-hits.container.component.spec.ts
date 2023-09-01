@@ -2,7 +2,7 @@ import { Component, DebugElement, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { SearchFacade } from '../state/search.facade'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { of } from 'rxjs'
 
 import { ResultsHitsContainerComponent } from './results-hits.container.component'
@@ -19,6 +19,10 @@ class MockResultsHitsNumberComponent {
 const searchFacadeMock = {
   isLoading$: of(false),
   resultsHits$: of(null),
+}
+
+const translateServiceMock = {
+  currentLang: 'de',
 }
 
 describe('ResultsHitsContainerComponent', () => {
@@ -38,6 +42,10 @@ describe('ResultsHitsContainerComponent', () => {
         {
           provide: SearchFacade,
           useValue: searchFacadeMock,
+        },
+        {
+          provide: TranslateService,
+          useValue: translateServiceMock,
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],

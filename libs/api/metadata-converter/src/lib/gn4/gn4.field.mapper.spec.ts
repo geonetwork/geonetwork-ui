@@ -3,10 +3,15 @@ import { TestBed } from '@angular/core/testing'
 import { ES_LINK_FIXTURES } from '@geonetwork-ui/common/fixtures'
 import { Gn4FieldMapper } from './gn4.field.mapper'
 import { MetadataUrlService } from './metadata-url.service'
+import { TranslateService } from '@ngx-translate/core'
 
 class MetadataUrlServiceMock {
   translate = undefined
   getUrl = () => 'url'
+}
+
+const translateServiceMock = {
+  currentLang: 'de',
 }
 
 describe('Gn4FieldMapper', () => {
@@ -16,6 +21,10 @@ describe('Gn4FieldMapper', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: MetadataUrlService, useClass: MetadataUrlServiceMock },
+        {
+          provide: TranslateService,
+          useValue: translateServiceMock,
+        },
       ],
     })
     service = TestBed.inject(Gn4FieldMapper)

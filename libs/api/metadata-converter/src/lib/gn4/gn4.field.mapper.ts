@@ -25,6 +25,7 @@ import {
   OnlineLinkResource,
 } from '@geonetwork-ui/common/domain/record'
 import { matchProtocol } from '../common/distribution.mapper'
+import { LangService } from '@geonetwork-ui/util/i18n'
 
 type ESResponseSource = SourceWithUnknownProps
 
@@ -37,7 +38,12 @@ type EsFieldMapperFn = (
   providedIn: 'root',
 })
 export class Gn4FieldMapper {
-  constructor(private metadataUrlService: MetadataUrlService) {}
+  constructor(
+    private metadataUrlService: MetadataUrlService,
+    private langService: LangService
+  ) {}
+
+  private lang3 = this.langService.gnLang
 
   protected fields: Record<string, EsFieldMapperFn> = {
     id: (output, source) =>
@@ -50,21 +56,22 @@ export class Gn4FieldMapper {
     resourceTitleObject: (output, source) => ({
       ...output,
       title: selectFallback(
-        selectTranslatedField(source, 'resourceTitleObject'),
+        selectTranslatedField(source, 'resourceTitleObject', this.lang3),
         'no title'
       ),
     }),
     resourceAbstractObject: (output, source) => ({
       ...output,
       abstract: selectFallback(
-        selectTranslatedField(source, 'resourceAbstractObject'),
+        selectTranslatedField(source, 'resourceAbstractObject', this.lang3),
         'no title'
       ),
     }),
     overview: (output, source) => {
       const firstOverview = getFirstValue(selectField(source, 'overview'))
       const description = selectTranslatedValue<string>(
-        selectField(firstOverview, 'text')
+        selectField(firstOverview, 'text'),
+        this.lang3
       )
       return {
         ...output,
@@ -121,7 +128,9 @@ export class Gn4FieldMapper {
     },
     contact: (output, source) => ({
       ...output,
-      contacts: [mapContact(getFirstValue(selectField(source, 'contact')))],
+      contacts: [
+        mapContact(getFirstValue(selectField(source, 'contact')), this.lang3),
+      ],
     }),
     contactForResource: (output, source) => ({
       ...output,
@@ -131,7 +140,7 @@ export class Gn4FieldMapper {
           ? output.contactsForResource
           : []),
         ...getAsArray(selectField(source, 'contactForResource')).map(
-          (contact) => mapContact(contact)
+          (contact) => mapContact(contact, this.lang3)
         ),
       ],
     }),
@@ -150,7 +159,7 @@ export class Gn4FieldMapper {
       ...output,
       keywords: getAsArray(
         selectField<SourceWithUnknownProps[]>(source, 'tag')
-      ).map((tag) => selectTranslatedValue<string>(tag)),
+      ).map((tag) => selectTranslatedValue<string>(tag, this.lang3)),
     }),
     inspireTheme: (output, source) => ({
       ...output,
@@ -183,14 +192,14 @@ export class Gn4FieldMapper {
       ).map((license) => {
         const link = getAsUrl(selectField(license, 'link'))
         return {
-          text: selectTranslatedValue<string>(license),
+          text: selectTranslatedValue<string>(license, this.lang3),
           ...(link ? { link } : {}),
         }
       }),
     }),
     lineageObject: (output, source) => ({
       ...output,
-      lineage: selectTranslatedField(source, 'lineageObject'),
+      lineage: selectTranslatedField(source, 'lineageObject', this.lang3),
     }),
     mainLanguage: (output) => output,
     userSavedCount: (output, source) =>
@@ -243,7 +252,8 @@ export class Gn4FieldMapper {
           useLimitations: [
             ...(output.useLimitations || []),
             ...selectField<SourceWithUnknownProps[]>(source, fieldName).map(
-              selectTranslatedValue
+              (source: SourceWithUnknownProps) =>
+                selectTranslatedValue(source, this.lang3)
             ),
           ],
         }
@@ -252,7 +262,7 @@ export class Gn4FieldMapper {
             ...(output.accessConstraints || []),
             ...selectField<SourceWithUnknownProps[]>(source, fieldName).map(
               (field) => ({
-                text: selectTranslatedValue(field),
+                text: selectTranslatedValue(field, this.lang3),
                 type: this.getConstraintsType(fieldName),
               })
             ),
@@ -299,16 +309,20 @@ export class Gn4FieldMapper {
   ): DatasetDistribution | null => {
     const url = getAsUrl(
       selectFallback(
-        selectTranslatedField<string>(sourceLink, 'urlObject'),
+        selectTranslatedField<string>(sourceLink, 'urlObject', this.lang3),
         selectField<string>(sourceLink, 'url')
       )
     )
     const name = selectFallback(
-      selectTranslatedField<string>(sourceLink, 'nameObject'),
+      selectTranslatedField<string>(sourceLink, 'nameObject', this.lang3),
       selectField<string>(sourceLink, 'name')
     )
     const description = selectFallback(
-      selectTranslatedField<string>(sourceLink, 'descriptionObject'),
+      selectTranslatedField<string>(
+        sourceLink,
+        'descriptionObject',
+        this.lang3
+      ),
       selectField<string>(sourceLink, 'description')
     )
     // no url: fail early

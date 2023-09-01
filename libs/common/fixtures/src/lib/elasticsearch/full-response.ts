@@ -1269,6 +1269,8 @@ export const ES_FIXTURE_FULL_RESPONSE = deepFreeze({
             {
               default: 'Restriction lié à l’exercice du droit moral',
               langfre: 'Restriction lié à l’exercice du droit moral',
+              langger:
+                'Einschränkung im Zusammenhang mit der Ausübung moralischer Rechte',
             },
           ],
           geom: {

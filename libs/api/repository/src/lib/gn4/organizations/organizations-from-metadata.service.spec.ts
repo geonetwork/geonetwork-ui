@@ -15,6 +15,7 @@ import {
   ES_FIXTURE_FULL_RESPONSE,
   GROUPS_FIXTURE,
 } from '@geonetwork-ui/common/fixtures'
+import { LangService } from '@geonetwork-ui/util/i18n'
 
 const sampleOrgA: Organization = {
   description: 'A description for ARE',
@@ -152,6 +153,10 @@ class SiteApiServiceMock {
   )
 }
 
+class LangServiceMock {
+  gnLang = jest.fn(() => 'langger')
+}
+
 describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
   'OrganizationsFromMetadataService (gn v%s)',
   (gnVersion) => {
@@ -177,6 +182,10 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
           {
             provide: SiteApiService,
             useClass: SiteApiServiceMock,
+          },
+          {
+            provide: LangService,
+            useClass: LangServiceMock,
           },
         ],
       })
