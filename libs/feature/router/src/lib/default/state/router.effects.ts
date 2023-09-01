@@ -4,19 +4,21 @@ import { ActivatedRouteSnapshot, Router } from '@angular/router'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
 import {
   FieldsService,
+  Paginate,
+  SearchActions,
   SetFilters,
   SetSortBy,
 } from '@geonetwork-ui/feature/search'
-import { SortByEnum } from '@geonetwork-ui/common/domain/search'
+import { FieldFilters, SortByEnum } from '@geonetwork-ui/common/domain/search'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { navigation } from '@ngrx/router-store/data-persistence'
-import { of } from 'rxjs'
+import { of, pairwise, startWith, withLatestFrom } from 'rxjs'
 import { map, mergeMap, tap } from 'rxjs/operators'
-import { ROUTER_CONFIG, RouterConfigModel } from '../router.module'
 import * as RouterActions from './router.actions'
 import { RouterFacade } from './router.facade'
 import { ROUTE_PARAMS } from '../constants'
 import { sortByFromString } from '@geonetwork-ui/util/shared'
+import { ROUTER_CONFIG, RouterConfigModel } from '../router.config'
 
 @Injectable()
 export class RouterEffects {
@@ -45,20 +47,58 @@ export class RouterEffects {
 
   syncSearchState$ = createEffect(() =>
     this.facade.searchParams$.pipe(
-      mergeMap((searchParams) => {
-        return this.fieldsService
+      mergeMap((searchParams: Record<string, string>) =>
+        this.fieldsService
           .buildFiltersFromFieldValues(searchParams)
-          .pipe(map((filters) => [searchParams, filters]))
-      }),
-      mergeMap(([searchParams, filters]) => {
-        let sortBy = SortByEnum.RELEVANCY
-        if (ROUTE_PARAMS.SORT in searchParams) {
-          sortBy = sortByFromString(searchParams[ROUTE_PARAMS.SORT])
+          .pipe(map((filters) => [searchParams, filters] as const))
+      ),
+      startWith([null, {}] as [Record<string, string>, FieldFilters]),
+      pairwise(),
+      map(([[oldParams, oldFilters], [newParams, newFilters]]) => {
+        let sortBy =
+          ROUTE_PARAMS.SORT in newParams
+            ? sortByFromString(newParams[ROUTE_PARAMS.SORT])
+            : SortByEnum.RELEVANCY
+        let pageNumber =
+          ROUTE_PARAMS.PAGE in newParams
+            ? parseInt(newParams[ROUTE_PARAMS.PAGE])
+            : 1
+        if (oldParams !== null) {
+          const oldSort =
+            ROUTE_PARAMS.SORT in oldParams
+              ? sortByFromString(oldParams[ROUTE_PARAMS.SORT])
+              : SortByEnum.RELEVANCY
+          if (JSON.stringify(sortBy) === JSON.stringify(oldSort)) {
+            sortBy = null
+          }
+          const oldPage =
+            ROUTE_PARAMS.PAGE in oldParams
+              ? parseInt(oldParams[ROUTE_PARAMS.PAGE])
+              : 1
+          if (pageNumber === oldPage) {
+            pageNumber = null
+          }
         }
-        return of(
-          new SetFilters(filters, this.routerConfig.searchStateId),
-          new SetSortBy(sortBy, this.routerConfig.searchStateId)
-        )
+        const filters =
+          JSON.stringify(oldFilters) === JSON.stringify(newFilters)
+            ? null
+            : newFilters
+        return [sortBy, pageNumber, filters] as const
+      }),
+      mergeMap(([sortBy, pageNumber, filters]) => {
+        const actions: SearchActions[] = []
+        if (filters !== null) {
+          actions.push(new SetFilters(filters, this.routerConfig.searchStateId))
+        }
+        if (sortBy !== null) {
+          actions.push(new SetSortBy(sortBy, this.routerConfig.searchStateId))
+        }
+        if (pageNumber !== null) {
+          actions.push(
+            new Paginate(pageNumber, this.routerConfig.searchStateId)
+          )
+        }
+        return of(...actions)
       })
     )
   )

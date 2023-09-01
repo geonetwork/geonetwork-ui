@@ -56,4 +56,10 @@ export class RouterSearchService implements SearchServiceI {
       [ROUTE_PARAMS.SORT]: sortByToString(sortBy),
     })
   }
+
+  setPage(page: number): void {
+    this.facade.updateSearch({
+      [ROUTE_PARAMS.PAGE]: page,
+    })
+  }
 }

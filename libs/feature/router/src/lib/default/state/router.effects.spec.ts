@@ -6,6 +6,7 @@ import { Params, Router } from '@angular/router'
 import { MdViewActions } from '@geonetwork-ui/feature/record'
 import {
   FieldsService,
+  Paginate,
   SetFilters,
   SetSortBy,
 } from '@geonetwork-ui/feature/search'
@@ -13,14 +14,14 @@ import { provideMockActions } from '@ngrx/effects/testing'
 import { routerNavigationAction } from '@ngrx/router-store'
 import { Action } from '@ngrx/store'
 import { hot } from 'jasmine-marbles'
-import { BehaviorSubject, Observable, of } from 'rxjs'
-import { ROUTER_CONFIG } from '../router.module'
-
+import { Observable, of, Subject } from 'rxjs'
 import * as fromActions from './router.actions'
 import { RouterGoActionPayload } from './router.actions'
 import * as fromEffects from './router.effects'
 import { RouterFacade } from './router.facade'
 import { TranslateModule } from '@ngx-translate/core'
+import { ROUTER_CONFIG } from '../router.config'
+import { ROUTE_PARAMS } from '../constants'
 
 class SearchRouteComponent extends Component {}
 class MetadataRouteComponent extends Component {}
@@ -32,10 +33,13 @@ const routerConfigMock = {
 }
 
 class RouterFacadeMock {
-  searchParams$ = new BehaviorSubject<Params>({
-    q: 'any',
-    _sort: '-createDate',
-  })
+  searchParams$ = new Subject<Params>()
+}
+
+const initialParams: Params = {
+  q: 'any',
+  [ROUTE_PARAMS.SORT]: '-createDate',
+  [ROUTE_PARAMS.PAGE]: '2',
 }
 
 class FieldsServiceMock {
@@ -60,7 +64,7 @@ class FieldsServiceMock {
 
 describe('RouterEffects', () => {
   let router: Router
-  let routerFacade: RouterFacadeMock
+  let routerFacade: RouterFacade
   let location: Location
   let effects: fromEffects.RouterEffects
   let actions: Observable<Action>
@@ -102,13 +106,15 @@ describe('RouterEffects', () => {
       ],
     })
 
-    effects = TestBed.inject(fromEffects.RouterEffects)
     router = TestBed.inject(Router)
     routerFacade = TestBed.inject(RouterFacade) as any
     location = TestBed.inject(Location)
   })
 
   describe('navigateToMetadata$', () => {
+    beforeEach(() => {
+      effects = TestBed.inject(fromEffects.RouterEffects)
+    })
     it('should dispatch a loadFullMetadata action', () => {
       actions = hot('-a', {
         a: routerNavigationAction({
@@ -140,6 +146,9 @@ describe('RouterEffects', () => {
   })
 
   describe('navigateToSearch$', () => {
+    beforeEach(() => {
+      effects = TestBed.inject(fromEffects.RouterEffects)
+    })
     it('should dispatch a loadFullMetadata action', () => {
       actions = hot('-a', {
         a: routerNavigationAction({
@@ -163,6 +172,9 @@ describe('RouterEffects', () => {
   })
 
   describe('navigate$', () => {
+    beforeEach(() => {
+      effects = TestBed.inject(fromEffects.RouterEffects)
+    })
     it('should call router navigate', () => {
       const payload: RouterGoActionPayload = {
         path: '.',
@@ -182,6 +194,9 @@ describe('RouterEffects', () => {
   })
 
   describe('navigateBack$', () => {
+    beforeEach(() => {
+      effects = TestBed.inject(fromEffects.RouterEffects)
+    })
     it('should call location back', () => {
       actions = hot('-a', { a: fromActions.backAction() })
 
@@ -192,6 +207,9 @@ describe('RouterEffects', () => {
   })
 
   describe('navigateForward$', () => {
+    beforeEach(() => {
+      effects = TestBed.inject(fromEffects.RouterEffects)
+    })
     it('should call location forward', () => {
       actions = hot('-a', { a: fromActions.forwardAction() })
 
@@ -204,27 +222,101 @@ describe('RouterEffects', () => {
   describe('syncSearchState$', () => {
     describe('when a sort value in the route', () => {
       beforeEach(() => {
-        actions = hot('-a', { a: routerFacade.searchParams$ })
+        routerFacade.searchParams$ = hot('-a', {
+          a: initialParams,
+        })
+        effects = TestBed.inject(fromEffects.RouterEffects)
       })
-      it('dispatches SetFilters and SortBy actions', () => {
-        const expected = hot('(ab)', {
+      it('dispatches SetFilters, SortBy, Paginate actions on initial params', () => {
+        const expected = hot('-(abc)', {
           a: new SetFilters({ any: 'any' }, 'main'),
           b: new SetSortBy(['desc', 'createDate'], 'main'),
+          c: new Paginate(2, 'main'),
         })
         expect(effects.syncSearchState$).toBeObservable(expected)
       })
     })
-    describe('when no sort value in the route', () => {
+    describe('when no sort or page value in the route', () => {
       beforeEach(() => {
-        routerFacade.searchParams$.next({
-          q: 'any',
+        routerFacade.searchParams$ = hot('-a----b', {
+          a: initialParams,
+          b: {
+            q: 'any',
+          },
         })
-        actions = hot('-a', { a: routerFacade.searchParams$ })
+        effects = TestBed.inject(fromEffects.RouterEffects)
       })
-      it('dispatches SetFilters and SortBy actions with default sort value', () => {
-        const expected = hot('(ab)', {
+      it('dispatches SetFilters and SortBy and Paginate actions with default sort value', () => {
+        const expected = hot('-(abc)(de)', {
           a: new SetFilters({ any: 'any' }, 'main'),
-          b: new SetSortBy(['desc', '_score'], 'main'),
+          b: new SetSortBy(['desc', 'createDate'], 'main'),
+          c: new Paginate(2, 'main'),
+          d: new SetSortBy(['desc', '_score'], 'main'),
+          e: new Paginate(1, 'main'),
+        })
+        expect(effects.syncSearchState$).toBeObservable(expected)
+      })
+    })
+    describe('when a page number is in the route', () => {
+      beforeEach(() => {
+        routerFacade.searchParams$ = hot('-a----b', {
+          a: initialParams,
+          b: {
+            q: 'any',
+            [ROUTE_PARAMS.PAGE]: '12',
+          },
+        })
+        effects = TestBed.inject(fromEffects.RouterEffects)
+      })
+      it('dispatches Paginate action accordingly', () => {
+        const expected = hot('-(abc)(de)', {
+          a: new SetFilters({ any: 'any' }, 'main'),
+          b: new SetSortBy(['desc', 'createDate'], 'main'),
+          c: new Paginate(2, 'main'),
+          d: new SetSortBy(['desc', '_score'], 'main'),
+          e: new Paginate(12, 'main'),
+        })
+        expect(effects.syncSearchState$).toBeObservable(expected)
+      })
+    })
+    describe('when only the sort param changes', () => {
+      beforeEach(() => {
+        routerFacade.searchParams$ = hot('-a----b----c', {
+          a: initialParams,
+          b: {
+            [ROUTE_PARAMS.PAGE]: '12',
+            [ROUTE_PARAMS.SORT]: 'createDate',
+          },
+          c: {
+            [ROUTE_PARAMS.PAGE]: '12',
+            [ROUTE_PARAMS.SORT]: '-title',
+          },
+        })
+        effects = TestBed.inject(fromEffects.RouterEffects)
+      })
+      it('only dispatches a SortBy action', () => {
+        const expected = hot('-(abc)(def)g', {
+          a: new SetFilters({ any: 'any' }, 'main'),
+          b: new SetSortBy(['desc', 'createDate'], 'main'),
+          c: new Paginate(2, 'main'),
+          d: new SetFilters({}, 'main'),
+          e: new SetSortBy(['asc', 'createDate'], 'main'),
+          f: new Paginate(12, 'main'),
+          g: new SetSortBy(['desc', 'title'], 'main'),
+        })
+        expect(effects.syncSearchState$).toBeObservable(expected)
+      })
+    })
+    describe('when identical params are received', () => {
+      beforeEach(() => {
+        routerFacade.searchParams$ = hot('-a----a', { a: initialParams })
+        effects = TestBed.inject(fromEffects.RouterEffects)
+      })
+      it('dispatches no action', () => {
+        const expected = hot('-(abc)-', {
+          a: new SetFilters({ any: 'any' }, 'main'),
+          b: new SetSortBy(['desc', 'createDate'], 'main'),
+          c: new Paginate(2, 'main'),
         })
         expect(effects.syncSearchState$).toBeObservable(expected)
       })

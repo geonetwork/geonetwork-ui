@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
-import { ROUTER_CONFIG } from './router.module'
 
 import { RouterService } from './router.service'
+import { ROUTER_CONFIG } from './router.config'
 
 const SearchRouteComponent = {
   name: 'searchRoute',
