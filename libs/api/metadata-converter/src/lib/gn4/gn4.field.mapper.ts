@@ -25,8 +25,7 @@ import {
   OnlineLinkResource,
 } from '@geonetwork-ui/common/domain/record'
 import { matchProtocol } from '../common/distribution.mapper'
-import { TranslateService } from '@ngx-translate/core'
-import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n'
+import { LangService } from '@geonetwork-ui/util/i18n'
 
 type ESResponseSource = SourceWithUnknownProps
 
@@ -41,12 +40,10 @@ type EsFieldMapperFn = (
 export class Gn4FieldMapper {
   constructor(
     private metadataUrlService: MetadataUrlService,
-    private translateService: TranslateService
+    private langService: LangService
   ) {}
 
-  private lang3 = LANG_2_TO_3_MAPPER[this.translateService.currentLang]
-    ? 'lang' + LANG_2_TO_3_MAPPER[this.translateService.currentLang]
-    : null
+  private lang3 = this.langService.gnLang
 
   protected fields: Record<string, EsFieldMapperFn> = {
     id: (output, source) =>
@@ -131,7 +128,9 @@ export class Gn4FieldMapper {
     },
     contact: (output, source) => ({
       ...output,
-      contacts: [mapContact(getFirstValue(selectField(source, 'contact')))],
+      contacts: [
+        mapContact(getFirstValue(selectField(source, 'contact')), this.lang3),
+      ],
     }),
     contactForResource: (output, source) => ({
       ...output,
@@ -141,7 +140,7 @@ export class Gn4FieldMapper {
           ? output.contactsForResource
           : []),
         ...getAsArray(selectField(source, 'contactForResource')).map(
-          (contact) => mapContact(contact)
+          (contact) => mapContact(contact, this.lang3)
         ),
       ],
     }),

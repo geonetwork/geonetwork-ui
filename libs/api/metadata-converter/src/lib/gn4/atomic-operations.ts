@@ -24,7 +24,8 @@ export const selectFallback = <T, U>(field: T, fallback: U): T | U =>
 export const selectTranslatedValue = <T>(
   source: SourceWithUnknownProps,
   lang3: string
-): T | null => selectField(source, lang3) || selectField(source, 'default')
+): T | null =>
+  selectFallback(selectField(source, lang3), selectField(source, 'default'))
 
 export const selectTranslatedField = <T>(
   source: SourceWithUnknownProps,
@@ -61,13 +62,14 @@ export const mapLogo = (source: SourceWithUnknownProps) => {
 }
 
 export const mapOrganization = (
-  sourceContact: SourceWithUnknownProps
+  sourceContact: SourceWithUnknownProps,
+  lang3: string
 ): Organization => {
   const website = getAsUrl(selectField<string>(sourceContact, 'website'))
   const logoUrl = getAsUrl(selectField<string>(sourceContact, 'logo'))
   return {
     name: selectFallback(
-      selectTranslatedField<string>(sourceContact, 'organisationObject'),
+      selectTranslatedField<string>(sourceContact, 'organisationObject', lang3),
       selectField<string>(sourceContact, 'organisation')
     ),
     ...(logoUrl && { logoUrl }),
@@ -76,13 +78,14 @@ export const mapOrganization = (
 }
 
 export const mapContact = (
-  sourceContact: SourceWithUnknownProps
+  sourceContact: SourceWithUnknownProps,
+  lang3: string
 ): Individual => {
   const address = selectField<string>(sourceContact, 'address')
   const phone = selectField<string>(sourceContact, 'phone')
   return {
     lastName: selectField<string>(sourceContact, 'individual'),
-    organization: mapOrganization(sourceContact),
+    organization: mapOrganization(sourceContact, lang3),
     email: selectField<string>(sourceContact, 'email'),
     role: getRoleFromRoleCode(selectField<string>(sourceContact, 'role')),
     ...(address && { address }),

@@ -9,18 +9,18 @@ import {
 } from '@geonetwork-ui/data-access/gn4'
 import { CommonModule } from '@angular/common'
 import { SourceLabelComponent } from './source-label/source-label.component'
-import { UtilI18nModule } from '@geonetwork-ui/util/i18n'
+import { LangService, UtilI18nModule } from '@geonetwork-ui/util/i18n'
 import { OrganisationsComponent } from './organisations/organisations.component'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
-  OrganizationsFromMetadataService,
+  ElasticsearchService,
   ORGANIZATIONS_STRATEGY,
   OrganizationsFromGroupsService,
+  OrganizationsFromMetadataService,
   OrganizationsStrategy,
-  ElasticsearchService,
 } from '@geonetwork-ui/api/repository/gn4'
 
 // expects the replacement key ${name}
@@ -34,7 +34,8 @@ const organizationsServiceFactory = (
   searchApiService: SearchApiService,
   groupsApiService: GroupsApiService,
   translateService: TranslateService,
-  siteApiService: SiteApiService
+  siteApiService: SiteApiService,
+  langService: LangService
 ) =>
   strategy === 'groups'
     ? new OrganizationsFromGroupsService(
@@ -47,7 +48,8 @@ const organizationsServiceFactory = (
         esService,
         searchApiService,
         groupsApiService,
-        siteApiService
+        siteApiService,
+        langService
       )
 
 @NgModule({
@@ -77,6 +79,7 @@ const organizationsServiceFactory = (
         GroupsApiService,
         TranslateService,
         SiteApiService,
+        LangService,
       ],
     },
   ],

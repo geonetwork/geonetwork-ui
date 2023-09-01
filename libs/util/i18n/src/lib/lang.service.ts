@@ -17,4 +17,7 @@ export class LangService {
   get index(): string {
     return `lang${this.iso3}`
   }
+  get gnLang() {
+    return this.iso3 ? 'lang' + this.iso3 : null
+  }
 }

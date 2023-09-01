@@ -27,6 +27,7 @@ import {
 } from '@geonetwork-ui/api/metadata-converter'
 import { combineLatest, Observable, of, switchMap, takeLast } from 'rxjs'
 import { filter, map, shareReplay, startWith, tap } from 'rxjs/operators'
+import { LangService } from '@geonetwork-ui/util/i18n'
 
 const IMAGE_URL = '/geonetwork/images/harvesting/'
 
@@ -114,8 +115,11 @@ export class OrganizationsFromMetadataService
     private esService: ElasticsearchService,
     private searchApiService: SearchApiService,
     private groupsApiService: GroupsApiService,
-    private siteApiService: SiteApiService
+    private siteApiService: SiteApiService,
+    private langService: LangService
   ) {}
+
+  private lang3 = this.langService.gnLang
 
   equalsNormalizedStrings(
     str1: string,
@@ -276,19 +280,19 @@ export class OrganizationsFromMetadataService
   ): Observable<CatalogRecord> {
     const contacts: SourceWithUnknownProps[] = getAsArray(
       selectFallback(
-        selectTranslatedField(source, 'contactObject'),
+        selectTranslatedField(source, 'contactObject', this.lang3),
         selectField(source, 'contact')
       )
     )
     const resourceContacts: SourceWithUnknownProps[] = getAsArray(
       selectFallback(
-        selectTranslatedField(source, 'contactForResourceObject'),
+        selectTranslatedField(source, 'contactForResourceObject', this.lang3),
         selectField(source, 'contactForResource')
       )
     )
     const allContactOrgs = resourceContacts
       .concat(contacts)
-      .map((contact) => mapOrganization(contact))
+      .map((contact) => mapOrganization(contact, this.lang3))
 
     if (!allContactOrgs.length) return of(record)
 
