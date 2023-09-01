@@ -1,13 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
-import { AllRecordsComponent } from './all-records-list.component'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { SearchRecordsComponent } from './search-records-list.component'
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 import { By } from '@angular/platform-browser'
 import { Router } from '@angular/router'
 import { BehaviorSubject } from 'rxjs'
 import { CommonModule } from '@angular/common'
-import { MatIconModule } from '@angular/material/icon'
 
 const results = [{ md: true }]
 const currentPage = 5
@@ -21,7 +20,6 @@ const totalPages = 25
 })
 export class RecordTableComponent {
   @Input() records: CatalogRecord[]
-  @Input() totalHits: number
   @Output() recordSelect = new EventEmitter<CatalogRecord>()
 }
 
@@ -43,26 +41,24 @@ class SearchFacadeMock {
   currentPage$ = new BehaviorSubject(currentPage)
   totalPages$ = new BehaviorSubject(totalPages)
   resultsHits$ = new BehaviorSubject(1000)
-  setConfigRequestFields = jest.fn(() => this)
-  setPagination = jest.fn(() => this)
-  setSortBy = jest.fn(() => this)
-}
-class SearchServiceMock {
-  setPage = jest.fn()
+  setFavoritesOnly = jest.fn()
+  setSortBy = jest.fn()
 }
 class RouterMock {
   navigate = jest.fn()
 }
+class DashboardSearchServiceMock {
+  paginate = jest.fn()
+}
 
-describe('AllRecordsComponent', () => {
-  let component: AllRecordsComponent
-  let fixture: ComponentFixture<AllRecordsComponent>
+describe('SearchRecordsComponent', () => {
+  let component: SearchRecordsComponent
+  let fixture: ComponentFixture<SearchRecordsComponent>
   let router: Router
-  let searchService: SearchService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AllRecordsComponent],
+      imports: [SearchRecordsComponent],
       providers: [
         {
           provide: SearchFacade,
@@ -72,24 +68,18 @@ describe('AllRecordsComponent', () => {
           provide: Router,
           useClass: RouterMock,
         },
-        {
-          provide: SearchService,
-          useClass: SearchServiceMock,
-        },
       ],
-    }).overrideComponent(AllRecordsComponent, {
+    }).overrideComponent(SearchRecordsComponent, {
       set: {
         imports: [
           CommonModule,
-          MatIconModule,
           RecordTableComponent,
           PaginationButtonsComponent,
         ],
       },
     })
     router = TestBed.inject(Router)
-    searchService = TestBed.inject(SearchService)
-    fixture = TestBed.createComponent(AllRecordsComponent)
+    fixture = TestBed.createComponent(SearchRecordsComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
@@ -129,7 +119,7 @@ describe('AllRecordsComponent', () => {
         pagination.newCurrentPageEvent.emit(3)
       })
       it('paginates', () => {
-        expect(searchService.setPage).toHaveBeenCalledWith(3)
+        expect(dashboardSearchService.paginate).toHaveBeenCalledWith(3)
       })
     })
   })

@@ -9,7 +9,7 @@ import { SearchHeaderComponent } from './search-header/search-header.component'
   templateUrl: './dashboard-page.component.html',
   styleUrls: ['./dashboard-page.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [SearchFacade, SearchService],
+  providers: [SearchService],
   imports: [RouterOutlet, SidebarComponent, SearchHeaderComponent],
   standalone: true,
 })

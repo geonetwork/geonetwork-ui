@@ -5,7 +5,6 @@ import { Router } from '@angular/router'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 
 const includes = [
   'uuid',
@@ -18,13 +17,13 @@ const includes = [
 ]
 
 @Component({
-  selector: 'md-editor-all-records-list',
-  templateUrl: './all-records-list.component.html',
-  styleUrls: ['./all-records-list.component.css'],
+  selector: 'md-editor-search-records-list',
+  templateUrl: './search-records-list.component.html',
+  styleUrls: ['./search-records-list.component.css'],
   standalone: true,
-  imports: [CommonModule, MatIconModule, UiSearchModule, UiElementsModule],
+  imports: [CommonModule, MatIconModule, UiSearchModule],
 })
-export class AllRecordsComponent {
+export class SearchRecordsComponent {
   constructor(
     private router: Router,
     public searchFacade: SearchFacade,
