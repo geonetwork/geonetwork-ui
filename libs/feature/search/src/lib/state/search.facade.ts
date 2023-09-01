@@ -8,7 +8,6 @@ import {
   Paginate,
   RequestMoreOnAggregation,
   RequestMoreResults,
-  Scroll,
   SetConfigAggregations,
   SetConfigFilters,
   SetConfigRequestFields,
@@ -191,13 +190,13 @@ export class SearchFacade {
     return this
   }
 
-  paginate(delta?: number): SearchFacade {
-    this.store.dispatch(new Paginate(delta, this.searchId))
+  paginate(pageNumber: number): SearchFacade {
+    this.store.dispatch(new Paginate(pageNumber, this.searchId))
     return this
   }
 
   scroll(): SearchFacade {
-    this.store.dispatch(new Scroll(this.searchId))
+    this.store.dispatch(new RequestMoreResults(this.searchId))
     return this
   }
 

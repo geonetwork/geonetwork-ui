@@ -37,7 +37,7 @@ export const getSearchResults = createSelector(
 
 export const getSearchResultsLoading = createSelector(
   getSearchStateSearch,
-  (state: SearchStateSearch) => state.loadingMore
+  (state: SearchStateSearch) => state.loadingResults
 )
 
 export const getSearchResultsAggregations = createSelector(

@@ -2,7 +2,7 @@ import { Inject, Injectable, Optional } from '@angular/core'
 import { AuthService } from '@geonetwork-ui/feature/auth'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
-import { combineLatestWith, from, of } from 'rxjs'
+import { combineLatestWith, debounceTime, from, of } from 'rxjs'
 import {
   catchError,
   map,
@@ -15,16 +15,18 @@ import {
   ClearError,
   ClearPagination,
   ClearResults,
+  PAGINATE,
   PatchResultsAggregations,
   REQUEST_MORE_ON_AGGREGATION,
   REQUEST_MORE_RESULTS,
+  REQUEST_NEW_RESULTS,
   RequestMoreOnAggregation,
-  RequestMoreResults,
-  SCROLL,
+  RequestNewResults,
   SearchActions,
   SET_FAVORITES_ONLY,
   SET_FILTERS,
   SET_INCLUDE_ON_AGGREGATION,
+  SET_PAGINATION,
   SET_SEARCH,
   SET_SORT_BY,
   SET_SPATIAL_FILTER_ENABLED,
@@ -56,7 +58,20 @@ export class SearchEffects {
     private filterGeometry: Promise<Geometry>
   ) {}
 
-  clearResults$ = createEffect(() =>
+  resetPagination$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(
+        SET_FILTERS,
+        UPDATE_FILTERS,
+        SET_SEARCH,
+        SET_FAVORITES_ONLY,
+        SET_SPATIAL_FILTER_ENABLED
+      ),
+      map((action: SearchActions) => new ClearPagination(action.id))
+    )
+  )
+
+  requestNewResults$ = createEffect(() =>
     this.actions$.pipe(
       ofType(
         SET_SORT_BY,
@@ -64,28 +79,18 @@ export class SearchEffects {
         UPDATE_FILTERS,
         SET_SEARCH,
         SET_FAVORITES_ONLY,
-        SET_SPATIAL_FILTER_ENABLED
+        SET_SPATIAL_FILTER_ENABLED,
+        PAGINATE,
+        SET_PAGINATION
       ),
-      switchMap((action: SearchActions) =>
-        of(
-          new ClearResults(action.id),
-          new ClearPagination(action.id),
-          new RequestMoreResults(action.id)
-        )
-      )
-    )
-  )
-
-  scroll$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(SCROLL),
-      map((action: SearchActions) => new RequestMoreResults(action.id))
+      debounceTime(0),
+      map((action: SearchActions) => new RequestNewResults(action.id))
     )
   )
 
   loadResults$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(REQUEST_MORE_RESULTS),
+      ofType(REQUEST_MORE_RESULTS, REQUEST_NEW_RESULTS),
       switchMapWithSearchId((action: SearchActions) =>
         this.authService.authReady().pipe(
           withLatestFrom(
@@ -137,12 +142,16 @@ export class SearchEffects {
             }
           ),
           switchMap(([results, aggregations]) => {
-            return [
+            const actions: SearchActions[] = [
+              new ClearError(action.id),
               new AddResults(results.records, action.id),
               new SetResultsAggregations(aggregations, action.id),
               new SetResultsHits(results.count, action.id),
-              new ClearError(action.id),
             ]
+            if (action.type === REQUEST_NEW_RESULTS) {
+              actions.unshift(new ClearResults(action.id))
+            }
+            return of(...actions)
           }),
           catchError((error: HttpErrorResponse | Error) => {
             if ('status' in error) {

@@ -35,7 +35,7 @@ export interface SearchStateSearch {
     aggregations: Aggregations
   }
   resultsLayout?: string
-  loadingMore: boolean
+  loadingResults: boolean
   error: SearchError
 }
 
@@ -60,7 +60,7 @@ export const initSearch = (): SearchStateSearch => {
       records: [],
       aggregations: {},
     },
-    loadingMore: false,
+    loadingResults: false,
     error: null,
   }
 }
@@ -169,10 +169,8 @@ export function reducerSearch(
           offset: 0,
         },
       }
-    case fromActions.SCROLL:
     case fromActions.PAGINATE: {
-      const delta = (action as fromActions.Paginate).delta || state.params.limit
-      const offset = Math.max(0, state.params.offset + delta)
+      const offset = Math.max(0, state.params.limit * (action.pageNumber - 1))
       return {
         ...state,
         params: {
@@ -194,7 +192,7 @@ export function reducerSearch(
           ...state.results,
           records: [...state.results.records, ...action.payload],
         },
-        loadingMore: false,
+        loadingResults: false,
       }
     }
     case fromActions.CLEAR_RESULTS: {
@@ -207,9 +205,21 @@ export function reducerSearch(
       }
     }
     case fromActions.REQUEST_MORE_RESULTS: {
+      const delta = state.params.limit
+      const offset = Math.max(0, state.params.offset + delta)
       return {
         ...state,
-        loadingMore: true,
+        params: {
+          ...state.params,
+          offset,
+        },
+        loadingResults: true,
+      }
+    }
+    case fromActions.REQUEST_NEW_RESULTS: {
+      return {
+        ...state,
+        loadingResults: true,
       }
     }
     case fromActions.SET_RESULTS_HITS: {
@@ -311,7 +321,7 @@ export function reducerSearch(
       return {
         ...state,
         error: { code, message },
-        loadingMore: false,
+        loadingResults: false,
       }
     }
 

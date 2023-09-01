@@ -1,8 +1,8 @@
 import {
-  SAMPLE_AGGREGATIONS_PARAMS,
-  SAMPLE_AGGREGATIONS_RESULTS,
   HISTOGRAM_AGGREGATION,
   SAMPLE_AGGREGATION_MORE_RESULTS,
+  SAMPLE_AGGREGATIONS_PARAMS,
+  SAMPLE_AGGREGATIONS_RESULTS,
   TERMS_AGGREGATION,
 } from '@geonetwork-ui/common/fixtures'
 import { DEFAULT_PAGE_SIZE } from '../constants'
@@ -168,17 +168,9 @@ describe('Search Reducer', () => {
 
   describe('Paginate action', () => {
     it('should set from property and keep size', () => {
-      const action = new fromActions.Paginate(30)
+      const action = new fromActions.Paginate(3)
       const state = reducerSearch(initialStateSearch, action)
-      expect(state.params.offset).toEqual(30)
-      expect(state.params.limit).toEqual(DEFAULT_PAGE_SIZE)
-    })
-  })
-  describe('Scroll action', () => {
-    it('increment `from` property with `size` value', () => {
-      const action = new fromActions.Scroll()
-      const state = reducerSearch(initialStateSearch, action)
-      expect(state.params.offset).toEqual(DEFAULT_PAGE_SIZE)
+      expect(state.params.offset).toEqual(2 * DEFAULT_PAGE_SIZE)
       expect(state.params.limit).toEqual(DEFAULT_PAGE_SIZE)
     })
   })
@@ -210,17 +202,17 @@ describe('Search Reducer', () => {
         ...payload,
       ])
     })
-    it('should remove the loadingMore flag', () => {
+    it('should remove the loadingResults flag', () => {
       const payload = [{ title: 'record1' } as any]
       const action = new fromActions.AddResults(payload)
       const state = reducerSearch(
         {
           ...initialStateSearch,
-          loadingMore: true,
+          loadingResults: true,
         },
         action
       )
-      expect(state.loadingMore).toEqual(false)
+      expect(state.loadingResults).toEqual(false)
     })
   })
 
@@ -246,11 +238,22 @@ describe('Search Reducer', () => {
     })
   })
 
+  describe('RequestNewResults action', () => {
+    it('should set the loadingResults flag, not change params', () => {
+      const action = new fromActions.RequestNewResults()
+      const state = reducerSearch(initialStateSearch, action)
+      expect(state.loadingResults).toEqual(true)
+      expect(state.params).toEqual(initialStateSearch.params)
+    })
+  })
+
   describe('RequestMoreResults action', () => {
-    it('should set the loadingMore flag', () => {
+    it('increment `from` property with `size` value and set the loadingResults flag', () => {
       const action = new fromActions.RequestMoreResults()
       const state = reducerSearch(initialStateSearch, action)
-      expect(state.loadingMore).toEqual(true)
+      expect(state.params.offset).toEqual(DEFAULT_PAGE_SIZE)
+      expect(state.params.limit).toEqual(DEFAULT_PAGE_SIZE)
+      expect(state.loadingResults).toEqual(true)
     })
   })
 
@@ -432,7 +435,7 @@ describe('Search Reducer', () => {
       const state = reducerSearch(
         {
           ...initialStateSearch,
-          loadingMore: true,
+          loadingResults: true,
           error: null,
         },
         action
@@ -441,7 +444,7 @@ describe('Search Reducer', () => {
         code: 404,
         message: 'Not found',
       })
-      expect(state.loadingMore).toBeFalsy()
+      expect(state.loadingResults).toBeFalsy()
     })
   })
 

@@ -70,7 +70,7 @@ describe('Search Selectors', () => {
     it('should return whether more results are loading', () => {
       const result = fromSelectors.getSearchResultsLoading.projector({
         ...initialStateSearch,
-        loadingMore: true,
+        loadingResults: true,
       })
       expect(result).toEqual(true)
     })

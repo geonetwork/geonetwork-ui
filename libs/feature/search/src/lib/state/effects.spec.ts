@@ -6,14 +6,16 @@ import {
   ClearPagination,
   ClearResults,
   DEFAULT_SEARCH_KEY,
+  Paginate,
   PatchResultsAggregations,
   RequestMoreOnAggregation,
   RequestMoreResults,
-  Scroll,
+  RequestNewResults,
   SetError,
   SetFavoritesOnly,
   SetFilters,
   SetIncludeOnAggregation,
+  SetPagination,
   SetResultsAggregations,
   SetResultsHits,
   SetSearch,
@@ -45,6 +47,7 @@ import { delay } from 'rxjs/operators'
 import { FavoritesService } from '../favorites/favorites.service'
 import { FILTER_GEOMETRY } from '../feature-search.module'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { TestScheduler } from 'rxjs/internal/testing/TestScheduler'
 
 const defaultSearchState = initialState[DEFAULT_SEARCH_KEY]
 const stateWithSearches = {
@@ -121,79 +124,149 @@ describe('Effects', () => {
     expect(effects).toBeTruthy()
   })
 
-  describe('clearResults$', () => {
-    it('clear results list on sortBy action', () => {
-      actions$ = hot('-a---', { a: new SetSortBy(['asc', 'fieldA']) })
-      const expected = hot('-(bcd)', {
-        b: new ClearResults(),
-        c: new ClearPagination(),
-        d: new RequestMoreResults(),
+  describe('resetPagination$', () => {
+    it('resets pagination on filters change', () => {
+      actions$ = hot('-a-', { a: new SetFilters({ any: 'abcd', other: 'ef' }) })
+      const expected = hot('-b-', {
+        b: new ClearPagination(),
       })
-
-      expect(effects.clearResults$).toBeObservable(expected)
+      expect(effects.resetPagination$).toBeObservable(expected)
     })
-    it('clear results list on setFilters action', () => {
-      actions$ = hot('-a---', {
-        a: new SetFilters({ any: 'abcd', other: 'ef' }),
+    it('resets pagination on filters update', () => {
+      actions$ = hot('-a-', { a: new UpdateFilters({ any: 'abcd' }) })
+      const expected = hot('-b-', {
+        b: new ClearPagination(),
       })
-      const expected = hot('-(bcd)', {
-        b: new ClearResults(),
-        c: new ClearPagination(),
-        d: new RequestMoreResults(),
-      })
-
-      expect(effects.clearResults$).toBeObservable(expected)
+      expect(effects.resetPagination$).toBeObservable(expected)
     })
-    it('clear results list on updateFilters action', () => {
-      actions$ = hot('-a---', { a: new UpdateFilters({ any: 'abcd' }) })
-      const expected = hot('-(bcd)', {
-        b: new ClearResults(),
-        c: new ClearPagination(),
-        d: new RequestMoreResults(),
-      })
-
-      expect(effects.clearResults$).toBeObservable(expected)
-    })
-    it('clear results list on setSearch action', () => {
-      actions$ = hot('-a---', {
+    it('resets pagination on filters update', () => {
+      actions$ = hot('-a-', {
         a: new SetSearch({ filters: { any: 'abcd' } } as any, 'main'),
       })
-      const expected = hot('-(bcd)', {
-        b: new ClearResults('main'),
-        c: new ClearPagination('main'),
-        d: new RequestMoreResults('main'),
+      const expected = hot('-b-', {
+        b: new ClearPagination('main'),
       })
-
-      expect(effects.clearResults$).toBeObservable(expected)
-    })
-    it('clear results list on setSpatialFilterEnabled action', () => {
-      actions$ = hot('-a---', {
-        a: new SetSpatialFilterEnabled(true, 'main'),
-      })
-      const expected = hot('-(bcd)', {
-        b: new ClearResults('main'),
-        c: new ClearPagination('main'),
-        d: new RequestMoreResults('main'),
-      })
-
-      expect(effects.clearResults$).toBeObservable(expected)
+      expect(effects.resetPagination$).toBeObservable(expected)
     })
   })
 
-  describe('scroll$', () => {
-    it('request more results on scroll action', () => {
-      actions$ = hot('-a---', { a: new Scroll('main') })
-      const expected = hot('-(b)', {
-        b: new RequestMoreResults('main'),
+  describe('requestNewResults$', () => {
+    let testScheduler: TestScheduler
+    beforeEach(() => {
+      testScheduler = new TestScheduler((actual, expected) => {
+        expect(actual).toEqual(expected)
       })
-      expect(effects.scroll$).toBeObservable(expected)
+    })
+
+    it('request new results on sortBy action', () => {
+      testScheduler.run(({ hot, expectObservable }) => {
+        actions$ = hot('-a---', {
+          a: new SetSortBy(['asc', 'fieldA']),
+        })
+        const expected = hot('-b', {
+          b: new RequestNewResults(),
+        })
+
+        expectObservable(effects.requestNewResults$).toEqual(expected)
+      })
+    })
+    it('request new results on setFilters action', () => {
+      testScheduler.run(({ hot, expectObservable }) => {
+        actions$ = hot('-a---', {
+          a: new SetFilters({ any: 'abcd', other: 'ef' }),
+        })
+        const expected = hot('-b', {
+          b: new RequestNewResults(),
+        })
+
+        expectObservable(effects.requestNewResults$).toEqual(expected)
+      })
+    })
+    it('request new results on updateFilters action', () => {
+      testScheduler.run(({ hot, expectObservable }) => {
+        actions$ = hot('-a---', {
+          a: new UpdateFilters({ any: 'abcd' }),
+        })
+        const expected = hot('-b', {
+          b: new RequestNewResults(),
+        })
+
+        expectObservable(effects.requestNewResults$).toEqual(expected)
+      })
+    })
+    it('request new results on setSearch action', () => {
+      testScheduler.run(({ hot, expectObservable }) => {
+        actions$ = hot('-a---', {
+          a: new SetSearch({ filters: { any: 'abcd' } } as any, 'main'),
+        })
+        const expected = hot('-b', {
+          b: new RequestNewResults('main'),
+        })
+        expectObservable(effects.requestNewResults$).toEqual(expected)
+      })
+    })
+    it('request new results on setSpatialFilterEnabled action', () => {
+      testScheduler.run(({ hot, expectObservable }) => {
+        actions$ = hot('-a---', {
+          a: new SetSpatialFilterEnabled(true, 'main'),
+        })
+        const expected = hot('-b', {
+          b: new RequestNewResults('main'),
+        })
+
+        expectObservable(effects.requestNewResults$).toEqual(expected)
+      })
+    })
+
+    it('request new results on SetPagination action', () => {
+      testScheduler.run(({ hot, expectObservable }) => {
+        actions$ = hot('-a---', {
+          a: new SetPagination(12, 15, 'main'),
+        })
+        const expected = hot('-b', {
+          b: new RequestNewResults('main'),
+        })
+
+        expectObservable(effects.requestNewResults$).toEqual(expected)
+      })
+    })
+
+    it('request new results on Paginate action', () => {
+      testScheduler.run(({ hot, expectObservable }) => {
+        actions$ = hot('-a---', {
+          a: new Paginate(4),
+        })
+        const expected = hot('-b', {
+          b: new RequestNewResults(),
+        })
+
+        expectObservable(effects.requestNewResults$).toEqual(expected)
+      })
+    })
+
+    describe('several param changes in the same frame', () => {
+      it('only issues one new RequestNewResults action', () => {
+        testScheduler.run(({ hot, expectObservable }) => {
+          actions$ = hot('-(abcd)-', {
+            a: new SetSpatialFilterEnabled(true, 'main'),
+            b: new SetSortBy(['asc', 'fieldA'], 'main'),
+            c: new SetFilters({ any: 'abcd', other: 'ef' }, 'main'),
+            d: new Paginate(4, 'main'),
+          })
+          const expected = hot('-b', {
+            b: new RequestNewResults('main'),
+          })
+
+          expectObservable(effects.requestNewResults$).toEqual(expected)
+        })
+      })
     })
   })
 
   describe('loadResults$', () => {
     it('load new results on requestMoreResults action', () => {
       actions$ = hot('-a-', { a: new RequestMoreResults() })
-      const expected = hot('-(bcde)-', {
+      const expected = hot('-(ebcd)-', {
         b: new AddResults(DATASET_RECORDS),
         c: new SetResultsAggregations(SAMPLE_AGGREGATIONS_RESULTS),
         d: new SetResultsHits(123),
@@ -202,13 +275,26 @@ describe('Effects', () => {
       expect(effects.loadResults$).toBeObservable(expected)
     })
 
+    it('load new results and clear previous ones on requestNewResults action', () => {
+      actions$ = hot('-a-', { a: new RequestNewResults() })
+      const expected = hot('-(febcd)-', {
+        b: new AddResults(DATASET_RECORDS),
+        c: new SetResultsAggregations(SAMPLE_AGGREGATIONS_RESULTS),
+        d: new SetResultsHits(123),
+        e: new ClearError(),
+        f: new ClearResults(),
+      })
+      expect(effects.loadResults$).toBeObservable(expected)
+    })
+
     it('propagate action search id', () => {
-      actions$ = hot('-a-', { a: new RequestMoreResults('main') })
-      const expected = hot('-(bcde)-', {
+      actions$ = hot('-a-', { a: new RequestNewResults('main') })
+      const expected = hot('-(febcd)-', {
         b: new AddResults(DATASET_RECORDS, 'main'),
         c: new SetResultsAggregations(SAMPLE_AGGREGATIONS_RESULTS, 'main'),
         d: new SetResultsHits(123, 'main'),
         e: new ClearError('main'),
+        f: new ClearResults('main'),
       })
       expect(effects.loadResults$).toBeObservable(expected)
     })
@@ -223,7 +309,7 @@ describe('Effects', () => {
           a: new RequestMoreResults('main'),
           b: new RequestMoreResults(DEFAULT_SEARCH_KEY),
         })
-        const expected = hot('--(abcdwxyz)-', {
+        const expected = hot('--(dabczwxy)-', {
           a: new AddResults(SAMPLE_SEARCH_RESULTS.records, 'main'),
           b: new SetResultsAggregations(SAMPLE_AGGREGATIONS_RESULTS, 'main'),
           c: new SetResultsHits(123, 'main'),
