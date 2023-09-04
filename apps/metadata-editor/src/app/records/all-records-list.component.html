@@ -10,19 +10,6 @@
       <span translate="">new record</span>
     </button>
   </div>
-  <div *ngIf="searchFacade.resultsHits$ | async as totalHits">
-    <div
-      *ngIf="searchFacade.results$ | async as results"
-      translate
-      class="text-gray-500"
-      [translateParams]="{
-        displayed: results.length,
-        hits: totalHits
-      }"
-    >
-      results.records.hits.displayedOn
-    </div>
-  </div>
   <div
     class="shadow rounded bg-white grow"
     *ngIf="searchFacade.results$ | async as results"
