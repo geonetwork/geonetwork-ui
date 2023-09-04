@@ -21,15 +21,14 @@ import { environment } from '../environments/environment'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { MainSearchComponent } from './main-search/main-search.component'
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MyOrgRecordsComponent } from './apps/metadata-editor/src/app/my-org-records/my-org-records.component'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
   : []
 
 @NgModule({
-  declarations: [AppComponent, MainSearchComponent, MyOrgRecordsComponent],
+  declarations: [AppComponent, MainSearchComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
