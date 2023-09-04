@@ -26,29 +26,6 @@ export class DashboardSearchService {
       .setConfigRequestFields(includes)
       .setPagination(0, 15)
       .setSortBy(['desc', 'changeDate'])
-
-    // combineLatest([
-    //   this.dashboardFacade.activeMenu$,
-    //   authService.user$,
-    // ]).subscribe(([menu, user]) => {
-    //   let filters
-    //   switch (menu) {
-    //     case 'my-records':
-    //       filters = {
-    //         owner: { [user.id]: true },
-    //       }
-    //       break
-    //     case 'my-org':
-    //       filters = {
-    //         Org: { [user.organisation]: true },
-    //       }
-    //       break
-    //     case 'catalog':
-    //     default:
-    //       break
-    //   }
-    //   this.facade.setFilters(filters)
-    // })
   }
 
   paginate(page: number) {

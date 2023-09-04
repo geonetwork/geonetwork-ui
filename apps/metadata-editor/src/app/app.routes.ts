@@ -54,12 +54,6 @@ export const appRoutes: Route[] = [
       },
     ],
   },
-  // {
-  //   path: '/records(inner:all)',
-  //   title: 'All records',
-  //   component: AllRecordsComponent,
-  //   outlet: 'inner',
-  // },
   { path: 'sign-in', component: SignInPageComponent },
   { path: 'create', component: CreatePageComponent },
   {
