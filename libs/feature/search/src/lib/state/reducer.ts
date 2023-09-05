@@ -5,14 +5,19 @@ import {
   AggregationsParams,
   FieldFilters,
   FieldName,
-  SearchParams,
+  SortByField,
 } from '@geonetwork-ui/common/domain/search'
 import { DEFAULT_PAGE_SIZE, FIELDS_SUMMARY } from '../constants'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
 export const SEARCH_FEATURE_KEY = 'searchState'
 
-export type SearchStateParams = SearchParams & {
+export type SearchStateParams = {
+  filters?: FieldFilters
+  currentPage: number // zero-based
+  pageSize: number
+  sort?: SortByField
+  fields?: FieldName[]
   favoritesOnly?: boolean
   useSpatialFilter?: boolean
 }
@@ -50,8 +55,8 @@ export const initSearch = (): SearchStateSearch => {
     },
     params: {
       filters: {},
-      limit: DEFAULT_PAGE_SIZE,
-      offset: 0,
+      pageSize: DEFAULT_PAGE_SIZE,
+      currentPage: 0,
       favoritesOnly: false,
       useSpatialFilter: true,
     },
@@ -150,32 +155,22 @@ export function reducerSearch(
         },
       }
     }
-    case fromActions.SET_PAGINATION: {
-      const { offset, limit } = action
+    case fromActions.SET_PAGE_SIZE: {
+      const { limit } = action
       return {
         ...state,
         params: {
           ...state.params,
-          limit,
-          offset,
+          pageSize: limit,
         },
       }
     }
-    case fromActions.CLEAR_PAGINATION:
-      return {
-        ...state,
-        params: {
-          ...state.params,
-          offset: 0,
-        },
-      }
     case fromActions.PAGINATE: {
-      const offset = Math.max(0, state.params.limit * (action.pageNumber - 1))
       return {
         ...state,
         params: {
           ...state.params,
-          offset,
+          currentPage: action.pageNumber - 1,
         },
       }
     }
@@ -205,13 +200,11 @@ export function reducerSearch(
       }
     }
     case fromActions.REQUEST_MORE_RESULTS: {
-      const delta = state.params.limit
-      const offset = Math.max(0, state.params.offset + delta)
       return {
         ...state,
         params: {
           ...state.params,
-          offset,
+          currentPage: state.params.currentPage + 1,
         },
         loadingResults: true,
       }

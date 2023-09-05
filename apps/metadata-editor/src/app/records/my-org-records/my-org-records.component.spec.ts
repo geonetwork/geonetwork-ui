@@ -15,7 +15,7 @@ import { RecordsListComponent } from '../records-list.component'
 export class MockRecordsListComponent {}
 
 class SearchFacadeMock {
-  setFilters = jest.fn()
+  resetSearch = jest.fn()
 }
 
 describe('MyOrgRecordsComponent', () => {
@@ -52,7 +52,7 @@ describe('MyOrgRecordsComponent', () => {
 
   describe('filters', () => {
     it('clears filters on init', () => {
-      expect(searchFacade.setFilters).toHaveBeenCalledWith({})
+      expect(searchFacade.resetSearch).toHaveBeenCalled()
     })
   })
 })

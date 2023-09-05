@@ -13,6 +13,6 @@ import { RecordsListComponent } from '../records-list.component'
 })
 export class AllRecordsComponent {
   constructor(public searchFacade: SearchFacade) {
-    this.searchFacade.setFilters({})
+    this.searchFacade.resetSearch()
   }
 }

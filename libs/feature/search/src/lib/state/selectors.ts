@@ -53,26 +53,29 @@ export const getSearchResultsHits = createSelector(
 export const isEndOfResults = createSelector(
   getSearchStateSearch,
   (state: SearchStateSearch) => {
-    return state.params.offset + state.params.limit >= state.results.count
+    return (
+      state.params.currentPage * state.params.pageSize +
+        state.params.pageSize >=
+      state.results.count
+    )
   }
 )
 
 export const totalPages = createSelector(
   getSearchStateSearch,
   (state: SearchStateSearch) => {
-    return Math.ceil(state.results.count / state.params.limit)
+    return Math.ceil(state.results.count / state.params.pageSize)
   }
 )
 
 export const currentPage = createSelector(
   getSearchStateSearch,
-  (state: SearchStateSearch) =>
-    Math.ceil(state.params.offset / state.params.limit) + 1
+  (state: SearchStateSearch) => state.params.currentPage + 1
 )
 
-export const getSize = createSelector(
+export const getPageSize = createSelector(
   getSearchStateSearch,
-  (state: SearchStateSearch) => state.params.limit
+  (state: SearchStateSearch) => state.params.pageSize
 )
 
 export const getFavoritesOnly = createSelector(

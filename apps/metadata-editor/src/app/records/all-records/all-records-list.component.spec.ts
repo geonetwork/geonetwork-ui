@@ -14,7 +14,7 @@ import { TranslateModule } from '@ngx-translate/core'
 export class MockRecordsListComponent {}
 
 class SearchFacadeMock {
-  setFilters = jest.fn()
+  resetSearch = jest.fn()
 }
 
 describe('AllRecordsComponent', () => {
@@ -51,7 +51,7 @@ describe('AllRecordsComponent', () => {
 
   describe('filters', () => {
     it('clears filters on init', () => {
-      expect(searchFacade.setFilters).toHaveBeenCalledWith({})
+      expect(searchFacade.resetSearch).toHaveBeenCalled()
     })
   })
 })

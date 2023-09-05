@@ -3,7 +3,6 @@ import { AuthService } from '@geonetwork-ui/feature/auth'
 import {
   AddResults,
   ClearError,
-  ClearPagination,
   ClearResults,
   DEFAULT_SEARCH_KEY,
   Paginate,
@@ -15,7 +14,7 @@ import {
   SetFavoritesOnly,
   SetFilters,
   SetIncludeOnAggregation,
-  SetPagination,
+  SetPageSize,
   SetResultsAggregations,
   SetResultsHits,
   SetSearch,
@@ -128,14 +127,14 @@ describe('Effects', () => {
     it('resets pagination on filters change', () => {
       actions$ = hot('-a-', { a: new SetFilters({ any: 'abcd', other: 'ef' }) })
       const expected = hot('-b-', {
-        b: new ClearPagination(),
+        b: new Paginate(1),
       })
       expect(effects.resetPagination$).toBeObservable(expected)
     })
     it('resets pagination on filters update', () => {
       actions$ = hot('-a-', { a: new UpdateFilters({ any: 'abcd' }) })
       const expected = hot('-b-', {
-        b: new ClearPagination(),
+        b: new Paginate(1),
       })
       expect(effects.resetPagination$).toBeObservable(expected)
     })
@@ -144,7 +143,7 @@ describe('Effects', () => {
         a: new SetSearch({ filters: { any: 'abcd' } } as any, 'main'),
       })
       const expected = hot('-b-', {
-        b: new ClearPagination('main'),
+        b: new Paginate(1, 'main'),
       })
       expect(effects.resetPagination$).toBeObservable(expected)
     })
@@ -221,7 +220,7 @@ describe('Effects', () => {
     it('request new results on SetPagination action', () => {
       testScheduler.run(({ hot, expectObservable }) => {
         actions$ = hot('-a---', {
-          a: new SetPagination(12, 15, 'main'),
+          a: new SetPageSize(15, 'main'),
         })
         const expected = hot('-b', {
           b: new RequestNewResults('main'),

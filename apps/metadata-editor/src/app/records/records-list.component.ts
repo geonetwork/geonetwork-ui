@@ -33,7 +33,7 @@ export class RecordsListComponent {
     public searchService: SearchService
   ) {
     this.searchFacade
-      .setPagination(0, 15)
+      .setPageSize(15)
       .setConfigRequestFields(includes)
       .setSortBy(['desc', 'changeDate'])
   }

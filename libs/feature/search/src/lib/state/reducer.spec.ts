@@ -127,8 +127,8 @@ describe('Search Reducer', () => {
   describe('SetSearch action', () => {
     it('should set search params', () => {
       const searchParams: SearchStateParams = {
-        limit: 12,
-        offset: 0,
+        pageSize: 12,
+        currentPage: 0,
         sort: ['asc', 'tag'],
         filters: {
           any: 'tag:river',
@@ -157,12 +157,11 @@ describe('Search Reducer', () => {
     })
   })
 
-  describe('SetPagination action', () => {
-    it('should set from and size', () => {
-      const action = new fromActions.SetPagination(12, 15)
+  describe('SetPageSize action', () => {
+    it('should set size', () => {
+      const action = new fromActions.SetPageSize(15)
       const state = reducerSearch(initialStateSearch, action)
-      expect(state.params.offset).toEqual(12)
-      expect(state.params.limit).toEqual(15)
+      expect(state.params.pageSize).toEqual(15)
     })
   })
 
@@ -170,8 +169,8 @@ describe('Search Reducer', () => {
     it('should set from property and keep size', () => {
       const action = new fromActions.Paginate(3)
       const state = reducerSearch(initialStateSearch, action)
-      expect(state.params.offset).toEqual(2 * DEFAULT_PAGE_SIZE)
-      expect(state.params.limit).toEqual(DEFAULT_PAGE_SIZE)
+      expect(state.params.currentPage).toEqual(2)
+      expect(state.params.pageSize).toEqual(DEFAULT_PAGE_SIZE)
     })
   })
 
@@ -251,8 +250,8 @@ describe('Search Reducer', () => {
     it('increment `from` property with `size` value and set the loadingResults flag', () => {
       const action = new fromActions.RequestMoreResults()
       const state = reducerSearch(initialStateSearch, action)
-      expect(state.params.offset).toEqual(DEFAULT_PAGE_SIZE)
-      expect(state.params.limit).toEqual(DEFAULT_PAGE_SIZE)
+      expect(state.params.currentPage).toEqual(1)
+      expect(state.params.pageSize).toEqual(DEFAULT_PAGE_SIZE)
       expect(state.loadingResults).toEqual(true)
     })
   })

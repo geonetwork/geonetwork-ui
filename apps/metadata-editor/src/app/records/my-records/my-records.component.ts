@@ -13,6 +13,6 @@ import { SearchFacade } from '@geonetwork-ui/feature/search'
 })
 export class MyRecordsComponent {
   constructor(public searchFacade: SearchFacade) {
-    this.searchFacade.setFilters({})
+    this.searchFacade.resetSearch()
   }
 }

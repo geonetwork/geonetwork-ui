@@ -13,8 +13,8 @@ import {
 import {
   AddResults,
   ClearError,
-  ClearPagination,
   ClearResults,
+  Paginate,
   PAGINATE,
   PatchResultsAggregations,
   REQUEST_MORE_ON_AGGREGATION,
@@ -26,12 +26,13 @@ import {
   SET_FAVORITES_ONLY,
   SET_FILTERS,
   SET_INCLUDE_ON_AGGREGATION,
-  SET_PAGINATION,
+  SET_PAGE_SIZE,
   SET_SEARCH,
   SET_SORT_BY,
   SET_SPATIAL_FILTER_ENABLED,
   SetError,
   SetIncludeOnAggregation,
+  SetPageSize,
   SetResultsAggregations,
   SetResultsHits,
   UPDATE_FILTERS,
@@ -67,7 +68,7 @@ export class SearchEffects {
         SET_FAVORITES_ONLY,
         SET_SPATIAL_FILTER_ENABLED
       ),
-      map((action: SearchActions) => new ClearPagination(action.id))
+      map((action: SearchActions) => new Paginate(1, action.id))
     )
   )
 
@@ -81,7 +82,7 @@ export class SearchEffects {
         SET_FAVORITES_ONLY,
         SET_SPATIAL_FILTER_ENABLED,
         PAGINATE,
-        SET_PAGINATION
+        SET_PAGE_SIZE
       ),
       debounceTime(0),
       map((action: SearchActions) => new RequestNewResults(action.id))
@@ -122,15 +123,15 @@ export class SearchEffects {
               string[],
               Geometry | null
             ]) => {
-              const { offset, limit, sort } = state.params
+              const { currentPage, pageSize, sort } = state.params
               const filters = {
                 ...state.config.filters,
                 ...state.params.filters,
               }
               const results$ = this.recordsRepository.search({
                 filters,
-                offset,
-                limit,
+                offset: currentPage * pageSize,
+                limit: pageSize,
                 sort,
                 fields: state.config.source,
               })

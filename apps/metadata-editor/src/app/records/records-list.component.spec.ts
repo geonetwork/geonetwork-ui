@@ -44,7 +44,7 @@ class SearchFacadeMock {
   totalPages$ = new BehaviorSubject(totalPages)
   resultsHits$ = new BehaviorSubject(1000)
   setConfigRequestFields = jest.fn(() => this)
-  setPagination = jest.fn(() => this)
+  setPageSize = jest.fn(() => this)
   setSortBy = jest.fn(() => this)
 }
 class SearchServiceMock {
