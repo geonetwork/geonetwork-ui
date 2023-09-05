@@ -53,9 +53,14 @@ export const appRoutes: Route[] = [
         component: MyLibraryComponent,
         pathMatch: 'prefix',
       },
+      {
+        path: 'search',
+        title: 'Search Records',
+        component: SearchRecordsComponent,
+        pathMatch: 'prefix',
+      },
     ],
   },
-  { path: 'search', component: SearchRecordsComponent },
   { path: 'sign-in', component: SignInPageComponent },
   { path: 'create', component: CreatePageComponent },
   {

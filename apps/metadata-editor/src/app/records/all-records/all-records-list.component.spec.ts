@@ -1,94 +1,45 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { AllRecordsComponent } from './all-records-list.component'
-import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
-import { By } from '@angular/platform-browser'
-import { Router } from '@angular/router'
-import { BehaviorSubject } from 'rxjs'
-import { CommonModule } from '@angular/common'
-import { MatIconModule } from '@angular/material/icon'
-
-const results = [{ md: true }]
-const currentPage = 5
-const totalPages = 25
+import { Component, importProvidersFrom } from '@angular/core'
+import { RecordsListComponent } from '../records-list.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   // eslint-disable-next-line
-  selector: 'gn-ui-record-table',
+  selector: 'md-editor-records-list',
   template: '',
   standalone: true,
 })
-export class RecordTableComponent {
-  @Input() records: CatalogRecord[]
-  @Input() totalHits: number
-  @Output() recordSelect = new EventEmitter<CatalogRecord>()
-}
-
-@Component({
-  // eslint-disable-next-line
-  selector: 'gn-ui-pagination-buttons',
-  template: '',
-  standalone: true,
-})
-export class PaginationButtonsComponent {
-  @Input() currentPage = 1
-  @Input() totalPages = 1
-  @Input() hideButton = false
-  @Output() newCurrentPageEvent = new EventEmitter<number>()
-}
+export class MockRecordsListComponent {}
 
 class SearchFacadeMock {
-  results$ = new BehaviorSubject(results)
-  currentPage$ = new BehaviorSubject(currentPage)
-  totalPages$ = new BehaviorSubject(totalPages)
-  resultsHits$ = new BehaviorSubject(1000)
-  setConfigRequestFields = jest.fn(() => this)
-  setPagination = jest.fn(() => this)
-  setSortBy = jest.fn(() => this)
-}
-class SearchServiceMock {
-  setPage = jest.fn()
-}
-class RouterMock {
-  navigate = jest.fn()
+  setFilters = jest.fn()
 }
 
 describe('AllRecordsComponent', () => {
   let component: AllRecordsComponent
   let fixture: ComponentFixture<AllRecordsComponent>
-  let router: Router
-  let searchService: SearchService
+  let searchFacade: SearchFacade
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AllRecordsComponent],
       providers: [
+        importProvidersFrom(TranslateModule.forRoot()),
         {
           provide: SearchFacade,
           useClass: SearchFacadeMock,
         },
-        {
-          provide: Router,
-          useClass: RouterMock,
-        },
-        {
-          provide: SearchService,
-          useClass: SearchServiceMock,
-        },
       ],
     }).overrideComponent(AllRecordsComponent, {
-      set: {
-        imports: [
-          CommonModule,
-          MatIconModule,
-          RecordTableComponent,
-          PaginationButtonsComponent,
-        ],
+      remove: {
+        imports: [RecordsListComponent],
+      },
+      add: {
+        imports: [MockRecordsListComponent],
       },
     })
-    router = TestBed.inject(Router)
-    searchService = TestBed.inject(SearchService)
+    searchFacade = TestBed.inject(SearchFacade)
     fixture = TestBed.createComponent(AllRecordsComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -98,47 +49,9 @@ describe('AllRecordsComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('when search results', () => {
-    let table, pagination
-    beforeEach(() => {
-      table = fixture.debugElement.query(
-        By.directive(RecordTableComponent)
-      ).componentInstance
-      pagination = fixture.debugElement.query(
-        By.directive(PaginationButtonsComponent)
-      ).componentInstance
-    })
-    it('displays record table', () => {
-      expect(table.records).toBe(results)
-    })
-    it('displays pagination', () => {
-      expect(pagination).toBeTruthy()
-      expect(pagination.currentPage).toEqual(currentPage)
-      expect(pagination.totalPages).toEqual(totalPages)
-    })
-    describe('when click on a record', () => {
-      beforeEach(() => {
-        table.recordSelect.emit({ uniqueIdentifier: 123 })
-      })
-      it('routes to record edition', () => {
-        expect(router.navigate).toHaveBeenCalledWith(['/edit', 123])
-      })
-    })
-    describe('when click on pagination', () => {
-      beforeEach(() => {
-        pagination.newCurrentPageEvent.emit(3)
-      })
-      it('paginates', () => {
-        expect(searchService.setPage).toHaveBeenCalledWith(3)
-      })
-    })
-  })
-  describe('on new record click', () => {
-    beforeEach(() => {
-      fixture.debugElement.query(By.css('.btn-default')).nativeElement.click()
-    })
-    it('routes to create record page', () => {
-      expect(router.navigate).toHaveBeenCalledWith(['/create'])
+  describe('filters', () => {
+    it('clears filters on init', () => {
+      expect(searchFacade.setFilters).toHaveBeenCalledWith({})
     })
   })
 })

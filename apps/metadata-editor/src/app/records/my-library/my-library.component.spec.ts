@@ -1,14 +1,45 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MyLibraryComponent } from './my-library.component'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { Component, importProvidersFrom } from '@angular/core'
+import { TranslateModule } from '@ngx-translate/core'
+import { RecordsListComponent } from '../records-list.component'
+
+@Component({
+  // eslint-disable-next-line
+  selector: 'md-editor-records-list',
+  template: '',
+  standalone: true,
+})
+export class MockRecordsListComponent {}
+
+class SearchFacadeMock {
+  setFilters = jest.fn()
+}
 
 describe('MyLibraryComponent', () => {
   let component: MyLibraryComponent
   let fixture: ComponentFixture<MyLibraryComponent>
+  let searchFacade: SearchFacade
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MyLibraryComponent],
+      providers: [
+        importProvidersFrom(TranslateModule.forRoot()),
+        {
+          provide: SearchFacade,
+          useClass: SearchFacadeMock,
+        },
+      ],
+    }).overrideComponent(MyLibraryComponent, {
+      remove: {
+        imports: [RecordsListComponent],
+      },
+      add: {
+        imports: [MockRecordsListComponent],
+      },
     })
+    searchFacade = TestBed.inject(SearchFacade)
     fixture = TestBed.createComponent(MyLibraryComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -16,5 +47,11 @@ describe('MyLibraryComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  describe('filters', () => {
+    it('clears filters on init', () => {
+      expect(searchFacade.setFilters).toHaveBeenCalledWith({})
+    })
   })
 })
