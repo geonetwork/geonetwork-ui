@@ -10,7 +10,7 @@ describe('RecordFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecordFormComponent],
+      imports: [RecordFormComponent],
       providers: [
         {
           provide: EditorService,

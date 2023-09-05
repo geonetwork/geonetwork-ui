@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
-import { BrowserModule } from '@angular/platform-browser'
 import { RouterLink } from '@angular/router'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
@@ -20,13 +19,13 @@ import {
 import { ResultsListComponent } from './results-list/results-list.component'
 import { RecordPreviewComponent } from './record-preview/record-preview.component'
 import { TagInputModule } from 'ngx-chips'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ResultsListItemComponent } from './results-list-item/results-list-item.component'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { RecordPreviewFeedComponent } from './record-preview-feed/record-preview-feed.component'
 import { RecordTableComponent } from './record-table/record-table.component'
+import { CommonModule } from '@angular/common'
 
 @NgModule({
   declarations: [
@@ -44,11 +43,10 @@ import { RecordTableComponent } from './record-table/record-table.component'
     RecordTableComponent,
   ],
   imports: [
-    BrowserModule,
+    CommonModule,
     TranslateModule.forChild(),
     NgxDropzoneModule,
     FacetsModule,
-    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     TagInputModule,

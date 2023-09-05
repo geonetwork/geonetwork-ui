@@ -8,6 +8,7 @@ import { BrowserModule, By } from '@angular/platform-browser'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { WizardService } from '../../services/wizard.service'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 const DEFAULT_CHIPS_ITEMS_URL = (keys) =>
   `https://apps.titellus.net/geonetwork/srv/api/registries/vocabularies/search?type=CONTAINS&thesaurus=external.place.regions&rows=200&q=${keys}&uri=*QUERY*&lang=eng`
@@ -27,6 +28,7 @@ describe('WizardFieldsComponent', () => {
         UiInputsModule,
         BrowserModule,
         HttpClientTestingModule,
+        BrowserAnimationsModule,
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()

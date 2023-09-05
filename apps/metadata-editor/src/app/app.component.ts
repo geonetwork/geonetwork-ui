@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'
+
 @Component({
   selector: 'md-editor-root',
   templateUrl: './app.component.html',

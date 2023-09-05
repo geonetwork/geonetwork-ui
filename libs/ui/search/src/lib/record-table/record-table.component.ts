@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
@@ -9,6 +9,7 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 })
 export class RecordTableComponent {
   @Input() records: CatalogRecord[] = DATASET_RECORDS
+  @Input() totalHits?: number
   @Output() recordSelect = new EventEmitter<CatalogRecord>()
 
   dateToString(date: Date): string {

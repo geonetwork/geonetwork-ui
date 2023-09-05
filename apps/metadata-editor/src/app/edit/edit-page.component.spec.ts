@@ -1,8 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { EditPageComponent } from './edit-page.component'
 import { ActivatedRoute } from '@angular/router'
-import { EditorService } from '@geonetwork-ui/feature/editor'
+import {
+  EditorService,
+  RecordFormComponent,
+} from '@geonetwork-ui/feature/editor'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
+import { CommonModule } from '@angular/common'
 
 const getRoute = () => ({
   snapshot: {
@@ -22,7 +26,7 @@ describe('EditPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EditPageComponent],
+      imports: [EditPageComponent],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {

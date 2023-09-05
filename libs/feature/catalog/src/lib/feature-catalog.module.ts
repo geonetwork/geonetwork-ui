@@ -2,7 +2,6 @@ import { InjectionToken, NgModule } from '@angular/core'
 import { SiteTitleComponent } from './site-title/site-title.component'
 import { UiCatalogModule } from '@geonetwork-ui/ui/catalog'
 import {
-  ApiModule,
   GroupsApiService,
   SearchApiService,
   SiteApiService,
@@ -61,7 +60,6 @@ const organizationsServiceFactory = (
   imports: [
     UiCatalogModule,
     UiLayoutModule,
-    ApiModule,
     CommonModule,
     UtilI18nModule,
     TranslateModule.forChild(),
