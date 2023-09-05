@@ -4,11 +4,11 @@ import { SignInPageComponent } from './sign-in/sign-in-page.component'
 import { CreatePageComponent } from './create/create-page.component'
 import { EditPageComponent } from './edit/edit-page.component'
 import { EditRecordResolver } from './edit-record.resolver'
-import { AllRecordsComponent } from './records/all-records-list.component'
-import { MyOrgRecordsComponent } from './records/my-org-records.component'
-import { MyLibraryComponent } from './records/my-library.component'
-import { MyDraftComponent } from './records/my-draft.component'
-import { MyRecordsComponent } from './records/my-records.component'
+import { AllRecordsComponent } from './records/all-records/all-records-list.component'
+import { MyOrgRecordsComponent } from './records/my-org-records/my-org-records.component'
+import { MyRecordsComponent } from './records/my-records/my-records.component'
+import { MyDraftComponent } from './records/my-draft/my-draft.component'
+import { MyLibraryComponent } from './records/my-library/my-library.component'
 
 export const appRoutes: Route[] = [
   { path: '', component: DashboardPageComponent, pathMatch: 'prefix' },

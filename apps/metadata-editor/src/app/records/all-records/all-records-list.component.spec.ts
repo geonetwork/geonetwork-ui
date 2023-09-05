@@ -1,5 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { DashboardSearchService } from '../../dashboard/dashboard-search.service'
 import { AllRecordsComponent } from './all-records-list.component'
+
+class searchFacadeMock {
+  setFavoritesOnly = jest.fn()
+  setSortBy = jest.fn()
+}
+
+class DashboardSearchServiceMock {}
 
 describe('AllRecordsComponent', () => {
   let component: AllRecordsComponent
@@ -7,7 +16,17 @@ describe('AllRecordsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AllRecordsComponent],
+      imports: [AllRecordsComponent],
+      providers: [
+        {
+          provide: SearchFacade,
+          useClass: searchFacadeMock,
+        },
+        {
+          provide: DashboardSearchService,
+          useClass: DashboardSearchServiceMock,
+        },
+      ],
     })
     fixture = TestBed.createComponent(AllRecordsComponent)
     component = fixture.componentInstance
