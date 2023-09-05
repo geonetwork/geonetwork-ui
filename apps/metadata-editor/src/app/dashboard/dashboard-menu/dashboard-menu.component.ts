@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { RouterModule } from '@angular/router'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'md-editor-dashboard-menu',
@@ -12,6 +12,4 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
   standalone: true,
   imports: [CommonModule, RouterModule, MatIconModule, TranslateModule],
 })
-export class DashboardMenuComponent {
-  constructor(public translate: TranslateService) {}
-}
+export class DashboardMenuComponent {}
