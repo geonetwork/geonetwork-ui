@@ -24,12 +24,12 @@
       *ngIf="searchFacade.resultsHits$ | async as hits"
     >
       <div class="grow">
-        <gn-ui-pagination
+        <gn-ui-pagination-buttons
           hideButton="true"
           [currentPage]="searchFacade.currentPage$ | async"
-          [nPages]="searchFacade.totalPages$ | async"
+          [totalPages]="searchFacade.totalPages$ | async"
           (newCurrentPageEvent)="paginate($event)"
-        ></gn-ui-pagination>
+        ></gn-ui-pagination-buttons>
       </div>
     </div>
   </div>

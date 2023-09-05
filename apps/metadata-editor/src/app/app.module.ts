@@ -16,11 +16,13 @@ import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import { DashboardSearchService } from './dashboard/dashboard-search.service'
 import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { BrowserModule } from '@angular/platform-browser'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
   ],
   providers: [
