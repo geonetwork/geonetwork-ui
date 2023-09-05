@@ -67,6 +67,7 @@ import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { WEB_COMPONENT_EMBEDDER_URL } from '@geonetwork-ui/feature/record'
 import { LANGUAGES_LIST, UiCatalogModule } from '@geonetwork-ui/ui/catalog'
 import { METADATA_LANGUAGE } from '@geonetwork-ui/api/repository'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
@@ -89,6 +90,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot([], {
       initialNavigation: 'enabledBlocking',
       scrollPositionRestoration: 'enabled',

@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { BrowserModule } from '@angular/platform-browser'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { TagInputModule } from 'ngx-chips'
@@ -35,6 +33,7 @@ import {
 import { CheckToggleComponent } from './check-toggle/check-toggle.component'
 import { CopyTextButtonComponent } from './copy-text-button/copy-text-button.component'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { CommonModule } from '@angular/common'
 
 @NgModule({
   declarations: [
@@ -61,10 +60,9 @@ import { MatTooltipModule } from '@angular/material/tooltip'
     CopyTextButtonComponent,
   ],
   imports: [
-    BrowserModule,
+    CommonModule,
     TranslateModule.forChild(),
     NgxDropzoneModule,
-    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     TagInputModule,

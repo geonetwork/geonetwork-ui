@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core'
+import { importProvidersFrom, NgModule } from '@angular/core'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
-import { BrowserModule } from '@angular/platform-browser'
-import { RouterModule } from '@angular/router'
+import { RouterModule, RouterOutlet } from '@angular/router'
 import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
 import {
   FeatureSearchModule,
@@ -19,36 +18,33 @@ import { AppCommonModule } from './app.common.module'
 
 import { AppComponent } from './app.component'
 import { appRoutes } from './app.routes'
-import { CreatePageComponent } from './create/create-page.component'
-import { DashboardModule } from './dashboard/dashboard.module'
-import { EditPageComponent } from './edit/edit-page.component'
-import { SignInPageComponent } from './sign-in/sign-in-page.component'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import { DashboardSearchService } from './dashboard/dashboard-search.service'
+import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
+import { BrowserModule } from '@angular/platform-browser'
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    EditPageComponent,
-    CreatePageComponent,
-    SignInPageComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
-    DashboardModule,
-    FeatureSearchModule,
-    UiElementsModule,
-    UiSearchModule,
+    RouterOutlet,
     AppCommonModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
-    UiInputsModule,
-    FeatureEditorModule,
-    UtilI18nModule,
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-    MatProgressSpinnerModule,
-    FeatureCatalogModule,
   ],
-  providers: [SearchFacade, DashboardSearchService],
+  providers: [
+    SearchFacade,
+    DashboardSearchService,
+    importProvidersFrom(FeatureAuthModule),
+    importProvidersFrom(FeatureSearchModule),
+    importProvidersFrom(UiElementsModule),
+    importProvidersFrom(UiSearchModule),
+    importProvidersFrom(UiInputsModule),
+    importProvidersFrom(FeatureEditorModule),
+    importProvidersFrom(UtilI18nModule),
+    importProvidersFrom(MatProgressSpinnerModule),
+    importProvidersFrom(FeatureCatalogModule),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

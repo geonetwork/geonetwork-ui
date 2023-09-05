@@ -6,11 +6,9 @@ import { WizardComponent } from './components/wizard/wizard.component'
 import { WizardFieldComponent } from './components/wizard-field/wizard-field.component'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
-import { BrowserModule } from '@angular/platform-browser'
 import { TranslateModule } from '@ngx-translate/core'
 import { WizardSummarizeComponent } from './components/wizard-summarize/wizard-summarize.component'
 import { CommonModule } from '@angular/common'
-import { RecordFormComponent } from './record-form/record-form.component'
 import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http'
 
 @NgModule({
@@ -18,21 +16,19 @@ import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http'
     WizardComponent,
     WizardFieldComponent,
     WizardSummarizeComponent,
-    RecordFormComponent,
   ],
   imports: [
-    BrowserModule,
+    CommonModule,
     UiInputsModule,
     UiWidgetsModule,
     TranslateModule.forChild(),
-    CommonModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
     HttpClientModule,
     HttpClientXsrfModule,
   ],
-  exports: [WizardComponent, WizardSummarizeComponent, RecordFormComponent],
+  exports: [WizardComponent, WizardSummarizeComponent],
 })
 export class FeatureEditorModule {}
 export * from './services/wizard.service'

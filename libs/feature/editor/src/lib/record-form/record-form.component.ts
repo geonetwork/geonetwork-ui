@@ -6,6 +6,7 @@ import { EditorService, FormField } from '../services/editor.service'
   templateUrl: './record-form.component.html',
   styleUrls: ['./record-form.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class RecordFormComponent {
   constructor(public editorService: EditorService) {}

@@ -1,48 +1,48 @@
 <div class="flex flex-col gap-3">
-  <button
-    (click)="onClick('/records/my-org', 'my-org')"
+  <a
     class="menu-item"
-    role="buton"
-    [class.btn-active]="isActive$('my-org') | async"
+    routerLink="/records/my-org"
+    routerLinkActive
+    #rlaMyOrg="routerLinkActive"
   >
     <mat-icon class="material-icons-outlined">home</mat-icon>
     <span translate="">editor.dashboard.myOrg</span>
-  </button>
-  <button
-    (click)="onClick('/records/all', 'catalog')"
+  </a>
+  <a
     class="menu-item"
-    role="buton"
-    [class.btn-active]="isActive$('catalog') | async"
+    routerLink="/records/all"
+    routerLinkActive
+    #rlaAll="routerLinkActive"
   >
     <mat-icon class="material-icons-outlined">work_outline</mat-icon>
     <span translate="">editor.dashboard.catalog</span>
-  </button>
+  </a>
   <div class="menu-title" translate="">editor.dashboard.mySpace</div>
-  <button
-    (click)="onClick('/records/my-records', 'my-records')"
+  <a
     class="menu-item"
-    role="buton"
-    [class.btn-active]="isActive$('my-records') | async"
+    routerLink="/records/my-records"
+    routerLinkActive
+    #rlaMyRecords="routerLinkActive"
   >
     <mat-icon class="material-icons-outlined">post_add</mat-icon>
     <span translate="">editor.dashboard.myRecords</span>
-  </button>
-  <button
-    (click)="onClick('/records/my-draft', 'my-draft')"
+  </a>
+  <a
     class="menu-item"
-    role="buton"
-    [class.btn-active]="isActive$('my-draft') | async"
+    routerLink="/records/my-draft"
+    routerLinkActive
+    #rlaMyDraft="routerLinkActive"
   >
     <mat-icon class="material-icons-outlined">edit_note</mat-icon>
     <span translate="">editor.dashboard.myDraft</span>
-  </button>
-  <button
-    (click)="onClick('/records/my-library', 'my-library')"
+  </a>
+  <a
     class="menu-item"
-    role="buton"
-    [class.btn-active]="isActive$('my-library') | async"
+    routerLink="/records/my-library"
+    routerLinkActive
+    #rlaMyLibrary="routerLinkActive"
   >
     <mat-icon class="material-icons-outlined">bookmark_border</mat-icon>
     <span translate="">editor.dashboard.myLibrary</span>
-  </button>
+  </a>
 </div>

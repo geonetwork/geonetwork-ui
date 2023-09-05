@@ -1,43 +1,14 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
-import { map } from 'rxjs/operators'
-import { DashboardFacade } from '../+state/dashboard.facade'
-import { DashboardMenuItem, DashboardMenuItemArray } from '../dashboard.model'
+import { CommonModule } from '@angular/common'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { MatIconModule } from '@angular/material/icon'
+import { RouterModule } from '@angular/router'
 
 @Component({
   selector: 'md-editor-dashboard-menu',
   templateUrl: './dashboard-menu.component.html',
   styleUrls: ['./dashboard-menu.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, RouterModule, MatIconModule],
 })
-export class DashboardMenuComponent implements OnInit {
-  constructor(
-    private facade: DashboardFacade,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
-
-  ngOnInit() {
-    const activeRoute = this.router.url
-    DashboardMenuItemArray.forEach((routeMapping) => {
-      if (activeRoute === routeMapping.route) {
-        this.setActive(routeMapping.menuItem)
-      }
-    })
-  }
-
-  private setActive(activeMenu: DashboardMenuItem) {
-    this.facade.setActiveMenu(activeMenu)
-  }
-
-  isActive$(menu: DashboardMenuItem) {
-    return this.facade.activeMenu$.pipe(
-      map((activeMenu) => activeMenu === menu)
-    )
-  }
-
-  onClick(destination: string, activeMenu: DashboardMenuItem) {
-    this.setActive(activeMenu)
-    this.router.navigateByUrl(destination)
-  }
-}
+export class DashboardMenuComponent {}

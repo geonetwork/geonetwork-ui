@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common'
 import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http'
-import { ApiModule } from '@geonetwork-ui/data-access/gn4'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
@@ -58,7 +57,6 @@ export const RECORD_URL_TOKEN = new InjectionToken<string>('record-url-token')
     UiSearchModule,
     UiInputsModule,
     UiElementsModule,
-    ApiModule,
     FacetsModule,
     MatIconModule,
     UiWidgetsModule,
