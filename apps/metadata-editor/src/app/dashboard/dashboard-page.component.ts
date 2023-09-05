@@ -7,13 +7,25 @@ import { SidebarComponent } from './sidebar/sidebar.component'
 import { SearchHeaderComponent } from './search-header/search-header.component'
 import { MatIconModule } from '@angular/material/icon'
 import { CommonModule } from '@angular/common'
+import {
+  TranslateModule,
+  TranslateService,
+  TranslateStore,
+} from '@ngx-translate/core'
+import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
 
 @Component({
   selector: 'md-editor-dashboard',
   templateUrl: './dashboard-page.component.html',
   styleUrls: ['./dashboard-page.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [SearchFacade, SearchService, DashboardSearchService],
+  providers: [
+    SearchFacade,
+    SearchService,
+    DashboardSearchService,
+    TranslateService,
+    TranslateStore,
+  ],
   imports: [
     SidebarComponent,
     SearchHeaderComponent,
