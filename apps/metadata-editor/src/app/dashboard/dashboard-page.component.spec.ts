@@ -62,11 +62,7 @@ describe('DashboardPageComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      declarations: [
-        DashboardPageComponent,
-        PaginationButtonsComponent,
-        RecordTableComponent,
-      ],
+      imports: [DashboardPageComponent],
       providers: [
         { provide: SearchFacade, useClass: SearchFacadeMock },
         {

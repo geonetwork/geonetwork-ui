@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
-import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { TranslateModule } from '@ngx-translate/core'
 import { DashboardMenuComponent } from '../dashboard-menu/dashboard-menu.component'
 
 @Component({

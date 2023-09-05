@@ -7,7 +7,7 @@ describe('CreatePageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CreatePageComponent],
+      imports: [CreatePageComponent],
     }).compileComponents()
 
     fixture = TestBed.createComponent(CreatePageComponent)

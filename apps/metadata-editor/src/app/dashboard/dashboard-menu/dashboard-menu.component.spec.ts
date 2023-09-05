@@ -1,7 +1,9 @@
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { BehaviorSubject } from 'rxjs'
+import { ActivatedRoute } from '@angular/router'
+import { TranslateService } from '@ngx-translate/core'
+import { BehaviorSubject, of } from 'rxjs'
 import { DashboardFacade } from '../+state/dashboard.facade'
 import { DashboardMenuComponent } from './dashboard-menu.component'
 import clearAllMocks = jest.clearAllMocks
@@ -11,6 +13,10 @@ class DashboardFacadeMock {
   activeMenu$ = new BehaviorSubject('')
 }
 
+const translateServiceMock = {
+  currentLang: 'fr',
+}
+
 describe('DashboardMenuComponent', () => {
   let component: DashboardMenuComponent
   let fixture: ComponentFixture<DashboardMenuComponent>
@@ -18,8 +24,18 @@ describe('DashboardMenuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DashboardMenuComponent],
-      providers: [{ provide: DashboardFacade, useClass: DashboardFacadeMock }],
+      imports: [DashboardMenuComponent],
+      providers: [
+        { provide: DashboardFacade, useClass: DashboardFacadeMock },
+        {
+          provide: ActivatedRoute,
+          useValue: { params: of({ id: 1 }) },
+        },
+        {
+          provide: TranslateService,
+          useValue: translateServiceMock,
+        },
+      ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
 

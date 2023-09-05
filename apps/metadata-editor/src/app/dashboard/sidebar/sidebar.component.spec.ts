@@ -8,9 +8,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AuthService } from '@geonetwork-ui/feature/auth'
 import { USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
 import { LetDirective } from '@ngrx/component'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, of } from 'rxjs'
 import { SidebarComponent } from './sidebar.component'
 import { UserModel } from '@geonetwork-ui/common/domain/user.model'
+import { ActivatedRoute } from '@angular/router'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   // eslint-disable-next-line
@@ -33,19 +35,28 @@ class AuthServiceMock {
   user$ = new BehaviorSubject(user)
 }
 
+const translateServiceMock = {
+  currentLang: 'fr',
+}
+
 describe('SidebarComponent', () => {
   let component: SidebarComponent
   let fixture: ComponentFixture<SidebarComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        SidebarComponent,
-        UserPreviewComponent,
-        DashboardMenuMockComponent,
+      imports: [SidebarComponent],
+      providers: [
+        { provide: AuthService, useClass: AuthServiceMock },
+        {
+          provide: ActivatedRoute,
+          useValue: { params: of({ id: 1 }) },
+        },
+        {
+          provide: TranslateService,
+          useValue: translateServiceMock,
+        },
       ],
-      imports: [LetDirective],
-      providers: [{ provide: AuthService, useClass: AuthServiceMock }],
       schemas: [NO_ERRORS_SCHEMA],
     })
       .overrideComponent(SidebarComponent, {

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { EditorService, FormField } from '../services/editor.service'
 
@@ -7,6 +8,7 @@ import { EditorService, FormField } from '../services/editor.service'
   styleUrls: ['./record-form.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
+  imports: [CommonModule],
 })
 export class RecordFormComponent {
   constructor(public editorService: EditorService) {}
