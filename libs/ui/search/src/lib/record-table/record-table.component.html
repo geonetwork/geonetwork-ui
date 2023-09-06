@@ -38,10 +38,20 @@
         <div [title]="record.title" class="record-table-col text-16">
           {{ record.title }}
         </div>
-        <div class="record-table-col text-16">
-          <span class="badge-btn btn-active text-sm">{{
-            getStatus(record.extras?.isPublishedToAll)
-          }}</span>
+        <div class="flex items-center">
+          <div class="record-table-col text-16">
+            <span
+              class="badge-btn text-sm text-white"
+              [style.background-color]="getBadgeColor(firstFormat(record))"
+              *ngIf="firstFormat(record)"
+              >{{ firstFormat(record) }}</span
+            >
+          </div>
+          <div>
+            <span *ngIf="secondToLastFormat(record).length > 0" [title]=""
+              >+ ({{ secondToLastFormat(record).length }})</span
+            >
+          </div>
         </div>
         <div class="record-table-col flex items-center gap-2 text-16">
           <mat-icon class="material-icons-outlined"> person </mat-icon>

@@ -2,9 +2,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core'
 import {
   CatalogRecord,
   DatasetDistribution,
-  DatasetRecord,
 } from '@geonetwork-ui/common/domain/record'
-import { FileFormat, getFileFormat } from '@geonetwork-ui/util/shared'
+import {
+  FileFormat,
+  getBadgeColor,
+  getFileFormat,
+  sortPriority,
+} from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-record-table',
@@ -41,9 +45,33 @@ export class RecordTableComponent {
     if (record.kind === 'service') {
       return []
     }
-    const types = new Set(
-      record.distributions.map((distribution) => getFileFormat(distribution))
+    const formatsAndPrio = record.distributions.map(
+      (distribution: DatasetDistribution) => {
+        return {
+          format: getFileFormat(distribution),
+          priority: sortPriority(distribution),
+        }
+      }
     )
+
+    const sortedFormats = formatsAndPrio
+      .sort((a, b) => a.priority - b.priority)
+      .map((element) => element.format)
+
+    const types = new Set(sortedFormats)
     return Array.from(types).filter((elm) => elm)
+  }
+
+  getBadgeColor(format: FileFormat): string {
+    return getBadgeColor(format)
+  }
+
+  firstFormat(record: CatalogRecord): FileFormat {
+    return this.getRecordFormats(record)[0]
+  }
+
+  secondToLastFormat(record: CatalogRecord): FileFormat[] {
+    const formats = this.getRecordFormats(record)
+    return formats.slice(formats.length - 2)
   }
 }
