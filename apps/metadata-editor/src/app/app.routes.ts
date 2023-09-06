@@ -9,6 +9,7 @@ import { MyOrgRecordsComponent } from './records/my-org-records/my-org-records.c
 import { MyRecordsComponent } from './records/my-records/my-records.component'
 import { MyDraftComponent } from './records/my-draft/my-draft.component'
 import { MyLibraryComponent } from './records/my-library/my-library.component'
+import { SearchRecordsComponent } from './records/search-records/search-records-list.component'
 
 export const appRoutes: Route[] = [
   { path: '', component: DashboardPageComponent, pathMatch: 'prefix' },
@@ -50,6 +51,12 @@ export const appRoutes: Route[] = [
         path: 'my-library',
         title: 'My Library',
         component: MyLibraryComponent,
+        pathMatch: 'prefix',
+      },
+      {
+        path: 'search',
+        title: 'Search Records',
+        component: SearchRecordsComponent,
         pathMatch: 'prefix',
       },
     ],

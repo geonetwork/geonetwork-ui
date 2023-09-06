@@ -8,14 +8,13 @@ import {
   Paginate,
   RequestMoreOnAggregation,
   RequestMoreResults,
-  Scroll,
   SetConfigAggregations,
   SetConfigFilters,
   SetConfigRequestFields,
   SetFavoritesOnly,
   SetFilters,
   SetIncludeOnAggregation,
-  SetPagination,
+  SetPageSize,
   SetResultsLayout,
   SetSearch,
   SetSortBy,
@@ -36,7 +35,7 @@ import {
   getSearchResultsLayout,
   getSearchResultsLoading,
   getSearchSortBy,
-  getSize,
+  getPageSize,
   getSpatialFilterEnabled,
   isEndOfResults,
   totalPages,
@@ -62,7 +61,7 @@ export class SearchFacade {
   isEndOfResults$: Observable<boolean>
   totalPages$: Observable<number>
   currentPage$: Observable<number>
-  size$: Observable<number>
+  pageSize$: Observable<number>
   searchFilters$: Observable<FieldFilters>
   configAggregations$: Observable<AggregationsParams>
   resultsAggregations$: Observable<Aggregations>
@@ -102,7 +101,7 @@ export class SearchFacade {
     this.isEndOfResults$ = this.store.pipe(select(isEndOfResults, searchId))
     this.totalPages$ = this.store.pipe(select(totalPages, searchId))
     this.currentPage$ = this.store.pipe(select(currentPage, searchId))
-    this.size$ = this.store.pipe(select(getSize, searchId))
+    this.pageSize$ = this.store.pipe(select(getPageSize, searchId))
     this.configAggregations$ = this.store.pipe(
       select(getSearchConfigAggregations, searchId)
     )
@@ -186,18 +185,18 @@ export class SearchFacade {
     return this
   }
 
-  setPagination(from: number, size: number): SearchFacade {
-    this.store.dispatch(new SetPagination(from, size, this.searchId))
+  setPageSize(size: number): SearchFacade {
+    this.store.dispatch(new SetPageSize(size, this.searchId))
     return this
   }
 
-  paginate(delta?: number): SearchFacade {
-    this.store.dispatch(new Paginate(delta, this.searchId))
+  paginate(pageNumber: number): SearchFacade {
+    this.store.dispatch(new Paginate(pageNumber, this.searchId))
     return this
   }
 
   scroll(): SearchFacade {
-    this.store.dispatch(new Scroll(this.searchId))
+    this.store.dispatch(new RequestMoreResults(this.searchId))
     return this
   }
 
@@ -209,5 +208,11 @@ export class SearchFacade {
   setSpatialFilterEnabled(enabled: boolean) {
     this.store.dispatch(new SetSpatialFilterEnabled(enabled, this.searchId))
     return this
+  }
+
+  resetSearch() {
+    this.store.dispatch(new Paginate(1, this.searchId))
+    this.store.dispatch(new SetFilters({}, this.searchId))
+    this.store.dispatch(new SetFavoritesOnly(false, this.searchId))
   }
 }

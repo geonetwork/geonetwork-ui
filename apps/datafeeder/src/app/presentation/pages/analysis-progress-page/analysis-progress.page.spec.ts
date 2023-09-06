@@ -15,7 +15,6 @@ import {
   UploadJobStatusApiModel,
 } from '@geonetwork-ui/data-access/datafeeder'
 import { delay, of } from 'rxjs'
-import { TestScheduler } from 'rxjs/testing'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
 import { AnalysisProgressPageComponent } from './analysis-progress.page'
 import advanceTimersByTime = jest.advanceTimersByTime

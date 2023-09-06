@@ -1,8 +1,8 @@
 import {
-  SAMPLE_AGGREGATIONS_PARAMS,
-  SAMPLE_AGGREGATIONS_RESULTS,
   HISTOGRAM_AGGREGATION,
   SAMPLE_AGGREGATION_MORE_RESULTS,
+  SAMPLE_AGGREGATIONS_PARAMS,
+  SAMPLE_AGGREGATIONS_RESULTS,
   TERMS_AGGREGATION,
 } from '@geonetwork-ui/common/fixtures'
 import { DEFAULT_PAGE_SIZE } from '../constants'
@@ -127,8 +127,8 @@ describe('Search Reducer', () => {
   describe('SetSearch action', () => {
     it('should set search params', () => {
       const searchParams: SearchStateParams = {
-        limit: 12,
-        offset: 0,
+        pageSize: 12,
+        currentPage: 0,
         sort: ['asc', 'tag'],
         filters: {
           any: 'tag:river',
@@ -157,29 +157,20 @@ describe('Search Reducer', () => {
     })
   })
 
-  describe('SetPagination action', () => {
-    it('should set from and size', () => {
-      const action = new fromActions.SetPagination(12, 15)
+  describe('SetPageSize action', () => {
+    it('should set size', () => {
+      const action = new fromActions.SetPageSize(15)
       const state = reducerSearch(initialStateSearch, action)
-      expect(state.params.offset).toEqual(12)
-      expect(state.params.limit).toEqual(15)
+      expect(state.params.pageSize).toEqual(15)
     })
   })
 
   describe('Paginate action', () => {
     it('should set from property and keep size', () => {
-      const action = new fromActions.Paginate(30)
+      const action = new fromActions.Paginate(3)
       const state = reducerSearch(initialStateSearch, action)
-      expect(state.params.offset).toEqual(30)
-      expect(state.params.limit).toEqual(DEFAULT_PAGE_SIZE)
-    })
-  })
-  describe('Scroll action', () => {
-    it('increment `from` property with `size` value', () => {
-      const action = new fromActions.Scroll()
-      const state = reducerSearch(initialStateSearch, action)
-      expect(state.params.offset).toEqual(DEFAULT_PAGE_SIZE)
-      expect(state.params.limit).toEqual(DEFAULT_PAGE_SIZE)
+      expect(state.params.currentPage).toEqual(2)
+      expect(state.params.pageSize).toEqual(DEFAULT_PAGE_SIZE)
     })
   })
 
@@ -210,17 +201,17 @@ describe('Search Reducer', () => {
         ...payload,
       ])
     })
-    it('should remove the loadingMore flag', () => {
+    it('should remove the loadingResults flag', () => {
       const payload = [{ title: 'record1' } as any]
       const action = new fromActions.AddResults(payload)
       const state = reducerSearch(
         {
           ...initialStateSearch,
-          loadingMore: true,
+          loadingResults: true,
         },
         action
       )
-      expect(state.loadingMore).toEqual(false)
+      expect(state.loadingResults).toEqual(false)
     })
   })
 
@@ -246,11 +237,22 @@ describe('Search Reducer', () => {
     })
   })
 
+  describe('RequestNewResults action', () => {
+    it('should set the loadingResults flag, not change params', () => {
+      const action = new fromActions.RequestNewResults()
+      const state = reducerSearch(initialStateSearch, action)
+      expect(state.loadingResults).toEqual(true)
+      expect(state.params).toEqual(initialStateSearch.params)
+    })
+  })
+
   describe('RequestMoreResults action', () => {
-    it('should set the loadingMore flag', () => {
+    it('increment `from` property with `size` value and set the loadingResults flag', () => {
       const action = new fromActions.RequestMoreResults()
       const state = reducerSearch(initialStateSearch, action)
-      expect(state.loadingMore).toEqual(true)
+      expect(state.params.currentPage).toEqual(1)
+      expect(state.params.pageSize).toEqual(DEFAULT_PAGE_SIZE)
+      expect(state.loadingResults).toEqual(true)
     })
   })
 
@@ -432,7 +434,7 @@ describe('Search Reducer', () => {
       const state = reducerSearch(
         {
           ...initialStateSearch,
-          loadingMore: true,
+          loadingResults: true,
           error: null,
         },
         action
@@ -441,7 +443,7 @@ describe('Search Reducer', () => {
         code: 404,
         message: 'Not found',
       })
-      expect(state.loadingMore).toBeFalsy()
+      expect(state.loadingResults).toBeFalsy()
     })
   })
 

@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { AllRecordsComponent } from './all-records-list.component'
-import { Component, importProvidersFrom } from '@angular/core'
-import { RecordsListComponent } from '../records-list.component'
+import { SearchRecordsComponent } from './search-records-list.component'
+import { Component, importProvidersFrom, Input } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
+import { BehaviorSubject } from 'rxjs'
+import { RecordsListComponent } from '../records-list.component'
 
 @Component({
   // eslint-disable-next-line
@@ -11,16 +12,19 @@ import { TranslateModule } from '@ngx-translate/core'
   template: '',
   standalone: true,
 })
-export class MockRecordsListComponent {}
-
-class SearchFacadeMock {
-  resetSearch = jest.fn()
+export class MockRecordsListComponent {
+  @Input() title: string
 }
 
-describe('AllRecordsComponent', () => {
-  let component: AllRecordsComponent
-  let fixture: ComponentFixture<AllRecordsComponent>
-  let searchFacade: SearchFacade
+class SearchFacadeMock {
+  searchFilters$ = new BehaviorSubject({
+    any: 'hello world',
+  })
+}
+
+describe('SearchRecordsComponent', () => {
+  let component: SearchRecordsComponent
+  let fixture: ComponentFixture<SearchRecordsComponent>
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -31,7 +35,7 @@ describe('AllRecordsComponent', () => {
           useClass: SearchFacadeMock,
         },
       ],
-    }).overrideComponent(AllRecordsComponent, {
+    }).overrideComponent(SearchRecordsComponent, {
       remove: {
         imports: [RecordsListComponent],
       },
@@ -39,19 +43,12 @@ describe('AllRecordsComponent', () => {
         imports: [MockRecordsListComponent],
       },
     })
-    searchFacade = TestBed.inject(SearchFacade)
-    fixture = TestBed.createComponent(AllRecordsComponent)
+    fixture = TestBed.createComponent(SearchRecordsComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
 
   it('should create', () => {
     expect(component).toBeTruthy()
-  })
-
-  describe('filters', () => {
-    it('clears filters on init', () => {
-      expect(searchFacade.resetSearch).toHaveBeenCalled()
-    })
   })
 })

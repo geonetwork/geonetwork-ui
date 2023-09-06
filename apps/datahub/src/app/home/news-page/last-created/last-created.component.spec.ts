@@ -9,7 +9,7 @@ import { RouterFacade } from '@geonetwork-ui/feature/router'
 class SearchFacadeMock {
   init = jest.fn()
   results$ = of(summaryHits)
-  setPagination = jest.fn(() => this)
+  setPageSize = jest.fn(() => this)
   setSortBy = jest.fn(() => this)
   setConfigRequestFields = jest.fn(() => this)
   setResultsLayout = jest.fn(() => this)
@@ -63,7 +63,7 @@ describe('LastCreatedComponent', () => {
     })
 
     it('Should set the correct params in the facade', () => {
-      expect(facade.setPagination).toHaveBeenCalledWith(0, 10)
+      expect(facade.setPageSize).toHaveBeenCalledWith(10)
       expect(facade.setSortBy).toHaveBeenCalledWith(['desc', 'createDate'])
       expect(facade.setConfigRequestFields).toHaveBeenCalledWith(
         expect.arrayContaining([

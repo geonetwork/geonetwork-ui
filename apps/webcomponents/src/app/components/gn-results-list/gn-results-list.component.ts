@@ -39,8 +39,8 @@ export class GnResultsListComponent extends BaseComponent {
     const filter = this.filter
     const query = this.query
     const searchActionPayload: SearchStateParams = {
-      limit: parseInt(this.size),
-      offset: 0,
+      pageSize: parseInt(this.size),
+      currentPage: 0,
       filters: {},
     }
     if (query) {

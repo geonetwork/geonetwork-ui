@@ -1,12 +1,7 @@
 import { Inject, Injectable } from '@angular/core'
-
-import {
-  ROUTER_CONFIG,
-  ROUTER_ROUTE_DATASET,
-  ROUTER_ROUTE_SEARCH,
-  RouterConfigModel,
-} from '.'
+import { ROUTER_ROUTE_DATASET, ROUTER_ROUTE_SEARCH } from '.'
 import { Router, Routes } from '@angular/router'
+import { ROUTER_CONFIG, RouterConfigModel } from './router.config'
 
 @Injectable({
   providedIn: 'root',

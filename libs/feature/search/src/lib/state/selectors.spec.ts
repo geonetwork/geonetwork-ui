@@ -70,7 +70,7 @@ describe('Search Selectors', () => {
     it('should return whether more results are loading', () => {
       const result = fromSelectors.getSearchResultsLoading.projector({
         ...initialStateSearch,
-        loadingMore: true,
+        loadingResults: true,
       })
       expect(result).toEqual(true)
     })
@@ -82,8 +82,8 @@ describe('Search Selectors', () => {
         ...initialStateSearch,
         params: {
           ...initialStateSearch.params,
-          offset: 0,
-          limit: 20,
+          currentPage: 0,
+          pageSize: 20,
         },
         results: {
           ...initialStateSearch.results,
@@ -96,8 +96,8 @@ describe('Search Selectors', () => {
         ...initialStateSearch,
         params: {
           ...initialStateSearch.params,
-          offset: 60,
-          limit: 20,
+          currentPage: 3,
+          pageSize: 20,
         },
         results: {
           ...initialStateSearch.results,
@@ -110,8 +110,8 @@ describe('Search Selectors', () => {
         ...initialStateSearch,
         params: {
           ...initialStateSearch.params,
-          offset: 40,
-          limit: 20,
+          currentPage: 2,
+          pageSize: 20,
         },
         results: {
           ...initialStateSearch.results,
@@ -128,8 +128,8 @@ describe('Search Selectors', () => {
         ...initialStateSearch,
         params: {
           ...initialStateSearch.params,
-          offset: 0,
-          limit: 20,
+          currentPage: 0,
+          pageSize: 20,
         },
         results: {
           ...initialStateSearch.results,
@@ -146,8 +146,8 @@ describe('Search Selectors', () => {
         ...initialStateSearch,
         params: {
           ...initialStateSearch.params,
-          offset: 0,
-          limit: 20,
+          currentPage: 0,
+          pageSize: 20,
         },
       })
       expect(result).toEqual(1)
@@ -156,8 +156,8 @@ describe('Search Selectors', () => {
         ...initialStateSearch,
         params: {
           ...initialStateSearch.params,
-          offset: 20,
-          limit: 20,
+          currentPage: 1,
+          pageSize: 20,
         },
       })
       expect(secondPage).toEqual(2)
