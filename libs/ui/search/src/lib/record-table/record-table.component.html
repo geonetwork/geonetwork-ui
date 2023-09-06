@@ -39,16 +39,18 @@
           {{ record.title }}
         </div>
         <div class="flex items-center">
-          <div class="record-table-col text-16">
+          <div class="record-table-col text-16 basis-1/2">
             <span
-              class="badge-btn text-sm text-white"
+              class="flex badge-btn text-sm text-white"
               [style.background-color]="getBadgeColor(firstFormat(record))"
               *ngIf="firstFormat(record)"
               >{{ firstFormat(record) }}</span
             >
           </div>
-          <div>
-            <span *ngIf="secondToLastFormat(record).length > 0" [title]=""
+          <div class="record-table-col text-16 basis-1/2">
+            <span
+              *ngIf="secondToLastFormat(record).length > 0"
+              [title]="secondToLastFormat(record).join(', ')"
               >+ ({{ secondToLastFormat(record).length }})</span
             >
           </div>
