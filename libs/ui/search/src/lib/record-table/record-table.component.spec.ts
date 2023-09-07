@@ -30,23 +30,12 @@ describe('RecordTableComponent', () => {
       ])
     })
   })
-  describe('get the first format', () => {
-    it('returns the first format of the list', () => {
-      expect(component.firstFormat(DATASET_RECORDS[0])).toEqual('pdf')
-    })
-  })
-  describe('get the remaining formats', () => {
-    it('returns the first format of the list', () => {
-      expect(component.secondToLastFormat(DATASET_RECORDS[0])).toEqual([
-        'shp',
-        'geojson',
-      ])
-    })
-  })
   describe('get the badge color for given format', () => {
     it('returns the color for its format', () => {
       expect(
-        component.getBadgeColor(component.firstFormat(DATASET_RECORDS[0]))
+        component.getBadgeColor(
+          component.getRecordFormats(DATASET_RECORDS[0])[0]
+        )
       ).toEqual('#db544a')
     })
   })

@@ -65,13 +65,4 @@ export class RecordTableComponent {
   getBadgeColor(format: FileFormat): string {
     return getBadgeColor(format)
   }
-
-  firstFormat(record: CatalogRecord): FileFormat {
-    return this.getRecordFormats(record)[0]
-  }
-
-  secondToLastFormat(record: CatalogRecord): FileFormat[] {
-    const formats = this.getRecordFormats(record)
-    return formats.slice(formats.length - 2)
-  }
 }

@@ -38,21 +38,25 @@
         <div [title]="record.title" class="record-table-col text-16">
           {{ record.title }}
         </div>
-        <div class="flex items-center">
-          <div class="record-table-col text-16 basis-1/2">
+        <div
+          class="record-table-col flex items-center"
+          [title]="formats.join(', ')"
+          *ngIf="getRecordFormats(record) as formats"
+        >
+          <div class="text-16 basis-2/3">
             <span
-              class="flex badge-btn text-sm text-white"
-              [style.background-color]="getBadgeColor(firstFormat(record))"
-              *ngIf="firstFormat(record)"
-              >{{ firstFormat(record) }}</span
+              class="badge-btn text-sm text-white mr-2"
+              [style.background-color]="getBadgeColor(formats[0])"
+              *ngIf="formats[0]"
             >
+              {{ formats[0] }}
+            </span>
           </div>
-          <div class="record-table-col text-16 basis-1/2">
-            <span
-              *ngIf="secondToLastFormat(record).length > 0"
-              [title]="secondToLastFormat(record).join(', ')"
-              >+ ({{ secondToLastFormat(record).length }})</span
-            >
+          <div
+            class="text-16 basis-1/3 flex-shrink-0"
+            *ngIf="formats.slice(1).length > 0"
+          >
+            <span>+ {{ formats.slice(1).length }}</span>
           </div>
         </div>
         <div class="record-table-col flex items-center gap-2 text-16">
