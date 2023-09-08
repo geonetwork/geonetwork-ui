@@ -6,6 +6,7 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import { SortByField } from '@geonetwork-ui/common/domain/search'
 
 const includes = [
   'uuid',
@@ -48,5 +49,9 @@ export class RecordsListComponent {
 
   editRecord(record: CatalogRecord) {
     this.router.navigate(['/edit', record.uniqueIdentifier])
+  }
+
+  setSortBy(newSortBy: SortByField) {
+    this.searchFacade.setSortBy(newSortBy)
   }
 }

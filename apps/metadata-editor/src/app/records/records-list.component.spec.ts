@@ -60,6 +60,7 @@ describe('RecordsListComponent', () => {
   let fixture: ComponentFixture<RecordsListComponent>
   let router: Router
   let searchService: SearchService
+  let searchFacade: SearchFacade
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -89,6 +90,7 @@ describe('RecordsListComponent', () => {
     })
     router = TestBed.inject(Router)
     searchService = TestBed.inject(SearchService)
+    searchFacade = TestBed.inject(SearchFacade)
     fixture = TestBed.createComponent(RecordsListComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -115,6 +117,12 @@ describe('RecordsListComponent', () => {
       expect(pagination).toBeTruthy()
       expect(pagination.currentPage).toEqual(currentPage)
       expect(pagination.totalPages).toEqual(totalPages)
+    })
+    it('orders the completion column', () => {
+      expect(searchFacade.setSortBy).toHaveBeenCalledWith([
+        'desc',
+        'changeDate',
+      ])
     })
     describe('when click on a record', () => {
       beforeEach(() => {

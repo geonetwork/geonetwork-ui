@@ -6,6 +6,7 @@ import {
   getFileFormat,
   getFormatPriority,
 } from '@geonetwork-ui/util/shared'
+import { SortByField } from '@geonetwork-ui/common/domain/search'
 
 @Component({
   selector: 'gn-ui-record-table',
@@ -15,7 +16,9 @@ import {
 export class RecordTableComponent {
   @Input() records: CatalogRecord[] = []
   @Input() totalHits?: number
+  @Input() sortBy?: SortByField
   @Output() recordSelect = new EventEmitter<CatalogRecord>()
+  @Output() sortByChange = new EventEmitter<SortByField>()
 
   dateToString(date: Date): string {
     return date?.toLocaleDateString(undefined, {
@@ -53,5 +56,37 @@ export class RecordTableComponent {
 
   getBadgeColor(format: FileFormat): string {
     return getBadgeColor(format)
+  }
+
+  private getOrderForColumn(col: string): 'asc' | 'desc' | null {
+    if (!this.sortBy) {
+      return null
+    }
+    let order: 'asc' | 'desc' | null = null
+    const sortedArray = Array.isArray(this.sortBy[0])
+      ? this.sortBy
+      : [this.sortBy]
+    sortedArray.forEach((sortedCol) => {
+      if (sortedCol[1] === col) {
+        order = sortedCol[0]
+      }
+    })
+    return order
+  }
+
+  setSortBy(col: string): void {
+    const sortOrder = this.getOrderForColumn(col)
+    let newOrder
+    if (sortOrder) {
+      newOrder = sortOrder === 'asc' ? 'desc' : 'asc'
+    } else {
+      newOrder = 'asc'
+    }
+    this.sortByChange.emit([newOrder, col])
+  }
+
+  isSortedBy(col: string, order: 'asc' | 'desc'): boolean {
+    const sortOrder = this.getOrderForColumn(col)
+    return sortOrder === order
   }
 }

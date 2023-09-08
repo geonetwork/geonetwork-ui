@@ -10,24 +10,97 @@
     >
       results.records.hits.displayedOn
     </div>
+
     <div
       class="grid grid-cols-[repeat(5,minmax(0,max-content))] gap-x-4 gap-y-1"
     >
       <div class="contents text-sm">
-        <div translate="" class="record-table-header text-gray-400">
-          record.metadata.title
+        <div class="record-table-header text-gray-400 flex gap-1">
+          <gn-ui-button
+            type="light"
+            extraClass="px-3 py-2 space-x-1"
+            (buttonClick)="setSortBy('resourceTitleObject.default.keyword')"
+          >
+            <span translate>record.metadata.title</span>
+            <mat-icon
+              class="text-base leading-tight"
+              *ngIf="isSortedBy('resourceTitleObject.default.keyword', 'desc')"
+            >
+              expand_more</mat-icon
+            >
+            <mat-icon
+              class="text-base leading-tight"
+              *ngIf="isSortedBy('resourceTitleObject.default.keyword', 'asc')"
+            >
+              expand_less</mat-icon
+            >
+          </gn-ui-button>
         </div>
-        <div translate="" class="record-table-header text-gray-400">
+        <div translate="" class="record-table-header text-gray-400 flex gap-1">
           record.metadata.formats
         </div>
-        <div translate="" class="record-table-header text-gray-400">
-          record.metadata.author
+        <div class="record-table-header text-gray-400 flex gap-1">
+          <gn-ui-button
+            type="light"
+            extraClass="px-3 py-2 space-x-1"
+            (buttonClick)="setSortBy('recordOwner')"
+          >
+            <span translate>record.metadata.author</span>
+            <mat-icon
+              class="text-base leading-tight"
+              *ngIf="isSortedBy('recordOwner', 'desc')"
+            >
+              expand_more</mat-icon
+            >
+            <mat-icon
+              class="text-base leading-tight"
+              *ngIf="isSortedBy('recordOwner', 'asc')"
+            >
+              expand_less</mat-icon
+            >
+          </gn-ui-button>
         </div>
-        <div translate="" class="record-table-header text-gray-400">
-          record.metadata.completion
+        <div class="record-table-header text-gray-400 flex gap-1">
+          <gn-ui-button
+            type="light"
+            extraClass="px-3 py-2 space-x-1"
+            (buttonClick)="setSortBy('changeDate')"
+          >
+            <span translate>record.metadata.completion</span>
+            <mat-icon
+              class="text-base leading-tight"
+              *ngIf="isSortedBy('changeDate', 'desc')"
+            >
+              expand_more</mat-icon
+            >
+            <mat-icon
+              class="text-base leading-tight"
+              *ngIf="isSortedBy('changeDate', 'asc')"
+            >
+              expand_less</mat-icon
+            >
+          </gn-ui-button>
         </div>
-        <div translate="" class="record-table-header text-gray-400">
-          record.metadata.createdOn
+        <div class="record-table-header text-gray-400 flex gap-1">
+          <gn-ui-button
+            type="light"
+            extraClass="px-3 py-2 space-x-1"
+            (buttonClick)="setSortBy('createDate')"
+          >
+            <span translate>record.metadata.createdOn</span>
+            <mat-icon
+              class="text-base leading-tight"
+              *ngIf="isSortedBy('createDate', 'desc')"
+            >
+              expand_more</mat-icon
+            >
+            <mat-icon
+              class="text-base leading-tight"
+              *ngIf="isSortedBy('createDate', 'asc')"
+            >
+              expand_less</mat-icon
+            >
+          </gn-ui-button>
         </div>
       </div>
       <div
