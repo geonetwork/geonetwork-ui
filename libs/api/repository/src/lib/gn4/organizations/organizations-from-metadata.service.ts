@@ -53,14 +53,16 @@ interface IncompleteOrganization {
 export class OrganizationsFromMetadataService
   implements OrganizationsServiceInterface
 {
-  geonetworkVersion$ = this.siteApiService.getSiteOrPortalDescription().pipe(
+  geonetworkVersion$ = of(true).pipe(
+    switchMap(() => this.siteApiService.getSiteOrPortalDescription()),
     map((info) => info['system/platform/version']),
     shareReplay(1)
   )
 
-  private groups$: Observable<GroupApiModel[]> = this.groupsApiService
-    .getGroups()
-    .pipe(shareReplay())
+  private groups$: Observable<GroupApiModel[]> = of(true).pipe(
+    switchMap(() => this.groupsApiService.getGroups()),
+    shareReplay()
+  )
   private organisationsAggs$: Observable<OrganizationAggsBucket[]> =
     this.geonetworkVersion$.pipe(
       switchMap((version) =>
