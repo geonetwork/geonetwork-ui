@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { MdViewFacade } from '../state'
 import { combineLatest, map } from 'rxjs'
+import { GN_UI_VERSION } from '../feature-record.module'
 
 @Component({
   selector: 'gn-ui-data-view-web-component',
@@ -17,7 +18,9 @@ export class DataViewWebComponentComponent {
     map(([config, metadata]) => {
       if (config) {
         const { aggregation, xProperty, yProperty, chartType } = config
-        return `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist/gn-wc.js"></script>
+        return `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${
+          this.version
+        }/gn-wc.js"></script>
 <gn-dataset-view-chart
         api-url="${new URL(
           this.config.basePath,
@@ -42,6 +45,7 @@ export class DataViewWebComponentComponent {
 
   constructor(
     @Inject(Configuration) private config: Configuration,
+    @Inject(GN_UI_VERSION) private version: string,
     private facade: MdViewFacade
   ) {}
 }
