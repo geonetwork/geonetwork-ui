@@ -32,6 +32,8 @@ import { FeatureMapModule } from '@geonetwork-ui/feature/map'
 import { GnDatasetViewChartComponent } from './components/gn-dataset-view-chart/gn-dataset-view-chart.component'
 import { FeatureDatavizModule } from '@geonetwork-ui/feature/dataviz'
 import { EmbeddedTranslateLoader } from '@geonetwork-ui/util/i18n'
+import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnFacetsComponent, 'gn-facets'],
@@ -78,6 +80,8 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     }),
     MatIconModule,
     FeatureDatavizModule,
+    FeatureAuthModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     {
