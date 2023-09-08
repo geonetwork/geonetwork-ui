@@ -11,7 +11,7 @@ All Web Components are prefixed with `gn-`.
 Web Components are made to be easily included in any context, e.g.:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist/gn-wc.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-main/gn-wc.js"></script>
 ...
 <gn-results-list
   api-url="https://apps.titellus.net/geonetwork/srv/api"

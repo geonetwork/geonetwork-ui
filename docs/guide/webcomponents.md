@@ -20,7 +20,7 @@ Web Components are made to be easily included in any context. To do so, you have
 - include your Web Component in the HTML content.
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist/gn-wc.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-v1.1.0/gn-wc.js"></script>
 ...
 <gn-results-list
   api-url="https://dev.geo2france.fr/geonetwork/srv/api"
@@ -30,6 +30,12 @@ Web Components are made to be easily included in any context. To do so, you have
   show-more="button"
 ></gn-results-list>
 ```
+
+## Publication and Versioning
+
+The Web Component script is automatically built upon merges on main and for releases. These builds are made available via a jsdelivr CDN, which points at `wc-dist` branches in the github repository. There is a `wc-dist` branch for every release tag > `v1.1.0` as well as `wc-dist-main`.
+
+You can choose the version of the Web Component script you wish to use by indicating the corresponding value in the script's URL e.g. `wc-dist-v1.1.0`.
 
 ## Build
 
