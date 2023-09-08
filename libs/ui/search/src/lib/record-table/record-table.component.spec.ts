@@ -24,9 +24,9 @@ describe('RecordTableComponent', () => {
   describe('get a list of formats and sorts them depending on priority', () => {
     it('returns a list of unique formats', () => {
       expect(component.getRecordFormats(DATASET_RECORDS[0])).toEqual([
-        'pdf',
-        'shp',
         'geojson',
+        'shp',
+        'pdf',
       ])
     })
   })
@@ -36,7 +36,7 @@ describe('RecordTableComponent', () => {
         component.getBadgeColor(
           component.getRecordFormats(DATASET_RECORDS[0])[0]
         )
-      ).toEqual('#db544a')
+      ).toEqual('#1e5180') // geojson
     })
   })
 })
