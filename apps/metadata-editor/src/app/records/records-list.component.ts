@@ -15,6 +15,7 @@ const includes = [
   'userinfo',
   'cl_status',
   'isPublishedToAll',
+  'link',
 ]
 
 @Component({

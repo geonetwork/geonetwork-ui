@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
-import { getFileFormat, sortPriority } from '@geonetwork-ui/util/shared'
+import { getFileFormat, getLinkPriority } from '@geonetwork-ui/util/shared'
 import { combineLatest, of } from 'rxjs'
 import { catchError, map, switchMap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
@@ -92,5 +92,5 @@ const removeDuplicateLinks = (wfsDownloadLinks) =>
 
 const sortLinks = (allLinks) =>
   allLinks.sort((a: DatasetDistribution, b: DatasetDistribution): number => {
-    return sortPriority(b) - sortPriority(a)
+    return getLinkPriority(b) - getLinkPriority(a)
   })

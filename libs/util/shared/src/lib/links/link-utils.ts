@@ -84,10 +84,9 @@ export const FORMATS = {
   },
 } as const
 
-type FileFormat = keyof typeof FORMATS
+export type FileFormat = keyof typeof FORMATS
 
-export function sortPriority(link: DatasetDistribution): number {
-  const linkFormat = getFileFormat(link)
+export function getFormatPriority(linkFormat: FileFormat): number {
   for (const format in FORMATS) {
     for (const ext of FORMATS[format].extensions) {
       if (new RegExp(`${ext}`, 'i').test(linkFormat)) {
@@ -97,6 +96,10 @@ export function sortPriority(link: DatasetDistribution): number {
     }
   }
   return 0
+}
+
+export function getLinkPriority(link: DatasetDistribution): number {
+  return getFormatPriority(getFileFormat(link))
 }
 
 export function extensionToFormat(extension: string): FileFormat {

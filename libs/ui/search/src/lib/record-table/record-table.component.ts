@@ -1,6 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import {
+  FileFormat,
+  getBadgeColor,
+  getFileFormat,
+  getFormatPriority,
+} from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-record-table',
@@ -8,7 +13,7 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
   styleUrls: ['./record-table.component.css'],
 })
 export class RecordTableComponent {
-  @Input() records: CatalogRecord[] = DATASET_RECORDS
+  @Input() records: CatalogRecord[] = []
   @Input() totalHits?: number
   @Output() recordSelect = new EventEmitter<CatalogRecord>()
 
@@ -31,5 +36,22 @@ export class RecordTableComponent {
       return `${infos[2]} ${infos[1]}`
     }
     return undefined
+  }
+
+  getRecordFormats(record: CatalogRecord): FileFormat[] {
+    if (record.kind === 'service' || !('distributions' in record)) {
+      return []
+    }
+    const formats = Array.from(
+      new Set(
+        record.distributions.map((distribution) => getFileFormat(distribution))
+      )
+    ).filter((format) => !!format)
+    formats.sort((a, b) => getFormatPriority(b) - getFormatPriority(a))
+    return formats
+  }
+
+  getBadgeColor(format: FileFormat): string {
+    return getBadgeColor(format)
   }
 }

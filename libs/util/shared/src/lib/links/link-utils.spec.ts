@@ -7,7 +7,7 @@ import {
   getFileFormat,
   getLinkLabel,
   mimeTypeToFormat,
-  sortPriority,
+  getLinkPriority,
 } from './link-utils'
 
 describe('link utils', () => {
@@ -171,7 +171,7 @@ describe('link utils', () => {
     const nFormats = Object.keys(FORMATS).length
     it(`returns ${nFormats - 1}`, () => {
       expect(
-        sortPriority({
+        getLinkPriority({
           description: 'Data in CSV format',
           name: 'abc.csv',
           url: new URL('https://my.server/files/abc.csv'),
@@ -181,7 +181,7 @@ describe('link utils', () => {
     })
     it(`returns ${nFormats - 5}`, () => {
       expect(
-        sortPriority({
+        getLinkPriority({
           description: 'Data in KML format',
           name: 'abc.kml',
           url: new URL('https://my.server/files/abc.kml'),
