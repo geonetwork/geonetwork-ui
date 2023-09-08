@@ -1,6 +1,6 @@
 import { ElasticsearchService } from './elasticsearch.service'
 import { ES_FIXTURE_AGGS_RESPONSE } from '@geonetwork-ui/common/fixtures'
-import { EsSearchParams } from '../types/elasticsearch.model'
+import { EsSearchParams } from '@geonetwork-ui/api/metadata-converter'
 
 describe('ElasticsearchService', () => {
   let service: ElasticsearchService
@@ -131,8 +131,10 @@ describe('ElasticsearchService', () => {
               },
             },
             {
-              query_string: {
-                query: '(Org:"world")',
+              match: {
+                Org: {
+                  world: true,
+                },
               },
             },
           ],
@@ -180,8 +182,10 @@ describe('ElasticsearchService', () => {
               },
             },
             {
-              query_string: {
-                query: '(Org:"world")',
+              match: {
+                Org: {
+                  world: true,
+                },
               },
             },
             {
@@ -234,8 +238,10 @@ describe('ElasticsearchService', () => {
               },
             },
             {
-              query_string: {
-                query: '(Org:"world")',
+              match: {
+                Org: {
+                  world: true,
+                },
               },
             },
             {
@@ -320,8 +326,10 @@ describe('ElasticsearchService', () => {
                 },
               },
               {
-                query_string: {
-                  query: '(Org:"world")',
+                match: {
+                  Org: {
+                    world: true,
+                  },
                 },
               },
             ],
@@ -621,15 +629,16 @@ describe('ElasticsearchService', () => {
         })
       ).toStrictEqual({
         myFilters: {
-          filters: {
-            filter1: {
-              match: {
-                field1: '100',
-              },
+          filter1: {
+            match: {
+              field1: '100',
             },
-            filter2: {
-              match: {
-                field2: { value1: true, value3: true },
+          },
+          filter2: {
+            match: {
+              field2: {
+                value1: true,
+                value3: true,
               },
             },
           },

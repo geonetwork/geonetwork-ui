@@ -5,7 +5,7 @@ import {
   Aggregation,
   AggregationParams,
   AggregationsParams,
-  FilterAggregationParams,
+  FieldFilters,
   SortByField,
 } from '@geonetwork-ui/common/domain/search'
 import { METADATA_LANGUAGE } from '../../metadata-language'
@@ -79,6 +79,13 @@ export class ElasticsearchService {
       if ('field' in node && typeof node.field === 'string') {
         if (node.field in this.runtimeFields) {
           addMapping(node.field)
+        }
+      }
+      if ('match' in node && typeof node.match === 'object') {
+        for (const key in node.match) {
+          if (key in this.runtimeFields) {
+            addMapping(key)
+          }
         }
       }
       for (const runtimeField in this.runtimeFields) {
@@ -183,7 +190,6 @@ export class ElasticsearchService {
     uuids?: string[],
     geometry?: Geometry
   ) {
-    const queryFilters = this.stateFiltersToQueryString(fieldSearchFilters)
     const must = [this.queryFilterOnValues('isTemplate', 'n')] as Record<
       string,
       unknown
@@ -210,12 +216,9 @@ export class ElasticsearchService {
         },
       })
     }
-    if (queryFilters) {
-      must.push({
-        query_string: {
-          query: queryFilters,
-        },
-      })
+    if (fieldSearchFilters) {
+      const filters = this.searchFiltersToESFilters(fieldSearchFilters)
+      must.push(filters)
     }
     if (uuids) {
       must.push({
@@ -415,22 +418,36 @@ export class ElasticsearchService {
     )
   }
 
+  private searchFiltersToESFilters(
+    filters: FieldFilters
+  ): Record<string, unknown> {
+    const match = Object.keys(filters).reduce(
+      (prev, curr) => ({
+        ...prev,
+        [curr]: filters[curr],
+      }),
+      {}
+    )
+    return { match }
+  }
+
   buildAggregationsPayload(aggregations: AggregationsParams): any {
-    const mapFilterAggregation = (filterAgg: FilterAggregationParams) => ({
-      match: filterAgg,
-    })
     const mapToESAggregation = (aggregation: AggregationParams) => {
       switch (aggregation.type) {
-        case 'filters':
-          return {
-            filters: Object.keys(aggregation.filters).reduce(
-              (prev, curr) => ({
-                ...prev,
-                [curr]: mapFilterAggregation(aggregation.filters[curr]),
-              }),
-              {}
-            ),
-          }
+        case 'filters': {
+          return Object.keys(aggregation.filters).reduce(
+            (prev, curr) => ({
+              ...prev,
+              [curr]:
+                typeof aggregation.filters[curr] === 'string'
+                  ? aggregation.filters[curr]
+                  : this.searchFiltersToESFilters(
+                      aggregation.filters[curr] as FieldFilters
+                    ),
+            }),
+            {}
+          )
+        }
         case 'terms':
           return {
             terms: {
