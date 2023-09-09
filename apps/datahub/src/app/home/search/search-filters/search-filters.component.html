@@ -36,7 +36,10 @@
             (click)="close()"
           >
             <span class="text-sm" translate>search.filters.minimize</span>
-            <mat-icon class="ml-1 align-middle leading-none">remove</mat-icon>
+            <mat-icon
+              class="material-symbols-outlined ml-1 align-middle leading-none"
+              >remove</mat-icon
+            >
           </button>
         </span>
       </div>
@@ -81,7 +84,7 @@
         extraClass="!p-[8px]"
         data-cy="filters-expand"
       >
-        <mat-icon>more_horiz</mat-icon>
+        <mat-icon class="material-symbols-outlined">more_horiz</mat-icon>
       </gn-ui-button>
       <button
         type="button"
@@ -91,7 +94,10 @@
         data-cy="filters-expand"
       >
         <span class="text-sm" translate>search.filters.maximize</span>
-        <mat-icon class="ml-1 align-middle leading-none">add</mat-icon>
+        <mat-icon
+          class="material-symbols-outlined ml-1 align-middle leading-none"
+          >add</mat-icon
+        >
       </button>
       <gn-ui-sort-by
         [ngClass]="isOpen ? 'block text-white mb-1' : 'hidden sm:block'"
@@ -106,7 +112,10 @@
         data-cy="filters-collapse"
       >
         <span class="text-sm" translate>search.filters.minimize</span>
-        <mat-icon class="ml-1 align-middle leading-none">remove</mat-icon>
+        <mat-icon
+          class="material-symbols-outlined ml-1 align-middle leading-none"
+          >remove</mat-icon
+        >
       </button>
     </div>
   </div>

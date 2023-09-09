@@ -9,7 +9,11 @@
       'cursor-default': disabled
     }"
   >
-    <mat-icon>{{ toggled ? 'star' : 'star_outline' }}</mat-icon>
+    <mat-icon
+      class="material-symbols-outlined"
+      [ngClass]="{ 'star-filled': toggled }"
+      >star</mat-icon
+    >
   </button>
   <svg
     #starOverlay

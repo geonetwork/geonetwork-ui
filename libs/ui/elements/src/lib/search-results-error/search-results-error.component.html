@@ -3,23 +3,29 @@
 >
   <div *ngIf="type === types.COULD_NOT_REACH_API">
     <div class="relative opacity-40">
-      <mat-icon class="face">face</mat-icon>
-      <mat-icon class="question-mark1">question_mark</mat-icon>
-      <mat-icon class="question-mark2">question_mark</mat-icon>
+      <mat-icon class="material-symbols-outlined face">face</mat-icon>
+      <mat-icon class="material-symbols-outlined question-mark1"
+        >question_mark</mat-icon
+      >
+      <mat-icon class="material-symbols-outlined question-mark2"
+        >question_mark</mat-icon
+      >
     </div>
     <div translate>search.error.couldNotReachApi</div>
   </div>
   <div *ngIf="type === types.RECEIVED_ERROR">
     <div class="relative opacity-40">
-      <mat-icon class="face">mood_bad</mat-icon>
+      <mat-icon class="material-symbols-outlined face">mood_bad</mat-icon>
     </div>
     <div translate>search.error.receivedError</div>
     <div *ngIf="error">{{ error }}</div>
   </div>
   <div *ngIf="type === types.RECORD_NOT_FOUND">
     <div class="relative opacity-40">
-      <mat-icon class="computer">computer</mat-icon>
-      <mat-icon class="computer-question-mark">question_mark</mat-icon>
+      <mat-icon class="material-symbols-outlined computer">computer</mat-icon>
+      <mat-icon class="material-symbols-outlined computer-question-mark"
+        >question_mark</mat-icon
+      >
     </div>
     <div translate [translateParams]="{ id: recordId }">
       search.error.recordNotFound

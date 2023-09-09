@@ -32,7 +32,7 @@ export class GnUiLinkifyDirective implements OnInit {
   private linkifyText(text: string): string {
     return text.replace(/(\bhttps?:\/\/\S+\b)/g, (match) => {
       return `<a href="${match}" target="_blank"
-                  class="text-primary cursor-pointer hover:underline">${match} <mat-icon class="mat-icon !w-[12px] !h-[14px] !text-[14px] opacity-75 material-icons">open_in_new</mat-icon></a>`
+                  class="text-primary cursor-pointer hover:underline">${match} <mat-icon class="material-symbols-outlined !w-[12px] !h-[14px] !text-[14px] opacity-75">open_in_new</mat-icon></a>`
     })
   }
 }
