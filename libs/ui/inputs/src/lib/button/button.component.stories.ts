@@ -5,6 +5,7 @@ import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
+import { MatIconModule } from '@angular/material/icon'
 
 export default {
   title: 'Inputs/ButtonComponent',
@@ -14,6 +15,7 @@ export default {
       imports: [
         UtilI18nModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+        MatIconModule,
       ],
     }),
   ],
@@ -36,7 +38,22 @@ export const Primary: StoryObj<ButtonComponentWithContent> = {
   },
   render: (args) => ({
     props: args,
-    template:
-      '<gn-ui-button [type]="type" [disabled]="disabled" [extraClass]="extraClass">{{ content }}</gn-ui-button>',
+    template: `<div class='flex flex-row gap-5'>
+  <gn-ui-button [type]="type" [disabled]="disabled" [extraClass]="extraClass">
+    {{ content }}
+  </gn-ui-button>
+  <gn-ui-button [type]="type" [disabled]="disabled" [extraClass]="extraClass">
+    with an icon&nbsp;<mat-icon class="material-symbols-outlined">downloading</mat-icon>
+  </gn-ui-button>
+  <gn-ui-button class="text-[1.5em]" [type]="type" [disabled]="disabled" [extraClass]="extraClass">
+    <mat-icon class='material-symbols-outlined'>globe_asia</mat-icon>&nbsp;bigger
+  </gn-ui-button>
+  <gn-ui-button class="text-[0.7em]" [type]="type" [disabled]="disabled" [extraClass]="extraClass">
+    <mat-icon class='material-symbols-outlined'>pest_control</mat-icon>&nbsp;smaller
+  </gn-ui-button>
+  <gn-ui-button [type]="type" [disabled]="disabled" [extraClass]="extraClass + ' !px-[3em] !py-[0.5em]'">
+    different&nbsp;<mat-icon class="material-symbols-outlined">waves</mat-icon>&nbsp;shape
+  </gn-ui-button>
+</div>`,
   }),
 }
