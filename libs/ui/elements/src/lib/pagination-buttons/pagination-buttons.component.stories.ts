@@ -1,15 +1,10 @@
 import { TranslateModule } from '@ngx-translate/core'
-import {
-  componentWrapperDecorator,
-  Meta,
-  moduleMetadata,
-  StoryObj,
-} from '@storybook/angular'
+import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
 import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
-import { UiInputsModule, ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { PaginationButtonsComponent } from './pagination-buttons.component'
 import { FormsModule } from '@angular/forms'
 import { action } from '@storybook/addon-actions'

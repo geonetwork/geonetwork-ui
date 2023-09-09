@@ -23,13 +23,13 @@
           >
             <span translate>record.metadata.title</span>
             <mat-icon
-              class="text-base leading-tight"
+              class="material-symbols-outlined"
               *ngIf="isSortedBy('resourceTitleObject.default.keyword', 'desc')"
             >
               expand_more</mat-icon
             >
             <mat-icon
-              class="text-base leading-tight"
+              class="material-symbols-outlined"
               *ngIf="isSortedBy('resourceTitleObject.default.keyword', 'asc')"
             >
               expand_less</mat-icon
@@ -47,13 +47,13 @@
           >
             <span translate>record.metadata.author</span>
             <mat-icon
-              class="text-base leading-tight"
+              class="material-symbols-outlined"
               *ngIf="isSortedBy('recordOwner', 'desc')"
             >
               expand_more</mat-icon
             >
             <mat-icon
-              class="text-base leading-tight"
+              class="material-symbols-outlined"
               *ngIf="isSortedBy('recordOwner', 'asc')"
             >
               expand_less</mat-icon
@@ -66,15 +66,15 @@
             extraClass="px-3 py-2 space-x-1"
             (buttonClick)="setSortBy('changeDate')"
           >
-            <span translate>record.metadata.completion</span>
+            <span translate>record.metadata.updatedOn</span>
             <mat-icon
-              class="text-base leading-tight"
+              class="material-symbols-outlined"
               *ngIf="isSortedBy('changeDate', 'desc')"
             >
               expand_more</mat-icon
             >
             <mat-icon
-              class="text-base leading-tight"
+              class="material-symbols-outlined"
               *ngIf="isSortedBy('changeDate', 'asc')"
             >
               expand_less</mat-icon
@@ -89,13 +89,13 @@
           >
             <span translate>record.metadata.createdOn</span>
             <mat-icon
-              class="text-base leading-tight"
+              class="material-symbols-outlined"
               *ngIf="isSortedBy('createDate', 'desc')"
             >
               expand_more</mat-icon
             >
             <mat-icon
-              class="text-base leading-tight"
+              class="material-symbols-outlined"
               *ngIf="isSortedBy('createDate', 'asc')"
             >
               expand_less</mat-icon

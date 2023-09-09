@@ -83,6 +83,7 @@ export class RecordTableComponent {
       newOrder = 'asc'
     }
     this.sortByChange.emit([newOrder, col])
+    this.sortBy = [newOrder, col]
   }
 
   isSortedBy(col: string, order: 'asc' | 'desc'): boolean {
