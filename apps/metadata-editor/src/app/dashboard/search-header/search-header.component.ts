@@ -7,6 +7,7 @@ import {
 } from '@geonetwork-ui/feature/auth'
 import { LetDirective } from '@ngrx/component'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
+import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 
 @Component({
   selector: 'md-editor-search-header',
@@ -14,7 +15,13 @@ import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
   styleUrls: ['./search-header.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FeatureSearchModule, MatIconModule, CommonModule, LetDirective],
+  imports: [
+    FeatureSearchModule,
+    MatIconModule,
+    CommonModule,
+    LetDirective,
+    UiElementsModule,
+  ],
 })
 export class SearchHeaderComponent {
   public placeholder = this.avatarService.placeholder
