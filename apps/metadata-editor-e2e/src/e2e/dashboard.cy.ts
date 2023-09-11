@@ -1,66 +1,58 @@
 describe('dashboard', () => {
+  let pageOne
   describe('pagination', () => {
-    let originalList
-    let newList
     it('should display different results on click on arrow', () => {
-      cy.visit('/')
+      cy.visit('/records/all')
       cy.get('gn-ui-record-table')
         .find('.record-table-col')
         .first()
-        .as('pageOne')
-
-      cy.get('@pageOne')
         .invoke('text')
-        .then((list) => {
-          originalList = list.trim()
-          cy.get('gn-ui-pagination-buttons').find('gn-ui-button').last().click()
-          cy.get('gn-ui-record-table')
-            .find('.record-table-col')
-            .first()
-            .invoke('text')
-            .then((list) => {
-              newList = list.trim()
-              expect(newList).not.to.be(originalList)
-            })
+        .then((text) => {
+          pageOne = text
+        })
+      cy.get('gn-ui-pagination-buttons').find('gn-ui-button').last().click()
+      cy.get('gn-ui-record-table')
+        .find('.record-table-col')
+        .first()
+        .invoke('text')
+        .then((text) => {
+          expect(text).not.to.equal(pageOne)
+          cy.url().should('include', 'page=2')
         })
     })
-    it('should display different results on click on specific page', () => {
+    it('should display different results on click on specific page and change url', () => {
+      cy.visit('/records/search?_page=2')
       cy.get('gn-ui-pagination-buttons').find('gn-ui-button').eq(1).click()
       cy.get('gn-ui-record-table')
         .find('.record-table-col')
         .first()
         .invoke('text')
-        .then((list) => {
-          newList = list.trim()
-          expect(newList).to.be(originalList)
+        .then((text) => {
+          expect(text).to.equal(pageOne)
+          cy.url().should('include', 'page=1')
         })
     })
   })
 
-  // NEEDS TO WAIT UNTIL STYLE IS DONE
   describe('sorting', () => {
-    let originalList
-    let newList
+    let originalFirstItem
+    let newFirstItem
     it('should order the result list on click', () => {
-      cy.visit('/')
+      cy.visit('/records/all')
       cy.get('gn-ui-record-table')
         .find('.record-table-col')
         .first()
-        .as('pageOne')
-
-      cy.get('@pageOne')
         .invoke('text')
         .then((list) => {
-          originalList = list.trim()
+          originalFirstItem = list.trim()
           cy.get('.record-table-header').first().click()
-          cy.get('gn-ui-sort').find('gn-ui-button').first().click()
           cy.get('gn-ui-record-table')
             .find('.record-table-col')
             .first()
             .invoke('text')
             .then((list) => {
-              newList = list.trim()
-              expect(newList).not.to.be(originalList)
+              newFirstItem = list.trim()
+              expect(newFirstItem).not.to.equal(originalFirstItem)
             })
         })
     })
