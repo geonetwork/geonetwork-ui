@@ -1,10 +1,35 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { MyOrgRecordsComponent } from './my-org-records.component'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { Component, importProvidersFrom } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { RecordsListComponent } from '../records-list.component'
+import { USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
+import { BehaviorSubject, of } from 'rxjs'
+import { AuthService } from '@geonetwork-ui/feature/auth'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+
+const user = USER_FIXTURE()
+class AuthServiceMock {
+  user$ = new BehaviorSubject(user)
+  authReady = jest.fn(() => this._authSubject$)
+  _authSubject$ = new BehaviorSubject({})
+}
+class OrganisationsServiceMock {
+  organisationsCount$ = of(456)
+}
+
+class searchServiceMock {
+  updateSearchFilters = jest.fn()
+  setSearch = jest.fn()
+  setSortBy = jest.fn()
+  setSortAndFilters = jest.fn()
+}
+
+class SearchFacadeMock {
+  resetSearch = jest.fn()
+}
 
 @Component({
   // eslint-disable-next-line
@@ -13,10 +38,6 @@ import { RecordsListComponent } from '../records-list.component'
   standalone: true,
 })
 export class MockRecordsListComponent {}
-
-class SearchFacadeMock {
-  resetSearch = jest.fn()
-}
 
 describe('MyOrgRecordsComponent', () => {
   let component: MyOrgRecordsComponent
@@ -30,6 +51,19 @@ describe('MyOrgRecordsComponent', () => {
         {
           provide: SearchFacade,
           useClass: SearchFacadeMock,
+        },
+        { provide: AuthService, useClass: AuthServiceMock },
+        {
+          provide: OrganizationsServiceInterface,
+          useClass: OrganisationsServiceMock,
+        },
+        {
+          provide: SearchFacade,
+          useClass: SearchFacadeMock,
+        },
+        {
+          provide: SearchService,
+          useClass: searchServiceMock,
         },
       ],
     }).overrideComponent(MyOrgRecordsComponent, {
