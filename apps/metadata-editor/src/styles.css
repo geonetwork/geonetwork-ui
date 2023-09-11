@@ -21,3 +21,7 @@ body {
 .menu-title {
   @apply text-xl px-9 py-3;
 }
+
+.mat-mdc-button-base {
+  line-height: normal;
+}

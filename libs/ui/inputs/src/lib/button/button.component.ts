@@ -61,7 +61,7 @@ export class ButtonComponent {
       case 'primary':
         return 'focus:ring-4 focus:ring-primary-lightest'
       case 'outline':
-        return 'border border-gray-300 hover:border-primary-lighter focus:border-primary-lighter focus:ring-4 focus:ring-primary-lightest active:border-primary-darker'
+        return 'border border-gray-300 -m-[1px] hover:border-primary-lighter focus:border-primary-lighter focus:ring-4 focus:ring-primary-lightest active:border-primary-darker'
       case 'light':
         return 'focus:ring-4 focus:ring-gray-300'
     }

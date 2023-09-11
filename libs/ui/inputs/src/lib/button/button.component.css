@@ -1,0 +1,5 @@
+/* makes sure icons will not make the buttons grow vertically */
+mat-icon.mat-icon {
+  margin-top: -0.3em;
+  margin-bottom: -0.3em;
+}

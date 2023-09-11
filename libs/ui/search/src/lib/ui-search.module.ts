@@ -26,6 +26,7 @@ import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { RecordPreviewFeedComponent } from './record-preview-feed/record-preview-feed.component'
 import { RecordTableComponent } from './record-table/record-table.component'
 import { CommonModule } from '@angular/common'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { CommonModule } from '@angular/common'
     TagInputModule,
     UtilSharedModule,
     UiWidgetsModule,
+    UiInputsModule,
     UiElementsModule,
     MatIconModule,
     RouterLink,
