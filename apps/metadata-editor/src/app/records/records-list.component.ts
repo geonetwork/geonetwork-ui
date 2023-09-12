@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { Component, Input } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { Router } from '@angular/router'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
@@ -34,10 +34,7 @@ export class RecordsListComponent {
     public searchFacade: SearchFacade,
     public searchService: SearchService
   ) {
-    this.searchFacade
-      .setPageSize(15)
-      .setConfigRequestFields(includes)
-      .setSortBy(['desc', 'changeDate'])
+    this.searchFacade.setPageSize(15).setConfigRequestFields(includes)
   }
 
   paginate(page: number) {
@@ -52,6 +49,6 @@ export class RecordsListComponent {
   }
 
   setSortBy(newSortBy: SortByField) {
-    this.searchFacade.setSortBy(newSortBy)
+    this.searchService.setSortBy(newSortBy)
   }
 }

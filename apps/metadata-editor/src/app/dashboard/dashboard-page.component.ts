@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
 import { SidebarComponent } from './sidebar/sidebar.component'
 import { SearchHeaderComponent } from './search-header/search-header.component'
+import { SearchService } from '@geonetwork-ui/feature/search'
 
 @Component({
   selector: 'md-editor-dashboard',
@@ -11,4 +12,10 @@ import { SearchHeaderComponent } from './search-header/search-header.component'
   imports: [RouterOutlet, SidebarComponent, SearchHeaderComponent],
   standalone: true,
 })
-export class DashboardPageComponent {}
+export class DashboardPageComponent implements OnInit {
+  constructor(public searchService: SearchService) {}
+
+  ngOnInit(): void {
+    this.searchService.setSortBy(['desc', 'changeDate'])
+  }
+}

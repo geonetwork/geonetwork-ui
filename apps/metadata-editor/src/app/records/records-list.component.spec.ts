@@ -118,12 +118,6 @@ describe('RecordsListComponent', () => {
       expect(pagination.currentPage).toEqual(currentPage)
       expect(pagination.totalPages).toEqual(totalPages)
     })
-    it('orders the completion column', () => {
-      expect(searchFacade.setSortBy).toHaveBeenCalledWith([
-        'desc',
-        'changeDate',
-      ])
-    })
     describe('when click on a record', () => {
       beforeEach(() => {
         table.recordSelect.emit({ uniqueIdentifier: 123 })

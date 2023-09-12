@@ -213,6 +213,7 @@ export class SearchFacade {
   resetSearch() {
     this.store.dispatch(new Paginate(1, this.searchId))
     this.store.dispatch(new SetFilters({}, this.searchId))
+    this.store.dispatch(new SetSortBy([], this.searchId))
     this.store.dispatch(new SetFavoritesOnly(false, this.searchId))
   }
 }
