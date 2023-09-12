@@ -5,6 +5,7 @@ import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { MdViewFacade } from '../state'
 import { TranslateModule } from '@ngx-translate/core'
 import { Component, Input } from '@angular/core'
+import { GN_UI_VERSION } from '../feature-record.module'
 
 const chartConfig1 = {
   aggregation: 'sum',
@@ -23,6 +24,8 @@ const chartConfig2 = {
 const metadata = {
   uniqueIdentifier: 'md_record_1234',
 }
+
+const gnUiVersion = 'v1.2.3'
 
 class MdViewFacadeMock {
   chartConfig$ = new BehaviorSubject(chartConfig1)
@@ -63,6 +66,10 @@ describe('DataViewWebComponentComponent', () => {
           provide: MdViewFacade,
           useClass: MdViewFacadeMock,
         },
+        {
+          provide: GN_UI_VERSION,
+          useValue: gnUiVersion,
+        },
       ],
     }).compileComponents()
     facade = TestBed.inject(MdViewFacade)
@@ -79,7 +86,7 @@ describe('DataViewWebComponentComponent', () => {
     it('should generate HTML based on configs', async () => {
       const html = await firstValueFrom(component.webComponentHtml$)
       expect(html).toBe(
-        `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist/gn-wc.js"></script>
+        `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${gnUiVersion}/gn-wc.js"></script>
 <gn-dataset-view-chart
         api-url="http://localhost/undefined"
         dataset-id="${metadata.uniqueIdentifier}"
@@ -104,7 +111,7 @@ describe('DataViewWebComponentComponent', () => {
     it('should update HTML based on configs', async () => {
       const html = await firstValueFrom(component.webComponentHtml$)
       expect(html).toBe(
-        `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist/gn-wc.js"></script>
+        `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${gnUiVersion}/gn-wc.js"></script>
 <gn-dataset-view-chart
         api-url="http://localhost/undefined"
         dataset-id="${metadata.uniqueIdentifier}"
