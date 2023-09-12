@@ -53,6 +53,10 @@ describe('dashboard', () => {
             .then((list) => {
               newFirstItem = list.trim()
               expect(newFirstItem).not.to.equal(originalFirstItem)
+              cy.url().should(
+                'include',
+                'sort=resourceTitleObject.default.keyword'
+              )
             })
         })
     })
