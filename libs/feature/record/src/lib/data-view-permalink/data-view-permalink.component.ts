@@ -8,6 +8,7 @@ import {
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { combineLatest, map } from 'rxjs'
 import { MdViewFacade } from '../state'
+import { GN_UI_VERSION } from '../feature-record.module'
 
 export const WEB_COMPONENT_EMBEDDER_URL = new InjectionToken<string>(
   'webComponentEmbedderUrl'
@@ -28,7 +29,8 @@ export class DataViewPermalinkComponent {
       if (config) {
         const { aggregation, xProperty, yProperty, chartType } = config
         const url = new URL(`${this.wcEmbedderBaseUrl}`, window.location.origin)
-        url.search = `?e=gn-dataset-view-chart
+        url.search = `?v=${this.version}
+&e=gn-dataset-view-chart
 &a=api-url=${this.config.basePath}
 &a=dataset-id=${metadata.uniqueIdentifier}
 &a=primary-color=%230f4395
@@ -50,6 +52,7 @@ export class DataViewPermalinkComponent {
     @Optional()
     @Inject(WEB_COMPONENT_EMBEDDER_URL)
     protected wcEmbedderBaseUrl: string,
+    @Inject(GN_UI_VERSION) private version: string,
     private facade: MdViewFacade
   ) {}
 }

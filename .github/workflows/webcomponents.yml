@@ -6,6 +6,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - 'v*.*.*'
   release:
     types: [published]
 
@@ -54,10 +56,10 @@ jobs:
           tag: ${{ github.ref }}
           overwrite: true
 
-      - name: Publish web component to ${{ env.PUBLISH_BRANCH }} branch
+      - name: Publish web component to ${{ env.PUBLISH_BRANCH }}-${{ github.ref_name }} branch
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           force_orphan: true
           publish_dir: ./wc-dist
-          publish_branch: ${{ env.PUBLISH_BRANCH }}
+          publish_branch: ${{ env.PUBLISH_BRANCH }}-${{ github.ref_name }}

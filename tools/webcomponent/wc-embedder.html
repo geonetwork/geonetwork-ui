@@ -16,7 +16,7 @@
         font-family: 'Open Sans', 'dataFeeder', sans-serif !important;
       }
     </style>
-    <script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist/gn-wc.js"></script>
+    <script id="gn-wc-script"></script>
     <script>
       function showError(message) {
         const errorMessage = document.createElement('div')
@@ -37,6 +37,10 @@ ${message}`
 
       try {
         const params = new URL(window.location).searchParams
+        const version = params.get('v')
+        document.getElementById(
+          'gn-wc-script'
+        ).src = `https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${version}/gn-wc.js`
         const elementName = params.get('e')
         const attributes = params.getAll('a')
 

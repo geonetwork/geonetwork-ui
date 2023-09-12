@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core'
+import { InjectionToken, NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { UiMapModule } from '@geonetwork-ui/ui/map'
 import { StoreModule } from '@ngrx/store'
@@ -29,6 +29,7 @@ import { DataViewPermalinkComponent } from './data-view-permalink/data-view-perm
 import { DataViewWebComponentComponent } from './data-view-web-component/data-view-web-component.component'
 import { DataViewShareComponent } from './data-view-share/data-view-share.component'
 
+export const GN_UI_VERSION = new InjectionToken<string>('gnUiVersion')
 @NgModule({
   declarations: [
     RecordMetadataComponent,

@@ -68,6 +68,7 @@ import { WEB_COMPONENT_EMBEDDER_URL } from '@geonetwork-ui/feature/record'
 import { LANGUAGES_LIST, UiCatalogModule } from '@geonetwork-ui/ui/catalog'
 import { METADATA_LANGUAGE } from '@geonetwork-ui/api/repository'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { GN_UI_VERSION } from '@geonetwork-ui/feature/record'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
@@ -130,6 +131,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   providers: [
     { provide: RouterService, useClass: DatahubRouterService },
     importProvidersFrom(FeatureAuthModule),
+    { provide: GN_UI_VERSION, useValue: environment.version },
     {
       provide: Configuration,
       useFactory: () =>
