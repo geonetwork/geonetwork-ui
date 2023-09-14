@@ -5,18 +5,24 @@ import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { Component, importProvidersFrom } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { RecordsListComponent } from '../records-list.component'
-import { USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
+import {
+  FILTERS_AGGREGATION,
+  USER_FIXTURE,
+} from '@geonetwork-ui/common/fixtures'
 import { BehaviorSubject, of } from 'rxjs'
 import { AuthService } from '@geonetwork-ui/feature/auth'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 
 const user = USER_FIXTURE()
+const filters = FILTERS_AGGREGATION
+
 class AuthServiceMock {
   user$ = new BehaviorSubject(user)
   authReady = jest.fn(() => this._authSubject$)
   _authSubject$ = new BehaviorSubject({})
 }
 class OrganisationsServiceMock {
+  getFiltersForOrgs = jest.fn(() => new BehaviorSubject(filters))
   organisationsCount$ = of(456)
 }
 
@@ -29,6 +35,7 @@ class searchServiceMock {
 
 class SearchFacadeMock {
   resetSearch = jest.fn()
+  setFilters = jest.fn()
 }
 
 @Component({
@@ -43,6 +50,7 @@ describe('MyOrgRecordsComponent', () => {
   let component: MyOrgRecordsComponent
   let fixture: ComponentFixture<MyOrgRecordsComponent>
   let searchFacade: SearchFacade
+  let orgService: OrganizationsServiceInterface
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -75,6 +83,7 @@ describe('MyOrgRecordsComponent', () => {
       },
     })
     searchFacade = TestBed.inject(SearchFacade)
+    orgService = TestBed.inject(OrganizationsServiceInterface)
     fixture = TestBed.createComponent(MyOrgRecordsComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -87,6 +96,14 @@ describe('MyOrgRecordsComponent', () => {
   describe('filters', () => {
     it('clears filters on init', () => {
       expect(searchFacade.resetSearch).toHaveBeenCalled()
+    })
+    it('filters by user organisation on init', () => {
+      expect(orgService.getFiltersForOrgs).toHaveBeenCalledWith([
+        {
+          name: user.organisation,
+        },
+      ])
+      expect(searchFacade.setFilters).toHaveBeenCalledWith(filters)
     })
   })
 })
