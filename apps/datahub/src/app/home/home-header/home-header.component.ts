@@ -20,9 +20,9 @@ import {
 import { SortByEnum, SortByField } from '@geonetwork-ui/common/domain/search'
 import { map } from 'rxjs/operators'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants'
-import { lastValueFrom } from 'rxjs'
+import { firstValueFrom, lastValueFrom } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
-import { sortByFromString } from '@geonetwork-ui/util/shared'
+import { sortByToString } from '@geonetwork-ui/util/shared'
 
 marker('datahub.header.myfavorites')
 marker('datahub.header.lastRecords')
@@ -84,9 +84,7 @@ export class HomeHeaderComponent {
         customSearchParameters.filters
       )
     )
-    this.searchService.setSortAndFilters(
-      searchFilters,
-      sortByFromString(customSearchParameters.sort)
-    )
+    const sortBy = await firstValueFrom(this.searchFacade.sortBy$)
+    this.searchService.setSortAndFilters(searchFilters, sortBy)
   }
 }
