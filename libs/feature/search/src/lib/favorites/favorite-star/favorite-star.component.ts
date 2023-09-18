@@ -8,14 +8,16 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core'
-import { FavoritesService } from '../favorites.service'
 import { map, pairwise } from 'rxjs/operators'
-import { AuthService } from '@geonetwork-ui/feature/auth'
 import tippy from 'tippy.js'
 import { TranslateService } from '@ngx-translate/core'
 import { StarToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { Subscription } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import {
+  AuthService,
+  FavoritesService,
+} from '@geonetwork-ui/api/repository/gn4'
 
 @Component({
   selector: 'gn-ui-favorite-star',

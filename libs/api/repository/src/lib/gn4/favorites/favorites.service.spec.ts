@@ -1,11 +1,10 @@
 import { FavoritesService } from './favorites.service'
-import { AuthService } from '@geonetwork-ui/feature/auth'
+import { AuthService } from '../auth/auth.service'
 import {
   MeResponseApiModel,
   UserselectionsApiService,
 } from '@geonetwork-ui/data-access/gn4'
-import { of, throwError } from 'rxjs'
-import { readFirst } from '@nx/angular/testing'
+import { firstValueFrom, of, throwError } from 'rxjs'
 import { delay } from 'rxjs/operators'
 import { fakeAsync, tick } from '@angular/core/testing'
 
@@ -46,7 +45,7 @@ describe('FavoritesService', () => {
         service = new FavoritesService(userSelectionsService, authService)
       })
       it('returns an empty array', async () => {
-        const uuids = await readFirst(service.myFavoritesUuid$)
+        const uuids = await firstValueFrom(service.myFavoritesUuid$)
         expect(uuids).toEqual([])
       })
     })
@@ -59,7 +58,7 @@ describe('FavoritesService', () => {
       it('throws an error', async () => {
         expect.assertions(2)
         try {
-          await readFirst(service.myFavoritesUuid$)
+          await firstValueFrom(service.myFavoritesUuid$)
         } catch (e: any) {
           expect(e.message).toContain('fetching favorite records')
           expect(e.message).toContain('blargz')
@@ -67,7 +66,7 @@ describe('FavoritesService', () => {
       })
     })
     it('emits a list of saved record uuids', async () => {
-      const uuids = await readFirst(service.myFavoritesUuid$)
+      const uuids = await firstValueFrom(service.myFavoritesUuid$)
       expect(uuids).toEqual(['abcd', 'efgh', 'ijkl'])
     })
     describe('when subscribing multiple times', () => {

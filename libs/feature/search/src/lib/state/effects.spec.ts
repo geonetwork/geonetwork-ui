@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing'
-import { AuthService } from '@geonetwork-ui/feature/auth'
 import {
   AddResults,
   ClearError,
@@ -43,10 +42,13 @@ import {
 } from '@geonetwork-ui/common/fixtures'
 import { HttpErrorResponse } from '@angular/common/http'
 import { delay } from 'rxjs/operators'
-import { FavoritesService } from '../favorites/favorites.service'
 import { FILTER_GEOMETRY } from '../feature-search.module'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
 import { TestScheduler } from 'rxjs/internal/testing/TestScheduler'
+import {
+  AuthService,
+  FavoritesService,
+} from '@geonetwork-ui/api/repository/gn4'
 
 const defaultSearchState = initialState[DEFAULT_SEARCH_KEY]
 const stateWithSearches = {

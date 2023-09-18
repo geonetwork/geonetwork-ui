@@ -11,6 +11,7 @@ export interface SearchParams {
   limit: number
   sort?: SortByField
   fields?: FieldName[]
+  uuids?: string[]
 }
 
 export interface SearchResults {

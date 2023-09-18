@@ -1,5 +1,4 @@
 import { Inject, Injectable, Optional } from '@angular/core'
-import { AuthService } from '@geonetwork-ui/feature/auth'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
 import { combineLatestWith, debounceTime, from, of } from 'rxjs'
@@ -32,7 +31,6 @@ import {
   SET_SPATIAL_FILTER_ENABLED,
   SetError,
   SetIncludeOnAggregation,
-  SetPageSize,
   SetResultsAggregations,
   SetResultsHits,
   UPDATE_FILTERS,
@@ -41,10 +39,13 @@ import { SearchState, SearchStateSearch } from './reducer'
 import { getSearchStateSearch } from './selectors'
 import { HttpErrorResponse } from '@angular/common/http'
 import { switchMapWithSearchId } from '../utils/operators/search.operator'
-import { FavoritesService } from '../favorites/favorites.service'
 import { Geometry } from 'geojson'
 import { FILTER_GEOMETRY } from '../feature-search.module'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import {
+  AuthService,
+  FavoritesService,
+} from '@geonetwork-ui/api/repository/gn4'
 
 @Injectable()
 export class SearchEffects {

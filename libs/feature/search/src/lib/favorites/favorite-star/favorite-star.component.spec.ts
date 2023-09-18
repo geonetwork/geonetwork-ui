@@ -1,14 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { FavoriteStarComponent } from './favorite-star.component'
 import { BehaviorSubject, of, throwError } from 'rxjs'
-import { AuthService } from '@geonetwork-ui/feature/auth'
-import { FavoritesService } from '../favorites.service'
 import { StarToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { By } from '@angular/platform-browser'
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import tippy from 'tippy.js'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import {
+  AuthService,
+  FavoritesService,
+} from '@geonetwork-ui/api/repository/gn4'
 
 tippy = jest.fn()
 class AuthServiceMock {

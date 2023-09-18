@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { AuthService } from '@geonetwork-ui/feature/auth'
 import {
   RouterFacade,
   ROUTER_ROUTE_SEARCH,
@@ -23,6 +22,7 @@ import { ROUTER_ROUTE_NEWS } from '../../router/constants'
 import { lastValueFrom } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 import { sortByFromString } from '@geonetwork-ui/util/shared'
+import { AuthService } from '@geonetwork-ui/api/repository/gn4'
 
 marker('datahub.header.myfavorites')
 marker('datahub.header.lastRecords')

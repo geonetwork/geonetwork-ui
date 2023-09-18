@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
-import { combineLatest, merge, Observable, of, Subject, throwError } from 'rxjs'
+import { merge, Observable, of, Subject, throwError } from 'rxjs'
 import { UserselectionsApiService } from '@geonetwork-ui/data-access/gn4'
-import { AuthService } from '@geonetwork-ui/feature/auth'
+import { AuthService } from '../auth/auth.service'
 import {
   catchError,
   map,
@@ -32,9 +32,10 @@ export class FavoritesService {
     ),
     catchError((e) =>
       throwError(
-        new Error(
-          `An error occurred while fetching favorite records: ${e.message}`
-        )
+        () =>
+          new Error(
+            `An error occurred while fetching favorite records: ${e.message}`
+          )
       )
     )
   )

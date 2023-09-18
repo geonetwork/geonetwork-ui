@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { AvatarServiceInterface } from './avatar.service.interface'
-import { Gn4SettingsService } from '@geonetwork-ui/api/repository/gn4'
+import { Gn4SettingsService } from '../settings/gn4-settings.service'
 
 @Injectable({
   providedIn: 'root',
