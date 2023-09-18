@@ -47,7 +47,7 @@ export const Primary: StoryObj<RecordPreviewFeedTemplate> = {
     record: DATASET_RECORDS[0],
     linkTarget: '_blank',
     favoriteTemplateString: `<a href title="Mark '{{record.title}}' as favorite">
-    1234 <mat-icon class="align-middle">star</mat-icon>
+    1234 <mat-icon class="material-symbols-outlined align-middle">star</mat-icon>
   </a>`,
   },
   render: (args) => ({

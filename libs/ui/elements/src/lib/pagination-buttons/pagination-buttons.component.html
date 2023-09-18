@@ -5,7 +5,7 @@
       [disabled]="currentPage === 1"
       (buttonClick)="previousPage()"
     >
-      <mat-icon>chevron_left</mat-icon>
+      <mat-icon class="material-symbols-outlined">chevron_left</mat-icon>
     </gn-ui-button>
     <ng-container *ngFor="let page of visiblePages">
       <ng-container *ngIf="page === '...'">
@@ -25,7 +25,7 @@
       [disabled]="currentPage === totalPages"
       (buttonClick)="nextPage()"
     >
-      <mat-icon>chevron_right</mat-icon>
+      <mat-icon class="material-symbols-outlined">chevron_right</mat-icon>
     </gn-ui-button>
   </div>
 </div>

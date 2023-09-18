@@ -8,15 +8,19 @@
         - {{ config.hintKey | translate }}
       </span>
     </label>
-    <mat-icon *ngIf="isFieldOk" class="text-[#c6d950] icon-ok"
+    <mat-icon
+      *ngIf="isFieldOk"
+      class="material-symbols-outlined text-[#c6d950] icon-ok"
       >check_circle</mat-icon
     >
     <mat-icon
       *ngIf="isFieldLocked"
-      class="material-icons-outlined text-blue-400 icon-locked"
+      class="material-symbols-outlined text-blue-400 icon-locked"
       >lock</mat-icon
     >
-    <mat-icon *ngIf="isFieldInvalid" class="text-pink-500 icon-invalid"
+    <mat-icon
+      *ngIf="isFieldInvalid"
+      class="material-symbols-outlined text-pink-500 icon-invalid"
       >cancel</mat-icon
     >
   </div>

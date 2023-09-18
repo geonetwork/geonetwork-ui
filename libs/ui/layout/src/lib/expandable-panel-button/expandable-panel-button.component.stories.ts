@@ -38,7 +38,7 @@ type ExpandablePanelButtonTemplate = ExpandablePanelButtonComponent & {
 export const Primary: StoryObj<ExpandablePanelButtonTemplate> = {
   args: {
     titleTemplateString:
-      "<mat-icon class='mr-4'>key</mat-icon> Open this menu to find out more",
+      "<mat-icon class='material-symbols-outlined mr-4'>key</mat-icon> Open this menu to find out more",
   },
   render: (args) => ({
     props: args,
