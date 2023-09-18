@@ -68,6 +68,8 @@ describe('FieldsService', () => {
         expect(service.supportedFields).toEqual([
           'publisher',
           'format',
+          'resourceType',
+          'representationType',
           'publicationYear',
           'topic',
           'inspireKeyword',
@@ -151,6 +153,8 @@ describe('FieldsService', () => {
           publicationYear: [],
           publisher: ['orgB'],
           q: [],
+          representationType: [],
+          resourceType: [],
           topic: [],
         })
       })

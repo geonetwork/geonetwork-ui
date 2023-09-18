@@ -23,6 +23,16 @@ export class FieldsService {
   private fields = {
     publisher: new OrganizationSearchField(this.injector),
     format: new SimpleSearchField('format', 'asc', this.injector),
+    resourceType: new GnUiTranslationSearchField(
+      'resourceType',
+      'asc',
+      this.injector
+    ),
+    representationType: new GnUiTranslationSearchField(
+      'cl_spatialRepresentationType.key',
+      'asc',
+      this.injector
+    ),
     publicationYear: new SimpleSearchField(
       'publicationYearForResource',
       'desc',
