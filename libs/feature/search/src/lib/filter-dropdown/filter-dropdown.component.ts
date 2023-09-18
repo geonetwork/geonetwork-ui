@@ -11,6 +11,7 @@ import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FieldsService } from '../utils/service/fields.service'
 import { FieldAvailableValue } from '../utils/service/fields'
+import { FileFormat, getFormatPriority } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-filter-dropdown',
@@ -49,10 +50,21 @@ export class FilterDropdownComponent implements OnInit {
     this.choices$ = this.fieldsService.getAvailableValues(this.fieldName).pipe(
       startWith([] as FieldAvailableValue[]),
       map((values) =>
-        values.map((v) => ({
-          ...v,
-          value: v.value.toString(), // converting to string for the dropdown
-        }))
+        values
+          .map((v) => ({
+            ...v,
+            value: v.value.toString(), // converting to string for the dropdown
+          }))
+          .sort((a, b) => {
+            if (this.fieldName !== 'format') {
+              return 0
+            } else {
+              return (
+                getFormatPriority(b.value as FileFormat) -
+                getFormatPriority(a.value as FileFormat)
+              )
+            }
+          })
       ),
       catchError(() => of([]))
     )
