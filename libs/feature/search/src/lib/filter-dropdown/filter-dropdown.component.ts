@@ -11,7 +11,6 @@ import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FieldsService } from '../utils/service/fields.service'
 import { FieldAvailableValue } from '../utils/service/fields'
-import { FileFormat, getFormatPriority } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-filter-dropdown',
