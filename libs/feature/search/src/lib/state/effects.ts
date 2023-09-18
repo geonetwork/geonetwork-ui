@@ -5,6 +5,7 @@ import { combineLatestWith, debounceTime, from, of } from 'rxjs'
 import {
   catchError,
   map,
+  shareReplay,
   switchMap,
   take,
   withLatestFrom,
@@ -49,6 +50,10 @@ import {
 
 @Injectable()
 export class SearchEffects {
+  filterGeometry$ = this.filterGeometry
+    ? from(this.filterGeometry).pipe(shareReplay())
+    : undefined
+
   constructor(
     private actions$: Actions,
     private store$: Store<SearchState>,
@@ -110,10 +115,10 @@ export class SearchEffects {
             )
           ),
           switchMap(([state, favorites]) => {
-            if (!state.params.useSpatialFilter || !this.filterGeometry) {
+            if (!state.params.useSpatialFilter || !this.filterGeometry$) {
               return of([state, favorites, null])
             }
-            return from(this.filterGeometry).pipe(
+            return this.filterGeometry$.pipe(
               map((geom) => [state, favorites, geom]),
               catchError(() => of([state, favorites, null])) // silently opt out of spatial filter if an error happens
             )
@@ -135,12 +140,15 @@ export class SearchEffects {
                 limit: pageSize,
                 sort,
                 fields: state.config.source,
-                uuids: favorites ?? undefined,
+                filterIds:
+                  state.params.favoritesOnly && favorites
+                    ? favorites
+                    : undefined,
+                filterGeometry: geometry ?? undefined,
               })
               const aggregations$ = this.recordsRepository.aggregate(
                 state.config.aggregations
               )
-              // FIXME: favorites, geometry
               return results$.pipe(combineLatestWith(aggregations$))
             }
           ),

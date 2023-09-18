@@ -111,7 +111,10 @@ describe('Gn4Repository', () => {
         4,
         ['asc', 'field1'],
         ['field1', 'field2', 'field3'],
-        { field1: '1234', field2: { abcd: true } }
+        { field1: '1234', field2: { abcd: true } },
+        undefined,
+        undefined,
+        undefined
       )
     })
     it('returns the given results as records', () => {

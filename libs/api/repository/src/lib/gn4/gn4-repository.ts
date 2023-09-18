@@ -33,6 +33,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     limit,
     sort,
     filterIds,
+    filterGeometry,
   }: SearchParams): Observable<SearchResults> {
     return this.gn4SearchApi
       .search(
@@ -46,7 +47,8 @@ export class Gn4Repository implements RecordsRepositoryInterface {
             fields,
             filters,
             undefined,
-            filterIds
+            filterIds,
+            filterGeometry
           )
         )
       )

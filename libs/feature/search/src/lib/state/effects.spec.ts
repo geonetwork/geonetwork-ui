@@ -407,13 +407,13 @@ describe('Effects', () => {
       })
     })
 
-    // FIXME: REACTIVATE THIS TEST
-    describe.skip('when providing a filter geometry', () => {
+    describe('when providing a filter geometry', () => {
       beforeEach(() => {
-        effects['filterGeometry'] = Promise.resolve({
+        effects['filterGeometry$'] = of({
           type: 'Polygon',
           coordinates: [],
         })
+        effects = TestBed.inject(SearchEffects)
       })
       describe('when useSpatialFilter is enabled', () => {
         beforeEach(() => {
@@ -421,12 +421,12 @@ describe('Effects', () => {
             new SetSpatialFilterEnabled(true, 'main')
           )
         })
-        it('passes the geometry to the ES service', async () => {
+        it('passes the geometry to the repository', async () => {
           actions$ = of(new RequestMoreResults('main'))
           await firstValueFrom(effects.loadResults$)
           expect(repository.search).toHaveBeenCalledWith(
             expect.objectContaining({
-              geometry: { type: 'Polygon', coordinates: [] },
+              filterGeometry: { type: 'Polygon', coordinates: [] },
             })
           )
         })
@@ -437,36 +437,28 @@ describe('Effects', () => {
             new SetSpatialFilterEnabled(false, 'main')
           )
         })
-        it('does not pass the geometry to the ES service', async () => {
+        it('does not pass the geometry to the repository', async () => {
           actions$ = of(new RequestMoreResults('main'))
           await firstValueFrom(effects.loadResults$)
           expect(repository.search).toHaveBeenCalledWith(
-            expect.anything(),
-            expect.anything(),
-            expect.anything(),
-            undefined,
-            expect.anything(),
-            expect.anything(),
-            expect.anything(),
-            null,
-            null
+            expect.objectContaining({ filterGeometry: undefined })
           )
         })
       })
 
-      describe('when providing a filter geometry', () => {
+      describe('when the geometry promise fails', () => {
         beforeEach(() => {
-          effects['filterGeometry'] = Promise.reject('blarg')
+          effects['filterGeometry$'] = throwError(() => 'blarg')
           TestBed.inject(Store).dispatch(
             new SetSpatialFilterEnabled(true, 'main')
           )
         })
-        it('does not pass the geometry to the ES service', async () => {
+        it('does not pass the geometry to the repository', async () => {
           actions$ = of(new RequestMoreResults('main'))
           await firstValueFrom(effects.loadResults$)
           expect(repository.search).toHaveBeenCalledWith(
             expect.objectContaining({
-              geometry: null,
+              filterGeometry: undefined,
             })
           )
         })
