@@ -135,6 +135,7 @@ export class SearchEffects {
                 limit: pageSize,
                 sort,
                 fields: state.config.source,
+                uuids: favorites ?? undefined,
               })
               const aggregations$ = this.recordsRepository.aggregate(
                 state.config.aggregations

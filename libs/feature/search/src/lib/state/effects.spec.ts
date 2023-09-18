@@ -368,8 +368,17 @@ describe('Effects', () => {
       })
     })
 
-    // FIXME: REACTIVATE THIS TEST
-    describe.skip('when asking for favorites only', () => {
+    it('does not filter by favorites by default', async () => {
+      actions$ = of(new RequestMoreResults('main'))
+      await firstValueFrom(effects.loadResults$)
+      expect(repository.search).toHaveBeenCalledWith(
+        expect.objectContaining({
+          filterIds: undefined,
+        })
+      )
+    })
+
+    describe('when asking for favorites only', () => {
       let store: Store<SearchState>
       beforeEach(() => {
         store = TestBed.inject(Store)
@@ -380,10 +389,10 @@ describe('Effects', () => {
           a: new RequestMoreResults('main'),
         })
         const expected = hot('-(abcd)-', {
-          a: new AddResults(DATASET_RECORDS, 'main'),
-          b: new SetResultsAggregations(SAMPLE_AGGREGATIONS_RESULTS, 'main'),
-          c: new SetResultsHits(123, 'main'),
-          d: new ClearError('main'),
+          a: new ClearError('main'),
+          b: new AddResults(DATASET_RECORDS, 'main'),
+          c: new SetResultsAggregations(SAMPLE_AGGREGATIONS_RESULTS, 'main'),
+          d: new SetResultsHits(123, 'main'),
         })
         expect(effects.loadResults$).toBeObservable(expected)
       })
@@ -392,7 +401,7 @@ describe('Effects', () => {
         await firstValueFrom(effects.loadResults$)
         expect(repository.search).toHaveBeenCalledWith(
           expect.objectContaining({
-            uuids: ['fav001', 'fav002', 'fav003'],
+            filterIds: ['fav001', 'fav002', 'fav003'],
           })
         )
       })
