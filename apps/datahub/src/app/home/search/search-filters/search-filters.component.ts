@@ -14,6 +14,16 @@ import {
 } from '@geonetwork-ui/feature/search'
 import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
 
+marker('search.filters.format')
+marker('search.filters.inspireKeyword')
+marker('search.filters.isSpatial')
+marker('search.filters.license')
+marker('search.filters.publisher')
+marker('search.filters.representationType')
+marker('search.filters.resourceType')
+marker('search.filters.standard')
+marker('search.filters.topic')
+
 @Component({
   selector: 'datahub-search-filters',
   templateUrl: './search-filters.component.html',
@@ -53,52 +63,10 @@ export class SearchFiltersComponent implements OnInit {
           return false
         }
       })
-      .map((filter) => {
-        switch (filter) {
-          case 'publisher':
-            return {
-              fieldName: filter,
-              title: marker('search.filters.byOrganisation'),
-            }
-          case 'format':
-            return {
-              fieldName: filter,
-              title: marker('search.filters.byFormat'),
-            }
-          case 'standard':
-            return {
-              fieldName: filter,
-              title: marker('search.filters.byStandard'),
-            }
-          case 'inspireKeyword':
-            return {
-              fieldName: filter,
-              title: marker('search.filters.byInspireKeyword'),
-            }
-          case 'topic':
-            return {
-              fieldName: filter,
-              title: marker('search.filters.byTopic'),
-            }
-          case 'publicationYear':
-            return {
-              fieldName: filter,
-              title: marker('search.filters.byPublicationYear'),
-            }
-          case 'isSpatial':
-            return {
-              fieldName: filter,
-              title: marker('search.filters.isSpatial'),
-            }
-          case 'license':
-            return {
-              fieldName: filter,
-              title: marker('search.filters.byLicense'),
-            }
-          default:
-            return { fieldName: filter, title: filter }
-        }
-      })
+      .map((filter) => ({
+        fieldName: filter,
+        title: `search.filters.${filter}`,
+      }))
   }
 
   open() {
