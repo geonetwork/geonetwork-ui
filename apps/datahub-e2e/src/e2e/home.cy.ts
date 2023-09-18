@@ -1,7 +1,13 @@
+/* eslint-disable cypress/no-unnecessary-waiting */
+import 'cypress-real-events'
+
 describe('header', () => {
-  beforeEach(() => cy.visit('/home/news'))
+  beforeEach(() => cy.visit('/'))
 
   describe('general display', () => {
+    it('should end up on the news page', () => {
+      cy.url().should('match', /^http:\/\/localhost:[0-9]+\/news$/)
+    })
     it('should select the right tab', () => {
       cy.get('datahub-navigation-menu')
         .find('button')
@@ -68,6 +74,36 @@ describe('header', () => {
     it('goes to the organisations page upon clicking', () => {
       cy.get('[href="/organisations"]').click()
       cy.url().should('include', '/organisations')
+    })
+  })
+
+  describe('my favorites button', () => {
+    beforeEach(() => {
+      cy.login()
+      cy.clearFavorites()
+      cy.visit('/')
+    })
+    beforeEach(() => {
+      // select the 6th record as the new favorite
+      cy.get('gn-ui-results-list-item').eq(6).as('favoriteItem')
+      cy.get('@favoriteItem')
+        .find('[data-cy=recordTitle]')
+        .invoke('text')
+        .as('favoriteTitle')
+      cy.get('@favoriteItem').find('gn-ui-favorite-star').click()
+
+      // show my favorites only
+      cy.get('datahub-header-badge-button[label$=favorites]').realClick()
+    })
+    it('only shows one record, same as the favorite one', () => {
+      cy.get('gn-ui-results-list-item').should('have.length', 1)
+      cy.get('gn-ui-results-list-item')
+        .eq(0)
+        .find('[data-cy=recordTitle]')
+        .invoke('text')
+        .then(function (resultTitle) {
+          expect(resultTitle).to.eql(this.favoriteTitle)
+        })
     })
   })
 })
