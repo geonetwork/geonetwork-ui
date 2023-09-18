@@ -3,11 +3,11 @@ import { lastValueFrom, of } from 'rxjs'
 import {
   AbstractSearchField,
   FullTextSearchField,
+  GnUiTranslationSearchField,
   IsSpatialSearchField,
   LicenseSearchField,
   OrganizationSearchField,
   SimpleSearchField,
-  TopicSearchField,
 } from './fields'
 import { TestBed } from '@angular/core/testing'
 import { Injector } from '@angular/core'
@@ -292,7 +292,11 @@ describe('search fields implementations', () => {
 
   describe('TopicSearchField', () => {
     beforeEach(() => {
-      searchField = new TopicSearchField(injector)
+      searchField = new GnUiTranslationSearchField(
+        'cl_topic.key',
+        'asc',
+        injector
+      )
     })
     describe('#getAvailableValues', () => {
       let values
