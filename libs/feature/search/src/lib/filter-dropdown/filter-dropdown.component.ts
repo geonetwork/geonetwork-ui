@@ -50,21 +50,10 @@ export class FilterDropdownComponent implements OnInit {
     this.choices$ = this.fieldsService.getAvailableValues(this.fieldName).pipe(
       startWith([] as FieldAvailableValue[]),
       map((values) =>
-        values
-          .map((v) => ({
-            ...v,
-            value: v.value.toString(), // converting to string for the dropdown
-          }))
-          .sort((a, b) => {
-            if (this.fieldName !== 'format') {
-              return 0
-            } else {
-              return (
-                getFormatPriority(b.value as FileFormat) -
-                getFormatPriority(a.value as FileFormat)
-              )
-            }
-          })
+        values.map((v) => ({
+          ...v,
+          value: v.value.toString(), // converting to string for the dropdown
+        }))
       ),
       catchError(() => of([]))
     )

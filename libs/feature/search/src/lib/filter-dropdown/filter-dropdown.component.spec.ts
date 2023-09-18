@@ -159,46 +159,6 @@ describe('FilterDropdownComponent', () => {
       it('reads choices from the search response', () => {
         expect(dropdown.choices).toEqual(values)
       })
-      describe('if current fieldName is "format"', () => {
-        const values = [
-          { label: 'Esri ShapeFile (4)', value: 'ESRI Shapefile' },
-          { label: 'geojson (2)', value: 'geojson' },
-          { label: 'csv (1)', value: 'csv' },
-        ]
-        beforeEach(() => {
-          component.fieldName = 'format'
-          fieldsService.getAvailableValues = () => of(values)
-          component.ngOnInit()
-          fixture.detectChanges()
-        })
-        it('sorts the values by their format priority', () => {
-          expect(dropdown.choices).toEqual([
-            { label: 'csv (1)', value: 'csv' },
-            { label: 'geojson (2)', value: 'geojson' },
-            { label: 'Esri ShapeFile (4)', value: 'ESRI Shapefile' },
-          ])
-        })
-      })
-      describe('if current fieldName is something other than "format"', () => {
-        const values = [
-          { label: 'bla (3)', value: 'bla' },
-          { label: 'blu (4)', value: 'blu' },
-          { label: 'bli (1)', value: 'bli' },
-        ]
-        beforeEach(() => {
-          component.fieldName = 'something else'
-          fieldsService.getAvailableValues = () => of(values)
-          component.ngOnInit()
-          fixture.detectChanges()
-        })
-        it('does not sort sorts the values', () => {
-          expect(dropdown.choices).toEqual([
-            { label: 'bla (3)', value: 'bla' },
-            { label: 'blu (4)', value: 'blu' },
-            { label: 'bli (1)', value: 'bli' },
-          ])
-        })
-      })
     })
     describe('no available values', () => {
       beforeEach(() => {
