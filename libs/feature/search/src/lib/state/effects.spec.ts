@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing'
-import { AuthService } from '@geonetwork-ui/feature/auth'
 import {
   AddResults,
   ClearError,
@@ -43,10 +42,13 @@ import {
 } from '@geonetwork-ui/common/fixtures'
 import { HttpErrorResponse } from '@angular/common/http'
 import { delay } from 'rxjs/operators'
-import { FavoritesService } from '../favorites/favorites.service'
 import { FILTER_GEOMETRY } from '../feature-search.module'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
 import { TestScheduler } from 'rxjs/internal/testing/TestScheduler'
+import {
+  AuthService,
+  FavoritesService,
+} from '@geonetwork-ui/api/repository/gn4'
 
 const defaultSearchState = initialState[DEFAULT_SEARCH_KEY]
 const stateWithSearches = {
@@ -244,7 +246,7 @@ describe('Effects', () => {
     })
 
     describe('several param changes in the same frame', () => {
-      it('only issues one new RequestNewResults action', () => {
+      it('only issues one new RequestNewResults action (same search id)', () => {
         testScheduler.run(({ hot, expectObservable }) => {
           actions$ = hot('-(abcd)-', {
             a: new SetSpatialFilterEnabled(true, 'main'),
@@ -254,6 +256,22 @@ describe('Effects', () => {
           })
           const expected = hot('-b', {
             b: new RequestNewResults('main'),
+          })
+
+          expectObservable(effects.requestNewResults$).toEqual(expected)
+        })
+      })
+      it('issues one new RequestNewResults action per search id', () => {
+        testScheduler.run(({ hot, expectObservable }) => {
+          actions$ = hot('-(abcd)-', {
+            a: new SetSpatialFilterEnabled(true, 'main'),
+            b: new SetSortBy(['asc', 'fieldA'], 'main'),
+            c: new SetFilters({ any: 'abcd', other: 'ef' }, 'other'),
+            d: new Paginate(4, 'other'),
+          })
+          const expected = hot('-(bc)', {
+            b: new RequestNewResults('main'),
+            c: new RequestNewResults('other'),
           })
 
           expectObservable(effects.requestNewResults$).toEqual(expected)
@@ -366,8 +384,17 @@ describe('Effects', () => {
       })
     })
 
-    // FIXME: REACTIVATE THIS TEST
-    describe.skip('when asking for favorites only', () => {
+    it('does not filter by favorites by default', async () => {
+      actions$ = of(new RequestMoreResults('main'))
+      await firstValueFrom(effects.loadResults$)
+      expect(repository.search).toHaveBeenCalledWith(
+        expect.objectContaining({
+          filterIds: undefined,
+        })
+      )
+    })
+
+    describe('when asking for favorites only', () => {
       let store: Store<SearchState>
       beforeEach(() => {
         store = TestBed.inject(Store)
@@ -378,10 +405,10 @@ describe('Effects', () => {
           a: new RequestMoreResults('main'),
         })
         const expected = hot('-(abcd)-', {
-          a: new AddResults(DATASET_RECORDS, 'main'),
-          b: new SetResultsAggregations(SAMPLE_AGGREGATIONS_RESULTS, 'main'),
-          c: new SetResultsHits(123, 'main'),
-          d: new ClearError('main'),
+          a: new ClearError('main'),
+          b: new AddResults(DATASET_RECORDS, 'main'),
+          c: new SetResultsAggregations(SAMPLE_AGGREGATIONS_RESULTS, 'main'),
+          d: new SetResultsHits(123, 'main'),
         })
         expect(effects.loadResults$).toBeObservable(expected)
       })
@@ -390,19 +417,19 @@ describe('Effects', () => {
         await firstValueFrom(effects.loadResults$)
         expect(repository.search).toHaveBeenCalledWith(
           expect.objectContaining({
-            uuids: ['fav001', 'fav002', 'fav003'],
+            filterIds: ['fav001', 'fav002', 'fav003'],
           })
         )
       })
     })
 
-    // FIXME: REACTIVATE THIS TEST
-    describe.skip('when providing a filter geometry', () => {
+    describe('when providing a filter geometry', () => {
       beforeEach(() => {
-        effects['filterGeometry'] = Promise.resolve({
+        effects['filterGeometry$'] = of({
           type: 'Polygon',
           coordinates: [],
         })
+        effects = TestBed.inject(SearchEffects)
       })
       describe('when useSpatialFilter is enabled', () => {
         beforeEach(() => {
@@ -410,12 +437,12 @@ describe('Effects', () => {
             new SetSpatialFilterEnabled(true, 'main')
           )
         })
-        it('passes the geometry to the ES service', async () => {
+        it('passes the geometry to the repository', async () => {
           actions$ = of(new RequestMoreResults('main'))
           await firstValueFrom(effects.loadResults$)
           expect(repository.search).toHaveBeenCalledWith(
             expect.objectContaining({
-              geometry: { type: 'Polygon', coordinates: [] },
+              filterGeometry: { type: 'Polygon', coordinates: [] },
             })
           )
         })
@@ -426,36 +453,28 @@ describe('Effects', () => {
             new SetSpatialFilterEnabled(false, 'main')
           )
         })
-        it('does not pass the geometry to the ES service', async () => {
+        it('does not pass the geometry to the repository', async () => {
           actions$ = of(new RequestMoreResults('main'))
           await firstValueFrom(effects.loadResults$)
           expect(repository.search).toHaveBeenCalledWith(
-            expect.anything(),
-            expect.anything(),
-            expect.anything(),
-            undefined,
-            expect.anything(),
-            expect.anything(),
-            expect.anything(),
-            null,
-            null
+            expect.objectContaining({ filterGeometry: undefined })
           )
         })
       })
 
-      describe('when providing a filter geometry', () => {
+      describe('when the geometry promise fails', () => {
         beforeEach(() => {
-          effects['filterGeometry'] = Promise.reject('blarg')
+          effects['filterGeometry$'] = throwError(() => 'blarg')
           TestBed.inject(Store).dispatch(
             new SetSpatialFilterEnabled(true, 'main')
           )
         })
-        it('does not pass the geometry to the ES service', async () => {
+        it('does not pass the geometry to the repository', async () => {
           actions$ = of(new RequestMoreResults('main'))
           await firstValueFrom(effects.loadResults$)
           expect(repository.search).toHaveBeenCalledWith(
             expect.objectContaining({
-              geometry: null,
+              filterGeometry: undefined,
             })
           )
         })

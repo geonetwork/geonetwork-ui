@@ -3,7 +3,7 @@ import { Subject } from 'rxjs'
 import { TestBed } from '@angular/core/testing'
 import { MeApiService } from '@geonetwork-ui/data-access/gn4'
 import { TranslateService } from '@ngx-translate/core'
-import { AvatarServiceInterface } from './avatar/avatar.service.interface'
+import { AvatarServiceInterface } from './avatar.service.interface'
 
 const userMock = {
   id: '21737',

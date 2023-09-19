@@ -41,7 +41,7 @@ import {
   UtilSharedModule,
   getGeometryFromGeoJSON,
 } from '@geonetwork-ui/util/shared'
-import { FeatureAuthModule, LOGIN_URL } from '@geonetwork-ui/feature/auth'
+import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
@@ -69,6 +69,7 @@ import { LANGUAGES_LIST, UiCatalogModule } from '@geonetwork-ui/ui/catalog'
 import { METADATA_LANGUAGE } from '@geonetwork-ui/api/repository'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { GN_UI_VERSION } from '@geonetwork-ui/feature/record'
+import { LOGIN_URL } from '@geonetwork-ui/api/repository/gn4'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191

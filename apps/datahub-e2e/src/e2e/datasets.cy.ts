@@ -385,6 +385,33 @@ describe('datasets', () => {
         })
       })
     })
+
+    describe('filter by geometry', () => {
+      beforeEach(() => {
+        // this will enable spatial filtering
+        cy.intercept('GET', '/assets/configuration/default.toml', {
+          fixture: 'config-with-geometry.toml',
+        })
+        cy.visit('/search')
+      })
+      it('boosts records in the provided geometry', () => {
+        cy.get('gn-ui-results-list-item')
+          .eq(0)
+          .find('[data-cy=recordTitle]')
+          .invoke('text')
+          .invoke('trim')
+          .should(
+            'eql',
+            'Cartographie des sols agricoles de la plaine du Rhône'
+          )
+        cy.get('gn-ui-results-list-item')
+          .eq(1)
+          .find('[data-cy=recordTitle]')
+          .invoke('text')
+          .invoke('trim')
+          .should('eql', 'Alpine Convention')
+      })
+    })
   })
 
   describe('sorting results', () => {
@@ -408,6 +435,8 @@ describe('datasets', () => {
     })
     describe('sort by date', () => {
       beforeEach(() => {
+        // first sort by popularity
+        cy.get('@sortBy').find('select').select('desc,userSavedCount')
         cy.get('@results')
           .find('[data-cy="recordTitle"]')
           .then(($titles) =>

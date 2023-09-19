@@ -3,10 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { SearchHeaderComponent } from './search-header.component'
 import { BehaviorSubject, of } from 'rxjs'
-import {
-  AuthService,
-  AvatarServiceInterface,
-} from '@geonetwork-ui/feature/auth'
 import { summaryHits, USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
@@ -15,6 +11,10 @@ import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
+import {
+  AuthService,
+  AvatarServiceInterface,
+} from '@geonetwork-ui/api/repository/gn4'
 
 const user = USER_FIXTURE()
 class AuthServiceMock {

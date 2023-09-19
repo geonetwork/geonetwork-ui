@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-
 import { MyOrgRecordsComponent } from './my-org-records.component'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { Component, importProvidersFrom } from '@angular/core'
@@ -10,8 +9,8 @@ import {
   USER_FIXTURE,
 } from '@geonetwork-ui/common/fixtures'
 import { BehaviorSubject, of } from 'rxjs'
-import { AuthService } from '@geonetwork-ui/feature/auth'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { AuthService } from '@geonetwork-ui/api/repository/gn4'
 
 const user = USER_FIXTURE()
 const filters = FILTERS_AGGREGATION

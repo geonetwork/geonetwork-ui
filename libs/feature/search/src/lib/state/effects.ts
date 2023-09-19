@@ -1,11 +1,11 @@
 import { Inject, Injectable, Optional } from '@angular/core'
-import { AuthService } from '@geonetwork-ui/feature/auth'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
-import { combineLatestWith, debounceTime, from, of } from 'rxjs'
+import { buffer, combineLatestWith, debounceTime, from, of } from 'rxjs'
 import {
   catchError,
   map,
+  shareReplay,
   switchMap,
   take,
   withLatestFrom,
@@ -32,7 +32,6 @@ import {
   SET_SPATIAL_FILTER_ENABLED,
   SetError,
   SetIncludeOnAggregation,
-  SetPageSize,
   SetResultsAggregations,
   SetResultsHits,
   UPDATE_FILTERS,
@@ -41,13 +40,20 @@ import { SearchState, SearchStateSearch } from './reducer'
 import { getSearchStateSearch } from './selectors'
 import { HttpErrorResponse } from '@angular/common/http'
 import { switchMapWithSearchId } from '../utils/operators/search.operator'
-import { FavoritesService } from '../favorites/favorites.service'
 import { Geometry } from 'geojson'
 import { FILTER_GEOMETRY } from '../feature-search.module'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import {
+  AuthService,
+  FavoritesService,
+} from '@geonetwork-ui/api/repository/gn4'
 
 @Injectable()
 export class SearchEffects {
+  filterGeometry$ = this.filterGeometry
+    ? from(this.filterGeometry).pipe(shareReplay())
+    : undefined
+
   constructor(
     private actions$: Actions,
     private store$: Store<SearchState>,
@@ -72,20 +78,31 @@ export class SearchEffects {
     )
   )
 
+  private actionsWithNewResults$ = this.actions$.pipe(
+    ofType(
+      SET_SORT_BY,
+      SET_FILTERS,
+      UPDATE_FILTERS,
+      SET_SEARCH,
+      SET_FAVORITES_ONLY,
+      SET_SPATIAL_FILTER_ENABLED,
+      PAGINATE,
+      SET_PAGE_SIZE
+    )
+  )
+
   requestNewResults$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(
-        SET_SORT_BY,
-        SET_FILTERS,
-        UPDATE_FILTERS,
-        SET_SEARCH,
-        SET_FAVORITES_ONLY,
-        SET_SPATIAL_FILTER_ENABLED,
-        PAGINATE,
-        SET_PAGE_SIZE
-      ),
-      debounceTime(0),
-      map((action: SearchActions) => new RequestNewResults(action.id))
+    this.actionsWithNewResults$.pipe(
+      // this will aggregate actions until the debounceTime ticks
+      buffer(this.actionsWithNewResults$.pipe(debounceTime(0))),
+      switchMap((actions: SearchActions[]) => {
+        // once we have a list of actions emitted since last time, we can split them by search id
+        const requestNewResults = actions
+          .map((action) => action.id)
+          .filter((value, index, array) => array.indexOf(value) === index)
+          .map((searchId) => new RequestNewResults(searchId))
+        return of(...requestNewResults)
+      })
     )
   )
 
@@ -109,10 +126,10 @@ export class SearchEffects {
             )
           ),
           switchMap(([state, favorites]) => {
-            if (!state.params.useSpatialFilter || !this.filterGeometry) {
+            if (!state.params.useSpatialFilter || !this.filterGeometry$) {
               return of([state, favorites, null])
             }
-            return from(this.filterGeometry).pipe(
+            return this.filterGeometry$.pipe(
               map((geom) => [state, favorites, geom]),
               catchError(() => of([state, favorites, null])) // silently opt out of spatial filter if an error happens
             )
@@ -134,11 +151,15 @@ export class SearchEffects {
                 limit: pageSize,
                 sort,
                 fields: state.config.source,
+                filterIds:
+                  state.params.favoritesOnly && favorites
+                    ? favorites
+                    : undefined,
+                filterGeometry: geometry ?? undefined,
               })
               const aggregations$ = this.recordsRepository.aggregate(
                 state.config.aggregations
               )
-              // FIXME: favorites, geometry
               return results$.pipe(combineLatestWith(aggregations$))
             }
           ),

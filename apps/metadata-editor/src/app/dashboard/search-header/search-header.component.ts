@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
-import {
-  AuthService,
-  AvatarServiceInterface,
-} from '@geonetwork-ui/feature/auth'
 import { LetDirective } from '@ngrx/component'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import {
+  AuthService,
+  AvatarServiceInterface,
+} from '@geonetwork-ui/api/repository/gn4'
 
 @Component({
   selector: 'md-editor-search-header',

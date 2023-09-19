@@ -1,7 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { AuthService } from '@geonetwork-ui/feature/auth'
 import {
   RouterFacade,
   ROUTER_ROUTE_SEARCH,
@@ -18,6 +17,7 @@ import { HeaderBadgeButtonComponent } from '../header-badge-button/header-badge-
 import { HomeHeaderComponent } from './home-header.component'
 import resetAllMocks = jest.resetAllMocks
 import { SortByEnum } from '@geonetwork-ui/common/domain/search'
+import { AuthService } from '@geonetwork-ui/api/repository/gn4'
 import { _setLanguages } from '@geonetwork-ui/util/app-config'
 
 jest.mock('@geonetwork-ui/util/app-config', () => {

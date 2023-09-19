@@ -8,7 +8,7 @@ import { UserModel } from '@geonetwork-ui/common/domain/user.model'
 import { TranslateService } from '@ngx-translate/core'
 import { Observable } from 'rxjs'
 import { map, shareReplay } from 'rxjs/operators'
-import { AvatarServiceInterface } from './avatar/avatar.service.interface'
+import { AvatarServiceInterface } from './avatar.service.interface'
 
 export const DEFAULT_GN4_LOGIN_URL = `/geonetwork/srv/\${lang3}/catalog.signin?redirect=\${current_url}`
 export const LOGIN_URL = new InjectionToken<string>('loginUrl')

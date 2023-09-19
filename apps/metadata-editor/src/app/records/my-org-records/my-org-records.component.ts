@@ -5,8 +5,8 @@ import { RecordsListComponent } from '../records-list.component'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { Organization } from '@geonetwork-ui/common/domain/record'
-import { AuthService } from '@geonetwork-ui/feature/auth'
 import { Subscription } from 'rxjs'
+import { AuthService } from '@geonetwork-ui/api/repository/gn4'
 
 @Component({
   selector: 'md-editor-my-org-records',
