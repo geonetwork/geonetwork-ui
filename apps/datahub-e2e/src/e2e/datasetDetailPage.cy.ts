@@ -451,3 +451,28 @@ describe('dataset pages', () => {
     })
   })
 })
+
+describe('record with file distributions', () => {
+  beforeEach(() => {
+    cy.visit('/dataset/n_tri_lill_inondable_s_059')
+    cy.get('gn-ui-record-metadata')
+      .find('[id="preview"]')
+      .first()
+      .as('prevSection')
+    cy.get('@prevSection')
+      .find('.mat-mdc-tab-labels')
+      .children('div')
+      .eq(1)
+      .click()
+  })
+
+  it('should display the distributions by priority', () => {
+    cy.get('@prevSection')
+      .find('gn-ui-dropdown-selector')
+      .last()
+      .find('select')
+      .children('option')
+      .then((options) => options.toArray().map((el) => el.text))
+      .should('deep.eq', ['csv (csv)', 'json (json)', 'geojson (geojson)'])
+  })
+})
