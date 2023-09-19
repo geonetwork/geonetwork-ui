@@ -19,12 +19,10 @@ cd support-services/datafeeder
 docker compose up -d
 ```
 
-With this composition, you'll need to use `proxy-config-dev.js`. To do so, the nx command must be executed with the `--proxy-config proxy-config-dev.js` argument.
-
 In `geonetwork-ui/` directory, run :
 
 ```shell
-npx nx run datafeeder:serve --proxy-config proxy-config-dev.js
+npx nx run datafeeder:serve
 ```
 
 ## Configuration

@@ -83,6 +83,15 @@ services:
     environment:
       discovery.type: single-node
       ES_JAVA_OPTS: '-Xms1g -Xmx1g'
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'curl -s -f http://localhost:9200/_cat/health >/dev/null || exit 1',
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 10
     volumes:
       - elasticsearch_data:/usr/share/elasticsearch/data
 
