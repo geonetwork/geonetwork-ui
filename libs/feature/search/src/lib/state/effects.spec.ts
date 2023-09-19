@@ -246,7 +246,7 @@ describe('Effects', () => {
     })
 
     describe('several param changes in the same frame', () => {
-      it('only issues one new RequestNewResults action', () => {
+      it('only issues one new RequestNewResults action (same search id)', () => {
         testScheduler.run(({ hot, expectObservable }) => {
           actions$ = hot('-(abcd)-', {
             a: new SetSpatialFilterEnabled(true, 'main'),
@@ -256,6 +256,22 @@ describe('Effects', () => {
           })
           const expected = hot('-b', {
             b: new RequestNewResults('main'),
+          })
+
+          expectObservable(effects.requestNewResults$).toEqual(expected)
+        })
+      })
+      it('issues one new RequestNewResults action per search id', () => {
+        testScheduler.run(({ hot, expectObservable }) => {
+          actions$ = hot('-(abcd)-', {
+            a: new SetSpatialFilterEnabled(true, 'main'),
+            b: new SetSortBy(['asc', 'fieldA'], 'main'),
+            c: new SetFilters({ any: 'abcd', other: 'ef' }, 'other'),
+            d: new Paginate(4, 'other'),
+          })
+          const expected = hot('-(bc)', {
+            b: new RequestNewResults('main'),
+            c: new RequestNewResults('other'),
           })
 
           expectObservable(effects.requestNewResults$).toEqual(expected)

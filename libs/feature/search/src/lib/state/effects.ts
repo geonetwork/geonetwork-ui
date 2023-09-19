@@ -1,7 +1,7 @@
 import { Inject, Injectable, Optional } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
-import { combineLatestWith, debounceTime, from, of } from 'rxjs'
+import { buffer, combineLatestWith, debounceTime, from, of } from 'rxjs'
 import {
   catchError,
   map,
@@ -78,20 +78,31 @@ export class SearchEffects {
     )
   )
 
+  private actionsWithNewResults$ = this.actions$.pipe(
+    ofType(
+      SET_SORT_BY,
+      SET_FILTERS,
+      UPDATE_FILTERS,
+      SET_SEARCH,
+      SET_FAVORITES_ONLY,
+      SET_SPATIAL_FILTER_ENABLED,
+      PAGINATE,
+      SET_PAGE_SIZE
+    )
+  )
+
   requestNewResults$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(
-        SET_SORT_BY,
-        SET_FILTERS,
-        UPDATE_FILTERS,
-        SET_SEARCH,
-        SET_FAVORITES_ONLY,
-        SET_SPATIAL_FILTER_ENABLED,
-        PAGINATE,
-        SET_PAGE_SIZE
-      ),
-      debounceTime(0),
-      map((action: SearchActions) => new RequestNewResults(action.id))
+    this.actionsWithNewResults$.pipe(
+      // this will aggregate actions until the debounceTime ticks
+      buffer(this.actionsWithNewResults$.pipe(debounceTime(0))),
+      switchMap((actions: SearchActions[]) => {
+        // once we have a list of actions emitted since last time, we can split them by search id
+        const requestNewResults = actions
+          .map((action) => action.id)
+          .filter((value, index, array) => array.indexOf(value) === index)
+          .map((searchId) => new RequestNewResults(searchId))
+        return of(...requestNewResults)
+      })
     )
   )
 
