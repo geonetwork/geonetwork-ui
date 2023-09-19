@@ -4,7 +4,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { getLinkLabel } from '@geonetwork-ui/util/shared'
+import { getLinkLabel, getLinkPriority } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
@@ -23,7 +23,13 @@ export class DataViewComponent {
   compatibleDataLinks$ = combineLatest([
     this.mdViewFacade.dataLinks$,
     this.mdViewFacade.geoDataLinks$,
-  ]).pipe(map(([dataLinks, geoDataLinks]) => [...dataLinks, ...geoDataLinks]))
+  ]).pipe(
+    map(([dataLinks, geoDataLinks]) => {
+      const a = [...dataLinks, ...geoDataLinks]
+      a.sort((a, b) => getLinkPriority(b) - getLinkPriority(a))
+      return a
+    })
+  )
   dropdownChoices$ = this.compatibleDataLinks$.pipe(
     tap((links) => {
       if (links.indexOf(this.selectedLink$.value) === -1) {

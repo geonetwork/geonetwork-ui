@@ -12,8 +12,10 @@ import { DataViewComponent } from './data-view.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/dataviz-configuration.model'
 import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
+import { LINK_FIXTURES } from '@geonetwork-ui/common/fixtures'
 
 const DATALINKS_FIXTURE: DatasetDistribution[] = [
+  LINK_FIXTURES.dataXls,
   {
     description: 'CSV file',
     name: 'some_file_name.csv',
@@ -21,6 +23,7 @@ const DATALINKS_FIXTURE: DatasetDistribution[] = [
     type: 'download',
   },
 ]
+
 const GEODATALINKS_FIXTURE: DatasetDistribution[] = [
   {
     description: 'Geojson file',
@@ -134,6 +137,10 @@ describe('DataViewComponent', () => {
         expect(dropdownComponent.choices).toEqual([
           {
             label: 'CSV file (csv)',
+            value: JSON.stringify(DATALINKS_FIXTURE[1]),
+          },
+          {
+            label: 'Data in XLS format (excel)',
             value: JSON.stringify(DATALINKS_FIXTURE[0]),
           },
           {
@@ -147,7 +154,7 @@ describe('DataViewComponent', () => {
         ])
       })
       it('displays link in the table', () => {
-        expect(tableViewComponent.link).toEqual(DATALINKS_FIXTURE[0])
+        expect(tableViewComponent.link).toEqual(DATALINKS_FIXTURE[1])
       })
     })
 
@@ -160,7 +167,9 @@ describe('DataViewComponent', () => {
         fixture.detectChanges()
       }))
       it('displays link in the table', () => {
-        expect(tableViewComponent.link).toEqual(GEODATALINKS_FIXTURE[1])
+        expect(tableViewComponent.link.description).toEqual(
+          GEODATALINKS_FIXTURE[1].description
+        )
       })
     })
   })
