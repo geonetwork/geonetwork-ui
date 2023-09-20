@@ -88,7 +88,7 @@ background_color = "#fdfbff"
 #     filters.publicationYear = ['2023', '2022']
 #     filters.isSpatial = ['yes']
 #     filters.license = ['unknown']
-#     sort = ['createDate']
+#     sort = 'createDate'
 # [[search_preset]]
 #     name = 'otherFilterName'
 #     filters.q = 'Other Full text search'

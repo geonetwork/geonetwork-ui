@@ -85,7 +85,7 @@ export class HomeHeaderComponent {
       )
     )
     if (customSearchParameters.sort) {
-      const sortBy = sortByFromString(customSearchParameters.sort[0])
+      const sortBy = sortByFromString(customSearchParameters.sort)
       this.searchService.setSortAndFilters(searchFilters, sortBy)
     } else {
       this.searchService.setFilters(searchFilters)
