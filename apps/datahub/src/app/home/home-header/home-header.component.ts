@@ -22,7 +22,7 @@ import { map } from 'rxjs/operators'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants'
 import { firstValueFrom, lastValueFrom } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
-import { sortByToString } from '@geonetwork-ui/util/shared'
+import { sortByFromString } from '@geonetwork-ui/util/shared'
 
 marker('datahub.header.myfavorites')
 marker('datahub.header.lastRecords')
@@ -84,7 +84,11 @@ export class HomeHeaderComponent {
         customSearchParameters.filters
       )
     )
-    const sortBy = await firstValueFrom(this.searchFacade.sortBy$)
-    this.searchService.setSortAndFilters(searchFilters, sortBy)
+    if (customSearchParameters.sort) {
+      const sortBy = sortByFromString(customSearchParameters.sort[0])
+      this.searchService.setSortAndFilters(searchFilters, sortBy)
+    } else {
+      this.searchService.setFilters(searchFilters)
+    }
   }
 }
