@@ -11,8 +11,7 @@
   <gn-ui-button
     type="outline"
     class="grow min-w-0"
-    style="min-width: {{ minWidth }}"
-    extraClass="w-full !p-[8px] !pl-[16px] {{ extraBtnClass }}"
+    extraClass="!p-[8px] !pl-[16px] flex flex-row w-full {{ extraBtnClass }}"
     [title]="title"
     [attr.aria-owns]="id"
     (buttonClick)="openOverlay()"
@@ -20,12 +19,10 @@
     #overlayOrigin="cdkOverlayOrigin"
     (keydown)="handleTriggerKeydown($event)"
   >
-    <div class="grow flex items-center mr-2 gap-2 overflow-hidden">
-      <div class="text-left font-medium truncate py-1">
-        {{ getChoiceLabel() | translate }}
-      </div>
+    <div class="grow font-medium truncate py-1 mr-2 text-left">
+      {{ getChoiceLabel() | translate }}
     </div>
-    <mat-icon class="shrink-0 opacity-40">
+    <mat-icon class="material-symbols-outlined shrink-0 opacity-40">
       <ng-container *ngIf="overlayOpen">expand_less</ng-container>
       <ng-container *ngIf="!overlayOpen">expand_more</ng-container>
     </mat-icon>
@@ -46,7 +43,7 @@
   <div
     class="bg-white border border-gray-300 rounded shadow-lg py-2 w-full overflow-x-hidden overflow-y-auto overlay-container"
     [style.max-height]="overlayMaxHeight"
-    [style.width]="overlayWidth"
+    [style.min-width]="overlayWidth"
     role="listbox"
     tabindex="-1"
     [attr.id]="id"
@@ -54,22 +51,23 @@
     [attr.aria-label]="title"
     (keydown)="handleOverlayKeydown($event)"
   >
-    <label
+    <button
+      #choiceInputs
+      type="button"
       *ngFor="let choice of choices"
       [title]="choice.label"
-      class="flex px-5 py-1 w-full text-gray-900 cursor-pointer hover:text-primary-darkest hover:bg-gray-50 focus-within:text-primary-darkest focus-within:bg-gray-50 transition-colors"
+      class="flex px-5 py-1 w-full cursor-pointer transition-colors"
+      [ngClass]="
+        isSelected(choice)
+          ? 'text-white bg-primary hover:text-white hover:bg-primary-darker focus:text-white focus:bg-primary-darker'
+          : 'text-gray-900 hover:text-primary-darkest hover:bg-gray-50 focus:text-primary-darkest focus:bg-gray-50'
+      "
+      (click)="onSelectValue(choice)"
+      (keydown)="selectIfEnter($event, choice)"
     >
-      <input
-        #choiceInputs
-        class="w-[0px] h-[18px] align-text-top shrink-0"
-        type="text"
-        [checked]="isSelected(choice)"
-        (click)="onSelectValue(choice)"
-        (keydown)="selectIfEnter($event, choice)"
-      />
       <span class="text-[14px]">
         {{ choice.label | translate }}
       </span>
-    </label>
+    </button>
   </div>
 </ng-template>

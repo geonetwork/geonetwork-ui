@@ -15,13 +15,8 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core'
-import { Choice } from '../dropdown-multiselect/dropdown-multiselect.model'
-import { take } from 'rxjs/operators'
-
-export type DDChoices = Array<{
-  label: string
-  value: string
-}>
+import { firstValueFrom } from 'rxjs'
+import { DropdownChoice } from './dropdown-selector.model'
 
 const DEFAULT_ROW_NUMBERS = 6
 
@@ -35,12 +30,12 @@ export class DropdownSelectorComponent implements OnInit {
   @Input() title: string
   @Input() showTitle = true
   @Input() ariaName: string
-  @Input() choices: DDChoices
-  @Input() selected: any
+  @Input() choices: Array<DropdownChoice>
+  @Input() selected: DropdownChoice['value']
   @Input() maxRows: number
   @Input() extraBtnClass = ''
   @Input() minWidth = ''
-  @Output() selectValue = new EventEmitter<any>()
+  @Output() selectValue = new EventEmitter<DropdownChoice['value']>()
   @ViewChild('overlayOrigin') overlayOrigin: CdkOverlayOrigin
   @ViewChild(CdkConnectedOverlay) overlay: CdkConnectedOverlay
   overlayOpen = false
@@ -65,7 +60,7 @@ export class DropdownSelectorComponent implements OnInit {
   @ViewChildren('choiceInputs', { read: ElementRef })
   choiceInputs: QueryList<ElementRef>
 
-  get selectedChoice(): Choice {
+  get selectedChoice(): DropdownChoice {
     return (
       this.choices.find((choice) => choice.value === this.selected) ??
       this.choices[0]
@@ -87,11 +82,11 @@ export class DropdownSelectorComponent implements OnInit {
     }
   }
 
-  isSelected(choice) {
+  isSelected(choice: DropdownChoice) {
     return choice === this.selectedChoice
   }
 
-  onSelectValue(choice: Choice): void {
+  onSelectValue(choice: DropdownChoice) {
     this.closeOverlay()
     this.selected = choice.value
     this.selectValue.emit(this.selected)
@@ -106,8 +101,8 @@ export class DropdownSelectorComponent implements OnInit {
       : 'none'
     this.overlayOpen = true
     return Promise.all([
-      this.overlay.attach.pipe(take(1)).toPromise(),
-      this.choiceInputs.changes.pipe(take(1)).toPromise(),
+      firstValueFrom(this.overlay.attach),
+      firstValueFrom(this.choiceInputs.changes),
     ])
   }
 
@@ -177,7 +172,7 @@ export class DropdownSelectorComponent implements OnInit {
     )
   }
 
-  selectIfEnter(event: KeyboardEvent, choice: Choice) {
+  selectIfEnter(event: KeyboardEvent, choice: DropdownChoice) {
     if (event.code === 'Enter') {
       event.preventDefault()
       this.onSelectValue(choice)

@@ -55,15 +55,15 @@ export class ButtonComponent {
   get borderColor() {
     switch (this.type) {
       case 'default':
-        return 'focus:ring-4 focus:ring-gray-200'
+        return 'border border-gray-700 focus:ring-4 focus:ring-gray-200'
       case 'secondary':
-        return 'focus:ring-4 focus:ring-secondary-lightest'
+        return 'border border-secondary focus:ring-4 focus:ring-secondary-lightest'
       case 'primary':
-        return 'focus:ring-4 focus:ring-primary-lightest'
+        return 'border border-primary focus:ring-4 focus:ring-primary-lightest'
       case 'outline':
-        return 'border border-gray-300 -m-[1px] hover:border-primary-lighter focus:border-primary-lighter focus:ring-4 focus:ring-primary-lightest active:border-primary-darker'
+        return 'border border-gray-300 hover:border-primary-lighter focus:border-primary-lighter focus:ring-4 focus:ring-primary-lightest active:border-primary-darker'
       case 'light':
-        return 'focus:ring-4 focus:ring-gray-300'
+        return 'border border-white focus:ring-4 focus:ring-gray-300'
     }
   }
 
