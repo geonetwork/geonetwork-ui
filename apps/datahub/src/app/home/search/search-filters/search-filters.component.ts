@@ -5,7 +5,6 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   FieldsService,
   FilterDropdownComponent,
@@ -13,16 +12,6 @@ import {
   SearchService,
 } from '@geonetwork-ui/feature/search'
 import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
-
-marker('search.filters.format')
-marker('search.filters.inspireKeyword')
-marker('search.filters.isSpatial')
-marker('search.filters.license')
-marker('search.filters.publisher')
-marker('search.filters.representationType')
-marker('search.filters.resourceType')
-marker('search.filters.standard')
-marker('search.filters.topic')
 
 @Component({
   selector: 'datahub-search-filters',

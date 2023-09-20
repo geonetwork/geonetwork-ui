@@ -12,9 +12,20 @@ import {
 import { forkJoin, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { FieldFilters } from '@geonetwork-ui/common/domain/search'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 // key is the field name
 export type FieldValues = Record<string, FieldValue[] | FieldValue>
+
+marker('search.filters.format')
+marker('search.filters.inspireKeyword')
+marker('search.filters.isSpatial')
+marker('search.filters.license')
+marker('search.filters.publisher')
+marker('search.filters.representationType')
+marker('search.filters.resourceType')
+marker('search.filters.standard')
+marker('search.filters.topic')
 
 @Injectable({
   providedIn: 'root',
