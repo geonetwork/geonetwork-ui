@@ -1,6 +1,6 @@
 import { firstValueFrom, Observable, of, switchMap } from 'rxjs'
 import { ToolsApiService } from '@geonetwork-ui/data-access/gn4'
-import { map, shareReplay } from 'rxjs/operators'
+import { catchError, map, shareReplay } from 'rxjs/operators'
 import { Injector } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -35,7 +35,7 @@ export class SimpleSearchField implements AbstractSearchField {
 
   constructor(
     protected esFieldName: string,
-    private order: 'asc' | 'desc' = 'asc',
+    protected order: 'asc' | 'desc' = 'asc',
     protected injector: Injector
   ) {}
 
@@ -87,24 +87,32 @@ export class SimpleSearchField implements AbstractSearchField {
   }
 }
 
-export class TopicSearchField extends SimpleSearchField {
+export class GnUiTranslationSearchField extends SimpleSearchField {
   private toolsApiService = this.injector.get(ToolsApiService)
-  allTranslations = this.toolsApiService
-    .getTranslationsPackage1('gnui')
-    .pipe(shareReplay(1))
+  allTranslations = this.toolsApiService.getTranslationsPackage1('gnui').pipe(
+    catchError(() => {
+      console.warn('Error while loading gnui language package')
+      return of({})
+    }),
+    shareReplay(1)
+  )
 
-  constructor(injector: Injector) {
-    super('cl_topic.key', 'asc', injector)
+  constructor(
+    esFieldName: string,
+    order: 'asc' | 'desc' = 'asc',
+    injector: Injector
+  ) {
+    super(esFieldName, order, injector)
   }
 
-  private async getTopicTranslation(topicKey: string) {
+  private async getTranslation(topicKey: string) {
     return firstValueFrom(
       this.allTranslations.pipe(map((translations) => translations[topicKey]))
     )
   }
 
   protected async getBucketLabel(bucket: TermBucket) {
-    return (await this.getTopicTranslation(bucket.term)) || bucket.term
+    return (await this.getTranslation(bucket.term)) || bucket.term
   }
 
   getAvailableValues(): Observable<FieldAvailableValue[]> {

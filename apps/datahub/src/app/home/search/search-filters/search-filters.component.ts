@@ -5,7 +5,6 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   FieldsService,
   FilterDropdownComponent,
@@ -53,52 +52,10 @@ export class SearchFiltersComponent implements OnInit {
           return false
         }
       })
-      .map((filter) => {
-        switch (filter) {
-          case 'publisher':
-            return {
-              fieldName: filter,
-              title: marker('search.filters.byOrganisation'),
-            }
-          case 'format':
-            return {
-              fieldName: filter,
-              title: marker('search.filters.byFormat'),
-            }
-          case 'standard':
-            return {
-              fieldName: filter,
-              title: marker('search.filters.byStandard'),
-            }
-          case 'inspireKeyword':
-            return {
-              fieldName: filter,
-              title: marker('search.filters.byInspireKeyword'),
-            }
-          case 'topic':
-            return {
-              fieldName: filter,
-              title: marker('search.filters.byTopic'),
-            }
-          case 'publicationYear':
-            return {
-              fieldName: filter,
-              title: marker('search.filters.byPublicationYear'),
-            }
-          case 'isSpatial':
-            return {
-              fieldName: filter,
-              title: marker('search.filters.isSpatial'),
-            }
-          case 'license':
-            return {
-              fieldName: filter,
-              title: marker('search.filters.byLicense'),
-            }
-          default:
-            return { fieldName: filter, title: filter }
-        }
-      })
+      .map((filter) => ({
+        fieldName: filter,
+        title: `search.filters.${filter}`,
+      }))
   }
 
   open() {
