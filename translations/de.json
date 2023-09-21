@@ -190,7 +190,7 @@
   "record.metadata.title": "Titel",
   "record.metadata.updateFrequency": "Aktualisierungsfrequenz der Daten",
   "record.metadata.updateStatus": "Aktualisierungsstatus der Daten",
-  "record.metadata.updatedOn": "Letzte Aktualisierung der Daten",
+  "record.metadata.updatedOn": "Letzte Aktualisierung der Dateninformationen",
   "record.metadata.usage": "Nutzung und Einschränkungen",
   "record.more.details": "Weitere Details",
   "record.tab.chart": "Diagramm",
