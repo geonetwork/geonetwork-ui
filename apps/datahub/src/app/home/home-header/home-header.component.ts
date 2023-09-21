@@ -19,7 +19,7 @@ import {
 import { SortByEnum, SortByField } from '@geonetwork-ui/common/domain/search'
 import { map } from 'rxjs/operators'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants'
-import { lastValueFrom } from 'rxjs'
+import { firstValueFrom, lastValueFrom } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 import { sortByFromString } from '@geonetwork-ui/util/shared'
 import { AuthService } from '@geonetwork-ui/api/repository/gn4'
@@ -84,9 +84,11 @@ export class HomeHeaderComponent {
         customSearchParameters.filters
       )
     )
-    this.searchService.setSortAndFilters(
-      searchFilters,
-      sortByFromString(customSearchParameters.sort)
-    )
+    if (customSearchParameters.sort) {
+      const sortBy = sortByFromString(customSearchParameters.sort)
+      this.searchService.setSortAndFilters(searchFilters, sortBy)
+    } else {
+      this.searchService.setFilters(searchFilters)
+    }
   }
 }

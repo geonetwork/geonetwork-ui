@@ -34,7 +34,6 @@ jest.mock('@geonetwork-ui/util/app-config', () => {
           filters: { publisher: ['DREAL'] },
         },
         {
-          sort: 'title',
           name: 'filterCarto',
           filters: { q: 'Cartographie' },
         },
@@ -61,6 +60,7 @@ class routerFacadeMock {
 class searchFacadeMock {
   setFavoritesOnly = jest.fn()
   setSortBy = jest.fn()
+  sortBy$ = new BehaviorSubject(['desc', 'createDate'])
 }
 
 class searchServiceMock {
@@ -68,6 +68,7 @@ class searchServiceMock {
   setSearch = jest.fn()
   setSortBy = jest.fn()
   setSortAndFilters = jest.fn()
+  setFilters = jest.fn()
 }
 
 class AuthServiceMock {
@@ -233,17 +234,32 @@ describe('HeaderComponent', () => {
           const allBadges = fixture.debugElement.queryAll(By.css('.badge-btn'))
           expect(allBadges.length).toBe(4)
         })
-        beforeEach(() => {
-          const firstCustomBadge = fixture.debugElement.queryAll(
-            By.css('.badge-btn')
-          )[2]
-          firstCustomBadge.nativeElement.click()
+        describe('when sort is defined', () => {
+          beforeEach(() => {
+            const firstCustomBadge = fixture.debugElement.queryAll(
+              By.css('.badge-btn')
+            )[2]
+            firstCustomBadge.nativeElement.click()
+          })
+          it('should redirect correctly', () => {
+            expect(searchService.setSortAndFilters).toHaveBeenCalledWith(
+              { thisIs: 'a fake filter' },
+              SortByEnum.CREATE_DATE
+            )
+          })
         })
-        it('should redirect correctly', () => {
-          expect(searchService.setSortAndFilters).toHaveBeenCalledWith(
-            { thisIs: 'a fake filter' },
-            SortByEnum.CREATE_DATE
-          )
+        describe('when sort is not defined', () => {
+          beforeEach(() => {
+            const secondCustomBadge = fixture.debugElement.queryAll(
+              By.css('.badge-btn')
+            )[3]
+            secondCustomBadge.nativeElement.click()
+          })
+          it('should redirect correctly', () => {
+            expect(searchService.setFilters).toHaveBeenCalledWith({
+              thisIs: 'a fake filter',
+            })
+          })
         })
       })
 
