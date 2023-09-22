@@ -23,21 +23,19 @@ export class FavoritesService {
     .pipe(map((userInfo) => (userInfo ? parseInt(userInfo.id) : null)))
 
   // this observable loads the current list of favorites from the API
-  private myFavoritesUuidFromApi$ = this.myUserId$.pipe(
+  private myFavoritesUuidFromApi$: Observable<string[]> = this.myUserId$.pipe(
     switchMap(
       (userId) =>
         userId !== null
           ? this.userSelectionsService.getSelectionRecords(SELECTION_ID, userId)
           : of([] as string[]) // emit an empty array if the user is not authentified
     ),
-    catchError((e) =>
-      throwError(
-        () =>
-          new Error(
-            `An error occurred while fetching favorite records: ${e.message}`
-          )
+    catchError((e) => {
+      console.error(
+        `An error occurred while fetching favorite records: ${e.message}`
       )
-    )
+      return of([])
+    })
   )
 
   private modifiedFavorites$ = new Subject<string[]>()

@@ -50,19 +50,24 @@ describe('FavoritesService', () => {
       })
     })
     describe('when an error happens', () => {
+      let originalConsoleError
+      beforeAll(() => {
+        originalConsoleError = window.console.error
+        window.console.error = jest.fn()
+      })
+      afterAll(() => {
+        window.console.error = originalConsoleError
+      })
       beforeEach(() => {
         userSelectionsService.getSelectionRecords = jest.fn(() =>
-          throwError(new Error('blargz'))
+          throwError(() => new Error('blargz'))
         )
       })
-      it('throws an error', async () => {
-        expect.assertions(2)
-        try {
-          await firstValueFrom(service.myFavoritesUuid$)
-        } catch (e: any) {
-          expect(e.message).toContain('fetching favorite records')
-          expect(e.message).toContain('blargz')
-        }
+      it('writes the error to the console', async () => {
+        await firstValueFrom(service.myFavoritesUuid$)
+        const errorMsg = (window.console.error as jest.Mock).mock.calls[0][0]
+        expect(errorMsg).toContain('fetching favorite records')
+        expect(errorMsg).toContain('blargz')
       })
     })
     it('emits a list of saved record uuids', async () => {
@@ -99,7 +104,7 @@ describe('FavoritesService', () => {
       it('throws an error', async () => {
         expect.assertions(1)
         try {
-          await service.addToFavorites(['aaa']).toPromise()
+          await firstValueFrom(service.addToFavorites(['aaa']))
         } catch (e: any) {
           expect(e.message).toContain('not authenticated')
         }
@@ -110,13 +115,13 @@ describe('FavoritesService', () => {
         favorites = null
         service.myFavoritesUuid$.subscribe((value) => (favorites = value))
         userSelectionsService.addToUserSelection = jest.fn(() =>
-          throwError(new Error('blargz'))
+          throwError(() => new Error('blargz'))
         )
       })
       it('throws an error', async () => {
         expect.assertions(2)
         try {
-          await service.addToFavorites(['aaa']).toPromise()
+          await firstValueFrom(service.addToFavorites(['aaa']))
         } catch (e: any) {
           expect(e.message).toContain('adding records')
           expect(e.message).toContain('blargz')
@@ -125,7 +130,7 @@ describe('FavoritesService', () => {
       it('does not add the record to favorites', async () => {
         expect.assertions(1)
         try {
-          await service.addToFavorites(['zzz']).toPromise()
+          await firstValueFrom(service.addToFavorites(['zzz']))
         } catch (e) {
           // ignore
         }
@@ -136,7 +141,7 @@ describe('FavoritesService', () => {
       beforeEach(async () => {
         favorites = null
         service.myFavoritesUuid$.subscribe((value) => (favorites = value))
-        await service.addToFavorites(['uvw', 'xyz']).toPromise()
+        await firstValueFrom(service.addToFavorites(['uvw', 'xyz']))
       })
       it('calls the corresponding API', () => {
         expect(userSelectionsService.addToUserSelection).toHaveBeenCalledWith(
@@ -161,7 +166,7 @@ describe('FavoritesService', () => {
       it('throws an error', async () => {
         expect.assertions(1)
         try {
-          await service.removeFromFavorites(['aaa']).toPromise()
+          await firstValueFrom(service.removeFromFavorites(['aaa']))
         } catch (e: any) {
           expect(e.message).toContain('not authenticated')
         }
@@ -172,13 +177,13 @@ describe('FavoritesService', () => {
         favorites = null
         service.myFavoritesUuid$.subscribe((value) => (favorites = value))
         userSelectionsService.deleteFromUserSelection = jest.fn(() =>
-          throwError(new Error('blargz'))
+          throwError(() => new Error('blargz'))
         )
       })
       it('throws an error', async () => {
         expect.assertions(2)
         try {
-          await service.removeFromFavorites(['aaa']).toPromise()
+          await firstValueFrom(service.removeFromFavorites(['aaa']))
         } catch (e: any) {
           expect(e.message).toContain('removing records')
           expect(e.message).toContain('blargz')
@@ -187,7 +192,7 @@ describe('FavoritesService', () => {
       it('does not remove the record from favorites', async () => {
         expect.assertions(1)
         try {
-          await service.removeFromFavorites(['abcd']).toPromise()
+          await firstValueFrom(service.removeFromFavorites(['abcd']))
         } catch (e) {
           // ignore
         }
@@ -198,7 +203,7 @@ describe('FavoritesService', () => {
       beforeEach(async () => {
         favorites = null
         service.myFavoritesUuid$.subscribe((value) => (favorites = value))
-        await service.removeFromFavorites(['abcd', 'ijkl']).toPromise()
+        await firstValueFrom(service.removeFromFavorites(['abcd', 'ijkl']))
       })
       it('calls the corresponding API', () => {
         expect(
