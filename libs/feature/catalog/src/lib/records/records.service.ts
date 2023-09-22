@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Observable, of } from 'rxjs'
-import { catchError, map, shareReplay } from 'rxjs/operators'
+import { catchError, shareReplay } from 'rxjs/operators'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
 
 @Injectable({
@@ -8,12 +8,8 @@ import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records
 })
 export class RecordsService {
   recordsCount$: Observable<number> = this.recordsRepository
-    .search({
-      limit: 0,
-      offset: 0,
-    })
+    .getMatchesCount({})
     .pipe(
-      map((response) => response.count),
       shareReplay(1),
       catchError(() => of(0))
     )
