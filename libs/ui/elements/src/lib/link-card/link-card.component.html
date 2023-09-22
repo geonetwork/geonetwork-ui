@@ -12,6 +12,12 @@
     <p class="font-medium text-sm break-words">
       {{ link.description }}
     </p>
+    <p
+      *ngIf="!link.name && !link.description"
+      class="font-medium text-sm break-words truncate"
+    >
+      {{ link.url }}
+    </p>
   </div>
   <div>
     <mat-icon class="material-symbols-outlined card-icon">open_in_new</mat-icon>
