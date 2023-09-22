@@ -34,7 +34,7 @@ describe('header', () => {
         .click({ force: true })
       cy.url().should('include', '/organisations')
     })
-    it.only('hide navigation buttons when scrolling down', () => {
+    it('hide navigation buttons when scrolling down', () => {
       cy.scrollTo(0, 1000)
       cy.get('datahub-navigation-menu')
         .find('button')
@@ -121,7 +121,7 @@ describe('header', () => {
     it('should sort results by latest date', () => {
       cy.get('gn-ui-fuzzy-search').next().find('button').first().click()
       cy.get('gn-ui-record-preview-row').should('not.eq', '@initialList')
-      cy.get('select#sort-by- option:selected').should(
+      cy.get('gn-ui-sort-by option:selected').should(
         'have.value',
         'desc,createDate'
       )
@@ -129,7 +129,7 @@ describe('header', () => {
     it('should filter results by popularity', () => {
       cy.get('gn-ui-fuzzy-search').next().find('button').eq(1).click()
       cy.get('gn-ui-record-preview-row').should('not.eq', '@initialList')
-      cy.get('select#sort-by- option:selected').should(
+      cy.get('gn-ui-sort-by option:selected').should(
         'have.value',
         'desc,userSavedCount'
       )
