@@ -10,6 +10,7 @@ import {
 import {
   Aggregations,
   AggregationsParams,
+  FieldFilters,
 } from '@geonetwork-ui/common/domain/search'
 import { map } from 'rxjs/operators'
 import {
@@ -60,6 +61,25 @@ export class Gn4Repository implements RecordsRepositoryInterface {
           }))
         )
       )
+  }
+
+  getMatchesCount(filters: FieldFilters): Observable<number> {
+    return this.gn4SearchApi
+      .search(
+        'records-count',
+        JSON.stringify({
+          ...this.gn4SearchHelper.getSearchRequestBody(
+            {},
+            0,
+            0,
+            undefined,
+            undefined,
+            filters
+          ),
+          track_total_hits: true,
+        })
+      )
+      .pipe(map((results: Gn4SearchResults) => results.hits.total?.value || 0))
   }
 
   getByUniqueIdentifier(

@@ -38,7 +38,7 @@ class ElasticsearchServiceMock {
 class SearchApiServiceMock {
   search = jest.fn((bucket, payload) => {
     const body = JSON.parse(payload)
-    const count = body.size ?? 20
+    const count = body.size || 1234
     const result: EsSearchResponse = {
       hits: {
         hits: DATASET_RECORDS,
@@ -120,6 +120,32 @@ describe('Gn4Repository', () => {
     it('returns the given results as records', () => {
       expect(results.count).toBe(12)
       expect(results.records).toStrictEqual(DATASET_RECORDS)
+    })
+  })
+  describe('getMatchesCount', () => {
+    let count: number
+    beforeEach(async () => {
+      count = await lastValueFrom(
+        repository.getMatchesCount({
+          field1: '1234',
+          field2: {
+            abcd: true,
+          },
+        })
+      )
+    })
+    it('builds a payload with the specified uuid', () => {
+      expect(gn4Helper.getSearchRequestBody).toHaveBeenCalledWith(
+        {},
+        0,
+        0,
+        undefined,
+        undefined,
+        { field1: '1234', field2: { abcd: true } }
+      )
+    })
+    it('returns the result count', () => {
+      expect(count).toStrictEqual(1234)
     })
   })
   describe('getByUniqueIdentifier', () => {
@@ -204,7 +230,7 @@ describe('Gn4Repository', () => {
       expect(gn4Helper.buildAutocompletePayload).toHaveBeenCalledWith('blargz')
     })
     it('returns the given results as records', () => {
-      expect(results.count).toBe(20)
+      expect(results.count).toBe(1234)
       expect(results.records).toStrictEqual(DATASET_RECORDS)
     })
   })

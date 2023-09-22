@@ -1,11 +1,9 @@
-import { TestBed } from '@angular/core/testing'
 import { RecordsService } from './records.service'
-import { SAMPLE_SEARCH_RESULTS } from '@geonetwork-ui/common/fixtures'
 import { of, throwError } from 'rxjs'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
 
 class RecordsRepositoryMock {
-  search = jest.fn(() => of(SAMPLE_SEARCH_RESULTS))
+  getMatchesCount = jest.fn(() => of(123))
 }
 
 describe('RecordsService', () => {
@@ -32,13 +30,13 @@ describe('RecordsService', () => {
         service.recordsCount$.subscribe()
         service.recordsCount$.subscribe()
         service.recordsCount$.subscribe()
-        expect(repository.search).toHaveBeenCalledTimes(1)
+        expect(repository.getMatchesCount).toHaveBeenCalledTimes(1)
       })
     })
 
     describe('when the request does not behave as expected', () => {
       beforeEach(() => {
-        repository.search = () => throwError(() => 'blargz')
+        repository.getMatchesCount = () => throwError(() => 'blargz')
         service = new RecordsService(repository) // create a new service to enable the changed repository behaviour
       })
       it('emits 0', () => {
