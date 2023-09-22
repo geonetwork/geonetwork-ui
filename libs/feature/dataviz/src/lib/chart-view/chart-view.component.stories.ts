@@ -13,22 +13,23 @@ import { ChartViewComponent } from './chart-view.component'
 import { ChartComponent, UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
 import { importProvidersFrom } from '@angular/core'
-import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  DropdownSelectorComponent,
+  UiInputsModule,
+} from '@geonetwork-ui/ui/inputs'
 import { MatProgressSpinner } from '@angular/material/progress-spinner'
+import { OverlayModule } from '@angular/cdk/overlay'
 
 export default {
   title: 'Smart/Dataviz/ChartView',
   component: ChartViewComponent,
   decorators: [
     moduleMetadata({
-      declarations: [
-        DropdownSelectorComponent,
-        LoadingMaskComponent,
-        MatProgressSpinner,
-      ],
       imports: [
         ChartComponent,
+        OverlayModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+        UiInputsModule,
       ],
     }),
     applicationConfig({

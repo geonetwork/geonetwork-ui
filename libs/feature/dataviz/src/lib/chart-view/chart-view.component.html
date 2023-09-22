@@ -5,6 +5,7 @@
     <gn-ui-dropdown-selector
       class="basis-1/4"
       [choices]="typeChoices"
+      [extraBtnClass]="'secondary min-w-full'"
       (selectValue)="chartType$.next($event)"
       [selected]="chartType$.value"
       [title]="'chart.dropdown.type' | translate"
@@ -12,6 +13,7 @@
     <gn-ui-dropdown-selector
       class="basis-1/4"
       [choices]="xChoices$ | async"
+      [extraBtnClass]="'secondary min-w-full'"
       (selectValue)="xProperty$.next($event)"
       [selected]="xProperty$.value"
       [title]="'chart.dropdown.xProperty' | translate"

@@ -12,7 +12,7 @@ import {
   FieldAggregation,
   getJsonDataItemsProxy,
 } from '@geonetwork-ui/data-fetcher'
-import { DDChoices } from '@geonetwork-ui/ui/inputs'
+import { DropdownChoice } from '@geonetwork-ui/ui/inputs'
 import { BehaviorSubject, combineLatest, EMPTY, Observable } from 'rxjs'
 import {
   catchError,
@@ -24,10 +24,7 @@ import {
   tap,
 } from 'rxjs/operators'
 import { DataService } from '../service/data.service'
-import {
-  AggregationTypes,
-  InputChartType,
-} from '@geonetwork-ui/common/domain/dataviz-configuration.model'
+import { InputChartType } from '@geonetwork-ui/common/domain/dataviz-configuration.model'
 import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
 import { TranslateService } from '@ngx-translate/core'
 
@@ -93,7 +90,7 @@ export class ChartViewComponent {
   error = null
   errorInfo = null
 
-  typeChoices: DDChoices = [
+  typeChoices: DropdownChoice[] = [
     { label: 'chart.type.bar', value: 'bar' },
     { label: 'chart.type.barHorizontal', value: 'bar-horizontal' },
     { label: 'chart.type.line', value: 'line' },
@@ -111,7 +108,7 @@ export class ChartViewComponent {
       { label: 'chart.aggregation.min', value: 'min' },
       { label: 'chart.aggregation.average', value: 'average' },
       { label: 'chart.aggregation.count', value: 'count' },
-    ] as DDChoices
+    ] as DropdownChoice[]
   }
 
   dataset$: Observable<BaseReader> = this.currentLink$.pipe(

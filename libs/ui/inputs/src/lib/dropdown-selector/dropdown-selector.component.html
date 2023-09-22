@@ -1,27 +1,73 @@
-<div class="flex flex-col items-start sm:flex-row sm:items-center relative">
-  <label
+<div
+  class="flex items-start flex-col sm:flex-row sm:items-center relative w-full"
+>
+  <span
     *ngIf="showTitle"
     class="tracking-wide text-sm mb-2 sm:mb-0 sm:mr-2 whitespace-nowrap"
     [attr.for]="id"
   >
     {{ title }}
-  </label>
-  <select
-    [id]="id"
-    (change)="this.selectValue.emit($event.target.value)"
-    class="w-full min-w-[66px] truncate text-main bg-white border border-gray-300 py-[10px] px-2 rounded-[0.25em] cursor-pointer leading-tight focus:outline-none hover:text-primary-darker hover:border-primary-lighter focus:ring-primary-lightest focus:ring-4"
-    [ngClass]="extraClass"
-    [class.w-full]="!showTitle"
+  </span>
+  <gn-ui-button
+    type="outline"
+    class="grow min-w-0"
+    extraClass="!p-[8px] !pl-[16px] flex flex-row w-full {{ extraBtnClass }}"
+    [title]="title"
+    [attr.aria-owns]="id"
+    (buttonClick)="openOverlay()"
+    cdkOverlayOrigin
+    #overlayOrigin="cdkOverlayOrigin"
+    (keydown)="handleTriggerKeydown($event)"
   >
-    <option
-      *ngFor="let choice of choices"
-      [value]="choice.value"
-      [selected]="isSelected(choice)"
-    >
-      {{ choice.label | translate }}
-    </option>
-  </select>
-  <div
-    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-800"
-  ></div>
+    <div class="grow font-medium truncate py-1 mr-2 text-left">
+      {{ getChoiceLabel() | translate }}
+    </div>
+    <mat-icon class="material-symbols-outlined shrink-0 opacity-40">
+      <ng-container *ngIf="overlayOpen">expand_less</ng-container>
+      <ng-container *ngIf="!overlayOpen">expand_more</ng-container>
+    </mat-icon>
+  </gn-ui-button>
 </div>
+
+<ng-template
+  cdkConnectedOverlay
+  cdkConnectedOverlayHasBackdrop
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayOrigin]="overlayOrigin"
+  [cdkConnectedOverlayOpen]="overlayOpen"
+  [cdkConnectedOverlayPositions]="overlayPositions"
+  [cdkConnectedOverlayFlexibleDimensions]="true"
+  (backdropClick)="closeOverlay()"
+  (detach)="closeOverlay()"
+>
+  <div
+    class="bg-white border border-gray-300 rounded shadow-lg py-2 w-full overflow-x-hidden overflow-y-auto overlay-container"
+    [style.max-height]="overlayMaxHeight"
+    [style.min-width]="overlayWidth"
+    role="listbox"
+    tabindex="-1"
+    [attr.id]="id"
+    [attr.aria-multiselectable]="true"
+    [attr.aria-label]="title"
+    (keydown)="handleOverlayKeydown($event)"
+  >
+    <button
+      #choiceInputs
+      type="button"
+      *ngFor="let choice of choices"
+      [title]="choice.label"
+      class="flex px-5 py-1 w-full cursor-pointer transition-colors"
+      [ngClass]="
+        isSelected(choice)
+          ? 'text-white bg-primary hover:text-white hover:bg-primary-darker focus:text-white focus:bg-primary-darker'
+          : 'text-gray-900 hover:text-primary-darkest hover:bg-gray-50 focus:text-primary-darkest focus:bg-gray-50'
+      "
+      (click)="onSelectValue(choice)"
+      (keydown)="selectIfEnter($event, choice)"
+    >
+      <span class="text-[14px]">
+        {{ choice.label | translate }}
+      </span>
+    </button>
+  </div>
+</ng-template>

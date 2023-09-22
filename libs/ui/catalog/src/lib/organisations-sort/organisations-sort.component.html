@@ -5,14 +5,12 @@
     <p translate>organisation.sort.intro</p>
   </span>
   <span class="flex flex-wrap sm:flex-nowrap sm:shrink-0">
-    <span class="mt-2 mr-2 opacity-75" translate>
-      organisation.sort.sortBy
-    </span>
     <gn-ui-dropdown-selector
-      [title]="''"
+      [title]="'organisation.sort.sortBy' | translate"
       class="shrink"
       [choices]="choices"
-      [showTitle]="false"
+      [minWidth]="'180px'"
+      [showTitle]="true"
       (selectValue)="selectOrderToDisplay($event)"
     ></gn-ui-dropdown-selector>
   </span>

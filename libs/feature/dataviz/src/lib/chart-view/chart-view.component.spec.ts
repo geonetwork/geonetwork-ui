@@ -39,6 +39,7 @@ export class MockChartComponent {
   template: '<div></div>',
 })
 export class MockDropdownSelectorComponent {
+  @Input() selected: any
   @Input() choices: unknown[]
   @Output() selectValue = new EventEmitter<any>()
 }

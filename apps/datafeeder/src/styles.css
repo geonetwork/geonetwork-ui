@@ -43,6 +43,11 @@ gn-ui-button button[type='button'].secondary {
   border-color: var(--color-primary);
   border-width: 1px;
 }
+
+gn-ui-dropdown-selector gn-ui-button button[type='button'].secondary {
+  border-width: 2px;
+}
+
 gn-ui-button button[type='button'].secondary:hover {
   background: var(--color-primary-darker);
   color: white;

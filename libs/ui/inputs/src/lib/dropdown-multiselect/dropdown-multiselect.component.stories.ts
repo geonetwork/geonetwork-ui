@@ -9,13 +9,14 @@ import { OverlayModule } from '@angular/cdk/overlay'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatIcon } from '@angular/material/icon'
+import { ButtonComponent } from '../button/button.component'
 
 export default {
   title: 'Inputs/DropdownMultiselectComponent',
   component: DropdownMultiselectComponent,
   decorators: [
     moduleMetadata({
-      declarations: [MatIcon],
+      declarations: [MatIcon, ButtonComponent],
       imports: [OverlayModule, MatCheckboxModule, TranslateModule.forRoot()],
     }),
     componentWrapperDecorator(
