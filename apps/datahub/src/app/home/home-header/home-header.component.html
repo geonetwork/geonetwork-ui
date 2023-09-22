@@ -69,10 +69,11 @@
       ></datahub-header-badge-button>
     </div>
 -->
-    <datahub-navigation-menu
-      class="tabs flex justify-between font-medium -mx-5 sm:mx-0 sm:mt-32 inset-x-0 bottom-0 z-50"
-      [style.opacity]="-0.6 + expandRatio * 5"
-    ></datahub-navigation-menu>
+    <div [style.opacity]="-0.6 + expandRatio * 5">
+      <datahub-navigation-menu
+        class="tabs flex justify-between font-medium -mx-5 sm:mx-0 sm:mt-32 inset-x-0 bottom-0 z-50"
+      ></datahub-navigation-menu>
+    </div>
   </div>
   <gn-ui-language-switcher
     *ngIf="showLanguageSwitcher"

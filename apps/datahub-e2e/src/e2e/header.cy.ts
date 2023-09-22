@@ -34,6 +34,13 @@ describe('header', () => {
         .click({ force: true })
       cy.url().should('include', '/organisations')
     })
+    it.only('hide navigation buttons when scrolling down', () => {
+      cy.scrollTo(0, 1000)
+      cy.get('datahub-navigation-menu')
+        .find('button')
+        .eq(0)
+        .should('not.be.visible')
+    })
   })
 
   describe('search actions', () => {
