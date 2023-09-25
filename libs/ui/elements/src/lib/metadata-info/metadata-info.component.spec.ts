@@ -16,36 +16,25 @@ describe('MetadataInfoComponent', () => {
     }).compileComponents()
   })
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(MetadataInfoComponent)
-    component = fixture.componentInstance
-    component.incomplete = false
-    component.metadata = DATASET_RECORDS[0]
-    fixture.detectChanges()
-  })
-
-  it('should create', () => {
-    expect(component).toBeTruthy()
-  })
-
   describe('When a section is empty', () => {
     beforeEach(() => {
+      fixture = TestBed.createComponent(MetadataInfoComponent)
+      component = fixture.componentInstance
       component.metadata = {
-        id: '',
-        uuid: '',
-        title: '',
-        metadataUrl: '',
-        keywords: [],
-        constraints: null,
+        ...DATASET_RECORDS[0],
+        useLimitations: null,
+        accessConstraints: null,
+        extras: {
+          isOpenData: false,
+        },
+        keywords: null,
       }
       fixture.detectChanges()
     })
     it('should display a message for no usage or constraints', () => {
-      const displayedElement =
-        fixture.nativeElement.getElementsByClassName('noUsage')
+      const displayedElement = fixture.nativeElement.querySelector('.noUsage')
       expect(displayedElement).toBeTruthy()
     })
-
     it('should not display the keywords section', () => {
       const displayedElement =
         fixture.nativeElement.querySelector('ng-container')
@@ -55,23 +44,14 @@ describe('MetadataInfoComponent', () => {
 
   describe('When a section is not empty', () => {
     beforeEach(() => {
-      component.metadata = {
-        id: '',
-        uuid: '',
-        title: '',
-        metadataUrl: '',
-        keywords: ['banana', 'pear'],
-        constraints: ['no usage'],
-      }
+      fixture = TestBed.createComponent(MetadataInfoComponent)
+      component = fixture.componentInstance
+      component.metadata = DATASET_RECORDS[0]
       fixture.detectChanges()
     })
     it('should not display a message for no usage or constraints', () => {
-      // Use waitForAsync to handle asynchronous changes in the DOM.
-      fixture.whenStable().then(() => {
-        const displayedElement =
-          fixture.nativeElement.getElementsByClassName('noUsage')
-        expect(displayedElement).toBeFalsy()
-      })
+      const displayedElement = fixture.nativeElement.querySelector('.noUsage')
+      expect(displayedElement).toBeFalsy()
     })
 
     it('should display the keywords section', () => {
