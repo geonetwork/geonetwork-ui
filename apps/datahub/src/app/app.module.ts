@@ -176,6 +176,11 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
           return fetch(getOptionalSearchConfig().FILTER_GEOMETRY_URL)
             .then((resp) => resp.json())
             .then(getGeometryFromGeoJSON)
+            .catch(() =>
+              console.log(
+                'No spatial filter was applied since a valid geometry could not be found'
+              )
+            )
         }
         return null
       },
