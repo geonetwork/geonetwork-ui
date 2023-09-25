@@ -35,6 +35,9 @@
     <div
       class="text-primary opacity-45 uppercase col-start-1 col-span-2 row-start-2 sm:truncate sm:row-start-3 sm:col-span-1"
       data-cy="recordOrg"
+      [class]="
+        hasMetadataQualityWidget ? 'limit-organisation-with-quality' : ''
+      "
     >
       {{ organization?.name }}
     </div>
@@ -53,8 +56,17 @@
       >
     </div>
     <div
-      class="text-right col-start-2 row-start-4 sm:absolute sm:col-start-2 sm:row-start-1 sm:top-[-1.125em] sm:right-[0.4em]"
-      data-cy="recordFav"
+      *ngIf="hasMetadataQualityWidget"
+      class="col-start-2 row-start-4 sm:row-start-3 absolute right-[4em] sm:right-[5em]"
+    >
+      <gn-ui-metadata-quality
+        smaller="true"
+        [metadata]="record"
+        [metadataQualityDisplay]="metadataQualityDisplay"
+      ></gn-ui-metadata-quality>
+    </div>
+    <div
+      class="text-right col-start-3 row-start-4 sm:absolute sm:col-start-2 sm:row-start-1 sm:top-[-1.125em] sm:right-[0.4em]"
     >
       <ng-container
         [ngTemplateOutlet]="favoriteTemplate"

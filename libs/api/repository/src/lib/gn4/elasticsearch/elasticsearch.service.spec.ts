@@ -434,7 +434,14 @@ describe('ElasticsearchService', () => {
           'linkProtocol',
           'contactForResource.organisation',
           'contact.organisation',
+          'contact.email',
           'userSavedCount',
+          "updateFrequency",
+          "cl_topic",
+          "cl_maintenanceAndUpdateFrequency",
+          "tag",
+          "MD_LegalConstraintsUseLimitationObject",
+          "qualityScore",
         ],
         query: {
           bool: {

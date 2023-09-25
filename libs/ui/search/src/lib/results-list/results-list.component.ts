@@ -11,6 +11,7 @@ import {
   ResultsLayoutConfigItem,
 } from './results-layout.config'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { MetadataQualityDisplay } from '@geonetwork-ui/ui/elements'
 
 @Component({
   selector: 'gn-ui-results-list',
@@ -24,5 +25,6 @@ export class ResultsListComponent {
     DEFAULT_RESULTS_LAYOUT_CONFIG['CARD']
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
   @Input() recordUrlGetter: (record: CatalogRecord) => string
+  @Input() metadataQualityDisplay: MetadataQualityDisplay
   @Output() mdSelect = new EventEmitter<CatalogRecord>()
 }

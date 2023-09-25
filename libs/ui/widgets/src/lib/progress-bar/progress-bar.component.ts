@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core'
 interface ColorScheme {
   outerBar: string
   innerBar: string
+  text: string
 }
 
 @Component({
@@ -24,16 +25,19 @@ export class ProgressBarComponent {
         return {
           outerBar: 'bg-gray-200',
           innerBar: 'bg-gray-100',
+          text: 'text-gray-900',
         }
       case 'primary':
         return {
           outerBar: 'bg-primary',
           innerBar: 'bg-primary-lighter',
+          text: 'text-white',
         }
       case 'secondary':
         return {
           outerBar: 'bg-secondary',
           innerBar: 'bg-secondary-lighter',
+          text: 'text-white',
         }
     }
   }

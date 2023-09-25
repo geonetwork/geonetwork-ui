@@ -16,6 +16,8 @@ import { LinkCardComponent } from './link-card/link-card.component'
 import { RelatedRecordCardComponent } from './related-record-card/related-record-card.component'
 import { MetadataContactComponent } from './metadata-contact/metadata-contact.component'
 import { MetadataCatalogComponent } from './metadata-catalog/metadata-catalog.component'
+import { MetadataQualityComponent } from './metadata-quality/metadata-quality.component'
+import { MetadataQualityItemComponent } from './metadata-quality-item/metadata-quality-item.component'
 import { SearchResultsErrorComponent } from './search-results-error/search-results-error.component'
 import { PaginationComponent } from './pagination/pagination.component'
 import { ThumbnailComponent } from './thumbnail/thumbnail.component'
@@ -50,6 +52,8 @@ import { PaginationButtonsComponent } from './pagination-buttons/pagination-butt
     RelatedRecordCardComponent,
     MetadataContactComponent,
     MetadataCatalogComponent,
+    MetadataQualityComponent,
+    MetadataQualityItemComponent,
     SearchResultsErrorComponent,
     PaginationComponent,
     ThumbnailComponent,
@@ -68,6 +72,8 @@ import { PaginationButtonsComponent } from './pagination-buttons/pagination-butt
     RelatedRecordCardComponent,
     MetadataContactComponent,
     MetadataCatalogComponent,
+    MetadataQualityComponent,
+    MetadataQualityItemComponent,
     SearchResultsErrorComponent,
     PaginationComponent,
     ThumbnailComponent,
