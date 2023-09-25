@@ -23,7 +23,7 @@ export class MetadataInfoComponent {
 
   get hasUsage() {
     return (
-      ('extras' in this.metadata && 'isOpenData' in this.metadata.extras) ||
+      this.metadata.extras?.isOpenData === true ||
       this.metadata.useLimitations?.length ||
       this.metadata.accessConstraints?.length
     )
