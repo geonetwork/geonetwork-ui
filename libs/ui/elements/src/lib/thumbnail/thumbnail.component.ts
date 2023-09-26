@@ -77,6 +77,7 @@ export class ThumbnailComponent implements OnInit, OnChanges {
       this.setPlaceholder()
       return
     }
+    this.isPlaceholder = false
     this.setNewSrcImage(this.images[0])
   }
 
