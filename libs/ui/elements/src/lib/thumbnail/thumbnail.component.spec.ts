@@ -38,10 +38,12 @@ describe('ThumbnailComponent', () => {
   describe('<img> element', () => {
     describe('When no url is given', () => {
       let img
+      let root
       beforeEach(fakeAsync(() => {
         component.thumbnailUrl = null
         fixture.detectChanges()
         img = de.query(By.css('img'))
+        root = de.query(By.css('div'))
         tick(10)
       }))
 
@@ -51,14 +53,22 @@ describe('ThumbnailComponent', () => {
       it('sets object cover to scale-down', () => {
         expect(img.nativeElement.style.objectFit).toEqual('scale-down')
       })
+      it('sets bg color to gray', () => {
+        expect(
+          root.nativeElement.classList.contains('bg-gray-100')
+        ).toBeTruthy()
+        expect(root.nativeElement.classList.contains('bg-white')).toBeFalsy()
+      })
     })
     describe('When an url is given and no fit is set', () => {
       const url = 'http://test.com/img.png'
       let img
+      let root
       beforeEach(() => {
         component.thumbnailUrl = url
         fixture.detectChanges()
         img = de.query(By.css('img'))
+        root = de.query(By.css('div'))
       })
       it('is displayed', () => {
         expect(img).toBeTruthy()
@@ -72,15 +82,21 @@ describe('ThumbnailComponent', () => {
       it('sets img height to 100%', () => {
         expect(img.nativeElement.classList.contains('h-full')).toBeTruthy()
       })
+      it('sets bg color to white', () => {
+        expect(root.nativeElement.classList.contains('bg-white')).toBeTruthy()
+        expect(root.nativeElement.classList.contains('bg-gray-100')).toBeFalsy()
+      })
     })
     describe('When an url is given and fit is set to "contain"', () => {
       const url = 'http://test.com/img.png'
       let img
+      let root
       beforeEach(() => {
         component.thumbnailUrl = url
         component.fit = 'contain'
         fixture.detectChanges()
         img = de.query(By.css('img'))
+        root = de.query(By.css('div'))
       })
       it('is displayed', () => {
         expect(img).toBeTruthy()
@@ -93,6 +109,10 @@ describe('ThumbnailComponent', () => {
       })
       it('sets img height to 80%', () => {
         expect(img.nativeElement.classList.contains('h-4/5')).toBeTruthy()
+      })
+      it('sets bg color to white', () => {
+        expect(root.nativeElement.classList.contains('bg-white')).toBeTruthy()
+        expect(root.nativeElement.classList.contains('bg-gray-100')).toBeFalsy()
       })
     })
   })
@@ -143,11 +163,13 @@ describe('ThumbnailComponent', () => {
   describe('When no url is given and a custom placeholder is provided', () => {
     const placeholderUrl = 'http://localhost/assets/img/placeholder.svg'
     let img
+    let root
     beforeEach(() => {
       component.placeholderUrl = placeholderUrl
       component.thumbnailUrl = null
       fixture.detectChanges()
       img = de.query(By.css('img'))
+      root = de.query(By.css('div'))
     })
     it('is displayed, with custom placeholder src', () => {
       expect(img.nativeElement.src).toEqual(placeholderUrl)
@@ -155,16 +177,22 @@ describe('ThumbnailComponent', () => {
     it('sets object cover to scale-down', () => {
       expect(img.nativeElement.style.objectFit).toEqual('scale-down')
     })
+    it('sets bg color to gray', () => {
+      expect(root.nativeElement.classList.contains('bg-gray-100')).toBeTruthy()
+      expect(root.nativeElement.classList.contains('bg-white')).toBeFalsy()
+    })
   })
   describe('broken image url', () => {
     const url = 'http://test.com/img.png'
     const placeholderUrl = 'http://localhost/assets/img/placeholder.png'
     let img
+    let root
     beforeEach(() => {
       component.thumbnailUrl = url
       component.placeholderUrl = placeholderUrl
       fixture.detectChanges()
       img = de.query(By.css('img'))
+      root = de.query(By.css('div'))
       img.nativeElement.dispatchEvent(new Event('error'))
       fixture.detectChanges()
     })
@@ -174,6 +202,10 @@ describe('ThumbnailComponent', () => {
     it('sets object cover to scale-down', () => {
       expect(img.nativeElement.style.objectFit).toEqual('scale-down')
     })
+    it('sets bg color to gray', () => {
+      expect(root.nativeElement.classList.contains('bg-gray-100')).toBeTruthy()
+      expect(root.nativeElement.classList.contains('bg-white')).toBeFalsy()
+    })
   })
 
   describe('thumbnail image url returns 404 and organisation logo exists', () => {
@@ -181,6 +213,7 @@ describe('ThumbnailComponent', () => {
     const orgLogoUrl = 'http://test.com/orgLogo.png'
     const placeholderUrl = 'http://localhost/assets/img/placeholder.png'
     let img
+    let root
     beforeEach(() => {
       component.thumbnailUrl = [url, orgLogoUrl]
       component.fit = ['cover', 'contain']
@@ -188,11 +221,16 @@ describe('ThumbnailComponent', () => {
       fixture.detectChanges()
       img = de.query(By.css('img'))
       img.nativeElement.dispatchEvent(new Event('error'))
+      root = de.query(By.css('div'))
       fixture.detectChanges()
     })
     it('displays organisation logo', () => {
       expect(img.nativeElement.src).toEqual(orgLogoUrl)
       expect(img.nativeElement.style.objectFit).toEqual('contain')
+    })
+    it('sets bg color to white', () => {
+      expect(root.nativeElement.classList.contains('bg-white')).toBeTruthy()
+      expect(root.nativeElement.classList.contains('bg-gray-100')).toBeFalsy()
     })
 
     describe('if organisation logo also returns 404', () => {
@@ -204,23 +242,35 @@ describe('ThumbnailComponent', () => {
         expect(img.nativeElement.src).toEqual(placeholderUrl)
         expect(img.nativeElement.style.objectFit).toEqual('scale-down')
       })
+      it('sets bg color to gray', () => {
+        expect(
+          root.nativeElement.classList.contains('bg-gray-100')
+        ).toBeTruthy()
+        expect(root.nativeElement.classList.contains('bg-white')).toBeFalsy()
+      })
     })
   })
   describe('thumbnail image url returns 404 and no organisation logo', () => {
     const url = 'http://test.com/img.png'
     const placeholderUrl = 'http://localhost/assets/img/placeholder.png'
     let img
+    let root
     beforeEach(() => {
       component.thumbnailUrl = url
       component.placeholderUrl = placeholderUrl
       fixture.detectChanges()
       img = de.query(By.css('img'))
+      root = de.query(By.css('div'))
       img.nativeElement.dispatchEvent(new Event('error'))
       fixture.detectChanges()
     })
 
     it('displays placeholder', () => {
       expect(img.nativeElement.src).toEqual(placeholderUrl)
+    })
+    it('sets bg color to gray', () => {
+      expect(root.nativeElement.classList.contains('bg-gray-100')).toBeTruthy()
+      expect(root.nativeElement.classList.contains('bg-white')).toBeFalsy()
     })
   })
 

@@ -1,9 +1,7 @@
 <div
   #containerElement
-  class="h-full w-full relative shrink-0 overflow-hidden flex items-center bg-gray-100"
-  [ngClass]="{
-    'bg-white': !isPlaceholder
-  }"
+  class="h-full w-full relative shrink-0 overflow-hidden flex items-center"
+  [ngClass]="isPlaceholder ? 'bg-gray-100' : 'bg-white'"
   [attr.data-cy-is-placeholder]="isPlaceholder.toString()"
 >
   <img
