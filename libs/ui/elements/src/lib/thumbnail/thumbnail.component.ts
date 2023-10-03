@@ -39,7 +39,9 @@ export class ThumbnailComponent implements OnInit, OnChanges {
   imgUrl: string
   imgFit: FitOptions
   placeholderUrl = this.optionalPlaceholderUrl || DEFAULT_PLACEHOLDER
-  isPlaceholder = false
+  get isPlaceholder() {
+    return this.imgUrl === this.placeholderUrl
+  }
   private images: ThumbnailImageObject[] = []
 
   constructor(
@@ -77,7 +79,6 @@ export class ThumbnailComponent implements OnInit, OnChanges {
       this.setPlaceholder()
       return
     }
-    this.isPlaceholder = false
     this.setNewSrcImage(this.images[0])
   }
 
@@ -87,7 +88,6 @@ export class ThumbnailComponent implements OnInit, OnChanges {
   }
 
   private setPlaceholder(): void {
-    this.isPlaceholder = true
     this.setNewSrcImage({ url: this.placeholderUrl, fit: 'scale-down' })
   }
 
