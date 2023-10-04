@@ -1,5 +1,5 @@
 import { FieldName } from './search.model'
-import { FieldFilter } from './filter.model'
+import { FieldFilters } from './filter.model'
 
 export interface TermsAggregationParams {
   type: 'terms'
@@ -13,7 +13,7 @@ export interface HistogramAggregationParams {
   field: FieldName
   interval: number
 }
-export type FilterAggregationParams = Record<string, FieldFilter> | string
+export type FilterAggregationParams = FieldFilters | string
 export interface FiltersAggregationParams {
   type: 'filters'
   filters: Record<string, FilterAggregationParams>

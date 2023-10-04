@@ -7,6 +7,7 @@ import {
   IsSpatialSearchField,
   LicenseSearchField,
   OrganizationSearchField,
+  OwnerSearchField,
   SimpleSearchField,
 } from './fields'
 import { forkJoin, Observable, of } from 'rxjs'
@@ -63,6 +64,7 @@ export class FieldsService {
     isSpatial: new IsSpatialSearchField(this.injector),
     q: new FullTextSearchField(),
     license: new LicenseSearchField(this.injector),
+    owner: new OwnerSearchField(this.injector),
   } as Record<string, AbstractSearchField>
 
   get supportedFields() {

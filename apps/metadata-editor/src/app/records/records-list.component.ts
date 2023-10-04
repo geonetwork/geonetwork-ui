@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { Router } from '@angular/router'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
@@ -7,6 +7,7 @@ import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { SortByField } from '@geonetwork-ui/common/domain/search'
+import { TranslateModule } from '@ngx-translate/core'
 
 const includes = [
   'uuid',
@@ -17,6 +18,7 @@ const includes = [
   'cl_status',
   'isPublishedToAll',
   'link',
+  'owner',
 ]
 
 @Component({
@@ -24,10 +26,17 @@ const includes = [
   templateUrl: './records-list.component.html',
   styleUrls: ['./records-list.component.css'],
   standalone: true,
-  imports: [CommonModule, MatIconModule, UiSearchModule, UiElementsModule],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    UiSearchModule,
+    UiElementsModule,
+    TranslateModule,
+  ],
 })
 export class RecordsListComponent {
   @Input() title: string
+  @Input() linkToDatahub?: string
 
   constructor(
     private router: Router,
