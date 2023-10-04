@@ -46,14 +46,14 @@
     </div>
     <div *ngIf="metadata.updateFrequency">
       <p class="text-sm" translate>record.metadata.updateFrequency</p>
-      <p class="text-primary font-medium mt-2">
-        {{ metadata.updateFrequency }}
+      <p class="text-primary font-medium mt-2" translate>
+        domain.record.updateFrequency.{{ metadata.updateFrequency }}
       </p>
     </div>
     <div *ngIf="metadata.status">
       <p class="text-sm" translate>record.metadata.updateStatus</p>
-      <p class="text-primary font-medium mt-2">
-        {{ metadata.status }}
+      <p class="text-primary font-medium mt-2" translate>
+        domain.record.status.{{ metadata.status }}
       </p>
     </div>
   </div>
