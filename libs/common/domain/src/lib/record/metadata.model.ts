@@ -1,7 +1,15 @@
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { Individual } from './contact.model'
 import { Organization } from './organization.model'
 
 type Uuid = string
+
+marker('domain.record.updateFrequency.unknown')
+marker('domain.record.updateFrequency.notPlanned')
+marker('domain.record.updateFrequency.asNeeded')
+marker('domain.record.updateFrequency.irregular')
+marker('domain.record.updateFrequency.continual')
+marker('domain.record.updateFrequency.periodic')
 
 export type UpdateFrequencyCode =
   | 'unknown'
@@ -10,6 +18,12 @@ export type UpdateFrequencyCode =
   | 'irregular'
   | 'continual'
   | 'periodic'
+
+marker('domain.record.updateFrequency.day')
+marker('domain.record.updateFrequency.week')
+marker('domain.record.updateFrequency.month')
+marker('domain.record.updateFrequency.year')
+
 export type UpdateFrequencyCustom = {
   updatedTimes: number // this should be an integer
   per: 'day' | 'week' | 'month' | 'year'
@@ -17,6 +31,12 @@ export type UpdateFrequencyCustom = {
 export type UpdateFrequency = UpdateFrequencyCode | UpdateFrequencyCustom
 
 export type RecordKind = 'dataset' | 'service'
+
+marker('domain.record.status.completed')
+marker('domain.record.status.ongoing')
+marker('domain.record.status.under_development')
+marker('domain.record.status.deprecated')
+marker('domain.record.status.removed')
 
 export const RecordStatusValues = [
   'completed',
