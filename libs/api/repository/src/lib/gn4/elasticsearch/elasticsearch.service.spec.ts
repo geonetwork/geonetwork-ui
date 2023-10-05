@@ -1,6 +1,6 @@
 import { ElasticsearchService } from './elasticsearch.service'
 import { ES_FIXTURE_AGGS_RESPONSE } from '@geonetwork-ui/common/fixtures'
-import { EsSearchParams } from '../types/elasticsearch.model'
+import { EsSearchParams } from '@geonetwork-ui/api/metadata-converter'
 
 describe('ElasticsearchService', () => {
   let service: ElasticsearchService
@@ -96,26 +96,31 @@ describe('ElasticsearchService', () => {
     })
   })
   describe('#buildPayloadQuery', () => {
-    it('add any and other fields query_strings', () => {
+    it('should not add fields query_strings if fieldsSearchFilters Object is empty', () => {
       const query = service['buildPayloadQuery'](
         {
-          Org: {
-            world: true,
-          },
           any: 'hello',
         },
-        {}
+        {},
+        ['record-1', 'record-2', 'record-3']
       )
+
       expect(query).toEqual({
         bool: {
-          filter: [],
-          should: [],
-          must: [
+          filter: [
             {
               terms: {
                 isTemplate: ['n'],
               },
             },
+            {
+              ids: {
+                values: ['record-1', 'record-2', 'record-3'],
+              },
+            },
+          ],
+          should: [],
+          must: [
             {
               query_string: {
                 default_operator: 'AND',
@@ -128,11 +133,6 @@ describe('ElasticsearchService', () => {
                   'uuid',
                 ],
                 query: 'hello',
-              },
-            },
-            {
-              query_string: {
-                query: '(Org:"world")',
               },
             },
           ],
@@ -157,14 +157,25 @@ describe('ElasticsearchService', () => {
       )
       expect(query).toEqual({
         bool: {
-          filter: [],
-          should: [],
-          must: [
+          filter: [
             {
               terms: {
                 isTemplate: ['n'],
               },
             },
+            {
+              query_string: {
+                query: 'Org:("world")',
+              },
+            },
+            {
+              ids: {
+                values: ['record-1', 'record-2', 'record-3'],
+              },
+            },
+          ],
+          should: [],
+          must: [
             {
               query_string: {
                 default_operator: 'AND',
@@ -177,16 +188,6 @@ describe('ElasticsearchService', () => {
                   'uuid',
                 ],
                 query: 'hello',
-              },
-            },
-            {
-              query_string: {
-                query: '(Org:"world")',
-              },
-            },
-            {
-              ids: {
-                values: ['record-1', 'record-2', 'record-3'],
               },
             },
           ],
@@ -203,6 +204,10 @@ describe('ElasticsearchService', () => {
         {
           Org: {
             world: true,
+            world2: true,
+          },
+          name: {
+            john: true,
           },
           any: 'hello',
         },
@@ -211,14 +216,25 @@ describe('ElasticsearchService', () => {
       )
       expect(query).toEqual({
         bool: {
-          filter: [],
-          should: [],
-          must: [
+          filter: [
             {
               terms: {
                 isTemplate: ['n'],
               },
             },
+            {
+              query_string: {
+                query: 'Org:("world" OR "world2") AND name:("john")',
+              },
+            },
+            {
+              ids: {
+                values: [],
+              },
+            },
+          ],
+          should: [],
+          must: [
             {
               query_string: {
                 default_operator: 'AND',
@@ -233,14 +249,98 @@ describe('ElasticsearchService', () => {
                 query: 'hello',
               },
             },
+          ],
+          must_not: {
+            terms: {
+              resourceType: ['service', 'map', 'map/static', 'mapDigital'],
+            },
+          },
+        },
+      })
+    })
+    it('handle negative and empty filters', () => {
+      const query = service['buildPayloadQuery'](
+        {
+          Org: {
+            world: false,
+          },
+          name: {},
+          message: '',
+        },
+        {},
+        []
+      )
+      expect(query).toEqual({
+        bool: {
+          filter: [
+            {
+              terms: {
+                isTemplate: ['n'],
+              },
+            },
             {
               query_string: {
-                query: '(Org:"world")',
+                query: 'Org:(-"world")',
               },
             },
             {
               ids: {
                 values: [],
+              },
+            },
+          ],
+          should: [],
+          must: [],
+          must_not: {
+            terms: {
+              resourceType: ['service', 'map', 'map/static', 'mapDigital'],
+            },
+          },
+        },
+      })
+    })
+    it('handle filters expressed as queries', () => {
+      const query = service['buildPayloadQuery'](
+        {
+          Org: 'world AND world2',
+          any: 'hello',
+        },
+        {},
+        []
+      )
+      expect(query).toEqual({
+        bool: {
+          filter: [
+            {
+              terms: {
+                isTemplate: ['n'],
+              },
+            },
+            {
+              query_string: {
+                query: 'Org:(world AND world2)',
+              },
+            },
+            {
+              ids: {
+                values: [],
+              },
+            },
+          ],
+          should: [],
+          must: [
+            {
+              query_string: {
+                default_operator: 'AND',
+                fields: [
+                  'resourceTitleObject.langfre^5',
+                  'tag.langfre^4',
+                  'resourceAbstractObject.langfre^3',
+                  'lineageObject.langfre^2',
+                  'any.langfre',
+                  'uuid',
+                ],
+                query: 'hello',
               },
             },
           ],
@@ -264,7 +364,7 @@ describe('ElasticsearchService', () => {
         )
       })
       it('escapes special char', () => {
-        expect(query.bool.must[1].query_string.query).toEqual(
+        expect(query.bool.must[0].query_string.query).toEqual(
           `scot \\(\\)\\{\\?\\[ \\/ test`
         )
       })
@@ -287,9 +387,7 @@ describe('ElasticsearchService', () => {
       it('adds boosting of 7 for intersecting with it and boosting of 10 on geoms within', () => {
         const query = service['buildPayloadQuery'](
           {
-            Org: {
-              world: true,
-            },
+            Org: 'world',
             any: 'hello',
           },
           {},
@@ -298,13 +396,19 @@ describe('ElasticsearchService', () => {
         )
         expect(query).toEqual({
           bool: {
-            filter: [],
-            must: [
+            filter: [
               {
                 terms: {
                   isTemplate: ['n'],
                 },
               },
+              {
+                query_string: {
+                  query: 'Org:(world)',
+                },
+              },
+            ],
+            must: [
               {
                 query_string: {
                   default_operator: 'AND',
@@ -317,11 +421,6 @@ describe('ElasticsearchService', () => {
                     'uuid',
                   ],
                   query: 'hello',
-                },
-              },
-              {
-                query_string: {
-                  query: '(Org:"world")',
                 },
               },
             ],
@@ -611,6 +710,7 @@ describe('ElasticsearchService', () => {
             filters: {
               filter1: { field1: '100' },
               filter2: { field2: { value1: true, value3: true } },
+              filter3: 'my own query',
             },
           },
           myHistogram: {
@@ -623,14 +723,13 @@ describe('ElasticsearchService', () => {
         myFilters: {
           filters: {
             filter1: {
-              match: {
-                field1: '100',
-              },
+              query_string: { query: 'field1:(100)' },
             },
             filter2: {
-              match: {
-                field2: { value1: true, value3: true },
-              },
+              query_string: { query: 'field2:("value1" OR "value3")' },
+            },
+            filter3: {
+              query_string: { query: 'my own query' },
             },
           },
         },

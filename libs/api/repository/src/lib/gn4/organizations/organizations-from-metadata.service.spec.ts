@@ -270,7 +270,7 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
               size: 0,
               query: {
                 bool: {
-                  must: [{ terms: { isTemplate: ['n'] } }],
+                  must: [],
                   must_not: {
                     terms: {
                       resourceType: [
@@ -282,7 +282,7 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
                     },
                   },
                   should: [],
-                  filter: [],
+                  filter: [{ terms: { isTemplate: ['n'] } }],
                 },
               },
               _source: [],
