@@ -4,7 +4,6 @@ describe('datasets', () => {
   beforeEach(() => {
     cy.clearCookies()
     cy.visit('/search')
-    cy.viewport(1700, 1200)
 
     // aliases
     cy.get('gn-ui-results-list-item').find('a').as('results')

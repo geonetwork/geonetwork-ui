@@ -1,14 +1,8 @@
 import 'cypress-real-events'
 
-const getSortOptions = () => {
-  cy.get('gn-ui-organisations-sort').find('gn-ui-dropdown-selector').click()
-  return cy.get('.cdk-overlay-container').find('[role=listbox]')
-}
-
 describe('organizations', () => {
   beforeEach(() => {
     cy.visit('/home/organisations')
-    cy.viewport(1700, 1200)
 
     // aliases
     cy.get('gn-ui-organisations-sort')

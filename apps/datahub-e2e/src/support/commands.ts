@@ -29,7 +29,7 @@ Cypress.Commands.add('login', () => {
     if (err.message.includes('postMessage')) return false
   })
 
-  cy.visit('/geonetwork/srv/eng/catalog.signin?debug')
+  cy.visit('/geonetwork/srv/eng/catalog.signin?debug&redirect=blargz') // this will point to a 404
   cy.get('#inputUsername').type('admin', { force: true })
   cy.get('#inputPassword').type('admin', { force: true })
   cy.get('[name="gnSigninForm"]').submit()
