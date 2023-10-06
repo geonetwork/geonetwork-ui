@@ -18,4 +18,7 @@ import './commands'
 
 beforeEach(() => {
   cy.viewport(1900, 1400)
+
+  // all tests should show english translations
+  window.localStorage.setItem('geonetwork-ui-language', 'en')
 })
