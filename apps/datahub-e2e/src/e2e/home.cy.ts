@@ -90,10 +90,13 @@ describe('header', () => {
         .find('[data-cy=recordTitle]')
         .invoke('text')
         .as('favoriteTitle')
-      cy.get('@favoriteItem').find('gn-ui-favorite-star').click()
+      cy.get('@favoriteItem').find('gn-ui-favorite-star button').click()
+      cy.wait(100)
 
       // show my favorites only
-      cy.get('datahub-header-badge-button[label$=favorites]').realClick()
+      cy.get('datahub-header-badge-button[label$=favorites] button').click({
+        force: true,
+      })
     })
     it('only shows one record, same as the favorite one', () => {
       cy.get('gn-ui-results-list-item').should('have.length', 1)

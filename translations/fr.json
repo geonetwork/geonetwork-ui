@@ -245,6 +245,7 @@
   "search.filters.license.unknown": "Non-reconnue ou absente",
   "search.filters.maximize": "Agrandir",
   "search.filters.minimize": "Réduire",
+  "search.filters.publicationYear": "Année de publication",
   "search.filters.publisher": "Organisations",
   "search.filters.representationType": "Type de représentation",
   "search.filters.resourceType": "Type de ressource",

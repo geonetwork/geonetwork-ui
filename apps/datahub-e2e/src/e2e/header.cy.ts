@@ -121,18 +121,18 @@ describe('header', () => {
     it('should sort results by latest date', () => {
       cy.get('gn-ui-fuzzy-search').next().find('button').first().click()
       cy.get('gn-ui-record-preview-row').should('not.eq', '@initialList')
-      cy.get('gn-ui-sort-by option:selected').should(
-        'have.value',
-        'desc,createDate'
-      )
+      cy.get('gn-ui-sort-by gn-ui-dropdown-selector')
+        .getActiveDropdownOption()
+        .invoke('attr', 'data-cy-value')
+        .should('equal', 'desc,createDate')
     })
     it('should filter results by popularity', () => {
       cy.get('gn-ui-fuzzy-search').next().find('button').eq(1).click()
       cy.get('gn-ui-record-preview-row').should('not.eq', '@initialList')
-      cy.get('gn-ui-sort-by option:selected').should(
-        'have.value',
-        'desc,userSavedCount'
-      )
+      cy.get('gn-ui-sort-by gn-ui-dropdown-selector')
+        .getActiveDropdownOption()
+        .invoke('attr', 'data-cy-value')
+        .should('equal', 'desc,userSavedCount')
     })
   })
 })

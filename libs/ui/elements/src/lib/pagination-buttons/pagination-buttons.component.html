@@ -4,6 +4,7 @@
       type="light"
       [disabled]="currentPage === 1"
       (buttonClick)="previousPage()"
+      extraClass="!px-[3px]"
     >
       <mat-icon class="material-symbols-outlined">chevron_left</mat-icon>
     </gn-ui-button>
@@ -24,6 +25,7 @@
       type="light"
       [disabled]="currentPage === totalPages"
       (buttonClick)="nextPage()"
+      extraClass="!px-[3px]"
     >
       <mat-icon class="material-symbols-outlined">chevron_right</mat-icon>
     </gn-ui-button>
