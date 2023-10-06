@@ -1,10 +1,13 @@
+:host {
+  --input-height: 3.5em;
+}
 .clear-btn {
-  width: 3.5em;
+  width: var(--input-height);
+  right: var(--input-height);
   height: 100%;
-  right: 3.5em;
 }
 .search-btn {
-  width: 3.5em;
+  width: var(--input-height);
   height: 100%;
   border-left-width: 0.1em;
 }
@@ -15,9 +18,14 @@ mat-icon {
   font-size: 1.5em;
 }
 input {
-  height: 3.5em;
+  height: var(--input-height);
   padding: 1.05em;
+  padding-right: calc(2 * var(--input-height));
 }
+input:placeholder-shown {
+  text-overflow: ellipsis;
+}
+
 .mat-mdc-option.suggestion.mat-mdc-option-active {
   background-color: var(--color-primary-lightest);
 }
