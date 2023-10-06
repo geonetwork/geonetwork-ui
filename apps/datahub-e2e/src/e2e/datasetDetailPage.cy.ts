@@ -1,4 +1,3 @@
-/* eslint-disable cypress/no-unnecessary-waiting */
 import 'cypress-real-events'
 
 describe('dataset pages', () => {
@@ -38,6 +37,13 @@ describe('dataset pages', () => {
       '/geoserver/insee/ows?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=application%2Fjson*',
       {
         fixture: 'insee-rectangles_200m_menage_erbm.json',
+      }
+    )
+    cy.intercept(
+      'GET',
+      '/geoserver/insee/ows?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=csv',
+      {
+        fixture: 'population-millesimee-communes-francaises.csv',
       }
     )
     cy.intercept(
@@ -211,34 +217,33 @@ describe('dataset pages', () => {
       cy.get('gn-ui-record-metadata')
         .find('[id="preview"]')
         .first()
-        .as('prevSection')
+        .as('previewSection')
     })
     describe('display', () => {
       it('should display the tabs', () => {
-        cy.get('@prevSection')
+        cy.get('@previewSection')
           .find('.mat-mdc-tab-labels')
           .children('div')
           .should('have.length', 3)
       })
       it('should display the dataset dropdown with at least 1 option', () => {
-        cy.get('@prevSection')
+        cy.get('@previewSection')
           .find('gn-ui-dropdown-selector')
-          .find('select')
-          .children('option')
+          .openDropdown()
+          .children('button')
           .should('have.length.gt', 1)
       })
       it('should display the map', () => {
-        cy.get('@prevSection').find('gn-ui-map').should('be.visible')
+        cy.get('@previewSection').find('gn-ui-map').should('be.visible')
       })
       it('should display the table', () => {
-        cy.get('@prevSection')
+        cy.get('@previewSection')
           .find('.mat-mdc-tab-labels')
           .children('div')
           .eq(1)
           .click()
-        cy.wait(1000)
-        cy.get('@prevSection').find('gn-ui-table').should('be.visible')
-        cy.get('@prevSection')
+        cy.get('@previewSection').find('gn-ui-table').should('be.visible')
+        cy.get('@previewSection')
           .find('gn-ui-table')
           .find('table')
           .find('tbody')
@@ -246,64 +251,68 @@ describe('dataset pages', () => {
           .should('have.length.gt', 0)
       })
       it('should display the chart & dropdowns', () => {
-        cy.get('@prevSection')
+        cy.get('@previewSection')
           .find('.mat-mdc-tab-labels')
           .children('div')
           .eq(2)
           .click()
-        cy.get('@prevSection').find('gn-ui-chart').should('not.match', ':empty')
-        cy.get('@prevSection')
+        cy.get('@previewSection')
+          .find('gn-ui-chart')
+          .should('not.match', ':empty')
+        cy.get('@previewSection')
           .find('gn-ui-chart-view')
           .find('gn-ui-dropdown-selector')
           .filter(':visible')
           .as('drop')
         cy.get('@drop').should('have.length', 4)
         cy.get('@drop').each((dropdown) => {
-          cy.wrap(dropdown).find('option').should('have.length.greaterThan', 0)
+          cy.wrap(dropdown)
+            .openDropdown()
+            .find('button')
+            .should('have.length.greaterThan', 0)
         })
       })
     })
     describe('features', () => {
       it('MAP : should open a popup on layer click', () => {
-        cy.get('@prevSection').find('canvas').realClick()
+        cy.get('@previewSection').find('canvas').realClick()
         cy.request({
           method: 'GET',
           url: ' https://www.geo2france.fr/geoserver/insee/ows?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&FORMAT=image%2Fpng&TRANSPARENT=true&QUERY_LAYERS=rectangles_200m_menage_erbm&LAYERS=rectangles_200m_menage_erbm&INFO_FORMAT=application%2Fjson&I=249&J=65&WIDTH=296&HEIGHT=296&CRS=EPSG%3A3857&STYLES=&BBOX=-24459.849051256402%2C6237261.508070382%2C337545.9169073383%2C6599267.274028977',
           failOnStatusCode: false,
         })
-        cy.get('@prevSection').find('gn-ui-feature-detail')
+        cy.get('@previewSection').find('gn-ui-feature-detail')
       })
       it('TABLE : should scroll', () => {
-        cy.get('@prevSection')
+        cy.get('@previewSection')
           .find('.mat-mdc-tab-labels')
           .children('div')
           .eq(1)
           .click()
-        cy.get('@prevSection').find('gn-ui-table').find('table').as('table')
+        cy.get('@previewSection').find('gn-ui-table').find('table').as('table')
         cy.get('@table').scrollTo('bottom', { ensureScrollable: false })
 
         cy.get('@table').find('tr:last-child').should('be.visible')
       })
       it('CHART : should change the chart on options change', () => {
-        cy.get('@prevSection')
+        cy.get('@previewSection')
           .find('.mat-mdc-tab-labels')
           .children('div')
           .eq(2)
           .click()
-        cy.get('@prevSection')
+        cy.get('@previewSection')
           .find('gn-ui-chart-view')
           .find('gn-ui-dropdown-selector')
-          .find('select')
           .filter(':visible')
           .as('drop')
-        cy.get('@drop').eq(0).select('pie chart')
-        cy.get('@drop').eq(2).select('men')
-        cy.get('@drop').eq(3).select('average')
-        cy.get('@prevSection')
+        cy.get('@drop').eq(0).selectDropdownOption('pie')
+        cy.get('@drop').eq(2).selectDropdownOption('men')
+        cy.get('@drop').eq(3).selectDropdownOption('average')
+        cy.get('@previewSection')
           .find('gn-ui-chart')
           .invoke('attr', 'ng-reflect-type')
           .should('include', 'pie')
-        cy.get('@prevSection')
+        cy.get('@previewSection')
           .find('gn-ui-chart')
           .invoke('attr', 'ng-reflect-value-property')
           .should('include', 'average(men)')
@@ -368,7 +377,6 @@ describe('dataset pages', () => {
             .find('gn-ui-download-item')
             .first()
             .click()
-          cy.wait(4000)
           cy.exec('ls cypress/downloads').then((result) => {
             const fileList = result.stdout.split('\n')
 
@@ -417,19 +425,14 @@ describe('dataset pages', () => {
           .find('button')
           .first()
           .click({ force: true })
-        // eslint-disable-next-line cypress/unsafe-to-chain-command
-        cy.wait(500)
-          .get('body')
-          .focus()
-          .realClick()
-          .window()
-          .then((win) => {
-            win.navigator.clipboard.readText().then((text) => {
-              expect(text).to.eq(
-                'https://www.geo2france.fr/geoserver/insee/ows'
-              )
-            })
+        // attempt to make the whole page focused
+        cy.get('body').focus()
+        cy.get('body').realClick()
+        cy.window().then((win) => {
+          win.navigator.clipboard.readText().then((text) => {
+            expect(text).to.eq('https://www.geo2france.fr/geoserver/insee/ows')
           })
+        })
       })
       it('goes to dataset on click', () => {
         let targetLink
@@ -458,8 +461,8 @@ describe('record with file distributions', () => {
     cy.get('gn-ui-record-metadata')
       .find('[id="preview"]')
       .first()
-      .as('prevSection')
-    cy.get('@prevSection')
+      .as('previewSection')
+    cy.get('@previewSection')
       .find('.mat-mdc-tab-labels')
       .children('div')
       .eq(1)
@@ -467,12 +470,12 @@ describe('record with file distributions', () => {
   })
 
   it('should display the distributions by priority', () => {
-    cy.get('@prevSection')
+    cy.get('@previewSection')
       .find('gn-ui-dropdown-selector')
       .last()
-      .find('select')
-      .children('option')
-      .then((options) => options.toArray().map((el) => el.text))
+      .openDropdown()
+      .children('button')
+      .then((options) => options.toArray().map((el) => el.innerText.trim()))
       .should('deep.eq', ['csv (csv)', 'json (json)', 'geojson (geojson)'])
   })
 })

@@ -14,6 +14,11 @@ declare namespace Cypress {
   interface Chainable<Subject> {
     login(): void
     clearFavorites(): void
+
+    // interaction with gn-ui-dropdown-selector
+    openDropdown(): Chainable<JQuery<HTMLElement>>
+    selectDropdownOption(value: string): void
+    getActiveDropdownOption(): Chainable<JQuery<HTMLButtonElement>>
   }
 }
 
@@ -64,6 +69,38 @@ Cypress.Commands.add('clearFavorites', () => {
       })
     })
 })
+
+// previous value should be a <gn-ui-dropdown-selector> component
+Cypress.Commands.add(
+  'openDropdown',
+  { prevSubject: true },
+  (dropdownElement) => {
+    cy.get('body').click() // first click on the document to close other dropdowns
+    cy.wrap(dropdownElement).click('right') // click on the right size to avoid the label
+    return cy.get('.cdk-overlay-container').find('[role=listbox]')
+  }
+)
+
+// previous value should be a <gn-ui-dropdown-selector> component
+Cypress.Commands.add(
+  'selectDropdownOption',
+  { prevSubject: true },
+  (dropdownElement, value: string) => {
+    cy.wrap(dropdownElement)
+      .openDropdown()
+      .find(`[data-cy-value="${value}"]`)
+      .click()
+  }
+)
+
+// previous value should be a <gn-ui-dropdown-selector> component
+Cypress.Commands.add(
+  'getActiveDropdownOption',
+  { prevSubject: true },
+  (dropdownElement) => {
+    return cy.wrap(dropdownElement).openDropdown().find(`[data-cy-active]`)
+  }
+)
 
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })

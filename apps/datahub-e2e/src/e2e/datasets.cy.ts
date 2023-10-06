@@ -13,7 +13,7 @@ describe('datasets', () => {
       .then(($results) => $results.length)
       .as('resultsCount')
     cy.get('gn-ui-filter-dropdown').as('filters')
-    cy.get('gn-ui-sort-by').as('sortBy')
+    cy.get('gn-ui-sort-by').find('gn-ui-dropdown-selector').as('sortBy')
     cy.get('[data-cy="addMoreBtn"]').as('addMoreBtn')
   })
 
@@ -46,15 +46,15 @@ describe('datasets', () => {
     })
     it('should sort by relevance initially', () => {
       cy.get('@sortBy')
-        .find('option:checked')
-        .invoke('val')
+        .getActiveDropdownOption()
+        .invoke('attr', 'data-cy-value')
         .should('equal', 'desc,_score')
     })
   })
 
   describe('display of dataset previews', () => {
     it('should display a logo for first and a placeholder for second result', () => {
-      cy.get('@sortBy').find('select').select('desc,createDate') // this makes the order reliable
+      cy.get('@sortBy').selectDropdownOption('desc,createDate') // this makes the order reliable
       cy.get('@firstResult')
         .find('gn-ui-thumbnail')
         .children('div')
@@ -417,7 +417,7 @@ describe('datasets', () => {
   describe('sorting results', () => {
     describe('sort by popularity', () => {
       beforeEach(() => {
-        cy.get('@sortBy').find('select').select('desc,userSavedCount')
+        cy.get('@sortBy').selectDropdownOption('desc,userSavedCount')
         cy.get('@results')
           .find('gn-ui-favorite-star')
           .find('span')
@@ -436,14 +436,14 @@ describe('datasets', () => {
     describe('sort by date', () => {
       beforeEach(() => {
         // first sort by popularity
-        cy.get('@sortBy').find('select').select('desc,userSavedCount')
+        cy.get('@sortBy').selectDropdownOption('desc,userSavedCount')
         cy.get('@results')
           .find('[data-cy="recordTitle"]')
           .then(($titles) =>
             $titles.toArray().map((title) => title.innerText.trim())
           )
           .as('initialResultTitles')
-        cy.get('@sortBy').find('select').select('desc,createDate')
+        cy.get('@sortBy').selectDropdownOption('desc,createDate')
       })
       it('changes the results order', () => {
         cy.get('@initialResultTitles').then((initialResultTitles) => {
