@@ -313,3 +313,12 @@ export class OrganizationSearchField implements AbstractSearchField {
     )
   }
 }
+export class OwnerSearchField extends SimpleSearchField {
+  constructor(injector: Injector) {
+    super('owner', 'asc', injector)
+  }
+
+  getAvailableValues(): Observable<FieldAvailableValue[]> {
+    return of([])
+  }
+}

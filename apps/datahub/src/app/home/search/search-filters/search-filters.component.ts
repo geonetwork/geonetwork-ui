@@ -5,6 +5,7 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core'
+import { AuthService } from '@geonetwork-ui/api/repository/gn4'
 import {
   FieldsService,
   FilterDropdownComponent,
@@ -12,6 +13,8 @@ import {
   SearchService,
 } from '@geonetwork-ui/feature/search'
 import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
+import { Observable, switchMap } from 'rxjs'
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'datahub-search-filters',
@@ -24,14 +27,28 @@ export class SearchFiltersComponent implements OnInit {
   filters: QueryList<FilterDropdownComponent>
   searchConfig: { fieldName: string; title: string }[]
   isOpen = false
+  userId: string
+  myRecordsFilterEnabled$: Observable<boolean> =
+    this.searchFacade.searchFilters$.pipe(
+      switchMap((filters) => {
+        return this.fieldsService.readFieldValuesFromFilters(filters)
+      }),
+      map((fieldValues) =>
+        fieldValues['owner'] && Array.isArray(fieldValues['owner'])
+          ? fieldValues['owner'].length > 0
+          : !!fieldValues['owner']
+      )
+    )
 
   constructor(
     public searchFacade: SearchFacade,
     private searchService: SearchService,
-    private fieldsService: FieldsService
+    private fieldsService: FieldsService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.authService.user$.subscribe((user) => (this.userId = user?.id))
     this.searchConfig = (
       getOptionalSearchConfig().ADVANCED_FILTERS || [
         'publisher',
@@ -68,6 +85,12 @@ export class SearchFiltersComponent implements OnInit {
 
   toggleSpatialFilter(enabled: boolean) {
     this.searchFacade.setSpatialFilterEnabled(enabled)
+  }
+
+  toggleMyRecordsFilter(enabled: boolean) {
+    this.fieldsService
+      .buildFiltersFromFieldValues({ owner: enabled ? this.userId : [] })
+      .subscribe((filters) => this.searchService.updateFilters(filters))
   }
 
   clearFilters() {

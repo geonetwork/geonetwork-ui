@@ -40,4 +40,8 @@ export class SearchService implements SearchServiceI {
   setPage(page: number): void {
     this.facade.paginate(page)
   }
+
+  resetSearch(): void {
+    this.facade.resetSearch()
+  }
 }

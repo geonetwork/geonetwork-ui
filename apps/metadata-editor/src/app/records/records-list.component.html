@@ -1,6 +1,15 @@
 <main class="grow bg-gray-100 p-12 flex flex-col justify-between gap-12">
   <div class="flex justify-center gap-8 items-baseline">
     <h1 class="text-[56px] font-title grow">{{ title }}</h1>
+    <a
+      class="text-[30px] hover:underline"
+      *ngIf="linkToDatahub"
+      [href]="linkToDatahub"
+      target="_blank"
+    >
+      {{ searchFacade.resultsHits$ | async }}
+      <span>{{ 'record.metadata.publications' | translate }}</span>
+    </a>
   </div>
   <div
     class="shadow rounded bg-white grow"
