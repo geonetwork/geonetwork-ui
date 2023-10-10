@@ -3,12 +3,10 @@ import 'cypress-real-events'
 describe('organizations', () => {
   beforeEach(() => {
     cy.visit('/home/organisations')
-    cy.viewport(1700, 1200)
 
     // aliases
     cy.get('gn-ui-organisations-sort')
       .find('gn-ui-dropdown-selector')
-      .find('select')
       .as('sort')
     cy.get('gn-ui-pagination').children('div').as('pagination')
     cy.get('gn-ui-organisations')
@@ -35,7 +33,7 @@ describe('organizations', () => {
     })
     it('should display the welcome panel', () => {
       cy.get('gn-ui-organisations-sort').should('be.visible')
-      cy.get('@sort').children('option').should('have.length', 4)
+      cy.get('@sort').openDropdown().children('button').should('have.length', 4)
     })
     it('should display organizations with thumbnail, title and description', () => {
       cy.get('@organizations').find('gn-ui-thumbnail').should('be.visible')
@@ -93,28 +91,28 @@ describe('organizations', () => {
     }
 
     it('should order the list alphabetically (asc)', () => {
-      cy.get('@sort').select('asc,name')
+      cy.get('@sort').selectDropdownOption('asc,name')
       cy.get('@organizationsName').then(($orgsName) => {
         const orderedNames = getInnerTexts($orgsName)
         expect(orderedNames).to.eql(orderBy(orderedNames, 1))
       })
     })
     it('should order the list alphabetically (desc)', () => {
-      cy.get('@sort').select('desc,name')
+      cy.get('@sort').selectDropdownOption('desc,name')
       cy.get('@organizationsName').then(($orgsName) => {
         const orderedNames = getInnerTexts($orgsName)
         expect(orderedNames).to.eql(orderBy(orderedNames, -1))
       })
     })
     it('should order the list by dataset count (asc)', () => {
-      cy.get('@sort').select('asc,recordCount')
+      cy.get('@sort').selectDropdownOption('asc,recordCount')
       cy.get('@organizationsRecordsCount').then(($orgsRecordsCount) => {
         const orderedCounts = getInnerTexts($orgsRecordsCount)
         expect(orderedCounts).to.eql(orderBy(orderedCounts, 1))
       })
     })
     it('should order the list by dataset count (desc)', () => {
-      cy.get('@sort').select('desc,recordCount')
+      cy.get('@sort').selectDropdownOption('desc,recordCount')
       cy.get('@organizationsRecordsCount').then(($orgsRecordsCount) => {
         const orderedCounts = getInnerTexts($orgsRecordsCount)
         expect(orderedCounts).to.eql(orderBy(orderedCounts, -1))

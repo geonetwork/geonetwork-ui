@@ -64,6 +64,8 @@
       "
       (click)="onSelectValue(choice)"
       (keydown)="selectIfEnter($event, choice)"
+      [attr.data-cy-value]="choice.value.toString()"
+      [attr.data-cy-active]="isSelected(choice) ? 'true' : undefined"
     >
       <span class="text-[14px]">
         {{ choice.label | translate }}

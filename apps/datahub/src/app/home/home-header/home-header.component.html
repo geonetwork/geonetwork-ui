@@ -4,6 +4,7 @@
   >
     <div
       class="py-8 relative z-40 mb-[184px] sm:mb-0"
+      [ngClass]="{ 'pointer-events-none': expandRatio < 0.2 }"
       [style.transform]="'translate(0, ' + (1 - expandRatio) * 242 + 'px)'"
     >
       <div
@@ -14,7 +15,7 @@
         [innerHTML]="'datahub.header.title.html' | translate"
       ></div>
       <gn-ui-fuzzy-search
-        class="text-[18px]"
+        class="text-[18px] pointer-events-auto"
         (itemSelected)="onFuzzySearchSelection($event)"
       ></gn-ui-fuzzy-search>
       <div class="flex h-0 py-5 gap-3" [style.opacity]="-0.6 + expandRatio * 2">
