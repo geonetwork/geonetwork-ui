@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - main
+      - develop
   release:
     types: [published]
   issue_comment:
@@ -20,7 +21,7 @@ concurrency:
 env:
   NODE_VERSION: 18.16.1
   # a list of apps to build and publish on releases
-  APP_NAMES: datafeeder,datahub
+  APP_NAMES: datafeeder,datahub,metadata-editor
 
 jobs:
   checks:
