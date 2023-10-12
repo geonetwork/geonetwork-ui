@@ -1,0 +1,18 @@
+/*
+  this computes the space outside of the main column when using `container-lg px-4`
+  FIXME: this component is dependant on the datahub context and should be in the app instead
+*/
+:host {
+  --container-outside-width: calc(50vw - 1024px / 2);
+}
+@media (max-width: 1024px) {
+  :host {
+    --container-outside-width: 1rem;
+  }
+}
+
+gn-ui-carousel {
+  display: block;
+  margin-left: calc(-1 * var(--container-outside-width));
+  margin-right: calc(-1 * var(--container-outside-width));
+}
