@@ -1,0 +1,7 @@
+.record-table-col {
+  @apply px-5 py-3 items-center truncate;
+}
+
+.record-table-header {
+  @apply record-table-col capitalize;
+}

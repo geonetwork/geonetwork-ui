@@ -1,2 +1,8 @@
-<md-editor-records-list [title]="'dashboard.records.myOrg' | translate">
+<md-editor-records-list
+  [logo]="orgData?.logoUrl"
+  [title]="orgData?.orgName"
+  [recordCount]="orgData?.recordCount"
+  [userCount]="orgData?.userCount"
+  [linkToDatahub]="getDatahubUrl()"
+>
 </md-editor-records-list>

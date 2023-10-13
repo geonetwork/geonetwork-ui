@@ -1,108 +1,164 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MyOrgRecordsComponent } from './my-org-records.component'
-import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
-import { Component, importProvidersFrom } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
-import { RecordsListComponent } from '../records-list.component'
-import {
-  FILTERS_AGGREGATION,
-  USER_FIXTURE,
-} from '@geonetwork-ui/common/fixtures'
 import { BehaviorSubject, of } from 'rxjs'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { MyOrgService } from '@geonetwork-ui/feature/catalog'
+import {
+  ORGANISATIONS_FIXTURE,
+  USER_FIXTURE_ANON,
+  USERS_FIXTURE,
+} from '@geonetwork-ui/common/fixtures'
 import { AuthService } from '@geonetwork-ui/api/repository/gn4'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { EditorRouterService } from '../../router.service'
 
-const user = USER_FIXTURE()
-const filters = FILTERS_AGGREGATION
-
-class AuthServiceMock {
-  user$ = new BehaviorSubject(user)
-  authReady = jest.fn(() => this._authSubject$)
-  _authSubject$ = new BehaviorSubject({})
+const orgDataMock = {
+  orgName: 'wizard-org',
+  logoUrl: 'https://my-geonetwork.org/logo11.png',
+  recordCount: 10,
+  userCount: 3,
+  userList: [
+    {
+      id: '161',
+      profile: 'Administrator',
+      username: 'ghost16',
+      name: 'Ghost',
+      surname: 'Old',
+      email: 'old.ghost@wiz.fr',
+      organisation: 'wizard-org',
+      profileIcon:
+        'https://www.gravatar.com/avatar/dbdffd183622800bcf8587328daf43a6?d=mp',
+    },
+    {
+      id: '3',
+      profile: 'Editor',
+      username: 'voldy63',
+      name: 'Lord',
+      surname: 'Voldemort',
+      email: 'lord.voldy@wiz.com',
+      organisation: 'wizard-org',
+    },
+    {
+      id: '4',
+      profile: 'Editor',
+      username: 'al.dumble98',
+      name: 'Albus',
+      surname: 'Dumbledore',
+      email: 'albus.dumble@wiz.com',
+      organisation: 'wizard-org',
+    },
+  ],
 }
-class OrganisationsServiceMock {
-  getFiltersForOrgs = jest.fn(() => new BehaviorSubject(filters))
-  organisationsCount$ = of(456)
+
+const myOrgServiceMock = {
+  myOrgData$: of(orgDataMock),
 }
 
-class searchServiceMock {
-  updateSearchFilters = jest.fn()
-  setSearch = jest.fn()
-  setSortBy = jest.fn()
-  setSortAndFilters = jest.fn()
+const user = USER_FIXTURE_ANON()
+const allUsers = USERS_FIXTURE()
+
+const authServiceMock = {
+  user$: new BehaviorSubject(user),
+  allUsers$: new BehaviorSubject(allUsers),
 }
 
-class SearchFacadeMock {
-  resetSearch = jest.fn()
-  setFilters = jest.fn()
+const organisationsServiceMock = {
+  organisations$: of(ORGANISATIONS_FIXTURE),
 }
 
-@Component({
-  // eslint-disable-next-line
-  selector: 'md-editor-records-list',
-  template: '',
-  standalone: true,
-})
-export class MockRecordsListComponent {}
+const searchFacadeMock = {
+  resetSearch: jest.fn(),
+}
+
+const routeServiceMock = {
+  getDatahubSearchRoute: jest.fn(),
+}
 
 describe('MyOrgRecordsComponent', () => {
   let component: MyOrgRecordsComponent
-  let fixture: ComponentFixture<MyOrgRecordsComponent>
   let searchFacade: SearchFacade
-  let orgService: OrganizationsServiceInterface
+  let myOrgService: MyOrgService
+  let authService: AuthService
+  let orgServiceInterface: OrganizationsServiceInterface
+  let routerService: EditorRouterService
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        importProvidersFrom(TranslateModule.forRoot()),
-        {
-          provide: SearchFacade,
-          useClass: SearchFacadeMock,
-        },
-        { provide: AuthService, useClass: AuthServiceMock },
-        {
-          provide: OrganizationsServiceInterface,
-          useClass: OrganisationsServiceMock,
-        },
-        {
-          provide: SearchFacade,
-          useClass: SearchFacadeMock,
-        },
-        {
-          provide: SearchService,
-          useClass: searchServiceMock,
-        },
-      ],
-    }).overrideComponent(MyOrgRecordsComponent, {
-      remove: {
-        imports: [RecordsListComponent],
-      },
-      add: {
-        imports: [MockRecordsListComponent],
-      },
-    })
-    searchFacade = TestBed.inject(SearchFacade)
-    orgService = TestBed.inject(OrganizationsServiceInterface)
-    fixture = TestBed.createComponent(MyOrgRecordsComponent)
-    component = fixture.componentInstance
-    fixture.detectChanges()
+    orgServiceInterface = organisationsServiceMock as any
+    myOrgService = myOrgServiceMock as any
+    authService = authServiceMock as any
+    searchFacade = searchFacadeMock as any
+    routerService = routeServiceMock as any
+
+    component = new MyOrgRecordsComponent(
+      myOrgService,
+      searchFacade,
+      orgServiceInterface,
+      routerService
+    )
   })
 
   it('should create', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('filters', () => {
-    it('clears filters on init', () => {
-      expect(searchFacade.resetSearch).toHaveBeenCalled()
+  describe('Get organization users info', () => {
+    it('should get the org name', () => {
+      expect(component.orgData.orgName).toEqual('wizard-org')
     })
-    it('filters by user organisation on init', () => {
-      expect(orgService.getFiltersForOrgs).toHaveBeenCalledWith([
+
+    it('should get the org logo', () => {
+      expect(component.orgData.logoUrl).toEqual(
+        'https://my-geonetwork.org/logo11.png'
+      )
+    })
+
+    it('should get the list of users', () => {
+      expect(component.orgData.userList).toEqual([
         {
-          name: user.organisation,
+          id: '161',
+          profile: 'Administrator',
+          username: 'ghost16',
+          name: 'Ghost',
+          surname: 'Old',
+          email: 'old.ghost@wiz.fr',
+          organisation: 'wizard-org',
+          profileIcon:
+            'https://www.gravatar.com/avatar/dbdffd183622800bcf8587328daf43a6?d=mp',
+        },
+        {
+          id: '3',
+          profile: 'Editor',
+          username: 'voldy63',
+          name: 'Lord',
+          surname: 'Voldemort',
+          email: 'lord.voldy@wiz.com',
+          organisation: 'wizard-org',
+        },
+        {
+          id: '4',
+          profile: 'Editor',
+          username: 'al.dumble98',
+          name: 'Albus',
+          surname: 'Dumbledore',
+          email: 'albus.dumble@wiz.com',
+          organisation: 'wizard-org',
         },
       ])
-      expect(searchFacade.setFilters).toHaveBeenCalledWith(filters)
     })
+  })
+  it('should generate the correct Datahub URL', () => {
+    // Mock the router method and set orgData
+    component.router.getDatahubSearchRoute = () => 'http://example.com'
+    component.orgData = {
+      orgName: 'TestOrg',
+      logoUrl: '',
+      recordCount: 5,
+      userCount: 3,
+      userList: [],
+    }
+
+    const datahubUrl = component.getDatahubUrl()
+
+    // Assert that the generated URL contains the orgName
+    expect(datahubUrl).toContain('publisher=TestOrg')
   })
 })
