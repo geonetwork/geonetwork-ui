@@ -14,7 +14,7 @@ import { SortByField } from '@geonetwork-ui/common/domain/search'
   styleUrls: ['./record-table.component.css'],
 })
 export class RecordTableComponent {
-  @Input() records: CatalogRecord[] = []
+  @Input() records: any[] = []
   @Input() totalHits?: number
   @Input() sortBy?: SortByField
   @Output() recordSelect = new EventEmitter<CatalogRecord>()

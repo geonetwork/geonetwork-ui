@@ -2,11 +2,12 @@ import { Component, OnDestroy } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 import { RecordsListComponent } from '../records-list.component'
+import { MyOrgService } from '@geonetwork-ui/feature/catalog'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { Organization } from '@geonetwork-ui/common/domain/record'
-import { Subscription } from 'rxjs'
-import { AuthService } from '@geonetwork-ui/api/repository/gn4'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { UserApiModel } from '@geonetwork-ui/data-access/gn4'
+import { EditorRouterService } from '../../router.service'
 
 @Component({
   selector: 'md-editor-my-org-records',
@@ -16,29 +17,48 @@ import { AuthService } from '@geonetwork-ui/api/repository/gn4'
   imports: [CommonModule, TranslateModule, RecordsListComponent],
 })
 export class MyOrgRecordsComponent implements OnDestroy {
-  subscriptionAuthService: Subscription
-  subscriptionOrgService: Subscription
+  orgData: {
+    orgName: string
+    logoUrl: string
+    recordCount: number
+    userCount: number
+    userList: UserApiModel[]
+  }
+
+  public myOrgDataSubscription
 
   constructor(
+    private myOrgRecordsService: MyOrgService,
     public searchFacade: SearchFacade,
-    private authService: AuthService,
-    private orgService: OrganizationsServiceInterface
+    public orgService: OrganizationsServiceInterface,
+    public router: EditorRouterService
   ) {
     this.searchFacade.resetSearch()
-
-    this.subscriptionAuthService = this.authService.user$.subscribe((user) => {
-      this.searchByOrganisation({ name: user?.organisation })
-    })
+    this.myOrgDataSubscription = this.myOrgRecordsService.myOrgData$.subscribe(
+      (data) => {
+        this.orgData = data
+        this.searchByOrganisation({ name: data.orgName })
+      }
+    )
   }
 
   searchByOrganisation(organisation: Organization) {
-    this.subscriptionOrgService = this.orgService
+    this.orgService
       .getFiltersForOrgs([organisation])
       .subscribe((filters) => this.searchFacade.setFilters(filters))
   }
 
-  ngOnDestroy(): void {
-    this.subscriptionAuthService.unsubscribe()
-    this.subscriptionOrgService.unsubscribe()
+  getDatahubUrl(): string {
+    const url = new URL(
+      this.router.getDatahubSearchRoute(),
+      window.location.toString()
+    )
+
+    url.searchParams.append('publisher', this.orgData?.orgName)
+    return url.toString()
+  }
+
+  ngOnDestroy() {
+    this.myOrgDataSubscription.unsubscribe()
   }
 }

@@ -148,7 +148,7 @@ describe('OrganisationsComponent', () => {
           expect(
             orgPreviewComponents[orgPreviewComponents.length - 1].organisation
               .name
-          ).toEqual('J Data Org')
+          ).toEqual('wizard-org')
         })
       })
     })

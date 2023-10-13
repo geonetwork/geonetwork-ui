@@ -36,6 +36,10 @@ const includes = [
 })
 export class RecordsListComponent {
   @Input() title: string
+  @Input() logo: string
+  @Input() recordCount: number
+  @Input() userCount: number
+  @Input() users
   @Input() linkToDatahub?: string
 
   constructor(
@@ -44,6 +48,10 @@ export class RecordsListComponent {
     public searchService: SearchService
   ) {
     this.searchFacade.setPageSize(15).setConfigRequestFields(includes)
+  }
+
+  getRecords() {
+    return this.users ? this.users : this.searchFacade.results$
   }
 
   paginate(page: number) {
@@ -59,5 +67,9 @@ export class RecordsListComponent {
 
   setSortBy(newSortBy: SortByField) {
     this.searchService.setSortBy(newSortBy)
+  }
+
+  showUsers() {
+    this.router.navigate(['/users/my-org'])
   }
 }
