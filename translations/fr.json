@@ -168,7 +168,7 @@
   "map.loading.data": "Chargement des données...",
   "map.navigation.message": "Veuillez utiliser CTRL + souris (ou deux doigts sur mobile) pour naviguer sur la carte",
   "map.select.layer": "Source de données",
-  "multiselect.filter.placeholder": "",
+  "multiselect.filter.placeholder": "Rechercher une donnée...",
   "nav.back": "Retour",
   "next": "suivant",
   "organisation.sort.intro": "Retrouvez sur cette page l'ensemble des fournisseurs de données de la plateforme.",

@@ -225,7 +225,7 @@
   "search.error.couldNotReachApi": "Die API konnte nicht erreicht werden",
   "search.error.receivedError": "Ein Fehler wurde empfangen",
   "search.error.recordNotFound": "Der Datensatz mit der Kennung \"{ id }\" konnte nicht gefunden werden.",
-  "search.field.any.placeholder": "",
+  "search.field.any.placeholder": "Suche nach Datensätzen ...",
   "search.field.sortBy": "Sortieren nach:",
   "search.filters.clear": "Zurücksetzen",
   "search.filters.format": "Formate",
