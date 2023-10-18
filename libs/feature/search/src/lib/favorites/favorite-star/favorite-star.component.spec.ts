@@ -25,7 +25,7 @@ class FavoritesServiceMock {
 
 class TranslateServiceMock {
   currentLang = 'fr'
-  instant = jest.fn(() => 'You can log in here')
+  get = jest.fn(() => of('You can log in here'))
 }
 
 describe('FavoriteStarComponent', () => {

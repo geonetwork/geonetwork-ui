@@ -8,11 +8,11 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core'
-import { map, pairwise } from 'rxjs/operators'
+import { map, pairwise, withLatestFrom } from 'rxjs/operators'
 import tippy from 'tippy.js'
 import { TranslateService } from '@ngx-translate/core'
 import { StarToggleComponent } from '@geonetwork-ui/ui/inputs'
-import { Subscription } from 'rxjs'
+import { Observable, Subscription } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 import {
   AuthService,
@@ -44,7 +44,7 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   favoriteCount: number | null
   loading = false
   loginUrl = this.authService.loginUrl
-  loginMessage = this.translateService.instant(
+  loginMessage$: Observable<string> = this.translateService.get(
     'favorite.not.authenticated.tooltip',
     {
       link: this.loginUrl,
@@ -67,18 +67,20 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   ) {}
 
   ngAfterViewInit(): void {
-    this.subscription = this.isAnonymous$.subscribe((anonymous) => {
-      if (anonymous) {
-        tippy(this.starToggleRef.nativeElement, {
-          appendTo: () => document.body,
-          content: this.loginMessage,
-          allowHTML: true,
-          interactive: true,
-          zIndex: 40,
-          maxWidth: 250,
-        })
-      }
-    })
+    this.subscription = this.isAnonymous$
+      .pipe(withLatestFrom(this.loginMessage$))
+      .subscribe(([anonymous, loginMessage]) => {
+        if (anonymous) {
+          tippy(this.starToggleRef.nativeElement, {
+            appendTo: () => document.body,
+            content: loginMessage,
+            allowHTML: true,
+            interactive: true,
+            zIndex: 40,
+            maxWidth: 250,
+          })
+        }
+      })
     this.countSubscription = this.favoritesService.myFavoritesUuid$
       .pipe(pairwise())
       .subscribe(([oldFavs, newFavs]) => {
