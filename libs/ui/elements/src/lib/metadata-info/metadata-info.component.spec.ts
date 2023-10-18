@@ -22,6 +22,7 @@ describe('MetadataInfoComponent', () => {
       component = fixture.componentInstance
       component.metadata = {
         ...DATASET_RECORDS[0],
+        abstract: null,
         useLimitations: null,
         accessConstraints: null,
         extras: {
@@ -40,6 +41,11 @@ describe('MetadataInfoComponent', () => {
         fixture.nativeElement.querySelector('ng-container')
       expect(displayedElement).toBeFalsy()
     })
+    it('should not display the abstract section', () => {
+      const displayedElement =
+        fixture.nativeElement.querySelector('.md-description')
+      expect(displayedElement).toBeFalsy()
+    })
   })
 
   describe('When a section is not empty', () => {
@@ -53,7 +59,6 @@ describe('MetadataInfoComponent', () => {
       const displayedElement = fixture.nativeElement.querySelector('.noUsage')
       expect(displayedElement).toBeFalsy()
     })
-
     it('should display the keywords section', () => {
       // Use waitForAsync to handle asynchronous changes in the DOM.
       fixture.whenStable().then(() => {
@@ -61,6 +66,11 @@ describe('MetadataInfoComponent', () => {
           fixture.nativeElement.querySelector('ng-container')
         expect(displayedElement).toBeTruthy()
       })
+    })
+    it('should display the abstract section', () => {
+      const displayedElement =
+        fixture.nativeElement.querySelector('.md-description')
+      expect(displayedElement).toBeTruthy()
     })
   })
 })

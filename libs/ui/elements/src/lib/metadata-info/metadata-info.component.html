@@ -4,7 +4,7 @@
 >
   record.metadata.about
 </p>
-<div class="mb-6 md-description sm:mb-4 sm:pr-16">
+<div class="mb-6 md-description sm:mb-4 sm:pr-16" *ngIf="metadata.abstract">
   <gn-ui-content-ghost ghostClass="h-32" [showContent]="fieldReady('abstract')">
     <p
       class="whitespace-pre-line break-words"
