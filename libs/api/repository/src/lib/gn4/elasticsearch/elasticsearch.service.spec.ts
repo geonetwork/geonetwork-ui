@@ -1,13 +1,18 @@
 import { ElasticsearchService } from './elasticsearch.service'
 import { ES_FIXTURE_AGGS_RESPONSE } from '@geonetwork-ui/common/fixtures'
-import { EsSearchParams } from '../types/elasticsearch.model'
+import { LangService } from '@geonetwork-ui/util/i18n'
+import { EsSearchParams } from '@geonetwork-ui/api/metadata-converter'
+
+const langServiceMock = {
+  iso3: 'eng',
+} as LangService
 
 describe('ElasticsearchService', () => {
   let service: ElasticsearchService
   let searchFilters
 
   beforeEach(() => {
-    service = new ElasticsearchService('fre')
+    service = new ElasticsearchService(langServiceMock, 'fre')
   })
 
   it('should be created', () => {
@@ -352,6 +357,47 @@ describe('ElasticsearchService', () => {
             ],
           },
         })
+      })
+    })
+  })
+
+  describe('#injectLangInQueryStringFields - Search language', () => {
+    const queryStringFields = ['resourceTitleObject.${searchLang}']
+    describe('When no lang from config', () => {
+      beforeEach(() => {
+        service['metadataLang'] = undefined
+      })
+      it('use * wildcard', () => {
+        expect(
+          service['injectLangInQueryStringFields'](queryStringFields)[0].split(
+            '.'
+          )[1]
+        ).toEqual('*')
+      })
+    })
+    describe('When one lang in config', () => {
+      beforeEach(() => {
+        service['metadataLang'] = 'fre'
+      })
+      it('search in the config language', () => {
+        expect(
+          service['injectLangInQueryStringFields'](queryStringFields)[0].split(
+            '.'
+          )[1]
+        ).toEqual('langfre')
+      })
+    })
+    describe('When "current" language from config"', () => {
+      beforeEach(() => {
+        service['metadataLang'] = 'current'
+        service['lang3'] = 'eng'
+      })
+      it('search in the UI language', () => {
+        expect(
+          service['injectLangInQueryStringFields'](queryStringFields)[0].split(
+            '.'
+          )[1]
+        ).toEqual('langeng')
       })
     })
   })

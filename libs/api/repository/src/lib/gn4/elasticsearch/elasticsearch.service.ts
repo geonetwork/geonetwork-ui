@@ -19,6 +19,7 @@ import {
   SortParams,
   TermsAggregationResult,
 } from '@geonetwork-ui/api/metadata-converter'
+import { LangService } from '@geonetwork-ui/util/i18n'
 
 @Injectable({
   providedIn: 'root',
@@ -27,8 +28,10 @@ export class ElasticsearchService {
   // runtime fields are computed using a Painless script
   // see: https://www.elastic.co/guide/en/elasticsearch/reference/current/runtime-mapping-fields.html
   private runtimeFields: Record<string, string> = {}
+  private lang3 = this.langService.iso3
 
   constructor(
+    private langService: LangService,
     @Optional() @Inject(METADATA_LANGUAGE) private metadataLang: string
   ) {}
 
@@ -167,11 +170,12 @@ export class ElasticsearchService {
     return fields.map((field) => ({ [field[1]]: field[0] }))
   }
 
-  private injectLangInQueryStringFields(
-    queryStringFields: string[],
-    lang: string
-  ) {
-    const queryLang = lang ? `lang${lang}` : `*`
+  private injectLangInQueryStringFields(queryStringFields: string[]) {
+    const queryLang = this.metadataLang
+      ? this.metadataLang === 'current'
+        ? `lang${this.lang3}`
+        : `lang${this.metadataLang}`
+      : `*`
     return queryStringFields.map((field) => {
       return field.replace(/\$\{searchLang\}/g, queryLang)
     })
@@ -203,10 +207,7 @@ export class ElasticsearchService {
         query_string: {
           query: this.escapeSpecialCharacters(any),
           default_operator: 'AND',
-          fields: this.injectLangInQueryStringFields(
-            ES_QUERY_STRING_FIELDS,
-            this.metadataLang
-          ),
+          fields: this.injectLangInQueryStringFields(ES_QUERY_STRING_FIELDS),
         },
       })
     }
@@ -290,15 +291,12 @@ export class ElasticsearchService {
               multi_match: {
                 query,
                 type: 'bool_prefix',
-                fields: this.injectLangInQueryStringFields(
-                  [
-                    'resourceTitleObject.${searchLang}',
-                    'resourceAbstractObject.${searchLang}',
-                    'tag',
-                    'resourceIdentifier',
-                  ],
-                  this.metadataLang
-                ),
+                fields: this.injectLangInQueryStringFields([
+                  'resourceTitleObject.${searchLang}',
+                  'resourceAbstractObject.${searchLang}',
+                  'tag',
+                  'resourceIdentifier',
+                ]),
               },
             },
           ],
