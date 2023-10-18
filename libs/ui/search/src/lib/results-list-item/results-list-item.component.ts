@@ -52,7 +52,8 @@ export class ResultsListItemComponent implements OnChanges, AfterViewInit {
     this.cardRef.clear()
     const componentFactory =
       this.cardRef.createComponent<RecordPreviewComponent>(resolver)
-    componentFactory.instance.metadataQualityDisplay = this.metadataQualityDisplay
+    componentFactory.instance.metadataQualityDisplay =
+      this.metadataQualityDisplay
     componentFactory.instance.record = this.record
     componentFactory.instance.favoriteTemplate = this.favoriteTemplate
     componentFactory.instance.mdSelect.subscribe((record) =>

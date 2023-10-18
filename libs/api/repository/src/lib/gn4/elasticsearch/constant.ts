@@ -18,7 +18,7 @@ export const ES_SOURCE_SUMMARY = [
   'cl_maintenanceAndUpdateFrequency',
   'tag',
   'MD_LegalConstraintsUseLimitationObject',
-  'qualityScore'
+  'qualityScore',
 ]
 
 export const ES_QUERY_STRING_FIELDS = [
