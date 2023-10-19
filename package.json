@@ -159,7 +159,7 @@
     "ngrx-store-freeze": "^0.2.4",
     "nx": "16.6.0",
     "nx-cloud": "16.2.0",
-    "postcss": "^8.4.19",
+    "postcss": "^8.4.31",
     "prettier": "2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
