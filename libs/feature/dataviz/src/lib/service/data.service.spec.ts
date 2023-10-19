@@ -593,11 +593,22 @@ describe('DataService', () => {
       it('builds a proxied url', () => {
         expect(
           service.getDownloadUrlFromEsriRest(
-            'http://esri.rest/local/',
+            'http://esri.rest/local',
             'geojson'
           )
         ).toBe(
-          'http://proxy.local/?url=http%3A%2F%2Fesri.rest%2Flocal%2F%2Fquery%3Ff%3Dgeojson%26where%3D1%3D1%26outFields%3D*'
+          'http://proxy.local/?url=http%3A%2F%2Fesri.rest%2Flocal%2Fquery%3Ff%3Dgeojson%26where%3D1%3D1%26outFields%3D*'
+        )
+      })
+      it('calls DataFetcher.openDataset with a proxied url', () => {
+        service.getDataset({
+          url: new URL('http://esri.rest/local'),
+          accessServiceProtocol: 'esriRest',
+          type: 'service',
+        })
+        expect(openDataset).toHaveBeenCalledWith(
+          'http://proxy.local/?url=http%3A%2F%2Fesri.rest%2Flocal%2Fquery%3Ff%3Dgeojson%26where%3D1%3D1%26outFields%3D*',
+          'geojson'
         )
       })
     })
