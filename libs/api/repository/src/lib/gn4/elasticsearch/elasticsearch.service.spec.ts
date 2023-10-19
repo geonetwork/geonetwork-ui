@@ -362,7 +362,7 @@ describe('ElasticsearchService', () => {
   })
 
   describe('#injectLangInQueryStringFields - Search language', () => {
-    const queryStringFields = ['resourceTitleObject.${searchLang}']
+    let queryStringFields = ['resourceTitleObject.${searchLang}']
     describe('When no lang from config', () => {
       beforeEach(() => {
         service['metadataLang'] = undefined
@@ -398,6 +398,31 @@ describe('ElasticsearchService', () => {
             '.'
           )[1]
         ).toEqual('langeng')
+      })
+      it('add * fallback with low priority', () => {
+        queryStringFields = [
+          'resourceTitleObject.${searchLang}^5',
+          'tag.${searchLang}^4',
+          'resourceAbstractObject.${searchLang}^3',
+          'lineageObject.${searchLang}^2',
+          'any.${searchLang}',
+          'uuid',
+        ]
+        expect(
+          service['injectLangInQueryStringFields'](queryStringFields)
+        ).toEqual([
+          'resourceTitleObject.langeng^5',
+          'tag.langeng^4',
+          'resourceAbstractObject.langeng^3',
+          'lineageObject.langeng^2',
+          'any.langeng',
+          'uuid',
+          'resourceTitleObject.*',
+          'tag.*',
+          'resourceAbstractObject.*',
+          'lineageObject.*',
+          'any.*',
+        ])
       })
     })
   })

@@ -171,14 +171,30 @@ export class ElasticsearchService {
   }
 
   private injectLangInQueryStringFields(queryStringFields: string[]) {
-    const queryLang = this.metadataLang
-      ? this.metadataLang === 'current'
+    const queryLang = this.getQueryLang()
+    return [
+      ...queryStringFields.map((field) => {
+        return field.replace(/\$\{searchLang\}/g, queryLang)
+      }),
+      ...(this.isCurrentSearchLang()
+        ? queryStringFields
+            .filter((field) => /\$\{searchLang\}/.test(field))
+            .map((field) => {
+              return field.replace(/\.\$\{searchLang\}(\^\d+)?/, '.*')
+            })
+        : []),
+    ]
+  }
+
+  private getQueryLang(): string {
+    return this.metadataLang
+      ? this.isCurrentSearchLang()
         ? `lang${this.lang3}`
         : `lang${this.metadataLang}`
       : `*`
-    return queryStringFields.map((field) => {
-      return field.replace(/\$\{searchLang\}/g, queryLang)
-    })
+  }
+  private isCurrentSearchLang() {
+    return this.metadataLang === 'current'
   }
 
   private buildPayloadQuery(
