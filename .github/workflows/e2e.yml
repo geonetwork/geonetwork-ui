@@ -1,0 +1,24 @@
+name: End-to-end tests
+on: push
+
+env:
+  # a list of apps to build and publish on releases
+  APP_NAMES: datahub-e2e,metadata-editor-e2e
+
+jobs:
+  cypress-run:
+    name: Cypress test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the backend
+        run: sudo docker-compose -f support-services/docker-compose.yml up -d init
+
+      - name: install dependencies and verify Cypress
+        run: |
+          npm ci
+
+      - name: Cypress tests
+        run: npx nx run-many --projects=${{ env.APP_NAMES }} --target=e2e
+
