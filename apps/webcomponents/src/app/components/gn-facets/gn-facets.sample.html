@@ -41,14 +41,14 @@
       <div style="display: flex">
         <div style="width: 320px; shrink: 0; margin: 20px">
           <gn-facets
-            api-url="https://apps.titellus.net/geonetwork/srv/api"
+            api-url="https://dev.geo2france.fr/geonetwork/srv/api"
             facet-config='{"tag.default":{"terms":{"field":"tag.default","include":".*","size": 10}}}'
           ></gn-facets>
         </div>
         <div style="grow: 1; margin: 20px">
           <gn-results-list
-            api-url="https://sdi.eea.europa.eu/catalogue/eea/api"
-            catalog-url="https://sdi.eea.europa.eu/catalogue/eea/fre/catalog.search#/metadata/{uuid}"
+            api-url="https://dev.geo2france.fr/geonetwork/srv/api"
+            catalog-url="https://dev.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/{uuid}"
             size="5"
             primary-color="#0f4395"
             secondary-color="#8bc832"
