@@ -37,7 +37,7 @@
   [cdkConnectedOverlayOpen]="overlayOpen"
   [cdkConnectedOverlayPositions]="overlayPositions"
   [cdkConnectedOverlayFlexibleDimensions]="true"
-  (backdropClick)="closeOverlay()"
+  (overlayOutsideClick)="closeOverlay()"
   (detach)="closeOverlay()"
 >
   <div
