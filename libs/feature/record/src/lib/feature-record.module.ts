@@ -12,15 +12,10 @@ import { MdViewEffects } from './state/mdview.effects'
 import { MapViewComponent } from './map-view/map-view.component'
 import { DataViewComponent } from './data-view/data-view.component'
 import { MD_VIEW_FEATURE_STATE_KEY, reducer } from './state/mdview.reducer'
-import { DataApisComponent } from './data-apis/data-apis.component'
-import { DataDownloadsComponent } from './data-downloads/data-downloads.component'
-import { RecordMetadataComponent } from './record-metadata/record-metadata.component'
 import { MatTabsModule } from '@angular/material/tabs'
 import { MatIconModule } from '@angular/material/icon'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { TranslateModule } from '@ngx-translate/core'
-import { DataOtherlinksComponent } from './data-otherlinks/data-otherlinks.component'
-import { RelatedRecordsComponent } from './related-records/related-records.component'
 import { ExternalViewerButtonComponent } from './external-viewer-button/external-viewer-button.component'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import { TableComponent } from '@geonetwork-ui/ui/dataviz'
@@ -32,13 +27,8 @@ import { DataViewShareComponent } from './data-view-share/data-view-share.compon
 export const GN_UI_VERSION = new InjectionToken<string>('gnUiVersion')
 @NgModule({
   declarations: [
-    RecordMetadataComponent,
     MapViewComponent,
     DataViewComponent,
-    DataDownloadsComponent,
-    DataApisComponent,
-    DataOtherlinksComponent,
-    RelatedRecordsComponent,
     ExternalViewerButtonComponent,
     DataViewPermalinkComponent,
     DataViewWebComponentComponent,
@@ -63,12 +53,8 @@ export const GN_UI_VERSION = new InjectionToken<string>('gnUiVersion')
   ],
   providers: [MdViewFacade],
   exports: [
-    RecordMetadataComponent,
     MapViewComponent,
     DataViewComponent,
-    DataDownloadsComponent,
-    DataApisComponent,
-    DataOtherlinksComponent,
     DataViewPermalinkComponent,
     DataViewWebComponentComponent,
     DataViewShareComponent,

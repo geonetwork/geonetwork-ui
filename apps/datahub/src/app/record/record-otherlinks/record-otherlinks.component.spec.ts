@@ -1,25 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { Subject } from 'rxjs'
-import { MdViewFacade } from '../state'
-
-import { DataOtherlinksComponent } from './data-otherlinks.component'
+import { RecordOtherlinksComponent } from './record-otherlinks.component'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
 
 class MdViewFacadeMock {
   otherLinks$ = new Subject()
 }
 describe('DataOtherlinksComponent', () => {
-  let component: DataOtherlinksComponent
-  let fixture: ComponentFixture<DataOtherlinksComponent>
+  let component: RecordOtherlinksComponent
+  let fixture: ComponentFixture<RecordOtherlinksComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DataOtherlinksComponent],
+      declarations: [RecordOtherlinksComponent],
       providers: [{ provide: MdViewFacade, useClass: MdViewFacadeMock }],
     }).compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DataOtherlinksComponent)
+    fixture = TestBed.createComponent(RecordOtherlinksComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

@@ -14,10 +14,10 @@ import {
 } from '@geonetwork-ui/ui/elements'
 import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject, of } from 'rxjs'
-import { MdViewFacade } from '../state/mdview.facade'
 import { RecordMetadataComponent } from './record-metadata.component'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
 
 const SAMPLE_RECORD = {
   ...DATASET_RECORDS[0],
@@ -56,43 +56,46 @@ class OrganisationsServiceMock {
 }
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'gn-ui-map-view',
   template: '<div></div>',
 })
 export class MockDataMapComponent {}
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'gn-ui-data-view',
   template: '<div></div>',
 })
 export class MockDataViewComponent {}
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'gn-ui-data-view-share',
   template: '<div></div>',
 })
 export class MockDataViewShareComponent {}
 
 @Component({
-  selector: 'gn-ui-data-downloads',
+  selector: 'datahub-record-downloads',
   template: '<div></div>',
 })
 export class MockDataDownloadsComponent {}
 
 @Component({
-  selector: 'gn-ui-data-otherlinks',
+  selector: 'datahub-record-otherlinks',
   template: '<div></div>',
 })
 export class MockDataOtherlinksComponent {}
 
 @Component({
-  selector: 'gn-ui-data-apis',
+  selector: 'datahub-record-apis',
   template: '<div></div>',
 })
 export class MockDataApisComponent {}
 
 @Component({
-  selector: 'gn-ui-related-records',
+  selector: 'datahub-record-related-records',
   template: '<div></div>',
 })
 export class MockRelatedComponent {}

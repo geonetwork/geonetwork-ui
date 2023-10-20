@@ -5,12 +5,12 @@ import {
   tick,
 } from '@angular/core/testing'
 import { BehaviorSubject, of, throwError } from 'rxjs'
-import { MdViewFacade } from '../state'
-import { DataDownloadsComponent } from './data-downloads.component'
+import { RecordDownloadsComponent } from './record-downloads.component'
 import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
 
 // This is used to work around a very weird bug when comparing URL objects would fail
 // if the `searchParams` of the object wasn't accessed beforehand in some cases...
@@ -58,6 +58,7 @@ class DataServiceMock {
 }
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'gn-ui-download-item',
   template: '<div></div>',
 })
@@ -66,20 +67,21 @@ export class MockDownloadsListItemComponent {
 }
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'gn-ui-popup-alert',
   template: '<div></div>',
 })
 export class MockPopupAlertComponent {}
 
 describe('DataDownloadsComponent', () => {
-  let component: DataDownloadsComponent
-  let fixture: ComponentFixture<DataDownloadsComponent>
+  let component: RecordDownloadsComponent
+  let fixture: ComponentFixture<RecordDownloadsComponent>
   let facade
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        DataDownloadsComponent,
+        RecordDownloadsComponent,
         MockDownloadsListItemComponent,
         MockPopupAlertComponent,
       ],
@@ -99,7 +101,7 @@ describe('DataDownloadsComponent', () => {
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DataDownloadsComponent)
+    fixture = TestBed.createComponent(RecordDownloadsComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

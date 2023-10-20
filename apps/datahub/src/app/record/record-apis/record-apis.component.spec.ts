@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { Subject } from 'rxjs'
-import { MdViewFacade } from '../state'
-
-import { DataApisComponent } from './data-apis.component'
+import { RecordApisComponent } from './record-apis.component'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
 
 class MdViewFacadeMock {
   apiLinks$ = new Subject()
 }
 
 describe('DataApisComponent', () => {
-  let component: DataApisComponent
-  let fixture: ComponentFixture<DataApisComponent>
+  let component: RecordApisComponent
+  let fixture: ComponentFixture<RecordApisComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DataApisComponent],
+      declarations: [RecordApisComponent],
       providers: [
         {
           provide: MdViewFacade,
@@ -25,7 +24,7 @@ describe('DataApisComponent', () => {
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DataApisComponent)
+    fixture = TestBed.createComponent(RecordApisComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
