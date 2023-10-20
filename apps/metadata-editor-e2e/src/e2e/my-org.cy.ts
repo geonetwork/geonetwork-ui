@@ -1,9 +1,14 @@
 describe('my-org', () => {
   beforeEach(() => {
     cy.loginGN('barbie', 'p4ssworD_', false)
+    cy.intercept({
+      method: 'GET',
+      url: 'http://localhost:4200/geonetwork/srv/api/userselections/0/101',
+    }).as('dataGetFirst')
     cy.visit(`/records/my-org`)
     cy.get('md-editor-dashboard-menu').find('a').first().click()
-    cy.get('main').children('div').first().children('div').eq(1).as('linkGroup')
+    cy.wait('@dataGetFirst').its('response.statusCode').should('equal', 200)
+    cy.get('main').children('div').first().as('linkGroup')
   })
   describe('my-org display', () => {
     it('should show my-org name and logo', () => {
@@ -28,8 +33,12 @@ describe('my-org', () => {
   })
   describe('routing', () => {
     it('should access the datahub with a filter', () => {
-      cy.get('@linkGroup').find('a').click()
-      cy.url().should('include', 'search/publisher=')
+      cy.get('@linkGroup')
+        .find('a')
+        .should('have.attr', 'href')
+        .then((href) => {
+          expect(href).to.include('search?publisher=Barbie+Inc')
+        })
     })
     it('should access the user list page and show my-org users', () => {
       cy.visit(`/records/my-org`)

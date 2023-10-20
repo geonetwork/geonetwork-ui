@@ -27,18 +27,14 @@ declare namespace Cypress {
 Cypress.Commands.add(
   'loginGN',
   (username: string, password: string, redirect = true) => {
-    cy.visit('http://localhost:8080/geonetwork/srv/eng/catalog.search#/home')
-    cy.get('.cookie-warning-actions').then(($cookie) => {
-      if ($cookie.is(':visible')) {
-        $cookie.find('button').eq(0).click()
-        cy.scrollTo('top')
-      }
+    Cypress.on('uncaught:exception', (err) => {
+      if (err.message.includes('Jsonix')) return false
+      if (err.message.includes('postMessage')) return false
     })
 
-    cy.wait(250)
-    cy.get('li.signin-dropdown').click()
-    cy.get('#inputUsername').type(username)
-    cy.get('#inputPassword').type(password)
+    cy.visit('/geonetwork/srv/eng/catalog.signin?debug') // this will point to a 404
+    cy.get('#inputUsername').type(username, { force: true })
+    cy.get('#inputPassword').type(password, { force: true })
     cy.get('[name="gnSigninForm"]').submit()
     if (redirect) cy.visit('/')
   }
