@@ -111,34 +111,38 @@ describe('AutocompleteComponent', () => {
       })
     })
     describe('when input is not empty', () => {
-      let anyEmitted
+      let anyEmitted: boolean
+      let clearEmitted: boolean
       let button
       beforeEach(() => {
+        anyEmitted = false
+        clearEmitted = false
         component.inputRef.nativeElement.value = 'blar'
         component.inputRef.nativeElement.dispatchEvent(new InputEvent('input'))
         component.triggerRef.closePanel = jest.fn()
-        component.inputSubmitted.subscribe((event) => (anyEmitted = event))
+        component.inputSubmitted.subscribe(() => (anyEmitted = true))
+        component.inputCleared.subscribe(() => (clearEmitted = true))
         fixture.detectChanges()
         button = fixture.debugElement.query(By.css('.clear-btn'))
+        button.nativeElement.click()
       })
       it('is visible', () => {
         expect(button).not.toBeNull()
       })
       it('resets the text input', () => {
-        button.nativeElement.click()
         expect(component.inputRef.nativeElement.value).toBe('')
       })
       it('sets the text input of the focus', () => {
-        button.nativeElement.click()
         expect(document.activeElement).toBe(component.inputRef.nativeElement)
       })
       it('closes the autocomplete panel', () => {
-        button.nativeElement.click()
         expect(component.triggerRef.closePanel).toHaveBeenCalled()
       })
-      it('clears search result by emitting empty string', () => {
-        button.nativeElement.click()
-        expect(anyEmitted).toEqual('')
+      it('does not emit an inputSubmitted event', () => {
+        expect(anyEmitted).toEqual(false)
+      })
+      it('emits an inputCleared event', () => {
+        expect(clearEmitted).toEqual(true)
       })
     })
   })

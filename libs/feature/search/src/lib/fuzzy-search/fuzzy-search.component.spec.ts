@@ -109,7 +109,6 @@ describe('FuzzySearchComponent', () => {
   })
 
   describe('search enter key press', () => {
-    let outputValue
     describe('when no output defined', () => {
       beforeEach(() => {
         component.handleInputSubmission('blarg')
@@ -123,8 +122,7 @@ describe('FuzzySearchComponent', () => {
     describe('when output is defined', () => {
       beforeEach(() => {
         jest.resetAllMocks()
-        outputValue = null
-        component.inputSubmitted.subscribe((event) => (outputValue = event))
+        component.inputSubmitted.subscribe()
         jest.spyOn(component.inputSubmitted, 'emit')
         component.handleInputSubmission('blarg')
       })
@@ -135,6 +133,25 @@ describe('FuzzySearchComponent', () => {
       })
       it('emits inputSubmitted', () => {
         expect(component.inputSubmitted.emit).toHaveBeenCalledWith('blarg')
+      })
+    })
+  })
+
+  describe('search input clear', () => {
+    describe('when output is defined', () => {
+      beforeEach(() => {
+        jest.resetAllMocks()
+        component.inputSubmitted.subscribe()
+        jest.spyOn(component.inputSubmitted, 'emit')
+        component.handleInputCleared()
+      })
+      it('clears the search filters', () => {
+        expect(searchService.updateFilters).toHaveBeenCalledWith({
+          any: '',
+        })
+      })
+      it('does not emit inputSubmitted', () => {
+        expect(component.inputSubmitted.emit).not.toHaveBeenCalled()
       })
     })
   })
