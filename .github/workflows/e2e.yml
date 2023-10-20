@@ -1,5 +1,11 @@
 name: End-to-end tests
-on: push
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
 
 env:
   # a list of apps to build and publish on releases
@@ -15,10 +21,9 @@ jobs:
       - name: Build the backend
         run: sudo docker-compose -f support-services/docker-compose.yml up -d init
 
-      - name: install dependencies and verify Cypress
+      - name: install dependencies
         run: |
           npm ci
 
-      - name: Cypress tests
+      - name: E2E tests
         run: npx nx run-many --projects=${{ env.APP_NAMES }} --target=e2e
-
