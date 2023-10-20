@@ -1,4 +1,11 @@
-import { Component, Injector, Input, OnChanges, OnInit } from '@angular/core'
+import {
+  Component,
+  ElementRef,
+  Injector,
+  Input,
+  OnChanges,
+  OnInit,
+} from '@angular/core'
 import {
   LinkClassifierService,
   LinkUsage,
@@ -10,6 +17,8 @@ import { TranslateService } from '@ngx-translate/core'
 import { firstValueFrom } from 'rxjs'
 import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { OverlayContainer } from '@angular/cdk/overlay'
+import { WebcomponentOverlayContainer } from '../webcomponent-overlay-container'
 
 export const apiConfiguration = new Configuration()
 
@@ -40,6 +49,12 @@ export class BaseComponent implements OnChanges, OnInit {
     this.searchService = injector.get(SearchApiService)
     this.recordsRepository = injector.get(RecordsRepositoryInterface)
     this.linkClassifier = injector.get(LinkClassifierService)
+
+    const elementRef = injector.get(ElementRef)
+    const overlayContainer = injector.get(
+      OverlayContainer
+    ) as WebcomponentOverlayContainer
+    overlayContainer.setRoot(elementRef.nativeElement.shadowRoot)
   }
 
   ngOnInit() {

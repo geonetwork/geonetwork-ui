@@ -51,7 +51,7 @@
   min-width: 1px;
   min-height: 1px;
 }
-.app-overlay-container {
+.gn-ui-overlay-container {
   position: absolute;
   z-index: 1000;
   pointer-events: none;
@@ -60,7 +60,7 @@
   height: 100%;
   width: 100%;
 }
-.app-overlay-container:empty {
+.gn-ui-overlay-container:empty {
   display: none;
 }
 
