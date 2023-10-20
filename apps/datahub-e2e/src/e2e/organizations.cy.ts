@@ -45,21 +45,21 @@ describe('organizations', () => {
     })
     it('should display organization information', () => {
       cy.get('@organizationsName')
-        .eq(2)
+        .eq(3)
         .invoke('text')
         .should('contain', 'Bundesamt für Raumentwicklung')
       cy.get('@organizationsDesc')
-        .eq(2)
+        .eq(3)
         .invoke('text')
         .should('contain', 'Bundesamt für Raumentwicklung')
       cy.get('@organizationsRecordsCount')
-        .eq(2)
+        .eq(3)
         .invoke('text')
         .should('contain', '1')
     })
     it('should display an actual logo', () => {
       cy.get('@organizations')
-        .eq(8)
+        .eq(9)
         .find('img')
         .should('have.attr', 'src')
         .and('contain', 'G%C3%A9o2France-4-3_decoupe.png')
@@ -124,7 +124,7 @@ describe('organizations', () => {
     it('should go to next page with arrow', () => {
       cy.then(() => {
         cy.get('@pagination').find('[data-cy=next-page]').click()
-        cy.get('@organizations').should('have.length', 2)
+        cy.get('@organizations').should('have.length', 3)
       })
     })
     it('should go back to the first page with arrow', () => {
