@@ -83,11 +83,33 @@ export class BaseComponent implements OnChanges, OnInit {
       this.titleFont
     )
     this.facade.init(this.searchId)
+    this.copyFontFacesToDocument()
     this.isInitialized = true
   }
 
   changes() {
     // to override
+  }
+
+  private copyFontFacesToDocument() {
+    // get the list of font face definitions in the Shadow DOM
+    const root = this.injector.get(ElementRef).nativeElement as HTMLElement
+    const styles = root.shadowRoot.styleSheets
+    const fontFaces = Array.from(styles).reduce(
+      (prev, curr) => [
+        ...prev,
+        ...Array.from(curr.cssRules)
+          .filter((rule) => rule.cssText.startsWith('@font-face'))
+          .map((rule) => rule.cssText),
+      ],
+      []
+    )
+
+    // all font faces are then copied to the document
+    const style = document.createElement('style')
+    const cssText = fontFaces.join('\n')
+    style.appendChild(document.createTextNode(cssText))
+    document.head.appendChild(style)
   }
 
   async getRecordLink(
