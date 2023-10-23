@@ -7,10 +7,6 @@ on:
   pull_request:
     types: [opened, synchronize, ready_for_review]
 
-env:
-  # a list of apps to build and publish on releases
-  APP_NAMES: datahub-e2e,metadata-editor-e2e
-
 jobs:
   cypress-run:
     name: Cypress test
@@ -26,4 +22,4 @@ jobs:
           npm ci
 
       - name: E2E tests
-        run: npx nx run-many --projects=${{ env.APP_NAMES }} --target=e2e
+        run: npx nx run-many --target=e2e
