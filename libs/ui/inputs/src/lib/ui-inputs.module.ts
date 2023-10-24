@@ -34,6 +34,7 @@ import { CheckToggleComponent } from './check-toggle/check-toggle.component'
 import { CopyTextButtonComponent } from './copy-text-button/copy-text-button.component'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { CommonModule } from '@angular/common'
+import { CheckboxComponent } from './checkbox/checkbox.component'
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { CommonModule } from '@angular/common'
     FormFieldTemporalExtentComponent,
     CheckToggleComponent,
     CopyTextButtonComponent,
+    CheckboxComponent,
   ],
   imports: [
     CommonModule,
