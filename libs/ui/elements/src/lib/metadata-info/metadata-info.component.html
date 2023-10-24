@@ -63,7 +63,11 @@
     <gn-ui-badge *ngIf="metadata.extras?.isOpenData">
       <span translate>record.metadata.isOpenData</span>
     </gn-ui-badge>
-    <span *ngFor="let usage of usages" gnUiLinkify>
+    <span
+      class="text-primary font-medium mt-2"
+      *ngFor="let usage of usages"
+      gnUiLinkify
+    >
       {{ usage }}
     </span>
     <span class="noUsage" *ngIf="!hasUsage">
