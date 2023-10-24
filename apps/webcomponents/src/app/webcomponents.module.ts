@@ -1,6 +1,5 @@
 import { OverlayContainer } from '@angular/cdk/overlay'
-import { Platform } from '@angular/cdk/platform'
-import { CommonModule, DOCUMENT } from '@angular/common'
+import { CommonModule } from '@angular/common'
 import { CUSTOM_ELEMENTS_SCHEMA, Injector, NgModule } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
 import { MatIconModule } from '@angular/material/icon'
@@ -12,6 +11,7 @@ import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import {
+  EmbeddedTranslateLoader,
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
@@ -20,7 +20,7 @@ import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { AppComponent } from './app.component'
-import { AppOverlayContainer } from './AppOverlayContainer'
+import { WebcomponentOverlayContainer } from './webcomponent-overlay-container'
 import { apiConfiguration, BaseComponent } from './components/base.component'
 import { GnAggregatedRecordsComponent } from './components/gn-aggregated-records/gn-aggregated-records.component'
 import { GnFacetsComponent } from './components/gn-facets/gn-facets.component'
@@ -31,7 +31,6 @@ import { GnMapViewerComponent } from './components/gn-map-viewer/gn-map-viewer.c
 import { FeatureMapModule } from '@geonetwork-ui/feature/map'
 import { GnDatasetViewChartComponent } from './components/gn-dataset-view-chart/gn-dataset-view-chart.component'
 import { FeatureDatavizModule } from '@geonetwork-ui/feature/dataviz'
-import { EmbeddedTranslateLoader } from '@geonetwork-ui/util/i18n'
 import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
@@ -90,12 +89,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     },
     {
       provide: OverlayContainer,
-      useFactory: (document: Document, platform: Platform) => {
-        const container = new AppOverlayContainer(document, platform)
-        container.setSelector('gn-search-input')
-        return container
-      },
-      deps: [DOCUMENT, Platform],
+      useClass: WebcomponentOverlayContainer,
     },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

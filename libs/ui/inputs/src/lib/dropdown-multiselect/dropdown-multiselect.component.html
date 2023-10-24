@@ -43,7 +43,7 @@
   [cdkConnectedOverlayPositions]="overlayPositions"
   [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
   [cdkConnectedOverlayFlexibleDimensions]="true"
-  (backdropClick)="closeOverlay()"
+  (overlayOutsideClick)="closeOverlay()"
   (detach)="closeOverlay()"
 >
   <div

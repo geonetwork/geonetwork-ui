@@ -13,7 +13,7 @@
   font-family: 'Material Symbols Outlined';
   font-style: normal;
   font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/materialiconsoutlined/v108/gok-H7zzDkdnRel8-DQ6KAXJ69wP1tGnf4ZGhUce.woff2)
+  src: url(https://fonts.gstatic.com/s/materialsymbolsoutlined/v138/kJEhBvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oFsLjBuVY.woff2)
     format('woff2');
 }
 .material-symbols-outlined {
@@ -32,7 +32,7 @@
   -webkit-font-smoothing: antialiased;
 }
 
-/* Material Theme */
+/* These classes were extracted from the full Material theme to save size */
 .cdk-overlay-pane {
   position: absolute;
   pointer-events: auto;
@@ -42,7 +42,6 @@
   max-width: 100%;
   max-height: 100%;
 }
-
 .cdk-overlay-connected-position-bounding-box {
   position: absolute;
   z-index: 1000;
@@ -51,7 +50,31 @@
   min-width: 1px;
   min-height: 1px;
 }
-.app-overlay-container {
+.cdk-overlay-backdrop {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  pointer-events: auto;
+  transition: opacity 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  opacity: 0;
+}
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+  opacity: 1;
+}
+.cdk-overlay-transparent-backdrop {
+  transition: visibility 1ms linear, opacity 1ms linear;
+  visibility: hidden;
+  opacity: 1;
+}
+.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing {
+  opacity: 0;
+  visibility: visible;
+}
+
+.gn-ui-overlay-container {
   position: absolute;
   z-index: 1000;
   pointer-events: none;
@@ -60,7 +83,7 @@
   height: 100%;
   width: 100%;
 }
-.app-overlay-container:empty {
+.gn-ui-overlay-container:empty {
   display: none;
 }
 

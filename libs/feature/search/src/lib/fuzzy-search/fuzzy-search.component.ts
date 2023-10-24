@@ -72,4 +72,8 @@ export class FuzzySearchComponent implements OnInit {
       this.searchService.updateFilters({ any })
     }
   }
+
+  handleInputCleared() {
+    this.searchService.updateFilters({ any: '' })
+  }
 }

@@ -49,6 +49,7 @@ export class AutocompleteComponent
   @Input() clearOnSelection = false
   @Output() itemSelected = new EventEmitter<AutocompleteItem>()
   @Output() inputSubmitted = new EventEmitter<string>()
+  @Output() inputCleared = new EventEmitter<void>()
   @ViewChild(MatAutocompleteTrigger) triggerRef: MatAutocompleteTrigger
   @ViewChild(MatAutocomplete) autocomplete: MatAutocomplete
   @ViewChild('searchInput') inputRef: ElementRef<HTMLInputElement>
@@ -126,7 +127,7 @@ export class AutocompleteComponent
 
   clear(): void {
     this.inputRef.nativeElement.value = ''
-    this.inputSubmitted.emit('')
+    this.inputCleared.emit()
     this.selectionSubject
       .pipe(take(1))
       .subscribe((selection) => selection && selection.option.deselect())
