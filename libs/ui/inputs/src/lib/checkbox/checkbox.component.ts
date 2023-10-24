@@ -14,10 +14,11 @@ import {
 })
 export class CheckboxComponent {
   @Input() checked = false
-  @Input() indeterminate = false
+  @Input() indeterminate? = false
   @Output() changed = new EventEmitter<boolean>()
 
-  handleClick() {
+  handleClick(event: Event) {
+    event.stopPropagation()
     this.checked = !this.checked
     this.changed.emit(this.checked)
   }

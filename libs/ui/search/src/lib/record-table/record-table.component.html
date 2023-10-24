@@ -50,14 +50,12 @@
       <div class="contents text-sm">
         <div class="record-table-header contents flex justify-center">
           <div class="flex justify-center">
-            <mat-checkbox
-              class="cursor-pointer"
-              type="checkbox"
+            <gn-ui-checkbox
               [checked]="isAllSelected()"
-              (change)="selectAll()"
-              color="primary"
+              [indeterminate]="isSomeSelected()"
+              (changed)="selectAll()"
             >
-            </mat-checkbox>
+            </gn-ui-checkbox>
           </div>
           <gn-ui-button
             type="light"
@@ -151,16 +149,11 @@
         (click)="recordSelect.emit(record)"
         *ngFor="let record of records"
       >
-        <div
-          class="record-table-col"
-          (click)="handleCheckboxClick($event, record)"
-        >
-          <mat-checkbox
-            class="cursor-pointer"
-            type="checkbox"
+        <div class="record-table-col">
+          <gn-ui-checkbox
             [checked]="isChecked(record)"
-            color="primary"
-          ></mat-checkbox>
+            (changed)="handleRecordSelectedChange($event, record)"
+          ></gn-ui-checkbox>
         </div>
         <div [title]="record.title" class="record-table-col text-16">
           {{ record.title }}

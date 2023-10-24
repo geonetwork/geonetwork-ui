@@ -14,7 +14,7 @@ import { SortByField } from '@geonetwork-ui/common/domain/search'
   styleUrls: ['./record-table.component.css'],
 })
 export class RecordTableComponent {
-  selectedRecords = []
+  selectedRecords: string[] = []
 
   @Input() records: any[] = []
   @Input() totalHits?: number
@@ -100,9 +100,8 @@ export class RecordTableComponent {
     return false
   }
 
-  handleCheckboxClick(event: MouseEvent | Event, record: CatalogRecord) {
-    event.stopPropagation()
-    if (this.isChecked(record)) {
+  handleRecordSelectedChange(selected: boolean, record: CatalogRecord) {
+    if (!selected) {
       this.selectedRecords = this.selectedRecords.filter(
         (val) => val !== record.uniqueIdentifier
       )
@@ -121,7 +120,7 @@ export class RecordTableComponent {
     }
   }
 
-  isAllSelected() {
+  isAllSelected(): boolean {
     if (this.selectedRecords.length === this.records.length) {
       const allRecords = this.records.filter((record) =>
         this.selectedRecords.includes(record.uniqueIdentifier)
@@ -129,6 +128,16 @@ export class RecordTableComponent {
       if (allRecords.length === this.records.length) {
         return true
       }
+    }
+    return false
+  }
+
+  isSomeSelected(): boolean {
+    if (
+      this.selectedRecords.length > 0 &&
+      this.selectedRecords.length < this.records.length
+    ) {
+      return true
     }
     return false
   }

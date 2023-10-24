@@ -91,6 +91,7 @@ import { CheckboxComponent } from './checkbox/checkbox.component'
     FormFieldComponent,
     CheckToggleComponent,
     CopyTextButtonComponent,
+    CheckboxComponent,
   ],
 })
 export class UiInputsModule {}
