@@ -4,7 +4,10 @@
 >
   record.metadata.about
 </p>
-<div class="mb-6 md-description sm:mb-4 sm:pr-16" *ngIf="metadata.abstract">
+<div
+  class="text-gray-900 mb-6 md-description sm:mb-4 sm:pr-16"
+  *ngIf="metadata.abstract"
+>
   <gn-ui-content-ghost ghostClass="h-32" [showContent]="fieldReady('abstract')">
     <p
       class="whitespace-pre-line break-words"
@@ -32,7 +35,10 @@
   *ngIf="metadata.lineage"
   [title]="'record.metadata.origin' | translate"
 >
-  <p class="mb-5 pt-4 whitespace-pre-line break-words" gnUiLinkify>
+  <p
+    class="text-gray-900 mb-5 pt-4 whitespace-pre-line break-words"
+    gnUiLinkify
+  >
     {{ metadata.lineage }}
   </p>
   <div
@@ -40,19 +46,19 @@
   >
     <div *ngIf="metadata.recordUpdated">
       <p class="text-sm" translate>record.metadata.updatedOn</p>
-      <p class="text-primary font-medium mt-2">
+      <p class="text-primary font-medium mt-[4px]">
         {{ metadata.recordUpdated && metadata.recordUpdated.toLocaleString() }}
       </p>
     </div>
     <div *ngIf="metadata.updateFrequency">
       <p class="text-sm" translate>record.metadata.updateFrequency</p>
-      <p class="text-primary font-medium mt-2" translate>
+      <p class="text-primary font-medium mt-[4px]" translate>
         domain.record.updateFrequency.{{ metadata.updateFrequency }}
       </p>
     </div>
     <div *ngIf="metadata.status">
       <p class="text-sm" translate>record.metadata.updateStatus</p>
-      <p class="text-primary font-medium mt-2" translate>
+      <p class="text-primary font-medium mt-[4px]" translate>
         domain.record.status.{{ metadata.status }}
       </p>
     </div>
@@ -64,7 +70,7 @@
       <span translate>record.metadata.isOpenData</span>
     </gn-ui-badge>
     <span
-      class="text-primary font-medium mt-2"
+      class="text-primary font-medium"
       *ngFor="let usage of usages"
       gnUiLinkify
     >
@@ -83,7 +89,7 @@
     <p class="text-sm" translate>record.metadata.sheet</p>
     <a [href]="metadata.landingPage" target="_blank">
       <mat-icon
-        class="material-symbols-outlined inline-block align-bottom pt-1.5 text-xs text-black"
+        class="material-symbols-outlined inline-block align-bottom pt-1.5 text-xs text-black !w-[20px]"
         >open_in_new</mat-icon
       >
       <span class="text-primary break-all">{{ metadata.landingPage }}</span>
