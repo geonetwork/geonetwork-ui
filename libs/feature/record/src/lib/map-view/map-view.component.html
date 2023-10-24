@@ -1,13 +1,14 @@
 <div class="w-full h-full flex flex-col p-1">
-  <div class="w-full mb-7 mt-1">
+  <div class="w-full flex justify-end mb-7 mt-1">
     <gn-ui-dropdown-selector
+      class="truncate p-1 -mx-1"
       extraBtnClass="!text-primary font-sans font-medium"
       [title]="'map.select.layer' | translate"
       [choices]="dropdownChoices$ | async"
       (selectValue)="selectLinkToDisplay($event)"
     ></gn-ui-dropdown-selector>
     <gn-ui-external-viewer-button
-      class="shrink-0"
+      class="shrink-0 py-1 place-self-end"
       [link]="selectedLink$ | async"
       [mapConfig]="mapConfig"
     >
