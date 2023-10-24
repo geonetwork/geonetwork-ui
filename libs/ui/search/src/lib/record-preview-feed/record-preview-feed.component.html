@@ -40,7 +40,7 @@
         >
           {{ contact.firstName }} {{ contact.lastName }}
         </span>
-        <p class="text-gray-900">
+        <p class="">
           <span translate [translateParams]="{ time }"
             >record.was.created.time</span
           >
@@ -55,12 +55,12 @@
         ></ng-container>
       </div>
       <h1
-        class="font-title text-[21px] font-medium mb-3 pr-8"
+        class="font-title text-black text-[21px] font-medium mb-3 pr-8"
         data-cy="recordTitle"
       >
         {{ record.title }}
       </h1>
-      <p class="text-gray-900 line-clamp-3">{{ abstract }}</p>
+      <p class="line-clamp-3">{{ abstract }}</p>
       <gn-ui-thumbnail
         *ngIf="record.overviews?.[0]"
         class="block mt-3 w-full h-[136px] border border-gray-100 rounded-lg overflow-hidden"
