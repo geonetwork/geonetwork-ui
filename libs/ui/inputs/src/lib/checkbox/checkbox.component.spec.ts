@@ -26,7 +26,8 @@ describe('CheckboxComponent', () => {
       component.checked = false
     })
     it('should invert checked state when being clicked', () => {
-      component.handleClick()
+      const event = new Event('click')
+      component.handleClick(event)
 
       expect(component.checked).toBe(true)
     })
@@ -37,7 +38,8 @@ describe('CheckboxComponent', () => {
       component.checked = true
     })
     it('should invert checked state when being clicked', () => {
-      component.handleClick()
+      const event = new Event('click')
+      component.handleClick(event)
 
       expect(component.checked).toBe(false)
     })
