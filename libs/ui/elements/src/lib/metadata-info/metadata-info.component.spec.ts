@@ -43,7 +43,7 @@ describe('MetadataInfoComponent', () => {
     })
     it('should not display the abstract section', () => {
       const displayedElement =
-        fixture.nativeElement.querySelector('.md-description')
+        fixture.nativeElement.querySelector('.md-description p')
       expect(displayedElement).toBeFalsy()
     })
   })
@@ -69,7 +69,7 @@ describe('MetadataInfoComponent', () => {
     })
     it('should display the abstract section', () => {
       const displayedElement =
-        fixture.nativeElement.querySelector('.md-description')
+        fixture.nativeElement.querySelector('.md-description p')
       expect(displayedElement).toBeTruthy()
     })
   })

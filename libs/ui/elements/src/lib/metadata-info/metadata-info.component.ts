@@ -5,10 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import {
-  DatasetDistribution,
-  DatasetRecord,
-} from '@geonetwork-ui/common/domain/record'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-metadata-info',
