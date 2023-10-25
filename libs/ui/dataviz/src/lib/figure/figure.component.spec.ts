@@ -62,7 +62,7 @@ describe('FigureComponent', () => {
   })
   it('label is main text color', () => {
     expect(compiled.querySelector('.figure-block')?.className).toContain(
-      'text-main'
+      'text-black'
     )
   })
   it('has a tooltip containing the information', () => {
