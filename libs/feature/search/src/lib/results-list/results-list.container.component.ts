@@ -11,7 +11,7 @@ import { Observable } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchError } from '../state/reducer'
-import { ErrorType } from '@geonetwork-ui/ui/elements'
+import { ErrorType, MetadataQualityDisplay } from '@geonetwork-ui/ui/elements'
 import {
   RESULTS_LAYOUT_CONFIG,
   ResultsLayoutConfigItem,
@@ -28,6 +28,7 @@ export type ResultsListShowMoreStrategy = 'auto' | 'button' | 'none'
   styleUrls: ['./results-list.container.component.css'],
 })
 export class ResultsListContainerComponent implements OnInit {
+  @Input() metadataQualityDisplay: MetadataQualityDisplay
   @Input() layout: string
   @Input() showMore: ResultsListShowMoreStrategy = 'auto'
   @Output() mdSelect = new EventEmitter<CatalogRecord>()

@@ -15,7 +15,13 @@ export const FIELDS_SUMMARY: FieldName[] = [
   'linkProtocol',
   'contactForResource*.organisation*',
   'contact*.organisation*',
+  'contact*.email',
   'userSavedCount',
+  'cl_topic',
+  'cl_maintenanceAndUpdateFrequency',
+  'tag',
+  'MD_LegalConstraintsUseLimitationObject',
+  'qualityScore',
 ]
 
 export const FIELDS_BRIEF: FieldName[] = [

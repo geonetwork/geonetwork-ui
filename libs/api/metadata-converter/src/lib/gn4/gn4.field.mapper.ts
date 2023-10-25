@@ -53,6 +53,11 @@ export class Gn4FieldMapper {
       const landingPage = getAsUrl(this.metadataUrlService.getUrl(uuid))
       return { ...output, uniqueIdentifier: uuid, landingPage }
     },
+    qualityScore: (output, source) =>
+      this.addExtra(
+        { qualityScore: selectField(source, 'qualityScore') },
+        output
+      ),
     resourceTitleObject: (output, source) => ({
       ...output,
       title: selectFallback(
@@ -83,6 +88,15 @@ export class Gn4FieldMapper {
         ],
       }
     },
+    cl_topic: (output, source) => ({
+      ...output,
+      themes: [
+        ...(output.themes || []),
+        ...getAsArray(
+          selectField<SourceWithUnknownProps[]>(source, 'cl_topic')
+        ).map((topic) => selectTranslatedValue<string>(topic, this.lang3)),
+      ],
+    }),
     cl_status: (output, source) => ({
       ...output,
       status: getStatusFromStatusCode(
@@ -163,7 +177,10 @@ export class Gn4FieldMapper {
     }),
     inspireTheme: (output, source) => ({
       ...output,
-      themes: getAsArray(selectField(source, 'inspireTheme_syn')),
+      themes: [
+        ...(output.themes || []),
+        ...getAsArray(selectField(source, 'inspireTheme_syn')),
+      ],
     }),
     MD_ConstraintsUseLimitationObject: (output, source) =>
       this.constraintField('MD_ConstraintsUseLimitationObject', output, source),
@@ -249,6 +266,18 @@ export class Gn4FieldMapper {
     ...output,
     ...(fieldName.endsWith('UseLimitationObject')
       ? {
+          legalConstraints:
+            fieldName === 'MD_LegalConstraintsUseLimitationObject'
+              ? [
+                  ...(output.legalConstraints || []),
+                  ...selectField<SourceWithUnknownProps[]>(
+                    source,
+                    fieldName
+                  ).map((source: SourceWithUnknownProps) =>
+                    selectTranslatedValue(source, this.lang3)
+                  ),
+                ]
+              : output.legalConstraints || [],
           useLimitations: [
             ...(output.useLimitations || []),
             ...selectField<SourceWithUnknownProps[]>(source, fieldName).map(

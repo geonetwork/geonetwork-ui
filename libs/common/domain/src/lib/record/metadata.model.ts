@@ -78,10 +78,12 @@ export interface BaseRecord {
   keywords: Array<string> // TODO: handle thesaurus and id
   accessConstraints: Array<AccessConstraint>
   useLimitations: Array<string>
+  legalConstraints?: Array<string>
   licenses: Array<License>
   overviews: Array<GraphicOverview>
   extras?: Record<string, unknown>
   landingPage?: URL
+  updateFrequency?: UpdateFrequency
 
   // to add: iso19139.topicCategory
   // to add: canonical url
@@ -156,7 +158,6 @@ export interface DatasetRecord extends BaseRecord {
   kind: 'dataset'
   contactsForResource: Array<Individual>
   status: RecordStatus
-  updateFrequency: UpdateFrequency
   datasetCreated?: Date
   datasetUpdated?: Date
   lineage: string // Explanation of the origin of this record (e.g: how, why)"

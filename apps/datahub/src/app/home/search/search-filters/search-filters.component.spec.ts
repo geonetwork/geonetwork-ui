@@ -19,10 +19,7 @@ import { SearchFiltersComponent } from './search-filters.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 import { FormsModule } from '@angular/forms'
-import {
-  AggregationsTypes,
-  FieldFilters,
-} from '@geonetwork-ui/common/domain/search'
+import { FieldFilters } from '@geonetwork-ui/common/domain/search'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getOptionalSearchConfig: () => ({

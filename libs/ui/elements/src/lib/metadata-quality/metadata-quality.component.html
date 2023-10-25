@@ -1,0 +1,27 @@
+<div
+  *ngIf="metadataQualityDisplay?.widget === true"
+  class="mb-6 metadata-quality"
+  (mouseenter)="showMenu()"
+  (mouseleave)="hideMenu()"
+>
+  <div class="min-w-[200px]" [class]="smaller ? 'leading-[8px]' : ''">
+    <gn-ui-progress-bar
+      (focus)="showMenu()"
+      (blur)="hideMenu()"
+      tabindex="0"
+      [value]="qualityScore"
+      type="primary"
+    ></gn-ui-progress-bar>
+  </div>
+  <div
+    class="absolute z-10 bg-white border border-black border-opacity-35 rounded-lg shadow-lg p-5 whitespace-nowrap"
+    [class]="isMenuShown ? 'block' : 'hidden'"
+  >
+    <div class="mb-4 font-bold" translate>record.metadata.quality.details</div>
+    <gn-ui-metadata-quality-item
+      *ngFor="let e of items"
+      [name]="e.name"
+      [value]="e.value"
+    ></gn-ui-metadata-quality-item>
+  </div>
+</div>

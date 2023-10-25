@@ -611,6 +611,7 @@ describe('Gn4MetadataMapper', () => {
             landingPage: new URL(
               'http://my.catalog.org/metadata/cf5048f6-5bbf-4e44-ba74-e6f429af51ea'
             ),
+            legalConstraints: ["Restriction légale d'utilisation à préciser"],
             licenses: [
               {
                 link: new URL(
@@ -635,7 +636,7 @@ describe('Gn4MetadataMapper', () => {
             recordCreated: new Date('2021-10-05T12:48:57.678Z'),
             recordUpdated: new Date('2021-10-05T12:48:57.678Z'),
             status: 'under_development',
-            themes: ['Installations de suivi environnemental'],
+            themes: ['Installations de suivi environnemental', 'Océans'],
             title: 'Surval - Données par paramètre',
             uniqueIdentifier: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
             updateFrequency: {
