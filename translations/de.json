@@ -224,6 +224,7 @@
   "results.records.hits.displayedOn": "{displayed, plural, =0{Kein Datensatz.} one{1 Datensatz} other{{displayed} Datensätze }} {hits, plural, other{auf {hits} insgesamt angezeigt.}}",
   "results.records.hits.empty.help.html": "Vorschläge: <ul class='list-disc list-inside'><li>Versuchen Sie andere Wörter</li><li>Geben Sie weniger Wörter ein</li></ul>",
   "results.records.hits.found": "{hits, plural, =0{Keine Dokumente entsprechen der angegebenen Suche.} one{1 Datensatz gefunden.} other{{hits} Datensätze gefunden.}}",
+  "results.records.hits.selected": "",
   "results.showMore": "Mehr Ergebnisse anzeigen...",
   "results.sortBy.dateStamp": "Letzte Aktualisierungen",
   "results.sortBy.popularity": "Beliebtheit",

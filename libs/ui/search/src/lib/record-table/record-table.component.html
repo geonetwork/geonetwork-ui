@@ -1,14 +1,23 @@
 <div>
   <div *ngIf="totalHits" class="">
-    <div
-      translate
-      class="my-8 ml-4 block text-gray-500"
-      [translateParams]="{
-        displayed: records.length,
-        hits: totalHits
-      }"
-    >
-      results.records.hits.displayedOn
+    <div class="flex">
+      <div
+        translate
+        class="my-8 ml-4 block text-gray-800"
+        [translateParams]="{
+          displayed: records.length,
+          hits: totalHits
+        }"
+      >
+        results.records.hits.displayedOn
+      </div>
+      <div
+        class="my-8 ml-6 block text-gray-400"
+        translate
+        [translateParams]="{ amount: selectedRecords.length }"
+      >
+        results.records.hits.selected
+      </div>
     </div>
 
     <div
