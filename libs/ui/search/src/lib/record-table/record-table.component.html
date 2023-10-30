@@ -44,14 +44,24 @@
     </div>
 
     <div
-      class="grid grid-cols-[repeat(5,minmax(0,max-content))] gap-x-4 gap-y-1"
+      class="grid grid-cols-[repeat(6,minmax(0,max-content))] gap-x-4 gap-y-1"
       *ngIf="!records[0].name"
     >
       <div class="contents text-sm">
-        <div class="record-table-header text-gray-400 flex gap-1">
+        <div class="record-table-header contents flex justify-center">
+          <div class="flex justify-center">
+            <mat-checkbox
+              class="cursor-pointer"
+              type="checkbox"
+              [checked]="isAllSelected()"
+              (change)="selectAll()"
+              color="primary"
+            >
+            </mat-checkbox>
+          </div>
           <gn-ui-button
             type="light"
-            extraClass="px-3 py-2 space-x-1"
+            extraClass="px-3 pl-0 space-x-1 text-left"
             (buttonClick)="setSortBy('resourceTitleObject.default.keyword')"
           >
             <span translate>record.metadata.title</span>
@@ -75,7 +85,7 @@
         <div class="record-table-header text-gray-400 flex gap-1">
           <gn-ui-button
             type="light"
-            extraClass="px-3 py-2 space-x-1"
+            extraClass="px-3 pl-0 space-x-1"
             (buttonClick)="setSortBy('recordOwner')"
           >
             <span translate>record.metadata.author</span>
@@ -96,7 +106,7 @@
         <div class="record-table-header text-gray-400 flex gap-1">
           <gn-ui-button
             type="light"
-            extraClass="px-3 py-2 space-x-1"
+            extraClass="px-3 pl-0 space-x-1"
             (buttonClick)="setSortBy('changeDate')"
           >
             <span translate>record.metadata.updatedOn</span>
@@ -117,7 +127,7 @@
         <div class="record-table-header text-gray-400 flex gap-1">
           <gn-ui-button
             type="light"
-            extraClass="px-3 py-2 space-x-1"
+            extraClass="px-3 pl-0 space-x-1"
             (buttonClick)="setSortBy('createDate')"
           >
             <span translate>record.metadata.createdOn</span>
@@ -141,6 +151,17 @@
         (click)="recordSelect.emit(record)"
         *ngFor="let record of records"
       >
+        <div
+          class="record-table-col"
+          (click)="handleCheckboxClick($event, record)"
+        >
+          <mat-checkbox
+            class="cursor-pointer"
+            type="checkbox"
+            [checked]="isChecked(record)"
+            color="primary"
+          ></mat-checkbox>
+        </div>
         <div [title]="record.title" class="record-table-col text-16">
           {{ record.title }}
         </div>

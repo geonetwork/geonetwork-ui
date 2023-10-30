@@ -3,6 +3,7 @@ import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 
 import { RecordTableComponent } from './record-table.component'
 import { SortByField } from '@geonetwork-ui/common/domain/search'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 
 describe('RecordTableComponent', () => {
   let component: RecordTableComponent
@@ -74,6 +75,37 @@ describe('RecordTableComponent', () => {
         ]
         expect(component.isSortedBy('title', 'desc')).toBe(true)
         expect(component.isSortedBy('title', 'asc')).toBe(false)
+      })
+    })
+
+    describe('isChecked', () => {
+      it('should return true when the record is in the selectedRecords array', () => {
+        const component = new RecordTableComponent()
+        component.selectedRecords = ['1', '2', '3']
+        const record = { uniqueIdentifier: '2' } as any as CatalogRecord
+        expect(component.isChecked(record)).toBe(true)
+      })
+
+      it('should return false when the record is not in the selectedRecords array', () => {
+        const component = new RecordTableComponent()
+        component.selectedRecords = ['1', '2', '3']
+        const record = { uniqueIdentifier: '4' } as any as CatalogRecord
+        expect(component.isChecked(record)).toBe(false)
+      })
+    })
+
+    describe('#handleCheckboxClick', () => {
+      it('should add unique identifier to selectedRecords when checkbox is clicked for a record that is not already selected', () => {
+        const component = new RecordTableComponent()
+        const record = { uniqueIdentifier: '1' }
+        component.selectedRecords = []
+
+        component.handleCheckboxClick(
+          {} as any as Event,
+          record as any as CatalogRecord
+        )
+
+        expect(component.selectedRecords).toEqual(['1'])
       })
     })
   })
