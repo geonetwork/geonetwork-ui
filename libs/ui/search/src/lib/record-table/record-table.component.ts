@@ -14,6 +14,8 @@ import { SortByField } from '@geonetwork-ui/common/domain/search'
   styleUrls: ['./record-table.component.css'],
 })
 export class RecordTableComponent {
+  selectedRecords: string[] = []
+
   @Input() records: any[] = []
   @Input() totalHits?: number
   @Input() sortBy?: SortByField
@@ -89,5 +91,54 @@ export class RecordTableComponent {
   isSortedBy(col: string, order: 'asc' | 'desc'): boolean {
     const sortOrder = this.getOrderForColumn(col)
     return sortOrder === order
+  }
+
+  isChecked(record: CatalogRecord) {
+    if (this.selectedRecords.includes(record.uniqueIdentifier)) {
+      return true
+    }
+    return false
+  }
+
+  handleRecordSelectedChange(selected: boolean, record: CatalogRecord) {
+    if (!selected) {
+      this.selectedRecords = this.selectedRecords.filter(
+        (val) => val !== record.uniqueIdentifier
+      )
+    } else {
+      this.selectedRecords.push(record.uniqueIdentifier)
+    }
+  }
+
+  selectAll() {
+    if (this.isAllSelected()) {
+      this.selectedRecords = []
+    } else {
+      this.selectedRecords = this.records.map(
+        (record) => record.uniqueIdentifier
+      )
+    }
+  }
+
+  isAllSelected(): boolean {
+    if (this.selectedRecords.length === this.records.length) {
+      const allRecords = this.records.filter((record) =>
+        this.selectedRecords.includes(record.uniqueIdentifier)
+      )
+      if (allRecords.length === this.records.length) {
+        return true
+      }
+    }
+    return false
+  }
+
+  isSomeSelected(): boolean {
+    if (
+      this.selectedRecords.length > 0 &&
+      this.selectedRecords.length < this.records.length
+    ) {
+      return true
+    }
+    return false
   }
 }

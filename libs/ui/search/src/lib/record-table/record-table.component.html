@@ -44,14 +44,22 @@
     </div>
 
     <div
-      class="grid grid-cols-[repeat(5,minmax(0,max-content))] gap-x-4 gap-y-1"
+      class="grid grid-cols-[repeat(6,minmax(0,max-content))] gap-x-4 gap-y-1"
       *ngIf="!records[0].name"
     >
       <div class="contents text-sm">
+        <div class="flex justify-center items-center">
+          <gn-ui-checkbox
+            [checked]="isAllSelected()"
+            [indeterminate]="isSomeSelected()"
+            (changed)="selectAll()"
+          >
+          </gn-ui-checkbox>
+        </div>
         <div class="record-table-header text-gray-400 flex gap-1">
           <gn-ui-button
             type="light"
-            extraClass="px-3 py-2 space-x-1"
+            extraClass="px-3 pl-0 space-x-1 text-left"
             (buttonClick)="setSortBy('resourceTitleObject.default.keyword')"
           >
             <span translate>record.metadata.title</span>
@@ -75,7 +83,7 @@
         <div class="record-table-header text-gray-400 flex gap-1">
           <gn-ui-button
             type="light"
-            extraClass="px-3 py-2 space-x-1"
+            extraClass="px-3 pl-0 space-x-1"
             (buttonClick)="setSortBy('recordOwner')"
           >
             <span translate>record.metadata.author</span>
@@ -96,7 +104,7 @@
         <div class="record-table-header text-gray-400 flex gap-1">
           <gn-ui-button
             type="light"
-            extraClass="px-3 py-2 space-x-1"
+            extraClass="px-3 pl-0 space-x-1"
             (buttonClick)="setSortBy('changeDate')"
           >
             <span translate>record.metadata.updatedOn</span>
@@ -117,7 +125,7 @@
         <div class="record-table-header text-gray-400 flex gap-1">
           <gn-ui-button
             type="light"
-            extraClass="px-3 py-2 space-x-1"
+            extraClass="px-3 pl-0 space-x-1"
             (buttonClick)="setSortBy('createDate')"
           >
             <span translate>record.metadata.createdOn</span>
@@ -141,7 +149,16 @@
         (click)="recordSelect.emit(record)"
         *ngFor="let record of records"
       >
-        <div [title]="record.title" class="record-table-col text-16">
+        <div class="record-table-col">
+          <gn-ui-checkbox
+            [checked]="isChecked(record)"
+            (changed)="handleRecordSelectedChange($event, record)"
+          ></gn-ui-checkbox>
+        </div>
+        <div
+          [title]="record.title"
+          class="record-table-col text-16 self-center"
+        >
           {{ record.title }}
         </div>
         <div
@@ -174,10 +191,10 @@
           <mat-icon class="material-symbols-outlined"> person </mat-icon>
           <span class="">{{ formatUserInfo(record.extras?.ownerInfo) }}</span>
         </div>
-        <div class="record-table-col text-16">
+        <div class="record-table-col text-16 self-center">
           {{ dateToString(record.recordUpdated) }}
         </div>
-        <div class="record-table-col text-16">
+        <div class="record-table-col text-16 self-center">
           {{ dateToString(record.recordCreated) }}
         </div>
       </div>
