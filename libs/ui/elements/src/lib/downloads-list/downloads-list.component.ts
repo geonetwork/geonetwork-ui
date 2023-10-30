@@ -42,7 +42,9 @@ export class DownloadsListComponent {
       this.activeFilterFormats = ['all']
     } else {
       this.activeFilterFormats = this.isFilterActive(format)
-        ? this.activeFilterFormats.filter((f: string) => format !== f)
+        ? this.activeFilterFormats.length > 1
+          ? this.activeFilterFormats.filter((f: string) => format !== f)
+          : ['all']
         : [...this.activeFilterFormats.filter((f) => f !== 'all'), format]
     }
   }
