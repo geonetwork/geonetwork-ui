@@ -13,9 +13,14 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckboxComponent {
+  @Input() type: 'primary' | 'secondary' | 'default' = 'default'
   @Input() checked = false
   @Input() indeterminate? = false
   @Output() changed = new EventEmitter<boolean>()
+
+  get classList() {
+    return `${this.type}`
+  }
 
   handleClick(event: Event) {
     event.stopPropagation()

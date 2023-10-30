@@ -53,6 +53,7 @@
             [checked]="isAllSelected()"
             [indeterminate]="isSomeSelected()"
             (changed)="selectAll()"
+            type="default"
           >
           </gn-ui-checkbox>
         </div>
@@ -153,6 +154,7 @@
           <gn-ui-checkbox
             [checked]="isChecked(record)"
             (changed)="handleRecordSelectedChange($event, record)"
+            type="default"
           ></gn-ui-checkbox>
         </div>
         <div
