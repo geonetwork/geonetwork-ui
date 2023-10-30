@@ -40,10 +40,20 @@ export class DownloadsListComponent {
   toggleFilterFormat(format: FilterFormat): void {
     if (format === 'all') {
       this.activeFilterFormats = ['all']
+      return
+    }
+    if (this.isFilterActive(format)) {
+      this.activeFilterFormats = this.activeFilterFormats.filter(
+        (f: string) => format !== f
+      )
     } else {
-      this.activeFilterFormats = this.isFilterActive(format)
-        ? this.activeFilterFormats.filter((f: string) => format !== f)
-        : [...this.activeFilterFormats.filter((f) => f !== 'all'), format]
+      this.activeFilterFormats = [
+        ...this.activeFilterFormats.filter((f) => f !== 'all'),
+        format,
+      ]
+    }
+    if (this.activeFilterFormats.length === 0) {
+      this.activeFilterFormats = ['all']
     }
   }
 
