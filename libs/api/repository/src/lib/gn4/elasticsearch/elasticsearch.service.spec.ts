@@ -362,7 +362,7 @@ describe('ElasticsearchService', () => {
   })
 
   describe('#injectLangInQueryStringFields - Search language', () => {
-    let queryStringFields = ['resourceTitleObject.${searchLang}']
+    let queryStringFields = { 'resourceTitleObject.${searchLang}': 1 }
     describe('When no lang from config', () => {
       beforeEach(() => {
         service['metadataLang'] = undefined
@@ -397,31 +397,31 @@ describe('ElasticsearchService', () => {
           service['injectLangInQueryStringFields'](queryStringFields)[0].split(
             '.'
           )[1]
-        ).toEqual('langeng')
+        ).toEqual('langeng^11')
       })
       it('add * fallback with low priority', () => {
-        queryStringFields = [
-          'resourceTitleObject.${searchLang}^5',
-          'tag.${searchLang}^4',
-          'resourceAbstractObject.${searchLang}^3',
-          'lineageObject.${searchLang}^2',
-          'any.${searchLang}',
-          'uuid',
-        ]
+        queryStringFields = {
+          'resourceTitleObject.${searchLang}': 5,
+          'tag.${searchLang}': 4,
+          'resourceAbstractObject.${searchLang}': 3,
+          'lineageObject.${searchLang}': 2,
+          'any.${searchLang}': 1,
+          uuid: 1,
+        }
         expect(
           service['injectLangInQueryStringFields'](queryStringFields)
         ).toEqual([
-          'resourceTitleObject.langeng^5',
-          'tag.langeng^4',
-          'resourceAbstractObject.langeng^3',
-          'lineageObject.langeng^2',
-          'any.langeng',
-          'uuid',
-          'resourceTitleObject.*',
-          'tag.*',
-          'resourceAbstractObject.*',
-          'lineageObject.*',
+          'resourceTitleObject.langeng^15',
+          'resourceTitleObject.*^5',
+          'tag.langeng^14',
+          'tag.*^4',
+          'resourceAbstractObject.langeng^13',
+          'resourceAbstractObject.*^3',
+          'lineageObject.langeng^12',
+          'lineageObject.*^2',
+          'any.langeng^11',
           'any.*',
+          'uuid',
         ])
       })
     })
@@ -444,9 +444,9 @@ describe('ElasticsearchService', () => {
                 {
                   multi_match: {
                     fields: [
-                      'resourceTitleObject.langfre',
-                      'resourceAbstractObject.langfre',
-                      'tag',
+                      'resourceTitleObject.langfre^4',
+                      'resourceAbstractObject.langfre^3',
+                      'tag^2',
                       'resourceIdentifier',
                     ],
                     query: 'blarg',

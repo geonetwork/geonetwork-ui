@@ -14,11 +14,12 @@ export const ES_SOURCE_SUMMARY = [
   'userSavedCount',
 ]
 
-export const ES_QUERY_STRING_FIELDS = [
-  'resourceTitleObject.${searchLang}^5',
-  'tag.${searchLang}^4',
-  'resourceAbstractObject.${searchLang}^3',
-  'lineageObject.${searchLang}^2',
-  'any.${searchLang}',
-  'uuid',
-]
+export type EsQueryFieldsPriorityType = Record<string, number>
+export const ES_QUERY_FIELDS_PRIORITY = {
+  'resourceTitleObject.${searchLang}': 5,
+  'tag.${searchLang}': 4,
+  'resourceAbstractObject.${searchLang}': 3,
+  'lineageObject.${searchLang}': 2,
+  'any.${searchLang}': 1,
+  uuid: 1,
+}
