@@ -59,9 +59,49 @@ describe('SelectionService', () => {
     })
   })
 
-  // describe('#deselectRecord', () => {})
+  describe('#deselectRecord', () => {
+    let selectedRecords
+    beforeEach(async () => {
+      service.selectedRecordsIdentifiers$.subscribe((value) => {
+        selectedRecords = value
+      })
+      await firstValueFrom(
+        service.deselectRecord([record('abcd'), record('efgh'), record('001')])
+      )
+    })
+    it('calls the corresponding API', () => {
+      expect(selectionsService.clear).toHaveBeenCalledWith('gnui', [
+        'abcd',
+        'efgh',
+        '001',
+      ])
+    })
+    it('emits new records in selectedRecordsIdentifiers$', () => {
+      expect(selectedRecords).toEqual(['002', '003'])
+    })
+  })
 
-  // describe('#clearSelection', () => {})
+  describe('#clearSelection', () => {
+    let selectedRecords
+    beforeEach(async () => {
+      service.selectedRecordsIdentifiers$.subscribe((value) => {
+        selectedRecords = value
+      })
+      await firstValueFrom(service.clearSelection())
+    })
+    it('calls the corresponding API', () => {
+      expect(selectionsService.get).toHaveBeenCalledWith('gnui')
+
+      expect(selectionsService.clear).toHaveBeenCalledWith('gnui', [
+        '001',
+        '002',
+        '003',
+      ])
+    })
+    it('emits new records in selectedRecordsIdentifiers$', () => {
+      expect(selectedRecords).toEqual([])
+    })
+  })
 
   // describe('selectedRecordsIdentifiers$', () => {})
 })
