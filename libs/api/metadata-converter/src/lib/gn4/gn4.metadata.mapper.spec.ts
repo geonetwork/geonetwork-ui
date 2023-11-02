@@ -634,7 +634,7 @@ describe('Gn4MetadataMapper', () => {
             ],
             recordCreated: new Date('2021-10-05T12:48:57.678Z'),
             recordUpdated: new Date('2021-10-05T12:48:57.678Z'),
-            status: 'under_development',
+            status: 'ongoing',
             themes: ['Installations de suivi environnemental'],
             title: 'Surval - Données par paramètre',
             uniqueIdentifier: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',

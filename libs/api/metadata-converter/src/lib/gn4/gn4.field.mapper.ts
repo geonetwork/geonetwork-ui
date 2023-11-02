@@ -86,7 +86,7 @@ export class Gn4FieldMapper {
     cl_status: (output, source) => ({
       ...output,
       status: getStatusFromStatusCode(
-        getFirstValue(selectField(source, 'cl_status'))
+        selectField(getFirstValue(selectField(source, 'cl_status')), 'key')
       ),
     }),
     cl_maintenanceAndUpdateFrequency: (output, source) => ({
