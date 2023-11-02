@@ -66,7 +66,7 @@ describe('SelectionService', () => {
         selectedRecords = value
       })
       await firstValueFrom(
-        service.deselectRecord([record('abcd'), record('efgh'), record('001')])
+        service.deselectRecords([record('abcd'), record('efgh'), record('001')])
       )
     })
     it('calls the corresponding API', () => {

@@ -66,6 +66,7 @@
       (recordSelect)="editRecord($event)"
       (sortByChange)="setSortBy($event)"
       [sortBy]="searchFacade.sortBy$ | async"
+      [selectedRecords]="getSelectedRecords() | async"
     ></gn-ui-record-table>
     <div
       class="px-5 py-5 flex justify-center gap-8 items-baseline"

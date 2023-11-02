@@ -47,7 +47,7 @@ export class SelectionService {
     )
   }
 
-  deselectRecord(records: CatalogRecord[]): Observable<void> {
+  deselectRecords(records: CatalogRecord[]): Observable<void> {
     const idsToBeRemoved = []
     records.map((record) => {
       idsToBeRemoved.push(record.uniqueIdentifier)
@@ -63,13 +63,13 @@ export class SelectionService {
 
   clearSelection(): Observable<void> {
     const currentSelectedResponse = this.selectionsApi.get(BUCKET_ID)
-    let apiResponse
     let currentSelection
     this.subscription = currentSelectedResponse.subscribe((value) => {
       currentSelection = [...value]
-      this.selectionsApi.clear(BUCKET_ID, currentSelection)
-      apiResponse = this.selectionsApi.clear(BUCKET_ID, currentSelection)
     })
+    this.selectionsApi.clear(BUCKET_ID, currentSelection)
+    const apiResponse = this.selectionsApi.clear(BUCKET_ID, currentSelection)
+
     return apiResponse.pipe(
       tap(() => {
         this.removeIdsFromSelected(currentSelection)

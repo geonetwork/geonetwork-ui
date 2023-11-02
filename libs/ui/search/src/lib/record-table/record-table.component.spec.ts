@@ -4,6 +4,23 @@ import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 import { RecordTableComponent } from './record-table.component'
 import { SortByField } from '@geonetwork-ui/common/domain/search'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { of } from 'rxjs'
+import { SelectionService } from '@geonetwork-ui/api/repository/gn4'
+
+class SelectionsApiMock {
+  private selected = ['001', '002', '003']
+  add = jest.fn((bucket, ids) => {
+    this.selected.push(...ids)
+    return of(undefined)
+  })
+  clear = jest.fn((bucket, ids) => {
+    this.selected = this.selected.filter(
+      (id) => !!ids && ids.indexOf(id) === -1
+    )
+    return of(undefined)
+  })
+  get = jest.fn(() => of(this.selected))
+}
 
 describe('RecordTableComponent', () => {
   let component: RecordTableComponent
@@ -12,6 +29,12 @@ describe('RecordTableComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [RecordTableComponent],
+      providers: [
+        {
+          provide: SelectionService,
+          useValue: SelectionService,
+        },
+      ],
     }).compileComponents()
 
     fixture = TestBed.createComponent(RecordTableComponent)
@@ -83,16 +106,22 @@ describe('RecordTableComponent', () => {
       })
     })
 
-    describe('isChecked', () => {
+    describe('#isChecked', () => {
       it('should return true when the record is in the selectedRecords array', () => {
-        const component = new RecordTableComponent()
+        const selectionServiceApiMock = new SelectionsApiMock() as any
+        const component = new RecordTableComponent(
+          new SelectionService(selectionServiceApiMock)
+        )
         component.selectedRecords = ['1', '2', '3']
         const record = { uniqueIdentifier: '2' } as any as CatalogRecord
         expect(component.isChecked(record)).toBe(true)
       })
 
       it('should return false when the record is not in the selectedRecords array', () => {
-        const component = new RecordTableComponent()
+        const selectionServiceApiMock = new SelectionsApiMock() as any
+        const component = new RecordTableComponent(
+          new SelectionService(selectionServiceApiMock)
+        )
         component.selectedRecords = ['1', '2', '3']
         const record = { uniqueIdentifier: '4' } as any as CatalogRecord
         expect(component.isChecked(record)).toBe(false)
@@ -101,7 +130,10 @@ describe('RecordTableComponent', () => {
 
     describe('#handleRecordSelectedChange', () => {
       it('should add unique identifier to selectedRecords when checkbox is clicked for a record that is not already selected', () => {
-        const component = new RecordTableComponent()
+        const selectionServiceApiMock = new SelectionsApiMock() as any
+        const component = new RecordTableComponent(
+          new SelectionService(selectionServiceApiMock)
+        )
         const record = { uniqueIdentifier: '1' }
         component.selectedRecords = []
 
