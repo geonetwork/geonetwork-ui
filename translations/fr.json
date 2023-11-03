@@ -224,6 +224,7 @@
   "results.records.hits.displayedOn": "",
   "results.records.hits.empty.help.html": "Suggestions : <ul class='list-disc list-inside'><li>Essayez d'autres mots clés</li><li>Cherchez moins de mots</li></ul>",
   "results.records.hits.found": "{hits, plural, =0{Aucune correspondance.} one{1 enregistrement trouvé.} other{{hits} résultats.}}",
+  "results.records.hits.selected": "",
   "results.showMore": "Plus de résultats...",
   "results.sortBy.dateStamp": "Plus récent",
   "results.sortBy.popularity": "Popularité",

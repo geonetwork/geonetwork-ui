@@ -61,4 +61,38 @@ describe('dashboard', () => {
         })
     })
   })
+
+  describe('checkboxes', () => {
+    it('should show the correct amount of selected records when they are selected', () => {
+      cy.visit('/records/all')
+      cy.get('gn-ui-record-table')
+        .find('.record-table-col')
+        .get('[type="checkbox"]')
+        .eq(2)
+        .click()
+      cy.get('.selected-records').contains('1 selected')
+    })
+
+    it('should show nothing when none are selected', () => {
+      cy.visit('/records/all')
+      cy.get('gn-ui-record-table')
+        .find('.record-table-col')
+        .get('mat-checkbox.mat-primary')
+        .each(($checkbox) => cy.wrap($checkbox).click())
+      cy.get('.records-information').should(
+        'not.have.descendants',
+        '.selected-records'
+      )
+    })
+
+    it('should select all records when the "select all" checkbox is checked', () => {
+      cy.visit('/records/all')
+      cy.get('gn-ui-record-table')
+        .find('.record-table-col')
+        .get('mat-checkbox.mat-primary')
+        .first()
+        .click()
+      cy.get('.selected-records').contains('12 selected')
+    })
+  })
 })
