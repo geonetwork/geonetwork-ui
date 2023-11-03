@@ -54,7 +54,7 @@ describe('DownloadsListComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('when a list of downloads', () => {
+  describe('with a non-empty list of downloads', () => {
     let items: DebugElement[]
 
     beforeEach(() => {
@@ -71,7 +71,7 @@ describe('DownloadsListComponent', () => {
     })
   })
 
-  describe('when a list of downloads is empty', () => {
+  describe('with an empty list of downloads', () => {
     let item: DebugElement
 
     beforeEach(() => {
@@ -96,7 +96,7 @@ describe('DownloadsListComponent', () => {
       expect(items.length).toBe(1)
     })
   })
-  describe('derivates color and format from link', () => {
+  describe('derives color and format from link', () => {
     let items: DebugElement[]
 
     beforeEach(() => {
@@ -163,6 +163,40 @@ describe('DownloadsListComponent', () => {
       })
       it('shows no link', () => {
         expect(component.filteredLinks).toEqual([])
+      })
+    })
+
+    describe('toggling formats', () => {
+      it('removes already enabled formats', () => {
+        component.activeFilterFormats = ['excel', 'csv', 'shp']
+        component.toggleFilterFormat('excel')
+        expect(component.activeFilterFormats).toEqual(['csv', 'shp'])
+      })
+      it('adds disabled formats', () => {
+        component.activeFilterFormats = ['excel', 'csv', 'shp']
+        component.toggleFilterFormat('json')
+        expect(component.activeFilterFormats).toEqual([
+          'excel',
+          'csv',
+          'shp',
+          'json',
+        ])
+      })
+      it('sets filter to all if disabling the last format', () => {
+        component.activeFilterFormats = ['excel', 'csv']
+        component.toggleFilterFormat('excel')
+        component.toggleFilterFormat('csv')
+        expect(component.activeFilterFormats).toEqual(['all'])
+      })
+      it('toggling all disables other formats if disabled', () => {
+        component.activeFilterFormats = ['excel', 'csv']
+        component.toggleFilterFormat('all')
+        expect(component.activeFilterFormats).toEqual(['all'])
+      })
+      it('toggling all does nothing if already enabled', () => {
+        component.activeFilterFormats = ['all']
+        component.toggleFilterFormat('all')
+        expect(component.activeFilterFormats).toEqual(['all'])
       })
     })
   })
