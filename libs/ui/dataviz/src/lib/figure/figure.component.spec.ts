@@ -60,7 +60,7 @@ describe('FigureComponent', () => {
       'bg-primary'
     )
   })
-  it('label is main text color', () => {
+  it('label is black text color', () => {
     expect(compiled.querySelector('.figure-block')?.className).toContain(
       'text-black'
     )
