@@ -1,6 +1,10 @@
 import { Inject, Injectable, Optional } from '@angular/core'
 import { Geometry } from 'geojson'
-import { ES_QUERY_STRING_FIELDS, ES_SOURCE_SUMMARY } from './constant'
+import {
+  ES_QUERY_FIELDS_PRIORITY,
+  ES_SOURCE_SUMMARY,
+  EsQueryFieldsPriorityType,
+} from './constant'
 import {
   Aggregation,
   AggregationParams,
@@ -19,6 +23,7 @@ import {
   SortParams,
   TermsAggregationResult,
 } from '@geonetwork-ui/api/metadata-converter'
+import { LangService } from '@geonetwork-ui/util/i18n'
 
 @Injectable({
   providedIn: 'root',
@@ -27,8 +32,10 @@ export class ElasticsearchService {
   // runtime fields are computed using a Painless script
   // see: https://www.elastic.co/guide/en/elasticsearch/reference/current/runtime-mapping-fields.html
   private runtimeFields: Record<string, string> = {}
+  private lang3 = this.langService.iso3
 
   constructor(
+    private langService: LangService,
     @Optional() @Inject(METADATA_LANGUAGE) private metadataLang: string
   ) {}
 
@@ -168,13 +175,40 @@ export class ElasticsearchService {
   }
 
   private injectLangInQueryStringFields(
-    queryStringFields: string[],
-    lang: string
+    queryFieldsPriority: EsQueryFieldsPriorityType
   ) {
-    const queryLang = lang ? `lang${lang}` : `*`
-    return queryStringFields.map((field) => {
-      return field.replace(/\$\{searchLang\}/g, queryLang)
-    })
+    const queryLang = this.getQueryLang()
+    return Object.keys(queryFieldsPriority).reduce((query, field) => {
+      const multiLangRegExp = /\$\{searchLang\}/g
+      const isMultilangField = multiLangRegExp.test(field)
+      const fieldPriority = queryFieldsPriority[field]
+      return [
+        ...query,
+        ...(this.isCurrentSearchLang() && isMultilangField
+          ? [
+              `${field.replace(multiLangRegExp, queryLang)}^${
+                fieldPriority + 10
+              }`,
+              field.replace(multiLangRegExp, '*') +
+                (fieldPriority > 1 ? `^${fieldPriority}` : ''),
+            ]
+          : [
+              field.replace(multiLangRegExp, queryLang) +
+                (fieldPriority > 1 ? `^${fieldPriority}` : ''),
+            ]),
+      ]
+    }, [])
+  }
+
+  private getQueryLang(): string {
+    if (this.metadataLang) {
+      return this.isCurrentSearchLang()
+        ? `lang${this.lang3}`
+        : `lang${this.metadataLang}`
+    } else return '*'
+  }
+  private isCurrentSearchLang() {
+    return this.metadataLang === 'current'
   }
 
   private buildPayloadQuery(
@@ -203,10 +237,7 @@ export class ElasticsearchService {
         query_string: {
           query: this.escapeSpecialCharacters(any),
           default_operator: 'AND',
-          fields: this.injectLangInQueryStringFields(
-            ES_QUERY_STRING_FIELDS,
-            this.metadataLang
-          ),
+          fields: this.injectLangInQueryStringFields(ES_QUERY_FIELDS_PRIORITY),
         },
       })
     }
@@ -290,15 +321,12 @@ export class ElasticsearchService {
               multi_match: {
                 query,
                 type: 'bool_prefix',
-                fields: this.injectLangInQueryStringFields(
-                  [
-                    'resourceTitleObject.${searchLang}',
-                    'resourceAbstractObject.${searchLang}',
-                    'tag',
-                    'resourceIdentifier',
-                  ],
-                  this.metadataLang
-                ),
+                fields: this.injectLangInQueryStringFields({
+                  'resourceTitleObject.${searchLang}': 4,
+                  'resourceAbstractObject.${searchLang}': 3,
+                  tag: 2,
+                  resourceIdentifier: 1,
+                }),
               },
             },
           ],

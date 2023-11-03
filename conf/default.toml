@@ -12,8 +12,9 @@ geonetwork4_api_url = "/geonetwork/srv/api"
 proxy_path = ""
 # This optional parameter defines, in which language metadata should be queried in elasticsearch.
 # Use ISO 639-2/B (https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format to indicate the language of the metadata.
+# Setting to "current" will use the current language of the User Interface.
 # If not indicated, a wildcard is used and no language preference is applied for the search.
-# metadata_language = "fre"
+# metadata_language = "current"
 # This optional URL should point to the login page that allows authentication to the datahub.
 # If not indicated, the default geonetwork login page is used.
 # The following three placeholders can be part of this URL:
