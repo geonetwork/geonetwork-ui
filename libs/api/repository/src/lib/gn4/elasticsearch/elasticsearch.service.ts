@@ -201,11 +201,11 @@ export class ElasticsearchService {
   }
 
   private getQueryLang(): string {
-    return this.metadataLang
-      ? this.isCurrentSearchLang()
+    if (this.metadataLang) {
+      return this.isCurrentSearchLang()
         ? `lang${this.lang3}`
         : `lang${this.metadataLang}`
-      : `*`
+    } else return '*'
   }
   private isCurrentSearchLang() {
     return this.metadataLang === 'current'

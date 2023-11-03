@@ -2,17 +2,31 @@ import { ElasticsearchService } from './elasticsearch.service'
 import { ES_FIXTURE_AGGS_RESPONSE } from '@geonetwork-ui/common/fixtures'
 import { LangService } from '@geonetwork-ui/util/i18n'
 import { EsSearchParams } from '@geonetwork-ui/api/metadata-converter'
+import { TestBed } from '@angular/core/testing'
+import { METADATA_LANGUAGE } from '../../metadata-language'
 
-const langServiceMock = {
-  iso3: 'eng',
-} as LangService
+class LangServiceMock {
+  iso3 = 'eng'
+}
 
 describe('ElasticsearchService', () => {
   let service: ElasticsearchService
   let searchFilters
 
   beforeEach(() => {
-    service = new ElasticsearchService(langServiceMock, 'fre')
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: LangService,
+          useClass: LangServiceMock,
+        },
+        {
+          provide: METADATA_LANGUAGE,
+          useValue: 'fre',
+        },
+      ],
+    })
+    service = TestBed.inject(ElasticsearchService)
   })
 
   it('should be created', () => {
