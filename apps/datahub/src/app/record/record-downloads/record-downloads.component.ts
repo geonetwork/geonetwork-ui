@@ -3,19 +3,19 @@ import { DataService } from '@geonetwork-ui/feature/dataviz'
 import { getFileFormat, getLinkPriority } from '@geonetwork-ui/util/shared'
 import { combineLatest, of } from 'rxjs'
 import { catchError, map, switchMap } from 'rxjs/operators'
-import { MdViewFacade } from '../state'
 import {
   DatasetDistribution,
   DatasetServiceDistribution,
 } from '@geonetwork-ui/common/domain/record'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
 
 @Component({
-  selector: 'gn-ui-data-downloads',
-  templateUrl: './data-downloads.component.html',
-  styleUrls: ['./data-downloads.component.css'],
+  selector: 'datahub-record-downloads',
+  templateUrl: './record-downloads.component.html',
+  styleUrls: ['./record-downloads.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataDownloadsComponent {
+export class RecordDownloadsComponent {
   constructor(public facade: MdViewFacade, private dataService: DataService) {}
 
   error: string = null

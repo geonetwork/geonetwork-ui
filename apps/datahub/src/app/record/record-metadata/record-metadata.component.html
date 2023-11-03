@@ -111,16 +111,16 @@
     class="container-lg px-4 lg:mx-auto"
     *ngIf="displayDownload$ | async"
   >
-    <gn-ui-data-downloads class="block mt-5"></gn-ui-data-downloads>
+    <datahub-record-downloads class="block mt-5"></datahub-record-downloads>
   </div>
 
   <div id="links" class="container-lg px-4 lg:mx-auto">
     <div *ngIf="displayOtherLinks | async">
-      <gn-ui-data-otherlinks class="block mt-5"></gn-ui-data-otherlinks>
+      <datahub-record-otherlinks class="block mt-5"></datahub-record-otherlinks>
     </div>
 
     <div *ngIf="displayApi$ | async">
-      <gn-ui-data-apis class="block mt-6"></gn-ui-data-apis>
+      <datahub-record-apis class="block mt-6"></datahub-record-apis>
     </div>
   </div>
 
@@ -128,9 +128,9 @@
     <div>
       <div class="h-48 overflow-visible">
         <div class="container-lg px-4 lg:mx-auto">
-          <gn-ui-related-records
+          <datahub-record-related-records
             [records]="facade.related$ | async"
-          ></gn-ui-related-records>
+          ></datahub-record-related-records>
         </div>
       </div>
     </div>

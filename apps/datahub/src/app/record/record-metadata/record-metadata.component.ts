@@ -4,12 +4,12 @@ import { SearchService } from '@geonetwork-ui/feature/search'
 import { ErrorType, MetadataQualityDisplay } from '@geonetwork-ui/ui/elements'
 import { BehaviorSubject, combineLatest } from 'rxjs'
 import { filter, map, mergeMap } from 'rxjs/operators'
-import { MdViewFacade } from '../state/mdview.facade'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { Organization } from '@geonetwork-ui/common/domain/record'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
 
 @Component({
-  selector: 'gn-ui-record-metadata',
+  selector: 'datahub-record-metadata',
   templateUrl: './record-metadata.component.html',
   styleUrls: ['./record-metadata.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

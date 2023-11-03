@@ -1,0 +1,25 @@
+<p
+  class="font-title text-[28px] font-medium mt-8 mb-5 text-title text-center sm:mt-12 sm:mb-[-22px] sm:text-left"
+  translate
+>
+  record.metadata.api
+</p>
+<gn-ui-carousel
+  containerClass="gap-4 py-10"
+  stepsContainerClass="right-[var(--container-outside-width)] bottom-[calc(100%-12px)] top-auto"
+>
+  <gn-ui-api-card
+    *ngFor="
+      let link of facade.apiLinks$ | async;
+      let first = first;
+      let last = last
+    "
+    [link]="link"
+    class="w-80"
+    [ngClass]="{
+      'mr-[var(--container-outside-width)]': last,
+      'ml-[var(--container-outside-width)]': first
+    }"
+  >
+  </gn-ui-api-card>
+</gn-ui-carousel>

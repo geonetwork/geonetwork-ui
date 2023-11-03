@@ -93,7 +93,7 @@ describe('dataset pages', () => {
           .filter(':visible')
           .as('navBtns')
         cy.get('@navBtns').eq(3).click()
-        cy.get('gn-ui-data-otherlinks').should('be.visible')
+        cy.get('datahub-record-otherlinks').should('be.visible')
       })
     })
   })
@@ -101,7 +101,7 @@ describe('dataset pages', () => {
   describe('ABOUT SECTION : display & functions', () => {
     describe('display', () => {
       it('should display the description', () => {
-        cy.get('gn-ui-record-metadata')
+        cy.get('datahub-record-metadata')
           .find('[id="about"]')
           .find('gn-ui-metadata-info')
           .find('gn-ui-content-ghost')
@@ -112,11 +112,11 @@ describe('dataset pages', () => {
           })
       })
       it('should display the contact details', () => {
-        cy.get('gn-ui-record-metadata')
+        cy.get('datahub-record-metadata')
           .find('[id="about"]')
           .find('gn-ui-metadata-contact')
           .should('have.length', 1)
-        cy.get('gn-ui-record-metadata')
+        cy.get('datahub-record-metadata')
           .find('[id="about"]')
           .find('gn-ui-metadata-contact')
           .children('div')
@@ -124,13 +124,13 @@ describe('dataset pages', () => {
           .eq(0)
           .invoke('text')
           .should('include', '@')
-        cy.get('gn-ui-record-metadata')
+        cy.get('datahub-record-metadata')
           .find('[id="about"]')
           .find('gn-ui-metadata-catalog')
           .should('have.length', 1)
       })
       it('should display the catalog details', () => {
-        cy.get('gn-ui-record-metadata')
+        cy.get('datahub-record-metadata')
           .find('[id="about"]')
           .find('gn-ui-metadata-catalog')
           .children('div')
@@ -142,7 +142,7 @@ describe('dataset pages', () => {
           })
       })
       it('should display the keywords', () => {
-        cy.get('gn-ui-record-metadata')
+        cy.get('datahub-record-metadata')
           .find('[id="about"]')
           .find('gn-ui-metadata-info')
           .children('div')
@@ -151,7 +151,7 @@ describe('dataset pages', () => {
           .should('have.length.gt', 0)
       })
       it('should display the lineage and usage tabs', () => {
-        cy.get('gn-ui-record-metadata')
+        cy.get('datahub-record-metadata')
           .find('[id="about"]')
           .find('gn-ui-metadata-info')
           .find('gn-ui-expandable-panel')
@@ -161,7 +161,7 @@ describe('dataset pages', () => {
       let targetLink
       let keyword
       it('should go to provider website on click', () => {
-        cy.get('gn-ui-record-metadata')
+        cy.get('datahub-record-metadata')
           .find('[id="about"]')
           .find('gn-ui-metadata-contact')
           .children('div')
@@ -178,7 +178,7 @@ describe('dataset pages', () => {
           })
       })
       it('should go to dataset search page when clicking on org name and filter by org', () => {
-        cy.get('gn-ui-record-metadata')
+        cy.get('datahub-record-metadata')
           .find('[id="about"]')
           .find('gn-ui-metadata-contact')
           .children('div')
@@ -189,7 +189,7 @@ describe('dataset pages', () => {
         cy.url().should('include', '/search?publisher=')
       })
       it('should go to dataset search page when clicking on keyword and filter by keyword', () => {
-        cy.get('gn-ui-record-metadata')
+        cy.get('datahub-record-metadata')
           .find('[id="about"]')
           .find('gn-ui-metadata-info')
           .children('div')
@@ -214,7 +214,7 @@ describe('dataset pages', () => {
 
   describe('PREVIEW SECTION : display & functions', () => {
     beforeEach(() => {
-      cy.get('gn-ui-record-metadata')
+      cy.get('datahub-record-metadata')
         .find('[id="preview"]')
         .first()
         .as('previewSection')
@@ -323,14 +323,14 @@ describe('dataset pages', () => {
   describe('DOWNLOADS : display & functions', () => {
     describe('display', () => {
       it('should have at least one download button', () => {
-        cy.get('gn-ui-data-downloads')
+        cy.get('datahub-record-downloads')
           .find('gn-ui-download-item')
           .should('have.length.gt', 0)
       })
       it('should have one button per download type + all and others', () => {
         cy.get('[data-cy="download-format"]').then((format) => {
           const formatString = format.text()
-          cy.get('gn-ui-data-downloads')
+          cy.get('datahub-record-downloads')
             .find('gn-ui-button')
             .children('button')
             .then((btn) => {
@@ -356,7 +356,7 @@ describe('dataset pages', () => {
       })
       describe('features', () => {
         it('filters the download list on format filter click', () => {
-          cy.get('gn-ui-data-downloads')
+          cy.get('datahub-record-downloads')
             .find('gn-ui-button')
             .children('button')
             .eq(1)
@@ -373,7 +373,7 @@ describe('dataset pages', () => {
           })
         })
         it('downloads a file on click', () => {
-          cy.get('gn-ui-data-downloads')
+          cy.get('datahub-record-downloads')
             .find('gn-ui-download-item')
             .first()
             .click()
@@ -391,21 +391,21 @@ describe('dataset pages', () => {
   describe('LINKS : display & functions', () => {
     describe('display', () => {
       it('should have external, API and internal links with one option', () => {
-        cy.get('gn-ui-data-otherlinks')
+        cy.get('datahub-record-otherlinks')
           .find('gn-ui-link-card')
           .should('have.length.gt', 0)
-        cy.get('gn-ui-data-apis')
+        cy.get('datahub-record-apis')
           .find('gn-ui-api-card')
           .should('have.length.gt', 0)
         cy.get('#related-records')
-          .find('gn-ui-related-records')
+          .find('datahub-record-related-records')
           .find('gn-ui-related-record-card')
           .should('have.length.gt', 0)
       })
     })
     describe('features', () => {
       it('goes to external link on click', () => {
-        cy.get('gn-ui-data-otherlinks')
+        cy.get('datahub-record-otherlinks')
           .find('gn-ui-link-card')
           .first()
           .children('a')
@@ -420,7 +420,7 @@ describe('dataset pages', () => {
           })
       })
       it('copies the API path on click', () => {
-        cy.get('gn-ui-data-apis')
+        cy.get('datahub-record-apis')
           .find('gn-ui-copy-text-button')
           .find('button')
           .first()
@@ -437,7 +437,7 @@ describe('dataset pages', () => {
       it('goes to dataset on click', () => {
         let targetLink
         cy.get('#related-records')
-          .find('gn-ui-related-records')
+          .find('datahub-record-related-records')
           .find('gn-ui-related-record-card')
           .first()
           .children('a')
@@ -458,7 +458,7 @@ describe('dataset pages', () => {
 describe('record with file distributions', () => {
   beforeEach(() => {
     cy.visit('/dataset/n_tri_lill_inondable_s_059')
-    cy.get('gn-ui-record-metadata')
+    cy.get('datahub-record-metadata')
       .find('[id="preview"]')
       .first()
       .as('previewSection')

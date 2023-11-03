@@ -70,6 +70,12 @@ import { METADATA_LANGUAGE } from '@geonetwork-ui/api/repository'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { GN_UI_VERSION } from '@geonetwork-ui/feature/record'
 import { LOGIN_URL } from '@geonetwork-ui/api/repository/gn4'
+import { RecordRelatedRecordsComponent } from './record/record-related-records/record-related-records.component'
+import { RecordMetadataComponent } from './record/record-metadata/record-metadata.component'
+import { RecordOtherlinksComponent } from './record/record-otherlinks/record-otherlinks.component'
+import { RecordDownloadsComponent } from './record/record-downloads/record-downloads.component'
+import { RecordApisComponent } from './record/record-apis/record-apis.component'
+import { MatTabsModule } from '@angular/material/tabs'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 // https://github.com/nrwl/nx/issues/191
@@ -89,6 +95,11 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     LastCreatedComponent,
     KeyFiguresComponent,
     NavigationMenuComponent,
+    RecordRelatedRecordsComponent,
+    RecordMetadataComponent,
+    RecordOtherlinksComponent,
+    RecordDownloadsComponent,
+    RecordApisComponent,
   ],
   imports: [
     BrowserModule,
@@ -128,6 +139,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     FormsModule,
     UiInputsModule,
     UiCatalogModule,
+    MatTabsModule,
   ],
   providers: [
     { provide: RouterService, useClass: DatahubRouterService },

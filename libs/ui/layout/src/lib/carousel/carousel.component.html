@@ -1,0 +1,16 @@
+<div #carouselOverflowContainer class="overflow-hidden h-full w-full">
+  <div class="carousel-container flex flex-row" [ngClass]="containerClass">
+    <ng-content></ng-content>
+  </div>
+</div>
+<div
+  class="absolute right-0 top-0 flex flex-row justify-center gap-[10px] p-1"
+  [ngClass]="stepsContainerClass"
+>
+  <button
+    *ngFor="let step of steps; let i = index"
+    class="carousel-step-dot"
+    (click)="scrollToStep(i)"
+    [ngClass]="selectedStep === i ? 'bg-secondary' : 'bg-gray-400'"
+  ></button>
+</div>
