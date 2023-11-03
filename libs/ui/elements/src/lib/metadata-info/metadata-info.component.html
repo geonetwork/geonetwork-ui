@@ -41,19 +41,19 @@
   >
     <div *ngIf="metadata.recordUpdated">
       <p class="text-sm" translate>record.metadata.updatedOn</p>
-      <p class="text-primary font-medium mt-[4px]">
+      <p class="text-primary font-medium mt-1">
         {{ metadata.recordUpdated && metadata.recordUpdated.toLocaleString() }}
       </p>
     </div>
     <div *ngIf="metadata.updateFrequency">
       <p class="text-sm" translate>record.metadata.updateFrequency</p>
-      <p class="text-primary font-medium mt-[4px]" translate>
+      <p class="text-primary font-medium mt-1" translate>
         domain.record.updateFrequency.{{ metadata.updateFrequency }}
       </p>
     </div>
     <div *ngIf="metadata.status">
       <p class="text-sm" translate>record.metadata.updateStatus</p>
-      <p class="text-primary font-medium mt-[4px]" translate>
+      <p class="text-primary font-medium mt-1" translate>
         domain.record.status.{{ metadata.status }}
       </p>
     </div>
