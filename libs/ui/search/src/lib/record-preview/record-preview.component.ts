@@ -8,7 +8,11 @@ import {
   Output,
   TemplateRef,
 } from '@angular/core'
-import { propagateToDocumentOnly, stripHtml } from '@geonetwork-ui/util/shared'
+import {
+  propagateToDocumentOnly,
+  stripHtml,
+  removeWhitespace,
+} from '@geonetwork-ui/util/shared'
 import { fromEvent, Subscription } from 'rxjs'
 import {
   CatalogRecord,
@@ -49,7 +53,7 @@ export class RecordPreviewComponent implements OnInit, OnDestroy {
   constructor(protected elementRef: ElementRef) {}
 
   ngOnInit(): void {
-    this.abstract = stripHtml(this.record?.abstract)
+    this.abstract = removeWhitespace(stripHtml(this.record?.abstract))
     this.subscription.add(
       fromEvent(this.elementRef.nativeElement, 'click').subscribe(
         (event: Event) => {
