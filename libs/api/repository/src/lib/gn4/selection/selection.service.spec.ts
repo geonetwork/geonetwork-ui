@@ -59,7 +59,7 @@ describe('SelectionService', () => {
     })
   })
 
-  describe('#deselectRecord', () => {
+  describe('#deselectRecords', () => {
     let selectedRecords
     beforeEach(async () => {
       service.selectedRecordsIdentifiers$.subscribe((value) => {

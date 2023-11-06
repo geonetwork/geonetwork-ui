@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { Component, Input } from '@angular/core'
+import { Component, Input, OnDestroy } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { Router } from '@angular/router'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
@@ -9,6 +9,7 @@ import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { SortByField } from '@geonetwork-ui/common/domain/search'
 import { TranslateModule } from '@ngx-translate/core'
 import { SelectionService } from '@geonetwork-ui/api/repository/gn4'
+import { Subject, takeUntil } from 'rxjs'
 
 const includes = [
   'uuid',
@@ -35,13 +36,15 @@ const includes = [
     TranslateModule,
   ],
 })
-export class RecordsListComponent {
+export class RecordsListComponent implements OnDestroy {
   @Input() title: string
   @Input() logo: string
   @Input() recordCount: number
   @Input() userCount: number
   @Input() users
   @Input() linkToDatahub?: string
+
+  private onDestroy$: Subject<void> = new Subject()
 
   constructor(
     private router: Router,
@@ -77,5 +80,24 @@ export class RecordsListComponent {
 
   getSelectedRecords() {
     return this.selectionService.selectedRecordsIdentifiers$
+  }
+
+  handleRecordsSelection(records: CatalogRecord[]) {
+    this.selectionService
+      .selectRecords(records)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe()
+  }
+
+  handleRecordsDeselection(records: CatalogRecord[]) {
+    this.selectionService
+      .deselectRecords(records)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe()
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroy$.next()
+    this.onDestroy$.complete()
   }
 }

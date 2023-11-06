@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  Output,
-} from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
 import {
   FileFormat,
@@ -13,25 +7,21 @@ import {
   getFormatPriority,
 } from '@geonetwork-ui/util/shared'
 import { SortByField } from '@geonetwork-ui/common/domain/search'
-import { SelectionService } from '@geonetwork-ui/api/repository/gn4'
-import { Subject, takeUntil } from 'rxjs'
 
 @Component({
   selector: 'gn-ui-record-table',
   templateUrl: './record-table.component.html',
   styleUrls: ['./record-table.component.css'],
 })
-export class RecordTableComponent implements OnDestroy {
-  private onDestroy$: Subject<void> = new Subject()
-
+export class RecordTableComponent {
   @Input() selectedRecords: string[] = []
   @Input() records: any[] = []
   @Input() totalHits?: number
   @Input() sortBy?: SortByField
   @Output() recordSelect = new EventEmitter<CatalogRecord>()
+  @Output() recordsSelection = new EventEmitter<CatalogRecord[]>()
+  @Output() recordsDeselection = new EventEmitter<CatalogRecord[]>()
   @Output() sortByChange = new EventEmitter<SortByField>()
-
-  constructor(private selectionService: SelectionService) {}
 
   dateToString(date: Date): string {
     return date?.toLocaleDateString(undefined, {
@@ -113,37 +103,25 @@ export class RecordTableComponent implements OnDestroy {
 
   handleRecordSelectedChange(selected: boolean, record: CatalogRecord) {
     if (!selected) {
+      this.recordsDeselection.emit([record])
       this.selectedRecords = this.selectedRecords.filter(
         (val) => val !== record.uniqueIdentifier
       )
-      this.selectionService
-        .deselectRecords([record])
-        .pipe(takeUntil(this.onDestroy$))
-        .subscribe()
     } else {
+      this.recordsSelection.emit([record])
       this.selectedRecords.push(record.uniqueIdentifier)
-      this.selectionService
-        .selectRecords([record])
-        .pipe(takeUntil(this.onDestroy$))
-        .subscribe()
     }
   }
 
   selectAll() {
     if (this.isAllSelected()) {
+      this.recordsDeselection.emit(this.records)
       this.selectedRecords = []
-      this.selectionService
-        .clearSelection()
-        .pipe(takeUntil(this.onDestroy$))
-        .subscribe()
     } else {
-      this.selectedRecords = this.records.map(
-        (record) => record.uniqueIdentifier
-      )
-      this.selectionService
-        .selectRecords(this.records)
-        .pipe(takeUntil(this.onDestroy$))
-        .subscribe()
+      this.recordsSelection.emit(this.records)
+      this.selectedRecords = this.records.map((record) => {
+        return record.uniqueIdentifier
+      })
     }
   }
 
@@ -167,10 +145,5 @@ export class RecordTableComponent implements OnDestroy {
       return true
     }
     return false
-  }
-
-  ngOnDestroy(): void {
-    this.onDestroy$.next()
-    this.onDestroy$.complete()
   }
 }
