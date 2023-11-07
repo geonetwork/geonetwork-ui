@@ -30,7 +30,13 @@
 </ng-container>
 
 <gn-ui-expandable-panel
-  *ngIf="metadata.lineage"
+  class="metadata-origin"
+  *ngIf="
+    metadata.lineage ||
+    metadata.recordUpdated ||
+    metadata.updateFrequency ||
+    metadata.status
+  "
   [title]="'record.metadata.origin' | translate"
 >
   <p class="mb-5 pt-4 whitespace-pre-line break-words" gnUiLinkify>
