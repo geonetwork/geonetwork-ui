@@ -1,3 +1,6 @@
 export * from './lib/feature-editor.module'
 export * from './lib/services/editor.service'
 export * from './lib/record-form/record-form.component'
+export * from './lib/components/wizard/wizard.component'
+export * from './lib/components/wizard-field/wizard-field.component'
+export * from './lib/components/wizard-summarize/wizard-summarize.component'

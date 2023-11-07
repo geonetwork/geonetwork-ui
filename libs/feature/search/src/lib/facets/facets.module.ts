@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
-import { FacetsModule as UiFacetsModule } from '@geonetwork-ui/ui/search'
+import { UiFacetsModule } from '@geonetwork-ui/ui/search'
 import { TranslateModule } from '@ngx-translate/core'
 import { FacetsContainerComponent } from './facets-container/facets-container.component'
 
