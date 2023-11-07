@@ -9,7 +9,7 @@ import { BehaviorSubject, firstValueFrom } from 'rxjs'
 import { MdViewFacade } from '../state'
 import { Component, Input } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
-import { GN_UI_VERSION } from '../feature-record.module'
+import { GN_UI_VERSION } from '../gn-ui-version.token'
 
 const chartConfig1 = {
   aggregation: 'sum',

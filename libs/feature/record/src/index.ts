@@ -1,4 +1,5 @@
 export * from './lib/feature-record.module'
+export * from './lib/gn-ui-version.token'
 export * from './lib/state'
 export * from './lib/data-view-permalink/data-view-permalink.component'
 export * from './lib/data-view/data-view.component'
