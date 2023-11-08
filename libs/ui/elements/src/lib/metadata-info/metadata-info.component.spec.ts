@@ -52,7 +52,7 @@ describe('MetadataInfoComponent', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(MetadataInfoComponent)
       component = fixture.componentInstance
-      component.metadata = DATASET_RECORDS[0]
+      component.metadata = { ...DATASET_RECORDS[0], lineage: null }
       fixture.detectChanges()
     })
     it('should not display a message for no usage or constraints', () => {
@@ -70,6 +70,12 @@ describe('MetadataInfoComponent', () => {
     it('should display the abstract section', () => {
       const displayedElement =
         fixture.nativeElement.querySelector('.md-description p')
+      expect(displayedElement).toBeTruthy()
+    })
+
+    it('should display the the metadata origin even if there is no lineage text', () => {
+      const displayedElement =
+        fixture.nativeElement.querySelector('.metadata-origin')
       expect(displayedElement).toBeTruthy()
     })
   })
