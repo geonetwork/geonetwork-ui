@@ -39,7 +39,11 @@
   "
   [title]="'record.metadata.origin' | translate"
 >
-  <p class="mb-5 pt-4 whitespace-pre-line break-words" gnUiLinkify>
+  <p
+    *ngIf="metadata.lineage"
+    class="mb-5 pt-4 whitespace-pre-line break-words"
+    gnUiLinkify
+  >
     {{ metadata.lineage }}
   </p>
   <div
