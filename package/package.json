@@ -8,7 +8,7 @@
   "type": "module",
   "exports": {
     "./tailwind.base.config.js": "./tailwind.base.config.js",
-    "./tailwind.base.css": "./tailwind.base.css"
+    "./style.css": "./style.css"
   },
   "peerDependencies": {
     "@angular/animations": "16.x || 17.x",

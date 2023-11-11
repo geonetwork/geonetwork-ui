@@ -171,6 +171,7 @@ copySourceDirectories()
       path.join(PROJECT_ROOT_PATH, 'tailwind.base.config.js'),
       PACKAGE_DIST_PATH
     )
+    await copyFile(path.join(CURRENT_DIR_PATH, 'style.css'), PACKAGE_DIST_PATH)
     await copyFile(path.join(CURRENT_DIR_PATH, 'index.ts'), PACKAGE_DIST_PATH)
     await fs.cp(LIBS_DEST_PATH, path.join(PACKAGE_DIST_PATH, 'src/libs'), {
       recursive: true,
@@ -183,12 +184,24 @@ copySourceDirectories()
       }
     )
 
-    console.log('Fixing .d.ts.map sources path to point to the src/libs folder')
+    console.log(
+      'Fixing .d.ts.map sources path to point to the src/libs folder...'
+    )
     await rewriteFiles(
       PACKAGE_DIST_PATH,
       (filePath) => filePath.endsWith('.d.ts.map'),
       (chunk) => chunk.replace('../../libs/', '../src/libs/')
     )
+
+    console.log('Cleaning up...')
+    await fs.rm(path.join(CURRENT_DIR_PATH, 'libs'), {
+      force: true,
+      recursive: true,
+    })
+    await fs.rm(path.join(CURRENT_DIR_PATH, 'translations'), {
+      force: true,
+      recursive: true,
+    })
 
     console.log('Package was successfully generated!')
   })
