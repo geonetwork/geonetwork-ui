@@ -73,7 +73,7 @@
     "@nx/angular": "16.6.0",
     "@rgrove/parse-xml": "~4.0.1",
     "alasql": "^3.1.0",
-    "axios": "^1.0.0",
+    "axios": "^1.6.0",
     "chart.js": "^4.2.0",
     "chroma-js": "^2.1.2",
     "cypress-browser-permissions": "^1.1.0",
