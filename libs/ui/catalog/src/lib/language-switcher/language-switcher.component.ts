@@ -42,6 +42,7 @@ export class LanguageSwitcherComponent implements OnInit {
   changeLanguage(value) {
     try {
       localStorage.setItem(LANGUAGE_STORAGE_KEY, value)
+      location.reload()
     } catch (error) {
       console.warn(`Language choice could not be persisted`, error)
     }
