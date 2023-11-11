@@ -8,13 +8,13 @@ import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { TranslateModule } from '@ngx-translate/core'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
-import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import {
   AuthService,
   AvatarServiceInterface,
 } from '@geonetwork-ui/api/repository/gn4'
+import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
 
 const user = USER_FIXTURE()
 class AuthServiceMock {
@@ -63,14 +63,11 @@ describe('SearchHeaderComponent', () => {
       ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        provideRepositoryUrl('/geonetwork/srv/api'),
         { provide: AuthService, useClass: AuthServiceMock },
         {
           provide: AvatarServiceInterface,
           useClass: AvatarServiceInterfaceMock,
-        },
-        {
-          provide: Configuration,
-          useValue: new Configuration({ basePath: '/geonetwork/srv/api' }),
         },
         {
           provide: OrganizationsServiceInterface,

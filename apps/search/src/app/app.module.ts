@@ -7,10 +7,9 @@ import { FeatureMapModule } from '@geonetwork-ui/feature/map'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { UiMapModule } from '@geonetwork-ui/ui/map'
 import {
-  UtilI18nModule,
   TRANSLATE_DEFAULT_CONFIG,
+  UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
-import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
@@ -22,6 +21,7 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { MainSearchComponent } from './main-search/main-search.component'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
@@ -46,14 +46,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     EffectsModule.forRoot(),
     NoopAnimationsModule,
   ],
-  providers: [
-    {
-      provide: Configuration,
-      useValue: new Configuration({
-        basePath: environment.API_BASE_PATH,
-      }),
-    },
-  ],
+  providers: [provideRepositoryUrl(environment.API_BASE_PATH)],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

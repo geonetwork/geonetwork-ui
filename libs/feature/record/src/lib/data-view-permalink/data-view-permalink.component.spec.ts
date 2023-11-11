@@ -4,12 +4,12 @@ import {
   DataViewPermalinkComponent,
   WEB_COMPONENT_EMBEDDER_URL,
 } from './data-view-permalink.component'
-import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { BehaviorSubject, firstValueFrom } from 'rxjs'
 import { MdViewFacade } from '../state'
 import { Component, Input } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { GN_UI_VERSION } from '../gn-ui-version.token'
+import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
 
 const chartConfig1 = {
   aggregation: 'sum',
@@ -32,9 +32,6 @@ const metadata = {
 class MdViewFacadeMock {
   chartConfig$ = new BehaviorSubject(chartConfig1)
   metadata$ = new BehaviorSubject(metadata)
-}
-class ConfigMock {
-  basePath: 'http://gn-api.url/'
 }
 
 const baseUrl = 'https://example.com/wc-embedder'
@@ -60,10 +57,7 @@ describe('DataViewPermalinkComponent', () => {
       declarations: [DataViewPermalinkComponent, MockCopyTextButtonComponent],
       imports: [TranslateModule.forRoot()],
       providers: [
-        {
-          provide: Configuration,
-          useClass: ConfigMock,
-        },
+        provideRepositoryUrl('http://gn-api.url/'),
         {
           provide: MdViewFacade,
           useClass: MdViewFacadeMock,

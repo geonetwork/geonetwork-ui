@@ -101,13 +101,7 @@ You'll need manual configuration to make the application running:
     // ...
     // provide API url and proxy path
     providers: [
-      {
-        provide: Configuration,
-        useFactory: () =>
-          new Configuration({
-            basePath: getGlobalConfig().GN4_API_URL,
-          }),
-      },
+      provideRepositoryUrl(() => getGlobalConfig().GN4_API_URL),
       {
         provide: PROXY_PATH,
         useFactory: () => getGlobalConfig().PROXY_PATH,

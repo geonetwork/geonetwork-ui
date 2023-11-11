@@ -10,7 +10,6 @@ import {
   DefaultRouterModule,
   RouterService,
 } from '@geonetwork-ui/feature/router'
-import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { ThemeService } from '@geonetwork-ui/util/shared'
 import {
@@ -25,6 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { extModules } from './build-specifics'
 import { DashboardPageComponent } from './dashboard/dashboard-page.component'
 import { EditorRouterService } from './router.service'
+import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
 
 @NgModule({
   declarations: [AppComponent],
@@ -56,13 +56,7 @@ import { EditorRouterService } from './router.service'
     importProvidersFrom(FeatureRecordModule),
     importProvidersFrom(UtilI18nModule),
     importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
-    {
-      provide: Configuration,
-      useFactory: () =>
-        new Configuration({
-          basePath: getGlobalConfig().GN4_API_URL,
-        }),
-    },
+    provideRepositoryUrl(() => getGlobalConfig().GN4_API_URL),
     importProvidersFrom(EffectsModule.forRoot()),
   ],
   bootstrap: [AppComponent],
