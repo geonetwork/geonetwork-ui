@@ -102,6 +102,4 @@ describe('SelectionService', () => {
       expect(selectedRecords).toEqual([])
     })
   })
-
-  // describe('selectedRecordsIdentifiers$', () => {})
 })
