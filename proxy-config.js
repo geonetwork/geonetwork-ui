@@ -1,6 +1,6 @@
 module.exports = {
   '/geonetwork': {
-    target: 'http://localhost:8080',
+    target: 'https://dev.geo2france.fr',
     secure: true,
     logLevel: 'debug',
     changeOrigin: true,

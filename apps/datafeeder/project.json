@@ -68,11 +68,11 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "datafeeder:build:production"
+          "buildTarget": "datafeeder:build:production"
         },
         "development": {
-          "browserTarget": "datafeeder:build:development",
-          "proxyConfig": "proxy-config.js"
+          "proxyConfig": "proxy-config.js",
+          "buildTarget": "datafeeder:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -80,11 +80,11 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "datafeeder:build"
+        "buildTarget": "datafeeder:build"
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": [
           "apps/datafeeder/src/**/*.ts",
@@ -97,8 +97,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/datafeeder"],
       "options": {
-        "jestConfig": "apps/datafeeder/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "apps/datafeeder/jest.config.ts"
       }
     },
     "docker-build": {
