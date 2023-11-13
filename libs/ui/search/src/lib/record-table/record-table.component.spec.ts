@@ -83,7 +83,7 @@ describe('RecordTableComponent', () => {
       })
     })
 
-    describe('isChecked', () => {
+    describe('#isChecked', () => {
       it('should return true when the record is in the selectedRecords array', () => {
         const component = new RecordTableComponent()
         component.selectedRecords = ['1', '2', '3']

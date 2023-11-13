@@ -14,12 +14,13 @@ import { SortByField } from '@geonetwork-ui/common/domain/search'
   styleUrls: ['./record-table.component.css'],
 })
 export class RecordTableComponent {
-  selectedRecords: string[] = []
-
+  @Input() selectedRecords: string[] = []
   @Input() records: any[] = []
   @Input() totalHits?: number
   @Input() sortBy?: SortByField
-  @Output() recordSelect = new EventEmitter<CatalogRecord>()
+  @Output() recordClick = new EventEmitter<CatalogRecord>()
+  @Output() recordsSelect = new EventEmitter<CatalogRecord[]>()
+  @Output() recordsDeselect = new EventEmitter<CatalogRecord[]>()
   @Output() sortByChange = new EventEmitter<SortByField>()
 
   dateToString(date: Date): string {
@@ -102,21 +103,25 @@ export class RecordTableComponent {
 
   handleRecordSelectedChange(selected: boolean, record: CatalogRecord) {
     if (!selected) {
+      this.recordsDeselect.emit([record])
       this.selectedRecords = this.selectedRecords.filter(
         (val) => val !== record.uniqueIdentifier
       )
     } else {
+      this.recordsSelect.emit([record])
       this.selectedRecords.push(record.uniqueIdentifier)
     }
   }
 
   selectAll() {
     if (this.isAllSelected()) {
+      this.recordsDeselect.emit(this.records)
       this.selectedRecords = []
     } else {
-      this.selectedRecords = this.records.map(
-        (record) => record.uniqueIdentifier
-      )
+      this.recordsSelect.emit(this.records)
+      this.selectedRecords = this.records.map((record) => {
+        return record.uniqueIdentifier
+      })
     }
   }
 

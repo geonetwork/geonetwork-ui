@@ -8,6 +8,8 @@ import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { SortByField } from '@geonetwork-ui/common/domain/search'
 import { TranslateModule } from '@ngx-translate/core'
+import { SelectionService } from '@geonetwork-ui/api/repository/gn4'
+import { Subject } from 'rxjs'
 
 const includes = [
   'uuid',
@@ -45,7 +47,8 @@ export class RecordsListComponent {
   constructor(
     private router: Router,
     public searchFacade: SearchFacade,
-    public searchService: SearchService
+    public searchService: SearchService,
+    private selectionService: SelectionService
   ) {
     this.searchFacade.setPageSize(15).setConfigRequestFields(includes)
   }
@@ -71,5 +74,17 @@ export class RecordsListComponent {
 
   showUsers() {
     this.router.navigate(['/users/my-org'])
+  }
+
+  getSelectedRecords() {
+    return this.selectionService.selectedRecordsIdentifiers$
+  }
+
+  handleRecordsSelection(records: CatalogRecord[]) {
+    this.selectionService.selectRecords(records).subscribe()
+  }
+
+  handleRecordsDeselection(records: CatalogRecord[]) {
+    this.selectionService.deselectRecords(records).subscribe()
   }
 }

@@ -8,6 +8,8 @@ import { Router } from '@angular/router'
 import { BehaviorSubject } from 'rxjs'
 import { CommonModule } from '@angular/common'
 import { MatIconModule } from '@angular/material/icon'
+import { SelectionService } from '@geonetwork-ui/api/repository/gn4'
+import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 
 const results = [{ md: true }]
 const currentPage = 5
@@ -22,7 +24,8 @@ const totalPages = 25
 export class RecordTableComponent {
   @Input() records: CatalogRecord[]
   @Input() totalHits: number
-  @Output() recordSelect = new EventEmitter<CatalogRecord>()
+  @Output() recordClick = new EventEmitter<CatalogRecord>()
+  @Output() recordsSelect = new EventEmitter<CatalogRecord[]>()
 }
 
 @Component({
@@ -55,12 +58,18 @@ class RouterMock {
   navigate = jest.fn()
 }
 
+class SelectionServiceMock {
+  selectRecords = jest.fn()
+  deselectRecords = jest.fn()
+  clearSelection = jest.fn()
+}
+
 describe('RecordsListComponent', () => {
   let component: RecordsListComponent
   let fixture: ComponentFixture<RecordsListComponent>
   let router: Router
   let searchService: SearchService
-  let searchFacade: SearchFacade
+  let selectionService: SelectionService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -77,6 +86,10 @@ describe('RecordsListComponent', () => {
           provide: SearchService,
           useClass: SearchServiceMock,
         },
+        {
+          provide: SelectionService,
+          useClass: SelectionServiceMock,
+        },
       ],
     }).overrideComponent(RecordsListComponent, {
       set: {
@@ -90,7 +103,7 @@ describe('RecordsListComponent', () => {
     })
     router = TestBed.inject(Router)
     searchService = TestBed.inject(SearchService)
-    searchFacade = TestBed.inject(SearchFacade)
+    selectionService = TestBed.inject(SelectionService)
     fixture = TestBed.createComponent(RecordsListComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -119,11 +132,31 @@ describe('RecordsListComponent', () => {
       expect(pagination.totalPages).toEqual(totalPages)
     })
     describe('when click on a record', () => {
+      const uniqueIdentifier = 123
+      const singleRecord = {
+        ...DATASET_RECORDS[0],
+        uniqueIdentifier,
+      }
       beforeEach(() => {
-        table.recordSelect.emit({ uniqueIdentifier: 123 })
+        table.recordClick.emit(singleRecord)
       })
       it('routes to record edition', () => {
         expect(router.navigate).toHaveBeenCalledWith(['/edit', 123])
+      })
+    })
+    describe('when selecting a record', () => {
+      const uniqueIdentifier = 123
+      const singleRecord = {
+        ...DATASET_RECORDS[0],
+        uniqueIdentifier,
+      }
+      beforeEach(() => {
+        table.recordsSelect.emit([singleRecord])
+      })
+      it('persists selection', () => {
+        expect(selectionService.selectRecords).toHaveBeenCalledWith([
+          singleRecord,
+        ])
       })
     })
     describe('when click on pagination', () => {
