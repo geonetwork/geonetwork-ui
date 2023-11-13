@@ -15,4 +15,4 @@ jobs:
     steps:
       - uses: camptocamp/backport-action@master
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.BACKPORT_BOT_TOKEN }}
