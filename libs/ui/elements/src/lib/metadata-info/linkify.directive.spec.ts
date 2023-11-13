@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser'
 import { GnUiLinkifyDirective } from './linkify.directive'
 
 @Component({
-  template: `<div [gnUiLinkify]>Click this link https://www.example.com</div>`,
+  template: `<div [gnUiLinkify]>Click this link https://www.example.com/</div>`,
 })
 class TestComponent {}
 
@@ -32,7 +32,7 @@ describe('GnUiLinkifyDirective', () => {
     const anchorElement = debugElement.query(By.css('a'))
 
     const href = anchorElement.nativeElement.getAttribute('href')
-    expect(href).toBe('https://www.example.com')
+    expect(href).toBe('https://www.example.com/')
   })
 
   it('should have the target attribute set to "_blank"', () => {
