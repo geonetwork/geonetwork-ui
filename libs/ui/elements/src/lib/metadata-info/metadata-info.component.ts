@@ -17,6 +17,7 @@ export class MetadataInfoComponent {
   @Input() metadata: Partial<DatasetRecord>
   @Input() incomplete: boolean
   @Output() keyword = new EventEmitter<string>()
+  updatedTimes: number
 
   get hasUsage() {
     return (
@@ -35,6 +36,15 @@ export class MetadataInfoComponent {
       array = array.concat(this.metadata.accessConstraints.map((c) => c.text))
     }
     return array
+  }
+
+  get updateFrequency(): string {
+    if (this.metadata.updateFrequency instanceof Object) {
+      this.updatedTimes = this.metadata.updateFrequency.updatedTimes
+      return `domain.record.updateFrequency.${this.metadata.updateFrequency.per}`
+    } else {
+      return `domain.record.updateFrequency.${this.metadata.updateFrequency}`
+    }
   }
 
   fieldReady(propName: string) {
