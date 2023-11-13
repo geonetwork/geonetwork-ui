@@ -17,6 +17,7 @@
       <gn-ui-fuzzy-search
         class="text-[18px] pointer-events-auto"
         (itemSelected)="onFuzzySearchSelection($event)"
+        [autoFocus]="true"
       ></gn-ui-fuzzy-search>
       <div class="flex h-0 py-5 gap-3" [style.opacity]="-0.6 + expandRatio * 2">
         <datahub-header-badge-button

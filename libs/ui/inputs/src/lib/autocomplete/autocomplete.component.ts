@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -47,6 +48,7 @@ export class AutocompleteComponent
   @Input() action: (value: string) => Observable<AutocompleteItem[]>
   @Input() value?: AutocompleteItem
   @Input() clearOnSelection = false
+  @Input() autoFocus = false
   @Output() itemSelected = new EventEmitter<AutocompleteItem>()
   @Output() inputSubmitted = new EventEmitter<string>()
   @Output() inputCleared = new EventEmitter<void>()
@@ -65,6 +67,7 @@ export class AutocompleteComponent
 
   @Input() displayWithFn: (AutocompleteItem) => string = (item) => item
 
+  constructor(private cdRef: ChangeDetectorRef) {}
   ngOnChanges(changes: SimpleChanges): void {
     const { value } = changes
     if (value) {
@@ -110,6 +113,10 @@ export class AutocompleteComponent
 
   ngAfterViewInit(): void {
     this.autocomplete.optionSelected.subscribe(this.selectionSubject)
+    if (this.autoFocus) {
+      this.inputRef.nativeElement.focus()
+      this.cdRef.detectChanges()
+    }
   }
 
   ngOnDestroy(): void {
