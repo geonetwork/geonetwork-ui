@@ -5,7 +5,7 @@ layout: home
 hero:
   name: 'GeoNetwork-UI'
   text: 'Documentation'
-  tagline: Re-invent your open source data platform.
+  tagline: A user-friendly frontend for GeoNetwork.
   actions:
     - theme: brand
       text: Why?
@@ -15,22 +15,20 @@ hero:
       link: guide/getting-started
 
 features:
-  - icon: 🔗
-    title: Connect
-    details: Connect geonetwork-ui platform to your favorite dataset
-  - icon: 📦
-    title: Prepare
-    details: Arrange the dataset to make it talk.
-  - icon: 💫
-    title: Publish
-    details: Make your dataset public and available.
-  - icon: 🔎
-    title: Explore
-    details: Explore your data through a powerful search engine. Tables, maps and dataviz charts.
-  - icon: 🤝
-    title: Share
-    details: Share your work.
   - icon: 💡
     title: Promote
-    details: Promote your data.
+    details: Promote your data on the Datahub
+    link: apps/datahub
+  - icon: 🔎
+    title: Explore
+    details: Explore your catalog through a powerful search engine. Tables, maps and dataviz charts.
+    link: apps/datahub
+  - icon: ⚙️
+    title: Integrate
+    details: Use Web Components to integrate GeoNetwork-UI features into your website
+    link: guide/webcomponents
+  - icon: 🎨
+    title: Personalize
+    details: A powerful theming system to really make it your own!
+    link: guide/theming
 ---
