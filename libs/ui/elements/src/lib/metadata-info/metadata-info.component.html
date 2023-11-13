@@ -55,10 +55,14 @@
         {{ metadata.recordUpdated && metadata.recordUpdated.toLocaleString() }}
       </p>
     </div>
-    <div *ngIf="metadata.updateFrequency">
+    <div *ngIf="updateFrequency">
       <p class="text-sm" translate>record.metadata.updateFrequency</p>
-      <p class="text-primary font-medium mt-1" translate>
-        domain.record.updateFrequency.{{ metadata.updateFrequency }}
+      <p
+        class="text-primary font-medium mt-1 updateFrequency"
+        translate
+        [translateParams]="{ count: updatedTimes }"
+      >
+        {{ updateFrequency }}
       </p>
     </div>
     <div *ngIf="metadata.status">

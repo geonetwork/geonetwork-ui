@@ -5,7 +5,11 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { DatasetRecord } from '@geonetwork-ui/common/domain/record'
+import {
+  DatasetRecord,
+  UpdateFrequencyCode,
+  UpdateFrequencyCustom,
+} from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-metadata-info',
@@ -17,6 +21,7 @@ export class MetadataInfoComponent {
   @Input() metadata: Partial<DatasetRecord>
   @Input() incomplete: boolean
   @Output() keyword = new EventEmitter<string>()
+  updatedTimes: number
 
   get hasUsage() {
     return (
@@ -35,6 +40,24 @@ export class MetadataInfoComponent {
       array = array.concat(this.metadata.accessConstraints.map((c) => c.text))
     }
     return array
+  }
+
+  get updateFrequency(): string {
+    if (
+      (this.metadata.updateFrequency as UpdateFrequencyCustom).updatedTimes !==
+      undefined
+    ) {
+      this.updatedTimes = (
+        this.metadata.updateFrequency as UpdateFrequencyCustom
+      ).updatedTimes
+      return `domain.record.updateFrequency.${
+        (this.metadata.updateFrequency as UpdateFrequencyCustom).per
+      }`
+    } else {
+      return `domain.record.updateFrequency.${
+        this.metadata.updateFrequency as UpdateFrequencyCode
+      }`
+    }
   }
 
   fieldReady(propName: string) {
