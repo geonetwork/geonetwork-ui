@@ -5,11 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import {
-  DatasetRecord,
-  UpdateFrequencyCode,
-  UpdateFrequencyCustom,
-} from '@geonetwork-ui/common/domain/record'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-metadata-info',
@@ -43,20 +39,11 @@ export class MetadataInfoComponent {
   }
 
   get updateFrequency(): string {
-    if (
-      (this.metadata.updateFrequency as UpdateFrequencyCustom).updatedTimes !==
-      undefined
-    ) {
-      this.updatedTimes = (
-        this.metadata.updateFrequency as UpdateFrequencyCustom
-      ).updatedTimes
-      return `domain.record.updateFrequency.${
-        (this.metadata.updateFrequency as UpdateFrequencyCustom).per
-      }`
+    if (this.metadata.updateFrequency instanceof Object) {
+      this.updatedTimes = this.metadata.updateFrequency.updatedTimes
+      return `domain.record.updateFrequency.${this.metadata.updateFrequency.per}`
     } else {
-      return `domain.record.updateFrequency.${
-        this.metadata.updateFrequency as UpdateFrequencyCode
-      }`
+      return `domain.record.updateFrequency.${this.metadata.updateFrequency}`
     }
   }
 
