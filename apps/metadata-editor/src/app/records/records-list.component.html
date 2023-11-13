@@ -62,9 +62,9 @@
     <gn-ui-record-table
       [records]="results"
       [totalHits]="users ? users.length : (searchFacade.resultsHits$ | async)"
-      (recordSelect)="editRecord($event)"
-      (recordsDeselection)="handleRecordsDeselection($event)"
-      (recordsSelection)="handleRecordsSelection($event)"
+      (recordClick)="editRecord($event)"
+      (recordsDeselect)="handleRecordsDeselection($event)"
+      (recordsSelect)="handleRecordsSelection($event)"
       (sortByChange)="setSortBy($event)"
       [sortBy]="searchFacade.sortBy$ | async"
       [selectedRecords]="getSelectedRecords() | async"

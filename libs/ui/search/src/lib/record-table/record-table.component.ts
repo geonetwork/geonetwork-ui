@@ -18,9 +18,9 @@ export class RecordTableComponent {
   @Input() records: any[] = []
   @Input() totalHits?: number
   @Input() sortBy?: SortByField
-  @Output() recordSelect = new EventEmitter<CatalogRecord>()
-  @Output() recordsSelection = new EventEmitter<CatalogRecord[]>()
-  @Output() recordsDeselection = new EventEmitter<CatalogRecord[]>()
+  @Output() recordClick = new EventEmitter<CatalogRecord>()
+  @Output() recordsSelect = new EventEmitter<CatalogRecord[]>()
+  @Output() recordsDeselect = new EventEmitter<CatalogRecord[]>()
   @Output() sortByChange = new EventEmitter<SortByField>()
 
   dateToString(date: Date): string {
@@ -103,22 +103,22 @@ export class RecordTableComponent {
 
   handleRecordSelectedChange(selected: boolean, record: CatalogRecord) {
     if (!selected) {
-      this.recordsDeselection.emit([record])
+      this.recordsDeselect.emit([record])
       this.selectedRecords = this.selectedRecords.filter(
         (val) => val !== record.uniqueIdentifier
       )
     } else {
-      this.recordsSelection.emit([record])
+      this.recordsSelect.emit([record])
       this.selectedRecords.push(record.uniqueIdentifier)
     }
   }
 
   selectAll() {
     if (this.isAllSelected()) {
-      this.recordsDeselection.emit(this.records)
+      this.recordsDeselect.emit(this.records)
       this.selectedRecords = []
     } else {
-      this.recordsSelection.emit(this.records)
+      this.recordsSelect.emit(this.records)
       this.selectedRecords = this.records.map((record) => {
         return record.uniqueIdentifier
       })
