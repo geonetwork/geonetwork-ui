@@ -1,6 +1,6 @@
 {
-  "catalog.figures.datasets": "données",
-  "catalog.figures.organisations": "organisations",
+  "catalog.figures.datasets": "{count, plural, =0{données} one{donnée} other{données}}",
+  "catalog.figures.organisations": "{count, plural, =0{organisations} one{organisation} other{organisations}}",
   "chart.aggregation.average": "moyenne",
   "chart.aggregation.count": "nombre",
   "chart.aggregation.max": "maximum",

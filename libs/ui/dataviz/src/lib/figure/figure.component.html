@@ -1,4 +1,5 @@
 <div
+  translate
   class="flex flex-row justify-start items-center overflow-hidden"
   [title]="hoverTitle"
 >
@@ -15,6 +16,8 @@
       <span class="figure font-medium mr-[0.3em]">{{ figure }}</span>
       <span class="unit text-[0.665em]">{{ unit }}</span>
     </div>
-    <div class="title truncate">{{ title }}</div>
+    <div translate class="title truncate" [translateParams]="{ count: figure }">
+      {{ title }}
+    </div>
   </div>
 </div>
