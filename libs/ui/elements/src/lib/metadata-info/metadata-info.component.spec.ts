@@ -4,6 +4,8 @@ import { TranslateModule } from '@ngx-translate/core'
 import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
 import { MetadataInfoComponent } from './metadata-info.component'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { TranslateTestingModule } from '@geonetwork-ui/util/i18n'
+import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
 
 describe('MetadataInfoComponent', () => {
   let component: MetadataInfoComponent
@@ -11,7 +13,19 @@ describe('MetadataInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), UtilSharedModule],
+      imports: [
+        TranslateModule.forRoot(),
+        UtilSharedModule,
+        TranslateTestingModule.withTranslations({
+          en: {
+            'domain.record.updateFrequency.notPlanned': 'Not planned',
+            'domain.record.updateFrequency.month':
+              '{count, plural, =0{0 times} one{once} other{{count} times}} per month',
+          },
+        })
+          .withDefaultLanguage('en')
+          .withCompiler(new TranslateMessageFormatCompiler()),
+      ],
       declarations: [MetadataInfoComponent, ContentGhostComponent],
     }).compileComponents()
   })
@@ -71,6 +85,37 @@ describe('MetadataInfoComponent', () => {
       const displayedElement =
         fixture.nativeElement.querySelector('.md-description p')
       expect(displayedElement).toBeTruthy()
+    })
+  })
+  describe('updateFrequency', () => {
+    describe('updateFrequency as UpdateFrequencyCode', () => {
+      beforeEach(() => {
+        fixture = TestBed.createComponent(MetadataInfoComponent)
+        component = fixture.componentInstance
+        component.metadata = {
+          ...DATASET_RECORDS[0],
+          updateFrequency: 'notPlanned',
+        }
+        fixture.detectChanges()
+      })
+      it('should display the updateFrequency code correctly', () => {
+        const displayedElement =
+          fixture.nativeElement.querySelector('.updateFrequency')
+        expect(displayedElement.textContent).toEqual(' Not planned ')
+      })
+    })
+    describe('updateFrequency as UpdateFrequencyCustom', () => {
+      beforeEach(() => {
+        fixture = TestBed.createComponent(MetadataInfoComponent)
+        component = fixture.componentInstance
+        component.metadata = DATASET_RECORDS[0]
+        fixture.detectChanges()
+      })
+      it('should display the updateFrequency object correctly', () => {
+        const displayedElement =
+          fixture.nativeElement.querySelector('.updateFrequency')
+        expect(displayedElement.textContent).toEqual(' 3 times per month ')
+      })
     })
   })
 })
