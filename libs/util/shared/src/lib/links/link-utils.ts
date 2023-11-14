@@ -59,10 +59,10 @@ export const FORMATS = {
     mimeTypes: ['application/geopackage+sqlite3'],
   },
   zip: {
-    extensions: ['zip'],
+    extensions: ['zip', 'tar.gz'],
     priority: 7,
     color: '#f2bb3a',
-    mimeTypes: ['application/zip'],
+    mimeTypes: ['application/zip', 'application/x-zip'],
   },
   pdf: {
     extensions: ['pdf'],
@@ -113,7 +113,10 @@ export function extensionToFormat(extension: string): FileFormat {
 
 export function getFileFormat(link: DatasetDistribution): FileFormat {
   if ('mimeType' in link) {
-    return mimeTypeToFormat(link.mimeType)
+    const mimeTypeFormat = mimeTypeToFormat(link.mimeType)
+    if (mimeTypeFormat !== null) {
+      return mimeTypeFormat
+    }
   }
   for (const format in FORMATS) {
     for (const alias of FORMATS[format].extensions) {
@@ -143,7 +146,7 @@ export function mimeTypeToFormat(mimeType: string): FileFormat {
       if (mimeType === mt) return format as FileFormat
     }
   }
-  return undefined
+  return null
 }
 
 export function checkFileFormat(
