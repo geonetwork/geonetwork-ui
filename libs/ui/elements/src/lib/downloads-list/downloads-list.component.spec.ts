@@ -11,7 +11,10 @@ import { LinkClassifierService } from '@geonetwork-ui/util/shared'
 import { LINK_FIXTURES } from '@geonetwork-ui/common/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
 import { DownloadsListComponent } from './downloads-list.component'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
+import {
+  DatasetDistribution,
+  DatasetDownloadDistribution,
+} from '@geonetwork-ui/common/domain/record'
 
 @Component({
   selector: 'gn-ui-download-item',
@@ -92,8 +95,27 @@ describe('DownloadsListComponent', () => {
       fixture.detectChanges()
       items = de.queryAll(By.directive(MockDownloadItemComponent))
     })
-    it('contains one link', () => {
+    it('contains one link in "others" section', () => {
       expect(items.length).toBe(1)
+      expect(component.isLinkOfFormat(component.links[0], 'others')).toBe(true)
+    })
+  })
+  describe('when link mime type is unknown', () => {
+    let items: DebugElement[]
+
+    beforeEach(() => {
+      component.links = [
+        {
+          ...LINK_FIXTURES.geodataJsonWithMimeType,
+          mimeType: 'unknown/x-type',
+        } as DatasetDownloadDistribution,
+      ]
+      fixture.detectChanges()
+      items = de.queryAll(By.directive(MockDownloadItemComponent))
+    })
+    it('contains one link and mime type is ignored', () => {
+      expect(items.length).toBe(1)
+      expect(component.isLinkOfFormat(component.links[0], 'json')).toBe(true)
     })
   })
   describe('derives color and format from link', () => {
