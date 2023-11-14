@@ -9,6 +9,7 @@ import {
   mimeTypeToFormat,
   getLinkPriority,
 } from './link-utils'
+import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/record'
 
 describe('link utils', () => {
   describe('#getFileFormat', () => {
@@ -27,6 +28,16 @@ describe('link utils', () => {
         expect(getFileFormat(LINK_FIXTURES.geodataJsonWithMimeType)).toEqual(
           'geojson'
         )
+      })
+    })
+    describe('for a geojson FILE link with unrecognized mime type', () => {
+      it('returns geojson format', () => {
+        expect(
+          getFileFormat({
+            ...LINK_FIXTURES.geodataJsonWithMimeType,
+            mimeType: 'unknown',
+          } as DatasetDownloadDistribution)
+        ).toEqual('geojson')
       })
     })
     describe('for a json FILE link', () => {
