@@ -1,6 +1,6 @@
 {
-  "catalog.figures.datasets": "Datensätze",
-  "catalog.figures.organisations": "Organisationen",
+  "catalog.figures.datasets": "{count, plural, =0{Datensätze} one{Datensatz} other{Datensätze}}",
+  "catalog.figures.organisations": "{count, plural, =0{Organisationen} one{Organisation} other{Organisationen}}",
   "chart.aggregation.average": "Durchschnitt",
   "chart.aggregation.count": "Anzahl",
   "chart.aggregation.max": "Maximum",
