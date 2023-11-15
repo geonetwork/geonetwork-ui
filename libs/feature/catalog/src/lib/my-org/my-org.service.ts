@@ -42,7 +42,7 @@ export class MyOrgService {
       map(([user, allUsers, orgs]) => {
         const orgName = user.organisation
         const org = orgs.find((org) => org.name === orgName)
-        const logoUrl = org?.logoUrl?.href.toString()
+        const logoUrl = org?.logoUrl?.toString()
         const recordCount = org?.recordCount
         const userList = allUsers.filter(
           (user) => user.organisation === orgName

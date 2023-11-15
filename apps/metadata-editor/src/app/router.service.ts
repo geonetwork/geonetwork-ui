@@ -18,6 +18,9 @@ export class EditorRouterService {
   }
 
   getDatahubSearchRoute(): string {
-    return new URL(`${getGlobalConfig().DATAHUB_URL}/search`).toString()
+    return new URL(
+      `${getGlobalConfig().DATAHUB_URL}/search`,
+      window.location.toString()
+    ).toString()
   }
 }

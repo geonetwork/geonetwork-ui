@@ -270,6 +270,7 @@ describe('datasets', () => {
         cy.get('@optionsLabel').should('eql', [
           'Agence wallonne du Patrimoine (SPW - Territoire, Logement, Patrimoine, Énergie - Agence wallonne du Patrimoine) (1)',
           'atmo Hauts-de-France (1)',
+          'Barbie Inc. (1)',
           'Bundesamt für Raumentwicklung (1)',
           "Canton du Valais - Service de l'environnement (SEN) - Protection des sols (1)",
           'Cellule informatique et géomatique (SPW - Intérieur et Action sociale - Direction fonctionnelle et d’appui) (1)',
@@ -279,7 +280,7 @@ describe('datasets', () => {
           'Géo2France (1)',
           "Helpdesk carto du SPW (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (2)",
           'Métropole Européenne de Lille (1)',
-          'Région Hauts-de-France (2)',
+          'Région Hauts-de-France (1)',
           'Service public de Wallonie (SPW) (2)',
           "Société Publique de Gestion de l'Eau (SPGE) (1)",
         ])
