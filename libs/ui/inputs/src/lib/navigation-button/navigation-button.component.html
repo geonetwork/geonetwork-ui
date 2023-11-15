@@ -1,12 +1,6 @@
 <button
-  type="button"
-  class="group flex items-center justify-center p-1 bg-white rounded opacity-80 box-shadow-xl shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] mix-blend-luminosity text-black rounded hover:opacity-100"
+  class="group flex items-center justify-center backdrop-blur p-1 bg-primary-opacity-50 text-white rounded"
 >
-  <div
-    class="absolute -z-0 inset-0 bg-white opacity-80 group-hover:opacity-100 rounded transition duration-[20ms]"
-  ></div>
-  <mat-icon class="z-0 material-symbols-outlined align-middle">{{
-    icon
-  }}</mat-icon>
-  <span class="z-0 mx-2 hidden group-hover:inline">{{ label }}</span>
+  <mat-icon class="material-symbols-outlined align-middle">{{ icon }}</mat-icon>
+  <span class="mx-2 hidden group-hover:inline">{{ label }}</span>
 </button>
