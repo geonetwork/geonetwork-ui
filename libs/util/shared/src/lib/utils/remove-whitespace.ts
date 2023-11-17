@@ -1,3 +1,3 @@
 export const removeWhitespace = function (str: string): string {
-  return str.replace(/\s+/g, ' ').trim()
+  return str ? str.replace(/\s+/g, ' ').trim() : undefined
 }
