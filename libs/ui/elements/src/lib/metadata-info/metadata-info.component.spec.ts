@@ -88,6 +88,22 @@ describe('MetadataInfoComponent', () => {
     })
   })
   describe('updateFrequency', () => {
+    describe('updateFrequency is null', () => {
+      beforeEach(() => {
+        fixture = TestBed.createComponent(MetadataInfoComponent)
+        component = fixture.componentInstance
+        component.metadata = {
+          ...DATASET_RECORDS[0],
+          updateFrequency: null,
+        }
+        fixture.detectChanges()
+      })
+      it('should not display the updateFrequency section', () => {
+        const displayedElement =
+          fixture.nativeElement.querySelector('.updateFrequency')
+        expect(displayedElement).toBeFalsy()
+      })
+    })
     describe('updateFrequency as UpdateFrequencyCode', () => {
       beforeEach(() => {
         fixture = TestBed.createComponent(MetadataInfoComponent)

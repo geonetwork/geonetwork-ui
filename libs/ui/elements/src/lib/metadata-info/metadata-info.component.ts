@@ -42,8 +42,10 @@ export class MetadataInfoComponent {
     if (this.metadata.updateFrequency instanceof Object) {
       this.updatedTimes = this.metadata.updateFrequency.updatedTimes
       return `domain.record.updateFrequency.${this.metadata.updateFrequency.per}`
-    } else {
+    } else if (typeof this.metadata.updateFrequency === 'string') {
       return `domain.record.updateFrequency.${this.metadata.updateFrequency}`
+    } else {
+      return undefined
     }
   }
 
