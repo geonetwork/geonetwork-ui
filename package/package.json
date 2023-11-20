@@ -10,6 +10,9 @@
     "./tailwind.base.config.js": "./tailwind.base.config.js",
     "./style.css": "./style.css"
   },
+  "repository": {
+    "url": "https://github.com/geonetwork/geonetwork-ui"
+  },
   "peerDependencies": {
     "@angular/animations": "16.x || 17.x",
     "@angular/cdk": "16.x || 17.x",

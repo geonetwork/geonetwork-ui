@@ -137,6 +137,10 @@ copySourceDirectories()
     )
     await copyFile(path.join(CURRENT_DIR_PATH, 'style.css'), PACKAGE_DIST_PATH)
     await copyFile(path.join(CURRENT_DIR_PATH, 'index.ts'), PACKAGE_DIST_PATH)
+    await fs.cp(
+      path.join(CURRENT_DIR_PATH, 'README.package.md'),
+      path.join(PACKAGE_DIST_PATH, 'README.md')
+    )
     await fs.cp(LIBS_DEST_PATH, path.join(PACKAGE_DIST_PATH, 'src/libs'), {
       recursive: true,
     })
