@@ -9,22 +9,20 @@ An important principle when looking to use GeoNetwork-UI is: **do not fork it!**
 Forking is tempting because it allows customizing things right away and easily, but it has many drawbacks: difficulties for keeping the forked repository in sync,
 fewer contributions being brought upstream, breaking changes and compatibility issues.
 
-If you want to create your own application using GeoNetwork-UI functionalities,you should **create a Custom Application** as described in this guide.
+If you want to create your own application using GeoNetwork-UI functionalities, you should **create a Custom Application** as described in this guide.
 
 ### Creating a Custom Application
 
-In order to discourage forking, GeoNetwork-UI is made to be publishable as an NPM package. This means that
+In order to discourage forking, GeoNetwork-UI is made to be publishable as an [NPM package](https://www.npmjs.com/package/geonetwork-ui). This means that
 **a Custom Application should be a separate project in a separate repository**, and that it should simply list
 GeoNetwork-UI as a regular dependency. No forking, no git submodules, just NPM.
 
 This also means that whenever new functionalities from GeoNetwork-UI are needed the version of the dependency can be
 bumped accordingly.
 
-> **Note:** for now, the aforementioned NPM package isn't published on any repository.
-
 ## What does the NPM package for GeoNetwork-UI contain?
 
-The package contains:
+The [`geonetwork-ui` NPM package](https://www.npmjs.com/package/geonetwork-ui) contains:
 
 - all the libraries in the `libs` folder
 - all translations
@@ -56,6 +54,10 @@ Setting up a Custom Application requires precisely following several steps.
 
 This can be done in several ways, see for instance [Angular Setup Guide](https://angular.io/guide/setup-local).
 
+::: tip
+If using Angular 17+, make sure to create a **non-standalone app** using the `--no-standalone` flag
+:::
+
 ### Step 2: Install the `geonetwork-ui` package
 
 Run:
@@ -64,7 +66,7 @@ Run:
 npm install --save geonetwork-ui
 ```
 
-> **Note:** currently this will fail because NPM package isn't published on any repository!
+> **Note:** because of the large amount of dependencies that geonetwork-ui uses, this command might fail with various errors; in that case please try again with the `--force` command flag
 
 ### Step 3: Adjust the Typescript configuration
 
@@ -222,4 +224,9 @@ Note that this is not guaranteed to be maintained in the long run.
 
 ## Using the NPM package in development mode
 
-> TODO
+When developing in parallel on GeoNetwork-UI and a Custom Application, the following guidelines should be followed:
+
+- A tool such as [yalc](https://github.com/wclr/yalc) is recommended to make a link between the Custom Application and GeoNetwork-UI
+  - [`npm link`](https://docs.npmjs.com/cli/v9/commands/npm-link) or `npm install <path/to/package/dist>` can also be used, but it will require including the [`--install-links` flag for `npm install`](https://docs.npmjs.com/cli/v8/commands/npm-install#install-links), otherwise _transitive dependencies will not be installed!_
+- Having live reload on changes made in a dependency (such as GeoNetwork-UI) is really hard to achieve with Angular; usually, changes in GeoNetwork-UI will only be reflected after a browser refresh
+- To make sure that changes in GeoNetwork-UI are correctly reflected, it might be necessary to disable the Angular cache in `.angular` altogether; see https://angular.io/cli/cache for how to do this
