@@ -1,16 +1,11 @@
 import * as ngPackage from 'ng-packagr'
 import baseTsConfig from '../tsconfig.base.json' assert { type: 'json' }
 import fs from 'fs/promises'
-import {
-  existsSync,
-  lstatSync,
-  createReadStream,
-  createWriteStream,
-  mkdirSync,
-} from 'fs'
+import { existsSync, createReadStream, createWriteStream, mkdirSync } from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { Transform } from 'stream'
+import { rewriteFiles, listDirectoryFiles } from '../tools/file-utils.js'
 
 const PATH_ALIASES = baseTsConfig.compilerOptions.paths
 
@@ -48,21 +43,6 @@ function createPathAliasTransformStream(depth) {
       callback()
     },
   })
-}
-
-async function listDirectoryFiles(path) {
-  return await fs.readdir(path).then((names) =>
-    Promise.all(
-      names.map((name) => {
-        const childPath = `${path}/${name}`
-        const stats = lstatSync(childPath)
-        if (stats.isDirectory()) {
-          return listDirectoryFiles(childPath)
-        }
-        return [childPath]
-      })
-    ).then((files) => files.flat())
-  )
 }
 
 function copyFile(inputPath, outputDirPath, basePath) {
@@ -110,22 +90,6 @@ async function resetDirectory(path) {
     await fs.rm(path, { force: true, recursive: true })
   }
   await fs.mkdir(path)
-}
-
-async function rewriteFiles(path, fileFilterCallback, rewriteCallback) {
-  const files = await listDirectoryFiles(path).then((files) =>
-    files.filter(fileFilterCallback)
-  )
-  return Promise.all(
-    files.map(async (filePath) => {
-      const contents = await fs.readFile(filePath, 'utf8')
-      return fs.writeFile(filePath, rewriteCallback(contents))
-    })
-  )
-    .then((results) =>
-      console.log(`${results.length} files successfully rewritten.`)
-    )
-    .catch(console.error)
 }
 
 async function copySourceDirectories() {

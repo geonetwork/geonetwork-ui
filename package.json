@@ -38,7 +38,8 @@
     "i18n:extract": "ngx-translate-extract -s --fi '  ' --input ./apps ./libs --output ./translations/{en,de,fr,it,es,nl,pt}.json --clean --format json && npm run format:write",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "version": "node tools/update-all-package-json.js && git add package"
   },
   "private": true,
   "dependencies": {
