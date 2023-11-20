@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   Input,
   OnDestroy,
@@ -103,15 +104,20 @@ export class WizardFieldComponent implements AfterViewInit, OnDestroy {
         return data ? new Date(Number(data)) : new Date()
       }
       case WizardFieldType.DROPDOWN: {
+        //TODO called continuously
         return data ? JSON.parse(data) : this.dropdownChoices[0]?.value
       }
     }
   }
 
-  constructor(private wizardService: WizardService) {}
+  constructor(
+    private wizardService: WizardService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngAfterViewInit() {
     this.initializeListeners()
+    this.cdr.detectChanges()
   }
 
   ngOnDestroy() {
@@ -196,6 +202,17 @@ export class WizardFieldComponent implements AfterViewInit, OnDestroy {
   }
 
   private initializeDropdownListener() {
+    if (
+      this.wizardService.getWizardFieldData(this.wizardFieldConfig.id) ===
+        undefined &&
+      !!this.dropdown.selected
+    ) {
+      this.wizardService.setWizardFieldData(
+        this.wizardFieldConfig.id,
+        this.dropdown.selected
+      )
+    }
+
     this.subs.add(
       this.dropdown.selectValue.subscribe((value) => {
         this.wizardService.onWizardWizardFieldDataChanged(
