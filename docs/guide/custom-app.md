@@ -22,7 +22,7 @@ bumped accordingly.
 
 > **Note:** for now, the aforementioned NPM package isn't published on any repository.
 
-## What does the NPM package for GeoNetwork-UI contains?
+## What does the NPM package for GeoNetwork-UI contain?
 
 The package contains:
 
