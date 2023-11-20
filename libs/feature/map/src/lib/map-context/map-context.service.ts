@@ -23,6 +23,8 @@ import { FeatureCollection } from 'geojson'
 import { fromLonLat } from 'ol/proj'
 import WMTS from 'ol/source/WMTS'
 import { removeSearchParams } from '@geonetwork-ui/util/shared'
+import { Geometry } from 'ol/geom'
+import Feature from 'ol/Feature'
 
 export const DEFAULT_BASELAYER_CONTEXT: MapContextLayerXyzModel = {
   type: MapContextLayerTypeEnum.XYZ,
@@ -136,7 +138,7 @@ export class MapContextService {
           }
           const features = this.mapUtils.readFeatureCollection(
             geojson as FeatureCollection
-          )
+          ) as Feature<Geometry>[]
           return new VectorLayer({
             source: new VectorSource({
               features,

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import type { FeatureCollection } from 'geojson'
 import { extend, Extent, isEmpty } from 'ol/extent'
-import OlFeature from 'ol/Feature'
+import OlFeature, { FeatureLike } from 'ol/Feature'
 import GeoJSON from 'ol/format/GeoJSON'
 import { Geometry } from 'ol/geom'
 import Layer from 'ol/layer/Layer'
@@ -50,7 +50,7 @@ export class MapUtilsService {
     featureCollection: FeatureCollection,
     featureProjection = FEATURE_PROJECTION,
     dataProjection = DATA_PROJECTION
-  ): OlFeature<Geometry>[] => {
+  ): FeatureLike[] => {
     const olFeatures = new GeoJSON().readFeatures(featureCollection, {
       featureProjection,
       dataProjection,
