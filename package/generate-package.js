@@ -18,7 +18,7 @@ const TRANSLATIONS_SOURCE_PATH = path.join(PROJECT_ROOT_PATH, './translations')
 const TRANSLATIONS_DEST_PATH = path.join(CURRENT_DIR_PATH, './translations')
 
 /**
- * @param {number} depth Depth value from the `libs` folder (0 means in the libs folder)
+ * @param {number} depth Depth from the `libs` folder (0 means in the libs folder)
  * @return {Transform}
  */
 function createPathAliasTransformStream(depth) {
@@ -121,8 +121,8 @@ copySourceDirectories()
   .then(() =>
     ngPackage
       .ngPackagr()
-      .forProject('ng-package.json')
-      .withTsConfig('tsconfig.json')
+      .forProject(path.join(CURRENT_DIR_PATH, 'ng-package.json'))
+      .withTsConfig(path.join(CURRENT_DIR_PATH, 'tsconfig.json'))
       .build()
   )
   .then(async () => {
