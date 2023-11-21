@@ -1,7 +1,7 @@
 import { Inject, Injectable, Optional } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
-import { buffer, combineLatestWith, debounceTime, from, of } from 'rxjs'
+import { buffer, combineLatestWith, debounceTime, from, of, tap } from 'rxjs'
 import {
   catchError,
   map,
@@ -45,6 +45,7 @@ import { FILTER_GEOMETRY } from '../feature-search.module'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { FavoritesService } from '@geonetwork-ui/api/repository/gn4'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { valid as validGeoJson } from 'geojson-validation'
 
 @Injectable()
 export class SearchEffects {
@@ -128,8 +129,17 @@ export class SearchEffects {
               return of([state, favorites, null])
             }
             return this.filterGeometry$.pipe(
+              tap((geom) => {
+                const isValid = validGeoJson(geom)
+                if (!isValid) {
+                  throw '\nFilter geometry is not a valid GeoJson'
+                }
+              }),
               map((geom) => [state, favorites, geom]),
-              catchError(() => of([state, favorites, null])) // silently opt out of spatial filter if an error happens
+              catchError((e) => {
+                console.warn('The filter geometry cannot be used', e)
+                return of([state, favorites, null])
+              }) // silently opt out of spatial filter if an error happens
             )
           }),
           switchMap(
