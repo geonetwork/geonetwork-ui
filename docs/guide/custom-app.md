@@ -55,20 +55,14 @@ Setting up a Custom Application requires precisely following several steps.
 This can be done in several ways, see for instance [Angular Setup Guide](https://angular.io/guide/setup-local).
 
 ::: tip
+GeoNetwork-UI as an NPM package is **not compatible with Server-Side Rendering!** use the `--ssr false` flag
+:::
+
+::: tip
 If using Angular 17+, make sure to create a **non-standalone app** using the `--no-standalone` flag
 :::
 
-### Step 2: Install the `geonetwork-ui` package
-
-Run:
-
-```shell
-npm install --save geonetwork-ui
-```
-
-> **Note:** because of the large amount of dependencies that geonetwork-ui uses, this command might fail with various errors; in that case please try again with the `--force` command flag
-
-### Step 3: Adjust the Typescript configuration
+### Step 2: Adjust the Typescript configuration
 
 Add the following settings to the `tsconfig.json` file at the root of your project:
 
@@ -99,7 +93,7 @@ Add the following settings to the `tsconfig.json` file at the root of your proje
 
 This is necessary mostly because GeoNetwork-UI will not compile under Typescript strict mode.
 
-### Step 4: Adjust the Angular configuration
+### Step 3: Adjust the Angular configuration
 
 Some dependencies of GeoNetwork-UI will trigger a warning by the Angular compiler. To suppress these warnings, add
 the following settings to the `angular.json` file at the root of your project:
@@ -139,7 +133,7 @@ the following settings to the `angular.json` file at the root of your project:
 The `preserveSymlinks` setting is also important if you're working in dev mode and use a symbolic link to point
 to a dev build of GeoNetwork-UI.
 
-### Step 5: Install Tailwind
+### Step 4: Install Tailwind
 
 [Tailwind CSS](https://tailwindcss.com/) is used for styling across the whole of GeoNetwork-UI, and is a mandatory dependency.
 
@@ -166,12 +160,30 @@ export default {
 
 Here we are inheriting from the GeoNetwork-UI base Tailwind config, which provides many essential things like theme colors etc.
 
-### Step 6: Install other mandatory dependencies
+### Step 5: Install other mandatory dependencies
 
 [Angular Material](https://material.angular.io/) and [ngx-translate](https://github.com/ngx-translate/core) are other dependencies essential for many GeoNetwork-UI components. To install them:
 
 ```shell
-npm install --save @angular/material @angular/material-moment-adapter @ngx-translate/core @ngx-translate/http-loader
+npm install --save \
+  @angular/material \
+  @angular/material-moment-adapter \
+  @angular/cdk \
+  @ngrx/component \
+  @ngrx/effects \
+  @ngrx/router-store \
+  @ngrx/store \
+  @ngrx/store-devtools \
+  @ngx-translate/core \
+  @ngx-translate/http-loader
+```
+
+### Step 6: Install the `geonetwork-ui` package
+
+Run:
+
+```shell
+npm install --save geonetwork-ui
 ```
 
 ### Step 7: Include the required fonts
