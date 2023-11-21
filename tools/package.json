@@ -1,3 +1,12 @@
 {
-  "type": "module"
+  "name": "geonetwork-ui-tools",
+  "description": "A series of tools used alongside GeoNetwork-UI",
+  "type": "module",
+  "devDependencies": {
+    "commander": "11.1.0"
+  },
+  "scripts": {
+    "pipelines:register": "node pipelines/register-es-pipelines.js register",
+    "pipelines:docker-build": "docker build . -f pipelines/Dockerfile -t $(./print-docker-tag.sh tools-pipelines)"
+  }
 }

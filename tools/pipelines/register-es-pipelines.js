@@ -8,14 +8,14 @@ program
 program
   .command('register')
   .description('Register pipelines')
-  .option('--host <value>', 'ElasticSearch host', 'http://localhost:9200/')
+  .option('--host <value>', 'ElasticSearch host', 'http://localhost:9200')
   .option(
     '--records-index <value>',
     'Name of the index used by GeoNetwork for records',
     'gn-records'
   )
   .action((options) => {
-    const esUrl = options.host
+    const esUrl = options.host.replace(/\/$/, '') // remove trailing slash if any
     const recordsIndex = options.recordsIndex
     registerPipelines(esUrl, recordsIndex)
   })
@@ -24,11 +24,11 @@ program
   .description('Clear all registered pipelines')
   .option(
     '--host <value>',
-    'ElasticSearch host, default is http://localhost:9090/',
-    'http://localhost:9200/'
+    'ElasticSearch host, default is http://localhost:9090',
+    'http://localhost:9200'
   )
   .action((options) => {
-    const esUrl = options.host || 'http://localhost:9200/'
+    const esUrl = options.host.replace(/\/$/, '') // remove trailing slash if any
     clearPipelines(esUrl)
   })
 
@@ -132,7 +132,7 @@ for(int i = ctx.format.length - 1; i >= 0; i--) {
 async function registerPipeline(esHost, name, payload) {
   console.log(`adding ${name} pipeline...`)
 
-  await fetch(`${esHost}_ingest/pipeline/${name}`, {
+  await fetch(`${esHost}/_ingest/pipeline/${name}`, {
     method: 'PUT',
     body: JSON.stringify(payload),
     headers: {
@@ -153,7 +153,7 @@ async function registerPipeline(esHost, name, payload) {
 async function clearPipeline(esHost, name) {
   console.log(`clearing ${name} pipeline...`)
 
-  await fetch(`${esHost}_ingest/pipeline/${name}`, {
+  await fetch(`${esHost}/_ingest/pipeline/${name}`, {
     method: 'DELETE',
   })
     .then((resp) => resp.json())
@@ -170,7 +170,7 @@ async function clearPipeline(esHost, name) {
 async function setDefaultPipeline(esHost, recordsIndex, name) {
   console.log(`setting ${name} as default pipeline...`)
 
-  await fetch(`${esHost}${recordsIndex}/_settings`, {
+  await fetch(`${esHost}/${recordsIndex}/_settings`, {
     method: 'PUT',
     body: JSON.stringify({ 'index.default_pipeline': name }),
     headers: {
@@ -191,7 +191,7 @@ async function setDefaultPipeline(esHost, recordsIndex, name) {
 async function registerPipelines(esHost, recordsIndex) {
   console.log('querying currently registered pipelines...')
 
-  const pipelines = await fetch(`${esHost}_ingest/pipeline`).then((resp) =>
+  const pipelines = await fetch(`${esHost}/_ingest/pipeline`).then((resp) =>
     resp.json()
   )
 
@@ -210,7 +210,7 @@ async function registerPipelines(esHost, recordsIndex) {
 }
 
 async function clearPipelines(esHost) {
-  const pipelines = await fetch(`${esHost}_ingest/pipeline`).then((resp) =>
+  const pipelines = await fetch(`${esHost}/_ingest/pipeline`).then((resp) =>
     resp.json()
   )
 

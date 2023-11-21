@@ -142,7 +142,6 @@
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
     "autoprefixer": "^10.4.13",
-    "commander": "11.1.0",
     "cypress": "^12.17.1",
     "cypress-browser-permissions": "^1.1.0",
     "cypress-real-events": "^1.9.1",
