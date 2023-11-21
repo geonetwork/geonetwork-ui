@@ -141,3 +141,45 @@ As such, **authenticated requests are not yet supported in GeoNetwork-UI in the 
 Lastly, even if authenticated requests were cleared regarding CORS rules, it would still be needed to disable the XSRF mechanism for the endpoints that GeoNetwork-UI relies on; XSRF protections works by making the client read the content of an HTTP cookie, and that is forbidden in a cross-origin context
 
 :::
+
+## Enabling improved search fields
+
+ElasticSearch offers the possibility to preprocess the records of a catalog, and this can be leveraged to **improve the search experience in GeoNetwork-UI**. This is done by registering so-called _ingest pipelines_.
+
+GeoNetwork-UI provides several pipelines:
+
+- Enable the Metadata Quality Score
+- Show better, human-readable data formats
+
+There are two options to register these pipelines:
+
+### Option A: Executing a Node script
+
+This will require having `node` installed on the device, as well as a direct HTTP access to the ElasticSearch instance (i.e. not just access to the GeoNetwork API).
+
+First clone the GeoNetwork-UI repository:
+
+```shell
+git clone git@github.com:geonetwork/geonetwork-ui.git
+cd geonetwork-ui
+```
+
+Then run the following script with the appropriate options:
+
+```shell
+node tools/pipelines/register-es-pipelines.js register --host=http://localhost:9090
+```
+
+The `--host` option is used to point to the ElasticSearch instance. Additionnally, the `--records-index` option can be used if the index containing the metadata records is not called `gn-records`.
+
+### Option B: Running a docker image
+
+A docker image called `geonetwork/geonetwork-ui-tools-pipelines` can be used to register pipelines automatically on startup.
+
+To run it:
+
+```shell
+docker run --rm --env ES_HOST=http://localhost:9200 --network host geonetwork/geonetwork-ui-tools-pipelines
+```
+
+Here the `ES_HOST` environment variable is used to point to the ElasticSearch instance. Note that this host will be used _from inside the docker container_, so to access an instance on `localhost` the `--network host` option is also required.
