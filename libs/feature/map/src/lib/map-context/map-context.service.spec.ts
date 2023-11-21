@@ -32,6 +32,14 @@ import {
   DEFAULT_VIEW,
   MapContextService,
 } from './map-context.service'
+import Feature from 'ol/Feature'
+
+class ResizeObserverMock {
+  observe = jest.fn()
+  unobserve = jest.fn()
+}
+
+;(window as any).ResizeObserver = ResizeObserverMock
 
 const mapStyleServiceMock = {
   createDefaultStyle: jest.fn(() => new Style()),
@@ -319,7 +327,9 @@ describe('MapContextService', () => {
       })
       it('add one WFS layer from config on top of baselayer', () => {
         const layerWFSSource = (
-          map.getLayers().item(2) as VectorLayer<VectorSource<Geometry>>
+          map.getLayers().item(2) as VectorLayer<
+            VectorSource<Feature<Geometry>>
+          >
         ).getSource()
         expect(layerWFSSource).toBeInstanceOf(VectorSource)
       })

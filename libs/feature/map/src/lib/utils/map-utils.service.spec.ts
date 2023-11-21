@@ -28,6 +28,21 @@ import {
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import MapBrowserEvent from 'ol/MapBrowserEvent'
 
+jest.mock('ol/proj/proj4', () => {
+  const fromEPSGCodeMock = jest.fn()
+  const registerMock = jest.fn()
+  return {
+    fromEPSGCode: fromEPSGCodeMock,
+    register: registerMock,
+  }
+})
+class ResizeObserverMock {
+  observe = jest.fn()
+  unobserve = jest.fn()
+}
+
+;(window as any).ResizeObserver = ResizeObserverMock
+
 const wmsUtilsMock = {
   getLayerLonLatBBox: jest.fn(() => of([1.33, 48.81, 4.3, 51.1])),
 }
@@ -146,7 +161,7 @@ describe('MapUtilsService', () => {
     })
     it('returns true', () => {
       expect(url).toEqual(
-        'url?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&FORMAT=image%2Fpng&TRANSPARENT=true&QUERY_LAYERS=layerName&LAYERS=layerName&INFO_FORMAT=application%2Fjson&I=50&J=50&CRS=EPSG%3A3857&STYLES=&WIDTH=101&HEIGHT=101&BBOX=-1697932.4932933417%2C4610319.813853541%2C1332067.5067066583%2C7640319.813853541'
+        'url?QUERY_LAYERS=layerName&INFO_FORMAT=application%2Fjson&REQUEST=GetFeatureInfo&SERVICE=WMS&VERSION=1.3.0&FORMAT=image%2Fpng&STYLES=&TRANSPARENT=true&LAYERS=layerName&I=50&J=50&WIDTH=101&HEIGHT=101&CRS=EPSG%3A3857&BBOX=-1697932.4932933417%2C4610319.813853541%2C1332067.5067066583%2C7640319.813853541'
       )
     })
   })
