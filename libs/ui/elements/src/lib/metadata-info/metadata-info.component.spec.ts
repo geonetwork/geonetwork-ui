@@ -88,13 +88,13 @@ describe('MetadataInfoComponent', () => {
     })
   })
   describe('updateFrequency', () => {
-    describe('updateFrequency is null', () => {
+    describe('updateFrequency is not defined', () => {
       beforeEach(() => {
         fixture = TestBed.createComponent(MetadataInfoComponent)
         component = fixture.componentInstance
         component.metadata = {
           ...DATASET_RECORDS[0],
-          updateFrequency: null,
+          updateFrequency: undefined,
         }
         fixture.detectChanges()
       })
