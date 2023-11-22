@@ -22,7 +22,6 @@ export class Gn4MetadataMapper extends MetadataBaseMapper<Gn4Record> {
     const emptyRecord: Partial<CatalogRecord> = {
       kind: 'dataset',
       status: null,
-      updateFrequency: null,
       lineage: null,
       recordUpdated: null,
       ownerOrganization: null,
