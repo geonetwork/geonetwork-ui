@@ -1,0 +1,24 @@
+.default {
+  --gn-ui-checkbox-color: var(--color-main);
+}
+
+.secondary {
+  --gn-ui-checkbox-color: var(--color-secondary);
+}
+
+.primary {
+  --gn-ui-checkbox-color: var(--color-primary);
+}
+
+mat-checkbox {
+  --mdc-checkbox-selected-icon-color: var(--gn-ui-checkbox-color);
+  --mdc-checkbox-selected-focus-icon-color: var(--gn-ui-checkbox-color);
+  --mdc-checkbox-selected-hover-icon-color: var(--gn-ui-checkbox-color);
+  --mdc-checkbox-selected-icon-color: var(--gn-ui-checkbox-color);
+  --mdc-checkbox-selected-pressed-icon-color: var(--gn-ui-checkbox-color);
+  --mdc-checkbox-selected-focus-state-layer-color: var(--gn-ui-checkbox-color);
+  --mdc-checkbox-selected-hover-state-layer-color: var(--gn-ui-checkbox-color);
+  --mdc-checkbox-selected-pressed-state-layer-color: var(
+    --gn-ui-checkbox-color
+  );
+}

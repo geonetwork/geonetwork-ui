@@ -4,6 +4,7 @@ import { TestBed } from '@angular/core/testing'
 import { MeApiService } from '@geonetwork-ui/data-access/gn4'
 import { TranslateService } from '@ngx-translate/core'
 import { AvatarServiceInterface } from './avatar.service.interface'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 
 const userMock = {
   id: '21737',
@@ -64,6 +65,7 @@ describe('AuthService', () => {
           useClass: AvatarServiceInterfaceMock,
         },
       ],
+      imports: [HttpClientTestingModule],
     })
   })
 

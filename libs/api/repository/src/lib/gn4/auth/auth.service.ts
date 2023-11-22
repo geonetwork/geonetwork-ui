@@ -2,6 +2,8 @@ import { Inject, Injectable, InjectionToken, Optional } from '@angular/core'
 import {
   MeApiService,
   MeResponseApiModel,
+  UserApiModel,
+  UsersApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n'
 import { UserModel } from '@geonetwork-ui/common/domain/user.model'
@@ -19,6 +21,7 @@ export const LOGIN_URL = new InjectionToken<string>('loginUrl')
 export class AuthService {
   authReady$: Observable<UserModel>
   user$: Observable<UserModel>
+  allUsers$: Observable<UserApiModel[]>
   isAnonymous$ = this.authReady().pipe(map((user) => !user || !('id' in user)))
 
   baseLoginUrl = this.baseLoginUrlToken || DEFAULT_GN4_LOGIN_URL
@@ -42,6 +45,7 @@ export class AuthService {
     @Inject(LOGIN_URL)
     private baseLoginUrlToken: string,
     private meApi: MeApiService,
+    private usersApi: UsersApiService,
     private translateService: TranslateService,
     private avatarService: AvatarServiceInterface
   ) {
@@ -49,6 +53,7 @@ export class AuthService {
       map((apiUser) => this.mapToUserModel(apiUser)),
       shareReplay({ bufferSize: 1, refCount: true })
     )
+    this.allUsers$ = this.usersApi.getUsers().pipe(shareReplay())
   }
 
   // TODO: refactor authReady

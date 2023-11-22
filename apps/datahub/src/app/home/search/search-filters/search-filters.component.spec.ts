@@ -20,6 +20,8 @@ import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 import { FormsModule } from '@angular/forms'
 import { FieldFilters } from '@geonetwork-ui/common/domain/search'
+import { USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
+import { AuthService } from '@geonetwork-ui/api/repository/gn4'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getOptionalSearchConfig: () => ({
@@ -64,6 +66,7 @@ export class MockFilterDropdownComponent {
   @Input() title: string
 }
 const state = { OrgForResource: { mel: true } } as FieldFilters
+const user = USER_FIXTURE()
 class SearchFacadeMock {
   searchFilters$ = new BehaviorSubject(state)
   hasSpatialFilter$ = new BehaviorSubject(false)
@@ -100,6 +103,12 @@ class FieldsServiceMock {
   }
 }
 
+class AuthServiceMock {
+  user$ = new BehaviorSubject(user)
+  authReady = jest.fn(() => this._authSubject$)
+  _authSubject$ = new BehaviorSubject({})
+}
+
 describe('SearchFiltersComponent', () => {
   let component: SearchFiltersComponent
   let fixture: ComponentFixture<SearchFiltersComponent>
@@ -128,6 +137,10 @@ describe('SearchFiltersComponent', () => {
           provide: FieldsService,
           useClass: FieldsServiceMock,
         },
+        {
+          provide: AuthService,
+          useClass: AuthServiceMock,
+        },
       ],
     })
       .overrideComponent(SearchFiltersComponent, {
@@ -152,7 +165,9 @@ describe('SearchFiltersComponent', () => {
 
   describe('spatial filter button', () => {
     function getCheckToggleDebugElement() {
-      return fixture.debugElement.query(By.directive(MockCheckToggleComponent))
+      return fixture.debugElement.queryAll(
+        By.directive(MockCheckToggleComponent)
+      )
     }
 
     describe('when panel is closed', () => {
@@ -161,7 +176,7 @@ describe('SearchFiltersComponent', () => {
         fixture.detectChanges()
       })
       it('does not show up', () => {
-        expect(getCheckToggleDebugElement()).toBeFalsy()
+        expect(getCheckToggleDebugElement().length).toBeFalsy()
       })
     })
     describe('when panel is opened & a spatial filter is unavailable', () => {
@@ -171,7 +186,7 @@ describe('SearchFiltersComponent', () => {
         fixture.detectChanges()
       })
       it('does not show up', () => {
-        expect(getCheckToggleDebugElement()).toBeFalsy()
+        expect(getCheckToggleDebugElement().length).toBe(1)
       })
     })
     describe('when panel is opened & a spatial filter is available', () => {
@@ -182,11 +197,11 @@ describe('SearchFiltersComponent', () => {
         fixture.detectChanges()
       })
       it('does show up', () => {
-        expect(getCheckToggleDebugElement()).toBeTruthy()
+        expect(getCheckToggleDebugElement().length).toBe(2)
       })
       it('has the value set in the state', () => {
         expect(
-          getCheckToggleDebugElement().componentInstance.value
+          getCheckToggleDebugElement()[0].componentInstance.value
         ).toBeTruthy()
       })
     })
@@ -198,7 +213,7 @@ describe('SearchFiltersComponent', () => {
       })
       it('emits a SetSpatialFilterEnabled action', () => {
         const checkToggleComponent =
-          getCheckToggleDebugElement().componentInstance
+          getCheckToggleDebugElement()[0].componentInstance
         checkToggleComponent.toggled.emit(false)
         expect(searchFacade.setSpatialFilterEnabled).toHaveBeenCalledWith(false)
       })

@@ -6,6 +6,7 @@
 [global]
 # This URL (relative or absolute) must point to the API endpoint of a GeoNetwork4 instance
 geonetwork4_api_url = "/geonetwork/srv/api"
+datahub_url = "/datahub"
 # This should point to a proxy to avoid CORS errors on some requests (data preview, OGC capabilities etc.)
 # The actual URL will be appended after this path, e.g. : https://my.proxy/?url=http%3A%2F%2Fencoded.url%2Fows`
 # This is an optional parameter: leave empty to disable proxy usage
@@ -72,7 +73,7 @@ background_color = "#fdfbff"
 # filter_geometry_data = '{ "coordinates": [...], "type": "Polygon" }'
 
 # The advanced search filters available to the user can be customized with this setting.
-# The following fields can be used for filtering: 'publisher', 'format', 'publicationYear', 'documentStandard', 'inspireKeyword', 'topic', 'isSpatial', 'license'
+# The following fields can be used for filtering: 'publisher', 'format', 'publicationYear', 'standard', 'inspireKeyword', 'topic', 'isSpatial', 'license'
 # any other field will be ignored
 # advanced_filters = ['publisher', 'format', 'publicationYear', 'topic', 'isSpatial', 'license']
 

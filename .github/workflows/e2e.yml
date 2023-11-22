@@ -1,0 +1,25 @@
+name: End-to-end tests
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
+
+jobs:
+  cypress-run:
+    name: Cypress test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the backend
+        run: sudo docker-compose -f support-services/docker-compose.yml up -d init
+
+      - name: install dependencies
+        run: |
+          npm ci
+
+      - name: E2E tests
+        run: npx nx run-many --target=e2e

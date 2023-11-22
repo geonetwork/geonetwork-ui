@@ -77,6 +77,7 @@ describe('FieldsService', () => {
           'isSpatial',
           'q',
           'license',
+          'owner',
         ])
       })
     })
@@ -156,6 +157,7 @@ describe('FieldsService', () => {
           representationType: [],
           resourceType: [],
           topic: [],
+          owner: [],
         })
       })
     })

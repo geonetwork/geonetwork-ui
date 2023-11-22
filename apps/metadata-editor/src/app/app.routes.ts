@@ -10,6 +10,7 @@ import { MyRecordsComponent } from './records/my-records/my-records.component'
 import { MyDraftComponent } from './records/my-draft/my-draft.component'
 import { MyLibraryComponent } from './records/my-library/my-library.component'
 import { SearchRecordsComponent } from './records/search-records/search-records-list.component'
+import { MyOrgUsersComponent } from './my-org-users/my-org-users.component'
 
 export const appRoutes: Route[] = [
   { path: '', component: DashboardPageComponent, pathMatch: 'prefix' },
@@ -60,6 +61,10 @@ export const appRoutes: Route[] = [
         pathMatch: 'prefix',
       },
     ],
+  },
+  {
+    path: 'users/my-org',
+    component: MyOrgUsersComponent,
   },
   { path: 'sign-in', component: SignInPageComponent },
   { path: 'create', component: CreatePageComponent },

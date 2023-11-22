@@ -9,6 +9,8 @@ import {
   Aggregation,
   AggregationParams,
   AggregationsParams,
+  FieldFilter,
+  FieldFilters,
   FilterAggregationParams,
   SortByField,
 } from '@geonetwork-ui/common/domain/search'
@@ -211,17 +213,36 @@ export class ElasticsearchService {
     return this.metadataLang === 'current'
   }
 
+  private filtersToQueryString(filters: FieldFilters): string {
+    const makeQuery = (filter: FieldFilter): string => {
+      if (typeof filter === 'string') {
+        return filter
+      }
+      return Object.keys(filter)
+        .map((key) => {
+          if (filter[key] === true) {
+            return `"${key}"`
+          }
+          return `-"${key}"`
+        })
+        .join(' OR ')
+    }
+    return Object.keys(filters)
+      .filter(
+        (fieldname) =>
+          filters[fieldname] && JSON.stringify(filters[fieldname]) !== '{}'
+      )
+      .map((fieldname) => `${fieldname}:(${makeQuery(filters[fieldname])})`)
+      .join(' AND ')
+  }
+
   private buildPayloadQuery(
     { any, ...fieldSearchFilters }: SearchFilters,
     configFilters: SearchFilters,
     uuids?: string[],
     geometry?: Geometry
   ) {
-    const queryFilters = this.stateFiltersToQueryString(fieldSearchFilters)
-    const must = [this.queryFilterOnValues('isTemplate', 'n')] as Record<
-      string,
-      unknown
-    >[]
+    const must = [] as Record<string, unknown>[]
     const must_not = {
       ...this.queryFilterOnValues('resourceType', [
         'service',
@@ -231,6 +252,10 @@ export class ElasticsearchService {
       ]),
     }
     const should = [] as Record<string, unknown>[]
+    const filter = [this.queryFilterOnValues('isTemplate', 'n')] as Record<
+      string,
+      unknown
+    >[]
 
     if (any) {
       must.push({
@@ -241,15 +266,16 @@ export class ElasticsearchService {
         },
       })
     }
+    const queryFilters = this.filtersToQueryString(fieldSearchFilters)
     if (queryFilters) {
-      must.push({
+      filter.push({
         query_string: {
           query: queryFilters,
         },
       })
     }
     if (uuids) {
-      must.push({
+      filter.push({
         ids: {
           values: uuids,
         },
@@ -283,7 +309,7 @@ export class ElasticsearchService {
         must,
         must_not,
         should,
-        filter: [],
+        filter,
       },
     }
   }
@@ -376,6 +402,7 @@ export class ElasticsearchService {
    *   }
    * }
    */
+  // FIXME: this is not used anymore
   stateFiltersToQueryString(facetsState) {
     const query = []
     for (const indexKey in facetsState) {
@@ -393,6 +420,7 @@ export class ElasticsearchService {
     return this.combineQueryGroups(query)
   }
 
+  // FIXME: this is not used anymore
   private parseStateNode(nodeName, node, indexKey) {
     let queryString = ''
     if (node && typeof node === 'object') {
@@ -444,20 +472,24 @@ export class ElasticsearchService {
   }
 
   buildAggregationsPayload(aggregations: AggregationsParams): any {
-    const mapFilterAggregation = (filterAgg: FilterAggregationParams) => ({
-      match: filterAgg,
-    })
     const mapToESAggregation = (aggregation: AggregationParams) => {
       switch (aggregation.type) {
         case 'filters':
           return {
-            filters: Object.keys(aggregation.filters).reduce(
-              (prev, curr) => ({
+            filters: Object.keys(aggregation.filters).reduce((prev, curr) => {
+              const filter = aggregation.filters[curr]
+              return {
                 ...prev,
-                [curr]: mapFilterAggregation(aggregation.filters[curr]),
-              }),
-              {}
-            ),
+                [curr]: {
+                  query_string: {
+                    query:
+                      typeof filter === 'string'
+                        ? filter
+                        : this.filtersToQueryString(filter),
+                  },
+                },
+              }
+            }, {}),
           }
         case 'terms':
           return {

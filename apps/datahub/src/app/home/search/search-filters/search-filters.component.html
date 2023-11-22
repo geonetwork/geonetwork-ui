@@ -53,7 +53,7 @@
     ></gn-ui-filter-dropdown>
     <div
       class="spatial-filter-toggle sm:col-span-2"
-      *ngIf="isOpen && searchFacade.hasSpatialFilter$ | async"
+      *ngIf="isOpen && (searchFacade.hasSpatialFilter$ | async)"
     >
       <gn-ui-check-toggle
         [title]="'search.filters.useSpatialFilterHelp' | translate"
@@ -62,6 +62,30 @@
         [value]="searchFacade.spatialFilterEnabled$ | async"
         (toggled)="toggleSpatialFilter($event)"
       ></gn-ui-check-toggle>
+    </div>
+    <div class="sm:col-span-2" *ngIf="userId && isOpen">
+      <gn-ui-check-toggle
+        [title]="'search.filters.myRecordsHelp' | translate"
+        [label]="'search.filters.myRecords' | translate"
+        [color]="'secondary'"
+        [value]="myRecordsFilterEnabled$ | async"
+        (toggled)="toggleMyRecordsFilter($event)"
+      ></gn-ui-check-toggle>
+    </div>
+    <div
+      class="sm:col-span-2"
+      *ngIf="!userId && (myRecordsFilterEnabled$ | async) && isOpen"
+    >
+      <gn-ui-button
+        type="light"
+        extraClass="text-sm align-middle"
+        (buttonClick)="toggleMyRecordsFilter(false)"
+      >
+        <span>{{ 'search.filters.otherRecords' | translate }}</span>
+        <mat-icon class="material-symbols-outlined ml-3 opacity-40"
+          >close</mat-icon
+        >
+      </gn-ui-button>
     </div>
   </div>
   <div

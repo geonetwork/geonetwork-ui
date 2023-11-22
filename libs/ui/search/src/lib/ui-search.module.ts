@@ -27,6 +27,7 @@ import { RecordPreviewFeedComponent } from './record-preview-feed/record-preview
 import { RecordTableComponent } from './record-table/record-table.component'
 import { CommonModule } from '@angular/common'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { MatCheckboxModule } from '@angular/material/checkbox'
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
     UiInputsModule,
     UiElementsModule,
     MatIconModule,
+    MatCheckboxModule,
     RouterLink,
   ],
   exports: [

@@ -103,6 +103,16 @@
         "jestConfig": "apps/metadata-editor/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "docker-build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "nx build metadata-editor --base-href='/metadata-editor/'",
+          "docker build --build-arg APP_NAME=metadata-editor -f ./tools/docker/Dockerfile.apps . -t $(tools/print-docker-tag.sh metadata-editor)"
+        ],
+        "parallel": false
+      }
     }
   },
   "tags": ["type:app"]

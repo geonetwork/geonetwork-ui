@@ -14,10 +14,13 @@ import { SortByField } from '@geonetwork-ui/common/domain/search'
   styleUrls: ['./record-table.component.css'],
 })
 export class RecordTableComponent {
-  @Input() records: CatalogRecord[] = []
+  @Input() selectedRecords: string[] = []
+  @Input() records: any[] = []
   @Input() totalHits?: number
   @Input() sortBy?: SortByField
-  @Output() recordSelect = new EventEmitter<CatalogRecord>()
+  @Output() recordClick = new EventEmitter<CatalogRecord>()
+  @Output() recordsSelect = new EventEmitter<CatalogRecord[]>()
+  @Output() recordsDeselect = new EventEmitter<CatalogRecord[]>()
   @Output() sortByChange = new EventEmitter<SortByField>()
 
   dateToString(date: Date): string {
@@ -89,5 +92,58 @@ export class RecordTableComponent {
   isSortedBy(col: string, order: 'asc' | 'desc'): boolean {
     const sortOrder = this.getOrderForColumn(col)
     return sortOrder === order
+  }
+
+  isChecked(record: CatalogRecord) {
+    if (this.selectedRecords.includes(record.uniqueIdentifier)) {
+      return true
+    }
+    return false
+  }
+
+  handleRecordSelectedChange(selected: boolean, record: CatalogRecord) {
+    if (!selected) {
+      this.recordsDeselect.emit([record])
+      this.selectedRecords = this.selectedRecords.filter(
+        (val) => val !== record.uniqueIdentifier
+      )
+    } else {
+      this.recordsSelect.emit([record])
+      this.selectedRecords.push(record.uniqueIdentifier)
+    }
+  }
+
+  selectAll() {
+    if (this.isAllSelected()) {
+      this.recordsDeselect.emit(this.records)
+      this.selectedRecords = []
+    } else {
+      this.recordsSelect.emit(this.records)
+      this.selectedRecords = this.records.map((record) => {
+        return record.uniqueIdentifier
+      })
+    }
+  }
+
+  isAllSelected(): boolean {
+    if (this.selectedRecords.length === this.records.length) {
+      const allRecords = this.records.filter((record) =>
+        this.selectedRecords.includes(record.uniqueIdentifier)
+      )
+      if (allRecords.length === this.records.length) {
+        return true
+      }
+    }
+    return false
+  }
+
+  isSomeSelected(): boolean {
+    if (
+      this.selectedRecords.length > 0 &&
+      this.selectedRecords.length < this.records.length
+    ) {
+      return true
+    }
+    return false
   }
 }
