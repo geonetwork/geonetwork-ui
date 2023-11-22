@@ -745,25 +745,28 @@ describe('MapViewComponent', () => {
     })
   })
 
-  const vectorLayer = new VectorLayer({
-    source: new VectorSource({
-      features: new GeoJSON().readFeatures(
-        FEATURE_COLLECTION_POINT_FIXTURE_4326,
-        {
-          featureProjection: 'EPSG:3857',
-          dataProjection: 'EPSG:4326',
-        }
-      ),
-    }),
-  })
-  const selectionFeatures = [
-    vectorLayer
-      .getSource()
-      .getFeatures()
-      .find((feature) => feature.getId() === 2),
-  ]
-
   describe('feature info', () => {
+    let selectionFeatures
+    beforeEach(() => {
+      const vectorLayer = new VectorLayer({
+        source: new VectorSource({
+          features: new GeoJSON().readFeatures(
+            FEATURE_COLLECTION_POINT_FIXTURE_4326,
+            {
+              featureProjection: 'EPSG:3857',
+              dataProjection: 'EPSG:4326',
+            }
+          ),
+        }),
+      })
+      selectionFeatures = [
+        vectorLayer
+          .getSource()
+          .getFeatures()
+          .find((feature) => feature.getId() === 2),
+      ]
+    })
+
     it('creates selection style', () => {
       expect(component['selectionStyle']).toBeTruthy()
     })
