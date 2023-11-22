@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "../node_modules/ng-packagr/lib/ts/conf/tsconfig.ngc.json",
+    "../tsconfig.base.json"
+  ],
+  "compilerOptions": {
+    "useDefineForClassFields": false,
+    "declarationMap": true
+  },
+  "angularCompilerOptions": {
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": false
+  }
+}

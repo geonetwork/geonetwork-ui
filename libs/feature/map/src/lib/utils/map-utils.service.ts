@@ -23,7 +23,7 @@ import {
 import WMTSCapabilities from 'ol/format/WMTSCapabilities'
 import { from, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { MapContextLayerModel } from '../..'
+import { MapContextLayerModel } from '../map-context/map-context.model'
 import { MapUtilsWMSService } from './map-utils-wms.service'
 import Collection from 'ol/Collection'
 import MapBrowserEvent from 'ol/MapBrowserEvent'

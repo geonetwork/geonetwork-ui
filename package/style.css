@@ -1,0 +1,4 @@
+@import 'tippy.js/dist/tippy.css';
+@import 'ol/ol.css';
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import './tailwind.base.css';

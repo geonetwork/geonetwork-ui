@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { MdViewFacade } from '../state'
 import { combineLatest, map } from 'rxjs'
-import { GN_UI_VERSION } from '../feature-record.module'
+import { GN_UI_VERSION } from '../gn-ui-version.token'
 
 @Component({
   selector: 'gn-ui-data-view-web-component',

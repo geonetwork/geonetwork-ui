@@ -38,7 +38,8 @@
     "i18n:extract": "ngx-translate-extract -s --fi '  ' --input ./apps ./libs --output ./translations/{en,de,fr,it,es,nl,pt,sk}.json --clean --format json && npm run format:write",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "version": "node tools/update-all-package-json.js && git add package"
   },
   "private": true,
   "dependencies": {
@@ -157,6 +158,7 @@
     "jest-canvas-mock": "2.5.2",
     "jest-environment-jsdom": "29.6.2",
     "jest-preset-angular": "13.1.1",
+    "ng-packagr": "^16.2.3",
     "ngrx-store-freeze": "^0.2.4",
     "nx": "16.6.0",
     "nx-cloud": "16.2.0",

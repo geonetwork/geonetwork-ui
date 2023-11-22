@@ -14,7 +14,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { EffectsModule } from '@ngrx/effects'
 import { storeFreeze } from 'ngrx-store-freeze'
 import { environment } from '../environments/environment'
-import { Configuration } from '@geonetwork-ui/data-access/gn4'
+import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
@@ -31,15 +31,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot(),
   ],
-  providers: [
-    {
-      provide: Configuration,
-      useFactory: () =>
-        new Configuration({
-          basePath: '/geonetwork/srv/api',
-        }),
-    },
-  ],
+  providers: [provideRepositoryUrl('/geonetwork/srv/api')],
   bootstrap: [AppComponent],
 })
 export class AppModule {

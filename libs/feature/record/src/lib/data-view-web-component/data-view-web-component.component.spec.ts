@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { DataViewWebComponentComponent } from './data-view-web-component.component'
 import { BehaviorSubject, firstValueFrom } from 'rxjs'
-import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { MdViewFacade } from '../state'
 import { TranslateModule } from '@ngx-translate/core'
 import { Component, Input } from '@angular/core'
-import { GN_UI_VERSION } from '../feature-record.module'
+import { GN_UI_VERSION } from '../gn-ui-version.token'
+import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
 
 const chartConfig1 = {
   aggregation: 'sum',
@@ -31,9 +31,6 @@ class MdViewFacadeMock {
   chartConfig$ = new BehaviorSubject(chartConfig1)
   metadata$ = new BehaviorSubject(metadata)
 }
-class ConfigMock {
-  basePath: 'http://gn-api.url/'
-}
 
 @Component({
   selector: 'gn-ui-copy-text-button',
@@ -58,10 +55,7 @@ describe('DataViewWebComponentComponent', () => {
       ],
       imports: [TranslateModule.forRoot()],
       providers: [
-        {
-          provide: Configuration,
-          useClass: ConfigMock,
-        },
+        provideRepositoryUrl('http://gn-api.url/'),
         {
           provide: MdViewFacade,
           useClass: MdViewFacadeMock,
@@ -88,7 +82,7 @@ describe('DataViewWebComponentComponent', () => {
       expect(html).toBe(
         `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${gnUiVersion}/gn-wc.js"></script>
 <gn-dataset-view-chart
-        api-url="http://localhost/undefined"
+        api-url="http://gn-api.url/"
         dataset-id="${metadata.uniqueIdentifier}"
         aggregation="${chartConfig1.aggregation}"
         x-property="${chartConfig1.xProperty}"
@@ -113,7 +107,7 @@ describe('DataViewWebComponentComponent', () => {
       expect(html).toBe(
         `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${gnUiVersion}/gn-wc.js"></script>
 <gn-dataset-view-chart
-        api-url="http://localhost/undefined"
+        api-url="http://gn-api.url/"
         dataset-id="${metadata.uniqueIdentifier}"
         aggregation="${chartConfig2.aggregation}"
         x-property="${chartConfig2.xProperty}"

@@ -3,17 +3,20 @@ import { importProvidersFrom, Inject, NgModule } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
 import { Router, RouterModule } from '@angular/router'
-import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import {
   FeatureCatalogModule,
   ORGANIZATION_URL_TOKEN,
 } from '@geonetwork-ui/feature/catalog'
-import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
+import {
+  FeatureRecordModule,
+  GN_UI_VERSION,
+  WEB_COMPONENT_EMBEDDER_URL,
+} from '@geonetwork-ui/feature/record'
 import {
   DefaultRouterModule,
+  ROUTE_PARAMS,
   ROUTER_ROUTE_DATASET,
   ROUTER_ROUTE_SEARCH,
-  ROUTE_PARAMS,
   RouterService,
 } from '@geonetwork-ui/feature/router'
 import {
@@ -36,10 +39,10 @@ import {
 } from '@geonetwork-ui/util/app-config'
 import { UtilI18nModule } from '@geonetwork-ui/util/i18n'
 import {
+  getGeometryFromGeoJSON,
   PROXY_PATH,
   ThemeService,
   UtilSharedModule,
-  getGeometryFromGeoJSON,
 } from '@geonetwork-ui/util/shared'
 import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { EffectsModule } from '@ngrx/effects'
@@ -64,11 +67,12 @@ import { DatahubRouterService } from './router/datahub-router.service'
 import { NavigationMenuComponent } from './home/navigation-menu/navigation-menu.component'
 import { FormsModule } from '@angular/forms'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
-import { WEB_COMPONENT_EMBEDDER_URL } from '@geonetwork-ui/feature/record'
 import { LANGUAGES_LIST, UiCatalogModule } from '@geonetwork-ui/ui/catalog'
-import { METADATA_LANGUAGE } from '@geonetwork-ui/api/repository'
+import {
+  METADATA_LANGUAGE,
+  provideRepositoryUrl,
+} from '@geonetwork-ui/api/repository'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { GN_UI_VERSION } from '@geonetwork-ui/feature/record'
 import { LOGIN_URL } from '@geonetwork-ui/api/repository/gn4'
 import { RecordRelatedRecordsComponent } from './record/record-related-records/record-related-records.component'
 import { RecordMetadataComponent } from './record/record-metadata/record-metadata.component'
@@ -142,16 +146,10 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     MatTabsModule,
   ],
   providers: [
-    { provide: RouterService, useClass: DatahubRouterService },
     importProvidersFrom(FeatureAuthModule),
+    provideRepositoryUrl(() => getGlobalConfig().GN4_API_URL),
+    { provide: RouterService, useClass: DatahubRouterService },
     { provide: GN_UI_VERSION, useValue: environment.version },
-    {
-      provide: Configuration,
-      useFactory: () =>
-        new Configuration({
-          basePath: getGlobalConfig().GN4_API_URL,
-        }),
-    },
     {
       provide: PROXY_PATH,
       useFactory: () => getGlobalConfig().PROXY_PATH,

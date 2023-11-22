@@ -1,2 +1,6 @@
 export * from './lib/feature-dataviz.module'
 export * from './lib/service/data.service'
+export * from './lib/chart-view/chart-view.component'
+export * from './lib/figure/figure-container/figure-container.component'
+export * from './lib/geo-table-view/geo-table-view.component'
+export * from './lib/table-view/table-view.component'

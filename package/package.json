@@ -1,0 +1,71 @@
+{
+  "name": "geonetwork-ui",
+  "version": "2.1.0-dev",
+  "engines": {
+    "node": ">=14.17.0"
+  },
+  "main": "./index.ts",
+  "type": "module",
+  "exports": {
+    "./tailwind.base.config.js": "./tailwind.base.config.js",
+    "./style.css": "./style.css"
+  },
+  "repository": {
+    "url": "https://github.com/geonetwork/geonetwork-ui"
+  },
+  "peerDependencies": {
+    "@angular/animations": "16.x || 17.x",
+    "@angular/cdk": "16.x || 17.x",
+    "@angular/common": "16.x || 17.x",
+    "@angular/compiler": "16.x || 17.x",
+    "@angular/core": "16.x || 17.x",
+    "@angular/forms": "16.x || 17.x",
+    "@angular/material": "16.x || 17.x",
+    "@angular/material-moment-adapter": "16.x || 17.x",
+    "@angular/platform-browser": "16.x || 17.x",
+    "@angular/platform-browser-dynamic": "16.x || 17.x",
+    "@angular/router": "16.x || 17.x",
+    "@ngrx/component": "16.x || 17.x",
+    "@ngrx/effects": "16.x || 17.x",
+    "@ngrx/router-store": "16.x || 17.x",
+    "@ngrx/store": "16.x || 17.x",
+    "@ngrx/store-devtools": "16.x || 17.x",
+    "@nguniversal/express-engine": "16.x || 17.x",
+    "@ngx-translate/core": "14.x",
+    "@ngx-translate/http-loader": "7.x",
+    "rxjs": "7.x",
+    "zone.js": "*",
+    "tailwindcss": "3.x"
+  },
+  "dependencies": {
+    "@camptocamp/ogc-client": "^0.4.0",
+    "@ltd/j-toml": "~1.35.2",
+    "@messageformat/core": "^3.0.1",
+    "@rgrove/parse-xml": "~4.0.1",
+    "@nx/angular": "16.6.0",
+    "@biesbjerg/ngx-translate-extract-marker": "^1.0.0",
+    "alasql": "^3.1.0",
+    "axios": "^1.0.0",
+    "chart.js": "^4.2.0",
+    "chroma-js": "^2.1.2",
+    "date-fns": "^2.29.3",
+    "document-register-element": "^1.14.10",
+    "duration-relativetimeformat": "^2.0.3",
+    "embla-carousel": "^8.0.0-rc14",
+    "express": "^4.17.1",
+    "moment": "^2.29.4",
+    "ng-table-virtual-scroll": "^1.4.1",
+    "ngx-chips": "3.0.0",
+    "ngx-dropzone": "^3.0.0",
+    "ngx-translate-messageformat-compiler": "~6.5.0",
+    "ol": "^6.6.1",
+    "papaparse": "^5.3.1",
+    "pg": "^8.9.0",
+    "reflect-metadata": "^0.1.13",
+    "tippy.js": "^6.3.7",
+    "tslib": "^2.3.0",
+    "typeorm": "^0.3.14",
+    "whatwg-fetch": "^3.6.2",
+    "xlsx": "^0.17.3"
+  }
+}
