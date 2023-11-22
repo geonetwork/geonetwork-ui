@@ -1,14 +1,15 @@
 import { Injectable, Injector } from '@angular/core'
 import {
   AbstractSearchField,
-  GnUiTranslationSearchField,
   FieldValue,
   FullTextSearchField,
+  GnUiTranslationSearchField,
   IsSpatialSearchField,
   LicenseSearchField,
   OrganizationSearchField,
   OwnerSearchField,
   SimpleSearchField,
+  ThesaurusTranslationSearchField,
 } from './fields'
 import { forkJoin, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -52,8 +53,9 @@ export class FieldsService {
       this.injector
     ),
     topic: new GnUiTranslationSearchField('cl_topic.key', 'asc', this.injector),
-    inspireKeyword: new SimpleSearchField(
-      'th_httpinspireeceuropaeutheme-theme_tree.default',
+    inspireKeyword: new ThesaurusTranslationSearchField(
+      'th_httpinspireeceuropaeutheme-theme.link',
+      'external.theme.httpinspireeceuropaeutheme-theme',
       'asc',
       this.injector
     ),

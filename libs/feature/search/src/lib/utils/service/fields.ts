@@ -14,6 +14,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/search'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { ElasticsearchService } from '@geonetwork-ui/api/repository/gn4'
+import { LangService } from '@geonetwork-ui/util/i18n'
 
 export type FieldValue = string | number
 export interface FieldAvailableValue {
@@ -99,6 +100,57 @@ export class GnUiTranslationSearchField extends SimpleSearchField {
 
   constructor(
     esFieldName: string,
+    order: 'asc' | 'desc' = 'asc',
+    injector: Injector
+  ) {
+    super(esFieldName, order, injector)
+  }
+
+  private async getTranslation(topicKey: string) {
+    return firstValueFrom(
+      this.allTranslations.pipe(map((translations) => translations[topicKey]))
+    )
+  }
+
+  protected async getBucketLabel(bucket: TermBucket) {
+    return (await this.getTranslation(bucket.term)) || bucket.term
+  }
+
+  getAvailableValues(): Observable<FieldAvailableValue[]> {
+    // sort values by alphabetical order
+    return super
+      .getAvailableValues()
+      .pipe(
+        map((values) =>
+          values.sort((a, b) => new Intl.Collator().compare(a.label, b.label))
+        )
+      )
+  }
+}
+
+export class ThesaurusTranslationSearchField extends SimpleSearchField {
+  private toolsApiService = this.injector.get(ToolsApiService)
+  private langService = this.injector.get(LangService)
+  allTranslations = this.toolsApiService
+    .getTranslationsFromThesaurus(this.thesaurusName, this.langService.iso3)
+    .pipe(
+      map((thesaurus) => {
+        const alltranslations = {}
+        thesaurus.map((val) => {
+          alltranslations[val.uri] = val.value
+        })
+        return alltranslations
+      }),
+      catchError(() => {
+        console.warn('Error while loading thesaurus language package')
+        return of({})
+      }),
+      shareReplay(1)
+    )
+
+  constructor(
+    esFieldName: string,
+    protected thesaurusName: string,
     order: 'asc' | 'desc' = 'asc',
     injector: Injector
   ) {
