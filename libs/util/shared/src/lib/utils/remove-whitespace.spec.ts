@@ -1,6 +1,10 @@
 import { removeWhitespace } from './remove-whitespace'
 
 describe('#removeWhitespace', () => {
+  it('returns undefined input is not defined', () => {
+    const html = null
+    expect(removeWhitespace(html)).toBe(undefined)
+  })
   it('removes superfluent whitespace for a single word', () => {
     const html = ' hello '
     expect(removeWhitespace(html)).toBe('hello')

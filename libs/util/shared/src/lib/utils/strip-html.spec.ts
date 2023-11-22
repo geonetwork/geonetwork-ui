@@ -7,6 +7,12 @@ describe('strip HTML', () => {
       expect(stripHtml(html)).toBe('hello')
     })
   })
+  describe('when HTML not defined', () => {
+    it('returns undefined', () => {
+      const html = null
+      expect(stripHtml(html)).toBe(undefined)
+    })
+  })
   describe('when no HTML tags', () => {
     it('return same string', () => {
       const html = 'hello'
