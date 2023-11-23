@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { of } from 'rxjs'
 import { catchError, map, switchMap } from 'rxjs/operators'
 import * as MdViewActions from './mdview.actions'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 @Injectable()
 export class MdViewEffects {

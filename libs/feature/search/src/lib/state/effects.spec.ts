@@ -43,7 +43,7 @@ import {
 import { HttpErrorResponse } from '@angular/common/http'
 import { delay } from 'rxjs/operators'
 import { FILTER_GEOMETRY } from '../feature-search.module'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { TestScheduler } from 'rxjs/internal/testing/TestScheduler'
 import {
   AuthService,

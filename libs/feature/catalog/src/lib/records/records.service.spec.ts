@@ -1,6 +1,6 @@
 import { RecordsService } from './records.service'
 import { of, throwError } from 'rxjs'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 class RecordsRepositoryMock {
   getMatchesCount = jest.fn(() => of(123))

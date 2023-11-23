@@ -42,7 +42,7 @@ import { HttpErrorResponse } from '@angular/common/http'
 import { switchMapWithSearchId } from '../utils/operators/search.operator'
 import { Geometry } from 'geojson'
 import { FILTER_GEOMETRY } from '../feature-search.module'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import {
   AuthService,
   FavoritesService,

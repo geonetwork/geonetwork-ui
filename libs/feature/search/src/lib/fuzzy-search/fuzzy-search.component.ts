@@ -16,7 +16,7 @@ import { map } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 @Component({
   selector: 'gn-ui-fuzzy-search',

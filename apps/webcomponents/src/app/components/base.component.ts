@@ -16,7 +16,7 @@ import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { TranslateService } from '@ngx-translate/core'
 import { firstValueFrom } from 'rxjs'
 import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { OverlayContainer } from '@angular/cdk/overlay'
 import { WebcomponentOverlayContainer } from '../webcomponent-overlay-container'
 

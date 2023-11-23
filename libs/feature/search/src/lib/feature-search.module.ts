@@ -22,7 +22,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { FilterDropdownComponent } from './filter-dropdown/filter-dropdown.component'
 import { Geometry } from 'geojson'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { Gn4Repository } from '@geonetwork-ui/api/repository/gn4'
 
 // this geometry will be used to filter & boost results accordingly

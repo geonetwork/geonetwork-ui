@@ -12,7 +12,7 @@ import {
   FieldFilters,
   TermBucket,
 } from '@geonetwork-ui/common/domain/search'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { ElasticsearchService } from '@geonetwork-ui/api/repository/gn4'
 
 export type FieldValue = string | number

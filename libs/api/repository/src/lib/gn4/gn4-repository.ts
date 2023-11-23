@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { ElasticsearchService } from './elasticsearch'
 import { Observable, of, switchMap } from 'rxjs'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import {
   SearchParams,
   SearchResults,

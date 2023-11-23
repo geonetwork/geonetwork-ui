@@ -5,8 +5,8 @@ import {
   FieldFilters,
   SearchParams,
   SearchResults,
-} from './search'
-import { CatalogRecord } from './record/metadata.model'
+} from '../search'
+import { CatalogRecord } from '../record/metadata.model'
 
 export abstract class RecordsRepositoryInterface {
   abstract search(params: SearchParams): Observable<SearchResults>

@@ -15,7 +15,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { Organization } from '@geonetwork-ui/common/domain/record'
 import { ElasticsearchService } from '@geonetwork-ui/api/repository/gn4'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 class ElasticsearchServiceMock {
   registerRuntimeField = jest.fn()
