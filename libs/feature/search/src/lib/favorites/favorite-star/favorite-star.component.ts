@@ -13,7 +13,7 @@ import tippy from 'tippy.js'
 import { TranslateService } from '@ngx-translate/core'
 import { StarToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { Observable, Subscription } from 'rxjs'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
 import {
   AuthService,
   FavoritesService,

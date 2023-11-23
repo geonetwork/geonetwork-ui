@@ -6,7 +6,7 @@ import {
   SimpleChanges,
 } from '@angular/core'
 import { MetadataQualityItem } from '../metadata-quality-item/metadata-quality-item.component'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
 
 export interface MetadataQualityDisplay {
   widget: boolean

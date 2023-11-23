@@ -6,18 +6,18 @@ import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/reposit
 import {
   SearchParams,
   SearchResults,
-} from '@geonetwork-ui/common/domain/search/search.model'
+} from '@geonetwork-ui/common/domain/model/search/search.model'
 import {
   Aggregations,
   AggregationsParams,
   FieldFilters,
-} from '@geonetwork-ui/common/domain/search'
+} from 'libs/common/domain/src/lib/model/search'
 import { map } from 'rxjs/operators'
 import {
   Gn4MetadataMapper,
   Gn4SearchResults,
 } from '@geonetwork-ui/api/metadata-converter'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
 
 @Injectable()
 export class Gn4Repository implements RecordsRepositoryInterface {

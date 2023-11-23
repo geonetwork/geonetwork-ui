@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { FIELDS_BRIEF, SearchFacade } from '@geonetwork-ui/feature/search'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
 
 @Component({
   selector: 'datahub-last-created',

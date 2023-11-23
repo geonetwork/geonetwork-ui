@@ -1,6 +1,6 @@
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/dataviz-configuration.model'
 import { createAction, props } from '@ngrx/store'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
 
 export const loadFullMetadata = createAction(
   '[Metadata view] Load full metadata',

@@ -1,7 +1,7 @@
 import {
   DatasetRecord,
   ServiceRecord,
-} from '@geonetwork-ui/common/domain/record'
+} from 'libs/common/domain/src/lib/model/record'
 
 export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
   uniqueIdentifier: '8698bf0b-fceb-4f0f-989b-111e7c4af0a4',

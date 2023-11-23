@@ -4,7 +4,7 @@ import {
   SearchFacade,
   SearchServiceI,
 } from '@geonetwork-ui/feature/search'
-import { FieldFilters, SortByField } from '@geonetwork-ui/common/domain/search'
+import { FieldFilters, SortByField } from 'libs/common/domain/src/lib/model/search'
 import { ROUTE_PARAMS, SearchRouteParams } from '../constants'
 import { RouterFacade } from '../state/router.facade'
 import { firstValueFrom } from 'rxjs'

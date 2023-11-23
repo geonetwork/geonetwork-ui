@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { LogService, parse, PARSE_DELIMITER } from '@geonetwork-ui/util/shared'
 import { FacetPath, ModelBlock, ModelItem } from '@geonetwork-ui/ui/search'
-import { FieldFilter, FieldFilters } from '@geonetwork-ui/common/domain/search'
+import { FieldFilter, FieldFilters } from 'libs/common/domain/src/lib/model/search'
 
 @Injectable({
   providedIn: 'root',

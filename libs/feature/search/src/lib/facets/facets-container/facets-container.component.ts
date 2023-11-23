@@ -5,7 +5,7 @@ import { map, take } from 'rxjs/operators'
 import { SearchFacade } from '../../state/search.facade'
 import { FacetsService } from '../facets.service'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { FieldFilters } from '@geonetwork-ui/common/domain/search'
+import { FieldFilters } from 'libs/common/domain/src/lib/model/search'
 import { EsRequestAggTerm } from '@geonetwork-ui/api/metadata-converter'
 
 marker('facets.block.title.OrgForResource')

@@ -10,7 +10,7 @@ import { OrganizationsFromMetadataService } from './organizations-from-metadata.
 import {
   CatalogRecord,
   Organization,
-} from '@geonetwork-ui/common/domain/record'
+} from 'libs/common/domain/src/lib/model/record'
 import {
   ES_FIXTURE_FULL_RESPONSE,
   GROUPS_FIXTURE,

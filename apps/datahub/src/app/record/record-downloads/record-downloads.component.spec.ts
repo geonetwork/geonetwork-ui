@@ -9,7 +9,7 @@ import { RecordDownloadsComponent } from './record-downloads.component'
 import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
+import { DatasetDistribution } from 'libs/common/domain/src/lib/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 
 // This is used to work around a very weird bug when comparing URL objects would fail

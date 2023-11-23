@@ -14,7 +14,7 @@ import { DownloadsListComponent } from './downloads-list.component'
 import {
   DatasetDistribution,
   DatasetDownloadDistribution,
-} from '@geonetwork-ui/common/domain/record'
+} from 'libs/common/domain/src/lib/model/record'
 
 @Component({
   selector: 'gn-ui-download-item',

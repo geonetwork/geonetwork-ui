@@ -18,7 +18,7 @@ import {
   ResultsLayoutConfigModel,
 } from '@geonetwork-ui/ui/search'
 import { RECORD_URL_TOKEN } from '../feature-search.module'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
 
 export type ResultsListShowMoreStrategy = 'auto' | 'button' | 'none'
 

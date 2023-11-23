@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { getBadgeColor, getFileFormat } from '@geonetwork-ui/util/shared'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
+import { DatasetDistribution } from 'libs/common/domain/src/lib/model/record'
 
 marker('datahub.search.filter.all')
 marker('datahub.search.filter.others')

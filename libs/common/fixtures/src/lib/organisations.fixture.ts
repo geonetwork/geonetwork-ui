@@ -1,5 +1,5 @@
 import { deepFreeze } from './utils/freeze'
-import { Organization } from '@geonetwork-ui/common/domain/record'
+import { Organization } from 'libs/common/domain/src/lib/model/record'
 
 export const ORGANISATIONS_FIXTURE: Organization[] = deepFreeze([
   {

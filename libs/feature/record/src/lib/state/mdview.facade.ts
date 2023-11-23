@@ -5,7 +5,7 @@ import * as MdViewActions from './mdview.actions'
 import * as MdViewSelectors from './mdview.selectors'
 import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/dataviz-configuration.model'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
 
 @Injectable()
 /**

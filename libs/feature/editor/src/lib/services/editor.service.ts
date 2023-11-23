@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs'
 import { finalize, map, switchMap, take, tap } from 'rxjs/operators'
 import { HttpClient } from '@angular/common/http'
 import { FormFieldConfig } from '@geonetwork-ui/ui/inputs'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
 
 export interface FormField {
   config: FormFieldConfig

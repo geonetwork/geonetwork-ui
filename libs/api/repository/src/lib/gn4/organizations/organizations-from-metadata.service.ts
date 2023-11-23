@@ -8,11 +8,11 @@ import {
 import {
   FieldFilterByValues,
   FieldFilters,
-} from '@geonetwork-ui/common/domain/search'
+} from 'libs/common/domain/src/lib/model/search'
 import {
   CatalogRecord,
   Organization,
-} from '@geonetwork-ui/common/domain/record'
+} from 'libs/common/domain/src/lib/model/record'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { ElasticsearchService } from '../elasticsearch'
 import {

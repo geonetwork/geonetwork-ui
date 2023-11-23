@@ -2,7 +2,7 @@ import {
   CatalogRecord,
   DatasetRecord,
   ServiceRecord,
-} from '@geonetwork-ui/common/domain/record'
+} from 'libs/common/domain/src/lib/model/record'
 import {
   createDocument,
   createElement,

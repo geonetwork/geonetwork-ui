@@ -9,7 +9,7 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { ContentGhostComponent } from '@geonetwork-ui/ui/elements'
-import { Organization } from '@geonetwork-ui/common/domain/record'
+import { Organization } from 'libs/common/domain/src/lib/model/record'
 import { firstValueFrom, of } from 'rxjs'
 import { ORGANISATIONS_FIXTURE } from '@geonetwork-ui/common/fixtures'
 import { OrganisationsComponent } from './organisations.component'

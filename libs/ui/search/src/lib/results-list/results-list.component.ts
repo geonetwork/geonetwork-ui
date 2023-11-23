@@ -10,7 +10,7 @@ import {
   DEFAULT_RESULTS_LAYOUT_CONFIG,
   ResultsLayoutConfigItem,
 } from './results-layout.config'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
 import { MetadataQualityDisplay } from '@geonetwork-ui/ui/elements'
 
 @Component({

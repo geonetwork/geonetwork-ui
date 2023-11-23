@@ -6,7 +6,7 @@ import {
   UsersApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n'
-import { UserModel } from '@geonetwork-ui/common/domain/user.model'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 import { TranslateService } from '@ngx-translate/core'
 import { Observable } from 'rxjs'
 import { map, shareReplay } from 'rxjs/operators'

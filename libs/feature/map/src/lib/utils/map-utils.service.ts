@@ -27,7 +27,7 @@ import { MapContextLayerModel } from '../map-context/map-context.model'
 import { MapUtilsWMSService } from './map-utils-wms.service'
 import Collection from 'ol/Collection'
 import MapBrowserEvent from 'ol/MapBrowserEvent'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
+import { DatasetDistribution } from 'libs/common/domain/src/lib/model/record'
 
 const FEATURE_PROJECTION = 'EPSG:3857'
 const DATA_PROJECTION = 'EPSG:4326'

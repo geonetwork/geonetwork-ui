@@ -11,7 +11,7 @@ import {
   FieldFilterByExpression,
   FieldFilters,
   TermBucket,
-} from '@geonetwork-ui/common/domain/search'
+} from 'libs/common/domain/src/lib/model/search'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { ElasticsearchService } from '@geonetwork-ui/api/repository/gn4'
 

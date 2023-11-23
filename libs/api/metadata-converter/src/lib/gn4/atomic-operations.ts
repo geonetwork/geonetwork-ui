@@ -1,4 +1,4 @@
-import { Individual, Organization } from '@geonetwork-ui/common/domain/record'
+import { Individual, Organization } from 'libs/common/domain/src/lib/model/record'
 import { getRoleFromRoleCode } from '../iso19139/codelists/role.mapper'
 
 export type SourceWithUnknownProps = { [key: string]: unknown }

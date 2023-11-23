@@ -11,9 +11,9 @@ import {
   SearchFacade,
   SearchStateParams,
 } from '@geonetwork-ui/feature/search'
-import { FieldFilters } from '@geonetwork-ui/common/domain/search'
+import { FieldFilters } from 'libs/common/domain/src/lib/model/search'
 import { BaseComponent } from '../base.component'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
 
 @Component({
   selector: 'wc-gn-results-list-component',

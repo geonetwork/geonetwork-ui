@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordPreviewListComponent } from './record-preview-list.component'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
 
 describe('RecordPreviewListComponent', () => {
   let component: RecordPreviewListComponent

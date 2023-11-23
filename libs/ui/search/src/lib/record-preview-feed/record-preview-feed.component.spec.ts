@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordPreviewFeedComponent } from './record-preview-feed.component'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
 import { ORGANISATIONS_FIXTURE } from '@geonetwork-ui/common/fixtures'
 
 describe('RecordPreviewFeedComponent', () => {

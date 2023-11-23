@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import { getThemeConfig } from '@geonetwork-ui/util/app-config'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
 
 @Component({
   selector: 'datahub-header-record',

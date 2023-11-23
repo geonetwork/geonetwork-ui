@@ -13,7 +13,7 @@ import {
 } from '@angular/core'
 import { RecordPreviewComponent } from '../record-preview/record-preview.component'
 import { ResultsLayoutConfigItem } from '../results-list/results-layout.config'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
 import { MetadataQualityDisplay } from '@geonetwork-ui/ui/elements'
 
 @Component({

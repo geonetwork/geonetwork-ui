@@ -1,4 +1,4 @@
-import { DatasetRecord } from '@geonetwork-ui/common/domain/record'
+import { DatasetRecord } from 'libs/common/domain/src/lib/model/record'
 
 export const GENERIC_DATASET_RECORD: DatasetRecord = {
   uniqueIdentifier: 'my-dataset-001',

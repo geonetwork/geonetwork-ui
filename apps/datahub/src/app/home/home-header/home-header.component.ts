@@ -16,11 +16,11 @@ import {
   SearchConfig,
   SearchPreset,
 } from '@geonetwork-ui/util/app-config'
-import { SortByEnum, SortByField } from '@geonetwork-ui/common/domain/search'
+import { SortByEnum, SortByField } from 'libs/common/domain/src/lib/model/search'
 import { map } from 'rxjs/operators'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants'
 import { firstValueFrom, lastValueFrom } from 'rxjs'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
 import { sortByFromString } from '@geonetwork-ui/util/shared'
 import { AuthService } from '@geonetwork-ui/api/repository/gn4'
 

@@ -6,9 +6,9 @@ import {
   FieldFilters,
   FieldName,
   SortByField,
-} from '@geonetwork-ui/common/domain/search'
+} from 'libs/common/domain/src/lib/model/search'
 import { DEFAULT_PAGE_SIZE, FIELDS_SUMMARY } from '../constants'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
 
 export const SEARCH_FEATURE_KEY = 'searchState'
 

@@ -13,7 +13,7 @@ import {
   FieldFilters,
   FilterAggregationParams,
   SortByField,
-} from '@geonetwork-ui/common/domain/search'
+} from 'libs/common/domain/src/lib/model/search'
 import { METADATA_LANGUAGE } from '../../metadata-language'
 import {
   AggregationResult,

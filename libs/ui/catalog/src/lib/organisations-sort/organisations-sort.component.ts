@@ -5,7 +5,7 @@ import {
   Output,
 } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { SortByField } from '@geonetwork-ui/common/domain/search'
+import { SortByField } from 'libs/common/domain/src/lib/model/search'
 
 @Component({
   selector: 'gn-ui-organisations-sort',

@@ -11,7 +11,7 @@ import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/orga
 import {
   CatalogRecord,
   DatasetRecord,
-} from '@geonetwork-ui/common/domain/record'
+} from 'libs/common/domain/src/lib/model/record'
 import { TranslateService } from '@ngx-translate/core'
 
 class MetadataUrlServiceMock {

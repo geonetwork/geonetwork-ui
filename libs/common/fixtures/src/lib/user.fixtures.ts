@@ -1,4 +1,4 @@
-import { UserModel } from '@geonetwork-ui/common/domain/user.model'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 
 export const USER_FIXTURE = (): UserModel => ({
   id: '46798',

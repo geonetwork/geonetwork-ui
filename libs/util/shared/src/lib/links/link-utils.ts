@@ -1,5 +1,5 @@
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
+import { DatasetDistribution } from 'libs/common/domain/src/lib/model/record'
 
 marker('downloads.wfs.featuretype.not.found')
 

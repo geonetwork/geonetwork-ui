@@ -10,7 +10,7 @@ import { SearchFacade } from '../state/search.facade'
 import { ResultsListContainerComponent } from './results-list.container.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
 
 @Component({
   selector: 'gn-ui-results-list',

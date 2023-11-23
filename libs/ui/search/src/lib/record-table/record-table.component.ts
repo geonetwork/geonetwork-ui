@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
 import {
   FileFormat,
   getBadgeColor,
   getFileFormat,
   getFormatPriority,
 } from '@geonetwork-ui/util/shared'
-import { SortByField } from '@geonetwork-ui/common/domain/search'
+import { SortByField } from 'libs/common/domain/src/lib/model/search'
 
 @Component({
   selector: 'gn-ui-record-table',

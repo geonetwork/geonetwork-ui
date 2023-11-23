@@ -1,4 +1,4 @@
-import { SortByEnum } from '@geonetwork-ui/common/domain/search'
+import { SortByEnum } from 'libs/common/domain/src/lib/model/search'
 import { BehaviorSubject } from 'rxjs'
 import { SearchService } from './search.service'
 
