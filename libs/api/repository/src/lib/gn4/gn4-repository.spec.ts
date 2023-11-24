@@ -10,9 +10,9 @@ import {
 import {
   Aggregations,
   SearchResults,
-} from 'libs/common/domain/src/lib/model/search'
+} from '@geonetwork-ui/common/domain/model/search'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
-import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 class Gn4MetadataMapperMock {
   readRecords = jest.fn((records) =>

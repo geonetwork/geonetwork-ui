@@ -25,7 +25,7 @@ import {
   MouseWheelZoom,
   PinchRotate,
 } from 'ol/interaction'
-import { DatasetServiceDistribution } from 'libs/common/domain/src/lib/model/record'
+import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import MapBrowserEvent from 'ol/MapBrowserEvent'
 
 const wmsUtilsMock = {

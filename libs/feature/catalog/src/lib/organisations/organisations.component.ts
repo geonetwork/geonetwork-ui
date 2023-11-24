@@ -7,12 +7,12 @@ import {
   Optional,
   Output,
 } from '@angular/core'
-import { Organization } from 'libs/common/domain/src/lib/model/record'
+import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
 import { map, startWith, tap } from 'rxjs/operators'
 import { ORGANIZATION_URL_TOKEN } from '../feature-catalog.module'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { SortByField } from 'libs/common/domain/src/lib/model/search'
+import { SortByField } from '@geonetwork-ui/common/domain/model/search'
 
 @Component({
   selector: 'gn-ui-organisations',

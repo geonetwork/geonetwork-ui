@@ -9,7 +9,7 @@ import {
   mimeTypeToFormat,
   getLinkPriority,
 } from './link-utils'
-import { DatasetDownloadDistribution } from 'libs/common/domain/src/lib/model/record'
+import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/model/record'
 
 describe('link utils', () => {
   describe('#getFileFormat', () => {

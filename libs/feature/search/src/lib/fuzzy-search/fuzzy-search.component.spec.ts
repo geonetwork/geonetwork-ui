@@ -6,7 +6,7 @@ import { BehaviorSubject, of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FuzzySearchComponent } from './fuzzy-search.component'
-import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
   DATASET_RECORDS,
   SAMPLE_SEARCH_RESULTS,

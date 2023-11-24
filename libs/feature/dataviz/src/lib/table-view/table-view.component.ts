@@ -11,7 +11,7 @@ import {
 import { DataItem, FetchError } from '@geonetwork-ui/data-fetcher'
 import { DataService } from '../service/data.service'
 import { TableItemModel } from '@geonetwork-ui/ui/dataviz'
-import { DatasetDistribution } from 'libs/common/domain/src/lib/model/record'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateService } from '@ngx-translate/core'
 
 @Component({

@@ -9,7 +9,7 @@ import {
   CatalogRecord,
   Individual,
   Organization,
-} from 'libs/common/domain/src/lib/model/record'
+} from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-metadata-contact',

@@ -6,7 +6,7 @@ import { catchError, map, switchMap } from 'rxjs/operators'
 import {
   DatasetDistribution,
   DatasetServiceDistribution,
-} from 'libs/common/domain/src/lib/model/record'
+} from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 
 @Component({

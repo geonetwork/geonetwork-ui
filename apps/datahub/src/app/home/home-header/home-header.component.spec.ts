@@ -16,7 +16,7 @@ import { ROUTER_ROUTE_NEWS } from '../../router/constants'
 import { HeaderBadgeButtonComponent } from '../header-badge-button/header-badge-button.component'
 import { HomeHeaderComponent } from './home-header.component'
 import resetAllMocks = jest.resetAllMocks
-import { SortByEnum } from 'libs/common/domain/src/lib/model/search'
+import { SortByEnum } from '@geonetwork-ui/common/domain/model/search'
 import { AuthService } from '@geonetwork-ui/api/repository/gn4'
 import { _setLanguages } from '@geonetwork-ui/util/app-config'
 

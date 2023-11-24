@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { SortByEnum, SortByField } from 'libs/common/domain/src/lib/model/search'
+import {
+  SortByEnum,
+  SortByField,
+} from '@geonetwork-ui/common/domain/model/search'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { filter, map } from 'rxjs/operators'

@@ -13,7 +13,7 @@ import {
   ServiceRecord,
   UpdateFrequencyCode,
   UpdateFrequencyCustom,
-} from 'libs/common/domain/src/lib/model/record'
+} from '@geonetwork-ui/common/domain/model/record'
 import {
   addAttribute,
   appendChildren,

@@ -1,4 +1,4 @@
-import { SortByField } from 'libs/common/domain/src/lib/model/search'
+import { SortByField } from '@geonetwork-ui/common/domain/model/search'
 
 export function sortByToStrings(sortBy: SortByField): string[] {
   const array = Array.isArray(sortBy[0]) ? sortBy : [sortBy]

@@ -14,7 +14,7 @@ import {
   reducerSearch,
   SearchStateParams,
 } from './reducer'
-import { TermsAggregationParams } from 'libs/common/domain/src/lib/model/search'
+import { TermsAggregationParams } from '@geonetwork-ui/common/domain/model/search'
 
 const initialStateSearch = initialState[DEFAULT_SEARCH_KEY]
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { SelectionsApiService } from '@geonetwork-ui/data-access/gn4'
 import { BehaviorSubject, Observable, Subscription, map, tap } from 'rxjs'
 

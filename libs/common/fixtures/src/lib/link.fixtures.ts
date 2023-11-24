@@ -1,5 +1,5 @@
 import { deepFreeze } from './utils/freeze'
-import { DatasetDistribution } from 'libs/common/domain/src/lib/model/record'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
 
 export const LINK_FIXTURES: Record<string, DatasetDistribution> = deepFreeze({
   readmeLink: {

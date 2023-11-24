@@ -20,7 +20,7 @@ import { catchError, map, switchMap, tap } from 'rxjs/operators'
 import {
   DatasetDistribution,
   DatasetServiceDistribution,
-} from 'libs/common/domain/src/lib/model/record'
+} from '@geonetwork-ui/common/domain/model/record'
 
 marker('wfs.unreachable.cors')
 marker('wfs.unreachable.http')

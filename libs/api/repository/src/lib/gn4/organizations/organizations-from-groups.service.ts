@@ -8,11 +8,11 @@ import { forkJoin, Observable, of } from 'rxjs'
 import { map, shareReplay } from 'rxjs/operators'
 import { TranslateService } from '@ngx-translate/core'
 import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n'
-import { FieldFilters } from 'libs/common/domain/src/lib/model/search'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 import {
   CatalogRecord,
   Organization,
-} from 'libs/common/domain/src/lib/model/record'
+} from '@geonetwork-ui/common/domain/model/record'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { ElasticsearchService } from '../elasticsearch'
 import { getAsUrl, MetadataObject } from '@geonetwork-ui/api/metadata-converter'

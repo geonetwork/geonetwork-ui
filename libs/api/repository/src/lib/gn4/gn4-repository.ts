@@ -11,13 +11,13 @@ import {
   Aggregations,
   AggregationsParams,
   FieldFilters,
-} from 'libs/common/domain/src/lib/model/search'
+} from '@geonetwork-ui/common/domain/model/search'
 import { map } from 'rxjs/operators'
 import {
   Gn4MetadataMapper,
   Gn4SearchResults,
 } from '@geonetwork-ui/api/metadata-converter'
-import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 @Injectable()
 export class Gn4Repository implements RecordsRepositoryInterface {

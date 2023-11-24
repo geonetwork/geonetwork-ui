@@ -9,7 +9,7 @@ import {
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { BaseComponent } from '../base.component'
 import { FuzzySearchComponent } from '@geonetwork-ui/feature/search'
-import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'wc-gn-search-input',

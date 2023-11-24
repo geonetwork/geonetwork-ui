@@ -3,16 +3,15 @@ import {
   GroupApiModel,
   GroupsApiService,
   SearchApiService,
-  SiteApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import {
   FieldFilterByValues,
   FieldFilters,
-} from 'libs/common/domain/src/lib/model/search'
+} from '@geonetwork-ui/common/domain/model/search'
 import {
   CatalogRecord,
   Organization,
-} from 'libs/common/domain/src/lib/model/record'
+} from '@geonetwork-ui/common/domain/model/record'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { ElasticsearchService } from '../elasticsearch'
 import {

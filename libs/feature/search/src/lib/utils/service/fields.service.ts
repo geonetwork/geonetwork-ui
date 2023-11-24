@@ -12,7 +12,7 @@ import {
 } from './fields'
 import { forkJoin, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { FieldFilters } from 'libs/common/domain/src/lib/model/search'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 // key is the field name

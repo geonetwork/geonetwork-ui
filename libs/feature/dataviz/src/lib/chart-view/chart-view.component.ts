@@ -25,7 +25,7 @@ import {
 } from 'rxjs/operators'
 import { DataService } from '../service/data.service'
 import { InputChartType } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
-import { DatasetDistribution } from 'libs/common/domain/src/lib/model/record'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateService } from '@ngx-translate/core'
 
 marker('chart.type.bar')

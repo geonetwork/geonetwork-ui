@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
-  RouterFacade,
   ROUTER_ROUTE_SEARCH,
+  RouterFacade,
 } from '@geonetwork-ui/feature/router'
 import {
   FieldsService,
@@ -16,13 +16,16 @@ import {
   SearchConfig,
   SearchPreset,
 } from '@geonetwork-ui/util/app-config'
-import { SortByEnum, SortByField } from 'libs/common/domain/src/lib/model/search'
+import {
+  SortByEnum,
+  SortByField,
+} from '@geonetwork-ui/common/domain/model/search'
 import { map } from 'rxjs/operators'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants'
-import { firstValueFrom, lastValueFrom } from 'rxjs'
-import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
+import { lastValueFrom } from 'rxjs'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { sortByFromString } from '@geonetwork-ui/util/shared'
-import { AuthService } from '@geonetwork-ui/api/repository/gn4'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 marker('datahub.header.myfavorites')
 marker('datahub.header.lastRecords')

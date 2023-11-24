@@ -1,7 +1,7 @@
 import { Gn4FieldMapper } from './gn4.field.mapper'
 import { lastValueFrom } from 'rxjs'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { MetadataBaseMapper } from '../metadata-base.mapper'
 import { Injectable } from '@angular/core'
 import { Gn4Record } from './types'

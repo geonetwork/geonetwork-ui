@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { Organization } from 'libs/common/domain/src/lib/model/record'
+import { Organization } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-organisation-preview',

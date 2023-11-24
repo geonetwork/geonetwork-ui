@@ -6,7 +6,7 @@ import {
   SearchParams,
   SearchResults,
 } from '../model/search'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record/metadata.model'
+import { CatalogRecord } from '../model/record'
 
 export abstract class RecordsRepositoryInterface {
   abstract search(params: SearchParams): Observable<SearchResults>

@@ -19,7 +19,7 @@ import { SearchFiltersComponent } from './search-filters.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 import { FormsModule } from '@angular/forms'
-import { FieldFilters } from 'libs/common/domain/src/lib/model/search'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 import { USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
 import { AuthService } from '@geonetwork-ui/api/repository/gn4'
 

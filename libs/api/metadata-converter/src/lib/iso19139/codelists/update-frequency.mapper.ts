@@ -1,4 +1,4 @@
-import { UpdateFrequency } from 'libs/common/domain/src/lib/model/record'
+import { UpdateFrequency } from '@geonetwork-ui/common/domain/model/record'
 
 export function getUpdateFrequencyFromFrequencyCode(
   frequencyCode: string

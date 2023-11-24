@@ -1,4 +1,4 @@
-import { RecordStatus } from 'libs/common/domain/src/lib/model/record'
+import { RecordStatus } from '@geonetwork-ui/common/domain/model/record'
 
 export function getStatusFromStatusCode(statusCode: string): RecordStatus {
   switch (statusCode) {

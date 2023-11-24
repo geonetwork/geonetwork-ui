@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { Organization } from 'libs/common/domain/src/lib/model/record'
+import { Organization } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'datahub-organisations-page',

@@ -6,7 +6,7 @@ import {
   AggregationBuckets,
   Aggregations,
   TermBucket,
-} from 'libs/common/domain/src/lib/model/search'
+} from '@geonetwork-ui/common/domain/model/search'
 import { RecordMetric } from '@geonetwork-ui/api/metadata-converter'
 
 @Component({
