@@ -13,7 +13,7 @@ export class MyOrgService {
     logoUrl: string
     recordCount: number
     userCount: number
-    userList: UserApiModel[]
+    userList: UserModel[]
   }>
 
   private myOrgDataSubject = new BehaviorSubject<{
@@ -21,7 +21,7 @@ export class MyOrgService {
     logoUrl: string
     recordCount: number
     userCount: number
-    userList: UserApiModel[]
+    userList: UserModel[]
   }>({
     orgName: '',
     logoUrl: '',

@@ -7,7 +7,7 @@ import { MeUserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserPreviewComponent {
-  @Input() user: UserModel
+  @Input() user: MeUserModel
   @Input() avatarPlaceholder?: string
 
   get userFullName() {
