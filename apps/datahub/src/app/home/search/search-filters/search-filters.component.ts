@@ -6,7 +6,6 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core'
-import { AuthService } from '@geonetwork-ui/api/repository/gn4'
 import {
   FieldsService,
   FilterDropdownComponent,
@@ -16,6 +15,7 @@ import {
 import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
 import { Observable, switchMap } from 'rxjs'
 import { map } from 'rxjs/operators'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 @Component({
   selector: 'datahub-search-filters',
@@ -46,11 +46,11 @@ export class SearchFiltersComponent implements OnInit {
     public searchFacade: SearchFacade,
     private searchService: SearchService,
     private fieldsService: FieldsService,
-    private authService: AuthService
+    private platformService: PlatformServiceInterface
   ) {}
 
   ngOnInit(): void {
-    this.authService.user$.subscribe((user) => (this.userId = user?.id))
+    this.platformService.getMe().subscribe((user) => (this.userId = user?.id))
     this.searchConfig = (
       getOptionalSearchConfig().ADVANCED_FILTERS || [
         'publisher',

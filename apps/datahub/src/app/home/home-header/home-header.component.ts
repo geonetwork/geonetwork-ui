@@ -53,7 +53,7 @@ export class HomeHeaderComponent {
     public routerFacade: RouterFacade,
     public searchFacade: SearchFacade,
     private searchService: SearchService,
-    private authService: AuthService,
+    private platformService: PlatformServiceInterface,
     private fieldsService: FieldsService
   ) {}
 
@@ -65,8 +65,8 @@ export class HomeHeaderComponent {
     )
   )
 
-  isAuthenticated$ = this.authService
-    .authReady()
+  isAuthenticated$ = this.platformService
+    .getMe()
     .pipe(map((user) => !!user?.id))
 
   onFuzzySearchSelection(record: CatalogRecord) {

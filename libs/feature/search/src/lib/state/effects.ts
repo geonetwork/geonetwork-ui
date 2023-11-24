@@ -47,6 +47,7 @@ import {
   AuthService,
   FavoritesService,
 } from '@geonetwork-ui/api/repository/gn4'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 @Injectable()
 export class SearchEffects {
@@ -60,6 +61,7 @@ export class SearchEffects {
     private recordsRepository: RecordsRepositoryInterface,
     private authService: AuthService,
     private favoritesService: FavoritesService,
+    private platformService: PlatformServiceInterface,
     @Optional()
     @Inject(FILTER_GEOMETRY)
     private filterGeometry: Promise<Geometry>
@@ -110,7 +112,7 @@ export class SearchEffects {
     this.actions$.pipe(
       ofType(REQUEST_MORE_RESULTS, REQUEST_NEW_RESULTS),
       switchMapWithSearchId((action: SearchActions) =>
-        this.authService.authReady().pipe(
+        this.platformService.getMe().pipe(
           withLatestFrom(
             this.store$.pipe(select(getSearchStateSearch, action.id))
           ),
@@ -194,7 +196,7 @@ export class SearchEffects {
         REQUEST_MORE_ON_AGGREGATION
       ),
       switchMap((action) =>
-        this.authService.authReady().pipe(
+        this.platformService.getMe().pipe(
           withLatestFrom(
             this.store$.pipe(select(getSearchStateSearch, action.id))
           ),

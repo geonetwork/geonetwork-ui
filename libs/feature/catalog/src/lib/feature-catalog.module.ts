@@ -21,6 +21,7 @@ import {
   OrganizationsFromMetadataService,
   OrganizationsStrategy,
 } from '@geonetwork-ui/api/repository/gn4'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 // expects the replacement key ${name}
 export const ORGANIZATION_URL_TOKEN = new InjectionToken<string>(
@@ -33,7 +34,7 @@ const organizationsServiceFactory = (
   searchApiService: SearchApiService,
   groupsApiService: GroupsApiService,
   translateService: TranslateService,
-  siteApiService: SiteApiService,
+  platformService: PlatformServiceInterface,
   langService: LangService
 ) =>
   strategy === 'groups'
@@ -47,7 +48,7 @@ const organizationsServiceFactory = (
         esService,
         searchApiService,
         groupsApiService,
-        siteApiService,
+        platformService,
         langService
       )
 
@@ -76,7 +77,7 @@ const organizationsServiceFactory = (
         SearchApiService,
         GroupsApiService,
         TranslateService,
-        SiteApiService,
+        PlatformServiceInterface,
         LangService,
       ],
     },
