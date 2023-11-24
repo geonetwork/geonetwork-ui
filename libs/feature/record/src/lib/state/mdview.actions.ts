@@ -1,4 +1,4 @@
-import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/dataviz-configuration.model'
+import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import { createAction, props } from '@ngrx/store'
 import { CatalogRecord } from 'libs/common/domain/src/lib/model/record'
 

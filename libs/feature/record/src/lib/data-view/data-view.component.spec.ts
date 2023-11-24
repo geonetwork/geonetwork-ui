@@ -10,7 +10,7 @@ import { BehaviorSubject, Subject } from 'rxjs'
 import { MdViewFacade } from '../state'
 import { DataViewComponent } from './data-view.component'
 import { TranslateModule } from '@ngx-translate/core'
-import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/dataviz-configuration.model'
+import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import { DatasetDistribution } from 'libs/common/domain/src/lib/model/record'
 import { LINK_FIXTURES } from '@geonetwork-ui/common/fixtures'
 

@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http'
 import { TranslateModule } from '@ngx-translate/core'
-import { CHART_TYPE_VALUES } from '@geonetwork-ui/common/domain/dataviz-configuration.model'
+import { CHART_TYPE_VALUES } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import {
   applicationConfig,
   componentWrapperDecorator,
