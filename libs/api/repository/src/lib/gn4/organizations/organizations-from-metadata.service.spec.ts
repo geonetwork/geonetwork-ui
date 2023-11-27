@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing'
 import {
   GroupsApiService,
   SearchApiService,
-  SiteApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import { firstValueFrom, lastValueFrom, of } from 'rxjs'
 import { take } from 'rxjs/operators'
@@ -16,6 +15,7 @@ import {
   GROUPS_FIXTURE,
 } from '@geonetwork-ui/common/fixtures'
 import { LangService } from '@geonetwork-ui/util/i18n'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 const sampleOrgA: Organization = {
   description: 'A description for ARE',
@@ -145,12 +145,8 @@ class GoupsApiServiceMock {
   getGroups = jest.fn(() => of(GROUPS_FIXTURE))
 }
 
-class SiteApiServiceMock {
-  getSiteOrPortalDescription = jest.fn(() =>
-    of({
-      'system/platform/version': geonetworkVersion,
-    })
-  )
+class Gn4PlatformServiceMock {
+  getApiVersion = jest.fn(() => of(geonetworkVersion))
 }
 
 class LangServiceMock {
@@ -180,12 +176,12 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
             useClass: SearchApiServiceMock,
           },
           {
-            provide: SiteApiService,
-            useClass: SiteApiServiceMock,
-          },
-          {
             provide: LangService,
             useClass: LangServiceMock,
+          },
+          {
+            provide: PlatformServiceInterface,
+            useClass: Gn4PlatformServiceMock,
           },
         ],
       })

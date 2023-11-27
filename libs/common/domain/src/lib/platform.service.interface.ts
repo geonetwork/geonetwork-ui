@@ -3,8 +3,9 @@ import { MeUserModel, UserModel } from './model/user/user.model'
 import { Organization } from './model/record/organization.model'
 
 export abstract class PlatformServiceInterface {
-  abstract readonly apiVersion$: Observable<string>
-  abstract readonly isApiCompatible$: Observable<boolean>
+  abstract getTye(): string
+  abstract getApiVersion(): Observable<string>
+  abstract isApiCompatible(): Observable<boolean>
 
   abstract getMe(): Observable<MeUserModel>
   abstract isAnonymous(): Observable<boolean>

@@ -58,7 +58,7 @@ export class OrganizationsFromMetadataService
     shareReplay()
   )
   private organisationsAggs$: Observable<OrganizationAggsBucket[]> =
-    this.platformService.apiVersion$.pipe(
+    this.platformService.getApiVersion().pipe(
       switchMap((version) =>
         this.searchApiService.search(
           'bucket',
@@ -229,7 +229,7 @@ export class OrganizationsFromMetadataService
   }
 
   getFiltersForOrgs(organisations: Organization[]): Observable<FieldFilters> {
-    return this.platformService.apiVersion$.pipe(
+    return this.platformService.getApiVersion().pipe(
       map((gnVersion) => {
         const fieldName = gnVersion.startsWith('4.2.2')
           ? 'OrgForResource'
@@ -245,7 +245,7 @@ export class OrganizationsFromMetadataService
   }
 
   getOrgsFromFilters(filters: FieldFilters): Observable<Organization[]> {
-    return this.platformService.apiVersion$.pipe(
+    return this.platformService.getApiVersion().pipe(
       switchMap((gnVersion) => {
         const fieldName = gnVersion.startsWith('4.2.2')
           ? 'OrgForResource'

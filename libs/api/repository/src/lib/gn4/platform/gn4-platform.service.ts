@@ -17,21 +17,22 @@ import { Gn4PlatformMapper } from './gn4-platform.mapper'
 const minApiVersion = '4.2.0'
 @Injectable()
 export class Gn4PlatformService implements PlatformServiceInterface {
+  private readonly type = 'GeoNetwork'
   private me$: Observable<MeUserModel>
   private users$: Observable<UserModel[]>
   isAnonymous$: Observable<boolean>
 
-  settings$ = of(true).pipe(
+  private settings$ = of(true).pipe(
     switchMap(() => this.siteApiService.getSiteOrPortalDescription()),
     shareReplay(1)
   )
 
-  readonly apiVersion$ = this.settings$.pipe(
+  private readonly apiVersion$ = this.settings$.pipe(
     map((info) => info['system/platform/version'] as string),
     shareReplay(1)
   )
 
-  readonly isApiCompatible$ = this.apiVersion$.pipe(
+  private readonly isApiCompatible$ = this.apiVersion$.pipe(
     tap(
       (version) =>
         version < minApiVersion &&
@@ -52,6 +53,17 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     )
     this.isAnonymous$ = this.me$.pipe(map((user) => !user || !('id' in user)))
     this.users$ = this.usersApi.getUsers().pipe(shareReplay())
+  }
+
+  getTye(): string {
+    return this.type
+  }
+
+  getApiVersion(): Observable<string> {
+    return this.apiVersion$
+  }
+  isApiCompatible(): Observable<boolean> {
+    return this.isApiCompatible$
   }
 
   getMe(): Observable<MeUserModel> {

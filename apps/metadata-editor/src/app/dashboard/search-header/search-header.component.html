@@ -16,7 +16,7 @@
     <button>
       <mat-icon class="icon-btn material-symbols-outlined">settings</mat-icon>
     </button>
-    <ng-container *ngrxLet="authService.user$ as user">
+    <ng-container *ngrxLet="platformService.getMe() as user">
       <gn-ui-user-preview
         *ngIf="user && user.name"
         [user]="user"

@@ -66,8 +66,8 @@ export class HomeHeaderComponent {
   )
 
   isAuthenticated$ = this.platformService
-    .getMe()
-    .pipe(map((user) => !!user?.id))
+    .isAnonymous()
+    .pipe(map((isAnonymous) => !isAnonymous))
 
   onFuzzySearchSelection(record: CatalogRecord) {
     this.routerFacade.goToMetadata(record)

@@ -2,8 +2,8 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import {
-  RouterFacade,
   ROUTER_ROUTE_SEARCH,
+  RouterFacade,
 } from '@geonetwork-ui/feature/router'
 import {
   FieldsService,
@@ -15,10 +15,10 @@ import { BehaviorSubject, firstValueFrom, of } from 'rxjs'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants'
 import { HeaderBadgeButtonComponent } from '../header-badge-button/header-badge-button.component'
 import { HomeHeaderComponent } from './home-header.component'
-import resetAllMocks = jest.resetAllMocks
 import { SortByEnum } from '@geonetwork-ui/common/domain/model/search'
-import { AuthService } from '@geonetwork-ui/api/repository/gn4'
 import { _setLanguages } from '@geonetwork-ui/util/app-config'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import resetAllMocks = jest.resetAllMocks
 
 jest.mock('@geonetwork-ui/util/app-config', () => {
   let _languages = ['pt', 'de']
@@ -71,6 +71,11 @@ class searchServiceMock {
   setFilters = jest.fn()
 }
 
+const isAnonymous$ = new BehaviorSubject(false)
+class PlatformServiceMock {
+  isAnonymous = jest.fn(() => isAnonymous$)
+}
+
 class AuthServiceMock {
   authReady = jest.fn(() => this._authSubject$)
   _authSubject$ = new BehaviorSubject({})
@@ -83,7 +88,6 @@ class FieldsServiceMock {
 describe('HeaderComponent', () => {
   let component: HomeHeaderComponent
   let fixture: ComponentFixture<HomeHeaderComponent>
-  let authService: AuthService
   let searchService: SearchService
   let searchFacade: SearchFacade
   let routerFacade: RouterFacade
@@ -108,8 +112,8 @@ describe('HeaderComponent', () => {
           useClass: searchServiceMock,
         },
         {
-          provide: AuthService,
-          useClass: AuthServiceMock,
+          provide: PlatformServiceInterface,
+          useClass: PlatformServiceMock,
         },
         {
           provide: FieldsService,
@@ -117,7 +121,6 @@ describe('HeaderComponent', () => {
         },
       ],
     }).compileComponents()
-    authService = TestBed.inject(AuthService)
     searchService = TestBed.inject(SearchService)
     searchFacade = TestBed.inject(SearchFacade)
     routerFacade = TestBed.inject(RouterFacade)
@@ -140,10 +143,7 @@ describe('HeaderComponent', () => {
     describe('isAuthenticated$', () => {
       describe('user is authenticated', () => {
         beforeEach(() => {
-          ;(authService as any)._authSubject$.next({
-            id: 'user-id',
-            name: 'testuser',
-          })
+          isAnonymous$.next(false)
         })
         it('displays favoriteBadge when authenticated', async () => {
           const isAuthenticated = await firstValueFrom(
@@ -154,7 +154,7 @@ describe('HeaderComponent', () => {
       })
       describe('user is NOT authenticated', () => {
         beforeEach(() => {
-          ;(authService as any)._authSubject$.next(null)
+          isAnonymous$.next(true)
         })
         it('does NOT display favoriteBadge when NOT authenticated', async () => {
           const isAuthenticated = await firstValueFrom(

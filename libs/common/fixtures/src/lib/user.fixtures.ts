@@ -1,6 +1,6 @@
-import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
+import { MeUserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 
-export const USER_FIXTURE = (): UserModel => ({
+export const USER_FIXTURE = (): MeUserModel => ({
   id: '46798',
   profile: 'Administrator',
   username: 'Gravin',
@@ -12,7 +12,7 @@ export const USER_FIXTURE = (): UserModel => ({
     'https://www.gravatar.com/avatar/dbdffd183622800bcf8587328daf43a6?d=mp',
 })
 
-export const USER_FIXTURE_ANON = (): UserModel => ({
+export const USER_FIXTURE_ANON = (): MeUserModel => ({
   id: '161',
   profile: 'Administrator',
   username: 'ghost16',
@@ -24,7 +24,7 @@ export const USER_FIXTURE_ANON = (): UserModel => ({
     'https://www.gravatar.com/avatar/dbdffd183622800bcf8587328daf43a6?d=mp',
 })
 
-export const USERS_FIXTURE = (): UserModel[] => [
+export const USERS_FIXTURE = (): MeUserModel[] => [
   USER_FIXTURE(),
   USER_FIXTURE_ANON(),
   {

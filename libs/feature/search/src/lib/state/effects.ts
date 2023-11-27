@@ -43,10 +43,7 @@ import { switchMapWithSearchId } from '../utils/operators/search.operator'
 import { Geometry } from 'geojson'
 import { FILTER_GEOMETRY } from '../feature-search.module'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import {
-  AuthService,
-  FavoritesService,
-} from '@geonetwork-ui/api/repository/gn4'
+import { FavoritesService } from '@geonetwork-ui/api/repository/gn4'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 @Injectable()
@@ -59,7 +56,6 @@ export class SearchEffects {
     private actions$: Actions,
     private store$: Store<SearchState>,
     private recordsRepository: RecordsRepositoryInterface,
-    private authService: AuthService,
     private favoritesService: FavoritesService,
     private platformService: PlatformServiceInterface,
     @Optional()

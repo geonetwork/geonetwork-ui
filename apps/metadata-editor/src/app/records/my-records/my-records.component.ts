@@ -6,6 +6,7 @@ import { FieldsService, SearchFacade } from '@geonetwork-ui/feature/search'
 import { AuthService } from '@geonetwork-ui/api/repository/gn4'
 import { EditorRouterService } from '../../router.service'
 import { Subscription } from 'rxjs'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 @Component({
   selector: 'md-editor-my-records',
@@ -21,13 +22,13 @@ export class MyRecordsComponent implements OnInit, OnDestroy {
   constructor(
     public fieldsService: FieldsService,
     public searchFacade: SearchFacade,
-    private authService: AuthService,
+    private platformService: PlatformServiceInterface,
     private router: EditorRouterService
   ) {}
 
   ngOnInit() {
     this.searchFacade.resetSearch()
-    this.sub = this.authService.user$.subscribe((user) => {
+    this.sub = this.platformService.getMe().subscribe((user) => {
       this.ownerId = user.id
       this.fieldsService
         .buildFiltersFromFieldValues({ owner: user.id })
