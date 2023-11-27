@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   Input,
@@ -67,6 +68,7 @@ export const MY_FORMATS = {
     },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardFieldComponent implements AfterViewInit, OnDestroy {
   @Input() wizardFieldConfig: WizardFieldModel
@@ -104,7 +106,6 @@ export class WizardFieldComponent implements AfterViewInit, OnDestroy {
         return data ? new Date(Number(data)) : new Date()
       }
       case WizardFieldType.DROPDOWN: {
-        //TODO called continuously
         return data ? JSON.parse(data) : this.dropdownChoices[0]?.value
       }
     }
