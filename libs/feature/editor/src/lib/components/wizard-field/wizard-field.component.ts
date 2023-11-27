@@ -1,5 +1,7 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Input,
   OnDestroy,
@@ -66,6 +68,7 @@ export const MY_FORMATS = {
     },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardFieldComponent implements AfterViewInit, OnDestroy {
   @Input() wizardFieldConfig: WizardFieldModel
@@ -108,10 +111,14 @@ export class WizardFieldComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  constructor(private wizardService: WizardService) {}
+  constructor(
+    private wizardService: WizardService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngAfterViewInit() {
     this.initializeListeners()
+    this.cdr.detectChanges()
   }
 
   ngOnDestroy() {
@@ -196,6 +203,17 @@ export class WizardFieldComponent implements AfterViewInit, OnDestroy {
   }
 
   private initializeDropdownListener() {
+    if (
+      this.wizardService.getWizardFieldData(this.wizardFieldConfig.id) ===
+        undefined &&
+      !!this.dropdown.selected
+    ) {
+      this.wizardService.setWizardFieldData(
+        this.wizardFieldConfig.id,
+        this.dropdown.selected
+      )
+    }
+
     this.subs.add(
       this.dropdown.selectValue.subscribe((value) => {
         this.wizardService.onWizardWizardFieldDataChanged(
