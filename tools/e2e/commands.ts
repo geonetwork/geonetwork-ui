@@ -25,13 +25,13 @@ declare namespace Cypress {
 
 Cypress.Commands.add(
   'login',
-  (username = 'admin', password = 'password', redirect = true) => {
+  (username = 'admin', password = 'admin', redirect = false) => {
     // first request to get the XSRF cookie
     cy.request({
       method: 'GET',
       url: '/geonetwork/srv/api/me',
       headers: {
-        Accept: 'application/json, text/plain, */*',
+        Accept: 'application/json',
       },
     })
     cy.getCookie('XSRF-TOKEN').then((xsrfTokenCookie) => {

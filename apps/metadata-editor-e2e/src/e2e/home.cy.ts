@@ -49,7 +49,7 @@ describe('avatar', () => {
   })
   describe('display avatar for user with hash', () => {
     it('should display the correct profile picture', () => {
-      cy.login(fakeUser.username, fakeUser.password)
+      cy.login(fakeUser.username, fakeUser.password, true)
       cy.get('gn-ui-avatar')
         .children('img')
         .should('have.attr', 'src')
