@@ -1,6 +1,6 @@
 describe('my-org', () => {
   beforeEach(() => {
-    cy.loginGN('barbie', 'p4ssworD_', false)
+    cy.login('barbie', 'p4ssworD_', false)
     cy.intercept({
       method: 'GET',
       url: '/geonetwork/srv/api/userselections/0/101',
