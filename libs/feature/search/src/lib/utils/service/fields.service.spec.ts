@@ -4,7 +4,7 @@ import { EMPTY, lastValueFrom, of } from 'rxjs'
 import { ToolsApiService } from '@geonetwork-ui/data-access/gn4'
 import { TranslateModule } from '@ngx-translate/core'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { ElasticsearchService } from '@geonetwork-ui/api/repository/gn4'
 
 class RecordsRepositoryMock {

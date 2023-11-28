@@ -23,7 +23,7 @@ import {
   DatasetDownloadDistribution,
   DatasetServiceDistribution,
   OnlineLinkResource,
-} from '@geonetwork-ui/common/domain/record'
+} from '@geonetwork-ui/common/domain/model/record'
 import { matchProtocol } from '../common/distribution.mapper'
 import { LangService } from '@geonetwork-ui/util/i18n'
 

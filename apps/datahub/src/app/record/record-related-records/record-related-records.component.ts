@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'datahub-record-related-records',

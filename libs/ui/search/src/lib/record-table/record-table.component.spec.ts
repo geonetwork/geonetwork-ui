@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 
 import { RecordTableComponent } from './record-table.component'
-import { SortByField } from '@geonetwork-ui/common/domain/search'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { SortByField } from '@geonetwork-ui/common/domain/model/search'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 describe('RecordTableComponent', () => {
   let component: RecordTableComponent

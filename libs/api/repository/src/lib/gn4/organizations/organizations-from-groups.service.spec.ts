@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core'
 import {
   CatalogRecord,
   Organization,
-} from '@geonetwork-ui/common/domain/record'
+} from '@geonetwork-ui/common/domain/model/record'
 import {
   ES_FIXTURE_FULL_RESPONSE,
   GROUPS_FIXTURE,

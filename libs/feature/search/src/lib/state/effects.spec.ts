@@ -43,12 +43,10 @@ import {
 import { HttpErrorResponse } from '@angular/common/http'
 import { delay } from 'rxjs/operators'
 import { FILTER_GEOMETRY } from '../feature-search.module'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { TestScheduler } from 'rxjs/internal/testing/TestScheduler'
-import {
-  AuthService,
-  FavoritesService,
-} from '@geonetwork-ui/api/repository/gn4'
+import { FavoritesService } from '@geonetwork-ui/api/repository/gn4'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 const defaultSearchState = initialState[DEFAULT_SEARCH_KEY]
 const stateWithSearches = {
@@ -69,8 +67,8 @@ const stateWithSearches = {
   },
 }
 
-class AuthServiceMock {
-  authReady = () => of(true)
+class PlatformServiceMock {
+  getMe = jest.fn(() => of(true))
 }
 class FavoritesServiceMock {
   myFavoritesUuid$ = of(['fav001', 'fav002', 'fav003'])
@@ -100,8 +98,8 @@ describe('Effects', () => {
         provideMockActions(() => actions$),
         SearchEffects,
         {
-          provide: AuthService,
-          useClass: AuthServiceMock,
+          provide: PlatformServiceInterface,
+          useClass: PlatformServiceMock,
         },
         {
           provide: FavoritesService,

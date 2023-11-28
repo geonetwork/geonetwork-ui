@@ -1,4 +1,4 @@
-import { AggregationsTypes } from '@geonetwork-ui/common/domain/search'
+import { AggregationsTypes } from '@geonetwork-ui/common/domain/model/search'
 
 export type FacetPath = string[]
 

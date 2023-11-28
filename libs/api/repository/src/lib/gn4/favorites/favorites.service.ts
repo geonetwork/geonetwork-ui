@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
 import { merge, Observable, of, Subject, throwError } from 'rxjs'
 import { UserselectionsApiService } from '@geonetwork-ui/data-access/gn4'
-import { AuthService } from '../auth/auth.service'
 import {
   catchError,
   map,
@@ -11,6 +10,7 @@ import {
   tap,
   withLatestFrom,
 } from 'rxjs/operators'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 const SELECTION_ID = 0 // hardcoded to always point on the first selection
 
@@ -18,8 +18,8 @@ const SELECTION_ID = 0 // hardcoded to always point on the first selection
   providedIn: 'root',
 })
 export class FavoritesService {
-  private myUserId$ = this.authService
-    .authReady()
+  private myUserId$ = this.platformService
+    .getMe()
     .pipe(map((userInfo) => (userInfo ? parseInt(userInfo.id) : null)))
 
   // this observable loads the current list of favorites from the API
@@ -52,7 +52,7 @@ export class FavoritesService {
 
   constructor(
     private userSelectionsService: UserselectionsApiService,
-    private authService: AuthService
+    private platformService: PlatformServiceInterface
   ) {}
 
   addToFavorites(uuids: string[]): Observable<void> {

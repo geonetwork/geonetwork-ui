@@ -7,7 +7,7 @@ import {
   SAMPLE_AGGREGATIONS_RESULTS,
 } from '@geonetwork-ui/common/fixtures'
 import { of } from 'rxjs'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 class RecordsRepositoryMock {
   aggregate = jest.fn(() => of(SAMPLE_AGGREGATIONS_RESULTS))

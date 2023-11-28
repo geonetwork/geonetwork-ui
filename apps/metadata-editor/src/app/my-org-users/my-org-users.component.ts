@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 import { MyOrgService } from '@geonetwork-ui/feature/catalog'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { UserApiModel } from '@geonetwork-ui/data-access/gn4'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 
 @Component({
   selector: 'md-editor-my-org-users',
@@ -25,7 +25,7 @@ export class MyOrgUsersComponent implements OnDestroy {
     logoUrl: string
     recordCount: number
     userCount: number
-    userList: UserApiModel[]
+    userList: UserModel[]
   }
 
   private myOrgDataSubscription

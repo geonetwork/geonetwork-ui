@@ -25,6 +25,7 @@ import { extModules } from './build-specifics'
 import { DashboardPageComponent } from './dashboard/dashboard-page.component'
 import { EditorRouterService } from './router.service'
 import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
+import { provideGn4 } from '@geonetwork-ui/api/repository/gn4'
 
 @NgModule({
   declarations: [AppComponent],
@@ -58,6 +59,7 @@ import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
     importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
     provideRepositoryUrl(() => getGlobalConfig().GN4_API_URL),
     importProvidersFrom(EffectsModule.forRoot()),
+    provideGn4(),
   ],
   bootstrap: [AppComponent],
 })

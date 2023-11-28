@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-link-card',

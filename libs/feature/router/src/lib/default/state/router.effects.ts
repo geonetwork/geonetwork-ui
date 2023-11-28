@@ -9,7 +9,10 @@ import {
   SetFilters,
   SetSortBy,
 } from '@geonetwork-ui/feature/search'
-import { FieldFilters, SortByEnum } from '@geonetwork-ui/common/domain/search'
+import {
+  FieldFilters,
+  SortByEnum,
+} from '@geonetwork-ui/common/domain/model/search'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { navigation } from '@ngrx/router-store/data-persistence'
 import { of, pairwise, startWith, withLatestFrom } from 'rxjs'

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { MetadataQualityDisplay } from '@geonetwork-ui/ui/elements'
 import {
   MetadataQualityConfig,

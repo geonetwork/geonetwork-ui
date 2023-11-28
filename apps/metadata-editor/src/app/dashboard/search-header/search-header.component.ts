@@ -4,10 +4,8 @@ import { MatIconModule } from '@angular/material/icon'
 import { LetDirective } from '@ngrx/component'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
-import {
-  AuthService,
-  AvatarServiceInterface,
-} from '@geonetwork-ui/api/repository/gn4'
+import { AvatarServiceInterface } from '@geonetwork-ui/api/repository/gn4'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 @Component({
   selector: 'md-editor-search-header',
@@ -27,7 +25,7 @@ export class SearchHeaderComponent {
   public placeholder = this.avatarService.placeholder
 
   constructor(
-    public authService: AuthService,
+    public platformService: PlatformServiceInterface,
     private avatarService: AvatarServiceInterface
   ) {}
 }

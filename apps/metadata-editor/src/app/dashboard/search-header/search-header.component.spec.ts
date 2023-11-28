@@ -1,52 +1,28 @@
-import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  CUSTOM_ELEMENTS_SCHEMA,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { SearchHeaderComponent } from './search-header.component'
-import { BehaviorSubject, of } from 'rxjs'
-import { summaryHits, USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
+import { BehaviorSubject } from 'rxjs'
+import { USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { TranslateModule } from '@ngx-translate/core'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
-import {
-  AuthService,
-  AvatarServiceInterface,
-} from '@geonetwork-ui/api/repository/gn4'
-import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
-
-const user = USER_FIXTURE()
-class AuthServiceMock {
-  user$ = new BehaviorSubject(user)
-  authReady = jest.fn(() => this._authSubject$)
-  _authSubject$ = new BehaviorSubject({})
-}
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { AvatarServiceInterface } from '@geonetwork-ui/api/repository/gn4'
 
 class AvatarServiceInterfaceMock {
   placeholder = 'http://placeholder.com'
   getProfileIcon = (hash: string) => `${hash}`
 }
 
-class OrganisationsServiceMock {
-  organisationsCount$ = of(456)
-}
-class SearchFacadeMock {
-  init = jest.fn()
-  results$ = of(summaryHits)
-  setPagination = jest.fn(() => this)
-  setSortBy = jest.fn(() => this)
-  setConfigRequestFields = jest.fn(() => this)
-  setResultsLayout = jest.fn(() => this)
-  searchFilters$ = new BehaviorSubject(user)
-  authReady = jest.fn(() => this.searchFilters$)
-}
-
-class searchServiceMock {
-  updateSearchFilters = jest.fn()
-  setSearch = jest.fn()
-  setSortBy = jest.fn()
-  setSortAndFilters = jest.fn()
+const me$ = new BehaviorSubject(USER_FIXTURE())
+class PlatformServiceMock {
+  getMe = jest.fn(() => me$)
 }
 
 describe('SearchHeaderComponent', () => {
@@ -63,28 +39,22 @@ describe('SearchHeaderComponent', () => {
       ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
-        provideRepositoryUrl('/geonetwork/srv/api'),
-        { provide: AuthService, useClass: AuthServiceMock },
         {
           provide: AvatarServiceInterface,
           useClass: AvatarServiceInterfaceMock,
         },
         {
-          provide: OrganizationsServiceInterface,
-          useClass: OrganisationsServiceMock,
-        },
-        {
-          provide: SearchFacade,
-          useClass: SearchFacadeMock,
-        },
-        {
-          provide: SearchService,
-          useClass: searchServiceMock,
+          provide: PlatformServiceInterface,
+          useClass: PlatformServiceMock,
         },
       ],
     })
       .overrideComponent(SearchHeaderComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default },
+        set: {
+          changeDetection: ChangeDetectionStrategy.Default,
+          imports: [],
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        },
       })
       .compileComponents()
 

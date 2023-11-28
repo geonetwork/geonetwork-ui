@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-external-viewer-button',

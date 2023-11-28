@@ -2,22 +2,22 @@ import { Injectable } from '@angular/core'
 import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { ElasticsearchService } from './elasticsearch'
 import { Observable, of, switchMap } from 'rxjs'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import {
   SearchParams,
   SearchResults,
-} from '@geonetwork-ui/common/domain/search/search.model'
+} from '@geonetwork-ui/common/domain/model/search/search.model'
 import {
   Aggregations,
   AggregationsParams,
   FieldFilters,
-} from '@geonetwork-ui/common/domain/search'
+} from '@geonetwork-ui/common/domain/model/search'
 import { map } from 'rxjs/operators'
 import {
   Gn4MetadataMapper,
   Gn4SearchResults,
 } from '@geonetwork-ui/api/metadata-converter'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 @Injectable()
 export class Gn4Repository implements RecordsRepositoryInterface {

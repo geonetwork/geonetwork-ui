@@ -3,16 +3,15 @@ import {
   GroupApiModel,
   GroupsApiService,
   SearchApiService,
-  SiteApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import {
   FieldFilterByValues,
   FieldFilters,
-} from '@geonetwork-ui/common/domain/search'
+} from '@geonetwork-ui/common/domain/model/search'
 import {
   CatalogRecord,
   Organization,
-} from '@geonetwork-ui/common/domain/record'
+} from '@geonetwork-ui/common/domain/model/record'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { ElasticsearchService } from '../elasticsearch'
 import {
@@ -28,6 +27,7 @@ import {
 import { combineLatest, Observable, of, switchMap, takeLast } from 'rxjs'
 import { filter, map, shareReplay, startWith, tap } from 'rxjs/operators'
 import { LangService } from '@geonetwork-ui/util/i18n'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 const IMAGE_URL = '/geonetwork/images/harvesting/'
 
@@ -53,18 +53,12 @@ interface IncompleteOrganization {
 export class OrganizationsFromMetadataService
   implements OrganizationsServiceInterface
 {
-  geonetworkVersion$ = of(true).pipe(
-    switchMap(() => this.siteApiService.getSiteOrPortalDescription()),
-    map((info) => info['system/platform/version']),
-    shareReplay(1)
-  )
-
   private groups$: Observable<GroupApiModel[]> = of(true).pipe(
     switchMap(() => this.groupsApiService.getGroups()),
     shareReplay()
   )
   private organisationsAggs$: Observable<OrganizationAggsBucket[]> =
-    this.geonetworkVersion$.pipe(
+    this.platformService.getApiVersion().pipe(
       switchMap((version) =>
         this.searchApiService.search(
           'bucket',
@@ -117,7 +111,7 @@ export class OrganizationsFromMetadataService
     private esService: ElasticsearchService,
     private searchApiService: SearchApiService,
     private groupsApiService: GroupsApiService,
-    private siteApiService: SiteApiService,
+    private platformService: PlatformServiceInterface,
     private langService: LangService
   ) {}
 
@@ -235,7 +229,7 @@ export class OrganizationsFromMetadataService
   }
 
   getFiltersForOrgs(organisations: Organization[]): Observable<FieldFilters> {
-    return this.geonetworkVersion$.pipe(
+    return this.platformService.getApiVersion().pipe(
       map((gnVersion) => {
         const fieldName = gnVersion.startsWith('4.2.2')
           ? 'OrgForResource'
@@ -251,7 +245,7 @@ export class OrganizationsFromMetadataService
   }
 
   getOrgsFromFilters(filters: FieldFilters): Observable<Organization[]> {
-    return this.geonetworkVersion$.pipe(
+    return this.platformService.getApiVersion().pipe(
       switchMap((gnVersion) => {
         const fieldName = gnVersion.startsWith('4.2.2')
           ? 'OrgForResource'

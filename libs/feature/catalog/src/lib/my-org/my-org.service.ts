@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { AuthService } from '@geonetwork-ui/api/repository/gn4'
 import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs'
-import { UserApiModel } from '@geonetwork-ui/data-access/gn4'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class MyOrgService {
     logoUrl: string
     recordCount: number
     userCount: number
-    userList: UserApiModel[]
+    userList: UserModel[]
   }>
 
   private myOrgDataSubject = new BehaviorSubject<{
@@ -21,7 +21,7 @@ export class MyOrgService {
     logoUrl: string
     recordCount: number
     userCount: number
-    userList: UserApiModel[]
+    userList: UserModel[]
   }>({
     orgName: '',
     logoUrl: '',
@@ -31,12 +31,12 @@ export class MyOrgService {
   })
 
   constructor(
-    private authService: AuthService,
+    private platformService: PlatformServiceInterface,
     private orgService: OrganizationsServiceInterface
   ) {
     this.myOrgData$ = combineLatest([
-      this.authService.user$,
-      this.authService.allUsers$,
+      this.platformService.getMe(),
+      this.platformService.getUsers(),
       this.orgService.organisations$,
     ]).pipe(
       map(([user, allUsers, orgs]) => {

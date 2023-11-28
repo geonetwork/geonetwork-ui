@@ -7,14 +7,13 @@ import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import tippy from 'tippy.js'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
-import {
-  AuthService,
-  FavoritesService,
-} from '@geonetwork-ui/api/repository/gn4'
+import { FavoritesService } from '@geonetwork-ui/api/repository/gn4'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 tippy = jest.fn()
-class AuthServiceMock {
-  isAnonymous$ = new BehaviorSubject(false)
+const isAnonymous$ = new BehaviorSubject(false)
+class PlatformServiceMock {
+  isAnonymous = jest.fn(() => isAnonymous$)
 }
 
 class FavoritesServiceMock {
@@ -31,7 +30,7 @@ class TranslateServiceMock {
 describe('FavoriteStarComponent', () => {
   let component: FavoriteStarComponent
   let fixture: ComponentFixture<FavoriteStarComponent>
-  let authService: AuthService
+  let platformService: PlatformServiceInterface
   let favoritesService: FavoritesService
   let favoriteCountHTMLEl: HTMLElement
   let starToggle: StarToggleComponent
@@ -42,8 +41,8 @@ describe('FavoriteStarComponent', () => {
       imports: [TranslateModule.forRoot()],
       providers: [
         {
-          provide: AuthService,
-          useClass: AuthServiceMock,
+          provide: PlatformServiceInterface,
+          useClass: PlatformServiceMock,
         },
         {
           provide: FavoritesService,
@@ -63,7 +62,7 @@ describe('FavoriteStarComponent', () => {
       })
       .compileComponents()
 
-    authService = TestBed.inject(AuthService)
+    platformService = TestBed.inject(PlatformServiceInterface)
     favoritesService = TestBed.inject(FavoritesService)
     fixture = TestBed.createComponent(FavoriteStarComponent)
     component = fixture.componentInstance
@@ -120,7 +119,7 @@ describe('FavoriteStarComponent', () => {
     })
     describe('when not authenticated', () => {
       beforeEach(() => {
-        ;(authService as any).isAnonymous$.next(true)
+        isAnonymous$.next(true)
         fixture.detectChanges()
       })
       it('star toggle is disabled', () => {
@@ -194,7 +193,7 @@ describe('FavoriteStarComponent', () => {
       })
       it('increase record favorite count by one', () => {
         expect(favoriteCountHTMLEl.textContent).toEqual(
-          (component.record.extras.favoriteCount + 1).toString()
+          ((component.record.extras.favoriteCount as number) + 1).toString()
         )
       })
     })

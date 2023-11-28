@@ -8,6 +8,7 @@ import { BehaviorSubject, of } from 'rxjs'
 import { USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
 import { AuthService } from '@geonetwork-ui/api/repository/gn4'
 import { EditorRouterService } from '../../router.service'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 @Component({
   // eslint-disable-next-line
@@ -38,6 +39,11 @@ class FieldsServiceMock {
   buildFiltersFromFieldValues = jest.fn((val) => of(val))
 }
 
+const me$ = new BehaviorSubject(USER_FIXTURE())
+class PlatformServiceMock {
+  getMe = jest.fn(() => me$)
+}
+
 describe('MyRecordsComponent', () => {
   let component: MyRecordsComponent
   let fixture: ComponentFixture<MyRecordsComponent>
@@ -56,8 +62,8 @@ describe('MyRecordsComponent', () => {
           useClass: SearchFacadeMock,
         },
         {
-          provide: AuthService,
-          useClass: AuthServiceMock,
+          provide: PlatformServiceInterface,
+          useClass: PlatformServiceMock,
         },
         {
           provide: EditorRouterService,

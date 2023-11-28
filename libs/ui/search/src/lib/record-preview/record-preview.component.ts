@@ -20,7 +20,7 @@ import {
   DatasetRecord,
   Individual,
   Organization,
-} from '@geonetwork-ui/common/domain/record'
+} from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-record-preview',

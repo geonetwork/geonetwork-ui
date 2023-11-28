@@ -13,8 +13,8 @@ import { Observable, of, throwError } from 'rxjs'
 import * as MdViewActions from './mdview.actions'
 import { MdViewEffects } from './mdview.effects'
 import { hot } from 'jasmine-marbles'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 const full = {
   uniqueIdentifier: '1231321321',

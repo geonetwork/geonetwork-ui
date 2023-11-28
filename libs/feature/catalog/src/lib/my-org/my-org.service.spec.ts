@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing'
 import { MyOrgService } from './my-org.service'
-import { AuthService } from '@geonetwork-ui/api/repository/gn4'
+import { AvatarServiceInterface } from '@geonetwork-ui/api/repository/gn4'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs'
+import { BehaviorSubject, of } from 'rxjs'
 import { UserApiModel } from '@geonetwork-ui/data-access/gn4'
-import { UserModel } from '@geonetwork-ui/common/domain/user.model'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { TranslateService } from '@ngx-translate/core'
-import { AvatarServiceInterface } from '@geonetwork-ui/api/repository/gn4'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 const translateServiceMock = {
   currentLang: 'fr',
@@ -27,9 +27,16 @@ class orgServiceMock {
   organisations$ = orgs$
 }
 
+const userSubject = new BehaviorSubject<UserModel | null>(null)
+const allUsersSubject = new BehaviorSubject<UserApiModel[]>([])
+
+class PlatformServiceMock {
+  getMe = jest.fn(() => userSubject)
+  getUsers = jest.fn(() => allUsersSubject)
+}
+
 describe('MyOrgService', () => {
   let myOrgService: MyOrgService
-  let authService: AuthService
   let orgService: OrganizationsServiceInterface
 
   beforeEach(() => {
@@ -45,12 +52,14 @@ describe('MyOrgService', () => {
           useClass: AvatarServiceInterfaceMock,
         },
         { provide: OrganizationsServiceInterface, useClass: orgServiceMock },
-        AuthService,
+        {
+          provide: PlatformServiceInterface,
+          useClass: PlatformServiceMock,
+        },
       ],
       imports: [HttpClientTestingModule],
     })
     myOrgService = TestBed.inject(MyOrgService)
-    authService = TestBed.inject(AuthService)
     orgService = TestBed.inject(OrganizationsServiceInterface)
   })
 
@@ -59,7 +68,6 @@ describe('MyOrgService', () => {
   })
 
   it('should update myOrgDataSubject when authService user$ emits a user', () => {
-    const userSubject = new BehaviorSubject<UserModel | null>(null)
     const user: UserModel = {
       organisation: 'Géo2France',
       id: '2',
@@ -70,7 +78,6 @@ describe('MyOrgService', () => {
       email: 'email@email',
       profileIcon: 'icon.com',
     }
-    authService.user$ = userSubject.asObservable()
 
     userSubject.next(user)
 
@@ -96,13 +103,10 @@ describe('MyOrgService', () => {
   })
 
   it('should update myOrgDataSubject when authService allUsers$ emits users', () => {
-    const allUsersSubject = new BehaviorSubject<UserApiModel[]>([])
     const users: UserApiModel[] = [
       { organisation: 'Géo2France' },
       { organisation: 'Géo2France' },
     ]
-    authService.allUsers$ = allUsersSubject.asObservable()
-
     allUsersSubject.next(users)
 
     myOrgService.myOrgData$.subscribe((data) => {

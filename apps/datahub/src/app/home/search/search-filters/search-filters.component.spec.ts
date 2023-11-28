@@ -19,9 +19,10 @@ import { SearchFiltersComponent } from './search-filters.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 import { FormsModule } from '@angular/forms'
-import { FieldFilters } from '@geonetwork-ui/common/domain/search'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 import { USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
 import { AuthService } from '@geonetwork-ui/api/repository/gn4'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getOptionalSearchConfig: () => ({
@@ -103,10 +104,8 @@ class FieldsServiceMock {
   }
 }
 
-class AuthServiceMock {
-  user$ = new BehaviorSubject(user)
-  authReady = jest.fn(() => this._authSubject$)
-  _authSubject$ = new BehaviorSubject({})
+class PlatformServiceMock {
+  getMe = jest.fn(() => new BehaviorSubject(user))
 }
 
 describe('SearchFiltersComponent', () => {
@@ -138,8 +137,8 @@ describe('SearchFiltersComponent', () => {
           useClass: FieldsServiceMock,
         },
         {
-          provide: AuthService,
-          useClass: AuthServiceMock,
+          provide: PlatformServiceInterface,
+          useClass: PlatformServiceMock,
         },
       ],
     })

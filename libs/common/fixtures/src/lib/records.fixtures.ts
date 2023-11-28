@@ -1,4 +1,4 @@
-import { DatasetRecord } from '@geonetwork-ui/common/domain/record'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
 import { deepFreeze } from './utils/freeze'
 
 export const DATASET_RECORDS: DatasetRecord[] = deepFreeze([

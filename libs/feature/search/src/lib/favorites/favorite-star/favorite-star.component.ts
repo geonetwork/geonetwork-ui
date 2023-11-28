@@ -13,11 +13,12 @@ import tippy from 'tippy.js'
 import { TranslateService } from '@ngx-translate/core'
 import { StarToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { Observable, Subscription } from 'rxjs'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
   AuthService,
   FavoritesService,
 } from '@geonetwork-ui/api/repository/gn4'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 @Component({
   selector: 'gn-ui-favorite-star',
@@ -39,7 +40,7 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   isFavorite$ = this.favoritesService.myFavoritesUuid$.pipe(
     map((favorites) => favorites.indexOf(this.record.uniqueIdentifier) > -1)
   )
-  isAnonymous$ = this.authService.isAnonymous$
+  isAnonymous$ = this.platformService.isAnonymous()
   record_: CatalogRecord
   favoriteCount: number | null
   loading = false
@@ -61,8 +62,9 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     private favoritesService: FavoritesService,
-    private authService: AuthService,
+    private platformService: PlatformServiceInterface,
     private changeDetector: ChangeDetectorRef,
+    private authService: AuthService,
     private translateService: TranslateService
   ) {}
 

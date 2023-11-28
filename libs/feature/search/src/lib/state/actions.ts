@@ -7,8 +7,8 @@ import {
   FieldFilters,
   FieldName,
   SortByField,
-} from '@geonetwork-ui/common/domain/search'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+} from '@geonetwork-ui/common/domain/model/search'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 export const ADD_SEARCH = '[Search] Add search instance'
 export const SET_FILTERS = '[Search] Set Filters'

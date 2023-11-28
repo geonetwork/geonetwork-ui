@@ -1,7 +1,7 @@
 import {
   CatalogRecord,
   DatasetRecord,
-} from '@geonetwork-ui/common/domain/record'
+} from '@geonetwork-ui/common/domain/model/record'
 
 export class MetadataMapperContext {
   readonly location?

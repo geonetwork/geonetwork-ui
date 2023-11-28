@@ -15,7 +15,7 @@ import {
   SpatialRepresentationType,
   UpdateFrequency,
   UpdateFrequencyCustom,
-} from '@geonetwork-ui/common/domain/record'
+} from '@geonetwork-ui/common/domain/model/record'
 import { getStatusFromStatusCode } from './codelists/status.mapper'
 import { getUpdateFrequencyFromFrequencyCode } from './codelists/update-frequency.mapper'
 import {

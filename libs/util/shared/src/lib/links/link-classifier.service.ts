@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { getFileFormat } from './link-utils'
 export enum LinkUsage {
   API = 'api',

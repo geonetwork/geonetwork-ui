@@ -4,10 +4,10 @@ import { TranslateModule } from '@ngx-translate/core'
 import { RecordsListComponent } from '../records-list.component'
 import { MyOrgService } from '@geonetwork-ui/feature/catalog'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { Organization } from '@geonetwork-ui/common/domain/record'
+import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { UserApiModel } from '@geonetwork-ui/data-access/gn4'
 import { EditorRouterService } from '../../router.service'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 
 @Component({
   selector: 'md-editor-my-org-records',
@@ -22,7 +22,7 @@ export class MyOrgRecordsComponent implements OnDestroy {
     logoUrl: string
     recordCount: number
     userCount: number
-    userList: UserApiModel[]
+    userList: UserModel[]
   }
 
   public myOrgDataSubscription

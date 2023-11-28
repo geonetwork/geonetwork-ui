@@ -16,7 +16,7 @@ import {
   RouterGoActionPayload,
 } from './router.actions'
 import { selectCurrentRoute, selectRouteParams } from './router.selectors'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 @Injectable()
 export class RouterFacade {

@@ -49,8 +49,8 @@ import {
   FieldFilters,
   FieldName,
   SortByField,
-} from '@geonetwork-ui/common/domain/search'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+} from '@geonetwork-ui/common/domain/model/search'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 @Injectable()
 export class SearchFacade {

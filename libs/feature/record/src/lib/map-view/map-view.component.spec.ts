@@ -39,7 +39,7 @@ import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/common/fix
 import { Collection } from 'ol'
 import { Interaction } from 'ol/interaction'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/record'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
 
 const mapConfigMock = {
   MAX_ZOOM: 10,

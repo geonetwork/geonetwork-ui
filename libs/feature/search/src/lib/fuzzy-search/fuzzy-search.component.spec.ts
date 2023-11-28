@@ -6,12 +6,12 @@ import { BehaviorSubject, of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FuzzySearchComponent } from './fuzzy-search.component'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
   DATASET_RECORDS,
   SAMPLE_SEARCH_RESULTS,
 } from '@geonetwork-ui/common/fixtures'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/records-repository.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 class SearchFacadeMock {
   setFilters = jest.fn()

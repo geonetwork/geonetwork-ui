@@ -16,7 +16,7 @@ import {
 import {
   DatasetDistribution,
   DatasetRecord,
-} from '@geonetwork-ui/common/domain/record'
+} from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-add-layer-record-preview',

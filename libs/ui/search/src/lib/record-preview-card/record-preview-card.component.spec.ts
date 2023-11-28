@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 import { RecordPreviewCardComponent } from './record-preview-card.component'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 describe('RecordPreviewCardComponent', () => {
   let component: RecordPreviewCardComponent
