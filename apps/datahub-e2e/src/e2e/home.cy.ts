@@ -22,8 +22,7 @@ describe('header', () => {
       cy.get('[data-cy="addMoreBtn"]').should('be.visible')
     })
     it('should display the orga and dataset link buttons', () => {
-      cy.get('[ng-reflect-title="datasets"]').should('be.visible')
-      cy.get('[ng-reflect-title="organisations"]').should('be.visible')
+      cy.get('gn-ui-figure').should('have.length', 2)
     })
 
     describe('news feed display', () => {
@@ -35,12 +34,14 @@ describe('header', () => {
 
     describe('link buttons display', () => {
       it('datasets : should display the icon', () => {
-        cy.get('[ng-reflect-title="datasets"]')
+        cy.get('gn-ui-figure')
+          .eq(0)
           .find('mat-icon')
           .should('have.text', ' folder_open ')
       })
       it('organisations : should display the icon', () => {
-        cy.get('[ng-reflect-title="organisations"]')
+        cy.get('gn-ui-figure')
+          .eq(1)
           .find('mat-icon')
           .should('have.text', ' corporate_fare ')
       })

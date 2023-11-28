@@ -385,7 +385,7 @@ describe('dataset pages', () => {
           })
         })
         it('displays the full list after clicking two times on one filter', () => {
-          cy.get('gn-ui-data-downloads')
+          cy.get('datahub-record-downloads')
             .find('gn-ui-button')
             .children('button')
             .eq(1)

@@ -42,17 +42,17 @@ describe('dashboard', () => {
       cy.visit('/records/all')
       cy.get('gn-ui-record-table')
         .find('.record-table-col')
-        .first()
+        .eq(1)
         .invoke('text')
         .then((list) => {
           originalFirstItem = list.trim()
           cy.get('.record-table-header').first().click()
           // Takes time to refresh results
           // eslint-disable-next-line cypress/no-unnecessary-waiting
-          // cy.wait(500)
+          cy.wait(500)
           cy.get('gn-ui-record-table')
             .find('.record-table-col')
-            .first()
+            .eq(1)
             .invoke('text')
             .then((list) => {
               newFirstItem = list.trim()
@@ -71,7 +71,7 @@ describe('dashboard', () => {
       cy.visit('/records/all')
       cy.get('gn-ui-record-table')
         .find('.record-table-col')
-        .get('[type="checkbox"]')
+        .get('gn-ui-checkbox')
         .eq(2)
         .click()
       cy.get('.selected-records').contains('1 selected')
@@ -81,7 +81,7 @@ describe('dashboard', () => {
       cy.visit('/records/all')
       cy.get('gn-ui-record-table')
         .find('.record-table-col')
-        .get('mat-checkbox.mat-primary')
+        .get('gn-ui-checkbox')
         .each(($checkbox) => cy.wrap($checkbox).click())
       cy.get('.records-information').should(
         'not.have.descendants',
@@ -93,7 +93,7 @@ describe('dashboard', () => {
       cy.visit('/records/all')
       cy.get('gn-ui-record-table')
         .find('.record-table-col')
-        .get('mat-checkbox.mat-primary')
+        .get('gn-ui-checkbox')
         .first()
         .click()
       cy.get('.selected-records').contains('12 selected')

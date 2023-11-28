@@ -13,29 +13,32 @@
 declare namespace Cypress {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface Chainable<Subject> {
-    // login(email: string, password: string): void
     loginGN(username: string, password: string, redirect?: boolean): void
     signOutGN(): void
   }
 }
-//
-// -- This is a parent command --
-/*Cypress.Commands.add('login', (email, password) => {
-  console.log('Custom command example: Login', email, password)
-})*/
 
 Cypress.Commands.add(
   'loginGN',
   (username: string, password: string, redirect = true) => {
-    Cypress.on('uncaught:exception', (err) => {
-      if (err.message.includes('Jsonix')) return false
-      if (err.message.includes('postMessage')) return false
+    // first request to get the XSRF cookie
+    cy.request({
+      method: 'GET',
+      url: '/geonetwork/srv/api/me',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+      },
     })
-
-    cy.visit('/geonetwork/srv/eng/catalog.signin?debug') // this will point to a 404
-    cy.get('#inputUsername').type(username, { force: true })
-    cy.get('#inputPassword').type(password, { force: true })
-    cy.get('[name="gnSigninForm"]').submit()
+    cy.getCookie('XSRF-TOKEN').then((xsrfTokenCookie) => {
+      cy.request({
+        method: 'POST',
+        url: '/geonetwork/signin',
+        body: `username=${username}&password=${password}&_csrf=${xsrfTokenCookie.value}`,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      })
+    })
     if (redirect) cy.visit('/')
   }
 )
