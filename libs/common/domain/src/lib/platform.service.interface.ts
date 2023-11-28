@@ -3,7 +3,7 @@ import { UserModel } from './model/user/user.model'
 import { Organization } from './model/record/organization.model'
 
 export abstract class PlatformServiceInterface {
-  abstract getTye(): string
+  abstract getType(): string
   abstract getApiVersion(): Observable<string>
   abstract isApiCompatible(): Observable<boolean>
 

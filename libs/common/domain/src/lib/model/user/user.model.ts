@@ -8,14 +8,3 @@ export interface UserModel {
   organisation: string
   profileIcon?: string
 }
-
-export interface UserModela {
-  enabled?: boolean
-  emailAddresses?: Set<string>
-  organisation?: string
-  kind?: string
-  lastLoginDate?: string
-  accountNonExpired?: boolean
-  accountNonLocked?: boolean
-  credentialsNonExpired?: boolean
-}

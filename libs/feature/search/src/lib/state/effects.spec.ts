@@ -67,7 +67,7 @@ const stateWithSearches = {
   },
 }
 
-class Gn4PlatformServiceMock {
+class PlatformServiceMock {
   getMe = jest.fn(() => of(true))
 }
 class FavoritesServiceMock {
@@ -99,7 +99,7 @@ describe('Effects', () => {
         SearchEffects,
         {
           provide: PlatformServiceInterface,
-          useClass: Gn4PlatformServiceMock,
+          useClass: PlatformServiceMock,
         },
         {
           provide: FavoritesService,

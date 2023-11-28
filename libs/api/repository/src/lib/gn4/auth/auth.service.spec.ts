@@ -1,37 +1,11 @@
 import { AuthService, LOGIN_URL } from './auth.service'
-import { Subject } from 'rxjs'
 import { TestBed } from '@angular/core/testing'
-import { MeApiService } from '@geonetwork-ui/data-access/gn4'
 import { TranslateService } from '@ngx-translate/core'
-import { AvatarServiceInterface } from './avatar.service.interface'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 
-const userMock = {
-  id: '21737',
-  profile: 'Administrator',
-  username: 'C2C-gravin',
-  name: 'Florent',
-  surname: 'Gravin',
-  email: 'florent.gravin@camptocamp.com',
-  hash: 'girafe',
-  organisation: null,
-  admin: true,
-  groupsWithRegisteredUser: [],
-  groupsWithEditor: [],
-  groupsWithReviewer: [],
-  groupsWithUserAdmin: [],
-}
 let loginUrlTokenMock
 const translateServiceMock = {
   currentLang: 'fr',
-}
-const me$ = new Subject()
-const meApiMock = {
-  getMe: () => me$,
-}
-class AvatarServiceInterfaceMock {
-  placeholder = 'http://placeholder.com'
-  getProfileIcon = jest.fn((hash: string) => `http://icon_service.com/${hash}`)
 }
 
 let windowLocation
@@ -53,16 +27,8 @@ describe('AuthService', () => {
           useFactory: () => loginUrlTokenMock,
         },
         {
-          provide: MeApiService,
-          useValue: meApiMock,
-        },
-        {
           provide: TranslateService,
           useValue: translateServiceMock,
-        },
-        {
-          provide: AvatarServiceInterface,
-          useClass: AvatarServiceInterfaceMock,
         },
       ],
       imports: [HttpClientTestingModule],

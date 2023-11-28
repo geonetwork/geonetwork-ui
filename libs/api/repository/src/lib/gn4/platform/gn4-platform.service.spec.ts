@@ -27,11 +27,11 @@ const userMock = {
   groupsWithUserAdmin: [],
 }
 
-const me$ = new Subject()
 class MeApiMock {
   getMe() {
-    return me$
+    return this._me$
   }
+  _me$ = new Subject()
 }
 
 class AvatarServiceInterfaceMock {
@@ -65,6 +65,7 @@ class UsersApiServiceMock {
 
 describe('Gn4PlatformService', () => {
   let service: Gn4PlatformService
+  let meApiService: MeApiService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -90,6 +91,7 @@ describe('Gn4PlatformService', () => {
       ],
     })
     service = TestBed.inject(Gn4PlatformService)
+    meApiService = TestBed.inject(MeApiService)
   })
 
   it('creates', () => {
@@ -117,7 +119,7 @@ describe('Gn4PlatformService', () => {
     ])
   })
   it('is of type GeoNetwork', async () => {
-    expect(service.getTye()).toEqual('GeoNetwork')
+    expect(service.getType()).toEqual('GeoNetwork')
   })
   describe('MeService', () => {
     let me
@@ -126,7 +128,7 @@ describe('Gn4PlatformService', () => {
     })
     describe('When user is logged in', () => {
       beforeEach(() => {
-        me$.next(userMock)
+        ;(meApiService as any)._me$.next(userMock)
       })
       it('returns mapped user ', async () => {
         expect(me).toEqual({
@@ -147,7 +149,7 @@ describe('Gn4PlatformService', () => {
     })
     describe('When no user is logged in', () => {
       beforeEach(() => {
-        me$.next({})
+        ;(meApiService as any)._me$.next({})
       })
       it('returns no user ', async () => {
         const me = await firstValueFrom(service.getMe())

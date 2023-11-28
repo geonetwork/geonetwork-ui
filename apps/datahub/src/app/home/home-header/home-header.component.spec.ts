@@ -71,14 +71,9 @@ class searchServiceMock {
   setFilters = jest.fn()
 }
 
-const isAnonymous$ = new BehaviorSubject(false)
 class PlatformServiceMock {
-  isAnonymous = jest.fn(() => isAnonymous$)
-}
-
-class AuthServiceMock {
-  authReady = jest.fn(() => this._authSubject$)
-  _authSubject$ = new BehaviorSubject({})
+  isAnonymous = jest.fn(() => this._isAnonymous$)
+  _isAnonymous$ = new BehaviorSubject(true)
 }
 
 class FieldsServiceMock {
@@ -91,6 +86,7 @@ describe('HeaderComponent', () => {
   let searchService: SearchService
   let searchFacade: SearchFacade
   let routerFacade: RouterFacade
+  let platform: PlatformServiceInterface
 
   beforeEach(async () => {
     _setLanguages(['fr', 'de'])
@@ -124,6 +120,7 @@ describe('HeaderComponent', () => {
     searchService = TestBed.inject(SearchService)
     searchFacade = TestBed.inject(SearchFacade)
     routerFacade = TestBed.inject(RouterFacade)
+    platform = TestBed.inject(PlatformServiceInterface)
   })
 
   beforeEach(() => {
@@ -143,7 +140,7 @@ describe('HeaderComponent', () => {
     describe('isAuthenticated$', () => {
       describe('user is authenticated', () => {
         beforeEach(() => {
-          isAnonymous$.next(false)
+          ;(platform as any)._isAnonymous$.next(false)
         })
         it('displays favoriteBadge when authenticated', async () => {
           const isAuthenticated = await firstValueFrom(
@@ -154,7 +151,7 @@ describe('HeaderComponent', () => {
       })
       describe('user is NOT authenticated', () => {
         beforeEach(() => {
-          isAnonymous$.next(true)
+          ;(platform as any)._isAnonymous$.next(true)
         })
         it('does NOT display favoriteBadge when NOT authenticated', async () => {
           const isAuthenticated = await firstValueFrom(

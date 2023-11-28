@@ -55,7 +55,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     )
   }
 
-  getTye(): string {
+  getType(): string {
     return this.type
   }
 
