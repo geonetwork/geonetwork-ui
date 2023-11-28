@@ -1,9 +1,9 @@
 describe('my-org', () => {
   beforeEach(() => {
-    cy.loginGN('barbie', 'p4ssworD_', false)
+    cy.login('barbie', 'p4ssworD_', false)
     cy.intercept({
       method: 'GET',
-      url: 'http://localhost:4200/geonetwork/srv/api/userselections/0/101',
+      url: '/geonetwork/srv/api/userselections/0/101',
     }).as('dataGetFirst')
     cy.visit(`/records/my-org`)
     cy.get('md-editor-dashboard-menu').find('a').first().click()

@@ -11,7 +11,6 @@ on:
   push:
     branches:
       - main
-      - develop
   pull_request:
     types: [opened, synchronize, ready_for_review]
 
@@ -142,3 +141,25 @@ jobs:
             - [ ] 📦 Build and push affected docker images'
           comment_tag: build-options
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  cypress-run:
+    name: End-to-end tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Build the backend
+        run: sudo docker-compose -f support-services/docker-compose.yml up -d init
+
+      - name: Install dependencies
+        run: |
+          npm ci
+
+      - name: Run tests
+        run: npx nx run-many --target=e2e

@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - main
-      - develop
   release:
     types: [published]
   issue_comment:
