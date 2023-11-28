@@ -7,10 +7,7 @@ import {
   UsersApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import {
-  MeUserModel,
-  UserModel,
-} from '@geonetwork-ui/common/domain/model/user/user.model'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { Gn4PlatformMapper } from './gn4-platform.mapper'
 
@@ -18,7 +15,7 @@ const minApiVersion = '4.2.0'
 @Injectable()
 export class Gn4PlatformService implements PlatformServiceInterface {
   private readonly type = 'GeoNetwork'
-  private me$: Observable<MeUserModel>
+  private me$: Observable<UserModel>
   private users$: Observable<UserModel[]>
   isAnonymous$: Observable<boolean>
 
@@ -48,11 +45,14 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     private mapper: Gn4PlatformMapper
   ) {
     this.me$ = this.meApi.getMe().pipe(
-      map((apiUser) => this.mapper.userFromApi(apiUser)),
+      map((apiUser) => this.mapper.userFromMeApi(apiUser)),
       shareReplay({ bufferSize: 1, refCount: true })
     )
     this.isAnonymous$ = this.me$.pipe(map((user) => !user || !('id' in user)))
-    this.users$ = this.usersApi.getUsers().pipe(shareReplay())
+    this.users$ = this.usersApi.getUsers().pipe(
+      map((users) => users.map((user) => this.mapper.userFromApi(user))),
+      shareReplay()
+    )
   }
 
   getTye(): string {
@@ -66,7 +66,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     return this.isApiCompatible$
   }
 
-  getMe(): Observable<MeUserModel> {
+  getMe(): Observable<UserModel> {
     return this.me$
   }
 

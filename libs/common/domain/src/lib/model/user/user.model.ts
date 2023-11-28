@@ -1,4 +1,4 @@
-export interface MeUserModel {
+export interface UserModel {
   id: string
   profile: string
   username: string
@@ -9,13 +9,8 @@ export interface MeUserModel {
   profileIcon?: string
 }
 
-export interface UserModel {
-  profile?: string
-  surname?: string
+export interface UserModela {
   enabled?: boolean
-  username?: string
-  id?: number
-  email?: string
   emailAddresses?: Set<string>
   organisation?: string
   kind?: string
@@ -23,5 +18,4 @@ export interface UserModel {
   accountNonExpired?: boolean
   accountNonLocked?: boolean
   credentialsNonExpired?: boolean
-  name?: string
 }

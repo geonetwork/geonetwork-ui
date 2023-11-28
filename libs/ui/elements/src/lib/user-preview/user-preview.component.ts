@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { MeUserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 
 @Component({
   selector: 'gn-ui-user-preview',
@@ -7,7 +7,7 @@ import { MeUserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserPreviewComponent {
-  @Input() user: MeUserModel
+  @Input() user: UserModel
   @Input() avatarPlaceholder?: string
 
   get userFullName() {

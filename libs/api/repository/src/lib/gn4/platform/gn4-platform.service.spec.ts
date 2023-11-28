@@ -107,12 +107,12 @@ describe('Gn4PlatformService', () => {
       {
         username: 'ken',
         email: 'ken@sf2.com',
-        id: 1,
+        id: '1',
       },
       {
         username: 'ryu',
         email: 'ryu@sf2.com',
-        id: 2,
+        id: '2',
       },
     ])
   })

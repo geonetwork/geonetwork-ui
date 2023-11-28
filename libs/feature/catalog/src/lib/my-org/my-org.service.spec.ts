@@ -4,7 +4,7 @@ import { AvatarServiceInterface } from '@geonetwork-ui/api/repository/gn4'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { BehaviorSubject, of } from 'rxjs'
 import { UserApiModel } from '@geonetwork-ui/data-access/gn4'
-import { MeUserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { TranslateService } from '@ngx-translate/core'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
@@ -27,7 +27,7 @@ class orgServiceMock {
   organisations$ = orgs$
 }
 
-const userSubject = new BehaviorSubject<MeUserModel | null>(null)
+const userSubject = new BehaviorSubject<UserModel | null>(null)
 const allUsersSubject = new BehaviorSubject<UserApiModel[]>([])
 
 class PlatformServiceMock {
@@ -68,7 +68,7 @@ describe('MyOrgService', () => {
   })
 
   it('should update myOrgDataSubject when authService user$ emits a user', () => {
-    const user: MeUserModel = {
+    const user: UserModel = {
       organisation: 'Géo2France',
       id: '2',
       profile: 'profile',
