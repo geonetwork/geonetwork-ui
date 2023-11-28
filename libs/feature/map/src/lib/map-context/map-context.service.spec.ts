@@ -34,13 +34,6 @@ import {
 } from './map-context.service'
 import Feature from 'ol/Feature'
 
-class ResizeObserverMock {
-  observe = jest.fn()
-  unobserve = jest.fn()
-}
-
-;(window as any).ResizeObserver = ResizeObserverMock
-
 const mapStyleServiceMock = {
   createDefaultStyle: jest.fn(() => new Style()),
   styles: {

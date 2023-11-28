@@ -32,10 +32,6 @@ export class MapUtilsWMSService {
     )
   }
 
-  async getProjFromEPSG(EPSGCode) {
-    return fromEPSGCode(EPSGCode)
-  }
-
   async getLonLatBBox(wmsLayerFull: WmsLayerFull): Promise<Extent> {
     const { boundingBoxes } = wmsLayerFull
     const lonLatCRS = Object.keys(boundingBoxes)?.find((crs) =>
@@ -46,7 +42,7 @@ export class MapUtilsWMSService {
     } else {
       const availableEPSGCode = Object.keys(boundingBoxes)[0]
       register(proj4)
-      const proj = await this.getProjFromEPSG(availableEPSGCode)
+      const proj = await fromEPSGCode(availableEPSGCode)
       proj4.defs(availableEPSGCode, proj)
 
       const bboxWithFiniteNumbers = [

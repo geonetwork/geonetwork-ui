@@ -36,12 +36,6 @@ jest.mock('ol/proj/proj4', () => {
     register: registerMock,
   }
 })
-class ResizeObserverMock {
-  observe = jest.fn()
-  unobserve = jest.fn()
-}
-
-;(window as any).ResizeObserver = ResizeObserverMock
 
 const wmsUtilsMock = {
   getLayerLonLatBBox: jest.fn(() => of([1.33, 48.81, 4.3, 51.1])),
