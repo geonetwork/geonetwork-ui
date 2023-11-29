@@ -130,14 +130,21 @@ export class SearchEffects {
             }
             return this.filterGeometry$.pipe(
               tap((geom) => {
-                const isValid = validGeoJson(geom)
-                if (!isValid) {
-                  throw '\nFilter geometry is not a valid GeoJson'
+                try {
+                  const trace = validGeoJson(geom, true) as string[]
+                  if (trace?.length > 0) {
+                    throw new Error(trace.join('\n'))
+                  }
+                } catch (error) {
+                  console.warn(
+                    'Error while parsing the geometry filter\n',
+                    error
+                  )
+                  throw new Error()
                 }
               }),
               map((geom) => [state, favorites, geom]),
               catchError((e) => {
-                console.warn('The filter geometry cannot be used', e)
                 return of([state, favorites, null])
               }) // silently opt out of spatial filter if an error happens
             )
