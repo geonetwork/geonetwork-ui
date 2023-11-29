@@ -444,6 +444,45 @@ describe('Effects', () => {
             })
           )
         })
+        describe('when geometry is broken', () => {
+          beforeEach(() => {
+            effects['filterGeometry$'] = of({
+              type: 'Polygon',
+              coordinates: [[]],
+            })
+            effects = TestBed.inject(SearchEffects)
+            actions$ = of(new RequestMoreResults('main'))
+          })
+          it('skips the geometry in the search', async () => {
+            await firstValueFrom(effects.loadResults$)
+            expect(repository.search).toHaveBeenCalledWith(
+              expect.not.objectContaining({
+                filterGeometry: { type: 'Polygon', coordinates: [[]] },
+              })
+            )
+          })
+        })
+        describe('when geometry is invalid', () => {
+          beforeEach(() => {
+            effects['filterGeometry$'] = of({
+              type: 'Polygon',
+              coordinates: [
+                [0, 1],
+                [0, 1],
+              ],
+            }) as any
+            effects = TestBed.inject(SearchEffects)
+            actions$ = of(new RequestMoreResults('main'))
+          })
+          it('skips the geometry in the search', async () => {
+            await firstValueFrom(effects.loadResults$)
+            expect(repository.search).toHaveBeenCalledWith(
+              expect.not.objectContaining({
+                filterGeometry: { type: 'Polygon', coordinates: [[]] },
+              })
+            )
+          })
+        })
       })
       describe('when useSpatialFilter is disabled', () => {
         beforeEach(() => {
