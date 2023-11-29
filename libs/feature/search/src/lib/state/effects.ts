@@ -146,7 +146,7 @@ export class SearchEffects {
               map((geom) => [state, favorites, geom]),
               catchError((e) => {
                 return of([state, favorites, null])
-              }) // silently opt out of spatial filter if an error happens
+              })
             )
           }),
           switchMap(
