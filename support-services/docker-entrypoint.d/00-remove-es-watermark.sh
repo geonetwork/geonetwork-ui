@@ -10,4 +10,5 @@ curl -s -X PUT "elasticsearch:9200/_cluster/settings" -H 'Content-Type: applicat
   }
 }'
 
+echo ""
 echo "Removed disk space watermark in ElasticSearch."

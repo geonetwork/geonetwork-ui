@@ -5,6 +5,8 @@ password=admin
 xsrf_token=aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
 host=geonetwork:8080
 
+echo "Logging in to GeoNetwork..."
+
 # first login to get an authenticated admin session
 jsessionid=$(
   curl -s "http://$host/geonetwork/signin" \
@@ -13,6 +15,8 @@ jsessionid=$(
     --data-raw "_csrf=$xsrf_token&username=$username&password=$password" \
     -c - | grep JSESSIONID | awk '{ print $7 }'
 )
+
+echo "Triggering full records indexation in GeoNetwork..."
 
 # then trigger an indexing
 result=$(
@@ -39,8 +43,25 @@ do
       -H "Cookie: JSESSIONID=$jsessionid; XSRF-TOKEN=$xsrf_token" \
       -H "X-XSRF-TOKEN: $xsrf_token"
   )
-  echo "Indexing? $indexing"
+  echo "Currently indexing: $indexing"
   sleep 1
+done
+
+# finally check that the index has records in it
+recordsCount=0
+while [ "$recordsCount" = '0' ];
+do
+  response=$(
+    curl -s "http://$host/geonetwork/srv/api/search/records/_search" \
+      -H 'Accept: application/json, text/plain, */*' \
+      -H 'Content-Type: application/json;charset=UTF-8' \
+      -H "Cookie: JSESSIONID=$jsessionid; XSRF-TOKEN=$xsrf_token" \
+      -H "X-XSRF-TOKEN: $xsrf_token" \
+      --data-raw '{"size":0}'
+  )
+  recordsCount=$(echo $response | sed 's/.*"hits":{"total":{"value":\([0-9]\+\).*/\1/g')
+  echo "Records found: $recordsCount"
+  sleep 2
 done
 
 echo "Indexing job in GeoNetwork successful."
