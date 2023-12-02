@@ -95,6 +95,7 @@
     "pg": "^8.9.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.0.0",
+    "semver": "^7.5.4",
     "tippy.js": "^6.3.7",
     "tslib": "^2.3.0",
     "typeorm": "^0.3.14",
