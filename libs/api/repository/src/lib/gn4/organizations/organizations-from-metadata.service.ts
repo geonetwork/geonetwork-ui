@@ -28,6 +28,7 @@ import { combineLatest, Observable, of, switchMap, takeLast } from 'rxjs'
 import { filter, map, shareReplay, startWith, tap } from 'rxjs/operators'
 import { LangService } from '@geonetwork-ui/util/i18n'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { coerce, satisfies, valid } from 'semver'
 
 const IMAGE_URL = '/geonetwork/images/harvesting/'
 
@@ -144,6 +145,7 @@ export class OrganizationsFromMetadataService
   }
 
   private getAggregationSearchRequest(gnVersion: string) {
+    const semVersion = valid(coerce(gnVersion))
     return this.esService.getSearchRequestBody({
       contact: {
         nested: {
@@ -152,9 +154,10 @@ export class OrganizationsFromMetadataService
         aggs: {
           org: {
             terms: {
-              field: gnVersion.startsWith('4.2.2')
-                ? 'contactForResource.organisation'
-                : 'contactForResource.organisationObject.default.keyword',
+              field:
+                semVersion === '4.2.2'
+                  ? 'contactForResource.organisation'
+                  : 'contactForResource.organisationObject.default.keyword',
               exclude: '',
               size: 5000,
               order: { _key: 'asc' },
@@ -164,12 +167,9 @@ export class OrganizationsFromMetadataService
                 terms: {
                   size: 50,
                   exclude: '',
-                  field:
-                    gnVersion.startsWith('4.2.2') ||
-                    gnVersion.startsWith('4.2.3') ||
-                    gnVersion.startsWith('4.2.4')
-                      ? 'contactForResource.email.keyword'
-                      : 'contactForResource.email',
+                  field: satisfies(semVersion, '4.2.2 - 4.2.4')
+                    ? 'contactForResource.email.keyword'
+                    : 'contactForResource.email',
                 },
               },
               logoUrl: {
@@ -187,9 +187,10 @@ export class OrganizationsFromMetadataService
         terms: {
           size: 5000,
           exclude: '',
-          field: gnVersion.startsWith('4.2.2')
-            ? 'OrgForResource'
-            : 'OrgForResourceObject.default',
+          field:
+            semVersion === '4.2.2'
+              ? 'OrgForResource'
+              : 'OrgForResourceObject.default',
           order: {
             _key: 'asc',
           },
