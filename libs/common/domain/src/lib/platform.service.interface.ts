@@ -5,7 +5,6 @@ import { Organization } from './model/record/organization.model'
 export abstract class PlatformServiceInterface {
   abstract getType(): string
   abstract getApiVersion(): Observable<string>
-  abstract isApiCompatible(): Observable<boolean>
 
   abstract getMe(): Observable<UserModel>
   abstract isAnonymous(): Observable<boolean>
