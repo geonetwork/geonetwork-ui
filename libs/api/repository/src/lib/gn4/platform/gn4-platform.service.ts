@@ -10,8 +10,9 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { Gn4PlatformMapper } from './gn4-platform.mapper'
+import { ltr } from 'semver'
 
-const minApiVersion = '4.2.0'
+const minApiVersion = '4.2.2'
 @Injectable()
 export class Gn4PlatformService implements PlatformServiceInterface {
   private readonly type = 'GeoNetwork'

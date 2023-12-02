@@ -37,6 +37,6 @@ export class Gn4PlatformMapper {
       credentialsNonExpired,
       ...user
     } = apiUser
-    return { ...apiUser, id: id + '' } as UserModel
+    return { ...apiUser, id: id.toString() } as UserModel
   }
 }
