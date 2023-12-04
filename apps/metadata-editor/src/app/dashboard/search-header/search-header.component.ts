@@ -22,7 +22,7 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
   ],
 })
 export class SearchHeaderComponent {
-  public placeholder = this.avatarService.placeholder
+  public placeholder$ = this.avatarService.getPlaceholder()
 
   constructor(
     public platformService: PlatformServiceInterface,

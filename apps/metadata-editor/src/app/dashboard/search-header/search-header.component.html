@@ -20,7 +20,7 @@
       <gn-ui-user-preview
         *ngIf="user && user.name"
         [user]="user"
-        [avatarPlaceholder]="placeholder"
+        [avatarPlaceholder]="placeholder$ | async"
       ></gn-ui-user-preview>
     </ng-container>
   </div>
