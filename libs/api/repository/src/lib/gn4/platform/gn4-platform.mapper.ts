@@ -5,12 +5,14 @@ import {
 import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 import { Injectable } from '@angular/core'
 import { AvatarServiceInterface } from '../auth/avatar.service.interface'
+import { map } from 'rxjs/operators'
+import { Observable, of } from 'rxjs'
 
 @Injectable()
 export class Gn4PlatformMapper {
   constructor(private avatarService: AvatarServiceInterface) {}
-  userFromMeApi(apiUser: MeResponseApiModel): UserModel {
-    if (!apiUser) return null
+  userFromMeApi(apiUser: MeResponseApiModel): Observable<UserModel | null> {
+    if (!apiUser) return of(null)
     const {
       hash,
       groupsWithRegisteredUser,
@@ -20,8 +22,10 @@ export class Gn4PlatformMapper {
       admin,
       ...user
     } = apiUser
-    const icon = this.avatarService.getProfileIcon(hash)
-    return { ...user, profileIcon: icon } as UserModel
+
+    return this.avatarService
+      .getProfileIcon(hash)
+      .pipe(map((profileIcon) => ({ ...user, profileIcon } as UserModel)))
   }
   userFromApi(apiUser: UserApiModel): UserModel {
     if (!apiUser) return null

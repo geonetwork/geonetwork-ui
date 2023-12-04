@@ -45,7 +45,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     private mapper: Gn4PlatformMapper
   ) {
     this.me$ = this.meApi.getMe().pipe(
-      map((apiUser) => this.mapper.userFromMeApi(apiUser)),
+      switchMap((apiUser) => this.mapper.userFromMeApi(apiUser)),
       shareReplay({ bufferSize: 1, refCount: true })
     )
     this.isAnonymous$ = this.me$.pipe(map((user) => !user || !('id' in user)))
