@@ -68,6 +68,11 @@ export class FieldsService {
     q: new FullTextSearchField(),
     license: new LicenseSearchField(this.injector),
     owner: new OwnerSearchField(this.injector),
+    contact: new GnUiTranslationSearchField(
+      'OrgForResource',
+      'asc',
+      this.injector
+    ),
   } as Record<string, AbstractSearchField>
 
   get supportedFields() {

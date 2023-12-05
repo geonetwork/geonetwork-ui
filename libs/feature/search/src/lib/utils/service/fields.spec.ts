@@ -1,4 +1,8 @@
-import { ToolsApiService } from '@geonetwork-ui/data-access/gn4'
+import {
+  ThesaurusApiService,
+  ToolsApiService,
+  thesaurusResponse,
+} from '@geonetwork-ui/data-access/gn4'
 import { lastValueFrom, of } from 'rxjs'
 import {
   AbstractSearchField,
@@ -8,6 +12,7 @@ import {
   LicenseSearchField,
   OrganizationSearchField,
   SimpleSearchField,
+  ThesaurusTranslationSearchField,
 } from './fields'
 import { TestBed } from '@angular/core/testing'
 import { Injector } from '@angular/core'
@@ -145,6 +150,30 @@ const sampleOrgs: Organization[] = [
   },
 ]
 
+const samplInspireThesaurus: thesaurusResponse[] = [
+  {
+    values: {
+      ger: 'Adressen',
+    },
+    definitions: {
+      ger: 'Lokalisierung von Grundstücken anhand von Adressdaten, in der Regel Straßenname, Hausnummer und Postleitzahl.',
+    },
+    coordEast: '',
+    coordWest: '',
+    coordSouth: '',
+    coordNorth: '',
+    thesaurusKey: 'external.theme.httpinspireeceuropaeutheme-theme',
+    definition:
+      'Lokalisierung von Grundstücken anhand von Adressdaten, in der Regel Straßenname, Hausnummer und Postleitzahl.',
+    value: 'Adressen',
+    uri: 'http://inspire.ec.europa.eu/theme/ad',
+  },
+]
+
+class ThesaurusApiServiceMock {
+  getTranslationsFromThesaurus = jest.fn(() => of(samplInspireThesaurus))
+}
+
 class OrganisationsServiceMock {
   organisations$ = of(sampleOrgs)
   getOrgsFromFilters = jest.fn(() => of(sampleOrgs.slice(0, 2)))
@@ -165,6 +194,7 @@ describe('search fields implementations', () => {
   let esService: ElasticsearchService
   let repository: RecordsRepositoryInterface
   let toolsService: ToolsApiService
+  let thesaurusService: ThesaurusApiService
   let injector: Injector
 
   beforeEach(() => {
@@ -184,6 +214,10 @@ describe('search fields implementations', () => {
           useClass: ToolsApiServiceMock,
         },
         {
+          provide: ThesaurusApiService,
+          useClass: ThesaurusApiServiceMock,
+        },
+        {
           provide: TranslateService,
           useClass: TranslateServiceMock,
         },
@@ -196,6 +230,7 @@ describe('search fields implementations', () => {
     esService = TestBed.inject(ElasticsearchService)
     repository = TestBed.inject(RecordsRepositoryInterface)
     toolsService = TestBed.inject(ToolsApiService)
+    thesaurusService = TestBed.inject(ThesaurusApiService)
     injector = TestBed.inject(Injector)
   })
 
@@ -542,6 +577,60 @@ describe('search fields implementations', () => {
             value: 'Office fédéral du développement territorial ARE',
           },
         ])
+      })
+    })
+  })
+  describe('ThesaurusTranslationSearchField', () => {
+    beforeEach(() => {
+      searchField = new ThesaurusTranslationSearchField(
+        'th_httpinspireeceuropaeutheme-theme.link',
+        'external.theme.httpinspireeceuropaeutheme-theme',
+        'asc',
+        injector
+      )
+    })
+    describe('#getFiltersForValues', () => {
+      let filters
+      beforeEach(async () => {
+        filters = await lastValueFrom(
+          searchField.getFiltersForValues([
+            'Adressen',
+            'Abwasser',
+            'Atmosphärische Bedingungen',
+          ])
+        )
+      })
+      it('returns the filters provided by the thesaurus service', () => {
+        expect(filters).toEqual({
+          'th_httpinspireeceuropaeutheme-theme.link': {
+            Adressen: true,
+            Abwasser: true,
+            'Atmosphärische Bedingungen': true,
+          },
+        })
+      })
+    })
+    describe('#getAvailableValues', () => {
+      let values
+      beforeEach(async () => {
+        values = await lastValueFrom(searchField.getAvailableValues())
+      })
+      it('returns a list of values sorted by translated labels', () => {
+        expect(values).toEqual([
+          { label: 'First value (5)', value: 'First value' },
+          {
+            label: 'Fourth value (1)',
+            value: 'Fourth value',
+          },
+          { label: 'Second value (3)', value: 'Second value' },
+          { label: 'Third value (12)', value: 'Third value' },
+        ])
+      })
+
+      it('only calls the thesaurus service once', () => {
+        expect(
+          thesaurusService.getTranslationsFromThesaurus
+        ).toHaveBeenCalledTimes(1)
       })
     })
   })

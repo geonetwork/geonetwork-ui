@@ -1,7 +1,10 @@
 import { TestBed } from '@angular/core/testing'
 import { FieldsService } from './fields.service'
 import { EMPTY, lastValueFrom, of } from 'rxjs'
-import { ToolsApiService } from '@geonetwork-ui/data-access/gn4'
+import {
+  ThesaurusApiService,
+  ToolsApiService,
+} from '@geonetwork-ui/data-access/gn4'
 import { TranslateModule } from '@ngx-translate/core'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
@@ -17,6 +20,11 @@ class ElasticsearchServiceMock {
 class ToolsApiServiceMock {
   getTranslationsPackage1 = jest.fn(() => EMPTY)
 }
+
+class ThesaurusApiServiceMock {
+  getTranslationsFromThesaurus = jest.fn(() => of([]))
+}
+
 class OrganisationsServiceMock {
   organisations$ = of([{ name: 'orgA', recordCount: 10 }])
   getOrgsFromFilters = jest.fn(() => of([{ name: 'orgB' }]))
@@ -50,6 +58,10 @@ describe('FieldsService', () => {
           provide: OrganizationsServiceInterface,
           useClass: OrganisationsServiceMock,
         },
+        {
+          provide: ThesaurusApiService,
+          useClass: ThesaurusApiServiceMock,
+        },
       ],
     })
   })
@@ -78,6 +90,7 @@ describe('FieldsService', () => {
           'q',
           'license',
           'owner',
+          'contact',
         ])
       })
     })
@@ -146,6 +159,7 @@ describe('FieldsService', () => {
       })
       it('calls the search api', () => {
         expect(values).toEqual({
+          contact: [],
           documentStandard: [],
           format: ['ascii', 'png'],
           inspireKeyword: [],

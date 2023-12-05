@@ -1,5 +1,8 @@
 import { firstValueFrom, Observable, of, switchMap } from 'rxjs'
-import { ToolsApiService } from '@geonetwork-ui/data-access/gn4'
+import {
+  ThesaurusApiService,
+  ToolsApiService,
+} from '@geonetwork-ui/data-access/gn4'
 import { catchError, map, shareReplay } from 'rxjs/operators'
 import { Injector } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
@@ -129,9 +132,9 @@ export class GnUiTranslationSearchField extends SimpleSearchField {
 }
 
 export class ThesaurusTranslationSearchField extends SimpleSearchField {
-  private toolsApiService = this.injector.get(ToolsApiService)
+  private thesaurusApiService = this.injector.get(ThesaurusApiService)
   private langService = this.injector.get(LangService)
-  allTranslations = this.toolsApiService
+  allTranslations = this.thesaurusApiService
     .getTranslationsFromThesaurus(this.thesaurusName, this.langService.iso3)
     .pipe(
       map((thesaurus) => {
