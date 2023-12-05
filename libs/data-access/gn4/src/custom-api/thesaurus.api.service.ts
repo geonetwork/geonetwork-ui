@@ -8,7 +8,7 @@ import { Observable } from 'rxjs'
 import { CustomHttpParameterCodec } from '../openapi/encoder'
 import { Configuration } from '../openapi/configuration'
 
-import { BASE_PATH, COLLECTION_FORMATS } from '../openapi/variables'
+import { BASE_PATH } from '../openapi/variables'
 
 export interface thesaurusResponse {
   values: { [key: string]: string }
@@ -95,7 +95,6 @@ export class ThesaurusApiService {
       )
     }
 
-    console.log('here')
     let headers = this.defaultHeaders
 
     let httpHeaderAcceptSelected: string | undefined =

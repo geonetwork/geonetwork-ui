@@ -10,6 +10,7 @@ import {
   OwnerSearchField,
   SimpleSearchField,
   ThesaurusTranslationSearchField,
+  TranslatedSearchField,
 } from './fields'
 import { forkJoin, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -69,8 +70,8 @@ export class FieldsService {
     q: new FullTextSearchField(),
     license: new LicenseSearchField(this.injector),
     owner: new OwnerSearchField(this.injector),
-    contact: new GnUiTranslationSearchField(
-      'OrgForResource',
+    contact: new TranslatedSearchField(
+      'contactForResource.organisationObject.default',
       'asc',
       this.injector
     ),

@@ -1,5 +1,6 @@
 import { firstValueFrom, Observable, of, switchMap } from 'rxjs'
 import {
+  SearchApiService,
   ThesaurusApiService,
   ToolsApiService,
 } from '@geonetwork-ui/data-access/gn4'
@@ -375,5 +376,84 @@ export class OwnerSearchField extends SimpleSearchField {
 
   getAvailableValues(): Observable<FieldAvailableValue[]> {
     return of([])
+  }
+}
+
+export class TranslatedSearchField extends SimpleSearchField {
+  protected searchApiService = this.injector.get(SearchApiService)
+
+  // FIXME: this is required to register runtime fields; abstract this as well
+  protected esService = this.injector.get(ElasticsearchService)
+  private langService = this.injector.get(LangService)
+  private esResearchName: string
+
+  constructor(
+    esFieldName: string,
+    order: 'asc' | 'desc' = 'asc',
+    injector: Injector
+  ) {
+    super(esFieldName, order, injector)
+    this.esResearchName = this.esFieldName.substring(
+      0,
+      this.esFieldName.lastIndexOf('.')
+    )
+  }
+
+  getTranslatedAggregations() {
+    return this.searchApiService
+      .search(
+        'bucket',
+        JSON.stringify(
+          this.esService.getSearchRequestBody({
+            [this.esFieldName.split('.')[0]]: {
+              nested: {
+                path: this.esFieldName.split('.')[0],
+              },
+              aggs: {
+                default: {
+                  terms: {
+                    field: `${this.esResearchName}.default.keyword`,
+                    exclude: '',
+                    size: 5000,
+                    order: { _key: this.order },
+                  },
+                  aggs: {
+                    translation: {
+                      terms: {
+                        size: 50,
+                        exclude: '',
+                        field: `${this.esResearchName}.${this.langService.gnLang}.keyword`,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          })
+        )
+      )
+      .pipe(
+        map(
+          (response) =>
+            response.aggregations[this.esFieldName.split('.')[0]].default
+              .buckets
+        ),
+        shareReplay()
+      )
+  }
+
+  getAvailableValues(): Observable<FieldAvailableValue[]> {
+    // sort values by alphabetical order
+    return this.getTranslatedAggregations().pipe(
+      map((response) => {
+        return response.map((tmp) => {
+          const label = tmp.translation.buckets[0]?.key || tmp.key
+          return {
+            label: `${label} (${tmp.doc_count})`,
+            value: tmp.key,
+          }
+        })
+      })
+    )
   }
 }
