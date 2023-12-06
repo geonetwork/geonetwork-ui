@@ -6,7 +6,7 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { SearchHeaderComponent } from './search-header.component'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, of } from 'rxjs'
 import { USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
@@ -16,8 +16,8 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository/gn4'
 
 class AvatarServiceInterfaceMock {
-  placeholder = 'http://placeholder.com'
-  getProfileIcon = (hash: string) => `${hash}`
+  getPlaceholder = () => of('http://placeholder.com')
+  getProfileIcon = (hash: string) => of(`${hash}`)
 }
 
 const me$ = new BehaviorSubject(USER_FIXTURE())
