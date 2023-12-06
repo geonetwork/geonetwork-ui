@@ -1,5 +1,5 @@
-const { readFile, writeFile } = require('fs/promises')
-const { program } = require('commander')
+import { readFile, writeFile } from 'fs/promises'
+import { program } from 'commander'
 
 program
   .command('merge <sourcePath> <destPath>')
