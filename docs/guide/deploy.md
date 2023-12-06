@@ -144,14 +144,22 @@ Lastly, even if authenticated requests were cleared regarding CORS rules, it wou
 
 ## Enabling improved search fields
 
-ElasticSearch offers the possibility to preprocess the records of a catalog, and this can be leveraged to **improve the search experience in GeoNetwork-UI**. This is done by registering so-called _ingest pipelines_.
+ElasticSearch offers the possibility to preprocess the records of a catalog, and this can be leveraged to **improve the search experience in GeoNetwork-UI**. This is done by registering so-called [ingest pipelines](https://www.elastic.co/guide/en/elasticsearch/reference/7.17/ingest.html).
 
-GeoNetwork-UI provides several pipelines:
+GeoNetwork-UI provides several pipelines, for instance:
 
 - Enable the Metadata Quality Score
 - Show better, human-readable data formats
 
-There are two options to register these pipelines:
+The two options for registering the pipelines are explained below.
+
+::: tip
+Once pipelines are registered, the GeoNetwork catalog should be fully reindexed again.
+:::
+
+::: warning
+**Please note that destroying and recreating the GeoNetwork index _will_ disable the pipelines!** These should simply be registered again afterward.
+:::
 
 ### Option A: Executing a Node script
 
@@ -170,7 +178,7 @@ Then run the following script with the appropriate options:
 node tools/pipelines/register-es-pipelines.js register --host=http://localhost:9090
 ```
 
-The `--host` option is used to point to the ElasticSearch instance. Additionnally, the `--records-index` option can be used if the index containing the metadata records is not called `gn-records`.
+The `--host` option is used to point to the ElasticSearch instance. Additionally, the `--records-index` option can be used if the index containing the metadata records is not called `gn-records`.
 
 ### Option B: Running a docker image
 
@@ -183,3 +191,5 @@ docker run --rm --env ES_HOST=http://localhost:9200 --network host geonetwork/ge
 ```
 
 Here the `ES_HOST` environment variable is used to point to the ElasticSearch instance. Note that this host will be used _from inside the docker container_, so to access an instance on `localhost` the `--network host` option is also required.
+
+The `RECORDS_INDEX` environment variable can be used to a different index name if it is not called `gn-records`.
