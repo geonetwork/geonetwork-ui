@@ -12,7 +12,7 @@ export class GravatarService implements AvatarServiceInterface {
   private GRAVATAR_IDENTICON = 'mp'
 
   private readonly identicon$ = this.gn4SettingsService.identicon$.pipe(
-    map((identicon) => identicon.replace('gravatar:', ''))
+    map((identicon) => identicon?.replace('gravatar:', ''))
   )
   constructor(private gn4SettingsService: Gn4SettingsService) {}
 
