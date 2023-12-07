@@ -12,7 +12,8 @@ import {
   MapManagerService,
 } from '@geonetwork-ui/feature/map'
 import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/common/fixtures'
-import { Map } from 'ol'
+import Map from 'ol/Map'
+import Feature from 'ol/Feature'
 import GeoJSON from 'ol/format/GeoJSON'
 import TileLayer from 'ol/layer/Tile'
 import VectorLayer from 'ol/layer/Vector'
@@ -21,6 +22,7 @@ import XYZ from 'ol/source/XYZ'
 import { Subject } from 'rxjs'
 
 import { GeoTableViewComponent } from './geo-table-view.component'
+import { Geometry } from 'ol/geom'
 
 const vectorLayer = new VectorLayer({
   source: new VectorSource({
@@ -31,7 +33,7 @@ const vectorLayer = new VectorLayer({
         dataProjection: 'EPSG:4326',
       }
     ),
-  }),
+  }) as VectorSource<Feature<Geometry>>,
 })
 
 const mapMock = new Map({

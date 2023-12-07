@@ -10,7 +10,7 @@ import {
   ViewChild,
 } from '@angular/core'
 import { ThemeService } from '@geonetwork-ui/util/shared'
-import type { Feature } from 'geojson'
+import type { Feature as FeatureType } from 'geojson'
 import { asArray, asString } from 'ol/color'
 import { isEmpty } from 'ol/extent'
 import GeoJSON from 'ol/format/GeoJSON'
@@ -18,11 +18,13 @@ import { Geometry } from 'ol/geom'
 import TileLayer from 'ol/layer/Tile'
 import VectorLayer from 'ol/layer/Vector'
 import Map from 'ol/Map'
+import Feature from 'ol/Feature'
 import OSM from 'ol/source/OSM'
 import VectorSource from 'ol/source/Vector'
 import { Fill, RegularShape, Stroke, Style } from 'ol/style'
 import { StyleLike } from 'ol/style/Style'
 import View from 'ol/View'
+import { FeatureLike } from 'ol/Feature'
 
 const DEFAULT_PRIMARY_COLOR = '#9a9a9a'
 const PADDING = 50
@@ -41,7 +43,7 @@ export class DataImportValidationMapPanelComponent
   @Input() headerLabel = ''
   @Input() footerLabel = ''
   @Input() footerList = []
-  @Input() geoJson?: Feature
+  @Input() geoJson?: FeatureType
   @Input() footerValue = ''
   @Input() padding = []
 
@@ -50,8 +52,8 @@ export class DataImportValidationMapPanelComponent
   selectedValue: any
 
   private map: Map
-  private source: VectorSource<Geometry>
-  private vectorLayer: VectorLayer<VectorSource<Geometry>>
+  private source: VectorSource<FeatureLike>
+  private vectorLayer: VectorLayer<VectorSource<Feature<Geometry>>>
   private format: any = new GeoJSON({})
 
   ngOnInit(): void {
@@ -158,8 +160,8 @@ export class DataImportValidationMapPanelComponent
     ]
   }
 
-  private buildVectorLayer(): VectorLayer<VectorSource<Geometry>> {
-    this.source = new VectorSource({})
+  private buildVectorLayer(): VectorLayer<VectorSource<Feature<Geometry>>> {
+    this.source = new VectorSource<Feature<Geometry>>({})
     if (this.geoJson) {
       this.source.addFeatures(
         this.format.readFeatures(this.geoJson, {
@@ -168,7 +170,7 @@ export class DataImportValidationMapPanelComponent
       )
     }
     return new VectorLayer({
-      source: this.source,
+      source: this.source as VectorSource<Feature<Geometry>>,
       style: this.getDefaultStyle(),
     })
   }

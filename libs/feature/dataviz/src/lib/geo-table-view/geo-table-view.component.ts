@@ -44,8 +44,8 @@ export class GeoTableViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private map: Map
   private view: View
-  private vectorLayer: VectorLayer<VectorSource<Geometry>>
-  private vectorSource: VectorSource<Geometry>
+  private vectorLayer: VectorLayer<VectorSource<Feature<Geometry>>>
+  private vectorSource: VectorSource<Feature<Geometry>>
   private features: Feature<Geometry>[]
 
   tableData: TableItemModel[]
@@ -76,7 +76,7 @@ export class GeoTableViewComponent implements OnInit, AfterViewInit, OnDestroy {
     const map = (this.map = this.manager.map)
     this.view = map.getView()
     this.vectorLayer = this.manager.map.getLayers().item(1) as VectorLayer<
-      VectorSource<Geometry>
+      VectorSource<Feature<Geometry>>
     >
     this.vectorLayer.setStyle(this.styleFn.bind(this))
     this.vectorSource = this.vectorLayer.getSource()

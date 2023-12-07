@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing'
 import { readFirst } from '@nx/angular/testing'
 
 import { MapUtilsWMSService } from './map-utils-wms.service'
+import { fromEPSGCode } from 'ol/proj/proj4'
 
 jest.mock('@camptocamp/ogc-client', () => ({
   WmsEndpoint: class {
@@ -21,6 +22,24 @@ jest.mock('@camptocamp/ogc-client', () => ({
     }
   },
 }))
+
+jest.mock('ol/proj/proj4', () => {
+  const fromEPSGCodeMock = jest.fn()
+  const registerMock = jest.fn()
+  return {
+    fromEPSGCode: fromEPSGCodeMock,
+    register: registerMock,
+  }
+})
+
+jest.mock('ol/proj', () => {
+  const extent = [1, 2, 3, 4]
+  const transformExtentMock = jest.fn().mockReturnValue(extent)
+
+  return {
+    transformExtent: transformExtentMock,
+  }
+})
 
 describe('MapUtilsWMSService', () => {
   let service: MapUtilsWMSService
@@ -80,8 +99,8 @@ describe('MapUtilsWMSService', () => {
         }
       })
       it('returns CRS:84 bbox', async () => {
-        const extent = service.getLonLatBBox(wmsLayerFull)
-        expect(extent).toEqual(['2.3', '50.6', '2.8', '50.9'])
+        const extent = await service.getLonLatBBox(wmsLayerFull)
+        expect(extent).toStrictEqual(['2.3', '50.6', '2.8', '50.9'])
       })
     })
     describe('bbox in EPSG:4326', () => {
@@ -94,8 +113,8 @@ describe('MapUtilsWMSService', () => {
         }
       })
       it('returns EPSG:4326 bbox', async () => {
-        const extent = service.getLonLatBBox(wmsLayerFull)
-        expect(extent).toEqual(['1', '2.6', '3.3', '4.2'])
+        const extent = await service.getLonLatBBox(wmsLayerFull)
+        expect(extent).toStrictEqual(['1', '2.6', '3.3', '4.2'])
       })
     })
     describe('no lon lat bbox', () => {
@@ -106,9 +125,10 @@ describe('MapUtilsWMSService', () => {
           },
         }
       })
-      it('returns EPSG:4326 bbox', async () => {
-        const extent = service.getLonLatBBox(wmsLayerFull)
-        expect(extent).toBeUndefined()
+      it('transforms to EPSG:4326 bbox', async () => {
+        const extent = await service.getLonLatBBox(wmsLayerFull)
+        expect(fromEPSGCode).toHaveBeenCalled()
+        expect(extent).toStrictEqual([1, 2, 3, 4])
       })
     })
   })

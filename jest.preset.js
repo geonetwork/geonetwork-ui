@@ -4,7 +4,7 @@ module.exports = {
   ...nxPreset,
   coverageReporters: ['text'],
   setupFiles: ['jest-canvas-mock'],
-  transformIgnorePatterns: ['node_modules/(?!(ol|@mapbox|.*.mjs$))'],
+  transformIgnorePatterns: ['node_modules/(?!(color-*|ol|@mapbox|.*.mjs$))'],
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
