@@ -20,7 +20,6 @@ import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/reposit
 import { ElasticsearchService } from '@geonetwork-ui/api/repository/gn4'
 import { LangService } from '@geonetwork-ui/util/i18n'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { coerce, valid } from 'semver'
 
 export type FieldValue = string | number
 export interface FieldAvailableValue {
@@ -87,8 +86,11 @@ export class SimpleSearchField implements AbstractSearchField {
     })
   }
 
-  getValuesForFilter(filters: FieldFilters): Observable<FieldValue[]> {
-    const filter = filters[this.esFieldName]
+  getValuesForFilter(
+    filters: FieldFilters,
+    esFieldName: string = this.esFieldName
+  ): Observable<FieldValue[]> {
+    const filter = filters[esFieldName]
     if (!filter) return of([])
     const values =
       typeof filter === 'string'
@@ -397,14 +399,13 @@ export class ContactField extends SimpleSearchField {
   private langService = this.injector.get(LangService)
   private platformService = this.injector.get(PlatformServiceInterface)
   public esFieldName: string
-  private esResearchName: string
   private version: Observable<string> = this.platformService
     .getApiVersion()
     .pipe(map((version) => version))
 
   constructor(public order: 'asc' | 'desc' = 'asc', public injector: Injector) {
     super('OrgForResource', order, injector)
-    this.esFieldName = 'contactForResource.organisationObject.default.keyword'
+    this.esFieldName = 'OrgForResourceObject.default'
   }
 
   getFiltersForValues(values: FieldValue[]): Observable<FieldFilters> {
@@ -421,21 +422,9 @@ export class ContactField extends SimpleSearchField {
       switchMap((version) =>
         version == '4.2.2'
           ? super.getValuesForFilter(filters)
-          : this.tmpFunction(filters)
+          : super.getValuesForFilter(filters, this.esFieldName)
       )
     )
-  }
-
-  tmpFunction(filters: FieldFilters) {
-    const filter = filters[this.esFieldName]
-    console.log(filters)
-    if (!filter) return of([])
-    const values =
-      typeof filter === 'string'
-        ? [filter]
-        : Object.keys(filter).filter((v) => filter[v])
-    console.log(values)
-    return of(values)
   }
 
   getTranslatedAggregations() {
@@ -484,7 +473,7 @@ export class ContactField extends SimpleSearchField {
     return this.version.pipe(
       switchMap((version) =>
         version == '4.2.2'
-          ? super.getAvailableValues() //TODO copy from simplesearch field
+          ? super.getAvailableValues()
           : this.getTranslatedAggregations().pipe(
               map((response) =>
                 response.map((tmp) => {
