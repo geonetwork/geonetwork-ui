@@ -1,6 +1,7 @@
 import { Injectable, Injector } from '@angular/core'
 import {
   AbstractSearchField,
+  ContactField,
   FieldValue,
   FullTextSearchField,
   GnUiTranslationSearchField,
@@ -10,7 +11,6 @@ import {
   OwnerSearchField,
   SimpleSearchField,
   ThesaurusTranslationSearchField,
-  TranslatedSearchField,
 } from './fields'
 import { forkJoin, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -70,11 +70,7 @@ export class FieldsService {
     q: new FullTextSearchField(),
     license: new LicenseSearchField(this.injector),
     owner: new OwnerSearchField(this.injector),
-    contact: new TranslatedSearchField(
-      'contactForResource.organisationObject.default',
-      'asc',
-      this.injector
-    ),
+    contact: new ContactField('asc', this.injector), // new TranslationField('OrgForResource')
   } as Record<string, AbstractSearchField>
 
   get supportedFields() {

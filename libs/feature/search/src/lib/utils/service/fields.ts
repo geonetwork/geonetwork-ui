@@ -19,6 +19,8 @@ import {
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { ElasticsearchService } from '@geonetwork-ui/api/repository/gn4'
 import { LangService } from '@geonetwork-ui/util/i18n'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { coerce, valid } from 'semver'
 
 export type FieldValue = string | number
 export interface FieldAvailableValue {
@@ -74,13 +76,17 @@ export class SimpleSearchField implements AbstractSearchField {
       })
     )
   }
-  getFiltersForValues(values: FieldValue[]): Observable<FieldFilters> {
+  getFiltersForValues(
+    values: FieldValue[],
+    esFieldName: string = this.esFieldName
+  ): Observable<FieldFilters> {
     return of({
-      [this.esFieldName]: values.reduce((acc, val) => {
+      [esFieldName]: values.reduce((acc, val) => {
         return { ...acc, [val.toString()]: true }
       }, {}),
     })
   }
+
   getValuesForFilter(filters: FieldFilters): Observable<FieldValue[]> {
     const filter = filters[this.esFieldName]
     if (!filter) return of([])
@@ -379,24 +385,57 @@ export class OwnerSearchField extends SimpleSearchField {
   }
 }
 
-export class TranslatedSearchField extends SimpleSearchField {
+// ResourceContactField
+// contact of the data not metadata
+// data is the resource
+export class ContactField extends SimpleSearchField {
+  protected repository = this.injector.get(RecordsRepositoryInterface)
   protected searchApiService = this.injector.get(SearchApiService)
 
   // FIXME: this is required to register runtime fields; abstract this as well
   protected esService = this.injector.get(ElasticsearchService)
   private langService = this.injector.get(LangService)
+  private platformService = this.injector.get(PlatformServiceInterface)
+  public esFieldName: string
   private esResearchName: string
+  private version: Observable<string> = this.platformService
+    .getApiVersion()
+    .pipe(map((version) => version))
 
-  constructor(
-    esFieldName: string,
-    order: 'asc' | 'desc' = 'asc',
-    injector: Injector
-  ) {
-    super(esFieldName, order, injector)
-    this.esResearchName = this.esFieldName.substring(
-      0,
-      this.esFieldName.lastIndexOf('.')
+  constructor(public order: 'asc' | 'desc' = 'asc', public injector: Injector) {
+    super('OrgForResource', order, injector)
+    this.esFieldName = 'contactForResource.organisationObject.default.keyword'
+  }
+
+  getFiltersForValues(values: FieldValue[]): Observable<FieldFilters> {
+    return this.version.pipe(
+      switchMap((version) =>
+        version == '4.2.2'
+          ? super.getFiltersForValues(values)
+          : super.getFiltersForValues(values, this.esFieldName)
+      )
     )
+  }
+  getValuesForFilter(filters: FieldFilters): Observable<FieldValue[]> {
+    return this.version.pipe(
+      switchMap((version) =>
+        version == '4.2.2'
+          ? super.getValuesForFilter(filters)
+          : this.tmpFunction(filters)
+      )
+    )
+  }
+
+  tmpFunction(filters: FieldFilters) {
+    const filter = filters[this.esFieldName]
+    console.log(filters)
+    if (!filter) return of([])
+    const values =
+      typeof filter === 'string'
+        ? [filter]
+        : Object.keys(filter).filter((v) => filter[v])
+    console.log(values)
+    return of(values)
   }
 
   getTranslatedAggregations() {
@@ -405,14 +444,14 @@ export class TranslatedSearchField extends SimpleSearchField {
         'bucket',
         JSON.stringify(
           this.esService.getSearchRequestBody({
-            [this.esFieldName.split('.')[0]]: {
+            contactForResource: {
               nested: {
-                path: this.esFieldName.split('.')[0],
+                path: 'contactForResource',
               },
               aggs: {
                 default: {
                   terms: {
-                    field: `${this.esResearchName}.default.keyword`,
+                    field: `contactForResource.organisationObject.default.keyword`,
                     exclude: '',
                     size: 5000,
                     order: { _key: this.order },
@@ -422,7 +461,7 @@ export class TranslatedSearchField extends SimpleSearchField {
                       terms: {
                         size: 50,
                         exclude: '',
-                        field: `${this.esResearchName}.${this.langService.gnLang}.keyword`,
+                        field: `contactForResource.organisationObject.${this.langService.gnLang}.keyword`,
                       },
                     },
                   },
@@ -434,9 +473,7 @@ export class TranslatedSearchField extends SimpleSearchField {
       )
       .pipe(
         map(
-          (response) =>
-            response.aggregations[this.esFieldName.split('.')[0]].default
-              .buckets
+          (response) => response.aggregations.contactForResource.default.buckets
         ),
         shareReplay()
       )
@@ -444,16 +481,22 @@ export class TranslatedSearchField extends SimpleSearchField {
 
   getAvailableValues(): Observable<FieldAvailableValue[]> {
     // sort values by alphabetical order
-    return this.getTranslatedAggregations().pipe(
-      map((response) => {
-        return response.map((tmp) => {
-          const label = tmp.translation.buckets[0]?.key || tmp.key
-          return {
-            label: `${label} (${tmp.doc_count})`,
-            value: tmp.key,
-          }
-        })
-      })
+    return this.version.pipe(
+      switchMap((version) =>
+        version == '4.2.2'
+          ? super.getAvailableValues() //TODO copy from simplesearch field
+          : this.getTranslatedAggregations().pipe(
+              map((response) =>
+                response.map((tmp) => {
+                  const label = tmp.translation.buckets[0]?.key || tmp.key
+                  return {
+                    label: `${label} (${tmp.doc_count})`,
+                    value: tmp.key,
+                  }
+                })
+              )
+            )
+      )
     )
   }
 }
