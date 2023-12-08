@@ -180,6 +180,7 @@
   "next": "weiter",
   "organisation.sort.intro": "Datengeber sind hier aufgelistet.",
   "organisation.sort.sortBy": "Sortieren nach:",
+  "organisations.hits.found": "{hits, plural, =0{Keine Organisation gefunden} other{{hits} von {total} Organisationen angezeigt}}",
   "organisations.sortBy.nameAsc": "Name A → Z",
   "organisations.sortBy.nameDesc": "Name Z → A",
   "organisations.sortBy.recordCountAsc": "Veröffentlichungen 0 → 9",

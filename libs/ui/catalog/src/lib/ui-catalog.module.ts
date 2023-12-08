@@ -8,6 +8,7 @@ import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { OrganisationsSortComponent } from './organisations-sort/organisations-sort.component'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { LanguageSwitcherComponent } from './language-switcher/language-switcher.component'
+import { OrganisationsResultComponent } from './organisations-result/organisations-result.component'
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { LanguageSwitcherComponent } from './language-switcher/language-switcher
     OrganisationPreviewComponent,
     OrganisationsSortComponent,
     LanguageSwitcherComponent,
+    OrganisationsResultComponent,
   ],
   imports: [
     CommonModule,
@@ -28,6 +30,7 @@ import { LanguageSwitcherComponent } from './language-switcher/language-switcher
     OrganisationPreviewComponent,
     OrganisationsSortComponent,
     LanguageSwitcherComponent,
+    OrganisationsResultComponent,
   ],
 })
 export class UiCatalogModule {}

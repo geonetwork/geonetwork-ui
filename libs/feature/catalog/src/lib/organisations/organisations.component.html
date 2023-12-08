@@ -2,6 +2,13 @@
   (sortBy)="setSortBy($event)"
   (filterBy)="setFilterBy($event)"
 ></gn-ui-organisations-sort>
+<div class="mt-6 rounded-lg text-gray-800 p-4 bg-slate-100">
+  <gn-ui-organisations-result
+    *ngIf="organisationsTotal$ | async"
+    [hits]="organisationResults"
+    [total]="organisationsTotal$ | async"
+  ></gn-ui-organisations-result>
+</div>
 <div
   class="grid grid-cols-1 mt-6 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3"
 >

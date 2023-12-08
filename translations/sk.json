@@ -180,6 +180,7 @@
   "next": "Ďalej",
   "organisation.sort.intro": "Zoradenie poskytovateľov datasetov.",
   "organisation.sort.sortBy": "Zoradiť podľa:",
+  "organisations.hits.found": "",
   "organisations.sortBy.nameAsc": "Názov A → Z",
   "organisations.sortBy.nameDesc": "Názov Z → A",
   "organisations.sortBy.recordCountAsc": "Publikácie 0 → 9",

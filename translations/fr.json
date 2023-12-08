@@ -180,6 +180,7 @@
   "next": "suivant",
   "organisation.sort.intro": "Retrouvez sur cette page l'ensemble des fournisseurs de données de la plateforme.",
   "organisation.sort.sortBy": "Trier par :",
+  "organisations.hits.found": "{hits, plural, =0{Aucune organisation trouvé} one{1 organisation sur {total} affichée} other{{hits} organisations sur {total} affichées}}",
   "organisations.sortBy.nameAsc": "Nom A → Z",
   "organisations.sortBy.nameDesc": "Nom Z → A",
   "organisations.sortBy.recordCountAsc": "Données 0 → 9",

@@ -33,12 +33,13 @@ export class OrganisationsComponent {
 
   totalPages: number
   currentPage$ = new BehaviorSubject(1)
+  organisationResults: number
   sortBy$: BehaviorSubject<SortByField> = new BehaviorSubject(['asc', 'name'])
   filterBy$: BehaviorSubject<string> = new BehaviorSubject('')
   filterByDebounced$: Observable<string> = this.filterBy$.pipe(
     debounceTime(300)
   )
-
+  organisationsTotal$ = this.organisationsService.organisationsCount$
   organisationsFilteredAndSorted$: Observable<Organization[]> = combineLatest([
     this.organisationsService.organisations$.pipe(
       startWith(Array(this.itemsOnPage).fill({}))
@@ -59,10 +60,10 @@ export class OrganisationsComponent {
     this.organisationsFilteredAndSorted$,
     this.currentPage$,
   ]).pipe(
-    tap(
-      ([organisations]) =>
-        (this.totalPages = Math.ceil(organisations.length / this.itemsOnPage))
-    ),
+    tap(([organisations]) => {
+      this.organisationResults = organisations.length
+      this.totalPages = Math.ceil(organisations.length / this.itemsOnPage)
+    }),
     map(([organisations, page]) =>
       organisations.slice(
         (page - 1) * this.itemsOnPage,

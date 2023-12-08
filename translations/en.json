@@ -180,6 +180,7 @@
   "next": "next",
   "organisation.sort.intro": "Dataset providers are listed here.",
   "organisation.sort.sortBy": "Sort by:",
+  "organisations.hits.found": "{hits, plural, =0{No organizations found} other{{hits} out of {total} organizations shown}}",
   "organisations.sortBy.nameAsc": "Name A → Z",
   "organisations.sortBy.nameDesc": "Name Z → A",
   "organisations.sortBy.recordCountAsc": "Publications 0 → 9",
