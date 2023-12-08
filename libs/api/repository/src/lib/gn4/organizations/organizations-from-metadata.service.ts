@@ -220,9 +220,10 @@ export class OrganizationsFromMetadataService
               .includes(this.normalizeString(group.email, false))
           )
       const { emails, ...fullOrg } = organisation
-      if (!group) return fullOrg
+      if (!group) return organisation
       return {
         ...fullOrg,
+        ...(group.email ? { emails: [...emails, group.email] } : emails),
         ...(group.description && { description: group.description }),
         ...(group.logo && { logoUrl: getAsUrl(`${IMAGE_URL}${group.logo}`) }),
         ...(group.website && { website: getAsUrl(group.website) }),
