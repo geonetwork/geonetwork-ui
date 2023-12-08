@@ -35,6 +35,7 @@ import { CopyTextButtonComponent } from './copy-text-button/copy-text-button.com
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { CommonModule } from '@angular/common'
 import { CheckboxComponent } from './checkbox/checkbox.component'
+import { SearchInputComponent } from './search-input/search-input.component'
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { CheckboxComponent } from './checkbox/checkbox.component'
     CheckToggleComponent,
     CopyTextButtonComponent,
     CheckboxComponent,
+    SearchInputComponent,
   ],
   imports: [
     CommonModule,
@@ -92,6 +94,7 @@ import { CheckboxComponent } from './checkbox/checkbox.component'
     CheckToggleComponent,
     CopyTextButtonComponent,
     CheckboxComponent,
+    SearchInputComponent,
   ],
 })
 export class UiInputsModule {}

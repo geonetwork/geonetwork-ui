@@ -1,10 +1,11 @@
 <div
-  class="flex flex-wrap sm:flex-nowrap bg-primary text-white px-6 py-7 mt-4 mb-8 rounded-lg"
+  class="flex flex-wrap sm:flex-nowrap justify-between bg-primary text-white px-6 py-7 mt-4 mb-8 rounded-lg"
 >
-  <span class="grow mb-4 mr-4 sm:mb-0 sm:mr-16">
-    <gn-ui-text-input
+  <span class="grow mb-4 mr-4 sm:mb-0 sm:mr-16 sm:max-w-sm">
+    <gn-ui-search-input
       (valueChange)="filterOrganisations($event)"
-    ></gn-ui-text-input>
+      [placeholder]="'organisation.filter.placeholder' | translate"
+    ></gn-ui-search-input>
   </span>
   <span class="flex flex-wrap sm:flex-nowrap sm:shrink-0">
     <gn-ui-dropdown-selector
