@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core'
 import { AvatarServiceInterface } from './avatar.service.interface'
 import { Gn4SettingsService } from '../settings/gn4-settings.service'
+import { map } from 'rxjs/operators'
+import { Observable } from 'rxjs'
 
 @Injectable({
   providedIn: 'root',
@@ -9,16 +11,19 @@ export class GravatarService implements AvatarServiceInterface {
   private GRAVATAR_URL = 'https://www.gravatar.com/avatar/'
   private GRAVATAR_IDENTICON = 'mp'
 
-  constructor(private gn4SettingsService: Gn4SettingsService) {
-    this.gn4SettingsService.identicon$.subscribe(
-      (identicon) =>
-        (this.GRAVATAR_IDENTICON = identicon.replace('gravatar:', ''))
-    )
+  private readonly identicon$ = this.gn4SettingsService.identicon$.pipe(
+    map((identicon) => identicon?.replace('gravatar:', ''))
+  )
+  constructor(private gn4SettingsService: Gn4SettingsService) {}
+
+  getPlaceholder(): Observable<string> {
+    return this.getProfileIcon('')
   }
 
-  placeholder = this.getProfileIcon('')
-
-  getProfileIcon(hash: string): string {
-    return `${this.GRAVATAR_URL}${hash}?d=${this.GRAVATAR_IDENTICON}`
+  getProfileIcon(hash: string): Observable<string> {
+    return this.identicon$.pipe(
+      map((identicon) => identicon || this.GRAVATAR_IDENTICON),
+      map((identicon) => `${this.GRAVATAR_URL}${hash}?d=${identicon}`)
+    )
   }
 }

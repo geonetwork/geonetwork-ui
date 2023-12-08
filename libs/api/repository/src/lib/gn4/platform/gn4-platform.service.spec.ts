@@ -35,8 +35,8 @@ class MeApiMock {
 }
 
 class AvatarServiceInterfaceMock {
-  placeholder = 'http://placeholder.com'
-  getProfileIcon = jest.fn((hash: string) => `http://icon_service.com/${hash}`)
+  getPlaceholder = () => of('http://placeholder.com')
+  getProfileIcon = (hash: string) => of(`http://icon_service.com/${hash}`)
 }
 
 class SiteApiServiceMock {
