@@ -9,7 +9,7 @@ import {
 } from '@angular/core'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
-import { map, startWith, tap } from 'rxjs/operators'
+import { debounceTime, map, startWith, tap } from 'rxjs/operators'
 import { ORGANIZATION_URL_TOKEN } from '../feature-catalog.module'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { SortByField } from '@geonetwork-ui/common/domain/model/search'
@@ -34,20 +34,29 @@ export class OrganisationsComponent {
   totalPages: number
   currentPage$ = new BehaviorSubject(1)
   sortBy$: BehaviorSubject<SortByField> = new BehaviorSubject(['asc', 'name'])
+  filterBy$: BehaviorSubject<string> = new BehaviorSubject('')
+  filterByDebounced$: Observable<string> = this.filterBy$.pipe(
+    debounceTime(300)
+  )
 
-  organisationsSorted$: Observable<Organization[]> = combineLatest([
+  organisationsFilteredAndSorted$: Observable<Organization[]> = combineLatest([
     this.organisationsService.organisations$.pipe(
       startWith(Array(this.itemsOnPage).fill({}))
     ),
     this.sortBy$,
+    this.filterByDebounced$,
   ]).pipe(
-    map(([organisations, sortBy]) =>
-      this.sortOrganisations(organisations, sortBy)
-    )
+    map(([organisations, sortBy, filterByDebounced]) => {
+      const filteredOrganisations = this.filterOrganisations(
+        organisations,
+        filterByDebounced
+      )
+      return this.sortOrganisations(filteredOrganisations, sortBy)
+    })
   )
 
   organisations$: Observable<Organization[]> = combineLatest([
-    this.organisationsSorted$,
+    this.organisationsFilteredAndSorted$,
     this.currentPage$,
   ]).pipe(
     tap(
@@ -66,8 +75,29 @@ export class OrganisationsComponent {
     this.currentPage$.next(page)
   }
 
+  protected setFilterBy(value: string): void {
+    this.filterBy$.next(value)
+  }
+
   protected setSortBy(value: SortByField): void {
     this.sortBy$.next(value)
+  }
+
+  private filterOrganisations(organisations: Organization[], filterBy: string) {
+    if (!filterBy) return organisations
+    const filterRegex = new RegExp(
+      filterBy
+        .replace(/[()[\]{}*+?^$|#.,/\\]/g, '\\$&') //escape special characters
+        .replace(/\s(?=.)/g, '|') //replace whitespaces by separator
+        .replace(/\s/g, ''), //remove potential whitespaces left
+      'i'
+    )
+    return [...organisations].filter((org) => {
+      return (
+        org.name.match(filterRegex) ||
+        org.emails?.filter((email) => email.match(filterRegex))?.length > 0
+      )
+    })
   }
 
   private sortOrganisations(

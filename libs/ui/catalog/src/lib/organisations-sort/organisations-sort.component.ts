@@ -33,8 +33,13 @@ export class OrganisationsSortComponent {
     },
   ]
   @Output() sortBy = new EventEmitter<SortByField>()
+  @Output() filterBy = new EventEmitter<string>()
 
   selectOrderToDisplay(selectValue: string) {
     this.sortBy.emit(selectValue.split(',') as SortByField)
+  }
+
+  filterOrganisations(inputValue: string) {
+    this.filterBy.emit(inputValue)
   }
 }

@@ -2,7 +2,9 @@
   class="flex flex-wrap sm:flex-nowrap bg-primary text-white px-6 py-7 mt-4 mb-8 rounded-lg"
 >
   <span class="grow mb-4 mr-4 sm:mb-0 sm:mr-16">
-    <p translate>organisation.sort.intro</p>
+    <gn-ui-text-input
+      (valueChange)="filterOrganisations($event)"
+    ></gn-ui-text-input>
   </span>
   <span class="flex flex-wrap sm:flex-nowrap sm:shrink-0">
     <gn-ui-dropdown-selector
