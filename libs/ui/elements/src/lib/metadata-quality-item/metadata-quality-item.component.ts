@@ -1,4 +1,22 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('record.metadata.quality.title.success')
+marker('record.metadata.quality.title.failed')
+marker('record.metadata.quality.description.success')
+marker('record.metadata.quality.description.failed')
+marker('record.metadata.quality.topic.success')
+marker('record.metadata.quality.topic.failed')
+marker('record.metadata.quality.keywords.success')
+marker('record.metadata.quality.keywords.failed')
+marker('record.metadata.quality.legalConstraints.success')
+marker('record.metadata.quality.legalConstraints.failed')
+marker('record.metadata.quality.contact.success')
+marker('record.metadata.quality.contact.failed')
+marker('record.metadata.quality.updateFrequency.success')
+marker('record.metadata.quality.updateFrequency.failed')
+marker('record.metadata.quality.organisation.success')
+marker('record.metadata.quality.organisation.failed')
 
 export interface MetadataQualityItem {
   name: string
