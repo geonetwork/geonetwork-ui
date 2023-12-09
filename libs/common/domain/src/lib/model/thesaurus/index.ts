@@ -1,0 +1,1 @@
+export * from './thesaurus.model'
