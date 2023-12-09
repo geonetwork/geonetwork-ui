@@ -1,5 +1,6 @@
 import {
   MeApiService,
+  RegistriesApiService,
   SiteApiService,
   ToolsApiService,
   UsersApiService,
@@ -76,10 +77,52 @@ class ToolsApiServiceMock {
   )
 }
 
+class RegistriesApiServiceMock {
+  searchKeywords = jest.fn(() =>
+    of([
+      {
+        values: {
+          fre: 'Adresses',
+        },
+        definitions: {
+          fre: 'Localisation des propriétés fondée sur les identifiants des adresses, habituellement le nom de la rue, le numéro de la maison et le code postal.',
+        },
+        coordEast: '',
+        coordWest: '',
+        coordSouth: '',
+        coordNorth: '',
+        thesaurusKey: 'external.theme.httpinspireeceuropaeutheme-theme',
+        uri: 'http://inspire.ec.europa.eu/theme/ad',
+        definition:
+          'Localisation des propriétés fondée sur les identifiants des adresses, habituellement le nom de la rue, le numéro de la maison et le code postal.',
+        value: 'Adresses',
+      },
+      {
+        values: {
+          fre: 'Altitude',
+        },
+        definitions: {
+          fre: "Modèles numériques pour l'altitude des surfaces terrestres, glaciaires et océaniques. Comprend l'altitude terrestre, la bathymétrie et la ligne de rivage.",
+        },
+        coordEast: '',
+        coordWest: '',
+        coordSouth: '',
+        coordNorth: '',
+        thesaurusKey: 'external.theme.httpinspireeceuropaeutheme-theme',
+        uri: 'http://inspire.ec.europa.eu/theme/el',
+        definition:
+          "Modèles numériques pour l'altitude des surfaces terrestres, glaciaires et océaniques. Comprend l'altitude terrestre, la bathymétrie et la ligne de rivage.",
+        value: 'Altitude',
+      },
+    ])
+  )
+}
+
 describe('Gn4PlatformService', () => {
   let service: Gn4PlatformService
   let meApiService: MeApiService
   let toolsApiService: ToolsApiService
+  let registriesApiService: RegistriesApiService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -106,11 +149,16 @@ describe('Gn4PlatformService', () => {
           provide: ToolsApiService,
           useClass: ToolsApiServiceMock,
         },
+        {
+          provide: RegistriesApiService,
+          useClass: RegistriesApiServiceMock,
+        },
       ],
     })
     service = TestBed.inject(Gn4PlatformService)
     meApiService = TestBed.inject(MeApiService)
     toolsApiService = TestBed.inject(ToolsApiService)
+    registriesApiService = TestBed.inject(RegistriesApiService)
   })
 
   it('creates', () => {
@@ -212,6 +260,28 @@ describe('Gn4PlatformService', () => {
       await lastValueFrom(service.translateKey('First value'))
       await lastValueFrom(service.translateKey('Second value'))
       expect(toolsApiService.getTranslationsPackage1).toHaveBeenCalledTimes(1)
+    })
+  })
+  describe('#getThesaurusByLang', () => {
+    it('calls api service ', async () => {
+      service.getThesaurusByLang('inspire', 'fre')
+      expect(registriesApiService.searchKeywords).toHaveBeenCalledWith(
+        null,
+        'fre',
+        1000,
+        0,
+        null,
+        ['inspire']
+      )
+    })
+    it('returns mapped thesaurus ', async () => {
+      const thesaurusDomain = await lastValueFrom(
+        service.getThesaurusByLang('inspire', 'fre')
+      )
+      expect(thesaurusDomain).toEqual([
+        { key: 'http://inspire.ec.europa.eu/theme/ad', label: 'Adresses' },
+        { key: 'http://inspire.ec.europa.eu/theme/el', label: 'Altitude' },
+      ])
     })
   })
 })

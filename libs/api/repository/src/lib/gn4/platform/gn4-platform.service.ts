@@ -3,6 +3,7 @@ import { Observable, of, switchMap } from 'rxjs'
 import { catchError, map, shareReplay, tap } from 'rxjs/operators'
 import {
   MeApiService,
+  RegistriesApiService,
   SiteApiService,
   ToolsApiService,
   UsersApiService,
@@ -12,6 +13,7 @@ import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { Gn4PlatformMapper } from './gn4-platform.mapper'
 import { ltr } from 'semver'
+import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus/thesaurus.model'
 
 const minApiVersion = '4.2.2'
 @Injectable()
@@ -53,7 +55,8 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     private meApi: MeApiService,
     private usersApi: UsersApiService,
     private mapper: Gn4PlatformMapper,
-    private toolsApiService: ToolsApiService
+    private toolsApiService: ToolsApiService,
+    private registriesApiService: RegistriesApiService
   ) {
     this.me$ = this.meApi.getMe().pipe(
       switchMap((apiUser) => this.mapper.userFromMeApi(apiUser)),
@@ -96,5 +99,16 @@ export class Gn4PlatformService implements PlatformServiceInterface {
 
   translateKey(key: string): Observable<string> {
     return this.keyTranslations$.pipe(map((translations) => translations[key]))
+  }
+
+  getThesaurusByLang(
+    thesaurusName: string,
+    lang: string
+  ): Observable<ThesaurusModel> {
+    return this.registriesApiService
+      .searchKeywords(null, lang, 1000, 0, null, [thesaurusName])
+      .pipe(
+        map((thesaurus) => this.mapper.thesaurusFromApi(thesaurus as any[]))
+      )
   }
 }
