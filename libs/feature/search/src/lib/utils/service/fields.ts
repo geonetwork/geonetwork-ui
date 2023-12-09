@@ -1,5 +1,5 @@
-import { firstValueFrom, Observable, of, switchMap } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { firstValueFrom, Observable, of, switchMap, tap } from 'rxjs'
+import { catchError, map, shareReplay } from 'rxjs/operators'
 import { Injector } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -14,6 +14,7 @@ import {
   TermBucket,
 } from '@geonetwork-ui/common/domain/model/search'
 import { ElasticsearchService } from '@geonetwork-ui/api/repository/gn4'
+import { LangService } from '@geonetwork-ui/util/i18n'
 
 export type FieldValue = string | number
 export interface FieldAvailableValue {
@@ -88,9 +89,9 @@ export class SimpleSearchField implements AbstractSearchField {
 }
 
 export class KeySearchField extends SimpleSearchField {
-  private platformService = this.injector.get(PlatformServiceInterface)
+  protected platformService = this.injector.get(PlatformServiceInterface)
 
-  private async getTranslation(key: string) {
+  protected async getTranslation(key: string) {
     return firstValueFrom(this.platformService.translateKey(key))
   }
 
@@ -107,6 +108,37 @@ export class KeySearchField extends SimpleSearchField {
           values.sort((a, b) => new Intl.Collator().compare(a.label, b.label))
         )
       )
+  }
+}
+
+export class ThesaurusField extends KeySearchField {
+  private langService = this.injector.get(LangService)
+  private thesaurus$ = this.platformService
+    .getThesaurusByLang(this.thesaurusName, this.langService.iso3)
+    .pipe(
+      catchError(() => {
+        console.warn('Error while loading thesaurus language package')
+        return of([])
+      }),
+      shareReplay(1)
+    )
+
+  constructor(
+    esFieldName: string,
+    protected thesaurusName: string,
+    order: 'asc' | 'desc' = 'asc',
+    injector: Injector
+  ) {
+    super(esFieldName, order, injector)
+  }
+  protected async getTranslation(key: string) {
+    return firstValueFrom(
+      this.thesaurus$.pipe(
+        map(
+          (thesaurus) => thesaurus.find((keyword) => keyword.key === key)?.label
+        )
+      )
+    )
   }
 }
 
