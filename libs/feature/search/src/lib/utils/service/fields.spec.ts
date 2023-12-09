@@ -1,13 +1,13 @@
-import { ToolsApiService } from '@geonetwork-ui/data-access/gn4'
 import { lastValueFrom, of } from 'rxjs'
 import {
   AbstractSearchField,
   FullTextSearchField,
-  KeySearchField,
   IsSpatialSearchField,
+  KeySearchField,
   LicenseSearchField,
   OrganizationSearchField,
   SimpleSearchField,
+  ThesaurusField,
 } from './fields'
 import { TestBed } from '@angular/core/testing'
 import { Injector } from '@angular/core'
@@ -132,6 +132,13 @@ class PlatformInterfaceMock {
         return of(null)
     }
   })
+  getThesaurusByLang = jest.fn((thesaurusName: string, lang: string) =>
+    of([
+      { key: 'First value', label: 'Rivière' },
+      { key: 'Second value', label: 'Forêt' },
+      { key: 'Third value', label: 'Planète' },
+    ])
+  )
 }
 
 const sampleOrgs: Organization[] = [
@@ -296,7 +303,7 @@ describe('search fields implementations', () => {
     })
   })
 
-  describe('TopicSearchField', () => {
+  describe('KeySearchField', () => {
     beforeEach(() => {
       searchField = new KeySearchField('cl_topic.key', 'asc', injector)
     })
@@ -325,6 +332,36 @@ describe('search fields implementations', () => {
       })
       it('calls translations 4 times', () => {
         expect(platformService.translateKey).toHaveBeenCalledTimes(4)
+      })
+    })
+  })
+  describe('ThesaurusField', () => {
+    beforeEach(() => {
+      searchField = new ThesaurusField(
+        'th_inspire.link',
+        'inspire',
+        'asc',
+        injector
+      )
+    })
+    describe('#getAvailableValues', () => {
+      let values
+      beforeEach(async () => {
+        values = await lastValueFrom(searchField.getAvailableValues())
+      })
+      it('calls search with a simple unsorted terms', () => {
+        expect(platformService.getThesaurusByLang).toHaveBeenCalledWith(
+          'inspire',
+          'fre'
+        )
+      })
+      it('returns a list of values sorted by translated labels', () => {
+        expect(values).toEqual([
+          { label: 'Forêt (3)', value: 'Second value' },
+          { label: 'Fourth value (1)', value: 'Fourth value' },
+          { label: 'Planète (12)', value: 'Third value' },
+          { label: 'Rivière (5)', value: 'First value' },
+        ])
       })
     })
   })
