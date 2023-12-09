@@ -1,6 +1,7 @@
 import {
   MeApiService,
   SiteApiService,
+  ToolsApiService,
   UsersApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import { TestBed } from '@angular/core/testing'
@@ -65,9 +66,20 @@ class UsersApiServiceMock {
   }
 }
 
+class ToolsApiServiceMock {
+  getTranslationsPackage1 = jest.fn(() =>
+    of({
+      'First value': 'Translated first value',
+      'Second value': 'Hello',
+      'Third value': 'Bla',
+    })
+  )
+}
+
 describe('Gn4PlatformService', () => {
   let service: Gn4PlatformService
   let meApiService: MeApiService
+  let toolsApiService: ToolsApiService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -90,10 +102,15 @@ describe('Gn4PlatformService', () => {
           provide: AvatarServiceInterface,
           useClass: AvatarServiceInterfaceMock,
         },
+        {
+          provide: ToolsApiService,
+          useClass: ToolsApiServiceMock,
+        },
       ],
     })
     service = TestBed.inject(Gn4PlatformService)
     meApiService = TestBed.inject(MeApiService)
+    toolsApiService = TestBed.inject(ToolsApiService)
   })
 
   it('creates', () => {
@@ -182,6 +199,19 @@ describe('Gn4PlatformService', () => {
         const isAnonymous = await firstValueFrom(service.isAnonymous())
         expect(isAnonymous).toBe(true)
       })
+    })
+  })
+  describe('#translateKey', () => {
+    it('returns translation ', async () => {
+      const translation = await lastValueFrom(
+        service.translateKey('First value')
+      )
+      expect(translation).toEqual('Translated first value')
+    })
+    it('fetch api translations once ', async () => {
+      await lastValueFrom(service.translateKey('First value'))
+      await lastValueFrom(service.translateKey('Second value'))
+      expect(toolsApiService.getTranslationsPackage1).toHaveBeenCalledTimes(1)
     })
   })
 })

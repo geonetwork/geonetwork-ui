@@ -13,4 +13,5 @@ export abstract class PlatformServiceInterface {
     organisation: Organization
   ): Observable<UserModel[]>
   abstract getOrganizations(): Observable<Organization[]>
+  abstract translateKey(key: string): Observable<string>
 }

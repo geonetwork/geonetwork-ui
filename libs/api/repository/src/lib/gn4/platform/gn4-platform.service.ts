@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core'
 import { Observable, of, switchMap } from 'rxjs'
-import { map, shareReplay, tap } from 'rxjs/operators'
+import { catchError, map, shareReplay, tap } from 'rxjs/operators'
 import {
   MeApiService,
   SiteApiService,
+  ToolsApiService,
   UsersApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
@@ -19,6 +20,16 @@ export class Gn4PlatformService implements PlatformServiceInterface {
   private me$: Observable<UserModel>
   private users$: Observable<UserModel[]>
   private isAnonymous$: Observable<boolean>
+
+  private keyTranslations$ = this.toolsApiService
+    .getTranslationsPackage1('gnui')
+    .pipe(
+      catchError(() => {
+        console.warn('Error while loading gnui language package')
+        return of({})
+      }),
+      shareReplay(1)
+    )
 
   private settings$ = of(true).pipe(
     switchMap(() => this.siteApiService.getSiteOrPortalDescription()),
@@ -41,7 +52,8 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     private siteApiService: SiteApiService,
     private meApi: MeApiService,
     private usersApi: UsersApiService,
-    private mapper: Gn4PlatformMapper
+    private mapper: Gn4PlatformMapper,
+    private toolsApiService: ToolsApiService
   ) {
     this.me$ = this.meApi.getMe().pipe(
       switchMap((apiUser) => this.mapper.userFromMeApi(apiUser)),
@@ -80,5 +92,9 @@ export class Gn4PlatformService implements PlatformServiceInterface {
 
   getUsers(): Observable<UserModel[]> {
     return this.users$
+  }
+
+  translateKey(key: string): Observable<string> {
+    return this.keyTranslations$.pipe(map((translations) => translations[key]))
   }
 }
