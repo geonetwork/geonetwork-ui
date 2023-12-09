@@ -16,6 +16,7 @@ import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/orga
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { ElasticsearchService } from '@geonetwork-ui/api/repository/gn4'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 class ElasticsearchServiceMock {
   registerRuntimeField = jest.fn()
@@ -118,14 +119,19 @@ class RecordsRepositoryMock {
   })
 }
 
-class ToolsApiServiceMock {
-  getTranslationsPackage1 = jest.fn(() =>
-    of({
-      'First value': 'Translated first value',
-      'Second value': 'Hello',
-      'Third value': 'Bla',
-    })
-  )
+class PlatformInterfaceMock {
+  translateKey = jest.fn((key) => {
+    switch (key) {
+      case 'First value':
+        return of('Translated first value')
+      case 'Second value':
+        return of('Hello')
+      case 'Third value':
+        return of('Bla')
+      default:
+        return of(null)
+    }
+  })
 }
 
 const sampleOrgs: Organization[] = [
@@ -164,7 +170,7 @@ describe('search fields implementations', () => {
   let searchField: AbstractSearchField
   let esService: ElasticsearchService
   let repository: RecordsRepositoryInterface
-  let toolsService: ToolsApiService
+  let platformService: PlatformServiceInterface
   let injector: Injector
 
   beforeEach(() => {
@@ -180,8 +186,8 @@ describe('search fields implementations', () => {
           useClass: ElasticsearchServiceMock,
         },
         {
-          provide: ToolsApiService,
-          useClass: ToolsApiServiceMock,
+          provide: PlatformServiceInterface,
+          useClass: PlatformInterfaceMock,
         },
         {
           provide: TranslateService,
@@ -195,7 +201,7 @@ describe('search fields implementations', () => {
     })
     esService = TestBed.inject(ElasticsearchService)
     repository = TestBed.inject(RecordsRepositoryInterface)
-    toolsService = TestBed.inject(ToolsApiService)
+    platformService = TestBed.inject(PlatformServiceInterface)
     injector = TestBed.inject(Injector)
   })
 
@@ -317,8 +323,8 @@ describe('search fields implementations', () => {
           { label: 'Translated first value (5)', value: 'First value' },
         ])
       })
-      it('only calls the translations service once', () => {
-        expect(toolsService.getTranslationsPackage1).toHaveBeenCalledTimes(1)
+      it('calls translations 4 times', () => {
+        expect(platformService.translateKey).toHaveBeenCalledTimes(4)
       })
     })
   })

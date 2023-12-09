@@ -1,10 +1,11 @@
 import { firstValueFrom, Observable, of, switchMap } from 'rxjs'
-import { ToolsApiService } from '@geonetwork-ui/data-access/gn4'
-import { catchError, map, shareReplay } from 'rxjs/operators'
+import { map } from 'rxjs/operators'
 import { Injector } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
   AggregationBuckets,
   AggregationsParams,
@@ -12,7 +13,6 @@ import {
   FieldFilters,
   TermBucket,
 } from '@geonetwork-ui/common/domain/model/search'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { ElasticsearchService } from '@geonetwork-ui/api/repository/gn4'
 
 export type FieldValue = string | number
@@ -88,27 +88,10 @@ export class SimpleSearchField implements AbstractSearchField {
 }
 
 export class KeySearchField extends SimpleSearchField {
-  private toolsApiService = this.injector.get(ToolsApiService)
-  allTranslations = this.toolsApiService.getTranslationsPackage1('gnui').pipe(
-    catchError(() => {
-      console.warn('Error while loading gnui language package')
-      return of({})
-    }),
-    shareReplay(1)
-  )
+  private platformService = this.injector.get(PlatformServiceInterface)
 
-  constructor(
-    esFieldName: string,
-    order: 'asc' | 'desc' = 'asc',
-    injector: Injector
-  ) {
-    super(esFieldName, order, injector)
-  }
-
-  private async getTranslation(topicKey: string) {
-    return firstValueFrom(
-      this.allTranslations.pipe(map((translations) => translations[topicKey]))
-    )
+  private async getTranslation(key: string) {
+    return firstValueFrom(this.platformService.translateKey(key))
   }
 
   protected async getBucketLabel(bucket: TermBucket) {
