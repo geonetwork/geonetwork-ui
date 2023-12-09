@@ -87,7 +87,7 @@ export class SimpleSearchField implements AbstractSearchField {
   }
 }
 
-export class GnUiTranslationSearchField extends SimpleSearchField {
+export class KeySearchField extends SimpleSearchField {
   private toolsApiService = this.injector.get(ToolsApiService)
   allTranslations = this.toolsApiService.getTranslationsPackage1('gnui').pipe(
     catchError(() => {

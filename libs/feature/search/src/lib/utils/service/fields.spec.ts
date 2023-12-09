@@ -3,7 +3,7 @@ import { lastValueFrom, of } from 'rxjs'
 import {
   AbstractSearchField,
   FullTextSearchField,
-  GnUiTranslationSearchField,
+  KeySearchField,
   IsSpatialSearchField,
   LicenseSearchField,
   OrganizationSearchField,
@@ -292,11 +292,7 @@ describe('search fields implementations', () => {
 
   describe('TopicSearchField', () => {
     beforeEach(() => {
-      searchField = new GnUiTranslationSearchField(
-        'cl_topic.key',
-        'asc',
-        injector
-      )
+      searchField = new KeySearchField('cl_topic.key', 'asc', injector)
     })
     describe('#getAvailableValues', () => {
       let values
