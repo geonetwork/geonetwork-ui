@@ -1,6 +1,7 @@
-import { Observable } from 'rxjs'
-import { UserModel } from './model/user/user.model'
-import { Organization } from './model/record/organization.model'
+import type { Observable } from 'rxjs'
+import type { UserModel } from './model/user/user.model'
+import type { Organization } from './model/record/organization.model'
+import type { ThesaurusModel } from './model/thesaurus/'
 
 export abstract class PlatformServiceInterface {
   abstract getType(): string
@@ -15,4 +16,8 @@ export abstract class PlatformServiceInterface {
   ): Observable<UserModel[]>
   abstract getOrganizations(): Observable<Organization[]>
   abstract translateKey(key: string): Observable<string>
+  abstract getThesaurusByLang(
+    thesaurusName: string,
+    lang: string
+  ): Observable<ThesaurusModel>
 }

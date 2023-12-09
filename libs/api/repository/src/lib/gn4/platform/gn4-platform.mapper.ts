@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core'
 import { AvatarServiceInterface } from '../auth/avatar.service.interface'
 import { map } from 'rxjs/operators'
 import { Observable, of } from 'rxjs'
+import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus/thesaurus.model'
 
 @Injectable()
 export class Gn4PlatformMapper {
@@ -42,5 +43,15 @@ export class Gn4PlatformMapper {
       ...user
     } = apiUser
     return { ...apiUser, id: id + '' } as UserModel
+  }
+
+  thesaurusFromApi(thesaurus: any[]): ThesaurusModel {
+    return thesaurus.map((keyword) => {
+      const { uri, value } = keyword
+      return {
+        key: uri,
+        label: value,
+      }
+    })
   }
 }
