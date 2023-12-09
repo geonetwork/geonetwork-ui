@@ -9,9 +9,11 @@ import { CatalogSource } from './sources.model'
   providedIn: 'root',
 })
 export class SourcesService {
-  sources$: Observable<CatalogSource[]> = this.sourcesApiService
-    .getSources1()
-    .pipe(shareReplay())
+  sources$: Observable<CatalogSource[]> = (
+    this.sourcesApiService.getSourcesByType('harvester') as Observable<
+      CatalogSource[]
+    >
+  ).pipe(shareReplay())
 
   constructor(
     private sourcesApiService: SourcesApiService,
