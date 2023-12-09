@@ -8,7 +8,7 @@ import { Observable } from 'rxjs'
 import { LangService } from '@geonetwork-ui/util/i18n'
 
 class SourcesApiServiceMock {
-  getSources1 = jest.fn(function () {
+  getSourcesByType = jest.fn(function () {
     return new Observable((observer) => {
       observer.next(SOURCES_FIXTURE)
     })

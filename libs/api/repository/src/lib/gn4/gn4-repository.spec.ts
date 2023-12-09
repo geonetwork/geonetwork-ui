@@ -36,7 +36,7 @@ class ElasticsearchServiceMock {
 }
 
 class SearchApiServiceMock {
-  search = jest.fn((bucket, payload) => {
+  search = jest.fn((bucket, relatedType, payload) => {
     const body = JSON.parse(payload)
     const count = body.size || 1234
     const result: EsSearchResponse = {
