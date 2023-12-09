@@ -255,6 +255,7 @@
   "search.field.any.placeholder": "Search datasets ...",
   "search.field.sortBy": "Sort by:",
   "search.filters.clear": "Reset",
+  "search.filters.contact": "Contacts",
   "search.filters.format": "Formats",
   "search.filters.inspireKeyword": "INSPIRE keyword",
   "search.filters.isSpatial": "Is spatial data",

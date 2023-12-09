@@ -29,6 +29,7 @@ marker('search.filters.representationType')
 marker('search.filters.resourceType')
 marker('search.filters.standard')
 marker('search.filters.topic')
+marker('search.filters.contact')
 
 @Injectable({
   providedIn: 'root',
