@@ -255,6 +255,7 @@
   "search.field.any.placeholder": "Rechercher une donnée...",
   "search.field.sortBy": "Trier par :",
   "search.filters.clear": "Réinitialiser",
+  "search.filters.contact": "Contacts",
   "search.filters.format": "Formats",
   "search.filters.inspireKeyword": "Mot-clé INSPIRE",
   "search.filters.isSpatial": "Données spatiales",
