@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core'
 import {
   AbstractSearchField,
-  GnUiTranslationSearchField,
+  KeySearchField,
   FieldValue,
   FullTextSearchField,
   IsSpatialSearchField,
@@ -36,12 +36,8 @@ export class FieldsService {
   private fields = {
     publisher: new OrganizationSearchField(this.injector),
     format: new SimpleSearchField('format', 'asc', this.injector),
-    resourceType: new GnUiTranslationSearchField(
-      'resourceType',
-      'asc',
-      this.injector
-    ),
-    representationType: new GnUiTranslationSearchField(
+    resourceType: new KeySearchField('resourceType', 'asc', this.injector),
+    representationType: new KeySearchField(
       'cl_spatialRepresentationType.key',
       'asc',
       this.injector
@@ -51,7 +47,7 @@ export class FieldsService {
       'desc',
       this.injector
     ),
-    topic: new GnUiTranslationSearchField('cl_topic.key', 'asc', this.injector),
+    topic: new KeySearchField('cl_topic.key', 'asc', this.injector),
     inspireKeyword: new SimpleSearchField(
       'th_httpinspireeceuropaeutheme-theme_tree.default',
       'asc',
