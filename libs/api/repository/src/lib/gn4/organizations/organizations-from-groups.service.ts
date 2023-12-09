@@ -29,6 +29,7 @@ export class OrganizationsFromGroupsService
   private groupsAggregation$ = this.searchApiService
     .search(
       'bucket',
+      null,
       JSON.stringify(
         this.esService.getSearchRequestBody({
           groups: {
