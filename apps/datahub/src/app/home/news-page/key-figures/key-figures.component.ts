@@ -4,6 +4,10 @@ import { RecordsService } from '@geonetwork-ui/feature/catalog'
 import { ROUTER_ROUTE_SEARCH } from '@geonetwork-ui/feature/router'
 import { ROUTER_ROUTE_ORGANISATIONS } from '../../../router/constants'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('catalog.figures.datasets')
+marker('catalog.figures.organisations')
 
 @Component({
   selector: 'datahub-key-figures',
