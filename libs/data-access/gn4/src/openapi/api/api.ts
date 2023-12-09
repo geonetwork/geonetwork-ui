@@ -1,5 +1,9 @@
+export * from './atom.api.service'
+import { AtomApiService } from './atom.api.service'
 export * from './customstyle.api.service'
 import { CustomstyleApiService } from './customstyle.api.service'
+export * from './formatters.api.service'
+import { FormattersApiService } from './formatters.api.service'
 export * from './groups.api.service'
 import { GroupsApiService } from './groups.api.service'
 export * from './harvesters.api.service'
@@ -14,6 +18,8 @@ export * from './logos.api.service'
 import { LogosApiService } from './logos.api.service'
 export * from './mapservers.api.service'
 import { MapserversApiService } from './mapservers.api.service'
+export * from './mapservices.api.service'
+import { MapservicesApiService } from './mapservices.api.service'
 export * from './me.api.service'
 import { MeApiService } from './me.api.service'
 export * from './operations.api.service'
@@ -57,7 +63,9 @@ import { UsersearchesApiService } from './usersearches.api.service'
 export * from './userselections.api.service'
 import { UserselectionsApiService } from './userselections.api.service'
 export const APIS = [
+  AtomApiService,
   CustomstyleApiService,
+  FormattersApiService,
   GroupsApiService,
   HarvestersApiService,
   IdentifiersApiService,
@@ -65,6 +73,7 @@ export const APIS = [
   LinksApiService,
   LogosApiService,
   MapserversApiService,
+  MapservicesApiService,
   MeApiService,
   OperationsApiService,
   PagesApiService,
