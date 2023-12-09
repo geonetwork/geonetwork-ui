@@ -23,7 +23,10 @@ import {
 import { CustomHttpParameterCodec } from '../encoder'
 import { Observable } from 'rxjs'
 
-import { BatchEditParameterApiModel } from '../model/models'
+import {
+  AssociatedRecordApiModel,
+  BatchEditParameterApiModel,
+} from '../model/models'
 import { ExtentDtoApiModel } from '../model/models'
 import { FeatureResponseApiModel } from '../model/models'
 import { IProcessingReportApiModel } from '../model/models'
