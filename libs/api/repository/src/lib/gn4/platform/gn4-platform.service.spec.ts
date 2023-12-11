@@ -7,7 +7,7 @@ import {
 } from '@geonetwork-ui/data-access/gn4'
 import { TestBed } from '@angular/core/testing'
 import { Gn4PlatformService } from './gn4-platform.service'
-import { firstValueFrom, of, Subject } from 'rxjs'
+import { firstValueFrom, lastValueFrom, of, Subject } from 'rxjs'
 import { AvatarServiceInterface } from '../auth/avatar.service.interface'
 import { Gn4PlatformMapper } from './gn4-platform.mapper'
 
