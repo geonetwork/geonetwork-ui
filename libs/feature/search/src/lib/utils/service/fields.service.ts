@@ -1,14 +1,15 @@
 import { Injectable, Injector } from '@angular/core'
 import {
   AbstractSearchField,
-  GnUiTranslationSearchField,
   FieldValue,
   FullTextSearchField,
   IsSpatialSearchField,
+  KeySearchField,
   LicenseSearchField,
   OrganizationSearchField,
   OwnerSearchField,
   SimpleSearchField,
+  ThesaurusField,
 } from './fields'
 import { forkJoin, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -28,6 +29,7 @@ marker('search.filters.representationType')
 marker('search.filters.resourceType')
 marker('search.filters.standard')
 marker('search.filters.topic')
+marker('search.filters.contact')
 
 @Injectable({
   providedIn: 'root',
@@ -36,12 +38,8 @@ export class FieldsService {
   private fields = {
     publisher: new OrganizationSearchField(this.injector),
     format: new SimpleSearchField('format', 'asc', this.injector),
-    resourceType: new GnUiTranslationSearchField(
-      'resourceType',
-      'asc',
-      this.injector
-    ),
-    representationType: new GnUiTranslationSearchField(
+    resourceType: new KeySearchField('resourceType', 'asc', this.injector),
+    representationType: new KeySearchField(
       'cl_spatialRepresentationType.key',
       'asc',
       this.injector
@@ -51,9 +49,10 @@ export class FieldsService {
       'desc',
       this.injector
     ),
-    topic: new GnUiTranslationSearchField('cl_topic.key', 'asc', this.injector),
-    inspireKeyword: new SimpleSearchField(
-      'th_httpinspireeceuropaeutheme-theme_tree.default',
+    topic: new KeySearchField('cl_topic.key', 'asc', this.injector),
+    inspireKeyword: new ThesaurusField(
+      'th_httpinspireeceuropaeutheme-theme.link',
+      'external.theme.httpinspireeceuropaeutheme-theme',
       'asc',
       this.injector
     ),

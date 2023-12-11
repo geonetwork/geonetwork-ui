@@ -1,10 +1,11 @@
-import { firstValueFrom, Observable, of, switchMap } from 'rxjs'
-import { ToolsApiService } from '@geonetwork-ui/data-access/gn4'
+import { firstValueFrom, Observable, of, switchMap, tap } from 'rxjs'
 import { catchError, map, shareReplay } from 'rxjs/operators'
 import { Injector } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
   AggregationBuckets,
   AggregationsParams,
@@ -12,8 +13,8 @@ import {
   FieldFilters,
   TermBucket,
 } from '@geonetwork-ui/common/domain/model/search'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { ElasticsearchService } from '@geonetwork-ui/api/repository/gn4'
+import { LangService } from '@geonetwork-ui/util/i18n'
 
 export type FieldValue = string | number
 export interface FieldAvailableValue {
@@ -87,28 +88,11 @@ export class SimpleSearchField implements AbstractSearchField {
   }
 }
 
-export class GnUiTranslationSearchField extends SimpleSearchField {
-  private toolsApiService = this.injector.get(ToolsApiService)
-  allTranslations = this.toolsApiService.getTranslationsPackage1('gnui').pipe(
-    catchError(() => {
-      console.warn('Error while loading gnui language package')
-      return of({})
-    }),
-    shareReplay(1)
-  )
+export class KeySearchField extends SimpleSearchField {
+  protected platformService = this.injector.get(PlatformServiceInterface)
 
-  constructor(
-    esFieldName: string,
-    order: 'asc' | 'desc' = 'asc',
-    injector: Injector
-  ) {
-    super(esFieldName, order, injector)
-  }
-
-  private async getTranslation(topicKey: string) {
-    return firstValueFrom(
-      this.allTranslations.pipe(map((translations) => translations[topicKey]))
-    )
+  protected async getTranslation(key: string) {
+    return firstValueFrom(this.platformService.translateKey(key))
   }
 
   protected async getBucketLabel(bucket: TermBucket) {
@@ -124,6 +108,37 @@ export class GnUiTranslationSearchField extends SimpleSearchField {
           values.sort((a, b) => new Intl.Collator().compare(a.label, b.label))
         )
       )
+  }
+}
+
+export class ThesaurusField extends KeySearchField {
+  private langService = this.injector.get(LangService)
+  private thesaurus$ = this.platformService
+    .getThesaurusByLang(this.thesaurusName, this.langService.iso3)
+    .pipe(
+      catchError(() => {
+        console.warn('Error while loading thesaurus language package')
+        return of([])
+      }),
+      shareReplay(1)
+    )
+
+  constructor(
+    esFieldName: string,
+    protected thesaurusName: string,
+    order: 'asc' | 'desc' = 'asc',
+    injector: Injector
+  ) {
+    super(esFieldName, order, injector)
+  }
+  protected async getTranslation(key: string) {
+    return firstValueFrom(
+      this.thesaurus$.pipe(
+        map(
+          (thesaurus) => thesaurus.find((keyword) => keyword.key === key)?.label
+        )
+      )
+    )
   }
 }
 

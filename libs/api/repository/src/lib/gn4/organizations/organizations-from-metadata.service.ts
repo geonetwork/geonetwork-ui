@@ -63,6 +63,7 @@ export class OrganizationsFromMetadataService
       switchMap((version) =>
         this.searchApiService.search(
           'bucket',
+          null,
           JSON.stringify(this.getAggregationSearchRequest(version))
         )
       ),

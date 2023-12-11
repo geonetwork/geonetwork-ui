@@ -39,6 +39,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return this.gn4SearchApi
       .search(
         'bucket',
+        null,
         JSON.stringify(
           this.gn4SearchHelper.getSearchRequestBody(
             {},
@@ -67,6 +68,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return this.gn4SearchApi
       .search(
         'records-count',
+        null,
         JSON.stringify({
           ...this.gn4SearchHelper.getSearchRequestBody(
             {},
@@ -88,6 +90,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return this.gn4SearchApi
       .search(
         'bucket',
+        null,
         JSON.stringify(
           this.gn4SearchHelper.getMetadataByIdPayload(uniqueIdentifier)
         )
@@ -104,6 +107,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return this.gn4SearchApi
       .search(
         'bucket',
+        null,
         JSON.stringify(
           this.gn4SearchHelper.getRelatedRecordPayload(
             similarTo.title,
@@ -126,6 +130,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return this.gn4SearchApi
       .search(
         'bucket',
+        null,
         JSON.stringify(this.gn4SearchHelper.getSearchRequestBody(aggregations))
       )
       .pipe(
@@ -148,6 +153,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return this.gn4SearchApi
       .search(
         'bucket',
+        null,
         JSON.stringify(this.gn4SearchHelper.buildAutocompletePayload(query))
       )
       .pipe(

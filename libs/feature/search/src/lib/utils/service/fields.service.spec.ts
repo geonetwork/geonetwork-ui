@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { ElasticsearchService } from '@geonetwork-ui/api/repository/gn4'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 class RecordsRepositoryMock {
   aggregate = jest.fn(() => EMPTY)
@@ -24,6 +25,28 @@ class OrganisationsServiceMock {
     of({
       orgFilter: true,
     })
+  )
+}
+
+class PlatformServiceInterfaceMock {
+  translateKey = jest.fn((key) => {
+    switch (key) {
+      case 'First value':
+        return of('Translated first value')
+      case 'Second value':
+        return of('Hello')
+      case 'Third value':
+        return of('Bla')
+      default:
+        return of(null)
+    }
+  })
+  getThesaurusByLang = jest.fn((thesaurusName: string, lang: string) =>
+    of([
+      { key: 'First value', label: 'Rivière' },
+      { key: 'Second value', label: 'Forêt' },
+      { key: 'Third value', label: 'Planète' },
+    ])
   )
 }
 
@@ -49,6 +72,10 @@ describe('FieldsService', () => {
         {
           provide: OrganizationsServiceInterface,
           useClass: OrganisationsServiceMock,
+        },
+        {
+          provide: PlatformServiceInterface,
+          useClass: PlatformServiceInterfaceMock,
         },
       ],
     })
