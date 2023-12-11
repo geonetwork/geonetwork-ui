@@ -5,7 +5,7 @@ import {
 } from '@geonetwork-ui/data-access/gn4'
 import { TestBed } from '@angular/core/testing'
 import { Gn4PlatformService } from './gn4-platform.service'
-import { firstValueFrom, lastValueFrom, of, Subject } from 'rxjs'
+import { firstValueFrom, of, Subject } from 'rxjs'
 import { AvatarServiceInterface } from '../auth/avatar.service.interface'
 import { Gn4PlatformMapper } from './gn4-platform.mapper'
 
@@ -31,6 +31,7 @@ class MeApiMock {
   getMe() {
     return this._me$
   }
+
   _me$ = new Subject()
 }
 
@@ -46,6 +47,7 @@ class SiteApiServiceMock {
     })
   )
 }
+
 class UsersApiServiceMock {
   getUsers() {
     return of([
@@ -98,11 +100,32 @@ describe('Gn4PlatformService', () => {
     expect(service).toBeTruthy()
   })
 
-  it('fetches version from settings', async () => {
-    geonetworkVersion = '4.2.0'
-    const version = await firstValueFrom(service.getApiVersion())
-    expect(version).toEqual('4.2.0')
+  describe('version', () => {
+    describe('when version is lower than 4.2.2', () => {
+      beforeEach(() => {
+        geonetworkVersion = '4.2.0'
+      })
+      it('throws an error', async () => {
+        let error
+        await firstValueFrom(service.getApiVersion()).catch((e) => (error = e))
+        expect(error).toEqual(
+          new Error(
+            'Gn4 API version is not compatible.\nMinimum: 4.2.2\nYour version: 4.2.0'
+          )
+        )
+      })
+    })
+    describe('when version is euqal or greater than 4.2.2', () => {
+      beforeEach(() => {
+        geonetworkVersion = '4.2.2'
+      })
+      it('fetches version from settings', async () => {
+        const version = await firstValueFrom(service.getApiVersion())
+        expect(version).toEqual('4.2.2')
+      })
+    })
   })
+
   it('fetches users from api', async () => {
     const users = await firstValueFrom(service.getUsers())
     expect(users).toEqual([

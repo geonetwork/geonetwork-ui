@@ -10,14 +10,15 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { Gn4PlatformMapper } from './gn4-platform.mapper'
+import { ltr } from 'semver'
 
-const minApiVersion = '4.2.0'
+const minApiVersion = '4.2.2'
 @Injectable()
 export class Gn4PlatformService implements PlatformServiceInterface {
   private readonly type = 'GeoNetwork'
   private me$: Observable<UserModel>
   private users$: Observable<UserModel[]>
-  isAnonymous$: Observable<boolean>
+  private isAnonymous$: Observable<boolean>
 
   private settings$ = of(true).pipe(
     switchMap(() => this.siteApiService.getSiteOrPortalDescription()),
@@ -26,16 +27,14 @@ export class Gn4PlatformService implements PlatformServiceInterface {
 
   private readonly apiVersion$ = this.settings$.pipe(
     map((info) => info['system/platform/version'] as string),
+    tap((version) => {
+      if (ltr(version, minApiVersion)) {
+        throw new Error(
+          `Gn4 API version is not compatible.\nMinimum: ${minApiVersion}\nYour version: ${version}`
+        )
+      }
+    }),
     shareReplay(1)
-  )
-
-  private readonly isApiCompatible$ = this.apiVersion$.pipe(
-    tap(
-      (version) =>
-        version < minApiVersion &&
-        console.warn(`The GeoNetwork Api version is too low ${version}`)
-    ),
-    map((version) => version >= minApiVersion)
   )
 
   constructor(
@@ -61,9 +60,6 @@ export class Gn4PlatformService implements PlatformServiceInterface {
 
   getApiVersion(): Observable<string> {
     return this.apiVersion$
-  }
-  isApiCompatible(): Observable<boolean> {
-    return this.isApiCompatible$
   }
 
   getMe(): Observable<UserModel> {
