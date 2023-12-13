@@ -28,7 +28,7 @@ describe('dataset pages', () => {
     )
     cy.intercept(
       'GET',
-      '/geoserver/insee/ows?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&LAYERS=rectangles_200m_menage_erbm*',
+      '/geoserver/insee/ows?REQUEST=GetMap&SERVICE=WMS&VERSION=1.3.0&FORMAT=image%2Fpng&STYLES=&TRANSPARENT=true&LAYERS=rectangles_200m_menage_erbm*',
       {
         fixture: 'insee-rectangles_200m_menage_erbm.png',
       }
