@@ -9,12 +9,12 @@ import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
-import { OrganisationsSortComponent } from './organisations-sort.component'
+import { OrganisationsFilterComponent } from './organisations-filter.component'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 
 export default {
-  title: 'Catalog/OrganisationsSortComponent',
-  component: OrganisationsSortComponent,
+  title: 'Catalog/OrganisationsFilterComponent',
+  component: OrganisationsFilterComponent,
   decorators: [
     moduleMetadata({
       declarations: [DropdownSelectorComponent],
@@ -27,6 +27,6 @@ export default {
       (story) => `<div style="max-width: 1000px">${story}</div>`
     ),
   ],
-} as Meta<OrganisationsSortComponent>
+} as Meta<OrganisationsFilterComponent>
 
-export const Primary: StoryObj<OrganisationsSortComponent> = {}
+export const Primary: StoryObj<OrganisationsFilterComponent> = {}

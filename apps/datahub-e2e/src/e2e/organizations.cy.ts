@@ -5,7 +5,7 @@ describe('organizations', () => {
     cy.visit('/home/organisations')
 
     // aliases
-    cy.get('gn-ui-organisations-sort')
+    cy.get('gn-ui-organisations-filter')
       .find('gn-ui-dropdown-selector')
       .as('sort')
     cy.get('gn-ui-pagination').children('div').as('pagination')
@@ -32,7 +32,7 @@ describe('organizations', () => {
         .should('eq', 'decoration-primary')
     })
     it('should display the welcome panel', () => {
-      cy.get('gn-ui-organisations-sort').should('be.visible')
+      cy.get('gn-ui-organisations-filter').should('be.visible')
       cy.get('@sort').openDropdown().children('button').should('have.length', 4)
     })
     it('should display organizations with thumbnail, title and description', () => {

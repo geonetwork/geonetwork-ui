@@ -16,10 +16,10 @@ import { OrganisationsComponent } from './organisations.component'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 
 @Component({
-  selector: 'gn-ui-organisations-sort',
+  selector: 'gn-ui-organisations-filter',
   template: '<div></div>',
 })
-class OrganisationsSortMockComponent {
+class OrganisationsFilterMockComponent {
   @Output() sortBy = new EventEmitter<string>()
 }
 @Component({
@@ -63,7 +63,7 @@ describe('OrganisationsComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         OrganisationsComponent,
-        OrganisationsSortMockComponent,
+        OrganisationsFilterMockComponent,
         OrganisationPreviewMockComponent,
         PaginationMockComponent,
         ContentGhostComponent,
@@ -156,7 +156,7 @@ describe('OrganisationsComponent', () => {
       beforeEach(() => {
         setSortBySpy = jest.spyOn(component, 'setSortBy')
         de.query(
-          By.directive(OrganisationsSortMockComponent)
+          By.directive(OrganisationsFilterMockComponent)
         ).triggerEventHandler('sortBy', ['desc', 'recordCount'])
         fixture.detectChanges()
         orgPreviewComponents = de

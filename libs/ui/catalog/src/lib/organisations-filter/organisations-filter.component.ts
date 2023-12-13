@@ -8,12 +8,11 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { SortByField } from '@geonetwork-ui/common/domain/model/search'
 
 @Component({
-  selector: 'gn-ui-organisations-sort',
-  templateUrl: './organisations-sort.component.html',
-  styleUrls: ['./organisations-sort.component.css'],
+  selector: 'gn-ui-organisations-filter',
+  templateUrl: './organisations-filter.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrganisationsSortComponent {
+export class OrganisationsFilterComponent {
   choices: { value: string; label: string }[] = [
     {
       value: 'asc,name',
