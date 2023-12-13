@@ -1,4 +1,5 @@
 import 'cypress-real-events'
+import path from 'path'
 
 describe('dataset pages', () => {
   beforeEach(() => {
@@ -43,7 +44,7 @@ describe('dataset pages', () => {
       'GET',
       '/geoserver/insee/ows?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=csv',
       {
-        fixture: 'population-millesimee-communes-francaises.csv',
+        fixture: 'insee-rectangles_200m_menage_erbm.csv',
       }
     )
     cy.intercept(
@@ -373,19 +374,16 @@ describe('dataset pages', () => {
           })
         })
         it('downloads a file on click', () => {
-          cy.intercept(
-            'GET',
-            'https://www.geo2france.fr/geoserver/insee/ows?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=csv'
-          ).as('downloadRequest')
-
           cy.get('datahub-record-downloads')
             .find('gn-ui-download-item')
             .first()
             .click()
 
-          cy.wait('@downloadRequest').then((interception) => {
-            expect(interception.response.statusCode).to.equal(200)
-          })
+          cy.readFile(path.join('cypress/downloads', 'ows.csv')).as(
+            'downloadedFile'
+          )
+          cy.get('@downloadedFile').should('exist')
+          cy.get('@downloadedFile').its('length').should('equal', 3579)
         })
         it('displays the full list after clicking two times on one filter', () => {
           cy.get('datahub-record-downloads')
