@@ -2,7 +2,6 @@ import 'cypress-real-events'
 
 describe('datasets', () => {
   beforeEach(() => {
-    cy.clearCookies()
     cy.visit('/search')
 
     // aliases
