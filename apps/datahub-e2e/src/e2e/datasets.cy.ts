@@ -445,15 +445,15 @@ describe('datasets', () => {
           .as('initialResultTitles')
         cy.get('@sortBy').selectDropdownOption('desc,createDate')
       })
-      it('changes the results order', () => {
-        cy.get('@initialResultTitles').then((initialResultTitles) => {
-          cy.get('@results')
-            .find('[data-cy="recordTitle"]')
-            .then(($titles) =>
-              $titles.toArray().map((title) => title.innerText.trim())
-            )
-            .should('not.eql', initialResultTitles)
-        })
+      it('changes the results order', function () {
+        cy.get('@results')
+          .find('[data-cy="recordTitle"]')
+          .then(($titles) => {
+            const titles = $titles
+              .toArray()
+              .map((title) => title.innerText.trim())
+            assert.notEqual(titles, this.initialResultTitles) // @initialResultTitles
+          })
       })
     })
   })
