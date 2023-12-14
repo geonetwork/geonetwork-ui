@@ -94,10 +94,7 @@ export class OrganisationsComponent {
       'i'
     )
     return [...organisations].filter((org) => {
-      return (
-        org.name.match(filterRegex) ||
-        org.emails?.filter((email) => email.match(filterRegex))?.length > 0
-      )
+      return org.name.match(filterRegex)
     })
   }
 
