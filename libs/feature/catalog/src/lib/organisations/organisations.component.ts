@@ -89,7 +89,7 @@ export class OrganisationsComponent {
     const filterRegex = new RegExp(
       filterBy
         .replace(/[()[\]{}*+?^$|#.,/\\]/g, '\\$&') //escape special characters
-        .replace(/\s(?=.)/g, '|') //replace whitespaces by separator
+        .replace(/\s(?=.)/g, '.*') //replace whitespaces by "AND" separator
         .replace(/\s/g, ''), //remove potential whitespaces left
       'i'
     )
