@@ -178,7 +178,7 @@
   "multiselect.filter.placeholder": "Suche",
   "nav.back": "Zurück",
   "next": "weiter",
-  "organisation.sort.intro": "Datengeber sind hier aufgelistet.",
+  "organisation.filter.placeholder": "Ergebnisse filtern",
   "organisation.sort.sortBy": "Sortieren nach:",
   "organisations.hits.found": "{hits, plural, =0{Keine Organisation gefunden} other{{hits} von {total} Organisationen angezeigt}}",
   "organisations.sortBy.nameAsc": "Name A → Z",

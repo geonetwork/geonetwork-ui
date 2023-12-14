@@ -178,7 +178,7 @@
   "multiselect.filter.placeholder": "Search",
   "nav.back": "Back",
   "next": "next",
-  "organisation.sort.intro": "Dataset providers are listed here.",
+  "organisation.filter.placeholder": "Filter results",
   "organisation.sort.sortBy": "Sort by:",
   "organisations.hits.found": "{hits, plural, =0{No organizations found} other{{hits} out of {total} organizations shown}}",
   "organisations.sortBy.nameAsc": "Name A → Z",

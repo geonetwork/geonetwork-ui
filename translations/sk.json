@@ -178,7 +178,7 @@
   "multiselect.filter.placeholder": "Hľadať",
   "nav.back": "Späť",
   "next": "Ďalej",
-  "organisation.sort.intro": "Zoradenie poskytovateľov datasetov.",
+  "organisation.filter.placeholder": "",
   "organisation.sort.sortBy": "Zoradiť podľa:",
   "organisations.hits.found": "",
   "organisations.sortBy.nameAsc": "Názov A → Z",
