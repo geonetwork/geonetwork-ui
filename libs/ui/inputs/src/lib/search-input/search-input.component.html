@@ -1,19 +1,22 @@
-<div class="relative">
-  <button class="text-primary-lightest absolute inset-y-0 left-0 pl-1">
-    <mat-icon class="material-symbols-outlined align-middle">search</mat-icon>
-  </button>
+<div class="h-full relative text-gray-300">
   <input
     #input
-    class="appearance-none border border-gray-300 rounded w-full p-2 pl-8 text-gray-700 leading-tight focus:outline-none focus:border-primary"
+    class="peer h-full appearance-none border border-gray-300 rounded w-full p-2 pl-10 text-gray-700 leading-tight hover:border-primary focus:text-primary focus:outline-none focus:border-primary focus:border-2"
     type="text"
     [value]="value"
     [placeholder]="placeholder"
     (change)="handleChange($event)"
     (input)="handleChange($event)"
   />
+  <div
+    class="absolute inset-y-0 left-0 pl-2.5 flex items-center peer-hover:text-primary peer-focus:text-primary"
+  >
+    <mat-icon class="material-symbols-outlined">search</mat-icon>
+  </div>
   <button
+    *ngIf="rawChange | async"
     type="button"
-    class="text-primary-lightest hover:text-primary hover:bg-gray-50 absolute transition-all duration-100 inset-y-0 right-0 pr-1"
+    class="text-primary-lightest hover:text-primary absolute transition-all duration-100 inset-y-0 right-0 pr-2.5"
     aria-label="Clear"
     (click)="clear()"
   >
