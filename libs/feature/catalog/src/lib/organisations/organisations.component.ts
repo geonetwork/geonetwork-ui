@@ -87,15 +87,19 @@ export class OrganisationsComponent {
   private filterOrganisations(organisations: Organization[], filterBy: string) {
     if (!filterBy) return organisations
     const filterRegex = new RegExp(
-      filterBy
+      this.normalizeString(filterBy) //ignore accents
         .replace(/[()[\]{}*+?^$|#.,/\\]/g, '\\$&') //escape special characters
         .replace(/\s(?=.)/g, '.*') //replace whitespaces by "AND" separator
         .replace(/\s/g, ''), //remove potential whitespaces left
       'i'
     )
     return [...organisations].filter((org) => {
-      return org.name.match(filterRegex)
+      return this.normalizeString(org.name).match(filterRegex)
     })
+  }
+
+  private normalizeString(str: string) {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   }
 
   private sortOrganisations(
