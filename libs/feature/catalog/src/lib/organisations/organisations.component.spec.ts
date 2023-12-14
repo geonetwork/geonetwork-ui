@@ -32,6 +32,15 @@ class OrganisationPreviewMockComponent {
 }
 
 @Component({
+  selector: 'gn-ui-organisations-result',
+  template: '<div></div>',
+})
+class OrganisationsResultMockComponent {
+  @Input() hits: number
+  @Input() total: number
+}
+
+@Component({
   selector: 'gn-ui-pagination',
   template: '<div></div>',
 })
@@ -43,6 +52,7 @@ class PaginationMockComponent {
 
 class OrganisationsServiceMock {
   organisations$ = of(ORGANISATIONS_FIXTURE)
+  organisationsCount$ = of(ORGANISATIONS_FIXTURE.length)
 }
 
 const organisationMock = {
@@ -66,6 +76,7 @@ describe('OrganisationsComponent', () => {
         OrganisationsFilterMockComponent,
         OrganisationPreviewMockComponent,
         PaginationMockComponent,
+        OrganisationsResultMockComponent,
         ContentGhostComponent,
       ],
       providers: [
@@ -93,6 +104,7 @@ describe('OrganisationsComponent', () => {
 
   describe('on component init', () => {
     let orgPreviewComponents: OrganisationPreviewMockComponent[]
+    let orgResultComponent: OrganisationsResultMockComponent
     let paginationComponentDE: DebugElement
     let setCurrentPageSpy
     let setSortBySpy
@@ -179,6 +191,69 @@ describe('OrganisationsComponent', () => {
         expect(orgPreviewComponents[5].organisation).toEqual(
           ORGANISATIONS_FIXTURE[3]
         )
+      })
+    })
+    describe('filter organisations', () => {
+      describe('initial state', () => {
+        beforeEach(() => {
+          orgResultComponent = de.query(
+            By.directive(OrganisationsResultMockComponent)
+          )
+        })
+        it('should display number of organisations found to equal all', () => {
+          expect(orgResultComponent.componentInstance.hits).toEqual(
+            ORGANISATIONS_FIXTURE.length
+          )
+        })
+        it('should display number of all organisations', () => {
+          expect(orgResultComponent.componentInstance.total).toEqual(
+            ORGANISATIONS_FIXTURE.length
+          )
+        })
+      })
+      describe('entering search terms', () => {
+        beforeEach(() => {
+          orgResultComponent = de.query(
+            By.directive(OrganisationsResultMockComponent)
+          )
+        })
+        it('should ignore case and display 11 matches for "Data", "DATA" or "data"', () => {
+          component.filterBy$.next('Data')
+          fixture.detectChanges()
+          expect(orgResultComponent.componentInstance.hits).toEqual(11)
+          component.filterBy$.next('DATA')
+          fixture.detectChanges()
+          expect(orgResultComponent.componentInstance.hits).toEqual(11)
+          component.filterBy$.next('data')
+          fixture.detectChanges()
+          expect(orgResultComponent.componentInstance.hits).toEqual(11)
+        })
+        it('should ignore accents and case and display 2 matches for "é Data Org", "e Data Org" or "E Data Org"', () => {
+          component.filterBy$.next('é Data Org')
+          fixture.detectChanges()
+          expect(orgResultComponent.componentInstance.hits).toEqual(2)
+          component.filterBy$.next('e Data Org')
+          fixture.detectChanges()
+          expect(orgResultComponent.componentInstance.hits).toEqual(2)
+          component.filterBy$.next('E Data Org')
+          fixture.detectChanges()
+          expect(orgResultComponent.componentInstance.hits).toEqual(2)
+        })
+        it('should combine multiple termes with "AND" logic and display 1 match for "a data"', () => {
+          component.filterBy$.next('a data')
+          fixture.detectChanges()
+          expect(orgResultComponent.componentInstance.hits).toEqual(1)
+        })
+        it('should combine multiple termes with "AND" logic and display 11 matches for "data org"', () => {
+          component.filterBy$.next('data org')
+          fixture.detectChanges()
+          expect(orgResultComponent.componentInstance.hits).toEqual(11)
+        })
+        it('should display 12 matches for "ORG"', () => {
+          component.filterBy$.next('ORG')
+          fixture.detectChanges()
+          expect(orgResultComponent.componentInstance.hits).toEqual(12)
+        })
       })
     })
     describe('click on organisation', () => {
