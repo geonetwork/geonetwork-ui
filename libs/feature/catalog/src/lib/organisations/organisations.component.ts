@@ -9,7 +9,7 @@ import {
 } from '@angular/core'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
-import { debounceTime, map, startWith, tap } from 'rxjs/operators'
+import { map, startWith, tap } from 'rxjs/operators'
 import { ORGANIZATION_URL_TOKEN } from '../feature-catalog.module'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { SortByField } from '@geonetwork-ui/common/domain/model/search'
@@ -36,21 +36,18 @@ export class OrganisationsComponent {
   organisationResults: number
   sortBy$: BehaviorSubject<SortByField> = new BehaviorSubject(['asc', 'name'])
   filterBy$: BehaviorSubject<string> = new BehaviorSubject('')
-  filterByDebounced$: Observable<string> = this.filterBy$.pipe(
-    debounceTime(300)
-  )
   organisationsTotal$ = this.organisationsService.organisationsCount$
   organisationsFilteredAndSorted$: Observable<Organization[]> = combineLatest([
     this.organisationsService.organisations$.pipe(
       startWith(Array(this.itemsOnPage).fill({}))
     ),
     this.sortBy$,
-    this.filterByDebounced$,
+    this.filterBy$,
   ]).pipe(
-    map(([organisations, sortBy, filterByDebounced]) => {
+    map(([organisations, sortBy, filterBy]) => {
       const filteredOrganisations = this.filterOrganisations(
         organisations,
-        filterByDebounced
+        filterBy
       )
       return this.sortOrganisations(filteredOrganisations, sortBy)
     })

@@ -6,6 +6,7 @@ import {
 } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { SortByField } from '@geonetwork-ui/common/domain/model/search'
+import { debounceTime } from 'rxjs'
 
 @Component({
   selector: 'gn-ui-organisations-filter',
@@ -32,13 +33,14 @@ export class OrganisationsFilterComponent {
     },
   ]
   @Output() sortBy = new EventEmitter<SortByField>()
-  @Output() filterBy = new EventEmitter<string>()
+  @Output() filterByValueChange = new EventEmitter<string>()
+  @Output() filterBy = this.filterByValueChange.pipe(debounceTime(300))
 
   selectOrderToDisplay(selectValue: string) {
     this.sortBy.emit(selectValue.split(',') as SortByField)
   }
 
   filterOrganisations(inputValue: string) {
-    this.filterBy.emit(inputValue)
+    this.filterByValueChange.next(inputValue)
   }
 }
