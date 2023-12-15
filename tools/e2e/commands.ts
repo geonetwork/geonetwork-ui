@@ -42,9 +42,11 @@ Cypress.Commands.add(
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
+        followRedirect: false,
       })
     })
-    if (redirect) cy.visit('/')
+    if (redirect) return cy.visit('/')
+    else return cy.window()
   }
 )
 
@@ -75,7 +77,8 @@ Cypress.Commands.add('clearFavorites', () => {
       .as('favoritesId')
   })
 
-  cy.getCookie('XSRF-TOKEN')
+  return cy
+    .getCookie('XSRF-TOKEN')
     .its('value')
     .then(function (token) {
       const favoritesId = this.favoritesId || []
