@@ -21,6 +21,12 @@ describe('organizations', () => {
     cy.get('@organizations')
       .find('[data-cy="organizationRecordsCount"]')
       .as('organizationsRecordsCount')
+    cy.get('gn-ui-organisations-filter')
+      .find('gn-ui-search-input')
+      .as('organisationsSearch')
+    cy.get('gn-ui-organisations')
+      .find('gn-ui-organisations-result')
+      .as('organisationsResult')
   })
 
   describe('general display', () => {
@@ -133,6 +139,39 @@ describe('organizations', () => {
         cy.get('@pagination').find('[data-cy=prev-page]').click()
         cy.get('@organizations').should('have.length', 12)
       })
+    })
+  })
+
+  describe('search filter', () => {
+    it('should display filtered results ignoring accents and case', () => {
+      cy.get('@organisationsSearch').type('geo2france')
+      cy.get('@organizationsName').should('have.length', 1)
+      cy.get('@organisationsResult').should('contain', '1')
+      cy.get('@organizationsName')
+        .eq(0)
+        .invoke('text')
+        .should('contain', 'Géo2France')
+    })
+    it('should display filtered results containing multiple words', () => {
+      cy.get('@organisationsSearch').type('dreal hdf')
+      cy.get('@organizationsName').should('have.length', 1)
+      cy.get('@organisationsResult').should('contain', '1')
+      cy.get('@organizationsName')
+        .eq(0)
+        .invoke('text')
+        .should('contain', 'DREAL HdF')
+    })
+    it('should display multiple results and refine search', () => {
+      cy.get('@organisationsSearch').type('de')
+      cy.get('@organizationsName').should('have.length', 10)
+      cy.get('@organisationsResult').should('contain', '10')
+      cy.get('@organisationsSearch').type(' Lille')
+      cy.get('@organizationsName').should('have.length', 1)
+      cy.get('@organisationsResult').should('contain', '1')
+    })
+    it('should display a message for no results found', () => {
+      cy.get('@organisationsSearch').type('An organisation that does not exist')
+      cy.get('@organisationsResult').should('contain', 'No organizations found')
     })
   })
 })
