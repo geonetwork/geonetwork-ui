@@ -1,8 +1,11 @@
 <div
-  class="flex flex-wrap sm:flex-nowrap bg-primary text-white px-6 py-7 mt-4 mb-8 rounded-lg"
+  class="flex flex-wrap sm:flex-nowrap justify-between bg-white shadow-xl p-5 rounded-lg"
 >
-  <span class="grow mb-4 mr-4 sm:mb-0 sm:mr-16">
-    <p translate>organisation.sort.intro</p>
+  <span class="grow mb-4 mr-4 sm:mb-0 sm:mr-16 sm:max-w-sm">
+    <gn-ui-search-input
+      (valueChange)="filterOrganisations($event)"
+      [placeholder]="'organisation.filter.placeholder' | translate"
+    ></gn-ui-search-input>
   </span>
   <span class="flex flex-wrap sm:flex-nowrap sm:shrink-0">
     <gn-ui-dropdown-selector

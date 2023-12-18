@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { OrganisationsSortComponent } from './organisations-sort.component'
+import { OrganisationsFilterComponent } from './organisations-filter.component'
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -18,16 +18,19 @@ class DropdownSelectorMockComponent {
 }
 
 describe('OrganisationsOrderComponent', () => {
-  let component: OrganisationsSortComponent
-  let fixture: ComponentFixture<OrganisationsSortComponent>
+  let component: OrganisationsFilterComponent
+  let fixture: ComponentFixture<OrganisationsFilterComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [OrganisationsSortComponent, DropdownSelectorMockComponent],
+      declarations: [
+        OrganisationsFilterComponent,
+        DropdownSelectorMockComponent,
+      ],
       imports: [TranslateModule.forRoot()],
     }).compileComponents()
 
-    fixture = TestBed.createComponent(OrganisationsSortComponent)
+    fixture = TestBed.createComponent(OrganisationsFilterComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

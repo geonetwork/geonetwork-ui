@@ -33,27 +33,34 @@ export class OrganisationsComponent {
 
   totalPages: number
   currentPage$ = new BehaviorSubject(1)
+  organisationResults: number
   sortBy$: BehaviorSubject<SortByField> = new BehaviorSubject(['asc', 'name'])
-
-  organisationsSorted$: Observable<Organization[]> = combineLatest([
+  filterBy$: BehaviorSubject<string> = new BehaviorSubject('')
+  organisationsTotal$ = this.organisationsService.organisationsCount$
+  organisationsFilteredAndSorted$: Observable<Organization[]> = combineLatest([
     this.organisationsService.organisations$.pipe(
       startWith(Array(this.itemsOnPage).fill({}))
     ),
     this.sortBy$,
+    this.filterBy$,
   ]).pipe(
-    map(([organisations, sortBy]) =>
-      this.sortOrganisations(organisations, sortBy)
-    )
+    map(([organisations, sortBy, filterBy]) => {
+      const filteredOrganisations = this.filterOrganisations(
+        organisations,
+        filterBy
+      )
+      return this.sortOrganisations(filteredOrganisations, sortBy)
+    })
   )
 
   organisations$: Observable<Organization[]> = combineLatest([
-    this.organisationsSorted$,
+    this.organisationsFilteredAndSorted$,
     this.currentPage$,
   ]).pipe(
-    tap(
-      ([organisations]) =>
-        (this.totalPages = Math.ceil(organisations.length / this.itemsOnPage))
-    ),
+    tap(([organisations]) => {
+      this.organisationResults = organisations.length
+      this.totalPages = Math.ceil(organisations.length / this.itemsOnPage)
+    }),
     map(([organisations, page]) =>
       organisations.slice(
         (page - 1) * this.itemsOnPage,
@@ -66,8 +73,33 @@ export class OrganisationsComponent {
     this.currentPage$.next(page)
   }
 
+  protected setFilterBy(value: string): void {
+    this.filterBy$.next(value)
+  }
+
   protected setSortBy(value: SortByField): void {
     this.sortBy$.next(value)
+  }
+
+  private filterOrganisations(organisations: Organization[], filterBy: string) {
+    if (!filterBy) return organisations
+    const filterRegex = new RegExp(
+      this.normalizeString(filterBy) //ignore accents and case
+        .replace(/[^a-z0-9\s]/g, '') //ignore special characters
+        .replace(/\s(?=.)/g, '.*') //replace whitespaces by "AND" separator
+        .replace(/\s/g, ''), //remove potential whitespaces left
+      'i'
+    )
+    return [...organisations].filter((org) => {
+      return this.normalizeString(org.name).match(filterRegex)
+    })
+  }
+
+  private normalizeString(str: string) {
+    return str
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
   }
 
   private sortOrganisations(

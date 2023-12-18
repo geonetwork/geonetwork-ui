@@ -5,16 +5,18 @@ import { OrganisationPreviewComponent } from './organisation-preview/organisatio
 import { TranslateModule } from '@ngx-translate/core'
 import { MatIconModule } from '@angular/material/icon'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
-import { OrganisationsSortComponent } from './organisations-sort/organisations-sort.component'
+import { OrganisationsFilterComponent } from './organisations-filter/organisations-filter.component'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { LanguageSwitcherComponent } from './language-switcher/language-switcher.component'
+import { OrganisationsResultComponent } from './organisations-result/organisations-result.component'
 
 @NgModule({
   declarations: [
     CatalogTitleComponent,
     OrganisationPreviewComponent,
-    OrganisationsSortComponent,
+    OrganisationsFilterComponent,
     LanguageSwitcherComponent,
+    OrganisationsResultComponent,
   ],
   imports: [
     CommonModule,
@@ -26,8 +28,9 @@ import { LanguageSwitcherComponent } from './language-switcher/language-switcher
   exports: [
     CatalogTitleComponent,
     OrganisationPreviewComponent,
-    OrganisationsSortComponent,
+    OrganisationsFilterComponent,
     LanguageSwitcherComponent,
+    OrganisationsResultComponent,
   ],
 })
 export class UiCatalogModule {}
