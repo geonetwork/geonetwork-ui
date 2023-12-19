@@ -294,6 +294,8 @@
   "tooltip.html.copy": "HTML kopieren",
   "tooltip.url.copy": "URL kopieren",
   "tooltip.url.open": "URL öffnen",
+  "ui.readLess": "Weniger lesen",
+  "ui.readMore": "Weiterlesen",
   "wfs.featuretype.notfound": "Kein passender Feature-Typ wurde im Dienst gefunden",
   "wfs.geojsongml.notsupported": "Dieser Dienst unterstützt das GeoJSON- oder GML-Format nicht",
   "wfs.unreachable.cors": "Der Dienst konnte aufgrund von CORS-Beschränkungen nicht erreicht werden",
