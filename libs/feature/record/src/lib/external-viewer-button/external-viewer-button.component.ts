@@ -1,6 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
 import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { TranslateService } from '@ngx-translate/core'
+import { getFileFormat } from '@geonetwork-ui/util/shared'
+
+marker('externalviewer.dataset.unnamed')
 
 @Component({
   selector: 'gn-ui-external-viewer-button',
@@ -31,14 +36,24 @@ export class ExternalViewerButtonComponent {
       if (this.link.accessServiceProtocol === 'wfs') {
         return 'wfs'
       }
+    } else if (
+      this.link.type === 'download' &&
+      getFileFormat(this.link) === 'geojson'
+    ) {
+      return 'geojson'
     }
     return null
   }
 
+  constructor(private translateService: TranslateService) {}
+
   openInExternalViewer() {
     const templateUrl = this.mapConfig.EXTERNAL_VIEWER_URL_TEMPLATE
+    const layerName = this.link.name
+      ? this.link.name
+      : this.translateService.instant('externalviewer.dataset.unnamed')
     const url = templateUrl
-      .replace('${layer_name}', `${this.link.name}`)
+      .replace('${layer_name}', `${layerName}`)
       .replace(
         '${service_url}',
         `${encodeURIComponent(this.link.url.toString())}`

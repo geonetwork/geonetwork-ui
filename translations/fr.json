@@ -139,6 +139,7 @@
   "downloads.format.unknown": "inconnu",
   "downloads.wfs.featuretype.not.found": "La couche n'a pas été retrouvée",
   "dropFile": "Faites glisser votre fichier",
+  "externalviewer.dataset.unnamed": "Couche du datahub",
   "facets.block.title.OrgForResource": "Organisation",
   "facets.block.title.availableInServices": "Disponible pour",
   "facets.block.title.cl_hierarchyLevel.key": "Type de ressource",
