@@ -154,7 +154,11 @@ export class MapUtilsService {
     } else if (layer && layer.type === 'wms') {
       geographicExtent = this.wmsUtils.getLayerLonLatBBox(layer)
     } else if (layer && layer.type === 'wmts') {
-      return of(layer.options.tileGrid.getExtent())
+      if (layer.extent) {
+        geographicExtent = of(layer.extent)
+      } else {
+        return of(layer.options.tileGrid.getExtent())
+      }
     } else {
       return of(null)
     }
@@ -191,9 +195,15 @@ ${await response.text()}`)
               layer: link.name,
               matrixSet: 'EPSG:3857',
             })
+            const layerCap = result?.Contents?.Layer.find(
+              (layer) => layer.Identifier === link.name
+            )
             return {
               options,
               type: MapContextLayerTypeEnum.WMTS as 'wmts',
+              ...(layerCap?.WGS84BoundingBox
+                ? { extent: layerCap.WGS84BoundingBox }
+                : {}),
             }
           } catch (e: any) {
             throw new Error(`WMTS GetCapabilities parsing failed:

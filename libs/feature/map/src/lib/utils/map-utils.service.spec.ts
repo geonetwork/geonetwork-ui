@@ -9,7 +9,6 @@ import Map from 'ol/Map'
 import ImageWMS from 'ol/source/ImageWMS'
 import TileWMS from 'ol/source/TileWMS'
 import XYZ from 'ol/source/XYZ'
-import { Options } from 'ol/source/WMTS'
 import { of } from 'rxjs'
 import { MapUtilsWMSService } from './map-utils-wms.service'
 import {
@@ -27,7 +26,7 @@ import {
 } from 'ol/interaction'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import MapBrowserEvent from 'ol/MapBrowserEvent'
-import { MapContextLayerWmtsModel } from '@geonetwork-ui/feature/map'
+import type { MapContextLayerWmtsModel } from '../map-context/map-context.model'
 
 jest.mock('ol/proj/proj4', () => {
   const fromEPSGCodeMock = jest.fn()
@@ -474,6 +473,39 @@ describe('MapUtilsService', () => {
             style: 'normal',
             urls: ['https://wxs.ign.fr/cartes/geoportail/wmts?'],
           },
+        })
+      })
+      describe('layer extent', () => {
+        describe('when the WGS84BoundingBox is defined', () => {
+          it('set the WGS84BoundingBox', () => {
+            expect(wmtsLayer.extent).toEqual([
+              1.82682, 48.3847, 2.79738, 49.5142,
+            ])
+          })
+        })
+        describe('when the WGS84BoundingBox is not defined', () => {
+          beforeEach(async () => {
+            ;(window as any).fetch = jest.fn(() =>
+              Promise.resolve({
+                ok: true,
+                status: 200,
+                text: () =>
+                  Promise.resolve(
+                    SAMPLE_WMTS_CAPABILITIES.replace(
+                      /WGS84BoundingBox/g,
+                      'NoWGS84BoundingBox'
+                    )
+                  ),
+              })
+            )
+            wmtsLayer = await readFirst(
+              service.getWmtsLayerFromCapabilities(SAMPLE_WMTS_LINK)
+            )
+          })
+
+          it('set the WGS84BoundingBox', () => {
+            expect(wmtsLayer.extent).toBeUndefined()
+          })
         })
       })
     })
