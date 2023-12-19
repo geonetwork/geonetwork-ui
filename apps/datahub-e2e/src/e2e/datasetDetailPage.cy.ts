@@ -106,6 +106,8 @@ describe('dataset pages', () => {
           .find('[id="about"]')
           .find('gn-ui-metadata-info')
           .find('gn-ui-content-ghost')
+          .find('gn-ui-max-lines')
+          .children('div')
           .children('p')
           .should(($element) => {
             const text = $element.text().trim()
