@@ -89,7 +89,7 @@ describe('ExternalViewerButtonComponent', () => {
         })
         it('opens window in new tab with URL including WMS link params', () => {
           expect(openMock).toHaveBeenCalledWith(
-            'https://example.com/myviewer?url=http%3A%2F%2Fexample.com%2Fows%3Fservice%3Dwms%26request%3Dgetcapabilities&name=layername&type=wms',
+            'https://example.com/myviewer/#/?actions=[{"type":"CATALOG:ADD_LAYERS_FROM_CATALOGS","layers":["layername"],"sources":[{"url":"http%3A%2F%2Fexample.com%2Fows%3Fservice%3Dwms%26request%3Dgetcapabilities","type":"wms"}]}]',
             '_blank'
           )
         })
@@ -138,7 +138,7 @@ describe('ExternalViewerButtonComponent', () => {
         })
         it('opens window in new tab with URL including WFS link params', () => {
           expect(openMock).toHaveBeenCalledWith(
-            'https://example.com/myviewer?url=http%3A%2F%2Fexample.com%2Fows%3Fservice%3Dwfs%26request%3Dgetcapabilities&name=layername&type=wfs',
+            'https://example.com/myviewer/#/?actions=[{"type":"CATALOG:ADD_LAYERS_FROM_CATALOGS","layers":["layername"],"sources":[{"url":"http%3A%2F%2Fexample.com%2Fows%3Fservice%3Dwfs%26request%3Dgetcapabilities","type":"wfs"}]}]',
             '_blank'
           )
         })
@@ -184,7 +184,7 @@ describe('ExternalViewerButtonComponent', () => {
         })
         it('opens window in new tab with URL including link params', () => {
           expect(openMock).toHaveBeenCalledWith(
-            'https://example.com/myviewer?url=http%3A%2F%2Fexample.com%2Fsomespatialdata.geojson&name=externalviewer.dataset.unnamed&type=geojson',
+            'https://example.com/myviewer/#/?actions=[{"type":"CATALOG:ADD_LAYERS_FROM_CATALOGS","layers":["externalviewer.dataset.unnamed"],"sources":[{"url":"http%3A%2F%2Fexample.com%2Fsomespatialdata.geojson","type":"geojson"}]}]',
             '_blank'
           )
         })

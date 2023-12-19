@@ -82,7 +82,7 @@ export const MAP_CONFIG_FIXTURE: MapConfig = {
   MAX_EXTENT: [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855],
   DO_NOT_USE_DEFAULT_BASEMAP: false,
   EXTERNAL_VIEWER_URL_TEMPLATE:
-    'https://example.com/myviewer?url=${service_url}&name=${layer_name}&type=${service_type}',
+    'https://example.com/myviewer/#/?actions=[{"type":"CATALOG:ADD_LAYERS_FROM_CATALOGS","layers":["${layer_name}"],"sources":[{"url":"${service_url}","type":"${service_type}"}]}]',
   EXTERNAL_VIEWER_OPEN_NEW_TAB: true,
   MAP_LAYERS: [
     {
