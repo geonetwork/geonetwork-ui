@@ -27,6 +27,7 @@ import {
 } from 'ol/interaction'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import MapBrowserEvent from 'ol/MapBrowserEvent'
+import { MapContextLayerWmtsModel } from '@geonetwork-ui/feature/map'
 
 jest.mock('ol/proj/proj4', () => {
   const fromEPSGCodeMock = jest.fn()
@@ -444,7 +445,7 @@ describe('MapUtilsService', () => {
       window.fetch = originalFetch
     })
     describe('nominal', () => {
-      let wmtsOptions: Options
+      let wmtsLayer: MapContextLayerWmtsModel
       beforeEach(async () => {
         ;(window as any).fetch = jest.fn(() =>
           Promise.resolve({
@@ -453,8 +454,8 @@ describe('MapUtilsService', () => {
             text: () => Promise.resolve(SAMPLE_WMTS_CAPABILITIES),
           })
         )
-        wmtsOptions = await readFirst(
-          service.getWmtsOptionsFromCapabilities(SAMPLE_WMTS_LINK)
+        wmtsLayer = await readFirst(
+          service.getWmtsLayerFromCapabilities(SAMPLE_WMTS_LINK)
         )
       })
       it('appends query params to the URL', () => {
@@ -463,13 +464,16 @@ describe('MapUtilsService', () => {
         )
       })
       it('returns appropriate WMTS options', () => {
-        expect(wmtsOptions).toMatchObject({
-          format: 'image/jpeg',
-          layer: 'GEOGRAPHICALGRIDSYSTEMS.ETATMAJOR10',
-          matrixSet: 'PM',
-          requestEncoding: 'KVP',
-          style: 'normal',
-          urls: ['https://wxs.ign.fr/cartes/geoportail/wmts?'],
+        expect(wmtsLayer).toMatchObject({
+          type: 'wmts',
+          options: {
+            format: 'image/jpeg',
+            layer: 'GEOGRAPHICALGRIDSYSTEMS.ETATMAJOR10',
+            matrixSet: 'PM',
+            requestEncoding: 'KVP',
+            style: 'normal',
+            urls: ['https://wxs.ign.fr/cartes/geoportail/wmts?'],
+          },
         })
       })
     })
@@ -489,7 +493,7 @@ describe('MapUtilsService', () => {
         )
         try {
           await readFirst(
-            service.getWmtsOptionsFromCapabilities(SAMPLE_WMTS_LINK)
+            service.getWmtsLayerFromCapabilities(SAMPLE_WMTS_LINK)
           )
         } catch (e) {
           error = e
@@ -515,7 +519,7 @@ describe('MapUtilsService', () => {
         )
         try {
           await readFirst(
-            service.getWmtsOptionsFromCapabilities(SAMPLE_WMTS_LINK)
+            service.getWmtsLayerFromCapabilities(SAMPLE_WMTS_LINK)
           )
         } catch (e) {
           error = e

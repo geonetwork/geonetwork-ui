@@ -23,7 +23,11 @@ import {
 import WMTSCapabilities from 'ol/format/WMTSCapabilities'
 import { from, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { MapContextLayerModel } from '../map-context/map-context.model'
+import {
+  MapContextLayerModel,
+  MapContextLayerTypeEnum,
+  MapContextLayerWmtsModel,
+} from '../map-context/map-context.model'
 import { MapUtilsWMSService } from './map-utils-wms.service'
 import Collection from 'ol/Collection'
 import MapBrowserEvent from 'ol/MapBrowserEvent'
@@ -163,9 +167,9 @@ export class MapUtilsService {
     )
   }
 
-  getWmtsOptionsFromCapabilities(
+  getWmtsLayerFromCapabilities(
     link: DatasetDistribution
-  ): Observable<Options> {
+  ): Observable<MapContextLayerWmtsModel> {
     const getCapabilitiesUrl = new URL(link.url, window.location.toString())
     getCapabilitiesUrl.searchParams.set('SERVICE', 'WMTS')
     getCapabilitiesUrl.searchParams.set('REQUEST', 'GetCapabilities')
@@ -183,10 +187,14 @@ ${await response.text()}`)
         .then(function (text) {
           try {
             const result = new WMTSCapabilities().read(text)
-            return optionsFromCapabilities(result, {
+            const options = optionsFromCapabilities(result, {
               layer: link.name,
               matrixSet: 'EPSG:3857',
             })
+            return {
+              options,
+              type: MapContextLayerTypeEnum.WMTS as 'wmts',
+            }
           } catch (e: any) {
             throw new Error(`WMTS GetCapabilities parsing failed:
 ${e.stack || e.message || e}`)

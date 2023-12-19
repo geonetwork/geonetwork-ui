@@ -59,12 +59,7 @@ export class AddLayerRecordPreviewComponent extends RecordPreviewComponent {
         name: link.name,
       })
     } else if (link.accessServiceProtocol === 'wmts') {
-      return this.mapUtils.getWmtsOptionsFromCapabilities(link).pipe(
-        map((options) => ({
-          type: MapContextLayerTypeEnum.WMTS,
-          options: options,
-        }))
-      )
+      return this.mapUtils.getWmtsLayerFromCapabilities(link)
     }
     return throwError(() => 'protocol not supported')
   }

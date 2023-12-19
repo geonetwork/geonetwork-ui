@@ -173,12 +173,7 @@ export class MapViewComponent implements OnInit, OnDestroy {
       link.type === 'service' &&
       link.accessServiceProtocol === 'wmts'
     ) {
-      return this.mapUtils.getWmtsOptionsFromCapabilities(link).pipe(
-        map((options) => ({
-          type: MapContextLayerTypeEnum.WMTS,
-          options: options,
-        }))
-      )
+      return this.mapUtils.getWmtsLayerFromCapabilities(link)
     } else if (
       (link.type === 'service' &&
         (link.accessServiceProtocol === 'wfs' ||
