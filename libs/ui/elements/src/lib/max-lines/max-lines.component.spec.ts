@@ -6,7 +6,7 @@ import { Component } from '@angular/core'
 @Component({
   template: `
     <gn-ui-max-lines [maxLines]="maxLines">
-      <div class="test-content" style="height: 70px;">
+      <div class="test-content" style="height: 70px; max-height:80px;">
         <p style="height: 40px;">Lorem ipsum dolor sit amet</p>
       </div>
     </gn-ui-max-lines>
@@ -27,10 +27,10 @@ describe('MaxLinesComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent)
     hostComponent = fixture.componentInstance
     maxLinesComponent = fixture.debugElement.children[0].componentInstance
-    fixture.detectChanges()
   })
 
   it('should create', () => {
+    fixture.detectChanges()
     expect(maxLinesComponent).toBeTruthy()
   })
 
@@ -38,36 +38,79 @@ describe('MaxLinesComponent', () => {
     hostComponent.maxLines = 10
     fixture.detectChanges()
 
-    const contentElement: HTMLElement =
-      fixture.nativeElement.querySelector('.test-content')
-    expect(contentElement.childNodes[0].textContent).toBe(
+    const maxLinesElement: HTMLElement =
+      fixture.nativeElement.querySelector('.max-lines')
+    expect(maxLinesElement.childNodes[0].textContent).toBe(
       'Lorem ipsum dolor sit amet'
     )
   })
 
-  it('should adjust maxHeight based on content height', () => {
-    let contentElement: HTMLElement =
-      fixture.nativeElement.querySelector('.test-content')
+  describe('should adjust maxHeight based on content height', () => {
+    const contentHeight = 120
+    beforeEach(() => {
+      jest
+        .spyOn(
+          fixture.nativeElement.querySelector('.test-content'),
+          'getBoundingClientRect'
+        )
+        .mockReturnValueOnce({
+          left: 100,
+          top: 50,
+          right: 20,
+          bottom: 10,
+          x: 30,
+          y: 40,
+          widht: 150,
+          height: contentHeight,
+        })
+    })
+    it('use content height if content height is smaller than max space', () => {
+      hostComponent.maxLines = 10
 
-    contentElement = fixture.nativeElement.querySelector('.test-content')
+      fixture.detectChanges()
 
-    const expectedHeight = `${
-      maxLinesComponent.getLineHeight(contentElement) *
-      maxLinesComponent.maxLines
-    }px`
+      expect(maxLinesComponent.maxHeight).toBe(`${contentHeight}px`)
+    })
 
-    expect(maxLinesComponent.maxHeight).toBe(expectedHeight)
-  })
+    it('use max space height if content height is bigger than max space', () => {
+      hostComponent.maxLines = 2
 
-  it('should show "Show More" button for long content', () => {
-    expect(maxLinesComponent.showToggleButton).toBeTruthy()
-  })
+      const contentElement =
+        fixture.nativeElement.querySelector('.test-content')
+      fixture.detectChanges()
 
-  it('should toggle display when "Show More" button is clicked', () => {
-    maxLinesComponent.toggleDisplay()
+      const maxSpace =
+        maxLinesComponent.getLineHeight(contentElement) *
+        maxLinesComponent.maxLines
 
-    expect(maxLinesComponent.isExpanded).toBeTruthy()
-    expect(maxLinesComponent.maxHeight).toBe('')
+      expect(maxLinesComponent.maxHeight).toBe(`${maxSpace}px`)
+    })
+
+    it('should show "Show More" button for long content', () => {
+      hostComponent.maxLines = 2
+
+      fixture.detectChanges()
+
+      expect(maxLinesComponent.showToggleButton).toBeTruthy()
+    })
+
+    it('should toggle display when "Show More" button is clicked', () => {
+      hostComponent.maxLines = 2
+
+      const contentElement =
+        fixture.nativeElement.querySelector('.test-content')
+      fixture.detectChanges()
+
+      maxLinesComponent.toggleDisplay()
+
+      expect(maxLinesComponent.isExpanded).toBeTruthy()
+      expect(maxLinesComponent.maxHeight).toBe(
+        `${
+          maxLinesComponent.maxLines *
+          maxLinesComponent.getLineHeight(contentElement)
+        }px`
+      )
+    })
   })
 
   afterEach(() => {
