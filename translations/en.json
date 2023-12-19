@@ -139,6 +139,7 @@
   "downloads.format.unknown": "unknown",
   "downloads.wfs.featuretype.not.found": "The layer was not found",
   "dropFile": "drop file",
+  "externalviewer.dataset.unnamed": "Datahub layer",
   "facets.block.title.OrgForResource": "Organisation",
   "facets.block.title.availableInServices": "Available for",
   "facets.block.title.cl_hierarchyLevel.key": "Resource type",

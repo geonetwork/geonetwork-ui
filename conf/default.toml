@@ -143,8 +143,8 @@ background_color = "#fdfbff"
 
 # Optional; URL template enabling to open map layers in an external viewer; if set, displays a button next to the map's layer drop down
 # The template must include the following placeholders, which allow the datahub to inject the correct values when adding a layer to a viewer:
-# ${service_url}: URL of the OWS
-# ${service_type}: Type of the OWS; currently supported WMS, WFS
+# ${service_url}: URL of the OWS or geojson file
+# ${service_type}: Type of the OWS or geojson file; currently supported WMS, WFS, GEOJSON
 # ${layer_name}: Name of the layer
 # Be careful to use englobing single quotes, if your template syntax includes JSON (with double quotes)
 # Examples:

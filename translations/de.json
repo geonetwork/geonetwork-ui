@@ -139,6 +139,7 @@
   "downloads.format.unknown": "unbekannt",
   "downloads.wfs.featuretype.not.found": "Die Schicht wurde nicht gefunden",
   "dropFile": "Datei ablegen",
+  "externalviewer.dataset.unnamed": "Datensatz aus dem Datahub",
   "facets.block.title.OrgForResource": "Organisation",
   "facets.block.title.availableInServices": "Verfügbar für",
   "facets.block.title.cl_hierarchyLevel.key": "Ressourcentyp",
