@@ -121,7 +121,7 @@ describe('OrganisationsComponent', () => {
         expect(orgPreviewComponents[0].organisation.name).toEqual('A Data Org')
       })
       it('should pass 6th organisation (sorted by name-asc) on page to 6th ui preview component', () => {
-        expect(orgPreviewComponents[5].organisation.name).toEqual('é Data Org')
+        expect(orgPreviewComponents[5].organisation.name).toEqual('E Data Org')
       })
     })
     describe('pass params to ui pagination component', () => {
@@ -153,14 +153,14 @@ describe('OrganisationsComponent', () => {
         })
         it('should pass first organisation of second page (sorted by name-asc) to first ui preview component', () => {
           expect(orgPreviewComponents[0].organisation.name).toEqual(
-            'F Data Org'
+            'é Data Org'
           )
         })
         it('should pass last organisation of second page (sorted by name-asc) to last ui preview component', () => {
           expect(
             orgPreviewComponents[orgPreviewComponents.length - 1].organisation
               .name
-          ).toEqual('wizard-org')
+          ).toEqual('J Data Org')
         })
       })
     })
@@ -238,6 +238,16 @@ describe('OrganisationsComponent', () => {
           component.filterBy$.next('E Data Org')
           fixture.detectChanges()
           expect(orgResultComponent.componentInstance.hits).toEqual(2)
+        })
+        it('should ignore special character without space and display 1 match for "l\'Ingénierie"', () => {
+          component.filterBy$.next("l'Ingénierie")
+          fixture.detectChanges()
+          expect(orgResultComponent.componentInstance.hits).toEqual(1)
+        })
+        it('should ignore special character with space and display 1 match for "ARS / Agence"', () => {
+          component.filterBy$.next('ARS / Agence')
+          fixture.detectChanges()
+          expect(orgResultComponent.componentInstance.hits).toEqual(1)
         })
         it('should combine multiple termes with "AND" logic and display 1 match for "a data"', () => {
           component.filterBy$.next('a data')

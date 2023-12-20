@@ -85,7 +85,7 @@ export class OrganisationsComponent {
     if (!filterBy) return organisations
     const filterRegex = new RegExp(
       this.normalizeString(filterBy) //ignore accents and case
-        .replace(/[^a-z0-9\s]/g, '') //ignore special characters
+        .replace(/[^a-z0-9\s]/g, ' ') //ignore special characters (also without spaces like l')
         .replace(/\s(?=.)/g, '.*') //replace whitespaces by "AND" separator
         .replace(/\s/g, ''), //remove potential whitespaces left
       'i'

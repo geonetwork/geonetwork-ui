@@ -74,4 +74,16 @@ export const ORGANISATIONS_FIXTURE: Organization[] = deepFreeze([
     logoUrl: new URL('https://my-geonetwork.org/logo11.png'),
     recordCount: 2,
   },
+  {
+    name: "Université de l'Ingénierie",
+    description: 'another org for testing',
+    logoUrl: new URL('https://my-geonetwork.org/logo12.png'),
+    recordCount: 2,
+  },
+  {
+    name: 'ARS / Agence régionale de santé',
+    description: 'another org for testing',
+    logoUrl: new URL('https://my-geonetwork.org/logo12.png'),
+    recordCount: 2,
+  },
 ])

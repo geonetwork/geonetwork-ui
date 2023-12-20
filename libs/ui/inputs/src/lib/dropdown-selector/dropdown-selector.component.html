@@ -53,7 +53,7 @@
       #choiceInputs
       type="button"
       *ngFor="let choice of choices"
-      [title]="choice.label"
+      [title]="choice.label | translate"
       class="flex px-5 py-1 w-full text-start cursor-pointer transition-colors"
       [ngClass]="
         isSelected(choice)
