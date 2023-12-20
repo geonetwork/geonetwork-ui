@@ -239,12 +239,12 @@ describe('OrganisationsComponent', () => {
           fixture.detectChanges()
           expect(orgResultComponent.componentInstance.hits).toEqual(2)
         })
-        it('should ignore special caharacter without space and display 1 match for "l\'Ingénierie"', () => {
+        it('should ignore special character without space and display 1 match for "l\'Ingénierie"', () => {
           component.filterBy$.next("l'Ingénierie")
           fixture.detectChanges()
           expect(orgResultComponent.componentInstance.hits).toEqual(1)
         })
-        it('should ignore special caharacter with space and display 1 match for "ARS / Agence"', () => {
+        it('should ignore special character with space and display 1 match for "ARS / Agence"', () => {
           component.filterBy$.next('ARS / Agence')
           fixture.detectChanges()
           expect(orgResultComponent.componentInstance.hits).toEqual(1)
