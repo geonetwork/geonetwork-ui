@@ -25,6 +25,7 @@ export interface MapContextLayerWmsModel {
 export interface MapContextLayerWmtsModel {
   type: 'wmts'
   options: Options
+  extent?: Extent
 }
 
 interface MapContextLayerWfsModel {

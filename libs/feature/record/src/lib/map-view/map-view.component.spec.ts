@@ -80,9 +80,9 @@ class MapUtilsServiceMock {
       }
     })
   })
-  getWmtsOptionsFromCapabilities = jest.fn(function () {
+  getWmtsLayerFromCapabilities = jest.fn(function () {
     return new Observable((observer) => {
-      observer.next(null)
+      observer.next({ type: 'wmts', options: null })
     })
   })
   prioritizePageScroll = jest.fn()
