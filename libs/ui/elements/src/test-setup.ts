@@ -13,3 +13,10 @@ getTestBed().initTestEnvironment(
   platformBrowserDynamicTesting(),
   { teardown: { destroyAfterEach: false } }
 )
+
+class ResizeObserverMock {
+  observe = jest.fn()
+  unobserve = jest.fn()
+}
+
+;(window as any).ResizeObserver = ResizeObserverMock

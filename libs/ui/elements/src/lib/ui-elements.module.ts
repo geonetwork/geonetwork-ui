@@ -27,6 +27,7 @@ import { AvatarComponent } from './avatar/avatar.component'
 import { UserPreviewComponent } from './user-preview/user-preview.component'
 import { GnUiLinkifyDirective } from './metadata-info/linkify.directive'
 import { PaginationButtonsComponent } from './pagination-buttons/pagination-buttons.component'
+import { MaxLinesComponent } from './max-lines/max-lines.component'
 
 @NgModule({
   imports: [
@@ -61,6 +62,7 @@ import { PaginationButtonsComponent } from './pagination-buttons/pagination-butt
     UserPreviewComponent,
     GnUiLinkifyDirective,
     PaginationButtonsComponent,
+    MaxLinesComponent,
   ],
   exports: [
     MetadataInfoComponent,

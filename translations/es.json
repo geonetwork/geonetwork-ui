@@ -295,6 +295,8 @@
   "tooltip.html.copy": "",
   "tooltip.url.copy": "",
   "tooltip.url.open": "",
+  "ui.readLess": "",
+  "ui.readMore": "",
   "wfs.featuretype.notfound": "",
   "wfs.geojsongml.notsupported": "",
   "wfs.unreachable.cors": "",
