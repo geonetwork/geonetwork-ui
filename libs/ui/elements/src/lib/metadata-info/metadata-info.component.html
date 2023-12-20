@@ -7,28 +7,29 @@
 <div class="mb-6 md-description sm:mb-4 sm:pr-16">
   <gn-ui-content-ghost ghostClass="h-32" [showContent]="fieldReady('abstract')">
     <gn-ui-max-lines [maxLines]="6" *ngIf="metadata.abstract">
-      <p
-        class="whitespace-pre-line break-words"
-        [innerHTML]="metadata.abstract"
-      ></p>
+      <div>
+        <p
+          class="whitespace-pre-line break-words sm:mb-4 sm:pr-16"
+          [innerHTML]="metadata.abstract"
+        ></p>
+        <ng-container *ngIf="metadata.keywords?.length">
+          <p class="mb-3 font-medium text-primary text-sm" translate>
+            record.metadata.keywords
+          </p>
+          <div class="sm:pb-4 sm:pr-16">
+            <gn-ui-badge
+              class="inline-block mr-2 mb-2 lowercase"
+              (click)="onKeywordClick(keyword)"
+              [clickable]="true"
+              *ngFor="let keyword of metadata.keywords"
+              >{{ keyword }}</gn-ui-badge
+            >
+          </div>
+        </ng-container>
+      </div>
     </gn-ui-max-lines>
   </gn-ui-content-ghost>
 </div>
-
-<ng-container *ngIf="metadata.keywords?.length">
-  <p class="mb-3 font-medium text-primary text-sm" translate>
-    record.metadata.keywords
-  </p>
-  <div class="mb-9 sm:mb-16">
-    <gn-ui-badge
-      class="inline-block mr-2 mb-2 lowercase"
-      (click)="onKeywordClick(keyword)"
-      [clickable]="true"
-      *ngFor="let keyword of metadata.keywords"
-      >{{ keyword }}</gn-ui-badge
-    >
-  </div>
-</ng-container>
 
 <gn-ui-expandable-panel
   class="metadata-origin"

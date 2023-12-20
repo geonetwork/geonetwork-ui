@@ -62,7 +62,7 @@ export class MaxLinesComponent implements AfterViewInit, OnDestroy {
       }
       containerElement.setAttribute(
         'style',
-        `height: ${this.maxHeight}; max-height: ${this.maxHeight}; overflow: hidden`
+        `max-height: ${this.maxHeight}; overflow: hidden`
       )
 
       this.cdr.detectChanges()
