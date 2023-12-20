@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { MaxLinesComponent } from './max-lines.component'
-import { Component } from '@angular/core'
+import { Component, importProvidersFrom } from '@angular/core'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   template: `
@@ -22,6 +23,8 @@ describe('MaxLinesComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [TranslateModule.forRoot()],
+      providers: [importProvidersFrom(TranslateModule.forRoot())],
       declarations: [MaxLinesComponent, TestHostComponent],
     })
     fixture = TestBed.createComponent(TestHostComponent)
