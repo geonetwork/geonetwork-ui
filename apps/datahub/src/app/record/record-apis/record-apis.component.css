@@ -1,0 +1,3 @@
+.tab-header-label {
+  @apply uppercase text-sm text-primary opacity-75 hover:text-primary-darker;
+}
