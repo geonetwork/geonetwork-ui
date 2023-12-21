@@ -522,10 +522,10 @@ describe('api cards', () => {
       .should('have.text', 'more_horiz')
   })
   it('should open and close the panel on click on open panel button', () => {
-    cy.get('@firstCard').find('button').click()
+    cy.get('@firstCard').click()
     cy.get('gn-ui-record-api-form').should('be.visible')
-    cy.get('@firstCard').find('button').click()
-    cy.get('gn-ui-record-api-form').should('not.exist')
+    cy.get('@firstCard').click()
+    cy.get('gn-ui-record-api-form').should('not.be.visible')
   })
 })
 
@@ -606,7 +606,7 @@ describe('api form', () => {
   })
   it('should close the panel on click', () => {
     cy.get('gn-ui-record-api-form').prev().find('button').click()
-    cy.get('gn-ui-record-api-form').should('not.exist')
+    cy.get('gn-ui-record-api-form').should('not.be.visible')
   })
   it('should switch to other card url if card already open', () => {
     cy.get('@apiForm')
