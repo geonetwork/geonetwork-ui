@@ -28,6 +28,7 @@ import { UserPreviewComponent } from './user-preview/user-preview.component'
 import { GnUiLinkifyDirective } from './metadata-info/linkify.directive'
 import { PaginationButtonsComponent } from './pagination-buttons/pagination-buttons.component'
 import { MaxLinesComponent } from './max-lines/max-lines.component'
+import { RecordApiFormComponent } from './record-api-form/record-api-form.component'
 
 @NgModule({
   imports: [
@@ -63,6 +64,7 @@ import { MaxLinesComponent } from './max-lines/max-lines.component'
     GnUiLinkifyDirective,
     PaginationButtonsComponent,
     MaxLinesComponent,
+    RecordApiFormComponent,
   ],
   exports: [
     MetadataInfoComponent,
@@ -82,6 +84,7 @@ import { MaxLinesComponent } from './max-lines/max-lines.component'
     AvatarComponent,
     UserPreviewComponent,
     PaginationButtonsComponent,
+    RecordApiFormComponent,
   ],
 })
 export class UiElementsModule {}

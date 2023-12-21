@@ -16,7 +16,7 @@
   }
 
   .card-icon {
-    @apply text-primary opacity-25 group-hover:text-secondary group-hover:opacity-100 transition-colors transition-opacity;
+    @apply text-primary opacity-50 group-hover:text-secondary group-hover:opacity-100 transition-colors transition-opacity;
   }
 }
 
