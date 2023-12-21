@@ -15,7 +15,6 @@
         "polyfills": "apps/datahub/src/polyfills.ts",
         "tsConfig": "apps/datahub/tsconfig.app.json",
         "assets": [
-          "apps/datahub/src/favicon.ico",
           "apps/datahub/src/assets",
           {
             "glob": "*",
