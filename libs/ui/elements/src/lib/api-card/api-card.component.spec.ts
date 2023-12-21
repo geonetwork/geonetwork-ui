@@ -1,18 +1,16 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MatIconModule } from '@angular/material/icon'
-import { TranslateModule } from '@ngx-translate/core'
 import { ApiCardComponent } from './api-card.component'
+import { TranslateModule } from '@ngx-translate/core'
+import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 
 describe('ApiCardComponent', () => {
   let component: ApiCardComponent
   let fixture: ComponentFixture<ApiCardComponent>
-
+  let openRecordApiFormEmit
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      schemas: [NO_ERRORS_SCHEMA],
       declarations: [ApiCardComponent],
-      imports: [MatIconModule, TranslateModule.forRoot()],
+      imports: [TranslateModule.forRoot()],
     }).compileComponents()
   })
 
@@ -20,16 +18,27 @@ describe('ApiCardComponent', () => {
     fixture = TestBed.createComponent(ApiCardComponent)
     component = fixture.componentInstance
     component.link = {
-      name: 'Allroads',
-      description: 'A file that contains all roads',
-      url: new URL('https://roads.com/wfs'),
-      type: 'service',
-      accessServiceProtocol: 'wfs',
-    }
+      accessServiceProtocol: 'ogcFeatures',
+    } as DatasetServiceDistribution
+    openRecordApiFormEmit = component.openRecordApiForm
+    jest.resetAllMocks()
+    jest.spyOn(openRecordApiFormEmit, 'emit')
     fixture.detectChanges()
   })
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  it('should initialize custom property based on accessServiceProtocol', () => {
+    component.ngOnInit()
+    expect(component.displayApiFormButton).toBe(true)
+  })
+
+  it('should toggle currentlyActive and emit openRecordApiForm event', () => {
+    component.openRecordApiFormPanel()
+
+    expect(component.currentlyActive).toBe(true)
+    expect(openRecordApiFormEmit.emit).toHaveBeenCalled()
   })
 })
