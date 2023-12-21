@@ -141,4 +141,9 @@ export const ES_LINK_FIXTURES: Record<string, unknown> = deepFreeze({
     name: 'Vue HTML des métadonnées sur internet',
     url: 'http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/fr-120066022-jdd-199fd14c-2abb-4c14-b0f8-6c8d92e7b480',
   },
+  geodataogcfeatures: {
+    protocol: 'OGC API - Features',
+    name: 'ogcapi features layer',
+    url: 'https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/comptages_velo/items?',
+  },
 })
