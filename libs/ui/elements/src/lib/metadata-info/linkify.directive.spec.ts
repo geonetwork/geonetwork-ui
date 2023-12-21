@@ -52,11 +52,35 @@ const testingUrls = [
     'http://foo.com/(something)?after=parens',
   ],
 ]
+
+const testWithMultipleUrls = {
+  input:
+    'Fourteenth links http://foo.com/(something)?after=parens with multiple links http://foo.com/(something)?before=multiple',
+  output: [
+    'http://foo.com/(something)?after=parens',
+    'http://foo.com/(something)?before=multiple',
+  ],
+}
+
+const testWithHTML = {
+  input:
+    '<p>Fourteenth link with html input <a href="http://foo.com/(something)?after=before">This is the display text</a> query params</p>',
+  output: 'http://foo.com/(something)?after=before',
+}
+
 @Component({
-  template: `<div [gnUiLinkify]>{{ text }}</div>`,
+  template: `<div
+      *ngIf="customInnerHTML"
+      [innerHTML]="customInnerHTML"
+      [gnUiLinkify]
+    ></div>
+    <div *ngIf="!customInnerHTML" [gnUiLinkify]>
+      {{ text }}
+    </div>`,
 })
 class TestComponent {
   text = ''
+  customInnerHTML = null
 }
 
 describe('GnUiLinkifyDirective', () => {
@@ -80,23 +104,49 @@ describe('GnUiLinkifyDirective', () => {
         component.text = input
         fixture.detectChanges()
         await fixture.whenStable()
-        const href = getAnchorElement().nativeElement.getAttribute('href')
+        const href = getAnchorElement()[0].nativeElement.getAttribute('href')
         expect(href).toBe(output)
       }
     )
+
+    it('should create multiple anchor elements with the correct href', async () => {
+      component.text = testWithMultipleUrls.input
+      const output = testWithMultipleUrls.output
+      fixture.detectChanges()
+      await fixture.whenStable()
+      const amountOfAnchors = getAnchorElement().length
+      const firstHref = getAnchorElement()[0].nativeElement.getAttribute('href')
+      const secondHref =
+        getAnchorElement()[1].nativeElement.getAttribute('href')
+      expect(amountOfAnchors).toBe(2)
+      expect(firstHref).toBe(output[0])
+      expect(secondHref).toBe(output[1])
+    })
   })
 
   it('should have the target attribute set to "_blank"', async () => {
     component.text = 'Click this link https://www.example.com/'
     fixture.detectChanges()
     await fixture.whenStable()
-    const target = getAnchorElement().nativeElement.getAttribute('target')
+    const target = getAnchorElement()[0].nativeElement.getAttribute('target')
     expect(target).toBe('_blank')
   })
   function getAnchorElement() {
     debugElement = fixture.debugElement.query(
       By.directive(GnUiLinkifyDirective)
     )
-    return debugElement.query(By.css('a'))
+    return debugElement.queryAll(By.css('a'))
   }
+
+  describe('HTML input', () => {
+    it('should create an anchor element with the correct href', async () => {
+      component.customInnerHTML = testWithHTML.input
+      fixture.detectChanges()
+      await fixture.whenStable()
+      const href = getAnchorElement()[0].nativeElement.getAttribute('href')
+      const matIcon = getAnchorElement()[0].nativeElement.childNodes[1]
+      expect(href).toBe(testWithHTML.output)
+      expect(matIcon.nodeName).toContain('MAT-ICON')
+    })
+  })
 })

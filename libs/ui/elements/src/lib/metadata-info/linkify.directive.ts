@@ -9,30 +9,72 @@ export class GnUiLinkifyDirective implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-      this.processLinks()
+      this.processLinks(this.el.nativeElement)
     }, 0)
   }
 
-  private processLinks() {
-    const container = this.el.nativeElement
-
+  private processLinks(container: HTMLElement | ChildNode) {
     const nodes = Array.from(container.childNodes)
+
     nodes.forEach((node) => {
       if (node instanceof Text) {
         const textNode = node as Text
-        const linkified = this.linkifyText(textNode.nodeValue)
-        const span = this.renderer.createElement('span')
-        span.innerHTML = linkified
-        container.insertBefore(span, textNode)
-        container.removeChild(textNode)
+        const linkified = this.linkifyNode(textNode.nodeValue)
+        if (linkified) {
+          this.createLinkElements(container, linkified, node)
+        }
+      } else if (node instanceof HTMLAnchorElement) {
+        const url = node.href
+        const displayValue = node.innerHTML
+        const linkified = this.linkifyNode(displayValue, url)
+        if (linkified) {
+          this.createLinkElements(container, linkified, node)
+        }
+      } else {
+        this.processLinks(node)
       }
     })
   }
 
-  private linkifyText(text: string): string {
-    return text.replace(/(\bhttps?:\/\/\S+\b[=)/]?)/g, (match) => {
-      return `<a href="${match}" target="_blank"
-                  class="text-primary cursor-pointer hover:underline">${match} <mat-icon class="material-symbols-outlined !w-[12px] !h-[14px] !text-[14px] opacity-75">open_in_new</mat-icon></a>`
+  private linkifyNode(displayValue: string, url?: string): string | undefined {
+    if (url) {
+      displayValue = this.createLink(displayValue, url)
+    } else {
+      const urlRegex = /\bhttps?:\/\/\S+\b[=)/]?/g
+      const matches = displayValue.match(urlRegex)
+
+      if (matches && matches.length > 0) {
+        matches.forEach((match) => {
+          url = match
+
+          displayValue = displayValue.replace(match, (match) => {
+            return this.createLink(match, url)
+          })
+        })
+      }
+    }
+
+    return displayValue
+  }
+
+  private createLinkElements(
+    container: HTMLElement | ChildNode,
+    htmlContent: string,
+    node: ChildNode
+  ): void {
+    const div = this.renderer.createElement('div')
+    div.innerHTML = htmlContent
+
+    const fragment = document.createDocumentFragment()
+    Array.from(div.childNodes).forEach((childNode: ChildNode) => {
+      fragment.appendChild(childNode)
     })
+
+    container.insertBefore(fragment, node)
+    container.removeChild(node)
+  }
+
+  private createLink(displayValue: string, url: string): string {
+    return `<a href="${url}" target="_blank" class="text-primary cursor-pointer hover:underline">${displayValue} <mat-icon class="material-symbols-outlined !w-[12px] !h-[14px] !text-[14px] opacity-75">open_in_new</mat-icon></a>`
   }
 }
