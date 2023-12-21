@@ -1,7 +1,7 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
 import 'cypress-real-events'
 
-describe('header', () => {
+describe('home', () => {
   beforeEach(() => cy.visit('/'))
 
   describe('general display', () => {
