@@ -38,17 +38,7 @@ export class ResultsListContainerComponent implements OnInit {
   error$: Observable<SearchError>
   errorCode$: Observable<number>
   errorMessage$: Observable<string>
-  pipelineForQualityScoreActivated: Observable<boolean> =
-    this.facade.results$.pipe(
-      tap((records) => {
-        if (records?.length > 0 && !records[0].extras?.qualityScore) {
-          console.warn(
-            'It looks like the metadata quality indicator is not available on these records, probably due to a missing indexing pipeline'
-          )
-        }
-      }),
-      map((records) => !!records[0]?.extras.qualityScore)
-    )
+  pipelineForQualityScoreActivated: Observable<boolean>
 
   errorTypes = ErrorType
   recordUrlGetter = this.getRecordUrl.bind(this)
@@ -70,6 +60,17 @@ export class ResultsListContainerComponent implements OnInit {
     if (this.layout) {
       this.facade.setResultsLayout(this.layout)
     }
+
+    this.pipelineForQualityScoreActivated = this.facade.results$.pipe(
+      tap((records) => {
+        if (records?.length > 0 && !records[0].extras?.qualityScore) {
+          console.warn(
+            'It looks like the metadata quality indicator is not available on these records, probably due to a missing indexing pipeline'
+          )
+        }
+      }),
+      map((records) => !!records[0]?.extras.qualityScore)
+    )
 
     this.error$ = this.facade.error$
     this.errorCode$ = this.error$.pipe(
