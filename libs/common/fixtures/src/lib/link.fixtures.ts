@@ -157,5 +157,6 @@ export const LINK_FIXTURES: Record<string, DatasetDistribution> = deepFreeze({
     url: new URL(
       'https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/comptages_velo/items?'
     ),
+    accessServiceProtocol: 'ogcFeatures',
   },
 })
