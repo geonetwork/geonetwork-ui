@@ -2,12 +2,13 @@
   <gn-ui-results-list
     [records]="facade.results$ | async"
     [layoutConfig]="layoutConfig$ | async"
-    [metadataQualityDisplay]="metadataQualityDisplay"
+    [metadataQualityDisplay]="
+      metadataQualityDisplay && (pipelineForQualityScoreActivated | async)
+    "
     [favoriteTemplate]="favoriteToggle"
     [recordUrlGetter]="recordUrlGetter"
     (mdSelect)="onMetadataSelection($event)"
   ></gn-ui-results-list>
-
   <ng-container
     *ngIf="
       (facade.isLoading$ | async) === false &&

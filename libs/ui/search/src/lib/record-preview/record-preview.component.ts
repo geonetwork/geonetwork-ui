@@ -13,7 +13,6 @@ import {
   stripHtml,
   removeWhitespace,
 } from '@geonetwork-ui/util/shared'
-import { MetadataQualityDisplay } from '@geonetwork-ui/ui/elements'
 import { fromEvent, Subscription } from 'rxjs'
 import {
   CatalogRecord,
@@ -31,7 +30,7 @@ export class RecordPreviewComponent implements OnInit, OnDestroy {
   @Input() linkTarget = '_blank'
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
   @Input() linkHref: string = null
-  @Input() metadataQualityDisplay: MetadataQualityDisplay
+  @Input() metadataQualityDisplay: boolean
   @Output() mdSelect = new EventEmitter<CatalogRecord>()
   subscription = new Subscription()
   abstract: string
@@ -50,9 +49,6 @@ export class RecordPreviewComponent implements OnInit, OnDestroy {
   }
   get organization(): Organization {
     return this.record.ownerOrganization
-  }
-  get hasMetadataQualityWidget(): boolean {
-    return this.metadataQualityDisplay?.widget === true
   }
 
   constructor(protected elementRef: ElementRef) {}

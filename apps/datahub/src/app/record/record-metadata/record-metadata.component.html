@@ -24,13 +24,12 @@
         </gn-ui-metadata-info>
       </div>
       <div>
-        <div *ngIf="hasMetadataQualityWidget">
+        <div *ngIf="metadataQualityDisplay">
           <p class="text text-gray-700 text-xs mb-3 uppercase" translate>
             record.metadata.quality
           </p>
           <gn-ui-metadata-quality
             [metadata]="facade.metadata$ | async"
-            [metadataQualityDisplay]="metadataQualityDisplay"
           ></gn-ui-metadata-quality>
         </div>
         <gn-ui-metadata-contact

@@ -109,27 +109,6 @@ background_color = "#fdfbff"
 # enabled = true
 # If u want to use metadata quality widget this configuration is required
 
-# if you add an indexed field to calculate the qualityScore, the datahub search allow you to sort on this field with this parameter
-# sortable = true
-
-# by default the widget appears in 2 locations in the search list and in the detail page
-# allow you to hide the widget in detail
-# display_widget_in_detail = false
-# allow you to hide the widget in search list
-# display_widget_in_search = false
-# If you want see the widget in the two locations, don't fill theses configurations
-
-# By default the window popup all fields to view if they are filled or not but you can hide some
-# display_title = false
-# display_description = false
-# display_topic = false
-# display_keywords = false
-# display_legal_constraints = false
-# display_contact = false
-# display_update_frequency = false
-# display_organisation = false
-# If you want see all fields, don't fill theses configurations
-
 ### MAP SETTINGS
 
 # The map section allows to customize how maps are configured.

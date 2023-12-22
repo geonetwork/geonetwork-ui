@@ -7,11 +7,11 @@ import {
   Optional,
   Output,
 } from '@angular/core'
-import { Observable } from 'rxjs'
+import { Observable, tap } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchError } from '../state/reducer'
-import { ErrorType, MetadataQualityDisplay } from '@geonetwork-ui/ui/elements'
+import { ErrorType } from '@geonetwork-ui/ui/elements'
 import {
   RESULTS_LAYOUT_CONFIG,
   ResultsLayoutConfigItem,
@@ -28,7 +28,7 @@ export type ResultsListShowMoreStrategy = 'auto' | 'button' | 'none'
   styleUrls: ['./results-list.container.component.css'],
 })
 export class ResultsListContainerComponent implements OnInit {
-  @Input() metadataQualityDisplay: MetadataQualityDisplay
+  @Input() metadataQualityDisplay: boolean
   @Input() layout: string
   @Input() showMore: ResultsListShowMoreStrategy = 'auto'
   @Output() mdSelect = new EventEmitter<CatalogRecord>()
@@ -38,6 +38,17 @@ export class ResultsListContainerComponent implements OnInit {
   error$: Observable<SearchError>
   errorCode$: Observable<number>
   errorMessage$: Observable<string>
+  pipelineForQualityScoreActivated: Observable<boolean> =
+    this.facade.results$.pipe(
+      tap((records) => {
+        if (records?.length > 0 && !records[0].extras?.qualityScore) {
+          console.warn(
+            'It looks like the metadata quality indicator is not available on these records, probably due to a missing indexing pipeline'
+          )
+        }
+      }),
+      map((records) => !!records[0]?.extras.qualityScore)
+    )
 
   errorTypes = ErrorType
   recordUrlGetter = this.getRecordUrl.bind(this)
