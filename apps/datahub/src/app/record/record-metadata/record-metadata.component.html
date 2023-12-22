@@ -114,13 +114,16 @@
     <datahub-record-downloads class="block mt-5"></datahub-record-downloads>
   </div>
 
-  <div id="links" class="container-lg px-4 lg:mx-auto">
-    <div *ngIf="displayOtherLinks | async">
+  <div id="links" class="lg:mx-auto">
+    <div class="container-lg px-4 lg:mx-auto" *ngIf="displayOtherLinks | async">
       <datahub-record-otherlinks class="block mt-5"></datahub-record-otherlinks>
     </div>
 
     <div *ngIf="displayApi$ | async">
-      <datahub-record-apis class="block mt-6"></datahub-record-apis>
+      <datahub-record-apis
+        [isPanelOpen]="isPanelOpen"
+        class="block mt-6"
+      ></datahub-record-apis>
     </div>
   </div>
 

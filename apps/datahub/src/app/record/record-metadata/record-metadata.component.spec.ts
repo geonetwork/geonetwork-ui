@@ -1,4 +1,10 @@
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core'
+import {
+  Component,
+  EventEmitter,
+  Input,
+  NO_ERRORS_SCHEMA,
+  Output,
+} from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
@@ -6,11 +12,7 @@ import { MapManagerService } from '@geonetwork-ui/feature/map'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import {
   ErrorType,
-  MetadataCatalogComponent,
-  MetadataContactComponent,
-  MetadataInfoComponent,
   SearchResultsErrorComponent,
-  UiElementsModule,
 } from '@geonetwork-ui/ui/elements'
 import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject, of } from 'rxjs'
@@ -18,6 +20,13 @@ import { RecordMetadataComponent } from './record-metadata.component'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import {
+  CatalogRecord,
+  DatasetRecord,
+  DatasetServiceDistribution,
+  Individual,
+  Organization,
+} from '@geonetwork-ui/common/domain/model/record'
 
 const SAMPLE_RECORD = {
   ...DATASET_RECORDS[0],
@@ -100,6 +109,46 @@ export class MockDataApisComponent {}
 })
 export class MockRelatedComponent {}
 
+@Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: 'gn-ui-metadata-info',
+  template: '<div></div>',
+})
+export class MockMetadataInfoComponent {
+  @Input() metadata: Partial<DatasetRecord>
+  @Input() incomplete: boolean
+  @Output() keyword = new EventEmitter<string>()
+}
+
+@Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: 'gn-ui-metadata-contact',
+  template: '<div></div>',
+})
+export class MockMetadataContactComponent {
+  @Input() metadata: Partial<CatalogRecord>
+  @Output() organizationClick = new EventEmitter<Organization>()
+  @Output() contactClick = new EventEmitter<Individual>()
+}
+
+@Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: 'gn-ui-metadata-catalog',
+  template: '<div></div>',
+})
+export class MockMetadataCatalogComponent {
+  @Input() sourceLabel: string
+}
+
+@Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: 'gn-ui-record-api-form',
+  template: '<div></div>',
+})
+export class MockRecordApiFormComponent {
+  @Input() apiLink: DatasetServiceDistribution
+}
+
 describe('RecordMetadataComponent', () => {
   let component: RecordMetadataComponent
   let fixture: ComponentFixture<RecordMetadataComponent>
@@ -119,9 +168,13 @@ describe('RecordMetadataComponent', () => {
         MockDataApisComponent,
         MockRelatedComponent,
         SearchResultsErrorComponent,
+        MockMetadataInfoComponent,
+        MockMetadataCatalogComponent,
+        MockMetadataContactComponent,
+        MockRecordApiFormComponent,
       ],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [UiElementsModule, TranslateModule.forRoot()],
+      imports: [TranslateModule.forRoot()],
       providers: [
         {
           provide: MdViewFacade,
@@ -161,21 +214,21 @@ describe('RecordMetadataComponent', () => {
   })
 
   describe('about', () => {
-    let metadataInfo: MetadataInfoComponent
-    let metadataContact: MetadataContactComponent
-    let catalogComponent: MetadataCatalogComponent
+    let metadataInfo: MockMetadataInfoComponent
+    let metadataContact: MockMetadataContactComponent
+    let catalogComponent: MockMetadataCatalogComponent
 
     beforeEach(() => {
       facade.isPresent$.next(true)
       fixture.detectChanges()
       metadataInfo = fixture.debugElement.query(
-        By.directive(MetadataInfoComponent)
+        By.directive(MockMetadataInfoComponent)
       ).componentInstance
       metadataContact = fixture.debugElement.query(
-        By.directive(MetadataContactComponent)
+        By.directive(MockMetadataContactComponent)
       ).componentInstance
       catalogComponent = fixture.debugElement.query(
-        By.directive(MetadataCatalogComponent)
+        By.directive(MockMetadataCatalogComponent)
       ).componentInstance
     })
     describe('if metadata present', () => {
@@ -197,7 +250,7 @@ describe('RecordMetadataComponent', () => {
         facade.isPresent$.next(false)
         fixture.detectChanges()
         metadataInfo = fixture.debugElement.query(
-          By.directive(MetadataInfoComponent)
+          By.directive(MockMetadataInfoComponent)
         ).componentInstance
       })
       it('shows a placeholder', () => {
@@ -206,12 +259,12 @@ describe('RecordMetadataComponent', () => {
       })
       it('does not display the metadata contact component', () => {
         expect(
-          fixture.debugElement.query(By.directive(MetadataContactComponent))
+          fixture.debugElement.query(By.directive(MockMetadataContactComponent))
         ).toBeFalsy()
       })
       it('does not display the metadata catalog component', () => {
         expect(
-          fixture.debugElement.query(By.directive(MetadataCatalogComponent))
+          fixture.debugElement.query(By.directive(MockMetadataCatalogComponent))
         ).toBeFalsy()
       })
     })

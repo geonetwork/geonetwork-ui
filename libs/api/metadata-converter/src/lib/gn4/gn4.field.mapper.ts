@@ -323,7 +323,8 @@ export class Gn4FieldMapper {
       (/^ESRI:REST/.test(protocol) && /FeatureServer/.test(url)) ||
       /^OGC:WMS/.test(protocol) ||
       /^OGC:WFS/.test(protocol) ||
-      /^OGC:WMTS/.test(protocol)
+      /^OGC:WMTS/.test(protocol) ||
+      /ogc\W*api\W*features/i.test(protocol)
     ) {
       return 'service'
     }

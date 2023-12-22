@@ -508,3 +508,122 @@ describe('record with file distributions', () => {
       .should('deep.eq', ['csv (csv)', 'json (json)', 'geojson (geojson)'])
   })
 })
+
+describe('api cards', () => {
+  beforeEach(() => {
+    cy.visit('/dataset/accroche_velos')
+    cy.get('gn-ui-api-card').first().as('firstCard')
+  })
+
+  it('should display the open panel button', () => {
+    cy.get('@firstCard')
+      .find('button')
+      .children('mat-icon')
+      .should('have.text', 'more_horiz')
+  })
+  it('should open and close the panel on click on open panel button', () => {
+    cy.get('@firstCard').click()
+    cy.get('gn-ui-record-api-form').should('be.visible')
+    cy.get('@firstCard').click()
+    cy.get('gn-ui-record-api-form').should('not.be.visible')
+  })
+})
+
+describe('api form', () => {
+  beforeEach(() => {
+    cy.visit('/dataset/accroche_velos')
+    cy.get('gn-ui-api-card').first().find('button').click()
+    cy.get('gn-ui-record-api-form').children('div').as('apiForm')
+  })
+  it('should have request inputs', () => {
+    cy.get('@apiForm').find('gn-ui-text-input').should('have.length', 2)
+    cy.get('@apiForm').find('gn-ui-dropdown-selector').should('have.length', 1)
+    cy.get('@apiForm')
+      .children('div')
+      .first()
+      .children('div')
+      .first()
+      .find('button')
+      .should('have.length', 1)
+    cy.get('@apiForm').find('gn-ui-copy-text-button').should('have.length', 1)
+  })
+  it('should change url on input change', () => {
+    cy.get('@apiForm')
+      .find('gn-ui-copy-text-button')
+      .find('input')
+      .invoke('val')
+      .then((url) => {
+        cy.get('@apiForm').find('gn-ui-text-input').first().clear()
+        cy.get('@apiForm').find('gn-ui-text-input').first().type('54')
+        cy.get('@apiForm')
+          .find('gn-ui-copy-text-button')
+          .find('input')
+          .invoke('val')
+          .then((newUrl) => {
+            expect(newUrl).to.not.eq(url)
+            expect(newUrl).to.include('54')
+          })
+      })
+  })
+  it('should set limit to zero on click on "All" button', () => {
+    cy.get('@apiForm').find('gn-ui-text-input').first().clear()
+    cy.get('@apiForm').find('gn-ui-text-input').first().type('54')
+    cy.get('@apiForm').find('input[type="checkbox"]').check()
+    cy.get('@apiForm').find('gn-ui-text-input').first().should('have.value', '')
+  })
+  it('should reset all 3 inputs and link on click', () => {
+    cy.get('@apiForm').find('gn-ui-text-input').first().as('firstInput')
+    cy.get('@firstInput').clear()
+    cy.get('@firstInput').type('54')
+
+    cy.get('@apiForm').find('gn-ui-text-input').eq(1).as('secondInput')
+    cy.get('@secondInput').clear()
+    cy.get('@secondInput').type('87')
+
+    cy.get('@apiForm').find('gn-ui-dropdown-selector').click()
+    cy.get('button[data-cy-value="csv"]').click()
+
+    cy.get('@apiForm')
+      .find('gn-ui-copy-text-button')
+      .find('input')
+      .invoke('val')
+      .should('include', 'offset=87&limit=54&f=csv')
+
+    cy.get('@apiForm').children('div').first().find('button').first().click()
+
+    cy.get('@firstInput').find('input').should('have.value', '')
+    cy.get('@secondInput').find('input').should('have.value', '')
+    cy.get('@apiForm')
+      .find('gn-ui-dropdown-selector')
+      .find('button')
+      .children('div')
+      .should('have.text', ' JSON ')
+    cy.get('@apiForm')
+      .find('gn-ui-copy-text-button')
+      .find('input')
+      .invoke('val')
+      .should('include', 'f=json')
+  })
+  it('should close the panel on click', () => {
+    cy.get('gn-ui-record-api-form').prev().find('button').click()
+    cy.get('gn-ui-record-api-form').should('not.be.visible')
+  })
+  it('should switch to other card url if card already open', () => {
+    cy.get('@apiForm')
+      .find('gn-ui-copy-text-button')
+      .find('input')
+      .invoke('val')
+      .then((url) => {
+        cy.get('@apiForm').find('gn-ui-text-input').first().clear()
+        cy.get('@apiForm').find('gn-ui-text-input').first().type('54')
+        cy.get('gn-ui-api-card').eq(1).find('button').click()
+        cy.get('@apiForm')
+          .find('gn-ui-copy-text-button')
+          .find('input')
+          .invoke('val')
+          .then((newUrl) => {
+            expect(newUrl).to.not.eq(url)
+          })
+      })
+  })
+})

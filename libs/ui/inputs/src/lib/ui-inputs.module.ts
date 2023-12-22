@@ -36,6 +36,11 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { CommonModule } from '@angular/common'
 import { CheckboxComponent } from './checkbox/checkbox.component'
 import { SearchInputComponent } from './search-input/search-input.component'
+import { DateRangePickerComponent } from './date-range-picker/date-range-picker.component'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
+import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatNativeDateModule } from '@angular/material/core'
 
 @NgModule({
   declarations: [
@@ -62,6 +67,7 @@ import { SearchInputComponent } from './search-input/search-input.component'
     CopyTextButtonComponent,
     CheckboxComponent,
     SearchInputComponent,
+    DateRangePickerComponent,
   ],
   imports: [
     CommonModule,
@@ -77,6 +83,10 @@ import { SearchInputComponent } from './search-input/search-input.component'
     OverlayModule,
     MatCheckboxModule,
     MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   exports: [
     DropdownSelectorComponent,
@@ -95,6 +105,7 @@ import { SearchInputComponent } from './search-input/search-input.component'
     CopyTextButtonComponent,
     CheckboxComponent,
     SearchInputComponent,
+    DateRangePickerComponent,
   ],
 })
 export class UiInputsModule {}
