@@ -15,7 +15,7 @@ import {
   SearchResultsErrorComponent,
 } from '@geonetwork-ui/ui/elements'
 import { TranslateModule } from '@ngx-translate/core'
-import { BehaviorSubject, firstValueFrom, of } from 'rxjs'
+import { BehaviorSubject, of } from 'rxjs'
 import { RecordMetadataComponent } from './record-metadata.component'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
@@ -171,7 +171,6 @@ describe('RecordMetadataComponent', () => {
         MockMetadataInfoComponent,
         MockMetadataCatalogComponent,
         MockMetadataContactComponent,
-
         MockRecordApiFormComponent,
       ],
       schemas: [NO_ERRORS_SCHEMA],

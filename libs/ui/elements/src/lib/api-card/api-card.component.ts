@@ -37,7 +37,6 @@ export class ApiCardComponent implements OnInit, OnChanges {
   openRecordApiFormPanel() {
     if (this.displayApiFormButton) {
       this.currentlyActive = !this.currentlyActive
-      console.log(this.currentlyActive)
       this.openRecordApiForm.emit(this.currentlyActive ? this.link : undefined)
     }
   }

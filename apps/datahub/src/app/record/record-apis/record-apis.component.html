@@ -30,11 +30,12 @@
   </gn-ui-carousel>
 </div>
 <div
-  class="content overflow-hidden transition-[max-height] duration-300"
+  class="content overflow-hidden transition-all duration-300"
   [ngClass]="selectedApiLink ? 'ease-in' : 'ease-out'"
   [style.maxHeight]="maxHeight"
+  [style.opacity]="opacity"
 >
-  <div class="bg-primary-opacity-10 pt-8">
+  <div class="bg-primary-opacity-10 py-8">
     <div class="flex flex-col px-4 gap-8 container-lg lg:mx-auto">
       <div class="flex flex-wrap justify-between sm:mb-2 ng-star-inserted">
         <p class="text-[21px] text-title font-title" translate>

@@ -9,26 +9,28 @@ import { MdViewFacade } from '@geonetwork-ui/feature/record'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecordApisComponent implements OnInit {
-  maxHeight = ''
+  maxHeight = '0px'
+  opacity = 0
   selectedApiLink: DatasetServiceDistribution
   constructor(public facade: MdViewFacade) {}
 
   ngOnInit(): void {
-    this.maxHeight = this.setMaxHeight(undefined)
+    this.setStyle(undefined)
     this.selectedApiLink = undefined
   }
 
   openRecordApiForm(link: DatasetServiceDistribution) {
     this.selectedApiLink = link
-    this.maxHeight = this.setMaxHeight(link)
+    this.setStyle(link)
   }
 
   closeRecordApiForm() {
     this.selectedApiLink = undefined
-    this.maxHeight = this.setMaxHeight(undefined)
+    this.setStyle(undefined)
   }
 
-  setMaxHeight(link: DatasetServiceDistribution) {
-    return `${link === undefined ? '0' : '428'}px`
+  setStyle(link: DatasetServiceDistribution) {
+    this.maxHeight = link === undefined ? '0px' : '500px'
+    this.opacity = link === undefined ? 0 : 1
   }
 }

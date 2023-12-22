@@ -3,7 +3,7 @@ import { RecordApisComponent } from './record-apis.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { BehaviorSubject, firstValueFrom } from 'rxjs'
+import { BehaviorSubject } from 'rxjs'
 
 class MdViewFacadeMock {
   selectedApiLink$ = new BehaviorSubject([])
@@ -18,7 +18,6 @@ const serviceDistributionMock = {
 describe('RecordApisComponent', () => {
   let component: RecordApisComponent
   let fixture: ComponentFixture<RecordApisComponent>
-  let facade
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -34,7 +33,6 @@ describe('RecordApisComponent', () => {
 
     fixture = TestBed.createComponent(RecordApisComponent)
     component = fixture.componentInstance
-    facade = TestBed.inject(MdViewFacade)
     fixture.detectChanges()
   })
 
@@ -46,15 +44,27 @@ describe('RecordApisComponent', () => {
     beforeEach(() => {
       component.openRecordApiForm(serviceDistributionMock)
     })
-    it('should update selectedApiLink$', async () => {
+    it('should update selectedApiLink', () => {
       expect(component.selectedApiLink).toEqual(serviceDistributionMock)
+    })
+    it('should update maxHeight for transition', () => {
+      expect(component.maxHeight).toEqual('500px')
+    })
+    it('should update opacity for transition', () => {
+      expect(component.opacity).toEqual(1)
     })
   })
 
   describe('#closeRecordApiForm', () => {
-    it('should pass undefined to selectedApiLink$', async () => {
+    it('should update selectedApiLink', () => {
       component.closeRecordApiForm()
       expect(component.selectedApiLink).toBeUndefined()
+    })
+    it('should update maxHeight for transition', () => {
+      expect(component.maxHeight).toEqual('0px')
+    })
+    it('should update opacity for transition', () => {
+      expect(component.opacity).toEqual(0)
     })
   })
 })
