@@ -456,4 +456,59 @@ describe('datasets', () => {
       })
     })
   })
+
+  describe('metadata quality', () => {
+    describe('metadata quality widget not enabled', () => {
+      it('should not show quality score sorting', () => {
+        cy.get('@sortBy').find('button').click()
+        cy.get('.cdk-overlay-container')
+          .find('[role=listbox]')
+          .find('button')
+          .should('have.length', 3)
+      })
+    })
+
+    describe('metadata quality widget enabled', () => {
+      beforeEach(() => {
+        // this will enable spatial filtering
+        cy.intercept('GET', '/assets/configuration/default.toml', {
+          fixture: 'config-with-metadata-quality.toml',
+        })
+        cy.visit('/search')
+      })
+      it('should not display widget', () => {
+        cy.get('@results')
+          .eq(2)
+          .get('gn-ui-metadata-quality')
+          .should('not.exist')
+      })
+
+      it('should reindex records', () => {
+        cy.login('admin', 'admin', false)
+        cy.visit(
+          `http://localhost:8080/geonetwork/srv/eng/admin.console#/tools`
+        )
+        cy.intercept({
+          method: 'PUT',
+          url: 'http://localhost:8080/geonetwork/srv/api/site/index?reset=false&asynchronous=true',
+        }).as('indexingRecordsXHR')
+        cy.get('[class=panel-body]').find('button').first().click()
+        cy.wait('@indexingRecordsXHR')
+      })
+
+      it('should display quality widget', () => {
+        cy.visit('/search')
+        cy.get('gn-ui-progress-bar')
+          .eq(2)
+          .should('have.attr', 'ng-reflect-value', 87)
+      })
+
+      it('should display results sorted by quality score', () => {
+        cy.get('@sortBy').selectDropdownOption('desc,qualityScore')
+        cy.get('gn-ui-progress-bar')
+          .eq(2)
+          .should('have.attr', 'ng-reflect-value', 100)
+      })
+    })
+  })
 })
