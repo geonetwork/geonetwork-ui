@@ -54,17 +54,6 @@ export interface SearchConfig {
 
 export interface MetadataQualityConfig {
   ENABLED: boolean
-  SORTABLE: boolean
-  DISPLAY_WIDGET_IN_DETAIL: boolean
-  DISPLAY_WIDGET_IN_SEARCH: boolean
-  DISPLAY_TITLE: boolean
-  DISPLAY_DESCRIPTION: boolean
-  DISPLAY_TOPIC: boolean
-  DISPLAY_KEYWORDS: boolean
-  DISPLAY_LEGAL_CONSTRAINTS: boolean
-  DISPLAY_CONTACT: boolean
-  DISPLAY_UPDATE_FREQUENCY: boolean
-  DISPLAY_ORGANISATION: boolean
 }
 
 export type CustomTranslations = { [translationKey: string]: string }

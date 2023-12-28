@@ -456,4 +456,40 @@ describe('datasets', () => {
       })
     })
   })
+
+  describe('metadata quality', () => {
+    describe('metadata quality widget not enabled', () => {
+      it('should not show quality score sorting', () => {
+        cy.get('@sortBy').find('button').click()
+        cy.get('.cdk-overlay-container')
+          .find('[role=listbox]')
+          .find('button')
+          .should('have.length', 3)
+      })
+    })
+
+    describe('metadata quality widget enabled', () => {
+      beforeEach(() => {
+        // this will enable metadata quality widget
+        cy.intercept('GET', '/assets/configuration/default.toml', {
+          fixture: 'config-with-metadata-quality.toml',
+        })
+        cy.visit('/search')
+      })
+
+      it('should display quality widget', () => {
+        cy.get('@sortBy').selectDropdownOption('desc,createDate')
+        cy.get('gn-ui-progress-bar')
+          .eq(0)
+          .should('have.attr', 'ng-reflect-value', 87)
+      })
+
+      it('should display results sorted by quality score', () => {
+        cy.get('@sortBy').selectDropdownOption('desc,qualityScore')
+        cy.get('gn-ui-progress-bar')
+          .eq(0)
+          .should('have.attr', 'ng-reflect-value', 100)
+      })
+    })
+  })
 })

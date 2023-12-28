@@ -11,8 +11,8 @@ import {
   GlobalConfig,
   LayerConfig,
   MapConfig,
-  SearchConfig,
   MetadataQualityConfig,
+  SearchConfig,
   ThemeConfig,
 } from './model'
 import { TranslateCompiler, TranslateLoader } from '@ngx-translate/core'
@@ -245,20 +245,7 @@ export function loadAppConfig() {
         parsed,
         'metadata-quality',
         [],
-        [
-          'enabled',
-          'sortable',
-          'display_widget_in_detail',
-          'display_widget_in_search',
-          'display_title',
-          'display_description',
-          'display_topic',
-          'display_keywords',
-          'display_legal_constraints',
-          'display_contact',
-          'display_update_frequency',
-          'display_organisation',
-        ],
+        ['enabled'],
         warnings,
         errors
       )
@@ -268,22 +255,6 @@ export function loadAppConfig() {
           : ({
               ENABLED: parsedMetadataQualitySection.enabled,
               SORTABLE: parsedMetadataQualitySection.sortable,
-              DISPLAY_WIDGET_IN_DETAIL:
-                parsedMetadataQualitySection.display_widget_in_detail,
-              DISPLAY_WIDGET_IN_SEARCH:
-                parsedMetadataQualitySection.display_widget_in_search,
-              DISPLAY_TITLE: parsedMetadataQualitySection.display_title,
-              DISPLAY_DESCRIPTION:
-                parsedMetadataQualitySection.display_description,
-              DISPLAY_TOPIC: parsedMetadataQualitySection.display_topic,
-              DISPLAY_KEYWORDS: parsedMetadataQualitySection.display_keywords,
-              DISPLAY_LEGAL_CONSTRAINTS:
-                parsedMetadataQualitySection.display_legal_constraints,
-              DISPLAY_CONTACT: parsedMetadataQualitySection.display_contact,
-              DISPLAY_UPDATE_FREQUENCY:
-                parsedMetadataQualitySection.display_update_frequency,
-              DISPLAY_ORGANISATION:
-                parsedMetadataQualitySection.display_organisation,
             } as MetadataQualityConfig)
 
       customTranslations = parseTranslationsConfigSection(

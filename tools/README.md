@@ -18,7 +18,7 @@ offering greater control over the values returned by ElasticSearch and giving an
 A CLI is provided to let you register or clear GeoNetwork-UI-related pipelines on an ES instance. For example:
 
 ```shell
-node pipelines/regiser-es-pipelines.js register --host=http://localhost:9200 --records-index=gn-records
+node pipelines/register-es-pipelines.js register --host=http://localhost:9200 --records-index=gn-records
 ```
 
 A docker image can also be built to register the pipelines automatically in a docker environment:

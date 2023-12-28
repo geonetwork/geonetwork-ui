@@ -99,6 +99,17 @@ services:
     ports:
       - '8080:8080'
 
+  init-pipeline:
+    image: geonetwork/geonetwork-ui-tools-pipelines:latest
+    environment:
+      ES_HOST: http://elasticsearch:9200
+      RECORDS_INDEX: gn-records
+    depends_on:
+      geonetwork:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+
   init:
     image: alpine/curl
     # only run init if volumes were cleared
@@ -110,6 +121,8 @@ services:
         condition: service_healthy
       elasticsearch:
         condition: service_healthy
+      init-pipeline:
+        condition: service_completed_successfully
     healthcheck:
       test: ['CMD-SHELL', "sh -c '[ -f /done ]'"]
       interval: 5s

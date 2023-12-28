@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { SearchService } from '@geonetwork-ui/feature/search'
-import { ErrorType, MetadataQualityDisplay } from '@geonetwork-ui/ui/elements'
+import { ErrorType } from '@geonetwork-ui/ui/elements'
 import { BehaviorSubject, combineLatest } from 'rxjs'
 import { filter, map, mergeMap } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
@@ -15,7 +15,7 @@ import { MdViewFacade } from '@geonetwork-ui/feature/record'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecordMetadataComponent {
-  @Input() metadataQualityDisplay: MetadataQualityDisplay
+  @Input() metadataQualityDisplay: boolean
 
   displayMap$ = combineLatest([
     this.facade.mapApiLinks$,
@@ -76,9 +76,5 @@ export class RecordMetadataComponent {
     this.orgsService
       .getFiltersForOrgs([org])
       .subscribe((filters) => this.searchService.updateFilters(filters))
-  }
-
-  get hasMetadataQualityWidget() {
-    return this.metadataQualityDisplay?.widget === true
   }
 }

@@ -14,7 +14,6 @@ import {
 import { RecordPreviewComponent } from '../record-preview/record-preview.component'
 import { ResultsLayoutConfigItem } from '../results-list/results-layout.config'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { MetadataQualityDisplay } from '@geonetwork-ui/ui/elements'
 
 @Component({
   selector: 'gn-ui-results-list-item',
@@ -26,7 +25,7 @@ export class ResultsListItemComponent implements OnChanges, AfterViewInit {
   @Input() layoutConfig: ResultsLayoutConfigItem
   @Input() record: CatalogRecord
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
-  @Input() metadataQualityDisplay: MetadataQualityDisplay
+  @Input() metadataQualityDisplay: boolean
   @Input() linkHref: string
   @Output() mdSelect = new EventEmitter<CatalogRecord>()
   initialized = false

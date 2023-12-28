@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { MetadataQualityDisplay } from '@geonetwork-ui/ui/elements'
 import {
   MetadataQualityConfig,
   getMetadataQualityConfig,
@@ -15,12 +14,11 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchPageComponent implements OnInit {
-  isQualitySortable = false
-  metadataQualityDisplay = {} as MetadataQualityDisplay
+  metadataQualityDisplay: boolean
 
   constructor(
     private searchRouter: RouterFacade,
-    private searchFacade: SearchFacade
+    public searchFacade: SearchFacade
   ) {}
 
   ngOnInit() {
@@ -28,18 +26,7 @@ export class SearchPageComponent implements OnInit {
 
     const cfg: MetadataQualityConfig =
       getMetadataQualityConfig() || ({} as MetadataQualityConfig)
-    this.isQualitySortable = cfg.SORTABLE === true
-    this.metadataQualityDisplay = {
-      widget: cfg.ENABLED && cfg.DISPLAY_WIDGET_IN_SEARCH !== false,
-      title: cfg.DISPLAY_TITLE,
-      description: cfg.DISPLAY_DESCRIPTION,
-      contact: cfg.DISPLAY_CONTACT,
-      keywords: cfg.DISPLAY_KEYWORDS,
-      legalConstraints: cfg.DISPLAY_LEGAL_CONSTRAINTS,
-      topic: cfg.DISPLAY_TOPIC,
-      updateFrequency: cfg.DISPLAY_UPDATE_FREQUENCY,
-      organisation: cfg.DISPLAY_ORGANISATION,
-    }
+    this.metadataQualityDisplay = cfg.ENABLED
   }
 
   onMetadataSelection(metadata: CatalogRecord): void {

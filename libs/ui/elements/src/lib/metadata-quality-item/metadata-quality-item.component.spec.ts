@@ -53,7 +53,7 @@ describe('MetadataQualityInfoComponent', () => {
     fixture.detectChanges()
 
     const iconElement = fixture.debugElement.query(By.css('mat-icon'))
-    expect(iconElement.nativeElement.innerHTML).toBe('warning_amber')
+    expect(iconElement.nativeElement.innerHTML).toBe('warning')
 
     const textElement = fixture.debugElement.query(By.css('.text'))
     expect(textElement.nativeElement.innerHTML).toBe(
@@ -81,7 +81,7 @@ describe('MetadataQualityInfoComponent', () => {
     fixture.detectChanges()
 
     const iconElement = fixture.debugElement.query(By.css('mat-icon'))
-    expect(iconElement.nativeElement.innerHTML).toBe('warning_amber')
+    expect(iconElement.nativeElement.innerHTML).toBe('warning')
 
     const textElement = fixture.debugElement.query(By.css('.text'))
     expect(textElement.nativeElement.innerHTML).toBe(

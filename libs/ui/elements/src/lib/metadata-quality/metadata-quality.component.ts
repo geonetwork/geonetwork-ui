@@ -8,18 +8,6 @@ import {
 import { MetadataQualityItem } from '../metadata-quality-item/metadata-quality-item.component'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
-export interface MetadataQualityDisplay {
-  widget: boolean
-  title: boolean
-  description: boolean
-  topic: boolean
-  keywords: boolean
-  legalConstraints: boolean
-  organisation: boolean
-  contact: boolean
-  updateFrequency: boolean
-}
-
 @Component({
   selector: 'gn-ui-metadata-quality',
   templateUrl: './metadata-quality.component.html',
@@ -29,7 +17,7 @@ export interface MetadataQualityDisplay {
 export class MetadataQualityComponent implements OnChanges {
   @Input() metadata: Partial<CatalogRecord>
   @Input() smaller = false
-  @Input() metadataQualityDisplay: MetadataQualityDisplay
+  @Input() metadataQualityDisplay: boolean
 
   items: MetadataQualityItem[] = []
 
