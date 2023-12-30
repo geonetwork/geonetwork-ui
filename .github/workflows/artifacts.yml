@@ -80,14 +80,18 @@ jobs:
           tag: ${{ github.ref }}
           overwrite: true
 
-      - name: Build all docker images
+      - name: Build docker images for all apps
         if: github.event_name == 'release'
         run: npx nx run-many --projects=${{ env.APP_NAMES }} --target=docker-build
 
-      - name: Build affected docker images
+      - name: Build docker images for affected apps
         if: github.event_name != 'release'
         # FIXME: excluding data-platform until it has a remote registry to be pushed
         run: npx nx affected --target=docker-build --exclude=data-platform
+
+      - name: Build docker images for tools
+        working-directory: tools
+        run: npm run pipelines:docker-build
 
       - name: Tag all docker images on main also as latest
         if: github.event_name == 'push' # only happens when pushing on the main branch
