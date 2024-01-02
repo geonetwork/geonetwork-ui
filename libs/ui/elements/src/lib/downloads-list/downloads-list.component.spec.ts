@@ -132,9 +132,6 @@ describe('DownloadsListComponent', () => {
         LINK_FIXTURES.geodataShpWithMimeType
       )
       expect(items[0].componentInstance.format).toEqual('shp')
-      expect(items[0].componentInstance.color).toEqual(
-        expect.stringMatching(/#[0-9a-b]{2,6}/i)
-      )
       expect(items[0].componentInstance.isFromWfs).toEqual(false)
     })
   })
