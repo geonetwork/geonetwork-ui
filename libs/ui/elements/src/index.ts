@@ -19,3 +19,5 @@ export * from './lib/related-record-card/related-record-card.component'
 export * from './lib/search-results-error/search-results-error.component'
 export * from './lib/user-preview/user-preview.component'
 export * from './lib/record-api-form/record-api-form.component'
+
+export * from './lib/markdown-parser/markdown-parser.component'
