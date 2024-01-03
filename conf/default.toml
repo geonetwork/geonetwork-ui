@@ -34,7 +34,7 @@ proxy_path = ""
 # More information about the translation can be found in the docs (https://geonetwork.github.io/geonetwork-ui/main/docs/reference/i18n.html)
 # languages = ['en', 'fr', 'de']
 
-# Allows displaying a contact email on news page for missing data
+# Enables displaying a "contact block" wherever relevant in applications
 # contact_email =  "opendata@mycompany.com"
 
 ### VISUAL THEME

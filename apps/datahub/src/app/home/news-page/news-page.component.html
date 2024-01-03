@@ -30,8 +30,10 @@
         >
           datahub.news.contact.title
         </h2>
-        <p translate>datahub.news.contact.desc1</p>
-        <p translate>datahub.news.contact.desc2</p>
+        <div
+          class="flex flex-col gap-3"
+          [innerHtml]="'datahub.news.contact.html' | translate"
+        ></div>
         <a
           [href]="'mailto:' + getContactMail()"
           class="btn-secondary uppercase justify-center"
