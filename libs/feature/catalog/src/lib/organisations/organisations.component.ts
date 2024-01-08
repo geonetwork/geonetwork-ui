@@ -74,6 +74,7 @@ export class OrganisationsComponent {
   }
 
   protected setFilterBy(value: string): void {
+    this.currentPage$.next(1)
     this.filterBy$.next(value)
   }
 
