@@ -8,7 +8,6 @@ export interface GlobalConfig {
   LOGIN_URL?: string
   WEB_COMPONENT_EMBEDDER_URL?: string
   LANGUAGES?: string[]
-  FAVICON?: string
 }
 
 export interface LayerConfig {
@@ -38,6 +37,7 @@ export interface ThemeConfig {
   MAIN_FONT?: string
   TITLE_FONT?: string
   FONTS_STYLESHEET_URL?: string
+  FAVICON?: string
 }
 
 export interface SearchPreset {

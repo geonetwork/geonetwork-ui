@@ -140,4 +140,13 @@ export class ThemeService {
     }
     return chroma.hsl(hue % 360, saturation, lightness).css()
   }
+
+  static setFavicon(faviconPath: string): void {
+    const link =
+      document.querySelector("link[rel*='icon']") ||
+      document.createElement('link')
+    link['rel'] = 'icon'
+    link['href'] = faviconPath
+    document.getElementsByTagName('head')[0].appendChild(link)
+  }
 }
