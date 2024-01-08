@@ -1,9 +1,4 @@
-import {
-  componentWrapperDecorator,
-  Meta,
-  moduleMetadata,
-  StoryObj,
-} from '@storybook/angular'
+import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
 import { GnUiLinkifyDirective } from './linkify.directive'
 
 export default {
@@ -17,13 +12,19 @@ export default {
 
 export const Primary: StoryObj<any> = {
   args: {
-    htmlContent: `Région Hauts-de-France, Dreal, IGN BD Topo<br>
-
-    Les données produites s'appuient sur le modèle CNIG de juin 2018 relatif aux SCoT : http://cnig.gouv.fr/wp-content/uploads/2019/04/190315_Standard_CNIG_SCOT.pdf<br>
-    
-    La structure a été modifiée au 03/2023 pour prendre en compte les évolutions du modèle CNIG du 10/06/2021 :<br>
-    http://cnig.gouv.fr/IMG/pdf/210615_standard_cnig_nouveauscot.pdf<br>
-    (il coexiste donc dans le modèle des champs liés aux deux modèles, par exemple sur les PADD pour les "anciens" SCoT, ou encore sur les PAS ou les DAAC pour les "nouveaux" SCoT)`,
+    htmlContent: `<p class='my-2'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin purus elit, tincidunt et gravida sit amet, mattis eget orci. Suspendisse dignissim magna sed neque rutrum lobortis. Aenean vitae quam sapien. Phasellus eleifend tortor ac imperdiet tristique. Curabitur aliquet mauris tristique, iaculis est sit amet, pulvinar ipsum. Maecenas lacinia varius felis sit amet tempor. Curabitur pulvinar ipsum eros, quis accumsan odio hendrerit sit amet.</p>
+This is a link without markup: http://cnig.gouv.fr/wp-content/uploads/2019/04/190315_Standard_CNIG_SCOT.pdf<br>
+Another link without markup:<br>
+http://cnig.gouv.fr/IMG/pdf/210615_standard_cnig_nouveauscot.pdf<br>
+<p class='my-2'>This is a link with markup: <a href="http://foo.com/(something)?after=before">This is the display text</a></p>
+This is a list containing links:
+<ul class='list-disc my-2 ml-3'>
+  <li>http://cnig.gouv.fr/IMG/pdf/210615_standard_cnig_nouveauscot.pdf</li>
+  <li><a href="http://foo.com/(something)?after=before">This is the display text</a></li>
+  <li><a href="http://foo.com/(something)?after=before" style='font-weight: bolder;'>
+    <span>Same link with style and <code>span</code> element inside</span>
+  </a></li>
+</ul>`,
   },
   argTypes: {
     htmlContent: {
@@ -33,8 +34,7 @@ export const Primary: StoryObj<any> = {
   render: (args) => ({
     props: args,
     template: `
-    <div
-        gnUiLinkify>
+    <div gnUiLinkify>
       ${args.htmlContent}
     </div>`,
   }),

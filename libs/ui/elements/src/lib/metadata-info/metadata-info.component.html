@@ -11,6 +11,7 @@
         <p
           class="whitespace-pre-line break-words sm:mb-4 sm:pr-16"
           [innerHTML]="metadata.abstract"
+          gnUiLinkify
         ></p>
         <ng-container *ngIf="metadata.keywords?.length">
           <p class="mb-3 font-medium text-primary text-sm" translate>
@@ -100,11 +101,7 @@
     <p class="text-sm" translate>record.metadata.sheet</p>
     <p class="text-primary font-medium mt-1" translate>
       <a [href]="metadata.landingPage" target="_blank">
-        <mat-icon
-          class="material-symbols-outlined inline-block align-bottom pt-1.5 text-xs text-black !w-[20px]"
-          >open_in_new</mat-icon
-        >
-        <span class="break-all">{{ metadata.landingPage }}</span>
+        <span class="break-all" gnUiLinkify>{{ metadata.landingPage }}</span>
       </a>
     </p>
   </div>
