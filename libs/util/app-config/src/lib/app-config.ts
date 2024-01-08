@@ -100,6 +100,7 @@ export function loadAppConfig() {
           'login_url',
           'web_component_embedder_url',
           'languages',
+          'favicon',
         ],
         warnings,
         errors
@@ -126,6 +127,7 @@ export function loadAppConfig() {
               WEB_COMPONENT_EMBEDDER_URL:
                 parsedGlobalSection.web_component_embedder_url,
               LANGUAGES: parsedGlobalSection.languages,
+              FAVICON: parsedGlobalSection.favicon,
             } as GlobalConfig)
 
       const parsedLayersSections = parseMultiConfigSection(

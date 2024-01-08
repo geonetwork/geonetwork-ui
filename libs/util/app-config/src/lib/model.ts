@@ -8,6 +8,7 @@ export interface GlobalConfig {
   LOGIN_URL?: string
   WEB_COMPONENT_EMBEDDER_URL?: string
   LANGUAGES?: string[]
+  FAVICON?: string
 }
 
 export interface LayerConfig {

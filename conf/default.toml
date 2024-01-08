@@ -34,6 +34,9 @@ proxy_path = ""
 # More information about the translation can be found in the docs (https://geonetwork.github.io/geonetwork-ui/main/docs/reference/i18n.html)
 # languages = ['en', 'fr', 'de']
 
+# Use it to set custom location for favicon
+# favicon = "assets/favicon.ico"
+
 ### VISUAL THEME
 
 # All parameters are expressed in CSS format, see:
