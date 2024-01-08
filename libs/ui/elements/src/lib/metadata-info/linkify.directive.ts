@@ -40,7 +40,7 @@ export class GnUiLinkifyDirective implements OnInit {
     if (url) {
       displayValue = this.createLink(displayValue, url)
     } else {
-      const urlRegex = /\bhttps?:\/\/\S+\b[=)/]?/g
+      const urlRegex = /\bhttps?:\/\/\S+?(?=[\s)|]|$)/g
       const matches = displayValue.match(urlRegex)
 
       if (matches && matches.length > 0) {
