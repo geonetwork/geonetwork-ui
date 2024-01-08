@@ -35,7 +35,7 @@ proxy_path = ""
 # languages = ['en', 'fr', 'de']
 
 # Enables displaying a "contact block" wherever relevant in applications
-# contact_email =  "opendata@mycompany.com"
+# contact_email = "opendata@mycompany.com"
 
 ### VISUAL THEME
 
