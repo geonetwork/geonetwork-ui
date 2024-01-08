@@ -29,7 +29,7 @@
   "dashboard.records.userDetail": "Nom",
   "dashboard.records.userEmail": "Email",
   "dashboard.records.username": "Nom d'utilisateur",
-  "dashboard.records.users": "{count, plural, =1{utlisateur} other{utilisateurs}}",
+  "dashboard.records.users": "{count, plural, =1{utilisateur} other{utilisateurs}}",
   "datafeeder.analysisProgressBar.illustration.fileFormatDetection": "Détection du \n format de fichier",
   "datafeeder.analysisProgressBar.illustration.gatheringDatasetInformation": "Récupération des informations \n sur le jeu de données",
   "datafeeder.analysisProgressBar.illustration.samplingData": "Sampling \n des données",
