@@ -1,52 +1,81 @@
-<div *ngIf="shownOrganization" class="mb-6 sm:mb-12">
-  <p class="text-gray-700 text-xs mb-3 uppercase" translate>
-    record.metadata.contact
-  </p>
-  <div class="flex mb-1">
+<div class="py-4 px-5 rounded bg-gray-100 text-black">
+  <div *ngIf="shownOrganization" class="mb-6 sm:mb-12">
+    <p class="text-sm mb-3 font-medium" translate>record.metadata.contact</p>
     <div
-      class="text-primary font-title text-21 mr-2 cursor-pointer hover:underline"
-      (click)="onOrganizationClick()"
+      *ngIf="contacts[0].organization?.logoUrl?.href"
+      class="mb-3 flex items-center justify-center border-solid border border-gray-300 rounded-md bg-white h-32"
     >
-      {{ shownOrganization.name }}
+      <gn-ui-thumbnail
+        class="relative h-full w-full"
+        [thumbnailUrl]="contacts[0].organization.logoUrl.href"
+        fit="contain"
+      ></gn-ui-thumbnail>
+    </div>
+    <div class="flex mb-1">
+      <div
+        class="text-primary font-title text-21 mr-2 cursor-pointer hover:underline"
+        (click)="onOrganizationClick()"
+      >
+        {{ shownOrganization.name }}
+      </div>
+    </div>
+    <div *ngIf="shownOrganization.website" class="mb-6">
+      <a
+        [href]="shownOrganization.website"
+        target="_blank"
+        class="contact-website text-primary text-sm cursor-pointer hover:underline transition-all"
+        >{{ shownOrganization.website }}
+        <mat-icon
+          class="material-symbols-outlined !w-[12px] !h-[12px] !text-[12px] opacity-75 shrink-0"
+          >open_in_new</mat-icon
+        >
+      </a>
     </div>
   </div>
-  <a
-    *ngIf="contacts.length"
-    [href]="'mailto:' + contacts[0].email"
-    class="text-gray-700 text-sm hover:underline"
-    target="_blank"
-    >{{ contacts[0].email }}</a
-  >
-  <div *ngIf="shownOrganization.website" class="mb-2">
-    <a
-      [href]="shownOrganization.website"
-      target="_blank"
-      class="contact-website text-primary text-sm cursor-pointer hover:underline transition-all"
-      >{{ shownOrganization.website }}
-      <mat-icon
-        class="material-symbols-outlined !w-[12px] !h-[12px] !text-[12px] opacity-75"
-        >open_in_new</mat-icon
-      >
-    </a>
-  </div>
-  <div *ngIf="contacts[0].firstName || contacts[0].lastName" class="mb-2">
+  <div *ngIf="contacts[0].phone" class="mb-5">
     <div class="flex">
       <mat-icon
-        class="material-symbols-outlined !w-[20px] !h-[20px] !text-[20px] opacity-75"
+        class="material-symbols-outlined !w-5 !h-5 !text-[20px] opacity-75 shrink-0"
+        >call_outline</mat-icon
+      >
+      <div class="flex flex-col ml-2">
+        <p class="text-sm">{{ contacts[0].phone }}</p>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="contacts[0].email" class="mb-5">
+    <div class="flex">
+      <mat-icon
+        class="material-symbols-outlined !w-5 !h-5 !text-[20px] opacity-75 shrink-0"
+      >
+        mail_outline</mat-icon
+      >
+      <a
+        *ngIf="contacts.length"
+        [href]="'mailto:' + contacts[0].email"
+        class="text-sm hover:underline ml-2"
+        target="_blank"
+        >{{ contacts[0].email }}</a
+      >
+    </div>
+  </div>
+  <div *ngIf="contacts[0].firstName || contacts[0].lastName" class="mb-5">
+    <div class="flex">
+      <mat-icon
+        class="material-symbols-outlined !w-5 !h-5 !text-[20px] opacity-75 shrink-0"
         >person_outline</mat-icon
       >
       <div class="flex flex-col ml-2">
         <p class="text-sm">
           {{ contacts[0].firstName }} {{ contacts[0].lastName }}
         </p>
-        <p class="text-gray-700 text-sm">{{ contacts[0].phone }}</p>
       </div>
     </div>
   </div>
   <div *ngIf="contacts[0].address" class="mb-2">
     <div class="flex">
       <mat-icon
-        class="material-symbols-outlined !w-[20px] !h-[20px] !text-[20px] opacity-75"
+        class="material-symbols-outlined !w-5 !h-5 !text-[20px] opacity-75 shrink-0"
       >
         location_on</mat-icon
       >
@@ -54,19 +83,10 @@
         <p class="text-sm">
           {{ address[0] }}
         </p>
-        <p *ngFor="let add of address.slice(1)" class="text-gray-700 text-sm">
-          {{ add }}
+        <p *ngFor="let addressPart of address.slice(1)" class="text-sm">
+          {{ addressPart }}
         </p>
       </div>
     </div>
-  </div>
-  <div
-    *ngIf="contacts[0].organization?.logoUrl?.href"
-    class="flex items-center justify-center border-solid border border-gray-300 rounded-md w-48 h-32"
-  >
-    <img
-      class="object-scale-down"
-      [src]="contacts[0].organization.logoUrl.href"
-    />
   </div>
 </div>
