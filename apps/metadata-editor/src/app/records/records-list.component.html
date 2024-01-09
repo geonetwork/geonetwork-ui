@@ -14,7 +14,12 @@
       </div>
       <div class="flex flex-row gap-3 items-center">
         <h1 class="text-[56px] font-title grow">{{ title }}</h1>
-        <h1 *ngIf="users" class="text-[56px] font-title grow" translate>
+        <h1
+          *ngIf="users"
+          class="text-[56px] font-title grow"
+          translate
+          [translateParams]="{ count: 0 }"
+        >
           dashboard.records.users
         </h1>
       </div>
@@ -38,13 +43,17 @@
         target="_blank"
         class="flex justify-center gap-2 items-center hover:text-gray-900 text-gray-800 cursor-pointer"
         ><span>{{ recordCount }}</span>
-        <span translate>dashboard.records.publishedRecords</span></a
+        <span translate [translateParams]="{ count: recordCount }"
+          >dashboard.records.publishedRecords</span
+        ></a
       >
       <gn-ui-button
         (click)="showUsers(logo, title)"
         class="flex justify-center gap-2 items-center hover:text-gray-900 text-gray-800 cursor-pointer"
         ><span>{{ userCount }}</span>
-        <span translate>dashboard.records.users</span></gn-ui-button
+        <span translate [translateParams]="{ count: userCount }"
+          >dashboard.records.users</span
+        ></gn-ui-button
       >
     </div>
   </div>
