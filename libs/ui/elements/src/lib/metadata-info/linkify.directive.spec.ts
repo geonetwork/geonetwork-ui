@@ -51,6 +51,10 @@ const testingUrls = [
     'Thirteenth link http://foo.com/(something)?after=parens query params',
     'http://foo.com/(something)?after=parens',
   ],
+  [
+    'Fourteenth link (http://foo.com/blah) in parenthesis',
+    'http://foo.com/blah',
+  ],
 ]
 
 const testWithMultipleUrls = {
