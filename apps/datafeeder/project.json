@@ -16,7 +16,6 @@
         "tsConfig": "apps/datafeeder/tsconfig.app.json",
         "aot": true,
         "assets": [
-          "apps/datafeeder/src/favicon.ico",
           "apps/datafeeder/src/assets",
           {
             "glob": "*",

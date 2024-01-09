@@ -34,6 +34,7 @@ proxy_path = ""
 # More information about the translation can be found in the docs (https://geonetwork.github.io/geonetwork-ui/main/docs/reference/i18n.html)
 # languages = ['en', 'fr', 'de']
 
+
 ### VISUAL THEME
 
 # All parameters are expressed in CSS format, see:
@@ -60,6 +61,9 @@ background_color = "#fdfbff"
 # main_font = "'My Custom Font', fallback-font"
 # title_font = "'My Custom Title Font', fallback-font-title"
 # fonts_stylesheet_url = "https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Permanent+Marker&display=swap"
+
+# Use it to set custom location for the favicon; by default, the path `/favicon.ico` will be used
+# favicon = "assets/favicon.ico"
 
 ### SEARCH SETTINGS
 

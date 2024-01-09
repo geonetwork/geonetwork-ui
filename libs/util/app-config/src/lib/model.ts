@@ -37,6 +37,7 @@ export interface ThemeConfig {
   MAIN_FONT?: string
   TITLE_FONT?: string
   FONTS_STYLESHEET_URL?: string
+  FAVICON?: string
 }
 
 export interface SearchPreset {

@@ -185,6 +185,7 @@ export function loadAppConfig() {
           'fonts_stylesheet_url',
           'thumbnail_placeholder',
           'header_background',
+          'favicon',
         ],
         warnings,
         errors
@@ -204,6 +205,7 @@ export function loadAppConfig() {
               TITLE_FONT: parsedThemeSection.title_font,
               MAIN_FONT: parsedThemeSection.main_font,
               FONTS_STYLESHEET_URL: parsedThemeSection.fonts_stylesheet_url,
+              FAVICON: parsedThemeSection.favicon,
             } as ThemeConfig)
 
       const parsedSearchSection = parseConfigSection(
