@@ -23,21 +23,29 @@ Whenever a release is made, the version number is increased according to the fol
 
 ### How to upgrade the version
 
-Simply use the following command:
+Use the following commands to upgrade to a stable (non development) version:
 
 ```shell
-$ npm version 1.3.6
+npm version 1.3.6 --no-git-tag-version
+git add .
+git commit -m "1.3.6"
+git tag v1.3.6
+git push upstream main v1.3.6 # replace "upstream" with your remote repo name
 ```
 
-This will create a commit changing the version and an associated tag.
+This will update all `package.json` files in the repository, create a commit changing the version and an associated tag, and push both
+to the remote repository.
 
-> Note that `npm version` can also automatically upgrade the version, e.g. calling `npm version minor`.
-
-Once the version commit and tags are done, run the following command to upgrade to an intermediary dev version:
+Once the version commit and tag are done and pushed, run the following commands to upgrade to an intermediary dev version:
 
 ```shell
-$ npm version 1.3.7-dev --no-git-tag-version
+npm version 1.4.0-dev --no-git-tag-version # dev versions are a minor version above stable ones 
+git add .
+git commit -m "1.4.0-dev"
+git push upstream main
 ```
+
+> Note that we're not tagging dev versions.
 
 ## Releases
 
