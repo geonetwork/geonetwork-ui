@@ -162,6 +162,16 @@ describe('OrganisationsComponent', () => {
               .name
           ).toEqual('J Data Org')
         })
+        it('should not change currentPage when sorting results', () => {
+          component.setSortBy('desc')
+          fixture.detectChanges()
+          expect(paginationComponentDE.componentInstance.currentPage).toEqual(2)
+        })
+        it('should set currentPage to 1 when filtering to display results', () => {
+          component.setFilterBy('Data')
+          fixture.detectChanges()
+          expect(paginationComponentDE.componentInstance.currentPage).toEqual(1)
+        })
       })
     })
     describe('sort by recordCount', () => {
