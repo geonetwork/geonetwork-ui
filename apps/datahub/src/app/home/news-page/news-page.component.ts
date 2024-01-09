@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
 
 @Component({
   selector: 'datahub-news-page',
@@ -6,4 +7,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   styleUrls: ['./news-page.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NewsPageComponent {}
+export class NewsPageComponent {
+  getContactMail(): string {
+    return getGlobalConfig().CONTACT_EMAIL
+  }
+}
