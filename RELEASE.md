@@ -39,7 +39,7 @@ to the remote repository.
 Once the version commit and tag are done and pushed, run the following commands to upgrade to an intermediary dev version:
 
 ```shell
-npm version 1.4.0-dev --no-git-tag-version # dev versions are a minor version above stable ones 
+npm version 1.4.0-dev --no-git-tag-version # dev versions are a minor version above stable ones
 git add .
 git commit -m "1.4.0-dev"
 git push upstream main
@@ -55,7 +55,7 @@ Releases are made periodically when needed. Each release includes:
 
 - An archive of each application, named like so: `geonetwork-ui-{application-name}-{version}.zip`  
   Example: `geonetwork-ui-datahub-1.2.5.zip`
-- A docker image of each application, tagged like so: `geonetwork/geonetwork-ui-{application-name}:{version}`  
+- A docker image of each application, tagged like so: `geonetwork/geonetwork-ui-{application-name}:{version}`
   Example: `geonetwork/geonetwork-ui-datahub:1.2.5`
 
 > Note that the latest development version of each application is also available by replacing the version with
