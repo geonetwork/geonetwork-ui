@@ -39,7 +39,7 @@ jobs:
   build-archive-docker:
     needs: checks
     if: github.event_name != 'issue_comment' || needs.checks.outputs.shouldRun
-    name: Build docker images and archives
+    name: Build and upload docker images and archives
     runs-on: ubuntu-latest
 
     steps:
@@ -108,3 +108,48 @@ jobs:
         run: |
           docker image ls --format '{{.Repository}}:{{.Tag}}' --filter=reference='geonetwork/*' | \
           xargs -r -L1 docker push $1
+
+  build-npm-package:
+    if: github.event_name != 'issue_comment'
+    name: Build and publish NPM package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.checks.outputs.ref }} # use the PR head ref if applicable; otherwise keep default behaviour
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Adjust package version according to branch & commit
+        working-directory: package
+        run: npm version $(../tools/print-dev-version.sh) --no-git-tag-version
+
+      - name: Build NPM package
+        working-directory: package
+        run: node generate-package.js
+
+      - name: Publish NPM package with @dev tag
+        if: github.event_name != 'release'
+        working-directory: package/dist
+        run: npm publish --tag dev
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish NPM package
+        if: github.event_name == 'release'
+        working-directory: package/dist
+        run: npm publish --tag latest
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
