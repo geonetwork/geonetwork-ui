@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core'
+import { importProvidersFrom, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 
 import { AppComponent } from './app.component'
@@ -15,6 +15,10 @@ import { EffectsModule } from '@ngrx/effects'
 import { storeFreeze } from 'ngrx-store-freeze'
 import { environment } from '../environments/environment'
 import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { provideGn4 } from '@geonetwork-ui/api/repository/gn4'
+import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
+import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
@@ -24,14 +28,20 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FeatureMapModule,
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
     UtilI18nModule,
     StoreModule.forRoot({}, { metaReducers }),
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot(),
+    FeatureCatalogModule,
   ],
-  providers: [provideRepositoryUrl('/geonetwork/srv/api')],
+  providers: [
+    importProvidersFrom(FeatureAuthModule),
+    provideRepositoryUrl('/geonetwork/srv/api'),
+    provideGn4(),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {
