@@ -14,7 +14,7 @@ import { Injector } from '@angular/core'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
-import { ElasticsearchService } from '@geonetwork-ui/api/repository/gn4'
+import { ElasticsearchService } from '@geonetwork-ui/api/repository'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 

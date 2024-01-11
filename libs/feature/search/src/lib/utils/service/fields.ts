@@ -13,7 +13,7 @@ import {
   FieldFilters,
   TermBucket,
 } from '@geonetwork-ui/common/domain/model/search'
-import { ElasticsearchService } from '@geonetwork-ui/api/repository/gn4'
+import { ElasticsearchService } from '@geonetwork-ui/api/repository'
 import { LangService } from '@geonetwork-ui/util/i18n'
 
 export type FieldValue = string | number

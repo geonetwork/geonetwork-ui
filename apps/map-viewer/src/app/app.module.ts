@@ -16,7 +16,7 @@ import { storeFreeze } from 'ngrx-store-freeze'
 import { environment } from '../environments/environment'
 import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { provideGn4 } from '@geonetwork-ui/api/repository/gn4'
+import { provideGn4 } from '@geonetwork-ui/api/repository'
 import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 

@@ -25,7 +25,7 @@ import { extModules } from './build-specifics'
 import { DashboardPageComponent } from './dashboard/dashboard-page.component'
 import { EditorRouterService } from './router.service'
 import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
-import { provideGn4 } from '@geonetwork-ui/api/repository/gn4'
+import { provideGn4 } from '@geonetwork-ui/api/repository'
 
 @NgModule({
   declarations: [AppComponent],

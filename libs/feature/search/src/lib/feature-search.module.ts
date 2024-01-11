@@ -23,7 +23,7 @@ import { FilterDropdownComponent } from './filter-dropdown/filter-dropdown.compo
 import { Geometry } from 'geojson'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { Gn4Repository } from '@geonetwork-ui/api/repository/gn4'
+import { Gn4Repository } from '@geonetwork-ui/api/repository'
 
 // this geometry will be used to filter & boost results accordingly
 export const FILTER_GEOMETRY = new InjectionToken<Promise<Geometry>>(

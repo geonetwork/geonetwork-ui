@@ -6,7 +6,7 @@ import {
   USER_FIXTURE_ANON,
   USERS_FIXTURE,
 } from '@geonetwork-ui/common/fixtures'
-import { AuthService } from '@geonetwork-ui/api/repository/gn4'
+import { AuthService } from '@geonetwork-ui/api/repository'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { EditorRouterService } from '../../router.service'

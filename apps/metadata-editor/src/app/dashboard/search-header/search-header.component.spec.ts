@@ -13,7 +13,7 @@ import { EffectsModule } from '@ngrx/effects'
 import { TranslateModule } from '@ngx-translate/core'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { AvatarServiceInterface } from '@geonetwork-ui/api/repository/gn4'
+import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
 
 class AvatarServiceInterfaceMock {
   getPlaceholder = () => of('http://placeholder.com')

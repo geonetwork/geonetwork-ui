@@ -45,7 +45,7 @@ import { delay } from 'rxjs/operators'
 import { FILTER_GEOMETRY } from '../feature-search.module'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { TestScheduler } from 'rxjs/internal/testing/TestScheduler'
-import { FavoritesService } from '@geonetwork-ui/api/repository/gn4'
+import { FavoritesService } from '@geonetwork-ui/api/repository'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 const defaultSearchState = initialState[DEFAULT_SEARCH_KEY]

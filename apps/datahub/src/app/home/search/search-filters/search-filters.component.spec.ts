@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser'
 import { FormsModule } from '@angular/forms'
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 import { USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
-import { AuthService } from '@geonetwork-ui/api/repository/gn4'
+import { AuthService } from '@geonetwork-ui/api/repository'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({

@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { RecordsListComponent } from '../records-list.component'
 import { BehaviorSubject, of } from 'rxjs'
 import { USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
-import { AuthService } from '@geonetwork-ui/api/repository/gn4'
+import { AuthService } from '@geonetwork-ui/api/repository'
 import { EditorRouterService } from '../../router.service'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
