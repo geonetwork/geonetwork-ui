@@ -43,6 +43,7 @@ testem.log
 Thumbs.db
 
 .angular
+.nx
 
 docs/.vitepress/dist
 docs/.vitepress/cache
