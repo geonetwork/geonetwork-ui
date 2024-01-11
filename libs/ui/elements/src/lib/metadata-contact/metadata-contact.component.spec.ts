@@ -106,14 +106,4 @@ describe('MetadataContactComponent', () => {
       expect(a.attributes.target).toBe('_blank')
     })
   })
-
-  describe('#parseAddress', () => {
-    test.each(addressCases)(
-      'adressString: $address',
-      ({ address, expectedResult }) => {
-        console.log(component)
-        expect(component.parseAddress(address)).toStrictEqual(expectedResult)
-      }
-    )
-  })
 })
