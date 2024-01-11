@@ -1,7 +1,9 @@
 <header class="w-full h-[231px]" [style.background]="backgroundCss">
-  <div class="h-full container-lg mx-auto flex flex-col relative">
+  <div
+    class="h-full container-lg mx-auto flex flex-col justify-between relative"
+  >
     <div class="flex flex-row space-between">
-      <div class="absolute" style="left: 16px; top: 16px">
+      <div>
         <gn-ui-navigation-button
           (click)="back()"
           [label]="'datahub.search.back' | translate"
@@ -9,32 +11,32 @@
         >
         </gn-ui-navigation-button>
       </div>
-      <div class="absolute" style="right: 16px; top: 16px">
+      <div>
         <gn-ui-favorite-star
           *ngIf="metadata?.uniqueIdentifier"
           [record]="metadata"
           [displayCount]="false"
-          class="absolute text-background top-[0.85em] right-[0.85em]"
+          class="text-background"
           [style.color]="foregroundColor"
           [style.--star-toggle-enabled-color]="'var(--color-primary)'"
           [style.--star-toggle-disabled-color]="foregroundColor"
         ></gn-ui-favorite-star>
-        <button class="text-white">FR</button>
+        <gn-ui-language-switcher
+          class="language-switcher absolute top-2.5 left-2.5 text-[13px] text-white"
+        ></gn-ui-language-switcher>
       </div>
     </div>
-    <div class="relative mt-18 gap-8">
-      <div
-        *ngIf="metadata"
-        class="font-title text-[28px] line-clamp-4"
-        [style.color]="foregroundColor"
-      >
-        {{ metadata.title }}
-      </div>
-      <div class="flex flex-row text-white gap-3">
-        <p>Donnée géographique</p>
-        <p>Mise à jour le 01.01.2024</p>
-        <p>[Statut]</p>
-      </div>
+    <div
+      *ngIf="metadata"
+      class="font-title text-[28px] line-clamp-4 mt-8 ml-4"
+      [style.color]="foregroundColor"
+    >
+      {{ metadata.title }}
+    </div>
+    <div class="flex flex-row text-white gap-3 mb-3 ml-4">
+      <p>Donnée géographique</p>
+      <p>Mise à jour le 01.01.2024</p>
+      <p>[Statut]</p>
     </div>
   </div>
 </header>
