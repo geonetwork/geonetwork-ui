@@ -1,36 +1,40 @@
 <header class="w-full h-[231px]" [style.background]="backgroundCss">
-  <div
-    class="h-full container-lg mx-auto flex flex-col justify-center relative"
-  >
-    <gn-ui-favorite-star
-      *ngIf="metadata?.uniqueIdentifier"
-      [record]="metadata"
-      class="absolute text-background top-[0.85em] right-[0.85em]"
-      [style.color]="foregroundColor"
-      [style.--star-toggle-enabled-color]="'var(--color-primary)'"
-      [style.--star-toggle-disabled-color]="foregroundColor"
-    ></gn-ui-favorite-star>
-    <div
-      *ngIf="metadata"
-      class="font-title text-center px-2 text-[28px] mb-[41px] line-clamp-4 sm:mx-48"
-      [style.color]="foregroundColor"
-    >
-      {{ metadata.title }}
+  <div class="h-full container-lg mx-auto flex flex-col relative">
+    <div class="flex flex-row space-between">
+      <div class="absolute" style="left: 16px; top: 16px">
+        <gn-ui-navigation-button
+          (click)="back()"
+          [label]="'datahub.search.back' | translate"
+          [icon]="'navigate_before'"
+        >
+        </gn-ui-navigation-button>
+      </div>
+      <div class="absolute" style="right: 16px; top: 16px">
+        <gn-ui-favorite-star
+          *ngIf="metadata?.uniqueIdentifier"
+          [record]="metadata"
+          [displayCount]="false"
+          class="absolute text-background top-[0.85em] right-[0.85em]"
+          [style.color]="foregroundColor"
+          [style.--star-toggle-enabled-color]="'var(--color-primary)'"
+          [style.--star-toggle-disabled-color]="foregroundColor"
+        ></gn-ui-favorite-star>
+        <button class="text-white">FR</button>
+      </div>
     </div>
-
-    <div class="absolute" style="left: 16px; top: 16px">
-      <gn-ui-navigation-button
-        (click)="back()"
-        [label]="'datahub.search.back' | translate"
-        [icon]="'navigate_before'"
+    <div class="relative mt-18 gap-8">
+      <div
+        *ngIf="metadata"
+        class="font-title text-[28px] line-clamp-4"
+        [style.color]="foregroundColor"
       >
-      </gn-ui-navigation-button>
+        {{ metadata.title }}
+      </div>
+      <div class="flex flex-row text-white gap-3">
+        <p>Donnée géographique</p>
+        <p>Mise à jour le 01.01.2024</p>
+        <p>[Statut]</p>
+      </div>
     </div>
   </div>
 </header>
-
-<div
-  class="container-lg mt-[-40px] z-20 sticky lg:mx-auto inset-x-0 top-[10px]"
->
-  <datahub-navigation-bar></datahub-navigation-bar>
-</div>

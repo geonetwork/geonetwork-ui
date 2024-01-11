@@ -27,6 +27,7 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
+  @Input() displayCount: string
   @Input() set record(value) {
     this.record_ = value
     this.favoriteCount =

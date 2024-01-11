@@ -55,5 +55,8 @@
 </div>
 
 <ng-template #favoriteToggle let-record>
-  <gn-ui-favorite-star [record]="record"></gn-ui-favorite-star>
+  <gn-ui-favorite-star
+    [displayCount]="true"
+    [record]="record"
+  ></gn-ui-favorite-star>
 </ng-template>
