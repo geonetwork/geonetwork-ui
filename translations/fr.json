@@ -219,6 +219,7 @@
   "record.metadata.formats": "Formats",
   "record.metadata.isOpenData": "Donnée Ouverte",
   "record.metadata.keywords": "Mots clés",
+  "record.metadata.lastUpdate": "Mis à jour le",
   "record.metadata.links": "Liens",
   "record.metadata.noUsage": "Aucune condition d'utilisation spécifiée pour ces données",
   "record.metadata.origin": "À propos des données",
