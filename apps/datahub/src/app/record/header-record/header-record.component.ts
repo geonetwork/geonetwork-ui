@@ -18,6 +18,10 @@ export class HeaderRecordComponent {
 
   constructor(private searchService: SearchService) {}
 
+  get lastUpdate() {
+    return this.metadata.recordUpdated.toLocaleString().split(',')[0]
+  }
+
   back() {
     this.searchService.updateFilters({})
   }

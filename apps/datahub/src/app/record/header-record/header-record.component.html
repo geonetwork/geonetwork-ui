@@ -35,7 +35,12 @@
     </div>
     <div class="flex flex-row text-white gap-3 mb-3 ml-4">
       <p>Donnée géographique</p>
-      <p>Mise à jour le 01.01.2024</p>
+      <div *ngIf="metadata.recordUpdated" class="flex flex-row gap-1">
+        <p class="text-white" translate>record.metadata.lastUpdate</p>
+        <p class="text-white">
+          {{ lastUpdate }}
+        </p>
+      </div>
       <p>[Statut]</p>
     </div>
   </div>
