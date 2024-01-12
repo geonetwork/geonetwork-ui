@@ -13,6 +13,7 @@ import { map, startWith, tap } from 'rxjs/operators'
 import { ORGANIZATION_URL_TOKEN } from '../feature-catalog.module'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { SortByField } from '@geonetwork-ui/common/domain/model/search'
+import { createFuzzyFilter } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-organisations',
@@ -84,23 +85,8 @@ export class OrganisationsComponent {
 
   private filterOrganisations(organisations: Organization[], filterBy: string) {
     if (!filterBy) return organisations
-    const filterRegex = new RegExp(
-      this.normalizeString(filterBy) //ignore accents and case
-        .replace(/[^a-z0-9\s]/g, ' ') //ignore special characters (also without spaces like l')
-        .replace(/\s(?=.)/g, '.*') //replace whitespaces by "AND" separator
-        .replace(/\s/g, ''), //remove potential whitespaces left
-      'i'
-    )
-    return [...organisations].filter((org) => {
-      return this.normalizeString(org.name).match(filterRegex)
-    })
-  }
-
-  private normalizeString(str: string) {
-    return str
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .toLowerCase()
+    const filter = createFuzzyFilter(filterBy)
+    return organisations.filter((org) => filter(org.name))
   }
 
   private sortOrganisations(

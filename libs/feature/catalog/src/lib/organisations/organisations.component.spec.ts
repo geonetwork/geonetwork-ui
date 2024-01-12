@@ -163,12 +163,12 @@ describe('OrganisationsComponent', () => {
           ).toEqual('J Data Org')
         })
         it('should not change currentPage when sorting results', () => {
-          component.setSortBy('desc')
+          component['setSortBy'](['desc', 'recordCount'])
           fixture.detectChanges()
           expect(paginationComponentDE.componentInstance.currentPage).toEqual(2)
         })
         it('should set currentPage to 1 when filtering to display results', () => {
-          component.setFilterBy('Data')
+          component['setFilterBy']('Data')
           fixture.detectChanges()
           expect(paginationComponentDE.componentInstance.currentPage).toEqual(1)
         })
@@ -208,71 +208,30 @@ describe('OrganisationsComponent', () => {
         beforeEach(() => {
           orgResultComponent = de.query(
             By.directive(OrganisationsResultMockComponent)
-          )
+          ).componentInstance
         })
         it('should display number of organisations found to equal all', () => {
-          expect(orgResultComponent.componentInstance.hits).toEqual(
-            ORGANISATIONS_FIXTURE.length
-          )
+          expect(orgResultComponent.hits).toEqual(ORGANISATIONS_FIXTURE.length)
         })
         it('should display number of all organisations', () => {
-          expect(orgResultComponent.componentInstance.total).toEqual(
-            ORGANISATIONS_FIXTURE.length
-          )
+          expect(orgResultComponent.total).toEqual(ORGANISATIONS_FIXTURE.length)
         })
       })
       describe('entering search terms', () => {
         beforeEach(() => {
           orgResultComponent = de.query(
             By.directive(OrganisationsResultMockComponent)
-          )
+          ).componentInstance
         })
         it('should ignore case and display 11 matches for "Data", "DATA" or "data"', () => {
           component.filterBy$.next('Data')
           fixture.detectChanges()
-          expect(orgResultComponent.componentInstance.hits).toEqual(11)
-          component.filterBy$.next('DATA')
-          fixture.detectChanges()
-          expect(orgResultComponent.componentInstance.hits).toEqual(11)
-          component.filterBy$.next('data')
-          fixture.detectChanges()
-          expect(orgResultComponent.componentInstance.hits).toEqual(11)
-        })
-        it('should ignore accents and case and display 2 matches for "é Data Org", "e Data Org" or "E Data Org"', () => {
-          component.filterBy$.next('é Data Org')
-          fixture.detectChanges()
-          expect(orgResultComponent.componentInstance.hits).toEqual(2)
-          component.filterBy$.next('e Data Org')
-          fixture.detectChanges()
-          expect(orgResultComponent.componentInstance.hits).toEqual(2)
-          component.filterBy$.next('E Data Org')
-          fixture.detectChanges()
-          expect(orgResultComponent.componentInstance.hits).toEqual(2)
+          expect(orgResultComponent.hits).toEqual(11)
         })
         it('should ignore special character without space and display 1 match for "l\'Ingénierie"', () => {
           component.filterBy$.next("l'Ingénierie")
           fixture.detectChanges()
-          expect(orgResultComponent.componentInstance.hits).toEqual(1)
-        })
-        it('should ignore special character with space and display 1 match for "ARS / Agence"', () => {
-          component.filterBy$.next('ARS / Agence')
-          fixture.detectChanges()
-          expect(orgResultComponent.componentInstance.hits).toEqual(1)
-        })
-        it('should combine multiple termes with "AND" logic and display 1 match for "a data"', () => {
-          component.filterBy$.next('a data')
-          fixture.detectChanges()
-          expect(orgResultComponent.componentInstance.hits).toEqual(1)
-        })
-        it('should combine multiple termes with "AND" logic and display 11 matches for "data org"', () => {
-          component.filterBy$.next('data org')
-          fixture.detectChanges()
-          expect(orgResultComponent.componentInstance.hits).toEqual(11)
-        })
-        it('should display 12 matches for "ORG"', () => {
-          component.filterBy$.next('ORG')
-          fixture.detectChanges()
-          expect(orgResultComponent.componentInstance.hits).toEqual(12)
+          expect(orgResultComponent.hits).toEqual(1)
         })
       })
     })

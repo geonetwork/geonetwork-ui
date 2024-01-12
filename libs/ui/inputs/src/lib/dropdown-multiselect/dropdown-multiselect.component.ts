@@ -17,7 +17,10 @@ import {
 } from '@angular/cdk/overlay'
 import { take } from 'rxjs/operators'
 import { Choice } from './dropdown-multiselect.model'
-import { propagateToDocumentOnly } from '@geonetwork-ui/util/shared'
+import {
+  createFuzzyFilter,
+  propagateToDocumentOnly,
+} from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-dropdown-multiselect',
@@ -74,9 +77,10 @@ export class DropdownMultiselectComponent {
   }
 
   get filteredChoicesByText() {
-    return this.choices.filter((choice) =>
-      choice.label.toLowerCase().includes(this.searchInputValue?.toLowerCase())
-    )
+    const filterPattern = this.searchInputValue?.toLowerCase()
+    if (!filterPattern) return this.choices
+    const filter = createFuzzyFilter(filterPattern)
+    return this.choices.filter((choice) => filter(choice.label))
   }
 
   get focusedIndex(): number | -1 {
