@@ -246,6 +246,7 @@
   "record.metadata.related": "Ähnliche Datensätze",
   "record.metadata.sheet": "Weitere Informationen erhalten Sie unter :",
   "record.metadata.title": "Titel",
+  "record.metadata.type": "",
   "record.metadata.updateFrequency": "Aktualisierungsfrequenz der Daten",
   "record.metadata.updateStatus": "Aktualisierungsstatus der Daten",
   "record.metadata.updatedOn": "Letzte Aktualisierung der Dateninformationen",

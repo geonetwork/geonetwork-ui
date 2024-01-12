@@ -1,6 +1,10 @@
 <button
-  class="group flex items-center justify-center backdrop-blur p-1 bg-primary-opacity-50 text-white rounded"
+  class="group flex items-center justify-center gap-1 backdrop-blur p-1 bg-primary-opacity-30 text-white rounded content-center"
 >
-  <mat-icon class="material-symbols-outlined align-middle">{{ icon }}</mat-icon>
-  <span class="mx-2 hidden group-hover:inline">{{ label }}</span>
+  <mat-icon class="material-symbols-outlined align-middle w-[18px]">{{
+    icon
+  }}</mat-icon>
+  <span class="mx-2 mt-0.5 text-[16px] content-center opacity-75">{{
+    label.toUpperCase()
+  }}</span>
 </button>

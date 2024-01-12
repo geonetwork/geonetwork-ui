@@ -7,7 +7,7 @@
         <gn-ui-navigation-button
           (click)="back()"
           [label]="'datahub.search.back' | translate"
-          [icon]="'navigate_before'"
+          [icon]="'arrow_back'"
         >
         </gn-ui-navigation-button>
       </div>
@@ -34,14 +34,23 @@
       {{ metadata.title }}
     </div>
     <div class="flex flex-row text-white gap-3 mb-3 ml-4">
-      <p>Donnée géographique</p>
+      <div
+        *ngIf="(displayMap$ | async) === true"
+        class="flex flex-row bg-primary-opacity-75 rounded"
+      >
+        <span class="material-symbols-outlined mt-0.5 ml-2 text-[20px]">
+          my_location
+        </span>
+        <p class="text-white ml-2 mr-2" translate>record.metadata.type</p>
+      </div>
       <div *ngIf="metadata.recordUpdated" class="flex flex-row gap-1">
         <p class="text-white" translate>record.metadata.lastUpdate</p>
         <p class="text-white">
           {{ lastUpdate }}
         </p>
       </div>
-      <div *ngIf="metadata.status">
+      <div *ngIf="metadata.status" class="flex flex-row gap-3">
+        <p>•</p>
         <p
           class="text-white"
           [innerHTML]="

@@ -246,6 +246,7 @@
   "record.metadata.related": "Súvisiace záznamy",
   "record.metadata.sheet": "Ďalšie metadáta sú k dispozícii na:",
   "record.metadata.title": "Názov",
+  "record.metadata.type": "",
   "record.metadata.updateFrequency": "Frekvencia aktualizácie metadát",
   "record.metadata.updateStatus": "Stav aktualizácie metadát",
   "record.metadata.updatedOn": "Posledná aktualizácia metadát",
