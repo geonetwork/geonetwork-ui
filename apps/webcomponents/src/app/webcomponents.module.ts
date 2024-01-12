@@ -33,7 +33,7 @@ import { GnDatasetViewChartComponent } from './components/gn-dataset-view-chart/
 import { FeatureDatavizModule } from '@geonetwork-ui/feature/dataviz'
 import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { provideGn4 } from '@geonetwork-ui/api/repository/gn4'
+import { provideGn4 } from '@geonetwork-ui/api/repository'
 
 const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnFacetsComponent, 'gn-facets'],

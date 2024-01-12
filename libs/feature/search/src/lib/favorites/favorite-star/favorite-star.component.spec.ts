@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import tippy from 'tippy.js'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
-import { FavoritesService } from '@geonetwork-ui/api/repository/gn4'
+import { FavoritesService } from '@geonetwork-ui/api/repository'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 tippy = jest.fn()

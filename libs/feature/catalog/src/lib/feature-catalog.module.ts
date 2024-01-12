@@ -20,7 +20,7 @@ import {
   OrganizationsFromGroupsService,
   OrganizationsFromMetadataService,
   OrganizationsStrategy,
-} from '@geonetwork-ui/api/repository/gn4'
+} from '@geonetwork-ui/api/repository'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 // expects the replacement key ${name}

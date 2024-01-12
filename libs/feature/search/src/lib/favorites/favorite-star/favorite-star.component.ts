@@ -14,10 +14,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { StarToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { Observable, Subscription } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import {
-  AuthService,
-  FavoritesService,
-} from '@geonetwork-ui/api/repository/gn4'
+import { AuthService, FavoritesService } from '@geonetwork-ui/api/repository'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 @Component({

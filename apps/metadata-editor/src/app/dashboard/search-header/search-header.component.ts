@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { LetDirective } from '@ngrx/component'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
-import { AvatarServiceInterface } from '@geonetwork-ui/api/repository/gn4'
+import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 @Component({

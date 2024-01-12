@@ -8,7 +8,7 @@ import { Router } from '@angular/router'
 import { BehaviorSubject } from 'rxjs'
 import { CommonModule } from '@angular/common'
 import { MatIconModule } from '@angular/material/icon'
-import { SelectionService } from '@geonetwork-ui/api/repository/gn4'
+import { SelectionService } from '@geonetwork-ui/api/repository'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 
 const results = [{ md: true }]

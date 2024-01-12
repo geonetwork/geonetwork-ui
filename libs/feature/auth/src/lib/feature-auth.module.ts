@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common'
 import {
   AvatarServiceInterface,
   GravatarService,
-} from '@geonetwork-ui/api/repository/gn4'
+} from '@geonetwork-ui/api/repository'
 
 @NgModule({
   imports: [CommonModule],

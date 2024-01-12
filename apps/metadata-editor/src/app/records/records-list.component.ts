@@ -8,7 +8,7 @@ import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { SortByField } from '@geonetwork-ui/common/domain/model/search'
 import { TranslateModule } from '@ngx-translate/core'
-import { SelectionService } from '@geonetwork-ui/api/repository/gn4'
+import { SelectionService } from '@geonetwork-ui/api/repository'
 import { Subject } from 'rxjs'
 
 const includes = [

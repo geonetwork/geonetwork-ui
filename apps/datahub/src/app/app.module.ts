@@ -73,7 +73,7 @@ import {
   provideRepositoryUrl,
 } from '@geonetwork-ui/api/repository'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { LOGIN_URL, provideGn4 } from '@geonetwork-ui/api/repository/gn4'
+import { LOGIN_URL, provideGn4 } from '@geonetwork-ui/api/repository'
 import { RecordRelatedRecordsComponent } from './record/record-related-records/record-related-records.component'
 import { RecordMetadataComponent } from './record/record-metadata/record-metadata.component'
 import { RecordOtherlinksComponent } from './record/record-otherlinks/record-otherlinks.component'

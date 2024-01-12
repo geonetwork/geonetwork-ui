@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing'
 import { MyOrgService } from './my-org.service'
-import { AvatarServiceInterface } from '@geonetwork-ui/api/repository/gn4'
+import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { BehaviorSubject, of } from 'rxjs'
 import { UserApiModel } from '@geonetwork-ui/data-access/gn4'

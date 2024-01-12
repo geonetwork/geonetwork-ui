@@ -43,7 +43,7 @@ import { switchMapWithSearchId } from '../utils/operators/search.operator'
 import { Geometry } from 'geojson'
 import { FILTER_GEOMETRY } from '../feature-search.module'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { FavoritesService } from '@geonetwork-ui/api/repository/gn4'
+import { FavoritesService } from '@geonetwork-ui/api/repository'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { valid as validGeoJson } from 'geojson-validation'
 
