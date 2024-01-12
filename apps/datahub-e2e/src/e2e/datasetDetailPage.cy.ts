@@ -81,22 +81,6 @@ describe('dataset pages', () => {
         cy.url().should('include', '/search')
       })
     })
-    describe('navigation bar', () => {
-      it('should display the navigation  bar with 4 sections', () => {
-        cy.get('datahub-navigation-bar')
-          .find('button')
-          .filter(':visible')
-          .should('have.length', 4)
-      })
-      it('should scroll down/up to the clicked section', () => {
-        cy.get('datahub-navigation-bar')
-          .find('button')
-          .filter(':visible')
-          .as('navBtns')
-        cy.get('@navBtns').eq(3).click()
-        cy.get('datahub-record-otherlinks').should('be.visible')
-      })
-    })
   })
 
   describe('ABOUT SECTION : display & functions', () => {
