@@ -1,9 +1,9 @@
-<header class="w-full h-[231px]" [style.background]="backgroundCss">
+<header class="w-full h-[255px]" [style.background]="backgroundCss">
   <div
     class="h-full container-lg mx-auto flex flex-col justify-between relative"
   >
-    <div class="flex flex-row space-between">
-      <div>
+    <div class="flex flex-row justify-between align-center mt-3">
+      <div class="ml-4">
         <gn-ui-navigation-button
           (click)="back()"
           [label]="'datahub.search.back' | translate"
@@ -11,7 +11,7 @@
         >
         </gn-ui-navigation-button>
       </div>
-      <div>
+      <div class="flex flex-row mr-4 align-center">
         <gn-ui-favorite-star
           *ngIf="metadata?.uniqueIdentifier"
           [record]="metadata"
@@ -22,13 +22,13 @@
           [style.--star-toggle-disabled-color]="foregroundColor"
         ></gn-ui-favorite-star>
         <gn-ui-language-switcher
-          class="language-switcher absolute top-2.5 left-2.5 text-[13px] text-white"
+          class="language-switcher text-[13px] text-white"
         ></gn-ui-language-switcher>
       </div>
     </div>
     <div
       *ngIf="metadata"
-      class="font-title text-[28px] line-clamp-4 mt-8 ml-4"
+      class="font-title text-[28px] max-w-screen-sm line-clamp-4 ml-4"
       [style.color]="foregroundColor"
     >
       {{ metadata.title }}
@@ -41,7 +41,14 @@
           {{ lastUpdate }}
         </p>
       </div>
-      <p>[Statut]</p>
+      <div *ngIf="metadata.status">
+        <p
+          class="text-white"
+          [innerHTML]="
+            '[' + ('domain.record.status.' + metadata.status | translate) + ']'
+          "
+        ></p>
+      </div>
     </div>
   </div>
 </header>
