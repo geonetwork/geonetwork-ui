@@ -2,7 +2,7 @@
   <div
     class="h-full container-lg mx-auto flex flex-col justify-between relative"
   >
-    <div class="flex flex-row justify-between align-center mt-3">
+    <div class="flex flex-row justify-between content-center mt-3">
       <div class="ml-4">
         <gn-ui-navigation-button
           (click)="back()"
@@ -11,18 +11,18 @@
         >
         </gn-ui-navigation-button>
       </div>
-      <div class="flex flex-row mr-4 align-center">
+      <div class="flex flex-row mr-6 content-center gap-3">
         <gn-ui-favorite-star
           *ngIf="metadata?.uniqueIdentifier"
           [record]="metadata"
           [displayCount]="false"
-          class="text-background"
+          class="flex text-background content-center"
           [style.color]="foregroundColor"
           [style.--star-toggle-enabled-color]="'var(--color-primary)'"
           [style.--star-toggle-disabled-color]="foregroundColor"
         ></gn-ui-favorite-star>
         <gn-ui-language-switcher
-          class="language-switcher text-[13px] text-white"
+          class="language-switcher text-[13px] text-white mt-0.5"
         ></gn-ui-language-switcher>
       </div>
     </div>
