@@ -1,0 +1,17 @@
+.input-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+.layer-title {
+  max-width: 200px; /* Adjust as needed */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

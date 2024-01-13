@@ -1,0 +1,30 @@
+<div class="input-container">
+  <gn-ui-text-input
+    [(value)]="wmsUrl"
+    (valueChange)="urlChange.next($event); isInvalidUrl = false"
+    hint="Enter WMS service URL"
+    style="width: 400px;"
+    class="wms-url-input">
+  </gn-ui-text-input>
+</div>
+
+<div *ngIf="isInvalidUrl" class="error-message">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="loading">
+  <p class="loading-message">Loading...</p>
+</div>
+
+<div *ngIf="!loading && layers.length > 0">
+  <h2 class="available-layers-header" style="font-weight: bold;">Available Layers</h2>
+  <ul class="available-layers-list">
+    <li *ngFor="let layer of layers" style="display: flex; align-items: center; justify-content: space-between;">
+      <span class="layer-title" [attr.title]="layer.title">{{ layer.title }}</span>
+      <gn-ui-button
+        type="primary"
+        style="font-size: 0.8em; padding: 5px 10px;"
+        (buttonClick)="addLayer(layer)">Add Layer</gn-ui-button>
+    </li>
+  </ul>
+</div>
