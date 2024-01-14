@@ -13,11 +13,12 @@ import { debounceTime } from 'rxjs/operators';
 export class AddLayerFromWmsComponent implements OnInit {
   wmsUrl = '';
   loading = false;
-  layers: WmsLayerSummary[] = [];
+  layers: (WmsLayerSummary & { children: WmsLayerSummary[] })[] = [];
   isInvalidUrl = false;
   wmsEndpoint: WmsEndpoint | null = null;
   urlChange = new Subject<string>();
   errorMessage: string | null = null;
+  test =null
 
   constructor(
     private mapFacade: MapFacade,
@@ -41,7 +42,14 @@ export class AddLayerFromWmsComponent implements OnInit {
       this.wmsEndpoint = new WmsEndpoint(this.wmsUrl);
       await this.wmsEndpoint.isReady();
 
-      this.layers = this.wmsEndpoint.getLayers()[0]?.children || [];
+      const layers = this.wmsEndpoint.getLayers();
+      this.layers = await Promise.all(layers.map(async layer => {
+        const children = this.wmsEndpoint.getLayerByName(layer.name).children || [];
+        return {
+          ...layer,
+          children
+        };
+      }));
     } catch (error) {
       const err = error as Error;
       console.error('Error loading layers:', err);
@@ -62,4 +70,5 @@ export class AddLayerFromWmsComponent implements OnInit {
     };
     this.mapFacade.addLayer({ ...layerToAdd, title: layer.title })
   }
+
 }
