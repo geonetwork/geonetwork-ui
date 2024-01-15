@@ -3,8 +3,9 @@
     [(value)]="wmsUrl"
     (valueChange)="urlChange.next($event); isInvalidUrl = false"
     hint="Enter WMS service URL"
-    style="width: 400px;"
-    class="wms-url-input">
+    style="width: 400px"
+    class="wms-url-input"
+  >
   </gn-ui-text-input>
 </div>
 
@@ -17,19 +18,33 @@
 </div>
 
 <div *ngIf="!loading && layers.length > 0">
-  <h2 class="available-layers-header" style="font-weight: bolder;">Available Layers</h2>
+  <h2 class="available-layers-header" style="font-weight: bolder">
+    Available Layers
+  </h2>
   <div *ngFor="let layer of layers">
-    <gn-ui-expandable-panel title="{{ layer.title }}" [collapsed]="true" >
+    <gn-ui-expandable-panel title="{{ layer.title }}" [collapsed]="true">
       <div *ngIf="layer.children.length > 0; else noChildren">
         <div *ngFor="let child of layer.children" class="child-layer">
-          <span class="layer-title" [attr.title]="child.title">{{ child.title }}</span>
-          <gn-ui-button type="primary" (buttonClick)="addLayer(child)" style="font-size: 0.8em; padding: 5px 10px;">Add</gn-ui-button>
+          <span class="layer-title" [attr.title]="child.title">{{
+            child.title
+          }}</span>
+          <gn-ui-button
+            type="primary"
+            (buttonClick)="addLayer(child)"
+            style="font-size: 0.8em; padding: 5px 10px"
+            >Add</gn-ui-button
+          >
         </div>
       </div>
       <ng-template #noChildren>
         <div class="child-layer">
           <p class="layer-title">{{ layer.title }}</p>
-          <gn-ui-button type="primary" (buttonClick)="addLayer(layer)" style="font-size: 0.8em; padding: 5px 10px;">Add</gn-ui-button>
+          <gn-ui-button
+            type="primary"
+            (buttonClick)="addLayer(layer)"
+            style="font-size: 0.8em; padding: 5px 10px"
+            >Add</gn-ui-button
+          >
         </div>
       </ng-template>
     </gn-ui-expandable-panel>
