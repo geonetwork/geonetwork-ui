@@ -67,127 +67,118 @@
         </div>
       </div>
     </div>
-    <div
-      style="height: 612px"
-      *ngIf="(displayMap$ | async) || (displayData$ | async)"
-      id="preview"
-    >
-      <div
-        class="bg-primary-opacity-10 pt-8 overflow-visible sm:pt-5"
-        style="height: 512px"
-      >
-        <div class="container-lg px-4 lg:mx-auto">
-          <div>
-            <div
-              class="text-[28px] text-title font-title transform sm:translate-y-10"
-              translate
-              id="preview"
-            >
-              record.metadata.preview
-            </div>
-            <mat-tab-group
-              (selectedIndexChange)="onTabIndexChange($event)"
-              [selectedIndex]="(displayMap$ | async) ? 0 : 1"
-              animationDuration="200ms"
-              mat-stretch-tabs="false"
-              mat-align-tabs="start"
-            >
-              <mat-tab [disabled]="(displayMap$ | async) === false">
-                <ng-template mat-tab-label>
-                  <span class="tab-header-label sm:ml-32" translate
-                    >record.tab.map</span
-                  >
-                </ng-template>
-                <div
-                  class="block"
-                  style="height: 500px"
-                  *ngIf="displayMap$ | async"
-                >
-                  <gn-ui-map-view></gn-ui-map-view>
-                </div>
-              </mat-tab>
-              <mat-tab [disabled]="(displayData$ | async) === false">
-                <ng-template mat-tab-label>
-                  <span class="tab-header-label" translate
-                    >record.tab.data</span
-                  >
-                </ng-template>
-                <div class="block" *ngIf="displayData$ | async">
-                  <gn-ui-data-view mode="table"></gn-ui-data-view>
-                </div>
-              </mat-tab>
-              <mat-tab [disabled]="(displayData$ | async) === false">
-                <ng-template mat-tab-label>
-                  <span class="tab-header-label" translate
-                    >record.tab.chart</span
-                  >
-                </ng-template>
-                <div class="block" *ngIf="displayData$ | async">
-                  <gn-ui-data-view mode="chart"></gn-ui-data-view>
-                </div>
-              </mat-tab>
-            </mat-tab-group>
-          </div>
-        </div>
-      </div>
-    </div>
-    <gn-ui-data-view-share
-      *ngIf="(selectedTabIndex$ | async) === 2"
-    ></gn-ui-data-view-share>
-    <div
-      id="access"
-      class="container-lg px-4 lg:mx-auto"
-      *ngIf="displayDownload$ | async"
-    >
-      <datahub-record-downloads class="block mt-5"></datahub-record-downloads>
-    </div>
-
-    <div id="links" class="lg:mx-auto">
-      <div
-        class="container-lg px-4 lg:mx-auto"
-        *ngIf="displayOtherLinks | async"
-      >
-        <datahub-record-otherlinks
-          class="block mt-5"
-        ></datahub-record-otherlinks>
-      </div>
-
-      <div *ngIf="displayApi$ | async">
-        <datahub-record-apis
-          [isPanelOpen]="isPanelOpen"
-          class="block mt-6"
-        ></datahub-record-apis>
-      </div>
-    </div>
-
-    <div id="related-records" *ngIf="displayRelated$ | async">
-      <div>
-        <div class="h-48 overflow-visible">
-          <div class="container-lg px-4 lg:mx-auto">
-            <datahub-record-related-records
-              [records]="facade.related$ | async"
-            ></datahub-record-related-records>
-          </div>
-        </div>
-      </div>
-      <div class="bg-primary">
-        <div class="container-lg mx-auto h-[1096px] sm:h-96"></div>
-      </div>
-    </div>
   </div>
   <div
-    class="mt-12 p-4 max-w-[600px] m-auto text-[13px]"
-    *ngIf="facade.error$ | async as error"
+    style="height: 612px"
+    *ngIf="(displayMap$ | async) || (displayData$ | async)"
+    id="preview"
   >
-    <gn-ui-search-results-error
-      *ngIf="error.notFound"
-      [type]="errorTypes.RECORD_NOT_FOUND"
-      [recordId]="(facade.metadata$ | async).uniqueIdentifier"
-    ></gn-ui-search-results-error>
-    <gn-ui-search-results-error
-      *ngIf="error.otherError"
-      [type]="errorTypes.RECEIVED_ERROR"
-      [error]="error.otherError"
-    ></gn-ui-search-results-error>
+    <div
+      class="bg-primary-opacity-10 pt-8 overflow-visible sm:pt-5"
+      style="height: 512px"
+    >
+      <div class="container-lg px-4 lg:mx-auto">
+        <div>
+          <div
+            class="text-[28px] text-title font-title transform sm:translate-y-10"
+            translate
+            id="preview"
+          >
+            record.metadata.preview
+          </div>
+          <mat-tab-group
+            (selectedIndexChange)="onTabIndexChange($event)"
+            [selectedIndex]="(displayMap$ | async) ? 0 : 1"
+            animationDuration="200ms"
+            mat-stretch-tabs="false"
+            mat-align-tabs="start"
+          >
+            <mat-tab [disabled]="(displayMap$ | async) === false">
+              <ng-template mat-tab-label>
+                <span class="tab-header-label sm:ml-32" translate
+                  >record.tab.map</span
+                >
+              </ng-template>
+              <div
+                class="block"
+                style="height: 500px"
+                *ngIf="displayMap$ | async"
+              >
+                <gn-ui-map-view></gn-ui-map-view>
+              </div>
+            </mat-tab>
+            <mat-tab [disabled]="(displayData$ | async) === false">
+              <ng-template mat-tab-label>
+                <span class="tab-header-label" translate>record.tab.data</span>
+              </ng-template>
+              <div class="block" *ngIf="displayData$ | async">
+                <gn-ui-data-view mode="table"></gn-ui-data-view>
+              </div>
+            </mat-tab>
+            <mat-tab [disabled]="(displayData$ | async) === false">
+              <ng-template mat-tab-label>
+                <span class="tab-header-label" translate>record.tab.chart</span>
+              </ng-template>
+              <div class="block" *ngIf="displayData$ | async">
+                <gn-ui-data-view mode="chart"></gn-ui-data-view>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
   </div>
+  <gn-ui-data-view-share
+    *ngIf="(selectedTabIndex$ | async) === 2"
+  ></gn-ui-data-view-share>
+  <div
+    id="access"
+    class="container-lg px-4 lg:mx-auto"
+    *ngIf="displayDownload$ | async"
+  >
+    <datahub-record-downloads class="block mt-5"></datahub-record-downloads>
+  </div>
+
+  <div id="links" class="lg:mx-auto">
+    <div class="container-lg px-4 lg:mx-auto" *ngIf="displayOtherLinks | async">
+      <datahub-record-otherlinks class="block mt-5"></datahub-record-otherlinks>
+    </div>
+
+    <div *ngIf="displayApi$ | async">
+      <datahub-record-apis
+        [isPanelOpen]="isPanelOpen"
+        class="block mt-6"
+      ></datahub-record-apis>
+    </div>
+  </div>
+
+  <div id="related-records" *ngIf="displayRelated$ | async">
+    <div>
+      <div class="h-48 overflow-visible">
+        <div class="container-lg px-4 lg:mx-auto">
+          <datahub-record-related-records
+            [records]="facade.related$ | async"
+          ></datahub-record-related-records>
+        </div>
+      </div>
+    </div>
+    <div class="bg-primary">
+      <div class="container-lg mx-auto h-[1096px] sm:h-96"></div>
+    </div>
+  </div>
+</div>
+<div
+  class="mt-12 p-4 max-w-[600px] m-auto text-[13px]"
+  *ngIf="facade.error$ | async as error"
+>
+  <gn-ui-search-results-error
+    *ngIf="error.notFound"
+    [type]="errorTypes.RECORD_NOT_FOUND"
+    [recordId]="(facade.metadata$ | async).uniqueIdentifier"
+  ></gn-ui-search-results-error>
+  <gn-ui-search-results-error
+    *ngIf="error.otherError"
+    [type]="errorTypes.RECEIVED_ERROR"
+    [error]="error.otherError"
+  ></gn-ui-search-results-error>
 </div>
