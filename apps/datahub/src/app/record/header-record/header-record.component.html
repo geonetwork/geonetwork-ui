@@ -33,9 +33,9 @@
     >
       {{ metadata.title }}
     </div>
-    <div class="flex flex-row text-white gap-3 mb-3 ml-4">
+    <div class="flex flex-row text-white gap-3 mb-4 ml-4">
       <div
-        *ngIf="(displayMap$ | async) === true"
+        *ngIf="(isGeodata$ | async) === true"
         class="flex flex-row bg-primary-opacity-75 rounded"
       >
         <span class="material-symbols-outlined mt-0.5 ml-2 text-[20px]">

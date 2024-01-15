@@ -23,7 +23,7 @@ export class HeaderRecordComponent {
     public facade: MdViewFacade
   ) {}
 
-  displayMap$ = combineLatest([
+  isGeodata$ = combineLatest([
     this.facade.mapApiLinks$,
     this.facade.geoDataLinks$,
   ]).pipe(
@@ -34,7 +34,14 @@ export class HeaderRecordComponent {
   )
 
   get lastUpdate() {
-    return this.metadata.recordUpdated.toLocaleString().split(',')[0]
+    const date = this.metadata.recordUpdated
+    return (
+      ('0' + date.getDate()).slice(-2) +
+      '.' +
+      ('0' + (date.getMonth() + 1)).slice(-2) +
+      '.' +
+      date.getFullYear()
+    )
   }
 
   back() {
