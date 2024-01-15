@@ -66,6 +66,7 @@ describe('FavoriteStarComponent', () => {
     favoritesService = TestBed.inject(FavoritesService)
     fixture = TestBed.createComponent(FavoriteStarComponent)
     component = fixture.componentInstance
+    component.displayCount = 'true'
     fixture.detectChanges()
     starToggle = fixture.debugElement.query(
       By.directive(StarToggleComponent)

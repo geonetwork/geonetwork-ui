@@ -1,7 +1,10 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import { TranslateModule } from '@ngx-translate/core'
+import { BehaviorSubject } from 'rxjs'
 
 import { HeaderRecordComponent } from './header-record.component'
 
@@ -15,6 +18,12 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
 const searchServiceMock = {
   updateFilters: jest.fn(),
 }
+
+class MdViewFacadeMock {
+  mapApiLinks$ = new BehaviorSubject([])
+  geoDataLinks$ = new BehaviorSubject([])
+}
+
 describe('HeaderRecordComponent', () => {
   let component: HeaderRecordComponent
   let fixture: ComponentFixture<HeaderRecordComponent>
@@ -24,13 +33,22 @@ describe('HeaderRecordComponent', () => {
       declarations: [HeaderRecordComponent],
       imports: [TranslateModule.forRoot()],
       schemas: [NO_ERRORS_SCHEMA],
-      providers: [{ provide: SearchService, useValue: searchServiceMock }],
+      providers: [
+        { provide: SearchService, useValue: searchServiceMock },
+        {
+          provide: MdViewFacade,
+          useClass: MdViewFacadeMock,
+        },
+      ],
     }).compileComponents()
   })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HeaderRecordComponent)
     component = fixture.componentInstance
+    component.metadata = {
+      ...DATASET_RECORDS[0],
+    }
     fixture.detectChanges()
   })
 
