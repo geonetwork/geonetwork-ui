@@ -84,7 +84,6 @@ export interface BaseRecord {
   extras?: Record<string, unknown>
   landingPage?: URL
   updateFrequency?: UpdateFrequency
-  status?: RecordStatus
 
   // to add: iso19139.topicCategory
   // to add: canonical url
