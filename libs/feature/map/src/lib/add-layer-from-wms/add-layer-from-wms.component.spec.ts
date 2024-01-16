@@ -20,7 +20,7 @@ describe('AddLayerFromWmsComponent', () => {
         {
           provide: MapFacade,
           useClass: MapFacadeMock,
-        }
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
@@ -34,5 +34,4 @@ describe('AddLayerFromWmsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
   })
-
 })
