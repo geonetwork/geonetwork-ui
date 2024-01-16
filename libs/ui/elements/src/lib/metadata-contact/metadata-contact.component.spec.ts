@@ -63,7 +63,7 @@ describe('MetadataContactComponent', () => {
   describe('content', () => {
     let email
     beforeEach(() => {
-      email = fixture.debugElement.query(By.css('a'))
+      email = fixture.debugElement.queryAll(By.css('a'))[1]
     })
     it('displays the contact name', () => {
       const el = fixture.debugElement.query(

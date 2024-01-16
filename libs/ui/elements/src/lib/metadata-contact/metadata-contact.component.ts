@@ -34,6 +34,13 @@ export class MetadataContactComponent {
     )
   }
 
+  get address() {
+    const addressParts = this.contacts[0].address
+      .split(',')
+      .map((part) => part.trim())
+    return addressParts
+  }
+
   onOrganizationClick() {
     this.organizationClick.emit(this.shownOrganization)
   }
