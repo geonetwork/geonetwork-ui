@@ -3,32 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { MetadataContactComponent } from './metadata-contact.component'
 
-const addressCases = [
-  {
-    address:
-      'Hôtel de Rennes Métropole, 4 avenue Henri Fréville, CS 93111, RENNES, 35031, France',
-    expectedResult: [
-      'Hôtel de Rennes Métropole',
-      '4 avenue Henri Fréville',
-      'CS 93111',
-      '35031 RENNES',
-      'France',
-    ],
-  },
-  {
-    address: '123 Main Street, Anytown, 54321',
-    expectedResult: ['123 Main Street', '54321 Anytown'],
-  },
-  {
-    address: '123 Main Street, Anytown, France',
-    expectedResult: ['123 Main Street', 'Anytown', 'France'],
-  },
-  {
-    address: 'Anytown, France',
-    expectedResult: ['Anytown', 'France'],
-  },
-]
-
 describe('MetadataContactComponent', () => {
   let component: MetadataContactComponent
   let fixture: ComponentFixture<MetadataContactComponent>
