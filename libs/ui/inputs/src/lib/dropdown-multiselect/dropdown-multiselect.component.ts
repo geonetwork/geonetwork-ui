@@ -77,9 +77,8 @@ export class DropdownMultiselectComponent {
   }
 
   get filteredChoicesByText() {
-    const filterPattern = this.searchInputValue?.toLowerCase()
-    if (!filterPattern) return this.choices
-    const filter = createFuzzyFilter(filterPattern)
+    if (!this.searchInputValue) return this.choices
+    const filter = createFuzzyFilter(this.searchInputValue)
     return this.choices.filter((choice) => filter(choice.label))
   }
 
