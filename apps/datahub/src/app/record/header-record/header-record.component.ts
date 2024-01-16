@@ -4,6 +4,7 @@ import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { combineLatest, map } from 'rxjs'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'datahub-header-record',
@@ -20,7 +21,8 @@ export class HeaderRecordComponent {
 
   constructor(
     private searchService: SearchService,
-    public facade: MdViewFacade
+    public facade: MdViewFacade,
+    private translateService: TranslateService
   ) {}
 
   isGeodata$ = combineLatest([
@@ -34,13 +36,8 @@ export class HeaderRecordComponent {
   )
 
   get lastUpdate() {
-    const date = this.metadata.recordUpdated
-    return (
-      ('0' + date.getDate()).slice(-2) +
-      '.' +
-      ('0' + (date.getMonth() + 1)).slice(-2) +
-      '.' +
-      date.getFullYear()
+    return this.metadata.recordUpdated.toLocaleDateString(
+      this.translateService.currentLang
     )
   }
 
