@@ -20,7 +20,7 @@
           (click)="onOrganizationClick()"
           data-cy="organization-name"
         >
-          {{ shownOrganization.name }}
+          {{ shownOrganization?.name }}
         </div>
       </div>
       <div *ngIf="shownOrganization?.website">

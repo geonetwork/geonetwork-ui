@@ -7,7 +7,6 @@ import { filter, map, mergeMap } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import * as basicLightbox from 'basiclightbox'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -56,10 +55,13 @@ export class RecordMetadataComponent {
   errorTypes = ErrorType
   selectedTabIndex$ = new BehaviorSubject(0)
 
-  lightbox$ = this.facade.metadata$.pipe(
-    map((metadata) => metadata?.overviews?.[0]?.url)
+  thumbnailUrl$ = this.facade.metadata$.pipe(
+    map((metadata) => {
+      return metadata?.overviews?.[0]?.url
+    })
   )
-  lightboxInstance: any
+
+  showOverlay = true
 
   constructor(
     public facade: MdViewFacade,
@@ -82,10 +84,5 @@ export class RecordMetadataComponent {
     this.orgsService
       .getFiltersForOrgs([org])
       .subscribe((filters) => this.searchService.updateFilters(filters))
-  }
-
-  openLightbox(src: string) {
-    this.lightboxInstance = basicLightbox.create(`<img src="${src}"/>`)
-    this.lightboxInstance.show()
   }
 }

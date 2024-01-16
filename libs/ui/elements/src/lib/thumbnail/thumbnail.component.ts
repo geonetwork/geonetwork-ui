@@ -10,6 +10,8 @@ import {
   Optional,
   SimpleChanges,
   ViewChild,
+  Output,
+  EventEmitter,
 } from '@angular/core'
 
 export const THUMBNAIL_PLACEHOLDER = new InjectionToken<string>(
@@ -36,6 +38,7 @@ export class ThumbnailComponent implements OnInit, OnChanges {
   @Input() fit: FitOptions | FitOptions[] = 'cover'
   @ViewChild('imageElement') imgElement: ElementRef<HTMLImageElement>
   @ViewChild('containerElement') containerElement: ElementRef<HTMLDivElement>
+  @Output() placeholderShown = new EventEmitter<boolean>()
   imgUrl: string
   imgFit: FitOptions
   placeholderUrl = this.optionalPlaceholderUrl || DEFAULT_PLACEHOLDER
@@ -85,6 +88,7 @@ export class ThumbnailComponent implements OnInit, OnChanges {
   private setNewSrcImage(image: ThumbnailImageObject) {
     this.imgFit = image.fit
     this.imgUrl = image.url
+    this.placeholderShown.emit(this.isPlaceholder)
   }
 
   private setPlaceholder(): void {

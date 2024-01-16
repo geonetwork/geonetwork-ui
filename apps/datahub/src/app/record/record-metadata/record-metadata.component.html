@@ -33,29 +33,12 @@
             [metadataQualityDisplay]="metadataQualityDisplay"
           ></gn-ui-metadata-quality>
         </div>
-        <div
-          *ngIf="lightbox$ | async as lightbox"
-          data-cy="record-thumbnail"
-          class="flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden w-full border border-gray-300 h-36 group-hover:shadow-xl group-hover:border-0 mb-3"
+        <gn-ui-image-overlay-preview
+          [imageUrl]="thumbnailUrl$ | async"
+          (isPlaceholderShown)="showOverlay = !$event"
+          *ngIf="showOverlay"
         >
-          <gn-ui-thumbnail
-            class="relative h-full w-full"
-            [thumbnailUrl]="(facade.metadata$ | async).overviews?.[0]?.url"
-            fit="cover"
-          ></gn-ui-thumbnail>
-          <div class="relative">
-            <gn-ui-button
-              class="absolute bottom-0 right-0 z-10 mr-2 mb-2"
-              [type]="'outline'"
-              [extraClass]="'!py-2 !px-0'"
-              (buttonClick)="openLightbox(lightbox)"
-            >
-              <mat-icon class="material-symbols-outlined font-extralight"
-                >zoom_out_map</mat-icon
-              >
-            </gn-ui-button>
-          </div>
-        </div>
+        </gn-ui-image-overlay-preview>
         <div>
           <gn-ui-metadata-contact
             (organizationClick)="onOrganizationClick($event)"
