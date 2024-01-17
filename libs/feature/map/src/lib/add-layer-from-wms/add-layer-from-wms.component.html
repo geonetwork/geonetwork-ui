@@ -1,49 +1,57 @@
-<div class="input-container">
+<div class="flex items-center mb-5">
   <gn-ui-text-input
     [(value)]="wmsUrl"
     (valueChange)="urlChange.next($event); isInvalidUrl = false"
-    hint="Enter WMS service URL"
-    style="width: 400px"
-    class="wms-url-input"
+    [hint]="'map.wms.urlInput.hint' | translate"
+    class="w-96"
   >
   </gn-ui-text-input>
 </div>
 
-<div *ngIf="isInvalidUrl" class="error-message">
+<div *ngIf="isInvalidUrl" class="text-red-500 mt-2">
   {{ errorMessage }}
 </div>
 
 <div *ngIf="loading">
-  <p class="loading-message">Loading...</p>
+  <p class="loading-message" translate>map.loading.service</p>
 </div>
 
 <div *ngIf="!loading && layers.length > 0">
-  <h2 class="available-layers-header" style="font-weight: bolder">
-    Available Layers
-  </h2>
+  <h2 class="font-bold" translate>map.layers.available</h2>
   <div *ngFor="let layer of layers">
     <gn-ui-expandable-panel title="{{ layer.title }}" [collapsed]="true">
       <div *ngIf="layer.children.length > 0; else noChildren">
-        <div *ngFor="let child of layer.children" class="child-layer">
-          <span class="layer-title" [attr.title]="child.title">{{
-            child.title
-          }}</span>
+        <div
+          *ngFor="let child of layer.children"
+          class="flex items-center justify-between"
+        >
+          <span
+            class="max-w-xs overflow-hidden overflow-ellipsis whitespace-nowrap"
+            [attr.title]="child.title"
+            >{{ child.title }}</span
+          >
           <gn-ui-button
             type="primary"
             (buttonClick)="addLayer(child)"
-            style="font-size: 0.8em; padding: 5px 10px"
-            >Add</gn-ui-button
+            class="text-sm px-2 py-1"
+            translate
+            ><span translate> map.layer.add </span></gn-ui-button
           >
         </div>
       </div>
       <ng-template #noChildren>
-        <div class="child-layer">
-          <p class="layer-title">{{ layer.title }}</p>
+        <div class="flex items-center justify-between">
+          <p
+            class="max-w-xs overflow-hidden overflow-ellipsis whitespace-nowrap"
+          >
+            {{ layer.title }}
+          </p>
           <gn-ui-button
             type="primary"
             (buttonClick)="addLayer(layer)"
-            style="font-size: 0.8em; padding: 5px 10px"
-            >Add</gn-ui-button
+            class="text-sm px-2 py-1"
+            translate
+            ><span translate> map.layer.add </span></gn-ui-button
           >
         </div>
       </ng-template>

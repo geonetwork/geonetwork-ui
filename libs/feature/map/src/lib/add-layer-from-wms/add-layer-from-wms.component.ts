@@ -16,7 +16,7 @@ import { debounceTime } from 'rxjs/operators'
 export class AddLayerFromWmsComponent implements OnInit {
   wmsUrl = ''
   loading = false
-  layers: (WmsLayerSummary & { children: WmsLayerSummary[] })[] = []
+  layers = []
   isInvalidUrl = false
   wmsEndpoint: WmsEndpoint | null = null
   urlChange = new Subject<string>()
@@ -41,20 +41,8 @@ export class AddLayerFromWmsComponent implements OnInit {
         return
       }
 
-      this.wmsEndpoint = new WmsEndpoint(this.wmsUrl)
-      await this.wmsEndpoint.isReady()
-
-      const layers = this.wmsEndpoint.getLayers()
-      this.layers = await Promise.all(
-        layers.map(async (layer) => {
-          const children =
-            this.wmsEndpoint.getLayerByName(layer.name).children || []
-          return {
-            ...layer,
-            children,
-          }
-        })
-      )
+      this.wmsEndpoint = await new WmsEndpoint(this.wmsUrl).isReady()
+      this.layers = this.wmsEndpoint.getLayers()
     } catch (error) {
       const err = error as Error
       console.error('Error loading layers:', err)

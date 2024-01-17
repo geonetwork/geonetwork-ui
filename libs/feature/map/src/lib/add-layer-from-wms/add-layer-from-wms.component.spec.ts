@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AddLayerFromWmsComponent } from './add-layer-from-wms.component'
 import { MapFacade } from '../+state/map.facade'
-import { Store } from '@ngrx/store'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
+import { TranslateModule } from '@ngx-translate/core'
 
 class MapFacadeMock {
   addLayer = jest.fn()
@@ -15,6 +15,7 @@ describe('AddLayerFromWmsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [TranslateModule.forRoot()],
       declarations: [AddLayerFromWmsComponent],
       providers: [
         {
