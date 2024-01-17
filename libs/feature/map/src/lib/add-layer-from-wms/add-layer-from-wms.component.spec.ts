@@ -7,8 +7,7 @@ import { By } from '@angular/platform-browser'
 
 jest.mock('@camptocamp/ogc-client', () => ({
   WmsEndpoint: class {
-    constructor(private url) {
-    }
+    constructor(private url) {}
     isReady() {
       if (this.url.indexOf('error') > -1) {
         return Promise.reject(new Error('Something went wrong'))
@@ -32,8 +31,8 @@ jest.mock('@camptocamp/ogc-client', () => ({
             {
               name: 'layer3',
               title: 'Layer 3',
-            }
-          ]
+            },
+          ],
         },
       ]
     }
@@ -75,7 +74,7 @@ describe('AddLayerFromWmsComponent', () => {
     expect(component.layers).toEqual([])
   })
 
-  describe('loadLayers', () =>{
+  describe('loadLayers', () => {
     describe('while layers are loading', () => {
       beforeEach(() => {
         component.wmsUrl = 'http://my.service.org/wait'
@@ -95,18 +94,23 @@ describe('AddLayerFromWmsComponent', () => {
       it('shows a list of layers', () => {
         expect(component.errorMessage).toBeFalsy()
         expect(component.loading).toBe(false)
-        expect(component.layers).toEqual([{
+        expect(component.layers).toEqual([
+          {
             name: 'layer1',
             title: 'Layer 1',
-            children: expect.any(Array)
-          }
+            children: expect.any(Array),
+          },
         ])
       })
       it('should show an Add layer button for each layer with a name', () => {
         fixture.detectChanges()
-        const layerElts = fixture.debugElement.queryAll(By.css('.layer-tree-item'))
+        const layerElts = fixture.debugElement.queryAll(
+          By.css('.layer-tree-item')
+        )
         expect(layerElts.length).toBe(3)
-        const hasButtons = layerElts.map(layerElt => !!layerElt.query(By.css('.layer-add-btn')))
+        const hasButtons = layerElts.map(
+          (layerElt) => !!layerElt.query(By.css('.layer-add-btn'))
+        )
         expect(hasButtons).toEqual([true, false, true])
       })
     })
@@ -125,12 +129,12 @@ describe('AddLayerFromWmsComponent', () => {
     })
     describe('error and then valid service', () => {
       beforeEach(async () => {
-          component.wmsUrl = 'http://my.service.org/error'
-          await component.loadLayers().catch(() => {
-            // do nothing
-          })
-          component.wmsUrl = 'http://my.service.org/wms'
-          await component.loadLayers()
+        component.wmsUrl = 'http://my.service.org/error'
+        await component.loadLayers().catch(() => {
+          // do nothing
+        })
+        component.wmsUrl = 'http://my.service.org/wms'
+        await component.loadLayers()
       })
       it('shows no error', () => {
         expect(component.errorMessage).toBeFalsy()
@@ -146,7 +150,7 @@ describe('AddLayerFromWmsComponent', () => {
       component.addLayer({
         name: 'myLayer',
         title: 'My Layer',
-        abstract: 'This is my layer'
+        abstract: 'This is my layer',
       })
     })
     it('adds the selected layer in the current map context', () => {
@@ -154,7 +158,7 @@ describe('AddLayerFromWmsComponent', () => {
         name: 'myLayer',
         title: 'My Layer',
         type: 'wms',
-        url: 'http://my.service.org/wms'
+        url: 'http://my.service.org/wms',
       })
     })
   })
