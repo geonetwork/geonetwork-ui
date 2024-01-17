@@ -43,7 +43,7 @@
   }
 }
 
-/deep/ gn-ui-carousel {
+:host ::ng-deep gn-ui-carousel {
   display: block;
   margin-left: calc(-1 * var(--container-outside-width));
   margin-right: calc(-1 * var(--container-outside-width));
