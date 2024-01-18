@@ -8,11 +8,9 @@
   <gn-ui-content-ghost ghostClass="h-32" [showContent]="fieldReady('abstract')">
     <gn-ui-max-lines [maxLines]="6" *ngIf="metadata.abstract">
       <div>
-        <p
-          class="whitespace-pre-line break-words sm:mb-4 sm:pr-16"
-          [innerHTML]="metadata.abstract"
-          gnUiLinkify
-        ></p>
+        <gn-ui-markdown-parser
+          [textContent]="metadata.abstract"
+        ></gn-ui-markdown-parser>
         <ng-container *ngIf="metadata.keywords?.length">
           <p class="mb-3 font-medium text-primary text-sm" translate>
             record.metadata.keywords

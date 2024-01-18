@@ -1,0 +1,264 @@
+/** Body **/
+:host /deep/ .markdown-body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  margin: 0px 0px 1.5rem 0px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+/** Emphasis **/
+
+:host /deep/ .markdown-body strong {
+  @apply font-bold;
+  color: var(--color-secondary-darker);
+}
+
+/** Headings **/
+
+:host /deep/ .markdown-body h1,
+:host /deep/ .markdown-body h2,
+:host /deep/ .markdown-body h3,
+:host /deep/ .markdown-body h4,
+:host /deep/ .markdown-body h5,
+:host /deep/ .markdown-body h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  line-height: 1.25;
+  @apply text-title font-title font-bold;
+}
+
+:host /deep/ .markdown-body h1 {
+  margin: 0.67em 0;
+  padding-bottom: 0.3em;
+  font-size: 2em;
+  color: var(--color-primary);
+}
+
+:host /deep/ .markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.5em;
+  color: var(--color-secondary);
+}
+
+:host /deep/ .markdown-body h3 {
+  font-size: 1.25em;
+  color: var(--color-secondary);
+}
+
+:host /deep/ .markdown-body h4 {
+  font-size: 1em;
+  color: var(--color-secondary);
+}
+
+:host /deep/ .markdown-body h5 {
+  font-size: 0.875em;
+  color: var(--color-secondary);
+}
+
+:host /deep/ .markdown-body h6 {
+  font-size: 0.85em;
+  color: var(--color-secondary-lighter);
+}
+
+/** Paragraphs **/
+
+:host /deep/ .markdown-body p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+/** Links **/
+
+:host /deep/ .markdown-body p > a {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: var(--color-primary) !important;
+  text-decoration: none !important;
+  @apply font-bold;
+}
+
+:host /deep/ .markdown-body p > a:hover {
+  color: var(--color-primary-darker) !important;
+}
+
+/** Blockquotes **/
+
+:host /deep/ .markdown-body blockquote {
+  margin: 0;
+  padding: 0 1em;
+  color: var(--color-secondary-lighter);
+  border-left: 0.25em solid var(--color-primary-lighter);
+}
+
+/** Code **/
+
+:host /deep/ .markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 12px;
+  background-color: var(--color-gray-100);
+  word-wrap: normal;
+}
+
+:host /deep/ .markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  color: var(--color-secondary);
+  border-radius: 6px;
+}
+
+:host /deep/ .markdown-body code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  white-space: break-spaces;
+  border-radius: 6px;
+}
+
+:host /deep/ .markdown-body pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  border: 0;
+}
+
+/** Horizontal rules **/
+
+:host /deep/ .markdown-body hr {
+  box-sizing: content-box;
+  overflow: hidden;
+  background: transparent;
+  border-bottom: 1px solid var(--color-secondary);
+  height: 0.15em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: var(--color-secondary);
+  border: 0;
+}
+
+:host /deep/ .markdown-body hr::before {
+  display: table;
+  content: '';
+}
+
+:host /deep/ .markdown-body hr::after {
+  display: table;
+  clear: both;
+  content: '';
+}
+
+/** Lists **/
+
+:host /deep/ .markdown-body ul,
+:host /deep/ .markdown-body ol {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 2em;
+  list-style: revert;
+}
+
+:host /deep/ .markdown-body ol ol,
+:host /deep/ .markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+:host /deep/ .markdown-body ul ul ol,
+:host /deep/ .markdown-body ul ol ol,
+:host /deep/ .markdown-body ol ul ol,
+:host /deep/ .markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+:host /deep/ .markdown-body ol[type='a s'] {
+  list-style-type: lower-alpha;
+}
+
+:host /deep/ .markdown-body ol[type='A s'] {
+  list-style-type: upper-alpha;
+}
+
+:host /deep/ .markdown-body ol[type='i s'] {
+  list-style-type: lower-roman;
+}
+
+:host /deep/ .markdown-body ol[type='I s'] {
+  list-style-type: upper-roman;
+}
+
+:host /deep/ .markdown-body ol[type='1'] {
+  list-style: unset;
+  list-style-type: decimal;
+}
+
+:host /deep/ .markdown-body div > ol:not([type]) {
+  list-style: unset;
+  list-style-type: decimal;
+}
+
+/** Table **/
+
+:host /deep/ .markdown-body table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow: auto;
+  padding-bottom: 15px;
+}
+
+:host /deep/ .markdown-body td,
+:host /deep/ .markdown-body th {
+  padding: 0;
+}
+
+:host /deep/ .markdown-body th {
+  color: var(--color-secondary);
+}
+
+:host /deep/ .markdown-body table th,
+:host /deep/ .markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid var(--color-gray-500);
+}
+
+:host /deep/ .markdown-body table td > :last-child {
+  margin-bottom: 0;
+}
+
+:host /deep/ .markdown-body table tr {
+  background-color: #ffffff;
+  border-top: 1px solid var(--color-secondary-lighter);
+}
+
+:host /deep/ .markdown-body table tr:nth-child(2n) {
+  background-color: var(--color-gray-100);
+}
+
+:host /deep/ .markdown-body table img {
+  background-color: transparent;
+}
+
+/** Images **/
+
+:host /deep/ .markdown-body img {
+  border-style: none;
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: transparent;
+}
+
+:host /deep/ .markdown-body img[align='right'] {
+  padding-left: 20px;
+}
+
+:host /deep/ .markdown-body img[align='left'] {
+  padding-right: 20px;
+}
