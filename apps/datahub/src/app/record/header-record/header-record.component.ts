@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { SearchService } from '@geonetwork-ui/feature/search'
-import { getThemeConfig } from '@geonetwork-ui/util/app-config'
+import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { combineLatest, map } from 'rxjs'
@@ -18,6 +18,7 @@ export class HeaderRecordComponent {
     getThemeConfig().HEADER_BACKGROUND ||
     `center /cover url('assets/img/header_bg.webp')`
   foregroundColor = getThemeConfig().HEADER_FOREGROUND_COLOR || '#ffffff'
+  showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
 
   constructor(
     private searchService: SearchService,
