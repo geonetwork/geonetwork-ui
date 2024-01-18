@@ -21,6 +21,7 @@ import { AddLayerRecordPreviewComponent } from './add-layer-from-catalog/add-lay
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { AddLayerFromWmsComponent } from './add-layer-from-wms/add-layer-from-wms.component'
+import { AddLayerFromWfsComponent } from './add-layer-from-wfs/add-layer-from-wfs.component'
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { AddLayerFromWmsComponent } from './add-layer-from-wms/add-layer-from-wm
     MapContainerComponent,
     AddLayerRecordPreviewComponent,
     AddLayerFromWmsComponent,
+    AddLayerFromWfsComponent,
   ],
   exports: [
     MapContextComponent,

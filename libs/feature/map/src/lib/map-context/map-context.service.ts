@@ -111,6 +111,12 @@ export class MapContextService {
               urlObj.searchParams.set('typename', layerModel.name)
               urlObj.searchParams.set('srsname', 'EPSG:3857')
               urlObj.searchParams.set('bbox', `${extent.join(',')},EPSG:3857`)
+              if ('featureCount' in layerModel && layerModel.featureCount) {
+                urlObj.searchParams.set(
+                  'maxFeatures',
+                  layerModel.featureCount.toString()
+                )
+              }
               return urlObj.toString()
             },
             strategy: bboxStrategy,

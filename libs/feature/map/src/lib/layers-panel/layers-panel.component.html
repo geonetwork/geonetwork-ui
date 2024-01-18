@@ -36,7 +36,9 @@
         </div>
       </mat-tab>
       <mat-tab [label]="'map.add.layer.wfs' | translate" bodyClass="h-full">
-        <div class="p-3 h-full">Add from WFS</div>
+        <div class="p-3">
+          <gn-ui-add-layer-from-wfs></gn-ui-add-layer-from-wfs>
+        </div>
       </mat-tab>
       <mat-tab [label]="'map.add.layer.file' | translate" bodyClass="h-full">
         <div class="p-3 h-full">Add from file</div>

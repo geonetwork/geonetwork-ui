@@ -182,6 +182,7 @@
   "map.loading.service": "Loading service...",
   "map.navigation.message": "Please use CTRL + mouse (or two fingers on mobile) to navigate the map",
   "map.select.layer": "Data source",
+  "map.wfs.urlInput.hint": "Enter WFS service URL",
   "map.wms.urlInput.hint": "Enter WMS service URL",
   "multiselect.filter.placeholder": "Search",
   "nav.back": "Back",

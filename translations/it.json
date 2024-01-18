@@ -182,6 +182,7 @@
   "map.loading.service": "",
   "map.navigation.message": "Si prega di utilizzare CTRL + mouse (o due dita su mobile) per navigare sulla mappa",
   "map.select.layer": "Sorgente dati",
+  "map.wfs.urlInput.hint": "",
   "map.wms.urlInput.hint": "",
   "multiselect.filter.placeholder": "Cerca",
   "nav.back": "Indietro",
