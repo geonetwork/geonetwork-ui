@@ -13,6 +13,11 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
     HEADER_BACKGROUND: 'red',
     HEADER_FOREGROUND_COLOR: 'white',
   }),
+  getGlobalConfig() {
+    return {
+      LANGUAGES: ['en', 'es'],
+    }
+  },
 }))
 
 const searchServiceMock = {
