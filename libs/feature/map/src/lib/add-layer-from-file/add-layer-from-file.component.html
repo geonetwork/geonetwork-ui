@@ -1,0 +1,21 @@
+<div class="flex flex-col gap-2 my-2">
+  <div class="flex items-center gap-4">
+    <div class="flex-grow rounded-md border-2 border-gray-200">
+      <gn-ui-drag-and-drop-file-input
+        (fileChange)="handleFileChange($event)"
+        [accept]="acceptedMimeType.join(',')"
+        [placeholder]="'map.addFromFile.placeholder' | translate"
+        class="placeholder-grey"
+      ></gn-ui-drag-and-drop-file-input>
+    </div>
+  </div>
+  <p class="text-sm text-gray-600" translate>map.help.addFromFile</p>
+</div>
+
+<div *ngIf="errorMessage" class="text-red-500 mt-2">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="successMessage" class="text-green-500 mt-2">
+  {{ successMessage }}
+</div>

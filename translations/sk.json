@@ -175,6 +175,8 @@
   "map.add.layer.file": "Zo súboru",
   "map.add.layer.wfs": "Z WFS",
   "map.add.layer.wms": "Z WMS",
+  "map.addFromFile.placeholder": "",
+  "map.help.addFromFile": "",
   "map.layer.add": "",
   "map.layers.available": "",
   "map.layers.list": "Vrstvy",

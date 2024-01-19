@@ -175,6 +175,8 @@
   "map.add.layer.file": "Aus einer Datei",
   "map.add.layer.wfs": "Aus WFS",
   "map.add.layer.wms": "Aus WMS",
+  "map.addFromFile.placeholder": "",
+  "map.help.addFromFile": "",
   "map.layer.add": "",
   "map.layers.available": "",
   "map.layers.list": "Ebenen",
