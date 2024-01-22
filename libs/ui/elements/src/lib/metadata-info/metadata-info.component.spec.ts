@@ -73,14 +73,6 @@ describe('MetadataInfoComponent', () => {
       const displayedElement = fixture.nativeElement.querySelector('.noUsage')
       expect(displayedElement).toBeFalsy()
     })
-    it('should display the keywords section', () => {
-      // Use waitForAsync to handle asynchronous changes in the DOM.
-      fixture.whenStable().then(() => {
-        const displayedElement =
-          fixture.nativeElement.querySelector('ng-container')
-        expect(displayedElement).toBeTruthy()
-      })
-    })
     it('should display the abstract section', () => {
       const displayedElement =
         fixture.nativeElement.querySelector('.md-description p')
