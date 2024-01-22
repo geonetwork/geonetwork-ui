@@ -11,18 +11,20 @@
 </div>
 
 <gn-ui-expandable-panel [title]="'record.metadata.usage' | translate">
-  <div class="py-4 px-6 rounded text-gray-700 flex flex-wrap gap-2">
-    <span class="text-primary font-medium" *ngFor="let license of licenses">
+  <div class="flex flex-col gap-4 mr-4 py-5 rounded text-gray-700">
+    <span class="text-primary font-bold" *ngFor="let license of licenses">
       {{ license }}
     </span>
-    <div class="flex flex-row" *ngIf="conditions.length">
-      <p>Conditions d'utilisation :</p>
-      <span *ngFor="let condition of conditions">
-        {{ condition }}
-      </span>
+    <div *ngIf="conditions.length">
+      <p translate class="font-bold">record.metadata.conditions</p>
+      <div class="inline-block">
+        <span *ngFor="let condition of conditions">
+          {{ condition }}
+        </span>
+      </div>
     </div>
     <div *ngIf="restrictions.length">
-      <p class="font-bold">Limitations d'usage</p>
+      <p translate class="font-bold">record.metadata.limitations</p>
       <div class="inline-block">
         <span *ngFor="let restriction of restrictions">
           {{ restriction }}
