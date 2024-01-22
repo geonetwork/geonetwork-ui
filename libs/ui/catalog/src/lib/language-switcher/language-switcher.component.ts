@@ -34,7 +34,7 @@ export class LanguageSwitcherComponent implements OnInit {
   ngOnInit(): void {
     const languages = this.languagePlaceholder || DEFAULT_LANGUAGES
     this.languageList = languages.map((language) => ({
-      label: `language.${language}`,
+      label: `${language}`.toUpperCase(),
       value: language,
     }))
   }
