@@ -27,13 +27,29 @@ export class MetadataInfoComponent {
     )
   }
 
-  get usages(): string[] {
+  get conditions(): string[] {
     let array = []
     if (this.metadata.useLimitations?.length) {
       array = array.concat(this.metadata.useLimitations)
     }
+    return array
+  }
+
+  get restrictions() {
+    let array = []
     if (this.metadata.accessConstraints?.length) {
       array = array.concat(this.metadata.accessConstraints.map((c) => c.text))
+    }
+    if (this.metadata.legalConstraints?.length) {
+      array = array.concat(this.metadata.legalConstraints)
+    }
+    return array
+  }
+
+  get licenses(): string[] {
+    let array = []
+    if (this.metadata.licenses?.length) {
+      array = array.concat(this.metadata.licenses.map((c) => c.text))
     }
     return array
   }
