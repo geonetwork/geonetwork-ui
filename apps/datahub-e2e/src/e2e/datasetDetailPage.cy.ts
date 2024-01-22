@@ -128,6 +128,10 @@ describe('dataset pages', () => {
             expect(text).not.to.equal('')
           })
       })
+      it('should display the keywords', () => {
+        cy.get('gn-ui-expandable-panel').eq(2).click()
+        cy.get('gn-ui-badge').should('have.length.gt', 0)
+      })
       it('should display the lineage and usage tabs', () => {
         cy.get('datahub-record-metadata')
           .find('[id="about"]')
@@ -159,6 +163,20 @@ describe('dataset pages', () => {
       it('should go to dataset search page when clicking on org name and filter by org', () => {
         cy.get('[data-cy="organization-name"]').click()
         cy.url().should('include', '/search?publisher=')
+      })
+      it('should go to dataset search page when clicking on keyword and filter by keyword', () => {
+        cy.get('gn-ui-expandable-panel').eq(2).click()
+
+        cy.get('gn-ui-badge').should('have.length.gt', 0).eq(1).as('keyword')
+
+        cy.get('@keyword').then((key) => {
+          keyword = key.text().toUpperCase()
+          cy.get('@keyword').first().click()
+          cy.url().should('include', '/search?q=')
+          cy.get('gn-ui-fuzzy-search')
+            .find('input')
+            .should('have.value', keyword)
+        })
       })
     })
   })

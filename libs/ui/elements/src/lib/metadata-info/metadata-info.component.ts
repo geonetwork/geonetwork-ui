@@ -52,4 +52,13 @@ export class MetadataInfoComponent {
   fieldReady(propName: string) {
     return !this.incomplete || propName in this.metadata
   }
+
+  onKeywordClick(keyword: string) {
+    this.keyword.emit(keyword)
+  }
+
+  copyText() {
+    navigator.clipboard.writeText(this.metadata.uniqueIdentifier)
+    ;(event.target as HTMLElement).blur()
+  }
 }
