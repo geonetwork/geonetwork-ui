@@ -21,7 +21,7 @@
       <div class="flex gap-4 w-full">
         <div>
           <gn-ui-dropdown-selector
-            [title]="'Delimiter'"
+            [title]="'datafeeder.validation.csv.delimiter' | translate"
             [choices]="delimiterChoices"
             (selectValue)="selectDelimiter($event)"
             [selected]="csvDelimiter"
@@ -32,7 +32,7 @@
         </div>
         <div>
           <gn-ui-dropdown-selector
-            [title]="'Quote separator'"
+            [title]="'datafeeder.validation.csv.quoteSeparator' | translate"
             [choices]="quoteSeparatorChoices"
             (selectValue)="selectQuoteSeparator($event)"
             [selected]="quoteSeparator"

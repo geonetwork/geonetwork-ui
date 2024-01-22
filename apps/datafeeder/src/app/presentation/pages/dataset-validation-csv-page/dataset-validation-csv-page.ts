@@ -16,16 +16,17 @@ import { DatafeederFacade } from '../../../store/datafeeder.facade'
 import * as Papa from 'papaparse'
 import { DropdownChoice } from '@geonetwork-ui/ui/inputs'
 
-const unknownLabel = 'datafeeder.datasetValidation.unknown'
-const viewSrs = 'EPSG:3857'
-
-marker('datafeeder.datasetValidation.unknown')
-marker('datafeeder.validation.sample.title')
-marker('datafeeder.validation.extent.title')
-marker('datafeeder.validation.extent.title.unknown')
-marker('datafeeder.validation.encoding')
-marker('datafeeder.validation.projection')
-marker('datafeeder.validation.projection.unknown')
+marker('datafeeder.validation.csv.delimiter.comma')
+marker('datafeeder.validation.csv.delimiter.semicolon')
+marker('datafeeder.validation.csv.quote.none')
+marker('datafeeder.validation.csv.quote.simple')
+marker('datafeeder.validation.csv.quote.double')
+marker('datafeeder.validation.csv.types.string')
+marker('datafeeder.validation.csv.types.boolean')
+marker('datafeeder.validation.csv.types.number')
+marker('datafeeder.validation.csv.types.lat')
+marker('datafeeder.validation.csv.types.lon')
+marker('datafeeder.validation.csv.types.unknown')
 
 @Component({
   selector: 'gn-ui-dataset-validation-csv-page',
@@ -44,24 +45,24 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
   csvData: []
   csvDelimiter: string
   delimiterChoices: DropdownChoice[] = [
-    { label: 'Comma ( , )', value: ',' },
-    { label: 'Semicolon ( ; )', value: ';' },
+    { label: 'datafeeder.validation.csv.delimiter.comma', value: ',' },
+    { label: 'datafeeder.validation.csv.delimiter.semicolon', value: ';' },
   ]
   quoteSeparator: string
   quoteSeparatorChoices: DropdownChoice[] = [
-    { label: 'None', value: '' },
-    { label: "Simple quote ( ' )", value: "'" },
-    { label: 'Double quote ( " )', value: '"' },
+    { label: 'datafeeder.validation.csv.quote.', value: '' },
+    { label: 'datafeeder.validation.csv.quote.simple', value: "'" },
+    { label: 'datafeeder.validation.csv.quote.double', value: '"' },
   ]
   columnTypes: string[]
 
   columnTypesChoices: DropdownChoice[] = [
-    { label: 'String', value: 'STRING' },
-    { label: 'Boolean', value: 'BOOL' },
-    { label: 'Number', value: 'NUMBER' },
-    { label: 'Lat', value: 'LAT' },
-    { label: 'Lon', value: 'LON' },
-    { label: 'Unknown', value: 'UNKNOWN' },
+    { label: 'datafeeder.validation.csv.types.string', value: 'STRING' },
+    { label: 'datafeeder.validation.csv.types.boolean', value: 'BOOL' },
+    { label: 'datafeeder.validation.csv.types.number', value: 'NUMBER' },
+    { label: 'datafeeder.validation.csv.types.lat', value: 'LAT' },
+    { label: 'datafeeder.validation.csv.types.lon', value: 'LON' },
+    { label: 'datafeeder.validation.csv.types.unknown', value: 'UNKNOWN' },
   ]
   private csv: string
   private routeParamsSub: Subscription
