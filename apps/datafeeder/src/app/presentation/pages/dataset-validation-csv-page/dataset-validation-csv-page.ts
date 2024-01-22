@@ -115,7 +115,12 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
     if (!this.isValid()) {
       return
     }
-    const fields = ['csvDelimiter', 'quoteSeparator', 'columnTypes']
+    const fields = [
+      'csvDelimiter',
+      'quoteSeparator',
+      'columnTypes',
+      'nativeName',
+    ]
     fields.forEach((f) => this.wizard.setWizardFieldData(f, this[f]))
     this.router.navigate(['/', this.rootId, 'step', 1])
   }
