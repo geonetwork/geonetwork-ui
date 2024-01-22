@@ -97,12 +97,7 @@ describe('dataset pages', () => {
       it('should display the description', () => {
         cy.get('datahub-record-metadata')
           .find('[id="about"]')
-          .find('gn-ui-metadata-info')
-          .find('gn-ui-content-ghost')
-          .find('gn-ui-max-lines')
-          .children('div')
-          .children('div')
-          .children('p')
+          .find('gn-ui-markdown-parser')
           .should(($element) => {
             const text = $element.text().trim()
             expect(text).not.to.equal('')

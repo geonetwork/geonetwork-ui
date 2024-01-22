@@ -74,8 +74,9 @@ describe('MetadataInfoComponent', () => {
       expect(displayedElement).toBeFalsy()
     })
     it('should display the abstract section', () => {
-      const displayedElement =
-        fixture.nativeElement.querySelector('.md-description p')
+      const displayedElement = fixture.nativeElement.querySelector(
+        'gn-ui-markdown-parser'
+      )
       expect(displayedElement).toBeTruthy()
     })
     it('should display the metadata origin even if there is no lineage text', () => {
