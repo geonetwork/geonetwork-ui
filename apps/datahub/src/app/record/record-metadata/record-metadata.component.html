@@ -19,6 +19,7 @@
           class="sm:block"
           [metadata]="facade.metadata$ | async"
           [incomplete]="facade.isIncomplete$ | async"
+          (keyword)="onInfoKeywordClick($event)"
         >
         </gn-ui-metadata-info>
       </div>
