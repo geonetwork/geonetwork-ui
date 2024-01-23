@@ -1,20 +1,8 @@
 #!/bin/sh
 
-username=admin
-password=admin
-xsrf_token=aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
 host=geonetwork:8080
-
-echo "Logging in to GeoNetwork..."
-
-# first login to get an authenticated admin session
-jsessionid=$(
-  curl -s "http://$host/geonetwork/signin" \
-    -H 'Content-Type: application/x-www-form-urlencoded' \
-    -H "Cookie: XSRF-TOKEN=$xsrf_token" \
-    --data-raw "_csrf=$xsrf_token&username=$username&password=$password" \
-    -c - | grep JSESSIONID | awk '{ print $7 }'
-)
+jsessionid=$(cat /jsessionid)
+xsrf_token=$(cat /xsrf_token)
 
 echo "Triggering full records indexation in GeoNetwork..."
 
