@@ -42,6 +42,7 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
   numberOfSteps: number
 
   csvData: []
+  private parseLength = 0
   csvDelimiter: string
   delimiterChoices: DropdownChoice[] = [
     { label: 'datafeeder.validation.csv.delimiter.comma', value: ',' },
@@ -59,8 +60,8 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
     { label: 'datafeeder.validation.csv.types.string', value: 'STRING' },
     { label: 'datafeeder.validation.csv.types.boolean', value: 'BOOL' },
     { label: 'datafeeder.validation.csv.types.number', value: 'NUMBER' },
-    { label: 'datafeeder.validation.csv.types.lat', value: 'LAT' },
-    { label: 'datafeeder.validation.csv.types.lon', value: 'LON' },
+    // { label: 'datafeeder.validation.csv.types.lat', value: 'LAT' },
+    // { label: 'datafeeder.validation.csv.types.lon', value: 'LON' },
     { label: 'datafeeder.validation.csv.types.unknown', value: 'UNKNOWN' },
   ]
   private csv: string
@@ -95,7 +96,7 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
 
           this.dataset = job.datasets[0]
           const options = this.dataset.options
-          this.csv = atob(options.csv)
+          this.csv = new TextDecoder().decode(this.base64ToBytes(options.csv))
           this.csvDelimiter =
             this.wizard.getWizardFieldData('csvDelimiter') || options.delimiter
           this.quoteChar =
@@ -114,7 +115,13 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
     if (!this.isValid()) {
       return
     }
-    const fields = ['csvDelimiter', 'quoteChar', 'columnTypes', 'nativeName']
+    const fields = [
+      'csvDelimiter',
+      'quoteChar',
+      'columnTypes',
+      'nativeName',
+      'crs',
+    ]
     fields.forEach((f) => this.wizard.setWizardFieldData(f, this[f]))
     this.router.navigate(['/', this.rootId, 'step', 1])
   }
@@ -126,15 +133,17 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
     })
     this.csvDelimiter ??= parseResult.meta.delimiter
     this.quoteChar ??= parseResult.meta.quoteChar
-    console.log(parseResult.meta)
-    this.csvData = parseResult.data
+    this.csvData = parseResult.data.filter(
+      (row) => row.length > 1 || (row.length == 1 && row[0])
+    )
+    this.parseLength = parseResult.data[0].length
   }
 
   isValid(): boolean {
     return !(
       this.latDuplicate ||
       this.longDuplicate ||
-      this.columnTypes.indexOf('UNKNOWN') != -1
+      this.columnTypes.slice(0, this.parseLength).indexOf('UNKNOWN') != -1
     )
   }
 
@@ -149,6 +158,11 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
   selectQuoteChar($event: string) {
     this.quoteChar = $event
     this.updateArray()
+  }
+
+  base64ToBytes(base64) {
+    const binString = atob(base64)
+    return Uint8Array.from(binString, (m) => m.codePointAt(0))
   }
 
   selectColumnTypes($event: string, index: number) {
