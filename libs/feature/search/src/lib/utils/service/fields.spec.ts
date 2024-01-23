@@ -25,6 +25,7 @@ class ElasticsearchServiceMock {
 class RecordsRepositoryMock {
   aggregate = jest.fn((aggregations) => {
     const aggName = Object.keys(aggregations)[0]
+    const sortType = aggregations[aggName].sort[1]
     if (aggName.startsWith('is'))
       return of({
         [aggName]: {
@@ -94,26 +95,30 @@ class RecordsRepositoryMock {
           ],
         },
       })
+    const buckets = [
+      {
+        term: 'First value',
+        count: 5,
+      },
+      {
+        term: 'Second value',
+        count: 3,
+      },
+      {
+        term: 'Third value',
+        count: 12,
+      },
+      {
+        term: 'Fourth value',
+        count: 1,
+      },
+    ]
+    if (sortType === 'count') {
+      buckets.sort((a, b) => b.count - a.count)
+    }
     return of({
       [aggName]: {
-        buckets: [
-          {
-            term: 'First value',
-            count: 5,
-          },
-          {
-            term: 'Second value',
-            count: 3,
-          },
-          {
-            term: 'Third value',
-            count: 12,
-          },
-          {
-            term: 'Fourth value',
-            count: 1,
-          },
-        ],
+        buckets,
       },
     })
   })
@@ -214,7 +219,7 @@ describe('search fields implementations', () => {
 
   describe('SimpleSearchField', () => {
     beforeEach(() => {
-      searchField = new SimpleSearchField('myField', 'desc', injector)
+      searchField = new SimpleSearchField('myField', injector, 'desc')
     })
     describe('#getAvailableValues', () => {
       let values
@@ -304,34 +309,70 @@ describe('search fields implementations', () => {
   })
 
   describe('KeySearchField', () => {
-    beforeEach(() => {
-      searchField = new KeySearchField('cl_topic.key', 'asc', injector)
-    })
-    describe('#getAvailableValues', () => {
-      let values
-      beforeEach(async () => {
-        values = await lastValueFrom(searchField.getAvailableValues())
+    describe('sort by key', () => {
+      beforeEach(() => {
+        searchField = new KeySearchField('cl_topic.key', injector, 'asc')
       })
-      it('calls search with a simple unsorted terms', () => {
-        expect(repository.aggregate).toHaveBeenCalledWith({
-          'cl_topic.key': {
-            type: 'terms',
-            limit: 1000,
-            field: 'cl_topic.key',
-            sort: ['asc', 'key'],
-          },
+      describe('#getAvailableValues', () => {
+        let values
+        beforeEach(async () => {
+          values = await lastValueFrom(searchField.getAvailableValues())
+        })
+        it('calls search with a simple unsorted terms', () => {
+          expect(repository.aggregate).toHaveBeenCalledWith({
+            'cl_topic.key': {
+              type: 'terms',
+              limit: 1000,
+              field: 'cl_topic.key',
+              sort: ['asc', 'key'],
+            },
+          })
+        })
+        it('returns a list of values sorted by translated labels', () => {
+          expect(values).toEqual([
+            { label: 'Bla (12)', value: 'Third value' },
+            { label: 'Fourth value (1)', value: 'Fourth value' },
+            { label: 'Hello (3)', value: 'Second value' },
+            { label: 'Translated first value (5)', value: 'First value' },
+          ])
+        })
+        it('calls translations 4 times', () => {
+          expect(platformService.translateKey).toHaveBeenCalledTimes(4)
         })
       })
-      it('returns a list of values sorted by translated labels', () => {
-        expect(values).toEqual([
-          { label: 'Bla (12)', value: 'Third value' },
-          { label: 'Fourth value (1)', value: 'Fourth value' },
-          { label: 'Hello (3)', value: 'Second value' },
-          { label: 'Translated first value (5)', value: 'First value' },
-        ])
+    })
+    describe('sort by count', () => {
+      beforeEach(() => {
+        searchField = new KeySearchField(
+          'tag.default',
+          injector,
+          'desc',
+          'count'
+        )
       })
-      it('calls translations 4 times', () => {
-        expect(platformService.translateKey).toHaveBeenCalledTimes(4)
+      describe('#getAvailableValues', () => {
+        let values
+        beforeEach(async () => {
+          values = await lastValueFrom(searchField.getAvailableValues())
+        })
+        it('calls search with a simple unsorted terms', () => {
+          expect(repository.aggregate).toHaveBeenCalledWith({
+            'tag.default': {
+              type: 'terms',
+              limit: 1000,
+              field: 'tag.default',
+              sort: ['desc', 'count'],
+            },
+          })
+        })
+        it('returns a list of values sorted by count', () => {
+          expect(values).toEqual([
+            { label: 'Bla (12)', value: 'Third value' },
+            { label: 'Translated first value (5)', value: 'First value' },
+            { label: 'Hello (3)', value: 'Second value' },
+            { label: 'Fourth value (1)', value: 'Fourth value' },
+          ])
+        })
       })
     })
   })
@@ -340,8 +381,8 @@ describe('search fields implementations', () => {
       searchField = new ThesaurusField(
         'th_inspire.link',
         'inspire',
-        'asc',
-        injector
+        injector,
+        'asc'
       )
     })
     describe('#getAvailableValues', () => {

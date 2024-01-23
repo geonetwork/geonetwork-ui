@@ -36,8 +36,9 @@ export class SimpleSearchField implements AbstractSearchField {
 
   constructor(
     protected esFieldName: string,
+    protected injector: Injector,
     protected order: 'asc' | 'desc' = 'asc',
-    protected injector: Injector
+    protected orderType: 'key' | 'count' = 'key'
   ) {}
 
   protected getAggregations(): AggregationsParams {
@@ -46,7 +47,7 @@ export class SimpleSearchField implements AbstractSearchField {
         type: 'terms',
         field: this.esFieldName,
         limit: 1000,
-        sort: [this.order, 'key'],
+        sort: [this.order, this.orderType],
       },
     }
   }
@@ -100,6 +101,7 @@ export class KeySearchField extends SimpleSearchField {
   }
 
   getAvailableValues(): Observable<FieldAvailableValue[]> {
+    if (this.orderType === 'count') return super.getAvailableValues()
     // sort values by alphabetical order
     return super
       .getAvailableValues()
@@ -126,10 +128,10 @@ export class ThesaurusField extends KeySearchField {
   constructor(
     esFieldName: string,
     protected thesaurusName: string,
-    order: 'asc' | 'desc' = 'asc',
-    injector: Injector
+    injector: Injector,
+    order: 'asc' | 'desc' = 'asc'
   ) {
-    super(esFieldName, order, injector)
+    super(esFieldName, injector, order)
   }
   protected async getTranslation(key: string) {
     return firstValueFrom(
@@ -163,7 +165,7 @@ export class IsSpatialSearchField extends SimpleSearchField {
   private translateService = this.injector.get(TranslateService)
 
   constructor(injector: Injector) {
-    super('isSpatial', 'asc', injector)
+    super('isSpatial', injector, 'asc')
     this.esService.registerRuntimeField(
       'isSpatial',
       `String result = 'no';
@@ -223,7 +225,7 @@ export class LicenseSearchField extends SimpleSearchField {
   private translateService = this.injector.get(TranslateService)
 
   constructor(injector: Injector) {
-    super('license', 'asc', injector)
+    super('license', injector, 'asc')
     this.esService.registerRuntimeField(
       'license',
       `String raw = '';
@@ -330,7 +332,7 @@ export class OrganizationSearchField implements AbstractSearchField {
 }
 export class OwnerSearchField extends SimpleSearchField {
   constructor(injector: Injector) {
-    super('owner', 'asc', injector)
+    super('owner', injector, 'asc')
   }
 
   getAvailableValues(): Observable<FieldAvailableValue[]> {
