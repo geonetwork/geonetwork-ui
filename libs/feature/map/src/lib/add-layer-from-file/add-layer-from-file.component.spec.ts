@@ -43,7 +43,7 @@ describe('AddLayerFromFileComponent', () => {
         component.handleFileChange(null)
       })
       it('should set error message', () => {
-        expect(component.errorMessage).toEqual('File is invalid')
+        expect(component.errorMessage).toEqual('Invalid file format')
       })
     })
     describe('if file size exceeds the limit', () => {
