@@ -38,7 +38,7 @@ describe('AddLayerFromFileComponent', () => {
   })
 
   describe('handleFileChange', () => {
-    describe('should set error message if file is not selected', () => {
+    describe('if file is not selected', () => {
       beforeEach(() => {
         component.handleFileChange(null)
       })
@@ -46,7 +46,7 @@ describe('AddLayerFromFileComponent', () => {
         expect(component.errorMessage).toEqual('File is invalid')
       })
     })
-    describe('should set error message if file size exceeds the limit', () => {
+    describe('if file size exceeds the limit', () => {
       beforeEach(() => {
         const file = new File([''], 'filename', { type: 'text/plain' })
         jest.spyOn(file, 'size', 'get').mockReturnValue(5000001)
@@ -58,7 +58,7 @@ describe('AddLayerFromFileComponent', () => {
         )
       })
     })
-    describe('should set error message if file format is invalid', () => {
+    describe('if file format is invalid', () => {
       beforeEach(() => {
         const file = new File([''], 'filename', { type: 'text/plain' })
         component.handleFileChange(file)

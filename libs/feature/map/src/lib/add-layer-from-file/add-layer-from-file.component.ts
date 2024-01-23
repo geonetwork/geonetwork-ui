@@ -2,11 +2,15 @@ import { ChangeDetectorRef, Component } from '@angular/core'
 import { MapContextLayerModel } from '../map-context/map-context.model'
 import { MapFacade } from '../+state/map.facade'
 
+const INVALID_FILE_FORMAT_ERROR_MESSAGE = 'Invalid file format'
+
 @Component({
   selector: 'gn-ui-add-layer-from-file',
   templateUrl: './add-layer-from-file.component.html',
   styleUrls: ['./add-layer-from-file.component.css'],
 })
+
+
 export class AddLayerFromFileComponent {
   errorMessage: string | null = null
   successMessage: string | null = null
@@ -21,13 +25,11 @@ export class AddLayerFromFileComponent {
 
   async handleFileChange(file: File) {
     if (!file) {
-      this.errorMessage = 'File is invalid'
-      this.displayError()
+      this.displayMessage(INVALID_FILE_FORMAT_ERROR_MESSAGE, 'error');
       return
     }
     if (file.size > this.maxFileSize) {
-      this.errorMessage = 'File size exceeds the limit of 5MB'
-      this.displayError()
+      this.displayMessage('File size exceeds the limit of 5MB', 'error');
       return
     }
     await this.addLayer(file)
@@ -38,25 +40,22 @@ export class AddLayerFromFileComponent {
     this.loading = true
     try {
       if (!this.isFileFormatValid(file)) {
-        this.errorMessage = 'Invalid file format'
-        this.displayError()
+        this.displayMessage(INVALID_FILE_FORMAT_ERROR_MESSAGE, 'error');
         return
       }
 
-      const fileExtension = file.name.split('.').pop()
+      const fileExtension = this.getFileExtension(file)
       switch (fileExtension) {
         case 'geojson':
           await this.addGeoJsonLayer(file)
           break
         default:
-          this.errorMessage = 'Invalid file format'
-          this.displayError()
+          this.displayMessage(INVALID_FILE_FORMAT_ERROR_MESSAGE, 'error');
           break
       }
     } catch (error) {
       const err = error as Error
-      this.errorMessage = 'Error loading file: ' + err.message
-      this.displayError()
+      this.displayMessage('Error loading file: ' + err.message, 'error');
     } finally {
       this.loading = false
     }
@@ -74,11 +73,7 @@ export class AddLayerFromFileComponent {
             data: result,
           }
           this.mapFacade.addLayer({ ...layerToAdd, title: title })
-          this.successMessage = 'File successfully added to map'
-          setTimeout(() => {
-            this.successMessage = null
-            this.changeDetectorRef.detectChanges()
-          }, 5000)
+          this.displayMessage('File successfully added to map', 'success');
           resolve()
         }
         reader.onerror = reject
@@ -90,14 +85,28 @@ export class AddLayerFromFileComponent {
   }
 
   private isFileFormatValid(file: File): boolean {
-    const fileExtension = file.name.split('.').pop()
+    const fileExtension = this.getFileExtension(file)
     return this.acceptedMimeType.includes(`.${fileExtension}`)
   }
 
-  private displayError() {
+  private getFileExtension(file: File): string | undefined {
+    return file.name.split('.').pop();
+  }
+
+  private displayMessage(message: string, type: 'success' | 'error') {
+    if (type === 'success') {
+      this.successMessage = message;
+    } else if (type === 'error') {
+      this.errorMessage = message;
+    }
+
     setTimeout(() => {
-      this.errorMessage = null
-      this.changeDetectorRef.detectChanges()
-    }, 5000)
+      if (type === 'success') {
+        this.successMessage = null;
+      } else if (type === 'error') {
+        this.errorMessage = null;
+      }
+      this.changeDetectorRef.detectChanges();
+    }, 5000);
   }
 }
