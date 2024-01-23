@@ -9,8 +9,6 @@ const INVALID_FILE_FORMAT_ERROR_MESSAGE = 'Invalid file format'
   templateUrl: './add-layer-from-file.component.html',
   styleUrls: ['./add-layer-from-file.component.css'],
 })
-
-
 export class AddLayerFromFileComponent {
   errorMessage: string | null = null
   successMessage: string | null = null
@@ -25,11 +23,11 @@ export class AddLayerFromFileComponent {
 
   async handleFileChange(file: File) {
     if (!file) {
-      this.displayMessage(INVALID_FILE_FORMAT_ERROR_MESSAGE, 'error');
+      this.displayMessage(INVALID_FILE_FORMAT_ERROR_MESSAGE, 'error')
       return
     }
     if (file.size > this.maxFileSize) {
-      this.displayMessage('File size exceeds the limit of 5MB', 'error');
+      this.displayMessage('File size exceeds the limit of 5MB', 'error')
       return
     }
     await this.addLayer(file)
@@ -40,7 +38,7 @@ export class AddLayerFromFileComponent {
     this.loading = true
     try {
       if (!this.isFileFormatValid(file)) {
-        this.displayMessage(INVALID_FILE_FORMAT_ERROR_MESSAGE, 'error');
+        this.displayMessage(INVALID_FILE_FORMAT_ERROR_MESSAGE, 'error')
         return
       }
 
@@ -50,12 +48,12 @@ export class AddLayerFromFileComponent {
           await this.addGeoJsonLayer(file)
           break
         default:
-          this.displayMessage(INVALID_FILE_FORMAT_ERROR_MESSAGE, 'error');
+          this.displayMessage(INVALID_FILE_FORMAT_ERROR_MESSAGE, 'error')
           break
       }
     } catch (error) {
       const err = error as Error
-      this.displayMessage('Error loading file: ' + err.message, 'error');
+      this.displayMessage('Error loading file: ' + err.message, 'error')
     } finally {
       this.loading = false
     }
@@ -73,7 +71,7 @@ export class AddLayerFromFileComponent {
             data: result,
           }
           this.mapFacade.addLayer({ ...layerToAdd, title: title })
-          this.displayMessage('File successfully added to map', 'success');
+          this.displayMessage('File successfully added to map', 'success')
           resolve()
         }
         reader.onerror = reject
@@ -90,23 +88,23 @@ export class AddLayerFromFileComponent {
   }
 
   private getFileExtension(file: File): string | undefined {
-    return file.name.split('.').pop();
+    return file.name.split('.').pop()
   }
 
   private displayMessage(message: string, type: 'success' | 'error') {
     if (type === 'success') {
-      this.successMessage = message;
+      this.successMessage = message
     } else if (type === 'error') {
-      this.errorMessage = message;
+      this.errorMessage = message
     }
 
     setTimeout(() => {
       if (type === 'success') {
-        this.successMessage = null;
+        this.successMessage = null
       } else if (type === 'error') {
-        this.errorMessage = null;
+        this.errorMessage = null
       }
-      this.changeDetectorRef.detectChanges();
-    }, 5000);
+      this.changeDetectorRef.detectChanges()
+    }, 5000)
   }
 }
