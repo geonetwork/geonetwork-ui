@@ -1,7 +1,9 @@
 #!/bin/sh
 
+# add jq first
+apk update && apk add --no-cache jq
+
 if [ "$GEONETWORK_VERSION" = '4.2.2' ]; then
-  apk update && apk add --no-cache jq
   indexConfigDir=/mnt/geonetwork_data/config/index/
 
   # fix the indexing type of the organisation name to allow displaying in the UI

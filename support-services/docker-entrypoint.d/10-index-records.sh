@@ -36,9 +36,13 @@ do
 done
 
 # finally check that the index has records in it
+# and that the records count is stable (i.e. indexing is finished)
+prevRecordsCount=0
 recordsCount=0
-while [ "$recordsCount" = '0' ];
+while [ "$recordsCount" = '0' ] || [ "$prevRecordsCount" != "$recordsCount" ];
 do
+  sleep 3
+  prevRecordsCount=$recordsCount
   response=$(
     curl -s "http://$host/geonetwork/srv/api/search/records/_search" \
       -H 'Accept: application/json, text/plain, */*' \
@@ -49,7 +53,6 @@ do
   )
   recordsCount=$(echo $response | sed 's/.*"hits":{"total":{"value":\([0-9]\+\).*/\1/g')
   echo "Records found: $recordsCount"
-  sleep 2
 done
 
 echo "Indexing job in GeoNetwork successful."
