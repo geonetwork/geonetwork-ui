@@ -100,7 +100,7 @@
   "datafeeder.validation.csv.quote.double": "Comillas dobles",
   "datafeeder.validation.csv.quote.none": "Ninguno",
   "datafeeder.validation.csv.quote.simple": "Comillas simples",
-  "datafeeder.validation.csv.quoteSeparator": "",
+  "datafeeder.validation.csv.quoteChar": "",
   "datafeeder.validation.csv.types.boolean": "Booleano",
   "datafeeder.validation.csv.types.lat": "Latitud",
   "datafeeder.validation.csv.types.lon": "Longitud",

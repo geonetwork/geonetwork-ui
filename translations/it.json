@@ -100,7 +100,7 @@
   "datafeeder.validation.csv.quote.double": "",
   "datafeeder.validation.csv.quote.none": "",
   "datafeeder.validation.csv.quote.simple": "",
-  "datafeeder.validation.csv.quoteSeparator": "",
+  "datafeeder.validation.csv.quoteChar": "",
   "datafeeder.validation.csv.types.boolean": "Booleano",
   "datafeeder.validation.csv.types.lat": "Latitudine",
   "datafeeder.validation.csv.types.lon": "Longitudine",

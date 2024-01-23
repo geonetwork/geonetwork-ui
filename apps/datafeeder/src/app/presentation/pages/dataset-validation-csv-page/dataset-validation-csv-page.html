@@ -32,10 +32,10 @@
         </div>
         <div>
           <gn-ui-dropdown-selector
-            [title]="'datafeeder.validation.csv.quoteSeparator' | translate"
-            [choices]="quoteSeparatorChoices"
-            (selectValue)="selectQuoteSeparator($event)"
-            [selected]="quoteSeparator"
+            [title]="'datafeeder.validation.csv.quoteChar' | translate"
+            [choices]="quoteCharChoices"
+            (selectValue)="selectQuoteChar($event)"
+            [selected]="quoteChar"
             [extraBtnClass]="'secondary min-w-full'"
             ariaName="search-sort-by"
           >

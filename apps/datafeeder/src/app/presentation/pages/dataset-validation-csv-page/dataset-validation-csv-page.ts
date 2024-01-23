@@ -4,7 +4,6 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   AnalysisStatusEnumApiModel,
   DatasetUploadStatusApiModel,
-  FileUploadApiService,
   UploadJobStatusApiModel,
 } from '@geonetwork-ui/data-access/datafeeder'
 import { WizardService } from '@geonetwork-ui/feature/editor'
@@ -48,9 +47,9 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
     { label: 'datafeeder.validation.csv.delimiter.comma', value: ',' },
     { label: 'datafeeder.validation.csv.delimiter.semicolon', value: ';' },
   ]
-  quoteSeparator: string
-  quoteSeparatorChoices: DropdownChoice[] = [
-    { label: 'datafeeder.validation.csv.quote.', value: '' },
+  quoteChar: string
+  quoteCharChoices: DropdownChoice[] = [
+    { label: 'datafeeder.validation.csv.quote.none', value: '' },
     { label: 'datafeeder.validation.csv.quote.simple', value: "'" },
     { label: 'datafeeder.validation.csv.quote.double', value: '"' },
   ]
@@ -74,7 +73,6 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private wizard: WizardService,
-    private fileUploadApiService: FileUploadApiService,
     private facade: DatafeederFacade
   ) {}
 
@@ -97,14 +95,14 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
 
           this.dataset = job.datasets[0]
           const options = this.dataset.options
-          this.csv = options.csv
+          this.csv = atob(options.csv)
           this.csvDelimiter =
             this.wizard.getWizardFieldData('csvDelimiter') || options.delimiter
-          this.quoteSeparator =
-            this.wizard.getWizardFieldData('quoteSeparator') ||
-            options.quoteSeparator
+          this.quoteChar =
+            this.wizard.getWizardFieldData('quoteChar') || options.quoteChar
           this.columnTypes =
-            this.wizard.getWizardFieldData('columnTypes') || options.columnTypes
+            this.wizard.getWizardFieldData('columnTypes') ||
+            options.columnTypes.split(',')
           this.numOfEntities = this.dataset.featureCount
           this.nativeName = this.dataset.name
           this.updateArray()
@@ -116,12 +114,7 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
     if (!this.isValid()) {
       return
     }
-    const fields = [
-      'csvDelimiter',
-      'quoteSeparator',
-      'columnTypes',
-      'nativeName',
-    ]
+    const fields = ['csvDelimiter', 'quoteChar', 'columnTypes', 'nativeName']
     fields.forEach((f) => this.wizard.setWizardFieldData(f, this[f]))
     this.router.navigate(['/', this.rootId, 'step', 1])
   }
@@ -129,8 +122,11 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
   updateArray(): void {
     const parseResult = Papa.parse(this.csv, {
       delimiter: this.csvDelimiter,
-      quoteChar: this.quoteSeparator,
+      quoteChar: this.quoteChar,
     })
+    this.csvDelimiter ??= parseResult.meta.delimiter
+    this.quoteChar ??= parseResult.meta.quoteChar
+    console.log(parseResult.meta)
     this.csvData = parseResult.data
   }
 
@@ -150,8 +146,8 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
     this.csvDelimiter = $event
     this.updateArray()
   }
-  selectQuoteSeparator($event: string) {
-    this.quoteSeparator = $event
+  selectQuoteChar($event: string) {
+    this.quoteChar = $event
     this.updateArray()
   }
 

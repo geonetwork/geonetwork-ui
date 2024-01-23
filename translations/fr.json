@@ -100,7 +100,7 @@
   "datafeeder.validation.csv.quote.double": "Double guillemets",
   "datafeeder.validation.csv.quote.none": "Aucun",
   "datafeeder.validation.csv.quote.simple": "Simple guillemet",
-  "datafeeder.validation.csv.quoteSeparator": "Séparateur de texte",
+  "datafeeder.validation.csv.quoteChar": "Séparateur de texte",
   "datafeeder.validation.csv.types.boolean": "Booléen",
   "datafeeder.validation.csv.types.lat": "Latitude",
   "datafeeder.validation.csv.types.lon": "Longitude",
