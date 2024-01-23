@@ -183,6 +183,7 @@
   "map.loading.service": "",
   "map.navigation.message": "Použite prosím CTRL + myš (alebo dva prsty na mobilnom zariadení) na navigáciu po mape",
   "map.select.layer": "Zdroj dát",
+  "map.wfs.urlInput.hint": "",
   "map.wms.urlInput.hint": "",
   "multiselect.filter.placeholder": "Hľadať",
   "nav.back": "Späť",

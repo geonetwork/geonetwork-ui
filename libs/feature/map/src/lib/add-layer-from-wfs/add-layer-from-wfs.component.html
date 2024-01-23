@@ -1,0 +1,37 @@
+<div class="flex items-center mb-5">
+  <gn-ui-text-input
+    [(value)]="wfsUrl"
+    (valueChange)="urlChange.next($event)"
+    [hint]="'map.wfs.urlInput.hint' | translate"
+    class="w-96"
+  >
+  </gn-ui-text-input>
+</div>
+
+<div *ngIf="errorMessage" class="text-red-500 mt-2">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="loading">
+  <p class="loading-message" translate>map.loading.service</p>
+</div>
+
+<div *ngIf="!loading && layers.length > 0">
+  <h2 class="font-bold" translate>map.layers.available</h2>
+  <ng-container *ngFor="let layer of layers">
+    <div class="flex items-center justify-between my-2 layer-item-tree">
+      <p class="max-w-xs overflow-hidden overflow-ellipsis whitespace-nowrap">
+        {{ layer.title }}
+      </p>
+      <gn-ui-button
+        *ngIf="layer.name"
+        class="layer-add-btn"
+        type="primary"
+        (buttonClick)="addLayer(layer)"
+        extraClass="text-sm !px-2 !py-1"
+        translate
+        ><span translate> map.layer.add </span></gn-ui-button
+      >
+    </div>
+  </ng-container>
+</div>

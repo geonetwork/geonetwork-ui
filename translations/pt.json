@@ -183,6 +183,7 @@
   "map.loading.service": "",
   "map.navigation.message": "",
   "map.select.layer": "",
+  "map.wfs.urlInput.hint": "",
   "map.wms.urlInput.hint": "",
   "multiselect.filter.placeholder": "",
   "nav.back": "",

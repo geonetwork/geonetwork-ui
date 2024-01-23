@@ -183,6 +183,7 @@
   "map.loading.service": "",
   "map.navigation.message": "Bitte verwenden Sie STRG + Maus (oder zwei Finger auf einem Mobilgerät), um die Karte zu navigieren",
   "map.select.layer": "Datenquelle",
+  "map.wfs.urlInput.hint": "",
   "map.wms.urlInput.hint": "",
   "multiselect.filter.placeholder": "Suche",
   "nav.back": "Zurück",
