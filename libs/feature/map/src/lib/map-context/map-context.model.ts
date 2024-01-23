@@ -32,7 +32,6 @@ interface MapContextLayerWfsModel {
   type: 'wfs'
   url: string
   name: string
-  featureCount?: number
 }
 
 interface LayerXyzModel {

@@ -58,7 +58,6 @@ export class AddLayerFromWfsComponent implements OnInit {
       name: layer.name,
       url: this.wfsUrl.toString(),
       type: MapContextLayerTypeEnum.WFS,
-      featureCount: 10000,
     }
     this.mapFacade.addLayer({ ...layerToAdd, title: layer.title })
   }

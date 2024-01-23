@@ -159,7 +159,6 @@ describe('AddLayerFromWfsComponent', () => {
         title: 'Feature Type 1',
         url: 'http://my.service.org/wfs',
         type: 'wfs',
-        featureCount: 10000,
       })
     })
   })
