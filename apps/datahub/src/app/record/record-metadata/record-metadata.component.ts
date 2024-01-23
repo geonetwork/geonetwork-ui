@@ -57,7 +57,14 @@ export class RecordMetadataComponent {
 
   thumbnailUrl$ = this.facade.metadata$.pipe(
     map((metadata) => {
-      return metadata?.overviews?.[0]?.url
+      // in order to differentiate between metadata not loaded yet
+      // and url not defined
+      // the content-ghost of image-overlay-preview relies on this differentiation
+      if (metadata?.overviews === undefined) {
+        return undefined
+      } else {
+        return metadata?.overviews?.[0]?.url ?? null
+      }
     })
   )
 

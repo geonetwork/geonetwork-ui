@@ -34,6 +34,7 @@ export class Gn4MetadataMapper extends MetadataBaseMapper<Gn4Record> {
       useLimitations: [],
       spatialExtents: [],
       temporalExtents: [],
+      overviews: [],
     }
     const record: CatalogRecord = Object.keys(_source).reduce(
       (prev, fieldName) =>
