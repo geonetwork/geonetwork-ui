@@ -30,6 +30,7 @@ import { PaginationButtonsComponent } from './pagination-buttons/pagination-butt
 import { MaxLinesComponent } from './max-lines/max-lines.component'
 import { RecordApiFormComponent } from './record-api-form/record-api-form.component'
 import { MarkdownParserComponent } from './markdown-parser/markdown-parser.component'
+import { ImageOverlayPreviewComponent } from './image-overlay-preview/image-overlay-preview.component'
 
 @NgModule({
   imports: [
@@ -67,6 +68,7 @@ import { MarkdownParserComponent } from './markdown-parser/markdown-parser.compo
     MaxLinesComponent,
     RecordApiFormComponent,
     MarkdownParserComponent,
+    ImageOverlayPreviewComponent,
   ],
   exports: [
     MetadataInfoComponent,
@@ -88,6 +90,7 @@ import { MarkdownParserComponent } from './markdown-parser/markdown-parser.compo
     PaginationButtonsComponent,
     RecordApiFormComponent,
     MarkdownParserComponent,
+    ImageOverlayPreviewComponent,
   ],
 })
 export class UiElementsModule {}
