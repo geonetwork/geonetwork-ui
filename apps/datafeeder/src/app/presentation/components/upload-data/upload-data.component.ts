@@ -25,7 +25,12 @@ export class UploadDataComponent {
   haveRights = false
   uploading = false
   // Edge use uncommon 'application/x-zip-compressed' mime type
-  acceptedMimeType = ['.zip', 'application/zip', 'application/x-zip-compressed']
+  acceptedMimeType = [
+    '.zip',
+    'application/zip',
+    'application/x-zip-compressed',
+    'text/csv',
+  ]
 
   @Input() maxFileSizeMb: number
   @Output() errors$ = new EventEmitter<UploadDataError>()

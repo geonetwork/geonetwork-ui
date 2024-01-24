@@ -11,6 +11,7 @@ import { PublicationLockGuard } from './router/publication-lock.guard'
 import { PublicationStatusGuard } from './router/publication-status.guard'
 import { UploadProgressGuard } from './router/upload-progress.guard'
 import { UploadStatusGuard } from './router/upload-status.guard'
+import { DatasetValidationCsvPageComponent } from './presentation/pages/dataset-validation-csv-page/dataset-validation-csv-page'
 
 const routes: Routes = [
   { path: '', component: UploadDataPageComponent },
@@ -22,6 +23,11 @@ const routes: Routes = [
   {
     path: ':id/validation',
     component: DatasetValidationPageComponent,
+    canActivate: [UploadStatusGuard, PublicationLockGuard],
+  },
+  {
+    path: ':id/validation-csv',
+    component: DatasetValidationCsvPageComponent,
     canActivate: [UploadStatusGuard, PublicationLockGuard],
   },
   {

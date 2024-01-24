@@ -34,4 +34,6 @@ export interface DatasetUploadStatusApiModel {
    * detected charset
    */
   encoding?: string
+  format?: 'CSV' | 'SHP'
+  options?: any
 }
