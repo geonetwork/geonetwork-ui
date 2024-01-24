@@ -66,7 +66,7 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
   ]
   private csv: string
   private routeParamsSub: Subscription
-  private rootId: number
+  rootId: number
   private format = new GeoJSON({})
   latDuplicate: boolean
   longDuplicate: boolean
@@ -133,9 +133,20 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
     })
     this.csvDelimiter ??= parseResult.meta.delimiter
     this.quoteChar ??= parseResult.meta.quoteChar
+    // add unknown types if needed
+    if (this.columnTypes.length < parseResult.data[0].length) {
+      this.columnTypes = [
+        ...this.columnTypes,
+        ...Array(parseResult.data[0].length - this.columnTypes.length).fill(
+          'UNKNOWN'
+        ),
+      ]
+    }
+    // remove empty rows
     this.csvData = parseResult.data.filter(
       (row) => row.length > 1 || (row.length == 1 && row[0])
     )
+
     this.parseLength = parseResult.data[0].length
   }
 
@@ -143,7 +154,7 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
     return !(
       this.latDuplicate ||
       this.longDuplicate ||
-      this.columnTypes.slice(0, this.parseLength).indexOf('UNKNOWN') != -1
+      this.columnTypes?.slice(0, this.parseLength).indexOf('UNKNOWN') != -1
     )
   }
 

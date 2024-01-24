@@ -40,9 +40,12 @@ export class FormsPageComponent implements OnInit, OnDestroy {
       this.facade.upload$
         .pipe(take(1))
         .subscribe((job: UploadJobStatusApiModel) => {
-          this.redirectPage = UploadProgressGuard.getRedirectPage(
-            job.datasets[0].format
-          )
+          const jobFormat = job.datasets[0].format
+          const thirdStep = this.wizardConfig.configuration[2]
+          if (jobFormat === 'CSV' && thirdStep.length > 1) {
+            thirdStep.pop()
+          }
+          this.redirectPage = UploadProgressGuard.getRedirectPage(jobFormat)
         })
     })
     this.cd.detectChanges()

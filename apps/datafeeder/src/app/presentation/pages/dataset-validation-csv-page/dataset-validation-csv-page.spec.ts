@@ -3,13 +3,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ActivatedRoute, Router } from '@angular/router'
 import {
   AnalysisStatusEnumApiModel,
-  FileUploadApiService,
   UploadJobStatusApiModel,
 } from '@geonetwork-ui/data-access/datafeeder'
 import { of } from 'rxjs'
 import { WizardService } from '@geonetwork-ui/feature/editor'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
-import { DatasetValidationPageComponent } from './dataset-validation-csv-page'
+import { DatasetValidationCsvPageComponent } from './dataset-validation-csv-page'
+import { UtilI18nModule } from '@geonetwork-ui/util/i18n'
+import { TranslateModule } from '@ngx-translate/core'
 
 const jobMock: UploadJobStatusApiModel = {
   jobId: '1234',
@@ -19,6 +20,12 @@ const jobMock: UploadJobStatusApiModel = {
     {
       name: 'f_name',
       featureCount: 36,
+      format: 'CSV',
+      options: {
+        quoteChar: '"',
+        columnTypes: 'NUMBER,STRING,STRING',
+        csv: 'IlllYXIiLCJNYWtlIiwiTW9kZWwiLCJMZW5ndGgiCiIxOTk3IiwiRm9yZCIsIkUzNTAiLCIyLjM1IgoiMjAwMCIsIk1lcmN1cnkiLCJDb3VnYXIiLCIyLjM4Ig==',
+      },
     },
   ],
 }
@@ -27,16 +34,10 @@ const facadeMock = {
   upload$: of(jobMock),
 }
 
-const fileUploadApiServiceMock = {
-  getBounds: jest.fn(() =>
-    of({ crs: { srs: 'EPSG:4326' }, minx: 0, maxx: 1, miny: 2, maxy: 3 })
-  ),
-  getSampleFeature: jest.fn(() => of({ id: 'feature_id' })),
-}
-
 const wizardServiceMock = {
   getConfigurationStepNumber: jest.fn(() => 6),
   initialize: jest.fn(),
+  getWizardFieldData: jest.fn(() => null),
 }
 
 const activatedRouteMock = {
@@ -47,22 +48,16 @@ const routerMock = {
   navigate: jest.fn(),
 }
 
-const proj = 'EPSG:3857'
-
-describe('DatasetValidationPageComponent', () => {
-  let component: DatasetValidationPageComponent
-  let fixture: ComponentFixture<DatasetValidationPageComponent>
+describe('DatasetValidationCsvPageComponent', () => {
+  let component: DatasetValidationCsvPageComponent
+  let fixture: ComponentFixture<DatasetValidationCsvPageComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DatasetValidationPageComponent],
-      imports: [],
+      declarations: [DatasetValidationCsvPageComponent],
+      imports: [UtilI18nModule, TranslateModule.forRoot()],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
-        {
-          provide: FileUploadApiService,
-          useValue: fileUploadApiServiceMock,
-        },
         {
           provide: WizardService,
           useValue: wizardServiceMock,
@@ -88,20 +83,25 @@ describe('DatasetValidationPageComponent', () => {
       fixture.detectChanges()
     })
 
-    it('fetch bounds', () => {
-      const args = ['1', 'f_name', proj, undefined]
-      expect(fileUploadApiServiceMock.getBounds.mock.calls).toEqual([
-        [...args],
-        [...args],
-      ])
-      expect(component.geoJSONBBox).toBeDefined()
+    it('should create', () => {
+      expect(component).toBeTruthy()
     })
-    it('fetch feature', () => {
-      const args = ['1', 'f_name', 0, undefined, proj, undefined]
-      expect(fileUploadApiServiceMock.getSampleFeature).toHaveBeenCalledWith(
-        ...args
-      )
-      expect(component.geoJSONData).toEqual({ id: 'feature_id' })
+
+    it('should contain the correct csvData', () => {
+      expect(component.csvData).toEqual([
+        ['Year', 'Make', 'Model', 'Length'],
+        ['1997', 'Ford', 'E350', '2.35'],
+        ['2000', 'Mercury', 'Cougar', '2.38'],
+      ])
+    })
+
+    it('should contain the correct columnTypes', () => {
+      expect(component.columnTypes).toEqual([
+        'NUMBER',
+        'STRING',
+        'STRING',
+        'UNKNOWN',
+      ])
     })
   })
 
@@ -120,7 +120,7 @@ describe('DatasetValidationPageComponent', () => {
   })
 
   function createComponent() {
-    fixture = TestBed.createComponent(DatasetValidationPageComponent)
+    fixture = TestBed.createComponent(DatasetValidationCsvPageComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   }
