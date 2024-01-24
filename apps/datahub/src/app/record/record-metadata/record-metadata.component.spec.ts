@@ -148,6 +148,15 @@ export class MockMetadataCatalogComponent {
 export class MockRecordApiFormComponent {
   @Input() apiLink: DatasetServiceDistribution
 }
+@Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: 'gn-ui-image-overlay-preview',
+  template: '<div></div>',
+})
+export class MockImgOverlayPreviewComponent {
+  @Input() imageUrl: string
+  @Output() isPlaceholderShown = new EventEmitter<boolean>()
+}
 
 describe('RecordMetadataComponent', () => {
   let component: RecordMetadataComponent
@@ -172,6 +181,7 @@ describe('RecordMetadataComponent', () => {
         MockMetadataCatalogComponent,
         MockMetadataContactComponent,
         MockRecordApiFormComponent,
+        MockImgOverlayPreviewComponent,
       ],
       schemas: [NO_ERRORS_SCHEMA],
       imports: [TranslateModule.forRoot()],
@@ -266,6 +276,56 @@ describe('RecordMetadataComponent', () => {
         expect(
           fixture.debugElement.query(By.directive(MockMetadataCatalogComponent))
         ).toBeFalsy()
+      })
+      it('does not display the image overlay preview', () => {
+        expect(
+          fixture.debugElement.query(
+            By.directive(MockImgOverlayPreviewComponent)
+          )
+        ).toBeFalsy()
+      })
+    })
+    describe('Image Overlay Preview', () => {
+      describe('if metadata without overview', () => {
+        let imgOverlayPreview: MockImgOverlayPreviewComponent
+        beforeEach(() => {
+          facade.isPresent$.next(true)
+          facade.metadata$.next({})
+          fixture.detectChanges()
+          imgOverlayPreview = fixture.debugElement.query(
+            By.directive(MockImgOverlayPreviewComponent)
+          ).componentInstance
+        })
+        it('should send undefined as imageUrl to imgOverlayPreview component', () => {
+          expect(imgOverlayPreview).toBeTruthy()
+          expect(imgOverlayPreview.imageUrl).toBe(undefined)
+        })
+      })
+      describe('if metadata with overview', () => {
+        let imgOverlayPreview: MockImgOverlayPreviewComponent
+        beforeEach(() => {
+          facade.isPresent$.next(true)
+          fixture.detectChanges()
+          imgOverlayPreview = fixture.debugElement.query(
+            By.directive(MockImgOverlayPreviewComponent)
+          ).componentInstance
+        })
+        describe('and url defined', () => {
+          it('should send the imageUrl to imgOverlayPreview component', () => {
+            expect(imgOverlayPreview).toBeTruthy()
+            expect(imgOverlayPreview.imageUrl).toBeDefined()
+          })
+        })
+        describe('and url undefined', () => {
+          beforeEach(() => {
+            facade.metadata$.next({ overviews: [] })
+            fixture.detectChanges()
+          })
+          it('should send the imagUrl as null to imgOverlayPreview component', () => {
+            expect(imgOverlayPreview).toBeTruthy()
+            expect(imgOverlayPreview.imageUrl).toBeNull()
+          })
+        })
       })
     })
   })
