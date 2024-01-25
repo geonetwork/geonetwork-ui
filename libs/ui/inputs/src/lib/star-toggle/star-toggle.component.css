@@ -11,6 +11,7 @@ mat-icon {
   font-size: 1.5em;
   margin-top: -0.1em;
   font-variation-settings: 'opsz' 40;
+  stroke: var(--color-primary-darker);
 }
 
 .star-filled {

@@ -55,6 +55,21 @@ export class RecordMetadataComponent {
   errorTypes = ErrorType
   selectedTabIndex$ = new BehaviorSubject(0)
 
+  thumbnailUrl$ = this.facade.metadata$.pipe(
+    map((metadata) => {
+      // in order to differentiate between metadata not loaded yet
+      // and url not defined
+      // the content-ghost of image-overlay-preview relies on this differentiation
+      if (metadata?.overviews === undefined) {
+        return undefined
+      } else {
+        return metadata?.overviews?.[0]?.url ?? null
+      }
+    })
+  )
+
+  showOverlay = true
+
   constructor(
     public facade: MdViewFacade,
     private searchService: SearchService,

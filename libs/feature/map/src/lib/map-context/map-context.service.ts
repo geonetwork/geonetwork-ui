@@ -40,6 +40,8 @@ export const DEFAULT_VIEW: MapContextViewModel = {
   zoom: 2,
 }
 
+export const WFS_MAX_FEATURES = 10000
+
 @Injectable({
   providedIn: 'root',
 })
@@ -111,6 +113,10 @@ export class MapContextService {
               urlObj.searchParams.set('typename', layerModel.name)
               urlObj.searchParams.set('srsname', 'EPSG:3857')
               urlObj.searchParams.set('bbox', `${extent.join(',')},EPSG:3857`)
+              urlObj.searchParams.set(
+                'maxFeatures',
+                WFS_MAX_FEATURES.toString()
+              )
               return urlObj.toString()
             },
             strategy: bboxStrategy,

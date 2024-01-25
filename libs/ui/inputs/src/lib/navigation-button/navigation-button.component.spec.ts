@@ -17,6 +17,8 @@ describe('NavigationButtonComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NavigationButtonComponent)
     component = fixture.componentInstance
+    component.icon = 'navigate_before'
+    component.label = 'Retours aux résultats'
     fixture.detectChanges()
   })
 

@@ -33,13 +33,21 @@
             [metadataQualityDisplay]="metadataQualityDisplay"
           ></gn-ui-metadata-quality>
         </div>
-        <gn-ui-metadata-contact
-          (organizationClick)="onOrganizationClick($event)"
-          [metadata]="facade.metadata$ | async"
+        <gn-ui-image-overlay-preview
+          [imageUrl]="thumbnailUrl$ | async"
+          (isPlaceholderShown)="showOverlay = !$event"
+          *ngIf="showOverlay"
         >
-        </gn-ui-metadata-contact>
-        <gn-ui-metadata-catalog [sourceLabel]="sourceLabel$ | async">
-        </gn-ui-metadata-catalog>
+        </gn-ui-image-overlay-preview>
+        <div>
+          <gn-ui-metadata-contact
+            (organizationClick)="onOrganizationClick($event)"
+            [metadata]="facade.metadata$ | async"
+          >
+          </gn-ui-metadata-contact>
+          <gn-ui-metadata-catalog [sourceLabel]="sourceLabel$ | async">
+          </gn-ui-metadata-catalog>
+        </div>
       </div>
     </div>
   </div>

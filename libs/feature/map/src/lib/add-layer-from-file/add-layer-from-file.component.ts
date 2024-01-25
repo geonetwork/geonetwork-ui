@@ -99,11 +99,8 @@ export class AddLayerFromFileComponent {
     }
 
     setTimeout(() => {
-      if (type === 'success') {
-        this.successMessage = null
-      } else if (type === 'error') {
-        this.errorMessage = null
-      }
+      this.successMessage = null
+      this.errorMessage = null
       this.changeDetectorRef.detectChanges()
     }, 5000)
   }

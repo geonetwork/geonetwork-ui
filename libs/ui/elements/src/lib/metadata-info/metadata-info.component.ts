@@ -56,4 +56,9 @@ export class MetadataInfoComponent {
   onKeywordClick(keyword: string) {
     this.keyword.emit(keyword)
   }
+
+  copyText() {
+    navigator.clipboard.writeText(this.metadata.uniqueIdentifier)
+    ;(event.target as HTMLElement).blur()
+  }
 }
