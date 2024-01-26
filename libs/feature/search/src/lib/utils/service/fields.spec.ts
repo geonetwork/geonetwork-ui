@@ -137,13 +137,6 @@ class PlatformInterfaceMock {
         return of(null)
     }
   })
-  getThesaurusByLang = jest.fn((thesaurusName: string, lang: string) =>
-    of([
-      { key: 'First value', label: 'Rivière' },
-      { key: 'Second value', label: 'Forêt' },
-      { key: 'Third value', label: 'Planète' },
-    ])
-  )
 }
 
 const sampleOrgs: Organization[] = [
