@@ -292,6 +292,7 @@
   "search.filters.isSpatial": "Données spatiales",
   "search.filters.isSpatial.no": "non-géolocalisées",
   "search.filters.isSpatial.yes": "géolocalisées",
+  "search.filters.keyword": "Mot-clé",
   "search.filters.license": "Licence",
   "search.filters.license.cc-by": "cc-by",
   "search.filters.license.cc-by-sa": "cc-by-sa",

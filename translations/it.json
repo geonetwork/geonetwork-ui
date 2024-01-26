@@ -292,6 +292,7 @@
   "search.filters.isSpatial": "Dati spaziali",
   "search.filters.isSpatial.no": "Non geolocalizzati",
   "search.filters.isSpatial.yes": "Geolocalizzati",
+  "search.filters.keyword": "Parola chiave",
   "search.filters.license": "Licenza",
   "search.filters.license.cc-by": "cc-by",
   "search.filters.license.cc-by-sa": "cc-by-sa",

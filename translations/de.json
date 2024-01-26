@@ -292,6 +292,7 @@
   "search.filters.isSpatial": "Ist räumliche Daten",
   "search.filters.isSpatial.no": "nicht räumlich",
   "search.filters.isSpatial.yes": "räumlich",
+  "search.filters.keyword": "Schlüsselwort",
   "search.filters.license": "Lizenz",
   "search.filters.license.cc-by": "Creative Commons CC-BY",
   "search.filters.license.cc-by-sa": "Creative Commons CC-BY-SA",

@@ -292,6 +292,7 @@
   "search.filters.isSpatial": "Je priestorový údaj",
   "search.filters.isSpatial.no": "nepravdivé",
   "search.filters.isSpatial.yes": "pravdivé",
+  "search.filters.keyword": "Kľúčové slová",
   "search.filters.license": "Licencia",
   "search.filters.license.cc-by": "Creative Commons CC-BY",
   "search.filters.license.cc-by-sa": "Creative Commons CC-BY-SA",
