@@ -4,12 +4,11 @@ import {
   FieldValue,
   FullTextSearchField,
   IsSpatialSearchField,
-  KeySearchField,
   LicenseSearchField,
   OrganizationSearchField,
   OwnerSearchField,
   SimpleSearchField,
-  ThesaurusField,
+  TranslatedSearchField,
 } from './fields'
 import { forkJoin, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -21,6 +20,7 @@ export type FieldValues = Record<string, FieldValue[] | FieldValue>
 
 marker('search.filters.format')
 marker('search.filters.inspireKeyword')
+marker('search.filters.keyword')
 marker('search.filters.isSpatial')
 marker('search.filters.license')
 marker('search.filters.publicationYear')
@@ -37,29 +37,33 @@ marker('search.filters.contact')
 export class FieldsService {
   private fields = {
     publisher: new OrganizationSearchField(this.injector),
-    format: new SimpleSearchField('format', 'asc', this.injector),
-    resourceType: new KeySearchField('resourceType', 'asc', this.injector),
-    representationType: new KeySearchField(
+    format: new SimpleSearchField('format', this.injector, 'asc'),
+    resourceType: new TranslatedSearchField(
+      'resourceType',
+      this.injector,
+      'asc'
+    ),
+    representationType: new TranslatedSearchField(
       'cl_spatialRepresentationType.key',
-      'asc',
-      this.injector
+      this.injector,
+      'asc'
     ),
     publicationYear: new SimpleSearchField(
       'publicationYearForResource',
-      'desc',
-      this.injector
+      this.injector,
+      'desc'
     ),
-    topic: new KeySearchField('cl_topic.key', 'asc', this.injector),
-    inspireKeyword: new ThesaurusField(
-      'th_httpinspireeceuropaeutheme-theme.link',
-      'external.theme.httpinspireeceuropaeutheme-theme',
-      'asc',
-      this.injector
+    topic: new TranslatedSearchField('cl_topic.key', this.injector, 'asc'),
+    inspireKeyword: new TranslatedSearchField(
+      'th_httpinspireeceuropaeutheme-theme',
+      this.injector,
+      'asc'
     ),
+    keyword: new TranslatedSearchField('tag', this.injector, 'desc', 'count'),
     documentStandard: new SimpleSearchField(
       'documentStandard',
-      'asc',
-      this.injector
+      this.injector,
+      'asc'
     ),
     isSpatial: new IsSpatialSearchField(this.injector),
     q: new FullTextSearchField(),

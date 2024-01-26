@@ -41,13 +41,6 @@ class PlatformServiceInterfaceMock {
         return of(null)
     }
   })
-  getThesaurusByLang = jest.fn((thesaurusName: string, lang: string) =>
-    of([
-      { key: 'First value', label: 'Rivière' },
-      { key: 'Second value', label: 'Forêt' },
-      { key: 'Third value', label: 'Planète' },
-    ])
-  )
 }
 
 describe('FieldsService', () => {
@@ -100,6 +93,7 @@ describe('FieldsService', () => {
           'publicationYear',
           'topic',
           'inspireKeyword',
+          'keyword',
           'documentStandard',
           'isSpatial',
           'q',
@@ -176,6 +170,7 @@ describe('FieldsService', () => {
           documentStandard: [],
           format: ['ascii', 'png'],
           inspireKeyword: [],
+          keyword: [],
           isSpatial: [],
           license: [],
           publicationYear: [],

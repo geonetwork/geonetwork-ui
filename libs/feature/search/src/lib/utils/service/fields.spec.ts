@@ -3,11 +3,10 @@ import {
   AbstractSearchField,
   FullTextSearchField,
   IsSpatialSearchField,
-  KeySearchField,
+  TranslatedSearchField,
   LicenseSearchField,
   OrganizationSearchField,
   SimpleSearchField,
-  ThesaurusField,
 } from './fields'
 import { TestBed } from '@angular/core/testing'
 import { Injector } from '@angular/core'
@@ -301,10 +300,10 @@ describe('search fields implementations', () => {
     })
   })
 
-  describe('KeySearchField', () => {
+  describe('TranslatedSearchField', () => {
     describe('sort by key', () => {
       beforeEach(() => {
-        searchField = new KeySearchField('cl_topic.key', injector, 'asc')
+        searchField = new TranslatedSearchField('cl_topic.key', injector, 'asc')
       })
       describe('#getAvailableValues', () => {
         let values
@@ -336,7 +335,7 @@ describe('search fields implementations', () => {
     })
     describe('sort by count', () => {
       beforeEach(() => {
-        searchField = new KeySearchField(
+        searchField = new TranslatedSearchField(
           'tag.default',
           injector,
           'desc',
@@ -366,36 +365,6 @@ describe('search fields implementations', () => {
             { label: 'Fourth value (1)', value: 'Fourth value' },
           ])
         })
-      })
-    })
-  })
-  describe('ThesaurusField', () => {
-    beforeEach(() => {
-      searchField = new ThesaurusField(
-        'th_inspire.link',
-        'inspire',
-        injector,
-        'asc'
-      )
-    })
-    describe('#getAvailableValues', () => {
-      let values
-      beforeEach(async () => {
-        values = await lastValueFrom(searchField.getAvailableValues())
-      })
-      it('calls search with a simple unsorted terms', () => {
-        expect(platformService.getThesaurusByLang).toHaveBeenCalledWith(
-          'inspire',
-          'fre'
-        )
-      })
-      it('returns a list of values sorted by translated labels', () => {
-        expect(values).toEqual([
-          { label: 'Forêt (3)', value: 'Second value' },
-          { label: 'Fourth value (1)', value: 'Fourth value' },
-          { label: 'Planète (12)', value: 'Third value' },
-          { label: 'Rivière (5)', value: 'First value' },
-        ])
       })
     })
   })

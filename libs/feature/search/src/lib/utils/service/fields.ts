@@ -1,5 +1,5 @@
-import { firstValueFrom, Observable, of, switchMap, tap } from 'rxjs'
-import { catchError, map, shareReplay } from 'rxjs/operators'
+import { firstValueFrom, Observable, of, switchMap } from 'rxjs'
+import { map } from 'rxjs/operators'
 import { Injector } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -14,7 +14,6 @@ import {
   TermBucket,
 } from '@geonetwork-ui/common/domain/model/search'
 import { ElasticsearchService } from '@geonetwork-ui/api/repository'
-import { LangService } from '@geonetwork-ui/util/i18n'
 
 export type FieldValue = string | number
 export interface FieldAvailableValue {
@@ -89,8 +88,17 @@ export class SimpleSearchField implements AbstractSearchField {
   }
 }
 
-export class KeySearchField extends SimpleSearchField {
+export class TranslatedSearchField extends SimpleSearchField {
   protected platformService = this.injector.get(PlatformServiceInterface)
+
+  constructor(
+    protected esFieldName: string,
+    protected injector: Injector,
+    protected order: 'asc' | 'desc' = 'asc',
+    protected orderType: 'key' | 'count' = 'key'
+  ) {
+    super(esFieldName, injector, order, orderType)
+  }
 
   protected async getTranslation(key: string) {
     return firstValueFrom(this.platformService.translateKey(key))
@@ -110,37 +118,6 @@ export class KeySearchField extends SimpleSearchField {
           values.sort((a, b) => new Intl.Collator().compare(a.label, b.label))
         )
       )
-  }
-}
-
-export class ThesaurusField extends KeySearchField {
-  private langService = this.injector.get(LangService)
-  private thesaurus$ = this.platformService
-    .getThesaurusByLang(this.thesaurusName, this.langService.iso3)
-    .pipe(
-      catchError(() => {
-        console.warn('Error while loading thesaurus language package')
-        return of([])
-      }),
-      shareReplay(1)
-    )
-
-  constructor(
-    esFieldName: string,
-    protected thesaurusName: string,
-    injector: Injector,
-    order: 'asc' | 'desc' = 'asc'
-  ) {
-    super(esFieldName, injector, order)
-  }
-  protected async getTranslation(key: string) {
-    return firstValueFrom(
-      this.thesaurus$.pipe(
-        map(
-          (thesaurus) => thesaurus.find((keyword) => keyword.key === key)?.label
-        )
-      )
-    )
   }
 }
 
