@@ -1,4 +1,4 @@
-:host .carousel-container /deep/ > * {
+:host .carousel-container ::ng-deep > * {
   flex-shrink: 0;
 }
 :host {
