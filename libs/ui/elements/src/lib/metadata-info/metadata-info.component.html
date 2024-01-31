@@ -13,22 +13,22 @@
           [innerHTML]="metadata.abstract"
           gnUiLinkify
         ></p>
-        <ng-container *ngIf="metadata.keywords?.length">
-          <p class="mb-3 font-medium text-primary text-sm" translate>
-            record.metadata.keywords
-          </p>
-          <div class="sm:pb-4 sm:pr-16">
-            <gn-ui-badge
-              class="inline-block mr-2 mb-2 lowercase"
-              (click)="onKeywordClick(keyword)"
-              [clickable]="true"
-              *ngFor="let keyword of metadata.keywords"
-              >{{ keyword }}</gn-ui-badge
-            >
-          </div>
-        </ng-container>
       </div>
     </gn-ui-max-lines>
+    <ng-container *ngIf="metadata.keywords?.length">
+      <p class="mb-3 font-medium text-primary text-sm mt-2" translate>
+        record.metadata.keywords
+      </p>
+      <div class="sm:pb-4 sm:pr-16">
+        <gn-ui-badge
+          class="inline-block mr-2 mb-2 lowercase"
+          (click)="onKeywordClick(keyword)"
+          [clickable]="true"
+          *ngFor="let keyword of metadata.keywords"
+          >{{ keyword }}</gn-ui-badge
+        >
+      </div>
+    </ng-container>
   </gn-ui-content-ghost>
 </div>
 
