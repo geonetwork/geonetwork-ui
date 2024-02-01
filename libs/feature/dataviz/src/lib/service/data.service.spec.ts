@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing'
 import { DataService } from './data.service'
 import { openDataset } from '@geonetwork-ui/data-fetcher'
 import { PROXY_PATH } from '@geonetwork-ui/util/shared'
-import { firstValueFrom, lastValueFrom } from 'rxjs'
+import { lastValueFrom } from 'rxjs'
 
 const newEndpointCall = jest.fn()
 
@@ -258,7 +258,7 @@ describe('DataService', () => {
             },
             {
               description: 'Lieu de surveillance (ligne)',
-              mimeType: 'gml',
+              mimeType: 'application/gml+xml',
               name: 'surval_parametre_ligne',
               url: new URL(
                 'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=gml'
@@ -301,7 +301,7 @@ describe('DataService', () => {
             },
             {
               description: 'Lieu de surveillance (ligne)',
-              mimeType: 'gml',
+              mimeType: 'application/gml+xml',
               name: 'nojson_type',
               url: new URL(
                 'http://local/wfs?GetFeature&FeatureType=nojson_type&format=gml'
@@ -355,7 +355,7 @@ describe('DataService', () => {
             },
             {
               description: 'Lieu de surveillance (ligne)',
-              mimeType: 'gml',
+              mimeType: 'application/gml+xml',
               name: '',
               url: new URL(
                 'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=gml'

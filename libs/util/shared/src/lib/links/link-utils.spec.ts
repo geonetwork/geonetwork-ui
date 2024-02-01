@@ -1,13 +1,13 @@
 import { LINK_FIXTURES } from '@geonetwork-ui/common/fixtures'
 import {
   checkFileFormat,
-  extensionToFormat,
   FORMATS,
   getBadgeColor,
   getFileFormat,
+  getFileFormatFromServiceOutput,
   getLinkLabel,
-  mimeTypeToFormat,
   getLinkPriority,
+  mimeTypeToFormat,
 } from './link-utils'
 import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/model/record'
 
@@ -50,7 +50,7 @@ describe('link utils', () => {
         expect(getFileFormat(LINK_FIXTURES.geodataShp)).toEqual('shp')
       })
     })
-    describe('for a shapefile link withe MimeType', () => {
+    describe('for a shapefile link with MimeType', () => {
       it('returns shp format', () => {
         expect(getFileFormat(LINK_FIXTURES.geodataShpWithMimeType)).toEqual(
           'shp'
@@ -165,11 +165,38 @@ describe('link utils', () => {
       }
     )
   })
-  describe('#extensionToFormat for an XLS extension', () => {
-    it('returns excel format', () => {
-      expect(extensionToFormat('XLS')).toEqual('excel')
-    })
+
+  describe('#getFileFormatFromServiceOutput', () => {
+    // service output, recognized file format
+    const toTest = [
+      ['SHAPE-ZIP', 'shp'],
+      ['application/vnd.google-earth.kml xml', 'kml'],
+      ['KML', 'kml'],
+      ['excel2007', 'excel'],
+      ['XLS', 'excel'],
+      ['gml2', 'gml'],
+      ['gml3', 'gml'],
+      ['text/xml; subtype=gml/3.1.1', 'gml'],
+      ['gml32', 'gml'],
+      ['DXF', 'dxf'],
+      ['DXF-ZIP', 'zip'],
+      ['json', 'json'],
+      ['geojson', 'geojson'],
+      ['Acbd', null],
+    ]
+
+    describe.each(toTest)(
+      'service output=%s, recognized file format=%s',
+      (serviceOutput, fileFormat) => {
+        it('returns the correct file format', () => {
+          expect(getFileFormatFromServiceOutput(serviceOutput)).toEqual(
+            fileFormat
+          )
+        })
+      }
+    )
   })
+
   describe('#getBadgeColor for format', () => {
     it('returns #1e5180', () => {
       expect(getBadgeColor('json')).toEqual('#1e5180')
@@ -190,7 +217,7 @@ describe('link utils', () => {
         })
       ).toEqual(nFormats - 1)
     })
-    it(`returns ${nFormats - 5}`, () => {
+    it(`returns ${nFormats - 6}`, () => {
       expect(
         getLinkPriority({
           description: 'Data in KML format',
@@ -198,7 +225,7 @@ describe('link utils', () => {
           url: new URL('https://my.server/files/abc.kml'),
           type: 'download',
         })
-      ).toEqual(nFormats - 5)
+      ).toEqual(nFormats - 6)
     })
   })
   describe('#checkFileFormat', () => {

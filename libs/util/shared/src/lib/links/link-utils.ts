@@ -43,9 +43,15 @@ export const FORMATS = {
     color: '#328556',
     mimeTypes: ['x-gis/x-shapefile'],
   },
+  gml: {
+    extensions: ['gml'],
+    priority: 5,
+    color: '#c92bce',
+    mimeTypes: ['application/gml+xml', 'text/xml; subtype=gml'],
+  },
   kml: {
     extensions: ['kml', 'kmz'],
-    priority: 5,
+    priority: 6,
     color: '#348009',
     mimeTypes: [
       'application/vnd.google-earth.kml+xml',
@@ -54,33 +60,39 @@ export const FORMATS = {
   },
   gpkg: {
     extensions: ['gpkg', 'geopackage'],
-    priority: 6,
+    priority: 7,
     color: '#ea79ba',
     mimeTypes: ['application/geopackage+sqlite3'],
   },
   zip: {
     extensions: ['zip', 'tar.gz'],
-    priority: 7,
+    priority: 8,
     color: '#f2bb3a',
     mimeTypes: ['application/zip', 'application/x-zip'],
   },
   pdf: {
     extensions: ['pdf'],
-    priority: 8,
+    priority: 9,
     color: '#db544a',
     mimeTypes: ['application/pdf'],
   },
   jpg: {
     extensions: ['jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp'],
-    priority: 8,
+    priority: 9,
     color: '#673ab7',
     mimeTypes: ['image/jpg'],
   },
   svg: {
     extensions: ['svg'],
-    priority: 9,
+    priority: 10,
     color: '#d98294',
     mimeTypes: ['image/svg+xml'],
+  },
+  dxf: {
+    extensions: ['dxf'],
+    priority: 11,
+    color: '#de630b',
+    mimeTypes: ['application/x-dxf', 'image/x-dxf'],
   },
 } as const
 
@@ -102,13 +114,24 @@ export function getLinkPriority(link: DatasetDistribution): number {
   return getFormatPriority(getFileFormat(link))
 }
 
-export function extensionToFormat(extension: string): FileFormat {
-  for (const format in FORMATS) {
-    for (const alias of FORMATS[format].extensions) {
-      if (alias === extension.toLowerCase()) return format as FileFormat
+export function getFileFormatFromServiceOutput(
+  serviceOutput: string
+): FileFormat | null {
+  function formatMatcher(format: typeof FORMATS[FileFormat]): boolean {
+    const output = serviceOutput.toLowerCase()
+    return (
+      format.extensions.some((extension: string) =>
+        output.includes(extension)
+      ) ||
+      format.mimeTypes.some((mimeType: string) => output.includes(mimeType))
+    )
+  }
+  for (const formatName in FORMATS) {
+    if (formatMatcher(FORMATS[formatName])) {
+      return formatName as FileFormat
     }
   }
-  return undefined
+  return null
 }
 
 export function getFileFormat(link: DatasetDistribution): FileFormat {

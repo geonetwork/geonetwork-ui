@@ -9,8 +9,8 @@ import {
   SupportedTypes,
 } from '@geonetwork-ui/data-fetcher'
 import {
-  extensionToFormat,
   getFileFormat,
+  getFileFormatFromServiceOutput,
   getMimeTypeForFormat,
   ProxyService,
 } from '@geonetwork-ui/util/shared'
@@ -140,7 +140,9 @@ export class DataService {
           ...wfsLink,
           type: 'download',
           url: new URL(urls[format]),
-          mimeType: getMimeTypeForFormat(extensionToFormat(format)) || format,
+          mimeType: getMimeTypeForFormat(
+            getFileFormatFromServiceOutput(format)
+          ),
         }))
       )
     )
@@ -154,7 +156,7 @@ export class DataService {
       url: new URL(
         this.getDownloadUrlFromEsriRest(esriRestLink.url.toString(), format)
       ),
-      mimeType: getMimeTypeForFormat(extensionToFormat(format)) || format,
+      mimeType: getMimeTypeForFormat(getFileFormatFromServiceOutput(format)),
     }))
   }
 
