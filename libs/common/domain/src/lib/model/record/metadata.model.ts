@@ -122,6 +122,7 @@ export interface DatasetDownloadDistribution {
   // textEncoding?: string
   name?: string
   description?: string
+  accessServiceProtocol?: ServiceProtocol
 }
 
 export interface OnlineLinkResource {
