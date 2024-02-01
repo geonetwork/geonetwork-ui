@@ -45,7 +45,7 @@ interface WfsDownloadUrls {
 export class DataService {
   constructor(private proxy: ProxyService) {}
 
-  private getDownloadUrlsFromWfs(
+  getDownloadUrlsFromWfs(
     wfsUrl: string,
     featureTypeName: string
   ): Observable<WfsDownloadUrls> {
@@ -120,7 +120,7 @@ export class DataService {
     )
   }
 
-  private getDownloadUrlFromEsriRest(apiUrl: string, format: string): string {
+  getDownloadUrlFromEsriRest(apiUrl: string, format: string): string {
     return this.proxy.getProxiedUrl(
       `${apiUrl}/query?f=${format}&where=1=1&outFields=*`
     )
@@ -138,6 +138,7 @@ export class DataService {
       map((urls) =>
         Object.keys(urls).map((format) => ({
           ...wfsLink,
+          type: 'download',
           url: new URL(urls[format]),
           mimeType: getMimeTypeForFormat(extensionToFormat(format)) || format,
         }))

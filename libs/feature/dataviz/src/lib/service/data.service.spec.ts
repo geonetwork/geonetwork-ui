@@ -160,7 +160,7 @@ describe('DataService', () => {
         ),
         type: 'service',
         accessServiceProtocol: 'wfs',
-      }
+      } as const
       describe('WFS unreachable (CORS)', () => {
         it('throws a relevant error', async () => {
           try {
@@ -233,7 +233,7 @@ describe('DataService', () => {
               url: new URL(
                 'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=csv'
               ),
-              type: 'service',
+              type: 'download',
               accessServiceProtocol: 'wfs',
             },
             {
@@ -243,7 +243,7 @@ describe('DataService', () => {
               url: new URL(
                 'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=xls'
               ),
-              type: 'service',
+              type: 'download',
               accessServiceProtocol: 'wfs',
             },
             {
@@ -253,7 +253,7 @@ describe('DataService', () => {
               url: new URL(
                 'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=json'
               ),
-              type: 'service',
+              type: 'download',
               accessServiceProtocol: 'wfs',
             },
             {
@@ -263,7 +263,7 @@ describe('DataService', () => {
               url: new URL(
                 'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=gml'
               ),
-              type: 'service',
+              type: 'download',
               accessServiceProtocol: 'wfs',
             },
           ])
@@ -286,7 +286,7 @@ describe('DataService', () => {
               url: new URL(
                 'http://local/wfs?GetFeature&FeatureType=nojson_type&format=csv'
               ),
-              type: 'service',
+              type: 'download',
               accessServiceProtocol: 'wfs',
             },
             {
@@ -296,7 +296,7 @@ describe('DataService', () => {
               url: new URL(
                 'http://local/wfs?GetFeature&FeatureType=nojson_type&format=xls'
               ),
-              type: 'service',
+              type: 'download',
               accessServiceProtocol: 'wfs',
             },
             {
@@ -306,7 +306,7 @@ describe('DataService', () => {
               url: new URL(
                 'http://local/wfs?GetFeature&FeatureType=nojson_type&format=gml'
               ),
-              type: 'service',
+              type: 'download',
               accessServiceProtocol: 'wfs',
             },
           ])
@@ -329,7 +329,7 @@ describe('DataService', () => {
               url: new URL(
                 'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=csv'
               ),
-              type: 'service',
+              type: 'download',
               accessServiceProtocol: 'wfs',
             },
             {
@@ -339,7 +339,7 @@ describe('DataService', () => {
               url: new URL(
                 'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=xls'
               ),
-              type: 'service',
+              type: 'download',
               accessServiceProtocol: 'wfs',
             },
             {
@@ -350,7 +350,7 @@ describe('DataService', () => {
                 'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=json'
               ),
 
-              type: 'service',
+              type: 'download',
               accessServiceProtocol: 'wfs',
             },
             {
@@ -360,7 +360,7 @@ describe('DataService', () => {
               url: new URL(
                 'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=gml'
               ),
-              type: 'service',
+              type: 'download',
               accessServiceProtocol: 'wfs',
             },
           ])
