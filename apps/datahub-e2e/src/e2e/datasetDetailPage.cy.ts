@@ -3,15 +3,6 @@ import path from 'path'
 
 describe('dataset pages', () => {
   beforeEach(() => {
-    // dataset without API, preview or downloads
-    // cy.visit('/dataset/011963da-afc0-494c-a2cc-5cbd59e122e4')
-    // dataset with map error
-    // cy.visit('/dataset/6d0bfdf4-4e94-48c6-9740-3f9facfd453c')
-    // dataset with stuff greyed out & unknown data types
-    // cy.visit('/dataset/8698bf0b-fceb-4f0f-989b-111e7c4af0a4')
-    // dataset with pretty much everything
-    cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
-
     cy.intercept(
       'GET',
       '/geoserver/insee/ows?SERVICE=WMS&REQUEST=GetCapabilities',
@@ -54,6 +45,15 @@ describe('dataset pages', () => {
         fixture: 'population-millesimee-communes-francaises.csv',
       }
     )
+
+    // dataset without API, preview or downloads
+    // cy.visit('/dataset/011963da-afc0-494c-a2cc-5cbd59e122e4')
+    // dataset with map error
+    // cy.visit('/dataset/6d0bfdf4-4e94-48c6-9740-3f9facfd453c')
+    // dataset with stuff greyed out & unknown data types
+    // cy.visit('/dataset/8698bf0b-fceb-4f0f-989b-111e7c4af0a4')
+    // dataset with pretty much everything
+    cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
   })
 
   describe('GENERAL : display & functions', () => {
@@ -103,7 +103,7 @@ describe('dataset pages', () => {
             expect(text).not.to.equal('')
           })
       })
-      it.only('should display the thumbnail image and magnify', () => {
+      it('should display the thumbnail image and magnify', () => {
         cy.get('datahub-record-metadata')
           .find('[id="about"]')
           .find('gn-ui-image-overlay-preview')
@@ -305,37 +305,43 @@ describe('dataset pages', () => {
 
   describe('DOWNLOADS : display & functions', () => {
     describe('display', () => {
-      it('should have at least one download button', () => {
+      it('should have a list of downloads based on the WFS capabilities', () => {
         cy.get('datahub-record-downloads')
-          .find('gn-ui-download-item')
-          .should('have.length.gt', 0)
+          .find('gn-ui-download-item [data-cy="download-format"]')
+          .then((formatBadges) => {
+            const formats = formatBadges
+              .toArray()
+              .map((badge) => badge.innerText.trim())
+            expect(formats).to.eql([
+              'csv',
+              'excel',
+              'json',
+              'shp',
+              'gml',
+              'kml',
+              'gpkg',
+              'zip',
+              'dxf',
+            ])
+          })
       })
-      it('should have one button per download type + all and others', () => {
-        cy.get('[data-cy="download-format"]').then((format) => {
-          const formatString = format.text()
-          cy.get('datahub-record-downloads')
-            .find('gn-ui-button')
-            .children('button')
-            .then((btn) => {
-              const buttons = btn.text()
-              let btnList = []
-              buttons.split(' ').map((btnVal) => btnList.push(btnVal.trim()))
-              btnList = btnList.filter((item) => item !== '')
-              expect(btnList).to.include('All')
-              btnList.forEach((format) => {
-                const allowedFormats = ['csv', 'excel', 'json', 'shp']
-                if (allowedFormats.includes(format)) {
-                  expect(formatString).to.contain(format)
-                } else if (!allowedFormats.includes(format)) {
-                  if (format == 'geojson') {
-                    expect(formatString).to.contain('json')
-                  } else {
-                    expect(btnList).to.include('Others')
-                  }
-                }
-              })
-            })
-        })
+      it('should have filter buttons for each download types + all and others', () => {
+        cy.get('[data-cy="download-format-filters"]')
+          .find('gn-ui-button')
+          .then((buttons) => {
+            expect(buttons).to.have.length(6)
+            const formats = buttons
+              .toArray()
+              .map((button) => button.getAttribute('data-format'))
+            expect(formats).to.eql([
+              'all',
+              'csv',
+              'excel',
+              'json',
+              'shp',
+              'others',
+            ])
+          })
       })
       describe('features', () => {
         it('filters the download list on format filter click', () => {
@@ -360,7 +366,6 @@ describe('dataset pages', () => {
             .find('gn-ui-download-item')
             .first()
             .click()
-
           cy.readFile(path.join('cypress/downloads', 'ows.csv')).as(
             'downloadedFile'
           )
