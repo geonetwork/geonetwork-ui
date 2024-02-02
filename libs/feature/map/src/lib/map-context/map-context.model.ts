@@ -1,7 +1,6 @@
 import type { FeatureCollection } from 'geojson'
 import { Coordinate } from 'ol/coordinate'
 import type { Extent } from 'ol/extent'
-import { Options } from 'ol/source/WMTS'
 
 export enum MapContextLayerTypeEnum {
   XYZ = 'xyz',
@@ -24,8 +23,8 @@ export interface MapContextLayerWmsModel {
 
 export interface MapContextLayerWmtsModel {
   type: 'wmts'
-  options: Options
-  extent?: Extent
+  url: string
+  name: string
 }
 
 interface MapContextLayerWfsModel {

@@ -41,6 +41,26 @@ const mapStyleServiceMock = {
     defaultHL: DEFAULT_STYLE_HL_FIXTURE,
   },
 }
+
+jest.mock('@camptocamp/ogc-client', () => ({
+  WmtsEndpoint: class {
+    constructor(private url) {}
+    isReady() {
+      return Promise.resolve({
+        getLayerByName: (name) => {
+          if (this.url.indexOf('error') > -1) {
+            throw new Error('Something went wrong')
+          }
+          return {
+            name,
+            latLonBoundingBox: [1.33, 48.81, 4.3, 51.1],
+          }
+        },
+      })
+    }
+  },
+}))
+
 describe('MapContextService', () => {
   let service: MapContextService
 
