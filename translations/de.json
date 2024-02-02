@@ -177,6 +177,7 @@
   "map.add.layer.wfs": "Aus WFS",
   "map.add.layer.wms": "Aus WMS",
   "map.addFromFile.placeholder": "Klicke hier oder ziehe eine Datei herein",
+  "map.geocoding.placeholder": "",
   "map.help.addFromFile": "Klicke oder ziehe eine Datei herein um eine Karte hinzuzufügen (momentan wird nur das GeoJSON-Format unterstützt).",
   "map.layer.add": "Hinzufügen",
   "map.layers.available": "Verfügbare Layer",

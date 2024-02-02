@@ -177,6 +177,7 @@
   "map.add.layer.wfs": "",
   "map.add.layer.wms": "",
   "map.addFromFile.placeholder": "",
+  "map.geocoding.placeholder": "",
   "map.help.addFromFile": "",
   "map.layer.add": "",
   "map.layers.available": "",
