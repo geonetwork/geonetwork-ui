@@ -23,6 +23,7 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { AddLayerFromWmsComponent } from './add-layer-from-wms/add-layer-from-wms.component'
 import { AddLayerFromFileComponent } from './add-layer-from-file/add-layer-from-file.component'
 import { AddLayerFromWfsComponent } from './add-layer-from-wfs/add-layer-from-wfs.component'
+import { GeocodingComponent } from './geocoding/geocoding.component'
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { AddLayerFromWfsComponent } from './add-layer-from-wfs/add-layer-from-wf
     AddLayerFromWmsComponent,
     AddLayerFromFileComponent,
     AddLayerFromWfsComponent,
+    GeocodingComponent,
   ],
   exports: [
     MapContextComponent,
@@ -42,6 +44,7 @@ import { AddLayerFromWfsComponent } from './add-layer-from-wfs/add-layer-from-wf
     LayersPanelComponent,
     AddLayerFromCatalogComponent,
     MapContainerComponent,
+    GeocodingComponent,
   ],
   imports: [
     CommonModule,
