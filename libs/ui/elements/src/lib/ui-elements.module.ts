@@ -88,6 +88,7 @@ import { ImageOverlayPreviewComponent } from './image-overlay-preview/image-over
     AvatarComponent,
     UserPreviewComponent,
     PaginationButtonsComponent,
+    MaxLinesComponent,
     RecordApiFormComponent,
     MarkdownParserComponent,
     ImageOverlayPreviewComponent,
