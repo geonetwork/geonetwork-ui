@@ -7,7 +7,6 @@ import {
   UploadJobStatusApiModel,
 } from '@geonetwork-ui/data-access/datafeeder'
 import { WizardService } from '@geonetwork-ui/feature/editor'
-import GeoJSON from 'ol/format/GeoJSON'
 import { Subscription } from 'rxjs'
 import { take } from 'rxjs/operators'
 import { config as wizardConfig } from '../../../configs/wizard.config'
@@ -20,12 +19,6 @@ marker('datafeeder.validation.csv.delimiter.semicolon')
 marker('datafeeder.validation.csv.quote.none')
 marker('datafeeder.validation.csv.quote.simple')
 marker('datafeeder.validation.csv.quote.double')
-marker('datafeeder.validation.csv.types.string')
-marker('datafeeder.validation.csv.types.boolean')
-marker('datafeeder.validation.csv.types.number')
-marker('datafeeder.validation.csv.types.lat')
-marker('datafeeder.validation.csv.types.lon')
-marker('datafeeder.validation.csv.types.unknown')
 
 @Component({
   selector: 'gn-ui-dataset-validation-csv-page',
@@ -42,7 +35,6 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
   numberOfSteps: number
 
   csvData: []
-  private parseLength = 0
   csvDelimiter: string
   delimiterChoices: DropdownChoice[] = [
     { label: 'datafeeder.validation.csv.delimiter.comma', value: ',' },
@@ -54,22 +46,14 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
     { label: 'datafeeder.validation.csv.quote.simple', value: "'" },
     { label: 'datafeeder.validation.csv.quote.double', value: '"' },
   ]
-  columnTypes: string[]
+  latLngChoices: DropdownChoice[] = []
+  latField: string
+  lngField: string
+  latLngValid: boolean
 
-  columnTypesChoices: DropdownChoice[] = [
-    { label: 'datafeeder.validation.csv.types.string', value: 'STRING' },
-    { label: 'datafeeder.validation.csv.types.boolean', value: 'BOOL' },
-    { label: 'datafeeder.validation.csv.types.number', value: 'NUMBER' },
-    // { label: 'datafeeder.validation.csv.types.lat', value: 'LAT' },
-    // { label: 'datafeeder.validation.csv.types.lon', value: 'LON' },
-    { label: 'datafeeder.validation.csv.types.unknown', value: 'UNKNOWN' },
-  ]
   private csv: string
   private routeParamsSub: Subscription
   rootId: number
-  private format = new GeoJSON({})
-  latDuplicate: boolean
-  longDuplicate: boolean
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -101,9 +85,11 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
             this.wizard.getWizardFieldData('csvDelimiter') || options.delimiter
           this.quoteChar =
             this.wizard.getWizardFieldData('quoteChar') || options.quoteChar
-          this.columnTypes =
-            this.wizard.getWizardFieldData('columnTypes') ||
-            options.columnTypes.split(',')
+
+          this.latField = this.wizard.getWizardFieldData('latField')
+
+          this.lngField = this.wizard.getWizardFieldData('lngField')
+
           this.numOfEntities = this.dataset.featureCount
           this.nativeName = this.dataset.name
           this.updateArray()
@@ -118,9 +104,10 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
     const fields = [
       'csvDelimiter',
       'quoteChar',
-      'columnTypes',
       'nativeName',
       'crs',
+      'latField',
+      'lngField',
     ]
     fields.forEach((f) => this.wizard.setWizardFieldData(f, this[f]))
     this.router.navigate(['/', this.rootId, 'step', 1])
@@ -133,29 +120,26 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
     })
     this.csvDelimiter ??= parseResult.meta.delimiter
     this.quoteChar ??= parseResult.meta.quoteChar
-    // add unknown types if needed
-    if (this.columnTypes.length < parseResult.data[0].length) {
-      this.columnTypes = [
-        ...this.columnTypes,
-        ...Array(parseResult.data[0].length - this.columnTypes.length).fill(
-          'UNKNOWN'
-        ),
-      ]
-    }
+
+    this.latLngChoices = [
+      { value: '', label: 'datafeeder.validation.csv.quote.none' },
+      ...parseResult.data[0].map((o) => ({
+        label: o,
+        value: o,
+      })),
+    ]
     // remove empty rows
     this.csvData = parseResult.data.filter(
       (row) => row.length > 1 || (row.length == 1 && row[0])
     )
 
-    this.parseLength = parseResult.data[0].length
+    this.latLngValid =
+      (!this.latField && !this.lngField) ||
+      (this.latField && this.lngField && this.latField !== this.lngField)
   }
 
   isValid(): boolean {
-    return !(
-      this.latDuplicate ||
-      this.longDuplicate ||
-      this.columnTypes?.slice(0, this.parseLength).indexOf('UNKNOWN') != -1
-    )
+    return this.latLngValid
   }
 
   ngOnDestroy() {
@@ -171,27 +155,17 @@ export class DatasetValidationCsvPageComponent implements OnInit, OnDestroy {
     this.updateArray()
   }
 
-  base64ToBytes(base64) {
-    const binString = atob(base64)
-    return Uint8Array.from(binString, (m) => m.codePointAt(0))
-  }
-
-  selectColumnTypes($event: string, index: number) {
-    const copy = [...this.columnTypes]
-    copy[index] = $event
-    this.columnTypes = [...copy]
-    this.latDuplicate =
-      this.columnTypes.filter((val) => val == 'LAT').length > 1
-    this.longDuplicate =
-      this.columnTypes.filter((val) => val == 'LON').length > 1
+  selectLatLng($event: string, lat: boolean) {
+    if (lat) {
+      this.latField = $event
+    } else {
+      this.lngField = $event
+    }
     this.updateArray()
   }
 
-  isDropdownValid(val: string) {
-    return (this.latDuplicate && val === 'LAT') ||
-      (this.longDuplicate && val === 'LON') ||
-      val === 'UNKNOWN'
-      ? '!border-red-600'
-      : ''
+  base64ToBytes(base64) {
+    const binString = atob(base64)
+    return Uint8Array.from(binString, (m) => m.codePointAt(0))
   }
 }

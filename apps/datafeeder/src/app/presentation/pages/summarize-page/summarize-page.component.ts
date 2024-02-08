@@ -60,7 +60,8 @@ export class SummarizePageComponent implements OnInit, OnDestroy {
         options: {
           delimiter: dataset.csvDelimiter,
           quoteChar: dataset.quoteChar,
-          columnTypes: dataset.columnTypes,
+          latField: dataset.latField,
+          lngField: dataset.lngField,
         },
       },
     }

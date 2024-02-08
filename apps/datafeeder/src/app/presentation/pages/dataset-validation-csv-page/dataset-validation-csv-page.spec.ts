@@ -23,7 +23,6 @@ const jobMock: UploadJobStatusApiModel = {
       format: 'CSV',
       options: {
         quoteChar: '"',
-        columnTypes: 'NUMBER,STRING,STRING',
         csv: 'IlllYXIiLCJNYWtlIiwiTW9kZWwiLCJMZW5ndGgiCiIxOTk3IiwiRm9yZCIsIkUzNTAiLCIyLjM1IgoiMjAwMCIsIk1lcmN1cnkiLCJDb3VnYXIiLCIyLjM4Ig==',
       },
     },
@@ -92,15 +91,6 @@ describe('DatasetValidationCsvPageComponent', () => {
         ['Year', 'Make', 'Model', 'Length'],
         ['1997', 'Ford', 'E350', '2.35'],
         ['2000', 'Mercury', 'Cougar', '2.38'],
-      ])
-    })
-
-    it('should contain the correct columnTypes', () => {
-      expect(component.columnTypes).toEqual([
-        'NUMBER',
-        'STRING',
-        'STRING',
-        'UNKNOWN',
       ])
     })
   })

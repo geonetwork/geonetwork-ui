@@ -41,6 +41,28 @@
           >
           </gn-ui-dropdown-selector>
         </div>
+        <div>
+          <gn-ui-dropdown-selector
+            [title]="'datafeeder.validation.csv.lat.field' | translate"
+            [choices]="latLngChoices"
+            (selectValue)="selectLatLng($event, true)"
+            [selected]="latField"
+            [extraBtnClass]="'secondary min-w-full' +  (latLngValid ? '' : ' !border-red-500')"
+            ariaName="search-sort-by"
+          >
+          </gn-ui-dropdown-selector>
+        </div>
+        <div>
+          <gn-ui-dropdown-selector
+            [title]="'datafeeder.validation.csv.lng.field' | translate"
+            [choices]="latLngChoices"
+            (selectValue)="selectLatLng($event, false)"
+            [selected]="lngField"
+            [extraBtnClass]="'secondary min-w-full' +  (latLngValid ? '' : ' !border-red-500')"
+            ariaName="search-sort-by"
+          >
+          </gn-ui-dropdown-selector>
+        </div>
       </div>
       <div
         class="relative overflow-x-auto shadow-md sm:rounded-lg border rounded-2xl"
@@ -58,17 +80,6 @@
                 class="{{isOdd? 'bg-slate-100' : ''}} {{isFirstRow ? 'border-b' : ''}} text-sm px-2 py-2 border-spacing-0 border-separate"
               >
                 {{value}}
-                <div class="mt-1" *ngIf="isFirstRow">
-                  <gn-ui-dropdown-selector
-                    [title]="''"
-                    [showTitle]="false"
-                    [choices]="columnTypesChoices"
-                    (selectValue)="selectColumnTypes($event, columnIndex)"
-                    [selected]="columnTypes[columnIndex]"
-                    [extraBtnClass]="'secondary min-w-full !p-[2px] !pl-[5px] !pr-0 ' + isDropdownValid(columnTypes[columnIndex])"
-                  >
-                  </gn-ui-dropdown-selector>
-                </div>
               </td>
             </tr>
           </tbody>
