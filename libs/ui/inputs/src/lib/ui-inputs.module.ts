@@ -41,6 +41,7 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatNativeDateModule } from '@angular/material/core'
+import { EditableLabelDirective } from './editable-label/editable-label.directive'
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { MatNativeDateModule } from '@angular/material/core'
     CheckboxComponent,
     SearchInputComponent,
     DateRangePickerComponent,
+    EditableLabelDirective,
   ],
   imports: [
     CommonModule,
@@ -106,6 +108,7 @@ import { MatNativeDateModule } from '@angular/material/core'
     CheckboxComponent,
     SearchInputComponent,
     DateRangePickerComponent,
+    EditableLabelDirective,
   ],
 })
 export class UiInputsModule {}

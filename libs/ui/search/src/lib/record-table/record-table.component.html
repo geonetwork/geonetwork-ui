@@ -38,7 +38,7 @@
       </div>
       <div
         class="contents hover:text-gray-900 text-gray-800 cursor-pointer"
-        (click)="recordSelect.emit(record)"
+        (click)="recordsSelect.emit([record])"
         *ngFor="let record of records"
       >
         <div class="record-table-col text-16">
@@ -157,7 +157,7 @@
       </div>
       <div
         class="contents hover:text-gray-900 text-gray-800 cursor-pointer"
-        (click)="recordSelect.emit(record)"
+        (click)="recordsSelect.emit([record])"
         *ngFor="let record of records"
       >
         <div class="record-table-col">
