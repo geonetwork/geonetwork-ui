@@ -1,6 +1,7 @@
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { Individual } from './contact.model'
-import { Organization } from './organization.model'
+import type { Individual } from './contact.model'
+import type { Organization } from './organization.model'
+import type { Geometry } from 'geojson'
 
 type Uuid = string
 
@@ -146,13 +147,16 @@ export interface GraphicOverview {
 }
 
 export interface DatasetSpatialExtent {
-  geometry: unknown // GeoJSON
+  geometry: Geometry
   description?: string
 }
 
+/**
+ * At least a start or an end date should be provided
+ */
 export interface DatasetTemporalExtent {
-  start: Date
-  end: Date
+  start?: Date
+  end?: Date
   description?: string
 }
 
@@ -164,8 +168,8 @@ export interface DatasetRecord extends BaseRecord {
   datasetUpdated?: Date
   lineage: string // Explanation of the origin of this record (e.g: how, why)"
   distributions: Array<DatasetDistribution>
-  spatialExtents: Array<DatasetSpatialExtent> // not handled yet
-  temporalExtents: Array<DatasetTemporalExtent> // not handled yet
+  spatialExtents: Array<DatasetSpatialExtent>
+  temporalExtents: Array<DatasetTemporalExtent>
   spatialRepresentation?: SpatialRepresentationType
 }
 

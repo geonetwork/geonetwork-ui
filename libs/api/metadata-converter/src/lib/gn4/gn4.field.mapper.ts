@@ -1,4 +1,5 @@
 import {
+  getArrayItem,
   getAsArray,
   getAsUrl,
   getFirstValue,
@@ -22,10 +23,12 @@ import {
   DatasetDistributionType,
   DatasetDownloadDistribution,
   DatasetServiceDistribution,
+  DatasetSpatialExtent,
   OnlineLinkResource,
 } from '@geonetwork-ui/common/domain/model/record'
 import { matchProtocol } from '../common/distribution.mapper'
 import { LangService } from '@geonetwork-ui/util/i18n'
+import { Geometry } from 'geojson'
 
 type ESResponseSource = SourceWithUnknownProps
 
@@ -256,6 +259,47 @@ export class Gn4FieldMapper {
       return {
         ...output,
         kind,
+      }
+    },
+    geom: (output, source) => {
+      const geoms = getAsArray(selectField(source, 'geom'))
+      const shapes = getAsArray(selectField(source, 'shape'))
+      const extentDescriptions = getAsArray(
+        selectField(source, 'extentDescriptionObject')
+      )
+      const spatialExtents = getAsArray(selectField(source, 'spatialExtents'))
+      return {
+        ...output,
+        spatialExtents: [
+          ...spatialExtents,
+          ...geoms.map((geom, index) => {
+            const description = selectTranslatedValue(
+              getArrayItem(extentDescriptions, index),
+              this.lang3
+            )
+            const geometry = shapes[index] ?? geom
+            return {
+              ...(description !== null ? { description } : null),
+              geometry,
+            } as DatasetSpatialExtent
+          }),
+        ],
+      }
+    },
+    resourceTemporalDateRange: (output, source) => {
+      const ranges = getAsArray(
+        selectField(source, 'resourceTemporalDateRange')
+      )
+      return {
+        ...output,
+        temporalExtents: ranges.map((range) => {
+          const start = selectField(range, 'gte')
+          const end = selectField(range, 'lte')
+          return {
+            ...(start !== null ? { start: toDate(start) } : null),
+            ...(end !== null ? { end: toDate(end) } : null),
+          }
+        }),
       }
     },
   }

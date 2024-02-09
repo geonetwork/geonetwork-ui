@@ -105,7 +105,16 @@ describe('Gn4MetadataMapper', () => {
             keywords: [],
             licenses: [],
             spatialExtents: [],
-            temporalExtents: [],
+            temporalExtents: [
+              {
+                end: new Date('2013-05-21T00:00:00.000Z'),
+                start: new Date('2013-05-21T00:00:00.000Z'),
+              },
+              {
+                end: new Date('2013-12-31T00:00:00.000Z'),
+                start: new Date('2013-01-01T00:00:00.000Z'),
+              },
+            ],
             themes: [],
             useLimitations: [],
           },
@@ -144,7 +153,20 @@ describe('Gn4MetadataMapper', () => {
             keywords: [],
             licenses: [],
             spatialExtents: [],
-            temporalExtents: [],
+            temporalExtents: [
+              {
+                end: new Date('2017-11-01T00:00:00.000Z'),
+                start: new Date('2017-11-01T00:00:00.000Z'),
+              },
+              {
+                end: new Date('2017-12-14T00:00:00.000Z'),
+                start: new Date('2017-12-14T00:00:00.000Z'),
+              },
+              {
+                end: new Date('2014-12-31T00:00:00.000Z'),
+                start: new Date('2013-01-01T00:00:00.000Z'),
+              },
+            ],
             themes: [],
             useLimitations: [],
           },
@@ -365,6 +387,385 @@ describe('Gn4MetadataMapper', () => {
               {
                 url: new URL('https://my.website/services/static/data.csv'),
                 type: 'link',
+              },
+            ])
+          })
+        })
+      })
+
+      describe('spatial and temporal extents', () => {
+        describe('only one bounding box, no bounding geometry', () => {
+          beforeEach(() => {
+            hit = {
+              ...hit,
+              _source: {
+                ...hit._source,
+                hasBoundingPolygon: 'false',
+                shape: null,
+                extentDescriptionObject: [
+                  {
+                    default: 'Genève',
+                    langger: 'Genève',
+                  },
+                ],
+                geom: {
+                  type: 'Polygon',
+                  coordinates: [
+                    [
+                      [6.11, 46.177],
+                      [6.176, 46.177],
+                      [6.176, 46.232],
+                      [6.11, 46.232],
+                      [6.11, 46.177],
+                    ],
+                  ],
+                },
+              },
+            }
+          })
+          it('keeps the bounding box', async () => {
+            const record = (await service.readRecord(hit)) as DatasetRecord
+            expect(record.spatialExtents).toEqual([
+              {
+                description: 'Genève',
+                geometry: {
+                  type: 'Polygon',
+                  coordinates: [
+                    [
+                      [6.11, 46.177],
+                      [6.176, 46.177],
+                      [6.176, 46.232],
+                      [6.11, 46.232],
+                      [6.11, 46.177],
+                    ],
+                  ],
+                },
+              },
+            ])
+          })
+        })
+        describe('only one bounding box, no description', () => {
+          beforeEach(() => {
+            hit = {
+              ...hit,
+              _source: {
+                ...hit._source,
+                shape: null,
+                extentDescriptionObject: null,
+                geom: {
+                  type: 'Polygon',
+                  coordinates: [
+                    [
+                      [6.755991, 45.788744],
+                      [10.541824, 45.788744],
+                      [10.541824, 47.517566],
+                      [6.755991, 47.517566],
+                      [6.755991, 45.788744],
+                    ],
+                  ],
+                },
+              },
+            }
+          })
+          it('does not define a description', async () => {
+            const record = (await service.readRecord(hit)) as DatasetRecord
+            expect(record.spatialExtents).toEqual([
+              {
+                geometry: {
+                  type: 'Polygon',
+                  coordinates: [
+                    [
+                      [6.755991, 45.788744],
+                      [10.541824, 45.788744],
+                      [10.541824, 47.517566],
+                      [6.755991, 47.517566],
+                      [6.755991, 45.788744],
+                    ],
+                  ],
+                },
+              },
+            ])
+          })
+        })
+        describe('one bounding box, one bounding polygon', () => {
+          beforeEach(() => {
+            hit = {
+              ...hit,
+              _source: {
+                ...hit._source,
+                hasBoundingPolygon: 'true',
+                shape: {
+                  type: 'Polygon',
+                  coordinates: [
+                    [
+                      [6.756, 47.5176],
+                      [10.5418, 47.478],
+                      [10.4463, 45.7887],
+                      [6.7771, 45.8271],
+                      [6.756, 47.5176],
+                    ],
+                  ],
+                },
+                extentDescriptionObject: [
+                  {
+                    default: 'Alpenkonvention',
+                    langger: 'Alpenkonvention',
+                    langfre: 'Convention des Alpes',
+                    langita: 'Convenzione delle alpi',
+                    langeng: 'Alpine Convention',
+                  },
+                ],
+                geom: {
+                  type: 'Polygon',
+                  coordinates: [
+                    [
+                      [6.755991, 45.788744],
+                      [10.541824, 45.788744],
+                      [10.541824, 47.517566],
+                      [6.755991, 47.517566],
+                      [6.755991, 45.788744],
+                    ],
+                  ],
+                },
+              },
+            }
+          })
+          it('keeps the bounding polygon', async () => {
+            const record = (await service.readRecord(hit)) as DatasetRecord
+            expect(record.spatialExtents).toEqual([
+              {
+                description: 'Alpenkonvention',
+                geometry: {
+                  type: 'Polygon',
+                  coordinates: [
+                    [
+                      [6.756, 47.5176],
+                      [10.5418, 47.478],
+                      [10.4463, 45.7887],
+                      [6.7771, 45.8271],
+                      [6.756, 47.5176],
+                    ],
+                  ],
+                },
+              },
+            ])
+          })
+        })
+        describe('multiple extents', () => {
+          beforeEach(() => {
+            hit = {
+              ...hit,
+              _source: {
+                ...hit._source,
+                geom: [
+                  {
+                    type: 'Polygon',
+                    coordinates: [
+                      [
+                        [7.756217, 47.534554],
+                        [7.839631, 47.534554],
+                        [7.839631, 47.590202],
+                        [7.756217, 47.590202],
+                        [7.756217, 47.534554],
+                      ],
+                    ],
+                  },
+                  {
+                    type: 'Polygon',
+                    coordinates: [
+                      [
+                        [7.714457, 47.526934],
+                        [7.764639, 47.526934],
+                        [7.764639, 47.548398],
+                        [7.714457, 47.548398],
+                        [7.714457, 47.526934],
+                      ],
+                    ],
+                  },
+                  {
+                    type: 'Polygon',
+                    coordinates: [
+                      [
+                        [7.818973, 47.534407],
+                        [7.899144, 47.534407],
+                        [7.899144, 47.591074],
+                        [7.818973, 47.591074],
+                        [7.818973, 47.534407],
+                      ],
+                    ],
+                  },
+                ],
+                extentDescriptionObject: [
+                  {
+                    default: 'Rheinfelden',
+                    langger: 'Rheinfelden',
+                    langfre: 'Rheinfelden',
+                    langita: 'Rheinfelden',
+                    langeng: 'Rheinfelden',
+                  },
+                  {
+                    default: 'Kaiseraugst',
+                    langger: 'Kaiseraugst',
+                    langfre: 'Kaiseraugst',
+                    langita: 'Kaiseraugst',
+                    langeng: 'Kaiseraugst',
+                  },
+                  {
+                    default: 'Möhlin',
+                    langger: 'Möhlin',
+                    langfre: 'Möhlin',
+                    langita: 'Möhlin',
+                    langeng: 'Möhlin',
+                  },
+                ],
+                hasBoundingPolygon: 'true',
+                shape: [
+                  {
+                    type: 'Polygon',
+                    coordinates: [
+                      [
+                        [7.7638, 47.543],
+                        [7.7637, 47.543],
+                        [7.7636, 47.543],
+                        [7.7635, 47.543],
+                        [7.7633, 47.5429],
+                        [7.763, 47.5429],
+                        [7.7638, 47.543],
+                      ],
+                    ],
+                  },
+                  {
+                    type: 'Polygon',
+                    coordinates: [
+                      [
+                        [7.764, 47.5429],
+                        [7.7641, 47.5423],
+                        [7.7643, 47.5421],
+                        [7.7645, 47.5415],
+                        [7.7646, 47.5411],
+                        [7.7646, 47.5405],
+                        [7.7645, 47.5398],
+                        [7.7634, 47.5402],
+                        [7.7621, 47.5401],
+                        [7.7623, 47.5396],
+                        [7.764, 47.5429],
+                      ],
+                    ],
+                  },
+                  {
+                    type: 'Polygon',
+                    coordinates: [
+                      [
+                        [7.8335, 47.5357],
+                        [7.8319, 47.5358],
+                        [7.831, 47.536],
+                        [7.8301, 47.5363],
+                        [7.829, 47.5364],
+                        [7.8335, 47.5357],
+                      ],
+                    ],
+                  },
+                ],
+              },
+            }
+          })
+          it('parses correctly the extents', async () => {
+            const record = (await service.readRecord(hit)) as DatasetRecord
+            expect(record.spatialExtents).toEqual([
+              {
+                description: 'Rheinfelden',
+                geometry: {
+                  type: 'Polygon',
+                  coordinates: [
+                    [
+                      [7.7638, 47.543],
+                      [7.7637, 47.543],
+                      [7.7636, 47.543],
+                      [7.7635, 47.543],
+                      [7.7633, 47.5429],
+                      [7.763, 47.5429],
+                      [7.7638, 47.543],
+                    ],
+                  ],
+                },
+              },
+              {
+                description: 'Kaiseraugst',
+                geometry: {
+                  type: 'Polygon',
+                  coordinates: [
+                    [
+                      [7.764, 47.5429],
+                      [7.7641, 47.5423],
+                      [7.7643, 47.5421],
+                      [7.7645, 47.5415],
+                      [7.7646, 47.5411],
+                      [7.7646, 47.5405],
+                      [7.7645, 47.5398],
+                      [7.7634, 47.5402],
+                      [7.7621, 47.5401],
+                      [7.7623, 47.5396],
+                      [7.764, 47.5429],
+                    ],
+                  ],
+                },
+              },
+              {
+                description: 'Möhlin',
+                geometry: {
+                  type: 'Polygon',
+                  coordinates: [
+                    [
+                      [7.8335, 47.5357],
+                      [7.8319, 47.5358],
+                      [7.831, 47.536],
+                      [7.8301, 47.5363],
+                      [7.829, 47.5364],
+                      [7.8335, 47.5357],
+                    ],
+                  ],
+                },
+              },
+            ])
+          })
+        })
+        describe('temporal extents', () => {
+          beforeEach(() => {
+            hit = {
+              ...hit,
+              _source: {
+                ...hit._source,
+                resourceTemporalDateRange: [
+                  {
+                    gte: '2000-05-31T22:00:00.000Z',
+                    lte: '2014-12-31T23:00:00.000Z',
+                  },
+                  {
+                    lte: '2000-04-31T23:00:00.000Z',
+                  },
+                ],
+                resourceTemporalExtentDetails: [
+                  {
+                    start: {
+                      date: '2000-06-01',
+                    },
+                    end: {
+                      date: '2015-01-01',
+                    },
+                  },
+                ],
+              },
+            }
+          })
+          it('parses temporal ranges accordingly', async () => {
+            const record = (await service.readRecord(hit)) as DatasetRecord
+            expect(record.temporalExtents).toEqual([
+              {
+                start: new Date('2000-05-31T22:00:00.000Z'),
+                end: new Date('2014-12-31T23:00:00.000Z'),
+              },
+              {
+                end: new Date('2000-04-31T23:00:00.000Z'),
               },
             ])
           })
@@ -645,8 +1046,34 @@ describe('Gn4MetadataMapper', () => {
               'Einschränkung im Zusammenhang mit der Ausübung moralischer Rechte',
               "Restriction légale d'utilisation à préciser",
             ],
-            spatialExtents: [],
-            temporalExtents: [],
+            spatialExtents: [
+              {
+                description: 'Hauts-de-France (Région)',
+                geometry: {
+                  type: 'Polygon',
+                  coordinates: [
+                    [
+                      [-180.0, -70.0],
+                      [180.0, -70.0],
+                      [180.0, 70.0],
+                      [-180.0, 70.0],
+                      [-180.0, -70.0],
+                    ],
+                  ],
+                },
+              },
+            ],
+            temporalExtents: [
+              {
+                start: new Date('2012-01-01T00:00:00.000Z'),
+                end: new Date('2012-01-01T00:00:00.000Z'),
+              },
+              {
+                start: new Date('2021-04-01T00:00:00.000Z'),
+                end: new Date('2021-04-01T00:00:00.000Z'),
+              },
+              { start: new Date('1974-01-01T00:00:00.000Z') },
+            ],
           } as CatalogRecord)
         })
       })
