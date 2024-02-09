@@ -65,7 +65,7 @@ describe('organizations', () => {
     })
     it('should display an actual logo', () => {
       cy.get('@organizations')
-        .eq(9)
+        .eq(10)
         .find('img')
         .should('have.attr', 'src')
         .and('contain', 'G%C3%A9o2France-4-3_decoupe.png')
@@ -78,9 +78,9 @@ describe('organizations', () => {
   describe('list features', () => {
     it('should search with a filter on the selected org on click', () => {
       cy.get('@organizationsName')
-        .eq(11)
+        .eq(10)
         .then(($clickedName) => {
-          cy.get('@organizations').eq(11).click()
+          cy.get('@organizations').eq(10).click()
           cy.url()
             .should('include', 'publisher=')
             .and('include', encodeURIComponent($clickedName.text().trim()))
@@ -130,7 +130,7 @@ describe('organizations', () => {
     it('should go to next page with arrow', () => {
       cy.then(() => {
         cy.get('@pagination').find('[data-cy=next-page]').click()
-        cy.get('@organizations').should('have.length', 3)
+        cy.get('@organizations').should('have.length', 4)
       })
     })
     it('should go back to the first page with arrow', () => {
