@@ -22,7 +22,10 @@ import {
   MouseWheelZoom,
   PinchRotate,
 } from 'ol/interaction'
-import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecord,
+  DatasetServiceDistribution,
+} from '@geonetwork-ui/common/domain/model/record'
 import MapBrowserEvent from 'ol/MapBrowserEvent'
 import type { MapContextLayerWmtsModel } from '../map-context/map-context.model'
 import * as olProjProj4 from 'ol/proj/proj4'
@@ -649,6 +652,71 @@ describe('MapUtilsService', () => {
         expect(error).toBeInstanceOf(Error)
         expect(error.message).toMatch('parsing failed')
       })
+    })
+  })
+
+  describe('#getRecordExtent', () => {
+    it('returns the extent of the record', () => {
+      const record = {
+        spatialExtents: [
+          {
+            description: 'Rheinfelden',
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [7.7638, 47.543],
+                  [7.7637, 47.543],
+                  [7.7636, 47.543],
+                  [7.7635, 47.543],
+                  [7.7633, 47.5429],
+                  [7.763, 47.5429],
+                  [7.7638, 47.543],
+                ],
+              ],
+            },
+          },
+          {
+            description: 'Kaiseraugst',
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [7.764, 47.5429],
+                  [7.7641, 47.5423],
+                  [7.7643, 47.5421],
+                  [7.7645, 47.5415],
+                  [7.7646, 47.5411],
+                  [7.7646, 47.5405],
+                  [7.7645, 47.5398],
+                  [7.7634, 47.5402],
+                  [7.7621, 47.5401],
+                  [7.7623, 47.5396],
+                  [7.764, 47.5429],
+                ],
+              ],
+            },
+          },
+          {
+            description: 'Möhlin',
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [7.8335, 47.5357],
+                  [7.8319, 47.5358],
+                  [7.831, 47.536],
+                  [7.8301, 47.5363],
+                  [7.829, 47.5364],
+                  [7.8335, 47.5357],
+                ],
+              ],
+            },
+          },
+        ],
+      } as Partial<CatalogRecord>
+      const extent = service.getRecordExtent(record)
+      expect(extent).toEqual([7.7621, 47.5357, 7.8335, 47.543])
     })
   })
 })

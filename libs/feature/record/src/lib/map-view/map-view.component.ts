@@ -23,11 +23,13 @@ import {
   BehaviorSubject,
   combineLatest,
   from,
+  lastValueFrom,
   Observable,
   of,
   startWith,
   Subscription,
   throwError,
+  withLatestFrom,
 } from 'rxjs'
 import {
   catchError,
@@ -117,7 +119,19 @@ export class MapViewComponent implements OnInit, OnDestroy {
         ),
         tap(() => this.resetSelection())
       )
-    )
+    ),
+    withLatestFrom(this.mdViewFacade.metadata$),
+    map(([context, metadata]) => {
+      if (context.view.extent) return context
+      const extent = this.mapUtils.getRecordExtent(metadata)
+      return {
+        ...context,
+        view: {
+          ...context.view,
+          extent,
+        },
+      }
+    })
   )
 
   constructor(

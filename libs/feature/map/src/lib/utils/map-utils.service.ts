@@ -31,7 +31,10 @@ import {
 } from '../map-context/map-context.model'
 import Collection from 'ol/Collection'
 import MapBrowserEvent from 'ol/MapBrowserEvent'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecord,
+  DatasetDistribution,
+} from '@geonetwork-ui/common/domain/model/record'
 import { ProxyService } from '@geonetwork-ui/util/shared'
 import { WmsEndpoint } from '@camptocamp/ogc-client'
 import { LONLAT_CRS_CODES } from '../constant/projections'
@@ -40,6 +43,8 @@ import proj4 from 'proj4/dist/proj4'
 
 const FEATURE_PROJECTION = 'EPSG:3857'
 const DATA_PROJECTION = 'EPSG:4326'
+
+const GEOJSON = new GeoJSON()
 
 @Injectable({
   providedIn: 'root',
@@ -59,7 +64,7 @@ export class MapUtilsService {
     featureProjection = FEATURE_PROJECTION,
     dataProjection = DATA_PROJECTION
   ): Feature<Geometry>[] => {
-    return new GeoJSON().readFeatures(featureCollection, {
+    return GEOJSON.readFeatures(featureCollection, {
       featureProjection,
       dataProjection,
     }) as Feature<Geometry>[]
@@ -249,6 +254,21 @@ ${e.stack || e.message || e}`)
         ])
         .getArray()
     )
+  }
+
+  getRecordExtent(record: Partial<CatalogRecord>): Extent {
+    if (!('spatialExtents' in record)) {
+      return null
+    }
+    // transform an array of geojson geometries into a bbox
+    const totalExtent = record.spatialExtents.reduce(
+      (prev, curr) => {
+        const geom = GEOJSON.readGeometry(curr.geometry)
+        return extend(prev, geom.getExtent())
+      },
+      [Infinity, Infinity, -Infinity, -Infinity]
+    )
+    return transformExtent(totalExtent, 'EPSG:4326', 'EPSG:3857')
   }
 }
 

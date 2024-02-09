@@ -68,6 +68,7 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
 class MdViewFacadeMock {
   mapApiLinks$ = new Subject()
   geoDataLinks$ = new Subject()
+  metadata$ = of({ title: 'abcd' })
 }
 
 class MapUtilsServiceMock {
@@ -86,6 +87,7 @@ class MapUtilsServiceMock {
     })
   })
   prioritizePageScroll = jest.fn()
+  getRecordExtent = jest.fn(() => [-30, -60, 30, 60])
   _returnImmediately = true
   _resolve = null
   _reject = null
@@ -676,7 +678,7 @@ describe('MapViewComponent', () => {
           tick()
           fixture.detectChanges()
         }))
-        it('emits a new map context with the selected layer and extent null', () => {
+        it('emits a new map context with the selected layer and extent from the record', () => {
           expect(mapComponent.context).toEqual({
             layers: [
               {
@@ -686,7 +688,7 @@ describe('MapViewComponent', () => {
               },
             ],
             view: {
-              extent: null,
+              extent: [-30, -60, 30, 60],
             },
           })
         })
@@ -705,7 +707,7 @@ describe('MapViewComponent', () => {
           tick()
           fixture.detectChanges()
         }))
-        it('emits a new map context with the selected layer and a default view', () => {
+        it('emits a new map context with the selected layer and extent from the record', () => {
           expect(mapComponent.context).toEqual({
             layers: [
               {
@@ -714,7 +716,7 @@ describe('MapViewComponent', () => {
                 type: 'wms',
               },
             ],
-            view: { extent: undefined },
+            view: { extent: [-30, -60, 30, 60] },
           })
         })
         it('provides selected link to the external viewer component', () => {
@@ -728,7 +730,7 @@ describe('MapViewComponent', () => {
       })
       describe('selecting another layer, while extent is not ready', () => {
         beforeEach(fakeAsync(() => {
-          mapUtilsService._resolve([-10, -20, 10, 20])
+          mapUtilsService._resolve([-30, -60, 30, 60])
           tick()
           dropdownComponent.selectValue.emit(0)
           tick()
