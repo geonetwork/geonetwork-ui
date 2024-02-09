@@ -168,6 +168,9 @@ export class MapUtilsService {
       this.proxy.getProxiedUrl(layer.url)
     ).isReady()
     const { boundingBoxes } = endpoint.getLayerByName(layer.name)
+    if (!Object.keys(boundingBoxes).length) {
+      return null
+    }
     const lonLatCRS = Object.keys(boundingBoxes)?.find((crs) =>
       LONLAT_CRS_CODES.includes(crs)
     )

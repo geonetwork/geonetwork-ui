@@ -291,6 +291,19 @@ describe('MapUtilsService', () => {
           expect(extent).toEqual([650796.4, 7060330.6, 690891.3, 7090402.2])
         })
       })
+      describe('no bbox at all', () => {
+        beforeEach(() => {
+          layer = {
+            type: 'wms',
+            name: 'mock_nobbox',
+            url: 'http://mock/wms',
+          }
+        })
+        it('returns the advertised extent', async () => {
+          const extent = await service.getLayerExtent(layer)
+          expect(extent).toEqual(null)
+        })
+      })
       describe('error while loading capabilities', () => {
         beforeEach(() => {
           layer = {
