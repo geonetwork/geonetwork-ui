@@ -22,8 +22,10 @@ import { StyleLike } from 'ol/style/Style'
 import {
   BehaviorSubject,
   combineLatest,
+  from,
   Observable,
   of,
+  startWith,
   Subscription,
   throwError,
 } from 'rxjs'
@@ -99,7 +101,7 @@ export class MapViewComponent implements OnInit, OnDestroy {
 
   mapContext$ = this.currentLayers$.pipe(
     switchMap((layers) =>
-      this.mapUtils.getLayerExtent(layers[0]).pipe(
+      from(this.mapUtils.getLayerExtent(layers[0])).pipe(
         catchError((error) => {
           console.warn(error) // FIXME: report this to the user somehow
           return of(undefined)
@@ -123,7 +125,6 @@ export class MapViewComponent implements OnInit, OnDestroy {
     private mapManager: MapManagerService,
     private mapUtils: MapUtilsService,
     private dataService: DataService,
-    private proxy: ProxyService,
     private featureInfo: FeatureInfoService,
     private changeRef: ChangeDetectorRef,
     private styleService: MapStyleService
