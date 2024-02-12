@@ -1,10 +1,10 @@
 import { Component, OnDestroy } from '@angular/core'
-import { queryGeoadmin, GeoadminOptions } from '@geospatial-sdk/geocoding'
 import { catchError, from, Subject, takeUntil } from 'rxjs'
 import { debounceTime, switchMap } from 'rxjs/operators'
 import { MapManagerService } from '../manager/map-manager.service'
 import { fromLonLat } from 'ol/proj'
 import { Polygon } from 'ol/geom'
+import { GeocodingService } from '../geocoding.service'
 
 @Component({
   selector: 'gn-ui-geocoding',
@@ -16,18 +16,20 @@ export class GeocodingComponent implements OnDestroy {
   results: any[] = []
   searchTextChanged = new Subject<string>()
   destroy$ = new Subject<void>()
+  errorMessage: string | null = null
 
-  constructor(private mapManager: MapManagerService) {
+  constructor(
+    private mapManager: MapManagerService,
+    private geocodingService: GeocodingService
+  ) {
     this.searchTextChanged
       .pipe(
         debounceTime(300),
         switchMap((searchText) => {
-          const options: GeoadminOptions = {
-            origins: ['zipcode', 'gg25', 'address'],
-            limit: 6,
-          }
-          return from(queryGeoadmin(searchText, options)).pipe(
+          return from(this.geocodingService.query(searchText)).pipe(
             catchError((error) => {
+              this.errorMessage =
+                'An error occurred while searching. Please try again.'
               console.error(error)
               return []
             })
@@ -57,18 +59,32 @@ export class GeocodingComponent implements OnDestroy {
   clearSearch() {
     this.searchText = ''
     this.results = []
+    this.errorMessage = null
   }
 
-  zoomToLocation(result) {
+  zoomToLocation(result: any) {
     const map = this.mapManager.map
     const view = map.getView()
     const geometry = result.geom
 
-    const polygonCoords = geometry.coordinates
+    if (geometry.type === 'Point') {
+      this.zoomToPoint(geometry.coordinates, view)
+    } else if (geometry.type === 'Polygon') {
+      this.zoomToPolygon(geometry.coordinates, view)
+    } else {
+      console.error(`Unsupported geometry type: ${geometry.type}`)
+    }
+  }
+
+  zoomToPoint(pointCoords: [number, number], view: any) {
+    const transformedCoords = fromLonLat(pointCoords)
+    view.setCenter(transformedCoords)
+    view.setZoom(12)
+  }
+
+  zoomToPolygon(polygonCoords: [[number, number][]], view: any) {
     const transformedCoords = polygonCoords[0].map((coord) => fromLonLat(coord))
-
     const polygon = new Polygon([transformedCoords])
-
     view.fit(polygon, {
       duration: 100,
       maxZoom: 12,
