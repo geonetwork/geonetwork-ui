@@ -192,6 +192,16 @@ describe('dataset pages', () => {
             .should('have.value', keyword)
         })
       })
+      it('should open the lightbox', () => {
+        cy.get('datahub-record-metadata')
+          .find('[id="about"]')
+          .find('gn-ui-thumbnail')
+          .first()
+          .next()
+          .find('gn-ui-button')
+          .click()
+        cy.get('.basicLightbox--visible')
+      })
     })
   })
 
