@@ -28,7 +28,6 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { matchProtocol } from '../common/distribution.mapper'
 import { LangService } from '@geonetwork-ui/util/i18n'
-import { Geometry } from 'geojson'
 
 type ESResponseSource = SourceWithUnknownProps
 
