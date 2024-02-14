@@ -11,12 +11,17 @@ import {
 import { from, Observable, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 
-export const GEOCODING_PROVIDER = new InjectionToken('geocoding-provider')
+type GeoadminGeocodingProvider = ['geoadmin', GeoadminOptions]
+type GeonamesGeocodingProvider = ['geonames', GeonamesOptions]
+type DataGouvFrGeocodingProvider = ['data-gouv-fr', DataGouvFrOptions]
+export type GeocodingProvider =
+  | GeoadminGeocodingProvider
+  | GeonamesGeocodingProvider
+  | DataGouvFrGeocodingProvider
 
-export interface GeocodingProvider {
-  id: 'geoadmin' | 'geonames' | 'data-gouv-fr'
-  options: GeoadminOptions | GeonamesOptions | DataGouvFrOptions
-}
+export const GEOCODING_PROVIDER = new InjectionToken<GeocodingProvider>(
+  'geocoding-provider'
+)
 
 @Injectable({
   providedIn: 'root',
@@ -28,25 +33,25 @@ export class GeocodingService {
 
   query(text: string): Observable<GeocodingResult[]> {
     let queryObservable: Observable<GeocodingResult[]>
-    switch (this.provider.id) {
+    switch (this.provider[0]) {
       case 'geoadmin':
         queryObservable = from(
-          queryGeoadmin(text, this.provider.options as GeoadminOptions)
+          queryGeoadmin(text, this.provider[1] as GeoadminOptions)
         )
         break
       case 'geonames':
         queryObservable = from(
-          queryGeonames(text, this.provider.options as GeonamesOptions)
+          queryGeonames(text, this.provider[1] as GeonamesOptions)
         )
         break
       case 'data-gouv-fr':
         queryObservable = from(
-          queryDataGouvFr(text, this.provider.options as DataGouvFrOptions)
+          queryDataGouvFr(text, this.provider[1] as DataGouvFrOptions)
         )
         break
       default:
         return throwError(
-          () => new Error(`Unsupported geocoding provider: ${this.provider.id}`)
+          () => new Error(`Unsupported geocoding provider: ${this.provider[0]}`)
         )
     }
     return queryObservable.pipe(catchError((error) => throwError(error)))
