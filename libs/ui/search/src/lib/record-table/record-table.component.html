@@ -1,5 +1,5 @@
 <div>
-  <div *ngIf="totalHits" class="">
+  <div *ngIf="totalHits">
     <div class="flex records-information">
       <div
         translate
@@ -156,8 +156,8 @@
         </div>
       </div>
       <div
-        class="contents hover:text-gray-900 text-gray-800 cursor-pointer"
-        (click)="recordsSelect.emit([record])"
+        class="contents hover:text-gray-900 text-gray-800 cursor-pointer table-line"
+        (click)="recordClick.emit(record)"
         *ngFor="let record of records"
       >
         <div class="record-table-col">

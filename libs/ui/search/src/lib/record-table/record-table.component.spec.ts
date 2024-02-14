@@ -4,6 +4,7 @@ import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 import { RecordTableComponent } from './record-table.component'
 import { SortByField } from '@geonetwork-ui/common/domain/model/search'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { By } from '@angular/platform-browser'
 
 describe('RecordTableComponent', () => {
   let component: RecordTableComponent
@@ -21,6 +22,7 @@ describe('RecordTableComponent', () => {
       { uniqueIdentifier: '2' },
       { uniqueIdentifier: '3' },
     ] as CatalogRecord[]
+    component.totalHits = 12
     fixture.detectChanges()
   })
 
@@ -82,7 +84,9 @@ describe('RecordTableComponent', () => {
         expect(component.isSortedBy('title', 'asc')).toBe(false)
       })
     })
+  })
 
+  describe('selection', () => {
     describe('#isChecked', () => {
       it('should return true when the record is in the selectedRecords array', () => {
         const component = new RecordTableComponent()
@@ -124,20 +128,36 @@ describe('RecordTableComponent', () => {
         expect(component.isAllSelected()).toBe(false)
       })
     })
+
+    describe('#isSomeSelected', () => {
+      it('returns false if all records are selected', () => {
+        component.selectedRecords = ['1', '2', '3']
+        expect(component.isSomeSelected()).toBe(false)
+      })
+      it('returns true if more than one record selected', () => {
+        component.selectedRecords = ['2', '3']
+        expect(component.isSomeSelected()).toBe(true)
+      })
+      it('returns false if no record selected', () => {
+        component.selectedRecords = []
+        expect(component.isSomeSelected()).toBe(false)
+      })
+    })
   })
 
-  describe('#isSomeSelected', () => {
-    it('returns false if all records are selected', () => {
-      component.selectedRecords = ['1', '2', '3']
-      expect(component.isSomeSelected()).toBe(false)
+  describe('clicking on a dataset', () => {
+    let clickedRecord: CatalogRecord
+
+    beforeEach(() => {
+      clickedRecord = null
+      component.recordClick.subscribe((r) => (clickedRecord = r))
     })
-    it('returns true if more than one record selected', () => {
-      component.selectedRecords = ['2', '3']
-      expect(component.isSomeSelected()).toBe(true)
-    })
-    it('returns false if no record selected', () => {
-      component.selectedRecords = []
-      expect(component.isSomeSelected()).toBe(false)
+
+    it('emits a recordClick event', () => {
+      const tableLine = fixture.debugElement.queryAll(By.css('.table-line'))[1]
+        .nativeElement as HTMLDivElement
+      tableLine.dispatchEvent(new Event('click'))
+      expect(clickedRecord).toEqual(component.records[1])
     })
   })
 })
