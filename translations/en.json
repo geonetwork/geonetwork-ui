@@ -221,7 +221,6 @@
   "record.metadata.api.form.type": "Output format",
   "record.metadata.author": "Author",
   "record.metadata.catalog": "Catalog",
-  "record.metadata.conditions": "Use conditions",
   "record.metadata.contact": "Contact",
   "record.metadata.details": "Technical information",
   "record.metadata.download": "Downloads",

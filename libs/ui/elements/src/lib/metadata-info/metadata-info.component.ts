@@ -27,21 +27,10 @@ export class MetadataInfoComponent {
     )
   }
 
-  get conditions(): string[] {
+  get restrictions() {
     let array = []
     if (this.metadata.useLimitations?.length) {
       array = array.concat(this.metadata.useLimitations)
-    }
-    return array
-  }
-
-  get restrictions() {
-    let array = []
-    if (this.metadata.accessConstraints?.length) {
-      array = array.concat(this.metadata.accessConstraints.map((c) => c.text))
-    }
-    if (this.metadata.legalConstraints?.length) {
-      array = array.concat(this.metadata.legalConstraints)
     }
     return array
   }
@@ -71,10 +60,5 @@ export class MetadataInfoComponent {
 
   onKeywordClick(keyword: string) {
     this.keyword.emit(keyword)
-  }
-
-  copyText() {
-    navigator.clipboard.writeText(this.metadata.uniqueIdentifier)
-    ;(event.target as HTMLElement).blur()
   }
 }
