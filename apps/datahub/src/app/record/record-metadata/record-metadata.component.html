@@ -30,15 +30,22 @@
           *ngIf="showOverlay"
         >
         </gn-ui-image-overlay-preview>
-        <div>
-          <gn-ui-metadata-contact
-            (organizationClick)="onOrganizationClick($event)"
+        <gn-ui-metadata-contact
+          (organizationClick)="onOrganizationClick($event)"
+          [metadata]="facade.metadata$ | async"
+        >
+        </gn-ui-metadata-contact>
+        <div *ngIf="metadataQualityDisplay">
+          <p class="text text-gray-700 text-xs mb-3 uppercase" translate>
+            record.metadata.quality
+          </p>
+          <gn-ui-metadata-quality
             [metadata]="facade.metadata$ | async"
-          >
-          </gn-ui-metadata-contact>
-          <gn-ui-metadata-catalog [sourceLabel]="sourceLabel$ | async">
-          </gn-ui-metadata-catalog>
+            [metadataQualityDisplay]="metadataQualityDisplay"
+          ></gn-ui-metadata-quality>
         </div>
+        <gn-ui-metadata-catalog [sourceLabel]="sourceLabel$ | async">
+        </gn-ui-metadata-catalog>
       </div>
     </div>
   </div>
