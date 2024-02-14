@@ -12,6 +12,8 @@ import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/common/fix
 import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
 import { TranslateModule } from '@ngx-translate/core'
+import { GeocodingService } from '../geocoding.service'
+import { of } from 'rxjs'
 
 const vectorLayer = new VectorLayer({
   source: new VectorSource({
@@ -40,6 +42,10 @@ const mapManagerMock = {
   map: mapMock,
 }
 
+const geocodingServiceMock = {
+  query: jest.fn().mockReturnValue(of([])),
+}
+
 describe('GeocodingComponent', () => {
   let component: GeocodingComponent
   let fixture: ComponentFixture<GeocodingComponent>
@@ -48,7 +54,10 @@ describe('GeocodingComponent', () => {
     await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [GeocodingComponent],
-      providers: [{ provide: MapManagerService, useValue: mapManagerMock }],
+      providers: [
+        { provide: MapManagerService, useValue: mapManagerMock },
+        { provide: GeocodingService, useValue: geocodingServiceMock },
+      ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
 
@@ -85,18 +94,68 @@ describe('GeocodingComponent', () => {
   })
 
   describe('zoomToLocation', () => {
-    it('should zoom to the location of the result', () => {
-      const result = {
-        geom: {
-          coordinates: [[0, 0]],
-        },
-      }
-      const viewMock = {
+    let viewMock: any
+    let zoomToPointSpy: jest.SpyInstance
+    let zoomToPolygonSpy: jest.SpyInstance
+
+    beforeEach(() => {
+      viewMock = {
+        setCenter: jest.fn(),
+        setZoom: jest.fn(),
         fit: jest.fn(),
       }
       mapMock.getView = jest.fn().mockReturnValue(viewMock)
+      zoomToPointSpy = jest.spyOn(component, 'zoomToPoint')
+      zoomToPolygonSpy = jest.spyOn(component, 'zoomToPolygon')
+    })
+
+    it('should zoom to the location of the result if geometry type is Point', () => {
+      const result = {
+        geom: {
+          type: 'Point',
+          coordinates: [0, 0],
+        },
+      }
       component.zoomToLocation(result)
-      expect(viewMock.fit).toHaveBeenCalled()
+      expect(zoomToPointSpy).toHaveBeenCalledWith(
+        result.geom.coordinates,
+        viewMock
+      )
+    })
+
+    it('should zoom to the location of the result if geometry type is Polygon', () => {
+      const result = {
+        geom: {
+          type: 'Polygon',
+          coordinates: [
+            [
+              [0, 0],
+              [1, 1],
+              [2, 2],
+              [0, 0],
+            ],
+          ],
+        },
+      }
+      component.zoomToLocation(result)
+      expect(zoomToPolygonSpy).toHaveBeenCalledWith(
+        result.geom.coordinates,
+        viewMock
+      )
+    })
+
+    it('should log an error if geometry type is unsupported', () => {
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation()
+      const result = {
+        geom: {
+          type: 'Unsupported',
+          coordinates: [0, 0],
+        },
+      }
+      component.zoomToLocation(result)
+      expect(consoleSpy).toHaveBeenCalledWith(
+        `Unsupported geometry type: ${result.geom.type}`
+      )
     })
   })
   describe('onEnterPress', () => {
