@@ -41,6 +41,9 @@ export const toDate = (field) => new Date(field)
 export const getFirstValue = (field) =>
   Array.isArray(field) ? field[0] : field
 
+export const getArrayItem = (field, index) =>
+  Array.isArray(field) && field[index] !== undefined ? field[index] : null
+
 export const getAsArray = (field) =>
   Array.isArray(field) ? field : field !== null ? [field] : []
 

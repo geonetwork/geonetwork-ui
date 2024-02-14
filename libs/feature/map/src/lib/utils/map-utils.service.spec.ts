@@ -9,14 +9,12 @@ import Map from 'ol/Map'
 import ImageWMS from 'ol/source/ImageWMS'
 import TileWMS from 'ol/source/TileWMS'
 import XYZ from 'ol/source/XYZ'
-import { of } from 'rxjs'
-import { MapUtilsWMSService } from './map-utils-wms.service'
+import { firstValueFrom } from 'rxjs'
 import {
   dragPanCondition,
   MapUtilsService,
   mouseWheelZoomCondition,
 } from './map-utils.service'
-import { readFirst } from '@nx/angular/testing'
 import {
   defaults,
   DragPan,
@@ -24,22 +22,53 @@ import {
   MouseWheelZoom,
   PinchRotate,
 } from 'ol/interaction'
-import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecord,
+  DatasetServiceDistribution,
+} from '@geonetwork-ui/common/domain/model/record'
 import MapBrowserEvent from 'ol/MapBrowserEvent'
 import type { MapContextLayerWmtsModel } from '../map-context/map-context.model'
+import * as olProjProj4 from 'ol/proj/proj4'
+import * as olProj from 'ol/proj'
+import { get } from 'ol/proj'
 
-jest.mock('ol/proj/proj4', () => {
-  const fromEPSGCodeMock = jest.fn()
-  const registerMock = jest.fn()
-  return {
-    fromEPSGCode: fromEPSGCodeMock,
-    register: registerMock,
-  }
-})
+jest.mock('@camptocamp/ogc-client', () => ({
+  WmsEndpoint: class {
+    constructor(private url) {}
+    isReady() {
+      return Promise.resolve({
+        getLayerByName: (name) => {
+          if (name.includes('error')) {
+            throw new Error('Something went wrong')
+          }
+          let boundingBoxes
+          if (name.includes('nobbox')) {
+            boundingBoxes = {}
+          } else if (name.includes('4326')) {
+            boundingBoxes = {
+              'EPSG:4326': ['1', '2.6', '3.3', '4.2'],
+              'CRS:84': ['2.3', '50.6', '2.8', '50.9'],
+            }
+          } else if (name.includes('2154')) {
+            boundingBoxes = {
+              'EPSG:2154': ['650796.4', '7060330.6', '690891.3', '7090402.2'],
+            }
+          } else {
+            boundingBoxes = {
+              'CRS:84': ['2.3', '50.6', '2.8', '50.9'],
+              'EPSG:2154': ['650796.4', '7060330.6', '690891.3', '7090402.2'],
+            }
+          }
+          return {
+            name,
+            boundingBoxes,
+          }
+        },
+      })
+    }
+  },
+}))
 
-const wmsUtilsMock = {
-  getLayerLonLatBBox: jest.fn(() => of([1.33, 48.81, 4.3, 51.1])),
-}
 const wmsTileLayer = new TileLayer({
   source: new TileWMS({
     url: 'url',
@@ -63,14 +92,12 @@ describe('MapUtilsService', () => {
   let service: MapUtilsService
 
   beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [
-        {
-          provide: MapUtilsWMSService,
-          useValue: wmsUtilsMock,
-        },
-      ],
     })
     service = TestBed.inject(MapUtilsService)
   })
@@ -186,7 +213,7 @@ describe('MapUtilsService', () => {
         }
       })
       it('returns an observable emitting the aggregated extent', async () => {
-        const extent = await readFirst(service.getLayerExtent(layer))
+        const extent = await service.getLayerExtent(layer)
         expect(extent).toEqual([
           -571959.6817241046, 5065908.545923665, 1064128.2009725596,
           6636971.049871371,
@@ -211,12 +238,18 @@ describe('MapUtilsService', () => {
         }
       })
       it('returns an observable emitting null', async () => {
-        const extent = await readFirst(service.getLayerExtent(layer))
+        const extent = await service.getLayerExtent(layer)
         expect(extent).toEqual(null)
       })
     })
     describe('WMS layer', () => {
       let layer
+      beforeEach(() => {
+        jest
+          .spyOn(olProj, 'transformExtent')
+          .mockImplementation((extent) => extent)
+      })
+
       describe('extent available in capabilities', () => {
         beforeEach(() => {
           layer = {
@@ -225,12 +258,70 @@ describe('MapUtilsService', () => {
             url: 'http://mock/wms',
           }
         })
-        it('returns an observable emitting the advertised extent', async () => {
-          const extent = await readFirst(service.getLayerExtent(layer))
-          expect(extent).toEqual([
-            148054.92275505388, 6242683.64671384, 478673.81041107635,
-            6639001.66376131,
-          ])
+        it('returns the advertised extent (CRS 84)', async () => {
+          const extent = await service.getLayerExtent(layer)
+          expect(extent).toEqual([2.3, 50.6, 2.8, 50.9])
+        })
+      })
+
+      describe('bbox in EPSG:4326', () => {
+        beforeEach(() => {
+          layer = {
+            type: 'wms',
+            name: 'mock_4326',
+            url: 'http://mock/wms',
+          }
+        })
+        it('returns EPSG:4326 bbox', async () => {
+          const extent = await service.getLayerExtent(layer)
+          expect(extent).toEqual([1, 2.6, 3.3, 4.2])
+        })
+      })
+      describe('no lon lat bbox', () => {
+        beforeEach(() => {
+          layer = {
+            type: 'wms',
+            name: 'mock_2154',
+            url: 'http://mock/wms',
+          }
+          jest
+            .spyOn(olProjProj4, 'fromEPSGCode')
+            .mockImplementation(async () => get('EPSG:4326'))
+        })
+        it('transforms to EPSG:4326 bbox', async () => {
+          const extent = await service.getLayerExtent(layer)
+          expect(olProjProj4.fromEPSGCode).toHaveBeenCalledWith('EPSG:2154')
+          expect(extent).toEqual([650796.4, 7060330.6, 690891.3, 7090402.2])
+        })
+      })
+      describe('no bbox at all', () => {
+        beforeEach(() => {
+          layer = {
+            type: 'wms',
+            name: 'mock_nobbox',
+            url: 'http://mock/wms',
+          }
+        })
+        it('returns the advertised extent', async () => {
+          const extent = await service.getLayerExtent(layer)
+          expect(extent).toEqual(null)
+        })
+      })
+      describe('error while loading capabilities', () => {
+        beforeEach(() => {
+          layer = {
+            type: 'wms',
+            name: 'mock_error',
+            url: 'http://mock/wms',
+          }
+        })
+        it('returns a translatable error', async () => {
+          try {
+            await service.getLayerExtent(layer)
+          } catch (e) {
+            const error = e as Error
+            expect(error.message).toEqual('Something went wrong')
+          }
         })
       })
     })
@@ -453,7 +544,7 @@ describe('MapUtilsService', () => {
             text: () => Promise.resolve(SAMPLE_WMTS_CAPABILITIES),
           })
         )
-        wmtsLayer = await readFirst(
+        wmtsLayer = await firstValueFrom(
           service.getWmtsLayerFromCapabilities(SAMPLE_WMTS_LINK)
         )
       })
@@ -498,7 +589,7 @@ describe('MapUtilsService', () => {
                   ),
               })
             )
-            wmtsLayer = await readFirst(
+            wmtsLayer = await firstValueFrom(
               service.getWmtsLayerFromCapabilities(SAMPLE_WMTS_LINK)
             )
           })
@@ -524,7 +615,7 @@ describe('MapUtilsService', () => {
           })
         )
         try {
-          await readFirst(
+          await firstValueFrom(
             service.getWmtsLayerFromCapabilities(SAMPLE_WMTS_LINK)
           )
         } catch (e) {
@@ -550,7 +641,7 @@ describe('MapUtilsService', () => {
           })
         )
         try {
-          await readFirst(
+          await firstValueFrom(
             service.getWmtsLayerFromCapabilities(SAMPLE_WMTS_LINK)
           )
         } catch (e) {
@@ -561,6 +652,71 @@ describe('MapUtilsService', () => {
         expect(error).toBeInstanceOf(Error)
         expect(error.message).toMatch('parsing failed')
       })
+    })
+  })
+
+  describe('#getRecordExtent', () => {
+    it('returns the extent of the record', () => {
+      const record = {
+        spatialExtents: [
+          {
+            description: 'Rheinfelden',
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [7.7638, 47.543],
+                  [7.7637, 47.543],
+                  [7.7636, 47.543],
+                  [7.7635, 47.543],
+                  [7.7633, 47.5429],
+                  [7.763, 47.5429],
+                  [7.7638, 47.543],
+                ],
+              ],
+            },
+          },
+          {
+            description: 'Kaiseraugst',
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [7.764, 47.5429],
+                  [7.7641, 47.5423],
+                  [7.7643, 47.5421],
+                  [7.7645, 47.5415],
+                  [7.7646, 47.5411],
+                  [7.7646, 47.5405],
+                  [7.7645, 47.5398],
+                  [7.7634, 47.5402],
+                  [7.7621, 47.5401],
+                  [7.7623, 47.5396],
+                  [7.764, 47.5429],
+                ],
+              ],
+            },
+          },
+          {
+            description: 'Möhlin',
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [7.8335, 47.5357],
+                  [7.8319, 47.5358],
+                  [7.831, 47.536],
+                  [7.8301, 47.5363],
+                  [7.829, 47.5364],
+                  [7.8335, 47.5357],
+                ],
+              ],
+            },
+          },
+        ],
+      } as Partial<CatalogRecord>
+      const extent = service.getRecordExtent(record)
+      expect(extent).toEqual([7.7621, 47.5357, 7.8335, 47.543])
     })
   })
 })

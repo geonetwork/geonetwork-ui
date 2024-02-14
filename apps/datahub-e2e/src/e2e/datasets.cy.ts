@@ -64,7 +64,7 @@ describe('datasets', () => {
         .invoke('attr', 'src')
         .should(
           'eql',
-          'https://www.geocat.ch/geonetwork/srv/api/records/a8b5e6c0-c21d-4c32-b8f9-10830215890a/attachments/SEN_CartesThematiquesSols.png'
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/records/9e1ea778-d0ce-4b49-90b7-37bc0e448300/attachments/test.png'
         )
       cy.get('@results')
         .eq(1)
@@ -273,6 +273,7 @@ describe('datasets', () => {
           'Bundesamt für Raumentwicklung (1)',
           "Canton du Valais - Service de l'environnement (SEN) - Protection des sols (1)",
           'Cellule informatique et géomatique (SPW - Intérieur et Action sociale - Direction fonctionnelle et d’appui) (1)',
+          'Coordination, Services et Informations Géographiques (COSIG), swisstopo (1)',
           "Direction de l'Action sociale (SPW - Intérieur et Action sociale - Département de l'Action sociale - Direction de l'Action sociale) (1)",
           'DREAL (1)',
           "DREAL HdF (Direction Régionale de l'Environnement de l'Aménagement et du Logement des Hauts de France) (1)",
@@ -364,7 +365,7 @@ describe('datasets', () => {
         // filter by theme
         cy.get('@filters').eq(3).click()
         getFilterOptions()
-        cy.get('@options').last().click()
+        cy.get('@options').eq(-2).click()
         cy.get('body').click()
       })
       it('shows only one result', () => {
