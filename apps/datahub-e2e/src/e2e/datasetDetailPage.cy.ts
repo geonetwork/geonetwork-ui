@@ -203,6 +203,22 @@ describe('dataset pages', () => {
         cy.get('.basicLightbox--visible')
       })
     })
+
+    describe('metadata quality widget enabled', () => {
+      beforeEach(() => {
+        // this will enable metadata quality widget
+        cy.intercept('GET', '/assets/configuration/default.toml', {
+          fixture: 'config-with-metadata-quality.toml',
+        })
+        cy.reload()
+      })
+
+      it('should display quality widget', () => {
+        cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
+          .eq(0)
+          .should('have.attr', 'ng-reflect-value', 75)
+      })
+    })
   })
 
   describe('PREVIEW SECTION : display & functions', () => {
