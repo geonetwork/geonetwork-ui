@@ -26,10 +26,8 @@ describe('EditableLabelDirective', () => {
 
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        declarations: [
-          EditableLabelDirective,
-          TestWithEditableLabelFalseComponent,
-        ],
+        declarations: [TestWithEditableLabelFalseComponent],
+        imports: [EditableLabelDirective],
       }).compileComponents()
 
       fixture = TestBed.createComponent(TestWithEditableLabelFalseComponent)
@@ -50,7 +48,8 @@ describe('EditableLabelDirective', () => {
 
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        declarations: [EditableLabelDirective, TestWithEditableLabelComponent],
+        declarations: [TestWithEditableLabelComponent],
+        imports: [EditableLabelDirective],
       }).compileComponents()
 
       fixture = TestBed.createComponent(TestWithEditableLabelComponent)

@@ -10,6 +10,7 @@ import {
 
 @Directive({
   selector: '[gnUiEditableLabel]',
+  standalone: true,
 })
 export class EditableLabelDirective implements AfterViewInit {
   @Output() editableLabelChanged = new EventEmitter<string>()
