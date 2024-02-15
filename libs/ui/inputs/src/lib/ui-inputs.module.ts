@@ -69,7 +69,6 @@ import { EditableLabelDirective } from './editable-label/editable-label.directiv
     CheckboxComponent,
     SearchInputComponent,
     DateRangePickerComponent,
-    EditableLabelDirective,
   ],
   imports: [
     CommonModule,
@@ -89,6 +88,7 @@ import { EditableLabelDirective } from './editable-label/editable-label.directiv
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    EditableLabelDirective,
   ],
   exports: [
     DropdownSelectorComponent,

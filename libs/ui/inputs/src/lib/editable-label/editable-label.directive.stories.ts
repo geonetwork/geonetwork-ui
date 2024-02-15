@@ -25,8 +25,7 @@ export default {
   component: EditableLabelStoryComponent,
   decorators: [
     moduleMetadata({
-      declarations: [EditableLabelDirective],
-      imports: [],
+      imports: [EditableLabelDirective],
     }),
   ],
 } as Meta<EditableLabelStoryComponent>
