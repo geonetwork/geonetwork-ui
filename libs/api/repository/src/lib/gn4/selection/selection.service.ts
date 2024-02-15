@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { SelectionsApiService } from '@geonetwork-ui/data-access/gn4'
-import { BehaviorSubject, Observable, Subscription, map, tap } from 'rxjs'
+import { BehaviorSubject, Subscription, tap } from 'rxjs'
 
 const BUCKET_ID = 'gnui'
 
@@ -33,48 +33,43 @@ export class SelectionService {
     this.selectedRecordsIdentifiers$.next(filtered)
   }
 
-  selectRecords(records: CatalogRecord[]): Observable<void> {
-    const newIds = []
-    records.map((record) => {
-      newIds.push(record.uniqueIdentifier)
-    })
-    const apiResponse = this.selectionsApi.add(BUCKET_ID, newIds)
-    return apiResponse.pipe(
-      tap(() => {
-        this.addIdsToSelected(newIds)
-      }),
-      map(() => undefined)
-    )
+  selectRecords(records: CatalogRecord[]) {
+    const newIds = records.map((record) => record.uniqueIdentifier)
+    this.selectionsApi
+      .add(BUCKET_ID, newIds)
+      .pipe(
+        tap(() => {
+          this.addIdsToSelected(newIds)
+        })
+      )
+      .subscribe()
   }
 
-  deselectRecords(records: CatalogRecord[]): Observable<void> {
-    const idsToBeRemoved = []
-    records.map((record) => {
-      idsToBeRemoved.push(record.uniqueIdentifier)
-    })
-    const apiResponse = this.selectionsApi.clear(BUCKET_ID, idsToBeRemoved)
-    return apiResponse.pipe(
-      tap(() => {
-        this.removeIdsFromSelected(idsToBeRemoved)
-      }),
-      map(() => undefined)
-    )
+  deselectRecords(records: CatalogRecord[]) {
+    const idsToBeRemoved = records.map((record) => record.uniqueIdentifier)
+    this.selectionsApi
+      .clear(BUCKET_ID, idsToBeRemoved)
+      .pipe(
+        tap(() => {
+          this.removeIdsFromSelected(idsToBeRemoved)
+        })
+      )
+      .subscribe()
   }
 
-  clearSelection(): Observable<void> {
+  clearSelection() {
     const currentSelectedResponse = this.selectionsApi.get(BUCKET_ID)
     let currentSelection
     this.subscription = currentSelectedResponse.subscribe((value) => {
       currentSelection = [...value]
     })
-    this.selectionsApi.clear(BUCKET_ID, currentSelection)
-    const apiResponse = this.selectionsApi.clear(BUCKET_ID, currentSelection)
-
-    return apiResponse.pipe(
-      tap(() => {
-        this.removeIdsFromSelected(currentSelection)
-      }),
-      map(() => undefined)
-    )
+    this.selectionsApi
+      .clear(BUCKET_ID, currentSelection)
+      .pipe(
+        tap(() => {
+          this.removeIdsFromSelected(currentSelection)
+        })
+      )
+      .subscribe()
   }
 }
