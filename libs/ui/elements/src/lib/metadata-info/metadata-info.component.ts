@@ -27,6 +27,17 @@ export class MetadataInfoComponent {
     )
   }
 
+  get conditions() {
+    let array = []
+    if (this.metadata.accessConstraints?.length) {
+      array = array.concat(this.metadata.accessConstraints.map((c) => c.text))
+    }
+    if (this.metadata.legalConstraints?.length) {
+      array = array.concat(this.metadata.legalConstraints)
+    }
+    return array
+  }
+
   get restrictions() {
     let array = []
     if (this.metadata.useLimitations?.length) {
