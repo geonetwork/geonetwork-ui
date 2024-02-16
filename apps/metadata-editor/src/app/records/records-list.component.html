@@ -22,6 +22,7 @@
         [href]="linkToDatahub"
         target="_blank"
         class="flex justify-center gap-2 items-center hover:text-gray-900 text-gray-800 cursor-pointer"
+        data-cy="link-to-datahub"
         ><span>{{ searchFacade.resultsHits$ | async }}</span>
         <span
           translate
@@ -33,6 +34,7 @@
         type="light"
         *ngIf="userCount > 0"
         (buttonClick)="showUsers()"
+        data-cy="link-to-users"
       >
         {{ userCount }}&nbsp;
         <span translate [translateParams]="{ count: userCount }">

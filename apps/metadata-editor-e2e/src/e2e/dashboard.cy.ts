@@ -3,8 +3,8 @@ describe('dashboard', () => {
   describe('pagination', () => {
     it('should display different results on click on arrow', () => {
       cy.visit('/records/all')
-      cy.get('gn-ui-record-table')
-        .find('.record-table-col')
+      cy.get('gn-ui-results-table')
+        .find('.table-row-cell')
         .first()
         .invoke('text')
         .then((text) => {
@@ -15,8 +15,8 @@ describe('dashboard', () => {
     it.skip('should display different results on click on specific page and change url', () => {
       cy.visit('/records/search?_page=2')
       cy.get('gn-ui-pagination-buttons').find('gn-ui-button').eq(1).click()
-      cy.get('gn-ui-record-table')
-        .find('.record-table-col')
+      cy.get('gn-ui-results-table')
+        .find('.table-row-cell')
         .first()
         .invoke('text')
         .then((text) => {
@@ -24,8 +24,8 @@ describe('dashboard', () => {
           cy.url().should('include', 'page=1')
         })
       cy.get('gn-ui-pagination-buttons').find('gn-ui-button').last().click()
-      cy.get('gn-ui-record-table')
-        .find('.record-table-col')
+      cy.get('gn-ui-results-table')
+        .find('.table-row-cell')
         .first()
         .invoke('text')
         .then((text) => {
@@ -40,18 +40,17 @@ describe('dashboard', () => {
     let newFirstItem
     it('should order the result list on click', () => {
       cy.visit('/records/all')
-      cy.get('gn-ui-record-table')
-        .find('.record-table-col')
+      cy.get('gn-ui-results-table')
+        .find('.table-row-cell')
         .eq(1)
         .invoke('text')
         .then((list) => {
           originalFirstItem = list.trim()
-          cy.get('.record-table-header').first().click()
-          // Takes time to refresh results
-          // eslint-disable-next-line cypress/no-unnecessary-waiting
-          cy.wait(500)
-          cy.get('gn-ui-record-table')
-            .find('.record-table-col')
+          // order by title descending
+          cy.get('.table-header-cell').eq(1).click()
+          cy.get('.table-header-cell').eq(1).click()
+          cy.get('gn-ui-results-table')
+            .find('.table-row-cell')
             .eq(1)
             .invoke('text')
             .then((list) => {
@@ -59,7 +58,7 @@ describe('dashboard', () => {
               expect(newFirstItem).not.to.equal(originalFirstItem)
               cy.url().should(
                 'include',
-                'sort=resourceTitleObject.default.keyword'
+                'sort=-resourceTitleObject.default.keyword'
               )
             })
         })
@@ -69,8 +68,8 @@ describe('dashboard', () => {
   describe('checkboxes', () => {
     it('should show the correct amount of selected records when they are selected', () => {
       cy.visit('/records/all')
-      cy.get('gn-ui-record-table')
-        .find('.record-table-col')
+      cy.get('gn-ui-results-table')
+        .find('.table-row-cell')
         .get('gn-ui-checkbox')
         .eq(2)
         .click()
@@ -79,8 +78,8 @@ describe('dashboard', () => {
 
     it('should show nothing when none are selected', () => {
       cy.visit('/records/all')
-      cy.get('gn-ui-record-table')
-        .find('.record-table-col')
+      cy.get('gn-ui-results-table')
+        .find('.table-row-cell')
         .get('gn-ui-checkbox')
         .each(($checkbox) => cy.wrap($checkbox).click())
       cy.get('.records-information').should(
@@ -91,8 +90,8 @@ describe('dashboard', () => {
 
     it('should select all records when the "select all" checkbox is checked', () => {
       cy.visit('/records/all')
-      cy.get('gn-ui-record-table')
-        .find('.record-table-col')
+      cy.get('gn-ui-results-table')
+        .find('.table-row-cell')
         .get('gn-ui-checkbox')
         .first()
         .click()
