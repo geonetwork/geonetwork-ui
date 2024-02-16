@@ -11,6 +11,7 @@ import {
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { TranslateModule } from '@ngx-translate/core'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 
 const includes = [
   'uuid',
@@ -36,12 +37,14 @@ const includes = [
     UiElementsModule,
     TranslateModule,
     ResultsTableComponent,
+    UiInputsModule,
   ],
 })
 export class RecordsListComponent {
   @Input() title: string
   @Input() logo: string
   @Input() linkToDatahub?: string
+  @Input() userCount = 0
 
   constructor(
     private router: Router,
@@ -60,5 +63,9 @@ export class RecordsListComponent {
 
   editRecord(record: CatalogRecord) {
     this.router.navigate(['/edit', record.uniqueIdentifier])
+  }
+
+  showUsers() {
+    this.router.navigate(['/users/my-org'])
   }
 }

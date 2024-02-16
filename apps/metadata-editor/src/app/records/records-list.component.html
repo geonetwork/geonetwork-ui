@@ -29,6 +29,16 @@
           >dashboard.records.publishedRecords</span
         ></a
       >
+      <gn-ui-button
+        type="light"
+        *ngIf="userCount > 0"
+        (buttonClick)="showUsers()"
+      >
+        {{ userCount }}&nbsp;
+        <span translate [translateParams]="{ count: userCount }">
+          dashboard.records.users
+        </span>
+      </gn-ui-button>
     </div>
   </div>
   <div class="shadow rounded bg-white grow">
