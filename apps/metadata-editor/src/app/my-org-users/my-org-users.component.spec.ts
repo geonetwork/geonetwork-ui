@@ -1,24 +1,12 @@
 import { MyOrgUsersComponent } from './my-org-users.component'
-import { BehaviorSubject, of } from 'rxjs'
+import { of } from 'rxjs'
 import { MyOrgService } from '@geonetwork-ui/feature/catalog'
-import {
-  ORGANISATIONS_FIXTURE,
-  USER_FIXTURE_ANON,
-  USERS_FIXTURE,
-} from '@geonetwork-ui/common/fixtures'
-import { AuthService } from '@geonetwork-ui/api/repository'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
 
 describe('MyOrgUsersComponent', () => {
   let component: MyOrgUsersComponent
-  let searchFacade: SearchFacade
   let myOrgService: MyOrgService
-  let authService: AuthService
 
   beforeEach(() => {
-    const user = USER_FIXTURE_ANON()
-    const allUsers = USERS_FIXTURE()
-
     const myOrgServiceMock = {
       myOrgData$: of({
         orgName: 'wizard-org',
@@ -59,24 +47,8 @@ describe('MyOrgUsersComponent', () => {
       }),
     }
 
-    const authServiceMock = {
-      user$: new BehaviorSubject(user),
-      allUsers$: new BehaviorSubject(allUsers),
-    }
-
-    const organisationsServiceMock = {
-      organisations$: of(ORGANISATIONS_FIXTURE),
-    }
-
-    const searchFacadeMock = {
-      resetSearch: jest.fn(),
-    }
-
     myOrgService = myOrgServiceMock as any
-    authService = authServiceMock as any
-    searchFacade = searchFacadeMock as any
-
-    component = new MyOrgUsersComponent(myOrgService, searchFacade)
+    component = new MyOrgUsersComponent(myOrgService)
   })
 
   it('should create', () => {
@@ -84,18 +56,23 @@ describe('MyOrgUsersComponent', () => {
   })
 
   describe('Get organization users info', () => {
+    let orgData
+
+    beforeEach(() => {
+      orgData = null
+      component.orgData$.subscribe((data) => (orgData = data))
+    })
+
     it('should get the org name', () => {
-      expect(component.orgData.orgName).toEqual('wizard-org')
+      expect(orgData.orgName).toEqual('wizard-org')
     })
 
     it('should get the org logo', () => {
-      expect(component.orgData.logoUrl).toEqual(
-        'https://my-geonetwork.org/logo11.png'
-      )
+      expect(orgData.logoUrl).toEqual('https://my-geonetwork.org/logo11.png')
     })
 
     it('should get the list of users', () => {
-      expect(component.orgData.userList).toEqual([
+      expect(orgData.userList).toEqual([
         {
           id: '161',
           profile: 'Administrator',

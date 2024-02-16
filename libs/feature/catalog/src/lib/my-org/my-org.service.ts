@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs'
+import { combineLatest, map, Observable } from 'rxjs'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { shareReplay } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root',
@@ -15,20 +16,6 @@ export class MyOrgService {
     userCount: number
     userList: UserModel[]
   }>
-
-  private myOrgDataSubject = new BehaviorSubject<{
-    orgName: string
-    logoUrl: string
-    recordCount: number
-    userCount: number
-    userList: UserModel[]
-  }>({
-    orgName: '',
-    logoUrl: '',
-    recordCount: 0,
-    userCount: 0,
-    userList: [],
-  })
 
   constructor(
     private platformService: PlatformServiceInterface,
@@ -55,7 +42,8 @@ export class MyOrgService {
           userList,
           userCount,
         }
-      })
+      }),
+      shareReplay(1)
     )
   }
 }

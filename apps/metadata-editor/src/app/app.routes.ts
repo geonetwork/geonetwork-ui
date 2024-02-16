@@ -63,8 +63,17 @@ export const appRoutes: Route[] = [
     ],
   },
   {
-    path: 'users/my-org',
-    component: MyOrgUsersComponent,
+    path: 'users',
+    component: DashboardPageComponent,
+    outlet: 'primary',
+    title: 'Users',
+    children: [
+      {
+        path: 'my-org',
+        component: MyOrgUsersComponent,
+        pathMatch: 'prefix',
+      },
+    ],
   },
   { path: 'sign-in', component: SignInPageComponent },
   { path: 'create', component: CreatePageComponent },
