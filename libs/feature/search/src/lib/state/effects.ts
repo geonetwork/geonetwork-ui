@@ -130,17 +130,19 @@ export class SearchEffects {
             }
             return this.filterGeometry$.pipe(
               tap((geom) => {
-                try {
-                  const trace = validGeoJson(geom, true) as string[]
-                  if (trace?.length > 0) {
-                    throw new Error(trace.join('\n'))
+                if (geom) {
+                  try {
+                    const trace = validGeoJson(geom, true) as string[]
+                    if (trace?.length > 0) {
+                      throw new Error(trace.join('\n'))
+                    }
+                  } catch (error) {
+                    console.warn(
+                      'Error while parsing the geometry filter\n',
+                      error
+                    )
+                    throw new Error()
                   }
-                } catch (error) {
-                  console.warn(
-                    'Error while parsing the geometry filter\n',
-                    error
-                  )
-                  throw new Error()
                 }
               }),
               map((geom) => [state, favorites, geom]),

@@ -483,6 +483,21 @@ describe('Effects', () => {
             )
           })
         })
+        describe('when geometry is undefined', () => {
+          beforeEach(() => {
+            effects['filterGeometry$'] = of(undefined) as any
+            effects = TestBed.inject(SearchEffects)
+            actions$ = of(new RequestMoreResults('main'))
+          })
+          it('skips the geometry in the search', async () => {
+            await firstValueFrom(effects.loadResults$)
+            expect(repository.search).toHaveBeenCalledWith(
+              expect.not.objectContaining({
+                filterGeometry: { type: 'Polygon', coordinates: [[]] },
+              })
+            )
+          })
+        })
       })
       describe('when useSpatialFilter is disabled', () => {
         beforeEach(() => {
