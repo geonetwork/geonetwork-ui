@@ -126,28 +126,27 @@ export class SearchEffects {
           ),
           switchMap(([state, favorites]) => {
             if (!state.params.useSpatialFilter || !this.filterGeometry$) {
-              return of([state, favorites, null])
+              return of([state, favorites, undefined])
             }
             return this.filterGeometry$.pipe(
               tap((geom) => {
-                if (geom) {
-                  try {
-                    const trace = validGeoJson(geom, true) as string[]
-                    if (trace?.length > 0) {
-                      throw new Error(trace.join('\n'))
-                    }
-                  } catch (error) {
-                    console.warn(
-                      'Error while parsing the geometry filter\n',
-                      error
-                    )
-                    throw new Error()
+                if (!geom) return
+                try {
+                  const trace = validGeoJson(geom, true) as string[]
+                  if (trace?.length > 0) {
+                    throw new Error(trace.join('\n'))
                   }
+                } catch (error) {
+                  console.warn(
+                    'Error while parsing the geometry filter\n',
+                    error
+                  )
+                  throw new Error()
                 }
               }),
               map((geom) => [state, favorites, geom]),
               catchError((e) => {
-                return of([state, favorites, null])
+                return of([state, favorites, undefined])
               })
             )
           }),
@@ -155,7 +154,7 @@ export class SearchEffects {
             ([state, favorites, geometry]: [
               SearchStateSearch,
               string[],
-              Geometry | null
+              Geometry | undefined
             ]) => {
               const { currentPage, pageSize, sort } = state.params
               const filters = {

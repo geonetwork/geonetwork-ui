@@ -492,8 +492,8 @@ describe('Effects', () => {
           it('skips the geometry in the search', async () => {
             await firstValueFrom(effects.loadResults$)
             expect(repository.search).toHaveBeenCalledWith(
-              expect.not.objectContaining({
-                filterGeometry: { type: 'Polygon', coordinates: [[]] },
+              expect.objectContaining({
+                filterGeometry: undefined,
               })
             )
           })
