@@ -1,0 +1,24 @@
+<gn-ui-interactive-table [items]="users">
+  <gn-ui-interactive-table-column [grow]="true">
+    <ng-template #header>
+      <span translate>dashboard.records.userDetail</span>
+    </ng-template>
+    <ng-template #cell let-item>
+      {{ item.name }} {{ item.surname }}
+    </ng-template> </gn-ui-interactive-table-column
+  ><gn-ui-interactive-table-column [grow]="true">
+    <ng-template #header>
+      <span translate>dashboard.records.username</span>
+    </ng-template>
+    <ng-template #cell let-item>
+      {{ item.username }}
+    </ng-template> </gn-ui-interactive-table-column
+  ><gn-ui-interactive-table-column [grow]="true">
+    <ng-template #header>
+      <span translate>dashboard.records.userEmail</span>
+    </ng-template>
+    <ng-template #cell let-item>
+      {{ item.emailAddresses[0] }}
+    </ng-template>
+  </gn-ui-interactive-table-column>
+</gn-ui-interactive-table>

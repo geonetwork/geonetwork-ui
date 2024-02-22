@@ -1,0 +1,54 @@
+<div class="grid w-full" [ngStyle]="gridStyle">
+  <div class="contents">
+    <ng-container *ngFor="let column of columns">
+      <button
+        *ngIf="column.sortable"
+        type="button"
+        class="table-header-cell"
+        (click)="column.sortable && column.handleSortChange()"
+      >
+        <ng-container *ngTemplateOutlet="column.header"></ng-container>
+        <div class="sort-button flex flex-col" *ngIf="column.sortable">
+          <mat-icon
+            class="material-symbols-outlined text-gray-600"
+            [ngClass]="{ 'text-main': column.activeSort === 'asc' }"
+            >expand_less</mat-icon
+          >
+          <mat-icon
+            class="material-symbols-outlined text-gray-600"
+            [ngClass]="{ 'text-main': column.activeSort === 'desc' }"
+            >expand_more</mat-icon
+          >
+        </div>
+      </button>
+      <div *ngIf="!column.sortable" class="table-header-cell">
+        <ng-container *ngTemplateOutlet="column.header"></ng-container>
+      </div>
+    </ng-container>
+  </div>
+  <div
+    class="contents text-gray-900 cursor-pointer group"
+    *ngFor="let item of items"
+    (click)="handleRowClick(item)"
+  >
+    <div
+      class="relative h-0"
+      [ngStyle]="{ 'grid-column': 'span ' + this.columns.length }"
+    >
+      <!-- this element is only used in keyboard navigation -->
+      <button
+        type="button"
+        class="absolute inset-x-0 h-[50px] bg-transparent pointer-events-none"
+      ></button>
+    </div>
+    <ng-container *ngFor="let column of columns">
+      <div
+        class="table-row-cell px-4 py-3 flex items-center bg-white transition-colors duration-75 truncate group-hover:text-main group-hover:bg-gray-50 border-b border-gray-200"
+      >
+        <ng-container
+          *ngTemplateOutlet="column.cell; context: { $implicit: item }"
+        ></ng-container>
+      </div>
+    </ng-container>
+  </div>
+</div>

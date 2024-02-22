@@ -1,12 +1,7 @@
 import { MyOrgRecordsComponent } from './my-org-records.component'
-import { BehaviorSubject, of } from 'rxjs'
+import { of } from 'rxjs'
 import { MyOrgService } from '@geonetwork-ui/feature/catalog'
-import {
-  ORGANISATIONS_FIXTURE,
-  USER_FIXTURE_ANON,
-  USERS_FIXTURE,
-} from '@geonetwork-ui/common/fixtures'
-import { AuthService } from '@geonetwork-ui/api/repository'
+import { ORGANISATIONS_FIXTURE } from '@geonetwork-ui/common/fixtures'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { EditorRouterService } from '../../router.service'
@@ -53,14 +48,6 @@ const myOrgServiceMock = {
   myOrgData$: of(orgDataMock),
 }
 
-const user = USER_FIXTURE_ANON()
-const allUsers = USERS_FIXTURE()
-
-const authServiceMock = {
-  user$: new BehaviorSubject(user),
-  allUsers$: new BehaviorSubject(allUsers),
-}
-
 const organisationsServiceMock = {
   organisations$: of(ORGANISATIONS_FIXTURE),
 }
@@ -77,14 +64,12 @@ describe('MyOrgRecordsComponent', () => {
   let component: MyOrgRecordsComponent
   let searchFacade: SearchFacade
   let myOrgService: MyOrgService
-  let authService: AuthService
   let orgServiceInterface: OrganizationsServiceInterface
   let routerService: EditorRouterService
 
   beforeEach(() => {
     orgServiceInterface = organisationsServiceMock as any
     myOrgService = myOrgServiceMock as any
-    authService = authServiceMock as any
     searchFacade = searchFacadeMock as any
     routerService = routeServiceMock as any
 
@@ -101,18 +86,23 @@ describe('MyOrgRecordsComponent', () => {
   })
 
   describe('Get organization users info', () => {
+    let orgData
+
+    beforeEach(() => {
+      orgData = null
+      component.orgData$.subscribe((data) => (orgData = data))
+    })
+
     it('should get the org name', () => {
-      expect(component.orgData.orgName).toEqual('wizard-org')
+      expect(orgData.orgName).toEqual('wizard-org')
     })
 
     it('should get the org logo', () => {
-      expect(component.orgData.logoUrl).toEqual(
-        'https://my-geonetwork.org/logo11.png'
-      )
+      expect(orgData.logoUrl).toEqual('https://my-geonetwork.org/logo11.png')
     })
 
     it('should get the list of users', () => {
-      expect(component.orgData.userList).toEqual([
+      expect(orgData.userList).toEqual([
         {
           id: '161',
           profile: 'Administrator',
@@ -148,17 +138,10 @@ describe('MyOrgRecordsComponent', () => {
   it('should generate the correct Datahub URL', () => {
     // Mock the router method and set orgData
     component.router.getDatahubSearchRoute = () => 'http://example.com'
-    component.orgData = {
-      orgName: 'TestOrg',
-      logoUrl: '',
-      recordCount: 5,
-      userCount: 3,
-      userList: [],
-    }
 
     const datahubUrl = component.getDatahubUrl()
 
     // Assert that the generated URL contains the orgName
-    expect(datahubUrl).toContain('publisher=TestOrg')
+    expect(datahubUrl).toContain('publisher=wizard-org')
   })
 })

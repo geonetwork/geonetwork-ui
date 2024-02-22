@@ -8,7 +8,6 @@ describe('my-org', () => {
     cy.visit(`/records/my-org`)
     cy.get('md-editor-dashboard-menu').find('a').first().click()
     cy.wait('@dataGetFirst').its('response.statusCode').should('equal', 200)
-    cy.get('main').children('div').first().as('linkGroup')
   })
   describe('my-org display', () => {
     it('should show my-org name and logo', () => {
@@ -16,25 +15,16 @@ describe('my-org', () => {
       cy.get('gn-ui-thumbnail')
     })
     it('should show the user and record count', () => {
-      cy.get('@linkGroup')
-        .find('a')
-        .children('span')
-        .first()
-        .should('not.have.text', '')
-      cy.get('@linkGroup')
-        .find('gn-ui-button')
-        .children('span')
-        .first()
-        .should('not.have.text', '')
+      cy.get('[data-cy=link-to-datahub]').should('not.have.text', '')
+      cy.get('[data-cy=link-to-users]').should('not.have.text', '')
     })
     it('should show my-org records', () => {
-      cy.get('.grid').should('have.length.above', 0)
+      cy.get('gn-ui-interactive-table .contents').should('have.length.above', 1)
     })
   })
   describe('routing', () => {
     it('should access the datahub with a filter', () => {
-      cy.get('@linkGroup')
-        .find('a')
+      cy.get('[data-cy=link-to-datahub]')
         .should('have.attr', 'href')
         .then((href) => {
           expect(href).to.include('search?publisher=Barbie+Inc')
@@ -43,9 +33,9 @@ describe('my-org', () => {
     it('should access the user list page and show my-org users', () => {
       cy.visit(`/records/my-org`)
       cy.get('md-editor-dashboard-menu').find('a').first().click()
-      cy.get('@linkGroup').find('gn-ui-button').click()
+      cy.get('[data-cy=link-to-users]').click()
       cy.url().should('include', '/users/my-org')
-      cy.get('.grid').should('have.length.above', 0)
+      cy.get('gn-ui-interactive-table .contents').should('have.length.above', 1)
       cy.get('h1').should('not.have.text', '')
       cy.get('gn-ui-thumbnail')
     })

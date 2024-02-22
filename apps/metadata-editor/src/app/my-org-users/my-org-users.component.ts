@@ -1,11 +1,11 @@
-import { Component, OnDestroy } from '@angular/core'
-import { RecordsListComponent } from '../records/records-list.component'
+import { Component } from '@angular/core'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 import { MyOrgService } from '@geonetwork-ui/feature/catalog'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
+import { UsersListComponent } from './users-list.component'
+import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import { tap } from 'rxjs'
 
 @Component({
   selector: 'md-editor-my-org-users',
@@ -13,36 +13,15 @@ import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
   styleUrls: ['./my-org-users.component.css'],
   standalone: true,
   imports: [
-    RecordsListComponent,
     UiInputsModule,
     TranslateModule,
     CommonModule,
+    UsersListComponent,
+    UiElementsModule,
   ],
 })
-export class MyOrgUsersComponent implements OnDestroy {
-  orgData: {
-    orgName: string
-    logoUrl: string
-    recordCount: number
-    userCount: number
-    userList: UserModel[]
-  }
+export class MyOrgUsersComponent {
+  orgData$ = this.myOrgRecordsService.myOrgData$
 
-  private myOrgDataSubscription
-
-  constructor(
-    private myOrgRecordsService: MyOrgService,
-    public searchFacade: SearchFacade
-  ) {
-    this.searchFacade.resetSearch()
-    this.myOrgDataSubscription = this.myOrgRecordsService.myOrgData$.subscribe(
-      (data) => {
-        this.orgData = data
-      }
-    )
-  }
-
-  ngOnDestroy() {
-    this.myOrgDataSubscription.unsubscribe()
-  }
+  constructor(private myOrgRecordsService: MyOrgService) {}
 }

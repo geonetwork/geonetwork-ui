@@ -13,7 +13,7 @@ import { UiDatavizModule } from '../ui-dataviz.module'
 import { importProvidersFrom } from '@angular/core'
 
 export default {
-  title: 'Layout/TableComponent',
+  title: 'Dataviz/TableComponent',
   component: TableComponent,
   decorators: [
     applicationConfig({
@@ -25,7 +25,7 @@ export default {
       ],
     }),
     componentWrapperDecorator(
-      (story) => `<div style="max-width: 700px">${story}</div>`
+      (story) => `<div style="max-width: 700px; height: 400px">${story}</div>`
     ),
   ],
 } as Meta<TableComponent>

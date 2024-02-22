@@ -1,6 +1,6 @@
 import { SelectionsApiService } from '@geonetwork-ui/data-access/gn4'
 import { SelectionService } from './selection.service'
-import { firstValueFrom, of } from 'rxjs'
+import { of } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 function record(uuid: string): CatalogRecord {
@@ -39,13 +39,11 @@ describe('SelectionService', () => {
 
   describe('#selectRecords', () => {
     let selectedRecords
-    beforeEach(async () => {
+    beforeEach(() => {
       service.selectedRecordsIdentifiers$.subscribe((value) => {
         selectedRecords = value
       })
-      await firstValueFrom(
-        service.selectRecords([record('abcd'), record('efgh'), record('001')])
-      )
+      service.selectRecords([record('abcd'), record('efgh'), record('001')])
     })
     it('calls the corresponding API', () => {
       expect(selectionsService.add).toHaveBeenCalledWith('gnui', [
@@ -61,13 +59,11 @@ describe('SelectionService', () => {
 
   describe('#deselectRecords', () => {
     let selectedRecords
-    beforeEach(async () => {
+    beforeEach(() => {
       service.selectedRecordsIdentifiers$.subscribe((value) => {
         selectedRecords = value
       })
-      await firstValueFrom(
-        service.deselectRecords([record('abcd'), record('efgh'), record('001')])
-      )
+      service.deselectRecords([record('abcd'), record('efgh'), record('001')])
     })
     it('calls the corresponding API', () => {
       expect(selectionsService.clear).toHaveBeenCalledWith('gnui', [
@@ -83,11 +79,11 @@ describe('SelectionService', () => {
 
   describe('#clearSelection', () => {
     let selectedRecords
-    beforeEach(async () => {
+    beforeEach(() => {
       service.selectedRecordsIdentifiers$.subscribe((value) => {
         selectedRecords = value
       })
-      await firstValueFrom(service.clearSelection())
+      service.clearSelection()
     })
     it('calls the corresponding API', () => {
       expect(selectionsService.get).toHaveBeenCalledWith('gnui')

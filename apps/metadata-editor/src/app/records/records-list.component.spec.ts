@@ -17,15 +17,12 @@ const totalPages = 25
 
 @Component({
   // eslint-disable-next-line
-  selector: 'gn-ui-record-table',
+  selector: 'gn-ui-results-table',
   template: '',
   standalone: true,
 })
 export class RecordTableComponent {
-  @Input() records: CatalogRecord[]
-  @Input() totalHits: number
   @Output() recordClick = new EventEmitter<CatalogRecord>()
-  @Output() recordsSelect = new EventEmitter<CatalogRecord[]>()
 }
 
 @Component({
@@ -58,18 +55,11 @@ class RouterMock {
   navigate = jest.fn()
 }
 
-class SelectionServiceMock {
-  selectRecords = jest.fn()
-  deselectRecords = jest.fn()
-  clearSelection = jest.fn()
-}
-
 describe('RecordsListComponent', () => {
   let component: RecordsListComponent
   let fixture: ComponentFixture<RecordsListComponent>
   let router: Router
   let searchService: SearchService
-  let selectionService: SelectionService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -86,10 +76,6 @@ describe('RecordsListComponent', () => {
           provide: SearchService,
           useClass: SearchServiceMock,
         },
-        {
-          provide: SelectionService,
-          useClass: SelectionServiceMock,
-        },
       ],
     }).overrideComponent(RecordsListComponent, {
       set: {
@@ -103,7 +89,6 @@ describe('RecordsListComponent', () => {
     })
     router = TestBed.inject(Router)
     searchService = TestBed.inject(SearchService)
-    selectionService = TestBed.inject(SelectionService)
     fixture = TestBed.createComponent(RecordsListComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -124,7 +109,7 @@ describe('RecordsListComponent', () => {
       ).componentInstance
     })
     it('displays record table', () => {
-      expect(table.records).toBe(results)
+      expect(table).toBeTruthy()
     })
     it('displays pagination', () => {
       expect(pagination).toBeTruthy()
@@ -142,21 +127,6 @@ describe('RecordsListComponent', () => {
       })
       it('routes to record edition', () => {
         expect(router.navigate).toHaveBeenCalledWith(['/edit', 123])
-      })
-    })
-    describe('when selecting a record', () => {
-      const uniqueIdentifier = 123
-      const singleRecord = {
-        ...DATASET_RECORDS[0],
-        uniqueIdentifier,
-      }
-      beforeEach(() => {
-        table.recordsSelect.emit([singleRecord])
-      })
-      it('persists selection', () => {
-        expect(selectionService.selectRecords).toHaveBeenCalledWith([
-          singleRecord,
-        ])
       })
     })
     describe('when click on pagination', () => {

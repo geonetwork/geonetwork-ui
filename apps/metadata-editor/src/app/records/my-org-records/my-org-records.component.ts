@@ -8,6 +8,7 @@ import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { EditorRouterService } from '../../router.service'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
+import { take } from 'rxjs'
 
 @Component({
   selector: 'md-editor-my-org-records',
@@ -16,16 +17,11 @@ import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
   standalone: true,
   imports: [CommonModule, TranslateModule, RecordsListComponent],
 })
-export class MyOrgRecordsComponent implements OnDestroy {
-  orgData: {
-    orgName: string
-    logoUrl: string
-    recordCount: number
-    userCount: number
-    userList: UserModel[]
-  }
-
-  public myOrgDataSubscription
+export class MyOrgRecordsComponent {
+  orgData$ = this.myOrgRecordsService.myOrgData$
+  userCount: number
+  orgName: string
+  logoUrl: string
 
   constructor(
     private myOrgRecordsService: MyOrgService,
@@ -34,12 +30,12 @@ export class MyOrgRecordsComponent implements OnDestroy {
     public router: EditorRouterService
   ) {
     this.searchFacade.resetSearch()
-    this.myOrgDataSubscription = this.myOrgRecordsService.myOrgData$.subscribe(
-      (data) => {
-        this.orgData = data
-        this.searchByOrganisation({ name: data.orgName })
-      }
-    )
+    this.orgData$.pipe(take(1)).subscribe((data) => {
+      this.userCount = data.userCount
+      this.orgName = data.orgName
+      this.logoUrl = data.logoUrl
+      this.searchByOrganisation({ name: data.orgName })
+    })
   }
 
   searchByOrganisation(organisation: Organization) {
@@ -54,11 +50,7 @@ export class MyOrgRecordsComponent implements OnDestroy {
       window.location.toString()
     )
 
-    url.searchParams.append('publisher', this.orgData?.orgName)
+    url.searchParams.append('publisher', this.orgName)
     return url.toString()
-  }
-
-  ngOnDestroy() {
-    this.myOrgDataSubscription.unsubscribe()
   }
 }

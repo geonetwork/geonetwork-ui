@@ -11,7 +11,7 @@ import { UiDatavizModule } from '../ui-dataviz.module'
 import { importProvidersFrom } from '@angular/core'
 
 export default {
-  title: 'Layout/FigureComponent',
+  title: 'Dataviz/FigureComponent',
   component: FigureComponent,
   decorators: [
     moduleMetadata({

@@ -14,74 +14,40 @@
       </div>
       <div class="flex flex-row gap-3 items-center">
         <h1 class="text-[56px] font-title grow">{{ title }}</h1>
-        <h1
-          *ngIf="users"
-          class="text-[56px] font-title grow"
-          translate
-          [translateParams]="{ count: 0 }"
-        >
-          dashboard.records.users
-        </h1>
       </div>
     </div>
-    <a
-      class="text-[30px] hover:underline"
-      *ngIf="linkToDatahub && !recordCount"
-      [href]="linkToDatahub"
-      target="_blank"
-    >
-      {{ searchFacade.resultsHits$ | async }}
-      <span>{{ 'record.metadata.publications' | translate }}</span>
-    </a>
-    <div
-      *ngIf="recordCount"
-      class="flex flex-col justify-items-start gap-3 items-center"
-    >
+    <div class="flex flex-col justify-items-start gap-3 items-center">
       <a
         *ngIf="linkToDatahub"
         [href]="linkToDatahub"
         target="_blank"
         class="flex justify-center gap-2 items-center hover:text-gray-900 text-gray-800 cursor-pointer"
-        ><span>{{ recordCount }}</span>
-        <span translate [translateParams]="{ count: recordCount }"
+        data-cy="link-to-datahub"
+        ><span>{{ searchFacade.resultsHits$ | async }}</span>
+        <span
+          translate
+          [translateParams]="{ count: searchFacade.resultsHits$ | async }"
           >dashboard.records.publishedRecords</span
         ></a
       >
       <gn-ui-button
-        (click)="showUsers(logo, title)"
-        class="flex justify-center gap-2 items-center hover:text-gray-900 text-gray-800 cursor-pointer"
-        ><span>{{ userCount }}</span>
-        <span translate [translateParams]="{ count: userCount }"
-          >dashboard.records.users</span
-        ></gn-ui-button
+        type="light"
+        *ngIf="userCount > 0"
+        (buttonClick)="showUsers()"
+        data-cy="link-to-users"
       >
+        {{ userCount }}&nbsp;
+        <span translate [translateParams]="{ count: userCount }">
+          dashboard.records.users
+        </span>
+      </gn-ui-button>
     </div>
   </div>
-  <div
-    class="shadow rounded bg-white grow"
-    *ngIf="users ? users : (searchFacade.results$ | async) as results"
-  >
-    <div
-      class="px-5 py-5 flex justify-center gap-8 items-baseline"
-      *ngIf="results.length === 0"
-    >
-      <span *ngIf="users" translate>dashboard.records.noUser</span>
-      <span *ngIf="!users" translate> dashboard.records.noRecord</span>
-    </div>
-    <gn-ui-record-table
-      [records]="results"
-      [totalHits]="users ? users.length : (searchFacade.resultsHits$ | async)"
+  <div class="shadow rounded bg-white grow">
+    <gn-ui-results-table
       (recordClick)="editRecord($event)"
-      (recordsDeselect)="handleRecordsDeselection($event)"
-      (recordsSelect)="handleRecordsSelection($event)"
-      (sortByChange)="setSortBy($event)"
-      [sortBy]="searchFacade.sortBy$ | async"
-      [selectedRecords]="getSelectedRecords() | async"
-    ></gn-ui-record-table>
-    <div
-      class="px-5 py-5 flex justify-center gap-8 items-baseline"
-      *ngIf="searchFacade.resultsHits$ | async as hits"
-    >
+    ></gn-ui-results-table>
+    <div class="px-5 py-5 flex justify-center gap-8 items-baseline">
       <div class="grow">
         <gn-ui-pagination-buttons
           [currentPage]="searchFacade.currentPage$ | async"

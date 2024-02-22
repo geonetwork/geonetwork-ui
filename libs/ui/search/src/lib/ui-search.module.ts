@@ -24,10 +24,10 @@ import { ResultsListItemComponent } from './results-list-item/results-list-item.
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { RecordPreviewFeedComponent } from './record-preview-feed/record-preview-feed.component'
-import { RecordTableComponent } from './record-table/record-table.component'
 import { CommonModule } from '@angular/common'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { MatCheckboxModule } from '@angular/material/checkbox'
+import { InteractiveTableComponent } from '@geonetwork-ui/ui/layout'
 
 @NgModule({
   declarations: [
@@ -42,7 +42,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
     ResultsListItemComponent,
     RecordPreviewFeedComponent,
     RecordPreviewRowComponent,
-    RecordTableComponent,
   ],
   imports: [
     CommonModule,
@@ -59,6 +58,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
     MatIconModule,
     MatCheckboxModule,
     RouterLink,
+    InteractiveTableComponent,
   ],
   exports: [
     RecordPreviewListComponent,
@@ -72,7 +72,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
     ResultsHitsNumberComponent,
     RecordPreviewFeedComponent,
     RecordPreviewRowComponent,
-    RecordTableComponent,
   ],
   providers: [
     { provide: RESULTS_LAYOUT_CONFIG, useValue: DEFAULT_RESULTS_LAYOUT_CONFIG },
