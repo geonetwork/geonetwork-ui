@@ -324,6 +324,8 @@
   "tooltip.id.copy": "Copier l'identifiant unique",
   "tooltip.url.copy": "Copier l'URL",
   "tooltip.url.open": "Ouvrir l'URL",
+  "ui.edit": "Editer",
+  "ui.preview": "Prévisualiser",
   "ui.readLess": "Réduire",
   "ui.readMore": "Lire la suite",
   "wfs.featuretype.notfound": "La classe d'objet n'a pas été trouvée dans le service",

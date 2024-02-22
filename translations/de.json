@@ -324,6 +324,8 @@
   "tooltip.id.copy": "",
   "tooltip.url.copy": "URL kopieren",
   "tooltip.url.open": "URL öffnen",
+  "ui.edit": "",
+  "ui.preview": "",
   "ui.readLess": "Weniger lesen",
   "ui.readMore": "Weiterlesen",
   "wfs.featuretype.notfound": "Kein passender Feature-Typ wurde im Dienst gefunden",
