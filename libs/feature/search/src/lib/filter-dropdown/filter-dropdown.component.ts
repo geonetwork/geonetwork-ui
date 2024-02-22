@@ -10,7 +10,7 @@ import { catchError, filter, map, startWith } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FieldsService } from '../utils/service/fields.service'
-import { FieldAvailableValue } from '../utils/service/fields'
+import { FieldAvailableValue, FieldValue } from '../utils/service/fields'
 
 @Component({
   selector: 'gn-ui-filter-dropdown',
@@ -31,11 +31,11 @@ export class FilterDropdownComponent implements OnInit {
     filter((selected) => !!selected),
     startWith([]),
     catchError(() => of([]))
-  )
+  ) as Observable<FieldValue[]>
 
-  onSelectedValues(values: (string | number)[]) {
+  onSelectedValues(values: unknown[]) {
     this.fieldsService
-      .buildFiltersFromFieldValues({ [this.fieldName]: values })
+      .buildFiltersFromFieldValues({ [this.fieldName]: values as FieldValue[] })
       .subscribe((filters) => this.searchService.updateFilters(filters))
   }
 

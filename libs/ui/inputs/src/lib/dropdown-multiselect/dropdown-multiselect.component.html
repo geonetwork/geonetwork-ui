@@ -113,7 +113,7 @@
         type="checkbox"
         #checkBox
         [checked]="isSelected(choice)"
-        (change)="select(choice, $event.target.checked)"
+        (change)="select(choice, checkBox.checked)"
       />
       <span class="ml-[8px] text-[14px] truncate">
         {{ choice.label }}
