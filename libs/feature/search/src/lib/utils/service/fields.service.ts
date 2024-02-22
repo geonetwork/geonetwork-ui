@@ -17,7 +17,7 @@ import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 // key is the field name
-export type FieldValues = Record<string, FieldValue[] | FieldValue>
+export type FieldValues = Record<string, FieldValue[]>
 
 marker('search.filters.format')
 marker('search.filters.inspireKeyword')
