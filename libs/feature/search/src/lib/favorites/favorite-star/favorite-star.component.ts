@@ -39,7 +39,7 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
     map((favorites) => favorites.indexOf(this.record.uniqueIdentifier) > -1)
   )
   isAnonymous$ = this.platformService.isAnonymous()
-  record_: CatalogRecord
+  record_: Partial<CatalogRecord>
   favoriteCount: number | null
   loading = false
   loginUrl = this.authService.loginUrl
