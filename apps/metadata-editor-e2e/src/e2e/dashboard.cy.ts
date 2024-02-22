@@ -82,7 +82,7 @@ describe('dashboard', () => {
         .find('.table-row-cell')
         .get('gn-ui-checkbox')
         .each(($checkbox) => cy.wrap($checkbox).click())
-      cy.get('.records-information').should(
+      cy.get('[data-cy=records-information]').should(
         'not.have.descendants',
         '.selected-records'
       )
