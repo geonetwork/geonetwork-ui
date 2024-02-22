@@ -6,7 +6,7 @@ export default {
   component: MarkdownParserComponent,
   decorators: [
     moduleMetadata({
-      declarations: [MarkdownParserComponent],
+      imports: [MarkdownParserComponent],
     }),
   ],
 } as Meta<MarkdownParserComponent>

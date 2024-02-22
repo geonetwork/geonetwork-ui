@@ -45,6 +45,7 @@ import { ImageOverlayPreviewComponent } from './image-overlay-preview/image-over
     UiInputsModule,
     FormsModule,
     NgOptimizedImage,
+    MarkdownParserComponent,
   ],
   declarations: [
     MetadataInfoComponent,
@@ -67,7 +68,6 @@ import { ImageOverlayPreviewComponent } from './image-overlay-preview/image-over
     PaginationButtonsComponent,
     MaxLinesComponent,
     RecordApiFormComponent,
-    MarkdownParserComponent,
     ImageOverlayPreviewComponent,
   ],
   exports: [
