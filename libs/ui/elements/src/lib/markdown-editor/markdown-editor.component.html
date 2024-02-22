@@ -1,0 +1,32 @@
+<div>
+  <mat-button-toggle-group
+    name="preview"
+    aria-label="Preview"
+    [(ngModel)]="preview"
+  >
+    <mat-button-toggle [value]="false">{{
+      'ui.edit' | translate
+    }}</mat-button-toggle>
+    <mat-button-toggle [value]="true">{{
+      'ui.preview' | translate
+    }}</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+<div>
+  <mat-card>
+    <mat-card-content>
+      <textarea
+        [hidden]="preview"
+        [maxlength]="maxLength"
+        [placeholder]="placeholder"
+        [ngModel]="textContent"
+        (ngModelChange)="textContentChangedHandler($event)"
+      >
+      </textarea>
+      <gn-ui-markdown-parser
+        [hidden]="!preview"
+        [textContent]="textContent"
+      ></gn-ui-markdown-parser
+    ></mat-card-content>
+  </mat-card>
+</div>
