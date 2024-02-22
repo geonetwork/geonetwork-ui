@@ -9,7 +9,7 @@ import { Observable, of, switchMap } from 'rxjs'
 import { catchError, filter, map, startWith } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
-import { FieldsService, FieldValues } from '../utils/service/fields.service'
+import { FieldsService } from '../utils/service/fields.service'
 import { FieldAvailableValue, FieldValue } from '../utils/service/fields'
 
 @Component({
@@ -29,9 +29,9 @@ export class FilterDropdownComponent implements OnInit {
     ),
     map((fieldValues) => fieldValues[this.fieldName]),
     filter((selected) => !!selected),
-    startWith([] as FieldValues[]),
-    catchError(() => of([] as FieldValues[]))
-  )
+    startWith([]),
+    catchError(() => of([]))
+  ) as Observable<FieldValue[]>
 
   onSelectedValues(values: unknown[]) {
     this.fieldsService
