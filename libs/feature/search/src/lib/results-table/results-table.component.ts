@@ -128,7 +128,7 @@ export class ResultsTableComponent {
     }
   }
 
-  async selectAll() {
+  async toggleSelectAll() {
     const records = await firstValueFrom(this.records$)
     if (await firstValueFrom(this.isAllSelected())) {
       this.selectionService.deselectRecords(records)

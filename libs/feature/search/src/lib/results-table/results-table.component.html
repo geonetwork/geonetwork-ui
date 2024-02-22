@@ -30,7 +30,7 @@
         <gn-ui-checkbox
           [checked]="isAllSelected() | async"
           [indeterminate]="isSomeSelected() | async"
-          (changed)="selectAll()"
+          (changed)="toggleSelectAll()"
           type="default"
           class="-m-2 mr-3"
         >

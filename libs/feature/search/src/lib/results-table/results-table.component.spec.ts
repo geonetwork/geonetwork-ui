@@ -152,7 +152,7 @@ describe('ResultsTableComponent', () => {
     })
 
     describe('#isAllSelected', () => {
-      it('returns true if all records are selected', async () => {
+      it('returns true if all records in the page are selected', async () => {
         selectionService.selectedRecordsIdentifiers$.next([
           '1',
           '2',
@@ -169,7 +169,7 @@ describe('ResultsTableComponent', () => {
     })
 
     describe('#isSomeSelected', () => {
-      it('returns false if all records are selected', async () => {
+      it('returns false if all records in the page are selected', async () => {
         selectionService.selectedRecordsIdentifiers$.next([
           '1',
           '2',
@@ -179,11 +179,11 @@ describe('ResultsTableComponent', () => {
         ])
         expect(await firstValueFrom(component.isSomeSelected())).toBe(false)
       })
-      it('returns true if more than one record selected', async () => {
+      it('returns true if one or more records in the page is selected', async () => {
         selectionService.selectedRecordsIdentifiers$.next(['2', '3'])
         expect(await firstValueFrom(component.isSomeSelected())).toBe(true)
       })
-      it('returns false if no record selected', async () => {
+      it('returns false if no record in the page is selected', async () => {
         selectionService.selectedRecordsIdentifiers$.next(['4', '5'])
         expect(await firstValueFrom(component.isSomeSelected())).toBe(false)
       })
