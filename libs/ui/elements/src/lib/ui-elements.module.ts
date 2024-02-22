@@ -31,6 +31,7 @@ import { MaxLinesComponent } from './max-lines/max-lines.component'
 import { RecordApiFormComponent } from './record-api-form/record-api-form.component'
 import { MarkdownParserComponent } from './markdown-parser/markdown-parser.component'
 import { ImageOverlayPreviewComponent } from './image-overlay-preview/image-overlay-preview.component'
+import { MarkdownEditorComponent } from './markdown-editor/markdown-editor.component'
 
 @NgModule({
   imports: [
@@ -45,6 +46,8 @@ import { ImageOverlayPreviewComponent } from './image-overlay-preview/image-over
     UiInputsModule,
     FormsModule,
     NgOptimizedImage,
+    MarkdownParserComponent,
+    MarkdownEditorComponent,
   ],
   declarations: [
     MetadataInfoComponent,
@@ -67,7 +70,6 @@ import { ImageOverlayPreviewComponent } from './image-overlay-preview/image-over
     PaginationButtonsComponent,
     MaxLinesComponent,
     RecordApiFormComponent,
-    MarkdownParserComponent,
     ImageOverlayPreviewComponent,
   ],
   exports: [
@@ -91,6 +93,7 @@ import { ImageOverlayPreviewComponent } from './image-overlay-preview/image-over
     MaxLinesComponent,
     RecordApiFormComponent,
     MarkdownParserComponent,
+    MarkdownEditorComponent,
     ImageOverlayPreviewComponent,
   ],
 })

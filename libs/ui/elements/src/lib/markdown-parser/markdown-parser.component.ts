@@ -6,6 +6,7 @@ import { marked } from 'marked'
   templateUrl: './markdown-parser.component.html',
   styleUrls: ['./markdown-parser.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class MarkdownParserComponent {
   @Input() textContent: string
