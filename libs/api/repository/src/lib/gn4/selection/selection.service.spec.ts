@@ -1,6 +1,6 @@
 import { SelectionsApiService } from '@geonetwork-ui/data-access/gn4'
 import { SelectionService } from './selection.service'
-import { firstValueFrom, of } from 'rxjs'
+import { of } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 function record(uuid: string): CatalogRecord {
