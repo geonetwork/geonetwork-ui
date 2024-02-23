@@ -1,12 +1,10 @@
 import {
-  AccessConstraint,
-  AccessConstraintType,
+  Constraint,
   DatasetDistribution,
   DatasetSpatialExtent,
   DatasetTemporalExtent,
   GraphicOverview,
   Individual,
-  License,
   Organization,
   RecordKind,
   RecordStatus,
@@ -183,11 +181,11 @@ function extractStatus(): ChainableFunction<XmlElement, RecordStatus> {
 }
 
 // from gmd:resourceConstraints
-function extractAccessConstraints(): ChainableFunction<
+function extractLegalConstraints(): ChainableFunction<
   XmlElement,
-  Array<AccessConstraint>
+  Array<Constraint>
 > {
-  const getOtherConstraints = pipe(
+  return pipe(
     findChildrenElement('gmd:MD_LegalConstraints', false),
     filterArray(
       pipe(
@@ -200,42 +198,56 @@ function extractAccessConstraints(): ChainableFunction<
         )
       )
     ),
-    mapArray(findChildrenElement('gmd:otherConstraints')),
-    flattenArray(),
-    mapArray(extractCharacterString()),
-    mapArray((text) => ({
-      text,
-      type: 'other' as AccessConstraintType,
-    }))
-  )
-  const getSecurityConstraints = pipe(
-    findNestedElements('gmd:MD_SecurityConstraints', 'gmd:useLimitation'),
-    mapArray(extractCharacterString()),
-    mapArray((text) => ({
-      text,
-      type: 'security' as AccessConstraintType,
-    }))
-  )
-  return pipe(
-    combine(getOtherConstraints, getSecurityConstraints),
-    flattenArray()
-  )
-}
-
-// from gmd:resourceConstraints
-function extractUseLimitations(): ChainableFunction<XmlElement, Array<string>> {
-  return pipe(
-    combine(
-      findNestedElements('gmd:MD_Constraints', 'gmd:useLimitation'),
-      findNestedElements('gmd:MD_LegalConstraints', 'gmd:useLimitation')
+    mapArray(
+      combine(
+        findChildrenElement('gmd:otherConstraints'),
+        findChildrenElement('gmd:useLimitation')
+      )
     ),
     flattenArray(),
-    mapArray(extractCharacterString())
+    flattenArray(),
+    mapArray(combine(extractCharacterString(), extractUrl())),
+    mapArray(([text, url]) => ({
+      ...(url && { url }),
+      text,
+    }))
   )
 }
 
 // from gmd:resourceConstraints
-function extractLicenses(): ChainableFunction<XmlElement, Array<License>> {
+function extractSecurityConstraints(): ChainableFunction<
+  XmlElement,
+  Array<Constraint>
+> {
+  return pipe(
+    findNestedElements('gmd:MD_SecurityConstraints', 'gmd:useLimitation'),
+    flattenArray(),
+    mapArray(combine(extractCharacterString(), extractUrl())),
+    mapArray(([text, url]) => ({
+      ...(url && { url }),
+      text,
+    }))
+  )
+}
+
+// from gmd:resourceConstraints
+function extractOtherConstraints(): ChainableFunction<
+  XmlElement,
+  Array<Constraint>
+> {
+  return pipe(
+    findNestedElements('gmd:MD_Constraints', 'gmd:useLimitation'),
+    flattenArray(),
+    mapArray(combine(extractCharacterString(), extractUrl())),
+    mapArray(([text, url]) => ({
+      ...(url && { url }),
+      text,
+    }))
+  )
+}
+
+// from gmd:resourceConstraints
+function extractLicenses(): ChainableFunction<XmlElement, Array<Constraint>> {
   return pipe(
     findChildrenElement('gmd:MD_LegalConstraints', false),
     filterArray(
@@ -246,15 +258,18 @@ function extractLicenses(): ChainableFunction<XmlElement, Array<License>> {
       )
     ),
     mapArray(
-      pipe(
-        findChildElement('gmd:otherConstraints'),
-        combine(extractCharacterString(), extractUrl()),
-        map(([text, url]) => ({
-          ...(url && { url }),
-          text,
-        }))
+      combine(
+        findChildrenElement('gmd:otherConstraints'),
+        findChildrenElement('gmd:useLimitation')
       )
-    )
+    ),
+    flattenArray(),
+    flattenArray(),
+    mapArray(combine(extractCharacterString(), extractUrl())),
+    mapArray(([text, url]) => ({
+      ...(url && { url }),
+      text,
+    }))
   )
 }
 
@@ -579,24 +594,32 @@ const getConstraints = pipe(
   findChildrenElement('gmd:resourceConstraints', false)
 )
 
-export function readAccessConstraints(rootEl: XmlElement): AccessConstraint[] {
+export function readLegalConstraints(rootEl: XmlElement): Constraint[] {
   return pipe(
     getConstraints,
-    mapArray(extractAccessConstraints()),
+    mapArray(extractLegalConstraints()),
     flattenArray(),
     flattenArray()
   )(rootEl)
 }
 
-export function readUseLimitations(rootEl: XmlElement): string[] {
+export function readSecurityConstraints(rootEl: XmlElement): Constraint[] {
   return pipe(
     getConstraints,
-    mapArray(extractUseLimitations()),
+    mapArray(extractSecurityConstraints()),
     flattenArray()
   )(rootEl)
 }
 
-export function readLicenses(rootEl: XmlElement): License[] {
+export function readOtherConstraints(rootEl: XmlElement): Constraint[] {
+  return pipe(
+    getConstraints,
+    mapArray(extractOtherConstraints()),
+    flattenArray()
+  )(rootEl)
+}
+
+export function readLicenses(rootEl: XmlElement): Constraint[] {
   return pipe(
     getConstraints,
     mapArray(extractLicenses()),

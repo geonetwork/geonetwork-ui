@@ -1,11 +1,10 @@
 import {
-  AccessConstraint,
   CatalogRecord,
+  Constraint,
   DatasetDistribution,
   DatasetRecord,
   DatasetServiceDistribution,
   Individual,
-  License,
   RecordStatus,
   Role,
   ServiceEndpoint,
@@ -374,35 +373,11 @@ function appendKeywords(keywords: string[], type: string | null) {
   )
 }
 
-function removeAccessConstraints() {
-  const securityConstraintsFilter = pipe(
-    findChildrenElement('gmd:MD_SecurityConstraints'),
-    (array) => array.length > 0
-  )
-
-  // remove legal constraints that *only* have 'otherRestrictions'
-  const otherConstraintsFilter = pipe(
-    findNestedElements(
-      'gmd:MD_LegalConstraints',
-      'gmd:accessConstraints',
-      'gmd:MD_RestrictionCode'
-    ),
-    mapArray(readAttribute('codeListValue')),
-    (restrictionCodes) =>
-      restrictionCodes.every((code) => code === 'otherRestrictions')
-  )
-  return removeChildren(
-    pipe(
-      findChildrenElement('gmd:resourceConstraints'),
-      filterArray(
-        (el) => securityConstraintsFilter(el) || otherConstraintsFilter(el)
-      )
-    )
-  )
-}
-
-function createAccessConstraint(constraint: AccessConstraint) {
-  if (constraint.type === 'security') {
+function createConstraint(
+  constraint: Constraint,
+  type: 'legal' | 'security' | 'other'
+) {
+  if (type === 'security') {
     return pipe(
       createElement('gmd:resourceConstraints'),
       createChild('gmd:MD_SecurityConstraints'),
@@ -422,29 +397,41 @@ function createAccessConstraint(constraint: AccessConstraint) {
         )
       )
     )
+  } else if (type === 'legal') {
+    return pipe(
+      createElement('gmd:resourceConstraints'),
+      createChild('gmd:MD_LegalConstraints'),
+      appendChildren(
+        pipe(
+          createElement('gmd:accessConstraints'),
+          createChild('gmd:MD_RestrictionCode'),
+          addAttribute(
+            'codeList',
+            'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode'
+          ),
+          addAttribute('codeListValue', 'otherRestrictions')
+        ),
+        pipe(
+          createElement('gmd:otherConstraints'),
+          writeCharacterString(constraint.text)
+        )
+      )
+    )
   }
+
   return pipe(
     createElement('gmd:resourceConstraints'),
-    createChild('gmd:MD_LegalConstraints'),
+    createChild('gmd:MD_Constraints'),
     appendChildren(
       pipe(
-        createElement('gmd:accessConstraints'),
-        createChild('gmd:MD_RestrictionCode'),
-        addAttribute(
-          'codeList',
-          'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode'
-        ),
-        addAttribute('codeListValue', 'otherRestrictions')
-      ),
-      pipe(
-        createElement('gmd:otherConstraints'),
+        createElement('gmd:useLimitation'),
         writeCharacterString(constraint.text)
       )
     )
   )
 }
 
-function removeUseLimitations() {
+function removeOtherConstraints() {
   return removeChildren(
     pipe(
       findChildrenElement('gmd:resourceConstraints'),
@@ -458,12 +445,37 @@ function removeUseLimitations() {
   )
 }
 
-function createUseLimitation(useLimitation: string) {
-  return pipe(
-    createElement('gmd:resourceConstraints'),
-    createChild('gmd:MD_Constraints'),
-    createChild('gmd:useLimitation'),
-    writeCharacterString(useLimitation)
+function removeSecurityConstraints() {
+  return removeChildren(
+    pipe(
+      findChildrenElement('gmd:resourceConstraints'),
+      filterArray(
+        pipe(
+          findNestedElements('gmd:MD_SecurityConstraints', 'gmd:useLimitation'),
+          (array) => array.length > 0
+        )
+      )
+    )
+  )
+}
+
+function removeLegalConstraints() {
+  return removeChildren(
+    pipe(
+      findChildrenElement('gmd:resourceConstraints'),
+      filterArray(
+        pipe(
+          findNestedElements(
+            'gmd:MD_LegalConstraints',
+            'gmd:accessConstraints',
+            'gmd:MD_RestrictionCode'
+          ),
+          mapArray(readAttribute('codeListValue')),
+          (restrictionCodes) =>
+            restrictionCodes.every((code) => code !== 'license')
+        )
+      )
+    )
   )
 }
 
@@ -487,7 +499,7 @@ function removeLicenses() {
   )
 }
 
-function createLicense(license: License) {
+function createLicense(license: Constraint) {
   return pipe(
     createElement('gmd:resourceConstraints'),
     createChild('gmd:MD_LegalConstraints'),
@@ -741,17 +753,6 @@ export function writeThemes(record: CatalogRecord, rootEl: XmlElement) {
   )(rootEl)
 }
 
-export function writeAccessConstraints(
-  record: CatalogRecord,
-  rootEl: XmlElement
-) {
-  pipe(
-    findOrCreateIdentification(),
-    removeAccessConstraints(),
-    appendChildren(...record.accessConstraints.map(createAccessConstraint))
-  )(rootEl)
-}
-
 export function writeLicenses(record: CatalogRecord, rootEl: XmlElement) {
   pipe(
     findOrCreateIdentification(),
@@ -760,11 +761,42 @@ export function writeLicenses(record: CatalogRecord, rootEl: XmlElement) {
   )(rootEl)
 }
 
-export function writeUseLimitations(record: CatalogRecord, rootEl: XmlElement) {
+export function writeLegalConstraints(
+  record: CatalogRecord,
+  rootEl: XmlElement
+) {
   pipe(
     findOrCreateIdentification(),
-    removeUseLimitations(),
-    appendChildren(...record.useLimitations.map(createUseLimitation))
+    removeLegalConstraints(),
+    appendChildren(
+      ...record.legalConstraints.map((c) => createConstraint(c, 'legal'))
+    )
+  )(rootEl)
+}
+
+export function writeSecurityConstraints(
+  record: CatalogRecord,
+  rootEl: XmlElement
+) {
+  pipe(
+    findOrCreateIdentification(),
+    removeSecurityConstraints(),
+    appendChildren(
+      ...record.securityConstraints.map((c) => createConstraint(c, 'security'))
+    )
+  )(rootEl)
+}
+
+export function writeOtherConstraints(
+  record: CatalogRecord,
+  rootEl: XmlElement
+) {
+  pipe(
+    findOrCreateIdentification(),
+    removeOtherConstraints(),
+    appendChildren(
+      ...record.otherConstraints.map((c) => createConstraint(c, 'other'))
+    )
   )(rootEl)
 }
 
