@@ -39,7 +39,6 @@ export class ResultsTableComponent {
   @Output() recordClick = new EventEmitter<CatalogRecord>()
 
   records$ = this.searchFacade.results$
-  recordCount$ = this.searchFacade.resultsHits$
   selectedRecords$ = this.selectionService.selectedRecordsIdentifiers$
 
   constructor(
