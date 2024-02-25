@@ -37,8 +37,9 @@ describe('MetadataInfoComponent', () => {
       component.metadata = {
         ...DATASET_RECORDS[0],
         abstract: null,
-        useLimitations: null,
-        accessConstraints: null,
+        licenses: null,
+        legalConstraints: null,
+        otherConstraints: null,
         extras: {
           isOpenData: false,
         },

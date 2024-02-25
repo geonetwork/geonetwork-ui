@@ -12,13 +12,29 @@
 
 <gn-ui-expandable-panel [title]="'record.metadata.usage' | translate">
   <div class="flex flex-col gap-4 mr-4 py-5 rounded text-gray-700">
-    <span class="text-primary font-bold" *ngFor="let license of licenses">
-      {{ license }}
-    </span>
+    <ng-container *ngFor="let license of licenses">
+      <span *ngIf="license.url; else noUrl" class="text-primary font-bold">
+        <a
+          [href]="license.url"
+          target="_blank"
+          class="text-primary cursor-pointer hover:underline transition-all"
+        >
+          {{ license.text }}
+          <mat-icon
+            class="material-symbols-outlined !w-[12px] !h-[12px] !text-[12px] opacity-75 shrink-0"
+            >open_in_new</mat-icon
+          >
+        </a>
+      </span>
+      <ng-template #noUrl>
+        <span class="text-primary font-bold" gnUiLinkify>
+          {{ license.text }}
+        </span>
+      </ng-template>
+    </ng-container>
     <div *ngIf="conditions.length">
-      <p translate class="font-bold">record.metadata.conditions</p>
       <div class="inline-block">
-        <span *ngFor="let condition of conditions">
+        <span gnUiLinkify *ngFor="let condition of conditions">
           {{ condition }}
         </span>
       </div>
@@ -26,7 +42,7 @@
     <div *ngIf="restrictions.length">
       <p translate class="font-bold">record.metadata.limitations</p>
       <div class="inline-block">
-        <span *ngFor="let restriction of restrictions">
+        <span gnUiLinkify *ngFor="let restriction of restrictions">
           {{ restriction }}
         </span>
       </div>

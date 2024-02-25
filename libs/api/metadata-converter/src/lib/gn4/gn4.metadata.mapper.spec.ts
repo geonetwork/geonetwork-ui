@@ -13,7 +13,7 @@ import {
   DatasetRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateService } from '@ngx-translate/core'
-import { Gn4Record } from '@geonetwork-ui/api/metadata-converter'
+import { Gn4Record } from '../gn4/types/metadata.model'
 
 class MetadataUrlServiceMock {
   translate = undefined

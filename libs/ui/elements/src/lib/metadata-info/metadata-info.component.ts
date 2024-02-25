@@ -22,34 +22,43 @@ export class MetadataInfoComponent {
   get hasUsage() {
     return (
       this.metadata.extras?.isOpenData === true ||
-      this.metadata.useLimitations?.length ||
-      this.metadata.accessConstraints?.length
+      (this.metadata.legalConstraints?.length > 0 &&
+        this.conditions.length > 0) ||
+      (this.metadata.otherConstraints?.length > 0 &&
+        this.restrictions.length > 0) ||
+      (this.metadata.licenses?.length > 0 && this.licenses.length > 0)
     )
   }
 
   get conditions() {
     let array = []
-    if (this.metadata.accessConstraints?.length) {
-      array = array.concat(this.metadata.accessConstraints.map((c) => c.text))
-    }
     if (this.metadata.legalConstraints?.length) {
-      array = array.concat(this.metadata.legalConstraints)
+      array = array.concat(
+        this.metadata.legalConstraints.filter((c) => c.text).map((c) => c.text)
+      )
     }
+    console.log(this.metadata)
     return array
   }
 
   get restrictions() {
     let array = []
-    if (this.metadata.useLimitations?.length) {
-      array = array.concat(this.metadata.useLimitations)
+    if (this.metadata.otherConstraints?.length) {
+      array = array.concat(
+        this.metadata.otherConstraints.filter((c) => c.text).map((c) => c.text)
+      )
     }
     return array
   }
 
-  get licenses(): string[] {
+  get licenses(): { text: string; url: string }[] {
     let array = []
     if (this.metadata.licenses?.length) {
-      array = array.concat(this.metadata.licenses.map((c) => c.text))
+      array = array.concat(
+        this.metadata.licenses
+          .filter((c) => c.text)
+          .map((c) => ({ text: c.text, url: c.url }))
+      )
     }
     return array
   }
