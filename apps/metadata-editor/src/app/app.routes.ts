@@ -1,7 +1,6 @@
 import { Route } from '@angular/router'
 import { DashboardPageComponent } from './dashboard/dashboard-page.component'
 import { SignInPageComponent } from './sign-in/sign-in-page.component'
-import { CreatePageComponent } from './create/create-page.component'
 import { EditPageComponent } from './edit/edit-page.component'
 import { EditRecordResolver } from './edit-record.resolver'
 import { MyOrgRecordsComponent } from './records/my-org-records/my-org-records.component'
@@ -69,7 +68,7 @@ export const appRoutes: Route[] = [
     ],
   },
   { path: 'sign-in', component: SignInPageComponent },
-  { path: 'create', component: CreatePageComponent },
+  { path: 'create', component: EditPageComponent },
   {
     path: 'edit/:uuid',
     component: EditPageComponent,
