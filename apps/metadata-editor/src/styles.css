@@ -9,7 +9,7 @@ body {
 }
 
 .btn-primary {
-  @apply bg-primary text-white px-9 py-3 rounded-[50px];
+  @apply rounded-[8px] p-[12px] text-[14px];
 }
 
 .menu-item {
