@@ -68,7 +68,7 @@ export class AppModule {
     ThemeService.applyCssVariables(
       getThemeConfig().PRIMARY_COLOR,
       getThemeConfig().SECONDARY_COLOR,
-      getThemeConfig().MAIN_COLOR || '#555',
+      getThemeConfig().MAIN_COLOR,
       getThemeConfig().BACKGROUND_COLOR,
       getThemeConfig().MAIN_FONT || "'Rubik', sans-serif",
       getThemeConfig().TITLE_FONT || "'Readex Pro', sans-serif",
