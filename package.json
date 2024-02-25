@@ -165,6 +165,7 @@
     "jest-preset-angular": "13.1.1",
     "ng-packagr": "^16.2.3",
     "ngrx-store-freeze": "^0.2.4",
+    "ngx-translate-testing": "^6.1.0",
     "nx": "16.6.0",
     "nx-cloud": "16.2.0",
     "postcss": "^8.4.31",

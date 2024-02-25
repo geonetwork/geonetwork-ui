@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
 import { ResultsHitsNumberComponent } from './results-hits-number.component'
-import { TranslateTestingModule } from '@geonetwork-ui/util/i18n'
+import { TranslateTestingModule } from 'ngx-translate-testing'
 
 describe('ResultsHitsNumberComponent', () => {
   let component: ResultsHitsNumberComponent

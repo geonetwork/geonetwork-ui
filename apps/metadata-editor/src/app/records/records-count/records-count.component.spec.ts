@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { SelectionService } from '@geonetwork-ui/api/repository'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
-import { TranslateTestingModule } from '@geonetwork-ui/util/i18n'
+import { TranslateTestingModule } from 'ngx-translate-testing'
 
 class SearchFacadeMock {
   results$ = new BehaviorSubject(DATASET_RECORDS)
