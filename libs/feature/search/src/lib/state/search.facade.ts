@@ -215,5 +215,6 @@ export class SearchFacade {
     this.store.dispatch(new SetFilters({}, this.searchId))
     this.store.dispatch(new SetSortBy([], this.searchId))
     this.store.dispatch(new SetFavoritesOnly(false, this.searchId))
+    return this
   }
 }
