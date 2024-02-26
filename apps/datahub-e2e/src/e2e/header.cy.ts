@@ -95,12 +95,25 @@ describe('header', () => {
         .find('input')
         .should('have.value', '')
     })
-    it('should reset search results on click on cancel button', () => {
-      cy.get('gn-ui-fuzzy-search').type('velo')
-      cy.get('mat-icon')
-        .contains('close')
-        .trigger('click', { waitForAnimations: false })
-      cy.get('gn-ui-record-preview-row').should('have.length.gt', 1)
+    describe('when on search url path', () => {
+      it('should reset search results on click on cancel button', () => {
+        cy.visit('/search')
+        cy.get('gn-ui-fuzzy-search').type('velo')
+        cy.get('mat-icon')
+          .contains('close')
+          .trigger('click', { waitForAnimations: false })
+        cy.get('gn-ui-record-preview-row').should('have.length.gt', 1)
+      })
+    })
+    describe('when on news url path', () => {
+      it('should stay on news url path', () => {
+        cy.visit('/')
+        cy.get('gn-ui-fuzzy-search').type('velo')
+        cy.get('mat-icon')
+          .contains('close')
+          .trigger('click', { waitForAnimations: false })
+        cy.url().should('include', '/news')
+      })
     })
   })
 

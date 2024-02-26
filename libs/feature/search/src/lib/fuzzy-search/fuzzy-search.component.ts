@@ -12,11 +12,12 @@ import {
   AutocompleteItem,
 } from '@geonetwork-ui/ui/inputs'
 import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, tap } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { SearchFilters } from '@geonetwork-ui/api/metadata-converter'
 
 @Component({
   selector: 'gn-ui-fuzzy-search',
@@ -30,6 +31,7 @@ export class FuzzySearchComponent implements OnInit {
   @Output() itemSelected = new EventEmitter<CatalogRecord>()
   @Output() inputSubmitted = new EventEmitter<string>()
   searchInputValue$: Observable<{ title: string }>
+  currentSearchFilters: SearchFilters
 
   displayWithFn: (record: CatalogRecord) => string = (record) => record?.title
 
@@ -46,6 +48,7 @@ export class FuzzySearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchInputValue$ = this.searchFacade.searchFilters$.pipe(
+      tap((searchFilter) => (this.currentSearchFilters = searchFilter)),
       map((searchFilter) => ({
         title: searchFilter.any as string,
       }))
@@ -76,6 +79,8 @@ export class FuzzySearchComponent implements OnInit {
   }
 
   handleInputCleared() {
-    this.searchService.updateFilters({ any: '' })
+    if (this.currentSearchFilters.any) {
+      this.searchService.updateFilters({ any: '' })
+    }
   }
 }
