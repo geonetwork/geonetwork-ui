@@ -143,7 +143,23 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
       text: "Licence passée entre l'Office fédéral de l'environnement (OFEV), et le canton de Fribourg, représenté par la Coordination SIT (SITel)",
     },
   ],
-  legalConstraints: [],
+  legalConstraints: [
+    {
+      text: `1. Nutzungsbestimmung
+
+Diese Geodaten unterliegen folgenden Nutzungsbeschränkungen:
+
+- Sie dürfen nicht vervielfältigt, verbreitet und/oder weiter zugänglich gemacht werden.
+
+- Sie dürfen nicht kommerziell genutzt werden.
+
+- Sie dürfen ausschliesslich zu vorgegebenen Zwecken genutzt werden.
+
+- Sie dürfen ausschliesslich zu dem unter 4. beschriebenen Zweck genutzt werden.
+
+Die Quelle ist zu bezeichnen: „Quelle: Stadt Zürich“.`,
+    },
+  ],
   securityConstraints: [],
   otherConstraints: [],
   // data quality?

@@ -191,11 +191,7 @@ function extractLegalConstraints(): ChainableFunction<
       pipe(
         findChildrenElement('gmd:MD_RestrictionCode'),
         mapArray(readAttribute('codeListValue')),
-        map(
-          (values) =>
-            values.indexOf('license') === -1 &&
-            values.indexOf('otherRestrictions') > -1
-        )
+        map((values) => values.indexOf('license') === -1)
       )
     ),
     mapArray(
