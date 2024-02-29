@@ -12,6 +12,7 @@ import { propagateToDocumentOnly } from '@geonetwork-ui/util/shared'
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class ButtonComponent {
   private btnClass: string

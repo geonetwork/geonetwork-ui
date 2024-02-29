@@ -14,8 +14,9 @@ describe('DropdownMultiselectComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DropdownMultiselectComponent, ButtonComponent],
+      declarations: [DropdownMultiselectComponent],
       imports: [
+        ButtonComponent,
         OverlayModule,
         MatIconModule,
         TranslateModule.forRoot(),

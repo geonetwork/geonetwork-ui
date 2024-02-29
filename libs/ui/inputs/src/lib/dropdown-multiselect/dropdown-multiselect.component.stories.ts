@@ -16,8 +16,13 @@ export default {
   component: DropdownMultiselectComponent,
   decorators: [
     moduleMetadata({
-      declarations: [MatIcon, ButtonComponent],
-      imports: [OverlayModule, MatCheckboxModule, TranslateModule.forRoot()],
+      declarations: [MatIcon],
+      imports: [
+        ButtonComponent,
+        OverlayModule,
+        MatCheckboxModule,
+        TranslateModule.forRoot(),
+      ],
     }),
     componentWrapperDecorator(
       (story) => `

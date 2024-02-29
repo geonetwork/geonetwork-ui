@@ -11,8 +11,13 @@ describe('DropdownSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OverlayModule, MatIconModule, TranslateModule.forRoot()],
-      declarations: [DropdownSelectorComponent, ButtonComponent],
+      imports: [
+        ButtonComponent,
+        OverlayModule,
+        MatIconModule,
+        TranslateModule.forRoot(),
+      ],
+      declarations: [DropdownSelectorComponent],
     }).compileComponents()
   })
 
