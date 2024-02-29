@@ -154,6 +154,80 @@ Similarly to unit tests, a `data-cy` attribute can be used to target elements in
 </div>
 ```
 
+## Storybook
+
+All UI components should theoretically appear in Storybook (launched through `npm run storybook`).
+
+An introduction to creating stories for Angular components can be found [here](https://storybook.js.org/docs/get-started/whats-a-story).
+
+A typical story should:
+
+- let the user manipulate all inputs in all ways possible in order to see how the component reacts
+- let the user see all outputs emitted by the component
+- let the user resize the container in which the component sits in order to see how the component handles its size; this can be done like so:
+  ```ts
+  export default {
+    // ...
+    decorators: [
+      // ...
+      componentWrapperDecorator(
+        (story) => `
+          <div class="border border-gray-300" style="width: 450px; height: 100px; resize: both; overflow: auto">
+             ${story}
+          </div>`
+      ),
+    ],
+  } as Meta<MyComponent>
+  ```
+
+### Stories for standard components
+
+Quite often, components will rely on other modules. These should be imported like so:
+
+```ts
+export default {
+  title: 'Category/MyComponent',
+  component: MyComponent,
+  decorators: [
+    moduleMetadata({
+      imports: [
+        // import whatever module is required
+        // ...
+        // note: these are required if the module needs translations:
+        UtilI18nModule,
+        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+      ],
+    }),
+    applicationConfig({
+      providers: [
+        // provider wheter is needed here
+      ],
+    }),
+  ],
+} as Meta<MyComponent>
+```
+
+### Stories for standalone components
+
+Stories for standalone components are usually set up a bit differently:
+
+```ts
+export default {
+  title: 'Category/MyStandaloneComponent',
+  component: MyStandaloneComponent,
+  decorators: [
+    // module imports may not be required since the component should already import everything it needs
+    applicationConfig({
+      providers: [
+        // provide here what's needed; for translation this is:
+        importProvidersFrom(UtilI18nModule),
+        importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
+      ],
+    }),
+  ],
+} as Meta<MyStandaloneComponent>
+```
+
 ## Event handling
 
 ### Stopping click event propagation
