@@ -11,12 +11,13 @@ import {
   AutocompleteComponent,
   AutocompleteItem,
 } from '@geonetwork-ui/ui/inputs'
-import { Observable } from 'rxjs'
+import { Observable, firstValueFrom } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { SearchFilters } from '@geonetwork-ui/api/metadata-converter'
 
 @Component({
   selector: 'gn-ui-fuzzy-search',
@@ -75,7 +76,12 @@ export class FuzzySearchComponent implements OnInit {
     }
   }
 
-  handleInputCleared() {
-    this.searchService.updateFilters({ any: '' })
+  async handleInputCleared() {
+    const currentSearchFilters: SearchFilters = await firstValueFrom(
+      this.searchFacade.searchFilters$
+    )
+    if (currentSearchFilters.any) {
+      this.searchService.updateFilters({ any: '' })
+    }
   }
 }

@@ -138,9 +138,10 @@ describe('FuzzySearchComponent', () => {
   })
 
   describe('search input clear', () => {
-    describe('when output is defined', () => {
+    describe('when output is defined and search filters are not empty', () => {
       beforeEach(() => {
         jest.resetAllMocks()
+        searchFacade.searchFilters$.next({ any: 'river' })
         component.inputSubmitted.subscribe()
         jest.spyOn(component.inputSubmitted, 'emit')
         component.handleInputCleared()
@@ -149,6 +150,21 @@ describe('FuzzySearchComponent', () => {
         expect(searchService.updateFilters).toHaveBeenCalledWith({
           any: '',
         })
+      })
+      it('does not emit inputSubmitted', () => {
+        expect(component.inputSubmitted.emit).not.toHaveBeenCalled()
+      })
+    })
+    describe('when output is defined but search filters are empty', () => {
+      beforeEach(() => {
+        jest.resetAllMocks()
+        searchFacade.searchFilters$.next({})
+        component.inputSubmitted.subscribe()
+        jest.spyOn(component.inputSubmitted, 'emit')
+        component.handleInputCleared()
+      })
+      it('does not clear the search filters (to prevent according navigation)', () => {
+        expect(searchService.updateFilters).not.toHaveBeenCalled()
       })
       it('does not emit inputSubmitted', () => {
         expect(component.inputSubmitted.emit).not.toHaveBeenCalled()

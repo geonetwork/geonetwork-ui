@@ -48,7 +48,12 @@ describe('dashboard', () => {
           originalFirstItem = list.trim()
           // order by title descending
           cy.get('.table-header-cell').eq(1).click()
+          cy.url().should('include', 'sort=resourceTitleObject.default.keyword')
           cy.get('.table-header-cell').eq(1).click()
+          cy.url().should(
+            'include',
+            'sort=-resourceTitleObject.default.keyword'
+          )
           cy.get('gn-ui-results-table')
             .find('.table-row-cell')
             .eq(1)
@@ -56,10 +61,6 @@ describe('dashboard', () => {
             .then((list) => {
               newFirstItem = list.trim()
               expect(newFirstItem).not.to.equal(originalFirstItem)
-              cy.url().should(
-                'include',
-                'sort=-resourceTitleObject.default.keyword'
-              )
             })
         })
     })
