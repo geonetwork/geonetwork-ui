@@ -11,13 +11,13 @@
 </div>
 
 <gn-ui-expandable-panel [title]="'record.metadata.usage' | translate">
-  <div class="flex flex-col gap-4 mr-4 py-5 rounded text-gray-700">
+  <div class="flex flex-col gap-[10px] mr-4 py-[12px] rounded text-gray-900">
     <ng-container *ngFor="let license of licenses">
-      <span *ngIf="license.url; else noUrl" class="text-primary font-bold">
+      <div *ngIf="license.url; else noUrl" class="text-primary">
         <a
           [href]="license.url"
           target="_blank"
-          class="text-primary cursor-pointer hover:underline transition-all"
+          class="cursor-pointer hover:underline transition-all"
         >
           {{ license.text }}
           <mat-icon
@@ -25,30 +25,30 @@
             >open_in_new</mat-icon
           >
         </a>
-      </span>
+      </div>
       <ng-template #noUrl>
-        <span class="text-primary font-bold" gnUiLinkify>
+        <div class="text-primary" gnUiLinkify>
           {{ license.text }}
-        </span>
+        </div>
       </ng-template>
     </ng-container>
-    <div *ngIf="conditions.length">
-      <div class="inline-block">
-        <span gnUiLinkify *ngFor="let condition of conditions">
-          {{ condition }}
-        </span>
+    <ng-container *ngIf="legalConstraints.length">
+      <p gnUiLinkify *ngFor="let constraint of legalConstraints">
+        {{ constraint }}
+      </p>
+    </ng-container>
+    <ng-container *ngIf="otherConstraints.length">
+      <div gnUiLinkify *ngFor="let constraint of otherConstraints">
+        <h5 translate class="font-medium text-black text-sm mb-[2px] mt-[16px]">
+          record.metadata.otherConstraints
+        </h5>
+        <p>
+          {{ constraint }}
+        </p>
       </div>
-    </div>
-    <div *ngIf="restrictions.length">
-      <p translate class="font-bold">record.metadata.limitations</p>
-      <div class="inline-block">
-        <span gnUiLinkify *ngFor="let restriction of restrictions">
-          {{ restriction }}
-        </span>
-      </div>
-    </div>
+    </ng-container>
 
-    <span class="text-primary font-medium noUsage" *ngIf="!hasUsage">
+    <span class="noUsage" *ngIf="!hasUsage">
       {{ 'record.metadata.noUsage' | translate }}
     </span>
   </div>
@@ -65,7 +65,7 @@
 >
   <p
     *ngIf="metadata.lineage"
-    class="mb-5 pt-4 whitespace-pre-line break-words"
+    class="mb-5 pt-4 whitespace-pre-line break-words text-gray-900"
     gnUiLinkify
   >
     {{ metadata.lineage }}

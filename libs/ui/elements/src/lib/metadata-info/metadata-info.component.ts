@@ -23,25 +23,24 @@ export class MetadataInfoComponent {
     return (
       this.metadata.extras?.isOpenData === true ||
       (this.metadata.legalConstraints?.length > 0 &&
-        this.conditions.length > 0) ||
+        this.legalConstraints.length > 0) ||
       (this.metadata.otherConstraints?.length > 0 &&
-        this.restrictions.length > 0) ||
+        this.otherConstraints.length > 0) ||
       (this.metadata.licenses?.length > 0 && this.licenses.length > 0)
     )
   }
 
-  get conditions() {
+  get legalConstraints() {
     let array = []
     if (this.metadata.legalConstraints?.length) {
       array = array.concat(
         this.metadata.legalConstraints.filter((c) => c.text).map((c) => c.text)
       )
     }
-    console.log(this.metadata)
     return array
   }
 
-  get restrictions() {
+  get otherConstraints() {
     let array = []
     if (this.metadata.otherConstraints?.length) {
       array = array.concat(
