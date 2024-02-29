@@ -50,7 +50,7 @@ const mdViewReducer = createReducer(
     chartConfig,
   })),
   on(MdViewActions.close, (state) => {
-    // eslint-disable-next-line
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { metadata, related, ...stateWithoutMd } = state
     return stateWithoutMd
   })

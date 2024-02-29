@@ -11,7 +11,6 @@ import { EditorRouterService } from '../../router.service'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 @Component({
-  // eslint-disable-next-line
   selector: 'md-editor-records-list',
   template: '',
   standalone: true,
