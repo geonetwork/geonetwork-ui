@@ -11,6 +11,7 @@ import {
 } from '@geonetwork-ui/ui/layout'
 import { TranslateModule } from '@ngx-translate/core'
 import { importProvidersFrom } from '@angular/core'
+import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 
 const meta: Meta<ResultsTableComponent> = {
   component: ResultsTableComponent,

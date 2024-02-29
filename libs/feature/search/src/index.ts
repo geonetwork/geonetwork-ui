@@ -1,4 +1,6 @@
 export * from './lib/feature-search.module'
+export * from './lib/filter-geometry.token'
+export * from './lib/record-url.token'
 export * from './lib/state/actions'
 export * from './lib/state/selectors'
 export * from './lib/state/search.facade'

@@ -1,4 +1,4 @@
-import { FieldName } from './search.model'
+import { FieldName } from './field.model'
 
 export type FieldFilterByValues = Record<string, boolean>
 export type FieldFilterByExpression = string | number

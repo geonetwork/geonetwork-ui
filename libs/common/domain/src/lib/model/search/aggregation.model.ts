@@ -1,4 +1,4 @@
-import { FieldName } from './search.model'
+import { FieldName } from './field.model'
 import { FieldFilters } from './filter.model'
 
 export interface TermsAggregationParams {

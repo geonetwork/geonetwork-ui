@@ -40,7 +40,7 @@ import {
   isEndOfResults,
   totalPages,
 } from './selectors'
-import { FILTER_GEOMETRY } from '../feature-search.module'
+import { FILTER_GEOMETRY } from '../filter-geometry.token'
 import { Geometry } from 'geojson'
 import { catchError, map, shareReplay } from 'rxjs/operators'
 import {

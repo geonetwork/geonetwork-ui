@@ -42,7 +42,7 @@ import {
 } from '@geonetwork-ui/common/fixtures'
 import { HttpErrorResponse } from '@angular/common/http'
 import { delay } from 'rxjs/operators'
-import { FILTER_GEOMETRY } from '../feature-search.module'
+import { FILTER_GEOMETRY } from '../filter-geometry.token'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { TestScheduler } from 'rxjs/internal/testing/TestScheduler'
 import { FavoritesService } from '@geonetwork-ui/api/repository'
