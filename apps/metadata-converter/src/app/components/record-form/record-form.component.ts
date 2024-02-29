@@ -99,16 +99,19 @@ export class RecordFormComponent implements AfterViewInit {
         : '0000-0000-0000-0000',
       title: hasPrevious ? this.record.title : 'My Record',
       abstract: hasPrevious ? this.record.abstract : '',
-      licenses: hasPrevious ? [...this.record.licenses] : [],
       recordUpdated: hasPrevious ? this.record.recordUpdated : new Date(),
       ownerOrganization: hasPrevious
         ? this.record.ownerOrganization
         : { name: 'My Organization' },
       contacts: hasPrevious ? this.record.contacts : [],
-      accessConstraints: hasPrevious ? this.record.accessConstraints : [],
+      licenses: hasPrevious ? [...this.record.licenses] : [],
+      legalConstraints: hasPrevious ? [...this.record.legalConstraints] : [],
+      securityConstraints: hasPrevious
+        ? [...this.record.securityConstraints]
+        : [],
+      otherConstraints: hasPrevious ? [...this.record.otherConstraints] : [],
       keywords: hasPrevious ? this.record.keywords : [],
       themes: hasPrevious ? this.record.themes : [],
-      useLimitations: hasPrevious ? this.record.useLimitations : [],
     }
     if (kind === 'dataset') {
       this.record = {
