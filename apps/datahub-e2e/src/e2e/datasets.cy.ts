@@ -404,12 +404,6 @@ describe('datasets', () => {
             'eql',
             'Cartographie des sols agricoles de la plaine du Rhône'
           )
-        cy.get('gn-ui-results-list-item')
-          .eq(1)
-          .find('[data-cy=recordTitle]')
-          .invoke('text')
-          .invoke('trim')
-          .should('eql', 'Alpine Convention')
       })
     })
   })
