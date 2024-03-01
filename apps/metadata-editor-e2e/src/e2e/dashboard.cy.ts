@@ -55,7 +55,7 @@ describe('dashboard', () => {
         .eq(1)
         .invoke('text')
         .invoke('trim')
-        .then((newFirstItem) => {
+        .then(function (newFirstItem) {
           expect(newFirstItem).not.to.equal(this.originalFirstItem)
         })
     })
