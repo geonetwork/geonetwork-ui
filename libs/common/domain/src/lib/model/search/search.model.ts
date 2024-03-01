@@ -1,10 +1,10 @@
 import { FieldFilters } from './filter.model'
 import { CatalogRecord } from '../record'
 import { Geometry } from 'geojson'
+import { FieldName } from './field.model'
 
 export type FieldSort = ['desc' | 'asc', FieldName]
 export type SortByField = FieldSort | FieldSort[] // several sort criteria can be used!
-export type FieldName = string
 
 export interface SearchParams {
   filters?: FieldFilters

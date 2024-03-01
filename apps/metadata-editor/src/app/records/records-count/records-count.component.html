@@ -1,0 +1,22 @@
+<div data-cy="records-information" class="flex flex-row">
+  <div
+    class="text-gray-800"
+    data-test="records-count"
+    translate
+    [translateParams]="{
+      displayed: (records$ | async).length,
+      hits: (recordCount$ | async)
+    }"
+  >
+    results.records.hits.displayedOn
+  </div>
+  <div
+    *ngIf="(selectedRecords$ | async).length as selectedRecordCount"
+    class="ml-2 text-gray-600"
+    data-test="selected-count"
+    translate
+    [translateParams]="{ amount: selectedRecordCount }"
+  >
+    results.records.hits.selected
+  </div>
+</div>

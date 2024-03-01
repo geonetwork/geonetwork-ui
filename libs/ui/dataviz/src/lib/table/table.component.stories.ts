@@ -6,7 +6,10 @@ import {
   Meta,
   StoryObj,
 } from '@storybook/angular'
-import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
+import {
+  TRANSLATE_DEFAULT_CONFIG,
+  UtilI18nModule,
+} from '@geonetwork-ui/util/i18n'
 import { TableComponent } from './table.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiDatavizModule } from '../ui-dataviz.module'
@@ -21,6 +24,7 @@ export default {
         importProvidersFrom(UiDatavizModule),
         importProvidersFrom(BrowserAnimationsModule),
         importProvidersFrom(HttpClientModule),
+        importProvidersFrom(UtilI18nModule),
         importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
       ],
     }),

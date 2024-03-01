@@ -16,7 +16,7 @@ const currentPage = 5
 const totalPages = 25
 
 @Component({
-  // eslint-disable-next-line
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'gn-ui-results-table',
   template: '',
   standalone: true,
@@ -26,7 +26,7 @@ export class RecordTableComponent {
 }
 
 @Component({
-  // eslint-disable-next-line
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'gn-ui-pagination-buttons',
   template: '',
   standalone: true,

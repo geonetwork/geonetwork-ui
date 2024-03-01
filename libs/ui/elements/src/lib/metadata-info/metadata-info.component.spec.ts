@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
 import { MetadataInfoComponent } from './metadata-info.component'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
-import { TranslateTestingModule } from '@geonetwork-ui/util/i18n'
+import { TranslateTestingModule } from 'ngx-translate-testing'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
 
 describe('MetadataInfoComponent', () => {

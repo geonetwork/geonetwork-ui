@@ -6,7 +6,6 @@ import { TranslateModule } from '@ngx-translate/core'
 import { RecordsListComponent } from '../records-list.component'
 
 @Component({
-  // eslint-disable-next-line
   selector: 'md-editor-records-list',
   template: '',
   standalone: true,

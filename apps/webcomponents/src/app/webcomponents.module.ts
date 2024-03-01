@@ -112,6 +112,6 @@ export class WebcomponentsModule {
     })
   }
 
-  // eslint-disable-next-line
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method, @angular-eslint/use-lifecycle-interface, @typescript-eslint/no-empty-function
   ngDoBootstrap() {}
 }

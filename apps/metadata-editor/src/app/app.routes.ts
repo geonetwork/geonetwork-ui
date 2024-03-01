@@ -1,10 +1,8 @@
 import { Route } from '@angular/router'
 import { DashboardPageComponent } from './dashboard/dashboard-page.component'
 import { SignInPageComponent } from './sign-in/sign-in-page.component'
-import { CreatePageComponent } from './create/create-page.component'
 import { EditPageComponent } from './edit/edit-page.component'
 import { EditRecordResolver } from './edit-record.resolver'
-import { AllRecordsComponent } from './records/all-records/all-records-list.component'
 import { MyOrgRecordsComponent } from './records/my-org-records/my-org-records.component'
 import { MyRecordsComponent } from './records/my-records/my-records.component'
 import { MyDraftComponent } from './records/my-draft/my-draft.component'
@@ -21,13 +19,7 @@ export const appRoutes: Route[] = [
     children: [
       {
         path: '',
-        redirectTo: 'all',
-        pathMatch: 'prefix',
-      },
-      {
-        path: 'all',
-        title: 'All Records',
-        component: AllRecordsComponent,
+        redirectTo: 'search',
         pathMatch: 'prefix',
       },
       {
@@ -76,7 +68,7 @@ export const appRoutes: Route[] = [
     ],
   },
   { path: 'sign-in', component: SignInPageComponent },
-  { path: 'create', component: CreatePageComponent },
+  { path: 'create', component: EditPageComponent },
   {
     path: 'edit/:uuid',
     component: EditPageComponent,

@@ -2,7 +2,7 @@ describe('dashboard', () => {
   let pageOne
   describe('pagination', () => {
     it('should display different results on click on arrow', () => {
-      cy.visit('/records/all')
+      cy.visit('/records/search')
       cy.get('gn-ui-results-table')
         .find('.table-row-cell')
         .first()
@@ -39,7 +39,7 @@ describe('dashboard', () => {
     let originalFirstItem
     let newFirstItem
     it('should order the result list on click', () => {
-      cy.visit('/records/all')
+      cy.visit('/records/search')
       cy.get('gn-ui-results-table')
         .find('.table-row-cell')
         .eq(1)
@@ -68,35 +68,35 @@ describe('dashboard', () => {
 
   describe('checkboxes', () => {
     it('should show the correct amount of selected records when they are selected', () => {
-      cy.visit('/records/all')
+      cy.visit('/records/search')
       cy.get('gn-ui-results-table')
         .find('.table-row-cell')
         .get('gn-ui-checkbox')
         .eq(2)
         .click()
-      cy.get('.selected-records').contains('1 selected')
+      cy.get('[data-test=selected-count]').contains('1 selected')
     })
 
     it('should show nothing when none are selected', () => {
-      cy.visit('/records/all')
+      cy.visit('/records/search')
       cy.get('gn-ui-results-table')
         .find('.table-row-cell')
         .get('gn-ui-checkbox')
         .each(($checkbox) => cy.wrap($checkbox).click())
       cy.get('[data-cy=records-information]').should(
         'not.have.descendants',
-        '.selected-records'
+        '[data-test=selected-count]'
       )
     })
 
     it('should select all records when the "select all" checkbox is checked', () => {
-      cy.visit('/records/all')
+      cy.visit('/records/search')
       cy.get('gn-ui-results-table')
         .find('.table-row-cell')
         .get('gn-ui-checkbox')
         .first()
         .click()
-      cy.get('.selected-records').contains('14 selected')
+      cy.get('[data-test=selected-count]').contains('14 selected')
     })
   })
 })

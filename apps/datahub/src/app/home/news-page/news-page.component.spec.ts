@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { NewsPageComponent } from './news-page.component'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
-import { TranslateTestingModule } from '@geonetwork-ui/util/i18n'
+import { TranslateTestingModule } from 'ngx-translate-testing'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({

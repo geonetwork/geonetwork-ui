@@ -40,7 +40,7 @@ import {
   isEndOfResults,
   totalPages,
 } from './selectors'
-import { FILTER_GEOMETRY } from '../feature-search.module'
+import { FILTER_GEOMETRY } from '../filter-geometry.token'
 import { Geometry } from 'geojson'
 import { catchError, map, shareReplay } from 'rxjs/operators'
 import {
@@ -215,5 +215,6 @@ export class SearchFacade {
     this.store.dispatch(new SetFilters({}, this.searchId))
     this.store.dispatch(new SetSortBy([], this.searchId))
     this.store.dispatch(new SetFavoritesOnly(false, this.searchId))
+    return this
   }
 }
