@@ -36,32 +36,27 @@ describe('dashboard', () => {
   })
 
   describe('sorting', () => {
-    let originalFirstItem
-    let newFirstItem
     it('should order the result list on click', () => {
       cy.visit('/records/search')
       cy.get('gn-ui-results-table')
         .find('.table-row-cell')
         .eq(1)
         .invoke('text')
-        .then((list) => {
-          originalFirstItem = list.trim()
-          // order by title descending
-          cy.get('.table-header-cell').eq(1).click()
-          cy.url().should('include', 'sort=resourceTitleObject.default.keyword')
-          cy.get('.table-header-cell').eq(1).click()
-          cy.url().should(
-            'include',
-            'sort=-resourceTitleObject.default.keyword'
-          )
-          cy.get('gn-ui-results-table')
-            .find('.table-row-cell')
-            .eq(1)
-            .invoke('text')
-            .then((list) => {
-              newFirstItem = list.trim()
-              expect(newFirstItem).not.to.equal(originalFirstItem)
-            })
+        .invoke('trim')
+        .as('originalFirstItem')
+
+      // order by title descending
+      cy.get('.table-header-cell').eq(1).click()
+      cy.url().should('include', 'sort=resourceTitleObject.default.keyword')
+      cy.get('.table-header-cell').eq(1).click()
+      cy.url().should('include', 'sort=-resourceTitleObject.default.keyword')
+      cy.get('gn-ui-results-table')
+        .find('.table-row-cell')
+        .eq(1)
+        .invoke('text')
+        .invoke('trim')
+        .then((newFirstItem) => {
+          expect(newFirstItem).not.to.equal(this.originalFirstItem)
         })
     })
   })
