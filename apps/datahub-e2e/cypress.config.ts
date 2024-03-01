@@ -6,5 +6,6 @@ export default defineConfig({
     ...nxE2EPreset(__dirname),
     video: false,
     downloadsFolder: 'cypress/downloads',
+    screenshotOnRunFailure: true,
   },
 })
