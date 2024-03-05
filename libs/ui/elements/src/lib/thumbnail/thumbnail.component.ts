@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -32,6 +33,8 @@ type FitOptions = 'cover' | 'contain' | 'scale-down'
   selector: 'gn-ui-thumbnail',
   templateUrl: './thumbnail.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule],
 })
 export class ThumbnailComponent implements OnInit, OnChanges {
   @Input() thumbnailUrl: string | string[]
