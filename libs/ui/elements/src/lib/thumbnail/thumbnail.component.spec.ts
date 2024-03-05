@@ -16,8 +16,7 @@ describe('ThumbnailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UtilSharedModule],
-      declarations: [ThumbnailComponent],
+      imports: [ThumbnailComponent, UtilSharedModule],
     })
       .overrideComponent(ThumbnailComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
