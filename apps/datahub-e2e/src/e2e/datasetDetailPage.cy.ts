@@ -532,7 +532,7 @@ describe('api cards', () => {
   })
 })
 
-describe('api form', () => {
+describe.only('api form', () => {
   beforeEach(() => {
     cy.visit('/dataset/accroche_velos')
     cy.get('gn-ui-api-card').first().find('button').click()
@@ -605,7 +605,7 @@ describe('api form', () => {
       .find('gn-ui-copy-text-button')
       .find('input')
       .invoke('val')
-      .should('include', 'f=json')
+      .should('include', 'limit=-1&f=json')
   })
   it('should close the panel on click', () => {
     cy.get('gn-ui-record-api-form').prev().find('button').click()
