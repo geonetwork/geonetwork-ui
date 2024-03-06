@@ -20,7 +20,7 @@
           <gn-ui-text-input
             class="mr-2 w-20"
             (input)="setLimit($event.target.value)"
-            [value]="limit$ | async"
+            [value]="(limit$ | async) !== '-1' ? (limit$ | async) : ''"
             hint=""
           >
           </gn-ui-text-input>
@@ -28,8 +28,8 @@
             <input
               class="mr-2 cursor-pointer"
               type="checkbox"
-              [checked]="(limit$ | async) === ''"
-              (change)="setLimit('')"
+              [checked]="(limit$ | async) === '-1'"
+              (change)="setLimit('-1')"
             />
             <span class="text-sm" translate
               >record.metadata.api.form.limit.all</span

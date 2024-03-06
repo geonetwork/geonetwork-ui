@@ -605,7 +605,7 @@ describe('api form', () => {
       .find('gn-ui-copy-text-button')
       .find('input')
       .invoke('val')
-      .should('include', 'f=json')
+      .should('include', 'limit=-1&f=json')
   })
   it('should close the panel on click', () => {
     cy.get('gn-ui-record-api-form').prev().find('button').click()

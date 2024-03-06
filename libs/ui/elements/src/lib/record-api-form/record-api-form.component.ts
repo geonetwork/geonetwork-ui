@@ -4,7 +4,7 @@ import { BehaviorSubject, combineLatest, map } from 'rxjs'
 
 const DEFAULT_PARAMS = {
   OFFSET: '',
-  LIMIT: '',
+  LIMIT: '-1',
   FORMAT: 'json',
 }
 @Component({

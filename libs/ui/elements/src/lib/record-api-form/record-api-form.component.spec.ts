@@ -34,10 +34,10 @@ describe('RecordApFormComponent', () => {
     it('should set the links and initial values correctly', async () => {
       expect(component.apiBaseUrl).toBe('https://api.example.com/data')
       expect(component.offset$.getValue()).toBe('')
-      expect(component.limit$.getValue()).toBe('')
+      expect(component.limit$.getValue()).toBe('-1')
       expect(component.format$.getValue()).toBe('json')
       const url = await firstValueFrom(component.apiQueryUrl$)
-      expect(url).toBe('https://api.example.com/data?f=json')
+      expect(url).toBe('https://api.example.com/data?limit=-1&f=json')
     })
   })
   describe('When URL params are changed', () => {
@@ -83,7 +83,7 @@ describe('RecordApFormComponent', () => {
     it('should reset URL to default parameters', () => {
       component.resetUrl()
       expect(component.offset$.getValue()).toBe('')
-      expect(component.limit$.getValue()).toBe('')
+      expect(component.limit$.getValue()).toBe('-1')
       expect(component.format$.getValue()).toBe('json')
     })
   })
