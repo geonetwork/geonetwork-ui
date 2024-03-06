@@ -28,7 +28,7 @@
             <input
               class="mr-2 cursor-pointer"
               type="checkbox"
-              [checked]="(limit$ | async) === '-1'"
+              [checked]="(limit$ | async) === '-1' || (limit$ | async) === ''"
               (change)="setLimit('-1')"
             />
             <span class="text-sm" translate

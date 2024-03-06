@@ -50,7 +50,8 @@ export class RecordApiFormComponent {
   }
 
   setLimit(value: string) {
-    this.limit$.next(value)
+    const newLimit = value === '' ? '-1' : value
+    this.limit$.next(newLimit)
   }
 
   setFormat(value: string) {
