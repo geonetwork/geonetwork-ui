@@ -532,7 +532,7 @@ describe('api cards', () => {
   })
 })
 
-describe.only('api form', () => {
+describe('api form', () => {
   beforeEach(() => {
     cy.visit('/dataset/accroche_velos')
     cy.get('gn-ui-api-card').first().find('button').click()
