@@ -19,8 +19,8 @@
         <div class="flex flex-row items-center gap-2">
           <gn-ui-text-input
             class="mr-2 w-20"
-            (input)="setLimit($event.target.value)"
-            [value]="(limit$ | async) !== '-1' ? (limit$ | async) : ''"
+            (valueChange)="setLimit($event)"
+            [value]="displayLimit$ | async"
             hint=""
           >
           </gn-ui-text-input>
@@ -28,7 +28,7 @@
             <input
               class="mr-2 cursor-pointer"
               type="checkbox"
-              [checked]="(limit$ | async) === '-1' || (limit$ | async) === ''"
+              [checked]="noLimitChecked$ | async"
               (change)="setLimit('-1')"
             />
             <span class="text-sm" translate
@@ -42,7 +42,7 @@
         <gn-ui-text-input
           class="w-20"
           [value]="offset$ | async"
-          (input)="setOffset($event.target.value)"
+          (valueChange)="setOffset($event)"
           hint=""
         >
         </gn-ui-text-input>

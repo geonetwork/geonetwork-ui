@@ -44,6 +44,13 @@ export class RecordApiFormComponent {
       return outputUrl
     })
   )
+  noLimitChecked$ = this.limit$.pipe(
+    map((limit) => limit === '-1' || limit === '')
+  )
+
+  displayLimit$ = this.limit$.pipe(
+    map((limit) => (limit !== '-1' ? limit : ''))
+  )
 
   setOffset(value: string) {
     this.offset$.next(value)
@@ -54,8 +61,8 @@ export class RecordApiFormComponent {
     this.limit$.next(newLimit)
   }
 
-  setFormat(value: string) {
-    this.format$.next(value)
+  setFormat(value: string | unknown) {
+    this.format$.next(String(value))
   }
 
   resetUrl() {
