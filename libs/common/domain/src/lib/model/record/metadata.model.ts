@@ -48,13 +48,7 @@ export const RecordStatusValues = [
 ]
 export type RecordStatus = typeof RecordStatusValues[number]
 
-export type AccessConstraintType = 'security' | 'privacy' | 'legal' | 'other'
-export interface AccessConstraint {
-  text: string
-  type: AccessConstraintType
-}
-
-export type License = {
+export type Constraint = {
   text: string
   url?: URL
 }
@@ -77,10 +71,10 @@ export interface BaseRecord {
   kind: RecordKind
   themes: Array<string> // TODO: handle codelists
   keywords: Array<string> // TODO: handle thesaurus and id
-  accessConstraints: Array<AccessConstraint>
-  useLimitations: Array<string>
-  legalConstraints?: Array<string>
-  licenses: Array<License>
+  licenses: Array<Constraint>
+  legalConstraints: Array<Constraint>
+  securityConstraints: Array<Constraint>
+  otherConstraints: Array<Constraint>
   overviews: Array<GraphicOverview>
   extras?: Record<string, unknown>
   landingPage?: URL

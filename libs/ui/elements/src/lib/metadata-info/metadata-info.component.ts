@@ -22,18 +22,42 @@ export class MetadataInfoComponent {
   get hasUsage() {
     return (
       this.metadata.extras?.isOpenData === true ||
-      this.metadata.useLimitations?.length ||
-      this.metadata.accessConstraints?.length
+      (this.metadata.legalConstraints?.length > 0 &&
+        this.legalConstraints.length > 0) ||
+      (this.metadata.otherConstraints?.length > 0 &&
+        this.otherConstraints.length > 0) ||
+      (this.metadata.licenses?.length > 0 && this.licenses.length > 0)
     )
   }
 
-  get usages(): string[] {
+  get legalConstraints() {
     let array = []
-    if (this.metadata.useLimitations?.length) {
-      array = array.concat(this.metadata.useLimitations)
+    if (this.metadata.legalConstraints?.length) {
+      array = array.concat(
+        this.metadata.legalConstraints.filter((c) => c.text).map((c) => c.text)
+      )
     }
-    if (this.metadata.accessConstraints?.length) {
-      array = array.concat(this.metadata.accessConstraints.map((c) => c.text))
+    return array
+  }
+
+  get otherConstraints() {
+    let array = []
+    if (this.metadata.otherConstraints?.length) {
+      array = array.concat(
+        this.metadata.otherConstraints.filter((c) => c.text).map((c) => c.text)
+      )
+    }
+    return array
+  }
+
+  get licenses(): { text: string; url: string }[] {
+    let array = []
+    if (this.metadata.licenses?.length) {
+      array = array.concat(
+        this.metadata.licenses
+          .filter((c) => c.text)
+          .map((c) => ({ text: c.text, url: c.url }))
+      )
     }
     return array
   }
@@ -55,10 +79,5 @@ export class MetadataInfoComponent {
 
   onKeywordClick(keyword: string) {
     this.keyword.emit(keyword)
-  }
-
-  copyText() {
-    navigator.clipboard.writeText(this.metadata.uniqueIdentifier)
-    ;(event.target as HTMLElement).blur()
   }
 }

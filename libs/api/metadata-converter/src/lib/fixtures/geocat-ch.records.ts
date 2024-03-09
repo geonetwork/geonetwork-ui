@@ -138,13 +138,30 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
   ],
   lineage:
     'Digitalisiert nach den administrativen Einheiten der Schweiz, die im Anhang des Übereinkommens erscheinen.',
-  accessConstraints: [],
-  useLimitations: [],
   licenses: [
     {
       text: "Licence passée entre l'Office fédéral de l'environnement (OFEV), et le canton de Fribourg, représenté par la Coordination SIT (SITel)",
     },
   ],
+  legalConstraints: [
+    {
+      text: `1. Nutzungsbestimmung
+
+Diese Geodaten unterliegen folgenden Nutzungsbeschränkungen:
+
+- Sie dürfen nicht vervielfältigt, verbreitet und/oder weiter zugänglich gemacht werden.
+
+- Sie dürfen nicht kommerziell genutzt werden.
+
+- Sie dürfen ausschliesslich zu vorgegebenen Zwecken genutzt werden.
+
+- Sie dürfen ausschliesslich zu dem unter 4. beschriebenen Zweck genutzt werden.
+
+Die Quelle ist zu bezeichnen: „Quelle: Stadt Zürich“.`,
+    },
+  ],
+  securityConstraints: [],
+  otherConstraints: [],
   // data quality?
   spatialExtents: [],
   temporalExtents: [],
@@ -216,7 +233,8 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
         'https://services.geo.sg.ch/wss/service/SG00170_WMS/guest?request=GetCapabilities&service=WMS',
     },
   ],
-  accessConstraints: [],
-  useLimitations: [],
   licenses: [],
+  legalConstraints: [],
+  securityConstraints: [],
+  otherConstraints: [],
 }

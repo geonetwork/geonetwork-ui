@@ -183,79 +183,63 @@
     </ng-template>
   </gn-ui-record-field-array>
 </p>
-<p>
-  <gn-ui-record-field-array
-    label="Use limitations"
-    [(fieldValue)]="record.useLimitations"
-    [itemTemplate]="useLimitationTpl"
-    (confirm)="emitChangedRecord()"
-    [defaultItem]="'change me!'"
-  >
-    <ng-template #useLimitationTpl let-get="getValue" let-set="setValue">
-      <gn-ui-record-field-simple
-        label="Use limitation"
-        [fieldValue]="get()"
-        (fieldValueChange)="set($event)"
-        [type]="'rich'"
-        (confirm)="emitChangedRecord()"
-      ></gn-ui-record-field-simple>
-    </ng-template>
-  </gn-ui-record-field-array>
-</p>
-<p>
-  <gn-ui-record-field-array
-    label="Access constraints"
-    [(fieldValue)]="record.accessConstraints"
-    [itemTemplate]="accessConstraintTpl"
-    (confirm)="emitChangedRecord()"
-    [defaultItem]="{ text: 'change me!', type: 'other' }"
-  >
-    <ng-template #accessConstraintTpl let-get="getValue" let-set="setValue">
-      <gn-ui-record-field-group label="Access constraint">
-        <gn-ui-record-field-simple
-          label="Text"
-          [fieldValue]="get().text"
-          (fieldValueChange)="set($event, 'text')"
-          [type]="'rich'"
-          (confirm)="emitChangedRecord()"
-        ></gn-ui-record-field-simple>
-        <gn-ui-record-field-simple
-          label="Type"
-          [fieldValue]="get().type"
-          (fieldValueChange)="set($event, 'type')"
-          [options]="['security', 'privacy', 'legal', 'other']"
-          (confirm)="emitChangedRecord()"
-        ></gn-ui-record-field-simple>
-      </gn-ui-record-field-group>
-    </ng-template>
-  </gn-ui-record-field-array>
-</p>
+
+<ng-template #constraintTpl let-get="getValue" let-set="setValue">
+  <gn-ui-record-field-group>
+    <gn-ui-record-field-simple
+      label="Text"
+      [fieldValue]="get().text"
+      (fieldValueChange)="set($event, 'text')"
+      [type]="'rich'"
+      (confirm)="emitChangedRecord()"
+    ></gn-ui-record-field-simple>
+    <gn-ui-record-field-simple
+      label="URL"
+      [fieldValue]="get().url"
+      (fieldValueChange)="set($event, 'url')"
+      [type]="'url'"
+      (confirm)="emitChangedRecord()"
+    ></gn-ui-record-field-simple>
+  </gn-ui-record-field-group>
+</ng-template>
 <p>
   <gn-ui-record-field-array
     label="Licenses"
     [(fieldValue)]="record.licenses"
-    [itemTemplate]="licenseTpl"
+    [itemTemplate]="constraintTpl"
     (confirm)="emitChangedRecord()"
     [defaultItem]="{ text: 'change me!' }"
   >
-    <ng-template #licenseTpl let-get="getValue" let-set="setValue">
-      <gn-ui-record-field-group label="License">
-        <gn-ui-record-field-simple
-          label="Text"
-          [fieldValue]="get().text"
-          (fieldValueChange)="set($event, 'text')"
-          [type]="'rich'"
-          (confirm)="emitChangedRecord()"
-        ></gn-ui-record-field-simple>
-        <gn-ui-record-field-simple
-          label="URL"
-          [fieldValue]="get().url"
-          (fieldValueChange)="set($event, 'url')"
-          [type]="'url'"
-          (confirm)="emitChangedRecord()"
-        ></gn-ui-record-field-simple>
-      </gn-ui-record-field-group>
-    </ng-template>
+  </gn-ui-record-field-array>
+</p>
+<p>
+  <gn-ui-record-field-array
+    label="Legal constraints"
+    [(fieldValue)]="record.legalConstraints"
+    [itemTemplate]="constraintTpl"
+    (confirm)="emitChangedRecord()"
+    [defaultItem]="{ text: 'change me!' }"
+  >
+  </gn-ui-record-field-array>
+</p>
+<p>
+  <gn-ui-record-field-array
+    label="Security constraints"
+    [(fieldValue)]="record.securityConstraints"
+    [itemTemplate]="constraintTpl"
+    (confirm)="emitChangedRecord()"
+    [defaultItem]="{ text: 'change me!' }"
+  >
+  </gn-ui-record-field-array>
+</p>
+<p>
+  <gn-ui-record-field-array
+    label="Other constraints"
+    [(fieldValue)]="record.otherConstraints"
+    [itemTemplate]="constraintTpl"
+    (confirm)="emitChangedRecord()"
+    [defaultItem]="{ text: 'change me!' }"
+  >
   </gn-ui-record-field-array>
 </p>
 

@@ -10,6 +10,50 @@
   </gn-ui-content-ghost>
 </div>
 
+<gn-ui-expandable-panel [title]="'record.metadata.usage' | translate">
+  <div class="flex flex-col gap-[10px] mr-4 py-[12px] rounded text-gray-900">
+    <ng-container *ngFor="let license of licenses">
+      <div *ngIf="license.url; else noUrl" class="text-primary">
+        <a
+          [href]="license.url"
+          target="_blank"
+          class="cursor-pointer hover:underline transition-all"
+        >
+          {{ license.text }}
+          <mat-icon
+            class="material-symbols-outlined !w-[12px] !h-[12px] !text-[12px] opacity-75 shrink-0"
+            >open_in_new</mat-icon
+          >
+        </a>
+      </div>
+      <ng-template #noUrl>
+        <div class="text-primary" gnUiLinkify>
+          {{ license.text }}
+        </div>
+      </ng-template>
+    </ng-container>
+    <ng-container *ngIf="legalConstraints.length">
+      <gn-ui-markdown-parser
+        *ngFor="let constraint of legalConstraints"
+        [textContent]="constraint"
+      >
+      </gn-ui-markdown-parser>
+    </ng-container>
+    <ng-container *ngIf="otherConstraints.length">
+      <div gnUiLinkify *ngFor="let constraint of otherConstraints">
+        <h5 translate class="font-medium text-black text-sm mb-[2px] mt-[16px]">
+          record.metadata.otherConstraints
+        </h5>
+        <gn-ui-markdown-parser [textContent]="constraint">
+        </gn-ui-markdown-parser>
+      </div>
+    </ng-container>
+
+    <span class="noUsage" *ngIf="!hasUsage">
+      {{ 'record.metadata.noUsage' | translate }}
+    </span>
+  </div>
+</gn-ui-expandable-panel>
 <gn-ui-expandable-panel
   class="metadata-origin"
   *ngIf="
@@ -22,7 +66,7 @@
 >
   <p
     *ngIf="metadata.lineage"
-    class="mb-5 pt-4 whitespace-pre-line break-words"
+    class="mb-5 pt-4 whitespace-pre-line break-words text-gray-900"
     gnUiLinkify
   >
     {{ metadata.lineage }}
@@ -52,23 +96,6 @@
         domain.record.status.{{ metadata.status }}
       </p>
     </div>
-  </div>
-</gn-ui-expandable-panel>
-<gn-ui-expandable-panel [title]="'record.metadata.usage' | translate">
-  <div class="py-4 px-6 rounded bg-gray-100 text-gray-700 flex flex-wrap gap-2">
-    <gn-ui-badge *ngIf="metadata.extras?.isOpenData">
-      <span translate>record.metadata.isOpenData</span>
-    </gn-ui-badge>
-    <span
-      class="text-primary font-medium"
-      *ngFor="let usage of usages"
-      gnUiLinkify
-    >
-      {{ usage }}
-    </span>
-    <span class="text-primary font-medium noUsage" *ngIf="!hasUsage">
-      {{ 'record.metadata.noUsage' | translate }}
-    </span>
   </div>
 </gn-ui-expandable-panel>
 <gn-ui-expandable-panel

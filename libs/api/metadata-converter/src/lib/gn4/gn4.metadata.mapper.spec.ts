@@ -13,6 +13,7 @@ import {
   DatasetRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateService } from '@ngx-translate/core'
+import { Gn4Record } from '../gn4/types/metadata.model'
 
 class MetadataUrlServiceMock {
   translate = undefined
@@ -99,11 +100,13 @@ describe('Gn4MetadataMapper', () => {
             lineage: null,
             recordUpdated: null,
             distributions: [],
-            accessConstraints: [],
+            licenses: [],
+            legalConstraints: [],
+            securityConstraints: [],
+            otherConstraints: [],
             contacts: [],
             contactsForResource: [],
             keywords: [],
-            licenses: [],
             spatialExtents: [],
             temporalExtents: [
               {
@@ -116,7 +119,6 @@ describe('Gn4MetadataMapper', () => {
               },
             ],
             themes: [],
-            useLimitations: [],
           },
           {
             kind: 'dataset',
@@ -147,11 +149,13 @@ describe('Gn4MetadataMapper', () => {
             lineage: null,
             recordUpdated: null,
             distributions: [],
-            accessConstraints: [],
             contacts: [],
             contactsForResource: [],
             keywords: [],
             licenses: [],
+            legalConstraints: [],
+            securityConstraints: [],
+            otherConstraints: [],
             spatialExtents: [],
             temporalExtents: [
               {
@@ -168,7 +172,6 @@ describe('Gn4MetadataMapper', () => {
               },
             ],
             themes: [],
-            useLimitations: [],
           },
         ] as CatalogRecord[])
       })
@@ -772,23 +775,139 @@ describe('Gn4MetadataMapper', () => {
         })
       })
 
+      describe('license and constraints', () => {
+        beforeEach(() => {
+          hit = {
+            ...hit,
+            _source: {
+              ...hit._source,
+              licenseObject: [
+                {
+                  default:
+                    'Géodonnées de base accessibles au public: niveau A (selon l’OGéo, art. 21).',
+                  langger:
+                    'Öffentlich zugängliche Geobasisdaten: Zugangsberechtigungsstufe A (nach GeoIV, Art. 21).',
+                  langeng:
+                    'Publicly accessible basic geodata : level A (GeoIV, Art. 21).',
+                  link: 'https://registry.geocat.ch/use-limitation/levelA',
+                  langfre:
+                    'Géodonnées de base accessibles au public: niveau A (selon l’OGéo, art. 21).',
+                },
+                {
+                  default:
+                    "Les conditions générales d'utilisation des géodonnées du Canton du Valais font foi (https://www.vs.ch/fr/web/guest/information-legale).",
+                  langger:
+                    'Es gelten die Nutzungsbedingungen für Geodaten des Kantons Wallis (https://www.vs.ch/de/web/guest/rechtliches).',
+                  langfre:
+                    "Les conditions générales d'utilisation des géodonnées du Canton du Valais font foi (https://www.vs.ch/fr/web/guest/information-legale).",
+                },
+              ],
+              MD_ConstraintsUseLimitationObject: [
+                {
+                  default: 'aucune',
+                  langger: 'keine',
+                  langfre: 'aucune',
+                },
+              ],
+              cl_accessConstraints: [
+                {
+                  default: 'Autres restrictions',
+                  langger: 'Benutzerdeifinierte Einschränkungen',
+                  langeng: 'Other restrictions',
+                  langroh: 'otherRestrictions',
+                  link: 'http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode',
+                  langita: 'Altri vincoli',
+                  key: 'otherRestrictions',
+                  langfre: 'Autres restrictions',
+                },
+              ],
+              MD_LegalConstraintsOtherConstraintsObject: [
+                {
+                  default:
+                    'Géodonnées de base accessibles au public: niveau A (selon l’OGéo, art. 21).',
+                  langger:
+                    'Öffentlich zugängliche Geobasisdaten: Zugangsberechtigungsstufe A (nach GeoIV, Art. 21).',
+                  langeng:
+                    'Publicly accessible basic geodata : level A (GeoIV, Art. 21).',
+                  link: 'https://registry.geocat.ch/use-limitation/levelA',
+                  langfre:
+                    'Géodonnées de base accessibles au public: niveau A (selon l’OGéo, art. 21).',
+                },
+                {
+                  default:
+                    "Les conditions générales d'utilisation des géodonnées du Canton du Valais font foi (https://www.vs.ch/fr/web/guest/information-legale).",
+                  langger:
+                    'Es gelten die Nutzungsbedingungen für Geodaten des Kantons Wallis (https://www.vs.ch/de/web/guest/rechtliches).',
+                  langfre:
+                    "Les conditions générales d'utilisation des géodonnées du Canton du Valais font foi (https://www.vs.ch/fr/web/guest/information-legale).",
+                },
+              ],
+            },
+          }
+        })
+
+        it('parses the licenses', async () => {
+          const record = (await service.readRecord(hit)) as DatasetRecord
+          expect(record.licenses).toEqual([
+            {
+              text: 'Öffentlich zugängliche Geobasisdaten: Zugangsberechtigungsstufe A (nach GeoIV, Art. 21).',
+              url: new URL('https://registry.geocat.ch/use-limitation/levelA'),
+            },
+            {
+              text: 'Es gelten die Nutzungsbedingungen für Geodaten des Kantons Wallis (https://www.vs.ch/de/web/guest/rechtliches).',
+            },
+          ])
+        })
+
+        it('parses the legal constraints', async () => {
+          const record = (await service.readRecord(hit)) as DatasetRecord
+          expect(record.legalConstraints).toEqual([])
+        })
+
+        it('parses the security constraints', async () => {
+          const record = (await service.readRecord(hit)) as DatasetRecord
+          expect(record.securityConstraints).toEqual([])
+        })
+
+        it('parses the other constraints', async () => {
+          const record = (await service.readRecord(hit)) as DatasetRecord
+          expect(record.otherConstraints).toEqual([
+            {
+              text: 'keine',
+            },
+          ])
+        })
+      })
+
       describe('full record', () => {
         it('builds a complete record object', async () => {
           const record = await service.readRecord(
-            ES_FIXTURE_FULL_RESPONSE.hits.hits[0]
+            ES_FIXTURE_FULL_RESPONSE.hits.hits[0] as Gn4Record
           )
           expect(record).toEqual({
             kind: 'dataset',
             abstract:
               "Le produit Surval \"Données par paramètre\" met à disposition les données d'observation et de surveillance bancarisées dans Quadrige, validées et qui ne sont pas sous moratoire.\n\nCe système d'information contient des résultats sur la plupart des paramètres physiques, chimiques et biologiques de description de l'environnement. Les premières données datent par exemple de 1974 pour les paramètres de la qualité générale des eaux et les contaminants, 1987 pour le phytoplancton et les phycotoxines, 1989 pour la microbiologie, du début des années 2000 pour le benthos. \n\nCe produit contient des résultats sur la plupart des paramètres physiques, chimiques et biologiques de description de l'environnement. Les premières données datent par exemple de 1974 pour les paramètres de la qualité générale des eaux et les contaminants.\n\nLes données sous moratoire ou les données qualifiées \"Faux\" sont exclus de la diffusion Surval. Une donnée validée dans Quadrige aujourd’hui sera disponible dans Surval demain.\n\nL'accès aux données d'observation se fait par lieu. Un lieu de surveillance est un lieu géographique où des observations, des mesures et/ou des prélèvements sont effectués. Il est localisé de façon unique par son emprise cartographique (surface, ligne ou point). Un lieu de mesure peut être utilisé par plusieurs programmes d'observation et de surveillance.\n\nA compter du 29 avril 2021, conformément aux obligations de l’ « Open data », toutes les données validées sans moratoire sont diffusées à J+1 et sans traitement. Ainsi tous les paramètres et tous les programmes Quadrige sont diffusés, et regroupés sous forme de thème :\n- Benthos dont récifs coralliens\n- Contaminants chimiques et Écotoxicologie\n- Déchets\n- Microbiologie\n- Phytoplancton et Hydrologie\n- Ressources aquacoles\n- Zooplancton\n- Autres\nUn thème regroupe un ou plusieurs programmes d'acquisition. Un programme correspond à une mise en œuvre d'un protocole, sur une période et un ensemble de lieux. Chaque programme est placé sous la responsabilité d'un animateur. \n\nPour accompagner le résultat, de nombreuses données sont diffusées (téléchargeables en tant que données d’observation), comme :\n- la description complète du « Paramètre-Support-Fraction-Méthode-Unité »;\n- la description complète des « Passages », « Prélèvements » et « Échantillons »;\n- le niveau de qualification du résultat;\n- une proposition de citation, afin d’identifier tous les organismes contribuant à cette observation.\n\nL'emprise géographique est nationale : la métropole et les départements et régions d'outre-mer (DROM).\n\nL'accès au téléchargement direct du jeu de données complet (~ 220 Mo) en date du 9 juillet 2021 s'effectue par ce lien : https://www.ifremer.fr/sextant_doc/surveillance_littorale/surval/data/surval.zip \nL'accès par la carte permet de configurer des extractions et des graphes de visualisation sur demande (email demandé pour le téléchargement).",
-            accessConstraints: [
+            licenses: [
               {
                 text: 'Pas de restriction d’accès public',
-                type: 'other',
+                url: new URL(
+                  'http://inspire.ec.europa.eu/metadatacodelist/LimitationsOnPublicAccess/noLimitations'
+                ),
               },
               {
                 text: 'Licence Ouverte version 2.0  https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf',
-                type: 'other',
+              },
+            ],
+            legalConstraints: [
+              {
+                text: "Restriction légale d'utilisation à préciser",
+              },
+            ],
+            securityConstraints: [],
+            otherConstraints: [
+              {
+                text: 'Einschränkung im Zusammenhang mit der Ausübung moralischer Rechte',
               },
             ],
             contacts: [
@@ -1010,18 +1129,6 @@ describe('Gn4MetadataMapper', () => {
             landingPage: new URL(
               'http://my.catalog.org/metadata/cf5048f6-5bbf-4e44-ba74-e6f429af51ea'
             ),
-            legalConstraints: ["Restriction légale d'utilisation à préciser"],
-            licenses: [
-              {
-                link: new URL(
-                  'http://inspire.ec.europa.eu/metadatacodelist/LimitationsOnPublicAccess/noLimitations'
-                ),
-                text: 'Pas de restriction d’accès public',
-              },
-              {
-                text: 'Licence Ouverte version 2.0  https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf',
-              },
-            ],
             lineage:
               'Les données sont bancarisées dans la base de données Quadrige.',
             overviews: [
@@ -1042,10 +1149,6 @@ describe('Gn4MetadataMapper', () => {
               per: 'day',
               updatedTimes: 1,
             },
-            useLimitations: [
-              'Einschränkung im Zusammenhang mit der Ausübung moralischer Rechte',
-              "Restriction légale d'utilisation à préciser",
-            ],
             spatialExtents: [
               {
                 description: 'Hauts-de-France (Région)',

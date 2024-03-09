@@ -74,12 +74,12 @@
   margin-top: 0;
   margin-bottom: 10px;
   color: var(--color-primary) !important;
-  text-decoration: none !important;
-  @apply font-bold;
+  text-decoration: none;
 }
 
 :host ::ng-deep .markdown-body p > a:hover {
   color: var(--color-primary-darker) !important;
+  @apply underline;
 }
 
 /** Blockquotes **/

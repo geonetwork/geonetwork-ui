@@ -93,9 +93,9 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
   lineage: `This record was edited manually to test the conversion processes
 
 As such, **it is not very interesting at all.**`,
-  useLimitations: [
-    'Should only be used as a testing tool',
-    'Might cause minor annoyance in people',
+  otherConstraints: [
+    { text: 'Should only be used as a testing tool' },
+    { text: 'Might cause minor annoyance in people' },
   ],
   licenses: [
     {
@@ -103,14 +103,14 @@ As such, **it is not very interesting at all.**`,
       url: new URL('https://data.rennesmetropole.fr/pages/licence/'),
     },
   ],
-  accessConstraints: [
+  legalConstraints: [
     {
       text: "Dataset access isn't possible since it does not really exist",
-      type: 'other',
     },
+  ],
+  securityConstraints: [
     {
       text: 'Contains sensitive information related to national defense',
-      type: 'security',
     },
   ],
   spatialExtents: [],

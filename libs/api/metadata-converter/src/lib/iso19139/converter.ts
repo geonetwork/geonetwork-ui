@@ -12,7 +12,6 @@ import {
 } from '../xml-utils'
 import {
   writeAbstract,
-  writeAccessConstraints,
   writeContacts,
   writeDatasetCreated,
   writeDatasetUpdated,
@@ -20,22 +19,23 @@ import {
   writeGraphicOverviews,
   writeKeywords,
   writeKind,
+  writeLegalConstraints,
   writeLicenses,
   writeLineage,
   writeOnlineResources,
+  writeOtherConstraints,
   writeOwnerOrganization,
   writeRecordUpdated,
+  writeSecurityConstraints,
   writeSpatialRepresentation,
   writeStatus,
   writeThemes,
   writeTitle,
   writeUniqueIdentifier,
   writeUpdateFrequency,
-  writeUseLimitations,
 } from './write-parts'
 import {
   readAbstract,
-  readAccessConstraints,
   readContacts,
   readDatasetCreated,
   readDatasetUpdated,
@@ -43,12 +43,15 @@ import {
   readIsoTopics,
   readKeywords,
   readKind,
+  readLegalConstraints,
   readLicenses,
   readLineage,
   readOnlineResources,
+  readOtherConstraints,
   readOverviews,
   readOwnerOrganization,
   readRecordUpdated,
+  readSecurityConstraints,
   readSpatialExtents,
   readSpatialRepresentation,
   readStatus,
@@ -57,7 +60,6 @@ import {
   readTitle,
   readUniqueIdentifier,
   readUpdateFrequency,
-  readUseLimitations,
 } from './read-parts'
 import { isEqual } from '../convert-utils'
 
@@ -75,8 +77,9 @@ export function toModel(xml: string): CatalogRecord {
   const recordCreated = recordUpdated
   const keywords = readKeywords(rootEl)
   const themes = readThemes(rootEl)
-  const accessConstraints = readAccessConstraints(rootEl)
-  const useLimitations = readUseLimitations(rootEl)
+  const legalConstraints = readLegalConstraints(rootEl)
+  const otherConstraints = readOtherConstraints(rootEl)
+  const securityConstraints = readSecurityConstraints(rootEl)
   const licenses = readLicenses(rootEl)
   const overviews = readOverviews(rootEl)
 
@@ -107,9 +110,10 @@ export function toModel(xml: string): CatalogRecord {
       contactsForResource: [], // FIXME: is that really useful??
       keywords,
       themes,
-      accessConstraints,
-      useLimitations,
       licenses,
+      legalConstraints,
+      securityConstraints,
+      otherConstraints,
       ...(datasetCreated && { datasetCreated }),
       ...(datasetUpdated && { datasetUpdated }),
       lineage,
@@ -133,9 +137,10 @@ export function toModel(xml: string): CatalogRecord {
       contacts,
       keywords,
       themes,
-      accessConstraints,
-      useLimitations,
       licenses,
+      legalConstraints,
+      securityConstraints,
+      otherConstraints,
       overviews,
       onlineResources,
     } as ServiceRecord
@@ -164,9 +169,11 @@ export function toXml(record: CatalogRecord, originalXml?: string): string {
   fieldChanged('contacts') && writeContacts(record, rootEl)
   fieldChanged('keywords') && writeKeywords(record, rootEl)
   fieldChanged('themes') && writeThemes(record, rootEl)
-  fieldChanged('accessConstraints') && writeAccessConstraints(record, rootEl)
+  fieldChanged('legalConstraints') && writeLegalConstraints(record, rootEl)
+  fieldChanged('securityConstraints') &&
+    writeSecurityConstraints(record, rootEl)
   fieldChanged('licenses') && writeLicenses(record, rootEl)
-  fieldChanged('useLimitations') && writeUseLimitations(record, rootEl)
+  fieldChanged('otherConstraints') && writeOtherConstraints(record, rootEl)
 
   if (record.kind === 'dataset') {
     writeStatus(record, rootEl)
