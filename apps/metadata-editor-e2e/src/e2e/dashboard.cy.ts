@@ -50,14 +50,16 @@ describe('dashboard', () => {
       cy.url().should('include', 'sort=resourceTitleObject.default.keyword')
       cy.get('.table-header-cell').eq(1).click()
       cy.url().should('include', 'sort=-resourceTitleObject.default.keyword')
-      cy.get('gn-ui-results-table')
-        .find('.table-row-cell')
-        .eq(1)
-        .invoke('text')
-        .invoke('trim')
-        .then(function (newFirstItem) {
-          expect(newFirstItem).not.to.equal(this.originalFirstItem)
-        })
+
+      // this is wrapped in a then call because we want to have access to `this.originalFirstItem`
+      cy.get('gn-ui-results-table').then(function (table) {
+        cy.wrap(table)
+          .find('.table-row-cell')
+          .eq(1)
+          .invoke('text')
+          .invoke('trim')
+          .should('not.equal', this.originalFirstItem)
+      })
     })
   })
 
