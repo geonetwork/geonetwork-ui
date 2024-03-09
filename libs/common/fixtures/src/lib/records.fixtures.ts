@@ -115,7 +115,7 @@ As such, **it is not very interesting at all.**`,
         url: new URL('https://data.rennesmetropole.fr/pages/licence/'),
       },
     ],
-    accessConstraints: [
+    legalConstraints: [
       {
         text: "Dataset access isn't possible since it does not really exist",
         type: 'other',
@@ -125,6 +125,8 @@ As such, **it is not very interesting at all.**`,
         type: 'security',
       },
     ],
+    securityConstraints: [],
+    otherConstraints: [],
     spatialExtents: [],
     temporalExtents: [],
     updateFrequency: {
@@ -189,7 +191,9 @@ Malgré l'attention portée à la création de ces données, il est rappelé que
     ],
     lineage: `Document d’urbanisme numérisé conformément aux prescriptions nationales du CNIG par le Service d'Information Géographique de l'Agglomération de la Région de Compiègne.
 Ce lot de données produit en 2019, a été numérisé à partir du PCI Vecteur de 2019 et contrôlé par le Service d'Information Géographique de l'Agglomération de la Région de Compiègne.`,
-    accessConstraints: [],
+    legalConstraints: [],
+    securityConstraints: [],
+    otherConstraints: [],
     useLimitations: ["Aucune condition ne s'applique", 'Licence Ouverte 2.0'],
     licenses: [
       {
