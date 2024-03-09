@@ -5,6 +5,7 @@ import {
   FullTextSearchField,
   IsSpatialSearchField,
   LicenseSearchField,
+  MultilingualSearchField,
   OrganizationSearchField,
   OwnerSearchField,
   SimpleSearchField,
@@ -59,7 +60,7 @@ export class FieldsService {
       this.injector,
       'asc'
     ),
-    keyword: new TranslatedSearchField('tag', this.injector, 'desc', 'count'),
+    keyword: new MultilingualSearchField('tag', this.injector, 'desc', 'count'),
     documentStandard: new SimpleSearchField(
       'documentStandard',
       this.injector,

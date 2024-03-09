@@ -13,7 +13,11 @@ import {
   FieldFilters,
   TermBucket,
 } from '@geonetwork-ui/common/domain/model/search'
-import { ElasticsearchService } from '@geonetwork-ui/api/repository'
+import {
+  ElasticsearchService,
+  METADATA_LANGUAGE,
+} from '@geonetwork-ui/api/repository'
+import { LangService } from '@geonetwork-ui/util/i18n'
 
 export type FieldValue = string | number
 export interface FieldAvailableValue {
@@ -52,7 +56,7 @@ export class SimpleSearchField implements AbstractSearchField {
   }
 
   protected async getBucketLabel(bucket: TermBucket): Promise<string> {
-    return bucket.term as string
+    return bucket.term.toString()
   }
 
   getAvailableValues(): Observable<FieldAvailableValue[]> {
@@ -118,6 +122,32 @@ export class TranslatedSearchField extends SimpleSearchField {
           values.sort((a, b) => new Intl.Collator().compare(a.label, b.label))
         )
       )
+  }
+}
+
+/**
+ * This search field will either target the `.default` field, or a specific `.langxyz` field according
+ * to the defined METADATA_LANGUAGE token
+ * The provided ES field name should not include any prefix such as `.langeng`
+ */
+export class MultilingualSearchField extends SimpleSearchField {
+  private langService = this.injector.get(LangService)
+  private searchLanguage = this.injector.get(METADATA_LANGUAGE, null)
+
+  constructor(
+    protected esFieldName: string,
+    protected injector: Injector,
+    protected order: 'asc' | 'desc' = 'asc',
+    protected orderType: 'key' | 'count' = 'key'
+  ) {
+    super(esFieldName, injector, order, orderType)
+    // note: we're excluding the metadata language "current" value because that would produce
+    // permalinks that might not work for different users
+    if (this.searchLanguage && this.searchLanguage !== 'current') {
+      this.esFieldName += `.lang${this.searchLanguage}`
+    } else {
+      this.esFieldName += '.default'
+    }
   }
 }
 

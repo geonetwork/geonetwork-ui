@@ -7,13 +7,17 @@ import {
   LicenseSearchField,
   OrganizationSearchField,
   SimpleSearchField,
+  MultilingualSearchField,
 } from './fields'
 import { TestBed } from '@angular/core/testing'
 import { Injector } from '@angular/core'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
-import { ElasticsearchService } from '@geonetwork-ui/api/repository'
+import {
+  ElasticsearchService,
+  METADATA_LANGUAGE,
+} from '@geonetwork-ui/api/repository'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
@@ -176,6 +180,7 @@ describe('search fields implementations', () => {
   let repository: RecordsRepositoryInterface
   let platformService: PlatformServiceInterface
   let injector: Injector
+  let currentMetadataLanguage: string
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -201,8 +206,13 @@ describe('search fields implementations', () => {
           provide: OrganizationsServiceInterface,
           useClass: OrganisationsServiceMock,
         },
+        {
+          provide: METADATA_LANGUAGE,
+          useFactory: () => currentMetadataLanguage,
+        },
       ],
     })
+    currentMetadataLanguage = null
     esService = TestBed.inject(ElasticsearchService)
     repository = TestBed.inject(RecordsRepositoryInterface)
     platformService = TestBed.inject(PlatformServiceInterface)
@@ -364,6 +374,75 @@ describe('search fields implementations', () => {
             { label: 'Hello (3)', value: 'Second value' },
             { label: 'Fourth value (1)', value: 'Fourth value' },
           ])
+        })
+      })
+    })
+  })
+
+  describe('MultilingualSearchField', () => {
+    describe('METADATA_LANGUAGE set to current', () => {
+      beforeEach(async () => {
+        currentMetadataLanguage = 'current'
+        searchField = new MultilingualSearchField(
+          'myField',
+          injector,
+          'desc',
+          'count'
+        )
+        await lastValueFrom(searchField.getAvailableValues())
+      })
+      it('appends the field name with the default field', () => {
+        expect(repository.aggregate).toHaveBeenCalledWith({
+          'myField.default': {
+            type: 'terms',
+            limit: 1000,
+            field: 'myField.default',
+            sort: ['desc', 'count'],
+          },
+        })
+      })
+    })
+    describe('METADATA_LANGUAGE set to an explicit language', () => {
+      beforeEach(async () => {
+        currentMetadataLanguage = 'swe'
+        searchField = new MultilingualSearchField(
+          'myField',
+          injector,
+          'desc',
+          'count'
+        )
+        await lastValueFrom(searchField.getAvailableValues())
+      })
+      it('appends the field name with the given language', () => {
+        expect(repository.aggregate).toHaveBeenCalledWith({
+          'myField.langswe': {
+            type: 'terms',
+            limit: 1000,
+            field: 'myField.langswe',
+            sort: ['desc', 'count'],
+          },
+        })
+      })
+    })
+    describe('METADATA_LANGUAGE unset', () => {
+      beforeEach(async () => {
+        currentMetadataLanguage = null
+        searchField = new MultilingualSearchField(
+          'myField',
+          injector,
+          'desc',
+          'count'
+        )
+        await lastValueFrom(searchField.getAvailableValues())
+      })
+      it('appends the field name with the default field', () => {
+        expect(repository.aggregate).toHaveBeenCalledWith({
+          'myField.default': {
+            type: 'terms',
+            limit: 1000,
+            field: 'myField.default',
+            sort: ['desc', 'count'],
+          },
         })
       })
     })
