@@ -33,18 +33,19 @@
       </ng-template>
     </ng-container>
     <ng-container *ngIf="legalConstraints.length">
-      <p gnUiLinkify *ngFor="let constraint of legalConstraints">
-        {{ constraint }}
-      </p>
+      <gn-ui-markdown-parser
+        *ngFor="let constraint of legalConstraints"
+        [textContent]="constraint"
+      >
+      </gn-ui-markdown-parser>
     </ng-container>
     <ng-container *ngIf="otherConstraints.length">
       <div gnUiLinkify *ngFor="let constraint of otherConstraints">
         <h5 translate class="font-medium text-black text-sm mb-[2px] mt-[16px]">
           record.metadata.otherConstraints
         </h5>
-        <p>
-          {{ constraint }}
-        </p>
+        <gn-ui-markdown-parser [textContent]="constraint">
+        </gn-ui-markdown-parser>
       </div>
     </ng-container>
 
