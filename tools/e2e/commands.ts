@@ -97,7 +97,7 @@ Cypress.Commands.add(
   'openDropdown',
   { prevSubject: true },
   (dropdownElement) => {
-    cy.get('body').click() // first click on the document to close other dropdowns
+    cy.get('body').click('bottomLeft') // first click on the document to close other dropdowns
     const width = dropdownElement.width()
     const height = dropdownElement.height()
     cy.wrap(dropdownElement).click(width - 10, height / 2) // click on the right size to avoid the label
