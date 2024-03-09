@@ -20,6 +20,10 @@ describe('home', () => {
     })
     it('should display the "show more" button', () => {
       cy.get('[data-cy="addMoreBtn"]').should('be.visible')
+      cy.get('body').then((body$) => {
+        cy.viewport(body$.width(), body$.height())
+        cy.screenshot({ capture: 'viewport' })
+      })
     })
     it('should display the orga and dataset link buttons', () => {
       cy.get('gn-ui-figure').should('have.length', 2)
@@ -108,6 +112,7 @@ describe('home', () => {
         .then(function (resultTitle) {
           expect(resultTitle).to.eql(this.favoriteTitle)
         })
+      cy.screenshot({ capture: 'viewport' })
     })
   })
 })

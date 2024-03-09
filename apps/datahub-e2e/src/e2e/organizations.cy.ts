@@ -48,6 +48,7 @@ describe('organizations', () => {
       cy.get('@organizationsRecordsCount')
         .its('text')
         .should('have.length.above', 0)
+      cy.screenshot({ capture: 'viewport' })
     })
     it('should display organization information', () => {
       cy.get('@organizationsName')
@@ -182,6 +183,7 @@ describe('organizations', () => {
         .eq(0)
         .invoke('text')
         .should('contain', 'Géo2France')
+      cy.screenshot({ capture: 'viewport' })
     })
   })
 })
