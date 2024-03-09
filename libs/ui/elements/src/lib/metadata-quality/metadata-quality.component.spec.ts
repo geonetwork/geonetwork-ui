@@ -24,7 +24,7 @@ describe('MetadataQualityComponent', () => {
     { name: 'description', value: true },
     { name: 'topic', value: true },
     { name: 'keywords', value: true },
-    { name: 'legalConstraints', value: false },
+    { name: 'legalConstraints', value: true },
     { name: 'organisation', value: true },
     { name: 'contact', value: true },
     { name: 'updateFrequency', value: true },

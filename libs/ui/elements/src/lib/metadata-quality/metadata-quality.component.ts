@@ -32,8 +32,7 @@ export class MetadataQualityComponent implements OnChanges {
 
   get calculatedQualityScore(): number {
     return Math.round(
-      (this.items.filter(({ value }) => value === true).length * 100) /
-        this.items.length
+      (this.items.filter(({ value }) => value).length * 100) / this.items.length
     )
   }
 
