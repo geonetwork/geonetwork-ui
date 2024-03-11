@@ -56,7 +56,7 @@ export class FieldsService {
     ),
     topic: new TranslatedSearchField('cl_topic.key', this.injector, 'asc'),
     inspireKeyword: new TranslatedSearchField(
-      'th_httpinspireeceuropaeutheme-theme',
+      'th_httpinspireeceuropaeutheme-theme.link',
       this.injector,
       'asc'
     ),
