@@ -466,6 +466,8 @@ describe('dataset pages', () => {
     describe('display', () => {
       it('should have external, API and internal links with one option', () => {
         cy.get('datahub-record-otherlinks')
+          .find('.carousel-step-dot')
+          .should('exist')
           .find('gn-ui-link-card')
           .should('have.length.gt', 0)
         cy.get('datahub-record-apis')
@@ -495,6 +497,8 @@ describe('dataset pages', () => {
           .find('button')
           .first()
           .realClick()
+          .get('.carousel-step-dot')
+          .should('not.exist')
         // attempt to make the whole page focused
         cy.get('body').focus()
         cy.get('body').realClick()
