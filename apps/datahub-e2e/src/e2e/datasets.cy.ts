@@ -157,6 +157,12 @@ describe('datasets', () => {
     }
 
     beforeEach(() => {
+      // this will enable all available filters
+      cy.intercept('GET', '/assets/configuration/default.toml', {
+        fixture: 'config-with-all-filters.toml',
+      })
+      cy.visit('/search')
+
       // expand filters
       cy.get('datahub-search-filters')
         .find('[data-cy=filters-expand]')
@@ -164,7 +170,7 @@ describe('datasets', () => {
         .click()
     })
     it('should display all filters', () => {
-      cy.get('@filters').filter(':visible').should('have.length', 6)
+      cy.get('@filters').filter(':visible').should('have.length', 10)
       cy.get('@filters')
         .children()
         .then(($dropdowns) =>
@@ -179,6 +185,10 @@ describe('datasets', () => {
           'topic',
           'isSpatial',
           'license',
+          'inspireKeyword',
+          'keyword',
+          'resourceType',
+          'representationType',
         ])
     })
 
@@ -342,6 +352,72 @@ describe('datasets', () => {
     describe('licence filter', () => {
       beforeEach(() => {
         cy.get('@filters').eq(5).click()
+        getFilterOptions()
+      })
+      it('should have options', () => {
+        cy.get('@options').should('have.length.above', 0)
+      })
+      it('should not have duplicates', () => {
+        cy.get<string[]>('@optionsLabelWithoutCount').then(checkHasDuplicates)
+      })
+    })
+
+    describe('inspire keyword filter', () => {
+      beforeEach(() => {
+        cy.get('@filters').eq(6).click()
+        getFilterOptions()
+      })
+      it('should have options', () => {
+        cy.get('@options').should('have.length.above', 0)
+        cy.get('@optionsLabel')
+          .invoke('slice', 0, 3)
+          .should('eql', [
+            'Environmental monitoring facilities (2)',
+            'Land use (1)',
+            'Production and industrial facilities (1)',
+          ])
+      })
+      it('should not have duplicates', () => {
+        cy.get<string[]>('@optionsLabelWithoutCount').then(checkHasDuplicates)
+      })
+    })
+
+    describe('keyword filter', () => {
+      beforeEach(() => {
+        cy.get('@filters').eq(7).click()
+        getFilterOptions()
+      })
+      it('should have options', () => {
+        cy.get('@options').should('have.length.above', 0)
+        cy.get('@optionsLabel')
+          .invoke('slice', 0, 3)
+          .should('eql', [
+            'DONNEE OUVERTE (3)',
+            'HAUTS-DE-FRANCE (3)',
+            'Open Data (3)',
+          ])
+      })
+      it('should not have duplicates', () => {
+        cy.get<string[]>('@optionsLabelWithoutCount').then(checkHasDuplicates)
+      })
+    })
+
+    describe('resource type filter', () => {
+      beforeEach(() => {
+        cy.get('@filters').eq(8).click()
+        getFilterOptions()
+      })
+      it('should have options', () => {
+        cy.get('@options').should('have.length.above', 0)
+      })
+      it('should not have duplicates', () => {
+        cy.get<string[]>('@optionsLabelWithoutCount').then(checkHasDuplicates)
+      })
+    })
+
+    describe('representation type filter', () => {
+      beforeEach(() => {
+        cy.get('@filters').eq(9).click()
         getFilterOptions()
       })
       it('should have options', () => {
