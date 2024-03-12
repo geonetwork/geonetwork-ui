@@ -211,7 +211,18 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
     },
   ],
   themes: [],
-  keywords: ['Verkehr', 'opendata.swiss'],
+  keywords: [
+    {
+      thesaurusId: 'geonetwork.thesaurus.local',
+      type: 'other',
+      value: 'Verkehr',
+    },
+    {
+      thesaurusId: 'geonetwork.thesaurus.local',
+      type: 'other',
+      value: 'opendata.swiss',
+    },
+  ],
   onlineResources: [
     {
       type: 'link',

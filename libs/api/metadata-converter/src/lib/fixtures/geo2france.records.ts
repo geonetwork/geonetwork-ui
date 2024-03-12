@@ -38,11 +38,31 @@ Malgré l'attention portée à la création de ces données, il est rappelé que
     },
   ],
   keywords: [
-    'planification',
-    'PLU',
-    "Plan local d'urbanisme",
-    'données ouvertes',
-    'Avrigny*60036',
+    {
+      thesaurusId: 'geonetwork.thesaurus.local',
+      type: 'other',
+      value: 'planification',
+    },
+    {
+      thesaurusId: 'geonetwork.thesaurus.local',
+      type: 'other',
+      value: 'PLU',
+    },
+    {
+      thesaurusId: 'geonetwork.thesaurus.local',
+      type: 'other',
+      value: "Plan local d'urbanisme",
+    },
+    {
+      thesaurusId: 'geonetwork.thesaurus.local',
+      type: 'other',
+      value: 'données ouvertes',
+    },
+    {
+      thesaurusId: 'geonetwork.thesaurus.local',
+      type: 'other',
+      value: 'Avrigny*60036',
+    },
   ],
   themes: ['Usage des sols', "document d'urbanisme"],
   spatialRepresentation: 'vector',
