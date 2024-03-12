@@ -5,6 +5,7 @@ import {
   DatasetRecord,
   DatasetServiceDistribution,
   Individual,
+  Keyword,
   RecordStatus,
   Role,
   ServiceEndpoint,
@@ -346,7 +347,7 @@ function removeKeywords(type: string | null) {
   )
 }
 
-function appendKeywords(keywords: string[], type: string | null) {
+function appendKeywords(keywords: Keyword[] | string[], type: string | null) {
   return appendChildren(
     pipe(
       createElement('gmd:descriptiveKeywords'),
@@ -366,7 +367,12 @@ function appendKeywords(keywords: string[], type: string | null) {
         : noop,
       appendChildren(
         ...keywords.map((keyword) =>
-          pipe(createElement('gmd:keyword'), writeCharacterString(keyword))
+          pipe(
+            createElement('gmd:keyword'),
+            writeCharacterString(
+              typeof keyword === 'string' ? keyword : keyword.value
+            )
+          )
         )
       )
     )
