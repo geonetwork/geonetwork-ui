@@ -60,6 +60,29 @@ export type SpatialRepresentationType =
   | 'table'
   | 'point'
 
+type KeywordType =
+  | 'subTopicCategory'
+  | 'dataCentre'
+  | 'discipline'
+  | 'instrument'
+  | 'place'
+  | 'platform'
+  | 'process'
+  | 'product'
+  | 'project'
+  | 'service'
+  | 'stratum'
+  | 'taxon'
+  | 'temporal'
+  | 'theme'
+  | 'featureType'
+  | 'other'
+export interface Keyword {
+  value?: string
+  type?: KeywordType
+  thesaurusId?: string
+}
+
 export interface BaseRecord {
   uniqueIdentifier: Uuid
   ownerOrganization: Organization
@@ -70,7 +93,7 @@ export interface BaseRecord {
   recordUpdated: Date
   kind: RecordKind
   themes: Array<string> // TODO: handle codelists
-  keywords: Array<string> // TODO: handle thesaurus and id
+  keywords: Array<Keyword>
   licenses: Array<Constraint>
   legalConstraints: Array<Constraint>
   securityConstraints: Array<Constraint>

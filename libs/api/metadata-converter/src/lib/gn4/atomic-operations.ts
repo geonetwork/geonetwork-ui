@@ -3,6 +3,7 @@ import {
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
 import { getRoleFromRoleCode } from '../iso19139/codelists/role.mapper'
+import { Thesaurus } from './types'
 
 export type SourceWithUnknownProps = { [key: string]: unknown }
 
@@ -97,4 +98,20 @@ export const mapContact = (
     ...(address && { address }),
     ...(phone && { phone }),
   }
+}
+
+export const mapKeywords = (thesauri: Thesaurus[], language: string) => {
+  const keywords = []
+  for (const thesaurusId in thesauri) {
+    const thesaurus = thesauri[thesaurusId]
+    for (const keyword of thesaurus.keywords) {
+      keywords.push({
+        value: selectTranslatedValue<string>(keyword, language),
+        type: thesaurus.theme || 'other',
+        thesaurusId: thesaurus.id,
+      })
+    }
+  }
+
+  return keywords
 }
