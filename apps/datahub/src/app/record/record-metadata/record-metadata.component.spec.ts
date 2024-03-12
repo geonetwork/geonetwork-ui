@@ -25,6 +25,7 @@ import {
   DatasetRecord,
   DatasetServiceDistribution,
   Individual,
+  Keyword,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
 
@@ -117,7 +118,7 @@ export class MockRelatedComponent {}
 export class MockMetadataInfoComponent {
   @Input() metadata: Partial<DatasetRecord>
   @Input() incomplete: boolean
-  @Output() keyword = new EventEmitter<string>()
+  @Output() keyword = new EventEmitter<Keyword>()
 }
 
 @Component({
@@ -593,9 +594,13 @@ describe('RecordMetadataComponent', () => {
 
   describe('#onInfoKeywordClick', () => {
     it('call searchService for any', () => {
-      component.onInfoKeywordClick('any')
+      component.onInfoKeywordClick({
+        thesaurusId: 'geonetwork.thesaurus.local',
+        type: 'other',
+        value: 'international',
+      })
       expect(searchService.updateFilters).toHaveBeenCalledWith({
-        any: 'any',
+        any: 'international',
       })
     })
   })

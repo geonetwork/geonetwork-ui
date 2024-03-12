@@ -5,7 +5,10 @@ import { ErrorType } from '@geonetwork-ui/ui/elements'
 import { BehaviorSubject, combineLatest } from 'rxjs'
 import { filter, map, mergeMap } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { Organization } from '@geonetwork-ui/common/domain/model/record'
+import {
+  Keyword,
+  Organization,
+} from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 
 @Component({
@@ -84,8 +87,8 @@ export class RecordMetadataComponent {
     }, 0)
   }
 
-  onInfoKeywordClick(keyword: string) {
-    this.searchService.updateFilters({ any: keyword })
+  onInfoKeywordClick(keyword: Keyword) {
+    this.searchService.updateFilters({ any: keyword.value })
   }
   onOrganizationClick(org: Organization) {
     this.orgsService
