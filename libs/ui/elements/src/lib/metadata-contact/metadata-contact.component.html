@@ -37,7 +37,13 @@
       </div>
     </div>
     <div class="grid gap-5 py-3 overflow-hidden">
-      <div *ngIf="contacts[0]?.phone">
+      <div
+        *ngIf="
+          contacts[0]?.phone &&
+          contacts[0].phone.trim().length > 0 &&
+          contacts[0].phone !== 'null'
+        "
+      >
         <div class="flex">
           <mat-icon
             class="material-symbols-outlined !w-5 !h-5 !text-[20px] opacity-75 shrink-0"
