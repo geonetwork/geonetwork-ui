@@ -1,6 +1,13 @@
 <div class="mb-6 md-description sm:mb-4 sm:pr-16">
   <gn-ui-content-ghost ghostClass="h-32" [showContent]="fieldReady('abstract')">
-    <gn-ui-max-lines [maxLines]="6" *ngIf="metadata.abstract">
+    <gn-ui-max-lines
+      [maxLines]="6"
+      *ngIf="
+        metadata.abstract &&
+        metadata.abstract !== 'null' &&
+        metadata.abstract.trim() !== ''
+      "
+    >
       <div>
         <gn-ui-markdown-parser
           [textContent]="metadata.abstract"
