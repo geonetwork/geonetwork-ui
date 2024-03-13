@@ -292,6 +292,7 @@
   "search.filters.isSpatial": "",
   "search.filters.isSpatial.no": "",
   "search.filters.isSpatial.yes": "",
+  "search.filters.keyword": "",
   "search.filters.license": "",
   "search.filters.license.cc-by": "",
   "search.filters.license.cc-by-sa": "",

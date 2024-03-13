@@ -15,8 +15,5 @@ export abstract class PlatformServiceInterface {
   ): Observable<UserModel[]>
   abstract getOrganizations(): Observable<Organization[]>
   abstract translateKey(key: string): Observable<string>
-  abstract getThesaurusByLang(
-    thesaurusName: string,
-    lang: string
-  ): Observable<ThesaurusModel>
+  abstract getThesaurusByUri(uri: string): Observable<ThesaurusModel>
 }

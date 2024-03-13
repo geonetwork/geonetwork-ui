@@ -3,18 +3,21 @@ import {
   AbstractSearchField,
   FullTextSearchField,
   IsSpatialSearchField,
-  KeySearchField,
+  TranslatedSearchField,
   LicenseSearchField,
   OrganizationSearchField,
   SimpleSearchField,
-  ThesaurusField,
+  MultilingualSearchField,
 } from './fields'
 import { TestBed } from '@angular/core/testing'
 import { Injector } from '@angular/core'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
-import { ElasticsearchService } from '@geonetwork-ui/api/repository'
+import {
+  ElasticsearchService,
+  METADATA_LANGUAGE,
+} from '@geonetwork-ui/api/repository'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
@@ -25,6 +28,7 @@ class ElasticsearchServiceMock {
 class RecordsRepositoryMock {
   aggregate = jest.fn((aggregations) => {
     const aggName = Object.keys(aggregations)[0]
+    const sortType = aggregations[aggName].sort[1]
     if (aggName.startsWith('is'))
       return of({
         [aggName]: {
@@ -94,26 +98,30 @@ class RecordsRepositoryMock {
           ],
         },
       })
+    const buckets = [
+      {
+        term: 'First value',
+        count: 5,
+      },
+      {
+        term: 'Second value',
+        count: 3,
+      },
+      {
+        term: 'Third value',
+        count: 12,
+      },
+      {
+        term: 'Fourth value',
+        count: 1,
+      },
+    ]
+    if (sortType === 'count') {
+      buckets.sort((a, b) => b.count - a.count)
+    }
     return of({
       [aggName]: {
-        buckets: [
-          {
-            term: 'First value',
-            count: 5,
-          },
-          {
-            term: 'Second value',
-            count: 3,
-          },
-          {
-            term: 'Third value',
-            count: 12,
-          },
-          {
-            term: 'Fourth value',
-            count: 1,
-          },
-        ],
+        buckets,
       },
     })
   })
@@ -132,13 +140,6 @@ class PlatformInterfaceMock {
         return of(null)
     }
   })
-  getThesaurusByLang = jest.fn((thesaurusName: string, lang: string) =>
-    of([
-      { key: 'First value', label: 'Rivière' },
-      { key: 'Second value', label: 'Forêt' },
-      { key: 'Third value', label: 'Planète' },
-    ])
-  )
 }
 
 const sampleOrgs: Organization[] = [
@@ -179,6 +180,7 @@ describe('search fields implementations', () => {
   let repository: RecordsRepositoryInterface
   let platformService: PlatformServiceInterface
   let injector: Injector
+  let currentMetadataLanguage: string
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -204,8 +206,13 @@ describe('search fields implementations', () => {
           provide: OrganizationsServiceInterface,
           useClass: OrganisationsServiceMock,
         },
+        {
+          provide: METADATA_LANGUAGE,
+          useFactory: () => currentMetadataLanguage,
+        },
       ],
     })
+    currentMetadataLanguage = null
     esService = TestBed.inject(ElasticsearchService)
     repository = TestBed.inject(RecordsRepositoryInterface)
     platformService = TestBed.inject(PlatformServiceInterface)
@@ -214,7 +221,7 @@ describe('search fields implementations', () => {
 
   describe('SimpleSearchField', () => {
     beforeEach(() => {
-      searchField = new SimpleSearchField('myField', 'desc', injector)
+      searchField = new SimpleSearchField('myField', injector, 'desc')
     })
     describe('#getAvailableValues', () => {
       let values
@@ -303,65 +310,140 @@ describe('search fields implementations', () => {
     })
   })
 
-  describe('KeySearchField', () => {
-    beforeEach(() => {
-      searchField = new KeySearchField('cl_topic.key', 'asc', injector)
-    })
-    describe('#getAvailableValues', () => {
-      let values
-      beforeEach(async () => {
-        values = await lastValueFrom(searchField.getAvailableValues())
+  describe('TranslatedSearchField', () => {
+    describe('sort by key', () => {
+      beforeEach(() => {
+        searchField = new TranslatedSearchField('cl_topic.key', injector, 'asc')
       })
-      it('calls search with a simple unsorted terms', () => {
-        expect(repository.aggregate).toHaveBeenCalledWith({
-          'cl_topic.key': {
-            type: 'terms',
-            limit: 1000,
-            field: 'cl_topic.key',
-            sort: ['asc', 'key'],
-          },
+      describe('#getAvailableValues', () => {
+        let values
+        beforeEach(async () => {
+          values = await lastValueFrom(searchField.getAvailableValues())
+        })
+        it('calls search with a simple unsorted terms', () => {
+          expect(repository.aggregate).toHaveBeenCalledWith({
+            'cl_topic.key': {
+              type: 'terms',
+              limit: 1000,
+              field: 'cl_topic.key',
+              sort: ['asc', 'key'],
+            },
+          })
+        })
+        it('returns a list of values sorted by translated labels', () => {
+          expect(values).toEqual([
+            { label: 'Bla (12)', value: 'Third value' },
+            { label: 'Fourth value (1)', value: 'Fourth value' },
+            { label: 'Hello (3)', value: 'Second value' },
+            { label: 'Translated first value (5)', value: 'First value' },
+          ])
+        })
+        it('calls translations 4 times', () => {
+          expect(platformService.translateKey).toHaveBeenCalledTimes(4)
         })
       })
-      it('returns a list of values sorted by translated labels', () => {
-        expect(values).toEqual([
-          { label: 'Bla (12)', value: 'Third value' },
-          { label: 'Fourth value (1)', value: 'Fourth value' },
-          { label: 'Hello (3)', value: 'Second value' },
-          { label: 'Translated first value (5)', value: 'First value' },
-        ])
+    })
+    describe('sort by count', () => {
+      beforeEach(() => {
+        searchField = new TranslatedSearchField(
+          'tag.default',
+          injector,
+          'desc',
+          'count'
+        )
       })
-      it('calls translations 4 times', () => {
-        expect(platformService.translateKey).toHaveBeenCalledTimes(4)
+      describe('#getAvailableValues', () => {
+        let values
+        beforeEach(async () => {
+          values = await lastValueFrom(searchField.getAvailableValues())
+        })
+        it('calls search with a simple unsorted terms', () => {
+          expect(repository.aggregate).toHaveBeenCalledWith({
+            'tag.default': {
+              type: 'terms',
+              limit: 1000,
+              field: 'tag.default',
+              sort: ['desc', 'count'],
+            },
+          })
+        })
+        it('returns a list of values sorted by count', () => {
+          expect(values).toEqual([
+            { label: 'Bla (12)', value: 'Third value' },
+            { label: 'Translated first value (5)', value: 'First value' },
+            { label: 'Hello (3)', value: 'Second value' },
+            { label: 'Fourth value (1)', value: 'Fourth value' },
+          ])
+        })
       })
     })
   })
-  describe('ThesaurusField', () => {
-    beforeEach(() => {
-      searchField = new ThesaurusField(
-        'th_inspire.link',
-        'inspire',
-        'asc',
-        injector
-      )
-    })
-    describe('#getAvailableValues', () => {
-      let values
+
+  describe('MultilingualSearchField', () => {
+    describe('METADATA_LANGUAGE set to current', () => {
       beforeEach(async () => {
-        values = await lastValueFrom(searchField.getAvailableValues())
-      })
-      it('calls search with a simple unsorted terms', () => {
-        expect(platformService.getThesaurusByLang).toHaveBeenCalledWith(
-          'inspire',
-          'fre'
+        currentMetadataLanguage = 'current'
+        searchField = new MultilingualSearchField(
+          'myField',
+          injector,
+          'desc',
+          'count'
         )
+        await lastValueFrom(searchField.getAvailableValues())
       })
-      it('returns a list of values sorted by translated labels', () => {
-        expect(values).toEqual([
-          { label: 'Forêt (3)', value: 'Second value' },
-          { label: 'Fourth value (1)', value: 'Fourth value' },
-          { label: 'Planète (12)', value: 'Third value' },
-          { label: 'Rivière (5)', value: 'First value' },
-        ])
+      it('appends the field name with the default field', () => {
+        expect(repository.aggregate).toHaveBeenCalledWith({
+          'myField.default': {
+            type: 'terms',
+            limit: 1000,
+            field: 'myField.default',
+            sort: ['desc', 'count'],
+          },
+        })
+      })
+    })
+    describe('METADATA_LANGUAGE set to an explicit language', () => {
+      beforeEach(async () => {
+        currentMetadataLanguage = 'swe'
+        searchField = new MultilingualSearchField(
+          'myField',
+          injector,
+          'desc',
+          'count'
+        )
+        await lastValueFrom(searchField.getAvailableValues())
+      })
+      it('appends the field name with the given language', () => {
+        expect(repository.aggregate).toHaveBeenCalledWith({
+          'myField.langswe': {
+            type: 'terms',
+            limit: 1000,
+            field: 'myField.langswe',
+            sort: ['desc', 'count'],
+          },
+        })
+      })
+    })
+    describe('METADATA_LANGUAGE unset', () => {
+      beforeEach(async () => {
+        currentMetadataLanguage = null
+        searchField = new MultilingualSearchField(
+          'myField',
+          injector,
+          'desc',
+          'count'
+        )
+        await lastValueFrom(searchField.getAvailableValues())
+      })
+      it('appends the field name with the default field', () => {
+        expect(repository.aggregate).toHaveBeenCalledWith({
+          'myField.default': {
+            type: 'terms',
+            limit: 1000,
+            field: 'myField.default',
+            sort: ['desc', 'count'],
+          },
+        })
       })
     })
   })

@@ -14,8 +14,10 @@ import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { Gn4PlatformMapper } from './gn4-platform.mapper'
 import { ltr } from 'semver'
 import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus/thesaurus.model'
+import { LangService } from '@geonetwork-ui/util/i18n'
 
 const minApiVersion = '4.2.2'
+
 @Injectable()
 export class Gn4PlatformService implements PlatformServiceInterface {
   private readonly type = 'GeoNetwork'
@@ -50,13 +52,20 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     shareReplay(1)
   )
 
+  /**
+   * A map of already loaded thesauri (groups of keywords); the key is a URI
+   * @private
+   */
+  private thesauri: Record<string, Observable<ThesaurusModel>> = {}
+
   constructor(
     private siteApiService: SiteApiService,
     private meApi: MeApiService,
     private usersApi: UsersApiService,
     private mapper: Gn4PlatformMapper,
     private toolsApiService: ToolsApiService,
-    private registriesApiService: RegistriesApiService
+    private registriesApiService: RegistriesApiService,
+    private langService: LangService
   ) {
     this.me$ = this.meApi.getMe().pipe(
       switchMap((apiUser) => this.mapper.userFromMeApi(apiUser)),
@@ -98,17 +107,47 @@ export class Gn4PlatformService implements PlatformServiceInterface {
   }
 
   translateKey(key: string): Observable<string> {
+    // if the key is a URI, use the registries API to look for the translation
+    if (key.match(/^https?:\/\//)) {
+      // the thesaurus URI is inferred by removing a part of the keyword URI
+      // this is not exact science but it's OK, we'll still end up loading a bunch of keywords at once anyway
+      const thesaurusUri = key.replace(/\/([^/]+)$/, '/')
+      return this.getThesaurusByUri(thesaurusUri).pipe(
+        map((thesaurus) => {
+          for (const item of thesaurus) {
+            if (item.key === key) return item.label
+          }
+          return key
+        })
+      )
+    }
     return this.keyTranslations$.pipe(map((translations) => translations[key]))
   }
 
-  getThesaurusByLang(
-    thesaurusName: string,
-    lang: string
-  ): Observable<ThesaurusModel> {
-    return this.registriesApiService
-      .searchKeywords(null, lang, 1000, 0, null, [thesaurusName])
-      .pipe(
-        map((thesaurus) => this.mapper.thesaurusFromApi(thesaurus as any[]))
+  getThesaurusByUri(uri: string): Observable<ThesaurusModel> {
+    if (this.thesauri[uri]) {
+      return this.thesauri[uri]
+    }
+    this.thesauri[uri] = this.registriesApiService
+      .searchKeywords(
+        null,
+        this.langService.iso3,
+        1000,
+        0,
+        null,
+        null,
+        null,
+        `${uri}*`
       )
+      .pipe(
+        map((thesaurus) =>
+          this.mapper.thesaurusFromApi(
+            thesaurus as any[],
+            this.langService.iso3
+          )
+        ),
+        shareReplay(1)
+      )
+    return this.thesauri[uri]
   }
 }

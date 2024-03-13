@@ -1,5 +1,5 @@
-import { firstValueFrom, Observable, of, switchMap, tap } from 'rxjs'
-import { catchError, map, shareReplay } from 'rxjs/operators'
+import { firstValueFrom, Observable, of, switchMap } from 'rxjs'
+import { map } from 'rxjs/operators'
 import { Injector } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -13,7 +13,10 @@ import {
   FieldFilters,
   TermBucket,
 } from '@geonetwork-ui/common/domain/model/search'
-import { ElasticsearchService } from '@geonetwork-ui/api/repository'
+import {
+  ElasticsearchService,
+  METADATA_LANGUAGE,
+} from '@geonetwork-ui/api/repository'
 import { LangService } from '@geonetwork-ui/util/i18n'
 
 export type FieldValue = string | number
@@ -36,8 +39,9 @@ export class SimpleSearchField implements AbstractSearchField {
 
   constructor(
     protected esFieldName: string,
+    protected injector: Injector,
     protected order: 'asc' | 'desc' = 'asc',
-    protected injector: Injector
+    protected orderType: 'key' | 'count' = 'key'
   ) {}
 
   protected getAggregations(): AggregationsParams {
@@ -46,13 +50,13 @@ export class SimpleSearchField implements AbstractSearchField {
         type: 'terms',
         field: this.esFieldName,
         limit: 1000,
-        sort: [this.order, 'key'],
+        sort: [this.order, this.orderType],
       },
     }
   }
 
   protected async getBucketLabel(bucket: TermBucket): Promise<string> {
-    return bucket.term as string
+    return bucket.term.toString()
   }
 
   getAvailableValues(): Observable<FieldAvailableValue[]> {
@@ -88,8 +92,17 @@ export class SimpleSearchField implements AbstractSearchField {
   }
 }
 
-export class KeySearchField extends SimpleSearchField {
+export class TranslatedSearchField extends SimpleSearchField {
   protected platformService = this.injector.get(PlatformServiceInterface)
+
+  constructor(
+    protected esFieldName: string,
+    protected injector: Injector,
+    protected order: 'asc' | 'desc' = 'asc',
+    protected orderType: 'key' | 'count' = 'key'
+  ) {
+    super(esFieldName, injector, order, orderType)
+  }
 
   protected async getTranslation(key: string) {
     return firstValueFrom(this.platformService.translateKey(key))
@@ -100,6 +113,7 @@ export class KeySearchField extends SimpleSearchField {
   }
 
   getAvailableValues(): Observable<FieldAvailableValue[]> {
+    if (this.orderType === 'count') return super.getAvailableValues()
     // sort values by alphabetical order
     return super
       .getAvailableValues()
@@ -111,34 +125,29 @@ export class KeySearchField extends SimpleSearchField {
   }
 }
 
-export class ThesaurusField extends KeySearchField {
+/**
+ * This search field will either target the `.default` field, or a specific `.langxyz` field according
+ * to the defined METADATA_LANGUAGE token
+ * The provided ES field name should not include any prefix such as `.langeng`
+ */
+export class MultilingualSearchField extends SimpleSearchField {
   private langService = this.injector.get(LangService)
-  private thesaurus$ = this.platformService
-    .getThesaurusByLang(this.thesaurusName, this.langService.iso3)
-    .pipe(
-      catchError(() => {
-        console.warn('Error while loading thesaurus language package')
-        return of([])
-      }),
-      shareReplay(1)
-    )
+  private searchLanguage = this.injector.get(METADATA_LANGUAGE, null)
 
   constructor(
-    esFieldName: string,
-    protected thesaurusName: string,
-    order: 'asc' | 'desc' = 'asc',
-    injector: Injector
+    protected esFieldName: string,
+    protected injector: Injector,
+    protected order: 'asc' | 'desc' = 'asc',
+    protected orderType: 'key' | 'count' = 'key'
   ) {
-    super(esFieldName, order, injector)
-  }
-  protected async getTranslation(key: string) {
-    return firstValueFrom(
-      this.thesaurus$.pipe(
-        map(
-          (thesaurus) => thesaurus.find((keyword) => keyword.key === key)?.label
-        )
-      )
-    )
+    super(esFieldName, injector, order, orderType)
+    // note: we're excluding the metadata language "current" value because that would produce
+    // permalinks that might not work for different users
+    if (this.searchLanguage && this.searchLanguage !== 'current') {
+      this.esFieldName += `.lang${this.searchLanguage}`
+    } else {
+      this.esFieldName += '.default'
+    }
   }
 }
 
@@ -163,7 +172,7 @@ export class IsSpatialSearchField extends SimpleSearchField {
   private translateService = this.injector.get(TranslateService)
 
   constructor(injector: Injector) {
-    super('isSpatial', 'asc', injector)
+    super('isSpatial', injector, 'asc')
     this.esService.registerRuntimeField(
       'isSpatial',
       `String result = 'no';
@@ -223,7 +232,7 @@ export class LicenseSearchField extends SimpleSearchField {
   private translateService = this.injector.get(TranslateService)
 
   constructor(injector: Injector) {
-    super('license', 'asc', injector)
+    super('license', injector, 'asc')
     this.esService.registerRuntimeField(
       'license',
       `String raw = '';
@@ -330,7 +339,7 @@ export class OrganizationSearchField implements AbstractSearchField {
 }
 export class OwnerSearchField extends SimpleSearchField {
   constructor(injector: Injector) {
-    super('owner', 'asc', injector)
+    super('owner', injector, 'asc')
   }
 
   getAvailableValues(): Observable<FieldAvailableValue[]> {

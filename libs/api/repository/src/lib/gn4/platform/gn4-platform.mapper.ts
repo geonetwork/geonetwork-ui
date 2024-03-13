@@ -45,12 +45,23 @@ export class Gn4PlatformMapper {
     return { ...apiUser, id: id.toString() } as UserModel
   }
 
-  thesaurusFromApi(thesaurus: any[]): ThesaurusModel {
+  thesaurusFromApi(thesaurus: any[], lang3?: string): ThesaurusModel {
     return thesaurus.map((keyword) => {
-      const { uri, value } = keyword
+      let key = keyword.uri
+      // sometines GN can prefix an URI with an "all thesaurus" URI; only keep the last one
+      if (key.indexOf('@@@') > -1) {
+        key = key.split('@@@')[1]
+      }
+      const label =
+        lang3 && lang3 in keyword.values ? keyword.values[lang3] : keyword.value
+      const description =
+        lang3 && lang3 in keyword.definitions
+          ? keyword.definitions[lang3]
+          : keyword.definition
       return {
-        key: uri,
-        label: value,
+        key,
+        label,
+        description,
       }
     })
   }
