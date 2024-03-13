@@ -33,7 +33,9 @@ const sampleOrgB: Organization = {
   website: new URL('http://www.bakom.admin.ch/'),
 }
 const sampleOrgC: Organization = {
-  logoUrl: new URL('http://localhost/geonetwork/images/harvesting/ifremer.png'),
+  logoUrl: new URL(
+    'http://localhost/geonetwork/images/harvesting/ifremer-org.png'
+  ),
   name: 'Ifremer',
   recordCount: 1,
   description: "Institut français de recherche pour l'exploitation de la mer",
@@ -141,7 +143,7 @@ class SearchApiServiceMock {
   search = jest.fn(() => of(organisationsAggregationMock))
 }
 
-class GoupsApiServiceMock {
+class GroupsApiServiceMock {
   getGroups = jest.fn(() => of(GROUPS_FIXTURE))
 }
 
@@ -169,7 +171,7 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
           OrganizationsFromMetadataService,
           {
             provide: GroupsApiService,
-            useClass: GoupsApiServiceMock,
+            useClass: GroupsApiServiceMock,
           },
           {
             provide: SearchApiService,
@@ -451,6 +453,50 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
                 "Institut français de recherche pour l'exploitation de la mer",
             },
           })
+        })
+      })
+      describe('when no logoUrl can be found by organisation name/email matching', () => {
+        beforeEach(async () => {
+          const source = {
+            ...ES_FIXTURE_FULL_RESPONSE.hits.hits[0]._source,
+            contactForResource: [
+              {
+                organisation: 'WrongIfremerName',
+                role: 'pointOfContact',
+                email: '',
+                website: '',
+                logo: '',
+                individual: "Cellule d'Administration Quadrige",
+                position: '',
+                phone: '',
+                address: '',
+              },
+            ],
+            contact: [
+              {
+                organisation: 'WrongIfremerName',
+                role: 'pointOfContact',
+                email: '',
+                website: 'https://www.ifremer.fr',
+                logo: '',
+                individual: "Cellule d'administration Quadrige",
+                position: "Cellule d'administration Quadrige",
+                phone: '',
+                address: '',
+              },
+            ],
+          }
+          record = await lastValueFrom(
+            service.addOrganizationToRecordFromSource(source, {
+              title: 'Surval - Données par paramètre',
+              uniqueIdentifier: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
+            } as CatalogRecord)
+          )
+        })
+        it('gets logoUrl from group', async () => {
+          expect(record.ownerOrganization.logoUrl).toEqual(
+            new URL('http://localhost/geonetwork/images/harvesting/ifremer.png')
+          )
         })
       })
     })

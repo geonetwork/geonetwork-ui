@@ -64,7 +64,7 @@ export const GROUPS_FIXTURE = deepFreeze([
     defaultCategory: null,
     allowedCategories: [],
     enableAllowedCategories: false,
-    id: 348385324,
+    id: 2,
     email: 'ifremer.ifremer@ifremer.admin.fr',
     referrer: null,
     description: "Institut français de recherche pour l'exploitation de la mer",
