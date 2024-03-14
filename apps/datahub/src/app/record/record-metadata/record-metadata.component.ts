@@ -88,7 +88,7 @@ export class RecordMetadataComponent {
   }
 
   onInfoKeywordClick(keyword: Keyword) {
-    this.searchService.updateFilters({ any: keyword.value })
+    this.searchService.updateFilters({ any: keyword.label })
   }
   onOrganizationClick(org: Organization) {
     this.orgsService

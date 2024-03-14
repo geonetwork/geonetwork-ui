@@ -44,10 +44,10 @@ describe('atomic operations', () => {
         },
       ]
       const expected = [
-        { value: 'keyword1', type: 'theme', thesaurusId: '1' },
-        { value: 'keyword2', type: 'theme', thesaurusId: '1' },
-        { value: 'keyword3', type: 'place', thesaurusId: '2' },
-        { value: 'keyword4', type: 'place', thesaurusId: '2' },
+        { label: 'keyword1', type: 'theme', thesaurus: { id: '1' } },
+        { label: 'keyword2', type: 'theme', thesaurus: { id: '1' } },
+        { label: 'keyword3', type: 'place', thesaurus: { id: '2' } },
+        { label: 'keyword4', type: 'place', thesaurus: { id: '2' } },
       ]
       expect(mapKeywords(thesauri, 'en')).toEqual(expected)
     })
@@ -64,8 +64,8 @@ describe('atomic operations', () => {
         },
       ]
       const expected = [
-        { value: 'keyword1', type: 'other', thesaurusId: '1' },
-        { value: 'keyword2', type: 'other', thesaurusId: '1' },
+        { label: 'keyword1', type: 'other', thesaurus: { id: '1' } },
+        { label: 'keyword2', type: 'other', thesaurus: { id: '1' } },
       ]
       expect(mapKeywords(thesauri, 'en')).toEqual(expected)
     })

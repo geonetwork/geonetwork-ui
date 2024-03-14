@@ -107,9 +107,9 @@ export const mapKeywords = (thesauri: Thesaurus[], language: string) => {
     const thesaurus = thesauri[thesaurusId]
     for (const keyword of thesaurus.keywords) {
       keywords.push({
-        value: selectTranslatedValue<string>(keyword, language),
+        label: selectTranslatedValue<string>(keyword, language),
         type: getKeywordTypeFromKeywordTypeCode(thesaurus.theme),
-        thesaurusId: thesaurus.id,
+        ...(thesaurus.id && { thesaurus: { id: thesaurus.id } }),
       })
     }
   }

@@ -1065,348 +1065,380 @@ describe('Gn4MetadataMapper', () => {
             },
             keywords: [
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                },
                 type: 'theme',
-                value: 'D8: Contaminants',
+                label: 'D8: Contaminants',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                },
                 type: 'theme',
-                value: 'D1: Biodiversité',
+                label: 'D1: Biodiversité',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                },
                 type: 'theme',
-                value: 'D7: Changements hydrographiques',
+                label: 'D7: Changements hydrographiques',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                },
                 type: 'theme',
-                value: 'D4: Réseaux trophiques',
+                label: 'D4: Réseaux trophiques',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                },
                 type: 'theme',
-                value: 'D5: Eutrophisation',
+                label: 'D5: Eutrophisation',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                },
                 type: 'theme',
-                value: 'D9: Questions sanitaires',
+                label: 'D9: Questions sanitaires',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                },
                 type: 'theme',
-                value: 'D10: Déchets marins',
+                label: 'D10: Déchets marins',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                },
                 type: 'theme',
-                value: 'D1: Biodiversité - Habitats benthiques',
+                label: 'D1: Biodiversité - Habitats benthiques',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                },
                 type: 'theme',
-                value: 'D1: Biodiversité - Habitats pélagiques',
+                label: 'D1: Biodiversité - Habitats pélagiques',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                },
                 type: 'theme',
-                value: 'D1: Biodiversité - Poissons',
+                label: 'D1: Biodiversité - Poissons',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                },
                 type: 'theme',
-                value: 'D1: Biodiversité - Mammifères',
+                label: 'D1: Biodiversité - Mammifères',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                },
                 type: 'theme',
-                value: 'D1: Biodiversité - Tortues',
+                label: 'D1: Biodiversité - Tortues',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.dcsmm-descripteur',
+                },
                 type: 'theme',
-                value: 'D1: Biodiversité - Céphalopodes',
+                label: 'D1: Biodiversité - Céphalopodes',
               },
               {
-                thesaurusId: 'geonetwork.thesaurus.local.theme.dcsmm-methode',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.dcsmm-methode',
+                },
                 type: 'theme',
-                value: 'Observation par point',
+                label: 'Observation par point',
               },
               {
-                thesaurusId: 'geonetwork.thesaurus.local.theme.dcsmm-methode',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.dcsmm-methode',
+                },
                 type: 'theme',
-                value: 'Observation directe',
+                label: 'Observation directe',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.external.theme.httpinspireeceuropaeutheme-theme',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.httpinspireeceuropaeutheme-theme',
+                },
                 type: 'theme',
-                value: 'Installations de suivi environnemental',
+                label: 'Installations de suivi environnemental',
               },
               {
-                thesaurusId: 'geonetwork.thesaurus.local.place.oh_ville',
+                thesaurus: { id: 'geonetwork.thesaurus.local.place.oh_ville' },
                 type: 'place',
-                value: 'Brest',
+                label: 'Brest',
               },
               {
-                thesaurusId: 'geonetwork.thesaurus.local.place.oh_ville',
+                thesaurus: { id: 'geonetwork.thesaurus.local.place.oh_ville' },
                 type: 'place',
-                value: 'Fort-de-France',
+                label: 'Fort-de-France',
               },
               {
-                thesaurusId: 'geonetwork.thesaurus.local.place.oh_ville',
+                thesaurus: { id: 'geonetwork.thesaurus.local.place.oh_ville' },
                 type: 'place',
-                value: 'Boulogne-sur-Mer',
+                label: 'Boulogne-sur-Mer',
               },
               {
-                thesaurusId: 'geonetwork.thesaurus.local.place.oh_ville',
+                thesaurus: { id: 'geonetwork.thesaurus.local.place.oh_ville' },
                 type: 'place',
-                value: 'Nouméa',
+                label: 'Nouméa',
               },
               {
-                thesaurusId: 'geonetwork.thesaurus.local.place.oh_ville',
+                thesaurus: { id: 'geonetwork.thesaurus.local.place.oh_ville' },
                 type: 'place',
-                value: 'Toulon',
+                label: 'Toulon',
               },
               {
-                thesaurusId: 'geonetwork.thesaurus.local.place.oh_ville',
+                thesaurus: { id: 'geonetwork.thesaurus.local.place.oh_ville' },
                 type: 'place',
-                value: 'Sète',
+                label: 'Sète',
               },
               {
-                thesaurusId: 'geonetwork.thesaurus.local.place.oh_ville',
+                thesaurus: { id: 'geonetwork.thesaurus.local.place.oh_ville' },
                 type: 'place',
-                value: 'La Rochelle',
+                label: 'La Rochelle',
               },
               {
-                thesaurusId: 'geonetwork.thesaurus.local.place.dcsmm.area',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.place.dcsmm.area',
+                },
                 type: 'place',
-                value: 'National',
+                label: 'National',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.odatis_thematiques',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.odatis_thematiques',
+                },
                 type: 'theme',
-                value: 'Base de données de recherche',
+                label: 'Base de données de recherche',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.odatis_thematiques',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.odatis_thematiques',
+                },
                 type: 'theme',
-                value: 'Dispositifs de surveillance',
+                label: 'Dispositifs de surveillance',
               },
               {
-                thesaurusId: 'geonetwork.thesaurus.local.theme.sextant-theme',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.sextant-theme',
+                },
                 type: 'theme',
-                value:
+                label:
                   "/Activités humaines/Réseaux d'observation et de surveillance du littoral",
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.simm.thematiques',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.simm.thematiques',
+                },
                 type: 'theme',
-                value: '/Etat du Milieu/Biogéochimie',
+                label: '/Etat du Milieu/Biogéochimie',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.simm.thematiques',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.simm.thematiques',
+                },
                 type: 'theme',
-                value: '/Etat du Milieu/Pollutions',
+                label: '/Etat du Milieu/Pollutions',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.simm.thematiques',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.simm.thematiques',
+                },
                 type: 'theme',
-                value: '/Etat du Milieu/Littoral',
+                label: '/Etat du Milieu/Littoral',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.simm.thematiques',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.simm.thematiques',
+                },
                 type: 'theme',
-                value: '/Etat du Milieu/Habitats',
+                label: '/Etat du Milieu/Habitats',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.simm.thematiques',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.simm.thematiques',
+                },
                 type: 'theme',
-                value: '/Etat du Milieu/Espèces',
+                label: '/Etat du Milieu/Espèces',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.type_jeux_donnee',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.type_jeux_donnee',
+                },
                 type: 'theme',
-                value: '/Observations in-situ/Réseaux',
+                label: '/Observations in-situ/Réseaux',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.odatis_variables',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.odatis_variables',
+                },
                 type: 'theme',
-                value: '/Biologie marine/Bivalves',
+                label: '/Biologie marine/Bivalves',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.odatis_variables',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.odatis_variables',
+                },
                 type: 'theme',
-                value:
+                label:
                   '/Biogéochimie marine/Eléments chimiques et contaminants',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.odatis_variables',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.odatis_variables',
+                },
                 type: 'theme',
-                value: "/Physique de l'Océan/Turbidité",
+                label: "/Physique de l'Océan/Turbidité",
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.odatis_variables',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.odatis_variables',
+                },
                 type: 'theme',
-                value: '/Biogéochimie marine/Pigments',
+                label: '/Biogéochimie marine/Pigments',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.odatis_variables',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.odatis_variables',
+                },
                 type: 'theme',
-                value: '/Biologie marine/Toxines',
+                label: '/Biologie marine/Toxines',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.odatis_variables',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.odatis_variables',
+                },
                 type: 'theme',
-                value: '/Biologie marine/Phytoplancton',
+                label: '/Biologie marine/Phytoplancton',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.odatis_variables',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.odatis_variables',
+                },
                 type: 'theme',
-                value: '/Biologie marine/Zooplancton',
+                label: '/Biologie marine/Zooplancton',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.odatis_variables',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.odatis_variables',
+                },
                 type: 'theme',
-                value: "/Physique de l'Océan/Température",
+                label: "/Physique de l'Océan/Température",
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.odatis_variables',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.odatis_variables',
+                },
                 type: 'theme',
-                value: "/Physique de l'Océan/Salinité",
+                label: "/Physique de l'Océan/Salinité",
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.odatis_variables',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.odatis_variables',
+                },
                 type: 'theme',
-                value: '/Biogéochimie marine/Oxygène dissous',
+                label: '/Biogéochimie marine/Oxygène dissous',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.odatis_variables',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.odatis_variables',
+                },
                 type: 'theme',
-                value: '/Biologie marine/Organismes pathogènes',
+                label: '/Biologie marine/Organismes pathogènes',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.odatis_variables',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.odatis_variables',
+                },
                 type: 'theme',
-                value: '/Biologie marine/Organismes marins tropicaux',
+                label: '/Biologie marine/Organismes marins tropicaux',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.odatis_variables',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.odatis_variables',
+                },
                 type: 'theme',
-                value: '/Biologie marine/Matière en suspension',
+                label: '/Biologie marine/Matière en suspension',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.odatis_variables',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.odatis_variables',
+                },
                 type: 'theme',
-                value: '/Biogéochimie marine/Nutriments (sels nutritifs)',
+                label: '/Biogéochimie marine/Nutriments (sels nutritifs)',
               },
               {
-                thesaurusId:
-                  'geonetwork.thesaurus.local.theme.odatis_variables',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.odatis_variables',
+                },
                 type: 'theme',
-                value: '/Biologie marine/Habitats benthiques',
+                label: '/Biologie marine/Habitats benthiques',
               },
               {
-                thesaurusId: undefined,
                 type: 'other',
-                value: 'Lieux de surveillance',
+                label: 'Lieux de surveillance',
               },
               {
-                thesaurusId: undefined,
                 type: 'other',
-                value: 'Observation',
+                label: 'Observation',
               },
               {
-                thesaurusId: undefined,
                 type: 'other',
-                value: 'Surveillance',
+                label: 'Surveillance',
               },
               {
-                thesaurusId: undefined,
                 type: 'other',
-                value: 'Environnement',
+                label: 'Environnement',
               },
               {
-                thesaurusId: undefined,
                 type: 'other',
-                value: 'Littoral',
+                label: 'Littoral',
               },
               {
-                thesaurusId: undefined,
                 type: 'other',
-                value: 'Quadrige',
+                label: 'Quadrige',
               },
               {
-                thesaurusId: undefined,
                 type: 'other',
-                value: 'DCE',
+                label: 'DCE',
               },
               {
-                thesaurusId: undefined,
                 type: 'other',
-                value: 'DCSMM',
+                label: 'DCSMM',
               },
               {
-                thesaurusId: undefined,
                 type: 'other',
-                value: 'OSPAR',
+                label: 'OSPAR',
               },
               {
-                thesaurusId: undefined,
                 type: 'other',
-                value: 'MEDPOL',
+                label: 'MEDPOL',
               },
               {
-                thesaurusId: undefined,
                 type: 'other',
-                value: 'Données ouvertes',
+                label: 'Données ouvertes',
               },
               {
-                thesaurusId: undefined,
                 type: 'other',
-                value: 'Open Data',
+                label: 'Open Data',
               },
               {
-                thesaurusId: undefined,
                 type: 'other',
-                value: 'Surval',
+                label: 'Surval',
               },
             ],
             landingPage: new URL(

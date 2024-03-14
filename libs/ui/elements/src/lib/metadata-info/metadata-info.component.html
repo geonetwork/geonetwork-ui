@@ -136,12 +136,12 @@
         </p>
       </div>
     </div>
-    <div *ngIf="metadata.themes?.length">
+    <div *ngIf="metadata.topics?.length">
       <p class="text-sm mb-1" translate>record.metadata.themes</p>
       <div class="sm:pb-4 sm:pr-16">
         <gn-ui-badge
           class="inline-block mr-2 lowercase"
-          *ngFor="let theme of metadata.themes"
+          *ngFor="let theme of metadata.topics"
           >{{ theme }}</gn-ui-badge
         >
       </div>
@@ -154,7 +154,7 @@
           (click)="onKeywordClick(keyword)"
           [clickable]="true"
           *ngFor="let keyword of metadata.keywords"
-          >{{ keyword.value }}</gn-ui-badge
+          >{{ keyword.label }}</gn-ui-badge
         >
       </div>
     </div>

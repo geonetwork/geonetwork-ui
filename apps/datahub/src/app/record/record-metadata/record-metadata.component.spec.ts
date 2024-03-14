@@ -595,9 +595,9 @@ describe('RecordMetadataComponent', () => {
   describe('#onInfoKeywordClick', () => {
     it('call searchService for any', () => {
       component.onInfoKeywordClick({
-        thesaurusId: 'geonetwork.thesaurus.local',
+        thesaurus: { id: 'geonetwork.thesaurus.local' },
         type: 'other',
-        value: 'international',
+        label: 'international',
       })
       expect(searchService.updateFilters).toHaveBeenCalledWith({
         any: 'international',
