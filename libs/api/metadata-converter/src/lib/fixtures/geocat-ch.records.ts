@@ -33,25 +33,185 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
   title: 'Alpenkonvention',
   abstract: `Perimeter der Alpenkonvention in der Schweiz. Die Alpenkonvention ist ein völkerrechtlicher Vertrag zwischen den acht Alpenländern Deutschland, Frankreich, Italien, Liechtenstein, Monaco, Österreich, Schweiz, Slowenien sowie der Europäischen Union. Das Ziel des Übereinkommens ist der Schutz der Alpen durch eine sektorübergreifende, ganzheitliche und nachhaltige Politik.`,
   overviews: [],
-  themes: [
-    'Aufbewahrungs- und Archivierungsplanung AAP - Bund',
-    'Geobasisdaten',
-    'e-geo.ch',
-    'opendata.swiss',
-    'Nachhaltige Entwicklung',
-    'Raumplanung',
-    'Bergschutz',
-    'Bodenschutz',
-    'Umweltpolitik',
-    'Umweltpolitik',
-    'Verkehr',
-    'Verkehr',
-    'Verkehr',
-    'Umweltüberwachung',
-    'Verwaltungseinheiten',
-    'BGDI Bundesgeodaten-Infrastruktur',
+  topics: ['planningCadastre', 'planningCadastre_Planning'],
+  keywords: [
+    {
+      thesaurus: {
+        name: 'geocat.ch',
+        id: 'geonetwork.thesaurus.local.theme.geocat.ch',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
+      },
+      type: 'theme',
+      label: 'Aufbewahrungs- und Archivierungsplanung AAP - Bund',
+    },
+    {
+      thesaurus: {
+        name: 'geocat.ch',
+        id: 'geonetwork.thesaurus.local.theme.geocat.ch',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
+      },
+      type: 'theme',
+      label: 'Geobasisdaten',
+    },
+    {
+      thesaurus: {
+        name: 'geocat.ch',
+        id: 'geonetwork.thesaurus.local.theme.geocat.ch',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
+      },
+      type: 'theme',
+      label: 'e-geo.ch',
+    },
+    {
+      label: 'opendata.swiss',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.local.theme.geocat.ch',
+        name: 'geocat.ch',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
+      },
+      type: 'theme',
+    },
+    {
+      label: 'Nachhaltige Entwicklung',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.external.theme.gemet',
+        name: 'GEMET',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
+      },
+      type: 'theme',
+    },
+    {
+      label: 'Raumplanung',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.external.theme.gemet',
+        name: 'GEMET',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
+      },
+      type: 'theme',
+    },
+    {
+      label: 'Bergschutz',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.external.theme.gemet',
+        name: 'GEMET',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
+      },
+      type: 'theme',
+    },
+    {
+      label: 'Bodenschutz',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.external.theme.gemet',
+        name: 'GEMET',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
+      },
+      type: 'theme',
+    },
+    {
+      label: 'Umweltpolitik',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.external.theme.gemet',
+        name: 'GEMET',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
+      },
+      type: 'theme',
+    },
+    {
+      label: 'Umweltpolitik',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.external.theme.gemet',
+        name: 'GEMET',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
+      },
+      type: 'theme',
+    },
+    {
+      label: 'Verkehr',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.external.theme.gemet',
+        name: 'GEMET',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
+      },
+      type: 'theme',
+    },
+    {
+      label: 'Verkehr',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.external.theme.gemet',
+        name: 'GEMET',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
+      },
+      type: 'theme',
+    },
+    {
+      label: 'Verkehr',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.external.theme.gemet',
+        name: 'GEMET',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
+      },
+      type: 'theme',
+    },
+    {
+      label: 'Umweltüberwachung',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.external.theme.inspire-theme',
+        name: 'GEMET - INSPIRE themes, version 1.0',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
+      },
+      type: 'theme',
+    },
+    {
+      label: 'Verwaltungseinheiten',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.external.theme.inspire-theme',
+        name: 'GEMET - INSPIRE themes, version 1.0',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
+      },
+      type: 'theme',
+    },
+    {
+      label: 'BGDI Bundesgeodaten-Infrastruktur',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.local.theme.geocat.ch',
+        name: 'geocat.ch',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
+      },
+      type: 'theme',
+    },
   ],
-  keywords: [],
   spatialRepresentation: 'vector',
   distributions: [
     {
@@ -210,17 +370,29 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
       description: 'Vorschaubild',
     },
   ],
-  themes: [],
+  topics: [],
   keywords: [
     {
-      thesaurusId: 'geonetwork.thesaurus.local',
+      label: 'Verkehr',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.external.theme.gemet',
+        name: 'GEMET',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
+      },
       type: 'other',
-      value: 'Verkehr',
     },
     {
-      thesaurusId: 'geonetwork.thesaurus.local',
+      label: 'opendata.swiss',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.local.theme.geocat.ch',
+        name: 'geocat.ch',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
+      },
       type: 'other',
-      value: 'opendata.swiss',
     },
   ],
   onlineResources: [

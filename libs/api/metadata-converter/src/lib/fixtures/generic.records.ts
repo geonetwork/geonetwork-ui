@@ -59,22 +59,59 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
   ],
   keywords: [
     {
-      thesaurusId: 'geonetwork.thesaurus.local',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.local',
+        name: 'geonetwork.thesaurus.local',
+      },
       type: 'other',
-      value: 'international',
+      label: 'international',
     },
     {
-      thesaurusId: 'geonetwork.thesaurus.local',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.local',
+        name: 'geonetwork.thesaurus.local',
+      },
       type: 'other',
-      value: 'test',
+      label: 'test',
     },
     {
-      thesaurusId: 'geonetwork.thesaurus.local',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.local',
+        name: 'geonetwork.thesaurus.local',
+      },
       type: 'other',
-      value: '_another_keyword_',
+      label: '_another_keyword_',
+    },
+    {
+      thesaurus: {
+        id: 'geonetwork.thesaurus.theme',
+        name: 'geonetwork.thesaurus.theme',
+      },
+      type: 'theme',
+      label: 'test theme',
+    },
+    {
+      thesaurus: {
+        id: 'geonetwork.thesaurus.place',
+        name: 'geonetwork.thesaurus.place',
+      },
+      type: 'place',
+      label: 'test place',
+    },
+    {
+      type: 'theme',
+      label: 'themeNoThesaurus',
+    },
+    {
+      type: 'theme',
+      label: 'themeNoThesaurus 2',
+    },
+    {
+      type: 'temporal',
+      label: 'temporalNoThesaurus',
     },
   ],
-  themes: ['testData', 'exampleData'],
+  topics: ['agriculture'],
   spatialRepresentation: 'grid',
   distributions: [
     {
