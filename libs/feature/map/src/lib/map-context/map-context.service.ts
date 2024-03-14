@@ -58,6 +58,8 @@ export class MapContextService {
   ): Map {
     if (mapConfig) {
       mapContext = this.mergeMapConfigWithContext(mapContext, mapConfig)
+    } else {
+      mapContext.layers = this.addDefaultBaselayerContext(mapContext.layers)
     }
     if (
       !mapContext.view?.extent &&
@@ -177,6 +179,14 @@ export class MapContextService {
       })
     }
     return view
+  }
+
+  addDefaultBaselayerContext(
+    layers: MapContextLayerModel[]
+  ): MapContextLayerModel[] {
+    return layers.includes(DEFAULT_BASELAYER_CONTEXT)
+      ? layers
+      : [DEFAULT_BASELAYER_CONTEXT, ...layers]
   }
 
   mergeMapConfigWithContext(
