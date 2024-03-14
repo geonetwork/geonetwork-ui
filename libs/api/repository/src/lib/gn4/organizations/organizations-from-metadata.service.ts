@@ -25,7 +25,14 @@ import {
   SourceWithUnknownProps,
 } from '@geonetwork-ui/api/metadata-converter'
 import { combineLatest, Observable, of, switchMap, takeLast } from 'rxjs'
-import { filter, map, shareReplay, startWith, tap } from 'rxjs/operators'
+import {
+  filter,
+  map,
+  shareReplay,
+  startWith,
+  tap,
+  withLatestFrom,
+} from 'rxjs/operators'
 import { LangService } from '@geonetwork-ui/util/i18n'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { coerce, satisfies, valid } from 'semver'
@@ -296,15 +303,28 @@ export class OrganizationsFromMetadataService
 
     const ownerOrganization = allContactOrgs[0]
 
+    // read the owner group as well to have a fallback logo
+    const groupId = selectField(source, 'groupOwner')
+    const group$ = this.groups$.pipe(
+      map((groups) =>
+        groups.find((group) => {
+          return group.id === Number(groupId)
+        })
+      )
+    )
+
     return this.organisations$.pipe(
       takeLast(1),
-      map((organisations: IncompleteOrganization[]) => {
+      withLatestFrom(group$),
+      map(([organisations, group]: [Organization[], GroupApiModel]) => {
         const recordOrganisation = organisations.filter(
           (org) => org.name === ownerOrganization.name
         )[0]
+        const logoUrl = group?.logo && getAsUrl(`${IMAGE_URL}${group.logo}`)
         return {
           ...record,
           ownerOrganization: {
+            logoUrl,
             ...ownerOrganization,
             ...recordOrganisation,
           },
