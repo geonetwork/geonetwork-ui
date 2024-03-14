@@ -286,12 +286,18 @@ describe('MapContextService', () => {
       })
       it('add layers', () => {
         const layers = map.getLayers().getArray()
-        expect(layers.length).toEqual(3)
+        expect(layers.length).toEqual(4)
       })
       it('set view', () => {
         const view = map.getView()
         expect(view).toBeTruthy()
         expect(view).toBeInstanceOf(View)
+      })
+      it('set first layer as baselayer', () => {
+        const baselayerUrls = (map.getLayers().item(0) as TileLayer<XYZ>)
+          .getSource()
+          .getUrls()
+        expect(baselayerUrls).toEqual(DEFAULT_BASELAYER_CONTEXT.urls)
       })
     })
     describe('with config', () => {
@@ -364,7 +370,7 @@ describe('MapContextService', () => {
       })
       it('add layers', () => {
         const layers = map.getLayers().getArray()
-        expect(layers.length).toEqual(3)
+        expect(layers.length).toEqual(4)
       })
       it('set view', () => {
         view = map.getView()
