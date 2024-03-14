@@ -94,8 +94,8 @@ export class Gn4FieldMapper {
     },
     cl_topic: (output, source) => ({
       ...output,
-      themes: [
-        ...(output.themes || []),
+      topics: [
+        ...(output.topics || []),
         ...getAsArray(
           selectField<SourceWithUnknownProps[]>(source, 'cl_topic')
         ).map((topic) => selectTranslatedValue<string>(topic, this.lang3)),
@@ -182,8 +182,8 @@ export class Gn4FieldMapper {
     }),
     inspireTheme: (output, source) => ({
       ...output,
-      themes: [
-        ...(output.themes || []),
+      topics: [
+        ...(output.topics || []),
         ...getAsArray(selectField(source, 'inspireTheme_syn')),
       ],
     }),

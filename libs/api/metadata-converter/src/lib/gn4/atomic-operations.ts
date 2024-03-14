@@ -4,6 +4,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { getRoleFromRoleCode } from '../iso19139/codelists/role.mapper'
 import { Thesaurus } from './types'
+import { getKeywordTypeFromKeywordTypeCode } from '../iso19139/codelists/keyword.mapper'
 
 export type SourceWithUnknownProps = { [key: string]: unknown }
 
@@ -107,7 +108,7 @@ export const mapKeywords = (thesauri: Thesaurus[], language: string) => {
     for (const keyword of thesaurus.keywords) {
       keywords.push({
         value: selectTranslatedValue<string>(keyword, language),
-        type: thesaurus.theme || 'other',
+        type: getKeywordTypeFromKeywordTypeCode(thesaurus.theme),
         thesaurusId: thesaurus.id,
       })
     }

@@ -118,7 +118,7 @@ describe('Gn4MetadataMapper', () => {
                 start: new Date('2013-01-01T00:00:00.000Z'),
               },
             ],
-            themes: [],
+            topics: [],
           },
           {
             kind: 'dataset',
@@ -171,7 +171,7 @@ describe('Gn4MetadataMapper', () => {
                 start: new Date('2013-01-01T00:00:00.000Z'),
               },
             ],
-            themes: [],
+            topics: [],
           },
         ] as CatalogRecord[])
       })
@@ -1425,7 +1425,7 @@ describe('Gn4MetadataMapper', () => {
             recordCreated: new Date('2021-10-05T12:48:57.678Z'),
             recordUpdated: new Date('2021-10-05T12:48:57.678Z'),
             status: 'ongoing',
-            themes: ['Installations de suivi environnemental', 'Océans'],
+            topics: ['Installations de suivi environnemental', 'Océans'],
             title: 'Surval - Données par paramètre',
             uniqueIdentifier: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
             updateFrequency: {

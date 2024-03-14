@@ -32,7 +32,7 @@ export class Gn4MetadataMapper extends MetadataBaseMapper<Gn4Record> {
       contacts: [],
       contactsForResource: [],
       keywords: [],
-      themes: [],
+      topics: [],
       spatialExtents: [],
       temporalExtents: [],
       overviews: [],
