@@ -5,6 +5,8 @@ import {
   DatasetTemporalExtent,
   GraphicOverview,
   Individual,
+  Keyword,
+  KeywordThesaurus,
   Organization,
   RecordKind,
   RecordStatus,
@@ -39,6 +41,7 @@ import {
 } from '../function-utils'
 import { getRoleFromRoleCode } from './codelists/role.mapper'
 import { matchMimeType, matchProtocol } from '../common/distribution.mapper'
+import { getKeywordTypeFromKeywordTypeCode } from './codelists/keyword.mapper'
 
 function extractCharacterString(): ChainableFunction<XmlElement, string> {
   return pipe(
@@ -552,29 +555,60 @@ export function readContacts(rootEl: XmlElement): Individual[] {
   )(rootEl)
 }
 
-function readKeywordsOfType(isTheme: boolean) {
+// from gmd:thesaurusName
+function readThesaurus(rootEl: XmlElement): KeywordThesaurus {
+  if (!rootEl) return null
+
+  const findIdentifier = findNestedElement(
+    'gmd:CI_Citation',
+    'gmd:identifier',
+    'gmd:MD_Identifier',
+    'gmd:code'
+  )
+  const id = pipe(findIdentifier, extractCharacterString())(rootEl)
+  const url = pipe(findIdentifier, extractUrl())(rootEl)
+  const name = pipe(
+    findNestedElement('gmd:CI_Citation', 'gmd:title'),
+    extractCharacterString()
+  )(rootEl)
+  return {
+    id,
+    ...(name && { name }),
+    ...(url && { url }),
+  }
+}
+
+// from gmd:MD_Keywords
+function readKeywordGroup(rootEl: XmlElement): Keyword[] {
+  const type = pipe(
+    findChildrenElement('gmd:MD_KeywordTypeCode'),
+    mapArray(readAttribute('codeListValue')),
+    map((values) => getKeywordTypeFromKeywordTypeCode(values[0]))
+  )(rootEl)
+  const thesaurus = pipe(
+    findNestedElement('gmd:thesaurusName'),
+    readThesaurus
+  )(rootEl)
+  return pipe(
+    findChildrenElement('gmd:keyword'),
+    mapArray((el) => {
+      const label = extractCharacterString()(el)
+      return {
+        ...(thesaurus ? { thesaurus } : {}),
+        label,
+        type,
+      } as Keyword
+    })
+  )(rootEl)
+}
+
+export function readKeywords(rootEl: XmlElement): Keyword[] {
   return pipe(
     findIdentification(),
     findNestedElements('gmd:descriptiveKeywords', 'gmd:MD_Keywords'),
-    filterArray(
-      pipe(
-        findChildrenElement('gmd:MD_KeywordTypeCode'),
-        mapArray(readAttribute('codeListValue')),
-        map((values) => isTheme === values.indexOf('theme') > -1)
-      )
-    ),
-    mapArray(findChildrenElement('gmd:keyword')),
-    flattenArray(),
-    mapArray(extractCharacterString())
-  )
-}
-
-export function readKeywords(rootEl: XmlElement): string[] {
-  return readKeywordsOfType(false)(rootEl)
-}
-
-export function readThemes(rootEl: XmlElement): string[] {
-  return readKeywordsOfType(true)(rootEl)
+    mapArray(readKeywordGroup),
+    flattenArray()
+  )(rootEl)
 }
 
 export function readStatus(rootEl: XmlElement): RecordStatus {
@@ -627,7 +661,7 @@ export function readLicenses(rootEl: XmlElement): Constraint[] {
 export function readIsoTopics(rootEl: XmlElement): string[] {
   return pipe(
     findIdentification(),
-    findChildrenElement('gmd:MD_TopicCategoryCode', false),
+    findChildrenElement('gmd:MD_TopicCategoryCode', true),
     mapArray(readText())
   )(rootEl)
 }

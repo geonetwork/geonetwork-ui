@@ -6,6 +6,7 @@ import {
   DatasetServiceDistribution,
   Individual,
   Keyword,
+  KeywordThesaurus,
   RecordStatus,
   Role,
   ServiceEndpoint,
@@ -26,6 +27,7 @@ import {
   findNestedElement,
   findNestedElements,
   readAttribute,
+  readText,
   removeAllChildren,
   removeChildren,
   removeChildrenByName,
@@ -327,50 +329,76 @@ function appendCitationDate(date, type: 'revision' | 'creation') {
   )
 }
 
-function removeKeywords(type: string | null) {
-  return removeChildren(
-    pipe(
-      findNestedElements('gmd:descriptiveKeywords'),
-      filterArray(
-        pipe(
-          findNestedElement(
-            'gmd:MD_Keywords',
-            'gmd:type',
-            'gmd:MD_KeywordTypeCode'
-          ),
-          readAttribute('codeListValue'),
-          // if a specific type is targeted, compare with it; otherwise remove keywords if they have no type defined
-          map((typeValue) => (type !== null ? type === typeValue : true))
+function removeKeywords() {
+  return removeChildren(pipe(findNestedElements('gmd:descriptiveKeywords')))
+}
+
+// returns a <gmd:thesaurusName> element
+function createThesaurus(thesaurus: KeywordThesaurus) {
+  return pipe(
+    createElement('gmd:thesaurusName'),
+    createChild('gmd:CI_Citation'),
+    appendChildren(
+      pipe(
+        createElement('gmd:title'),
+        writeCharacterString(thesaurus.name || thesaurus.id)
+      ),
+      pipe(
+        createElement('gmd:identifier'),
+        createChild('gmd:MD_Identifier'),
+        appendChildren(
+          pipe(
+            createElement('gmd:code'),
+            thesaurus.url
+              ? writeAnchor(thesaurus.url, thesaurus.id)
+              : writeCharacterString(thesaurus.id)
+          )
         )
       )
     )
   )
 }
 
-function appendKeywords(keywords: Keyword[] | string[], type: string | null) {
+function appendKeywords(keywords: Keyword[]) {
+  const keywordsByThesaurus: Keyword[][] = keywords.reduce((acc, keyword) => {
+    const thesaurusId = keyword.thesaurus?.id
+    const type = keyword.type
+    let existingGroup = acc.find((group) =>
+      group[0].thesaurus
+        ? group[0].thesaurus.id === thesaurusId
+        : group[0].type === type
+    )
+    if (!existingGroup) {
+      existingGroup = []
+      acc.push(existingGroup)
+    }
+    existingGroup.push(keyword)
+    return acc
+  }, [])
   return appendChildren(
-    pipe(
-      createElement('gmd:descriptiveKeywords'),
-      createChild('gmd:MD_Keywords'),
-      type !== null
-        ? appendChildren(
-            pipe(
-              createElement('gmd:type'),
-              createChild('gmd:MD_KeywordTypeCode'),
-              addAttribute(
-                'codeList',
-                'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode'
-              ),
-              addAttribute('codeListValue', type)
-            )
-          )
-        : noop,
-      appendChildren(
-        ...keywords.map((keyword) =>
+    ...keywordsByThesaurus.map((keywords) =>
+      pipe(
+        createElement('gmd:descriptiveKeywords'),
+        createChild('gmd:MD_Keywords'),
+        appendChildren(
           pipe(
-            createElement('gmd:keyword'),
-            writeCharacterString(
-              typeof keyword === 'string' ? keyword : keyword.value
+            createElement('gmd:type'),
+            createChild('gmd:MD_KeywordTypeCode'),
+            addAttribute(
+              'codeList',
+              'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode'
+            ),
+            addAttribute('codeListValue', keywords[0].type)
+          )
+        ),
+        keywords[0].thesaurus
+          ? appendChildren(createThesaurus(keywords[0].thesaurus))
+          : noop,
+        appendChildren(
+          ...keywords.map((keyword) =>
+            pipe(
+              createElement('gmd:keyword'),
+              writeCharacterString(keyword.label)
             )
           )
         )
@@ -746,16 +774,24 @@ export function writeContacts(record: CatalogRecord, rootEl: XmlElement) {
 export function writeKeywords(record: CatalogRecord, rootEl: XmlElement) {
   pipe(
     findOrCreateIdentification(),
-    removeKeywords(null),
-    appendKeywords(record.keywords, null)
+    removeKeywords(),
+    appendKeywords(record.keywords)
   )(rootEl)
 }
 
-export function writeThemes(record: CatalogRecord, rootEl: XmlElement) {
+export function writeTopics(record: CatalogRecord, rootEl: XmlElement) {
   pipe(
     findOrCreateIdentification(),
-    removeKeywords('theme'),
-    appendKeywords(record.themes, 'theme')
+    removeChildrenByName('gmd:topicCategory'),
+    appendChildren(
+      ...record.topics.map((topic) =>
+        pipe(
+          createElement('gmd:topicCategory'),
+          createChild('gmd:MD_TopicCategoryCode'),
+          setTextContent(topic)
+        )
+      )
+    )
   )(rootEl)
 }
 

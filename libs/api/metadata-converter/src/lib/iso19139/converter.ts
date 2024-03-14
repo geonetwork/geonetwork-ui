@@ -29,7 +29,7 @@ import {
   writeSecurityConstraints,
   writeSpatialRepresentation,
   writeStatus,
-  writeThemes,
+  writeTopics,
   writeTitle,
   writeUniqueIdentifier,
   writeUpdateFrequency,
@@ -56,7 +56,6 @@ import {
   readSpatialRepresentation,
   readStatus,
   readTemporalExtents,
-  readThemes,
   readTitle,
   readUniqueIdentifier,
   readUpdateFrequency,
@@ -76,15 +75,12 @@ export function toModel(xml: string): CatalogRecord {
   const recordUpdated = readRecordUpdated(rootEl)
   const recordCreated = recordUpdated
   const keywords = readKeywords(rootEl)
-  const themes = readThemes(rootEl)
+  const topics = readIsoTopics(rootEl)
   const legalConstraints = readLegalConstraints(rootEl)
   const otherConstraints = readOtherConstraints(rootEl)
   const securityConstraints = readSecurityConstraints(rootEl)
   const licenses = readLicenses(rootEl)
   const overviews = readOverviews(rootEl)
-
-  // not used yet
-  const isoTopics = readIsoTopics(rootEl)
 
   if (kind === 'dataset') {
     const status = readStatus(rootEl)
@@ -109,7 +105,7 @@ export function toModel(xml: string): CatalogRecord {
       contacts,
       contactsForResource: [], // FIXME: is that really useful??
       keywords,
-      themes,
+      topics,
       licenses,
       legalConstraints,
       securityConstraints,
@@ -136,7 +132,7 @@ export function toModel(xml: string): CatalogRecord {
       ownerOrganization,
       contacts,
       keywords,
-      themes,
+      topics,
       licenses,
       legalConstraints,
       securityConstraints,
@@ -168,7 +164,7 @@ export function toXml(record: CatalogRecord, originalXml?: string): string {
   writeAbstract(record, rootEl)
   fieldChanged('contacts') && writeContacts(record, rootEl)
   fieldChanged('keywords') && writeKeywords(record, rootEl)
-  fieldChanged('themes') && writeThemes(record, rootEl)
+  fieldChanged('topics') && writeTopics(record, rootEl)
   fieldChanged('legalConstraints') && writeLegalConstraints(record, rootEl)
   fieldChanged('securityConstraints') &&
     writeSecurityConstraints(record, rootEl)
