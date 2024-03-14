@@ -320,15 +320,13 @@ export class OrganizationsFromMetadataService
         const recordOrganisation = organisations.filter(
           (org) => org.name === ownerOrganization.name
         )[0]
+        const logoUrl = group?.logo && getAsUrl(`${IMAGE_URL}${group.logo}`)
         return {
           ...record,
           ownerOrganization: {
+            logoUrl,
             ...ownerOrganization,
             ...recordOrganisation,
-            logoUrl:
-              ownerOrganization?.logoUrl ||
-              recordOrganisation?.logoUrl ||
-              (group?.logo && getAsUrl(`${IMAGE_URL}${group.logo}`)),
           },
         }
       })
