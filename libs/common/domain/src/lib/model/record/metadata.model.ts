@@ -60,27 +60,18 @@ export type SpatialRepresentationType =
   | 'table'
   | 'point'
 
-type KeywordType =
-  | 'subTopicCategory'
-  | 'dataCentre'
-  | 'discipline'
-  | 'instrument'
-  | 'place'
-  | 'platform'
-  | 'process'
-  | 'product'
-  | 'project'
-  | 'service'
-  | 'stratum'
-  | 'taxon'
-  | 'temporal'
-  | 'theme'
-  | 'featureType'
-  | 'other'
+export type KeywordType = 'place' | 'temporal' | 'theme' | 'other'
+
+export type KeywordThesaurus = {
+  id: string
+  name?: string
+  url?: URL
+}
+
 export interface Keyword {
-  value?: string
-  type?: KeywordType
-  thesaurusId?: string
+  label: string
+  type: KeywordType
+  thesaurus?: KeywordThesaurus
 }
 
 export interface BaseRecord {
@@ -92,7 +83,7 @@ export interface BaseRecord {
   recordCreated?: Date
   recordUpdated: Date
   kind: RecordKind
-  themes: Array<string> // TODO: handle codelists
+  topics: Array<string> // TODO: handle codelists
   keywords: Array<Keyword>
   licenses: Array<Constraint>
   legalConstraints: Array<Constraint>
@@ -103,7 +94,6 @@ export interface BaseRecord {
   landingPage?: URL
   updateFrequency?: UpdateFrequency
 
-  // to add: iso19139.topicCategory
   // to add: canonical url
   // to add: source catalog (??)
   // to add: is open data ?

@@ -86,7 +86,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
         value: '_another_keyword_',
       },
     ],
-    themes: ['testData', 'exampleData'],
+    topics: ['testData', 'exampleData'],
     spatialRepresentation: 'grid',
     distributions: [
       {
@@ -192,7 +192,7 @@ Malgré l'attention portée à la création de ces données, il est rappelé que
       'données ouvertes',
       'Avrigny*60036',
     ],
-    themes: ['Usage des sols', "document d'urbanisme"],
+    topics: ['Usage des sols', "document d'urbanisme"],
     spatialRepresentation: 'vector',
     distributions: [
       {
