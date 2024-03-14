@@ -149,15 +149,15 @@
 </p>
 <p>
   <gn-ui-record-field-array
-    label="Themes"
-    [(fieldValue)]="record.themes"
-    [itemTemplate]="themeTpl"
+    label="Topics"
+    [(fieldValue)]="record.topics"
+    [itemTemplate]="topicTpl"
     (confirm)="emitChangedRecord()"
     [defaultItem]="'change me!'"
   >
-    <ng-template #themeTpl let-get="getValue" let-set="setValue">
+    <ng-template #topicTpl let-get="getValue" let-set="setValue">
       <gn-ui-record-field-simple
-        label="Theme"
+        label="Topic"
         [fieldValue]="get()"
         (fieldValueChange)="set($event)"
         (confirm)="emitChangedRecord()"
@@ -171,18 +171,61 @@
     [(fieldValue)]="record.keywords"
     [itemTemplate]="keywordTpl"
     (confirm)="emitChangedRecord()"
-    [defaultItem]="'change me!'"
+    [defaultItem]="{ label: 'change me!', type: 'other' }"
   >
-    <ng-template #keywordTpl let-get="getValue" let-set="setValue">
-      <gn-ui-record-field-simple
-        label="Keyword"
-        [fieldValue]="get()"
-        (fieldValueChange)="set($event)"
-        (confirm)="emitChangedRecord()"
-      ></gn-ui-record-field-simple>
-    </ng-template>
   </gn-ui-record-field-array>
 </p>
+
+<ng-template #keywordTpl let-get="getValue" let-set="setValue">
+  <gn-ui-record-field-group>
+    <gn-ui-record-field-simple
+      label="Label"
+      [fieldValue]="get().label"
+      (fieldValueChange)="set($event, 'label')"
+      [type]="'text'"
+      (confirm)="emitChangedRecord()"
+    ></gn-ui-record-field-simple>
+    <gn-ui-record-field-simple
+      label="Type"
+      [options]="['other', 'theme', 'place', 'temporal']"
+      [fieldValue]="get().type"
+      (fieldValueChange)="set($event, 'type')"
+      (confirm)="emitChangedRecord()"
+    ></gn-ui-record-field-simple>
+    <gn-ui-record-field-object
+      label="Thesaurus"
+      [optional]="true"
+      [itemTemplate]="thesaurusTpl"
+      [fieldValue]="get().thesaurus"
+      (fieldValueChange)="set($event, 'thesaurus')"
+      (confirm)="emitChangedRecord()"
+    ></gn-ui-record-field-object>
+  </gn-ui-record-field-group>
+</ng-template>
+
+<ng-template #thesaurusTpl let-get="getValue" let-set="setValue">
+  <gn-ui-record-field-simple
+    label="Identifier"
+    [fieldValue]="get().id"
+    (fieldValueChange)="set($event, 'id')"
+    [type]="'text'"
+    (confirm)="emitChangedRecord()"
+  ></gn-ui-record-field-simple>
+  <gn-ui-record-field-simple
+    label="Name"
+    [fieldValue]="get().name"
+    (fieldValueChange)="set($event, 'name')"
+    [type]="'text'"
+    (confirm)="emitChangedRecord()"
+  ></gn-ui-record-field-simple>
+  <gn-ui-record-field-simple
+    label="URL"
+    [fieldValue]="get().url"
+    (fieldValueChange)="set($event, 'url')"
+    [type]="'url'"
+    (confirm)="emitChangedRecord()"
+  ></gn-ui-record-field-simple>
+</ng-template>
 
 <ng-template #constraintTpl let-get="getValue" let-set="setValue">
   <gn-ui-record-field-group>
