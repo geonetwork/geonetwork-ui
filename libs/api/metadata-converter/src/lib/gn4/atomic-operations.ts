@@ -104,12 +104,23 @@ export const mapContact = (
 export const mapKeywords = (thesauri: Thesaurus[], language: string) => {
   const keywords = []
   for (const thesaurusId in thesauri) {
-    const thesaurus = thesauri[thesaurusId]
-    for (const keyword of thesaurus.keywords) {
+    const rawThesaurus = thesauri[thesaurusId]
+    let thesaurus = null
+    if (rawThesaurus.id) {
+      const thesaurusSource: SourceWithUnknownProps = { ...rawThesaurus }
+      const url = getAsUrl(selectField(thesaurusSource, 'link'))
+      const name = selectField(thesaurusSource, 'title')
+      thesaurus = {
+        id: rawThesaurus.id,
+        ...(name && { name }),
+        ...(url && { url }),
+      }
+    }
+    for (const keyword of rawThesaurus.keywords) {
       keywords.push({
         label: selectTranslatedValue<string>(keyword, language),
-        type: getKeywordTypeFromKeywordTypeCode(thesaurus.theme),
-        ...(thesaurus.id && { thesaurus: { id: thesaurus.id } }),
+        type: getKeywordTypeFromKeywordTypeCode(rawThesaurus.theme),
+        ...(thesaurus && { thesaurus }),
       })
     }
   }
