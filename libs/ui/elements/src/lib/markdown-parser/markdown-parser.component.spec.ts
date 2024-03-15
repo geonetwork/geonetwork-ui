@@ -7,7 +7,7 @@ describe('MarkdownParserComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MarkdownParserComponent],
+      imports: [MarkdownParserComponent],
     }).compileComponents()
 
     fixture = TestBed.createComponent(MarkdownParserComponent)

@@ -1,18 +1,22 @@
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
-import { MarkdownParserComponent } from './markdown-parser.component'
+import { MarkdownEditorComponent } from './markdown-editor.component'
 
 export default {
-  title: 'Elements/MarkdownParserComponent',
-  component: MarkdownParserComponent,
+  title: 'Elements/MarkdownEditorComponent',
+  component: MarkdownEditorComponent,
   decorators: [
     moduleMetadata({
-      imports: [MarkdownParserComponent],
+      imports: [MarkdownEditorComponent],
     }),
   ],
-} as Meta<MarkdownParserComponent>
+} as Meta<MarkdownEditorComponent>
 
-export const Primary: StoryObj<MarkdownParserComponent> = {
+export const Primary: StoryObj<MarkdownEditorComponent> = {
   args: {
+    label: 'Some label',
+    tooltip: 'Some tooltip',
+    helperText: 'Some helper text',
+    placeholder: 'Some placeholder',
     textContent: ` 
 # SUPPORTED MARKDOWN CONTENT
 
@@ -141,8 +145,15 @@ export const Primary: StoryObj<MarkdownParserComponent> = {
   },
   render: (args) => ({
     props: args,
-    template: `<gn-ui-markdown-parser [textContent]="
-    textContent
-    "></gn-ui-markdown-parser>`,
+    template: `
+    <div style="width: 600px;height: 400px;">
+      <gn-ui-markdown-editor
+        [label]="label"
+        [tooltip]="tooltip"
+        [helperText]="helperText"
+        [placeholder]="placeholder"
+        [textContent]="textContent"
+      ></gn-ui-markdown-editor>
+    </div>`,
   }),
 }

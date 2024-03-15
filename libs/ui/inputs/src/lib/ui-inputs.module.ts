@@ -47,10 +47,8 @@ import { EditableLabelDirective } from './editable-label/editable-label.directiv
   declarations: [
     DropdownSelectorComponent,
     AutocompleteComponent,
-    ButtonComponent,
     TextInputComponent,
     DragAndDropFileInputComponent,
-    TextAreaComponent,
     ChipsInputComponent,
     NavigationButtonComponent,
     StarToggleComponent,
@@ -89,6 +87,8 @@ import { EditableLabelDirective } from './editable-label/editable-label.directiv
     MatDatepickerModule,
     MatNativeDateModule,
     EditableLabelDirective,
+    TextAreaComponent,
+    ButtonComponent,
   ],
   exports: [
     DropdownSelectorComponent,

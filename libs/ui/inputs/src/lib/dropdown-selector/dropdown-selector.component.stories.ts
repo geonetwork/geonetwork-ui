@@ -21,8 +21,13 @@ export default {
   component: DropdownSelectorComponent,
   decorators: [
     moduleMetadata({
-      declarations: [MatIcon, ButtonComponent],
-      imports: [UtilI18nModule, OverlayModule, TranslateModule],
+      declarations: [MatIcon],
+      imports: [
+        ButtonComponent,
+        UtilI18nModule,
+        OverlayModule,
+        TranslateModule,
+      ],
     }),
     applicationConfig({
       providers: [

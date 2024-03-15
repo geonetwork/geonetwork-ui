@@ -47,9 +47,9 @@ describe('ResultsListContainerComponent', () => {
       declarations: [
         ResultsListContainerComponent,
         ResultsListMockComponent,
-        ButtonComponent,
         ViewportIntersectorMockComponent,
       ],
+      imports: [ButtonComponent],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {

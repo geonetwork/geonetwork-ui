@@ -12,6 +12,7 @@ import { distinctUntilChanged } from 'rxjs/operators'
   selector: 'gn-ui-text-area',
   templateUrl: './text-area.component.html',
   styleUrls: ['./text-area.component.css'],
+  standalone: true,
 })
 export class TextAreaComponent implements AfterViewInit {
   @Input() value = ''

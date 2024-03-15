@@ -19,8 +19,9 @@ export default {
   component: PaginationComponent,
   decorators: [
     moduleMetadata({
-      declarations: [ButtonComponent, MatIcon],
+      declarations: [MatIcon],
       imports: [
+        ButtonComponent,
         UtilI18nModule,
         FormsModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
