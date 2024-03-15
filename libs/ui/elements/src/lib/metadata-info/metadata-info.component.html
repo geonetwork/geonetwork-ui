@@ -137,12 +137,12 @@
       </div>
     </div>
     <div *ngIf="metadata.topics?.length">
-      <p class="text-sm mb-1" translate>record.metadata.themes</p>
+      <p class="text-sm mb-1" translate>record.metadata.topics</p>
       <div class="sm:pb-4 sm:pr-16">
         <gn-ui-badge
           class="inline-block mr-2 lowercase"
-          *ngFor="let theme of metadata.topics"
-          >{{ theme }}</gn-ui-badge
+          *ngFor="let topic of metadata.topics"
+          >{{ topic }}</gn-ui-badge
         >
       </div>
     </div>
