@@ -1,0 +1,29 @@
+import { inject, Injectable } from '@angular/core'
+import { select, Store } from '@ngrx/store'
+import * as EditorActions from './editor.actions'
+import * as EditorSelectors from './editor.selectors'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+
+@Injectable()
+export class EditorFacade {
+  private readonly store = inject(Store)
+
+  record$ = this.store.pipe(select(EditorSelectors.selectRecord))
+  saving$ = this.store.pipe(select(EditorSelectors.selectRecordSaving))
+  saveError$ = this.store.pipe(select(EditorSelectors.selectRecordSaveError))
+  changedSinceSave$ = this.store.pipe(
+    select(EditorSelectors.selectRecordChangedSinceSave)
+  )
+
+  openRecord(record: CatalogRecord) {
+    this.store.dispatch(EditorActions.openRecord({ record }))
+  }
+
+  saveRecord() {
+    this.store.dispatch(EditorActions.saveRecord())
+  }
+
+  updateRecordField(field: string, value: unknown) {
+    this.store.dispatch(EditorActions.updateRecordField({ field, value }))
+  }
+}
