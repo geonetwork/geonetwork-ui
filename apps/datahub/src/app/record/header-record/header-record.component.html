@@ -37,7 +37,7 @@
     >
       {{ metadata.title }}
     </div>
-    <div class="flex flex-row text-white gap-2 mb-4 ml-4">
+    <div class="flex flex-row gap-2 mb-4 ml-4" [style.color]="foregroundColor">
       <div
         *ngIf="(isGeodata$ | async) === true"
         class="flex flex-row bg-primary-darker rounded"
@@ -45,18 +45,17 @@
         <span class="material-symbols-outlined mt-0.5 ml-2 text-[20px]">
           my_location
         </span>
-        <p class="text-white ml-2 mr-2" translate>record.metadata.type</p>
+        <p class="ml-2 mr-2" translate>record.metadata.type</p>
       </div>
       <div *ngIf="metadata.recordUpdated" class="flex flex-row gap-1">
-        <p class="text-white" translate>record.metadata.lastUpdate</p>
-        <p class="text-white">
+        <p translate>record.metadata.lastUpdate</p>
+        <p>
           {{ lastUpdate }}
         </p>
       </div>
       <div *ngIf="metadata.status" class="flex flex-row gap-2">
         <p>•</p>
         <p
-          class="text-white"
           [innerHTML]="'domain.record.status.' + metadata.status | translate"
         ></p>
       </div>
