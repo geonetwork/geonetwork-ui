@@ -71,19 +71,19 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
     ],
     keywords: [
       {
-        thesaurusId: 'geonetwork.thesaurus.local',
+        thesaurus: { id: 'geonetwork.thesaurus.local' },
         type: 'other',
-        value: 'international',
+        label: 'international',
       },
       {
-        thesaurusId: 'geonetwork.thesaurus.local',
+        thesaurus: { id: 'geonetwork.thesaurus.local' },
         type: 'other',
-        value: 'test',
+        label: 'test',
       },
       {
-        thesaurusId: 'geonetwork.thesaurus.local',
+        thesaurus: { id: 'geonetwork.thesaurus.local' },
         type: 'other',
-        value: '_another_keyword_',
+        label: '_another_keyword_',
       },
     ],
     topics: ['testData', 'exampleData'],
@@ -186,11 +186,31 @@ Malgré l'attention portée à la création de ces données, il est rappelé que
       },
     ],
     keywords: [
-      'planification',
-      'PLU',
-      "Plan local d'urbanisme",
-      'données ouvertes',
-      'Avrigny*60036',
+      {
+        thesaurus: { id: 'geonetwork.thesaurus.local' },
+        type: 'other',
+        label: 'planification',
+      },
+      {
+        thesaurus: { id: 'geonetwork.thesaurus.local' },
+        type: 'other',
+        label: 'PLU',
+      },
+      {
+        thesaurus: { id: 'geonetwork.thesaurus.local' },
+        type: 'other',
+        label: "Plan local d'urbanisme",
+      },
+      {
+        thesaurus: { id: 'geonetwork.thesaurus.local' },
+        type: 'other',
+        label: 'données ouvertes',
+      },
+      {
+        thesaurus: { id: 'geonetwork.thesaurus.local' },
+        type: 'other',
+        label: 'Avrigny*60036',
+      },
     ],
     topics: ['Usage des sols', "document d'urbanisme"],
     spatialRepresentation: 'vector',
