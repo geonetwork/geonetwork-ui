@@ -4,6 +4,7 @@ import {
   getAsUrl,
   getFirstValue,
   mapContact,
+  mapKeywords,
   selectFallback,
   selectFallbackFields,
   selectField,
@@ -28,6 +29,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { matchProtocol } from '../common/distribution.mapper'
 import { LangService } from '@geonetwork-ui/util/i18n'
+import { Thesaurus } from './types'
 
 type ESResponseSource = SourceWithUnknownProps
 
@@ -92,8 +94,8 @@ export class Gn4FieldMapper {
     },
     cl_topic: (output, source) => ({
       ...output,
-      themes: [
-        ...(output.themes || []),
+      topics: [
+        ...(output.topics || []),
         ...getAsArray(
           selectField<SourceWithUnknownProps[]>(source, 'cl_topic')
         ).map((topic) => selectTranslatedValue<string>(topic, this.lang3)),
@@ -171,16 +173,17 @@ export class Gn4FieldMapper {
         output
       )
     },
-    tag: (output, source) => ({
+    allKeywords: (output, source) => ({
       ...output,
-      keywords: getAsArray(
-        selectField<SourceWithUnknownProps[]>(source, 'tag')
-      ).map((tag) => selectTranslatedValue<string>(tag, this.lang3)),
+      keywords: mapKeywords(
+        selectField<Thesaurus[]>(source, 'allKeywords'),
+        this.lang3
+      ),
     }),
     inspireTheme: (output, source) => ({
       ...output,
-      themes: [
-        ...(output.themes || []),
+      topics: [
+        ...(output.topics || []),
         ...getAsArray(selectField(source, 'inspireTheme_syn')),
       ],
     }),

@@ -57,8 +57,61 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
       url: new URL('http://my-org.net/two.png'),
     },
   ],
-  keywords: ['international', 'test', '_another_keyword_'],
-  themes: ['testData', 'exampleData'],
+  keywords: [
+    {
+      thesaurus: {
+        id: 'geonetwork.thesaurus.local',
+        name: 'geonetwork.thesaurus.local',
+      },
+      type: 'other',
+      label: 'international',
+    },
+    {
+      thesaurus: {
+        id: 'geonetwork.thesaurus.local',
+        name: 'geonetwork.thesaurus.local',
+      },
+      type: 'other',
+      label: 'test',
+    },
+    {
+      thesaurus: {
+        id: 'geonetwork.thesaurus.local',
+        name: 'geonetwork.thesaurus.local',
+      },
+      type: 'other',
+      label: '_another_keyword_',
+    },
+    {
+      thesaurus: {
+        id: 'geonetwork.thesaurus.theme',
+        name: 'geonetwork.thesaurus.theme',
+      },
+      type: 'theme',
+      label: 'test theme',
+    },
+    {
+      thesaurus: {
+        id: 'geonetwork.thesaurus.place',
+        name: 'geonetwork.thesaurus.place',
+      },
+      type: 'place',
+      label: 'test place',
+    },
+    {
+      type: 'theme',
+      label: 'themeNoThesaurus',
+    },
+    {
+      type: 'theme',
+      label: 'themeNoThesaurus 2',
+    },
+    {
+      type: 'temporal',
+      label: 'temporalNoThesaurus',
+    },
+  ],
+  topics: ['agriculture'],
   spatialRepresentation: 'grid',
   distributions: [
     {

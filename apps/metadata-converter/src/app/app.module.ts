@@ -14,6 +14,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
 import { HttpClientModule } from '@angular/common/http'
 import { MatIconModule } from '@angular/material/icon'
+import { RecordFieldObjectComponent } from './components/record-field-object/record-field-object.component'
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { MatIconModule } from '@angular/material/icon'
     RecordFieldSimpleComponent,
     RecordFieldGroupComponent,
     RecordFieldArrayComponent,
+    RecordFieldObjectComponent,
   ],
   imports: [
     BrowserModule,

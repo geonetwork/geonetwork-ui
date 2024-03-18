@@ -25,7 +25,7 @@ const SAMPLE_RECORD: CatalogRecord = {
   securityConstraints: [],
   otherConstraints: [],
   keywords: [],
-  themes: [],
+  topics: [],
   updateFrequency: 'unknown',
   overviews: [],
   distributions: [],

@@ -38,13 +38,57 @@ Malgré l'attention portée à la création de ces données, il est rappelé que
     },
   ],
   keywords: [
-    'planification',
-    'PLU',
-    "Plan local d'urbanisme",
-    'données ouvertes',
-    'Avrigny*60036',
+    {
+      thesaurus: {
+        name: 'GEMET - INSPIRE themes, version 1.0',
+        id: 'geonetwork.thesaurus.external.theme.inspire-theme',
+        url: new URL(
+          'http://geo.compiegnois.fr/geonetwork/srv/eng/thesaurus.download?ref=external.theme.inspire-theme'
+        ),
+      },
+      type: 'theme',
+      label: 'Usage des sols',
+    },
+    {
+      thesaurus: {
+        name: 'GEMET - Concepts, version 2.4',
+        id: 'geonetwork.thesaurus.external.theme.gemet',
+        url: new URL(
+          'http://geo.compiegnois.fr/geonetwork/srv/eng/thesaurus.download?ref=external.theme.gemet'
+        ),
+      },
+      type: 'theme',
+      label: "document d'urbanisme",
+    },
+    {
+      type: 'other',
+      label: 'planification',
+    },
+    {
+      type: 'other',
+      label: 'PLU',
+    },
+    {
+      type: 'other',
+      label: "Plan local d'urbanisme",
+    },
+    {
+      type: 'other',
+      label: 'données ouvertes',
+    },
+    {
+      thesaurus: {
+        id: 'geonetwork.thesaurus.external.place.GeoCompiegnois',
+        name: 'Collectivités du Pays Compiégnois',
+        url: new URL(
+          'http://geo.compiegnois.fr/geonetwork/srv/eng/thesaurus.download?ref=external.place.GeoCompiegnois'
+        ),
+      },
+      type: 'place',
+      label: 'Avrigny*60036',
+    },
   ],
-  themes: ['Usage des sols', "document d'urbanisme"],
+  topics: ['planningCadastre'],
   spatialRepresentation: 'vector',
   distributions: [
     {

@@ -1,4 +1,4 @@
-import { getAsUrl } from './atomic-operations'
+import { getAsUrl, mapKeywords } from './atomic-operations'
 
 describe('atomic operations', () => {
   describe('getAsUrl', () => {
@@ -21,6 +21,53 @@ describe('atomic operations', () => {
       expect(getAsUrl('www.myorg.net')).toEqual(
         new URL('https://www.myorg.net/')
       )
+    })
+  })
+  describe('mapKeywords', () => {
+    it('should map keywords from thesauri', () => {
+      const thesauri = [
+        {
+          id: '1',
+          theme: 'theme',
+          keywords: [
+            { en: 'keyword1', fr: 'mot-clé1' },
+            { en: 'keyword2', fr: 'mot-clé2' },
+          ],
+        },
+        {
+          id: '2',
+          theme: 'place',
+          keywords: [
+            { en: 'keyword3', fr: 'mot-clé3' },
+            { en: 'keyword4', fr: 'mot-clé4' },
+          ],
+        },
+      ]
+      const expected = [
+        { label: 'keyword1', type: 'theme', thesaurus: { id: '1' } },
+        { label: 'keyword2', type: 'theme', thesaurus: { id: '1' } },
+        { label: 'keyword3', type: 'place', thesaurus: { id: '2' } },
+        { label: 'keyword4', type: 'place', thesaurus: { id: '2' } },
+      ]
+      expect(mapKeywords(thesauri, 'en')).toEqual(expected)
+    })
+
+    it('should default type to "other" if theme is not provided', () => {
+      const thesauri = [
+        {
+          id: '1',
+          theme: '',
+          keywords: [
+            { en: 'keyword1', fr: 'mot-clé1' },
+            { en: 'keyword2', fr: 'mot-clé2' },
+          ],
+        },
+      ]
+      const expected = [
+        { label: 'keyword1', type: 'other', thesaurus: { id: '1' } },
+        { label: 'keyword2', type: 'other', thesaurus: { id: '1' } },
+      ]
+      expect(mapKeywords(thesauri, 'en')).toEqual(expected)
     })
   })
 })

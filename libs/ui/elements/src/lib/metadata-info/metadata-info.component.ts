@@ -5,7 +5,10 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  DatasetRecord,
+  Keyword,
+} from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-metadata-info',
@@ -16,7 +19,7 @@ import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
 export class MetadataInfoComponent {
   @Input() metadata: Partial<DatasetRecord>
   @Input() incomplete: boolean
-  @Output() keyword = new EventEmitter<string>()
+  @Output() keyword = new EventEmitter<Keyword>()
   updatedTimes: number
 
   get hasUsage() {
@@ -77,7 +80,7 @@ export class MetadataInfoComponent {
     return !this.incomplete || propName in this.metadata
   }
 
-  onKeywordClick(keyword: string) {
+  onKeywordClick(keyword: Keyword) {
     this.keyword.emit(keyword)
   }
 }
