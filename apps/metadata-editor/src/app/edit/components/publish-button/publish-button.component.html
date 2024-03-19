@@ -7,13 +7,8 @@
   >
     <mat-icon class="material-symbols-outlined">cloud_upload</mat-icon>
   </gn-ui-button>
-  <gn-ui-button
-    *ngSwitchCase="'saving'"
-    type="primary"
-    extraClass="opacity-50"
-    [disabled]="true"
-  >
-    <mat-spinner [diameter]="16" class="mr-2"></mat-spinner>
+  <gn-ui-button *ngSwitchCase="'saving'" type="primary" [disabled]="true">
+    <mat-spinner [diameter]="16"></mat-spinner>
   </gn-ui-button>
   <gn-ui-button
     *ngSwitchCase="'upToDate'"

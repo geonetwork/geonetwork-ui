@@ -6,6 +6,7 @@ import { RecordFormComponent } from '@geonetwork-ui/feature/editor'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { PublishButtonComponent } from './components/publish-button/publish-button.component'
+import { TopToolbarComponent } from './components/top-toolbar/top-toolbar.component'
 
 @Component({
   selector: 'md-editor-edit',
@@ -18,6 +19,7 @@ import { PublishButtonComponent } from './components/publish-button/publish-butt
     ButtonComponent,
     MatProgressSpinnerModule,
     PublishButtonComponent,
+    TopToolbarComponent,
   ],
 })
 export class EditPageComponent implements OnInit {
