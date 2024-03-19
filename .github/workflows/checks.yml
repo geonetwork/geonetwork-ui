@@ -179,7 +179,7 @@ jobs:
             apps/metadata-editor-e2e/cypress/screenshots/**/*
 
       - uses: thollander/actions-comment-pull-request@v2
-        if: always() && github.event_name == 'pull_request'
+        if: always() && github.event_name == 'pull_request' && steps.upload-screenshots.outputs.artifact-url
         with:
           message: '📷 Screenshots are [here](${{ steps.upload-screenshots.outputs.artifact-url }})!'
           comment_tag: screenshots-url
