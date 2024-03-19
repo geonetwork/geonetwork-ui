@@ -1,6 +1,7 @@
-import { EditorPartialState } from './editor.reducer'
+import { EditorPartialState, initialEditorState } from './editor.reducer'
 import * as EditorSelectors from './editor.selectors'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { DEFAULT_FIELDS } from '../fields.config'
 
 describe('Editor Selectors', () => {
   let state: EditorPartialState
@@ -8,6 +9,7 @@ describe('Editor Selectors', () => {
   beforeEach(() => {
     state = {
       editor: {
+        ...initialEditorState,
         record: DATASET_RECORDS[0],
         saveError: 'something went wrong',
         saving: false,
@@ -35,6 +37,33 @@ describe('Editor Selectors', () => {
     it('selectRecordChangedSinceSave() should return the current "changedSinceSave" state', () => {
       const result = EditorSelectors.selectRecordChangedSinceSave(state)
       expect(result).toBe(true)
+    })
+
+    it('selectRecordFieldsConfig() should return the current "fieldsConfig" state', () => {
+      const result = EditorSelectors.selectRecordFieldsConfig(state)
+      expect(result).toEqual(DEFAULT_FIELDS)
+    })
+
+    it('selectRecordFields() should return the current "fieldsConfig" state', () => {
+      const result = EditorSelectors.selectRecordFields(state)
+      expect(result).toEqual([
+        {
+          config: DEFAULT_FIELDS[0],
+          value: DATASET_RECORDS[0].title,
+        },
+        {
+          config: DEFAULT_FIELDS[1],
+          value: DATASET_RECORDS[0].abstract,
+        },
+        {
+          config: DEFAULT_FIELDS[2],
+          value: DATASET_RECORDS[0].uniqueIdentifier,
+        },
+        {
+          config: DEFAULT_FIELDS[3],
+          value: DATASET_RECORDS[0].recordUpdated,
+        },
+      ])
     })
   })
 })

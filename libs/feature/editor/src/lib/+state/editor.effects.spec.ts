@@ -11,7 +11,7 @@ import { EditorService } from '../services/editor.service'
 
 class EditorServiceMock {
   loadRecordByUuid = jest.fn(() => of(DATASET_RECORDS[0]))
-  saveRecord = jest.fn(() => of(undefined))
+  saveRecord = jest.fn((record) => of(record))
 }
 
 describe('EditorEffects', () => {
@@ -51,11 +51,12 @@ describe('EditorEffects', () => {
   describe('saveRecord$', () => {
     describe('when api success', () => {
       it('dispatch saveRecordSuccess', () => {
-        actions = hot('-a-|', {
+        actions = hot('-a---|', {
           a: EditorActions.saveRecord(),
         })
-        const expected = hot('-a-|', {
+        const expected = hot('-(ab)|', {
           a: EditorActions.saveRecordSuccess(),
+          b: EditorActions.openRecord({ record: DATASET_RECORDS[0] }),
         })
         expect(effects.saveRecord$).toBeObservable(expected)
       })

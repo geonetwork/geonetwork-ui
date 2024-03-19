@@ -2,9 +2,7 @@ import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { EditorFacade } from '../+state/editor.facade'
-import { EditorFieldConfig, EditorFieldState } from '../models/fields.model'
-import { map } from 'rxjs/operators'
-import { Observable } from 'rxjs'
+import { EditorFieldState, EditorFieldValue } from '../models/fields.model'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -15,44 +13,15 @@ import { Observable } from 'rxjs'
   imports: [CommonModule, UiInputsModule],
 })
 export class RecordFormComponent {
-  fieldsConfig: EditorFieldConfig[] = [
-    {
-      model: 'title',
-      formFieldConfig: {
-        labelKey: 'Metadata title',
-        type: 'text',
-      },
-    },
-    {
-      model: 'abstract',
-      formFieldConfig: {
-        labelKey: 'Abstract',
-        type: 'rich',
-      },
-    },
-    {
-      model: 'uniqueIdentifier',
-      formFieldConfig: {
-        labelKey: 'Unique identifier',
-        type: 'text',
-        locked: true,
-      },
-    },
-  ]
-
-  fields$: Observable<EditorFieldState[]> = this.facade.record$.pipe(
-    map((record) =>
-      this.fieldsConfig.map((fieldConfig) => ({
-        config: fieldConfig,
-        value: record?.[fieldConfig.model] || null,
-      }))
-    )
-  )
+  fields$ = this.facade.recordFields$
 
   constructor(public facade: EditorFacade) {}
 
-  handleFieldValueChange(fieldName: string, value: unknown) {
-    this.facade.updateRecordField(fieldName, value)
+  handleFieldValueChange(field: EditorFieldState, newValue: EditorFieldValue) {
+    if (!field.config.model) {
+      return
+    }
+    this.facade.updateRecordField(field.config.model, newValue)
   }
 
   fieldTracker(index: number, field: EditorFieldState) {
