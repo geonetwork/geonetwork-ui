@@ -144,6 +144,8 @@
   "downloads.format.unknown": "neznámy",
   "downloads.wfs.featuretype.not.found": "Vrstva nebola nájdená",
   "dropFile": "nahrať súbor",
+  "editor.record.publish": "",
+  "editor.record.upToDate": "",
   "externalviewer.dataset.unnamed": "",
   "facets.block.title.OrgForResource": "Organizácia",
   "facets.block.title.availableInServices": "Dostupné pre",

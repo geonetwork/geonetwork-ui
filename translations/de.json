@@ -144,6 +144,8 @@
   "downloads.format.unknown": "unbekannt",
   "downloads.wfs.featuretype.not.found": "Der Layer wurde nicht gefunden",
   "dropFile": "Datei ablegen",
+  "editor.record.publish": "",
+  "editor.record.upToDate": "",
   "externalviewer.dataset.unnamed": "Datensatz aus dem Datahub",
   "facets.block.title.OrgForResource": "Organisation",
   "facets.block.title.availableInServices": "Verfügbar für",
