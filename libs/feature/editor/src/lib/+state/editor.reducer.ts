@@ -2,6 +2,8 @@ import { Action, createReducer, on } from '@ngrx/store'
 import * as EditorActions from './editor.actions'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { SaveRecordError } from './editor.models'
+import { EditorFieldsConfig } from '../models/fields.model'
+import { DEFAULT_FIELDS } from '../fields.config'
 
 export const EDITOR_FEATURE_KEY = 'editor'
 
@@ -10,6 +12,7 @@ export interface EditorState {
   saving: boolean
   saveError: SaveRecordError | null
   changedSinceSave: boolean
+  fieldsConfig: EditorFieldsConfig
 }
 
 export interface EditorPartialState {
@@ -21,6 +24,7 @@ export const initialEditorState: EditorState = {
   saving: false,
   saveError: null,
   changedSinceSave: false,
+  fieldsConfig: DEFAULT_FIELDS,
 }
 
 const reducer = createReducer(

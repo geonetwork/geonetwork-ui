@@ -23,3 +23,17 @@ export const selectRecordChangedSinceSave = createSelector(
   selectEditorState,
   (state: EditorState) => state.changedSinceSave
 )
+
+export const selectRecordFieldsConfig = createSelector(
+  selectEditorState,
+  (state: EditorState) => state.fieldsConfig
+)
+
+export const selectRecordFields = createSelector(
+  selectEditorState,
+  (state: EditorState) =>
+    state.fieldsConfig.map((fieldConfig) => ({
+      config: fieldConfig,
+      value: state.record?.[fieldConfig.model] || null,
+    }))
+)

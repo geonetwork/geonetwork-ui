@@ -19,6 +19,8 @@ export interface EditorFieldConfig {
   onSaveProcess?: EditorFieldExpression
 }
 
+export type EditorFieldsConfig = EditorFieldConfig[]
+
 export type EditorFieldValue = string | number | boolean | unknown
 
 export interface EditorFieldState {

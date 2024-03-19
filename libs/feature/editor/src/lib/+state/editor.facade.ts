@@ -14,6 +14,7 @@ export class EditorFacade {
   changedSinceSave$ = this.store.pipe(
     select(EditorSelectors.selectRecordChangedSinceSave)
   )
+  recordFields$ = this.store.pipe(select(EditorSelectors.selectRecordFields))
 
   openRecord(record: CatalogRecord) {
     this.store.dispatch(EditorActions.openRecord({ record }))

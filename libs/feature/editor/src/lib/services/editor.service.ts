@@ -5,6 +5,8 @@ import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { HttpClient } from '@angular/common/http'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { EditorFieldsConfig } from '../models/fields.model'
+import { evaluate } from '../expressions'
 
 @Injectable({
   providedIn: 'root',
@@ -31,12 +33,29 @@ export class EditorService {
       .pipe(map((response) => toModel(response.toString())))
   }
 
-  // TODO: use the catalog repository instead
-  saveRecord(record: CatalogRecord): Observable<void> {
+  // returns the record as it was when saved
+  saveRecord(
+    record: CatalogRecord,
+    fieldsConfig: EditorFieldsConfig
+  ): Observable<CatalogRecord> {
+    const savedRecord = { ...record }
+
+    // run onSave processes
+    for (const field of fieldsConfig) {
+      if (field.onSaveProcess && field.model) {
+        const evaluator = evaluate(field.onSaveProcess)
+        savedRecord[field.model] = evaluator({
+          config: field,
+          value: record[field.model],
+        })
+      }
+    }
+
+    // TODO: use the catalog repository instead
     return this.http
       .put(
         `${this.apiUrl}/records?metadataType=METADATA&uuidProcessing=OVERWRITE&transformWith=_none_&publishToAll=on`,
-        toXml(record),
+        toXml(savedRecord),
         {
           headers: {
             'Content-Type': 'application/xml',
@@ -44,6 +63,6 @@ export class EditorService {
           withCredentials: true,
         }
       )
-      .pipe(map(() => undefined))
+      .pipe(map(() => savedRecord))
   }
 }
