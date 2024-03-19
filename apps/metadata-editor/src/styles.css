@@ -2,14 +2,14 @@ html,
 body {
   height: 100%;
   color: var(--color-main);
+
+  --gn-ui-button-rounded: 8px;
+  --gn-ui-button-padding: 12px;
+  --gn-ui-button-font-size: 14px;
 }
 
 .icon-btn {
   @apply text-slate-600 hover:text-slate-400 cursor-pointer transition-colors;
-}
-
-.btn-primary {
-  @apply rounded-[8px] p-[12px] text-[14px];
 }
 
 .menu-item {
