@@ -1,8 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordFormComponent } from './record-form.component'
-import { EditorService } from '../services/editor.service'
+import { FeatureEditorModule } from '../feature-editor.module'
+import { EditorFacade } from '@geonetwork-ui/feature/editor'
 
-class EditorServiceMock {}
+class EditorFacadeMock {
+  updateRecordField = jest.fn()
+}
 
 describe('RecordFormComponent', () => {
   let component: RecordFormComponent
@@ -13,8 +16,8 @@ describe('RecordFormComponent', () => {
       imports: [RecordFormComponent],
       providers: [
         {
-          provide: EditorService,
-          useClass: EditorServiceMock,
+          provide: EditorFacade,
+          useClass: EditorFacadeMock,
         },
       ],
     }).compileComponents()
@@ -26,5 +29,18 @@ describe('RecordFormComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  describe('handleFieldValueChange', () => {
+    it('should call facade.updateRecordField', () => {
+      component.handleFieldValueChange(
+        { config: { model: 'title' }, value: 'old title' },
+        'new title'
+      )
+      expect(component.facade.updateRecordField).toHaveBeenCalledWith(
+        'title',
+        'new title'
+      )
+    })
   })
 })
