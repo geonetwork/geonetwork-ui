@@ -31,8 +31,8 @@
 
   .btn-outline {
     @apply btn text-main
-      bg-white hover:text-primary-darker focus:text-primary-darker active:text-primary-black
-      border border-gray-300 hover:border-primary-lighter focus:border-primary-lighter focus:ring-4 focus:ring-primary-lightest active:border-primary-darker;
+    bg-transparent hover:text-primary-darker focus:text-primary-darker active:text-primary-black
+    border border-gray-300 hover:border-primary-lighter focus:border-primary-lighter focus:ring-4 focus:ring-primary-lightest active:border-primary-darker;
   }
 
   .btn-light {

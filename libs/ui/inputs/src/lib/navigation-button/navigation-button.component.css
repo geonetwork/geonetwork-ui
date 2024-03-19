@@ -1,0 +1,3 @@
+button {
+  color: var(--navigation-button-color, --color-background);
+}
