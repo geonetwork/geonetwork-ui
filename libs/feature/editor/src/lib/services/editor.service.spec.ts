@@ -5,6 +5,8 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { DEFAULT_FIELDS } from '../fields.config'
+import { firstValueFrom } from 'rxjs'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 
 const SAMPLE_RECORD: CatalogRecord = DATASET_RECORDS[0]
@@ -50,12 +52,27 @@ describe('EditorService', () => {
 
   describe('saveRecord', () => {
     describe('after a record was set as current', () => {
+      let savedRecord: CatalogRecord
       beforeEach(() => {
-        service.saveRecord(SAMPLE_RECORD).subscribe()
+        service
+          .saveRecord(SAMPLE_RECORD, DEFAULT_FIELDS)
+          .subscribe((v) => (savedRecord = v))
       })
-      it('sends the record as XML to the API', () => {
-        http.expectOne(
+      it('sends a record as XML to the API after applying field processes', () => {
+        const match = http.expectOne(
           (req) => req.method === 'PUT' && req.url.indexOf('/records') > -1
+        )
+        match.flush('ok')
+        expect(match.request.body).toContain(`
+    <gmd:fileIdentifier>
+        <gco:CharacterString>${SAMPLE_RECORD.uniqueIdentifier}</gco:CharacterString>
+    </gmd:fileIdentifier>`)
+        expect(savedRecord).toEqual({
+          ...SAMPLE_RECORD,
+          recordUpdated: expect.any(Date),
+        })
+        expect(savedRecord.recordUpdated).not.toEqual(
+          SAMPLE_RECORD.recordUpdated
         )
       })
     })

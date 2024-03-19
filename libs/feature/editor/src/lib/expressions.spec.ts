@@ -9,6 +9,11 @@ const SAMPLE_CONFIG: EditorFieldConfig = {
   model: 'myModel',
 }
 
+const originalDate = window.Date
+window.Date = function () {
+  return new originalDate('12345')
+} as any
+
 describe('expressions', () => {
   let evaluator: ExpressionEvaluator
   describe('operators', () => {
