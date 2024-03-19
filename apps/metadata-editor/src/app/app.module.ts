@@ -26,6 +26,7 @@ import { DashboardPageComponent } from './dashboard/dashboard-page.component'
 import { EditorRouterService } from './router.service'
 import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
 import { provideGn4 } from '@geonetwork-ui/api/repository'
+import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
 
 @NgModule({
   declarations: [AppComponent],
@@ -55,6 +56,7 @@ import { provideGn4 } from '@geonetwork-ui/api/repository'
     importProvidersFrom(FeatureSearchModule),
     importProvidersFrom(FeatureCatalogModule),
     importProvidersFrom(FeatureRecordModule),
+    importProvidersFrom(FeatureEditorModule),
     importProvidersFrom(UtilI18nModule),
     importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
     provideRepositoryUrl(() => getGlobalConfig().GN4_API_URL),
