@@ -13,7 +13,7 @@ type BaseFormFieldType =
 type AllFormFieldType = BaseFormFieldType | 'object' | 'array'
 
 interface FormFieldConfigBase {
-  model?: string
+  model: string
   type: AllFormFieldType
   labelKey: string
   hintKey?: string

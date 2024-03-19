@@ -17,7 +17,9 @@ import { Observable } from 'rxjs'
 export class FormFieldComponent {
   @Input() config: FormFieldConfig
   @Input() set value(v: unknown) {
-    this.formControl.setValue(v)
+    this.formControl.setValue(v, {
+      emitEvent: false,
+    })
   }
   @Output() valueChange: Observable<unknown>
 
