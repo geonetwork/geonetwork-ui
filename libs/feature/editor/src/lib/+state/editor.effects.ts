@@ -5,11 +5,7 @@ import { catchError, map, switchMap } from 'rxjs/operators'
 import * as EditorActions from './editor.actions'
 import { EditorService } from '../services/editor.service'
 import { Store } from '@ngrx/store'
-import {
-  selectRecord,
-  selectRecordFields,
-  selectRecordFieldsConfig,
-} from './editor.selectors'
+import { selectRecord, selectRecordFieldsConfig } from './editor.selectors'
 
 @Injectable()
 export class EditorEffects {
