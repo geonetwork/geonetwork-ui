@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordFormComponent } from './record-form.component'
-import { FeatureEditorModule } from '../feature-editor.module'
-import { EditorFacade } from '@geonetwork-ui/feature/editor'
+import { EditorFacade } from '../+state/editor.facade'
 
 class EditorFacadeMock {
   updateRecordField = jest.fn()
