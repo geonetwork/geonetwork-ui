@@ -1,5 +1,0 @@
-/* makes sure icons will not make the buttons grow vertically */
-:host ::ng-deep mat-icon.mat-icon {
-  margin-top: -0.325em;
-  margin-bottom: -0.325em;
-}
