@@ -1,13 +1,13 @@
 <div
   #containerElement
-  class="h-full w-full relative shrink-0 overflow-hidden flex items-center"
+  class="h-full w-full relative shrink-0 overflow-hidden flex items-center justify-center"
   [ngClass]="isPlaceholder ? 'bg-gray-100' : 'bg-white'"
   [attr.data-cy-is-placeholder]="isPlaceholder.toString()"
 >
   <img
     #imageElement
     class="relative w-full object-center"
-    [ngClass]="imgFit === 'contain' ? 'h-4/5' : 'h-full'"
+    [ngClass]="imgFit === 'contain' ? 'h-4/5 w-4/5' : 'h-full'"
     [ngStyle]="{ objectFit: imgFit }"
     alt="thumbnail"
     loading="lazy"
