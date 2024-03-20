@@ -72,6 +72,7 @@ describe('dataset pages', () => {
         cy.get('datahub-header-record')
           .children('header')
           .find('gn-ui-navigation-button')
+        cy.screenshot({ capture: 'fullPage' })
       })
       it('should display the data type, last update and status', () => {
         cy.visit('/dataset/01491630-78ce-49f3-b479-4b30dabc4c69')
@@ -201,6 +202,7 @@ describe('dataset pages', () => {
           .find('gn-ui-button')
           .click()
         cy.get('.basicLightbox--visible')
+        cy.screenshot({ capture: 'viewport' })
       })
     })
 
@@ -217,6 +219,7 @@ describe('dataset pages', () => {
         cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
           .eq(0)
           .should('have.attr', 'ng-reflect-value', 75)
+        cy.screenshot({ capture: 'fullPage' })
       })
     })
   })
@@ -258,6 +261,7 @@ describe('dataset pages', () => {
           .find('tbody')
           .children('tr')
           .should('have.length.gt', 0)
+        cy.screenshot({ capture: 'fullPage' })
       })
       it('should display the chart & dropdowns', () => {
         cy.get('@previewSection')
@@ -280,6 +284,7 @@ describe('dataset pages', () => {
             .find('button')
             .should('have.length.greaterThan', 0)
         })
+        cy.screenshot({ capture: 'fullPage' })
       })
     })
     describe('features', () => {
@@ -386,6 +391,7 @@ describe('dataset pages', () => {
                 expect(formatOutput).to.eq(filterFormat)
               })
           })
+          cy.screenshot({ capture: 'fullPage' })
         })
         it('downloads a file on click', () => {
           cy.get('datahub-record-downloads')
@@ -509,6 +515,7 @@ describe('record with file distributions', () => {
       .children('button')
       .then((options) => options.toArray().map((el) => el.innerText.trim()))
       .should('deep.eq', ['csv (csv)', 'json (json)', 'geojson (geojson)'])
+    cy.screenshot({ capture: 'viewport' })
   })
 })
 
@@ -527,6 +534,7 @@ describe('api cards', () => {
   it('should open and close the panel on click on open panel button', () => {
     cy.get('@firstCard').click()
     cy.get('gn-ui-record-api-form').should('be.visible')
+    cy.screenshot({ capture: 'fullPage' })
     cy.get('@firstCard').click()
     cy.get('gn-ui-record-api-form').should('not.be.visible')
   })

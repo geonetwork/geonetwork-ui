@@ -63,6 +63,7 @@ describe('header', () => {
         .find('a')
         .first()
         .should('have.attr', 'title', 'Accroches vélos MEL')
+      cy.screenshot({ capture: 'viewport' })
     })
     it('should display the search results on enter touch', () => {
       cy.get('gn-ui-fuzzy-search').type('velo{enter}')
@@ -138,6 +139,7 @@ describe('header', () => {
         .getActiveDropdownOption()
         .invoke('attr', 'data-cy-value')
         .should('equal', 'desc,createDate')
+      cy.screenshot({ capture: 'viewport' })
     })
     it('should filter results by popularity', () => {
       cy.get('gn-ui-fuzzy-search').next().find('button').eq(1).click()

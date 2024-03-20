@@ -15,3 +15,11 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+import { VIEWPORT_SIZE } from '../../../../tools/e2e/settings'
+
+beforeEach(() => {
+  cy.viewport(VIEWPORT_SIZE[0], VIEWPORT_SIZE[1])
+
+  // all tests should show english translations
+  window.localStorage.setItem('geonetwork-ui-language', 'en')
+})

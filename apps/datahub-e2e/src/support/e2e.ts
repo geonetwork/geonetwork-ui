@@ -13,11 +13,11 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-// Import commands.js using ES2015 syntax:
 import './commands'
+import { VIEWPORT_SIZE } from '../../../../tools/e2e/settings.js'
 
 beforeEach(() => {
-  cy.viewport(1900, 1400)
+  cy.viewport(VIEWPORT_SIZE[0], VIEWPORT_SIZE[1])
 
   // all tests should show english translations
   window.localStorage.setItem('geonetwork-ui-language', 'en')

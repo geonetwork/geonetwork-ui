@@ -7,9 +7,10 @@
     "e2e": {
       "executor": "@nx/cypress:cypress",
       "options": {
-        "cypressConfig": "apps/metadata-editor-e2e/cypress.config.ts",
+        "cypressConfig": "apps/metadata-editor-e2e/cypress.config.js",
         "devServerTarget": "metadata-editor:serve:development",
-        "testingType": "e2e"
+        "testingType": "e2e",
+        "browser": "chrome"
       },
       "configurations": {
         "production": {

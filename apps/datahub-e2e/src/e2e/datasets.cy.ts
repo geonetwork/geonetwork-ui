@@ -41,6 +41,7 @@ describe('datasets', () => {
         .find('[data-cy=filters-expand]')
         .filter(':visible')
         .should('have.length', 1)
+      cy.screenshot({ capture: 'viewport' })
     })
     it('should sort by relevance initially', () => {
       cy.get('@sortBy')
@@ -109,6 +110,7 @@ describe('datasets', () => {
           .find('a')
           .invoke('attr', 'href')
           .should('include', 'catalog.signin')
+        cy.screenshot({ capture: 'viewport' })
       })
     })
     describe('when logged in', () => {
@@ -125,6 +127,7 @@ describe('datasets', () => {
           .then((text) => {
             cy.get('@initialCount').should('not.eq', text)
           })
+        cy.screenshot({ capture: 'viewport' })
       })
     })
   })
@@ -190,6 +193,7 @@ describe('datasets', () => {
           'resourceType',
           'representationType',
         ])
+      cy.screenshot({ capture: 'viewport' })
     })
 
     describe('publisher filter', () => {
@@ -294,6 +298,7 @@ describe('datasets', () => {
           'Service public de Wallonie (SPW) (2)',
           "Société Publique de Gestion de l'Eau (SPGE) (1)",
         ])
+        cy.screenshot({ capture: 'viewport' })
       })
     })
 
@@ -480,6 +485,7 @@ describe('datasets', () => {
             'eql',
             'Cartographie des sols agricoles de la plaine du Rhône'
           )
+        cy.screenshot({ capture: 'viewport' })
       })
     })
   })
@@ -560,6 +566,7 @@ describe('datasets', () => {
         cy.get('gn-ui-progress-bar')
           .eq(0)
           .should('have.attr', 'ng-reflect-value', 100)
+        cy.screenshot({ capture: 'viewport' })
       })
     })
   })

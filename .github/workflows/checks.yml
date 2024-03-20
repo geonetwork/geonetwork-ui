@@ -145,6 +145,8 @@ jobs:
   cypress-run:
     name: End-to-end tests
     runs-on: ubuntu-latest
+    outputs:
+      screenshotsUrl: ${{ steps.upload-screenshots.outputs.artifact-url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -166,6 +168,23 @@ jobs:
 
       - name: Run tests
         run: npx nx run-many --target=e2e
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        id: upload-screenshots
+        with:
+          name: cypress-screenshots
+          path: |
+            apps/datahub-e2e/cypress/screenshots/**/*
+            apps/metadata-editor-e2e/cypress/screenshots/**/*
+
+      - uses: thollander/actions-comment-pull-request@v2
+        if: always() && github.event_name == 'pull_request' && steps.upload-screenshots.outputs.artifact-url
+        with:
+          message: '📷 Screenshots are [here](${{ steps.upload-screenshots.outputs.artifact-url }})!'
+          comment_tag: screenshots-url
+          pr_number: ${{ github.event.number }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build-npm-package:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
