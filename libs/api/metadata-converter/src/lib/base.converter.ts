@@ -7,13 +7,13 @@ export class MetadataMapperContext {
   readonly location?
 }
 
-export abstract class MetadataBaseMapper<F> {
+export abstract class BaseConverter<F> {
   constructor(
     protected ctx: MetadataMapperContext = new MetadataMapperContext()
   ) {}
 
   abstract readRecord(document: F): Promise<CatalogRecord>
-  abstract writeRecord(record: CatalogRecord): Promise<F>
+  abstract writeRecord(record: CatalogRecord, reference?: F): Promise<F>
   readRecords(documents: F[]): Promise<CatalogRecord[]> {
     return Promise.all(documents.map((doc) => this.readRecord(doc)))
   }

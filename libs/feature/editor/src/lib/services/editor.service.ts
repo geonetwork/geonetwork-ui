@@ -1,8 +1,8 @@
 import { Inject, Injectable, Optional } from '@angular/core'
-import { toModel, toXml } from '@geonetwork-ui/api/metadata-converter'
+import { Iso19139Converter } from '@geonetwork-ui/api/metadata-converter'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, switchMap } from 'rxjs/operators'
 import { HttpClient } from '@angular/common/http'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { EditorFieldsConfig } from '../models/fields.model'
@@ -13,6 +13,8 @@ import { evaluate } from '../expressions'
 })
 export class EditorService {
   private apiUrl = `${this.apiConfiguration?.basePath || '/geonetwork/srv/api'}`
+
+  converter = new Iso19139Converter()
 
   constructor(
     private http: HttpClient,
@@ -30,7 +32,9 @@ export class EditorService {
           Accept: 'application/xml',
         },
       })
-      .pipe(map((response) => toModel(response.toString())))
+      .pipe(
+        switchMap((response) => this.converter.readRecord(response.toString()))
+      )
   }
 
   // returns the record as it was when saved
@@ -55,7 +59,7 @@ export class EditorService {
     return this.http
       .put(
         `${this.apiUrl}/records?metadataType=METADATA&uuidProcessing=OVERWRITE&transformWith=_none_&publishToAll=on`,
-        toXml(savedRecord),
+        this.converter.writeRecord(savedRecord),
         {
           headers: {
             'Content-Type': 'application/xml',

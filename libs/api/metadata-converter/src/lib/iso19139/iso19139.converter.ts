@@ -29,8 +29,8 @@ import {
   writeSecurityConstraints,
   writeSpatialRepresentation,
   writeStatus,
-  writeTopics,
   writeTitle,
+  writeTopics,
   writeUniqueIdentifier,
   writeUpdateFrequency,
 } from './write-parts'
@@ -62,8 +62,9 @@ import {
   readUpdateFrequency,
 } from './read-parts'
 import { isEqual } from '../convert-utils'
+import { BaseConverter } from '../base.converter'
 
-export function toModel(xml: string): CatalogRecord {
+function toModel(xml: string): CatalogRecord {
   const doc = parseXmlString(xml)
   const rootEl = getRootElement(doc)
 
@@ -149,7 +150,7 @@ export function toModel(xml: string): CatalogRecord {
   }
 }
 
-export function toXml(record: CatalogRecord, originalXml?: string): string {
+function toXml(record: CatalogRecord, originalXml?: string): string {
   const originalDoc = originalXml ? parseXmlString(originalXml) : null
   const originalRecord = originalXml ? toModel(originalXml) : null
   const rootEl = originalDoc
@@ -193,4 +194,14 @@ export function toXml(record: CatalogRecord, originalXml?: string): string {
 
   const newDocument = createDocument(rootEl)
   return xmlToString(newDocument)
+}
+
+export class Iso19139Converter extends BaseConverter<string> {
+  readRecord(document: string): Promise<CatalogRecord> {
+    return Promise.resolve(toModel(document))
+  }
+
+  writeRecord(record: CatalogRecord, reference?: string): Promise<string> {
+    return Promise.resolve(toXml(record, reference))
+  }
 }
