@@ -1,6 +1,6 @@
-<div class="flex flex-row content-center">
+<div class="flex flex-row items-center">
   <span
-    class="align-text-top mr-1.5 mt-1.5 favorite-count"
+    class="align-text-top mr-1.5 favorite-count"
     *ngIf="hasFavoriteCount && displayCount"
     >{{ favoriteCount }}</span
   >
@@ -8,10 +8,9 @@
     [toggled]="isFavorite$ | async"
     (newValue)="toggleFavorite($event)"
     [disabled]="loading || (isAnonymous$ | async)"
-    class="mt-1"
   ></gn-ui-star-toggle>
   <span
-    class="align-text-top ml-1.5 favorite-count mt-1.5"
+    class="align-text-top ml-1.5 favorite-count"
     *ngIf="!displayCount"
     translate="datahub.record.addToFavorites"
   ></span>

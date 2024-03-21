@@ -6,7 +6,8 @@
       ? 'decoration-primary'
       : 'decoration-transparent hover:decoration-primary transition-colors'
   "
-  class="hidden sm:block sm:py-4 uppercase truncate text-white font-title text-sm underline decoration-4 underline-offset-[19px]"
+  class="hidden sm:block sm:py-4 uppercase truncate font-title text-sm underline decoration-4 underline-offset-[19px]"
+  [style.color]="foregroundColor"
   translate
 >
   {{ l.label }}

@@ -14,6 +14,12 @@ import {
 
 import { NavigationMenuComponent } from './navigation-menu.component'
 
+jest.mock('@geonetwork-ui/util/app-config', () => ({
+  getThemeConfig: () => ({
+    HEADER_FOREGROUND_COLOR: 'white',
+  }),
+}))
+
 const routerFacadeMock = {
   currentRoute$: new BehaviorSubject({
     url: [{ path: ROUTER_ROUTE_NEWS }],
