@@ -71,6 +71,7 @@ export class DatahubRouterService {
         path: `${ROUTER_ROUTE_DATASET}/:metadataUuid`,
         component: RecordPageComponent,
       },
+      { path: '**', redirectTo: '', pathMatch: 'full' },
     ]
   }
 

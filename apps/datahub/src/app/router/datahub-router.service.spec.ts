@@ -57,6 +57,7 @@ const expectedRoutes = [
     path: `dataset/:metadataUuid`,
     component: RecordPageComponent,
   },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ]
 describe('DatahubRouterService', () => {
   let service: DatahubRouterService
