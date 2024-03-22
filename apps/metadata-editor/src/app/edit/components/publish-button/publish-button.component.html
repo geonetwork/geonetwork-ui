@@ -1,0 +1,22 @@
+<ng-container [ngSwitch]="status$ | async">
+  <gn-ui-button
+    *ngSwitchCase="'hasChanges'"
+    type="primary"
+    (buttonClick)="saveRecord()"
+    [matTooltip]="'editor.record.publish' | translate"
+  >
+    <mat-icon class="material-symbols-outlined">cloud_upload</mat-icon>
+  </gn-ui-button>
+  <gn-ui-button *ngSwitchCase="'saving'" type="primary" [disabled]="true">
+    <mat-spinner [diameter]="16"></mat-spinner>
+  </gn-ui-button>
+  <gn-ui-button
+    *ngSwitchCase="'upToDate'"
+    type="secondary"
+    [disabled]="true"
+    (buttonClick)="saveRecord()"
+    [matTooltip]="'editor.record.upToDate' | translate"
+  >
+    <mat-icon class="material-symbols-outlined">check_circle</mat-icon>
+  </gn-ui-button>
+</ng-container>

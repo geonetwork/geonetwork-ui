@@ -2,49 +2,78 @@
 @tailwind components;
 @tailwind utilities;
 
+/* PLEASE NOTE: all Tailwind components should be prefixed by `gn-ui` */
 @layer components {
+  /* TODO: add prefix */
   .card-shadow {
     @apply shadow-xl hover:shadow-xl-hover transition-shadow;
   }
 
-  .btn {
-    @apply flex flex-row items-center text-[1em] leading-none p-[1em] rounded-[0.25em] transition-all duration-100 focus:outline-none disabled:opacity-50;
+  /* BUTTON CLASSES */
+  /* these are used behind the scenes by the `gn-ui-button` component */
+
+  /* this is a base class, do not use it directly */
+  .gn-ui-btn {
+    --rounded: var(--gn-ui-button-rounded, 0.25em);
+    --padding: var(--gn-ui-button-padding, 1em);
+    --width: var(--gn-ui-button-width, auto);
+    --height: var(--gn-ui-button-height, auto);
+    --background: var(--gn-ui-button-background, --color-background);
+    --font-size: var(--gn-ui-button-font-size, 1em);
+    @apply flex flex-row items-center justify-center
+      text-[length:--font-size] leading-none
+      p-[--padding] rounded-[--rounded] w-[--width] h-[--height] overflow-hidden
+      bg-[--background] transition-all duration-100
+      focus:outline-none
+      disabled:opacity-50 disabled:pointer-events-none;
+  }
+  /* makes sure icons will not make the buttons grow vertically */
+  .gn-ui-btn mat-icon.mat-icon {
+    margin-top: -0.325em;
+    margin-bottom: -0.325em;
+    flex-shrink: 0;
+  }
+  /* makes spinners appear in the right color */
+  .gn-ui-btn mat-spinner circle {
+    stroke: currentColor !important;
   }
 
-  .btn-default {
-    @apply btn text-white
+  .gn-ui-btn-default {
+    @apply gn-ui-btn text-white
       bg-gray-700 hover:bg-gray-800 active:bg-gray-900
       border border-gray-700 focus:ring-4 focus:ring-gray-200;
   }
 
-  .btn-primary {
-    @apply btn text-white
+  .gn-ui-btn-primary {
+    @apply gn-ui-btn text-white
       bg-primary hover:bg-primary-darker focus:bg-primary-darker active:bg-primary-darkest
       border border-primary focus:ring-4 focus:ring-primary-lightest;
   }
 
-  .btn-secondary {
-    @apply btn text-white
+  .gn-ui-btn-secondary {
+    @apply gn-ui-btn text-white
       bg-secondary hover:bg-secondary-darker focus:bg-secondary-darker active:bg-secondary-darkest
       border border-secondary focus:ring-4 focus:ring-secondary-lightest;
   }
 
-  .btn-outline {
-    @apply btn text-main
-    bg-transparent hover:text-primary-darker focus:text-primary-darker active:text-primary-black
+  .gn-ui-btn-outline {
+    @apply gn-ui-btn text-main
+    hover:text-primary-darker focus:text-primary-darker active:text-primary-black
     border border-gray-300 hover:border-primary-lighter focus:border-primary-lighter focus:ring-4 focus:ring-primary-lightest active:border-primary-darker;
   }
 
-  .btn-light {
-    @apply btn text-main
-      bg-white hover:bg-gray-50 focus:bg-gray-50 active:bg-gray-100
+  .gn-ui-btn-light {
+    @apply gn-ui-btn text-main
+      hover:bg-gray-50 focus:bg-gray-50 active:bg-gray-100
       border border-white focus:ring-4 focus:ring-gray-300;
   }
 
+  /* TODO: add prefix */
   .badge-btn {
     @apply flex items-center justify-center px-4 py-1 text-white rounded backdrop-blur;
   }
 
+  /* TODO: add prefix */
   .card-icon {
     @apply text-primary opacity-50 group-hover:text-secondary group-hover:opacity-100 transition-colors transition-opacity;
   }

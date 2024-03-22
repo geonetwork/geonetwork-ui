@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { EditorService, FormField } from '../services/editor.service'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { EditorFacade } from '../+state/editor.facade'
+import { EditorFieldState, EditorFieldValue } from '../models/fields.model'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -12,13 +13,18 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
   imports: [CommonModule, UiInputsModule],
 })
 export class RecordFormComponent {
-  constructor(public editorService: EditorService) {}
+  fields$ = this.facade.recordFields$
 
-  handleFieldValueChange(fieldName: string, value: unknown) {
-    this.editorService.updateRecordField(fieldName, value)
+  constructor(public facade: EditorFacade) {}
+
+  handleFieldValueChange(field: EditorFieldState, newValue: EditorFieldValue) {
+    if (!field.config.model) {
+      return
+    }
+    this.facade.updateRecordField(field.config.model, newValue)
   }
 
-  fieldTracker(index: number, field: FormField) {
+  fieldTracker(index: number, field: EditorFieldState) {
     return field.config.model
   }
 }
