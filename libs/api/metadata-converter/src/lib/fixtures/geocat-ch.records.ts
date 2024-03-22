@@ -328,6 +328,7 @@ Die Quelle ist zu bezeichnen: „Quelle: Stadt Zürich“.`,
   temporalExtents: [],
   status: 'completed',
   updateFrequency: 'asNeeded',
+  languages: [],
 }
 
 export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
@@ -422,4 +423,5 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
   legalConstraints: [],
   securityConstraints: [],
   otherConstraints: [],
+  languages: [],
 }

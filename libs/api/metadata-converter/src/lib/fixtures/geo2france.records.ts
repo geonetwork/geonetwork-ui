@@ -119,4 +119,5 @@ Ce lot de données produit en 2019, a été numérisé à partir du PCI Vecteur 
   temporalExtents: [],
   status: 'completed',
   updateFrequency: 'unknown',
+  languages: [],
 }
