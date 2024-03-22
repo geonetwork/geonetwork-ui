@@ -466,13 +466,21 @@ describe('dataset pages', () => {
     describe('display', () => {
       it('should have external, API and internal links with one option', () => {
         cy.get('datahub-record-otherlinks')
-          .find('.carousel-step-dot')
-          .should('exist')
           .find('gn-ui-link-card')
           .should('have.length.gt', 0)
         cy.get('datahub-record-apis')
           .find('gn-ui-api-card')
           .should('have.length.gt', 0)
+      })
+      it('should not display carousel dot button for 4 link cards', () => {
+        cy.get('datahub-record-otherlinks')
+          .find('.carousel-step-dot')
+          .should('exist')
+      })
+      it('should not display carousel dot button for 2 API cards', () => {
+        cy.get('datahub-record-apis')
+          .find('.carousel-step-dot')
+          .should('not.exist')
       })
     })
     describe('features', () => {
@@ -497,8 +505,6 @@ describe('dataset pages', () => {
           .find('button')
           .first()
           .realClick()
-          .get('.carousel-step-dot')
-          .should('not.exist')
         // attempt to make the whole page focused
         cy.get('body').focus()
         cy.get('body').realClick()
