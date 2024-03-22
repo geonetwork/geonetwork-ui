@@ -472,6 +472,16 @@ describe('dataset pages', () => {
           .find('gn-ui-api-card')
           .should('have.length.gt', 0)
       })
+      it('should not display carousel dot button for 4 link cards', () => {
+        cy.get('datahub-record-otherlinks')
+          .find('.carousel-step-dot')
+          .should('exist')
+      })
+      it('should not display carousel dot button for 2 API cards', () => {
+        cy.get('datahub-record-apis')
+          .find('.carousel-step-dot')
+          .should('not.exist')
+      })
     })
     describe('features', () => {
       it('goes to external link on click', () => {
