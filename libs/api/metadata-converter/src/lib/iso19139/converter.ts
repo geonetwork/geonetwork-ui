@@ -98,6 +98,7 @@ export function toModel(xml: string): CatalogRecord {
     return {
       uniqueIdentifier,
       kind,
+      languages: [],
       recordCreated,
       recordUpdated,
       recordPublished,
@@ -128,6 +129,7 @@ export function toModel(xml: string): CatalogRecord {
     return {
       uniqueIdentifier,
       kind,
+      languages: [],
       recordCreated,
       recordUpdated,
       recordPublished,

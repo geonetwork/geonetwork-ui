@@ -149,6 +149,7 @@ As such, **it is not very interesting at all.**`,
       updatedTimes: 3,
       per: 'month',
     },
+    languages: ['en'],
   },
   {
     uniqueIdentifier: '7d002c4c-92ef-4b9f-a568-d732f740b99e',
