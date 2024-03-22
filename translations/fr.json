@@ -226,7 +226,7 @@
   "record.metadata.download": "Téléchargements",
   "record.metadata.formats": "Formats",
   "record.metadata.keywords": "Mots clés",
-  "record.metadata.lastUpdate": "Mis à jour le",
+  "record.metadata.lastUpdate": "Mis à jour le {date}",
   "record.metadata.links": "Liens",
   "record.metadata.noUsage": "Aucune condition d'utilisation spécifiée pour ces données",
   "record.metadata.origin": "À propos des données",
