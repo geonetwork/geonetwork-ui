@@ -9,7 +9,9 @@
   <gn-ui-button
     type="outline"
     class="grow min-w-0"
-    extraClass="!p-[8px] !pl-[16px] flex flex-row w-full {{ extraBtnClass }}"
+    extraClass="bg-background !p-[8px] !pl-[16px] flex flex-row w-full {{
+      extraBtnClass
+    }}"
     [title]="title"
     [attr.aria-owns]="id"
     (buttonClick)="openOverlay()"
