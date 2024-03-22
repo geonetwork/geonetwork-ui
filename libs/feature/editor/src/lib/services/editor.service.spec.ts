@@ -31,6 +31,7 @@ const SAMPLE_RECORD: CatalogRecord = {
   distributions: [],
   spatialExtents: [],
   temporalExtents: [],
+  languages: [],
 }
 
 describe('EditorService', () => {

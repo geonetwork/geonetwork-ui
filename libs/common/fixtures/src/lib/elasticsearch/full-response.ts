@@ -131,7 +131,7 @@ export const ES_FIXTURE_FULL_RESPONSE = deepFreeze({
           creationDateForResource: ['2012-01-01T00:00:00.000Z'],
           creationYearForResource: '2012',
           creationMonthForResource: '2012-01',
-          publicationDateForResource: ['2021-04-01T00:00:00.000Z'],
+          publicationDateForResource: '2021-04-01T00:00:00.000Z',
           publicationYearForResource: '2021',
           publicationMonthForResource: '2021-04',
           resourceDate: [

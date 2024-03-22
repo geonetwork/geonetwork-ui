@@ -291,7 +291,10 @@ function appendResponsibleParty(contact: Individual) {
   )
 }
 
-function updateCitationDate(date: Date, type: 'revision' | 'creation') {
+function updateCitationDate(
+  date: Date,
+  type: 'revision' | 'creation' | 'publication'
+) {
   return pipe(
     findNestedElements('gmd:date', 'gmd:CI_Date'),
     filterArray(
@@ -308,7 +311,10 @@ function updateCitationDate(date: Date, type: 'revision' | 'creation') {
   )
 }
 
-function appendCitationDate(date, type: 'revision' | 'creation') {
+function appendCitationDate(
+  date,
+  type: 'revision' | 'creation' | 'publication'
+) {
   return appendChildren(
     pipe(
       createElement('gmd:date'),

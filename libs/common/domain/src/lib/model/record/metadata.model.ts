@@ -73,6 +73,8 @@ export interface Keyword {
   type: KeywordType
   thesaurus?: KeywordThesaurus
 }
+// languages should be expressed using two-letters ISO 639-1 codes
+export type LanguageCode = string
 
 export interface BaseRecord {
   uniqueIdentifier: Uuid
@@ -82,6 +84,8 @@ export interface BaseRecord {
   abstract: string
   recordCreated?: Date
   recordUpdated: Date
+  recordPublished?: Date
+  languages: Array<LanguageCode>
   kind: RecordKind
   topics: Array<string> // TODO: handle codelists
   keywords: Array<Keyword>

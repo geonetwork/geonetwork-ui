@@ -98,6 +98,7 @@ describe('Gn4MetadataMapper', () => {
             },
             status: null,
             lineage: null,
+            recordPublished: null,
             recordUpdated: null,
             distributions: [],
             licenses: [],
@@ -108,17 +109,14 @@ describe('Gn4MetadataMapper', () => {
             contactsForResource: [],
             keywords: [],
             spatialExtents: [],
+            topics: [],
             temporalExtents: [
-              {
-                end: new Date('2013-05-21T00:00:00.000Z'),
-                start: new Date('2013-05-21T00:00:00.000Z'),
-              },
               {
                 end: new Date('2013-12-31T00:00:00.000Z'),
                 start: new Date('2013-01-01T00:00:00.000Z'),
               },
             ],
-            topics: [],
+            languages: ['en'],
           },
           {
             kind: 'dataset',
@@ -147,6 +145,7 @@ describe('Gn4MetadataMapper', () => {
             },
             status: null,
             lineage: null,
+            recordPublished: null,
             recordUpdated: null,
             distributions: [],
             contacts: [],
@@ -157,21 +156,14 @@ describe('Gn4MetadataMapper', () => {
             securityConstraints: [],
             otherConstraints: [],
             spatialExtents: [],
+            topics: [],
             temporalExtents: [
-              {
-                end: new Date('2017-11-01T00:00:00.000Z'),
-                start: new Date('2017-11-01T00:00:00.000Z'),
-              },
-              {
-                end: new Date('2017-12-14T00:00:00.000Z'),
-                start: new Date('2017-12-14T00:00:00.000Z'),
-              },
               {
                 end: new Date('2014-12-31T00:00:00.000Z'),
                 start: new Date('2013-01-01T00:00:00.000Z'),
               },
             ],
-            topics: [],
+            languages: ['en'],
           },
         ] as CatalogRecord[])
       })
@@ -738,7 +730,7 @@ describe('Gn4MetadataMapper', () => {
               ...hit,
               _source: {
                 ...hit._source,
-                resourceTemporalDateRange: [
+                resourceTemporalExtentDateRange: [
                   {
                     gte: '2000-05-31T22:00:00.000Z',
                     lte: '2014-12-31T23:00:00.000Z',
@@ -1632,6 +1624,7 @@ describe('Gn4MetadataMapper', () => {
             ],
             recordCreated: new Date('2021-10-05T12:48:57.678Z'),
             recordUpdated: new Date('2021-10-05T12:48:57.678Z'),
+            recordPublished: new Date('2021-04-01T00:00:00.000Z'),
             status: 'ongoing',
             topics: ['Installations de suivi environnemental', 'Océans'],
             title: 'Surval - Données par paramètre',
@@ -1657,17 +1650,8 @@ describe('Gn4MetadataMapper', () => {
                 },
               },
             ],
-            temporalExtents: [
-              {
-                start: new Date('2012-01-01T00:00:00.000Z'),
-                end: new Date('2012-01-01T00:00:00.000Z'),
-              },
-              {
-                start: new Date('2021-04-01T00:00:00.000Z'),
-                end: new Date('2021-04-01T00:00:00.000Z'),
-              },
-              { start: new Date('1974-01-01T00:00:00.000Z') },
-            ],
+            temporalExtents: [{ start: new Date('1974-01-01T00:00:00.000Z') }],
+            languages: ['fr'],
           } as CatalogRecord)
         })
       })

@@ -450,7 +450,7 @@ function findIdentification() {
   }
 }
 
-function extractCitationDate(type: 'creation' | 'revision') {
+function extractCitationDate(type: 'creation' | 'revision' | 'publication') {
   return pipe(
     findIdentification(),
     findNestedElements('gmd:citation', 'gmd:CI_Citation', 'gmd:date'),
@@ -514,6 +514,10 @@ export function readOwnerOrganization(rootEl: XmlElement): Organization {
 }
 
 export function readRecordUpdated(rootEl: XmlElement): Date {
+  return pipe(findChildElement('gmd:dateStamp'), extractDateTime())(rootEl)
+}
+
+export function readRecordPublished(rootEl: XmlElement): Date {
   return pipe(findChildElement('gmd:dateStamp'), extractDateTime())(rootEl)
 }
 

@@ -28,8 +28,8 @@ import {
   OnlineLinkResource,
 } from '@geonetwork-ui/common/domain/model/record'
 import { matchProtocol } from '../common/distribution.mapper'
-import { LangService } from '@geonetwork-ui/util/i18n'
 import { Thesaurus } from './types'
+import { LANG_3_TO_2_MAPPER, LangService } from '@geonetwork-ui/util/i18n'
 
 type ESResponseSource = SourceWithUnknownProps
 
@@ -132,6 +132,22 @@ export class Gn4FieldMapper {
       ...output,
       recordUpdated: toDate(selectField<string>(source, 'changeDate')),
     }),
+    publicationDateForResource: (output, source) => ({
+      ...output,
+      recordPublished: toDate(
+        selectField<string>(source, 'publicationDateForResource')
+      ),
+    }),
+    resourceLanguage: (output, source) => {
+      const langList = getAsArray(
+        selectField<string>(source, 'resourceLanguage')
+      )
+      const languages = langList.map((lang) => LANG_3_TO_2_MAPPER[lang])
+      return {
+        ...output,
+        languages,
+      }
+    },
     link: (output, source) => {
       const rawLinks = getAsArray(
         selectField<SourceWithUnknownProps[]>(source, 'link')
@@ -292,9 +308,9 @@ export class Gn4FieldMapper {
         ],
       }
     },
-    resourceTemporalDateRange: (output, source) => {
+    resourceTemporalExtentDateRange: (output, source) => {
       const ranges = getAsArray(
-        selectField(source, 'resourceTemporalDateRange')
+        selectField(source, 'resourceTemporalExtentDateRange')
       )
       return {
         ...output,
