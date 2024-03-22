@@ -226,7 +226,7 @@
   "record.metadata.download": "Download",
   "record.metadata.formats": "Formati",
   "record.metadata.keywords": "Parole chiave",
-  "record.metadata.lastUpdate": "Ultimo aggiornamento",
+  "record.metadata.lastUpdate": "Ultimo aggiornamento il {date}",
   "record.metadata.links": "Collegamenti",
   "record.metadata.noUsage": "Nessuna condizione d'uso specificata per questi dati",
   "record.metadata.origin": "Informazioni sui dati",
