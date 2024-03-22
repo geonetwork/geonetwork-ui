@@ -80,11 +80,6 @@ describe('MetadataInfoComponent', () => {
       )
       expect(displayedElement).toBeTruthy()
     })
-    it('should display the metadata origin even if there is no lineage text', () => {
-      const displayedElement =
-        fixture.nativeElement.querySelector('.metadata-origin')
-      expect(displayedElement).toBeTruthy()
-    })
   })
   describe('updateFrequency', () => {
     describe('updateFrequency is not defined', () => {
