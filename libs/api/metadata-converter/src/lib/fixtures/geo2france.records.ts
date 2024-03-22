@@ -18,6 +18,7 @@ export const GEO2FRANCE_PLU_DATASET_RECORD: DatasetRecord = {
   ],
   contactsForResource: [],
   recordCreated: new Date('2022-04-15T14:18:19'),
+  recordPublished: new Date('2022-04-15T14:18:19'),
   recordUpdated: new Date('2022-04-15T14:18:19'),
   datasetUpdated: new Date('2022-03-29'),
   title:

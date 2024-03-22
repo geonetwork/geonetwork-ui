@@ -147,11 +147,47 @@ describe('dataset pages', () => {
         cy.get('gn-ui-expandable-panel').eq(2).click()
         cy.get('gn-ui-badge').should('have.length.gt', 0)
       })
-      it('should display the lineage and usage tabs', () => {
+      it('should display three expandable panels', () => {
         cy.get('datahub-record-metadata')
-          .find('[id="about"]')
-          .find('gn-ui-metadata-info')
           .find('gn-ui-expandable-panel')
+          .should('have.length', 3)
+      })
+      describe('about section', () => {
+        it('should display the lineage', () => {
+          cy.get('datahub-record-metadata')
+            .find('[id="about"]')
+            .find('gn-ui-markdown-parser')
+            .should(($element) => {
+              const text = $element.text().trim()
+              expect(text).not.to.equal('')
+            })
+        })
+        it('should display the data producer elements', () => {
+          cy.get('datahub-record-metadata')
+            .find('[id="about"]')
+            .find('gn-ui-thumbnail')
+            .should('be.visible')
+          cy.get('datahub-record-metadata')
+            .find('[data-cy="organization-name"]')
+            .parent()
+            .children('div')
+            .should('have.length', 4)
+        })
+        it('should display the creation date, the publication date, the frequency, the languages and the temporal extent', () => {
+          cy.get('datahub-record-metadata')
+            .find('[id="about"]')
+            .find('gn-ui-expandable-panel')
+            .eq(1)
+            .click()
+          cy.get('gn-ui-expandable-panel')
+            .eq(1)
+            .children('div')
+            .eq(1)
+            .children('div')
+            .eq(2)
+            .children('div')
+            .should('have.length', 5)
+        })
       })
     })
     describe('features', () => {
@@ -176,7 +212,7 @@ describe('dataset pages', () => {
           })
       })
       it('should go to dataset search page when clicking on org name and filter by org', () => {
-        cy.get('[data-cy="organization-name"]').click()
+        cy.get('[data-cy="organization-name"]').eq(1).click()
         cy.url().should('include', '/search?publisher=')
       })
       it('should go to dataset search page when clicking on keyword and filter by keyword', () => {
@@ -197,7 +233,7 @@ describe('dataset pages', () => {
         cy.get('datahub-record-metadata')
           .find('[id="about"]')
           .find('gn-ui-thumbnail')
-          .first()
+          .eq(1)
           .next()
           .find('gn-ui-button')
           .click()
@@ -218,7 +254,7 @@ describe('dataset pages', () => {
       it('should display quality widget', () => {
         cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
           .eq(0)
-          .should('have.attr', 'ng-reflect-value', 75)
+          .should('have.attr', 'ng-reflect-value', 87)
         cy.screenshot({ capture: 'fullPage' })
       })
     })
@@ -435,10 +471,6 @@ describe('dataset pages', () => {
         cy.get('datahub-record-apis')
           .find('gn-ui-api-card')
           .should('have.length.gt', 0)
-        cy.get('#related-records')
-          .find('datahub-record-related-records')
-          .find('gn-ui-related-record-card')
-          .should('have.length.gt', 0)
       })
     })
     describe('features', () => {
@@ -472,22 +504,33 @@ describe('dataset pages', () => {
           })
         })
       })
-      it('goes to dataset on click', () => {
-        let targetLink
-        cy.get('#related-records')
-          .find('datahub-record-related-records')
-          .find('gn-ui-related-record-card')
-          .first()
-          .children('a')
-          .as('proviLink')
+      describe('related records', () => {
+        beforeEach(() => {
+          cy.visit('/dataset/6d0bfdf4-4e94-48c6-9740-3f9facfd453c')
+        })
+        it('should display the related records', () => {
+          cy.get('#related-records')
+            .find('datahub-record-related-records')
+            .find('gn-ui-related-record-card')
+            .should('have.length.gt', 0)
+        })
+        it('goes to dataset on click', () => {
+          let targetLink
+          cy.get('#related-records')
+            .find('datahub-record-related-records')
+            .find('gn-ui-related-record-card')
+            .first()
+            .children('a')
+            .as('proviLink')
 
-        cy.get('@proviLink')
-          .invoke('attr', 'href')
-          .then((link) => {
-            targetLink = link
-            cy.get('@proviLink').invoke('removeAttr', 'target').click()
-            cy.url().should('include', targetLink)
-          })
+          cy.get('@proviLink')
+            .invoke('attr', 'href')
+            .then((link) => {
+              targetLink = link
+              cy.get('@proviLink').invoke('removeAttr', 'target').click()
+              cy.url().should('include', targetLink)
+            })
+        })
       })
     })
   })

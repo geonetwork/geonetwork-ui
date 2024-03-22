@@ -150,6 +150,7 @@ export type MetadataObject = Partial<{
   pointOfContactOrg: string
   pointOfContactOrgForResource: string
   popularity: number
+  publicationDateForResource: string
   rating: string
   record: string
   recordGroup: string

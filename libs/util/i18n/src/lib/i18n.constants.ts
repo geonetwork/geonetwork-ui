@@ -40,6 +40,24 @@ export const LANG_3_TO_2_MAPPER = {
   slo: 'sk',
 }
 
+export const LANGUAGE_NAMES = {
+  en: 'English',
+  nl: 'Nederlands',
+  fr: 'Français',
+  de: 'Deutsch',
+  ko: '한국어',
+  es: 'Español',
+  cs: 'Čeština',
+  ca: 'Català',
+  fi: 'Suomi',
+  is: 'Íslenska',
+  it: 'Italiano',
+  pt: 'Português',
+  ru: 'Русский',
+  zh: '中文',
+  sk: 'Slovenčina',
+}
+
 // Caution: changing this can break language selection from third parties!
 export const LANGUAGE_STORAGE_KEY = 'geonetwork-ui-language'
 

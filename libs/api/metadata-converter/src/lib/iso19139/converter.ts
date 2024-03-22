@@ -51,6 +51,7 @@ import {
   readOverviews,
   readOwnerOrganization,
   readRecordUpdated,
+  readRecordPublished,
   readSecurityConstraints,
   readSpatialExtents,
   readSpatialRepresentation,
@@ -74,6 +75,7 @@ export function toModel(xml: string): CatalogRecord {
   const contacts = readContacts(rootEl)
   const recordUpdated = readRecordUpdated(rootEl)
   const recordCreated = recordUpdated
+  const recordPublished = readRecordPublished(rootEl)
   const keywords = readKeywords(rootEl)
   const topics = readIsoTopics(rootEl)
   const legalConstraints = readLegalConstraints(rootEl)
@@ -98,6 +100,7 @@ export function toModel(xml: string): CatalogRecord {
       kind,
       recordCreated,
       recordUpdated,
+      recordPublished,
       status,
       title,
       abstract,
@@ -127,6 +130,7 @@ export function toModel(xml: string): CatalogRecord {
       kind,
       recordCreated,
       recordUpdated,
+      recordPublished,
       title,
       abstract,
       ownerOrganization,

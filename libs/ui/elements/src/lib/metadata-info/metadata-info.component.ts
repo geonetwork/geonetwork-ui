@@ -9,6 +9,7 @@ import {
   DatasetRecord,
   Keyword,
 } from '@geonetwork-ui/common/domain/model/record'
+import { getTemporalRangeUnion } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-metadata-info',
@@ -74,6 +75,19 @@ export class MetadataInfoComponent {
     } else {
       return undefined
     }
+  }
+
+  get temporalExtent(): { start: string; end: string } {
+    const temporalExtents = this.metadata.temporalExtents
+    return getTemporalRangeUnion(temporalExtents)
+  }
+
+  get shownOrganization() {
+    return this.metadata.ownerOrganization
+  }
+
+  get resourceContact() {
+    return this.metadata.contactsForResource?.[0]
   }
 
   fieldReady(propName: string) {
