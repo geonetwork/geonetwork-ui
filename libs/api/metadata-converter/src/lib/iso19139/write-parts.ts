@@ -48,7 +48,7 @@ import {
 import format from 'date-fns/format'
 import { readKind } from './read-parts'
 
-function writeCharacterString(
+export function writeCharacterString(
   text: string
 ): ChainableFunction<XmlElement, XmlElement> {
   return tap(
@@ -56,7 +56,9 @@ function writeCharacterString(
   )
 }
 
-function writeLinkage(url: URL): ChainableFunction<XmlElement, XmlElement> {
+export function writeLinkage(
+  url: URL
+): ChainableFunction<XmlElement, XmlElement> {
   return tap(
     pipe(
       findNestedChildOrCreate('gmd:linkage', 'gmd:URL'),
@@ -65,7 +67,7 @@ function writeLinkage(url: URL): ChainableFunction<XmlElement, XmlElement> {
   )
 }
 
-function writeAnchor(
+export function writeAnchor(
   url: URL,
   text?: string
 ): ChainableFunction<XmlElement, XmlElement> {
@@ -78,7 +80,9 @@ function writeAnchor(
   )
 }
 
-function writeDateTime(date: Date): ChainableFunction<XmlElement, XmlElement> {
+export function writeDateTime(
+  date: Date
+): ChainableFunction<XmlElement, XmlElement> {
   return tap(
     pipe(
       findChildOrCreate('gco:DateTime'),
@@ -87,7 +91,9 @@ function writeDateTime(date: Date): ChainableFunction<XmlElement, XmlElement> {
   )
 }
 
-function writeDate(date: Date): ChainableFunction<XmlElement, XmlElement> {
+export function writeDate(
+  date: Date
+): ChainableFunction<XmlElement, XmlElement> {
   return tap(
     pipe(
       findChildOrCreate('gco:Date'),
@@ -96,7 +102,7 @@ function writeDate(date: Date): ChainableFunction<XmlElement, XmlElement> {
   )
 }
 
-function getProgressCode(status: RecordStatus): string {
+export function getProgressCode(status: RecordStatus): string {
   switch (status) {
     case 'completed':
       return 'completed'
@@ -115,7 +121,7 @@ function getProgressCode(status: RecordStatus): string {
   }
 }
 
-function getRoleCode(role: Role): string {
+export function getRoleCode(role: Role): string {
   switch (role) {
     case 'author':
       return 'author'
@@ -164,7 +170,7 @@ function getRoleCode(role: Role): string {
   }
 }
 
-function getDistributionProtocol(
+export function getDistributionProtocol(
   distribution: DatasetServiceDistribution
 ): string {
   switch (distribution.accessServiceProtocol.toLowerCase()) {
@@ -179,7 +185,7 @@ function getDistributionProtocol(
   }
 }
 
-function getMaintenanceFrequencyCode(
+export function getMaintenanceFrequencyCode(
   updateFrequency: UpdateFrequencyCode
 ): string | null {
   switch (updateFrequency) {
@@ -198,7 +204,7 @@ function getMaintenanceFrequencyCode(
   }
 }
 
-function getISODuration(updateFrequency: UpdateFrequencyCustom): string {
+export function getISODuration(updateFrequency: UpdateFrequencyCustom): string {
   const duration = {
     years: 0,
     months: 0,
@@ -227,7 +233,7 @@ function getISODuration(updateFrequency: UpdateFrequencyCustom): string {
   return `P${duration.years}Y${duration.months}M${duration.days}D${hours}`
 }
 
-function appendResponsibleParty(contact: Individual) {
+export function appendResponsibleParty(contact: Individual) {
   const name =
     contact.lastName && contact.firstName
       ? `${contact.firstName} ${contact.lastName}`
@@ -291,7 +297,7 @@ function appendResponsibleParty(contact: Individual) {
   )
 }
 
-function updateCitationDate(
+export function updateCitationDate(
   date: Date,
   type: 'revision' | 'creation' | 'publication'
 ) {
@@ -311,7 +317,7 @@ function updateCitationDate(
   )
 }
 
-function appendCitationDate(
+export function appendCitationDate(
   date,
   type: 'revision' | 'creation' | 'publication'
 ) {
@@ -335,12 +341,12 @@ function appendCitationDate(
   )
 }
 
-function removeKeywords() {
+export function removeKeywords() {
   return removeChildren(pipe(findNestedElements('gmd:descriptiveKeywords')))
 }
 
 // returns a <gmd:thesaurusName> element
-function createThesaurus(thesaurus: KeywordThesaurus) {
+export function createThesaurus(thesaurus: KeywordThesaurus) {
   return pipe(
     createElement('gmd:thesaurusName'),
     createChild('gmd:CI_Citation'),
@@ -365,7 +371,7 @@ function createThesaurus(thesaurus: KeywordThesaurus) {
   )
 }
 
-function appendKeywords(keywords: Keyword[]) {
+export function appendKeywords(keywords: Keyword[]) {
   const keywordsByThesaurus: Keyword[][] = keywords.reduce((acc, keyword) => {
     const thesaurusId = keyword.thesaurus?.id
     const type = keyword.type
@@ -413,7 +419,7 @@ function appendKeywords(keywords: Keyword[]) {
   )
 }
 
-function createConstraint(
+export function createConstraint(
   constraint: Constraint,
   type: 'legal' | 'security' | 'other'
 ) {
@@ -471,7 +477,7 @@ function createConstraint(
   )
 }
 
-function removeOtherConstraints() {
+export function removeOtherConstraints() {
   return removeChildren(
     pipe(
       findChildrenElement('gmd:resourceConstraints'),
@@ -485,7 +491,7 @@ function removeOtherConstraints() {
   )
 }
 
-function removeSecurityConstraints() {
+export function removeSecurityConstraints() {
   return removeChildren(
     pipe(
       findChildrenElement('gmd:resourceConstraints'),
@@ -499,7 +505,7 @@ function removeSecurityConstraints() {
   )
 }
 
-function removeLegalConstraints() {
+export function removeLegalConstraints() {
   return removeChildren(
     pipe(
       findChildrenElement('gmd:resourceConstraints'),
@@ -519,7 +525,7 @@ function removeLegalConstraints() {
   )
 }
 
-function removeLicenses() {
+export function removeLicenses() {
   return removeChildren(
     pipe(
       findChildrenElement('gmd:resourceConstraints'),
@@ -539,7 +545,7 @@ function removeLicenses() {
   )
 }
 
-function createLicense(license: Constraint) {
+export function createLicense(license: Constraint) {
   return pipe(
     createElement('gmd:resourceConstraints'),
     createChild('gmd:MD_LegalConstraints'),
@@ -572,11 +578,11 @@ function createLicense(license: Constraint) {
   )
 }
 
-function removeDistributions() {
+export function removeDistributions() {
   return pipe(removeChildrenByName('gmd:distributionInfo'))
 }
 
-function createDistribution(distribution: DatasetDistribution) {
+export function createDistribution(distribution: DatasetDistribution) {
   const appendDistributionFormat =
     'mimeType' in distribution
       ? appendChildren(
@@ -660,7 +666,7 @@ function createDistribution(distribution: DatasetDistribution) {
  * Looks for srv:SV_ServiceIdentification or gmd:MD_DataIdentification element
  * depending on record type, create if missing
  */
-function findOrCreateIdentification() {
+export function findOrCreateIdentification() {
   return (rootEl: XmlElement) => {
     const kind = readKind(rootEl)
     let eltName = 'gmd:MD_DataIdentification'
@@ -669,7 +675,7 @@ function findOrCreateIdentification() {
   }
 }
 
-function findOrCreateDistribution() {
+export function findOrCreateDistribution() {
   return (rootEl: XmlElement) => {
     return findNestedChildOrCreate(
       'gmd:distributionInfo',
@@ -972,7 +978,7 @@ export function writeLineage(record: DatasetRecord, rootEl: XmlElement) {
   )(rootEl)
 }
 
-function getServiceEndpointProtocol(endpoint: ServiceEndpoint): string {
+export function getServiceEndpointProtocol(endpoint: ServiceEndpoint): string {
   switch (endpoint.protocol.toLowerCase()) {
     case 'wfs':
       return 'OGC:WFS'
@@ -985,7 +991,7 @@ function getServiceEndpointProtocol(endpoint: ServiceEndpoint): string {
   }
 }
 
-function createOnlineResource(onlineResource: ServiceOnlineResource) {
+export function createOnlineResource(onlineResource: ServiceOnlineResource) {
   let linkageUrl, functionCode, protocol
   if (onlineResource.type === 'endpoint') {
     linkageUrl = onlineResource.endpointUrl.toString()

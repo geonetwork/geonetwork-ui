@@ -43,7 +43,10 @@ import { getRoleFromRoleCode } from './codelists/role.mapper'
 import { matchMimeType, matchProtocol } from '../common/distribution.mapper'
 import { getKeywordTypeFromKeywordTypeCode } from './codelists/keyword.mapper'
 
-function extractCharacterString(): ChainableFunction<XmlElement, string> {
+export function extractCharacterString(): ChainableFunction<
+  XmlElement,
+  string
+> {
   return pipe(
     fallback(
       findChildElement('gco:CharacterString', false),
@@ -53,7 +56,7 @@ function extractCharacterString(): ChainableFunction<XmlElement, string> {
   )
 }
 
-function extractDateTime(): ChainableFunction<XmlElement, Date> {
+export function extractDateTime(): ChainableFunction<XmlElement, Date> {
   return pipe(
     fallback(
       findChildElement('gco:DateTime', false),
@@ -64,7 +67,7 @@ function extractDateTime(): ChainableFunction<XmlElement, Date> {
   )
 }
 
-function extractUrl(): ChainableFunction<XmlElement, URL> {
+export function extractUrl(): ChainableFunction<XmlElement, URL> {
   const getUrl = pipe(findChildElement('gmd:URL', false), readText())
   const getCharacterString = pipe(
     findChildElement('gco:CharacterString', false),
@@ -86,12 +89,12 @@ function extractUrl(): ChainableFunction<XmlElement, URL> {
   )
 }
 
-function extractMandatoryUrl() {
+export function extractMandatoryUrl() {
   return fallback(extractUrl(), () => new URL('http://missing'))
 }
 
 // from gmd:role
-function extractRole(): ChainableFunction<XmlElement, Role> {
+export function extractRole(): ChainableFunction<XmlElement, Role> {
   return pipe(
     findChildElement('gmd:CI_RoleCode'),
     readAttribute('codeListValue'),
@@ -100,7 +103,10 @@ function extractRole(): ChainableFunction<XmlElement, Role> {
 }
 
 // from gmd:CI_ResponsibleParty
-function extractOrganization(): ChainableFunction<XmlElement, Organization> {
+export function extractOrganization(): ChainableFunction<
+  XmlElement,
+  Organization
+> {
   const getUrl = pipe(
     findNestedElements(
       'gmd:contactInfo',
@@ -128,7 +134,7 @@ function extractOrganization(): ChainableFunction<XmlElement, Organization> {
 }
 
 // from gmd:CI_ResponsibleParty
-function extractIndividuals(): ChainableFunction<
+export function extractIndividuals(): ChainableFunction<
   XmlElement,
   Array<Individual>
 > {
@@ -175,7 +181,7 @@ function extractIndividuals(): ChainableFunction<
   )
 }
 
-function extractStatus(): ChainableFunction<XmlElement, RecordStatus> {
+export function extractStatus(): ChainableFunction<XmlElement, RecordStatus> {
   return pipe(
     findChildElement('gmd:MD_ProgressCode'),
     readAttribute('codeListValue'),
@@ -184,7 +190,7 @@ function extractStatus(): ChainableFunction<XmlElement, RecordStatus> {
 }
 
 // from gmd:resourceConstraints
-function extractLegalConstraints(): ChainableFunction<
+export function extractLegalConstraints(): ChainableFunction<
   XmlElement,
   Array<Constraint>
 > {
@@ -214,7 +220,7 @@ function extractLegalConstraints(): ChainableFunction<
 }
 
 // from gmd:resourceConstraints
-function extractSecurityConstraints(): ChainableFunction<
+export function extractSecurityConstraints(): ChainableFunction<
   XmlElement,
   Array<Constraint>
 > {
@@ -230,7 +236,7 @@ function extractSecurityConstraints(): ChainableFunction<
 }
 
 // from gmd:resourceConstraints
-function extractOtherConstraints(): ChainableFunction<
+export function extractOtherConstraints(): ChainableFunction<
   XmlElement,
   Array<Constraint>
 > {
@@ -246,7 +252,10 @@ function extractOtherConstraints(): ChainableFunction<
 }
 
 // from gmd:resourceConstraints
-function extractLicenses(): ChainableFunction<XmlElement, Array<Constraint>> {
+export function extractLicenses(): ChainableFunction<
+  XmlElement,
+  Array<Constraint>
+> {
   return pipe(
     findChildrenElement('gmd:MD_LegalConstraints', false),
     filterArray(
@@ -273,7 +282,7 @@ function extractLicenses(): ChainableFunction<XmlElement, Array<Constraint>> {
 }
 
 // from gmd:MD_Distribution
-function extractDatasetDistributions(): ChainableFunction<
+export function extractDatasetDistributions(): ChainableFunction<
   XmlElement,
   DatasetDistribution[]
 > {
@@ -363,7 +372,7 @@ function extractDatasetDistributions(): ChainableFunction<
   )
 }
 
-function getUpdateFrequencyFromCustomPeriod(
+export function getUpdateFrequencyFromCustomPeriod(
   isoPeriod: string
 ): UpdateFrequencyCustom {
   if (!isoPeriod) return null
@@ -415,7 +424,7 @@ function getUpdateFrequencyFromCustomPeriod(
 }
 
 // from gmd:MD_MaintenanceInformation
-function extractUpdateFrequency(): ChainableFunction<
+export function extractUpdateFrequency(): ChainableFunction<
   XmlElement,
   UpdateFrequency
 > {
@@ -441,7 +450,7 @@ function extractUpdateFrequency(): ChainableFunction<
  * Looks for srv:SV_ServiceIdentification or gmd:MD_DataIdentification element
  * depending on record type
  */
-function findIdentification() {
+export function findIdentification() {
   return (rootEl: XmlElement) => {
     const kind = readKind(rootEl)
     let eltName = 'gmd:MD_DataIdentification'
@@ -450,7 +459,7 @@ function findIdentification() {
   }
 }
 
-function extractCitationDate(type: 'creation' | 'revision' | 'publication') {
+export function extractCitationDate(type: 'creation' | 'revision' | 'publication') {
   return pipe(
     findIdentification(),
     findNestedElements('gmd:citation', 'gmd:CI_Citation', 'gmd:date'),
@@ -473,7 +482,7 @@ function extractCitationDate(type: 'creation' | 'revision' | 'publication') {
   )
 }
 
-function getSpatialRepresentationFromCode(
+export function getSpatialRepresentationFromCode(
   spatialRepresentationCode: string
 ): SpatialRepresentationType | null {
   switch (spatialRepresentationCode) {
@@ -560,7 +569,7 @@ export function readContacts(rootEl: XmlElement): Individual[] {
 }
 
 // from gmd:thesaurusName
-function readThesaurus(rootEl: XmlElement): KeywordThesaurus {
+export function readThesaurus(rootEl: XmlElement): KeywordThesaurus {
   if (!rootEl) return null
 
   const findIdentifier = findNestedElement(
@@ -583,7 +592,7 @@ function readThesaurus(rootEl: XmlElement): KeywordThesaurus {
 }
 
 // from gmd:MD_Keywords
-function readKeywordGroup(rootEl: XmlElement): Keyword[] {
+export function readKeywordGroup(rootEl: XmlElement): Keyword[] {
   const type = pipe(
     findChildrenElement('gmd:MD_KeywordTypeCode'),
     mapArray(readAttribute('codeListValue')),
@@ -699,16 +708,6 @@ export function readOverviews(rootEl: XmlElement): GraphicOverview[] {
       ...(description && { description }),
     }))
   )(rootEl)
-}
-
-export function readSpatialExtents(rootEl: XmlElement): DatasetSpatialExtent[] {
-  return [] // TODO
-}
-
-export function readTemporalExtents(
-  rootEl: XmlElement
-): DatasetTemporalExtent[] {
-  return [] // TODO
 }
 
 export function readLineage(rootEl: XmlElement): string {

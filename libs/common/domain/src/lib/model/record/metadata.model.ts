@@ -203,3 +203,5 @@ export interface ServiceRecord extends BaseRecord {
 }
 
 export type CatalogRecord = ServiceRecord | DatasetRecord
+
+export type CatalogRecordKeys = keyof ServiceRecord | keyof DatasetRecord

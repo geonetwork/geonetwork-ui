@@ -1,5 +1,6 @@
 import {
   CatalogRecord,
+  CatalogRecordKeys,
   DatasetRecord,
   ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
@@ -53,155 +54,239 @@ import {
   readRecordUpdated,
   readRecordPublished,
   readSecurityConstraints,
-  readSpatialExtents,
   readSpatialRepresentation,
   readStatus,
-  readTemporalExtents,
   readTitle,
   readUniqueIdentifier,
   readUpdateFrequency,
 } from './read-parts'
 import { isEqual } from '../convert-utils'
 import { BaseConverter } from '../base.converter'
-
-function toModel(xml: string): CatalogRecord {
-  const doc = parseXmlString(xml)
-  const rootEl = getRootElement(doc)
-
-  const uniqueIdentifier = readUniqueIdentifier(rootEl)
-  const kind = readKind(rootEl)
-  const ownerOrganization = readOwnerOrganization(rootEl)
-  const title = readTitle(rootEl)
-  const abstract = readAbstract(rootEl)
-  const contacts = readContacts(rootEl)
-  const recordUpdated = readRecordUpdated(rootEl)
-  const recordCreated = recordUpdated
-  const recordPublished = readRecordPublished(rootEl)
-  const keywords = readKeywords(rootEl)
-  const topics = readIsoTopics(rootEl)
-  const legalConstraints = readLegalConstraints(rootEl)
-  const otherConstraints = readOtherConstraints(rootEl)
-  const securityConstraints = readSecurityConstraints(rootEl)
-  const licenses = readLicenses(rootEl)
-  const overviews = readOverviews(rootEl)
-
-  if (kind === 'dataset') {
-    const status = readStatus(rootEl)
-    const datasetCreated = readDatasetCreated(rootEl)
-    const datasetUpdated = readDatasetUpdated(rootEl)
-    const spatialRepresentation = readSpatialRepresentation(rootEl)
-    const spatialExtents = readSpatialExtents(rootEl)
-    const temporalExtents = readTemporalExtents(rootEl)
-    const lineage = readLineage(rootEl)
-    const distributions = readDistributions(rootEl)
-    const updateFrequency = readUpdateFrequency(rootEl)
-
-    return {
-      uniqueIdentifier,
-      kind,
-      languages: [],
-      recordCreated,
-      recordUpdated,
-      recordPublished,
-      status,
-      title,
-      abstract,
-      ownerOrganization,
-      contacts,
-      contactsForResource: [], // FIXME: is that really useful??
-      keywords,
-      topics,
-      licenses,
-      legalConstraints,
-      securityConstraints,
-      otherConstraints,
-      ...(datasetCreated && { datasetCreated }),
-      ...(datasetUpdated && { datasetUpdated }),
-      lineage,
-      ...(spatialRepresentation && { spatialRepresentation }),
-      overviews,
-      spatialExtents,
-      temporalExtents,
-      distributions,
-      updateFrequency,
-    } as DatasetRecord
-  } else {
-    const onlineResources = readOnlineResources(rootEl)
-    return {
-      uniqueIdentifier,
-      kind,
-      languages: [],
-      recordCreated,
-      recordUpdated,
-      recordPublished,
-      title,
-      abstract,
-      ownerOrganization,
-      contacts,
-      keywords,
-      topics,
-      licenses,
-      legalConstraints,
-      securityConstraints,
-      otherConstraints,
-      overviews,
-      onlineResources,
-    } as ServiceRecord
-  }
-}
-
-function toXml(record: CatalogRecord, originalXml?: string): string {
-  const originalDoc = originalXml ? parseXmlString(originalXml) : null
-  const originalRecord = originalXml ? toModel(originalXml) : null
-  const rootEl = originalDoc
-    ? getRootElement(originalDoc)
-    : createElement('gmd:MD_Metadata')()
-
-  function fieldChanged(name: string) {
-    return originalRecord !== null
-      ? !isEqual(record[name], originalRecord[name])
-      : true
-  }
-
-  writeUniqueIdentifier(record, rootEl)
-  writeKind(record, rootEl)
-  fieldChanged('ownerOrganization') && writeOwnerOrganization(record, rootEl)
-  fieldChanged('recordUpdated') && writeRecordUpdated(record, rootEl)
-  writeTitle(record, rootEl)
-  writeAbstract(record, rootEl)
-  fieldChanged('contacts') && writeContacts(record, rootEl)
-  fieldChanged('keywords') && writeKeywords(record, rootEl)
-  fieldChanged('topics') && writeTopics(record, rootEl)
-  fieldChanged('legalConstraints') && writeLegalConstraints(record, rootEl)
-  fieldChanged('securityConstraints') &&
-    writeSecurityConstraints(record, rootEl)
-  fieldChanged('licenses') && writeLicenses(record, rootEl)
-  fieldChanged('otherConstraints') && writeOtherConstraints(record, rootEl)
-
-  if (record.kind === 'dataset') {
-    writeStatus(record, rootEl)
-    fieldChanged('updateFrequency') && writeUpdateFrequency(record, rootEl)
-    fieldChanged('datasetCreated') && writeDatasetCreated(record, rootEl)
-    fieldChanged('datasetUpdated') && writeDatasetUpdated(record, rootEl)
-    fieldChanged('spatialRepresentation') &&
-      writeSpatialRepresentation(record, rootEl)
-    fieldChanged('overviews') && writeGraphicOverviews(record, rootEl)
-    fieldChanged('distributions') && writeDistributions(record, rootEl)
-    writeLineage(record, rootEl)
-  } else {
-    fieldChanged('onlineResources') && writeOnlineResources(record, rootEl)
-  }
-
-  const newDocument = createDocument(rootEl)
-  return xmlToString(newDocument)
-}
+import { XmlElement } from '@rgrove/parse-xml'
 
 export class Iso19139Converter extends BaseConverter<string> {
-  readRecord(document: string): Promise<CatalogRecord> {
-    return Promise.resolve(toModel(document))
+  protected readers: Record<
+    CatalogRecordKeys,
+    (rootEl: XmlElement) => unknown
+  > = {
+    uniqueIdentifier: readUniqueIdentifier,
+    kind: readKind,
+    ownerOrganization: readOwnerOrganization,
+    recordUpdated: readRecordUpdated,
+    recordCreated: readRecordUpdated,
+    recordPublished: readRecordPublished,
+    title: readTitle,
+    abstract: readAbstract,
+    contacts: readContacts,
+    keywords: readKeywords,
+    topics: readIsoTopics,
+    licenses: readLicenses,
+    legalConstraints: readLegalConstraints,
+    securityConstraints: readSecurityConstraints,
+    otherConstraints: readOtherConstraints,
+    status: readStatus,
+    updateFrequency: readUpdateFrequency,
+    datasetCreated: readDatasetCreated,
+    datasetUpdated: readDatasetUpdated,
+    spatialRepresentation: readSpatialRepresentation,
+    overviews: readOverviews,
+    lineage: readLineage,
+    distributions: readDistributions,
+    onlineResources: readOnlineResources,
+    // TODO
+    spatialExtents: () => [],
+    temporalExtents: () => [],
+    extras: () => undefined,
+    landingPage: () => undefined,
+    contactsForResource: () => [],
+    languages: () => [],
   }
 
-  writeRecord(record: CatalogRecord, reference?: string): Promise<string> {
-    return Promise.resolve(toXml(record, reference))
+  protected writers: Record<
+    CatalogRecordKeys,
+    (record: CatalogRecord, rootEl: XmlElement) => void
+  > = {
+    uniqueIdentifier: writeUniqueIdentifier,
+    kind: writeKind,
+    ownerOrganization: writeOwnerOrganization,
+    recordUpdated: writeRecordUpdated,
+    title: writeTitle,
+    abstract: writeAbstract,
+    contacts: writeContacts,
+    keywords: writeKeywords,
+    topics: writeTopics,
+    licenses: writeLicenses,
+    legalConstraints: writeLegalConstraints,
+    securityConstraints: writeSecurityConstraints,
+    otherConstraints: writeOtherConstraints,
+    status: writeStatus,
+    updateFrequency: writeUpdateFrequency,
+    datasetCreated: writeDatasetCreated,
+    datasetUpdated: writeDatasetUpdated,
+    spatialRepresentation: writeSpatialRepresentation,
+    overviews: writeGraphicOverviews,
+    lineage: writeLineage,
+    distributions: writeDistributions,
+    onlineResources: writeOnlineResources,
+    // TODO
+    recordCreated: () => undefined,
+    recordPublished: () => undefined,
+    spatialExtents: () => undefined,
+    temporalExtents: () => undefined,
+    extras: () => undefined,
+    landingPage: () => undefined,
+    contactsForResource: () => undefined,
+    languages: () => undefined,
+  }
+
+  async readRecord(document: string): Promise<CatalogRecord> {
+    const doc = parseXmlString(document)
+    const rootEl = getRootElement(doc)
+
+    const uniqueIdentifier = this.readers['uniqueIdentifier'](rootEl)
+    const kind = this.readers['kind'](rootEl)
+    const ownerOrganization = this.readers['ownerOrganization'](rootEl)
+    const title = this.readers['title'](rootEl)
+    const abstract = this.readers['abstract'](rootEl)
+    const contacts = this.readers['contacts'](rootEl)
+    const recordUpdated = this.readers['recordUpdated'](rootEl)
+    const recordCreated = this.readers['recordCreated'](rootEl)
+    const recordPublished = this.readers['recordPublished'](rootEl)
+    const keywords = this.readers['keywords'](rootEl)
+    const topics = this.readers['topics'](rootEl)
+    const legalConstraints = this.readers['legalConstraints'](rootEl)
+    const otherConstraints = this.readers['otherConstraints'](rootEl)
+    const securityConstraints = this.readers['securityConstraints'](rootEl)
+    const licenses = this.readers['licenses'](rootEl)
+    const overviews = this.readers['overviews'](rootEl)
+
+    if (kind === 'dataset') {
+      const status = this.readers['status'](rootEl)
+      const datasetCreated = this.readers['datasetCreated'](rootEl)
+      const datasetUpdated = this.readers['datasetUpdated'](rootEl)
+      const spatialRepresentation =
+        this.readers['spatialRepresentation'](rootEl)
+      const spatialExtents = this.readers['spatialExtents'](rootEl)
+      const temporalExtents = this.readers['temporalExtents'](rootEl)
+      const lineage = this.readers['lineage'](rootEl)
+      const distributions = this.readers['distributions'](rootEl)
+      const updateFrequency = this.readers['updateFrequency'](rootEl)
+      const contactsForResource = this.readers['contactsForResource'](rootEl)
+
+      return {
+        uniqueIdentifier,
+        kind,
+        languages: [],
+        recordCreated,
+        recordUpdated,
+        recordPublished,
+        status,
+        title,
+        abstract,
+        ownerOrganization,
+        contacts,
+        contactsForResource,
+        keywords,
+        topics,
+        licenses,
+        legalConstraints,
+        securityConstraints,
+        otherConstraints,
+        ...(datasetCreated && { datasetCreated }),
+        ...(datasetUpdated && { datasetUpdated }),
+        lineage,
+        ...(spatialRepresentation && { spatialRepresentation }),
+        overviews,
+        spatialExtents,
+        temporalExtents,
+        distributions,
+        updateFrequency,
+      } as DatasetRecord
+    } else {
+      const onlineResources = this.readers['onlineResources'](rootEl)
+      return {
+        uniqueIdentifier,
+        kind,
+        languages: [],
+        recordCreated,
+        recordUpdated,
+        recordPublished,
+        title,
+        abstract,
+        ownerOrganization,
+        contacts,
+        keywords,
+        topics,
+        licenses,
+        legalConstraints,
+        securityConstraints,
+        otherConstraints,
+        overviews,
+        onlineResources,
+      } as ServiceRecord
+    }
+  }
+
+  async writeRecord(
+    record: CatalogRecord,
+    reference?: string
+  ): Promise<string> {
+    let rootEl: XmlElement
+    let fieldChanged: (name: string) => boolean
+    if (reference) {
+      const originalDoc = parseXmlString(reference)
+      const originalRecord = await this.readRecord(reference)
+      rootEl = getRootElement(originalDoc)
+
+      fieldChanged = (name: string) => {
+        return originalRecord !== null
+          ? !isEqual(record[name], originalRecord[name])
+          : true
+      }
+    } else {
+      rootEl = createElement('gmd:MD_Metadata')()
+      fieldChanged = () => true
+    }
+
+    this.writers['uniqueIdentifier'](record, rootEl)
+    this.writers['kind'](record, rootEl)
+    fieldChanged('ownerOrganization') &&
+      this.writers['ownerOrganization'](record, rootEl)
+    fieldChanged('recordUpdated') &&
+      this.writers['recordUpdated'](record, rootEl)
+    this.writers['title'](record, rootEl)
+    this.writers['abstract'](record, rootEl)
+    fieldChanged('contacts') && this.writers['contacts'](record, rootEl)
+    fieldChanged('keywords') && this.writers['keywords'](record, rootEl)
+    fieldChanged('topics') && this.writers['topics'](record, rootEl)
+    fieldChanged('legalConstraints') &&
+      this.writers['legalConstraints'](record, rootEl)
+    fieldChanged('securityConstraints') &&
+      this.writers['securityConstraints'](record, rootEl)
+    fieldChanged('licenses') && this.writers['licenses'](record, rootEl)
+    fieldChanged('otherConstraints') &&
+      this.writers['otherConstraints'](record, rootEl)
+
+    if (record.kind === 'dataset') {
+      this.writers['status'](record, rootEl)
+      fieldChanged('updateFrequency') &&
+        this.writers['updateFrequency'](record, rootEl)
+      fieldChanged('datasetCreated') &&
+        this.writers['datasetCreated'](record, rootEl)
+      fieldChanged('datasetUpdated') &&
+        this.writers['datasetUpdated'](record, rootEl)
+      fieldChanged('spatialRepresentation') &&
+        this.writers['spatialRepresentation'](record, rootEl)
+      fieldChanged('overviews') && this.writers['overviews'](record, rootEl)
+      fieldChanged('distributions') &&
+        this.writers['distributions'](record, rootEl)
+      this.writers['lineage'](record, rootEl)
+    } else {
+      fieldChanged('onlineResources') &&
+        this.writers['onlineResources'](record, rootEl)
+    }
+
+    const newDocument = createDocument(rootEl)
+    return xmlToString(newDocument)
   }
 }
