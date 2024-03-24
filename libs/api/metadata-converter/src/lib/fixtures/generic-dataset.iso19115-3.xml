@@ -107,8 +107,7 @@
             <mri:citation>
                 <cit:CI_Citation>
                     <cit:title>
-                        <gco:CharacterString>A very interesting dataset (un jeu de données très intéressant)
-                        </gco:CharacterString>
+                        <gco:CharacterString>A very interesting dataset (un jeu de données très intéressant)</gco:CharacterString>
                     </cit:title>
                     <cit:date>
                         <cit:CI_Date>

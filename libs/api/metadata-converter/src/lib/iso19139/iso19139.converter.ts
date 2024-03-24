@@ -159,6 +159,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     const securityConstraints = this.readers['securityConstraints'](rootEl)
     const licenses = this.readers['licenses'](rootEl)
     const overviews = this.readers['overviews'](rootEl)
+    const landingPage = this.readers['landingPage'](rootEl)
 
     if (kind === 'dataset') {
       const status = this.readers['status'](rootEl)
@@ -201,6 +202,7 @@ export class Iso19139Converter extends BaseConverter<string> {
         temporalExtents,
         distributions,
         updateFrequency,
+        ...(landingPage && { landingPage }),
       } as DatasetRecord
     } else {
       const onlineResources = this.readers['onlineResources'](rootEl)
@@ -223,6 +225,7 @@ export class Iso19139Converter extends BaseConverter<string> {
         otherConstraints,
         overviews,
         onlineResources,
+        ...(landingPage && { landingPage }),
       } as ServiceRecord
     }
   }

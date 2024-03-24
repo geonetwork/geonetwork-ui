@@ -115,7 +115,7 @@ export function allChildrenElement(element: XmlElement): Array<XmlElement> {
  * returns an empty array if no matching element
  */
 export function findNestedElements(
-  ...elementNames
+  ...elementNames: string[]
 ): ChainableFunction<XmlElement, Array<XmlElement>> {
   return (el) => {
     function lookFor(elNameIndex: number) {

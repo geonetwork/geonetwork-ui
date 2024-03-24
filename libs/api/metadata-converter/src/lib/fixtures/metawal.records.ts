@@ -24,16 +24,14 @@ Toutes ces données sont reprises dans BDR.`,
       organization: {
         name: 'Direction Asset Management (SPW - Mobilité et Infrastructures - Direction Asset Management)',
       },
-      role: 'pointOfContact',
+      role: 'point_of_contact',
     },
-  ],
-  contactsForResource: [
     {
       email: 'helpdesk.carto@spw.wallonie.be',
       organization: {
         name: "Helpdesk carto du SPW (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées)",
       },
-      role: 'pointOfContact',
+      role: 'point_of_contact',
     },
     {
       firstName: 'Frédéric',
@@ -46,6 +44,23 @@ Toutes ces données sont reprises dans BDR.`,
         name: 'Direction Asset Management (SPW - Mobilité et Infrastructures - Direction Asset Management)',
       },
       role: 'custodian',
+    },
+    {
+      email: 'missing@missing.com',
+      organization: {
+        name: 'Service public de Wallonie (SPW)',
+        website: new URL('https://geoportail.wallonie.be'),
+      },
+      role: 'owner',
+    },
+  ],
+  contactsForResource: [
+    {
+      email: 'helpdesk.carto@spw.wallonie.be',
+      organization: {
+        name: 'Service public de Wallonie (SPW)',
+      },
+      role: 'distributor',
     },
   ],
   datasetCreated: new Date('2002-01-01'),
@@ -367,8 +382,7 @@ Depuis, ce sont les Districts routiers qui assurent la tenue à jour de ces info
     },
   ],
   ownerOrganization: {
-    name: 'Service public de Wallonie (SPW)',
-    website: new URL('http://geoportail.wallonie.be/'),
+    name: 'Direction Asset Management (SPW - Mobilité et Infrastructures - Direction Asset Management)',
   },
   recordCreated: new Date('2019-04-02T12:34:35'),
   recordUpdated: new Date('2022-06-16T05:01:21'),
@@ -383,6 +397,7 @@ Depuis, ce sont les Districts routiers qui assurent la tenue à jour de ces info
   landingPage: new URL(
     'https://metawal.wallonie.be/geonetwork/srv/api/records/2d974612-70b1-4662-a9f4-c43cbe453773'
   ),
+  languages: [],
 }
 
 export const METAWAL_SERVICE_RECORD: ServiceRecord = {
@@ -405,4 +420,5 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
   topics: [],
   updateFrequency: 'unknown',
   onlineResources: [],
+  languages: [],
 }
