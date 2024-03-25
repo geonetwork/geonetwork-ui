@@ -1,10 +1,14 @@
 <div
   #container
-  class="max-lines overflow-hidden transition-[max-height] duration-300"
+  class="max-lines overflow-hidden transition-[max-height] duration-300 relative"
   [ngClass]="isExpanded ? 'ease-in' : 'ease-out'"
   [style.maxHeight]="maxHeight"
 >
   <ng-content></ng-content>
+  <div
+    *ngIf="showToggleButton && !isExpanded"
+    class="absolute inset-x-0 bottom-0 bg-gradient-to-b from-transparent to-white h-3"
+  ></div>
 </div>
 <div
   *ngIf="showToggleButton"
