@@ -1,7 +1,9 @@
 <div
   class="inline-block bg-black opacity-70 py-1.5 px-3 rounded font-medium text-gray-50 text-sm leading-none"
   [ngClass]="
-    clickable ? 'hover:bg-gray-800 cursor-pointer transition-colors' : ''
+    clickable
+      ? 'hover:bg-primary cursor-pointer transition-colors duration-100'
+      : ''
   "
 >
   <ng-content></ng-content>
