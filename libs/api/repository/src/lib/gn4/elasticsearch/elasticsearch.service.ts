@@ -133,7 +133,7 @@ export class ElasticsearchService {
     title: string,
     uuid: string,
     size = 6,
-    _source = ES_SOURCE_SUMMARY
+    _source = [...ES_SOURCE_SUMMARY, 'allKeywords', 'createDate']
   ): EsSearchParams {
     return {
       query: {
