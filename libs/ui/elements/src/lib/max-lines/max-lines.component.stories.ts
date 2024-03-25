@@ -6,6 +6,12 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { MaxLinesComponent } from './max-lines.component'
+import { TranslateModule } from '@ngx-translate/core'
+import {
+  TRANSLATE_DEFAULT_CONFIG,
+  UtilI18nModule,
+} from '@geonetwork-ui/util/i18n'
+import { importProvidersFrom } from '@angular/core'
 
 export default {
   title: 'Elements/MaxLinesComponent',
@@ -13,13 +19,17 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [MaxLinesComponent],
-      imports: [],
+      imports: [TranslateModule],
     }),
     applicationConfig({
-      providers: [],
+      providers: [
+        importProvidersFrom(UtilI18nModule),
+        importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
+      ],
     }),
     componentWrapperDecorator(
-      (story) => `<div style="max-width: 800px">${story}</div>`
+      (story) =>
+        `<div class="border border-gray-300 p-2" style="width: 600px; height:400px; resize: both; overflow: auto">${story}</div>`
     ),
   ],
 } as Meta<MaxLinesComponent>

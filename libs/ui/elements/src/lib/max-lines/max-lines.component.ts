@@ -78,6 +78,7 @@ export class MaxLinesComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (!this.observer) return
     this.observer.unobserve(this.container.nativeElement.children[0])
   }
 }
