@@ -91,8 +91,10 @@ describe('ISO19139 converter', () => {
             await converter.writeRecord(GENERIC_DATASET_RECORD)
           )
           // unsupported fields need to be filtered out
+          const { recordPublished, recordCreated, ...withoutDates } =
+            GENERIC_DATASET_RECORD
           expect(backAndForth).toStrictEqual({
-            ...GENERIC_DATASET_RECORD,
+            ...withoutDates,
             ownerOrganization: {
               name: GENERIC_DATASET_RECORD.ownerOrganization.name,
               website: GENERIC_DATASET_RECORD.ownerOrganization.website,

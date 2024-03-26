@@ -63,8 +63,11 @@ Toutes ces données sont reprises dans BDR.`,
       role: 'distributor',
     },
   ],
-  datasetCreated: new Date('2002-01-01'),
-  datasetUpdated: new Date('2022-06-16'),
+  recordCreated: new Date('2019-04-02T12:34:35'),
+  recordUpdated: new Date('2022-06-16T05:01:21'),
+  resourceCreated: new Date('2002-01-01'),
+  resourceUpdated: new Date('2022-06-16'),
+  resourcePublished: new Date('2022-06-16'),
   distributions: [
     {
       description:
@@ -384,8 +387,6 @@ Depuis, ce sont les Districts routiers qui assurent la tenue à jour de ces info
   ownerOrganization: {
     name: 'Direction Asset Management (SPW - Mobilité et Infrastructures - Direction Asset Management)',
   },
-  recordCreated: new Date('2019-04-02T12:34:35'),
-  recordUpdated: new Date('2022-06-16T05:01:21'),
   securityConstraints: [],
   spatialExtents: [],
   spatialRepresentation: 'vector',
@@ -402,23 +403,178 @@ Depuis, ce sont les Districts routiers qui assurent la tenue à jour de ces info
 
 export const METAWAL_SERVICE_RECORD: ServiceRecord = {
   uniqueIdentifier: '6d2b6fdb-f1ea-4d48-8697-a0c05512f1dc',
-  abstract: null,
-  contacts: [],
-  keywords: [],
+  abstract:
+    "Ce service permet de visualiser les données du bâti et du parcellaire CADMAP 2016 fournies par l'Administration Générale de la Documentation Patrimoniale (AGDP - tous droits réservés) au Service public de Wallonie.",
+  contacts: [
+    {
+      email: 'helpdesk.carto@spw.wallonie.be',
+      organization: {
+        name: "Direction de l'Intégration des géodonnées (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées)",
+      },
+      role: 'point_of_contact',
+    },
+    {
+      email: 'helpdesk.carto@spw.wallonie.be',
+      organization: {
+        name: "Helpdesk carto du SPW (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées)",
+      },
+      role: 'point_of_contact',
+    },
+    {
+      email: 'helpdesk.carto@spw.wallonie.be',
+      organization: {
+        name: "Direction de l'Intégration des géodonnées (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées)",
+      },
+      role: 'custodian',
+    },
+    {
+      email: 'missing@missing.com',
+      organization: {
+        name: 'Service public de Wallonie (SPW)',
+        website: new URL('https://geoportail.wallonie.be/'),
+      },
+      role: 'owner',
+    },
+  ],
+  contactsForResource: [
+    {
+      email: 'helpdesk.carto@spw.wallonie.be',
+      organization: {
+        name: 'Service public de Wallonie (SPW)',
+      },
+      role: 'distributor',
+    },
+  ],
+  keywords: [
+    {
+      label: 'Plans et règlements',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.external.theme.Themes_geoportail_wallon_hierarchy',
+        name: 'Thèmes du géoportail wallon',
+        url: new URL(
+          'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.Themes_geoportail_wallon_hierarchy'
+        ),
+      },
+      type: 'theme',
+    },
+    {
+      label: 'Données de base',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.external.theme.Themes_geoportail_wallon_hierarchy',
+        name: 'Thèmes du géoportail wallon',
+        url: new URL(
+          'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.Themes_geoportail_wallon_hierarchy'
+        ),
+      },
+      type: 'theme',
+    },
+    {
+      label: 'administration',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.external.theme.gemet-theme',
+        name: 'GEMET themes',
+        url: new URL(
+          'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.gemet-theme'
+        ),
+      },
+      type: 'theme',
+    },
+    {
+      label: 'Reporting INSPIRENO',
+      thesaurus: {
+        id: 'geonetwork.thesaurus.external.theme.infraSIG',
+        name: 'Mots-clés InfraSIG',
+        url: new URL(
+          'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.infraSIG'
+        ),
+      },
+      type: 'theme',
+    },
+    {
+      label: 'Ministère des Finances',
+      type: 'theme',
+    },
+    {
+      label: 'SPF Finances',
+      type: 'theme',
+    },
+    {
+      label: 'Cadastre',
+      type: 'theme',
+    },
+    {
+      label: 'Administration Générale de la Documentation Patrimoniale',
+      type: 'theme',
+    },
+    {
+      label: 'Etat Fédéral',
+      type: 'theme',
+    },
+    {
+      label: 'Cadmap',
+      type: 'theme',
+    },
+    {
+      label: 'Cadgis',
+      type: 'theme',
+    },
+    {
+      label: 'Propriété',
+      type: 'theme',
+    },
+    {
+      label: 'Plan cadastral',
+      type: 'theme',
+    },
+    {
+      label: 'Fiscal',
+      type: 'theme',
+    },
+    {
+      label: 'Zonage',
+      type: 'theme',
+    },
+    {
+      label: 'Privé',
+      type: 'theme',
+    },
+    {
+      label: 'Parcellaire cadastral',
+      type: 'theme',
+    },
+  ],
   kind: 'service',
   legalConstraints: [],
-  licenses: [],
+  licenses: [
+    {
+      text: "Les conditions d'utilisation du service sont régies par les Conditions d’accès et d’utilisation des services web géographiques de visualisation du Service public de Wallonie consultables à l'adresse https://geoportail.wallonie.be/files/documents/ConditionsSPW/LicServicesSPW.pdf\n\n                            Elles s'appliquent sans préjudice des conditions d'accès à la donnée décrites dans la fiche de la donnée.",
+    },
+  ],
+  onlineResources: [
+    {
+      description:
+        'Ce service ESRI-REST permet de visualiser la couche de données "Plan parcellaire cadastral - situation 01/01/2016" (uniquement les données du bâti et le parcellaire)',
+      endpointUrl: new URL(
+        'https://geoservices.wallonie.be/arcgis/rest/services/PLAN_REGLEMENT/CADMAP_2016_PARCELLES/MapServer'
+      ),
+      protocol: 'esriRest',
+      type: 'endpoint',
+    },
+  ],
   otherConstraints: [],
   overviews: [],
   ownerOrganization: {
-    name: null,
+    name: "Direction de l'Intégration des géodonnées (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées)",
   },
-  recordCreated: new Date(),
-  recordUpdated: new Date(),
+  recordCreated: new Date('2019-04-02T12:31:58'),
+  recordUpdated: new Date('2022-02-09T11:31:06.766Z'),
+  resourcePublished: new Date('2016-12-01'),
   securityConstraints: [],
-  title: null,
+  title:
+    'Plan parcellaire cadastral - situation au 01/01/2016 - Service de visualisation REST',
   topics: [],
-  updateFrequency: 'unknown',
-  onlineResources: [],
   languages: [],
+  landingPage: new URL(
+    'https://metawal.wallonie.be/geonetwork/srv/api/records/6d2b6fdb-f1ea-4d48-8697-a0c05512f1dc'
+  ),
 }

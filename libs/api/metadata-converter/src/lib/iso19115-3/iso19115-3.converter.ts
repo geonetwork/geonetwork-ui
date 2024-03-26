@@ -5,6 +5,9 @@ import {
   readLandingPage,
   readLineage,
   readOwnerOrganization,
+  readRecordCreated,
+  readRecordPublished,
+  readRecordUpdated,
   readResourceContacts,
   readUniqueIdentifier,
 } from './read-parts'
@@ -16,6 +19,9 @@ export class Iso191153Converter extends Iso19139Converter {
 
     this.readers['uniqueIdentifier'] = readUniqueIdentifier
     this.readers['kind'] = readKind
+    this.readers['recordUpdated'] = readRecordUpdated
+    this.readers['recordCreated'] = readRecordCreated
+    this.readers['recordPublished'] = readRecordPublished
     this.readers['contacts'] = readContacts
     this.readers['contactsForResource'] = readResourceContacts
     this.readers['ownerOrganization'] = readOwnerOrganization

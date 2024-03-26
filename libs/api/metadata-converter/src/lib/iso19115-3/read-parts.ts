@@ -9,6 +9,7 @@ import {
 import {
   ChainableFunction,
   combine,
+  filterArray,
   flattenArray,
   getAtIndex,
   map,
@@ -17,6 +18,7 @@ import {
 } from '../function-utils'
 import {
   extractCharacterString,
+  extractDateTime,
   extractRole,
   extractUrl,
 } from '../iso19139/read-parts'
@@ -40,15 +42,6 @@ export function readKind(rootEl: XmlElement): RecordKind {
         scopeCode === 'service' ? 'service' : 'dataset'
     )
   )(rootEl)
-}
-
-export function findIdentification() {
-  return (rootEl: XmlElement) => {
-    const kind = readKind(rootEl)
-    let eltName = 'mri:MD_DataIdentification'
-    if (kind === 'service') eltName = 'srv:SV_ServiceIdentification'
-    return findNestedElement('gmd:identificationInfo', eltName)(rootEl)
-  }
 }
 
 export function findDistribution() {
@@ -250,4 +243,34 @@ export function readLineage(rootEl: XmlElement): string {
     findNestedElement('mdb:resourceLineage', 'mrl:LI_Lineage', 'mrl:statement'),
     extractCharacterString()
   )(rootEl)
+}
+
+function extractDateInfo(
+  type: 'creation' | 'revision' | 'publication'
+): ChainableFunction<XmlElement, Date> {
+  return pipe(
+    findChildrenElement('mdb:dateInfo', false),
+    filterArray(
+      (el) =>
+        pipe(
+          findChildElement('cit:CI_DateTypeCode'),
+          readAttribute('codeListValue')
+        )(el) === type
+    ),
+    getAtIndex(0),
+    findChildElement('cit:date'),
+    extractDateTime()
+  )
+}
+
+export function readRecordUpdated(rootEl: XmlElement): Date {
+  return extractDateInfo('revision')(rootEl)
+}
+
+export function readRecordCreated(rootEl: XmlElement): Date {
+  return extractDateInfo('creation')(rootEl)
+}
+
+export function readRecordPublished(rootEl: XmlElement): Date {
+  return extractDateInfo('publication')(rootEl)
 }

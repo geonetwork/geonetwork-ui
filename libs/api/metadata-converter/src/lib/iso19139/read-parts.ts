@@ -1,8 +1,6 @@
 import {
   Constraint,
   DatasetDistribution,
-  DatasetSpatialExtent,
-  DatasetTemporalExtent,
   GraphicOverview,
   Individual,
   Keyword,
@@ -448,18 +446,24 @@ export function extractUpdateFrequency(): ChainableFunction<
 
 /**
  * Looks for srv:SV_ServiceIdentification or gmd:MD_DataIdentification element
- * depending on record type
+ * Will find the first one that exists, not reading the type of the record
+ * (this allows using this function in other similar schemas)
  */
 export function findIdentification() {
-  return (rootEl: XmlElement) => {
-    const kind = readKind(rootEl)
-    let eltName = 'gmd:MD_DataIdentification'
-    if (kind === 'service') eltName = 'srv:SV_ServiceIdentification'
-    return findNestedElement('gmd:identificationInfo', eltName)(rootEl)
-  }
+  return pipe(
+    findChildElement('gmd:identificationInfo', false),
+    combine(
+      findChildElement('gmd:MD_DataIdentification', false),
+      findChildElement('srv:SV_ServiceIdentification', false)
+    ),
+    filterArray((el) => el !== null),
+    getAtIndex(0)
+  )
 }
 
-export function extractCitationDate(type: 'creation' | 'revision' | 'publication') {
+export function extractIdentificationDate(
+  type: 'creation' | 'revision' | 'publication'
+) {
   return pipe(
     findIdentification(),
     findNestedElements('gmd:citation', 'gmd:CI_Citation', 'gmd:date'),
@@ -522,11 +526,19 @@ export function readOwnerOrganization(rootEl: XmlElement): Organization {
   )(rootEl)
 }
 
-export function readRecordUpdated(rootEl: XmlElement): Date {
-  return pipe(findChildElement('gmd:dateStamp'), extractDateTime())(rootEl)
+export function readResourceUpdated(rootEl: XmlElement): Date {
+  return extractIdentificationDate('revision')(rootEl)
 }
 
-export function readRecordPublished(rootEl: XmlElement): Date {
+export function readResourceCreated(rootEl: XmlElement): Date {
+  return extractIdentificationDate('creation')(rootEl)
+}
+
+export function readResourcePublished(rootEl: XmlElement): Date {
+  return extractIdentificationDate('publication')(rootEl)
+}
+
+export function readRecordUpdated(rootEl: XmlElement): Date {
   return pipe(findChildElement('gmd:dateStamp'), extractDateTime())(rootEl)
 }
 
@@ -544,14 +556,6 @@ export function readAbstract(rootEl: XmlElement): string {
     findChildElement('gmd:abstract', false),
     extractCharacterString()
   )(rootEl)
-}
-
-export function readDatasetCreated(rootEl: XmlElement): Date {
-  return extractCitationDate('creation')(rootEl)
-}
-
-export function readDatasetUpdated(rootEl: XmlElement): Date {
-  return extractCitationDate('revision')(rootEl)
 }
 
 export function readContacts(rootEl: XmlElement): Individual[] {

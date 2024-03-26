@@ -14,8 +14,6 @@ import {
 import {
   writeAbstract,
   writeContacts,
-  writeDatasetCreated,
-  writeDatasetUpdated,
   writeDistributions,
   writeGraphicOverviews,
   writeKeywords,
@@ -27,6 +25,9 @@ import {
   writeOtherConstraints,
   writeOwnerOrganization,
   writeRecordUpdated,
+  writeResourceCreated,
+  writeResourcePublished,
+  writeResourceUpdated,
   writeSecurityConstraints,
   writeSpatialRepresentation,
   writeStatus,
@@ -38,8 +39,6 @@ import {
 import {
   readAbstract,
   readContacts,
-  readDatasetCreated,
-  readDatasetUpdated,
   readDistributions,
   readIsoTopics,
   readKeywords,
@@ -52,7 +51,9 @@ import {
   readOverviews,
   readOwnerOrganization,
   readRecordUpdated,
-  readRecordPublished,
+  readResourceCreated,
+  readResourcePublished,
+  readResourceUpdated,
   readSecurityConstraints,
   readSpatialRepresentation,
   readStatus,
@@ -73,8 +74,11 @@ export class Iso19139Converter extends BaseConverter<string> {
     kind: readKind,
     ownerOrganization: readOwnerOrganization,
     recordUpdated: readRecordUpdated,
-    recordCreated: readRecordUpdated,
-    recordPublished: readRecordPublished,
+    recordCreated: () => undefined, // not supported in ISO19139
+    recordPublished: () => undefined, // not supported in ISO19139
+    resourceUpdated: readResourceUpdated,
+    resourceCreated: readResourceCreated,
+    resourcePublished: readResourcePublished,
     title: readTitle,
     abstract: readAbstract,
     contacts: readContacts,
@@ -86,8 +90,6 @@ export class Iso19139Converter extends BaseConverter<string> {
     otherConstraints: readOtherConstraints,
     status: readStatus,
     updateFrequency: readUpdateFrequency,
-    datasetCreated: readDatasetCreated,
-    datasetUpdated: readDatasetUpdated,
     spatialRepresentation: readSpatialRepresentation,
     overviews: readOverviews,
     lineage: readLineage,
@@ -110,6 +112,11 @@ export class Iso19139Converter extends BaseConverter<string> {
     kind: writeKind,
     ownerOrganization: writeOwnerOrganization,
     recordUpdated: writeRecordUpdated,
+    recordCreated: () => undefined, // not supported in ISO19139
+    recordPublished: () => undefined, // not supported in ISO19139
+    resourceUpdated: writeResourceUpdated,
+    resourceCreated: writeResourceCreated,
+    resourcePublished: writeResourcePublished,
     title: writeTitle,
     abstract: writeAbstract,
     contacts: writeContacts,
@@ -121,16 +128,12 @@ export class Iso19139Converter extends BaseConverter<string> {
     otherConstraints: writeOtherConstraints,
     status: writeStatus,
     updateFrequency: writeUpdateFrequency,
-    datasetCreated: writeDatasetCreated,
-    datasetUpdated: writeDatasetUpdated,
     spatialRepresentation: writeSpatialRepresentation,
     overviews: writeGraphicOverviews,
     lineage: writeLineage,
     distributions: writeDistributions,
     onlineResources: writeOnlineResources,
     // TODO
-    recordCreated: () => undefined,
-    recordPublished: () => undefined,
     spatialExtents: () => undefined,
     temporalExtents: () => undefined,
     extras: () => undefined,
@@ -149,9 +152,13 @@ export class Iso19139Converter extends BaseConverter<string> {
     const title = this.readers['title'](rootEl)
     const abstract = this.readers['abstract'](rootEl)
     const contacts = this.readers['contacts'](rootEl)
+    const contactsForResource = this.readers['contactsForResource'](rootEl)
     const recordUpdated = this.readers['recordUpdated'](rootEl)
     const recordCreated = this.readers['recordCreated'](rootEl)
     const recordPublished = this.readers['recordPublished'](rootEl)
+    const resourceCreated = this.readers['resourceCreated'](rootEl)
+    const resourceUpdated = this.readers['resourceUpdated'](rootEl)
+    const resourcePublished = this.readers['resourcePublished'](rootEl)
     const keywords = this.readers['keywords'](rootEl)
     const topics = this.readers['topics'](rootEl)
     const legalConstraints = this.readers['legalConstraints'](rootEl)
@@ -163,8 +170,6 @@ export class Iso19139Converter extends BaseConverter<string> {
 
     if (kind === 'dataset') {
       const status = this.readers['status'](rootEl)
-      const datasetCreated = this.readers['datasetCreated'](rootEl)
-      const datasetUpdated = this.readers['datasetUpdated'](rootEl)
       const spatialRepresentation =
         this.readers['spatialRepresentation'](rootEl)
       const spatialExtents = this.readers['spatialExtents'](rootEl)
@@ -172,15 +177,17 @@ export class Iso19139Converter extends BaseConverter<string> {
       const lineage = this.readers['lineage'](rootEl)
       const distributions = this.readers['distributions'](rootEl)
       const updateFrequency = this.readers['updateFrequency'](rootEl)
-      const contactsForResource = this.readers['contactsForResource'](rootEl)
 
       return {
         uniqueIdentifier,
         kind,
         languages: [],
-        recordCreated,
+        ...(recordCreated && { recordCreated }),
+        ...(recordPublished && { recordPublished }),
         recordUpdated,
-        recordPublished,
+        ...(resourceCreated && { resourceCreated }),
+        ...(resourceUpdated && { resourceUpdated }),
+        ...(resourcePublished && { resourcePublished }),
         status,
         title,
         abstract,
@@ -193,8 +200,6 @@ export class Iso19139Converter extends BaseConverter<string> {
         legalConstraints,
         securityConstraints,
         otherConstraints,
-        ...(datasetCreated && { datasetCreated }),
-        ...(datasetUpdated && { datasetUpdated }),
         lineage,
         ...(spatialRepresentation && { spatialRepresentation }),
         overviews,
@@ -210,13 +215,17 @@ export class Iso19139Converter extends BaseConverter<string> {
         uniqueIdentifier,
         kind,
         languages: [],
-        recordCreated,
+        ...(recordCreated && { recordCreated }),
+        ...(recordPublished && { recordPublished }),
         recordUpdated,
-        recordPublished,
+        ...(resourceCreated && { resourceCreated }),
+        ...(resourceUpdated && { resourceUpdated }),
+        ...(resourcePublished && { resourcePublished }),
         title,
         abstract,
         ownerOrganization,
         contacts,
+        contactsForResource,
         keywords,
         topics,
         licenses,
@@ -253,12 +262,27 @@ export class Iso19139Converter extends BaseConverter<string> {
 
     this.writers['uniqueIdentifier'](record, rootEl)
     this.writers['kind'](record, rootEl)
+
     fieldChanged('ownerOrganization') &&
       this.writers['ownerOrganization'](record, rootEl)
+
     fieldChanged('recordUpdated') &&
       this.writers['recordUpdated'](record, rootEl)
+
     this.writers['title'](record, rootEl)
     this.writers['abstract'](record, rootEl)
+
+    fieldChanged('recordCreated') &&
+      this.writers['recordCreated'](record, rootEl)
+    fieldChanged('recordPublished') &&
+      this.writers['recordPublished'](record, rootEl)
+    fieldChanged('resourceCreated') &&
+      this.writers['resourceCreated'](record, rootEl)
+    fieldChanged('resourcePublished') &&
+      this.writers['resourcePublished'](record, rootEl)
+    fieldChanged('resourceUpdated') &&
+      this.writers['resourceUpdated'](record, rootEl)
+
     fieldChanged('contacts') && this.writers['contacts'](record, rootEl)
     fieldChanged('keywords') && this.writers['keywords'](record, rootEl)
     fieldChanged('topics') && this.writers['topics'](record, rootEl)
@@ -270,14 +294,13 @@ export class Iso19139Converter extends BaseConverter<string> {
     fieldChanged('otherConstraints') &&
       this.writers['otherConstraints'](record, rootEl)
 
+    fieldChanged('contactsForResource') &&
+      this.writers['contactsForResource'](record, rootEl)
+
     if (record.kind === 'dataset') {
       this.writers['status'](record, rootEl)
       fieldChanged('updateFrequency') &&
         this.writers['updateFrequency'](record, rootEl)
-      fieldChanged('datasetCreated') &&
-        this.writers['datasetCreated'](record, rootEl)
-      fieldChanged('datasetUpdated') &&
-        this.writers['datasetUpdated'](record, rootEl)
       fieldChanged('spatialRepresentation') &&
         this.writers['spatialRepresentation'](record, rootEl)
       fieldChanged('overviews') && this.writers['overviews'](record, rootEl)

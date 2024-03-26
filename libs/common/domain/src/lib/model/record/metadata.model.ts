@@ -83,8 +83,8 @@ export interface BaseRecord {
   title: string
   abstract: string
   recordCreated?: Date
-  recordUpdated: Date
   recordPublished?: Date
+  recordUpdated: Date
   languages: Array<LanguageCode>
   kind: RecordKind
   topics: Array<string> // TODO: handle codelists
@@ -97,6 +97,12 @@ export interface BaseRecord {
   extras?: Record<string, unknown>
   landingPage?: URL
   updateFrequency?: UpdateFrequency
+
+  // information related to the resource (dataset, service)
+  contactsForResource: Array<Individual>
+  resourceCreated?: Date
+  resourcePublished?: Date
+  resourceUpdated?: Date
 
   // to add: canonical url
   // to add: source catalog (??)
@@ -173,10 +179,7 @@ export interface DatasetTemporalExtent {
 
 export interface DatasetRecord extends BaseRecord {
   kind: 'dataset'
-  contactsForResource: Array<Individual>
   status: RecordStatus
-  datasetCreated?: Date
-  datasetUpdated?: Date
   lineage: string // Explanation of the origin of this record (e.g: how, why)"
   distributions: Array<DatasetDistribution>
   spatialExtents: Array<DatasetSpatialExtent>

@@ -318,7 +318,7 @@ export function updateCitationDate(
 }
 
 export function appendCitationDate(
-  date,
+  date: Date,
   type: 'revision' | 'creation' | 'publication'
 ) {
   return appendChildren(
@@ -884,26 +884,47 @@ export function writeUpdateFrequency(
   )(rootEl)
 }
 
-export function writeDatasetCreated(record: DatasetRecord, rootEl: XmlElement) {
-  if (!('datasetCreated' in record)) return
+export function writeResourceCreated(
+  record: DatasetRecord,
+  rootEl: XmlElement
+) {
+  if (!('resourceCreated' in record)) return
   pipe(
     findOrCreateIdentification(),
     findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation'),
     fallback(
-      updateCitationDate(record.datasetCreated, 'creation'),
-      appendCitationDate(record.datasetCreated, 'creation')
+      updateCitationDate(record.resourceCreated, 'creation'),
+      appendCitationDate(record.resourceCreated, 'creation')
     )
   )(rootEl)
 }
 
-export function writeDatasetUpdated(record: DatasetRecord, rootEl: XmlElement) {
-  if (!('datasetUpdated' in record)) return
+export function writeResourceUpdated(
+  record: DatasetRecord,
+  rootEl: XmlElement
+) {
+  if (!('resourceUpdated' in record)) return
   pipe(
     findOrCreateIdentification(),
     findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation'),
     fallback(
-      updateCitationDate(record.datasetUpdated, 'revision'),
-      appendCitationDate(record.datasetUpdated, 'revision')
+      updateCitationDate(record.resourceUpdated, 'revision'),
+      appendCitationDate(record.resourceUpdated, 'revision')
+    )
+  )(rootEl)
+}
+
+export function writeResourcePublished(
+  record: DatasetRecord,
+  rootEl: XmlElement
+) {
+  if (!('resourcePublished' in record)) return
+  pipe(
+    findOrCreateIdentification(),
+    findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation'),
+    fallback(
+      updateCitationDate(record.resourcePublished, 'publication'),
+      appendCitationDate(record.resourcePublished, 'publication')
     )
   )(rootEl)
 }
