@@ -31,16 +31,16 @@ export class DataViewPermalinkComponent {
         const url = new URL(`${this.wcEmbedderBaseUrl}`, window.location.origin)
         url.search = `?v=${this.version}
 &e=gn-dataset-view-chart
-&a=api-url=${this.config.basePath}
-&a=dataset-id=${metadata.uniqueIdentifier}
-&a=primary-color=%230f4395
-&a=secondary-color=%238bc832
-&a=main-color=%23555
-&a=background-color=%23fdfbff
-&a=aggregation=${aggregation}
-&a=x-property=${xProperty}
-&a=y-property=${yProperty}
-&a=chart-type=${chartType}`
+&a=api-url%3D${this.config.basePath}
+&a=dataset-id%3D${metadata.uniqueIdentifier}
+&a=primary-color%3D%230f4395
+&a=secondary-color%3D%238bc832
+&a=main-color%3D%23555
+&a=background-color%3D%23fdfbff
+&a=aggregation%3D${aggregation}
+&a=x-property%3D${xProperty}
+&a=y-property%3D${yProperty}
+&a=chart-type%3D${chartType}`
         return url.toString()
       }
       return ''
