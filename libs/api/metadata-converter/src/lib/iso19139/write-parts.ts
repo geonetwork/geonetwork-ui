@@ -36,6 +36,7 @@ import {
 } from '../xml-utils'
 import {
   ChainableFunction,
+  combine,
   fallback,
   filterArray,
   getAtIndex,
@@ -238,6 +239,50 @@ export function appendResponsibleParty(contact: Individual) {
     contact.lastName && contact.firstName
       ? `${contact.firstName} ${contact.lastName}`
       : contact.lastName || contact.firstName || null
+
+  const createAddress = pipe(
+    createElement('gmd:address'),
+    createChild('gmd:CI_Address'),
+    appendChildren(
+      pipe(
+        createElement('gmd:electronicMailAddress'),
+        writeCharacterString(contact.email)
+      )
+    ),
+    contact.address
+      ? appendChildren(
+          pipe(
+            createElement('gmd:deliveryPoint'),
+            writeCharacterString(contact.address)
+          )
+        )
+      : noop
+  )
+
+  const createContact = pipe(
+    createElement('gmd:contactInfo'),
+    createChild('gmd:CI_Contact'),
+    contact.phone
+      ? appendChildren(
+          pipe(
+            createElement('gmd:phone'),
+            createChild('gmd:CI_Telephone'),
+            createChild('gmd:voice')
+          )
+        )
+      : noop,
+    appendChildren(createAddress),
+    'website' in contact.organization
+      ? appendChildren(
+          pipe(
+            createElement('gmd:onlineResource'),
+            createChild('gmd:CI_OnlineResource'),
+            writeLinkage(contact.organization.website)
+          )
+        )
+      : noop
+  )
+
   return appendChildren(
     pipe(
       createElement('gmd:CI_ResponsibleParty'),
@@ -262,27 +307,7 @@ export function appendResponsibleParty(contact: Individual) {
           createElement('gmd:organisationName'),
           writeCharacterString(contact.organization.name)
         ),
-        pipe(
-          createElement('gmd:contactInfo'),
-          createChild('gmd:CI_Contact'),
-          appendChildren(
-            pipe(
-              createElement('gmd:address'),
-              createChild('gmd:CI_Address'),
-              createChild('gmd:electronicMailAddress'),
-              writeCharacterString(contact.email)
-            )
-          ),
-          'website' in contact.organization
-            ? appendChildren(
-                pipe(
-                  createElement('gmd:onlineResource'),
-                  createChild('gmd:CI_OnlineResource'),
-                  writeLinkage(contact.organization.website)
-                )
-              )
-            : noop
-        ),
+        createContact,
         pipe(
           createElement('gmd:role'),
           createChild('gmd:CI_RoleCode'),
@@ -770,10 +795,25 @@ export function writeStatus(record: DatasetRecord, rootEl: XmlElement) {
 
 export function writeContacts(record: CatalogRecord, rootEl: XmlElement) {
   pipe(
-    findOrCreateIdentification(),
-    removeChildrenByName('gmd:pointOfContact'),
+    removeChildrenByName('gmd:contact'),
     appendChildren(
       ...record.contacts.map((contact) =>
+        pipe(createElement('gmd:contact'), appendResponsibleParty(contact))
+      )
+    )
+  )(rootEl)
+}
+
+export function writeContactsForResource(
+  record: CatalogRecord,
+  rootEl: XmlElement
+) {
+  pipe(
+    findOrCreateIdentification(),
+    removeChildrenByName('gmd:pointOfContact'),
+    removeChildrenByName('gmd:contact'),
+    appendChildren(
+      ...record.contactsForResource.map((contact) =>
         pipe(
           createElement('gmd:pointOfContact'),
           appendResponsibleParty(contact)

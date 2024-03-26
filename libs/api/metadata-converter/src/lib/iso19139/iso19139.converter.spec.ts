@@ -106,6 +106,15 @@ describe('ISO19139 converter', () => {
                 website: c.organization.website,
               },
             })),
+            contactsForResource: GENERIC_DATASET_RECORD.contactsForResource.map(
+              (c) => ({
+                ...c,
+                organization: {
+                  name: c.organization.name,
+                  website: c.organization.website,
+                },
+              })
+            ),
           })
         })
       })

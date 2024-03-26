@@ -13,6 +13,17 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
     {
       email: 'rolf.giezendanner@are.admin.ch',
       role: 'point_of_contact',
+      address: 'Ittigen, 3063, CH',
+      organization: {
+        name: 'Bundesamt für Raumentwicklung',
+      },
+    },
+  ],
+  contactsForResource: [
+    {
+      email: 'rolf.giezendanner@are.admin.ch',
+      role: 'point_of_contact',
+      address: 'Ittigen, 3063, CH',
       organization: {
         name: 'Bundesamt für Raumentwicklung',
       },
@@ -25,7 +36,6 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
       },
     },
   ],
-  contactsForResource: [],
   recordUpdated: new Date('2022-02-22T19:40:06'),
   resourceCreated: new Date('1999-01-01T00:00:00'),
   resourceUpdated: new Date('2009-01-01'),
@@ -339,7 +349,23 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
   contacts: [
     {
       email: 'geodaten@sg.ch',
+      role: 'resource_provider',
+      phone: '+41(0)58 229 31 47',
+      address: 'St. Gallen, 9001, CH',
+      organization: {
+        name: 'Amt für Raumentwicklung und Geoinformation (SG)',
+        website: new URL(
+          'https://www.sg.ch/bauen/geoinformation/datenbezug.html'
+        ),
+      },
+    },
+  ],
+  contactsForResource: [
+    {
+      email: 'geodaten@sg.ch',
       role: 'other',
+      phone: '+41(0)58 229 31 47',
+      address: 'St. Gallen, 9001, CH',
       organization: {
         name: 'Amt für Raumentwicklung und Geoinformation (SG)',
         website: new URL(
@@ -350,6 +376,8 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
     {
       email: 'geodaten@sg.ch',
       role: 'publisher',
+      phone: '+41(0)58 229 31 47',
+      address: 'St. Gallen, 9001, CH',
       organization: {
         name: 'Amt für Raumentwicklung und Geoinformation (SG)',
         website: new URL(
@@ -358,7 +386,6 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
       },
     },
   ],
-  contactsForResource: [],
   recordUpdated: new Date('2022-03-07T01:15:51+01:00'),
   resourceCreated: new Date('2021-09-15'),
   resourceUpdated: new Date('2021-09-17'),

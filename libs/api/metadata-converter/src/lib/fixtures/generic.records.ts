@@ -12,6 +12,21 @@ export const GENERIC_DATASET_RECORD: DatasetRecord = {
   contacts: [
     {
       email: 'bob@org.net',
+      role: 'point_of_contact',
+      organization: {
+        name: 'MyOrganization',
+        website: new URL('https://www.my.org/info'),
+        logoUrl: new URL('https://www.my.org/logo.png'),
+        description: 'A generic organization',
+      },
+      firstName: 'Bob',
+      lastName: 'TheGreat',
+      position: 'developer',
+    },
+  ],
+  contactsForResource: [
+    {
+      email: 'bob@org.net',
       role: 'author',
       organization: {
         name: 'MyOrganization',
@@ -33,7 +48,6 @@ export const GENERIC_DATASET_RECORD: DatasetRecord = {
       position: 'manager',
     },
   ],
-  contactsForResource: [],
   status: 'ongoing',
   recordCreated: new Date('2021-11-15T09:00:00'),
   recordPublished: new Date('2022-01-01T10:00:00'),

@@ -49,8 +49,7 @@
             <cit:role>
                 <cit:CI_RoleCode
                         codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode"
-                        codeListValue="pointOfContact">pointOfContact
-                </cit:CI_RoleCode>
+                        codeListValue="pointOfContact">pointOfContact</cit:CI_RoleCode>
             </cit:role>
             <cit:party>
                 <cit:CI_Organisation>

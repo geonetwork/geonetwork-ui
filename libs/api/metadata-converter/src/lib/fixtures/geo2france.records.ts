@@ -16,7 +16,15 @@ export const GEO2FRANCE_PLU_DATASET_RECORD: DatasetRecord = {
       },
     },
   ],
-  contactsForResource: [],
+  contactsForResource: [
+    {
+      email: 'sig@agglo-compiegne.fr',
+      role: 'point_of_contact',
+      organization: {
+        name: 'GeoCompiegnois',
+      },
+    },
+  ],
   recordUpdated: new Date('2022-04-15T14:18:19'),
   resourcePublished: new Date('2022-05-01'),
   resourceUpdated: new Date('2022-03-29'),

@@ -14,6 +14,7 @@ import {
 import {
   writeAbstract,
   writeContacts,
+  writeContactsForResource,
   writeDistributions,
   writeGraphicOverviews,
   writeKeywords,
@@ -39,6 +40,7 @@ import {
 import {
   readAbstract,
   readContacts,
+  readContactsForResource,
   readDistributions,
   readIsoTopics,
   readKeywords,
@@ -82,6 +84,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     title: readTitle,
     abstract: readAbstract,
     contacts: readContacts,
+    contactsForResource: readContactsForResource,
     keywords: readKeywords,
     topics: readIsoTopics,
     licenses: readLicenses,
@@ -100,7 +103,6 @@ export class Iso19139Converter extends BaseConverter<string> {
     temporalExtents: () => [],
     extras: () => undefined,
     landingPage: () => undefined,
-    contactsForResource: () => [],
     languages: () => [],
   }
 
@@ -120,6 +122,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     title: writeTitle,
     abstract: writeAbstract,
     contacts: writeContacts,
+    contactsForResource: writeContactsForResource,
     keywords: writeKeywords,
     topics: writeTopics,
     licenses: writeLicenses,
@@ -138,7 +141,6 @@ export class Iso19139Converter extends BaseConverter<string> {
     temporalExtents: () => undefined,
     extras: () => undefined,
     landingPage: () => undefined,
-    contactsForResource: () => undefined,
     languages: () => undefined,
   }
 
@@ -263,6 +265,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     this.writers['uniqueIdentifier'](record, rootEl)
     this.writers['kind'](record, rootEl)
 
+    fieldChanged('contacts') && this.writers['contacts'](record, rootEl)
     fieldChanged('ownerOrganization') &&
       this.writers['ownerOrganization'](record, rootEl)
 
@@ -283,7 +286,9 @@ export class Iso19139Converter extends BaseConverter<string> {
     fieldChanged('resourceUpdated') &&
       this.writers['resourceUpdated'](record, rootEl)
 
-    fieldChanged('contacts') && this.writers['contacts'](record, rootEl)
+    fieldChanged('contactsForResource') &&
+      this.writers['contactsForResource'](record, rootEl)
+
     fieldChanged('keywords') && this.writers['keywords'](record, rootEl)
     fieldChanged('topics') && this.writers['topics'](record, rootEl)
     fieldChanged('legalConstraints') &&
@@ -293,9 +298,6 @@ export class Iso19139Converter extends BaseConverter<string> {
     fieldChanged('licenses') && this.writers['licenses'](record, rootEl)
     fieldChanged('otherConstraints') &&
       this.writers['otherConstraints'](record, rootEl)
-
-    fieldChanged('contactsForResource') &&
-      this.writers['contactsForResource'](record, rootEl)
 
     if (record.kind === 'dataset') {
       this.writers['status'](record, rootEl)

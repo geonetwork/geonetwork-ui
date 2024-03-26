@@ -26,6 +26,8 @@ Toutes ces données sont reprises dans BDR.`,
       },
       role: 'point_of_contact',
     },
+  ],
+  contactsForResource: [
     {
       email: 'helpdesk.carto@spw.wallonie.be',
       organization: {
@@ -53,8 +55,6 @@ Toutes ces données sont reprises dans BDR.`,
       },
       role: 'owner',
     },
-  ],
-  contactsForResource: [
     {
       email: 'helpdesk.carto@spw.wallonie.be',
       organization: {
@@ -413,6 +413,8 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
       },
       role: 'point_of_contact',
     },
+  ],
+  contactsForResource: [
     {
       email: 'helpdesk.carto@spw.wallonie.be',
       organization: {
@@ -435,8 +437,6 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
       },
       role: 'owner',
     },
-  ],
-  contactsForResource: [
     {
       email: 'helpdesk.carto@spw.wallonie.be',
       organization: {

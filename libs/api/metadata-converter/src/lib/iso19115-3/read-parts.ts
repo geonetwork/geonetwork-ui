@@ -21,11 +21,13 @@ import {
   extractDateTime,
   extractRole,
   extractUrl,
+  findIdentification,
 } from '../iso19139/read-parts'
 import {
   Individual,
   Organization,
   RecordKind,
+  Role,
 } from '@geonetwork-ui/common/domain/model/record'
 
 export function readKind(rootEl: XmlElement): RecordKind {
@@ -48,14 +50,12 @@ export function findDistribution() {
   return findNestedElement('mdb:distributionInfo', 'mrd:MD_Distribution')
 }
 
-// from cit:CI_Responsibility
+// from cit:CI_Organisation
 export function extractOrganization(): ChainableFunction<
   XmlElement,
   Organization
 > {
-  const getOrganization = findNestedElement('cit:party', 'cit:CI_Organisation')
   const getUrl = pipe(
-    getOrganization,
     findNestedElements(
       'cit:contactInfo',
       'cit:CI_Contact',
@@ -68,11 +68,7 @@ export function extractOrganization(): ChainableFunction<
   )
   return pipe(
     combine(
-      pipe(
-        getOrganization,
-        findChildElement('cit:name', false),
-        extractCharacterString()
-      ),
+      pipe(findChildElement('cit:name', false), extractCharacterString()),
       getUrl
     ),
     map(([name, website]) => ({
@@ -82,23 +78,17 @@ export function extractOrganization(): ChainableFunction<
   )
 }
 
-// from cit:CI_Responsibility
-export function extractIndividuals(): ChainableFunction<
-  XmlElement,
-  Array<Individual>
-> {
-  const getRole = pipe(findChildElement('cit:role'), extractRole())
-  const getIndividual = pipe(
-    findChildElement('cit:individual'),
-    findChildElement('cit:CI_Individual')
-  )
+// from cit:CI_Individual or cit:CI_Organisation
+export function extractIndividual(
+  role: Role,
+  organization?: Organization,
+  orgContact?: Individual
+): ChainableFunction<XmlElement, Individual> {
   const getPosition = pipe(
-    getIndividual,
     findChildElement('cit:positionName'),
     extractCharacterString()
   )
   const getNameParts = pipe(
-    getIndividual,
     findChildElement('cit:name'),
     extractCharacterString(),
     map((fullName) => {
@@ -109,81 +99,111 @@ export function extractIndividuals(): ChainableFunction<
       return [first, parts.join(' ')]
     })
   )
-  const getOrganization = extractOrganization()
-  const getContacts = pipe(
-    findNestedElement('cit:party', 'cit:CI_Organisation'),
-    findChildrenElement('cit:contactInfo'),
-    mapArray(findChildElement('cit:CI_Contact'))
+  const getContact = findNestedElement('cit:contactInfo', 'cit:CI_Contact')
+  const getAddressRoot = pipe(
+    getContact,
+    findNestedElement('cit:address', 'cit:CI_Address')
   )
-  const getAddressRoots = pipe(
-    getContacts,
-    mapArray(findNestedElement('cit:address', 'cit:CI_Address'))
-  )
-  const getAddresses = pipe(
-    getAddressRoots,
-    mapArray(
-      combine(
-        pipe(
-          findChildElement('cit:deliveryPoint', false),
-          extractCharacterString()
-        ),
-        pipe(findChildElement('cit:city', false), extractCharacterString()),
-        pipe(
-          findChildElement('cit:postalCode', false),
-          extractCharacterString()
-        ),
-        pipe(findChildElement('cit:country', false), extractCharacterString())
-      )
-    ),
-    mapArray((parts) => parts.filter((p) => !!p).join(', '))
-  )
-  const getPhones = pipe(
-    getContacts,
-    mapArray(findNestedElement('cit:phone', 'cit:CI_Telephone', 'cit:number')),
-    mapArray(extractCharacterString())
-  )
-  const getEmails = pipe(
-    getAddressRoots,
-    mapArray(
+  const getAddress = pipe(
+    getAddressRoot,
+    combine(
       pipe(
-        findChildElement('cit:electronicMailAddress', false),
-        extractCharacterString(),
-        map((email) => (email === null ? 'missing@missing.com' : email))
-      )
-    )
+        findChildElement('cit:deliveryPoint', false),
+        extractCharacterString()
+      ),
+      pipe(findChildElement('cit:city', false), extractCharacterString()),
+      pipe(findChildElement('cit:postalCode', false), extractCharacterString()),
+      pipe(findChildElement('cit:country', false), extractCharacterString())
+    ),
+    map((parts) => parts.filter((p) => !!p).join(', '))
   )
+  const getPhone = pipe(
+    getContact,
+    findNestedElement('cit:phone', 'cit:CI_Telephone', 'cit:number'),
+    extractCharacterString()
+  )
+  const getEmail = pipe(
+    getAddressRoot,
+    findChildElement('cit:electronicMailAddress', false),
+    extractCharacterString()
+  )
+  const defaultOrg: Organization = {
+    name: 'Missing Organization',
+  }
+
+  let defaultIndividual: Partial<Individual> = {}
+  if (orgContact) {
+    defaultIndividual = {
+      email: orgContact.email,
+      ...(orgContact.address && { address: orgContact.address }),
+      ...(orgContact.phone && { phone: orgContact.phone }),
+      ...(orgContact.position && { position: orgContact.position }),
+      organization,
+    }
+  }
+
+  return pipe(
+    combine(getPosition, getNameParts, getEmail, getAddress, getPhone),
+    map(([position, [firstName, lastName], email, address, phone]) => ({
+      ...defaultIndividual,
+      email: email || defaultIndividual.email || 'missing@missing.com',
+      role,
+      organization: organization || defaultOrg,
+      ...(position && { position }),
+      ...(firstName && { firstName }),
+      ...(lastName && { lastName }),
+      ...(address && { address }),
+      ...(phone && { phone }),
+    }))
+  )
+}
+
+// from cit:CI_Organisation
+export function extractOrganizationIndividuals(
+  role: Role
+): ChainableFunction<XmlElement, Array<Individual>> {
   return pipe(
     combine(
-      getRole,
-      getPosition,
-      getNameParts,
-      getOrganization,
-      getEmails,
-      getAddresses,
-      getPhones
+      extractOrganization(),
+      extractIndividual(role),
+      findNestedElements('cit:individual', 'cit:CI_Individual')
     ),
-    map(
-      ([
-        role,
-        position,
-        [firstName, lastName],
-        organization,
-        emails,
-        addresses,
-        phones,
-      ]) =>
-        emails.map((email, i) => ({
-          email,
-          role,
-          organization,
-          ...(position && { position }),
-          ...(firstName && { firstName }),
-          ...(lastName && { lastName }),
-          ...(addresses[i] && { address: addresses[i] }),
-          ...(phones[i] && { phone: phones[i] }),
-        }))
+    map(([org, orgContact, els]) =>
+      els.length
+        ? els.map((el) => extractIndividual(role, org, orgContact)(el))
+        : [
+            {
+              email: orgContact.email,
+              ...(orgContact.address && { address: orgContact.address }),
+              ...(orgContact.phone && { phone: orgContact.phone }),
+              ...(orgContact.position && { position: orgContact.position }),
+              organization: org,
+              role,
+            },
+          ]
     )
   )
+}
+
+// from cit:CI_Responsibility
+export function extractIndividuals(): ChainableFunction<
+  XmlElement,
+  Array<Individual>
+> {
+  const getRole = pipe(findChildElement('cit:role'), extractRole())
+  const getIndividuals = pipe(
+    combine(getRole, findNestedElements('cit:party', 'cit:CI_Individual')),
+    ([role, els]) => els.map((el) => extractIndividual(role)(el))
+  )
+  const getOrgIndividuals = pipe(
+    combine(getRole, findNestedElements('cit:party', 'cit:CI_Organisation')),
+    map(([role, els]) =>
+      els.map((el) => extractOrganizationIndividuals(role)(el))
+    ),
+    flattenArray()
+  )
+
+  return pipe(combine(getIndividuals, getOrgIndividuals), flattenArray())
 }
 
 export function readUniqueIdentifier(rootEl: XmlElement): string {
@@ -198,20 +218,16 @@ export function readUniqueIdentifier(rootEl: XmlElement): string {
 }
 
 export function readOwnerOrganization(rootEl: XmlElement): Organization {
-  return pipe(
-    findNestedElement('mdb:contact', 'cit:CI_Responsibility'),
-    extractOrganization()
-  )(rootEl)
+  const contacts = readContacts(rootEl)
+  const pointOfContact = contacts.filter(
+    (c) => c.role === 'point_of_contact'
+  )[0]
+  return (pointOfContact || contacts[0]).organization
 }
 
 export function readContacts(rootEl: XmlElement): Individual[] {
   return pipe(
-    combine(
-      findChildElement('mdb:contact'),
-      findChildrenElement('mri:pointOfContact')
-    ),
-    flattenArray(),
-    mapArray(findChildElement('cit:CI_Responsibility', false)),
+    findNestedElements('mdb:contact', 'cit:CI_Responsibility'),
     mapArray(extractIndividuals()),
     flattenArray()
   )(rootEl)
@@ -219,8 +235,22 @@ export function readContacts(rootEl: XmlElement): Individual[] {
 
 export function readResourceContacts(rootEl: XmlElement): Individual[] {
   return pipe(
-    findDistribution(),
-    findChildrenElement('mrd:distributorContact'),
+    combine(
+      pipe(
+        findIdentification(),
+        findNestedElements(
+          'mri:citation',
+          'cit:CI_Citation',
+          'cit:citedResponsibleParty'
+        )
+      ),
+      pipe(
+        findIdentification(),
+        findChildrenElement('mri:pointOfContact', false)
+      ),
+      pipe(findDistribution(), findChildrenElement('mrd:distributorContact'))
+    ),
+    flattenArray(),
     mapArray(findChildElement('cit:CI_Responsibility', false)),
     mapArray(extractIndividuals()),
     flattenArray()

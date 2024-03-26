@@ -372,6 +372,7 @@ export function removeAllChildren(): ChainableFunction<XmlElement, XmlElement> {
   }
 }
 
+// stays on the same element
 export function removeChildrenByName(
   name: string
 ): ChainableFunction<XmlElement, XmlElement> {
