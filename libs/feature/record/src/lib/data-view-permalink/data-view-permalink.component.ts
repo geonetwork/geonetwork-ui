@@ -29,18 +29,18 @@ export class DataViewPermalinkComponent {
       if (config) {
         const { aggregation, xProperty, yProperty, chartType } = config
         const url = new URL(`${this.wcEmbedderBaseUrl}`, window.location.origin)
-        url.search = `?v=${this.version}
-&e=gn-dataset-view-chart
-&a=api-url=${this.config.basePath}
-&a=dataset-id=${metadata.uniqueIdentifier}
-&a=primary-color=%230f4395
-&a=secondary-color=%238bc832
-&a=main-color=%23555
-&a=background-color=%23fdfbff
-&a=aggregation=${aggregation}
-&a=x-property=${xProperty}
-&a=y-property=${yProperty}
-&a=chart-type=${chartType}`
+        url.searchParams.set('v', `${this.version}`)
+        url.searchParams.append('e', `gn-dataset-view-chart`)
+        url.searchParams.append('a', `api-url=${this.config.basePath}`)
+        url.searchParams.append('a', `dataset-id=${metadata.uniqueIdentifier}`)
+        url.searchParams.append('a', `primary-color=#0f4395`)
+        url.searchParams.append('a', `secondary-color=#8bc832`)
+        url.searchParams.append('a', `main-color=#555`)
+        url.searchParams.append('a', `background-color=#fdfbff`)
+        url.searchParams.append('a', `aggregation=${aggregation}`)
+        url.searchParams.append('a', `x-property=${xProperty}`)
+        url.searchParams.append('a', `y-property=${yProperty}`)
+        url.searchParams.append('a', `chart-type=${chartType}`)
         return url.toString()
       }
       return ''

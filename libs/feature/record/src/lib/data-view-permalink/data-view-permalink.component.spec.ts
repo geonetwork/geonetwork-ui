@@ -86,7 +86,15 @@ describe('DataViewPermalinkComponent', () => {
     it('should generate URL based on configs', async () => {
       const url = await firstValueFrom(component.permalinkUrl$)
       expect(url).toBe(
-        `https://example.com/wc-embedder?v=${gnUiVersion}&e=gn-dataset-view-chart&a=api-url=${component.config.basePath}&a=dataset-id=${metadata.uniqueIdentifier}&a=primary-color=%230f4395&a=secondary-color=%238bc832&a=main-color=%23555&a=background-color=%23fdfbff&a=aggregation=${chartConfig1.aggregation}&a=x-property=${chartConfig1.xProperty}&a=y-property=${chartConfig1.yProperty}&a=chart-type=${chartConfig1.chartType}`
+        `https://example.com/wc-embedder?v=${gnUiVersion}&e=gn-dataset-view-chart&a=api-url%3D${encodeURIComponent(
+          component.config.basePath
+        )}&a=dataset-id%3D${
+          metadata.uniqueIdentifier
+        }&a=primary-color%3D%230f4395&a=secondary-color%3D%238bc832&a=main-color%3D%23555&a=background-color%3D%23fdfbff&a=aggregation%3D${
+          chartConfig1.aggregation
+        }&a=x-property%3D${chartConfig1.xProperty}&a=y-property%3D${
+          chartConfig1.yProperty
+        }&a=chart-type%3D${chartConfig1.chartType}`
       )
     })
   })
@@ -97,7 +105,15 @@ describe('DataViewPermalinkComponent', () => {
     it('should update URL based on configs', async () => {
       const url = await firstValueFrom(component.permalinkUrl$)
       expect(url).toBe(
-        `https://example.com/wc-embedder?v=${gnUiVersion}&e=gn-dataset-view-chart&a=api-url=${component.config.basePath}&a=dataset-id=${metadata.uniqueIdentifier}&a=primary-color=%230f4395&a=secondary-color=%238bc832&a=main-color=%23555&a=background-color=%23fdfbff&a=aggregation=${chartConfig2.aggregation}&a=x-property=${chartConfig2.xProperty}&a=y-property=${chartConfig2.yProperty}&a=chart-type=${chartConfig2.chartType}`
+        `https://example.com/wc-embedder?v=${gnUiVersion}&e=gn-dataset-view-chart&a=api-url%3D${encodeURIComponent(
+          component.config.basePath
+        )}&a=dataset-id%3D${
+          metadata.uniqueIdentifier
+        }&a=primary-color%3D%230f4395&a=secondary-color%3D%238bc832&a=main-color%3D%23555&a=background-color%3D%23fdfbff&a=aggregation%3D${
+          chartConfig2.aggregation
+        }&a=x-property%3D${chartConfig2.xProperty}&a=y-property%3D${
+          chartConfig2.yProperty
+        }&a=chart-type%3D${chartConfig2.chartType}`
       )
     })
   })
