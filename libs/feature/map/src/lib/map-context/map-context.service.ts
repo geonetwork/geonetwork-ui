@@ -22,9 +22,9 @@ import { LayerConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 import { FeatureCollection } from 'geojson'
 import { fromLonLat } from 'ol/proj'
 import WMTS from 'ol/source/WMTS'
-import { removeSearchParams } from '@geonetwork-ui/util/shared'
 import { Geometry } from 'ol/geom'
 import Feature from 'ol/Feature'
+import { WfsEndpoint, WmtsEndpoint } from '@camptocamp/ogc-client'
 
 export const DEFAULT_BASELAYER_CONTEXT: MapContextLayerXyzModel = {
   type: MapContextLayerTypeEnum.XYZ,
@@ -87,44 +87,63 @@ export class MapContextService {
       case MapContextLayerTypeEnum.WMS:
         return new TileLayer({
           source: new TileWMS({
-            url: removeSearchParams(layerModel.url, ['request', 'service']),
+            url: layerModel.url,
             params: { LAYERS: layerModel.name },
             gutter: 20,
           }),
         })
-      case MapContextLayerTypeEnum.WMTS:
-        return new TileLayer({
-          source: new WMTS(layerModel.options),
+      case MapContextLayerTypeEnum.WMTS: {
+        // TODO: isolate this in utils service
+        const olLayer = new TileLayer({})
+        const endpoint = new WmtsEndpoint(layerModel.url)
+        endpoint.isReady().then(async (endpoint) => {
+          const layerName = endpoint.getSingleLayerName() ?? layerModel.name
+          const layer = endpoint.getLayerByName(layerName)
+          const matrixSet = layer.matrixSets[0]
+          const tileGrid = await endpoint.getOpenLayersTileGrid(layer.name)
+          const resourceUrl = layer.resourceLinks[0]
+          const dimensions = endpoint.getDefaultDimensions(layer.name)
+          olLayer.setSource(
+            new WMTS({
+              layer: layer.name,
+              style: layer.defaultStyle,
+              matrixSet: matrixSet.identifier,
+              format: resourceUrl.format,
+              url: resourceUrl.url,
+              requestEncoding: resourceUrl.encoding,
+              tileGrid,
+              projection: matrixSet.crs,
+              dimensions,
+            })
+          )
         })
-      case MapContextLayerTypeEnum.WFS:
-        return new VectorLayer({
-          source: new VectorSource({
-            format: new GeoJSON(),
-            url: function (extent) {
-              const urlObj = new URL(
-                removeSearchParams(layerModel.url, [
-                  'service',
-                  'version',
-                  'request',
-                ])
-              )
-              urlObj.searchParams.set('service', 'WFS')
-              urlObj.searchParams.set('version', '1.1.0')
-              urlObj.searchParams.set('request', 'GetFeature')
-              urlObj.searchParams.set('outputFormat', 'application/json')
-              urlObj.searchParams.set('typename', layerModel.name)
-              urlObj.searchParams.set('srsname', 'EPSG:3857')
-              urlObj.searchParams.set('bbox', `${extent.join(',')},EPSG:3857`)
-              urlObj.searchParams.set(
-                'maxFeatures',
-                WFS_MAX_FEATURES.toString()
-              )
-              return urlObj.toString()
-            },
-            strategy: bboxStrategy,
-          }),
+        return olLayer
+      }
+      case MapContextLayerTypeEnum.WFS: {
+        const olLayer = new VectorLayer({
           style,
         })
+        new WfsEndpoint(layerModel.url).isReady().then((endpoint) => {
+          const featureType =
+            endpoint.getSingleFeatureTypeName() ?? layerModel.name
+          olLayer.setSource(
+            new VectorSource({
+              format: new GeoJSON(),
+              url: function (extent: [number, number, number, number]) {
+                return endpoint.getFeatureUrl(featureType, {
+                  maxFeatures: WFS_MAX_FEATURES,
+                  asJson: true,
+                  outputCrs: 'EPSG:3857',
+                  extent,
+                  extentCrs: 'EPSG:3857',
+                })
+              },
+              strategy: bboxStrategy,
+            })
+          )
+        })
+        return olLayer
+      }
       case MapContextLayerTypeEnum.GEOJSON: {
         if ('url' in layerModel) {
           return new VectorLayer({

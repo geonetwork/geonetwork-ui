@@ -12,7 +12,6 @@ import Source from 'ol/source/Source'
 import ImageWMS from 'ol/source/ImageWMS'
 import TileWMS from 'ol/source/TileWMS'
 import VectorSource from 'ol/source/Vector'
-import { optionsFromCapabilities } from 'ol/source/WMTS'
 import { defaults, DragPan, Interaction, MouseWheelZoom } from 'ol/interaction'
 import {
   mouseOnly,
@@ -20,23 +19,17 @@ import {
   platformModifierKeyOnly,
   primaryAction,
 } from 'ol/events/condition'
-import WMTSCapabilities from 'ol/format/WMTSCapabilities'
-import { from, Observable } from 'rxjs'
+import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import {
   MapContextLayerModel,
-  MapContextLayerTypeEnum,
   MapContextLayerWmsModel,
-  MapContextLayerWmtsModel,
 } from '../map-context/map-context.model'
 import Collection from 'ol/Collection'
 import MapBrowserEvent from 'ol/MapBrowserEvent'
-import {
-  CatalogRecord,
-  DatasetDistribution,
-} from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { ProxyService } from '@geonetwork-ui/util/shared'
-import { WmsEndpoint } from '@camptocamp/ogc-client'
+import { WmsEndpoint, WmtsEndpoint } from '@camptocamp/ogc-client'
 import { LONLAT_CRS_CODES } from '../constant/projections'
 import { fromEPSGCode, register } from 'ol/proj/proj4'
 import proj4 from 'proj4/dist/proj4'
@@ -152,11 +145,14 @@ export class MapUtilsService {
     } else if (layer && layer.type === 'wms') {
       latLonExtent = await this.getWmsLayerExtent(layer)
     } else if (layer && layer.type === 'wmts') {
-      if (layer.extent) {
-        latLonExtent = layer.extent
-      } else {
-        return layer.options.tileGrid.getExtent()
-      }
+      // TODO: isolate this in utils service
+      latLonExtent = await new WmtsEndpoint(layer.url)
+        .isReady()
+        .then((endpoint) => {
+          const layerName = endpoint.getSingleLayerName() ?? layer.name
+          const wmtsLayer = endpoint.getLayerByName(layerName)
+          return wmtsLayer.latLonBoundingBox
+        })
     } else {
       return null
     }
@@ -180,57 +176,17 @@ export class MapUtilsService {
       LONLAT_CRS_CODES.includes(crs)
     )
     if (lonLatCRS) {
-      return boundingBoxes[lonLatCRS].map(parseFloat)
+      return boundingBoxes[lonLatCRS]
     } else {
       const availableEPSGCode = Object.keys(boundingBoxes)[0]
       register(proj4)
       const proj = await fromEPSGCode(availableEPSGCode)
-      const bboxWithFiniteNumbers =
-        boundingBoxes[availableEPSGCode].map(parseFloat)
-      return transformExtent(bboxWithFiniteNumbers, proj, 'EPSG:4326')
+      return transformExtent(
+        boundingBoxes[availableEPSGCode],
+        proj,
+        'EPSG:4326'
+      )
     }
-  }
-
-  getWmtsLayerFromCapabilities(
-    link: DatasetDistribution
-  ): Observable<MapContextLayerWmtsModel> {
-    const getCapabilitiesUrl = new URL(link.url, window.location.toString())
-    getCapabilitiesUrl.searchParams.set('SERVICE', 'WMTS')
-    getCapabilitiesUrl.searchParams.set('REQUEST', 'GetCapabilities')
-    return from(
-      fetch(getCapabilitiesUrl.toString())
-        .then(async function (response) {
-          if (!response.ok) {
-            throw new Error(`WMTS GetCapabilities HTTP request failed with code ${
-              response.status
-            } and body:
-${await response.text()}`)
-          }
-          return response.text()
-        })
-        .then(function (text) {
-          try {
-            const result = new WMTSCapabilities().read(text)
-            const options = optionsFromCapabilities(result, {
-              layer: link.name,
-              matrixSet: 'EPSG:3857',
-            })
-            const layerCap = result?.Contents?.Layer.find(
-              (layer) => layer.Identifier === link.name
-            )
-            return {
-              options,
-              type: MapContextLayerTypeEnum.WMTS as 'wmts',
-              ...(layerCap?.WGS84BoundingBox
-                ? { extent: layerCap.WGS84BoundingBox }
-                : {}),
-            }
-          } catch (e: any) {
-            throw new Error(`WMTS GetCapabilities parsing failed:
-${e.stack || e.message || e}`)
-          }
-        })
-    )
   }
 
   prioritizePageScroll(interactions: Collection<Interaction>) {
