@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { EditorService, FormField } from '../services/editor.service'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { OverviewUploadComponent } from '../components/overview-upload/overview-upload.component'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -9,7 +10,7 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
   styleUrls: ['./record-form.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, UiInputsModule],
+  imports: [CommonModule, UiInputsModule, OverviewUploadComponent],
 })
 export class RecordFormComponent {
   constructor(public editorService: EditorService) {}
