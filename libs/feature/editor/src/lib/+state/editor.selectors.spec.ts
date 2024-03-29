@@ -44,7 +44,7 @@ describe('Editor Selectors', () => {
       expect(result).toEqual(DEFAULT_FIELDS)
     })
 
-    it('selectRecordFields() should return the current "fieldsConfig" state', () => {
+    it('selectRecordFields() should return the config and value for each field', () => {
       const result = EditorSelectors.selectRecordFields(state)
       expect(result).toEqual([
         {
