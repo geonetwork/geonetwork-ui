@@ -1,6 +1,7 @@
 import { Iso19139Converter } from '../iso19139'
 import {
   readContacts,
+  readDistributions,
   readKind,
   readLandingPage,
   readLineage,
@@ -27,6 +28,7 @@ export class Iso191153Converter extends Iso19139Converter {
     this.readers['ownerOrganization'] = readOwnerOrganization
     this.readers['landingPage'] = readLandingPage
     this.readers['lineage'] = readLineage
+    this.readers['distributions'] = readDistributions
 
     this.writers['uniqueIdentifier'] = writeUniqueIdentifier
   }

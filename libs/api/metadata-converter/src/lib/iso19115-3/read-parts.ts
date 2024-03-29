@@ -3,6 +3,7 @@ import {
   findChildrenElement,
   findNestedElement,
   findNestedElements,
+  findParent,
   readAttribute,
   XmlElement,
 } from '../xml-utils'
@@ -18,17 +19,20 @@ import {
 } from '../function-utils'
 import {
   extractCharacterString,
+  extractDatasetDistributions,
   extractDateTime,
   extractRole,
   extractUrl,
   findIdentification,
 } from '../iso19139/read-parts'
 import {
+  DatasetDistribution,
   Individual,
   Organization,
   RecordKind,
   Role,
 } from '@geonetwork-ui/common/domain/model/record'
+import { matchMimeType } from '../common/distribution.mapper'
 
 export function readKind(rootEl: XmlElement): RecordKind {
   return pipe(
@@ -303,4 +307,25 @@ export function readRecordCreated(rootEl: XmlElement): Date {
 
 export function readRecordPublished(rootEl: XmlElement): Date {
   return extractDateInfo('publication')(rootEl)
+}
+
+const getMimeType = pipe(
+  findParent('mrd:MD_Distribution'),
+  findNestedElement(
+    'mrd:distributionFormat',
+    'mrd:MD_Format',
+    'mrd:formatSpecificationCitation',
+    'cit:CI_Citation',
+    'cit:title'
+  ),
+  extractCharacterString(),
+  map(matchMimeType)
+)
+
+export function readDistributions(rootEl: XmlElement): DatasetDistribution[] {
+  return pipe(
+    findNestedElements('mrd:distributionInfo', 'mrd:MD_Distribution'),
+    mapArray(extractDatasetDistributions(getMimeType)),
+    flattenArray()
+  )(rootEl)
 }

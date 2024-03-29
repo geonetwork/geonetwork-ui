@@ -309,18 +309,20 @@ export function extractLicenses(): ChainableFunction<
   )
 }
 
-// from gmd:MD_Distribution
-export function extractDatasetDistributions(): ChainableFunction<
-  XmlElement,
-  DatasetDistribution[]
-> {
-  const getFormat = pipe(
-    findParent('gmd:MD_Distribution'),
-    findNestedElement('gmd:distributionFormat', 'gmd:MD_Format', 'gmd:name'),
-    extractCharacterString(),
-    map(matchMimeType)
-  )
+const getMimeType = pipe(
+  findParent('gmd:MD_Distribution'),
+  findNestedElement('gmd:distributionFormat', 'gmd:MD_Format', 'gmd:name'),
+  extractCharacterString(),
+  map(matchMimeType)
+)
 
+/**
+ * Extract distributions from a MD_Distribution element
+ * @param getMimeTypeFn This function starts from a gmd:transferOptions element
+ */
+export function extractDatasetDistributions(
+  getMimeTypeFn: ChainableFunction<XmlElement, string>
+): ChainableFunction<XmlElement, DatasetDistribution[]> {
   const getUrl = pipe(findChildElement('gmd:linkage'), extractMandatoryUrl())
   const getProtocolStr = pipe(
     findChildElement('gmd:protocol'),
@@ -363,11 +365,11 @@ export function extractDatasetDistributions(): ChainableFunction<
         getUrl,
         getName,
         getDescription,
-        getFormat
+        getMimeTypeFn
       )
     ),
     mapArray(
-      ([isService, isDownload, protocol, url, name, description, format]) => {
+      ([isService, isDownload, protocol, url, name, description, mimeType]) => {
         if (isService) {
           const hasIdentifier = protocol === 'wms' || protocol === 'wfs'
           return {
@@ -379,7 +381,6 @@ export function extractDatasetDistributions(): ChainableFunction<
             ...(description && { description }),
           }
         } else if (isDownload) {
-          const mimeType = format
           return {
             type: 'download',
             url: url,
@@ -767,7 +768,7 @@ export function readLineage(rootEl: XmlElement): string {
 export function readDistributions(rootEl: XmlElement): DatasetDistribution[] {
   return pipe(
     findNestedElements('gmd:distributionInfo', 'gmd:MD_Distribution'),
-    mapArray(extractDatasetDistributions()),
+    mapArray(extractDatasetDistributions(getMimeType)),
     flattenArray()
   )(rootEl)
 }
