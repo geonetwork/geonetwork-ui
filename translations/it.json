@@ -144,6 +144,8 @@
   "downloads.format.unknown": "sconosciuto",
   "downloads.wfs.featuretype.not.found": "Il layer non è stato trovato",
   "dropFile": "Trascina il suo file",
+  "editor.record.publish": "",
+  "editor.record.upToDate": "",
   "externalviewer.dataset.unnamed": "Layer del datahub",
   "facets.block.title.OrgForResource": "Organizzazione",
   "facets.block.title.availableInServices": "Disponibile per",

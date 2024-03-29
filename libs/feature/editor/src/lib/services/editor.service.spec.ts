@@ -1,38 +1,15 @@
-import { fakeAsync, TestBed, tick } from '@angular/core/testing'
+import { TestBed } from '@angular/core/testing'
 import { EditorService } from './editor.service'
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { DEFAULT_FIELDS } from '../fields.config'
 import { firstValueFrom } from 'rxjs'
+import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 
-const SAMPLE_RECORD: CatalogRecord = {
-  uniqueIdentifier: '1234-5678',
-  kind: 'dataset',
-  title: 'my title',
-  abstract: 'my abstract',
-  status: 'ongoing',
-  contacts: [],
-  contactsForResource: [],
-  ownerOrganization: {
-    name: 'bla',
-  },
-  lineage: '',
-  licenses: [],
-  recordUpdated: new Date(),
-  legalConstraints: [],
-  securityConstraints: [],
-  otherConstraints: [],
-  keywords: [],
-  topics: [],
-  updateFrequency: 'unknown',
-  overviews: [],
-  distributions: [],
-  spatialExtents: [],
-  temporalExtents: [],
-  languages: [],
-}
+const SAMPLE_RECORD: CatalogRecord = DATASET_RECORDS[0]
 
 describe('EditorService', () => {
   let service: EditorService
@@ -73,57 +50,30 @@ describe('EditorService', () => {
     })
   })
 
-  describe('setCurrentRecord', () => {
-    let fields
-    beforeEach(async () => {
-      service.setCurrentRecord(SAMPLE_RECORD)
-      fields = await firstValueFrom(service.fields$)
-    })
-    it('updates the fields$ values', () => {
-      expect(fields).toEqual([
-        {
-          config: expect.objectContaining({
-            model: 'title',
-            type: 'text',
-          }),
-          value: 'my title',
-        },
-        {
-          config: expect.objectContaining({
-            model: 'abstract',
-            type: 'rich',
-          }),
-          value: 'my abstract',
-        },
-        {
-          config: expect.objectContaining({
-            model: 'uniqueIdentifier',
-            type: 'text',
-          }),
-          value: '1234-5678',
-        },
-      ])
-    })
-  })
-
-  describe('saveCurrentRecord', () => {
+  describe('saveRecord', () => {
     describe('after a record was set as current', () => {
-      beforeEach(fakeAsync(() => {
-        service.setCurrentRecord(SAMPLE_RECORD)
-        service.saveCurrentRecord().subscribe()
-        tick()
-      }))
-      it('sends the record as XML to the API', () => {
-        http.expectOne(
+      let savedRecord: CatalogRecord
+      beforeEach(() => {
+        service
+          .saveRecord(SAMPLE_RECORD, DEFAULT_FIELDS)
+          .subscribe((v) => (savedRecord = v))
+      })
+      it('sends a record as XML to the API after applying field processes', () => {
+        const match = http.expectOne(
           (req) => req.method === 'PUT' && req.url.indexOf('/records') > -1
         )
-      })
-    })
-    describe('when no record was set as current', () => {
-      it('throws an error', async () => {
-        await expect(
-          service.saveCurrentRecord().toPromise()
-        ).rejects.toThrowError('Save record failed')
+        match.flush('ok')
+        expect(match.request.body).toContain(`
+    <gmd:fileIdentifier>
+        <gco:CharacterString>${SAMPLE_RECORD.uniqueIdentifier}</gco:CharacterString>
+    </gmd:fileIdentifier>`)
+        expect(savedRecord).toEqual({
+          ...SAMPLE_RECORD,
+          recordUpdated: expect.any(Date),
+        })
+        expect(savedRecord.recordUpdated).not.toEqual(
+          SAMPLE_RECORD.recordUpdated
+        )
       })
     })
   })
