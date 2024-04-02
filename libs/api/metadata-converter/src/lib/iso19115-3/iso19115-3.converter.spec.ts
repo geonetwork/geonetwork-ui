@@ -110,7 +110,29 @@ describe('ISO19115-3 converter', () => {
           const backAndForth = await converter.readRecord(
             await converter.writeRecord(GENERIC_DATASET_RECORD)
           )
-          expect(backAndForth).toStrictEqual(GENERIC_DATASET_RECORD)
+          expect(backAndForth).toStrictEqual({
+            ...GENERIC_DATASET_RECORD,
+            ownerOrganization: {
+              name: GENERIC_DATASET_RECORD.ownerOrganization.name,
+              website: GENERIC_DATASET_RECORD.ownerOrganization.website,
+            },
+            contacts: GENERIC_DATASET_RECORD.contacts.map((c) => ({
+              ...c,
+              organization: {
+                name: c.organization.name,
+                website: c.organization.website,
+              },
+            })),
+            contactsForResource: GENERIC_DATASET_RECORD.contactsForResource.map(
+              (c) => ({
+                ...c,
+                organization: {
+                  name: c.organization.name,
+                  website: c.organization.website,
+                },
+              })
+            ),
+          })
         })
       })
     })

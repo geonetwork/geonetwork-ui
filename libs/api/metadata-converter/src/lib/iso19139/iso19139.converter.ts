@@ -144,6 +144,10 @@ export class Iso19139Converter extends BaseConverter<string> {
     languages: () => undefined,
   }
 
+  protected beforeDocumentCreation(rootElement: XmlElement) {
+    // to override
+  }
+
   async readRecord(document: string): Promise<CatalogRecord> {
     const doc = parseXmlString(document)
     const rootEl = getRootElement(doc)
@@ -262,8 +266,9 @@ export class Iso19139Converter extends BaseConverter<string> {
       fieldChanged = () => true
     }
 
-    this.writers['uniqueIdentifier'](record, rootEl)
-    this.writers['kind'](record, rootEl)
+    fieldChanged('uniqueIdentifier') &&
+      this.writers['uniqueIdentifier'](record, rootEl)
+    fieldChanged('kind') && this.writers['kind'](record, rootEl)
 
     fieldChanged('contacts') && this.writers['contacts'](record, rootEl)
     fieldChanged('ownerOrganization') &&
@@ -271,14 +276,14 @@ export class Iso19139Converter extends BaseConverter<string> {
 
     fieldChanged('recordUpdated') &&
       this.writers['recordUpdated'](record, rootEl)
-
-    this.writers['title'](record, rootEl)
-    this.writers['abstract'](record, rootEl)
-
     fieldChanged('recordCreated') &&
       this.writers['recordCreated'](record, rootEl)
     fieldChanged('recordPublished') &&
       this.writers['recordPublished'](record, rootEl)
+
+    fieldChanged('title') && this.writers['title'](record, rootEl)
+    fieldChanged('abstract') && this.writers['abstract'](record, rootEl)
+
     fieldChanged('resourceCreated') &&
       this.writers['resourceCreated'](record, rootEl)
     fieldChanged('resourcePublished') &&
@@ -300,7 +305,7 @@ export class Iso19139Converter extends BaseConverter<string> {
       this.writers['otherConstraints'](record, rootEl)
 
     if (record.kind === 'dataset') {
-      this.writers['status'](record, rootEl)
+      fieldChanged('status') && this.writers['status'](record, rootEl)
       fieldChanged('updateFrequency') &&
         this.writers['updateFrequency'](record, rootEl)
       fieldChanged('spatialRepresentation') &&
@@ -308,11 +313,13 @@ export class Iso19139Converter extends BaseConverter<string> {
       fieldChanged('overviews') && this.writers['overviews'](record, rootEl)
       fieldChanged('distributions') &&
         this.writers['distributions'](record, rootEl)
-      this.writers['lineage'](record, rootEl)
+      fieldChanged('lineage') && this.writers['lineage'](record, rootEl)
     } else {
       fieldChanged('onlineResources') &&
         this.writers['onlineResources'](record, rootEl)
     }
+
+    this.beforeDocumentCreation(rootEl)
 
     const newDocument = createDocument(rootEl)
     return xmlToString(newDocument)

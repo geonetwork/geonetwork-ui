@@ -1,32 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mdb:MD_Metadata xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/2.0"
-                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns:cat="http://standards.iso.org/iso/19115/-3/cat/1.0"
-                 xmlns:gfc="http://standards.iso.org/iso/19110/gfc/1.1"
-                 xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/2.0"
-                 xmlns:gcx="http://standards.iso.org/iso/19115/-3/gcx/1.0"
-                 xmlns:gex="http://standards.iso.org/iso/19115/-3/gex/1.0"
-                 xmlns:lan="http://standards.iso.org/iso/19115/-3/lan/1.0"
-                 xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.1"
-                 xmlns:mas="http://standards.iso.org/iso/19115/-3/mas/1.0"
                  xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0"
-                 xmlns:mco="http://standards.iso.org/iso/19115/-3/mco/1.0"
-                 xmlns:mda="http://standards.iso.org/iso/19115/-3/mda/1.0"
-                 xmlns:mds="http://standards.iso.org/iso/19115/-3/mds/2.0"
-                 xmlns:mdt="http://standards.iso.org/iso/19115/-3/mdt/2.0"
-                 xmlns:mex="http://standards.iso.org/iso/19115/-3/mex/1.0"
-                 xmlns:mmi="http://standards.iso.org/iso/19115/-3/mmi/1.0"
-                 xmlns:mpc="http://standards.iso.org/iso/19115/-3/mpc/1.0"
-                 xmlns:mrc="http://standards.iso.org/iso/19115/-3/mrc/2.0"
-                 xmlns:mrd="http://standards.iso.org/iso/19115/-3/mrd/1.0"
+                 xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0"
+                 xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/2.0"
                  xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0"
-                 xmlns:mrl="http://standards.iso.org/iso/19115/-3/mrl/2.0"
-                 xmlns:mrs="http://standards.iso.org/iso/19115/-3/mrs/1.0"
-                 xmlns:msr="http://standards.iso.org/iso/19115/-3/msr/2.0"
-                 xmlns:mdq="http://standards.iso.org/iso/19157/-2/mdq/1.0"
-                 xmlns:mac="http://standards.iso.org/iso/19115/-3/mac/2.0"
-                 xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0" xmlns:gml="http://www.opengis.net/gml/3.2"
-                 xmlns:xlink="http://www.w3.org/1999/xlink">
+                 xmlns:mco="http://standards.iso.org/iso/19115/-3/mco/1.0"
+                 xmlns:gcx="http://standards.iso.org/iso/19115/-3/gcx/1.0"
+                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                 xmlns:mmi="http://standards.iso.org/iso/19115/-3/mmi/1.0"
+                 xmlns:mrd="http://standards.iso.org/iso/19115/-3/mrd/1.0"
+                 xmlns:mrl="http://standards.iso.org/iso/19115/-3/mrl/2.0">
     <mdb:metadataIdentifier>
         <mcc:MD_Identifier>
             <mcc:code>
@@ -39,8 +22,7 @@
             <mdb:resourceScope>
                 <mcc:MD_ScopeCode
                         codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode"
-                        codeListValue="dataset">dataset
-                </mcc:MD_ScopeCode>
+                        codeListValue="dataset">dataset</mcc:MD_ScopeCode>
             </mdb:resourceScope>
         </mdb:MD_MetadataScope>
     </mdb:metadataScope>
@@ -96,21 +78,7 @@
             <cit:dateType>
                 <cit:CI_DateTypeCode
                         codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode"
-                        codeListValue="revision">revision
-                </cit:CI_DateTypeCode>
-            </cit:dateType>
-        </cit:CI_Date>
-    </mdb:dateInfo>
-    <mdb:dateInfo>
-        <cit:CI_Date>
-            <cit:date>
-                <gco:DateTime>2022-01-01T10:00:00</gco:DateTime>
-            </cit:date>
-            <cit:dateType>
-                <cit:CI_DateTypeCode
-                        codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode"
-                        codeListValue="publication">publication
-                </cit:CI_DateTypeCode>
+                        codeListValue="revision">revision</cit:CI_DateTypeCode>
             </cit:dateType>
         </cit:CI_Date>
     </mdb:dateInfo>
@@ -122,8 +90,19 @@
             <cit:dateType>
                 <cit:CI_DateTypeCode
                         codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode"
-                        codeListValue="creation">creation
-                </cit:CI_DateTypeCode>
+                        codeListValue="creation">creation</cit:CI_DateTypeCode>
+            </cit:dateType>
+        </cit:CI_Date>
+    </mdb:dateInfo>
+    <mdb:dateInfo>
+        <cit:CI_Date>
+            <cit:date>
+                <gco:DateTime>2022-01-01T10:00:00</gco:DateTime>
+            </cit:date>
+            <cit:dateType>
+                <cit:CI_DateTypeCode
+                        codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode"
+                        codeListValue="publication">publication</cit:CI_DateTypeCode>
             </cit:dateType>
         </cit:CI_Date>
     </mdb:dateInfo>
@@ -142,8 +121,7 @@
                             <cit:dateType>
                                 <cit:CI_DateTypeCode
                                         codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode"
-                                        codeListValue="creation">creation
-                                </cit:CI_DateTypeCode>
+                                        codeListValue="creation">creation</cit:CI_DateTypeCode>
                             </cit:dateType>
                         </cit:CI_Date>
                     </cit:date>
@@ -155,8 +133,7 @@
                             <cit:dateType>
                                 <cit:CI_DateTypeCode
                                         codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode"
-                                        codeListValue="revision">revision
-                                </cit:CI_DateTypeCode>
+                                        codeListValue="revision">revision</cit:CI_DateTypeCode>
                             </cit:dateType>
                         </cit:CI_Date>
                     </cit:date>
@@ -172,19 +149,12 @@ This is a section about details. Here is an HTML tag: &lt;img src="http://google
 ## Informations intéressantes
 Cette section contient des *caractères internationaux* (ainsi que des "caractères spéciaux"). 'çàü^@/~^&amp;</gco:CharacterString>
             </mri:abstract>
-            <mri:status>
-                <mcc:MD_ProgressCode
-                        codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode"
-                        codeListValue="onGoing">onGoing
-                </mcc:MD_ProgressCode>
-            </mri:status>
             <mri:pointOfContact>
                 <cit:CI_Responsibility>
                     <cit:role>
                         <cit:CI_RoleCode
                                 codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode"
-                                codeListValue="author">author
-                        </cit:CI_RoleCode>
+                                codeListValue="author">author</cit:CI_RoleCode>
                     </cit:role>
                     <cit:party>
                         <cit:CI_Organisation>
@@ -228,8 +198,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                     <cit:role>
                         <cit:CI_RoleCode
                                 codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode"
-                                codeListValue="custodian">custodian
-                        </cit:CI_RoleCode>
+                                codeListValue="custodian">custodian</cit:CI_RoleCode>
                     </cit:role>
                     <cit:party>
                         <cit:CI_Organisation>
@@ -265,39 +234,6 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                     </cit:party>
                 </cit:CI_Responsibility>
             </mri:pointOfContact>
-            <mri:spatialRepresentationType>
-                <mcc:MD_SpatialRepresentationTypeCode
-                        codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_SpatialRepresentationTypeCode"
-                        codeListValue="grid">grid
-                </mcc:MD_SpatialRepresentationTypeCode>
-            </mri:spatialRepresentationType>
-            <mri:topicCategory>
-                <mri:MD_TopicCategoryCode>agriculture</mri:MD_TopicCategoryCode>
-            </mri:topicCategory>
-            <mri:resourceMaintenance>
-                <mmi:MD_MaintenanceInformation>
-                    <mmi:userDefinedMaintenanceFrequency>
-                        <gco:TM_PeriodDuration>P0Y0M10D</gco:TM_PeriodDuration>
-                    </mmi:userDefinedMaintenanceFrequency>
-                </mmi:MD_MaintenanceInformation>
-            </mri:resourceMaintenance>
-            <mri:graphicOverview>
-                <mcc:MD_BrowseGraphic>
-                    <mcc:fileName>
-                        <gco:CharacterString>http://my-org.net/one.png</gco:CharacterString>
-                    </mcc:fileName>
-                    <mcc:fileDescription>
-                        <gco:CharacterString>An overview</gco:CharacterString>
-                    </mcc:fileDescription>
-                </mcc:MD_BrowseGraphic>
-            </mri:graphicOverview>
-            <mri:graphicOverview>
-                <mcc:MD_BrowseGraphic>
-                    <mcc:fileName>
-                        <gco:CharacterString>http://my-org.net/two.png</gco:CharacterString>
-                    </mcc:fileName>
-                </mcc:MD_BrowseGraphic>
-            </mri:graphicOverview>
             <mri:descriptiveKeywords>
                 <mri:MD_Keywords>
                     <mri:type>
@@ -409,6 +345,9 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                     </mri:keyword>
                 </mri:MD_Keywords>
             </mri:descriptiveKeywords>
+            <mri:topicCategory>
+                <mri:MD_TopicCategoryCode>agriculture</mri:MD_TopicCategoryCode>
+            </mri:topicCategory>
             <mri:resourceConstraints>
                 <mco:MD_LegalConstraints>
                     <mco:accessConstraints>
@@ -464,10 +403,100 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                     </mco:useLimitation>
                 </mco:MD_Constraints>
             </mri:resourceConstraints>
+            <mri:status>
+                <mcc:MD_ProgressCode
+                        codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode"
+                        codeListValue="onGoing">onGoing</mcc:MD_ProgressCode>
+            </mri:status>
+            <mri:resourceMaintenance>
+                <mmi:MD_MaintenanceInformation>
+                    <mmi:userDefinedMaintenanceFrequency>
+                        <gco:TM_PeriodDuration>P0Y0M10D</gco:TM_PeriodDuration>
+                    </mmi:userDefinedMaintenanceFrequency>
+                </mmi:MD_MaintenanceInformation>
+            </mri:resourceMaintenance>
+            <mri:spatialRepresentationType>
+                <mcc:MD_SpatialRepresentationTypeCode
+                        codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_SpatialRepresentationTypeCode"
+                        codeListValue="grid">grid</mcc:MD_SpatialRepresentationTypeCode>
+            </mri:spatialRepresentationType>
+            <mri:graphicOverview>
+                <mcc:MD_BrowseGraphic>
+                    <mcc:fileName>
+                        <gco:CharacterString>http://my-org.net/one.png</gco:CharacterString>
+                    </mcc:fileName>
+                    <mcc:fileDescription>
+                        <gco:CharacterString>An overview</gco:CharacterString>
+                    </mcc:fileDescription>
+                </mcc:MD_BrowseGraphic>
+            </mri:graphicOverview>
+            <mri:graphicOverview>
+                <mcc:MD_BrowseGraphic>
+                    <mcc:fileName>
+                        <gco:CharacterString>http://my-org.net/two.png</gco:CharacterString>
+                    </mcc:fileName>
+                </mcc:MD_BrowseGraphic>
+            </mri:graphicOverview>
         </mri:MD_DataIdentification>
     </mdb:identificationInfo>
     <mdb:distributionInfo>
         <mrd:MD_Distribution>
+            <mrd:distributor>
+                <mrd:MD_Distributor>
+                    <mrd:distributorContact>
+                        <cit:CI_Responsibility>
+                            <cit:role>
+                                <cit:CI_RoleCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="distributor">distributor</cit:CI_RoleCode>
+                            </cit:role>
+                            <cit:party>
+                                <cit:CI_Organisation>
+                                    <cit:name>
+                                        <gco:CharacterString>Another Organization</gco:CharacterString>
+                                    </cit:name>
+                                    <cit:contactInfo>
+                                        <cit:CI_Contact>
+                                            <cit:address>
+                                                <cit:CI_Address>
+                                                    <cit:electronicMailAddress>
+                                                        <gco:CharacterString>bill@org2.com</gco:CharacterString>
+                                                    </cit:electronicMailAddress>
+                                                    <cit:deliveryPoint>
+                                                        <gco:CharacterString>123 rue des moulins, 10808 Montargis, FR</gco:CharacterString>
+                                                    </cit:deliveryPoint>
+                                                </cit:CI_Address>
+                                            </cit:address>
+                                            <cit:onlineResource>
+                                                <cit:CI_OnlineResource>
+                                                    <cit:linkage>
+                                                        <gco:CharacterString>https://www.another.org/docs</gco:CharacterString>
+                                                    </cit:linkage>
+                                                </cit:CI_OnlineResource>
+                                            </cit:onlineResource>
+                                            <cit:phone>
+                                                <cit:CI_Telephone>
+                                                    <cit:number>
+                                                        <gco:CharacterString>+11234567890</gco:CharacterString>
+                                                    </cit:number>
+                                                </cit:CI_Telephone>
+                                            </cit:phone>
+                                        </cit:CI_Contact>
+                                    </cit:contactInfo>
+                                    <cit:individual>
+                                        <cit:CI_Individual>
+                                            <cit:name>
+                                                <gco:CharacterString>Bill TheDistributor</gco:CharacterString>
+                                            </cit:name>
+                                            <cit:positionName>
+                                                <gco:CharacterString>randomWorker</gco:CharacterString>
+                                            </cit:positionName>
+                                        </cit:CI_Individual>
+                                    </cit:individual>
+                                </cit:CI_Organisation>
+                            </cit:party>
+                        </cit:CI_Responsibility>
+                    </mrd:distributorContact>
+                </mrd:MD_Distributor>
+            </mrd:distributor>
             <mrd:distributionFormat>
                 <mrd:MD_Format>
                     <mrd:formatSpecificationCitation>
@@ -475,10 +504,6 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                             <cit:title>
                                 <gco:CharacterString>x-gis/x-shapefile</gco:CharacterString>
                             </cit:title>
-                            <cit:date gco:nilReason="unknown"/>
-                            <cit:edition>
-                                <gco:CharacterString>1.0</gco:CharacterString>
-                            </cit:edition>
                         </cit:CI_Citation>
                     </mrd:formatSpecificationCitation>
                 </mrd:MD_Format>
@@ -519,10 +544,6 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                             <cit:title>
                                 <gco:CharacterString>application/geo+json</gco:CharacterString>
                             </cit:title>
-                            <cit:date gco:nilReason="unknown"/>
-                            <cit:edition>
-                                <gco:CharacterString>1.0</gco:CharacterString>
-                            </cit:edition>
                         </cit:CI_Citation>
                     </mrd:formatSpecificationCitation>
                 </mrd:MD_Format>

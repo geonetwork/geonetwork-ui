@@ -267,7 +267,8 @@ export function appendResponsibleParty(contact: Individual) {
           pipe(
             createElement('gmd:phone'),
             createChild('gmd:CI_Telephone'),
-            createChild('gmd:voice')
+            createChild('gmd:voice'),
+            writeCharacterString(contact.phone)
           )
         )
       : noop,
@@ -607,40 +608,48 @@ export function removeDistributions() {
   return pipe(removeChildrenByName('gmd:distributionInfo'))
 }
 
-export function createDistribution(distribution: DatasetDistribution) {
-  const appendDistributionFormat =
-    'mimeType' in distribution
-      ? appendChildren(
-          pipe(
-            createElement('gmd:distributionFormat'),
-            createChild('gmd:MD_Format'),
-            appendChildren(
-              pipe(
-                createElement('gmd:name'),
-                writeCharacterString(distribution.mimeType)
-              ),
-              pipe(
-                createElement('gmd:version'),
-                writeCharacterString('1.0') // hardcoding this as it most likely won't be used but is mandatory
-              )
-            )
-          )
+function appendDistributionFormat(mimeType: string) {
+  return appendChildren(
+    pipe(
+      createElement('gmd:distributionFormat'),
+      createChild('gmd:MD_Format'),
+      appendChildren(
+        pipe(createElement('gmd:name'), writeCharacterString(mimeType)),
+        pipe(
+          createElement('gmd:version'),
+          writeCharacterString('1.0') // hardcoding this as it most likely won't be used but is mandatory
         )
-      : noop
+      )
+    )
+  )
+}
 
-  let linkageUrl, name, functionCode, protocol
+export function createDistributionInfo() {
+  return pipe(
+    createElement('gmd:distributionInfo'),
+    createChild('gmd:MD_Distribution')
+  )
+}
+
+// apply to MD_Distribution
+export function appendDistribution(
+  distribution: DatasetDistribution,
+  appendFormatFn: (
+    mimeType: string
+  ) => ChainableFunction<XmlElement, XmlElement>
+) {
+  let name: string
+  let functionCode: string
+  let protocol: string
   if (distribution.type === 'service') {
-    linkageUrl = distribution.url.toString()
     name = distribution.identifierInService // this is for GeoNetwork to know the layer name
     functionCode = 'download'
     protocol = getDistributionProtocol(distribution)
   } else if (distribution.type === 'download') {
-    linkageUrl = distribution.url.toString()
     name = distribution.name
     functionCode = 'download'
     protocol = 'WWW:DOWNLOAD'
   } else {
-    linkageUrl = distribution.url.toString()
     name = distribution.name
     functionCode = 'information'
     protocol = 'WWW:LINK'
@@ -651,7 +660,7 @@ export function createDistribution(distribution: DatasetDistribution) {
       createChild('gmd:MD_DigitalTransferOptions'),
       createChild('gmd:onLine'),
       createChild('gmd:CI_OnlineResource'),
-      writeLinkage(linkageUrl),
+      writeLinkage(distribution.url),
       'description' in distribution
         ? appendChildren(
             pipe(
@@ -680,9 +689,7 @@ export function createDistribution(distribution: DatasetDistribution) {
     )
   )
   return pipe(
-    createElement('gmd:distributionInfo'),
-    createChild('gmd:MD_Distribution'),
-    appendDistributionFormat,
+    'mimeType' in distribution ? appendFormatFn(distribution.mimeType) : noop,
     appendTransferOptions
   )
 }
@@ -1022,7 +1029,14 @@ export function writeGraphicOverviews(
 export function writeDistributions(record: DatasetRecord, rootEl: XmlElement) {
   pipe(
     removeDistributions(),
-    appendChildren(...record.distributions.map(createDistribution))
+    appendChildren(
+      ...record.distributions.map((d) =>
+        pipe(
+          createDistributionInfo(),
+          appendDistribution(d, appendDistributionFormat)
+        )
+      )
+    )
   )(rootEl)
 }
 
