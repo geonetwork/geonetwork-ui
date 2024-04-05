@@ -6,7 +6,6 @@ import {
 } from '@angular/common/http/testing'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { DEFAULT_FIELDS } from '../fields.config'
-import { firstValueFrom } from 'rxjs'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 
 const SAMPLE_RECORD: CatalogRecord = DATASET_RECORDS[0]

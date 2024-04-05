@@ -1,7 +1,10 @@
 import { Inject, Injectable, Optional } from '@angular/core'
-import { Iso19139Converter } from '@geonetwork-ui/api/metadata-converter'
+import {
+  findConverterForDocument,
+  Iso19139Converter,
+} from '@geonetwork-ui/api/metadata-converter'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
-import { Observable } from 'rxjs'
+import { from, Observable } from 'rxjs'
 import { map, switchMap } from 'rxjs/operators'
 import { HttpClient } from '@angular/common/http'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
@@ -13,8 +16,6 @@ import { evaluate } from '../expressions'
 })
 export class EditorService {
   private apiUrl = `${this.apiConfiguration?.basePath || '/geonetwork/srv/api'}`
-
-  converter = new Iso19139Converter()
 
   constructor(
     private http: HttpClient,
@@ -33,7 +34,9 @@ export class EditorService {
         },
       })
       .pipe(
-        switchMap((response) => this.converter.readRecord(response.toString()))
+        switchMap((response) =>
+          findConverterForDocument(response).readRecord(response.toString())
+        )
       )
   }
 
@@ -56,17 +59,21 @@ export class EditorService {
     }
 
     // TODO: use the catalog repository instead
-    return this.http
-      .put(
-        `${this.apiUrl}/records?metadataType=METADATA&uuidProcessing=OVERWRITE&transformWith=_none_&publishToAll=on`,
-        this.converter.writeRecord(savedRecord),
-        {
-          headers: {
-            'Content-Type': 'application/xml',
-          },
-          withCredentials: true,
-        }
-      )
-      .pipe(map(() => savedRecord))
+    // TODO: use converter based on the format of the record before change
+    return from(new Iso19139Converter().writeRecord(savedRecord)).pipe(
+      switchMap((recordXml) =>
+        this.http.put(
+          `${this.apiUrl}/records?metadataType=METADATA&uuidProcessing=OVERWRITE&transformWith=_none_&publishToAll=on`,
+          recordXml,
+          {
+            headers: {
+              'Content-Type': 'application/xml',
+            },
+            withCredentials: true,
+          }
+        )
+      ),
+      map(() => savedRecord)
+    )
   }
 }
