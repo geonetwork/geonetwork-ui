@@ -104,6 +104,7 @@ export class RecordFormComponent implements AfterViewInit {
         ? this.record.ownerOrganization
         : { name: 'My Organization' },
       contacts: hasPrevious ? this.record.contacts : [],
+      contactsForResource: hasPrevious ? this.record.contactsForResource : [],
       licenses: hasPrevious ? [...this.record.licenses] : [],
       legalConstraints: hasPrevious ? [...this.record.legalConstraints] : [],
       securityConstraints: hasPrevious
