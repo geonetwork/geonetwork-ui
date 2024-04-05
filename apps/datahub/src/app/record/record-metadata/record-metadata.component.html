@@ -1,24 +1,24 @@
-<div *ngIf="(facade.error$ | async) === null">
+<div *ngIf="(metadataViewFacade.error$ | async) === null">
   <div
     id="about"
     class="container-lg px-4 mb-9 mt-8 sm:mb-16 sm:mt-10 lg:mx-auto"
   >
     <gn-ui-metadata-info
       class="sm:block"
-      *ngIf="(facade.isPresent$ | async) === false"
+      *ngIf="(metadataViewFacade.isPresent$ | async) === false"
       [metadata]="{}"
       [incomplete]="true"
     >
     </gn-ui-metadata-info>
     <div
-      *ngIf="(facade.isPresent$ | async) === true"
+      *ngIf="(metadataViewFacade.isPresent$ | async) === true"
       class="grid gap-8 grid-cols-1 sm:gap-6 sm:grid-cols-3"
     >
       <div class="sm:col-span-2">
         <gn-ui-metadata-info
           class="sm:block"
-          [metadata]="facade.metadata$ | async"
-          [incomplete]="facade.isIncomplete$ | async"
+          [metadata]="metadataViewFacade.metadata$ | async"
+          [incomplete]="metadataViewFacade.isIncomplete$ | async"
           (keyword)="onInfoKeywordClick($event)"
         >
         </gn-ui-metadata-info>
@@ -32,7 +32,7 @@
         </gn-ui-image-overlay-preview>
         <gn-ui-metadata-contact
           (organizationClick)="onOrganizationClick($event)"
-          [metadata]="facade.metadata$ | async"
+          [metadata]="metadataViewFacade.metadata$ | async"
         >
         </gn-ui-metadata-contact>
         <div *ngIf="metadataQualityDisplay">
@@ -40,7 +40,7 @@
             record.metadata.quality
           </p>
           <gn-ui-metadata-quality
-            [metadata]="facade.metadata$ | async"
+            [metadata]="metadataViewFacade.metadata$ | async"
             [metadataQualityDisplay]="metadataQualityDisplay"
           ></gn-ui-metadata-quality>
         </div>
@@ -77,7 +77,7 @@
             <mat-tab [disabled]="(displayMap$ | async) === false">
               <ng-template mat-tab-label>
                 <span class="tab-header-label sm:ml-32" translate
-                  >record.tab.map</span
+                >record.tab.map</span
                 >
               </ng-template>
               <div
@@ -138,7 +138,7 @@
       <div class="h-48 overflow-visible">
         <div class="container-lg px-4 lg:mx-auto">
           <datahub-record-related-records
-            [records]="facade.related$ | async"
+            [records]="metadataViewFacade.related$ | async"
           ></datahub-record-related-records>
         </div>
       </div>
@@ -149,13 +149,24 @@
   </div>
 </div>
 <div
+  id="userFeedbacks"
+  class="bg-primary-opacity-10 py-16"
+>
+  <div class="container-lg px-4 lg:mx-auto">
+    <datahub-record-user-feedbacks
+      [organisationName$]="organisationName$"
+      [metadataUuid]="metadataUuid$ | async"
+    ></datahub-record-user-feedbacks>
+  </div>
+</div>
+<div
   class="mt-12 p-4 max-w-[600px] m-auto text-[13px]"
-  *ngIf="facade.error$ | async as error"
+  *ngIf="metadataViewFacade.error$ | async as error"
 >
   <gn-ui-search-results-error
     *ngIf="error.notFound"
     [type]="errorTypes.RECORD_NOT_FOUND"
-    [recordId]="(facade.metadata$ | async).uniqueIdentifier"
+    [recordId]="(metadataViewFacade.metadata$ | async).uniqueIdentifier"
   ></gn-ui-search-results-error>
   <gn-ui-search-results-error
     *ngIf="error.otherError"

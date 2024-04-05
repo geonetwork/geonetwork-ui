@@ -165,7 +165,7 @@ describe('RouterEffects', () => {
         } as any),
       })
       const expected = hot('-a', {
-        a: MdViewActions.close(),
+        a: MdViewActions.closeMetadata(),
       })
       expect(effects.navigateToSearch$).toBeObservable(expected)
     })

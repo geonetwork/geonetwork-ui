@@ -5,7 +5,11 @@ import * as MdViewActions from './mdview.actions'
 import * as MdViewSelectors from './mdview.selectors'
 import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecord,
+  UserFeedback, UserFeedbackViewModel
+} from '@geonetwork-ui/common/domain/model/record'
+import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
 
 @Injectable()
 /**
@@ -15,19 +19,31 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
  * To clear the current record use the `close()` method.
  */
 export class MdViewFacade {
+  constructor(
+    private store: Store,
+    private linkClassifier: LinkClassifierService,
+    private avatarService: AvatarServiceInterface
+  ) {}
+
   isPresent$ = this.store.pipe(
     select(MdViewSelectors.getMetadataUuid),
     map((uuid) => !!uuid)
   )
-  isLoading$ = this.store.pipe(select(MdViewSelectors.getMetadataIsLoading))
+
+  isMetadataLoading$ = this.store.pipe(
+    select(MdViewSelectors.getMetadataIsLoading)
+  )
+
   metadata$ = this.store.pipe(
     select(MdViewSelectors.getMetadata),
     filter((md) => !!md)
   )
+
   isIncomplete$ = this.store.pipe(
     select(MdViewSelectors.getMetadataIsIncomplete),
     filter((incomplete) => incomplete !== null)
   )
+
   error$ = this.store.pipe(select(MdViewSelectors.getMetadataError))
 
   related$ = this.store.pipe(select(MdViewSelectors.getRelated))
@@ -37,11 +53,13 @@ export class MdViewFacade {
   allLinks$ = this.metadata$.pipe(
     map((record) => ('distributions' in record ? record.distributions : []))
   )
+
   apiLinks$ = this.allLinks$.pipe(
     map((links) =>
       links.filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.API))
     )
   )
+
   mapApiLinks$ = this.allLinks$.pipe(
     map((links) =>
       links.filter((link) =>
@@ -49,6 +67,7 @@ export class MdViewFacade {
       )
     )
   )
+
   downloadLinks$ = this.allLinks$.pipe(
     map((links) =>
       links.filter((link) =>
@@ -56,11 +75,13 @@ export class MdViewFacade {
       )
     )
   )
+
   dataLinks$ = this.allLinks$.pipe(
     map((links) =>
       links.filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.DATA))
     )
   )
+
   geoDataLinks$ = this.allLinks$.pipe(
     map((links) =>
       links.filter((link) =>
@@ -68,9 +89,11 @@ export class MdViewFacade {
       )
     )
   )
+
   landingPageLinks$ = this.metadata$.pipe(
     map((record) => ('landingPage' in record ? [record.landingPage] : []))
   )
+
   otherLinks$ = this.allLinks$.pipe(
     map((links) =>
       links.filter((link) =>
@@ -79,10 +102,13 @@ export class MdViewFacade {
     )
   )
 
-  constructor(
-    private store: Store,
-    private linkClassifier: LinkClassifierService
-  ) {}
+  userFeedbacks$ = this.store.pipe(select(MdViewSelectors.getUserFeedbacks))
+  isAllUserFeedbackLoading$ = this.store.pipe(
+    select(MdViewSelectors.getAllUserFeedbacksLoading)
+  )
+  isAddUserFeedbackLoading$ = this.store.pipe(
+    select(MdViewSelectors.getAddUserFeedbacksLoading)
+  )
 
   /**
    * This will show an incomplete record (e.g. from a search result) as a preview
@@ -91,16 +117,39 @@ export class MdViewFacade {
   setIncompleteMetadata(incomplete: CatalogRecord) {
     this.store.dispatch(MdViewActions.setIncompleteMetadata({ incomplete }))
   }
+
   /**
    * This will trigger the load of a full metadata record
    */
   loadFull(uuid: string) {
     this.store.dispatch(MdViewActions.loadFullMetadata({ uuid }))
   }
-  close() {
-    this.store.dispatch(MdViewActions.close())
+
+  closeMetadata() {
+    this.store.dispatch(MdViewActions.closeMetadata())
   }
+
   setChartConfig(chartConfig: DatavizConfigurationModel) {
     this.store.dispatch(MdViewActions.setChartConfig({ chartConfig }))
+  }
+
+  /**
+   * UserFeedbacks
+   */
+  addUserFeedback(userFeedback: UserFeedback) {
+    this.store.dispatch(MdViewActions.addUserFeedback({ userFeedback }))
+  }
+
+  loadUserFeedbacks(datasetUuid: string) {
+    this.store.dispatch(MdViewActions.loadUserFeedbacks({ datasetUuid }))
+  }
+
+  async createUserFeedbackViewModel(baseUserFeedback: UserFeedback): Promise<UserFeedbackViewModel>{
+    const userAvatarUrl = await this.avatarService.getProfileIconUrl(baseUserFeedback.authorUserId?.toString())
+
+    return {
+      ...baseUserFeedback,
+      avatarUrl: userAvatarUrl
+    }
   }
 }

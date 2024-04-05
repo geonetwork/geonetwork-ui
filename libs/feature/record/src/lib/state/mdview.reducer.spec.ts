@@ -1,5 +1,5 @@
 import * as MdViewActions from './mdview.actions'
-import { initialMdviewState, reducer } from './mdview.reducer'
+import { initialMetadataViewState, reducer } from './mdview.reducer'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 
 const chartConfigMock = {
@@ -10,7 +10,7 @@ const chartConfigMock = {
 }
 
 const withErrorMdViewState = {
-  ...initialMdviewState,
+  ...initialMetadataViewState,
   error: { otherError: 'Some error' },
 }
 
@@ -20,7 +20,7 @@ describe('MdView Reducer', () => {
       const action = {} as any
       const state = reducer(undefined, action)
 
-      expect(state).toBe(initialMdviewState)
+      expect(state).toBe(initialMetadataViewState)
     })
   })
 
@@ -67,7 +67,7 @@ describe('MdView Reducer', () => {
   describe('loadFullRecordSuccess', () => {
     let action
     beforeEach(() => {
-      action = MdViewActions.loadFullSuccess({
+      action = MdViewActions.loadFullMetadataSuccess({
         full: DATASET_RECORDS[0],
       })
     })
@@ -87,18 +87,18 @@ describe('MdView Reducer', () => {
   describe('loadFullRecordFailure', () => {
     let action
     beforeEach(() => {
-      action = MdViewActions.loadFullFailure({
+      action = MdViewActions.loadFullMetadataFailure({
         otherError: 'error',
         notFound: true,
       })
     })
     it('set error', () => {
       const state = reducer(
-        { ...initialMdviewState, loadingFull: true },
+        { ...initialMetadataViewState, loadingFull: true },
         action
       )
       expect(state).toEqual({
-        ...initialMdviewState,
+        ...initialMetadataViewState,
         loadingFull: false,
         error: { otherError: 'error', notFound: true },
       })
@@ -112,9 +112,9 @@ describe('MdView Reducer', () => {
       })
     })
     it('set related records', () => {
-      const state = reducer({ ...initialMdviewState }, action)
+      const state = reducer({ ...initialMetadataViewState }, action)
       expect(state).toEqual({
-        ...initialMdviewState,
+        ...initialMetadataViewState,
         related: [DATASET_RECORDS[1]],
       })
     })
@@ -127,9 +127,9 @@ describe('MdView Reducer', () => {
       })
     })
     it('set chart config', () => {
-      const state = reducer({ ...initialMdviewState }, action)
+      const state = reducer({ ...initialMetadataViewState }, action)
       expect(state).toEqual({
-        ...initialMdviewState,
+        ...initialMetadataViewState,
         chartConfig: [chartConfigMock],
       })
     })
@@ -137,19 +137,19 @@ describe('MdView Reducer', () => {
   describe('close', () => {
     let action
     beforeEach(() => {
-      action = MdViewActions.close()
+      action = MdViewActions.closeMetadata()
     })
     it('set error', () => {
       const state = reducer(
         {
-          ...initialMdviewState,
+          ...initialMetadataViewState,
           related: [DATASET_RECORDS[1]],
           loadingFull: false,
           metadata: DATASET_RECORDS[0],
         },
         action
       )
-      expect(state).toEqual(initialMdviewState)
+      expect(state).toEqual(initialMetadataViewState)
     })
   })
 })

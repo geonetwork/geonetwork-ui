@@ -1,61 +1,114 @@
 import { Action, createReducer, on } from '@ngrx/store'
-import * as MdViewActions from './mdview.actions'
+import * as MetadataViewActions from './mdview.actions'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecord,
+  UserFeedback,
+} from '@geonetwork-ui/common/domain/model/record'
 
-export const MD_VIEW_FEATURE_STATE_KEY = 'mdView'
+export const METADATA_VIEW_FEATURE_STATE_KEY = 'metadataView'
 
-export interface MdViewState {
+export interface MetadataViewState {
   loadingFull: boolean
   error: { notFound?: boolean; otherError?: string } | null
   metadata?: Partial<CatalogRecord>
   related?: CatalogRecord[]
+  userFeedbacks?: UserFeedback[]
+  allUserFeedbacksLoading: boolean
+  addUserFeedbackLoading: boolean
   chartConfig?: DatavizConfigurationModel
 }
 
-export const initialMdviewState: MdViewState = {
+export const initialMetadataViewState: MetadataViewState = {
   error: null,
   loadingFull: false,
+  allUserFeedbacksLoading: false,
+  addUserFeedbackLoading: false,
 }
 
-const mdViewReducer = createReducer(
-  initialMdviewState,
-  on(MdViewActions.loadFullMetadata, (state) => ({
+const metadataViewReducer = createReducer(
+  initialMetadataViewState,
+
+  /*
+    Metadata reducers
+  */
+  on(MetadataViewActions.loadFullMetadata, (state) => ({
     ...state,
     error: null,
     loadingFull: true,
   })),
-  on(MdViewActions.setIncompleteMetadata, (state, { incomplete }) => ({
+  on(MetadataViewActions.setIncompleteMetadata, (state, { incomplete }) => ({
     ...state,
     error: null,
     metadata: incomplete,
   })),
-  on(MdViewActions.loadFullSuccess, (state, { full }) => ({
+  on(MetadataViewActions.loadFullMetadataSuccess, (state, { full }) => ({
     ...state,
     error: null,
     metadata: full,
     loadingFull: false,
   })),
-  on(MdViewActions.loadFullFailure, (state, { otherError, notFound }) => ({
-    ...state,
-    error: { otherError, notFound },
-    loadingFull: false,
-  })),
-  on(MdViewActions.setRelated, (state, { related }) => ({
+  on(
+    MetadataViewActions.loadFullMetadataFailure,
+    (state, { otherError, notFound }) => ({
+      ...state,
+      error: { otherError, notFound },
+      loadingFull: false,
+    })
+  ),
+  on(MetadataViewActions.closeMetadata, (state) => {
+    const { metadata, related, userFeedbacks, ...stateWithoutMetadata } = state
+    return stateWithoutMetadata
+  }),
+
+  /*
+    Related reducers
+  */
+  on(MetadataViewActions.setRelated, (state, { related }) => ({
     ...state,
     related,
   })),
-  on(MdViewActions.setChartConfig, (state, { chartConfig }) => ({
+
+  /*
+    ChartConfig reducers
+  */
+  on(MetadataViewActions.setChartConfig, (state, { chartConfig }) => ({
     ...state,
     chartConfig,
   })),
-  on(MdViewActions.close, (state) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { metadata, related, ...stateWithoutMd } = state
-    return stateWithoutMd
-  })
+
+  /*
+    UserFeedbacks reducers
+  */
+  on(MetadataViewActions.loadUserFeedbacks, (state) => ({
+    ...state,
+    error: null,
+    allUserFeedbacksLoading: true,
+  })),
+  on(MetadataViewActions.addUserFeedback, (state) => ({
+    ...state,
+    addUserFeedbackLoading: true,
+  })),
+  on(
+    MetadataViewActions.loadUserFeedbacksSuccess,
+    (state, { userFeedbacks }) => ({
+      ...state,
+      userFeedbacks: userFeedbacks,
+      addUserFeedbackLoading: false,
+      allUserFeedbacksLoading: false,
+    })
+  ),
+  on(MetadataViewActions.loadUserFeedbacksFailure, (state, { error }) => ({
+    ...state,
+    error: { otherError: error.message },
+    addUserFeedbackLoading: false,
+    allUserFeedbacksLoading: false,
+  }))
 )
 
-export function reducer(state: MdViewState | undefined, action: Action) {
-  return mdViewReducer(state, action)
+export function reducer(
+  metadataViewState: MetadataViewState | undefined,
+  action: Action
+) {
+  return metadataViewReducer(metadataViewState, action)
 }

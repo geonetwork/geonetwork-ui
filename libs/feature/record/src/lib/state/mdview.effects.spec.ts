@@ -59,9 +59,9 @@ describe('MdViewEffects', () => {
           a: MdViewActions.loadFullMetadata({ uuid: full.uniqueIdentifier }),
         })
         const expected = hot('-a-|', {
-          a: MdViewActions.loadFullSuccess({ full: DATASET_RECORDS[0] }),
+          a: MdViewActions.loadFullMetadataSuccess({ full: DATASET_RECORDS[0] }),
         })
-        expect(effects.loadFull$).toBeObservable(expected)
+        expect(effects.loadFullMetadata$).toBeObservable(expected)
       })
     })
     describe('when api success and at no record found', () => {
@@ -73,9 +73,9 @@ describe('MdViewEffects', () => {
           a: MdViewActions.loadFullMetadata({ uuid: full.uniqueIdentifier }),
         })
         const expected = hot('-a-|', {
-          a: MdViewActions.loadFullFailure({ notFound: true }),
+          a: MdViewActions.loadFullMetadataFailure({ notFound: true }),
         })
-        expect(effects.loadFull$).toBeObservable(expected)
+        expect(effects.loadFullMetadata$).toBeObservable(expected)
       })
     })
 
@@ -90,9 +90,9 @@ describe('MdViewEffects', () => {
           a: MdViewActions.loadFullMetadata({ uuid: full.uniqueIdentifier }),
         })
         const expected = hot('-(a|)', {
-          a: MdViewActions.loadFullFailure({ otherError: 'api' }),
+          a: MdViewActions.loadFullMetadataFailure({ otherError: 'api' }),
         })
-        expect(effects.loadFull$).toBeObservable(expected)
+        expect(effects.loadFullMetadata$).toBeObservable(expected)
       })
     })
   })
@@ -101,7 +101,7 @@ describe('MdViewEffects', () => {
     describe('when load full success', () => {
       it('dispatch setRelated', () => {
         actions = hot('-a-|', {
-          a: MdViewActions.loadFullSuccess({ full }),
+          a: MdViewActions.loadFullMetadataSuccess({ full }),
         })
         const expected = hot('-a-|', {
           a: MdViewActions.setRelated({ related: DATASET_RECORDS }),
@@ -115,7 +115,7 @@ describe('MdViewEffects', () => {
       })
       it('dispatch loadFullFailure', () => {
         actions = hot('-a-|', {
-          a: MdViewActions.loadFullSuccess({ full }),
+          a: MdViewActions.loadFullMetadataSuccess({ full }),
         })
         const expected = hot('-(a|)', {
           a: MdViewActions.setRelated({ related: null }),

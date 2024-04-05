@@ -69,19 +69,23 @@ import { FormsModule } from '@angular/forms'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { LANGUAGES_LIST, UiCatalogModule } from '@geonetwork-ui/ui/catalog'
 import {
+  LOGIN_URL,
   METADATA_LANGUAGE,
+  provideGn4,
   provideRepositoryUrl,
 } from '@geonetwork-ui/api/repository'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { LOGIN_URL, provideGn4 } from '@geonetwork-ui/api/repository'
 import { RecordRelatedRecordsComponent } from './record/record-related-records/record-related-records.component'
 import { RecordMetadataComponent } from './record/record-metadata/record-metadata.component'
 import { RecordOtherlinksComponent } from './record/record-otherlinks/record-otherlinks.component'
 import { RecordDownloadsComponent } from './record/record-downloads/record-downloads.component'
 import { RecordApisComponent } from './record/record-apis/record-apis.component'
 import { MatTabsModule } from '@angular/material/tabs'
+import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { RecordUserFeedbacksComponent } from './record/record-user-feedbacks/record-user-feedbacks.component'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
+
 // https://github.com/nrwl/nx/issues/191
 @NgModule({
   declarations: [
@@ -100,6 +104,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     KeyFiguresComponent,
     NavigationMenuComponent,
     RecordRelatedRecordsComponent,
+    RecordUserFeedbacksComponent,
     RecordMetadataComponent,
     RecordOtherlinksComponent,
     RecordDownloadsComponent,
@@ -144,6 +149,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     UiInputsModule,
     UiCatalogModule,
     MatTabsModule,
+    UiWidgetsModule,
   ],
   providers: [
     importProvidersFrom(FeatureAuthModule),

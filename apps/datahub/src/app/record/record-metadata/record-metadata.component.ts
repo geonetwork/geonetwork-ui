@@ -7,7 +7,7 @@ import { filter, map, mergeMap } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
   Keyword,
-  Organization,
+  Organization
 } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 
@@ -15,50 +15,66 @@ import { MdViewFacade } from '@geonetwork-ui/feature/record'
   selector: 'datahub-record-metadata',
   templateUrl: './record-metadata.component.html',
   styleUrls: ['./record-metadata.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecordMetadataComponent {
   @Input() metadataQualityDisplay: boolean
 
   displayMap$ = combineLatest([
-    this.facade.mapApiLinks$,
-    this.facade.geoDataLinks$,
+    this.metadataViewFacade.mapApiLinks$,
+    this.metadataViewFacade.geoDataLinks$
   ]).pipe(
     map(
       ([mapLinks, geoDataLinks]) =>
         mapLinks?.length > 0 || geoDataLinks?.length > 0
     )
   )
+
   displayData$ = combineLatest([
-    this.facade.dataLinks$,
-    this.facade.geoDataLinks$,
+    this.metadataViewFacade.dataLinks$,
+    this.metadataViewFacade.geoDataLinks$
   ]).pipe(
     map(
       ([dataLinks, geoDataLinks]) =>
         dataLinks?.length > 0 || geoDataLinks?.length > 0
     )
   )
-  displayDownload$ = this.facade.downloadLinks$.pipe(
+
+  displayDownload$ = this.metadataViewFacade.downloadLinks$.pipe(
     map((links) => links?.length > 0)
   )
-  displayApi$ = this.facade.apiLinks$.pipe(map((links) => links?.length > 0))
-  displayOtherLinks = this.facade.otherLinks$.pipe(
+  displayApi$ = this.metadataViewFacade.apiLinks$.pipe(
     map((links) => links?.length > 0)
   )
-  displayRelated$ = this.facade.related$.pipe(
+
+  displayOtherLinks = this.metadataViewFacade.otherLinks$.pipe(
+    map((links) => links?.length > 0)
+  )
+  displayRelated$ = this.metadataViewFacade.related$.pipe(
     map((records) => records?.length > 0)
   )
 
-  sourceLabel$ = this.facade.metadata$.pipe(
+  organisationName$ = this.metadataViewFacade.metadata$.pipe(
+    map((record) => record?.ownerOrganization?.name),
+    filter(Boolean)
+  )
+
+  metadataUuid$ = this.metadataViewFacade.metadata$.pipe(
+    map((record) => record?.uniqueIdentifier),
+    filter(Boolean)
+  )
+
+  sourceLabel$ = this.metadataViewFacade.metadata$.pipe(
     map((record) => record?.extras?.catalogUuid as string),
     filter((uuid) => !!uuid),
     mergeMap((uuid) => this.sourceService.getSourceLabel(uuid))
   )
 
   errorTypes = ErrorType
+
   selectedTabIndex$ = new BehaviorSubject(0)
 
-  thumbnailUrl$ = this.facade.metadata$.pipe(
+  thumbnailUrl$ = this.metadataViewFacade.metadata$.pipe(
     map((metadata) => {
       // in order to differentiate between metadata not loaded yet
       // and url not defined
@@ -74,11 +90,12 @@ export class RecordMetadataComponent {
   showOverlay = true
 
   constructor(
-    public facade: MdViewFacade,
+    public metadataViewFacade: MdViewFacade,
     private searchService: SearchService,
     private sourceService: SourcesService,
     private orgsService: OrganizationsServiceInterface
-  ) {}
+  ) {
+  }
 
   onTabIndexChange(index: number): void {
     this.selectedTabIndex$.next(index)
@@ -90,6 +107,7 @@ export class RecordMetadataComponent {
   onInfoKeywordClick(keyword: Keyword) {
     this.searchService.updateFilters({ any: keyword.label })
   }
+
   onOrganizationClick(org: Organization) {
     this.orgsService
       .getFiltersForOrgs([org])

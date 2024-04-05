@@ -15,7 +15,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/search'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { navigation } from '@ngrx/router-store/data-persistence'
-import { of, pairwise, startWith, withLatestFrom } from 'rxjs'
+import { of, pairwise, startWith } from 'rxjs'
 import { map, mergeMap, tap } from 'rxjs/operators'
 import * as RouterActions from './router.actions'
 import { RouterFacade } from './router.facade'
@@ -141,7 +141,7 @@ export class RouterEffects {
   navigateToSearch$ = createEffect(() =>
     this._actions$.pipe(
       navigation(this.routerConfig.searchRouteComponent, {
-        run: () => MdViewActions.close(),
+        run: () => MdViewActions.closeMetadata(),
       })
     )
   )

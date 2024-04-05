@@ -8,6 +8,7 @@ import { ThemeService } from '@geonetwork-ui/util/shared'
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+
   ngOnInit(): void {
     const favicon = getThemeConfig().FAVICON
     if (favicon) ThemeService.setFavicon(favicon)

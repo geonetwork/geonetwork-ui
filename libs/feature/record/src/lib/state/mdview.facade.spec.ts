@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing'
 import { MockStore, provideMockStore } from '@ngrx/store/testing'
-import { initialMdviewState, MD_VIEW_FEATURE_STATE_KEY } from './mdview.reducer'
+import { initialMetadataViewState, METADATA_VIEW_FEATURE_STATE_KEY } from './mdview.reducer'
 import { MdViewFacade } from './mdview.facade'
 import * as MdViewActions from './mdview.actions'
 import { hot } from 'jasmine-marbles'
@@ -17,7 +17,7 @@ describe('MdViewFacade', () => {
         MdViewFacade,
         provideMockStore({
           initialState: {
-            [MD_VIEW_FEATURE_STATE_KEY]: initialMdviewState,
+            [METADATA_VIEW_FEATURE_STATE_KEY]: initialMetadataViewState,
           },
         }),
       ],
@@ -32,8 +32,8 @@ describe('MdViewFacade', () => {
     })
     it('emits true if metadata', () => {
       store.setState({
-        [MD_VIEW_FEATURE_STATE_KEY]: {
-          ...initialMdviewState,
+        [METADATA_VIEW_FEATURE_STATE_KEY]: {
+          ...initialMetadataViewState,
           metadata: DATASET_RECORDS[0],
         },
       })
@@ -48,8 +48,8 @@ describe('MdViewFacade', () => {
     })
     it('emits metadata if present', () => {
       store.setState({
-        [MD_VIEW_FEATURE_STATE_KEY]: {
-          ...initialMdviewState,
+        [METADATA_VIEW_FEATURE_STATE_KEY]: {
+          ...initialMetadataViewState,
           metadata: DATASET_RECORDS[0],
         },
       })
@@ -64,8 +64,8 @@ describe('MdViewFacade', () => {
     })
     it('emits allLinks if present', () => {
       store.setState({
-        [MD_VIEW_FEATURE_STATE_KEY]: {
-          ...initialMdviewState,
+        [METADATA_VIEW_FEATURE_STATE_KEY]: {
+          ...initialMetadataViewState,
           metadata: DATASET_RECORDS[0],
         },
       })
@@ -76,8 +76,8 @@ describe('MdViewFacade', () => {
   describe('isIncomplete$', () => {
     it('emits true if full record is loading', () => {
       store.setState({
-        [MD_VIEW_FEATURE_STATE_KEY]: {
-          ...initialMdviewState,
+        [METADATA_VIEW_FEATURE_STATE_KEY]: {
+          ...initialMetadataViewState,
           metadata: DATASET_RECORDS[0],
           loadingFull: true,
         },
@@ -87,8 +87,8 @@ describe('MdViewFacade', () => {
     })
     it('emits false if full metadata loaded', () => {
       store.setState({
-        [MD_VIEW_FEATURE_STATE_KEY]: {
-          ...initialMdviewState,
+        [METADATA_VIEW_FEATURE_STATE_KEY]: {
+          ...initialMetadataViewState,
           metadata: DATASET_RECORDS[0],
           loadingFull: false,
         },
@@ -109,8 +109,8 @@ describe('MdViewFacade', () => {
     })
     it('emits the error if any', () => {
       store.setState({
-        [MD_VIEW_FEATURE_STATE_KEY]: {
-          ...initialMdviewState,
+        [METADATA_VIEW_FEATURE_STATE_KEY]: {
+          ...initialMetadataViewState,
           error: 'something went wrong',
         },
       })
@@ -121,14 +121,14 @@ describe('MdViewFacade', () => {
     })
     it('emits the error and null', () => {
       store.setState({
-        [MD_VIEW_FEATURE_STATE_KEY]: {
-          ...initialMdviewState,
+        [METADATA_VIEW_FEATURE_STATE_KEY]: {
+          ...initialMetadataViewState,
           error: 'something went wrong',
         },
       })
       store.setState({
-        [MD_VIEW_FEATURE_STATE_KEY]: {
-          ...initialMdviewState,
+        [METADATA_VIEW_FEATURE_STATE_KEY]: {
+          ...initialMetadataViewState,
           error: null,
         },
       })
@@ -148,9 +148,9 @@ describe('MdViewFacade', () => {
   })
   describe('close', () => {
     it('dispatches a close action', () => {
-      facade.close()
+      facade.closeMetadata()
       const expected = hot('a', {
-        a: MdViewActions.close(),
+        a: MdViewActions.closeMetadata(),
       })
       expect(store.scannedActions$).toBeObservable(expected)
     })

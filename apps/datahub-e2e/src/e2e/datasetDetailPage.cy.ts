@@ -688,3 +688,84 @@ describe('api form', () => {
       })
   })
 })
+
+describe.only('userFeedback', () => {
+  describe('when not logged in', () => {
+    beforeEach(() => {
+      cy.visit('/dataset/accroche_velos')
+      cy.get('datahub-record-user-feedbacks').as('userFeedback')
+    })
+    it('should sort comments', () => {
+      cy.get('gn-ui-user-feedback-item')
+        .find('[data-cy="commentText"]')
+        .as('commentText')
+
+      cy.get('@commentText')
+        .first()
+        .then((div) => {
+          const premierCommentaireAvantTri = div.text().trim()
+          cy.get('@userFeedback')
+            .find('gn-ui-dropdown-selector')
+            .openDropdown()
+            .children('button')
+            .eq(1)
+            .click()
+
+          // eslint-disable-next-line cypress/no-unnecessary-waiting
+          cy.wait(1000)
+
+          cy.get('gn-ui-user-feedback-item')
+            .find('[data-cy="commentText"]')
+            .first()
+            .then((div) => {
+              const premierCommentaireApresTri = div.text().trim()
+              expect(premierCommentaireAvantTri).to.not.eq(
+                premierCommentaireApresTri
+              )
+            })
+        })
+    })
+    it("shouldn't be able to comment", () => {
+      cy.get('datahub-record-user-feedbacks')
+        .find('gn-ui-text-area')
+        .should('not.exist')
+    })
+  })
+
+  describe('when logged in', () => {
+    beforeEach(() => {
+      cy.login()
+      cy.visit('/dataset/accroche_velos')
+      cy.get('datahub-record-user-feedbacks').as('userFeedback')
+
+      cy.get('gn-ui-user-feedback-item')
+        .find('[data-cy="commentText"]')
+        .as('commentText')
+    })
+    it('should publish a comment', () => {
+      cy.get('datahub-record-user-feedbacks')
+        .find('gn-ui-text-area')
+        .first()
+        .should('exist')
+        .type('Something')
+
+      cy.get('datahub-record-user-feedbacks')
+        .find('gn-ui-button')
+        .eq(1)
+        .should('exist')
+    })
+    it('should answer to a comment', () => {
+      cy.get('gn-ui-user-feedback-item')
+        .find('gn-ui-text-area')
+        .first()
+        .should('exist')
+        .type('Something')
+
+
+      cy.get('gn-ui-user-feedback-item')
+        .find('gn-ui-button')
+        .eq(0)
+        .should('exist')
+    })
+  })
+})
