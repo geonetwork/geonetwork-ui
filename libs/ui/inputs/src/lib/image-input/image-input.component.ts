@@ -4,18 +4,18 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   Output,
-  ViewChild,
 } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { downgradeImage, megabytesToBytes } from '@geonetwork-ui/util/shared'
+import { firstValueFrom } from 'rxjs'
 import { ButtonComponent } from '../button/button.component'
 import { FilesDropDirective } from '../files-drop/files-drop.directive'
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
-import { firstValueFrom } from 'rxjs'
+import { TranslateModule } from '@ngx-translate/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 @Component({
   selector: 'gn-ui-image-input',
@@ -29,6 +29,7 @@ import { firstValueFrom } from 'rxjs'
     MatIconModule,
     FilesDropDirective,
     MatProgressSpinnerModule,
+    TranslateModule,
   ],
 })
 export class ImageInputComponent {
@@ -56,22 +57,22 @@ export class ImageInputComponent {
 
   getPrimaryText() {
     if (this.uploadError) {
-      return "L'image n'a pas pu être chargée"
+      return marker('input.image.uploadErrorLabel')
     }
     if (this.uploadProgress) {
-      return 'Chargement en cours...'
+      return marker('input.image.uploadProgressLabel')
     }
-    return 'Sélectionner une image'
+    return marker('input.image.selectFileLabel')
   }
 
   getSecondaryText() {
     if (this.uploadError) {
-      return 'Réessayer'
+      return marker('input.image.uploadErrorRetry')
     }
     if (this.uploadProgress) {
-      return 'Annuler'
+      return marker('input.image.uploadProgressCancel')
     }
-    return 'ou la glisser ici'
+    return marker('input.image.dropFileLabel')
   }
 
   handleDragFilesOver(dragFilesOver: boolean) {

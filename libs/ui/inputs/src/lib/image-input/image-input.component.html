@@ -23,7 +23,7 @@
       *ngIf="showAltTextInput"
       type="text"
       class="py-3 px-2 border-2 border-gray-300 rounded-lg text-sm font-medium"
-      placeholder="Texte alternatif de l'image"
+      [placeholder]="'input.image.altTextPlaceholder' | translate"
       [value]="altText"
       (change)="handleAltTextChange($event)"
     />
@@ -33,7 +33,7 @@
         (buttonClick)="handleDelete()"
       >
         <mat-icon class="material-symbols-outlined me-1">delete</mat-icon>
-        Supprimer
+        {{ 'input.image.delete' | translate }}
       </gn-ui-button>
       <gn-ui-button
         *ngIf="!showAltTextInput"
@@ -41,7 +41,7 @@
         (buttonClick)="toggleAltTextInput()"
       >
         <mat-icon class="material-symbols-outlined me-1">add</mat-icon>
-        Texte alternatif
+        {{ 'input.image.displayAltTextInput' | translate }}
       </gn-ui-button>
     </div>
   </div>
@@ -86,7 +86,7 @@
         >
       </div>
       <div class="flex flex-col items-center gap-1">
-        <p class="font-medium">{{ getPrimaryText() }}</p>
+        <p class="font-medium">{{ getPrimaryText() | translate }}</p>
         <p
           class="text-sm"
           [class]="
@@ -96,7 +96,7 @@
           "
           (click)="handleSecondaryTextClick()"
         >
-          {{ getSecondaryText() }}
+          {{ getSecondaryText() | translate }}
         </p>
       </div>
       <input
@@ -112,7 +112,7 @@
         (buttonClick)="displayUrlInput()"
       >
         <mat-icon class="material-symbols-outlined me-1">link</mat-icon>
-        Saisir une URL
+        {{ 'input.image.displayUrlInput' | translate }}
       </gn-ui-button>
     </div>
     <div *ngIf="showUrlInput" class="flex-none flex flex-col gap-2">
