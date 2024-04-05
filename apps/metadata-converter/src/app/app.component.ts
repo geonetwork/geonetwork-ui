@@ -35,8 +35,8 @@ export class AppComponent {
     reader.readAsText(file, 'UTF-8')
     reader.onload = (evt) => {
       const text = evt.target.result as string
-      this.statusComponent.referenceIso19139 = text
-      this.statusComponent.recordIso19139 = text
+      this.statusComponent.referenceMetadata = text
+      this.statusComponent.currentMetadata = text
     }
     reader.onerror = () => this.statusComponent.errorReadingFile()
   }
@@ -47,8 +47,8 @@ export class AppComponent {
     fetch(url)
       .then((resp) => resp.text())
       .then((text) => {
-        this.statusComponent.referenceIso19139 = text
-        this.statusComponent.recordIso19139 = text
+        this.statusComponent.referenceMetadata = text
+        this.statusComponent.currentMetadata = text
       })
       .catch((e) => this.statusComponent.errorLoadingFile(e.message))
   }

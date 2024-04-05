@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { Iso19139Converter } from '@geonetwork-ui/api/metadata-converter'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { findConverterForDocument } from '@geonetwork-ui/api/metadata-converter'
+import { Iso191153Converter } from '@geonetwork-ui/api/metadata-converter'
 
 @Component({
   selector: 'gn-ui-status',
@@ -8,16 +9,13 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
   styleUrls: ['./status.component.css'],
 })
 export class StatusComponent {
-  converter = new Iso19139Converter()
-
   @Input() set recordNative(value: CatalogRecord) {
     const start = performance.now()
     this.status = 'Converting to ISO9139...'
-    this.newRecordIso19139.emit('')
-    this.converter
-      .writeRecord(value, this.referenceIso19139)
+    this.newMetadata.emit('')
+    this.recordToXml(value)
       .then((output) => {
-        this.newRecordIso19139.emit(output)
+        this.newMetadata.emit(output)
         const time = Math.round(performance.now() - start)
         this.status = `Converting to ISO9139... Done (${time} ms).`
       })
@@ -28,14 +26,13 @@ export class StatusComponent {
         console.error(e)
       })
   }
-  @Input() set recordIso19139(value: string) {
+  @Input() set currentMetadata(value: string) {
     const start = performance.now()
     this.status = 'Converting to native format...'
-    this.converter
-      .readRecord(value)
+    this.xmlToRecord(value)
       .then((output) => {
         this.newRecordNative.emit(output)
-        this.newRecordIso19139.emit(value)
+        this.newMetadata.emit(value)
         const time = Math.round(performance.now() - start)
         this.status = `Converting to native format... Done (${time} ms).`
       })
@@ -46,10 +43,10 @@ export class StatusComponent {
         console.error(e)
       })
   }
-  @Input() referenceIso19139: string
+  @Input() referenceMetadata: string
 
   @Output() newRecordNative = new EventEmitter<CatalogRecord>()
-  @Output() newRecordIso19139 = new EventEmitter<string>()
+  @Output() newMetadata = new EventEmitter<string>()
 
   status = 'Standing by.'
 
@@ -65,5 +62,17 @@ export class StatusComponent {
   }
   errorReadingFile() {
     this.status = `Reading file... Failed`
+  }
+
+  private recordToXml(record: CatalogRecord) {
+    const converter = this.referenceMetadata
+      ? findConverterForDocument(this.referenceMetadata)
+      : new Iso191153Converter()
+    return converter.writeRecord(record, this.referenceMetadata)
+  }
+
+  private xmlToRecord(metadata: string) {
+    const converter = findConverterForDocument(metadata)
+    return converter.readRecord(metadata)
   }
 }
