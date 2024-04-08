@@ -8,7 +8,7 @@ import { ROUTER_CONFIG, RouterConfigModel } from './router.config'
 })
 export class RouterService {
   constructor(
-    @Inject(ROUTER_CONFIG) private routerConfig: RouterConfigModel,
+    @Inject(ROUTER_CONFIG) protected routerConfig: RouterConfigModel,
     private router: Router
   ) {}
 
