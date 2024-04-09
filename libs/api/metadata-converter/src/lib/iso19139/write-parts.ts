@@ -398,13 +398,14 @@ export function createThesaurus(thesaurus: KeywordThesaurus) {
 }
 
 export function appendKeywords(keywords: Keyword[]) {
+  // keywords are grouped by thesaurus if they have one, otherwise by type
   const keywordsByThesaurus: Keyword[][] = keywords.reduce((acc, keyword) => {
     const thesaurusId = keyword.thesaurus?.id
     const type = keyword.type
     let existingGroup = acc.find((group) =>
-      group[0].thesaurus
-        ? group[0].thesaurus.id === thesaurusId
-        : group[0].type === type
+      thesaurusId
+        ? group[0].thesaurus?.id === thesaurusId
+        : group[0].type === type && !group[0].thesaurus
     )
     if (!existingGroup) {
       existingGroup = []
