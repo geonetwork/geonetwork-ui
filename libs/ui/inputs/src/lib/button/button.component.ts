@@ -15,7 +15,7 @@ import { propagateToDocumentOnly } from '@geonetwork-ui/util/shared'
   standalone: true,
 })
 export class ButtonComponent {
-  private btnClass: string
+  private btnClass = 'gn-ui-btn-default'
 
   @Input() set type(
     value: 'primary' | 'secondary' | 'default' | 'outline' | 'light'
