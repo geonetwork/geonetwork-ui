@@ -96,7 +96,12 @@ describe('home', () => {
         .invoke('text')
         .as('favoriteTitle')
       cy.get('@favoriteItem').find('gn-ui-favorite-star button').click()
-      cy.wait(100)
+
+      // wait for the favorite count to change before filtering
+      cy.get('@favoriteItem')
+        .find('[data-test=favorite-count]')
+        .invoke('text')
+        .should('eq', '1')
 
       // show my favorites only
       cy.get('datahub-header-badge-button[label$=favorites] button').click({
