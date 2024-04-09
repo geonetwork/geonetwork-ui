@@ -88,7 +88,7 @@ describe('FavoriteStarComponent', () => {
       })
       it('shows the amount of favorites on the record', () => {
         favoriteCountHTMLEl = fixture.debugElement.query(
-          By.css('.favorite-count')
+          By.css('[data-test=favorite-count]')
         ).nativeElement
         expect(favoriteCountHTMLEl).toBeTruthy()
         expect(favoriteCountHTMLEl.textContent).toEqual(
@@ -103,7 +103,7 @@ describe('FavoriteStarComponent', () => {
       })
       it('does not show the amount of favorites on the record', () => {
         const favoriteCountEl = fixture.debugElement.query(
-          By.css('.favorite-count')
+          By.css('[data-test=favorite-count]')
         )
         expect(favoriteCountEl).toBeFalsy()
       })
@@ -182,7 +182,7 @@ describe('FavoriteStarComponent', () => {
       }
       fixture.detectChanges()
       favoriteCountHTMLEl = fixture.debugElement.query(
-        By.css('.favorite-count')
+        By.css('[data-test=favorite-count]')
       ).nativeElement
     })
     describe('When my record is part of the updates', () => {
