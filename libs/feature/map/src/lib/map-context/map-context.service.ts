@@ -77,6 +77,15 @@ export class MapContextService {
     const { type } = layerModel
     const style = this.styleService.styles.default
     switch (type) {
+      case MapContextLayerTypeEnum.OGCAPI:
+        return new VectorLayer({
+          source: new VectorSource({
+            format: new GeoJSON(),
+            url: layerModel.url,
+          }),
+          style,
+        })
+
       case MapContextLayerTypeEnum.XYZ:
         return new TileLayer({
           source: new XYZ({

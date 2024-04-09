@@ -8,6 +8,7 @@ export enum MapContextLayerTypeEnum {
   WMTS = 'wmts',
   WFS = 'wfs',
   GEOJSON = 'geojson',
+  OGCAPI = 'ogcapi',
 }
 
 export interface MapContextModel {
@@ -29,6 +30,12 @@ export interface MapContextLayerWmtsModel {
 
 interface MapContextLayerWfsModel {
   type: 'wfs'
+  url: string
+  name: string
+}
+
+export interface MapContextLayerOgcapiModel {
+  type: 'ogcapi'
   url: string
   name: string
 }
@@ -70,6 +77,7 @@ export type MapContextLayerModel =
   | MapContextLayerWfsModel
   | MapContextLayerXyzModel
   | MapContextLayerGeojsonModel
+  | MapContextLayerOgcapiModel
 
 export interface MapContextViewModel {
   center?: Coordinate // expressed in long/lat (EPSG:4326)
