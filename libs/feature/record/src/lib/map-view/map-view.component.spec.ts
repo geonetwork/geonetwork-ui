@@ -451,8 +451,9 @@ describe('MapViewComponent', () => {
         expect(mapComponent.context).toEqual({
           layers: [
             {
+              name: 'orthophoto',
               type: 'wmts',
-              options: expect.any(Object),
+              url: 'http://abcd.com/wmts',
             },
           ],
           view: expect.any(Object),
