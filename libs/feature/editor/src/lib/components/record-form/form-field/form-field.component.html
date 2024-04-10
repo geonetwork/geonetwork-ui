@@ -24,6 +24,30 @@
       >cancel</mat-icon
     >
   </div>
+  <ng-container *ngIf="isTitle">
+    <div class="flex justify-between items-center gap-3">
+      <h2
+        #titleInput
+        class="grow text-3xl font-normal"
+        [gnUiEditableLabel]="true"
+        (editableLabelChanged)="formControl.setValue($event)"
+      >
+        {{ formControl.value }}
+      </h2>
+      <span
+        class="material-symbols-outlined gn-ui-icon-small m-2 cursor-pointer"
+        (click)="focusTitleInput()"
+        >edit</span
+      >
+      <span
+        class="material-symbols-outlined gn-ui-icon-small m-2"
+        [matTooltip]="config.hintKey | translate"
+        matTooltipPosition="above"
+      >
+        help
+      </span>
+    </div>
+  </ng-container>
   <ng-container *ngIf="isSimpleField">
     <gn-ui-form-field-simple
       [type]="simpleType"

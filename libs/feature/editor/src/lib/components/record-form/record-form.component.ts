@@ -2,16 +2,7 @@ import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { EditorFacade } from '../../+state/editor.facade'
 import { EditorFieldState, EditorFieldValue } from '../../models/fields.model'
-import {
-  FormFieldArrayComponent,
-  FormFieldComponent,
-  FormFieldFileComponent,
-  FormFieldObjectComponent,
-  FormFieldRichComponent,
-  FormFieldSimpleComponent,
-  FormFieldSpatialExtentComponent,
-  FormFieldTemporalExtentComponent,
-} from './form-field'
+import { FormFieldComponent } from './form-field'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -19,17 +10,7 @@ import {
   styleUrls: ['./record-form.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    FormFieldComponent,
-    FormFieldArrayComponent,
-    FormFieldFileComponent,
-    FormFieldObjectComponent,
-    FormFieldRichComponent,
-    FormFieldSimpleComponent,
-    FormFieldSpatialExtentComponent,
-    FormFieldTemporalExtentComponent,
-  ],
+  imports: [CommonModule, FormFieldComponent],
 })
 export class RecordFormComponent {
   fields$ = this.facade.recordFields$

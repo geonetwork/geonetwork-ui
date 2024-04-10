@@ -9,6 +9,13 @@
     @apply shadow-xl hover:shadow-xl-hover transition-shadow;
   }
 
+  /* ICON CLASSES */
+  .gn-ui-icon-small {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
   /* LINK CLASSES */
   .gn-ui-link {
     @apply text-blue-600 hover:text-blue-700 hover:underline;
