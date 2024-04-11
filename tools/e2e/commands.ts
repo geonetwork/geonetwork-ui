@@ -98,9 +98,7 @@ Cypress.Commands.add(
   { prevSubject: true },
   (dropdownElement) => {
     cy.get('body').click('bottomLeft') // first click on the document to close other dropdowns
-    const width = dropdownElement.width()
-    const height = dropdownElement.height()
-    cy.wrap(dropdownElement).click(width - 10, height / 2) // click on the right size to avoid the label
+    cy.wrap(dropdownElement).find('button').click()
     return cy.get('.cdk-overlay-container').find('[role=listbox]')
   }
 )
