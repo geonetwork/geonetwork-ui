@@ -134,7 +134,7 @@ jobs:
 
       - name: Adjust package version according to branch & commit
         working-directory: package
-        run: npm version $(../tools/print-dev-version.sh) --no-git-tag-version
+        run: npm version $(../tools/print-dev-version.sh) --no-git-tag-version --allow-same-version
 
       - name: Build NPM package
         working-directory: package
