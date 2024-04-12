@@ -1,8 +1,17 @@
 import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { EditorFacade } from '../../+state/editor.facade'
 import { EditorFieldState, EditorFieldValue } from '../../models/fields.model'
+import {
+  FormFieldArrayComponent,
+  FormFieldComponent,
+  FormFieldFileComponent,
+  FormFieldObjectComponent,
+  FormFieldRichComponent,
+  FormFieldSimpleComponent,
+  FormFieldSpatialExtentComponent,
+  FormFieldTemporalExtentComponent,
+} from './form-field'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -10,7 +19,17 @@ import { EditorFieldState, EditorFieldValue } from '../../models/fields.model'
   styleUrls: ['./record-form.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, UiInputsModule],
+  imports: [
+    CommonModule,
+    FormFieldComponent,
+    FormFieldArrayComponent,
+    FormFieldFileComponent,
+    FormFieldObjectComponent,
+    FormFieldRichComponent,
+    FormFieldSimpleComponent,
+    FormFieldSpatialExtentComponent,
+    FormFieldTemporalExtentComponent,
+  ],
 })
 export class RecordFormComponent {
   fields$ = this.facade.recordFields$

@@ -20,16 +20,6 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { OverlayModule } from '@angular/cdk/overlay'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { ViewportIntersectorComponent } from './viewport-intersector/viewport-intersector.component'
-import {
-  FormFieldArrayComponent,
-  FormFieldComponent,
-  FormFieldFileComponent,
-  FormFieldObjectComponent,
-  FormFieldRichComponent,
-  FormFieldSimpleComponent,
-  FormFieldSpatialExtentComponent,
-  FormFieldTemporalExtentComponent,
-} from './form-field'
 import { CheckToggleComponent } from './check-toggle/check-toggle.component'
 import { CopyTextButtonComponent } from './copy-text-button/copy-text-button.component'
 import { MatTooltipModule } from '@angular/material/tooltip'
@@ -54,14 +44,6 @@ import { EditableLabelDirective } from './editable-label/editable-label.directiv
     StarToggleComponent,
     DropdownMultiselectComponent,
     ViewportIntersectorComponent,
-    FormFieldComponent,
-    FormFieldSimpleComponent,
-    FormFieldArrayComponent,
-    FormFieldObjectComponent,
-    FormFieldRichComponent,
-    FormFieldFileComponent,
-    FormFieldSpatialExtentComponent,
-    FormFieldTemporalExtentComponent,
     CheckToggleComponent,
     CopyTextButtonComponent,
     CheckboxComponent,
@@ -102,7 +84,6 @@ import { EditableLabelDirective } from './editable-label/editable-label.directiv
     StarToggleComponent,
     DropdownMultiselectComponent,
     ViewportIntersectorComponent,
-    FormFieldComponent,
     CheckToggleComponent,
     CopyTextButtonComponent,
     CheckboxComponent,

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { FormFieldSimpleComponent } from './form-field-simple.component'
+import { FormControl } from '@angular/forms'
 
 describe('FormFieldSimpleComponent', () => {
   let component: FormFieldSimpleComponent
@@ -8,11 +9,12 @@ describe('FormFieldSimpleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FormFieldSimpleComponent],
+      imports: [FormFieldSimpleComponent],
     }).compileComponents()
 
     fixture = TestBed.createComponent(FormFieldSimpleComponent)
     component = fixture.componentInstance
+    component.control = new FormControl()
     fixture.detectChanges()
   })
 

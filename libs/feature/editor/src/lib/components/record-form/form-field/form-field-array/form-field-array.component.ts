@@ -5,5 +5,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   templateUrl: './form-field-array.component.html',
   styleUrls: ['./form-field-array.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class FormFieldArrayComponent {}

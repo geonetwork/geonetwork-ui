@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { FormFieldRichComponent } from './form-field-rich.component'
+import { FormControl } from '@angular/forms'
 
 describe('FormFieldRichComponent', () => {
   let component: FormFieldRichComponent
@@ -8,11 +9,12 @@ describe('FormFieldRichComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FormFieldRichComponent],
+      imports: [FormFieldRichComponent],
     }).compileComponents()
 
     fixture = TestBed.createComponent(FormFieldRichComponent)
     component = fixture.componentInstance
+    component.control = new FormControl()
     fixture.detectChanges()
   })
 

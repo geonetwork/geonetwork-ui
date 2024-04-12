@@ -5,5 +5,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   templateUrl: './form-field-spatial-extent.component.html',
   styleUrls: ['./form-field-spatial-extent.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class FormFieldSpatialExtentComponent {}

@@ -8,7 +8,7 @@ describe('FormFieldSpatialExtentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FormFieldSpatialExtentComponent],
+      imports: [FormFieldSpatialExtentComponent],
     }).compileComponents()
 
     fixture = TestBed.createComponent(FormFieldSpatialExtentComponent)

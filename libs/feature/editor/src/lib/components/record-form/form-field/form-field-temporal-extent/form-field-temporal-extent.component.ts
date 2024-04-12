@@ -5,5 +5,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   templateUrl: './form-field-temporal-extent.component.html',
   styleUrls: ['./form-field-temporal-extent.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class FormFieldTemporalExtentComponent {}

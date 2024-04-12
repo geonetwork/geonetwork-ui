@@ -1,16 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { ReactiveFormsModule } from '@angular/forms'
-import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component'
-import { FormFieldComponent } from './form-field.component'
-import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component'
+import { TranslateModule } from '@ngx-translate/core'
+import { FormFieldArrayComponent } from './form-field-array/form-field-array.component'
+import { FormFieldFileComponent } from './form-field-file/form-field-file.component'
 import { FormFieldObjectComponent } from './form-field-object/form-field-object.component'
+import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component'
+import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component'
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
 import { FormFieldTemporalExtentComponent } from './form-field-temporal-extent/form-field-temporal-extent.component'
-import { FormFieldFileComponent } from './form-field-file/form-field-file.component'
-import { FormFieldArrayComponent } from './form-field-array/form-field-array.component'
-import { TranslateModule } from '@ngx-translate/core'
-import { MatIconModule } from '@angular/material/icon'
+import { FormFieldComponent } from './form-field.component'
 
 describe('FormFieldComponent', () => {
   let component: FormFieldComponent
@@ -18,18 +16,7 @@ describe('FormFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        FormFieldComponent,
-        FormFieldSimpleComponent,
-        FormFieldRichComponent,
-        FormFieldFileComponent,
-        FormFieldArrayComponent,
-        FormFieldObjectComponent,
-        FormFieldArrayComponent,
-        FormFieldSpatialExtentComponent,
-        FormFieldTemporalExtentComponent,
-      ],
-      imports: [ReactiveFormsModule, TranslateModule.forRoot(), MatIconModule],
+      imports: [FormFieldComponent, TranslateModule.forRoot()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(FormFieldComponent)
