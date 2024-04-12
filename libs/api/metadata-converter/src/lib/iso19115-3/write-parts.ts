@@ -48,6 +48,7 @@ import {
   writeLinkage,
 } from '../iso19139/write-parts'
 import { findIdentification } from '../iso19139/read-parts'
+import { namePartsToFull } from '../iso19139/utils/individual-name'
 
 export function writeUniqueIdentifier(
   record: CatalogRecord,
@@ -241,17 +242,14 @@ export function writeOwnerOrganization(
 }
 
 export function appendResponsibleParty(contact: Individual) {
-  const name =
-    contact.lastName && contact.firstName
-      ? `${contact.firstName} ${contact.lastName}`
-      : contact.lastName || contact.firstName || null
+  const fullName = namePartsToFull(contact.firstName, contact.lastName)
 
   const createIndividual = pipe(
     createElement('cit:individual'),
     createChild('cit:CI_Individual'),
-    name
+    fullName
       ? appendChildren(
-          pipe(createElement('cit:name'), writeCharacterString(name))
+          pipe(createElement('cit:name'), writeCharacterString(fullName))
         )
       : noop,
     contact.position

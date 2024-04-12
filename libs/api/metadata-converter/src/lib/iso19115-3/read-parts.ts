@@ -33,6 +33,7 @@ import {
   Role,
 } from '@geonetwork-ui/common/domain/model/record'
 import { matchMimeType } from '../common/distribution.mapper'
+import { fullNameToParts } from '../iso19139/utils/individual-name'
 
 export function readKind(rootEl: XmlElement): RecordKind {
   return pipe(
@@ -97,10 +98,7 @@ export function extractIndividual(
     extractCharacterString(),
     map((fullName) => {
       if (!fullName) return []
-      const parts = fullName.split(/\s+/)
-      if (!parts.length) return [fullName, null]
-      const first = parts.shift()
-      return [first, parts.join(' ')]
+      return fullNameToParts(fullName)
     })
   )
   const getContact = findNestedElement('cit:contactInfo', 'cit:CI_Contact')

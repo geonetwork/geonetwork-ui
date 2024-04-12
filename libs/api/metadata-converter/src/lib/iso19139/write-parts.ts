@@ -48,6 +48,7 @@ import {
 } from '../function-utils'
 import format from 'date-fns/format'
 import { readKind } from './read-parts'
+import { namePartsToFull } from './utils/individual-name'
 
 export function writeCharacterString(
   text: string
@@ -235,10 +236,7 @@ export function getISODuration(updateFrequency: UpdateFrequencyCustom): string {
 }
 
 export function appendResponsibleParty(contact: Individual) {
-  const name =
-    contact.lastName && contact.firstName
-      ? `${contact.firstName} ${contact.lastName}`
-      : contact.lastName || contact.firstName || null
+  const fullName = namePartsToFull(contact.firstName, contact.lastName)
 
   const createAddress = pipe(
     createElement('gmd:address'),
@@ -287,11 +285,11 @@ export function appendResponsibleParty(contact: Individual) {
   return appendChildren(
     pipe(
       createElement('gmd:CI_ResponsibleParty'),
-      name
+      fullName
         ? appendChildren(
             pipe(
               createElement('gmd:individualName'),
-              writeCharacterString(name)
+              writeCharacterString(fullName)
             )
           )
         : noop,

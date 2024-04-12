@@ -14,8 +14,8 @@ import {
   UpdateFrequency,
   UpdateFrequencyCustom,
 } from '@geonetwork-ui/common/domain/model/record'
-import { getStatusFromStatusCode } from './codelists/status.mapper'
-import { getUpdateFrequencyFromFrequencyCode } from './codelists/update-frequency.mapper'
+import { getStatusFromStatusCode } from './utils/status.mapper'
+import { getUpdateFrequencyFromFrequencyCode } from './utils/update-frequency.mapper'
 import {
   findChildElement,
   findChildrenElement,
@@ -37,9 +37,10 @@ import {
   mapArray,
   pipe,
 } from '../function-utils'
-import { getRoleFromRoleCode } from './codelists/role.mapper'
+import { getRoleFromRoleCode } from './utils/role.mapper'
 import { matchMimeType, matchProtocol } from '../common/distribution.mapper'
-import { getKeywordTypeFromKeywordTypeCode } from './codelists/keyword.mapper'
+import { getKeywordTypeFromKeywordTypeCode } from './utils/keyword.mapper'
+import { fullNameToParts } from './utils/individual-name'
 
 export function extractCharacterString(): ChainableFunction<
   XmlElement,
@@ -143,10 +144,7 @@ export function extractIndividual(): ChainableFunction<XmlElement, Individual> {
     extractCharacterString(),
     map((fullName) => {
       if (!fullName) return []
-      const parts = fullName.split(/\s+/)
-      if (!parts.length) return [fullName, null]
-      const first = parts.shift()
-      return [first, parts.join(' ')]
+      return fullNameToParts(fullName)
     })
   )
   const getOrganization = extractOrganization()
