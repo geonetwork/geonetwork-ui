@@ -31,25 +31,12 @@ import { MatTooltipModule } from '@angular/material/tooltip'
   ],
 })
 export class MarkdownEditorComponent {
-  @Input() label: string
-  @Input() tooltip?: string
+  @Input() preview = false
   @Input() helperText?: string
   @Input() placeholder: string
   @Input() textContent: string
   @Output() textContentChanged: EventEmitter<string> =
     new EventEmitter<string>()
-
-  preview = false
-
-  getButtonExtraClass() {
-    return `${
-      this.preview ? 'text-gray-200 bg-gray-900' : 'text-gray-900 bg-gray-200'
-    } rounded-[1.25rem] p-[0.375rem] text-xs font-medium w-24`
-  }
-
-  togglePreview() {
-    this.preview = !this.preview
-  }
 
   textContentChangedHandler(textContent: string) {
     this.textContent = textContent

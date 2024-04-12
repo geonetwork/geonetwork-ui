@@ -1,23 +1,7 @@
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
 import { MarkdownEditorComponent } from './markdown-editor.component'
 
-export default {
-  title: 'Elements/MarkdownEditorComponent',
-  component: MarkdownEditorComponent,
-  decorators: [
-    moduleMetadata({
-      imports: [MarkdownEditorComponent],
-    }),
-  ],
-} as Meta<MarkdownEditorComponent>
-
-export const Primary: StoryObj<MarkdownEditorComponent> = {
-  args: {
-    label: 'Some label',
-    tooltip: 'Some tooltip',
-    helperText: 'Some helper text',
-    placeholder: 'Some placeholder',
-    textContent: ` 
+const textContent = ` 
 # SUPPORTED MARKDOWN CONTENT
 
 ## 1) Headings
@@ -136,7 +120,24 @@ export const Primary: StoryObj<MarkdownEditorComponent> = {
 
 **With and without title**
 
-![Geonetwork](https://geonetwork-opensource.org/_static/chrome/geonetwork3-logo.png "Geonetwork title")`,
+![Geonetwork](https://geonetwork-opensource.org/_static/chrome/geonetwork3-logo.png "Geonetwork title")`
+
+export default {
+  title: 'Elements/MarkdownEditorComponent',
+  component: MarkdownEditorComponent,
+  decorators: [
+    moduleMetadata({
+      imports: [MarkdownEditorComponent],
+    }),
+  ],
+} as Meta<MarkdownEditorComponent>
+
+export const Edition: StoryObj<MarkdownEditorComponent> = {
+  args: {
+    preview: false,
+    helperText: 'Some helper text',
+    placeholder: 'Some placeholder',
+    textContent,
   },
   argTypes: {
     textContent: {
@@ -148,8 +149,33 @@ export const Primary: StoryObj<MarkdownEditorComponent> = {
     template: `
     <div style="width: 600px;height: 400px;">
       <gn-ui-markdown-editor
-        [label]="label"
-        [tooltip]="tooltip"
+        [preview]="preview"
+        [helperText]="helperText"
+        [placeholder]="placeholder"
+        [textContent]="textContent"
+      ></gn-ui-markdown-editor>
+    </div>`,
+  }),
+}
+
+export const Preview: StoryObj<MarkdownEditorComponent> = {
+  args: {
+    preview: true,
+    helperText: 'Some helper text',
+    placeholder: 'Some placeholder',
+    textContent,
+  },
+  argTypes: {
+    textContent: {
+      control: 'text',
+    },
+  },
+  render: (args) => ({
+    props: args,
+    template: `
+    <div style="width: 600px;height: 400px;">
+      <gn-ui-markdown-editor
+        [preview]="preview"
         [helperText]="helperText"
         [placeholder]="placeholder"
         [textContent]="textContent"

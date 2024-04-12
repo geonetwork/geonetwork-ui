@@ -1,25 +1,4 @@
 <div class="h-full flex flex-col">
-  <div class="flex-none w-full flex flex-row items-center">
-    <p class="flex-none font-bold">{{ label }}</p>
-    <div class="flex-1 flex justify-end items-center">
-      <gn-ui-button
-        [extraClass]="getButtonExtraClass()"
-        (buttonClick)="togglePreview()"
-      >
-        <span class="material-symbols-outlined mr-1 icon-small">{{
-          preview ? 'visibility' : 'visibility_off'
-        }}</span>
-        {{ preview ? 'WYSIWYG' : 'Markdown' }}
-      </gn-ui-button>
-      <span
-        class="material-symbols-outlined m-2 icon-small"
-        [matTooltip]="tooltip"
-        matTooltipPosition="above"
-      >
-        help
-      </span>
-    </div>
-  </div>
   <p class="flex-none mb-2 font-medium text-sm text-gray-900">
     {{ helperText }}
   </p>
