@@ -14,7 +14,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/search'
 import { map } from 'rxjs/operators'
 import {
-  Gn4MetadataMapper,
+  Gn4Converter,
   Gn4SearchResults,
 } from '@geonetwork-ui/api/metadata-converter'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
@@ -24,7 +24,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   constructor(
     private gn4SearchApi: SearchApiService,
     private gn4SearchHelper: ElasticsearchService,
-    private gn4Mapper: Gn4MetadataMapper
+    private gn4Mapper: Gn4Converter
   ) {}
 
   search({

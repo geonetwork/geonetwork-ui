@@ -6,7 +6,7 @@
         <gn-ui-status
           #status
           class="font-main font-normal text-gray-900 text-[16px]"
-          (newRecordIso19139)="onRecordOutputReceived($event)"
+          (newMetadata)="onRecordOutputReceived($event)"
           (newRecordNative)="onRecordNativeReceived($event)"
         ></gn-ui-status>
       </h1>
@@ -20,7 +20,7 @@
         placeholder="Upload a record from your computer"
       />
       <input
-        type="string"
+        type="text"
         class="border border-gray-500 rounded-sm w-full bg-white p-2"
         (change)="onFileUrlInput($event.target.value)"
         placeholder="...or enter a URL pointing to a metadata record"

@@ -32,18 +32,12 @@ describe('read parts', () => {
       it('returns an array of individuals with their organization', () => {
         expect(readContacts(recordRootEl)).toEqual([
           {
+            address: 'Ittigen, 3063, CH',
             email: 'rolf.giezendanner@are.admin.ch',
             organization: {
               name: 'Bundesamt für Raumentwicklung',
             },
             role: 'point_of_contact',
-          },
-          {
-            email: 'info@are.admin.ch',
-            organization: {
-              name: 'Bundesamt für Raumentwicklung',
-            },
-            role: 'owner',
           },
         ])
       })

@@ -15,8 +15,8 @@ import {
 } from './atomic-operations'
 import { MetadataUrlService } from './metadata-url.service'
 import { Injectable } from '@angular/core'
-import { getStatusFromStatusCode } from '../iso19139/codelists/status.mapper'
-import { getUpdateFrequencyFromFrequencyCode } from '../iso19139/codelists/update-frequency.mapper'
+import { getStatusFromStatusCode } from '../iso19139/utils/status.mapper'
+import { getUpdateFrequencyFromFrequencyCode } from '../iso19139/utils/update-frequency.mapper'
 import {
   CatalogRecord,
   Constraint,

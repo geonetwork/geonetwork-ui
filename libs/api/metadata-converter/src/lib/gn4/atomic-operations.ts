@@ -2,9 +2,9 @@ import {
   Individual,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
-import { getRoleFromRoleCode } from '../iso19139/codelists/role.mapper'
+import { getRoleFromRoleCode } from '../iso19139/utils/role.mapper'
 import { Thesaurus } from './types'
-import { getKeywordTypeFromKeywordTypeCode } from '../iso19139/codelists/keyword.mapper'
+import { getKeywordTypeFromKeywordTypeCode } from '../iso19139/utils/keyword.mapper'
 
 export type SourceWithUnknownProps = { [key: string]: unknown }
 

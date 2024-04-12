@@ -2,14 +2,14 @@ import { Gn4FieldMapper } from './gn4.field.mapper'
 import { lastValueFrom } from 'rxjs'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { MetadataBaseMapper } from '../metadata-base.mapper'
+import { BaseConverter } from '../base.converter'
 import { Injectable } from '@angular/core'
 import { Gn4Record } from './types'
 
 @Injectable({
   providedIn: 'root',
 })
-export class Gn4MetadataMapper extends MetadataBaseMapper<Gn4Record> {
+export class Gn4Converter extends BaseConverter<Gn4Record> {
   constructor(
     private fieldMapper: Gn4FieldMapper,
     private orgsService: OrganizationsServiceInterface

@@ -5,7 +5,7 @@ import { ElasticsearchService } from './elasticsearch'
 import { TestBed } from '@angular/core/testing'
 import {
   EsSearchResponse,
-  Gn4MetadataMapper,
+  Gn4Converter,
 } from '@geonetwork-ui/api/metadata-converter'
 import {
   Aggregations,
@@ -74,7 +74,7 @@ describe('Gn4Repository', () => {
           useClass: SearchApiServiceMock,
         },
         {
-          provide: Gn4MetadataMapper,
+          provide: Gn4Converter,
           useClass: Gn4MetadataMapperMock,
         },
       ],

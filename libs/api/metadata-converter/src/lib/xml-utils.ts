@@ -33,6 +33,7 @@ export function createDocument(rootEl: XmlElement): XmlDocument {
   function collectNamespaceFromName(name: string) {
     const namespace = extractNamespace(name)
     if (namespace === 'xmlns' || namespace === null) return
+    if (rootEl.attributes[`xmlns:${namespace}`]) return
     if (!NAMESPACES[namespace]) {
       throw new Error(`No known URI for namespace ${namespace}`)
     }
@@ -55,9 +56,14 @@ export function createDocument(rootEl: XmlElement): XmlDocument {
 /**
  * Will do nothing if no namespace present
  */
-function stripNamespace(name: string): string {
+export function stripNamespace(name: string): string {
   const colon = name.indexOf(':')
   return colon > -1 ? name.substring(colon + 1) : name
+}
+
+export function getNamespace(name: string): string {
+  const colon = name.indexOf(':')
+  return colon > -1 ? name.substring(0, colon) : ''
 }
 
 function getElementName(element: XmlElement): string {
@@ -115,7 +121,7 @@ export function allChildrenElement(element: XmlElement): Array<XmlElement> {
  * returns an empty array if no matching element
  */
 export function findNestedElements(
-  ...elementNames
+  ...elementNames: string[]
 ): ChainableFunction<XmlElement, Array<XmlElement>> {
   return (el) => {
     function lookFor(elNameIndex: number) {
@@ -248,6 +254,29 @@ const NAMESPACES = {
   gsr: 'http://www.isotc211.org/2005/gsr',
   gmi: 'http://www.isotc211.org/2005/gmi',
   xlink: 'http://www.w3.org/1999/xlink',
+  mdb: 'http://standards.iso.org/iso/19115/-3/mdb/2.0',
+  mdq: 'http://standards.iso.org/iso/19157/-2/mdq/1.0',
+  msr: 'http://standards.iso.org/iso/19115/-3/msr/2.0',
+  mrs: 'http://standards.iso.org/iso/19115/-3/mrs/1.0',
+  mmi: 'http://standards.iso.org/iso/19115/-3/mmi/1.0',
+  mrl: 'http://standards.iso.org/iso/19115/-3/mrl/2.0',
+  mdt: 'http://standards.iso.org/iso/19115/-3/mdt/2.0',
+  mrd: 'http://standards.iso.org/iso/19115/-3/mrd/1.0',
+  mds: 'http://standards.iso.org/iso/19115/-3/mds/2.0',
+  mpc: 'http://standards.iso.org/iso/19115/-3/mpc/1.0',
+  mcc: 'http://standards.iso.org/iso/19115/-3/mcc/1.0',
+  mac: 'http://standards.iso.org/iso/19115/-3/mac/2.0',
+  mco: 'http://standards.iso.org/iso/19115/-3/mco/1.0',
+  mda: 'http://standards.iso.org/iso/19115/-3/mda/1.0',
+  mex: 'http://standards.iso.org/iso/19115/-3/mex/1.0',
+  gex: 'http://standards.iso.org/iso/19115/-3/gex/1.0',
+  gcx: 'http://standards.iso.org/iso/19115/-3/gcx/1.0',
+  mas: 'http://standards.iso.org/iso/19115/-3/mas/1.0',
+  mri: 'http://standards.iso.org/iso/19115/-3/mri/1.0',
+  cit: 'http://standards.iso.org/iso/19115/-3/cit/2.0',
+  cat: 'http://standards.iso.org/iso/19115/-3/cat/1.0',
+  lan: 'http://standards.iso.org/iso/19115/-3/lan/1.0',
+  mrc: 'http://standards.iso.org/iso/19115/-3/mrc/2.0',
 }
 
 /**
@@ -268,6 +297,13 @@ export function addAttribute(
     return element
   }
 }
+function getTreeRoot(element: XmlElement): XmlElement {
+  let root = element
+  while (root.parent instanceof XmlElement) {
+    root = root.parent
+  }
+  return root
+}
 
 // stays on the parent element
 // if the given elements are part of a subtree, will add the root of subtree
@@ -276,19 +312,23 @@ export function appendChildren(
 ): ChainableFunction<XmlElement, XmlElement> {
   return (element) => {
     if (!element) return null
-    element.children.push(
-      ...childrenFns
-        .map((fn) => fn())
-        .map((el) => {
-          let root = el
-          while (root.parent instanceof XmlElement) {
-            root = root.parent
-          }
-          return root
-        })
-    )
+    element.children.push(...childrenFns.map((fn) => fn()).map(getTreeRoot))
     element.children.forEach((el) => (el.parent = element))
     return element
+  }
+}
+
+// switch to the tip of the subtree
+export function appendChildTree(
+  childrenFn: ChainableFunction<void, XmlElement>
+): ChainableFunction<XmlElement, XmlElement> {
+  return (element) => {
+    if (!element) return null
+    const treeTip = childrenFn()
+    const treeRoot = getTreeRoot(treeTip)
+    element.children.push(treeRoot)
+    treeRoot.parent = element
+    return treeTip
   }
 }
 
@@ -349,6 +389,7 @@ export function removeAllChildren(): ChainableFunction<XmlElement, XmlElement> {
   }
 }
 
+// stays on the same element
 export function removeChildrenByName(
   name: string
 ): ChainableFunction<XmlElement, XmlElement> {
@@ -372,11 +413,38 @@ export function removeChildren(
   childrenFn: ChainableFunction<XmlElement, Array<XmlElement>>
 ): ChainableFunction<XmlElement, XmlElement> {
   return (element) => {
-    const children = childrenFn(element)
-    children.forEach((child) => (child.parent = null))
+    const childrenToRemove = childrenFn(element)
+    childrenToRemove.forEach((child) => (child.parent = null))
     element.children = element.children.filter(
-      (child) => child instanceof XmlElement && children.indexOf(child) === -1
+      (child) =>
+        child instanceof XmlElement && childrenToRemove.indexOf(child) === -1
     )
     return element
   }
+}
+
+/**
+ * Renames elements in the XML tree according to the map
+ * Either specify a full element name like 'gmd:MD_Metadata' or simply a namespace like 'gmd'
+ * @param rootElement
+ * @param replaceMap
+ */
+export function renameElements(
+  rootElement: XmlElement,
+  replaceMap: Record<string, string>
+) {
+  function doReplace(element: XmlElement) {
+    if (element.name in replaceMap) {
+      element.name = replaceMap[element.name]
+    } else if (element.name && getNamespace(element.name) in replaceMap) {
+      element.name = `${
+        replaceMap[getNamespace(element.name)]
+      }:${stripNamespace(element.name)}`
+    }
+    if (element.children) {
+      element.children.forEach(doReplace)
+    }
+  }
+  doReplace(rootElement)
+  return rootElement
 }

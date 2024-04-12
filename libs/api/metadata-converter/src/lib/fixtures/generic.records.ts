@@ -12,6 +12,21 @@ export const GENERIC_DATASET_RECORD: DatasetRecord = {
   contacts: [
     {
       email: 'bob@org.net',
+      role: 'point_of_contact',
+      organization: {
+        name: 'MyOrganization',
+        website: new URL('https://www.my.org/info'),
+        logoUrl: new URL('https://www.my.org/logo.png'),
+        description: 'A generic organization',
+      },
+      firstName: 'Bob',
+      lastName: 'TheGreat',
+      position: 'developer',
+    },
+  ],
+  contactsForResource: [
+    {
+      email: 'bob@org.net',
       role: 'author',
       organization: {
         name: 'MyOrganization',
@@ -32,14 +47,26 @@ export const GENERIC_DATASET_RECORD: DatasetRecord = {
       },
       position: 'manager',
     },
+    {
+      email: 'bill@org2.com',
+      role: 'distributor',
+      organization: {
+        name: 'Another Organization',
+        website: new URL('https://www.another.org/docs'),
+      },
+      position: 'randomWorker',
+      address: '123 rue des moulins, 10808 Montargis, FR',
+      phone: '+11234567890',
+      lastName: 'TheDistributor',
+      firstName: 'Bill',
+    },
   ],
-  contactsForResource: [],
   status: 'ongoing',
-  recordCreated: new Date('2022-02-01T15:12:00'),
-  recordPublished: new Date('2022-02-01T15:12:00'),
+  recordCreated: new Date('2021-11-15T09:00:00'),
+  recordPublished: new Date('2022-01-01T10:00:00'),
   recordUpdated: new Date('2022-02-01T15:12:00'),
-  datasetCreated: new Date('2022-09-01T14:18:19'),
-  datasetUpdated: new Date('2022-12-04T15:12:00'),
+  resourceCreated: new Date('2022-09-01T14:18:19'),
+  resourceUpdated: new Date('2022-12-04T15:12:00'),
   title: 'A very interesting dataset (un jeu de données très intéressant)',
   abstract: `# Introduction
 This dataset has been established for testing purposes.

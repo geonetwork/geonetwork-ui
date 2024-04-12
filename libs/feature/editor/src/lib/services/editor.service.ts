@@ -1,8 +1,11 @@
 import { Inject, Injectable, Optional } from '@angular/core'
-import { toModel, toXml } from '@geonetwork-ui/api/metadata-converter'
+import {
+  findConverterForDocument,
+  Iso19139Converter,
+} from '@geonetwork-ui/api/metadata-converter'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
-import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { from, Observable } from 'rxjs'
+import { map, switchMap } from 'rxjs/operators'
 import { HttpClient } from '@angular/common/http'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { EditorFieldsConfig } from '../models/fields.model'
@@ -30,7 +33,11 @@ export class EditorService {
           Accept: 'application/xml',
         },
       })
-      .pipe(map((response) => toModel(response.toString())))
+      .pipe(
+        switchMap((response) =>
+          findConverterForDocument(response).readRecord(response.toString())
+        )
+      )
   }
 
   // returns the record as it was when saved
@@ -52,17 +59,21 @@ export class EditorService {
     }
 
     // TODO: use the catalog repository instead
-    return this.http
-      .put(
-        `${this.apiUrl}/records?metadataType=METADATA&uuidProcessing=OVERWRITE&transformWith=_none_&publishToAll=on`,
-        toXml(savedRecord),
-        {
-          headers: {
-            'Content-Type': 'application/xml',
-          },
-          withCredentials: true,
-        }
-      )
-      .pipe(map(() => savedRecord))
+    // TODO: use converter based on the format of the record before change
+    return from(new Iso19139Converter().writeRecord(savedRecord)).pipe(
+      switchMap((recordXml) =>
+        this.http.put(
+          `${this.apiUrl}/records?metadataType=METADATA&uuidProcessing=OVERWRITE&transformWith=_none_&publishToAll=on`,
+          recordXml,
+          {
+            headers: {
+              'Content-Type': 'application/xml',
+            },
+            withCredentials: true,
+          }
+        )
+      ),
+      map(() => savedRecord)
+    )
   }
 }

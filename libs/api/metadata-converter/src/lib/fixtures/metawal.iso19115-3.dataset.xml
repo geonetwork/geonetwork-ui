@@ -223,13 +223,13 @@
             <mri:abstract>
                 <gco:CharacterString>Cette donnée ponctuelle reprend la localisation des passages pour piétons sur l’ensemble des routes régionales du territoire.
 
-                    Les passages pour piétons constituent un élément spécifique du réseau et font l'objet d'une attention particulière du gestionnaire de la voirie. L’implantation d’un passage piéton est régi par un arrêté ministériel.
+Les passages pour piétons constituent un élément spécifique du réseau et font l'objet d'une attention particulière du gestionnaire de la voirie. L’implantation d’un passage piéton est régi par un arrêté ministériel.
 
-                    Une distinction est faite entre les passages aux abords des écoles et les autres ; les premiers cités étant dotés d’aménagements spécifiques (éclairage, barrières,…).
+Une distinction est faite entre les passages aux abords des écoles et les autres ; les premiers cités étant dotés d’aménagements spécifiques (éclairage, barrières,…).
 
-                    Parmi les données attributaires de chaque élément, sont mentionnés la localisation de l’élément (route , BK, coordonnées XY) ainsi que le District gestionnaire. D’autres informations sont présentes dans la base de données : environnement, vitesse autorisée, aménagements, éléments de signalisation, distances de visibilité, …
+Parmi les données attributaires de chaque élément, sont mentionnés la localisation de l’élément (route , BK, coordonnées XY) ainsi que le District gestionnaire. D’autres informations sont présentes dans la base de données : environnement, vitesse autorisée, aménagements, éléments de signalisation, distances de visibilité, …
 
-                    Toutes ces données sont reprises dans BDR.</gco:CharacterString>
+Toutes ces données sont reprises dans BDR.</gco:CharacterString>
             </mri:abstract>
             <mri:status>
                 <mcc:MD_ProgressCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode"
@@ -901,12 +901,12 @@
             <mrl:statement>
                 <gco:CharacterString>En 2002, la Direction de le Sécurité des aménagements de voiries a décidé de mener une analyse approfondie de la sécurité sur les passages piétons. En effet, depuis 1996 (loi du 21/12/2006), le piéton manifestant clairement son intention de traverser au droit d'un passage piéton bénéficie d'une priorité absolue sur les automobilistes.
 
-                    La première démarche de cette direction a été de créer une base de données. Un relevé de tous les passages a donc été effectué de 2003 à 2005 et un peu moins de 6000 passages ont été répertoriés via une fiche de terrain qui est toujours utilisée actuellement.
+La première démarche de cette direction a été de créer une base de données. Un relevé de tous les passages a donc été effectué de 2003 à 2005 et un peu moins de 6000 passages ont été répertoriés via une fiche de terrain qui est toujours utilisée actuellement.
 
-                    Cette donnée a été intégrée dans la base de données routière (BDR). Les Districts routiers font la mise à jour directement dans cette base de données.
+Cette donnée a été intégrée dans la base de données routière (BDR). Les Districts routiers font la mise à jour directement dans cette base de données.
 
-                    Ces données, intégrées dans la Banque de Données routières (BDR), ont fait l’objet d’une mise à jour massive en 2014-2015.
-                    Depuis, ce sont les Districts routiers qui assurent la tenue à jour de ces informations directement dans la base de données.</gco:CharacterString>
+Ces données, intégrées dans la Banque de Données routières (BDR), ont fait l’objet d’une mise à jour massive en 2014-2015.
+Depuis, ce sont les Districts routiers qui assurent la tenue à jour de ces informations directement dans la base de données.</gco:CharacterString>
             </mrl:statement>
             <mrl:scope>
                 <mcc:MD_Scope>

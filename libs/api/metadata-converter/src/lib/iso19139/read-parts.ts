@@ -1,8 +1,6 @@
 import {
   Constraint,
   DatasetDistribution,
-  DatasetSpatialExtent,
-  DatasetTemporalExtent,
   GraphicOverview,
   Individual,
   Keyword,
@@ -16,8 +14,8 @@ import {
   UpdateFrequency,
   UpdateFrequencyCustom,
 } from '@geonetwork-ui/common/domain/model/record'
-import { getStatusFromStatusCode } from './codelists/status.mapper'
-import { getUpdateFrequencyFromFrequencyCode } from './codelists/update-frequency.mapper'
+import { getStatusFromStatusCode } from './utils/status.mapper'
+import { getUpdateFrequencyFromFrequencyCode } from './utils/update-frequency.mapper'
 import {
   findChildElement,
   findChildrenElement,
@@ -39,11 +37,15 @@ import {
   mapArray,
   pipe,
 } from '../function-utils'
-import { getRoleFromRoleCode } from './codelists/role.mapper'
+import { getRoleFromRoleCode } from './utils/role.mapper'
 import { matchMimeType, matchProtocol } from '../common/distribution.mapper'
-import { getKeywordTypeFromKeywordTypeCode } from './codelists/keyword.mapper'
+import { getKeywordTypeFromKeywordTypeCode } from './utils/keyword.mapper'
+import { fullNameToParts } from './utils/individual-name'
 
-function extractCharacterString(): ChainableFunction<XmlElement, string> {
+export function extractCharacterString(): ChainableFunction<
+  XmlElement,
+  string
+> {
   return pipe(
     fallback(
       findChildElement('gco:CharacterString', false),
@@ -53,7 +55,7 @@ function extractCharacterString(): ChainableFunction<XmlElement, string> {
   )
 }
 
-function extractDateTime(): ChainableFunction<XmlElement, Date> {
+export function extractDateTime(): ChainableFunction<XmlElement, Date> {
   return pipe(
     fallback(
       findChildElement('gco:DateTime', false),
@@ -64,7 +66,7 @@ function extractDateTime(): ChainableFunction<XmlElement, Date> {
   )
 }
 
-function extractUrl(): ChainableFunction<XmlElement, URL> {
+export function extractUrl(): ChainableFunction<XmlElement, URL> {
   const getUrl = pipe(findChildElement('gmd:URL', false), readText())
   const getCharacterString = pipe(
     findChildElement('gco:CharacterString', false),
@@ -86,12 +88,12 @@ function extractUrl(): ChainableFunction<XmlElement, URL> {
   )
 }
 
-function extractMandatoryUrl() {
+export function extractMandatoryUrl() {
   return fallback(extractUrl(), () => new URL('http://missing'))
 }
 
 // from gmd:role
-function extractRole(): ChainableFunction<XmlElement, Role> {
+export function extractRole(): ChainableFunction<XmlElement, Role> {
   return pipe(
     findChildElement('gmd:CI_RoleCode'),
     readAttribute('codeListValue'),
@@ -100,7 +102,10 @@ function extractRole(): ChainableFunction<XmlElement, Role> {
 }
 
 // from gmd:CI_ResponsibleParty
-function extractOrganization(): ChainableFunction<XmlElement, Organization> {
+export function extractOrganization(): ChainableFunction<
+  XmlElement,
+  Organization
+> {
   const getUrl = pipe(
     findNestedElements(
       'gmd:contactInfo',
@@ -128,10 +133,7 @@ function extractOrganization(): ChainableFunction<XmlElement, Organization> {
 }
 
 // from gmd:CI_ResponsibleParty
-function extractIndividuals(): ChainableFunction<
-  XmlElement,
-  Array<Individual>
-> {
+export function extractIndividual(): ChainableFunction<XmlElement, Individual> {
   const getRole = pipe(findChildElement('gmd:role'), extractRole())
   const getPosition = pipe(
     findChildElement('gmd:positionName'),
@@ -142,17 +144,35 @@ function extractIndividuals(): ChainableFunction<
     extractCharacterString(),
     map((fullName) => {
       if (!fullName) return []
-      const parts = fullName.split(/\s+/)
-      if (!parts.length) return [fullName, null]
-      const first = parts.shift()
-      return [first, parts.join(' ')]
+      return fullNameToParts(fullName)
     })
   )
   const getOrganization = extractOrganization()
+  const getContactRoot = findNestedElement('gmd:contactInfo', 'gmd:CI_Contact')
   const getEmail = pipe(
+    getContactRoot,
     findChildElement('gmd:electronicMailAddress'),
     extractCharacterString(),
     map((email) => (email === null ? 'missing@missing.com' : email))
+  )
+  const getAddress = pipe(
+    getContactRoot,
+    findNestedElement('gmd:address', 'gmd:CI_Address'),
+    combine(
+      pipe(
+        findChildElement('gmd:deliveryPoint', false),
+        extractCharacterString()
+      ),
+      pipe(findChildElement('gmd:city', false), extractCharacterString()),
+      pipe(findChildElement('gmd:postalCode', false), extractCharacterString()),
+      pipe(findChildElement('gmd:country', false), extractCharacterString())
+    ),
+    map((parts) => parts.filter((p) => !!p).join(', '))
+  )
+  const getPhone = pipe(
+    getContactRoot,
+    findNestedElement('gmd:phone', 'gmd:CI_Telephone', 'gmd:voice'),
+    extractCharacterString()
   )
   return pipe(
     combine(
@@ -160,22 +180,34 @@ function extractIndividuals(): ChainableFunction<
       getPosition,
       getNameParts,
       getOrganization,
-      pipe(findChildrenElement('gmd:contactInfo'), mapArray(getEmail))
+      getEmail,
+      getAddress,
+      getPhone
     ),
-    map(([role, position, [firstName, lastName], organization, emails]) =>
-      emails.map((email) => ({
+    map(
+      ([
+        role,
+        position,
+        [firstName, lastName],
+        organization,
+        email,
+        address,
+        phone,
+      ]) => ({
         email,
         role,
         organization,
         ...(position && { position }),
         ...(firstName && { firstName }),
         ...(lastName && { lastName }),
-      }))
+        ...(address && { address }),
+        ...(phone && { phone }),
+      })
     )
   )
 }
 
-function extractStatus(): ChainableFunction<XmlElement, RecordStatus> {
+export function extractStatus(): ChainableFunction<XmlElement, RecordStatus> {
   return pipe(
     findChildElement('gmd:MD_ProgressCode'),
     readAttribute('codeListValue'),
@@ -184,7 +216,7 @@ function extractStatus(): ChainableFunction<XmlElement, RecordStatus> {
 }
 
 // from gmd:resourceConstraints
-function extractLegalConstraints(): ChainableFunction<
+export function extractLegalConstraints(): ChainableFunction<
   XmlElement,
   Array<Constraint>
 > {
@@ -214,7 +246,7 @@ function extractLegalConstraints(): ChainableFunction<
 }
 
 // from gmd:resourceConstraints
-function extractSecurityConstraints(): ChainableFunction<
+export function extractSecurityConstraints(): ChainableFunction<
   XmlElement,
   Array<Constraint>
 > {
@@ -230,7 +262,7 @@ function extractSecurityConstraints(): ChainableFunction<
 }
 
 // from gmd:resourceConstraints
-function extractOtherConstraints(): ChainableFunction<
+export function extractOtherConstraints(): ChainableFunction<
   XmlElement,
   Array<Constraint>
 > {
@@ -246,7 +278,10 @@ function extractOtherConstraints(): ChainableFunction<
 }
 
 // from gmd:resourceConstraints
-function extractLicenses(): ChainableFunction<XmlElement, Array<Constraint>> {
+export function extractLicenses(): ChainableFunction<
+  XmlElement,
+  Array<Constraint>
+> {
   return pipe(
     findChildrenElement('gmd:MD_LegalConstraints', false),
     filterArray(
@@ -272,18 +307,20 @@ function extractLicenses(): ChainableFunction<XmlElement, Array<Constraint>> {
   )
 }
 
-// from gmd:MD_Distribution
-function extractDatasetDistributions(): ChainableFunction<
-  XmlElement,
-  DatasetDistribution[]
-> {
-  const getFormat = pipe(
-    findParent('gmd:MD_Distribution'),
-    findNestedElement('gmd:distributionFormat', 'gmd:MD_Format', 'gmd:name'),
-    extractCharacterString(),
-    map(matchMimeType)
-  )
+const getMimeType = pipe(
+  findParent('gmd:MD_Distribution'),
+  findNestedElement('gmd:distributionFormat', 'gmd:MD_Format', 'gmd:name'),
+  extractCharacterString(),
+  map(matchMimeType)
+)
 
+/**
+ * Extract distributions from a MD_Distribution element
+ * @param getMimeTypeFn This function starts from a gmd:transferOptions element
+ */
+export function extractDatasetDistributions(
+  getMimeTypeFn: ChainableFunction<XmlElement, string>
+): ChainableFunction<XmlElement, DatasetDistribution[]> {
   const getUrl = pipe(findChildElement('gmd:linkage'), extractMandatoryUrl())
   const getProtocolStr = pipe(
     findChildElement('gmd:protocol'),
@@ -326,11 +363,11 @@ function extractDatasetDistributions(): ChainableFunction<
         getUrl,
         getName,
         getDescription,
-        getFormat
+        getMimeTypeFn
       )
     ),
     mapArray(
-      ([isService, isDownload, protocol, url, name, description, format]) => {
+      ([isService, isDownload, protocol, url, name, description, mimeType]) => {
         if (isService) {
           const hasIdentifier = protocol === 'wms' || protocol === 'wfs'
           return {
@@ -342,7 +379,6 @@ function extractDatasetDistributions(): ChainableFunction<
             ...(description && { description }),
           }
         } else if (isDownload) {
-          const mimeType = format
           return {
             type: 'download',
             url: url,
@@ -363,7 +399,7 @@ function extractDatasetDistributions(): ChainableFunction<
   )
 }
 
-function getUpdateFrequencyFromCustomPeriod(
+export function getUpdateFrequencyFromCustomPeriod(
   isoPeriod: string
 ): UpdateFrequencyCustom {
   if (!isoPeriod) return null
@@ -415,7 +451,7 @@ function getUpdateFrequencyFromCustomPeriod(
 }
 
 // from gmd:MD_MaintenanceInformation
-function extractUpdateFrequency(): ChainableFunction<
+export function extractUpdateFrequency(): ChainableFunction<
   XmlElement,
   UpdateFrequency
 > {
@@ -439,18 +475,24 @@ function extractUpdateFrequency(): ChainableFunction<
 
 /**
  * Looks for srv:SV_ServiceIdentification or gmd:MD_DataIdentification element
- * depending on record type
+ * Will find the first one that exists, not reading the type of the record
+ * (this allows using this function in other similar schemas)
  */
-function findIdentification() {
-  return (rootEl: XmlElement) => {
-    const kind = readKind(rootEl)
-    let eltName = 'gmd:MD_DataIdentification'
-    if (kind === 'service') eltName = 'srv:SV_ServiceIdentification'
-    return findNestedElement('gmd:identificationInfo', eltName)(rootEl)
-  }
+export function findIdentification() {
+  return pipe(
+    findChildElement('gmd:identificationInfo', false),
+    combine(
+      findChildElement('gmd:MD_DataIdentification', false),
+      findChildElement('srv:SV_ServiceIdentification', false)
+    ),
+    filterArray((el) => el !== null),
+    getAtIndex(0)
+  )
 }
 
-function extractCitationDate(type: 'creation' | 'revision' | 'publication') {
+export function extractIdentificationDate(
+  type: 'creation' | 'revision' | 'publication'
+) {
   return pipe(
     findIdentification(),
     findNestedElements('gmd:citation', 'gmd:CI_Citation', 'gmd:date'),
@@ -473,7 +515,7 @@ function extractCitationDate(type: 'creation' | 'revision' | 'publication') {
   )
 }
 
-function getSpatialRepresentationFromCode(
+export function getSpatialRepresentationFromCode(
   spatialRepresentationCode: string
 ): SpatialRepresentationType | null {
   switch (spatialRepresentationCode) {
@@ -513,11 +555,19 @@ export function readOwnerOrganization(rootEl: XmlElement): Organization {
   )(rootEl)
 }
 
-export function readRecordUpdated(rootEl: XmlElement): Date {
-  return pipe(findChildElement('gmd:dateStamp'), extractDateTime())(rootEl)
+export function readResourceUpdated(rootEl: XmlElement): Date {
+  return extractIdentificationDate('revision')(rootEl)
 }
 
-export function readRecordPublished(rootEl: XmlElement): Date {
+export function readResourceCreated(rootEl: XmlElement): Date {
+  return extractIdentificationDate('creation')(rootEl)
+}
+
+export function readResourcePublished(rootEl: XmlElement): Date {
+  return extractIdentificationDate('publication')(rootEl)
+}
+
+export function readRecordUpdated(rootEl: XmlElement): Date {
   return pipe(findChildElement('gmd:dateStamp'), extractDateTime())(rootEl)
 }
 
@@ -537,30 +587,29 @@ export function readAbstract(rootEl: XmlElement): string {
   )(rootEl)
 }
 
-export function readDatasetCreated(rootEl: XmlElement): Date {
-  return extractCitationDate('creation')(rootEl)
-}
-
-export function readDatasetUpdated(rootEl: XmlElement): Date {
-  return extractCitationDate('revision')(rootEl)
-}
-
 export function readContacts(rootEl: XmlElement): Individual[] {
+  return pipe(
+    findChildrenElement('gmd:contact', false),
+    mapArray(findChildElement('gmd:CI_ResponsibleParty', false)),
+    mapArray(extractIndividual())
+  )(rootEl)
+}
+
+export function readContactsForResource(rootEl: XmlElement): Individual[] {
   return pipe(
     findIdentification(),
     combine(
-      findChildrenElement('gmd:contact'),
-      findChildrenElement('gmd:pointOfContact')
+      findChildrenElement('gmd:contact', false),
+      findChildrenElement('gmd:pointOfContact', false)
     ),
     flattenArray(),
     mapArray(findChildElement('gmd:CI_ResponsibleParty', false)),
-    mapArray(extractIndividuals()),
-    flattenArray()
+    mapArray(extractIndividual())
   )(rootEl)
 }
 
 // from gmd:thesaurusName
-function readThesaurus(rootEl: XmlElement): KeywordThesaurus {
+export function readThesaurus(rootEl: XmlElement): KeywordThesaurus {
   if (!rootEl) return null
 
   const findIdentifier = findNestedElement(
@@ -583,7 +632,7 @@ function readThesaurus(rootEl: XmlElement): KeywordThesaurus {
 }
 
 // from gmd:MD_Keywords
-function readKeywordGroup(rootEl: XmlElement): Keyword[] {
+export function readKeywordGroup(rootEl: XmlElement): Keyword[] {
   const type = pipe(
     findChildrenElement('gmd:MD_KeywordTypeCode'),
     mapArray(readAttribute('codeListValue')),
@@ -701,16 +750,6 @@ export function readOverviews(rootEl: XmlElement): GraphicOverview[] {
   )(rootEl)
 }
 
-export function readSpatialExtents(rootEl: XmlElement): DatasetSpatialExtent[] {
-  return [] // TODO
-}
-
-export function readTemporalExtents(
-  rootEl: XmlElement
-): DatasetTemporalExtent[] {
-  return [] // TODO
-}
-
 export function readLineage(rootEl: XmlElement): string {
   return pipe(
     findNestedElement(
@@ -727,7 +766,7 @@ export function readLineage(rootEl: XmlElement): string {
 export function readDistributions(rootEl: XmlElement): DatasetDistribution[] {
   return pipe(
     findNestedElements('gmd:distributionInfo', 'gmd:MD_Distribution'),
-    mapArray(extractDatasetDistributions()),
+    mapArray(extractDatasetDistributions(getMimeType)),
     flattenArray()
   )(rootEl)
 }

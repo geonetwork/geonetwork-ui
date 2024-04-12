@@ -424,5 +424,92 @@ describe('write parts', () => {
     </gmd:identificationInfo>
 </root>`)
     })
+
+    it('correctly adds a thesaurus to an existing keyword', () => {
+      // add some distributions first
+      const sample = parseXmlString(`
+<root>
+    <gmd:identificationInfo >
+        <gmd:MD_DataIdentification>
+            <gmd:descriptiveKeywords>
+                <gmd:MD_Keywords>
+                    <gmd:keyword>
+                        <gco:CharacterString>Usage des sols</gco:CharacterString>
+                    </gmd:keyword>
+                    <gmd:keyword>
+                        <gco:CharacterString>Agriculture</gco:CharacterString>
+                    </gmd:keyword>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                                codeListValue="theme"/>
+                    </gmd:type>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+      rootEl = getRootElement(sample)
+      writeKeywords(
+        {
+          ...datasetRecord,
+          keywords: [
+            {
+              label: 'Usage des sols',
+              type: 'theme',
+            },
+            {
+              label: 'Agriculture',
+              type: 'theme',
+              thesaurus: {
+                id: 'abcd',
+                url: new URL('http://abcd.com'),
+                name: 'A thesaurus',
+              },
+            },
+          ],
+        },
+        rootEl
+      )
+      expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <gmd:descriptiveKeywords>
+                <gmd:MD_Keywords>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme"/>
+                    </gmd:type>
+                    <gmd:keyword>
+                        <gco:CharacterString>Usage des sols</gco:CharacterString>
+                    </gmd:keyword>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+            <gmd:descriptiveKeywords>
+                <gmd:MD_Keywords>
+                    <gmd:type>
+                        <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme"/>
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>A thesaurus</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:identifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gmx:Anchor xlink:href="http://abcd.com/">abcd</gmx:Anchor>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:identifier>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                    <gmd:keyword>
+                        <gco:CharacterString>Agriculture</gco:CharacterString>
+                    </gmd:keyword>
+                </gmd:MD_Keywords>
+            </gmd:descriptiveKeywords>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+    })
   })
 })

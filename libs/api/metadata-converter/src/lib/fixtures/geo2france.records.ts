@@ -16,11 +16,18 @@ export const GEO2FRANCE_PLU_DATASET_RECORD: DatasetRecord = {
       },
     },
   ],
-  contactsForResource: [],
-  recordCreated: new Date('2022-04-15T14:18:19'),
-  recordPublished: new Date('2022-04-15T14:18:19'),
+  contactsForResource: [
+    {
+      email: 'sig@agglo-compiegne.fr',
+      role: 'point_of_contact',
+      organization: {
+        name: 'GeoCompiegnois',
+      },
+    },
+  ],
   recordUpdated: new Date('2022-04-15T14:18:19'),
-  datasetUpdated: new Date('2022-03-29'),
+  resourcePublished: new Date('2022-05-01'),
+  resourceUpdated: new Date('2022-03-29'),
   title:
     "Plan local d'urbanisme (PLU) dématérialisé - commune d'Avrigny - approbation du 29/03/2022",
   // data revision: 2022-03-29 ???

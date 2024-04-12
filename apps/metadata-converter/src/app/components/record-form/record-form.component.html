@@ -68,72 +68,88 @@
       role: 'unspecified'
     }"
   >
-    <ng-template #contactTpl let-get="getValue" let-set="setValue">
-      <gn-ui-record-field-group label="Contact">
-        <gn-ui-record-field-simple
-          label="First Name"
-          [fieldValue]="get().firstName"
-          (fieldValueChange)="set($event, 'firstName')"
-          (confirm)="emitChangedRecord()"
-        ></gn-ui-record-field-simple>
-        <gn-ui-record-field-simple
-          label="Last Name"
-          [fieldValue]="get().lastName"
-          (fieldValueChange)="set($event, 'lastName')"
-          (confirm)="emitChangedRecord()"
-        ></gn-ui-record-field-simple>
-        <gn-ui-record-field-simple
-          label="Email"
-          [fieldValue]="get().email"
-          (fieldValueChange)="set($event, 'email')"
-          (confirm)="emitChangedRecord()"
-        ></gn-ui-record-field-simple>
-        <gn-ui-record-field-simple
-          label="Role"
-          [fieldValue]="get().role"
-          (fieldValueChange)="set($event, 'role')"
-          (confirm)="emitChangedRecord()"
-          [options]="roleOptions"
-        ></gn-ui-record-field-simple>
-        <gn-ui-record-field-simple
-          label="Position"
-          [fieldValue]="get().position"
-          (fieldValueChange)="set($event, 'position')"
-          (confirm)="emitChangedRecord()"
-        ></gn-ui-record-field-simple>
-        <gn-ui-record-field-group label="Organisation">
-          <gn-ui-record-field-simple
-            label="Name"
-            [fieldValue]="get().organization.name"
-            (fieldValueChange)="set($event, 'organization', 'name')"
-            (confirm)="emitChangedRecord()"
-          ></gn-ui-record-field-simple>
-          <gn-ui-record-field-simple
-            label="Description"
-            [fieldValue]="get().organization.description"
-            (fieldValueChange)="set($event, 'organization', 'description')"
-            (confirm)="emitChangedRecord()"
-          ></gn-ui-record-field-simple>
-          <gn-ui-record-field-simple
-            label="Website"
-            [fieldValue]="get().organization.website"
-            (fieldValueChange)="set($event, 'organization', 'website')"
-            (confirm)="emitChangedRecord()"
-            [type]="'url'"
-          ></gn-ui-record-field-simple>
-          <gn-ui-record-field-simple
-            label="Logo URL"
-            [fieldValue]="get().organization.logoUrl"
-            (fieldValueChange)="set($event, 'organization', 'logoUrl')"
-            (confirm)="emitChangedRecord()"
-            [type]="'url'"
-          ></gn-ui-record-field-simple>
-        </gn-ui-record-field-group>
-      </gn-ui-record-field-group>
-    </ng-template>
   </gn-ui-record-field-array>
 </p>
-<p class="grid grid-cols-2">
+<p>
+  <gn-ui-record-field-array
+    label="Contacts for resource"
+    [(fieldValue)]="record.contactsForResource"
+    [itemTemplate]="contactTpl"
+    (confirm)="emitChangedRecord()"
+    [defaultItem]="{
+      firstName: 'first',
+      lastName: 'last',
+      email: 'email@domain.com',
+      organization: { name: 'org' },
+      role: 'unspecified'
+    }"
+  >
+  </gn-ui-record-field-array>
+</p>
+<ng-template #contactTpl let-get="getValue" let-set="setValue">
+  <gn-ui-record-field-group label="Contact">
+    <gn-ui-record-field-simple
+      label="First Name"
+      [fieldValue]="get().firstName"
+      (fieldValueChange)="set($event, 'firstName')"
+      (confirm)="emitChangedRecord()"
+    ></gn-ui-record-field-simple>
+    <gn-ui-record-field-simple
+      label="Last Name"
+      [fieldValue]="get().lastName"
+      (fieldValueChange)="set($event, 'lastName')"
+      (confirm)="emitChangedRecord()"
+    ></gn-ui-record-field-simple>
+    <gn-ui-record-field-simple
+      label="Email"
+      [fieldValue]="get().email"
+      (fieldValueChange)="set($event, 'email')"
+      (confirm)="emitChangedRecord()"
+    ></gn-ui-record-field-simple>
+    <gn-ui-record-field-simple
+      label="Role"
+      [fieldValue]="get().role"
+      (fieldValueChange)="set($event, 'role')"
+      (confirm)="emitChangedRecord()"
+      [options]="roleOptions"
+    ></gn-ui-record-field-simple>
+    <gn-ui-record-field-simple
+      label="Position"
+      [fieldValue]="get().position"
+      (fieldValueChange)="set($event, 'position')"
+      (confirm)="emitChangedRecord()"
+    ></gn-ui-record-field-simple>
+    <gn-ui-record-field-group label="Organisation">
+      <gn-ui-record-field-simple
+        label="Name"
+        [fieldValue]="get().organization.name"
+        (fieldValueChange)="set($event, 'organization', 'name')"
+        (confirm)="emitChangedRecord()"
+      ></gn-ui-record-field-simple>
+      <gn-ui-record-field-simple
+        label="Description"
+        [fieldValue]="get().organization.description"
+        (fieldValueChange)="set($event, 'organization', 'description')"
+        (confirm)="emitChangedRecord()"
+      ></gn-ui-record-field-simple>
+      <gn-ui-record-field-simple
+        label="Website"
+        [fieldValue]="get().organization.website"
+        (fieldValueChange)="set($event, 'organization', 'website')"
+        (confirm)="emitChangedRecord()"
+        [type]="'url'"
+      ></gn-ui-record-field-simple>
+      <gn-ui-record-field-simple
+        label="Logo URL"
+        [fieldValue]="get().organization.logoUrl"
+        (fieldValueChange)="set($event, 'organization', 'logoUrl')"
+        (confirm)="emitChangedRecord()"
+        [type]="'url'"
+      ></gn-ui-record-field-simple>
+    </gn-ui-record-field-group>
+  </gn-ui-record-field-group>
+</ng-template>
+<p class="grid grid-cols-3">
   <gn-ui-record-field-simple
     label="Record created on"
     [(fieldValue)]="record.recordCreated"
@@ -143,6 +159,32 @@
   <gn-ui-record-field-simple
     label="Record updated on"
     [(fieldValue)]="record.recordUpdated"
+    (confirm)="emitChangedRecord()"
+    [type]="'date'"
+  ></gn-ui-record-field-simple>
+  <gn-ui-record-field-simple
+    label="Record published on"
+    [(fieldValue)]="record.recordPublished"
+    (confirm)="emitChangedRecord()"
+    [type]="'date'"
+  ></gn-ui-record-field-simple>
+</p>
+<p class="grid grid-cols-3">
+  <gn-ui-record-field-simple
+    label="Resource created on"
+    [(fieldValue)]="record.resourceCreated"
+    (confirm)="emitChangedRecord()"
+    [type]="'date'"
+  ></gn-ui-record-field-simple>
+  <gn-ui-record-field-simple
+    label="Resource updated on"
+    [(fieldValue)]="record.resourceUpdated"
+    (confirm)="emitChangedRecord()"
+    [type]="'date'"
+  ></gn-ui-record-field-simple>
+  <gn-ui-record-field-simple
+    label="Resource published on"
+    [(fieldValue)]="record.resourcePublished"
     (confirm)="emitChangedRecord()"
     [type]="'date'"
   ></gn-ui-record-field-simple>
@@ -312,20 +354,6 @@
       [(fieldValue)]="record.lineage"
       (confirm)="emitChangedRecord()"
       [type]="'rich'"
-    ></gn-ui-record-field-simple>
-  </p>
-  <p class="grid grid-cols-2">
-    <gn-ui-record-field-simple
-      label="Dataset created on"
-      [(fieldValue)]="record.datasetCreated"
-      (confirm)="emitChangedRecord()"
-      [type]="'date'"
-    ></gn-ui-record-field-simple>
-    <gn-ui-record-field-simple
-      label="Dataset updated on"
-      [(fieldValue)]="record.datasetUpdated"
-      (confirm)="emitChangedRecord()"
-      [type]="'date'"
     ></gn-ui-record-field-simple>
   </p>
   <p>

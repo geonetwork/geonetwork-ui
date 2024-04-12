@@ -3,7 +3,7 @@ import {
   ES_FIXTURE_FULL_RESPONSE,
   hitsOnly,
 } from '@geonetwork-ui/common/fixtures'
-import { Gn4MetadataMapper } from './gn4.metadata.mapper'
+import { Gn4Converter } from './gn4.converter'
 import { of } from 'rxjs'
 import { TestBed } from '@angular/core/testing'
 import { MetadataUrlService } from './metadata-url.service'
@@ -37,8 +37,8 @@ const translateServiceMock = {
   currentLang: 'de',
 }
 
-describe('Gn4MetadataMapper', () => {
-  let service: Gn4MetadataMapper
+describe('Gn4Converter', () => {
+  let service: Gn4Converter
 
   beforeAll(() => {
     window.console.warn = jest.fn()
@@ -61,13 +61,13 @@ describe('Gn4MetadataMapper', () => {
   })
 
   it('should be created', () => {
-    service = TestBed.inject(Gn4MetadataMapper)
+    service = TestBed.inject(Gn4Converter)
     expect(service).toBeTruthy()
   })
 
   describe('methods', () => {
     beforeEach(() => {
-      service = TestBed.inject(Gn4MetadataMapper)
+      service = TestBed.inject(Gn4Converter)
     })
     describe('#readRecords', () => {
       it('outputs records', async () => {
