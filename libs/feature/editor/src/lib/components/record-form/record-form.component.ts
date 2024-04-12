@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { EditorFacade } from '../+state/editor.facade'
-import { EditorFieldState, EditorFieldValue } from '../models/fields.model'
+import { EditorFacade } from '../../+state/editor.facade'
+import { EditorFieldState, EditorFieldValue } from '../../models/fields.model'
 
 @Component({
   selector: 'gn-ui-record-form',

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { EditorFacade } from '../../+state/editor.facade'
 import { RecordFormComponent } from './record-form.component'
-import { EditorFacade } from '../+state/editor.facade'
 
 class EditorFacadeMock {
   updateRecordField = jest.fn()
