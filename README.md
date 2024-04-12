@@ -1,4 +1,4 @@
-![Workflow status](https://github.com/geonetwork/geonetwork-ui/workflows/Build/badge.svg) &nbsp;&nbsp; [![Coverage Status](https://coveralls.io/repos/github/geonetwork/geonetwork-ui/badge.svg?branch=main)](https://coveralls.io/github/geonetwork/geonetwork-ui?branch=main)
+![Workflow status](https://github.com/geonetwork/geonetwork-ui/actions/workflows/checks.yml/badge.svg) &nbsp;&nbsp; ![Workflow status](https://github.com/geonetwork/geonetwork-ui/actions/workflows/snyk-security.yml/badge.svg) &nbsp;&nbsp; ![Workflow status](https://github.com/geonetwork/geonetwork-ui/actions/workflows/artifacts.yml/badge.svg) &nbsp;&nbsp; [![Coverage Status](https://coveralls.io/repos/github/geonetwork/geonetwork-ui/badge.svg?branch=main)](https://coveralls.io/github/geonetwork/geonetwork-ui?branch=main)
 
 # GeoNetwork UI
 
