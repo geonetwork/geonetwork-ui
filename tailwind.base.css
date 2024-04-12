@@ -9,6 +9,35 @@
     @apply shadow-xl hover:shadow-xl-hover transition-shadow;
   }
 
+  /* LINK CLASSES */
+  .gn-ui-link {
+    @apply text-blue-600 hover:text-blue-700 hover:underline;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+  .gn-ui-link-external-icon {
+    content: 'open_in_new';
+    font-family: 'Material Symbols Outlined';
+    font-size: 0.9em;
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 0.1em;
+  }
+  .gn-ui-link-external {
+    @apply gn-ui-link;
+  }
+  .gn-ui-link-external::before {
+    @apply gn-ui-link-external-icon;
+    padding-right: 0.2em;
+  }
+  .gn-ui-link-external-after {
+    @apply gn-ui-link;
+  }
+  .gn-ui-link-external-after::after {
+    @apply gn-ui-link-external-icon;
+    padding-left: 0.2em;
+  }
+
   /* BUTTON CLASSES */
   /* these are used behind the scenes by the `gn-ui-button` component */
 
