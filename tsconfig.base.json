@@ -40,6 +40,9 @@
       "@geonetwork-ui/feature/dataviz": ["libs/feature/dataviz/src/index.ts"],
       "@geonetwork-ui/feature/editor": ["libs/feature/editor/src/index.ts"],
       "@geonetwork-ui/feature/map": ["libs/feature/map/src/index.ts"],
+      "@geonetwork-ui/feature/notifications": [
+        "libs/feature/notifications/src/index.ts"
+      ],
       "@geonetwork-ui/feature/record": ["libs/feature/record/src/index.ts"],
       "@geonetwork-ui/feature/router": ["libs/feature/router/src/index.ts"],
       "@geonetwork-ui/feature/search": ["libs/feature/search/src/index.ts"],
