@@ -1,10 +1,10 @@
-<div class="flex flex-col gap-6 p-6 items-start">
+<div class="flex flex-col gap-6 p-6 items-start pointer-events-none">
   <gn-ui-notification
     *ngFor="
       let notification of notificationsService.notifications$ | async;
       trackBy: trackById
     "
-    class="max-w-full"
+    class="max-w-full pointer-events-auto"
     [text]="notification.text"
     [type]="notification.type"
     [title]="notification.title"
