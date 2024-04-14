@@ -3,6 +3,7 @@ import { select, Store } from '@ngrx/store'
 import * as EditorActions from './editor.actions'
 import * as EditorSelectors from './editor.selectors'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { filter } from 'rxjs'
 
 @Injectable()
 export class EditorFacade {
@@ -10,7 +11,10 @@ export class EditorFacade {
 
   record$ = this.store.pipe(select(EditorSelectors.selectRecord))
   saving$ = this.store.pipe(select(EditorSelectors.selectRecordSaving))
-  saveError$ = this.store.pipe(select(EditorSelectors.selectRecordSaveError))
+  saveError$ = this.store.pipe(
+    select(EditorSelectors.selectRecordSaveError),
+    filter((error) => !!error)
+  )
   changedSinceSave$ = this.store.pipe(
     select(EditorSelectors.selectRecordChangedSinceSave)
   )
