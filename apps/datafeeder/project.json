@@ -21,6 +21,11 @@
             "glob": "*",
             "input": "translations",
             "output": "assets/i18n/"
+          },
+          {
+            "glob": "**/*",
+            "input": "assets-common",
+            "output": "assets/"
           }
         ],
         "styles": [

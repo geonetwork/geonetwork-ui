@@ -26,6 +26,11 @@
             "glob": "*",
             "input": "conf",
             "output": "assets/configuration/"
+          },
+          {
+            "glob": "**/*",
+            "input": "assets-common",
+            "output": "assets/"
           }
         ],
         "styles": [
