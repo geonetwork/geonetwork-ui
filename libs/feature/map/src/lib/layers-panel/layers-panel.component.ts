@@ -9,9 +9,14 @@ import { MapFacade } from '../+state/map.facade'
 })
 export class LayersPanelComponent {
   layers$ = this.mapFacade.layers$
+  ogcUrl = ''
   constructor(private mapFacade: MapFacade) {}
 
   deleteLayer(index: number) {
     this.mapFacade.removeLayer(index)
+  }
+
+  addLayer(layer) {
+    this.mapFacade.addLayer(layer)
   }
 }

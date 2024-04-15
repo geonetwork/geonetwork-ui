@@ -39,7 +39,6 @@ import { AddLayerFromOgcApiComponent } from './add-layer-from-ogc-api/add-layer-
     AddLayerFromFileComponent,
     AddLayerFromWfsComponent,
     GeocodingComponent,
-    AddLayerFromOgcApiComponent,
   ],
   exports: [
     MapContextComponent,
@@ -61,6 +60,7 @@ import { AddLayerFromOgcApiComponent } from './add-layer-from-ogc-api/add-layer-
     EffectsModule.forFeature([MapEffects]),
     UiElementsModule,
     UiInputsModule,
+    AddLayerFromOgcApiComponent,
   ],
   providers: [
     {

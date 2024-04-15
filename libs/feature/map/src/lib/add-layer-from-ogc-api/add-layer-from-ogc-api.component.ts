@@ -1,33 +1,48 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core'
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+  Input,
+  ChangeDetectorRef,
+} from '@angular/core'
 import { OgcApiEndpoint } from '@camptocamp/ogc-client'
 import { Subject, debounceTime } from 'rxjs'
-import { MapFacade } from '../+state/map.facade'
 import {
   MapContextLayerModel,
   MapContextLayerTypeEnum,
 } from '../map-context/map-context.model'
+import { TranslateModule } from '@ngx-translate/core'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { CommonModule } from '@angular/common'
+import { MapLayer } from '../+state/map.models'
 
 @Component({
   selector: 'gn-ui-add-layer-from-ogc-api',
   templateUrl: './add-layer-from-ogc-api.component.html',
   styleUrls: ['./add-layer-from-ogc-api.component.css'],
+  standalone: true,
+  imports: [CommonModule, TranslateModule, UiInputsModule],
 })
 export class AddLayerFromOgcApiComponent implements OnInit {
+  @Input() ogcUrl: string
+  @Output() layerAdded = new EventEmitter<MapLayer>()
+
   urlChange = new Subject<string>()
-  ogcUrl = ''
   layerUrl = ''
   loading = false
   layers: string[] = []
   ogcEndpoint: OgcApiEndpoint = null
   errorMessage: string | null = null
 
-  constructor(
-    private mapFacade: MapFacade,
-    private changeDetectorRef: ChangeDetectorRef
-  ) {}
+  constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.urlChange.pipe(debounceTime(700)).subscribe(() => this.loadLayers())
+    this.urlChange.pipe(debounceTime(700)).subscribe(() => {
+      this.loadLayers()
+      this.changeDetectorRef.detectChanges() // manually trigger change detection
+    })
   }
 
   async loadLayers() {
@@ -52,7 +67,7 @@ export class AddLayerFromOgcApiComponent implements OnInit {
     }
   }
 
-  async addLayer(layer) {
+  async addLayer(layer: string) {
     this.layerUrl = await this.ogcEndpoint.getCollectionItemsUrl(layer)
 
     const layerToAdd: MapContextLayerModel = {
@@ -60,6 +75,6 @@ export class AddLayerFromOgcApiComponent implements OnInit {
       url: this.layerUrl,
       type: MapContextLayerTypeEnum.OGCAPI,
     }
-    this.mapFacade.addLayer({ ...layerToAdd, title: layer })
+    this.layerAdded.emit({ ...layerToAdd, title: layer })
   }
 }

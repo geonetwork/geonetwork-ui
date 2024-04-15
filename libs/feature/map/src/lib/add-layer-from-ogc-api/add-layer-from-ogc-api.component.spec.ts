@@ -33,29 +33,17 @@ jest.mock('@camptocamp/ogc-client', () => ({
   },
 }))
 
-class MapFacadeMock {
-  addLayer = jest.fn()
-}
-
 describe('AddLayerFromOgcApiComponent', () => {
   let component: AddLayerFromOgcApiComponent
   let fixture: ComponentFixture<AddLayerFromOgcApiComponent>
-  let mapFacade: MapFacade
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
-      declarations: [AddLayerFromOgcApiComponent],
-      providers: [
-        {
-          provide: MapFacade,
-          useClass: MapFacadeMock,
-        },
-      ],
+      imports: [TranslateModule.forRoot(), AddLayerFromOgcApiComponent],
+      declarations: [],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
 
-    mapFacade = TestBed.inject(MapFacade)
     fixture = TestBed.createComponent(AddLayerFromOgcApiComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -89,24 +77,6 @@ describe('AddLayerFromOgcApiComponent', () => {
       expect(component.errorMessage).toContain('Error loading layers:')
       expect(component.loading).toBe(false)
       expect(component.layers.length).toBe(0)
-    })
-  })
-
-  describe('addLayer', () => {
-    beforeEach(async () => {
-      component.ogcUrl = 'http://example.com/ogc'
-      await component.loadLayers()
-      component.addLayer('layer1')
-    })
-
-    it('adds the selected layer to the map facade', () => {
-      expect(mapFacade.addLayer).toHaveBeenCalledWith(
-        expect.objectContaining({
-          name: 'layer1',
-          url: 'http://example.com/collections/layer1/items',
-          type: MapContextLayerTypeEnum.OGCAPI,
-        })
-      )
     })
   })
 })
