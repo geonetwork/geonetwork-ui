@@ -2,6 +2,7 @@
   <ng-container *ngFor="let field of fields$ | async; trackBy: fieldTracker">
     <gn-ui-form-field
       *ngIf="field.config.formFieldConfig && !field.config.hidden"
+      [model]="field.config.model"
       [config]="field.config.formFieldConfig"
       [value]="field.value"
       (valueChange)="handleFieldValueChange(field, $event)"

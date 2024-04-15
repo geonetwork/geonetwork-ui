@@ -1,11 +1,20 @@
-<textarea
-  [readonly]="readonly"
-  [formControl]="control"
-  [placeholder]="placeholder"
-  class="border rounded-md p-3 w-full bg-white h-full resize-none transition-colors"
-  [ngClass]="{
-    'border-pink-500': invalid,
-    'border-gray-200': !invalid,
-    'text-gray-600': readonly
-  }"
-></textarea>
+<gn-ui-form-field-wrapper [label]="label" [hint]="hint">
+  <gn-ui-button
+    form-field-interaction
+    [extraClass]="getButtonExtraClass()"
+    (buttonClick)="togglePreview()"
+  >
+    <span class="material-symbols-outlined mr-1 icon-small">{{
+      preview ? 'visibility' : 'visibility_off'
+    }}</span>
+    {{ preview ? 'WYSIWYG' : 'Markdown' }}
+  </gn-ui-button>
+  <gn-ui-markdown-editor
+    class="h-full"
+    [preview]="preview"
+    [helperText]="helperText"
+    [placeholder]="placeholder"
+    [textContent]="control.value"
+    (textContentChanged)="handleTextContentChanged($event)"
+  ></gn-ui-markdown-editor>
+</gn-ui-form-field-wrapper>

@@ -39,12 +39,12 @@
       [invalid]="isFieldInvalid"
     ></gn-ui-form-field-file>
   </ng-container>
-  <ng-container *ngIf="isRichField">
+  <ng-container *ngIf="isAbstract">
     <gn-ui-form-field-rich
-      class="grow"
+      class="h-[8rem]"
       [control]="formControl"
-      [readonly]="isFieldLocked"
-      [invalid]="isFieldInvalid"
+      [label]="config.labelKey | translate"
+      [hint]="config.hintKey | translate"
     ></gn-ui-form-field-rich>
   </ng-container>
   <ng-container *ngIf="isArrayField">

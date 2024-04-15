@@ -108,10 +108,11 @@ describe('FormFieldComponent', () => {
       expect(icon).toBeTruthy()
     })
   })
-  describe('rich text field', () => {
+  describe('abstract field', () => {
     let formField
     beforeEach(() => {
-      component.config.type = 'rich'
+      component.model = 'abstract'
+      component.value = 'Some rich abstract value'
       fixture.detectChanges()
       formField = fixture.debugElement.query(
         By.directive(FormFieldRichComponent)
@@ -119,7 +120,6 @@ describe('FormFieldComponent', () => {
     })
     it('creates a rich text form field', () => {
       expect(formField).toBeTruthy()
-      expect(formField.readonly).toEqual(component.config.locked)
     })
   })
   describe('file field', () => {

@@ -39,6 +39,7 @@ import { CommonModule } from '@angular/common'
   ],
 })
 export class FormFieldComponent {
+  @Input() model: string
   @Input() config: FormFieldConfig
   @Input() set value(v: unknown) {
     this.formControl.setValue(v, {
@@ -73,9 +74,6 @@ export class FormFieldComponent {
       this.config.type === 'toggle'
     )
   }
-  get isRichField() {
-    return this.config.type === 'rich'
-  }
   get isFileField() {
     return this.config.type === 'file'
   }
@@ -100,5 +98,9 @@ export class FormFieldComponent {
   }
   get isFieldInvalid() {
     return !this.config.locked && this.config.invalid
+  }
+
+  get isAbstract() {
+    return this.model === 'abstract'
   }
 }

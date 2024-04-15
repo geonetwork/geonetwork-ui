@@ -14,7 +14,9 @@ describe('FormFieldRichComponent', () => {
 
     fixture = TestBed.createComponent(FormFieldRichComponent)
     component = fixture.componentInstance
-    component.control = new FormControl()
+    const control = new FormControl()
+    control.setValue('Some rich text')
+    component.control = control
     fixture.detectChanges()
   })
 
