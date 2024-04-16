@@ -94,7 +94,7 @@ export class DataService {
           ),
           geojson: endpoint.supportsJson(featureType.name)
             ? endpoint.getFeatureUrl(featureType.name, {
-                outputFormat: 'application/json',
+                asJson: true,
                 outputCrs: 'EPSG:4326',
               })
             : null,
