@@ -3,6 +3,14 @@ import fetchMock from 'fetch-mock-jest'
 import path from 'path'
 import fs from 'fs/promises'
 
+//todo: fix this test, to run without mocking useCache
+jest.mock('@camptocamp/ogc-client', () => ({
+  useCache: jest.fn(async (factory) =>
+    JSON.parse(JSON.stringify(await factory()))
+  ),
+  sharedFetch: jest.fn((url) => global.fetch(url)),
+}))
+
 describe('json parsing', () => {
   describe('parseJson', () => {
     describe('valid JSON with id', () => {

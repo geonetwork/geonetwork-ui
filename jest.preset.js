@@ -5,7 +5,7 @@ module.exports = {
   coverageReporters: ['text'],
   setupFiles: ['jest-canvas-mock'],
   transformIgnorePatterns: [
-    'node_modules/(?!(color-*|ol|@mapbox|@geospatial-sdk|.*.mjs$))',
+    'node_modules/(?!(color-*|ol|@mapbox|@geospatial-sdk|@camptocamp/ogc-client|.*.mjs$))',
   ],
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [

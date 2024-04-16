@@ -6,6 +6,14 @@ import fetchMock from 'fetch-mock-jest'
 import path from 'path'
 import fs from 'fs/promises'
 
+//todo: fix this test, to run without mocking useCache
+jest.mock('@camptocamp/ogc-client', () => ({
+  useCache: jest.fn(async (factory) =>
+    JSON.parse(JSON.stringify(await factory()))
+  ),
+  sharedFetch: jest.fn((url) => global.fetch(url)),
+}))
+
 const singleFeatureValidGml = `<?xml version='1.0' encoding="UTF-8" ?>
 <wfs:FeatureCollection
   xmlns:ms="http://mapserver.gis.umn.edu/mapserver"

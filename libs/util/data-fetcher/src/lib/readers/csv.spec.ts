@@ -7,6 +7,14 @@ afterEach(() => {
   jest.clearAllMocks()
 })
 
+//todo: fix this test, to run without mocking useCache
+jest.mock('@camptocamp/ogc-client', () => ({
+  useCache: jest.fn(async (factory) =>
+    JSON.parse(JSON.stringify(await factory()))
+  ),
+  sharedFetch: jest.fn((url) => global.fetch(url)),
+}))
+
 describe('CSV parsing', () => {
   describe('parseCsv', () => {
     describe('valid CSV with id', () => {

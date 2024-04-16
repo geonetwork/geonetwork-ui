@@ -41,6 +41,48 @@ const mapStyleServiceMock = {
     defaultHL: DEFAULT_STYLE_HL_FIXTURE,
   },
 }
+
+jest.mock('@camptocamp/ogc-client', () => ({
+  WmtsEndpoint: class {
+    constructor(private url) {}
+    isReady() {
+      return Promise.resolve({
+        getLayerByName: (name) => {
+          if (this.url.indexOf('error') > -1) {
+            throw new Error('Something went wrong')
+          }
+          return {
+            name,
+            latLonBoundingBox: [1.33, 48.81, 4.3, 51.1],
+          }
+        },
+      })
+    }
+  },
+  WfsEndpoint: class {
+    constructor(private url) {}
+    isReady() {
+      return Promise.resolve({
+        getLayerByName: (name) => {
+          if (this.url.indexOf('error') > -1) {
+            throw new Error('Something went wrong')
+          }
+          return {
+            name,
+            latLonBoundingBox: [1.33, 48.81, 4.3, 51.1],
+          }
+        },
+        getSingleFeatureTypeName: () => {
+          return 'ms:commune_actuelle_3857'
+        },
+        getFeatureUrl: () => {
+          return 'https://www.geograndest.fr/geoserver/region-grand-est/ows?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application%2Fjson&typename=ms%3Acommune_actuelle_3857&srsname=EPSG%3A3857&bbox=10%2C20%2C30%2C40%2CEPSG%3A3857&maxFeatures=10000'
+        },
+      })
+    }
+  },
+}))
+
 describe('MapContextService', () => {
   let service: MapContextService
 
@@ -110,7 +152,7 @@ describe('MapContextService', () => {
         const urls = source.getUrls()
         expect(urls.length).toBe(1)
         expect(urls[0]).toBe(
-          'https://www.geograndest.fr/geoserver/region-grand-est/ows'
+          'https://www.geograndest.fr/geoserver/region-grand-est/ows?REQUEST=GetCapabilities&SERVICE=WMS'
         )
       })
       it('set WMS gutter of 20px', () => {
@@ -322,7 +364,7 @@ describe('MapContextService', () => {
         const layerWMSUrl = (map.getLayers().item(1) as TileLayer<TileWMS>)
           .getSource()
           .getUrls()[0]
-        expect(layerWMSUrl).toEqual('https://some-wms-server/')
+        expect(layerWMSUrl).toEqual('https://some-wms-server')
       })
       it('add one WFS layer from config on top of baselayer', () => {
         const layerWFSSource = (

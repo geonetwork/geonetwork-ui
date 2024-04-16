@@ -12,6 +12,14 @@ const sampleXls = fs.readFileSync(
   null
 )
 
+//todo: fix this test, to run without mocking useCache
+jest.mock('@camptocamp/ogc-client', () => ({
+  useCache: jest.fn(async (factory) =>
+    JSON.parse(JSON.stringify(await factory()))
+  ),
+  sharedFetch: jest.fn((url) => global.fetch(url)),
+}))
+
 describe('Excel parsing', () => {
   describe('parseExcel', () => {
     describe('.xslx file', () => {

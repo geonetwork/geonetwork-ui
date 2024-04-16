@@ -40,6 +40,14 @@
           <gn-ui-add-layer-from-wfs></gn-ui-add-layer-from-wfs>
         </div>
       </mat-tab>
+      <mat-tab [label]="'map.add.layer.ogc.api' | translate" bodyClass="h-full">
+        <div class="p-3">
+          <gn-ui-add-layer-from-ogc-api
+            [ogcUrl]="ogcUrl"
+            (layerAdded)="addLayer($event)"
+          ></gn-ui-add-layer-from-ogc-api>
+        </div>
+      </mat-tab>
       <mat-tab [label]="'map.add.layer.file' | translate" bodyClass="h-full">
         <div class="p-3">
           <gn-ui-add-layer-from-file></gn-ui-add-layer-from-file>

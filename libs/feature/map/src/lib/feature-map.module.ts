@@ -25,6 +25,7 @@ import { AddLayerFromFileComponent } from './add-layer-from-file/add-layer-from-
 import { AddLayerFromWfsComponent } from './add-layer-from-wfs/add-layer-from-wfs.component'
 import { GeocodingComponent } from './geocoding/geocoding.component'
 import { GEOCODING_PROVIDER, GeocodingProvider } from './geocoding.service'
+import { AddLayerFromOgcApiComponent } from './add-layer-from-ogc-api/add-layer-from-ogc-api.component'
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { GEOCODING_PROVIDER, GeocodingProvider } from './geocoding.service'
     EffectsModule.forFeature([MapEffects]),
     UiElementsModule,
     UiInputsModule,
+    AddLayerFromOgcApiComponent,
   ],
   providers: [
     {
