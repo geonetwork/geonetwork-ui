@@ -118,7 +118,6 @@ the following settings to the `angular.json` file at the root of your project:
             "@rgrove/parse-xml",
             "@messageformat/core",
             "rbush",
-            "@camptocamp/ogc-client",
             "pbf",
             "alasql"
             // add dependencies here if other warnings show up and you want to hide them
