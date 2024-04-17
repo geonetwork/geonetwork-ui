@@ -1058,6 +1058,7 @@ describe('Gn4Converter', () => {
               },
             ],
             datasetCreated: new Date('2012-01-01T00:00:00.000Z'),
+            datasetUpdated: new Date('2021-12-13T00:00:00.000Z'),
             distributions: [
               {
                 url: new URL(
