@@ -2,6 +2,7 @@ import {
   CdkConnectedOverlay,
   CdkOverlayOrigin,
   ConnectedPosition,
+  OverlayModule,
 } from '@angular/cdk/overlay'
 import {
   ChangeDetectionStrategy,
@@ -17,6 +18,10 @@ import {
 } from '@angular/core'
 import { firstValueFrom } from 'rxjs'
 import { DropdownChoice } from './dropdown-selector.model'
+import { CommonModule } from '@angular/common'
+import { TranslateModule } from '@ngx-translate/core'
+import { MatIconModule } from '@angular/material/icon'
+import { ButtonComponent } from '../button/button.component'
 
 const DEFAULT_ROW_NUMBERS = 6
 
@@ -25,6 +30,14 @@ const DEFAULT_ROW_NUMBERS = 6
   templateUrl: './dropdown-selector.component.html',
   styleUrls: ['./dropdown-selector.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    ButtonComponent,
+    OverlayModule,
+    MatIconModule,
+    TranslateModule,
+  ],
 })
 export class DropdownSelectorComponent implements OnInit {
   @Input() title: string

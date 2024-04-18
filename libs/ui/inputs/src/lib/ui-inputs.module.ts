@@ -36,7 +36,6 @@ import { ImageInputComponent } from './image-input/image-input.component'
 
 @NgModule({
   declarations: [
-    DropdownSelectorComponent,
     AutocompleteComponent,
     TextInputComponent,
     DragAndDropFileInputComponent,
@@ -73,6 +72,7 @@ import { ImageInputComponent } from './image-input/image-input.component'
     TextAreaComponent,
     ButtonComponent,
     ImageInputComponent,
+    DropdownSelectorComponent,
   ],
   exports: [
     DropdownSelectorComponent,
