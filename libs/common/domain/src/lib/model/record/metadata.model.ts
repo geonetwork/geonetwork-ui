@@ -180,6 +180,8 @@ export interface DatasetTemporalExtent {
 export interface DatasetRecord extends BaseRecord {
   kind: 'dataset'
   status: RecordStatus
+  datasetCreated?: Date
+  datasetUpdated?: Date
   lineage: string // Explanation of the origin of this record (e.g: how, why)"
   distributions: Array<DatasetDistribution>
   spatialExtents: Array<DatasetSpatialExtent>
