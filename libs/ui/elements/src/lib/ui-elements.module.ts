@@ -46,6 +46,7 @@ import { ImageOverlayPreviewComponent } from './image-overlay-preview/image-over
     FormsModule,
     NgOptimizedImage,
     MarkdownParserComponent,
+    ThumbnailComponent,
   ],
   declarations: [
     MetadataInfoComponent,
@@ -61,7 +62,6 @@ import { ImageOverlayPreviewComponent } from './image-overlay-preview/image-over
     MetadataQualityItemComponent,
     SearchResultsErrorComponent,
     PaginationComponent,
-    ThumbnailComponent,
     AvatarComponent,
     UserPreviewComponent,
     GnUiLinkifyDirective,

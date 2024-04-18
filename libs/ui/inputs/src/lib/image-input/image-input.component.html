@@ -1,0 +1,146 @@
+<ng-container *ngIf="previewUrl; then withImage; else withoutImage">
+</ng-container>
+
+<ng-template #withImage>
+  <div class="w-full h-full flex flex-col gap-2">
+    <div class="flex-1 group relative">
+      <img
+        class="w-full h-full object-cover border-2 border-gray-300 rounded-lg"
+        [alt]="altText"
+        loading="lazy"
+        [src]="previewUrl"
+      />
+      <gn-ui-button
+        [extraClass]="
+          'bg-gray-200 absolute right-2 bottom-2 invisible group-hover:visible'
+        "
+        (buttonClick)="handleDelete()"
+      >
+        <mat-icon class="material-symbols-outlined">delete</mat-icon>
+      </gn-ui-button>
+    </div>
+    <input
+      *ngIf="showAltTextInput"
+      type="text"
+      class="py-3 px-2 border-2 border-gray-300 rounded-lg text-sm font-medium"
+      [placeholder]="'input.image.altTextPlaceholder' | translate"
+      [value]="altText"
+      (change)="handleAltTextChange($event)"
+    />
+    <div class="flex flex-row gap-2">
+      <gn-ui-button
+        [extraClass]="'bg-gray-200 font-bold'"
+        (buttonClick)="handleDelete()"
+      >
+        <mat-icon class="material-symbols-outlined me-1">delete</mat-icon>
+        {{ 'input.image.delete' | translate }}
+      </gn-ui-button>
+      <gn-ui-button
+        *ngIf="!showAltTextInput"
+        [extraClass]="'bg-gray-200 font-bold'"
+        (buttonClick)="toggleAltTextInput()"
+      >
+        <mat-icon class="material-symbols-outlined me-1">add</mat-icon>
+        {{ 'input.image.displayAltTextInput' | translate }}
+      </gn-ui-button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #withoutImage>
+  <div class="w-full h-full flex flex-col gap-2">
+    <label
+      gnUiFilesDrop
+      class="block flex-1 border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center gap-4"
+      (dragFilesOver)="handleDragFilesOver($event)"
+      (dropFiles)="handleDropFiles($event)"
+    >
+      <div class="w-14 h-14 rounded-md bg-gray-200 grid">
+        <mat-icon
+          *ngIf="!dragFilesOver && !uploadProgress && !uploadError"
+          class="material-symbols-outlined place-self-center text-blue-500"
+          >image</mat-icon
+        >
+        <mat-icon
+          *ngIf="dragFilesOver && !uploadProgress && !uploadError"
+          class="material-symbols-outlined place-self-center text-blue-500"
+          >add_box</mat-icon
+        >
+        <div *ngIf="uploadProgress">
+          <mat-progress-spinner
+            class="place-self-center"
+            [diameter]="56"
+            [mode]="'determinate'"
+            [value]="uploadProgress"
+          ></mat-progress-spinner>
+          <span
+            class="text-sm font-medium relative inline-block width-[30px] bottom-[40px] left-[15px]"
+          >
+            {{ uploadProgress }}%
+          </span>
+        </div>
+        <mat-icon
+          *ngIf="uploadError"
+          class="material-symbols-outlined place-self-center text-rose-500"
+          >broken_image</mat-icon
+        >
+      </div>
+      <div class="flex flex-col items-center gap-1">
+        <p class="font-medium">{{ getPrimaryText() | translate }}</p>
+        <p
+          class="text-sm"
+          [class]="
+            uploadProgress || uploadError
+              ? 'font-bold text-blue-500 cursor-pointer'
+              : 'font-medium text-gray-500'
+          "
+          (click)="handleSecondaryTextClick()"
+        >
+          {{ getSecondaryText() | translate }}
+        </p>
+      </div>
+      <input
+        type="file"
+        class="hidden"
+        (change)="handleFileInput($event)"
+        [disabled]="showUrlInput || uploadProgress || uploadError"
+      />
+    </label>
+    <div *ngIf="!showUrlInput" class="flex-none">
+      <gn-ui-button
+        [extraClass]="'bg-gray-200 font-bold'"
+        (buttonClick)="displayUrlInput()"
+      >
+        <mat-icon class="material-symbols-outlined me-1">link</mat-icon>
+        {{ 'input.image.displayUrlInput' | translate }}
+      </gn-ui-button>
+    </div>
+    <div *ngIf="showUrlInput" class="flex-none flex flex-col gap-2">
+      <div class="h-2"></div>
+      <div class="flex gap-2 items-center">
+        <div class="flex-1 flex rounded-lg">
+          <span
+            class="material-symbols-outlined px-4 inline-flex items-center min-w-fit rounded-s-lg border-2 border-e-0 border-gray-300"
+            >link</span
+          >
+          <input
+            type="text"
+            class="py-3 ps-1 block w-full border-2 border-s-0 border-e-0 border-gray-300 text-sm font-medium"
+            placeholder="https://exemple.com/image.jpg"
+            (change)="handleUrlChange($event)"
+          />
+          <gn-ui-button
+            class="px-1 inline-flex items-center min-w-fit rounded-e-lg border-2 border-s-0 border-gray-300 text-white"
+            [extraClass]="
+              urlInputValue && !downloadError ? 'bg-blue-500' : 'bg-gray-500'
+            "
+            [disabled]="!urlInputValue || downloadError"
+            (buttonClick)="downloadUrl()"
+          >
+            <mat-icon class="material-symbols-outlined">arrow_upward</mat-icon>
+          </gn-ui-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

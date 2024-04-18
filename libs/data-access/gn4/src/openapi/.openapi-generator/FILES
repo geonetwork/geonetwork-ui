@@ -74,7 +74,6 @@ model/iProcessingReport.api.model.ts
 model/iSODate.api.model.ts
 model/infoReport.api.model.ts
 model/inlineObject1.api.model.ts
-model/inlineObject3.api.model.ts
 model/inlineObject4.api.model.ts
 model/isoLanguage.api.model.ts
 model/jSONObject.api.model.ts

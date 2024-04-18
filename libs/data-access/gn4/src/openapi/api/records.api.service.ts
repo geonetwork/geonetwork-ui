@@ -30,7 +30,6 @@ import {
 import { ExtentDtoApiModel } from '../model/models'
 import { FeatureResponseApiModel } from '../model/models'
 import { IProcessingReportApiModel } from '../model/models'
-import { InlineObject3ApiModel } from '../model/models'
 import { MetadataBatchApproveParameterApiModel } from '../model/models'
 import { MetadataBatchSubmitParameterApiModel } from '../model/models'
 import { MetadataCategoryApiModel } from '../model/models'
@@ -73,6 +72,20 @@ export class RecordsApiService {
       this.configuration.basePath = basePath
     }
     this.encoder = this.configuration.encoder || new CustomHttpParameterCodec()
+  }
+
+  /**
+   * @param consumes string[] mime-types
+   * @return true: consumes contains 'multipart/form-data', false: otherwise
+   */
+  private canConsumeForm(consumes: string[]): boolean {
+    const form = 'multipart/form-data'
+    for (const consume of consumes) {
+      if (form === consume) {
+        return true
+      }
+    }
+    return false
   }
 
   private addToHttpParams(
@@ -8290,44 +8303,44 @@ export class RecordsApiService {
   /**
    * Create a new resource for a given metadata
    * @param metadataUuid The metadata UUID
+   * @param file The file to upload
    * @param visibility The sharing policy
    * @param approved Use approved version or not
-   * @param inlineObject3ApiModel
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public putResource(
     metadataUuid: string,
+    file: Blob,
     visibility?: 'public' | 'private',
     approved?: boolean,
-    inlineObject3ApiModel?: InlineObject3ApiModel,
     observe?: 'body',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<MetadataResourceApiModel>
   public putResource(
     metadataUuid: string,
+    file: Blob,
     visibility?: 'public' | 'private',
     approved?: boolean,
-    inlineObject3ApiModel?: InlineObject3ApiModel,
     observe?: 'response',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<HttpResponse<MetadataResourceApiModel>>
   public putResource(
     metadataUuid: string,
+    file: Blob,
     visibility?: 'public' | 'private',
     approved?: boolean,
-    inlineObject3ApiModel?: InlineObject3ApiModel,
     observe?: 'events',
     reportProgress?: boolean,
     options?: { httpHeaderAccept?: 'application/json' }
   ): Observable<HttpEvent<MetadataResourceApiModel>>
   public putResource(
     metadataUuid: string,
+    file: Blob,
     visibility?: 'public' | 'private',
     approved?: boolean,
-    inlineObject3ApiModel?: InlineObject3ApiModel,
     observe: any = 'body',
     reportProgress: boolean = false,
     options?: { httpHeaderAccept?: 'application/json' }
@@ -8335,6 +8348,11 @@ export class RecordsApiService {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
         'Required parameter metadataUuid was null or undefined when calling putResource.'
+      )
+    }
+    if (file === null || file === undefined) {
+      throw new Error(
+        'Required parameter file was null or undefined when calling putResource.'
       )
     }
 
@@ -8369,11 +8387,24 @@ export class RecordsApiService {
     }
 
     // to determine the Content-Type header
-    const consumes: string[] = ['application/json']
-    const httpContentTypeSelected: string | undefined =
-      this.configuration.selectHeaderContentType(consumes)
-    if (httpContentTypeSelected !== undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected)
+    const consumes: string[] = ['multipart/form-data']
+
+    const canConsumeForm = this.canConsumeForm(consumes)
+
+    let formParams: { append(param: string, value: any): any }
+    let useForm = false
+    let convertFormParamsToString = false
+    // use FormData to transmit files using content-type "multipart/form-data"
+    // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
+    useForm = canConsumeForm
+    if (useForm) {
+      formParams = new FormData()
+    } else {
+      formParams = new HttpParams({ encoder: this.encoder })
+    }
+
+    if (file !== undefined) {
+      formParams = (formParams.append('file', <any>file) as any) || formParams
     }
 
     let responseType_: 'text' | 'json' = 'json'
@@ -8388,7 +8419,7 @@ export class RecordsApiService {
       `${this.configuration.basePath}/records/${encodeURIComponent(
         String(metadataUuid)
       )}/attachments`,
-      inlineObject3ApiModel,
+      convertFormParamsToString ? formParams.toString() : formParams,
       {
         params: queryParameters,
         responseType: <any>responseType_,
