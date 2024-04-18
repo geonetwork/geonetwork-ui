@@ -191,7 +191,6 @@ describe('dataset pages', () => {
       })
     })
     describe('features', () => {
-      let targetLink
       let keyword
       it('should go to provider website on click', () => {
         cy.get('datahub-record-metadata')
@@ -206,9 +205,7 @@ describe('dataset pages', () => {
         cy.get('@proviLink')
           .invoke('attr', 'href')
           .then((link) => {
-            targetLink = link
-            cy.get('@proviLink').invoke('removeAttr', 'target').click()
-            cy.url().should('include', targetLink)
+            expect(link).to.eq('https://www.geo2france.fr/')
           })
       })
       it('should go to dataset search page when clicking on org name and filter by org', () => {
