@@ -1,0 +1,11 @@
+<div class="flex flex-col gap-6 p-6">
+  <ng-container *ngFor="let field of fields$ | async; trackBy: fieldTracker">
+    <gn-ui-form-field
+      *ngIf="field.config.formFieldConfig && !field.config.hidden"
+      [model]="field.config.model"
+      [config]="field.config.formFieldConfig"
+      [value]="field.value"
+      (valueChange)="handleFieldValueChange(field, $event)"
+    ></gn-ui-form-field>
+  </ng-container>
+</div>

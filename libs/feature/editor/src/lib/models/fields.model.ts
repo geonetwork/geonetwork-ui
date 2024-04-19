@@ -1,4 +1,4 @@
-import { FormFieldConfig } from '@geonetwork-ui/ui/inputs'
+import { FormFieldConfig } from '../components/record-form/form-field'
 
 // Expressions should be enclosed in `${}` to be recognized as such
 // eg. ${dateNow()}
