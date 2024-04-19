@@ -1,11 +1,16 @@
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   Input,
   Output,
+  ViewChild,
 } from '@angular/core'
 import { FormControl, ReactiveFormsModule } from '@angular/forms'
 import { MatIconModule } from '@angular/material/icon'
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { EditableLabelDirective } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 import { Observable } from 'rxjs'
 import { FormFieldArrayComponent } from './form-field-array/form-field-array.component'
@@ -16,7 +21,6 @@ import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
 import { FormFieldTemporalExtentComponent } from './form-field-temporal-extent/form-field-temporal-extent.component'
 import { FormFieldConfig } from './form-field.model'
-import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'gn-ui-form-field',
@@ -25,6 +29,11 @@ import { CommonModule } from '@angular/common'
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    EditableLabelDirective,
+    MatIconModule,
+    MatTooltipModule,
     FormFieldSimpleComponent,
     FormFieldRichComponent,
     FormFieldObjectComponent,
@@ -32,10 +41,7 @@ import { CommonModule } from '@angular/common'
     FormFieldTemporalExtentComponent,
     FormFieldFileComponent,
     FormFieldArrayComponent,
-    CommonModule,
-    ReactiveFormsModule,
     TranslateModule,
-    MatIconModule,
   ],
 })
 export class FormFieldComponent {
@@ -48,10 +54,16 @@ export class FormFieldComponent {
   }
   @Output() valueChange: Observable<unknown>
 
+  @ViewChild('titleInput') titleInput: ElementRef
+
   formControl = new FormControl()
 
   constructor() {
     this.valueChange = this.formControl.valueChanges
+  }
+
+  focusTitleInput() {
+    this.titleInput.nativeElement.children[0].focus()
   }
 
   get simpleType() {
@@ -100,6 +112,9 @@ export class FormFieldComponent {
     return !this.config.locked && this.config.invalid
   }
 
+  get isTitle() {
+    return this.model === 'title'
+  }
   get isAbstract() {
     return this.model === 'abstract'
   }
