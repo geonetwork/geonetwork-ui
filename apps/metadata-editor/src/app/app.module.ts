@@ -20,19 +20,17 @@ import { AppComponent } from './app.component'
 import { appRoutes } from './app.routes'
 import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { BrowserModule } from '@angular/platform-browser'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { provideAnimations } from '@angular/platform-browser/animations'
 import { extModules } from './build-specifics'
 import { DashboardPageComponent } from './dashboard/dashboard-page.component'
 import { EditorRouterService } from './router.service'
-import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
-import { provideGn4 } from '@geonetwork-ui/api/repository'
+import { provideGn4, provideRepositoryUrl } from '@geonetwork-ui/api/repository'
 import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     StoreModule.forRoot(
       {},
       {
@@ -62,6 +60,7 @@ import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
     provideRepositoryUrl(() => getGlobalConfig().GN4_API_URL),
     importProvidersFrom(EffectsModule.forRoot()),
     provideGn4(),
+    provideAnimations(),
   ],
   bootstrap: [AppComponent],
 })

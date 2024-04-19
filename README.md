@@ -248,6 +248,7 @@ Libraries are organized in the following fashion:
    - `feature-editor` for logic and components related to editing metadata
    - `feature-map` for logic and components related to interactive maps
    - `feature-search` for logic and components related to searching through the catalog
+   - `feature-notifications` for notifications systems
 
    > Note: these libraries provide "smart components" which are communicating with each other using a NgRx store.  
    > They rely on presentation components and as such hold very little HTML or CSS code.

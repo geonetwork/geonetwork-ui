@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "types": [],
-    "target": "ES2022",
+    "target": "es2022",
     "useDefineForClassFields": false
   },
   "files": ["src/main.ts", "src/polyfills.ts"],

@@ -4,7 +4,7 @@
     [title]="organisation.name"
   >
     <div
-      class="flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden w-full border border-gray-300 h-36"
+      class="shrink-0 bg-gray-100 rounded-lg overflow-hidden w-full border border-gray-300 h-36"
     >
       <gn-ui-thumbnail
         class="relative h-full w-full"
@@ -13,20 +13,20 @@
       >
       </gn-ui-thumbnail>
     </div>
-    <div class="px-3 pb-2 capitalize flex flex-col flex-grow overflow-hidden">
+    <div class="px-3 pb-2 capitalize flex flex-col grow overflow-hidden">
       <span
-        class="flex-shrink-0 mb-3 mt-5 font-title text-21 text-title group-hover:text-primary line-clamp-2 sm:mt-2 transition-colors"
+        class="shrink-0 mb-3 mt-5 font-title text-21 text-title group-hover:text-primary line-clamp-2 sm:mt-2 transition-colors"
         data-cy="organizationName"
       >
         {{ organisation.name }}</span
       >
       <p
-        class="abstract mt-4 mb-5 sm:mb-2 sm:mt-0 flex-grow flex-shrink-1 overflow-hidden"
+        class="abstract mt-4 mb-5 sm:mb-2 sm:mt-0 grow shrink-1 overflow-hidden"
         data-cy="organizationDesc"
       >
         {{ organisation.description }}
       </p>
-      <div class="flex-shrink-0 text-primary opacity-50 flex leading-6">
+      <div class="shrink-0 text-primary opacity-50 flex leading-6">
         <mat-icon class="material-symbols-outlined text-primary opacity-50 mr-1"
           >folder_open
         </mat-icon>
