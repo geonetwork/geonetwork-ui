@@ -3,7 +3,7 @@
 >
   <div
     role="alert"
-    class="rounded-full text-white p-[6px] w-[32px] h-[32px] flex flex-shrink-0"
+    class="rounded-full text-white p-[6px] w-[32px] h-[32px] flex shrink-0"
     [ngClass]="{
       'bg-red-500': type === 'error',
       'bg-yellow-500': type === 'warning',
@@ -20,7 +20,7 @@
     </mat-icon>
   </div>
   <div
-    class="flex flex-col items-start gap-[4px] pt-[3px] flex-grow flex-shrink overflow-hidden"
+    class="flex flex-col items-start gap-[4px] pt-[3px] grow shrink overflow-hidden"
   >
     <div class="font-bold text-[16px] text-gray-900">
       {{ title }}
@@ -39,7 +39,7 @@
   </div>
   <gn-ui-button
     type="light"
-    class="flex-shrink-0"
+    class="shrink-0"
     (buttonClick)="handleClose()"
     [style.--gn-ui-button-padding]="0"
     [style.--gn-ui-button-width]="'21px'"
