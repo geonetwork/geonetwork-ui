@@ -60,10 +60,10 @@ describe('EditRecordResolver', () => {
       record = undefined
       resolver.resolve(activatedRoute, null).subscribe((r) => (record = r))
     })
-    it('should show error notification', () => {
+    it('should not emit anything', () => {
       expect(record).toBeUndefined()
     })
-    it('should not emit anything', () => {
+    it('should show error notification', () => {
       expect(notificationsService.showNotification).toHaveBeenCalledWith({
         type: 'error',
         title: 'editor.record.loadError.title',
