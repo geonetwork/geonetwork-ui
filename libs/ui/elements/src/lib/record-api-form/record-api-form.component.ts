@@ -73,7 +73,6 @@ export class RecordApiFormComponent {
 
   parseOutputFormats() {
     this.getOutputFormats(this.apiBaseUrl).then((outputFormats) => {
-      console.log(outputFormats)
       const uniqueFormats = [...new Set(outputFormats.formats)]
       const formatsList = uniqueFormats.map((format) => {
         const normalizedFormat = mimeTypeToFormat(format)
@@ -94,7 +93,6 @@ export class RecordApiFormComponent {
   }
 
   async getOutputFormats(url) {
-    console.log(url)
     const endpoint = await new OgcApiEndpoint(url)
     const firstCollection = (await endpoint.featureCollections)[0]
     return endpoint.getCollectionInfo(firstCollection)
