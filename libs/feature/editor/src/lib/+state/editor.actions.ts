@@ -4,7 +4,11 @@ import { SaveRecordError } from './editor.models'
 
 export const openRecord = createAction(
   '[Editor] Open record',
-  props<{ record: CatalogRecord }>()
+  props<{
+    record: CatalogRecord
+    alreadySavedOnce: boolean
+    recordSource?: string | null
+  }>()
 )
 
 export const updateRecordField = createAction(

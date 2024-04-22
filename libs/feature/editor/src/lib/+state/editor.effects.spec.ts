@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing'
 import { provideMockActions } from '@ngrx/effects/testing'
 import { Action } from '@ngrx/store'
 import { provideMockStore } from '@ngrx/store/testing'
-import { hot } from 'jasmine-marbles'
+import { getTestScheduler, hot } from 'jasmine-marbles'
 import { Observable, of, throwError } from 'rxjs'
 import * as EditorActions from './editor.actions'
 import { EditorEffects } from './editor.effects'
@@ -10,8 +10,8 @@ import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 import { EditorService } from '../services/editor.service'
 
 class EditorServiceMock {
-  loadRecordByUuid = jest.fn(() => of(DATASET_RECORDS[0]))
-  saveRecord = jest.fn((record) => of(record))
+  saveRecord = jest.fn((record) => of([record, '<xml>blabla</xml>']))
+  saveRecordAsDraft = jest.fn(() => of('<xml>blabla</xml>'))
 }
 
 describe('EditorEffects', () => {
@@ -56,7 +56,11 @@ describe('EditorEffects', () => {
         })
         const expected = hot('-(ab)|', {
           a: EditorActions.saveRecordSuccess(),
-          b: EditorActions.openRecord({ record: DATASET_RECORDS[0] }),
+          b: EditorActions.openRecord({
+            record: DATASET_RECORDS[0],
+            alreadySavedOnce: true,
+            recordSource: '<xml>blabla</xml>',
+          }),
         })
         expect(effects.saveRecord$).toBeObservable(expected)
       })
@@ -92,6 +96,37 @@ describe('EditorEffects', () => {
         a: EditorActions.markRecordAsChanged(),
       })
       expect(effects.markAsChanged$).toBeObservable(expected)
+    })
+  })
+
+  describe('saveRecordDraft$', () => {
+    it('does not dispatch any action', () => {
+      actions = hot('-a-', {
+        a: EditorActions.updateRecordField({
+          field: 'title',
+          value: 'Hello world',
+        }),
+      })
+      expect(effects.saveRecordDraft$).toBeObservable(hot('---'))
+      expect(service.saveRecordAsDraft).not.toHaveBeenCalled()
+    })
+    it('calls editorService.saveRecordAsDraft after 1000ms', () => {
+      getTestScheduler().run(() => {
+        actions = hot('a-a 1050ms -', {
+          a: EditorActions.updateRecordField({
+            field: 'title',
+            value: 'Hello world',
+          }),
+        })
+        expect(effects.saveRecordDraft$).toBeObservable(
+          hot('--- 999ms b', {
+            b: '<xml>blabla</xml>', // this is emitted by the observable but not dispatched as an action
+          })
+        )
+        expect(service.saveRecordAsDraft).toHaveBeenCalledWith(
+          DATASET_RECORDS[0]
+        )
+      })
     })
   })
 })
