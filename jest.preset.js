@@ -18,7 +18,6 @@ module.exports = {
     ],
   },
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  testRunner: 'jest-jasmine2',
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
     'jest-preset-angular/build/serializers/ng-snapshot',
