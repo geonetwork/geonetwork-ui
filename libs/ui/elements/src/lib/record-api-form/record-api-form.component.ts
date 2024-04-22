@@ -73,8 +73,7 @@ export class RecordApiFormComponent {
 
   parseOutputFormats() {
     this.getOutputFormats(this.apiBaseUrl).then((outputFormats) => {
-      const uniqueFormats = [...new Set(outputFormats.formats)]
-      const formatsList = uniqueFormats.map((format) => {
+      const formatsList = outputFormats.formats.map((format) => {
         const normalizedFormat = mimeTypeToFormat(format)
         return {
           label: normalizedFormat.toUpperCase(),
@@ -82,13 +81,12 @@ export class RecordApiFormComponent {
         }
       })
       this.outputFormats = this.outputFormats.concat(formatsList)
-      this.outputFormats.sort((a, b) => {
-        const labelA = a.label.toUpperCase()
-        const labelB = b.label.toUpperCase()
-        if (labelA < labelB) return -1
-        if (labelA > labelB) return 1
-        return 0
-      })
+      this.outputFormats = this.outputFormats
+        .filter(
+          (format, index, self) =>
+            index === self.findIndex((t) => t.value === format.value)
+        )
+        .sort((a, b) => a.label.localeCompare(b.label))
     })
   }
 
