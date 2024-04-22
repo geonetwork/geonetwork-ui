@@ -689,7 +689,7 @@ describe('api form', () => {
   })
 })
 
-describe.only('userFeedback', () => {
+describe('userFeedback', () => {
   describe('when not logged in', () => {
     beforeEach(() => {
       cy.visit('/dataset/accroche_velos')
@@ -760,7 +760,6 @@ describe.only('userFeedback', () => {
         .first()
         .should('exist')
         .type('Something')
-
 
       cy.get('gn-ui-user-feedback-item')
         .find('gn-ui-button')
