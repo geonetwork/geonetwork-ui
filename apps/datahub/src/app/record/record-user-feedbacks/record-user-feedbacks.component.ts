@@ -135,14 +135,20 @@ export class RecordUserFeedbacksComponent implements OnInit, OnDestroy {
             )
 
             const userFeedBacksAnswersMap = new Map()
-            userFeedbacksAnswersViewModels.forEach((userFeedbackAnswerViewModel) => {
-              const parentUuid = userFeedbackAnswerViewModel.parentUuid
-              if (userFeedBacksAnswersMap.has(parentUuid)) {
-                userFeedBacksAnswersMap.get(parentUuid).push(userFeedbackAnswerViewModel)
-              } else {
-                userFeedBacksAnswersMap.set(parentUuid, [userFeedbackAnswerViewModel])
+            userFeedbacksAnswersViewModels.forEach(
+              (userFeedbackAnswerViewModel) => {
+                const parentUuid = userFeedbackAnswerViewModel.parentUuid
+                if (userFeedBacksAnswersMap.has(parentUuid)) {
+                  userFeedBacksAnswersMap
+                    .get(parentUuid)
+                    .push(userFeedbackAnswerViewModel)
+                } else {
+                  userFeedBacksAnswersMap.set(parentUuid, [
+                    userFeedbackAnswerViewModel,
+                  ])
+                }
               }
-            })
+            )
 
             return {
               parentsViewModels: userFeedbacksParentsViewModels,

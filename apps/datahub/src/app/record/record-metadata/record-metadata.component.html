@@ -77,7 +77,7 @@
             <mat-tab [disabled]="(displayMap$ | async) === false">
               <ng-template mat-tab-label>
                 <span class="tab-header-label sm:ml-32" translate
-                >record.tab.map</span
+                  >record.tab.map</span
                 >
               </ng-template>
               <div
@@ -148,10 +148,7 @@
     </div>
   </div>
 </div>
-<div
-  id="userFeedbacks"
-  class="bg-primary-opacity-10 py-16"
->
+<div id="userFeedbacks" class="bg-primary-opacity-10 py-16">
   <div class="container-lg px-4 lg:mx-auto">
     <datahub-record-user-feedbacks
       [organisationName$]="organisationName$"

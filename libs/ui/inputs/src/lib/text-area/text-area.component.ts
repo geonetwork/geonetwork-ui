@@ -14,11 +14,9 @@ import { distinctUntilChanged } from 'rxjs/operators'
   styleUrls: ['./text-area.component.css'],
   standalone: true,
 })
-
 export class TextAreaComponent implements AfterViewInit {
   private readonly baseClasses: string
   private readonly disabledClasses: string
-
 
   @Input() value = ''
   @Input() disabled = false
@@ -43,16 +41,16 @@ export class TextAreaComponent implements AfterViewInit {
       'leading-tight',
       'focus:outline-none',
       'focus:bg-background',
-      'focus:border-primary'
+      'focus:border-primary',
     ].join(' ')
 
-    this.disabledClasses = [
-      'cursor-not-allowed'
-    ].join(' ')
+    this.disabledClasses = ['cursor-not-allowed'].join(' ')
   }
 
   get classList() {
-    return `${this.baseClasses} ${this.extraClass} ${this.disabled ? this.disabledClasses	: ''}`
+    return `${this.baseClasses} ${this.extraClass} ${
+      this.disabled ? this.disabledClasses : ''
+    }`
   }
 
   ngAfterViewInit() {

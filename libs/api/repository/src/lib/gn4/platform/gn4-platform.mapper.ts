@@ -1,6 +1,7 @@
 import {
   MeResponseApiModel,
-  UserApiModel, UserFeedbackDTOApiModel
+  UserApiModel,
+  UserFeedbackDTOApiModel,
 } from '@geonetwork-ui/data-access/gn4'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 import { Injectable } from '@angular/core'
@@ -83,7 +84,9 @@ export class Gn4PlatformMapper {
     }
   }
 
-  userFeedbacksToApi(userFeedback: UserFeedback): Partial<UserFeedbackDTOApiModel> {
+  userFeedbacksToApi(
+    userFeedback: UserFeedback
+  ): Partial<UserFeedbackDTOApiModel> {
     return {
       uuid: userFeedback.uuid,
       metadataUUID: userFeedback.metadataUUID,

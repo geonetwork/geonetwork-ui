@@ -1,6 +1,9 @@
 import { TestBed } from '@angular/core/testing'
 import { MockStore, provideMockStore } from '@ngrx/store/testing'
-import { initialMetadataViewState, METADATA_VIEW_FEATURE_STATE_KEY } from './mdview.reducer'
+import {
+  initialMetadataViewState,
+  METADATA_VIEW_FEATURE_STATE_KEY,
+} from './mdview.reducer'
 import { MdViewFacade } from './mdview.facade'
 import * as MdViewActions from './mdview.actions'
 import { hot } from 'jasmine-marbles'

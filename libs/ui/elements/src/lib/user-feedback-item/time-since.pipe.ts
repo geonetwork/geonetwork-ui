@@ -12,7 +12,7 @@ export class TimeSincePipe implements PipeTransform {
 
   transform(value: Date): string {
     if (isNaN(value.getTime())) {
-      throw new Error('Invalid Date');
+      throw new Error('Invalid Date')
     }
 
     const maintenant = new Date()

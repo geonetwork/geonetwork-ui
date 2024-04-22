@@ -18,9 +18,11 @@ export class TextInputComponent implements AfterViewInit {
     'appearance-none',
     'border border-gray-300',
     'rounded w-full',
-    'p-2', 'text-gray-700', 'leading-tight',
+    'p-2',
+    'text-gray-700',
+    'leading-tight',
     'focus:outline-none',
-    'focus:border-primary'
+    'focus:border-primary',
   ].join(' ')
 
   @Input() value = ''
@@ -31,8 +33,7 @@ export class TextInputComponent implements AfterViewInit {
   @Output() valueChange = this.rawChange.pipe(distinctUntilChanged())
   @ViewChild('input') input
 
-  constructor() {
-  }
+  constructor() {}
 
   get classList() {
     return `${this.baseClass} ${this.extraClass}`

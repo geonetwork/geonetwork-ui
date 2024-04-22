@@ -3,43 +3,35 @@
   class="flex flex-col bg-white rounded w-full"
   [ngClass]="[isAnAnswer ? 'ps-4 ' : 'p-4']"
 >
-  <div
-    class="flex flex-row"
-  >
+  <div class="flex flex-row">
     <div class="avatar">
       <img
         class="rounded-full"
         [src]="userFeedbackParent.avatarUrl"
         alt="avatar"
-      >
+      />
     </div>
     <div class="p-4 flex flex-col">
       <span>{{ userFeedbackParent.authorName }}</span>
       <span> {{ userFeedbackParent.date | timeSince }}</span>
     </div>
   </div>
-  <div
-    data-cy="commentText"
-    class="mt-4 whitespace-pre-line"
-  >
+  <div data-cy="commentText" class="mt-4 whitespace-pre-line">
     {{ userFeedbackParent.comment }}
   </div>
   <div
     class="w-full"
     *ngFor="let userFeedBacksAnswer of userFeedBacksAnswers; let last = last"
   >
-    <hr class="-mx-4 my-6">
+    <hr class="-mx-4 my-6" />
     <gn-ui-user-feedback-item
       [userFeedbackParent]="userFeedBacksAnswer"
       [isLastComment]="last"
     ></gn-ui-user-feedback-item>
   </div>
 
-  <div
-    *ngIf="isActiveUserEditor"
-    class="mt-2 flex flex-col"
-  >
-    <hr class="-mx-4 my-4">
+  <div *ngIf="isActiveUserEditor" class="mt-2 flex flex-col">
+    <hr class="-mx-4 my-4" />
     <div
       id="new-comment-buttons"
       class="flex flex-row gap-2 items-center justify-end"
@@ -49,14 +41,13 @@
         [(value)]="newAnswer"
         (valueChange)="onNewAnswerValueChange()"
         (keyup.control.enter)="publishNewAnswer()"
-        [placeholder]="'record.metadata.userFeedbacks.newAnswer.placeholder' | translate"
+        [placeholder]="
+          'record.metadata.userFeedbacks.newAnswer.placeholder' | translate
+        "
         class="grow"
         extraClass="bg-transparent border-0 placeholder-primary-darker text-primary-darker h-9"
       ></gn-ui-text-area>
-      <div
-        *ngIf="!isAnswerEmpty"
-        class="flex flex-row justify-end"
-      >
+      <div *ngIf="!isAnswerEmpty" class="flex flex-row justify-end">
         <gn-ui-button
           [disabled]="isAddUserFeedbackLoading"
           [type]="'outline'"

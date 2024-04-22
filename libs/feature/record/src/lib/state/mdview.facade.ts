@@ -7,7 +7,8 @@ import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import {
   CatalogRecord,
-  UserFeedback, UserFeedbackViewModel
+  UserFeedback,
+  UserFeedbackViewModel,
 } from '@geonetwork-ui/common/domain/model/record'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
 
@@ -144,12 +145,16 @@ export class MdViewFacade {
     this.store.dispatch(MdViewActions.loadUserFeedbacks({ datasetUuid }))
   }
 
-  async createUserFeedbackViewModel(baseUserFeedback: UserFeedback): Promise<UserFeedbackViewModel>{
-    const userAvatarUrl = await this.avatarService.getProfileIconUrl(baseUserFeedback.authorUserId?.toString())
+  async createUserFeedbackViewModel(
+    baseUserFeedback: UserFeedback
+  ): Promise<UserFeedbackViewModel> {
+    const userAvatarUrl = await this.avatarService.getProfileIconUrl(
+      baseUserFeedback.authorUserId?.toString()
+    )
 
     return {
       ...baseUserFeedback,
-      avatarUrl: userAvatarUrl
+      avatarUrl: userAvatarUrl,
     }
   }
 }

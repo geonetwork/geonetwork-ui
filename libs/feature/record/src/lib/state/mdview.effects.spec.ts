@@ -59,7 +59,9 @@ describe('MdViewEffects', () => {
           a: MdViewActions.loadFullMetadata({ uuid: full.uniqueIdentifier }),
         })
         const expected = hot('-a-|', {
-          a: MdViewActions.loadFullMetadataSuccess({ full: DATASET_RECORDS[0] }),
+          a: MdViewActions.loadFullMetadataSuccess({
+            full: DATASET_RECORDS[0],
+          }),
         })
         expect(effects.loadFullMetadata$).toBeObservable(expected)
       })

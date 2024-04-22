@@ -3,7 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  Output
+  Output,
 } from '@angular/core'
 import { propagateToDocumentOnly } from '@geonetwork-ui/util/shared'
 
@@ -12,7 +12,7 @@ import { propagateToDocumentOnly } from '@geonetwork-ui/util/shared'
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true
+  standalone: true,
 })
 export class ButtonComponent {
   private btnClass = 'gn-ui-btn-default'

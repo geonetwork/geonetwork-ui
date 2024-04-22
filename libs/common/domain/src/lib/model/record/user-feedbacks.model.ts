@@ -1,4 +1,3 @@
-
 export interface UserFeedback {
   uuid: string
   comment: string
@@ -11,6 +10,6 @@ export interface UserFeedback {
   date: Date
 }
 
-export interface UserFeedbackViewModel extends UserFeedback{
+export interface UserFeedbackViewModel extends UserFeedback {
   avatarUrl: string
 }

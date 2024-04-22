@@ -1,7 +1,9 @@
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import { createAction, props } from '@ngrx/store'
-import { CatalogRecord, UserFeedback } from '@geonetwork-ui/common/domain/model/record'
-
+import {
+  CatalogRecord,
+  UserFeedback,
+} from '@geonetwork-ui/common/domain/model/record'
 
 /*
   Metadata actions
@@ -28,7 +30,6 @@ export const loadFullMetadataFailure = createAction(
 
 export const closeMetadata = createAction('[Metadata view] close')
 
-
 /*
   Related actions
  */
@@ -37,7 +38,6 @@ export const setRelated = createAction(
   props<{ related: CatalogRecord[] }>()
 )
 
-
 /*
   ChartConfig actions
  */
@@ -45,7 +45,6 @@ export const setChartConfig = createAction(
   '[Metadata view] Set chart config',
   props<{ chartConfig: DatavizConfigurationModel }>()
 )
-
 
 /*
   User Feedbacks actions
@@ -79,5 +78,3 @@ export const loadUserFeedbacksFailure = createAction(
   '[Metadata view] Load UserFeedbacks Failure',
   props<{ error: any }>()
 )
-
-

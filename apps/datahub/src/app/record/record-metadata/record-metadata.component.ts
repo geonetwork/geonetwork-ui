@@ -7,7 +7,7 @@ import { filter, map, mergeMap } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
   Keyword,
-  Organization
+  Organization,
 } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 
@@ -15,14 +15,14 @@ import { MdViewFacade } from '@geonetwork-ui/feature/record'
   selector: 'datahub-record-metadata',
   templateUrl: './record-metadata.component.html',
   styleUrls: ['./record-metadata.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecordMetadataComponent {
   @Input() metadataQualityDisplay: boolean
 
   displayMap$ = combineLatest([
     this.metadataViewFacade.mapApiLinks$,
-    this.metadataViewFacade.geoDataLinks$
+    this.metadataViewFacade.geoDataLinks$,
   ]).pipe(
     map(
       ([mapLinks, geoDataLinks]) =>
@@ -32,7 +32,7 @@ export class RecordMetadataComponent {
 
   displayData$ = combineLatest([
     this.metadataViewFacade.dataLinks$,
-    this.metadataViewFacade.geoDataLinks$
+    this.metadataViewFacade.geoDataLinks$,
   ]).pipe(
     map(
       ([dataLinks, geoDataLinks]) =>
@@ -94,8 +94,7 @@ export class RecordMetadataComponent {
     private searchService: SearchService,
     private sourceService: SourcesService,
     private orgsService: OrganizationsServiceInterface
-  ) {
-  }
+  ) {}
 
   onTabIndexChange(index: number): void {
     this.selectedTabIndex$.next(index)
