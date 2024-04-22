@@ -33,8 +33,6 @@ export class TextInputComponent implements AfterViewInit {
   @Output() valueChange = this.rawChange.pipe(distinctUntilChanged())
   @ViewChild('input') input
 
-  constructor() {}
-
   get classList() {
     return `${this.baseClass} ${this.extraClass}`
   }
