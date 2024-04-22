@@ -69,11 +69,12 @@ import { FormsModule } from '@angular/forms'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { LANGUAGES_LIST, UiCatalogModule } from '@geonetwork-ui/ui/catalog'
 import {
+  LOGIN_URL,
   METADATA_LANGUAGE,
+  provideGn4,
   provideRepositoryUrl,
 } from '@geonetwork-ui/api/repository'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { LOGIN_URL, provideGn4 } from '@geonetwork-ui/api/repository'
 import { RecordRelatedRecordsComponent } from './record/record-related-records/record-related-records.component'
 import { RecordMetadataComponent } from './record/record-metadata/record-metadata.component'
 import { RecordOtherlinksComponent } from './record/record-otherlinks/record-otherlinks.component'
@@ -213,8 +214,7 @@ export class AppModule {
       getThemeConfig().BACKGROUND_COLOR,
       getThemeConfig().MAIN_FONT || "'Rubik', sans-serif",
       getThemeConfig().TITLE_FONT || "'Readex Pro', sans-serif",
-      getThemeConfig().FONTS_STYLESHEET_URL ||
-        'https://fonts.googleapis.com/css2?family=Readex+Pro&family=Rubik&display=swap'
+      getThemeConfig().FONTS_STYLESHEET_URL || 'assets/css/default-fonts.css'
     )
     ThemeService.generateBgOpacityClasses(
       'primary',
