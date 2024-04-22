@@ -94,6 +94,33 @@ export const FORMATS = {
     color: '#de630b',
     mimeTypes: ['application/x-dxf', 'image/x-dxf'],
   },
+  html: {
+    extensions: ['html', 'htm'],
+    priority: 12,
+    color: '#f2bb3a',
+    mimeTypes: ['text/html'],
+  },
+  fgb: {
+    extensions: ['fgb', 'flatgeobuf'],
+    priority: 13,
+    color: '#f2bb3a',
+    mimeTypes: ['application/flatgeobuf'],
+  },
+  jsonfg: {
+    extensions: ['jsonfg', 'jsonfgc'],
+    priority: 14,
+    color: '#f2bb3a',
+    mimeTypes: [
+      'application/vnd.ogc.fg+json',
+      'application/vnd.ogc.fg+json;compatibility=geojson',
+    ],
+  },
+  pap: {
+    extensions: ['pap'],
+    priority: 15,
+    color: '#f2bb3a',
+    mimeTypes: ['application/vnd.policy.attributes'],
+  },
 } as const
 
 export type FileFormat = keyof typeof FORMATS
