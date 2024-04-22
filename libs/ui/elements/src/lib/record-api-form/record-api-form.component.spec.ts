@@ -4,6 +4,8 @@ import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/r
 import { firstValueFrom } from 'rxjs'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
+import { OgcApiEndpoint } from '@camptocamp/ogc-client'
+import { mimeTypeToFormat } from '@geonetwork-ui/util/shared'
 
 const mockDatasetServiceDistribution: DatasetServiceDistribution = {
   url: new URL('https://api.example.com/data'),
@@ -85,6 +87,18 @@ describe('RecordApFormComponent', () => {
       expect(component.offset$.getValue()).toBe('')
       expect(component.limit$.getValue()).toBe('-1')
       expect(component.format$.getValue()).toBe('json')
+    })
+  })
+
+  describe('#parseOutputFormats', () => {
+    beforeEach(() => {
+      component.apiBaseUrl = 'https://api.example.com/data?'
+    })
+    it('should initialize the formats correctly', () => {
+      component.parseOutputFormats()
+      expect(component.outputFormats).toEqual([
+        { value: 'json', label: 'JSON' },
+      ])
     })
   })
 })
