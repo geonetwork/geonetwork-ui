@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { OgcApiEndpoint } from '@camptocamp/ogc-client'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { mimeTypeToFormat } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest, map } from 'rxjs'
 
 const DEFAULT_PARAMS = {
@@ -16,16 +18,14 @@ const DEFAULT_PARAMS = {
 export class RecordApiFormComponent {
   @Input() set apiLink(value: DatasetServiceDistribution) {
     this.apiBaseUrl = value ? value.url.href : undefined
+    this.parseOutputFormats()
     this.resetUrl()
   }
   offset$ = new BehaviorSubject('')
   limit$ = new BehaviorSubject('')
   format$ = new BehaviorSubject('')
   apiBaseUrl: string
-  formatsList = [
-    { label: 'JSON', value: 'json' },
-    { label: 'CSV', value: 'csv' },
-  ]
+  outputFormats = [{ value: 'json', label: 'JSON' }]
   apiQueryUrl$ = combineLatest([this.offset$, this.limit$, this.format$]).pipe(
     map(([offset, limit, format]) => {
       let outputUrl
@@ -69,5 +69,34 @@ export class RecordApiFormComponent {
     this.offset$.next(DEFAULT_PARAMS.OFFSET)
     this.limit$.next(DEFAULT_PARAMS.LIMIT)
     this.format$.next(DEFAULT_PARAMS.FORMAT)
+  }
+
+  parseOutputFormats() {
+    this.getOutputFormats(this.apiBaseUrl).then((outputFormats) => {
+      console.log(outputFormats)
+      const uniqueFormats = [...new Set(outputFormats.formats)]
+      const formatsList = uniqueFormats.map((format) => {
+        const normalizedFormat = mimeTypeToFormat(format)
+        return {
+          label: normalizedFormat.toUpperCase(),
+          value: normalizedFormat,
+        }
+      })
+      this.outputFormats = this.outputFormats.concat(formatsList)
+      this.outputFormats.sort((a, b) => {
+        const labelA = a.label.toUpperCase()
+        const labelB = b.label.toUpperCase()
+        if (labelA < labelB) return -1
+        if (labelA > labelB) return 1
+        return 0
+      })
+    })
+  }
+
+  async getOutputFormats(url) {
+    console.log(url)
+    const endpoint = await new OgcApiEndpoint(url)
+    const firstCollection = (await endpoint.featureCollections)[0]
+    return endpoint.getCollectionInfo(firstCollection)
   }
 }
