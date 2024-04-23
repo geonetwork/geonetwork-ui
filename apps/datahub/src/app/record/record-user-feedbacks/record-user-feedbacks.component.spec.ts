@@ -17,7 +17,7 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import {
   DATASET_RECORDS,
   SOME_USER_FEEDBACKS,
-  USER_FIXTURE,
+  A_USER,
 } from '@geonetwork-ui/common/fixtures'
 import { UserFeedbackViewModel } from '@geonetwork-ui/common/domain/model/record'
 
@@ -44,7 +44,7 @@ describe('RelatedRecordsComponent', () => {
 
   const platformServiceInterfaceMock: Partial<PlatformServiceInterface> = {
     getUserFeedbacks: jest.fn(),
-    getMe: jest.fn(() => new BehaviorSubject(USER_FIXTURE())),
+    getMe: jest.fn(() => new BehaviorSubject(A_USER)),
   }
 
   let component: RecordUserFeedbacksComponent
@@ -108,7 +108,7 @@ describe('RelatedRecordsComponent', () => {
     it('should set active user', fakeAsync(() => {
       component.ngOnInit()
       tick()
-      expect(component.activeUser).toEqual(USER_FIXTURE())
+      expect(component.activeUser).toEqual(A_USER)
     }))
     it('should fetch user feedbacks and sort them correctly', async () => {
       component.ngOnInit()
