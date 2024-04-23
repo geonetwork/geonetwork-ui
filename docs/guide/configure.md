@@ -119,11 +119,15 @@ All parameters in this section are expressed using CSS formats; references:
 
 * `fonts_stylesheet_url` (optional)
 
-  If using custom fonts, specify a URL pointing to a stylesheet defining these fonts. This could typically be a Google Fonts URL, for instance:
+  If using custom fonts, specify a URL pointing to a stylesheet defining these fonts. Default fonts are available locally in the application assets. Fonts can also be loaded from third-party services, for instance:
 
   ```toml
   fonts_stylesheet_url = "https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Permanent+Marker&display=swap"
   ```
+
+  ::: warning Potential GDPR implications
+  Using fonts coming from third-party services (e.g. Google Fonts) might require asking for explicit user consent as the user's IP address might be shared with said service
+  :::
 
 - `favicon` (optional)
 

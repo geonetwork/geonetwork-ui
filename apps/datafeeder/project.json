@@ -16,12 +16,17 @@
         "tsConfig": "apps/datafeeder/tsconfig.app.json",
         "aot": true,
         "assets": [
-          "apps/datafeeder/src/assets",
           {
             "glob": "*",
             "input": "translations",
             "output": "assets/i18n/"
-          }
+          },
+          {
+            "glob": "**/*",
+            "input": "assets-common",
+            "output": "assets/"
+          },
+          "apps/datafeeder/src/assets"
         ],
         "styles": [
           "tailwind.base.css",
