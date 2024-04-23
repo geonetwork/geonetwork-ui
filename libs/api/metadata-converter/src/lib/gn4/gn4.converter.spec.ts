@@ -1057,8 +1057,6 @@ describe('Gn4Converter', () => {
                 role: 'publisher',
               },
             ],
-            datasetCreated: new Date('2012-01-01T00:00:00.000Z'),
-            datasetUpdated: new Date('2021-12-13T00:00:00.000Z'),
             distributions: [
               {
                 url: new URL(
@@ -1626,6 +1624,8 @@ describe('Gn4Converter', () => {
             recordCreated: new Date('2021-10-05T12:48:57.678Z'),
             recordUpdated: new Date('2021-10-05T12:48:57.678Z'),
             recordPublished: new Date('2021-04-01T00:00:00.000Z'),
+            resourceCreated: new Date('2012-01-01T00:00:00.000Z'),
+            resourceUpdated: new Date('2021-12-13T00:00:00.000Z'),
             status: 'ongoing',
             topics: ['Installations de suivi environnemental', 'Océans'],
             title: 'Surval - Données par paramètre',

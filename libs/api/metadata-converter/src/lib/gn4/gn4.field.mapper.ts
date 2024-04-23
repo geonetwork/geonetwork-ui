@@ -120,13 +120,13 @@ export class Gn4FieldMapper {
     }),
     creationDateForResource: (output, source) => ({
       ...output,
-      datasetCreated: toDate(
+      resourceCreated: toDate(
         getFirstValue(selectField<string>(source, 'creationDateForResource'))
       ),
     }),
     revisionDateForResource: (output, source) => ({
       ...output,
-      datasetUpdated: toDate(
+      resourceUpdated: toDate(
         getFirstValue(selectField<string>(source, 'revisionDateForResource'))
       ),
     }),
