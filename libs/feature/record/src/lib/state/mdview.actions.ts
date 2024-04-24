@@ -61,7 +61,7 @@ export const addUserFeedbackSuccess = createAction(
 
 export const addUserFeedbackFailure = createAction(
   '[Metadata view] Add UserFeedback Failure',
-  props<{ error: any }>()
+  props<{ otherError?: string; notFound?: boolean }>()
 )
 
 export const loadUserFeedbacks = createAction(
@@ -76,5 +76,5 @@ export const loadUserFeedbacksSuccess = createAction(
 
 export const loadUserFeedbacksFailure = createAction(
   '[Metadata view] Load UserFeedbacks Failure',
-  props<{ error: any }>()
+  props<{ otherError?: string; notFound?: boolean }>()
 )

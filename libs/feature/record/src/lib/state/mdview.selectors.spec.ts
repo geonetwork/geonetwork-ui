@@ -34,20 +34,25 @@ describe('MdView Selectors', () => {
         const results = MdViewSelectors.getMetadataUuid.projector(state)
         expect(results).toBe('321321321321')
       })
+
       it('returns null if no metadata in the state', () => {
         const results = MdViewSelectors.getMetadataUuid.projector({
           loadingFull: false,
           error: null,
+          allUserFeedbacksLoading: false,
+          addUserFeedbackLoading: false,
         })
         expect(results).toBe(null)
       })
     })
+
     describe('getMetadata', () => {
       it('returns the metadata in the state', () => {
         const results = MdViewSelectors.getMetadata.projector(state)
         expect(results).toBe(state.metadata)
       })
     })
+
     describe('getMetadataIsIncomplete', () => {
       it('returns true when incomplete', () => {
         const results = MdViewSelectors.getMetadataIsIncomplete.projector({
@@ -56,23 +61,29 @@ describe('MdView Selectors', () => {
         })
         expect(results).toBe(true)
       })
+
       it('returns false when complete', () => {
         const results = MdViewSelectors.getMetadataIsIncomplete.projector(state)
         expect(results).toBe(false)
       })
+
       it('returns null if no metadata', () => {
         const results = MdViewSelectors.getMetadataIsIncomplete.projector({
           loadingFull: false,
           error: null,
+          allUserFeedbacksLoading: false,
+          addUserFeedbackLoading: false,
         })
         expect(results).toBe(null)
       })
     })
+
     describe('getMetadataIsLoading', () => {
       it('returns false if not loading', () => {
         const results = MdViewSelectors.getMetadataIsLoading.projector(state)
         expect(results).toBe(false)
       })
+
       it('returns true if loading', () => {
         const results = MdViewSelectors.getMetadataIsLoading.projector({
           ...state,
@@ -81,6 +92,7 @@ describe('MdView Selectors', () => {
         expect(results).toBe(true)
       })
     })
+
     describe('getMetadataError', () => {
       it('returns error if present', () => {
         const results = MdViewSelectors.getMetadataError.projector({
@@ -89,14 +101,18 @@ describe('MdView Selectors', () => {
         })
         expect(results).toBe('ouch')
       })
+
       it('returns null if no error', () => {
         const results = MdViewSelectors.getMetadataError.projector({
           loadingFull: false,
           error: null,
+          allUserFeedbacksLoading: false,
+          addUserFeedbackLoading: false,
         })
         expect(results).toBe(null)
       })
     })
+
     describe('getRelated', () => {
       it('returns related records', () => {
         const results = MdViewSelectors.getRelated.projector({
@@ -106,6 +122,7 @@ describe('MdView Selectors', () => {
         expect(results).toEqual([relatedRecord])
       })
     })
+
     describe('getChartConfig', () => {
       it('returns chart config', () => {
         const results = MdViewSelectors.getChartConfig.projector({

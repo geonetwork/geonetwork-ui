@@ -70,15 +70,14 @@ export const SOME_USER_FEEDBACKS: UserFeedback[] = deepFreeze([
   },
 ])
 
-export const A_USER_FEEDBACK: UserFeedback = deepFreeze(
-  {
-    uuid: '4ad03fb7-1728-424c-bdaa-aedd531b07a8',
-    comment: 'A nice comment.',
-    metadataUUID: 'my-dataset-001',
-    authorUserId: '46798',
-    authorName: 'Arnaud De Maison',
-    authorEmail: 'a.demaison@geo2france.fr',
-    published: true,
-    parentUuid: undefined,
-    date: new Date('2023-01-01T08:00:00Z'),
-  })
+export const A_USER_FEEDBACK: UserFeedback = deepFreeze({
+  uuid: '4ad03fb7-1728-424c-bdaa-aedd531b07a8',
+  comment: 'A nice comment.',
+  metadataUUID: 'my-dataset-001',
+  authorUserId: '46798',
+  authorName: 'Arnaud De Maison',
+  authorEmail: 'a.demaison@geo2france.fr',
+  published: true,
+  parentUuid: undefined,
+  date: new Date('2023-01-01T08:00:00Z'),
+})

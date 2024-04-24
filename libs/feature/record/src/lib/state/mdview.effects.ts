@@ -52,22 +52,22 @@ export class MdViewEffects {
   /*
     UserFeedback effects
   */
-  addUserFeedback$ = createEffect(() =>
+  loadUserFeedbacks$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(MdViewActions.addUserFeedback),
-      mergeMap((action) =>
-        this.platformServiceInterface
-          .postUserFeedbacks(action.userFeedback)
-          .pipe(
-            map(() =>
-              MdViewActions.addUserFeedbackSuccess({
-                datasetUuid: action.userFeedback.metadataUUID,
+      ofType(MdViewActions.loadUserFeedbacks),
+      exhaustMap(({ datasetUuid }) =>
+        this.platformServiceInterface.getUserFeedbacks(datasetUuid).pipe(
+          map((userFeedbacks) =>
+            MdViewActions.loadUserFeedbacksSuccess({ userFeedbacks })
+          ),
+          catchError((error) =>
+            of(
+              MdViewActions.loadUserFeedbacksFailure({
+                otherError: error.message,
               })
-            ),
-            catchError((error) => {
-              return of(MdViewActions.addUserFeedbackFailure({ error }))
-            })
+            )
           )
+        )
       )
     )
   )
@@ -81,25 +81,37 @@ export class MdViewEffects {
             MdViewActions.loadUserFeedbacksSuccess({ userFeedbacks })
           ),
           catchError((error) =>
-            of(MdViewActions.loadUserFeedbacksFailure({ error }))
+            of(
+              MdViewActions.loadUserFeedbacksFailure({
+                otherError: error.message,
+              })
+            )
           )
         )
       )
     )
   )
 
-  loadUserFeedbacks$ = createEffect(() =>
+  addUserFeedback$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(MdViewActions.loadUserFeedbacks),
-      exhaustMap(({ datasetUuid }) =>
-        this.platformServiceInterface.getUserFeedbacks(datasetUuid).pipe(
-          map((userFeedbacks) =>
-            MdViewActions.loadUserFeedbacksSuccess({ userFeedbacks })
-          ),
-          catchError((error) =>
-            of(MdViewActions.loadUserFeedbacksFailure({ error }))
+      ofType(MdViewActions.addUserFeedback),
+      mergeMap((action) =>
+        this.platformServiceInterface
+          .postUserFeedbacks(action.userFeedback)
+          .pipe(
+            map(() =>
+              MdViewActions.addUserFeedbackSuccess({
+                datasetUuid: action.userFeedback.metadataUUID,
+              })
+            ),
+            catchError((error) => {
+              return of(
+                MdViewActions.addUserFeedbackFailure({
+                  otherError: error.message,
+                })
+              )
+            })
           )
-        )
       )
     )
   )

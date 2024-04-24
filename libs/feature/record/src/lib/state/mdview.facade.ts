@@ -144,17 +144,4 @@ export class MdViewFacade {
   loadUserFeedbacks(datasetUuid: string) {
     this.store.dispatch(MdViewActions.loadUserFeedbacks({ datasetUuid }))
   }
-
-  async createUserFeedbackViewModel(
-    baseUserFeedback: UserFeedback
-  ): Promise<UserFeedbackViewModel> {
-    const userAvatarUrl = await this.avatarService.getProfileIconUrl(
-      baseUserFeedback.authorUserId?.toString()
-    )
-
-    return {
-      ...baseUserFeedback,
-      avatarUrl: userAvatarUrl,
-    }
-  }
 }

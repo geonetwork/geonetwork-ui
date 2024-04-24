@@ -8,6 +8,7 @@ import { TimeSincePipe } from './time-since.pipe'
 describe('UserFeedbackItemComponent', () => {
   let component: UserFeedbackItemComponent
   let fixture: ComponentFixture<UserFeedbackItemComponent>
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [UserFeedbackItemComponent],
@@ -18,35 +19,41 @@ describe('UserFeedbackItemComponent', () => {
       })
       .compileComponents()
   })
+
   beforeEach(() => {
     fixture = TestBed.createComponent(UserFeedbackItemComponent)
     component = fixture.componentInstance
     component.userFeedbackParent = { ...SOME_USER_FEEDBACKS[0], avatarUrl: '' }
     fixture.detectChanges()
   })
+
   it('should create', () => {
     expect(component).toBeTruthy()
   })
+
   describe('publishNewAnswer()', () => {
     it('should not emit new answer if new answer is empty', () => {
       component.newAnswer = ''
-      spyOn(component.newUserFeedbackAnswer, 'emit')
+      component.newUserFeedbackAnswer.emit = jest.fn()
       component.publishNewAnswer()
       expect(component.newUserFeedbackAnswer.emit).not.toHaveBeenCalled()
     })
-    it('should not emit new answer if new answer is empty', () => {
+
+    it('should emit new answer if new answer is not empty', () => {
       component.newAnswer = 'This is a new answer'
-      spyOn(component.newUserFeedbackAnswer, 'emit')
+      component.newUserFeedbackAnswer.emit = jest.fn()
       component.publishNewAnswer()
       expect(component.newUserFeedbackAnswer.emit).toHaveBeenCalled()
     })
   })
+
   describe('onNewAnswerValueChange()', () => {
     it('should set isAnswerEmpty to true if new answer is empty', () => {
       component.newAnswer = ''
       component.onNewAnswerValueChange()
       expect(component.isAnswerEmpty).toBe(true)
     })
+
     it('should set isAnswerEmpty to false if new answer is not empty', () => {
       component.newAnswer = 'This is a new answer'
       component.onNewAnswerValueChange()

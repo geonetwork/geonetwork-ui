@@ -17,7 +17,7 @@ import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 import { DropdownChoice } from '@geonetwork-ui/ui/inputs'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { TranslateService } from '@ngx-translate/core'
-import { AuthService } from '@geonetwork-ui/api/repository'
+import { AuthService, Gn4PlatformMapper } from '@geonetwork-ui/api/repository'
 
 type UserFeedbackSortingFunction = (
   userFeedbackA: UserFeedback,
@@ -72,11 +72,12 @@ export class RecordUserFeedbacksComponent implements OnInit, OnDestroy {
   isAddUserFeedbackLoading = false
 
   constructor(
-    private translate: TranslateService,
-    private authService: AuthService,
-    private metadataViewFacade: MdViewFacade,
-    private cdr: ChangeDetectorRef,
-    private platformServiceInterface: PlatformServiceInterface
+    private readonly translate: TranslateService,
+    private readonly authService: AuthService,
+    private readonly metadataViewFacade: MdViewFacade,
+    private readonly cdr: ChangeDetectorRef,
+    private readonly mapper: Gn4PlatformMapper,
+    private readonly platformServiceInterface: PlatformServiceInterface
   ) {
     this.activeUser$ = this.platformServiceInterface.getMe()
   }
@@ -124,13 +125,13 @@ export class RecordUserFeedbacksComponent implements OnInit, OnDestroy {
 
             const userFeedbacksParentsViewModels = await Promise.all(
               userFeedbacksParents.map((feedback) =>
-                this.metadataViewFacade.createUserFeedbackViewModel(feedback)
+                this.mapper.createUserFeedbackViewModel(feedback)
               )
             )
 
             const userFeedbacksAnswersViewModels = await Promise.all(
               userFeedbacksAnswers.map((feedback) =>
-                this.metadataViewFacade.createUserFeedbackViewModel(feedback)
+                this.mapper.createUserFeedbackViewModel(feedback)
               )
             )
 

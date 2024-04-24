@@ -9,7 +9,10 @@ import { AvatarServiceInterface } from '../auth'
 import { map } from 'rxjs/operators'
 import { Observable, of } from 'rxjs'
 import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus/thesaurus.model'
-import { UserFeedback } from '@geonetwork-ui/common/domain/model/record'
+import {
+  UserFeedback,
+  UserFeedbackViewModel,
+} from '@geonetwork-ui/common/domain/model/record'
 
 @Injectable()
 export class Gn4PlatformMapper {
@@ -97,6 +100,19 @@ export class Gn4PlatformMapper {
       published: userFeedback.published,
       parentUuid: userFeedback.parentUuid,
       date: userFeedback.date.getTime().toString(),
+    }
+  }
+
+  async createUserFeedbackViewModel(
+    baseUserFeedback: UserFeedback
+  ): Promise<UserFeedbackViewModel> {
+    const userAvatarUrl = await this.avatarService.getProfileIconUrl(
+      baseUserFeedback.authorUserId?.toString()
+    )
+
+    return {
+      ...baseUserFeedback,
+      avatarUrl: userAvatarUrl,
     }
   }
 }

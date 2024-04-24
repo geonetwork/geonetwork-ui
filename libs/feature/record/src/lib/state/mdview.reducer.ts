@@ -93,17 +93,21 @@ const metadataViewReducer = createReducer(
     MetadataViewActions.loadUserFeedbacksSuccess,
     (state, { userFeedbacks }) => ({
       ...state,
+      error: null,
       userFeedbacks: userFeedbacks,
       addUserFeedbackLoading: false,
       allUserFeedbacksLoading: false,
     })
   ),
-  on(MetadataViewActions.loadUserFeedbacksFailure, (state, { error }) => ({
-    ...state,
-    error: { otherError: error.message },
-    addUserFeedbackLoading: false,
-    allUserFeedbacksLoading: false,
-  }))
+  on(
+    MetadataViewActions.loadUserFeedbacksFailure,
+    (state, { otherError, notFound }) => ({
+      ...state,
+      error: { otherError, notFound },
+      addUserFeedbackLoading: false,
+      allUserFeedbacksLoading: false,
+    })
+  )
 )
 
 export function reducer(
