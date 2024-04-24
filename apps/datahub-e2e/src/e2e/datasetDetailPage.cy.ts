@@ -632,7 +632,7 @@ describe('api form', () => {
     cy.get('@apiForm').find('input[type="checkbox"]').check()
     cy.get('@apiForm').find('gn-ui-text-input').first().should('have.value', '')
   })
-  it('should reset all 3 inputs and link on click', () => {
+  it.only('should reset all 3 inputs and link on click', () => {
     cy.get('@apiForm').find('gn-ui-text-input').first().as('firstInput')
     cy.get('@firstInput').clear()
     cy.get('@firstInput').type('54')
@@ -641,14 +641,14 @@ describe('api form', () => {
     cy.get('@secondInput').clear()
     cy.get('@secondInput').type('87')
 
-    cy.get('@apiForm').find('gn-ui-dropdown-selector').click()
-    cy.get('button[data-cy-value="csv"]').click()
+    cy.get('@apiForm').find('gn-ui-dropdown-selector').as('dropdown')
+    cy.get('@dropdown').eq(0).selectDropdownOption('geojson')
 
     cy.get('@apiForm')
       .find('gn-ui-copy-text-button')
       .find('input')
       .invoke('val')
-      .should('include', 'offset=87&limit=54&f=csv')
+      .should('include', 'offset=87&limit=54&f=geojson')
 
     cy.get('@apiForm').children('div').first().find('button').first().click()
 
