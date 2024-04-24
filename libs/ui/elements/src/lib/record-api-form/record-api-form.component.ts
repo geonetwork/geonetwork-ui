@@ -72,7 +72,12 @@ export class RecordApiFormComponent {
   }
 
   parseOutputFormats() {
-    this.getOutputFormats(this.apiBaseUrl).then((outputFormats) => {
+    const apiUrl =
+      this.apiBaseUrl.slice(-1) === '?'
+        ? this.apiBaseUrl.slice(0, -1)
+        : this.apiBaseUrl
+
+    this.getOutputFormats(apiUrl).then((outputFormats) => {
       const formatsList = outputFormats.formats.map((format) => {
         const normalizedFormat = mimeTypeToFormat(format)
         return {
