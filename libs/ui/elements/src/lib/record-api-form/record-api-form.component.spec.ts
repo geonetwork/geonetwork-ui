@@ -1,17 +1,35 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing'
 import { RecordApiFormComponent } from './record-api-form.component'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
-import { firstValueFrom } from 'rxjs'
+import { firstValueFrom, of } from 'rxjs'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
-import { OgcApiEndpoint } from '@camptocamp/ogc-client'
-import { mimeTypeToFormat } from '@geonetwork-ui/util/shared'
 
 const mockDatasetServiceDistribution: DatasetServiceDistribution = {
   url: new URL('https://api.example.com/data'),
   type: 'service',
   accessServiceProtocol: 'ogcFeatures',
 }
+
+jest.mock('@camptocamp/ogc-client', () => ({
+  OgcApiEndpoint: class {
+    constructor(private url) {}
+    get featureCollections() {
+      return Promise.resolve(['feature1'])
+    }
+    getCollectionInfo(collectionId) {
+      return Promise.resolve({
+        id: collectionId,
+        formats: [
+          'application/geo+json',
+          'application/json',
+          'text/csv',
+          'application/json',
+        ],
+      })
+    }
+  },
+}))
 
 describe('RecordApFormComponent', () => {
   let component: RecordApiFormComponent
@@ -92,11 +110,14 @@ describe('RecordApFormComponent', () => {
 
   describe('#parseOutputFormats', () => {
     beforeEach(() => {
-      component.apiBaseUrl = 'https://api.example.com/data?'
+      const url = 'https://api.example.com/data?'
+      component.apiBaseUrl = url
     })
-    it('should initialize the formats correctly', () => {
+    it('should parse the returned formats', () => {
       component.parseOutputFormats()
       expect(component.outputFormats).toEqual([
+        { value: 'csv', label: 'CSV' },
+        { value: 'geojson', label: 'GEOJSON' },
         { value: 'json', label: 'JSON' },
       ])
     })
