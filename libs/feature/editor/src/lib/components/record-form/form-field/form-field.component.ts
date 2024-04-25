@@ -11,6 +11,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { EditableLabelDirective } from '@geonetwork-ui/ui/inputs'
+import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
 import { TranslateModule } from '@ngx-translate/core'
 import { Observable } from 'rxjs'
 import { FormFieldArrayComponent } from './form-field-array/form-field-array.component'
@@ -34,6 +35,7 @@ import { FormFieldConfig } from './form-field.model'
     EditableLabelDirective,
     MatIconModule,
     MatTooltipModule,
+    FormFieldWrapperComponent,
     FormFieldSimpleComponent,
     FormFieldRichComponent,
     FormFieldObjectComponent,
@@ -117,5 +119,9 @@ export class FormFieldComponent {
   }
   get isAbstract() {
     return this.model === 'abstract'
+  }
+
+  get withoutWrapper() {
+    return this.model === 'title' || this.model === 'abstract'
   }
 }

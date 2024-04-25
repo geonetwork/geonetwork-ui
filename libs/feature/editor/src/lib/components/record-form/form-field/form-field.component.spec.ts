@@ -9,6 +9,8 @@ import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
 import { FormFieldTemporalExtentComponent } from './form-field-temporal-extent/form-field-temporal-extent.component'
 import { FormFieldComponent } from './form-field.component'
+import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
+import { EditableLabelDirective } from '@geonetwork-ui/ui/inputs'
 
 describe('FormFieldComponent', () => {
   let component: FormFieldComponent
@@ -32,12 +34,30 @@ describe('FormFieldComponent', () => {
     expect(component).toBeTruthy()
   })
 
+  describe('abstract field', () => {
+    let formField
+    beforeEach(() => {
+      component.model = 'abstract'
+      component.value = 'Some rich abstract value'
+      fixture.detectChanges()
+      formField = fixture.debugElement.query(
+        By.directive(FormFieldRichComponent)
+      ).componentInstance
+    })
+    it('creates a rich text form field', () => {
+      expect(formField).toBeTruthy()
+    })
+  })
   describe('simple field', () => {
+    let fieldWrapper
     let formField
     beforeEach(async () => {
       component.config.type = 'url'
       fixture.detectChanges()
       await fixture.whenStable()
+      fieldWrapper = fixture.debugElement.query(
+        By.directive(FormFieldWrapperComponent)
+      ).componentInstance
       formField = fixture.debugElement.query(
         By.directive(FormFieldSimpleComponent)
       ).componentInstance
@@ -48,13 +68,8 @@ describe('FormFieldComponent', () => {
       expect(formField.readonly).toEqual(component.config.locked)
       expect(formField.invalid).toEqual(component.config.invalid)
     })
-    it('shows the label', () => {
-      const label = fixture.debugElement.query(By.css('.field-label'))
-      expect(label.nativeElement.textContent).toEqual(component.config.labelKey)
-    })
-    it('shows the ok icon', () => {
-      const icon = fixture.debugElement.query(By.css('.icon-ok'))
-      expect(icon).toBeTruthy()
+    it('creates a form field wrapper', () => {
+      expect(fieldWrapper).toBeTruthy()
     })
   })
   describe('simple field (invalid)', () => {
@@ -73,10 +88,6 @@ describe('FormFieldComponent', () => {
       expect(formField).toBeTruthy()
       expect(formField.type).toEqual(component.config.type)
       expect(formField.invalid).toEqual(true)
-    })
-    it('shows the invalid icon', () => {
-      const icon = fixture.debugElement.query(By.css('.icon-invalid'))
-      expect(icon).toBeTruthy()
     })
     it('shows the invalid hint key', () => {
       const hint = fixture.debugElement.query(By.css('.field-invalid-hint'))
@@ -102,24 +113,6 @@ describe('FormFieldComponent', () => {
       expect(formField.type).toEqual(component.config.type)
       expect(formField.readonly).toEqual(true)
       expect(formField.invalid).toEqual(false)
-    })
-    it('shows the locked icon', () => {
-      const icon = fixture.debugElement.query(By.css('.icon-locked'))
-      expect(icon).toBeTruthy()
-    })
-  })
-  describe('abstract field', () => {
-    let formField
-    beforeEach(() => {
-      component.model = 'abstract'
-      component.value = 'Some rich abstract value'
-      fixture.detectChanges()
-      formField = fixture.debugElement.query(
-        By.directive(FormFieldRichComponent)
-      ).componentInstance
-    })
-    it('creates a rich text form field', () => {
-      expect(formField).toBeTruthy()
     })
   })
   describe('file field', () => {
