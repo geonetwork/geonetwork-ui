@@ -18,6 +18,7 @@ const DEFAULT_PARAMS = {
 export class RecordApiFormComponent {
   @Input() set apiLink(value: DatasetServiceDistribution) {
     this.apiBaseUrl = value ? value.url.href : undefined
+    this.outputFormats = [{ value: 'json', label: 'JSON' }]
     this.parseOutputFormats()
     this.resetUrl()
   }
@@ -78,7 +79,7 @@ export class RecordApiFormComponent {
         : this.apiBaseUrl
 
     this.getOutputFormats(apiUrl).then((outputFormats) => {
-      const formatsList = outputFormats.formats.map((format) => {
+      const formatsList = outputFormats.itemFormats.map((format) => {
         const normalizedFormat = mimeTypeToFormat(format)
         return {
           label: normalizedFormat.toUpperCase(),
