@@ -45,6 +45,12 @@
       [hint]="config.hintKey | translate"
     ></gn-ui-form-field-rich>
   </ng-container>
+  <ng-container *ngIf="isLicenses">
+    <gn-ui-form-field-license
+      [control]="formControl"
+      [label]="config.labelKey | translate"
+    ></gn-ui-form-field-license>
+  </ng-container>
   <ng-container *ngIf="isSimpleField">
     <gn-ui-form-field-simple
       [type]="simpleType"
