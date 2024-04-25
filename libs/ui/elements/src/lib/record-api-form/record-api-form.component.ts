@@ -78,9 +78,7 @@ export class RecordApiFormComponent {
         ? this.apiBaseUrl.slice(0, -1)
         : this.apiBaseUrl
 
-    this.getOutputFormats(
-      'https://demo.ldproxy.net/zoomstack/collections/airports/items'
-    ).then((outputFormats) => {
+    this.getOutputFormats(apiUrl).then((outputFormats) => {
       const formatsList = outputFormats.itemFormats.map((format) => {
         const normalizedFormat = mimeTypeToFormat(format)
         if (normalizedFormat) {
