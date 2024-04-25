@@ -115,12 +115,6 @@ export const FORMATS = {
       'application/vnd.ogc.fg+json;compatibility=geojson',
     ],
   },
-  pap: {
-    extensions: ['pap'],
-    priority: 15,
-    color: '#f2bb3a',
-    mimeTypes: ['application/vnd.policy.attributes'],
-  },
 } as const
 
 export type FileFormat = keyof typeof FORMATS
