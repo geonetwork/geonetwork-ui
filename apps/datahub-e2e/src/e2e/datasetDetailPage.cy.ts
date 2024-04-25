@@ -641,6 +641,8 @@ describe('api form', () => {
     cy.get('@secondInput').clear()
     cy.get('@secondInput').type('87')
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(3000)
     cy.get('@apiForm').find('gn-ui-dropdown-selector').as('dropdown')
     cy.get('@dropdown').eq(0).selectDropdownOption('geojson')
 
