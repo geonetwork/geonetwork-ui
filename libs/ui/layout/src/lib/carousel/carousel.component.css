@@ -1,15 +1,18 @@
 :host .carousel-container ::ng-deep > * {
   flex-shrink: 0;
 }
+
 :host {
   position: relative;
 }
+
 .carousel-step-dot {
   width: 6px;
   height: 6px;
   border-radius: 6px;
   position: relative;
 }
+
 .carousel-step-dot:after {
   content: '';
   position: absolute;
