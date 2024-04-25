@@ -1,17 +1,58 @@
-<div #carouselOverflowContainer class="overflow-hidden h-full w-full">
-  <div class="carousel-container flex flex-row" [ngClass]="containerClass">
-    <ng-content></ng-content>
+<div class="flex flex-col items-center">
+  <div class="flex flex-row gap-4 justify-center md:justify-start w-full">
+    <div class="font-title text-[28px] leading-[3.5rem] text-title mb-1.5">
+      {{ title }}
+    </div>
+    <div *ngIf="hasFourSlidesOrMore" class="flex flex-row gap-x-4 items-center">
+      <mat-icon
+        (click)="slideToPrevious()"
+        class="material-symbols-outlined card-icon rounded-full text-[0.9rem] text-center pt-[0.19rem]"
+        [style]="previousButtonStyle"
+        [ngClass]="
+          isFirstStep
+            ? 'border border-secondary text-secondary'
+            : 'border border-primary text-primary cursor-pointer'
+        "
+      >
+        arrow_back
+      </mat-icon>
+      <mat-icon
+        (click)="slideToNext()"
+        class="material-symbols-outlined card-icon rounded-full text-[0.9rem] text-center pt-[0.19rem]"
+        [style]="nextButtonStyle"
+        [ngClass]="
+          isLastStep
+            ? 'border border-secondary text-secondary'
+            : 'border border-primary text-primary cursor-pointer'
+        "
+      >
+        arrow_forward
+      </mat-icon>
+    </div>
   </div>
-</div>
-<div
-  *ngIf="steps.length > 1"
-  class="absolute right-0 top-0 flex flex-row justify-center gap-[10px] p-1"
-  [ngClass]="stepsContainerClass"
->
-  <button
-    *ngFor="let step of steps; let i = index"
-    class="carousel-step-dot"
-    (click)="scrollToStep(i)"
-    [ngClass]="selectedStep === i ? 'bg-secondary' : 'bg-gray-400'"
-  ></button>
+
+  <div #carouselOverflowContainer class="h-full w-full">
+    <div
+      class="carousel-container flex"
+      [ngClass]="{
+      containerClass: true,
+      'flex-row gap-x-4': hasFourSlidesOrMore,
+      'flex-col gap-y-4 md:flex-row md:gap-x-4': !hasFourSlidesOrMore,
+      }"
+    >
+      <ng-content></ng-content>
+    </div>
+  </div>
+  <div
+    *ngIf="hasFourSlidesOrMore"
+    class="flex flex-row justify-center gap-[10px] p-1 mt-5 w-full"
+    [ngClass]="stepsContainerClass"
+  >
+    <button
+      *ngFor="let step of steps; let i = index"
+      class="carousel-step-dot"
+      (click)="scrollToStep(i)"
+      [ngClass]="currentStep === i ? 'bg-primary' : 'bg-gray-400'"
+    ></button>
+  </div>
 </div>

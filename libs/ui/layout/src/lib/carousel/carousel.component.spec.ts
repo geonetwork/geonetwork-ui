@@ -68,7 +68,7 @@ describe('CarouselComponent', () => {
     })
     it('computes steps initially', () => {
       expect(component.steps).toEqual([0, 0.5, 0.75, 1])
-      expect(component.selectedStep).toEqual(0)
+      expect(component.currentStep).toEqual(0)
     })
     describe('click on step', () => {
       beforeEach(() => {
@@ -78,7 +78,7 @@ describe('CarouselComponent', () => {
         expect(component.emblaApi.scrollTo).toHaveBeenCalledWith(2)
       })
       it('sets the clicked step as selected', () => {
-        expect(component.selectedStep).toEqual(2)
+        expect(component.currentStep).toEqual(2)
       })
     })
   })

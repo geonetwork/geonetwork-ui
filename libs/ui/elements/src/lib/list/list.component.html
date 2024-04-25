@@ -1,0 +1,65 @@
+<div class="flex flex-col">
+  <div class="flex flex-row gap-4 justify-center md:justify-start">
+    <div class="font-title text-[28px] leading-[3.5rem] text-title mb-1.5">
+      {{ title }}
+    </div>
+    <div>
+      <mat-paginator
+        [length]="listLength"
+        [pageSize]="listPageSize"
+        [showFirstLastButtons]="false"
+        [hidePageSize]="true"
+        aria-label="Select page"
+        (page)="pageChanged($event)"
+        #matPaginator
+      >
+        ></mat-paginator
+      >
+    </div>
+    <div class="flex flex-row items-center gap-x-4">
+      <mat-icon
+        (click)="goToPreviousPage()"
+        class="material-symbols-outlined card-icon rounded-full text-[0.9rem] text-center pt-[0.19rem]"
+        [style]="previousButtonStyle"
+        [ngClass]="
+          isFirstPage
+            ? 'border border-secondary text-secondary'
+            : 'border border-primary text-primary cursor-pointer'
+        "
+      >
+        arrow_back
+      </mat-icon>
+      <mat-icon
+        (click)="goToNextPage()"
+        class="material-symbols-outlined card-icon rounded-full text-[0.9rem] text-center pt-[0.19rem]"
+        [style]="nextButtonStyle"
+        [ngClass]="
+          isLastPage
+            ? 'border border-secondary text-secondary'
+            : 'border border-primary text-primary cursor-pointer'
+        "
+      >
+        arrow_forward
+      </mat-icon>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-y-4" *ngIf="listItems && listItems.length > 0">
+    <div *ngFor="let listItem of filteredListItems">
+      <gn-ui-list-item
+        [link]="listItem"
+        [color]="getLinkColor(listItem)"
+        [format]="getLinkFormat(listItem)"
+        [isFromWfs]="isFromWfs(listItem)"
+      ></gn-ui-list-item>
+    </div>
+    <div class="flex flex-row justify-center gap-[10px] p-1 mt-1">
+      <button
+        *ngFor="let page of listPages; let i = index"
+        class="carousel-step-dot"
+        (click)="goToPage(i)"
+        [ngClass]="currentPage === i ? 'bg-primary' : 'bg-gray-400'"
+      ></button>
+    </div>
+  </div>
+</div>

@@ -12,7 +12,10 @@ export class RecordApisComponent implements OnInit {
   maxHeight = '0px'
   opacity = 0
   selectedApiLink: DatasetServiceDistribution
-  constructor(public facade: MdViewFacade) {}
+
+  apiLinks$ = this.facade.apiLinks$
+
+  constructor(private facade: MdViewFacade) {}
 
   ngOnInit(): void {
     this.setStyle(undefined)
