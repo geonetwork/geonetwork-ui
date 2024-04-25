@@ -1,7 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing'
 import { RecordApiFormComponent } from './record-api-form.component'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
-import { firstValueFrom, of } from 'rxjs'
+import { firstValueFrom } from 'rxjs'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -20,7 +20,7 @@ jest.mock('@camptocamp/ogc-client', () => ({
     getCollectionInfo(collectionId) {
       return Promise.resolve({
         id: collectionId,
-        formats: [
+        itemFormats: [
           'application/geo+json',
           'application/json',
           'text/csv',

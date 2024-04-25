@@ -632,7 +632,7 @@ describe('api form', () => {
     cy.get('@apiForm').find('input[type="checkbox"]').check()
     cy.get('@apiForm').find('gn-ui-text-input').first().should('have.value', '')
   })
-  it.only('should reset all 3 inputs and link on click', () => {
+  it('should reset all 3 inputs and link on click', () => {
     cy.get('@apiForm').find('gn-ui-text-input').first().as('firstInput')
     cy.get('@firstInput').clear()
     cy.get('@firstInput').type('54')
