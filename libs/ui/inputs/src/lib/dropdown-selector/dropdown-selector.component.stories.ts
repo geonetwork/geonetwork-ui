@@ -49,6 +49,7 @@ export const Primary: StoryObj<DropdownSelectorComponent> = {
     ],
     selected: 'choice1',
     showTitle: true,
+    disabled: false,
   },
   argTypes: {
     selectValue: {
