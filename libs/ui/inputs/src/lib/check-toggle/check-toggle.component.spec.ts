@@ -8,7 +8,7 @@ describe('CheckToggleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CheckToggleComponent],
+      imports: [CheckToggleComponent],
     }).compileComponents()
 
     fixture = TestBed.createComponent(CheckToggleComponent)

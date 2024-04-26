@@ -5,12 +5,15 @@ import {
   Input,
   Output,
 } from '@angular/core'
+import { FormsModule } from '@angular/forms'
 
 @Component({
   selector: 'gn-ui-check-toggle',
   templateUrl: './check-toggle.component.html',
   styleUrls: ['./check-toggle.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [FormsModule],
 })
 export class CheckToggleComponent {
   @Input() title: string
