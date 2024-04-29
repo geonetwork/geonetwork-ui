@@ -21,7 +21,10 @@ program
     const recordsIndex = options.recordsIndex
     const username = options.username
     const password = options.password
-    const authHeader = (options.username && options.password ? 'Basic ' + btoa(username + ":" + password) : '');
+    const authHeader =
+      options.username && options.password
+        ? 'Basic ' + btoa(username + ':' + password)
+        : ''
     registerPipelines(esUrl, recordsIndex, authHeader)
   })
 program
@@ -38,7 +41,10 @@ program
     const esUrl = options.host.replace(/\/$/, '') // remove trailing slash if any
     const username = options.username
     const password = options.password
-    const authHeader = (options.username && options.password ? 'Basic ' + btoa(username + ":" + password) : '');
+    const authHeader =
+      options.username && options.password
+        ? 'Basic ' + btoa(username + ':' + password)
+        : ''
     clearPipelines(esUrl, authHeader)
   })
 
@@ -146,7 +152,7 @@ async function registerPipeline(esHost, name, payload, authHeader) {
     method: 'PUT',
     body: JSON.stringify(payload),
     headers: {
-      'Authorization': authHeader,
+      Authorization: authHeader,
       'Content-Type': 'application/json',
     },
   })
@@ -167,7 +173,7 @@ async function clearPipeline(esHost, name, authHeader) {
   await fetch(`${esHost}/_ingest/pipeline/${name}`, {
     method: 'DELETE',
     headers: {
-      'Authorization': authHeader,
+      Authorization: authHeader,
     },
   })
     .then((resp) => resp.json())
@@ -188,7 +194,7 @@ async function setDefaultPipeline(esHost, recordsIndex, name, authHeader) {
     method: 'PUT',
     body: JSON.stringify({ 'index.default_pipeline': name }),
     headers: {
-      'Authorization': authHeader,
+      Authorization: authHeader,
       'Content-Type': 'application/json',
     },
   })
@@ -208,12 +214,9 @@ async function registerPipelines(esHost, recordsIndex, authHeader) {
 
   const pipelines = await fetch(`${esHost}/_ingest/pipeline`, {
     headers: {
-      'Authorization': authHeader,
+      Authorization: authHeader,
     },
-  })
-    .then((resp) =>
-    resp.json()
-  )
+  }).then((resp) => resp.json())
 
   const names = Object.keys(pipelines)
   names.forEach((name) => {
@@ -223,7 +226,12 @@ async function registerPipelines(esHost, recordsIndex, authHeader) {
   })
 
   console.log('')
-  await registerPipeline(esHost, 'geonetwork-ui', GEONETWORK_UI_PIPELINE, authHeader)
+  await registerPipeline(
+    esHost,
+    'geonetwork-ui',
+    GEONETWORK_UI_PIPELINE,
+    authHeader
+  )
 
   console.log('')
   await setDefaultPipeline(esHost, recordsIndex, 'geonetwork-ui', authHeader)
