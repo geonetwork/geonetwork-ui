@@ -14,13 +14,28 @@ import { Subject } from 'rxjs'
   styleUrls: ['./text-input.component.css'],
 })
 export class TextInputComponent implements AfterViewInit {
+  private readonly baseClass = [
+    'appearance-none',
+    'border border-gray-300',
+    'rounded w-full',
+    'p-2',
+    'text-gray-700',
+    'leading-tight',
+    'focus:outline-none',
+    'focus:border-primary',
+  ].join(' ')
+
   @Input() value = ''
+  @Input() extraClass = ''
   @Input() hint: string
   @Input() required = false
   rawChange = new Subject<string>()
   @Output() valueChange = this.rawChange.pipe(distinctUntilChanged())
-
   @ViewChild('input') input
+
+  get classList() {
+    return `${this.baseClass} ${this.extraClass}`
+  }
 
   ngAfterViewInit() {
     this.checkRequired(this.input.nativeElement.value)

@@ -1,47 +1,51 @@
 import * as MdViewActions from './mdview.actions'
-import { initialMdviewState, reducer } from './mdview.reducer'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { initialMetadataViewState, reducer } from './mdview.reducer'
+import {
+  A_USER_FEEDBACK,
+  DATASET_RECORDS,
+  SOME_USER_FEEDBACKS,
+} from '@geonetwork-ui/common/fixtures'
+import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 
-const chartConfigMock = {
+const chartConfigMock: DatavizConfigurationModel = {
   aggregation: 'sum',
   xProperty: 'anneeappro',
   yProperty: 'nbre_com',
   chartType: 'bar',
 }
 
-const withErrorMdViewState = {
-  ...initialMdviewState,
-  error: { otherError: 'Some error' },
-}
-
-describe('MdView Reducer', () => {
+describe('metadataViewReducer', () => {
   describe('undefined action', () => {
     it('should return the default state', () => {
       const action = {} as any
       const state = reducer(undefined, action)
 
-      expect(state).toBe(initialMdviewState)
+      expect(state).toBe(initialMetadataViewState)
     })
   })
 
   describe('loadFullMetadata', () => {
     let action
+
     beforeEach(() => {
       action = MdViewActions.loadFullMetadata({
-        uniqueIdentifier: '123132132132132132',
+        uuid: '123132132132132132',
       })
     })
+
     it('store the loading state', () => {
-      const state = reducer(withErrorMdViewState, action)
+      const state = reducer(initialMetadataViewState, action)
       expect(state).toEqual({
-        ...withErrorMdViewState,
+        ...initialMetadataViewState,
         error: null,
         loadingFull: true,
       })
     })
   })
+
   describe('setIncompleteMetadata', () => {
     let action
+
     beforeEach(() => {
       const { uniqueIdentifier, title, ...rest } = DATASET_RECORDS[0]
       action = MdViewActions.setIncompleteMetadata({
@@ -51,10 +55,11 @@ describe('MdView Reducer', () => {
         },
       })
     })
+
     it('saves incomplete metadata', () => {
-      const state = reducer(withErrorMdViewState, action)
+      const state = reducer(initialMetadataViewState, action)
       expect(state).toEqual({
-        ...withErrorMdViewState,
+        ...initialMetadataViewState,
         error: null,
         metadata: {
           title:
@@ -64,92 +69,190 @@ describe('MdView Reducer', () => {
       })
     })
   })
-  describe('loadFullRecordSuccess', () => {
+
+  describe('loadFullMetadataSuccess', () => {
     let action
+
     beforeEach(() => {
-      action = MdViewActions.loadFullSuccess({
+      action = MdViewActions.loadFullMetadataSuccess({
         full: DATASET_RECORDS[0],
       })
     })
+
     it('saves full metadata ', () => {
       const state = reducer(
-        { ...withErrorMdViewState, loadingFull: true },
+        { ...initialMetadataViewState, loadingFull: true },
         action
       )
       expect(state).toEqual({
-        ...withErrorMdViewState,
+        ...initialMetadataViewState,
         error: null,
         loadingFull: false,
         metadata: DATASET_RECORDS[0],
       })
     })
   })
+
   describe('loadFullRecordFailure', () => {
     let action
+
     beforeEach(() => {
-      action = MdViewActions.loadFullFailure({
-        otherError: 'error',
+      action = MdViewActions.loadFullMetadataFailure({
+        otherError: 'Some error',
         notFound: true,
       })
     })
+
     it('set error', () => {
       const state = reducer(
-        { ...initialMdviewState, loadingFull: true },
+        { ...initialMetadataViewState, loadingFull: true },
         action
       )
       expect(state).toEqual({
-        ...initialMdviewState,
+        ...initialMetadataViewState,
         loadingFull: false,
-        error: { otherError: 'error', notFound: true },
+        error: { otherError: 'Some error', notFound: true },
       })
     })
   })
+
   describe('setRelated', () => {
     let action
+
     beforeEach(() => {
       action = MdViewActions.setRelated({
         related: [DATASET_RECORDS[1]],
       })
     })
+
     it('set related records', () => {
-      const state = reducer({ ...initialMdviewState }, action)
+      const state = reducer({ ...initialMetadataViewState }, action)
       expect(state).toEqual({
-        ...initialMdviewState,
+        ...initialMetadataViewState,
         related: [DATASET_RECORDS[1]],
       })
     })
   })
+
   describe('setChartConfig', () => {
     let action
+
     beforeEach(() => {
       action = MdViewActions.setChartConfig({
-        chartConfig: [chartConfigMock],
+        chartConfig: chartConfigMock,
       })
     })
+
     it('set chart config', () => {
-      const state = reducer({ ...initialMdviewState }, action)
+      const state = reducer({ ...initialMetadataViewState }, action)
       expect(state).toEqual({
-        ...initialMdviewState,
-        chartConfig: [chartConfigMock],
+        ...initialMetadataViewState,
+        chartConfig: chartConfigMock,
       })
     })
   })
-  describe('close', () => {
+
+  describe('closeMetadata', () => {
     let action
+
     beforeEach(() => {
-      action = MdViewActions.close()
+      action = MdViewActions.closeMetadata()
     })
+
     it('set error', () => {
       const state = reducer(
         {
-          ...initialMdviewState,
+          ...initialMetadataViewState,
           related: [DATASET_RECORDS[1]],
           loadingFull: false,
           metadata: DATASET_RECORDS[0],
         },
         action
       )
-      expect(state).toEqual(initialMdviewState)
+      expect(state).toEqual(initialMetadataViewState)
+    })
+  })
+
+  describe('loadUserFeedbacks', () => {
+    let action
+
+    beforeEach(() => {
+      action = MdViewActions.loadUserFeedbacks({
+        datasetUuid: expect.any(Number),
+      })
+    })
+
+    it('return states without error and with allUserFeedbacksLoading true', () => {
+      const state = reducer(initialMetadataViewState, action)
+      expect(state).toEqual({
+        ...initialMetadataViewState,
+        error: null,
+        loadingFull: false,
+        allUserFeedbacksLoading: true,
+        addUserFeedbackLoading: false,
+      })
+    })
+  })
+
+  describe('addUserFeedback', () => {
+    let action
+
+    beforeEach(() => {
+      action = MdViewActions.addUserFeedback({
+        userFeedback: A_USER_FEEDBACK,
+      })
+    })
+
+    it('return states without error and with addUserFeedbackLoading true', () => {
+      const state = reducer({ ...initialMetadataViewState }, action)
+      expect(state).toEqual({
+        ...initialMetadataViewState,
+        addUserFeedbackLoading: true,
+      })
+    })
+  })
+
+  describe('loadUserFeedbacksSuccess', () => {
+    let action
+
+    beforeEach(() => {
+      action = MdViewActions.loadUserFeedbacksSuccess({
+        userFeedbacks: SOME_USER_FEEDBACKS,
+      })
+    })
+
+    it('return states without error and with userfeedbacks', () => {
+      const state = reducer(
+        { ...initialMetadataViewState, allUserFeedbacksLoading: true },
+        action
+      )
+      expect(state).toEqual({
+        ...initialMetadataViewState,
+        error: null,
+        addUserFeedbackLoading: false,
+        allUserFeedbacksLoading: false,
+        loadingFull: false,
+        userFeedbacks: SOME_USER_FEEDBACKS,
+      })
+    })
+  })
+
+  describe('loadUserFeedbacksFailure', () => {
+    let action
+
+    beforeEach(() => {
+      action = MdViewActions.loadUserFeedbacksFailure({
+        otherError: 'Some error',
+        notFound: true,
+      })
+    })
+
+    it('set error', () => {
+      const state = reducer({ ...initialMetadataViewState }, action)
+      expect(state).toEqual({
+        ...initialMetadataViewState,
+        error: { otherError: 'Some error', notFound: true },
+      })
     })
   })
 })

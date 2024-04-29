@@ -81,8 +81,11 @@ import { RecordOtherlinksComponent } from './record/record-otherlinks/record-oth
 import { RecordDownloadsComponent } from './record/record-downloads/record-downloads.component'
 import { RecordApisComponent } from './record/record-apis/record-apis.component'
 import { MatTabsModule } from '@angular/material/tabs'
+import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { RecordUserFeedbacksComponent } from './record/record-user-feedbacks/record-user-feedbacks.component'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
+
 // https://github.com/nrwl/nx/issues/191
 @NgModule({
   declarations: [
@@ -101,6 +104,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     KeyFiguresComponent,
     NavigationMenuComponent,
     RecordRelatedRecordsComponent,
+    RecordUserFeedbacksComponent,
     RecordMetadataComponent,
     RecordOtherlinksComponent,
     RecordDownloadsComponent,
@@ -145,6 +149,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     UiInputsModule,
     UiCatalogModule,
     MatTabsModule,
+    UiWidgetsModule,
   ],
   providers: [
     importProvidersFrom(FeatureAuthModule),

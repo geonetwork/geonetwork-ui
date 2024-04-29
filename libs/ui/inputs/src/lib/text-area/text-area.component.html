@@ -2,11 +2,12 @@
   <textarea
     #input
     name="textArea"
+    [disabled]="disabled"
     [placeholder]="placeholder"
     [value]="value"
     (change)="handleChange($event)"
     (input)="handleChange($event)"
-    class="w-full pt-2 pl-2 resize-none border border-gray-800 rounded italic leading-tight focus:outline-none focus:bg-background focus:border-primary"
+    [class]="classList"
     [attr.required]="required || null"
   ></textarea>
 </div>

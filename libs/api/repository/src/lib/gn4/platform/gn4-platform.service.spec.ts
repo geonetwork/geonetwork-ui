@@ -3,14 +3,20 @@ import {
   RegistriesApiService,
   SiteApiService,
   ToolsApiService,
+  UserfeedbackApiService,
+  UserFeedbackDTOApiModel,
   UsersApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import { TestBed } from '@angular/core/testing'
 import { Gn4PlatformService } from './gn4-platform.service'
-import { firstValueFrom, lastValueFrom, of, Subject } from 'rxjs'
+import { firstValueFrom, lastValueFrom, of, Subject, throwError } from 'rxjs'
 import { AvatarServiceInterface } from '../auth/avatar.service.interface'
 import { Gn4PlatformMapper } from './gn4-platform.mapper'
 import { LangService } from '@geonetwork-ui/util/i18n'
+import {
+  A_USER_FEEDBACK,
+  SOME_USER_FEEDBACKS,
+} from '@geonetwork-ui/common/fixtures'
 
 let geonetworkVersion: string
 
@@ -122,11 +128,18 @@ class LangServiceMock {
   iso3 = 'fre'
 }
 
+class UserfeedbackApiServiceMock {
+  getUserComments = jest.fn(() => of(SOME_USER_FEEDBACKS))
+
+  newUserFeedback = jest.fn(() => of(undefined))
+}
+
 describe('Gn4PlatformService', () => {
   let service: Gn4PlatformService
   let meApiService: MeApiService
   let toolsApiService: ToolsApiService
   let registriesApiService: RegistriesApiService
+  let userFeedbackApiService: UserfeedbackApiServiceMock
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -161,12 +174,17 @@ describe('Gn4PlatformService', () => {
           provide: LangService,
           useClass: LangServiceMock,
         },
+        {
+          provide: UserfeedbackApiService,
+          useClass: UserfeedbackApiServiceMock,
+        },
       ],
     })
     service = TestBed.inject(Gn4PlatformService)
     meApiService = TestBed.inject(MeApiService)
     toolsApiService = TestBed.inject(ToolsApiService)
     registriesApiService = TestBed.inject(RegistriesApiService)
+    userFeedbackApiService = TestBed.inject(UserfeedbackApiService as any)
   })
 
   it('creates', () => {
@@ -352,6 +370,61 @@ describe('Gn4PlatformService', () => {
             label: 'altitude',
           },
         ])
+      })
+    })
+    describe('getUserFeedbacks', () => {
+      it('should call getUserComments with correct UUID and map results', (done) => {
+        const mockUuid = '1234'
+        const mockFeedbacks = SOME_USER_FEEDBACKS
+
+        service.getUserFeedbacks(mockUuid).subscribe({
+          next: (results) => {
+            expect(results).toEqual(mockFeedbacks)
+            expect(userFeedbackApiService.getUserComments).toHaveBeenCalledWith(
+              mockUuid
+            )
+            done()
+          },
+          error: done,
+        })
+      })
+
+      it('should handle errors', (done) => {
+        const mockUuid = '1234'
+        const errorResponse = new Error('Failed to fetch')
+        userFeedbackApiService.getUserComments.mockReturnValue(
+          throwError(() => errorResponse)
+        )
+
+        service.getUserFeedbacks(mockUuid).subscribe({
+          next: () => {
+            done('Expected error, but got success')
+          },
+          error: (error) => {
+            expect(error).toBe(errorResponse)
+            done()
+          },
+        })
+      })
+    })
+
+    describe('postUserFeedbacks', () => {
+      it('should process and post user feedbacks correctly', (done) => {
+        const expected: UserFeedbackDTOApiModel = {
+          ...A_USER_FEEDBACK,
+          authorUserId: expect.any(Number),
+          date: expect.any(String),
+        }
+
+        service.postUserFeedbacks(A_USER_FEEDBACK).subscribe({
+          next: () => {
+            expect(userFeedbackApiService.newUserFeedback).toHaveBeenCalledWith(
+              expected
+            )
+            done()
+          },
+          error: done,
+        })
       })
     })
   })

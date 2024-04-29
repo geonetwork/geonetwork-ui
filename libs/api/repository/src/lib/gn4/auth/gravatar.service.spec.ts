@@ -47,4 +47,15 @@ describe('GravatarService', () => {
       expect(placeholder).toEqual('https://www.gravatar.com/avatar/?d=mp')
     })
   })
+  describe('#getProfileIconUrl', () => {
+    it('returns url with identicon value, without hash', async () => {
+      const placeholder = await service.getProfileIconUrl('12345')
+      expect(placeholder).toEqual('https://www.gravatar.com/avatar/12345?d=404')
+    })
+    it('returns placeholder to be mp if no identicon value', async () => {
+      settingsService.identicon$.next('')
+      const placeholder = await service.getProfileIconUrl('12345')
+      expect(placeholder).toEqual('https://www.gravatar.com/avatar/12345?d=mp')
+    })
+  })
 })
