@@ -21,7 +21,7 @@ program
     const recordsIndex = options.recordsIndex
     const username = options.username
     const password = options.password
-    const authHeader = (options.username && options.password ? 'Basic ' + Buffer.from(username + ":" + password).toString('base64') : '');
+    const authHeader = (options.username && options.password ? 'Basic ' + btoa(username + ":" + password) : '');
     registerPipelines(esUrl, recordsIndex, authHeader)
   })
 program
