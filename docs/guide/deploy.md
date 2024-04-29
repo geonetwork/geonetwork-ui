@@ -178,7 +178,9 @@ Then run the following script with the appropriate options:
 node tools/pipelines/register-es-pipelines.js register --host=http://localhost:9090
 ```
 
-The `--host` option is used to point to the ElasticSearch instance. Additionally, the `--records-index` option can be used if the index containing the metadata records is not called `gn-records`.
+The `--host` option is used to point to the ElasticSearch instance.
+If ElasticSearch is secured, `--username` and `--password` can be used to pass HTTP Authentication.
+Additionally, the `--records-index` option can be used if the index containing the metadata records is not called `gn-records`.
 
 ### Option B: Running a docker image
 
