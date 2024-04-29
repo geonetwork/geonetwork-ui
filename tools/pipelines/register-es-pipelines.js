@@ -38,7 +38,7 @@ program
     const esUrl = options.host.replace(/\/$/, '') // remove trailing slash if any
     const username = options.username
     const password = options.password
-    const authHeader = (options.username && options.password ? 'Basic ' + Buffer.from(username + ":" + password).toString('base64') : '');
+    const authHeader = (options.username && options.password ? 'Basic ' + btoa(username + ":" + password) : '');
     clearPipelines(esUrl, authHeader)
   })
 
