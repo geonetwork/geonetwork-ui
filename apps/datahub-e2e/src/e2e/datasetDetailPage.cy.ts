@@ -703,7 +703,7 @@ describe('userFeedback', () => {
       cy.get('@commentText')
         .first()
         .then((div) => {
-          const premierCommentaireAvantTri = div.text().trim()
+          const firstCommentBeforeSort = div.text().trim()
           cy.get('@userFeedback')
             .find('gn-ui-dropdown-selector')
             .openDropdown()
@@ -718,10 +718,8 @@ describe('userFeedback', () => {
             .find('[data-cy="commentText"]')
             .first()
             .then((div) => {
-              const premierCommentaireApresTri = div.text().trim()
-              expect(premierCommentaireAvantTri).to.not.eq(
-                premierCommentaireApresTri
-              )
+              const firstCommentAfterSort = div.text().trim()
+              expect(firstCommentBeforeSort).to.not.eq(firstCommentAfterSort)
             })
         })
     })
@@ -736,11 +734,6 @@ describe('userFeedback', () => {
     beforeEach(() => {
       cy.login()
       cy.visit('/dataset/accroche_velos')
-      cy.get('datahub-record-user-feedbacks').as('userFeedback')
-
-      cy.get('gn-ui-user-feedback-item')
-        .find('[data-cy="commentText"]')
-        .as('commentText')
     })
     it('should publish a comment', () => {
       cy.get('datahub-record-user-feedbacks')

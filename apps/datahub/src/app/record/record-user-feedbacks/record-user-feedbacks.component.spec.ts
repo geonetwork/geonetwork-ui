@@ -19,18 +19,24 @@ import {
   SOME_USER_FEEDBACKS,
   USER_FIXTURE,
 } from '@geonetwork-ui/common/fixtures'
-import { UserFeedbackViewModel } from '@geonetwork-ui/common/domain/model/record'
+import {
+  UserFeedback,
+  UserFeedbackViewModel,
+} from '@geonetwork-ui/common/domain/model/record'
 import { Gn4PlatformMapper } from '@geonetwork-ui/api/repository'
 
 describe('RelatedRecordsComponent', () => {
   const allUserFeedbacks = SOME_USER_FEEDBACKS
   let mockDestroy$: Subject<void>
 
+  const activeUser = USER_FIXTURE()
+
   const mdViewFacadeMock: Partial<MdViewFacade> = {
     isAllUserFeedbackLoading$: new BehaviorSubject(false),
     isAddUserFeedbackLoading$: new BehaviorSubject(false),
     loadUserFeedbacks: jest.fn(),
     userFeedbacks$: of(allUserFeedbacks),
+    addUserFeedback: jest.fn(),
   }
 
   const gn4PlatformMapperMock: Partial<Gn4PlatformMapper> = {
@@ -48,7 +54,7 @@ describe('RelatedRecordsComponent', () => {
 
   const platformServiceInterfaceMock: Partial<PlatformServiceInterface> = {
     getUserFeedbacks: jest.fn(),
-    getMe: jest.fn(() => new BehaviorSubject(USER_FIXTURE())),
+    getMe: jest.fn(() => new BehaviorSubject(activeUser)),
   }
 
   let component: RecordUserFeedbacksComponent
@@ -125,6 +131,30 @@ describe('RelatedRecordsComponent', () => {
       expect(
         component.userFeedBacksAnswers.get(SOME_USER_FEEDBACKS[0].uuid).length
       ).toBe(2)
+    })
+  })
+
+  describe('publishNewComment()', () => {
+    it('should publish the new userFeedback', () => {
+      const expectedNewUserFeedback: UserFeedback = {
+        uuid: undefined,
+        comment: 'TEST',
+        metadataUUID: 'accroche_velos',
+        parentUuid: null,
+        published: true,
+        date: expect.any(Date),
+        authorUserId: activeUser.id,
+        authorEmail: activeUser.email,
+        authorName: `${activeUser.name} ${activeUser.surname}`,
+      }
+
+      component.newComment = 'TEST'
+      component.metadataUuid = 'accroche_velos'
+      fixture.detectChanges()
+      component.publishNewComment()
+      expect(mdViewFacadeMock.addUserFeedback).toHaveBeenCalledWith(
+        expectedNewUserFeedback
+      )
     })
   })
 })

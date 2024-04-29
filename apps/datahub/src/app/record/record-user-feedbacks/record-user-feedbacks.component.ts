@@ -18,6 +18,7 @@ import { DropdownChoice } from '@geonetwork-ui/ui/inputs'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { TranslateService } from '@ngx-translate/core'
 import { AuthService, Gn4PlatformMapper } from '@geonetwork-ui/api/repository'
+import { UserApiModel } from '@geonetwork-ui/data-access/gn4'
 
 type UserFeedbackSortingFunction = (
   userFeedbackA: UserFeedback,
@@ -175,8 +176,8 @@ export class RecordUserFeedbacksComponent implements OnInit, OnDestroy {
   }
 
   onNewUserFeedbackAnswer(newUserFeedback: UserFeedbackViewModel) {
-    delete newUserFeedback.avatarUrl
-    this.newUserFeedback(newUserFeedback)
+    const userFeedBack = this.mapper.userFeedbacksFromApi(newUserFeedback)
+    this.newUserFeedback(userFeedBack)
   }
 
   publishNewComment() {

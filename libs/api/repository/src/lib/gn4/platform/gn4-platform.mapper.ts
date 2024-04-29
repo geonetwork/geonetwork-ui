@@ -73,7 +73,7 @@ export class Gn4PlatformMapper {
     })
   }
 
-  userFeedbacksFromApi(userFeedback: UserFeedbackDTOApiModel): UserFeedback {
+  userFeedbacksFromApi(userFeedback: any): UserFeedback {
     return {
       uuid: userFeedback.uuid,
       metadataUUID: userFeedback.metadataUUID,

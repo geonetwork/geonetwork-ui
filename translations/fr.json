@@ -286,6 +286,7 @@
   "record.metadata.userFeedbacks.sortSelector.choices.oldestFirst": "Les plus anciens en premier",
   "record.metadata.userFeedbacks.newComment.placeholder": "Rédiger votre commentaire ici...",
   "record.metadata.userFeedbacks.newAnswer.placeholder": "Répondre...",
+  "record.metadata.userFeedbacks.newAnswer.buttonTitle": "Publier",
   "record.metadata.sheet": "Fiche de métadonnées d'origine",
   "record.metadata.status": "Statut",
   "record.metadata.technical": "Informations techniques",

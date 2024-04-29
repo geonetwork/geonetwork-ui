@@ -286,6 +286,7 @@
   "record.metadata.userFeedbacks.sortSelector.choices.oldestFirst": "",
   "record.metadata.userFeedbacks.newComment.placeholder": "",
   "record.metadata.userFeedbacks.newAnswer.placeholder": "",
+  "record.metadata.userFeedbacks.newAnswer.buttonTitle": "",
   "record.metadata.sheet": "Origine del metadata",
   "record.metadata.status": "Stato",
   "record.metadata.technical": "Informazioni tecniche",

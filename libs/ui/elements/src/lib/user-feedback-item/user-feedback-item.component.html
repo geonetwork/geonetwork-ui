@@ -52,7 +52,9 @@
           [disabled]="isAddUserFeedbackLoading"
           [type]="'outline'"
           (buttonClick)="publishNewAnswer()"
-          title="Publish"
+          [title]="
+            'record.metadata.userFeedbacks.newAnswer.buttonTitle' | translate
+          "
           extraClass="!p-[0.5em] text-primary-darker border-primary-darker h-9"
         >
           <mat-icon
