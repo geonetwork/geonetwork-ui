@@ -24,6 +24,7 @@ import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
 import { FormFieldTemporalExtentComponent } from './form-field-temporal-extent/form-field-temporal-extent.component'
 import { FormFieldConfig } from './form-field.model'
+import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
 
 @Component({
   selector: 'gn-ui-form-field',
@@ -40,6 +41,7 @@ import { FormFieldConfig } from './form-field.model'
     FormFieldWrapperComponent,
     FormFieldLicenseComponent,
     FormFieldResourceUpdatedComponent,
+    FormFieldUpdateFrequencyComponent,
     FormFieldSimpleComponent,
     FormFieldRichComponent,
     FormFieldObjectComponent,
@@ -129,6 +131,9 @@ export class FormFieldComponent {
   }
   get isResourceUpdated() {
     return this.model === 'resourceUpdated'
+  }
+  get isUpdateFrequency() {
+    return this.model === 'updateFrequency'
   }
 
   get withoutWrapper() {

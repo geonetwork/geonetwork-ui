@@ -1,16 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
+import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
 import { TranslateModule } from '@ngx-translate/core'
 import { FormFieldArrayComponent } from './form-field-array/form-field-array.component'
 import { FormFieldFileComponent } from './form-field-file/form-field-file.component'
+import { FormFieldLicenseComponent } from './form-field-license/form-field-license.component'
 import { FormFieldObjectComponent } from './form-field-object/form-field-object.component'
+import { FormFieldResourceUpdatedComponent } from './form-field-resource-updated/form-field-resource-updated.component'
 import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component'
 import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component'
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
 import { FormFieldTemporalExtentComponent } from './form-field-temporal-extent/form-field-temporal-extent.component'
+import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
 import { FormFieldComponent } from './form-field.component'
-import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
-import { EditableLabelDirective } from '@geonetwork-ui/ui/inputs'
 
 describe('FormFieldComponent', () => {
   let component: FormFieldComponent
@@ -45,6 +47,51 @@ describe('FormFieldComponent', () => {
       ).componentInstance
     })
     it('creates a rich text form field', () => {
+      expect(formField).toBeTruthy()
+    })
+  })
+  describe('license field', () => {
+    let formField
+    beforeEach(() => {
+      component.model = 'licenses'
+      component.value = 'cc-by'
+      fixture.detectChanges()
+      formField = fixture.debugElement.query(
+        By.directive(FormFieldLicenseComponent)
+      ).componentInstance
+    })
+    it('creates a license form field', () => {
+      expect(formField).toBeTruthy()
+    })
+  })
+  describe('resource updated field', () => {
+    let formField
+    beforeEach(() => {
+      component.model = 'resourceUpdated'
+      component.value = new Date('2022-12-04T15:12:00')
+      fixture.detectChanges()
+      formField = fixture.debugElement.query(
+        By.directive(FormFieldResourceUpdatedComponent)
+      ).componentInstance
+    })
+    it('creates a resource updated form field', () => {
+      expect(formField).toBeTruthy()
+    })
+  })
+  describe('update frequency field', () => {
+    let formField
+    beforeEach(() => {
+      component.model = 'updateFrequency'
+      component.value = {
+        updatedTimes: 3,
+        per: 'week',
+      }
+      fixture.detectChanges()
+      formField = fixture.debugElement.query(
+        By.directive(FormFieldUpdateFrequencyComponent)
+      ).componentInstance
+    })
+    it('creates an update frequency form field', () => {
       expect(formField).toBeTruthy()
     })
   })
