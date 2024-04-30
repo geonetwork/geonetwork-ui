@@ -88,7 +88,7 @@ export class CarouselComponent implements AfterViewInit, OnChanges {
   /**
    * Click on previous arrow
    */
-  slideToPrevious() {
+  public slideToPrevious() {
     if (this.isFirstStep) return
     this.emblaApi.scrollPrev()
   }
@@ -96,7 +96,7 @@ export class CarouselComponent implements AfterViewInit, OnChanges {
   /**
    * Click on next arrow
    */
-  slideToNext() {
+  public slideToNext() {
     if (this.isLastStep) return
     this.emblaApi.scrollNext()
   }
