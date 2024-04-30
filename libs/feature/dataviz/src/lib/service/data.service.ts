@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { WfsEndpoint, WfsVersion } from '@camptocamp/ogc-client'
+import {
+  OgcApiCollectionInfo,
+  OgcApiEndpoint,
+  WfsEndpoint,
+  WfsVersion,
+} from '@camptocamp/ogc-client'
 import {
   BaseReader,
   FetchError,
@@ -12,6 +17,7 @@ import {
   getFileFormat,
   getFileFormatFromServiceOutput,
   getMimeTypeForFormat,
+  mimeTypeToFormat,
   ProxyService,
 } from '@geonetwork-ui/util/shared'
 import type { FeatureCollection } from 'geojson'
@@ -148,6 +154,31 @@ export class DataService {
     )
   }
 
+  async getDownloadLinksFromOgcApiFeatures(
+    ogcApiLink: DatasetServiceDistribution
+  ): Promise<DatasetDistribution[]> {
+    const collectionInfo = await this.getDownloadUrlsFromOgcApi(
+      ogcApiLink.url.href
+    )
+
+    return Object.keys(collectionInfo.bulkDownloadLinks).map((downloadLink) => {
+      return {
+        ...ogcApiLink,
+        type: 'download',
+        url: new URL(collectionInfo.bulkDownloadLinks[downloadLink]),
+        mimeType: getMimeTypeForFormat(
+          getFileFormatFromServiceOutput(downloadLink)
+        ),
+      }
+    })
+  }
+
+  async getDownloadUrlsFromOgcApi(url: string): Promise<OgcApiCollectionInfo> {
+    const endpoint = new OgcApiEndpoint(url)
+    const collection = (await endpoint.featureCollections)[0]
+    return endpoint.getCollectionInfo(collection)
+  }
+
   getDownloadLinksFromEsriRest(
     esriRestLink: DatasetServiceDistribution
   ): DatasetDistribution[] {
@@ -205,6 +236,22 @@ export class DataService {
         'geojson'
       )
       return from(openDataset(url, 'geojson')).pipe()
+    } else if (
+      link.type === 'service' &&
+      link.accessServiceProtocol === 'ogcFeatures'
+    ) {
+      return from(this.getDownloadUrlsFromOgcApi(link.url.href)).pipe(
+        switchMap((collectionInfo) => {
+          const geojsonUrl = collectionInfo.jsonDownloadLink
+          console.log(collectionInfo)
+          return openDataset(geojsonUrl, 'geojson')
+        }),
+        tap((url) => {
+          if (url === null) {
+            throw new Error('wfs.geojsongml.notsupported')
+          }
+        })
+      )
     }
     return throwError(() => 'protocol not supported')
   }
