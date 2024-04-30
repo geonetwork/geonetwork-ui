@@ -36,33 +36,45 @@ export class RecordDownloadsComponent {
             link as DatasetServiceDistribution
           )
         )
+      const ogcLinks = links.filter(
+        (link) =>
+          link.type === 'service' &&
+          link.accessServiceProtocol === 'ogcFeatures'
+      )
+
       const otherLinks = links.filter(
         (link) =>
           link.type !== 'service' ||
           (link.type === 'service' &&
             link.accessServiceProtocol !== 'esriRest' &&
-            link.accessServiceProtocol !== 'wfs')
+            link.accessServiceProtocol !== 'wfs' &&
+            link.accessServiceProtocol !== 'ogcFeatures')
       )
 
       this.error = null
 
-      return combineLatest(
-        wfsLinks.length > 0
+      return combineLatest([
+        ...(wfsLinks.length > 0
           ? wfsLinks.map((link) =>
               this.dataService.getDownloadLinksFromWfs(
                 link as DatasetServiceDistribution
               )
             )
-          : [of([] as DatasetDistribution[])]
-      ).pipe(
+          : [of([] as DatasetDistribution[])]),
+        ...(ogcLinks.length > 0
+          ? ogcLinks.map((link) =>
+              this.dataService.getDownloadLinksFromOgcApiFeatures(
+                link as DatasetServiceDistribution
+              )
+            )
+          : [of([] as DatasetDistribution[])]),
+      ]).pipe(
         map(flattenArray),
         map(removeLinksWithUnknownFormat),
         map(removeDuplicateLinks),
-        map((wfsDownloadLinks) => [
-          ...otherLinks,
-          ...wfsDownloadLinks,
-          ...esriRestLinks,
-        ]),
+        map((downloadLinks) => {
+          return [...otherLinks, ...downloadLinks, ...esriRestLinks]
+        }),
         catchError((e) => {
           this.error = e.message
           return of([...otherLinks, ...esriRestLinks])
@@ -76,11 +88,11 @@ export class RecordDownloadsComponent {
 const flattenArray = (arrayOfArrays) =>
   arrayOfArrays.reduce((prev, curr) => [...prev, ...curr], [])
 
-const removeLinksWithUnknownFormat = (wfsDownloadLinks) =>
-  wfsDownloadLinks.filter((link) => !!getFileFormat(link))
+const removeLinksWithUnknownFormat = (downloadLinks) =>
+  downloadLinks.filter((link) => !!getFileFormat(link))
 
-const removeDuplicateLinks = (wfsDownloadLinks) =>
-  wfsDownloadLinks.filter(
+const removeDuplicateLinks = (downloadLinks) =>
+  downloadLinks.filter(
     (link, i, links) =>
       links.findIndex(
         (firstLink) =>
