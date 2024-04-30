@@ -20,7 +20,7 @@ export const Primary: Story = {
   render: (args) => ({
     props: args,
     template: `
-    <gn-ui-carousel containerClass='py-4 gap-4 h-full'>
+    <gn-ui-carousel containerClass='py-4 gap-4 h-full' [itemsLength]='5'>
       <div class='border border-black w-[160px] ml-[calc(50%-80px)]'>
         First box
       </div>

@@ -32,19 +32,12 @@
   </div>
 
   <div #carouselOverflowContainer class="h-full w-full">
-    <div
-      class="carousel-container flex"
-      [ngClass]="{
-      containerClass: true,
-      'flex-row gap-x-4': hasFourSlidesOrMore,
-      'flex-col gap-y-4 md:flex-row md:gap-x-4': !hasFourSlidesOrMore,
-      }"
-    >
+    <div class="carousel-container flex" [ngClass]="containerClass">
       <ng-content></ng-content>
     </div>
   </div>
   <div
-    *ngIf="hasFourSlidesOrMore"
+    *ngIf="steps.length > 1"
     class="flex flex-row justify-center gap-[10px] p-1 mt-5 w-full"
     [ngClass]="stepsContainerClass"
   >

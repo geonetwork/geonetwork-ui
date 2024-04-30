@@ -12,7 +12,7 @@ import { importProvidersFrom } from '@angular/core'
 import { MatIcon } from '@angular/material/icon'
 
 export default {
-  title: 'Elements/DownloadsListItemComponent',
+  title: 'Elements/ListItemComponent',
   component: ListItemComponent,
   decorators: [
     moduleMetadata({
