@@ -55,6 +55,20 @@ class DataServiceMock {
       url: newUrl(`${link.url}/query?f=geojson&where=1=1&outFields=*`),
     },
   ])
+  getDownloadLinksFromOgcApiFeatures = jest.fn((link) =>
+    link.url.toString().indexOf('error') > -1
+      ? throwError(() => new Error('would not fetch links'))
+      : of([
+          {
+            ...link,
+            mimeType: 'application/geo+json',
+          },
+          {
+            ...link,
+            mimeType: 'application/json',
+          },
+        ])
+  )
 }
 
 @Component({
@@ -210,6 +224,15 @@ describe('DataDownloadsComponent', () => {
             type: 'service',
             accessServiceProtocol: 'esriRest',
           },
+          {
+            name: 'Surveillance littorale OGC',
+            description: 'OGC API service',
+            url: newUrl(
+              'https://demo.ldproxy.net/zoomstack/collections/airports/items'
+            ),
+            type: 'service',
+            accessServiceProtocol: 'ogcFeatures',
+          },
         ])
         fixture.detectChanges()
       })
@@ -273,6 +296,26 @@ describe('DataDownloadsComponent', () => {
             ),
             type: 'service',
             accessServiceProtocol: 'wfs',
+          },
+          {
+            description: 'OGC API service',
+            mimeType: 'application/geo+json',
+            name: 'Surveillance littorale OGC',
+            url: newUrl(
+              'https://demo.ldproxy.net/zoomstack/collections/airports/items'
+            ),
+            type: 'service',
+            accessServiceProtocol: 'ogcFeatures',
+          },
+          {
+            description: 'OGC API service',
+            mimeType: 'application/json',
+            name: 'Surveillance littorale OGC',
+            url: newUrl(
+              'https://demo.ldproxy.net/zoomstack/collections/airports/items'
+            ),
+            type: 'service',
+            accessServiceProtocol: 'ogcFeatures',
           },
           {
             description: 'ArcGIS GeoService',

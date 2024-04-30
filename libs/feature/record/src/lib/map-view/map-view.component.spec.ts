@@ -377,6 +377,12 @@ describe('MapViewComponent', () => {
             name: 'data.geojson',
             type: 'download',
           },
+          {
+            url: new URL('http://abcd.com/data/ogcapi'),
+            name: 'ogc api',
+            type: 'service',
+            accessServiceProtocol: 'ogcFeatures',
+          },
         ])
         fixture.detectChanges()
       })
@@ -393,6 +399,10 @@ describe('MapViewComponent', () => {
           {
             value: 2,
             label: 'data.geojson (geojson)',
+          },
+          {
+            value: 3,
+            label: 'ogc api',
           },
         ])
       })
@@ -472,6 +482,33 @@ describe('MapViewComponent', () => {
             ),
             type: 'service',
             accessServiceProtocol: 'esriRest',
+          },
+        ])
+        tick(200)
+        fixture.detectChanges()
+      }))
+      it('emits a map context with the the downloaded data from the ESRI REST API', () => {
+        expect(mapComponent.context).toEqual({
+          layers: [
+            {
+              type: 'geojson',
+              data: SAMPLE_GEOJSON,
+            },
+          ],
+          view: expect.any(Object),
+        })
+      })
+    })
+
+    describe('with a link using OGC API protocol', () => {
+      beforeEach(fakeAsync(() => {
+        mdViewFacade.mapApiLinks$.next([])
+        mdViewFacade.geoDataLinks$.next([
+          {
+            name: 'ogc layer',
+            url: new URL('http://abcd.com/data/ogcapi'),
+            type: 'service',
+            accessServiceProtocol: 'ogcFeatures',
           },
         ])
         tick(200)
