@@ -9,6 +9,8 @@ program
   .command('register')
   .description('Register pipelines')
   .option('--host <value>', 'ElasticSearch host', 'http://localhost:9200')
+  .option('--username <value>', 'ElasticSearch user', '')
+  .option('--password <value>', 'ElasticSearch password', '')
   .option(
     '--records-index <value>',
     'Name of the index used by GeoNetwork for records',
@@ -17,7 +19,13 @@ program
   .action((options) => {
     const esUrl = options.host.replace(/\/$/, '') // remove trailing slash if any
     const recordsIndex = options.recordsIndex
-    registerPipelines(esUrl, recordsIndex)
+    const username = options.username
+    const password = options.password
+    const authHeader =
+      options.username && options.password
+        ? 'Basic ' + btoa(username + ':' + password)
+        : ''
+    registerPipelines(esUrl, recordsIndex, authHeader)
   })
 program
   .command('clear')
@@ -27,9 +35,17 @@ program
     'ElasticSearch host, default is http://localhost:9090',
     'http://localhost:9200'
   )
+  .option('--username <value>', 'ElasticSearch user', '')
+  .option('--password <value>', 'ElasticSearch password', '')
   .action((options) => {
     const esUrl = options.host.replace(/\/$/, '') // remove trailing slash if any
-    clearPipelines(esUrl)
+    const username = options.username
+    const password = options.password
+    const authHeader =
+      options.username && options.password
+        ? 'Basic ' + btoa(username + ':' + password)
+        : ''
+    clearPipelines(esUrl, authHeader)
   })
 
 program.parse(process.argv)
@@ -129,13 +145,14 @@ for(int i = ctx.format.length - 1; i >= 0; i--) {
   ],
 }
 
-async function registerPipeline(esHost, name, payload) {
+async function registerPipeline(esHost, name, payload, authHeader) {
   console.log(`adding ${name} pipeline...`)
 
   await fetch(`${esHost}/_ingest/pipeline/${name}`, {
     method: 'PUT',
     body: JSON.stringify(payload),
     headers: {
+      Authorization: authHeader,
       'Content-Type': 'application/json',
     },
   })
@@ -150,11 +167,14 @@ async function registerPipeline(esHost, name, payload) {
   console.log(`${name} pipeline was successfully registered!`)
 }
 
-async function clearPipeline(esHost, name) {
+async function clearPipeline(esHost, name, authHeader) {
   console.log(`clearing ${name} pipeline...`)
 
   await fetch(`${esHost}/_ingest/pipeline/${name}`, {
     method: 'DELETE',
+    headers: {
+      Authorization: authHeader,
+    },
   })
     .then((resp) => resp.json())
     .then((result) => {
@@ -167,13 +187,14 @@ async function clearPipeline(esHost, name) {
   console.log(`${name} pipeline was successfully cleaned!`)
 }
 
-async function setDefaultPipeline(esHost, recordsIndex, name) {
+async function setDefaultPipeline(esHost, recordsIndex, name, authHeader) {
   console.log(`setting ${name} as default pipeline...`)
 
   await fetch(`${esHost}/${recordsIndex}/_settings`, {
     method: 'PUT',
     body: JSON.stringify({ 'index.default_pipeline': name }),
     headers: {
+      Authorization: authHeader,
       'Content-Type': 'application/json',
     },
   })
@@ -188,12 +209,14 @@ async function setDefaultPipeline(esHost, recordsIndex, name) {
   console.log(`${name} pipeline was successfully set as default!`)
 }
 
-async function registerPipelines(esHost, recordsIndex) {
+async function registerPipelines(esHost, recordsIndex, authHeader) {
   console.log('querying currently registered pipelines...')
 
-  const pipelines = await fetch(`${esHost}/_ingest/pipeline`).then((resp) =>
-    resp.json()
-  )
+  const pipelines = await fetch(`${esHost}/_ingest/pipeline`, {
+    headers: {
+      Authorization: authHeader,
+    },
+  }).then((resp) => resp.json())
 
   const names = Object.keys(pipelines)
   names.forEach((name) => {
@@ -203,10 +226,15 @@ async function registerPipelines(esHost, recordsIndex) {
   })
 
   console.log('')
-  await registerPipeline(esHost, 'geonetwork-ui', GEONETWORK_UI_PIPELINE)
+  await registerPipeline(
+    esHost,
+    'geonetwork-ui',
+    GEONETWORK_UI_PIPELINE,
+    authHeader
+  )
 
   console.log('')
-  await setDefaultPipeline(esHost, recordsIndex, 'geonetwork-ui')
+  await setDefaultPipeline(esHost, recordsIndex, 'geonetwork-ui', authHeader)
 }
 
 async function clearPipelines(esHost) {
