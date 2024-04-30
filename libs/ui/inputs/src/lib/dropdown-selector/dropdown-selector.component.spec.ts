@@ -1,9 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TranslateModule } from '@ngx-translate/core'
-import { ButtonComponent } from '../button/button.component'
 import { DropdownSelectorComponent } from './dropdown-selector.component'
-import { OverlayModule } from '@angular/cdk/overlay'
-import { MatIconModule } from '@angular/material/icon'
 
 describe('DropdownSelectorComponent', () => {
   let component: DropdownSelectorComponent
@@ -11,13 +8,7 @@ describe('DropdownSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        ButtonComponent,
-        OverlayModule,
-        MatIconModule,
-        TranslateModule.forRoot(),
-      ],
-      declarations: [DropdownSelectorComponent],
+      imports: [DropdownSelectorComponent, TranslateModule.forRoot()],
     }).compileComponents()
   })
 
