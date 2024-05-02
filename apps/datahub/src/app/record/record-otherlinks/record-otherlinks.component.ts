@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { CarouselComponent } from '@geonetwork-ui/ui/layout'
+import { ListComponent } from '@geonetwork-ui/ui/elements'
 
 @Component({
   selector: 'datahub-record-otherlinks',
@@ -9,30 +10,28 @@ import { CarouselComponent } from '@geonetwork-ui/ui/layout'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecordOtherlinksComponent {
-  private _OTHER_LINKS_LIST_PAGE_SIZE = 5
   otherLinks$ = this.facade.otherLinks$
-  hasFourSlidesOrMore = true
-
-  get isFirstStep() {
-    return this.carousel?.isFirstStep
-  }
-  get isLastStep() {
-    return this.carousel?.isLastStep
-  }
 
   @ViewChild(CarouselComponent) carousel: CarouselComponent
+  @ViewChild(ListComponent) list: ListComponent
 
   constructor(public facade: MdViewFacade) {}
 
-  get OTHER_LINKS_LIST_PAGE_SIZE() {
-    return this._OTHER_LINKS_LIST_PAGE_SIZE
+  get isFirstStepOrPage() {
+    return this.carousel?.isFirstStep ?? this.list?.isFirstPage ?? true
   }
 
-  slideToPrevious() {
-    this.carousel?.slideToPrevious()
+  get isLastStepOrPage() {
+    return this.carousel?.isLastStep ?? this.list?.isLastPage ?? false
   }
 
-  slideToNext() {
-    this.carousel?.slideToNext()
+  changeStepOrPage(direction: string) {
+    if (direction === 'next') {
+      this.list?.goToNextPage()
+      this.carousel?.slideToNext()
+    } else {
+      this.carousel?.slideToPrevious()
+      this.list?.goToPreviousPage()
+    }
   }
 }
