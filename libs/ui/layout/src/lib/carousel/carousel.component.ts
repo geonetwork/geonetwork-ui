@@ -4,9 +4,9 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
-  OnChanges,
-  SimpleChanges,
+  Output,
   ViewChild,
 } from '@angular/core'
 import EmblaCarousel, { EmblaCarouselType } from 'embla-carousel'
@@ -17,17 +17,13 @@ import EmblaCarousel, { EmblaCarouselType } from 'embla-carousel'
   styleUrls: ['./carousel.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CarouselComponent implements AfterViewInit, OnChanges {
+export class CarouselComponent implements AfterViewInit {
   @ViewChild('carouselOverflowContainer') carouselOverflowContainer: ElementRef
-
-  /**
-   * This is needed !!
-   */
-  @Input() itemsLength = 0
 
   @Input() containerClass = ''
   @Input() stepsContainerClass = ''
-  @Input() title = ''
+
+  @Output() stepsChanged = new EventEmitter<number>()
 
   steps: number[] = []
   currentStep = 0
@@ -36,36 +32,16 @@ export class CarouselComponent implements AfterViewInit, OnChanges {
   isFirstStep = true
   isLastStep = false
 
-  hasFourSlidesOrMore = false
-
-  @Input() previousButtonWidth = 1.4
-  @Input() previousButtonHeight = 1.4
-  previousButtonStyle = ''
-
-  @Input() nextButtonWidth = 1.4
-  @Input() nextButtonHeight = 1.4
-  nextButtonStyle = ''
-
   refreshSteps = () => {
     this.steps = this.emblaApi.scrollSnapList()
     this.currentStep = this.emblaApi.selectedScrollSnap()
     this.isFirstStep = this.currentStep === 0
     this.isLastStep = this.currentStep === this.steps.length - 1
+    this.stepsChanged.emit(this.steps.length)
     this.changeDetector.detectChanges()
   }
 
-  constructor(private changeDetector: ChangeDetectorRef) {
-    this.previousButtonStyle = `width: ${this.previousButtonWidth}rem; height: ${this.previousButtonHeight}rem;`
-    this.nextButtonStyle = `width: ${this.nextButtonWidth}rem; height: ${this.nextButtonHeight}rem;`
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['itemsLength']) {
-      const itemsLength = changes['itemsLength'].currentValue
-      this.hasFourSlidesOrMore = itemsLength > 3
-      this.changeDetector.detectChanges()
-    }
-  }
+  constructor(private changeDetector: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     this.emblaApi = EmblaCarousel(

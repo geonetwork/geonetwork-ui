@@ -1,62 +1,34 @@
-<div>
+<div class="flex flex-row gap-x-4 items-center justify-center md:justify-start">
   <p
-    class="font-title text-[28px] font-medium mt-8 mb-5 text-title text-center sm:mt-12 sm:mb-[-22px] sm:text-left"
+    class="font-title text-[28px] font-medium text-title text-center sm:text-left"
     translate
   >
     record.metadata.links
   </p>
-  <div *ngIf="hasFourSlidesOrMore" class="flex flex-row gap-x-4 items-center">
-    <gn-ui-button
-      [style.--gn-ui-button-rounded]="'100%'"
-      [style.--gn-ui-button-width]="'1.4rem'"
-      [style.--gn-ui-button-height]="'1.4rem'"
-      [type]="isFirstStep ? 'outline' : 'outline'"
-      [disabled]="isFirstStep"
-      (buttonClick)="slideToPrevious()"
-    >
-      <mat-icon
-        class="material-symbols-outlined rounded-full text-[0.9rem] text-center pt-[0.19rem]"
-      >
-        arrow_back
-      </mat-icon>
-    </gn-ui-button>
-    <gn-ui-button
-      [style.--gn-ui-button-rounded]="'100%'"
-      [style.--gn-ui-button-width]="'1.4rem'"
-      [style.--gn-ui-button-height]="'1.4rem'"
-      [type]="isLastStep ? 'outline' : 'outline'"
-      [disabled]="isLastStep"
-      (buttonClick)="slideToNext()"
-    >
-      <mat-icon
-        class="material-symbols-outlined rounded-full text-[0.9rem] text-center pt-[0.19rem]"
-      >
-        arrow_forward
-      </mat-icon>
-    </gn-ui-button>
-  </div>
+  <gn-ui-previous-next-buttons
+    *ngIf="(otherLinks$ | async).length > 3"
+    [isFirst]="isFirstStepOrPage"
+    [isLast]="isLastStepOrPage"
+    (directionButtonClicked)="changeStepOrPage($event)"
+  ></gn-ui-previous-next-buttons>
 </div>
-<ng-container *ngIf="(otherLinks$ | async).length > 9; else carrouselTpl">
-  <gn-ui-list
-    [listItems]="otherLinks$ | async"
-    [listPageSize]="OTHER_LINKS_LIST_PAGE_SIZE"
-  >
+<ng-container *ngIf="(otherLinks$ | async).length > 9; else carouselTemplate">
+  <gn-ui-list [listItems]="otherLinks$ | async" [listPageSize]="5">
   </gn-ui-list>
 </ng-container>
-<ng-template #carrouselTpl>
+<ng-template #carouselTemplate>
   <gn-ui-carousel
-    #carousel
     containerClass="gap-4 py-10"
     stepsContainerClass="right-[var(--container-outside-width)] bottom-[calc(100%-12px)] top-auto"
   >
     <gn-ui-link-card
       *ngFor="
-        let link of facade.otherLinks$ | async;
+        let otherLink of otherLinks$ | async;
         let first = first;
         let last = last
       "
-      [title]="link.name"
-      [link]="link"
+      [title]="otherLink.name"
+      [link]="otherLink"
       class="w-80"
       [ngClass]="{
         'mr-[var(--container-outside-width)]': last,

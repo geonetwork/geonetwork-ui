@@ -32,9 +32,6 @@ export class MdViewFacade {
     map((uuid) => !!uuid)
   )
 
-  isLoading$ = this.store.pipe(select(MdViewSelectors.getMetadataIsLoading))
-
-
   isMetadataLoading$ = this.store.pipe(
     select(MdViewSelectors.getMetadataIsLoading)
   )

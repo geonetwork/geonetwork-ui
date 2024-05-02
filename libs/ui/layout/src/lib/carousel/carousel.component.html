@@ -1,36 +1,4 @@
 <div class="flex flex-col items-center">
-  <div class="flex flex-row gap-4 justify-center md:justify-start w-full">
-    <div class="font-title text-[28px] leading-[3.5rem] text-title mb-1.5">
-      {{ title }}
-    </div>
-    <div *ngIf="hasFourSlidesOrMore" class="flex flex-row gap-x-4 items-center">
-      <mat-icon
-        (click)="slideToPrevious()"
-        class="material-symbols-outlined card-icon rounded-full text-[0.9rem] text-center pt-[0.19rem]"
-        [style]="previousButtonStyle"
-        [ngClass]="
-          isFirstStep
-            ? 'border border-secondary text-secondary'
-            : 'border border-primary text-primary cursor-pointer'
-        "
-      >
-        arrow_back
-      </mat-icon>
-      <mat-icon
-        (click)="slideToNext()"
-        class="material-symbols-outlined card-icon rounded-full text-[0.9rem] text-center pt-[0.19rem]"
-        [style]="nextButtonStyle"
-        [ngClass]="
-          isLastStep
-            ? 'border border-secondary text-secondary'
-            : 'border border-primary text-primary cursor-pointer'
-        "
-      >
-        arrow_forward
-      </mat-icon>
-    </div>
-  </div>
-
   <div #carouselOverflowContainer class="h-full w-full">
     <div class="carousel-container flex" [ngClass]="containerClass">
       <ng-content></ng-content>
@@ -38,7 +6,7 @@
   </div>
   <div
     *ngIf="steps.length > 1"
-    class="flex flex-row justify-center gap-[10px] p-1 mt-5 w-full"
+    class="flex flex-row justify-center gap-[10px] p-1 w-full"
     [ngClass]="stepsContainerClass"
   >
     <button

@@ -33,6 +33,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatNativeDateModule } from '@angular/material/core'
 import { EditableLabelDirective } from './editable-label/editable-label.directive'
 import { ImageInputComponent } from './image-input/image-input.component'
+import { PreviousNextButtonsComponent } from './previous-next-buttons/previous-next-buttons.component'
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { ImageInputComponent } from './image-input/image-input.component'
     ButtonComponent,
     ImageInputComponent,
     DropdownSelectorComponent,
+    PreviousNextButtonsComponent,
   ],
   exports: [
     DropdownSelectorComponent,
@@ -93,6 +95,7 @@ import { ImageInputComponent } from './image-input/image-input.component'
     DateRangePickerComponent,
     EditableLabelDirective,
     ImageInputComponent,
+    PreviousNextButtonsComponent,
   ],
 })
 export class UiInputsModule {}

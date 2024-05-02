@@ -118,19 +118,19 @@
     *ngIf="displayDownload$ | async"
   >
     <datahub-record-downloads
-      class="block mt-[4.5rem]"
+      class="block mt-[72px]"
     ></datahub-record-downloads>
   </div>
 
   <div id="links" class="lg:mx-auto">
     <div class="container-lg px-4 lg:mx-auto" *ngIf="displayOtherLinks | async">
       <datahub-record-otherlinks
-        class="block mt-[4.5rem]"
+        class="block mt-[72px]"
       ></datahub-record-otherlinks>
     </div>
 
     <div class="container-lg px-4 lg:mx-auto" *ngIf="displayApi$ | async">
-      <datahub-record-apis class="block mt-[4.5rem]"></datahub-record-apis>
+      <datahub-record-apis class="block mt-[32px]"></datahub-record-apis>
     </div>
   </div>
 
@@ -149,7 +149,7 @@
     </div>
   </div>
 </div>
-<div id="userFeedbacks" class="bg-primary-opacity-10 py-16">
+<div id="userFeedbacks" class="bg-primary-opacity-10 py-16 mt-[32px]">
   <div class="container-lg px-4 lg:mx-auto">
     <datahub-record-user-feedbacks
       [organisationName$]="organisationName$"
