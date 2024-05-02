@@ -155,6 +155,7 @@
   "editor.record.form.license.odc-by": "Open Data Commons ODC-By",
   "editor.record.form.license.pddl": "Open Data Commons PDDL",
   "editor.record.form.license.unknown": "Unknown or absent",
+  "editor.record.form.resourceUpdated": "Last update date",
   "editor.record.loadError.body": "The record could not be loaded:",
   "editor.record.loadError.closeMessage": "Understood",
   "editor.record.loadError.title": "Error loading record",

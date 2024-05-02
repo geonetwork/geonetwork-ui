@@ -155,6 +155,7 @@
   "editor.record.form.license.odc-by": "",
   "editor.record.form.license.pddl": "",
   "editor.record.form.license.unknown": "Non-reconnue ou absente",
+  "editor.record.form.resourceUpdated": "Date de dernière révision",
   "editor.record.loadError.body": "",
   "editor.record.loadError.closeMessage": "",
   "editor.record.loadError.title": "",
