@@ -156,6 +156,8 @@
   "editor.record.form.license.pddl": "",
   "editor.record.form.license.unknown": "Non riconosciuta o assente",
   "editor.record.form.resourceUpdated": "",
+  "editor.record.form.updateFrequency": "",
+  "editor.record.form.updateFrequency.planned": "",
   "editor.record.loadError.body": "",
   "editor.record.loadError.closeMessage": "",
   "editor.record.loadError.title": "",

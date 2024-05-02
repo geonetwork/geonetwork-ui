@@ -156,6 +156,8 @@
   "editor.record.form.license.pddl": "Open Data Commons PDDL",
   "editor.record.form.license.unknown": "Unknown or absent",
   "editor.record.form.resourceUpdated": "Last update date",
+  "editor.record.form.updateFrequency": "Update frequency",
+  "editor.record.form.updateFrequency.planned": "The data should be updated regularly.",
   "editor.record.loadError.body": "The record could not be loaded:",
   "editor.record.loadError.closeMessage": "Understood",
   "editor.record.loadError.title": "Error loading record",
