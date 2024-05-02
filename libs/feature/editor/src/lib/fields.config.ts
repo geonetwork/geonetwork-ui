@@ -40,4 +40,11 @@ export const DEFAULT_FIELDS: EditorFieldsConfig = [
       type: 'list',
     },
   },
+  {
+    model: 'resourceUpdated',
+    formFieldConfig: {
+      labelKey: marker('editor.record.form.resourceUpdated'),
+      type: 'date',
+    },
+  },
 ]

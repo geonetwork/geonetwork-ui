@@ -48,7 +48,6 @@ import { ImageInputComponent } from './image-input/image-input.component'
     CopyTextButtonComponent,
     CheckboxComponent,
     SearchInputComponent,
-    DateRangePickerComponent,
   ],
   imports: [
     CommonModule,
@@ -73,6 +72,7 @@ import { ImageInputComponent } from './image-input/image-input.component'
     ButtonComponent,
     ImageInputComponent,
     DropdownSelectorComponent,
+    DateRangePickerComponent,
   ],
   exports: [
     DropdownSelectorComponent,

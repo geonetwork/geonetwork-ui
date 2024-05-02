@@ -1,0 +1,11 @@
+<div
+  class="flex items-center justify-between pl-3 rounded-lg border border-gray-300 bg-white"
+>
+  <input
+    [matDatepicker]="picker"
+    [value]="date"
+    (dateChange)="dateChange.emit($event.value)"
+  />
+  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+</div>
+<mat-datepicker #picker></mat-datepicker>

@@ -51,6 +51,11 @@
       [label]="config.labelKey | translate"
     ></gn-ui-form-field-license>
   </ng-container>
+  <ng-container *ngIf="isResourceUpdated">
+    <gn-ui-form-field-resource-updated
+      [control]="formControl"
+    ></gn-ui-form-field-resource-updated>
+  </ng-container>
   <ng-container *ngIf="isSimpleField">
     <gn-ui-form-field-simple
       [type]="simpleType"

@@ -67,6 +67,10 @@ describe('Editor Selectors', () => {
           config: DEFAULT_FIELDS[4],
           value: DATASET_RECORDS[0].licenses,
         },
+        {
+          config: DEFAULT_FIELDS[5],
+          value: DATASET_RECORDS[0].resourceUpdated,
+        },
       ])
     })
   })

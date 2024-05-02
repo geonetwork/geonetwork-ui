@@ -49,8 +49,8 @@ export const DATASET_RECORDS: DatasetRecord[] = deepFreeze([
     status: 'ongoing',
     recordCreated: new Date('2022-02-01T15:12:00'),
     recordUpdated: new Date('2022-02-01T15:12:00'),
-    datasetCreated: new Date('2022-09-01T14:18:19'),
-    datasetUpdated: new Date('2022-12-04T15:12:00'),
+    resourceCreated: new Date('2022-09-01T14:18:19'),
+    resourceUpdated: new Date('2022-12-04T15:12:00'),
     title: 'A very interesting dataset (un jeu de données très intéressant)',
     abstract: `# Introduction
 This dataset has been established for testing purposes.

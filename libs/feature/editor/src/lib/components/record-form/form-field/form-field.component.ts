@@ -18,6 +18,7 @@ import { FormFieldArrayComponent } from './form-field-array/form-field-array.com
 import { FormFieldFileComponent } from './form-field-file/form-field-file.component'
 import { FormFieldLicenseComponent } from './form-field-license/form-field-license.component'
 import { FormFieldObjectComponent } from './form-field-object/form-field-object.component'
+import { FormFieldResourceUpdatedComponent } from './form-field-resource-updated/form-field-resource-updated.component'
 import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component'
 import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component'
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
@@ -37,6 +38,8 @@ import { FormFieldConfig } from './form-field.model'
     MatIconModule,
     MatTooltipModule,
     FormFieldWrapperComponent,
+    FormFieldLicenseComponent,
+    FormFieldResourceUpdatedComponent,
     FormFieldSimpleComponent,
     FormFieldRichComponent,
     FormFieldObjectComponent,
@@ -44,7 +47,6 @@ import { FormFieldConfig } from './form-field.model'
     FormFieldTemporalExtentComponent,
     FormFieldFileComponent,
     FormFieldArrayComponent,
-    FormFieldLicenseComponent,
     TranslateModule,
   ],
 })
@@ -124,6 +126,9 @@ export class FormFieldComponent {
   }
   get isLicenses() {
     return this.model === 'licenses'
+  }
+  get isResourceUpdated() {
+    return this.model === 'resourceUpdated'
   }
 
   get withoutWrapper() {
