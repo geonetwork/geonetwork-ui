@@ -590,17 +590,10 @@ describe('api cards', () => {
   })
 })
 
-describe.only('api form', () => {
+describe('api form', () => {
   beforeEach(() => {
     cy.visit('/dataset/accroche_velos')
     cy.get('gn-ui-api-card').first().find('button').click()
-    cy.intercept(
-      'GET',
-      'https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/aires-covoiturage?f=json',
-      {
-        fixture: 'aires-covoiturage.json',
-      }
-    )
     cy.get('gn-ui-record-api-form').children('div').as('apiForm')
   })
   it('should have request inputs', () => {
@@ -648,6 +641,8 @@ describe.only('api form', () => {
     cy.get('@secondInput').clear()
     cy.get('@secondInput').type('87')
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(4000)
     cy.get('@apiForm').find('gn-ui-dropdown-selector').as('dropdown')
     cy.get('@dropdown').eq(0).selectDropdownOption('geojson')
 
