@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { OgcApiEndpoint } from '@camptocamp/ogc-client'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { mimeTypeToFormat } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest, map } from 'rxjs'
 
 const DEFAULT_PARAMS = {
@@ -16,16 +18,15 @@ const DEFAULT_PARAMS = {
 export class RecordApiFormComponent {
   @Input() set apiLink(value: DatasetServiceDistribution) {
     this.apiBaseUrl = value ? value.url.href : undefined
+    this.outputFormats = [{ value: 'json', label: 'JSON' }]
+    this.parseOutputFormats()
     this.resetUrl()
   }
   offset$ = new BehaviorSubject('')
   limit$ = new BehaviorSubject('')
   format$ = new BehaviorSubject('')
   apiBaseUrl: string
-  formatsList = [
-    { label: 'JSON', value: 'json' },
-    { label: 'CSV', value: 'csv' },
-  ]
+  outputFormats = [{ value: 'json', label: 'JSON' }]
   apiQueryUrl$ = combineLatest([this.offset$, this.limit$, this.format$]).pipe(
     map(([offset, limit, format]) => {
       let outputUrl
@@ -69,5 +70,40 @@ export class RecordApiFormComponent {
     this.offset$.next(DEFAULT_PARAMS.OFFSET)
     this.limit$.next(DEFAULT_PARAMS.LIMIT)
     this.format$.next(DEFAULT_PARAMS.FORMAT)
+  }
+
+  parseOutputFormats() {
+    const apiUrl =
+      this.apiBaseUrl.slice(-1) === '?'
+        ? this.apiBaseUrl.slice(0, -1)
+        : this.apiBaseUrl
+
+    this.getOutputFormats(apiUrl).then((outputFormats) => {
+      const formatsList = outputFormats.itemFormats.map((format) => {
+        const normalizedFormat = mimeTypeToFormat(format)
+        if (normalizedFormat) {
+          return {
+            label: normalizedFormat?.toUpperCase(),
+            value: normalizedFormat,
+          }
+        }
+        return null
+      })
+      this.outputFormats = this.outputFormats.concat(
+        formatsList.filter(Boolean)
+      )
+      this.outputFormats = this.outputFormats
+        .filter(
+          (format, index, self) =>
+            index === self.findIndex((t) => t.value === format.value)
+        )
+        .sort((a, b) => a.label.localeCompare(b.label))
+    })
+  }
+
+  async getOutputFormats(url) {
+    const endpoint = await new OgcApiEndpoint(url)
+    const firstCollection = (await endpoint.featureCollections)[0]
+    return endpoint.getCollectionInfo(firstCollection)
   }
 }

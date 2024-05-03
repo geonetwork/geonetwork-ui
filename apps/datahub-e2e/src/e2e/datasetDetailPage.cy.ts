@@ -641,14 +641,16 @@ describe('api form', () => {
     cy.get('@secondInput').clear()
     cy.get('@secondInput').type('87')
 
-    cy.get('@apiForm').find('gn-ui-dropdown-selector').click()
-    cy.get('button[data-cy-value="csv"]').click()
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(3000)
+    cy.get('@apiForm').find('gn-ui-dropdown-selector').as('dropdown')
+    cy.get('@dropdown').eq(0).selectDropdownOption('geojson')
 
     cy.get('@apiForm')
       .find('gn-ui-copy-text-button')
       .find('input')
       .invoke('val')
-      .should('include', 'offset=87&limit=54&f=csv')
+      .should('include', 'offset=87&limit=54&f=geojson')
 
     cy.get('@apiForm').children('div').first().find('button').first().click()
 
