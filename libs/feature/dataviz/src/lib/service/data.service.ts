@@ -17,7 +17,6 @@ import {
   getFileFormat,
   getFileFormatFromServiceOutput,
   getMimeTypeForFormat,
-  mimeTypeToFormat,
   ProxyService,
 } from '@geonetwork-ui/util/shared'
 import type { FeatureCollection } from 'geojson'
@@ -174,7 +173,7 @@ export class DataService {
   }
 
   async getDownloadUrlsFromOgcApi(url: string): Promise<OgcApiCollectionInfo> {
-    const endpoint = new OgcApiEndpoint(url)
+    const endpoint = new OgcApiEndpoint(this.proxy.getProxiedUrl(url))
     const collection = (await endpoint.featureCollections)[0]
     return endpoint.getCollectionInfo(collection)
   }
@@ -243,7 +242,6 @@ export class DataService {
       return from(this.getDownloadUrlsFromOgcApi(link.url.href)).pipe(
         switchMap((collectionInfo) => {
           const geojsonUrl = collectionInfo.jsonDownloadLink
-          console.log(collectionInfo)
           return openDataset(geojsonUrl, 'geojson')
         }),
         tap((url) => {
