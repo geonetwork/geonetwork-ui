@@ -174,8 +174,30 @@ export class DataService {
 
   async getDownloadUrlsFromOgcApi(url: string): Promise<OgcApiCollectionInfo> {
     const endpoint = new OgcApiEndpoint(this.proxy.getProxiedUrl(url))
-    const collection = (await endpoint.featureCollections)[0]
-    return endpoint.getCollectionInfo(collection)
+    return await endpoint.featureCollections
+      .then((collections) => {
+        return endpoint.getCollectionInfo(collections[0])
+      })
+      .catch((error) => {
+        if (error instanceof Error) {
+          throw new Error(`wfs.unreachable.unknown`)
+        } else {
+          if (error.type === 'network') {
+            throw new Error(`wfs.unreachable.cors`)
+          }
+          if (error.type === 'http') {
+            throw new Error(`wfs.unreachable.http`)
+          }
+          if (error.type === 'parse') {
+            throw new Error(`wfs.unreachable.parse`)
+          }
+          if (error.type === 'unsupportedType') {
+            throw new Error(`wfs.unreachable.unsupportedType`)
+          } else {
+            throw new Error(`wfs.unreachable.unknown`)
+          }
+        }
+      })
   }
 
   getDownloadLinksFromEsriRest(
