@@ -107,9 +107,8 @@ export class AddLayerFromOgcApiComponent implements OnInit {
 
   async addLayer(layer: string, layerType: any) {
     try {
-      console.log(layerType)
       const ogcEndpoint = await new OgcApiEndpoint(this.ogcUrl)
-      let layerUrl
+      let layerUrl: string
 
       if (layerType === 'vectorTiles') {
         layerUrl = await ogcEndpoint.getVectorTilesetUrl(layer)
@@ -121,7 +120,6 @@ export class AddLayerFromOgcApiComponent implements OnInit {
         })
       }
 
-      // const layerUrl = await ogcEndpoint.getCollectionItemsUrl(layer, {outputFormat: 'json'})
       const layerToAdd: MapContextLayerModel = {
         name: layer,
         url: layerUrl,
