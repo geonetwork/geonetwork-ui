@@ -193,3 +193,15 @@ docker run --rm --env ES_HOST=http://localhost:9200 --network host geonetwork/ge
 Here the `ES_HOST` environment variable is used to point to the ElasticSearch instance. Note that this host will be used _from inside the docker container_, so to access an instance on `localhost` the `--network host` option is also required.
 
 The `RECORDS_INDEX` environment variable can be used to a different index name if it is not called `gn-records`.
+
+## Enabling user feedbacks
+
+The [Datahub](../apps/datahub) application lets users post feedbacks (comments) on the records of the catalog. This feature has to be enabled in GeoNetwork first:
+
+1. Log in to GeoNetwork with an administrator account
+2. Go to administration > settings > system settings  
+   e.g. http://localhost:8080/geonetwork/srv/fre/admin.console#/settings/system
+3. In "User feedback" section, check "Enable feedback"
+4. **only for GeoNetwork version 4.2.5 and below**:
+   the user feedbacks API will fail if a SMTP host is not properly configured; this is done in the "Feedback" section, option "SMTP Host"; _this does not need to be a valid host, as long as it's not empty_
+5. Click on the "Save settings" button in the top right corner of that page
