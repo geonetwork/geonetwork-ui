@@ -1,3 +1,4 @@
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { EditorFieldsConfig } from './models/fields.model'
 
 export const DEFAULT_FIELDS: EditorFieldsConfig = [
@@ -31,5 +32,19 @@ export const DEFAULT_FIELDS: EditorFieldsConfig = [
       locked: true,
     },
     onSaveProcess: '${dateNow()}',
+  },
+  {
+    model: 'licenses',
+    formFieldConfig: {
+      labelKey: marker('editor.record.form.license'),
+      type: 'list',
+    },
+  },
+  {
+    model: 'resourceUpdated',
+    formFieldConfig: {
+      labelKey: marker('editor.record.form.resourceUpdated'),
+      type: 'date',
+    },
   },
 ]

@@ -11,11 +11,14 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { EditableLabelDirective } from '@geonetwork-ui/ui/inputs'
+import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
 import { TranslateModule } from '@ngx-translate/core'
 import { Observable } from 'rxjs'
 import { FormFieldArrayComponent } from './form-field-array/form-field-array.component'
 import { FormFieldFileComponent } from './form-field-file/form-field-file.component'
+import { FormFieldLicenseComponent } from './form-field-license/form-field-license.component'
 import { FormFieldObjectComponent } from './form-field-object/form-field-object.component'
+import { FormFieldResourceUpdatedComponent } from './form-field-resource-updated/form-field-resource-updated.component'
 import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component'
 import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component'
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
@@ -34,6 +37,9 @@ import { FormFieldConfig } from './form-field.model'
     EditableLabelDirective,
     MatIconModule,
     MatTooltipModule,
+    FormFieldWrapperComponent,
+    FormFieldLicenseComponent,
+    FormFieldResourceUpdatedComponent,
     FormFieldSimpleComponent,
     FormFieldRichComponent,
     FormFieldObjectComponent,
@@ -117,5 +123,15 @@ export class FormFieldComponent {
   }
   get isAbstract() {
     return this.model === 'abstract'
+  }
+  get isLicenses() {
+    return this.model === 'licenses'
+  }
+  get isResourceUpdated() {
+    return this.model === 'resourceUpdated'
+  }
+
+  get withoutWrapper() {
+    return this.model === 'title' || this.model === 'abstract'
   }
 }

@@ -1,37 +1,25 @@
+import { HttpClientModule } from '@angular/common/http'
+import { importProvidersFrom } from '@angular/core'
+import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
+import { TranslateModule } from '@ngx-translate/core'
 import {
   applicationConfig,
   componentWrapperDecorator,
   Meta,
-  moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
 import { DropdownSelectorComponent } from './dropdown-selector.component'
-import { OverlayModule } from '@angular/cdk/overlay'
-import { TranslateModule } from '@ngx-translate/core'
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
-import { MatIcon } from '@angular/material/icon'
-import { ButtonComponent } from '../button/button.component'
-import { importProvidersFrom } from '@angular/core'
 
 export default {
   title: 'Inputs/DropdownSelectorComponent',
   component: DropdownSelectorComponent,
   decorators: [
-    moduleMetadata({
-      declarations: [MatIcon],
-      imports: [
-        ButtonComponent,
-        UtilI18nModule,
-        OverlayModule,
-        TranslateModule,
-      ],
-    }),
     applicationConfig({
       providers: [
-        importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
+        importProvidersFrom(
+          HttpClientModule,
+          TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)
+        ),
       ],
     }),
     componentWrapperDecorator(

@@ -11,6 +11,26 @@ const mockDatasetServiceDistribution: DatasetServiceDistribution = {
   accessServiceProtocol: 'ogcFeatures',
 }
 
+jest.mock('@camptocamp/ogc-client', () => ({
+  OgcApiEndpoint: class {
+    constructor(private url) {}
+    get featureCollections() {
+      return Promise.resolve(['feature1'])
+    }
+    getCollectionInfo(collectionId) {
+      return Promise.resolve({
+        id: collectionId,
+        itemFormats: [
+          'application/geo+json',
+          'application/json',
+          'text/csv',
+          'application/json',
+        ],
+      })
+    }
+  },
+}))
+
 describe('RecordApFormComponent', () => {
   let component: RecordApiFormComponent
   let fixture: ComponentFixture<RecordApiFormComponent>
@@ -85,6 +105,21 @@ describe('RecordApFormComponent', () => {
       expect(component.offset$.getValue()).toBe('')
       expect(component.limit$.getValue()).toBe('-1')
       expect(component.format$.getValue()).toBe('json')
+    })
+  })
+
+  describe('#parseOutputFormats', () => {
+    beforeEach(() => {
+      const url = 'https://api.example.com/data?'
+      component.apiBaseUrl = url
+    })
+    it('should parse the returned formats', () => {
+      component.parseOutputFormats()
+      expect(component.outputFormats).toEqual([
+        { value: 'csv', label: 'CSV' },
+        { value: 'geojson', label: 'GEOJSON' },
+        { value: 'json', label: 'JSON' },
+      ])
     })
   })
 })

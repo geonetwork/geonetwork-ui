@@ -55,7 +55,7 @@
           extraBtnClass="secondary min-w-full !w-40 !text-black"
           [showTitle]="false"
           class="text-black"
-          [choices]="formatsList"
+          [choices]="outputFormats"
           (selectValue)="setFormat($event)"
           [selected]="format$ | async"
         ></gn-ui-dropdown-selector>
