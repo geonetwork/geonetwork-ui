@@ -1,11 +1,22 @@
-import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@angular/core';
-import { OgcApiEndpoint } from '@camptocamp/ogc-client';
-import { Subject, debounceTime } from 'rxjs';
-import { MapContextLayerModel, MapContextLayerTypeEnum } from '../map-context/map-context.model';
-import { TranslateModule } from '@ngx-translate/core';
-import { DropdownChoice, UiInputsModule } from '@geonetwork-ui/ui/inputs';
-import { CommonModule } from '@angular/common';
-import { MapLayer } from '../+state/map.models';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+  Input,
+  ChangeDetectorRef,
+} from '@angular/core'
+import { OgcApiEndpoint } from '@camptocamp/ogc-client'
+import { Subject, debounceTime } from 'rxjs'
+import {
+  MapContextLayerModel,
+  MapContextLayerTypeEnum,
+} from '../map-context/map-context.model'
+import { TranslateModule } from '@ngx-translate/core'
+import { DropdownChoice, UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { CommonModule } from '@angular/common'
+import { MapLayer } from '../+state/map.models'
 
 @Component({
   selector: 'gn-ui-add-layer-from-ogc-api',
@@ -15,92 +26,112 @@ import { MapLayer } from '../+state/map.models';
   imports: [CommonModule, TranslateModule, UiInputsModule],
 })
 export class AddLayerFromOgcApiComponent implements OnInit {
-  @Input() ogcUrl: string;
-  @Output() layerAdded = new EventEmitter<MapLayer>();
+  @Input() ogcUrl: string
+  @Output() layerAdded = new EventEmitter<MapLayer>()
 
-  urlChange = new Subject<string>();
-  loading = false;
-  layers: any[] = [];
-  errorMessage: string | null = null;
-  selectedLayerTypes: { [key: string]: DropdownChoice['value'] } = {};
+  urlChange = new Subject<string>()
+  loading = false
+  layers: any[] = []
+  errorMessage: string | null = null
+  selectedLayerTypes: { [key: string]: DropdownChoice['value'] } = {}
 
   constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.urlChange.pipe(debounceTime(700)).subscribe(() => {
-      this.loadLayers();
-    });
+      this.loadLayers()
+    })
   }
 
   async loadLayers() {
-    this.errorMessage = null;
+    this.errorMessage = null
     try {
-      this.loading = true;
+      this.loading = true
       if (!this.ogcUrl.trim()) {
-        this.layers = [];
-        return;
+        this.layers = []
+        return
       }
-      const ogcEndpoint = await new OgcApiEndpoint(this.ogcUrl);
-      this.layers = await ogcEndpoint.allCollections;
-      this.setDefaultLayerTypes();
+      const ogcEndpoint = await new OgcApiEndpoint(this.ogcUrl)
+      this.layers = await ogcEndpoint.allCollections
+      this.setDefaultLayerTypes()
     } catch (error) {
-      const err = error as Error;
-      this.layers = [];
-      this.errorMessage = 'Error loading layers: ' + err.message;
+      const err = error as Error
+      this.layers = []
+      this.errorMessage = 'Error loading layers: ' + err.message
     } finally {
-      this.loading = false;
-      this.changeDetectorRef.markForCheck();
+      this.loading = false
+      this.changeDetectorRef.markForCheck()
     }
   }
 
   setDefaultLayerTypes() {
     this.layers.forEach((layer) => {
-      const choices = this.getLayerChoices(layer);
+      const choices = this.getLayerChoices(layer)
       if (choices.length > 0) {
-        this.selectedLayerTypes[layer.name] = choices[0].value;
+        this.selectedLayerTypes[layer.name] = choices[0].value
       }
-    });
+    })
   }
 
   getLayerChoices(layer: any) {
-    const choices = [];
+    const choices = []
     if (layer.hasRecords) {
-      choices.push({ label: 'Records', value: 'record' });
+      choices.push({ label: 'Records', value: 'record' })
     }
     if (layer.hasFeatures) {
-      choices.push({ label: 'Features', value: 'features' });
+      choices.push({ label: 'Features', value: 'features' })
     }
     if (layer.hasVectorTiles) {
-      choices.push({ label: 'Vector Tiles', value: 'vectorTiles' });
+      choices.push({ label: 'Vector Tiles', value: 'vectorTiles' })
     }
     if (layer.hasMapTiles) {
-      choices.push({ label: 'Map Tiles', value: 'mapTiles' });
+      choices.push({ label: 'Map Tiles', value: 'mapTiles' })
     }
-    return choices;
+    return choices
   }
 
   shouldDisplayLayer(layer: any) {
-    return layer.hasRecords || layer.hasFeatures || layer.hasVectorTiles || layer.hasMapTiles;
+    return (
+      layer.hasRecords ||
+      layer.hasFeatures ||
+      layer.hasVectorTiles ||
+      layer.hasMapTiles
+    )
   }
 
   onLayerTypeSelect(layerName: string, selectedType: any) {
-    this.selectedLayerTypes[layerName] = selectedType ? selectedType : this.getLayerChoices(layerName)[0]?.value;
+    this.selectedLayerTypes[layerName] = selectedType
+      ? selectedType
+      : this.getLayerChoices(layerName)[0]?.value
   }
 
   async addLayer(layer: string, layerType: any) {
     try {
       console.log(layerType)
-      const ogcEndpoint = await new OgcApiEndpoint(this.ogcUrl);
-      const layerUrl = await ogcEndpoint.getCollectionItemsUrl(layer);
+      const ogcEndpoint = await new OgcApiEndpoint(this.ogcUrl)
+      let layerUrl
+
+      if (layerType === 'vectorTiles') {
+        layerUrl = await ogcEndpoint.getVectorTilesetUrl(layer)
+      } else if (layerType === 'mapTiles') {
+        layerUrl = await ogcEndpoint.getMapTilesetUrl(layer)
+      } else {
+        layerUrl = await ogcEndpoint.getCollectionItemsUrl(layer, {
+          outputFormat: 'json',
+        })
+      }
+
+      // const layerUrl = await ogcEndpoint.getCollectionItemsUrl(layer, {outputFormat: 'json'})
       const layerToAdd: MapContextLayerModel = {
         name: layer,
         url: layerUrl,
         type: MapContextLayerTypeEnum.OGCAPI,
-      };
-      this.layerAdded.emit({ ...layerToAdd, title: layer });
+        layerType: layerType,
+      }
+      this.layerAdded.emit({ ...layerToAdd, title: layer })
     } catch (error) {
-      const err = error as Error;
-      console.error('Error adding layer:', err.message);
+      const err = error as Error
+      console.error('Error adding layer:', err.message)
     }
   }
 }

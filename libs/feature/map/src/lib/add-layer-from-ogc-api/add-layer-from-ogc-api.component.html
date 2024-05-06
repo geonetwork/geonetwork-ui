@@ -16,9 +16,15 @@
 </div>
 
 <ng-container *ngFor="let layer of layers">
-  <div *ngIf="shouldDisplayLayer(layer)" class="flex items-center justify-between my-2 layer-item-tree">
+  <div
+    *ngIf="shouldDisplayLayer(layer)"
+    class="flex items-center justify-between my-2 layer-item-tree"
+  >
     <div class="flex flex-col items-start w-full">
-      <p class="max-w-xs overflow-hidden overflow-ellipsis whitespace-nowrap" [title]="layer.name">
+      <p
+        class="max-w-xs overflow-hidden overflow-ellipsis whitespace-nowrap"
+        [title]="layer.name"
+      >
         {{ layer.name }}
       </p>
       <div class="flex justify-between items-center w-full">
