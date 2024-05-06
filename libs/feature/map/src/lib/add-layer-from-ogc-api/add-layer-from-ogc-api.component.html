@@ -4,8 +4,7 @@
     (valueChange)="urlChange.next($event)"
     [hint]="'map.ogc.urlInput.hint' | translate"
     class="w-96"
-  >
-  </gn-ui-text-input>
+  ></gn-ui-text-input>
 </div>
 
 <div *ngIf="errorMessage" class="text-red-500 mt-2">
@@ -16,21 +15,30 @@
   <p class="loading-message" translate>map.loading.service</p>
 </div>
 
-<div *ngIf="!loading && layers.length > 0">
-  <h2 class="font-bold" translate>map.layers.available</h2>
-  <ng-container *ngFor="let layer of layers">
-    <div class="flex items-center justify-between my-2 layer-item-tree">
-      <p class="max-w-xs overflow-hidden overflow-ellipsis whitespace-nowrap">
-        {{ layer }}
+<ng-container *ngFor="let layer of layers">
+  <div *ngIf="shouldDisplayLayer(layer)" class="flex items-center justify-between my-2 layer-item-tree">
+    <div class="flex flex-col items-start w-full">
+      <p class="max-w-xs overflow-hidden overflow-ellipsis whitespace-nowrap" [title]="layer.name">
+        {{ layer.name }}
       </p>
-      <gn-ui-button
-        class="layer-add-btn"
-        type="primary"
-        (buttonClick)="addLayer(layer)"
-        extraClass="text-sm !px-2 !py-1"
-        translate
-        ><span translate> map.layer.add </span></gn-ui-button
-      >
+      <div class="flex justify-between items-center w-full">
+        <gn-ui-dropdown-selector
+          [title]="'Add Layer As' | translate"
+          [choices]="getLayerChoices(layer)"
+          (selectValue)="onLayerTypeSelect(layer.name, $event)"
+          [selected]="selectedLayerTypes[layer.name]"
+          extraBtnClass="w-6 h-5 !text-sm !px-2 !py-1"
+        ></gn-ui-dropdown-selector>
+        <gn-ui-button
+          class="layer-add-btn"
+          type="primary"
+          (buttonClick)="addLayer(layer.name, selectedLayerTypes[layer.name])"
+          extraClass="text-sm !px-2 !py-1"
+          translate
+        >
+          <span translate>map.layer.add</span>
+        </gn-ui-button>
+      </div>
     </div>
-  </ng-container>
-</div>
+  </div>
+</ng-container>
