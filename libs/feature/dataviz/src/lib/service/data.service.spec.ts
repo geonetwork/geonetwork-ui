@@ -76,6 +76,17 @@ jest.mock('@camptocamp/ogc-client', () => ({
       return '2.0.0'
     }
   },
+  OgcApiEndpoint: class {
+    constructor(private url) {
+      newEndpointCall(url) // to track endpoint creation
+    }
+    getCollectionInfo() {
+      return Promise.resolve({
+        bulkDownloadLinks: { json: 'http://json', csv: 'http://csv' },
+      })
+    }
+    featureCollections = Promise.resolve(['collection1'])
+  },
 }))
 
 const SAMPLE_GEOJSON = {
@@ -440,6 +451,34 @@ describe('DataService', () => {
             ),
             type: 'service',
             accessServiceProtocol: 'esriRest',
+          },
+        ])
+      })
+    })
+
+    describe('#getDownloadLinksFromOgcApiFeatures', () => {
+      it('returns links with formats for link', async () => {
+        const url = new URL('https://my.ogc.api/features')
+        const links = await service.getDownloadLinksFromOgcApiFeatures({
+          name: 'mycollection',
+          url,
+          type: 'service',
+          accessServiceProtocol: 'ogcFeatures',
+        })
+        expect(links).toEqual([
+          {
+            name: 'mycollection',
+            mimeType: 'application/json',
+            url: new URL('http://json'),
+            type: 'download',
+            accessServiceProtocol: 'ogcFeatures',
+          },
+          {
+            name: 'mycollection',
+            mimeType: 'text/csv',
+            url: new URL('http://csv'),
+            type: 'download',
+            accessServiceProtocol: 'ogcFeatures',
           },
         ])
       })

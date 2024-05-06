@@ -1,51 +1,87 @@
 import 'cypress-real-events'
 import path from 'path'
 
+beforeEach(() => {
+  // GEOSERVER stubs
+  cy.intercept(
+    'GET',
+    '/geoserver/insee/ows?SERVICE=WMS&REQUEST=GetCapabilities',
+    {
+      fixture: 'insee-wms-getcapabilities.xml',
+    }
+  )
+  cy.intercept(
+    'GET',
+    '/geoserver/insee/ows?SERVICE=WMS&REQUEST=GetCapabilities',
+    {
+      fixture: 'insee-wfs-getcapabilities.xml',
+    }
+  )
+  cy.intercept(
+    'GET',
+    '/geoserver/insee/ows?REQUEST=GetMap&SERVICE=WMS&VERSION=1.3.0&FORMAT=image%2Fpng&STYLES=&TRANSPARENT=true&LAYERS=rectangles_200m_menage_erbm*',
+    {
+      fixture: 'insee-rectangles_200m_menage_erbm.png',
+    }
+  )
+  cy.intercept(
+    'GET',
+    '/geoserver/insee/ows?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=application%2Fjson*',
+    {
+      fixture: 'insee-rectangles_200m_menage_erbm.json',
+    }
+  )
+  cy.intercept(
+    'GET',
+    '/geoserver/insee/ows?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=csv',
+    {
+      fixture: 'insee-rectangles_200m_menage_erbm.csv',
+    }
+  )
+
+  // OPENDATASOFT stub
+  cy.intercept(
+    'GET',
+    '/explore/dataset/population-millesimee-communes-francaises/download?format=csv&timezone=Europe/Berlin&use_labels_for_header=false',
+    {
+      fixture: 'population-millesimee-communes-francaises.csv',
+    }
+  )
+
+  // OGC API stubs
+  cy.intercept(
+    'GET',
+    '/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix/items?f=json',
+    {
+      fixture: 'liste-des-jardins-familiaux-et-partages-de-roubaix_items.json',
+    }
+  )
+  cy.intercept('GET', '/data/ogcapi/collections/covoit-mel/items?f=json', {
+    fixture: 'covoit-mel_items.json',
+  })
+  cy.intercept(
+    'GET',
+    '/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix?f=json',
+    {
+      fixture: 'liste-des-jardins-familiaux-et-partages-de-roubaix.json',
+    }
+  )
+  cy.intercept('GET', '/data/ogcapi/collections/covoit-mel?f=json', {
+    fixture: 'covoit-mel.json',
+  })
+  cy.intercept('GET', '/data/ogcapi/collections?f=json', {
+    fixture: 'ogcapi_collections.json',
+  })
+  cy.intercept('GET', '/data/ogcapi/conformance?f=json', {
+    fixture: 'ogcapi_conformance.json',
+  })
+  cy.intercept('GET', '/data/ogcapi/?f=json', {
+    fixture: 'ogcapi.json',
+  })
+})
+
 describe('dataset pages', () => {
   beforeEach(() => {
-    cy.intercept(
-      'GET',
-      '/geoserver/insee/ows?SERVICE=WMS&REQUEST=GetCapabilities',
-      {
-        fixture: 'insee-wms-getcapabilities.xml',
-      }
-    )
-    cy.intercept(
-      'GET',
-      '/geoserver/insee/ows?SERVICE=WMS&REQUEST=GetCapabilities',
-      {
-        fixture: 'insee-wfs-getcapabilities.xml',
-      }
-    )
-    cy.intercept(
-      'GET',
-      '/geoserver/insee/ows?REQUEST=GetMap&SERVICE=WMS&VERSION=1.3.0&FORMAT=image%2Fpng&STYLES=&TRANSPARENT=true&LAYERS=rectangles_200m_menage_erbm*',
-      {
-        fixture: 'insee-rectangles_200m_menage_erbm.png',
-      }
-    )
-    cy.intercept(
-      'GET',
-      '/geoserver/insee/ows?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=application%2Fjson*',
-      {
-        fixture: 'insee-rectangles_200m_menage_erbm.json',
-      }
-    )
-    cy.intercept(
-      'GET',
-      '/geoserver/insee/ows?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=csv',
-      {
-        fixture: 'insee-rectangles_200m_menage_erbm.csv',
-      }
-    )
-    cy.intercept(
-      'GET',
-      '/explore/dataset/population-millesimee-communes-francaises/download?format=csv&timezone=Europe/Berlin&use_labels_for_header=false',
-      {
-        fixture: 'population-millesimee-communes-francaises.csv',
-      }
-    )
-
     // dataset without API, preview or downloads
     // cy.visit('/dataset/011963da-afc0-494c-a2cc-5cbd59e122e4')
     // dataset with map error
@@ -641,8 +677,6 @@ describe('api form', () => {
     cy.get('@secondInput').clear()
     cy.get('@secondInput').type('87')
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(3000)
     cy.get('@apiForm').find('gn-ui-dropdown-selector').as('dropdown')
     cy.get('@dropdown').eq(0).selectDropdownOption('geojson')
 

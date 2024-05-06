@@ -1,0 +1,36 @@
+{
+  "title": "geOrchestra Data API",
+  "description": "data-api provides an API to access datas",
+  "links": [
+    {
+      "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/",
+      "rel": "self",
+      "type": "application/json",
+      "title": "This document as JSON"
+    },
+    {
+      "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/conformance",
+      "rel": "conformance",
+      "type": "application/json",
+      "title": "Conformance"
+    },
+    {
+      "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections",
+      "rel": "data",
+      "type": "application/json",
+      "title": "Collections"
+    },
+    {
+      "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/../v3/api-docs",
+      "rel": "service-desc",
+      "type": "application/vnd.oai.openapi+json;version=3.0",
+      "title": "OpenAPI definition in JSON format"
+    },
+    {
+      "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/../swagger-ui/index.html",
+      "rel": "service-doc",
+      "type": "text/html",
+      "title": "OpenAPI definition in HTML format"
+    }
+  ]
+}

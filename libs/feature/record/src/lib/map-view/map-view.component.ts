@@ -196,7 +196,8 @@ export class MapViewComponent implements OnInit, OnDestroy {
     } else if (
       (link.type === 'service' &&
         (link.accessServiceProtocol === 'wfs' ||
-          link.accessServiceProtocol === 'esriRest')) ||
+          link.accessServiceProtocol === 'esriRest' ||
+          link.accessServiceProtocol === 'ogcFeatures')) ||
       link.type === 'download'
     ) {
       return this.dataService.readAsGeoJson(link).pipe(

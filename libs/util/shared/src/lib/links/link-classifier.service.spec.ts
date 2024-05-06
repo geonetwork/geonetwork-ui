@@ -111,5 +111,14 @@ describe('LinkClassifierService', () => {
         ])
       })
     })
+    describe('for an OGC API Features link', () => {
+      it('returns download, data and API usage', () => {
+        expect(service.getUsagesForLink(LINK_FIXTURES.ogcApiFormat)).toEqual([
+          LinkUsage.API,
+          LinkUsage.DOWNLOAD,
+          LinkUsage.GEODATA,
+        ])
+      })
+    })
   })
 })

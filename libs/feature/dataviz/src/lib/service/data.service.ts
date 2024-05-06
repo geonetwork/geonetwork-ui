@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { WfsEndpoint, WfsVersion } from '@camptocamp/ogc-client'
+import {
+  OgcApiCollectionInfo,
+  OgcApiEndpoint,
+  WfsEndpoint,
+  WfsVersion,
+} from '@camptocamp/ogc-client'
 import {
   BaseReader,
   FetchError,
@@ -148,6 +153,53 @@ export class DataService {
     )
   }
 
+  async getDownloadLinksFromOgcApiFeatures(
+    ogcApiLink: DatasetServiceDistribution
+  ): Promise<DatasetDistribution[]> {
+    const collectionInfo = await this.getDownloadUrlsFromOgcApi(
+      ogcApiLink.url.href
+    )
+
+    return Object.keys(collectionInfo.bulkDownloadLinks).map((downloadLink) => {
+      return {
+        ...ogcApiLink,
+        type: 'download',
+        url: new URL(collectionInfo.bulkDownloadLinks[downloadLink]),
+        mimeType: getMimeTypeForFormat(
+          getFileFormatFromServiceOutput(downloadLink)
+        ),
+      }
+    })
+  }
+
+  async getDownloadUrlsFromOgcApi(url: string): Promise<OgcApiCollectionInfo> {
+    const endpoint = new OgcApiEndpoint(this.proxy.getProxiedUrl(url))
+    return await endpoint.featureCollections
+      .then((collections) => {
+        return endpoint.getCollectionInfo(collections[0])
+      })
+      .catch((error) => {
+        if (error instanceof Error) {
+          throw new Error(`wfs.unreachable.unknown`)
+        } else {
+          if (error.type === 'network') {
+            throw new Error(`wfs.unreachable.cors`)
+          }
+          if (error.type === 'http') {
+            throw new Error(`wfs.unreachable.http`)
+          }
+          if (error.type === 'parse') {
+            throw new Error(`wfs.unreachable.parse`)
+          }
+          if (error.type === 'unsupportedType') {
+            throw new Error(`wfs.unreachable.unsupportedType`)
+          } else {
+            throw new Error(`wfs.unreachable.unknown`)
+          }
+        }
+      })
+  }
+
   getDownloadLinksFromEsriRest(
     esriRestLink: DatasetServiceDistribution
   ): DatasetDistribution[] {
@@ -205,6 +257,21 @@ export class DataService {
         'geojson'
       )
       return from(openDataset(url, 'geojson')).pipe()
+    } else if (
+      link.type === 'service' &&
+      link.accessServiceProtocol === 'ogcFeatures'
+    ) {
+      return from(this.getDownloadUrlsFromOgcApi(link.url.href)).pipe(
+        switchMap((collectionInfo) => {
+          const geojsonUrl = collectionInfo.jsonDownloadLink
+          return openDataset(geojsonUrl, 'geojson')
+        }),
+        tap((url) => {
+          if (url === null) {
+            throw new Error('wfs.geojsongml.notsupported')
+          }
+        })
+      )
     }
     return throwError(() => 'protocol not supported')
   }
