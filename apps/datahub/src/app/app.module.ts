@@ -25,6 +25,7 @@ import {
   RECORD_URL_TOKEN,
 } from '@geonetwork-ui/feature/search'
 import {
+  LinkCardComponent,
   THUMBNAIL_PLACEHOLDER,
   UiElementsModule,
 } from '@geonetwork-ui/ui/elements'
@@ -150,6 +151,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     UiCatalogModule,
     MatTabsModule,
     UiWidgetsModule,
+    LinkCardComponent,
   ],
   providers: [
     importProvidersFrom(FeatureAuthModule),
