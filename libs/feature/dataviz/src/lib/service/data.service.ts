@@ -156,20 +156,25 @@ export class DataService {
   async getDownloadLinksFromOgcApiFeatures(
     ogcApiLink: DatasetServiceDistribution
   ): Promise<DatasetDistribution[]> {
-    const collectionInfo = await this.getDownloadUrlsFromOgcApi(
-      ogcApiLink.url.href
-    )
-
-    return Object.keys(collectionInfo.bulkDownloadLinks).map((downloadLink) => {
-      return {
-        ...ogcApiLink,
-        type: 'download',
-        url: new URL(collectionInfo.bulkDownloadLinks[downloadLink]),
-        mimeType: getMimeTypeForFormat(
-          getFileFormatFromServiceOutput(downloadLink)
-        ),
-      }
-    })
+    try {
+      const collectionInfo = await this.getDownloadUrlsFromOgcApi(
+        ogcApiLink.url.href
+      )
+      return Object.keys(collectionInfo.bulkDownloadLinks).map(
+        (downloadLink) => {
+          return {
+            ...ogcApiLink,
+            type: 'download',
+            url: new URL(collectionInfo.bulkDownloadLinks[downloadLink]),
+            mimeType: getMimeTypeForFormat(
+              getFileFormatFromServiceOutput(downloadLink)
+            ),
+          }
+        }
+      )
+    } catch (error) {
+      return Promise.resolve([])
+    }
   }
 
   async getDownloadUrlsFromOgcApi(url: string): Promise<OgcApiCollectionInfo> {
