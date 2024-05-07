@@ -110,6 +110,14 @@ export const LINK_FIXTURES: Record<string, DatasetDistribution> = deepFreeze({
     url: new URL('https://my.ogc.server/wfs'),
     accessServiceProtocol: 'wfs',
   },
+  geodataWfsDownload: {
+    name: 'mylayer',
+    type: 'download',
+    url: new URL(
+      'https://my.ogc.server/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=csv'
+    ),
+    accessServiceProtocol: 'wfs',
+  },
   geodataWms2: {
     name: 'myotherlayer',
     type: 'service',

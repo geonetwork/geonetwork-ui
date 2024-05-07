@@ -95,6 +95,6 @@ export class DownloadsListComponent {
   }
 
   isFromWfs(link: DatasetDistribution) {
-    return link.type === 'service' && link.accessServiceProtocol === 'wfs'
+    return link.type === 'download' && link.accessServiceProtocol === 'wfs'
   }
 }
