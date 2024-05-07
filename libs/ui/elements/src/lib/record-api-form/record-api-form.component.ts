@@ -17,9 +17,11 @@ const DEFAULT_PARAMS = {
 })
 export class RecordApiFormComponent {
   @Input() set apiLink(value: DatasetServiceDistribution) {
-    this.apiBaseUrl = value ? value.url.href : undefined
     this.outputFormats = [{ value: 'json', label: 'JSON' }]
-    this.parseOutputFormats()
+    if (value) {
+      this.apiBaseUrl = value.url.href
+      this.parseOutputFormats()
+    }
     this.resetUrl()
   }
   offset$ = new BehaviorSubject('')
