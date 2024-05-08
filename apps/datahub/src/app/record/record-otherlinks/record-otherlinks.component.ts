@@ -1,7 +1,12 @@
-import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core'
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ViewChild,
+} from '@angular/core'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { CarouselComponent } from '@geonetwork-ui/ui/layout'
-import { ListComponent } from '@geonetwork-ui/ui/elements'
+import { BlockListComponent, CarouselComponent } from '@geonetwork-ui/ui/layout'
 
 @Component({
   selector: 'datahub-record-otherlinks',
@@ -9,13 +14,16 @@ import { ListComponent } from '@geonetwork-ui/ui/elements'
   styleUrls: ['./record-otherlinks.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RecordOtherlinksComponent {
+export class RecordOtherlinksComponent implements AfterViewInit {
   otherLinks$ = this.facade.otherLinks$
 
   @ViewChild(CarouselComponent) carousel: CarouselComponent
-  @ViewChild(ListComponent) list: ListComponent
+  @ViewChild(BlockListComponent) list: BlockListComponent
 
-  constructor(public facade: MdViewFacade) {}
+  constructor(
+    public facade: MdViewFacade,
+    private changeDetector: ChangeDetectorRef
+  ) {}
 
   get isFirstStepOrPage() {
     return this.carousel?.isFirstStep ?? this.list?.isFirstPage ?? true
@@ -25,13 +33,26 @@ export class RecordOtherlinksComponent {
     return this.carousel?.isLastStep ?? this.list?.isLastPage ?? false
   }
 
+  get hasPagination() {
+    return (this.carousel?.stepsCount || this.list?.pagesCount) > 1
+  }
+
   changeStepOrPage(direction: string) {
     if (direction === 'next') {
-      this.list?.goToNextPage()
+      this.list?.nextPage()
       this.carousel?.slideToNext()
     } else {
       this.carousel?.slideToPrevious()
-      this.list?.goToPreviousPage()
+      this.list?.previousPage()
     }
+  }
+
+  updateView() {
+    this.changeDetector.detectChanges()
+  }
+
+  ngAfterViewInit() {
+    // this is required to show the pagination correctly
+    this.changeDetector.detectChanges()
   }
 }

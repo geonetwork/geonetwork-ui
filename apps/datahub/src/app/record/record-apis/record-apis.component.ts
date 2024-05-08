@@ -1,6 +1,7 @@
 import {
-  Component,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
   OnInit,
   ViewChild,
 } from '@angular/core'
@@ -23,21 +24,22 @@ export class RecordApisComponent implements OnInit {
 
   apiLinks$ = this.facade.apiLinks$
 
-  carouselSteps = 0
-
-  constructor(private facade: MdViewFacade) {}
+  constructor(
+    private facade: MdViewFacade,
+    private changeDetector: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.setStyle(undefined)
     this.selectedApiLink = undefined
   }
 
-  get hasSteps() {
-    return this.carouselSteps > 1
+  get hasPagination() {
+    return this.carousel?.stepsCount > 1
   }
 
-  carouselStepsHasChanged(stepNumber: number) {
-    this.carouselSteps = stepNumber
+  updateView() {
+    this.changeDetector.detectChanges()
   }
 
   get isFirstStep() {

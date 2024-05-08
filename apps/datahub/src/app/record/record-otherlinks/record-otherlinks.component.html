@@ -6,20 +6,26 @@
     record.metadata.links
   </p>
   <gn-ui-previous-next-buttons
-    *ngIf="(otherLinks$ | async).length > 3"
+    *ngIf="hasPagination"
     [isFirst]="isFirstStepOrPage"
     [isLast]="isLastStepOrPage"
     (directionButtonClicked)="changeStepOrPage($event)"
   ></gn-ui-previous-next-buttons>
 </div>
-<ng-container *ngIf="(otherLinks$ | async).length > 9; else carouselTemplate">
-  <gn-ui-list [listItems]="otherLinks$ | async" [listPageSize]="5">
-  </gn-ui-list>
+<ng-container *ngIf="(otherLinks$ | async).length >= 10; else carouselTemplate">
+  <gn-ui-block-list containerClass="gap-4 py-10">
+    <gn-ui-link-card
+      #block
+      *ngFor="let otherLink of otherLinks$ | async"
+      [link]="otherLink"
+      [compact]="true"
+    ></gn-ui-link-card>
+  </gn-ui-block-list>
 </ng-container>
 <ng-template #carouselTemplate>
   <gn-ui-carousel
-    containerClass="gap-4 py-10"
-    stepsContainerClass="right-[var(--container-outside-width)] bottom-[calc(100%-12px)] top-auto"
+    containerClass="gap-4 pt-[26px] pb-[38px]"
+    (currentStepChange)="updateView()"
   >
     <gn-ui-link-card
       *ngFor="
@@ -27,14 +33,8 @@
         let first = first;
         let last = last
       "
-      [title]="otherLink.name"
       [link]="otherLink"
       class="w-80"
-      [ngClass]="{
-        'mr-[var(--container-outside-width)]': last,
-        'ml-[var(--container-outside-width)]': first
-      }"
-    >
-    </gn-ui-link-card>
+    ></gn-ui-link-card>
   </gn-ui-carousel>
 </ng-template>
