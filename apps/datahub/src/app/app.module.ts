@@ -30,7 +30,7 @@ import {
   UiElementsModule,
 } from '@geonetwork-ui/ui/elements'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
+import { CarouselComponent, UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import {
   getGlobalConfig,
@@ -152,6 +152,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     MatTabsModule,
     UiWidgetsModule,
     LinkCardComponent,
+    CarouselComponent,
   ],
   providers: [
     importProvidersFrom(FeatureAuthModule),

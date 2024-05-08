@@ -34,7 +34,7 @@ jest.mock('embla-carousel', () => {
 })
 
 @Component({
-  template: `<gn-ui-carousel style="width: {{ width }}px">
+  template: `<gn-ui-carousel [ngStyle]="{ width: width + 'px' }">
     <div *ngFor="let block of blocks" style="width: 50px"></div>
   </gn-ui-carousel>`,
 })
@@ -49,7 +49,8 @@ describe('CarouselComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CarouselWrapperComponent, CarouselComponent],
+      declarations: [CarouselWrapperComponent],
+      imports: [CarouselComponent],
     }).compileComponents()
     fixture = TestBed.createComponent(CarouselWrapperComponent)
     component = fixture.debugElement.query(
@@ -80,6 +81,37 @@ describe('CarouselComponent', () => {
       it('sets the clicked step as selected', () => {
         expect(component.currentStep).toEqual(2)
       })
+    })
+  })
+
+  describe('currentStepChange', () => {
+    it('emits the current step index', () => {
+      const spy = jest.fn()
+      component.currentStepChange.subscribe(spy)
+      component.scrollToStep(2)
+      expect(spy).toHaveBeenCalledWith(2)
+      expect(spy).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('isFirstStep', () => {
+    it('returns true if the current step is the first one', () => {
+      expect(component.isFirstStep).toBe(true)
+    })
+    it('returns false if the current step is not the first one', () => {
+      component.scrollToStep(2)
+      expect(component.isFirstStep).toBe(false)
+    })
+  })
+
+  describe('isLastStep', () => {
+    it('returns true if the current step is the last one', () => {
+      component.scrollToStep(3)
+      expect(component.isLastStep).toBe(true)
+    })
+    it('returns false if the current step is not the last one', () => {
+      component.scrollToStep(1)
+      expect(component.isLastStep).toBe(false)
     })
   })
 })
