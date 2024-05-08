@@ -33,8 +33,6 @@ import { MarkdownParserComponent } from './markdown-parser/markdown-parser.compo
 import { ImageOverlayPreviewComponent } from './image-overlay-preview/image-overlay-preview.component'
 import { UserFeedbackItemComponent } from './user-feedback-item/user-feedback-item.component'
 import { TimeSincePipe } from './user-feedback-item/time-since.pipe'
-import { ListComponent } from './list/list.component'
-import { ListItemComponent } from './list-item/list-item.component'
 import { MatPaginatorModule } from '@angular/material/paginator'
 
 @NgModule({
@@ -60,8 +58,6 @@ import { MatPaginatorModule } from '@angular/material/paginator'
     ContentGhostComponent,
     DownloadItemComponent,
     DownloadsListComponent,
-    ListComponent,
-    ListItemComponent,
     ApiCardComponent,
     RelatedRecordCardComponent,
     MetadataContactComponent,
@@ -84,8 +80,6 @@ import { MatPaginatorModule } from '@angular/material/paginator'
     ContentGhostComponent,
     DownloadItemComponent,
     DownloadsListComponent,
-    ListComponent,
-    ListItemComponent,
     ApiCardComponent,
     RelatedRecordCardComponent,
     MetadataContactComponent,
