@@ -29,7 +29,10 @@ import {
   THUMBNAIL_PLACEHOLDER,
   UiElementsModule,
 } from '@geonetwork-ui/ui/elements'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import {
+  PreviousNextButtonsComponent,
+  UiInputsModule,
+} from '@geonetwork-ui/ui/inputs'
 import {
   BlockListComponent,
   CarouselComponent,
@@ -158,6 +161,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     LinkCardComponent,
     CarouselComponent,
     BlockListComponent,
+    PreviousNextButtonsComponent,
   ],
   providers: [
     importProvidersFrom(FeatureAuthModule),

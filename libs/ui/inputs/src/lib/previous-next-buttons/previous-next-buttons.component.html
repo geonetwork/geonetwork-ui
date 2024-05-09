@@ -1,10 +1,6 @@
 <div class="flex flex-row gap-x-4 items-center">
   <gn-ui-button
     data-test="previousButton"
-    [style.--gn-ui-button-rounded]="'100%'"
-    [style.--gn-ui-button-width]="'8px'"
-    [style.--gn-ui-button-height]="'8px'"
-    [style.--gn-ui-button-padding]="'12px'"
     [type]="isFirst ? 'default' : 'outline'"
     [disabled]="isFirst"
     (buttonClick)="previousButtonClicked()"
@@ -17,10 +13,6 @@
   </gn-ui-button>
   <gn-ui-button
     data-test="nextButton"
-    [style.--gn-ui-button-rounded]="'100%'"
-    [style.--gn-ui-button-width]="'8px'"
-    [style.--gn-ui-button-height]="'8px'"
-    [style.--gn-ui-button-padding]="'12px'"
     [type]="isLast ? 'default' : 'outline'"
     [disabled]="isLast"
     (buttonClick)="nextButtonClicked()"
