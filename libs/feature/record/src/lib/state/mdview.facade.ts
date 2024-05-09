@@ -7,11 +7,9 @@ import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import {
   CatalogRecord,
-  DatasetDistribution,
   UserFeedback,
 } from '@geonetwork-ui/common/domain/model/record'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
-import { Observable } from 'rxjs'
 
 @Injectable()
 /**
@@ -48,15 +46,11 @@ export class MdViewFacade {
 
   error$ = this.store.pipe(select(MdViewSelectors.getMetadataError))
 
-  related$: Observable<CatalogRecord[]> = this.store.pipe(
-    select(MdViewSelectors.getRelated)
-  )
+  related$ = this.store.pipe(select(MdViewSelectors.getRelated))
 
-  chartConfig$: Observable<DatavizConfigurationModel> = this.store.pipe(
-    select(MdViewSelectors.getChartConfig)
-  )
+  chartConfig$ = this.store.pipe(select(MdViewSelectors.getChartConfig))
 
-  allLinks$: Observable<DatasetDistribution[]> = this.metadata$.pipe(
+  allLinks$ = this.metadata$.pipe(
     map((record) => ('distributions' in record ? record.distributions : []))
   )
 

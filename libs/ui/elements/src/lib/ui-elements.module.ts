@@ -33,7 +33,6 @@ import { MarkdownParserComponent } from './markdown-parser/markdown-parser.compo
 import { ImageOverlayPreviewComponent } from './image-overlay-preview/image-overlay-preview.component'
 import { UserFeedbackItemComponent } from './user-feedback-item/user-feedback-item.component'
 import { TimeSincePipe } from './user-feedback-item/time-since.pipe'
-import { MatPaginatorModule } from '@angular/material/paginator'
 
 @NgModule({
   imports: [
@@ -51,7 +50,6 @@ import { MatPaginatorModule } from '@angular/material/paginator'
     MarkdownParserComponent,
     ThumbnailComponent,
     TimeSincePipe,
-    MatPaginatorModule,
   ],
   declarations: [
     MetadataInfoComponent,
