@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { Subject } from 'rxjs'
+import { BehaviorSubject } from 'rxjs'
 import { RecordOtherlinksComponent } from './record-otherlinks.component'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 
 class MdViewFacadeMock {
-  otherLinks$ = new Subject()
+  otherLinks$ = new BehaviorSubject([])
 }
-describe('DataOtherlinksComponent', () => {
+describe('RecordOtherlinksComponent', () => {
   let component: RecordOtherlinksComponent
   let fixture: ComponentFixture<RecordOtherlinksComponent>
 
