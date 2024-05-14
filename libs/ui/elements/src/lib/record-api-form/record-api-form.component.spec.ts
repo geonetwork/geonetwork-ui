@@ -29,6 +29,30 @@ jest.mock('@camptocamp/ogc-client', () => ({
       })
     }
   },
+  WfsEndpoint: class {
+    constructor(private url) {}
+    async isReady() {
+      return Promise.resolve(true)
+    }
+    getFeatureUrl(featureType, options) {
+      return `${this.url}?type=${featureType}&options=${JSON.stringify(
+        options
+      )}`
+    }
+    getServiceInfo() {
+      return Promise.resolve({
+        outputFormats: [
+          'application/geo+json',
+          'application/json',
+          'text/csv',
+          'application/json',
+        ],
+      })
+    }
+    supportsStartIndex() {
+      return true
+    }
+  },
 }))
 
 describe('RecordApFormComponent', () => {
@@ -120,6 +144,27 @@ describe('RecordApFormComponent', () => {
         { value: 'geojson', label: 'GEOJSON' },
         { value: 'json', label: 'JSON' },
       ])
+    })
+  })
+  describe('When panel is opened and accessServiceProtocol is wfs', () => {
+    beforeEach(() => {
+      component.apiLink = {
+        ...mockDatasetServiceDistribution,
+        accessServiceProtocol: 'wfs',
+      }
+      fixture.detectChanges()
+    })
+
+    it('should set the links and initial values correctly', async () => {
+      expect(component.apiBaseUrl).toBe('https://api.example.com/data')
+      expect(component.accessServiceProtocol).toBe('wfs')
+      expect(component.offset$.getValue()).toBe('')
+      expect(component.limit$.getValue()).toBe('-1')
+      expect(component.format$.getValue()).toBe('json')
+      const url = await firstValueFrom(component.apiQueryUrl$)
+      expect(url).toBe(
+        'https://api.example.com/data?type=undefined&options={"outputFormat":"json","startIndex":0}'
+      )
     })
   })
 })

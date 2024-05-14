@@ -37,15 +37,37 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-col gap-3">
-        <p class="text-sm" translate>record.metadata.api.form.offset</p>
-        <gn-ui-text-input
-          class="w-20"
-          [value]="offset$ | async"
-          (valueChange)="setOffset($event)"
-          hint=""
-        >
-        </gn-ui-text-input>
+      <div class="flex flex-col gap-3 relative">
+        <p class="text-sm" [class.text-gray-600]="!supportOffset" translate>
+          record.metadata.api.form.offset
+        </p>
+        <div class="flex items-center">
+          <gn-ui-text-input
+            class="w-20"
+            [value]="offset$ | async"
+            [extraClass]="
+              supportOffset ? '' : 'text-gray-600 bg-gray-200 opacity-70'
+            "
+            (valueChange)="supportOffset ? setOffset($event) : null"
+            hint=""
+          >
+          </gn-ui-text-input>
+          <div
+            *ngIf="!supportOffset"
+            class="flex items-center gap-2 text-red-500 z-10 ml-3 cursor-pointer"
+          >
+            <span
+              class="material-symbols-outlined"
+              matTooltip="Not supported on this service"
+            >
+              warning
+            </span>
+          </div>
+        </div>
+        <div
+          *ngIf="!supportOffset"
+          class="absolute inset-0 bg-transparent cursor-not-allowed"
+        ></div>
       </div>
       <div class="flex flex-col gap-3">
         <p class="text-sm" translate>record.metadata.api.form.type</p>
