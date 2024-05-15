@@ -9,7 +9,7 @@ import { By } from '@angular/platform-browser'
       class="block"
       *ngFor="let block of blocks"
       #block
-      style="width: 50px"
+      style="width: 50px; height: 20px"
     ></div>
   </gn-ui-block-list>`,
 })
@@ -145,6 +145,29 @@ describe('BlockListComponent', () => {
     it('returns false if the current page is not the last one', () => {
       component.goToPage(1)
       expect(component.isLastPage).toBe(false)
+    })
+  })
+
+  describe('set initial height as min height, keeps value when height changes', () => {
+    beforeEach(() => {
+      Object.defineProperties(component.blockContainer.nativeElement, {
+        clientHeight: {
+          value: 150,
+        },
+      })
+      fixture.detectChanges()
+      component.ngAfterViewInit()
+      Object.defineProperties(component.blockContainer.nativeElement, {
+        clientHeight: {
+          value: 50,
+        },
+      })
+      fixture.detectChanges()
+    })
+    it('sets the min height of the container according to its initial content', () => {
+      expect(component.blockContainer.nativeElement.style.minHeight).toBe(
+        '150px'
+      )
     })
   })
 })

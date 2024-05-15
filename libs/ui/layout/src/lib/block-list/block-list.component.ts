@@ -1,5 +1,5 @@
 import {
-  AfterContentInit,
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -7,6 +7,7 @@ import {
   ElementRef,
   Input,
   QueryList,
+  ViewChild,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 
@@ -18,13 +19,16 @@ import { CommonModule } from '@angular/common'
   standalone: true,
   imports: [CommonModule],
 })
-export class BlockListComponent implements AfterContentInit {
+export class BlockListComponent implements AfterViewInit {
   @Input() pageSize = 5
   @Input() containerClass = ''
   @Input() paginationContainerClass = 'w-full bottom-0 top-auto'
   @ContentChildren('block', { read: ElementRef }) blocks: QueryList<
     ElementRef<HTMLElement>
   >
+  @ViewChild('blockContainer') blockContainer: ElementRef<HTMLElement>
+
+  protected minHeight = 0
 
   protected currentPage = 0
   protected get pages() {
@@ -43,9 +47,13 @@ export class BlockListComponent implements AfterContentInit {
 
   constructor(private changeDetector: ChangeDetectorRef) {}
 
-  ngAfterContentInit() {
+  ngAfterViewInit() {
     this.blocks.changes.subscribe(this.refreshBlocksVisibility)
     this.refreshBlocksVisibility()
+
+    // we store the first height as the min-height of the list container
+    this.minHeight = this.blockContainer.nativeElement.clientHeight
+    this.changeDetector.detectChanges()
   }
 
   protected refreshBlocksVisibility = () => {
