@@ -1,0 +1,13 @@
+<div class="border rounded-lg px-4 pb-4">
+  <p class="my-2" translate>editor.record.form.temporalExtents.range</p>
+  <gn-ui-date-range-picker
+    [startDate]="control.value?.start"
+    [endDate]="control.value?.end"
+    (startDateChange)="
+      control.setValue({ start: $event, end: control.value?.end })
+    "
+    (endDateChange)="
+      control.setValue({ start: control.value?.start, end: $event })
+    "
+  ></gn-ui-date-range-picker>
+</div>

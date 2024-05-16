@@ -1,0 +1,6 @@
+<gn-ui-sortable-list
+  [elements]="elements"
+  (elementsChange)="onElementsChange($event)"
+  [addOptions]="addOptions$ | async"
+  (add)="onAdd($event)"
+></gn-ui-sortable-list>
