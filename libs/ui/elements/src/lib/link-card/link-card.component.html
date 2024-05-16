@@ -1,25 +1,43 @@
 <a
   [href]="link.url"
   target="_blank"
-  class="flex flex-col justify-between group h-40 grow py-5 px-5 bg-white rounded border-gray-300 filter card-shadow overflow-hidden lg:w-80"
+  class="flex flex-col justify-between group grow py-5 px-5 bg-white rounded border-gray-300 filter card-shadow overflow-hidden"
+  [ngClass]="{ 'h-40': !compact }"
+  [title]="title"
 >
-  <div class="max-h-24 overflow-hidden text-ellipsis">
-    <p
-      class="font-title font-medium text-21 text-black break-words mb-1 line-clamp-2"
-    >
-      {{ link.name }}
-    </p>
-    <p class="font-medium text-sm break-words">
-      {{ link.description }}
-    </p>
-    <p
-      *ngIf="!link.name && !link.description"
-      class="font-medium text-sm break-words truncate"
-    >
-      {{ link.url }}
-    </p>
-  </div>
-  <div>
-    <mat-icon class="material-symbols-outlined card-icon">open_in_new</mat-icon>
-  </div>
+  <ng-container *ngIf="!compact; else compactTpl">
+    <div class="max-h-24 overflow-hidden text-ellipsis">
+      <p
+        class="font-title font-medium text-21 text-black break-words mb-1 line-clamp-2"
+      >
+        {{ link.name }}
+      </p>
+      <p class="font-medium text-sm break-words">
+        {{ link.description }}
+      </p>
+      <p
+        *ngIf="!link.name && !link.description"
+        class="font-medium text-sm break-words truncate"
+      >
+        {{ link.url }}
+      </p>
+    </div>
+    <div>
+      <mat-icon class="material-symbols-outlined card-icon"
+        >open_in_new</mat-icon
+      >
+    </div>
+  </ng-container>
+  <ng-template #compactTpl>
+    <div class="flex items-center justify-between gap-4">
+      <p
+        class="overflow-hidden font-title font-medium text-21 text-black text-ellipsis whitespace-nowrap"
+      >
+        {{ link.name || link.description }}
+      </p>
+      <mat-icon class="material-symbols-outlined card-icon flex-shrink-0"
+        >open_in_new</mat-icon
+      >
+    </div>
+  </ng-template>
 </a>

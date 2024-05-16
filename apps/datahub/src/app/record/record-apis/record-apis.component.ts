@@ -1,6 +1,13 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import { CarouselComponent } from '@geonetwork-ui/ui/layout'
 
 @Component({
   selector: 'datahub-record-apis',
@@ -9,14 +16,38 @@ import { MdViewFacade } from '@geonetwork-ui/feature/record'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecordApisComponent implements OnInit {
+  @ViewChild(CarouselComponent) carousel: CarouselComponent
+
   maxHeight = '0px'
   opacity = 0
   selectedApiLink: DatasetServiceDistribution
-  constructor(public facade: MdViewFacade) {}
+
+  apiLinks$ = this.facade.apiLinks$
+
+  constructor(
+    private facade: MdViewFacade,
+    private changeDetector: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.setStyle(undefined)
     this.selectedApiLink = undefined
+  }
+
+  get hasPagination() {
+    return this.carousel?.stepsCount > 1
+  }
+
+  updateView() {
+    this.changeDetector.detectChanges()
+  }
+
+  get isFirstStep() {
+    return this.carousel?.isFirstStep
+  }
+
+  get isLastStep() {
+    return this.carousel?.isLastStep
   }
 
   openRecordApiForm(link: DatasetServiceDistribution) {
@@ -32,5 +63,13 @@ export class RecordApisComponent implements OnInit {
   setStyle(link: DatasetServiceDistribution) {
     this.maxHeight = link === undefined ? '0px' : '500px'
     this.opacity = link === undefined ? 0 : 1
+  }
+
+  changeStepOrPage(direction: string) {
+    if (direction === 'next') {
+      this.carousel?.slideToNext()
+    } else {
+      this.carousel?.slideToPrevious()
+    }
   }
 }

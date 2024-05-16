@@ -1,0 +1,26 @@
+<div class="flex flex-row gap-x-4 items-center">
+  <gn-ui-button
+    data-test="previousButton"
+    [type]="isFirst ? 'default' : 'outline'"
+    [disabled]="isFirst"
+    (buttonClick)="previousButtonClicked()"
+  >
+    <mat-icon
+      class="material-symbols-outlined text-[14px] text-center pt-[5px]"
+    >
+      arrow_back
+    </mat-icon>
+  </gn-ui-button>
+  <gn-ui-button
+    data-test="nextButton"
+    [type]="isLast ? 'default' : 'outline'"
+    [disabled]="isLast"
+    (buttonClick)="nextButtonClicked()"
+  >
+    <mat-icon
+      class="material-symbols-outlined text-[14px] text-center pt-[5px]"
+    >
+      arrow_forward
+    </mat-icon>
+  </gn-ui-button>
+</div>

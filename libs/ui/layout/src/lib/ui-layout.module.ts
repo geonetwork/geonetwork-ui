@@ -15,14 +15,12 @@ import { CarouselComponent } from './carousel/carousel.component'
     StickyHeaderComponent,
     AnchorLinkDirective,
     ExpandablePanelButtonComponent,
-    CarouselComponent,
   ],
   exports: [
     ExpandablePanelComponent,
     StickyHeaderComponent,
     AnchorLinkDirective,
     ExpandablePanelButtonComponent,
-    CarouselComponent,
   ],
 })
 export class UiLayoutModule {}

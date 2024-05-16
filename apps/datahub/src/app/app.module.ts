@@ -25,11 +25,19 @@ import {
   RECORD_URL_TOKEN,
 } from '@geonetwork-ui/feature/search'
 import {
+  LinkCardComponent,
   THUMBNAIL_PLACEHOLDER,
   UiElementsModule,
 } from '@geonetwork-ui/ui/elements'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
+import {
+  PreviousNextButtonsComponent,
+  UiInputsModule,
+} from '@geonetwork-ui/ui/inputs'
+import {
+  BlockListComponent,
+  CarouselComponent,
+  UiLayoutModule,
+} from '@geonetwork-ui/ui/layout'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import {
   getGlobalConfig,
@@ -83,6 +91,7 @@ import { RecordApisComponent } from './record/record-apis/record-apis.component'
 import { MatTabsModule } from '@angular/material/tabs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { RecordUserFeedbacksComponent } from './record/record-user-feedbacks/record-user-feedbacks.component'
+import { LetDirective } from '@ngrx/component'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
@@ -150,6 +159,11 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     UiCatalogModule,
     MatTabsModule,
     UiWidgetsModule,
+    LinkCardComponent,
+    CarouselComponent,
+    BlockListComponent,
+    PreviousNextButtonsComponent,
+    LetDirective,
   ],
   providers: [
     importProvidersFrom(FeatureAuthModule),

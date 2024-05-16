@@ -33,18 +33,3 @@
 .tab-header-label {
   @apply uppercase text-sm text-primary opacity-75 hover:text-primary-darker;
 }
-
-:host {
-  --container-outside-width: calc(50vw - 1024px / 2);
-}
-@media (max-width: 1024px) {
-  :host {
-    --container-outside-width: 1rem;
-  }
-}
-
-:host ::ng-deep gn-ui-carousel {
-  display: block;
-  margin-left: calc(-1 * var(--container-outside-width));
-  margin-right: calc(-1 * var(--container-outside-width));
-}
