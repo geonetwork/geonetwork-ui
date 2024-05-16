@@ -7,13 +7,15 @@
         class="w-24 text-black font-basierCircle text-base font-medium text-center"
         matStartDate
         placeholder="Start date"
-        (dateInput)="startDateSelected($event)"
+        [value]="startDate"
+        (dateInput)="startDateChange.emit($event.value)"
       />
       <input
         class="w-24 text-black font-basierCircle text-base font-medium text-center"
         matEndDate
         placeholder="End date"
-        (dateInput)="endDateSelected($event)"
+        [value]="endDate"
+        (dateInput)="endDateChange.emit($event.value)"
       />
     </mat-date-range-input>
   </div>

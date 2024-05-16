@@ -13,6 +13,25 @@ export default {
   ],
 } as Meta<DateRangePickerComponent>
 
-export const Primary: StoryObj<DateRangePickerComponent> = {
+export const StartEnd: StoryObj<DateRangePickerComponent> = {
+  args: {
+    startDate: new Date(),
+    endDate: new Date(),
+  },
+}
+
+export const Start: StoryObj<DateRangePickerComponent> = {
+  args: {
+    startDate: new Date(),
+  },
+}
+
+export const End: StoryObj<DateRangePickerComponent> = {
+  args: {
+    endDate: new Date(),
+  },
+}
+
+export const Neither: StoryObj<DateRangePickerComponent> = {
   args: {},
 }
