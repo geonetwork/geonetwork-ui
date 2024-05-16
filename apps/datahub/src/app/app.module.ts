@@ -91,6 +91,7 @@ import { RecordApisComponent } from './record/record-apis/record-apis.component'
 import { MatTabsModule } from '@angular/material/tabs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { RecordUserFeedbacksComponent } from './record/record-user-feedbacks/record-user-feedbacks.component'
+import { LetDirective } from '@ngrx/component'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
@@ -162,6 +163,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     CarouselComponent,
     BlockListComponent,
     PreviousNextButtonsComponent,
+    LetDirective,
   ],
   providers: [
     importProvidersFrom(FeatureAuthModule),
