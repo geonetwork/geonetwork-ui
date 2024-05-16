@@ -4,7 +4,6 @@ import { UiCatalogModule } from '@geonetwork-ui/ui/catalog'
 import {
   GroupsApiService,
   SearchApiService,
-  SiteApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import { CommonModule } from '@angular/common'
 import { SourceLabelComponent } from './source-label/source-label.component'

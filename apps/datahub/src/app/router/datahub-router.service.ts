@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { Router, Routes } from '@angular/router'
 import {
-  ROUTER_ROUTE_DATASET,
+  ROUTER_ROUTE_DATASET, ROUTER_ROUTE_ORGANIZATION,
   ROUTER_ROUTE_SEARCH,
 } from '@geonetwork-ui/feature/router'
 import { HomePageComponent } from '../home/home-page/home-page.component'
@@ -14,6 +14,7 @@ import {
   ROUTER_ROUTE_NEWS,
   ROUTER_ROUTE_ORGANISATIONS,
 } from './constants'
+import { OrganizationPageComponent } from '../organization/organization-page/organization-page.component'
 
 @Injectable({
   providedIn: 'root',
@@ -64,12 +65,19 @@ export class DatahubRouterService {
             data: {
               shouldDetach: true,
             },
-          },
+          }
         ],
       },
       {
         path: `${ROUTER_ROUTE_DATASET}/:metadataUuid`,
         component: RecordPageComponent,
+      },
+      {
+        path: `${ROUTER_ROUTE_ORGANIZATION}/:name`,
+        component: OrganizationPageComponent,
+        data: {
+          shouldDetach: true,
+        },
       },
       { path: '**', redirectTo: '', pathMatch: 'full' },
     ]
@@ -77,5 +85,9 @@ export class DatahubRouterService {
 
   getSearchRoute(): string {
     return `${ROUTER_ROUTE_HOME}/${ROUTER_ROUTE_SEARCH}`
+  }
+
+  getOrganizationPageRoute(): string {
+    return ROUTER_ROUTE_ORGANIZATION
   }
 }

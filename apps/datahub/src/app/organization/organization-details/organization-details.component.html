@@ -1,0 +1,61 @@
+<div
+  id="organization-details-container"
+  class="container-xl px-4 lg:mx-auto"
+>
+  <div class="flex flex-row">
+    <div
+      id="organization-details-left"
+      class="w-2/3 mt-14 pe-[70px]"
+    >
+      <p *ngIf="organization.description">
+        {{ organization.description }}
+      </p>
+    </div>
+    <div
+      id="organization-details-right"
+      class="w-1/3 flex flex-col gap-5"
+    >
+      <div
+        *ngIf="organization.logoUrl"
+        id="organization-logo"
+        class="bg-white border border-[#d8d8d8] w-full h-[185px] rounded-lg p-[30px] -mt-28"
+      >
+        <img
+          [src]="organization.logoUrl.href"
+          [alt]="organization.name + ' logo'"
+          class="h-full m-auto"
+        >
+      </div>
+      <button
+        class="bg-white border border-[#d8d8d8] w-full h-[140px] rounded-lg p-[38px]"
+      >
+        <div class="flex flex-row gap-4">
+          <mat-icon class="material-symbols-outlined ps-[22px] pe-[44px] pt-[22px] pb-[44px] text-[26px] bg-lime-200 text-lime-500 rounded-full text-center">folder</mat-icon>
+          <div class="flex flex-col">
+            <p
+              class="text-3xl text-start"
+            > {{ organization.recordCount }}</p>
+            <p
+              class="text-2xl"
+              translate
+              [translateParams]="{ count: organization.recordCount }">
+              organization.details.publishedDataset
+            </p>
+          </div>
+        </div>
+      </button>
+      <button
+        *ngIf="organization.email"
+        class="bg-lime-500 text-white capitalize w-full h-[44px] rounded-lg"
+      >
+        <a
+          [href]="'mailto:' + organization.email"
+          translate
+          class="uppercase"
+        >
+          organization.details.mailContact
+        </a>
+      </button>
+    </div>
+  </div>
+</div>

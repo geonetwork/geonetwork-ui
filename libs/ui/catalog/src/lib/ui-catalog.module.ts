@@ -9,6 +9,7 @@ import { OrganisationsFilterComponent } from './organisations-filter/organisatio
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { LanguageSwitcherComponent } from './language-switcher/language-switcher.component'
 import { OrganisationsResultComponent } from './organisations-result/organisations-result.component'
+import { RouterLink } from '@angular/router'
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { OrganisationsResultComponent } from './organisations-result/organisatio
     UiElementsModule,
     UiInputsModule,
     MatIconModule,
+    RouterLink,
   ],
   exports: [
     CatalogTitleComponent,
