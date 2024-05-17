@@ -41,7 +41,7 @@ export const Primary: StoryObj<ErrorComponent> = {
     error: 'something wrong happened',
     recordId: 'thisIsAnID',
   },
-  argTypes: {v
+  argTypes: {
     type: {
       control: 'radio',
       options: [

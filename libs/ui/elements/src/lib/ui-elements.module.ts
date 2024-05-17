@@ -26,7 +26,6 @@ import { AvatarComponent } from './avatar/avatar.component'
 import { UserPreviewComponent } from './user-preview/user-preview.component'
 import { GnUiLinkifyDirective } from './metadata-info/linkify.directive'
 import { PaginationButtonsComponent } from './pagination-buttons/pagination-buttons.component'
-import { MaxLinesComponent } from './max-lines/max-lines.component'
 import { RecordApiFormComponent } from './record-api-form/record-api-form.component'
 import { MarkdownParserComponent } from './markdown-parser/markdown-parser.component'
 import { ImageOverlayPreviewComponent } from './image-overlay-preview/image-overlay-preview.component'
@@ -68,7 +67,6 @@ import { TimeSincePipe } from './user-feedback-item/time-since.pipe'
     UserPreviewComponent,
     GnUiLinkifyDirective,
     PaginationButtonsComponent,
-    MaxLinesComponent,
     RecordApiFormComponent,
     UserFeedbackItemComponent,
     ImageOverlayPreviewComponent,
@@ -90,7 +88,6 @@ import { TimeSincePipe } from './user-feedback-item/time-since.pipe'
     AvatarComponent,
     UserPreviewComponent,
     PaginationButtonsComponent,
-    MaxLinesComponent,
     RecordApiFormComponent,
     MarkdownParserComponent,
     UserFeedbackItemComponent,

@@ -10,16 +10,16 @@ import { TranslateModule } from '@ngx-translate/core'
 import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
+} from '../../../../../util/i18n/src'
 import { importProvidersFrom } from '@angular/core'
 
 export default {
-  title: 'Elements/MaxLinesComponent',
+  title: 'Layout/MaxLinesComponent',
   component: MaxLinesComponent,
   decorators: [
     moduleMetadata({
-      declarations: [MaxLinesComponent],
-      imports: [TranslateModule],
+      declarations: [],
+      imports: [TranslateModule, MaxLinesComponent],
     }),
     applicationConfig({
       providers: [

@@ -6,7 +6,6 @@ import { StickyHeaderComponent } from './sticky-header/sticky-header.component'
 import { AnchorLinkDirective } from './anchor-link/anchor-link.directive'
 import { ExpandablePanelButtonComponent } from './expandable-panel-button/expandable-panel-button.component'
 import { MatIconModule } from '@angular/material/icon'
-import { CarouselComponent } from './carousel/carousel.component'
 
 @NgModule({
   imports: [CommonModule, MatIconModule, TranslateModule.forChild()],
