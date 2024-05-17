@@ -56,16 +56,26 @@ export class RecordDownloadsComponent {
       return combineLatest([
         ...(wfsLinks.length > 0
           ? wfsLinks.map((link) =>
-              this.dataService.getDownloadLinksFromWfs(
-                link as DatasetServiceDistribution
-              )
+              this.dataService
+                .getDownloadLinksFromWfs(link as DatasetServiceDistribution)
+                .pipe(
+                  catchError((e) => {
+                    this.error = e.message
+                    return [of([] as DatasetDistribution[])]
+                  })
+                )
             )
           : [of([] as DatasetDistribution[])]),
         ...(ogcLinks.length > 0
           ? ogcLinks.map((link) =>
-              this.dataService.getDownloadLinksFromOgcApiFeatures(
-                link as DatasetServiceDistribution
-              )
+              this.dataService
+                .getDownloadLinksFromOgcApiFeatures(
+                  link as DatasetServiceDistribution
+                )
+                .catch((e) => {
+                  this.error = e.message
+                  return Promise.resolve([])
+                })
             )
           : [of([] as DatasetDistribution[])]),
       ]).pipe(

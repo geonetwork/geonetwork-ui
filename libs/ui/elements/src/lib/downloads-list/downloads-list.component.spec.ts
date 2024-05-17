@@ -138,6 +138,18 @@ describe('DownloadsListComponent', () => {
       expect(items[0].componentInstance.isFromWfs).toEqual(false)
     })
   })
+  describe('displaying download links from WFS', () => {
+    let items: DebugElement[]
+
+    beforeEach(() => {
+      component.links = [LINK_FIXTURES.geodataWfsDownload]
+      fixture.detectChanges()
+      items = de.queryAll(By.directive(MockDownloadItemComponent))
+    })
+    it('sets isFromWfs to true', () => {
+      expect(items[0].componentInstance.isFromWfs).toEqual(true)
+    })
+  })
   describe('filtering links', () => {
     beforeEach(() => {
       component.links = [

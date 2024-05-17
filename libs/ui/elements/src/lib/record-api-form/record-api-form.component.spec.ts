@@ -122,4 +122,12 @@ describe('RecordApFormComponent', () => {
       ])
     })
   })
+  describe('When apiLink input is undefined', () => {
+    it('should not call parseOutputFormats()', () => {
+      const spy = jest.spyOn(component, 'parseOutputFormats')
+      component.apiLink = undefined
+      fixture.detectChanges()
+      expect(spy).not.toHaveBeenCalled()
+    })
+  })
 })

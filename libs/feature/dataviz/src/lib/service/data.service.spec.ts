@@ -81,6 +81,13 @@ jest.mock('@camptocamp/ogc-client', () => ({
       newEndpointCall(url) // to track endpoint creation
     }
     getCollectionInfo() {
+      if (this.url.indexOf('error.http') > -1) {
+        return Promise.reject({
+          type: 'http',
+          info: 'Something went wrong',
+          httpStatus: 403,
+        })
+      }
       return Promise.resolve({
         bulkDownloadLinks: { json: 'http://json', csv: 'http://csv' },
       })
@@ -457,30 +464,47 @@ describe('DataService', () => {
     })
 
     describe('#getDownloadLinksFromOgcApiFeatures', () => {
-      it('returns links with formats for link', async () => {
-        const url = new URL('https://my.ogc.api/features')
-        const links = await service.getDownloadLinksFromOgcApiFeatures({
-          name: 'mycollection',
-          url,
-          type: 'service',
-          accessServiceProtocol: 'ogcFeatures',
+      describe('calling getDownloadLinksFromOgcApiFeatures() with a valid URL', () => {
+        it('returns links with formats for link', async () => {
+          const url = new URL('https://my.ogc.api/features')
+          const links = await service.getDownloadLinksFromOgcApiFeatures({
+            name: 'mycollection',
+            url,
+            type: 'service',
+            accessServiceProtocol: 'ogcFeatures',
+          })
+          expect(links).toEqual([
+            {
+              name: 'mycollection',
+              mimeType: 'application/json',
+              url: new URL('http://json'),
+              type: 'download',
+              accessServiceProtocol: 'ogcFeatures',
+            },
+            {
+              name: 'mycollection',
+              mimeType: 'text/csv',
+              url: new URL('http://csv'),
+              type: 'download',
+              accessServiceProtocol: 'ogcFeatures',
+            },
+          ])
         })
-        expect(links).toEqual([
-          {
-            name: 'mycollection',
-            mimeType: 'application/json',
-            url: new URL('http://json'),
-            type: 'download',
-            accessServiceProtocol: 'ogcFeatures',
-          },
-          {
-            name: 'mycollection',
-            mimeType: 'text/csv',
-            url: new URL('http://csv'),
-            type: 'download',
-            accessServiceProtocol: 'ogcFeatures',
-          },
-        ])
+      })
+      describe('calling getDownloadLinksFromOgcApiFeatures() with a erroneous URL', () => {
+        it('returns an error', async () => {
+          try {
+            const url = new URL('http://error.http/ogcapi')
+            await service.getDownloadLinksFromOgcApiFeatures({
+              name: 'mycollection',
+              url,
+              type: 'service',
+              accessServiceProtocol: 'ogcFeatures',
+            })
+          } catch (e) {
+            expect(e.message).toBe('ogc.unreachable.unknown')
+          }
+        })
       })
     })
 
