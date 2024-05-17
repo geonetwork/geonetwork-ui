@@ -32,6 +32,7 @@ marker('wfs.unreachable.http')
 marker('wfs.unreachable.unknown')
 marker('wfs.featuretype.notfound')
 marker('wfs.geojsongml.notsupported')
+marker('ogc.unreachable.unknown')
 marker('dataset.error.network')
 marker('dataset.error.http')
 marker('dataset.error.parse')
@@ -178,24 +179,7 @@ export class DataService {
         return endpoint.getCollectionInfo(collections[0])
       })
       .catch((error) => {
-        if (error instanceof Error) {
-          throw new Error(`wfs.unreachable.unknown`)
-        } else {
-          if (error.type === 'network') {
-            throw new Error(`wfs.unreachable.cors`)
-          }
-          if (error.type === 'http') {
-            throw new Error(`wfs.unreachable.http`)
-          }
-          if (error.type === 'parse') {
-            throw new Error(`wfs.unreachable.parse`)
-          }
-          if (error.type === 'unsupportedType') {
-            throw new Error(`wfs.unreachable.unsupportedType`)
-          } else {
-            throw new Error(`wfs.unreachable.unknown`)
-          }
-        }
+        throw new Error(`ogc.unreachable.unknown`)
       })
   }
 

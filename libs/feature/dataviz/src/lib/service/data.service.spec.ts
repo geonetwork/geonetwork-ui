@@ -492,15 +492,18 @@ describe('DataService', () => {
         })
       })
       describe('calling getDownloadLinksFromOgcApiFeatures() with a erroneous URL', () => {
-        it('returns empty list of links', async () => {
-          const url = new URL('http://error.http/ogcapi')
-          const links = await service.getDownloadLinksFromOgcApiFeatures({
-            name: 'mycollection',
-            url,
-            type: 'service',
-            accessServiceProtocol: 'ogcFeatures',
-          })
-          expect(links).toEqual([])
+        it('returns an error', async () => {
+          try {
+            const url = new URL('http://error.http/ogcapi')
+            await service.getDownloadLinksFromOgcApiFeatures({
+              name: 'mycollection',
+              url,
+              type: 'service',
+              accessServiceProtocol: 'ogcFeatures',
+            })
+          } catch (e) {
+            expect(e.message).toBe('ogc.unreachable.unknown')
+          }
         })
       })
     })
