@@ -1,4 +1,7 @@
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { XmlElement } from '@rgrove/parse-xml'
 import { Iso19139Converter } from '../iso19139'
+import { renameElements } from '../xml-utils'
 import {
   readContacts,
   readDistributions,
@@ -30,9 +33,6 @@ import {
   writeStatus,
   writeUniqueIdentifier,
 } from './write-parts'
-import { XmlElement } from '@rgrove/parse-xml'
-import { renameElements } from '../xml-utils'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 export class Iso191153Converter extends Iso19139Converter {
   constructor() {

@@ -1,17 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
-import GEO2FRANCE_PLU_DATASET from '../fixtures/geo2france.iso19139.plu.xml'
 // @ts-ignore
 import GEOCAT_CH_DATASET from '../fixtures/geocat-ch.iso19139.dataset.xml'
 // @ts-ignore
+import { XmlElement } from '@rgrove/parse-xml'
 import GEOCAT_CH_SERVICE from '../fixtures/geocat-ch.iso19139.service.xml'
-import {
-  getUpdateFrequencyFromCustomPeriod,
-  readContacts,
-  readDistributions,
-  readOnlineResources,
-  readOwnerOrganization,
-} from './read-parts'
+import { pipe } from '../function-utils'
 import {
   appendChildren,
   findNestedElement,
@@ -19,8 +13,15 @@ import {
   parseXmlString,
   removeChildrenByName,
 } from '../xml-utils'
-import { pipe } from '../function-utils'
-import { XmlElement } from '@rgrove/parse-xml'
+import {
+  findIdentification,
+  getUpdateFrequencyFromCustomPeriod,
+  readContacts,
+  readDistributions,
+  readOnlineResources,
+  readOwnerOrganization,
+  readTemporalExtents,
+} from './read-parts'
 
 describe('read parts', () => {
   let recordRootEl: XmlElement
@@ -228,6 +229,151 @@ describe('read parts', () => {
               url: new URL('http://missing'),
               mimeType: 'x-gis/x-shapefile',
               type: 'download',
+            },
+          ])
+        })
+      })
+    })
+    describe('readTemporalExtents', () => {
+      describe('no temporal extent', () => {
+        it('returns an empty array', () => {
+          expect(readTemporalExtents(recordRootEl)).toEqual([])
+        })
+      })
+      describe('instant temporal extent with known time position', () => {
+        beforeEach(() => {
+          const instantExtent = getRootElement(
+            parseXmlString(`
+<gmd:temporalElement>
+  <gmd:EX_TemporalExtent>
+    <gmd:extent>
+      <gml:TimeInstant>
+        <gml:timePosition>2024-05-24</gml:timePosition>
+      </gml:TimeInstant>
+    </gmd:extent>
+  </gmd:EX_TemporalExtent>
+</gmd:temporalElement>`)
+          )
+          pipe(
+            findIdentification(),
+            findNestedElement('gmd:extent', 'gmd:EX_Extent'),
+            removeChildrenByName('gmd:temporalElement'),
+            appendChildren(() => instantExtent)
+          )(recordRootEl)
+        })
+        it('returns an array of temporal extents with only the start attribute', () => {
+          expect(readTemporalExtents(recordRootEl)).toEqual([
+            {
+              start: new Date('2024-05-24'),
+            },
+          ])
+        })
+      })
+      describe('instant temporal extent with unknown time position', () => {
+        beforeEach(() => {
+          const instantExtent = getRootElement(
+            parseXmlString(`
+<gmd:temporalElement>
+  <gmd:EX_TemporalExtent>
+    <gmd:extent>
+      <gml:TimeInstant>
+        <gml:timePosition indeterminatePosition="unknown"/>
+      </gml:TimeInstant>
+    </gmd:extent>
+  </gmd:EX_TemporalExtent>
+</gmd:temporalElement>`)
+          )
+          pipe(
+            findIdentification(),
+            findNestedElement('gmd:extent', 'gmd:EX_Extent'),
+            removeChildrenByName('gmd:temporalElement'),
+            appendChildren(() => instantExtent)
+          )(recordRootEl)
+        })
+        it('returns an array of temporal extents with only the start attribute set to null', () => {
+          expect(readTemporalExtents(recordRootEl)).toEqual([
+            {
+              start: null,
+            },
+          ])
+        })
+      })
+      describe('period temporal extent with known begin and end position', () => {
+        beforeEach(() => {
+          const periodExtent = getRootElement(
+            parseXmlString(`
+<gmd:temporalElement>
+  <gmd:EX_TemporalExtent>
+    <gmd:extent>
+      <gml:TimePeriod>
+        <gml:beginPosition>2024-05-24</gml:beginPosition>
+        <gml:endPosition>2024-05-30</gml:endPosition>
+      </gml:TimePeriod>
+    </gmd:extent>
+  </gmd:EX_TemporalExtent>
+</gmd:temporalElement>`)
+          )
+          pipe(
+            findIdentification(),
+            findNestedElement('gmd:extent', 'gmd:EX_Extent'),
+            removeChildrenByName('gmd:temporalElement'),
+            appendChildren(() => periodExtent)
+          )(recordRootEl)
+        })
+        it('returns an array of temporal extents with start and end attributes', () => {
+          expect(readTemporalExtents(recordRootEl)).toEqual([
+            {
+              start: new Date('2024-05-24'),
+              end: new Date('2024-05-30'),
+            },
+          ])
+        })
+      })
+      describe('mixed temporal extents', () => {
+        beforeEach(() => {
+          const periodExtent = getRootElement(
+            parseXmlString(`
+<gmd:temporalElement>
+  <gmd:EX_TemporalExtent>
+    <gmd:extent>
+      <gml:TimePeriod>
+        <gml:beginPosition>2024-05-24</gml:beginPosition>
+        <gml:endPosition indeterminatePosition="unknown"/>
+      </gml:TimePeriod>
+    </gmd:extent>
+  </gmd:EX_TemporalExtent>
+</gmd:temporalElement>`)
+          )
+          const instantExtent = getRootElement(
+            parseXmlString(`
+<gmd:temporalElement>
+  <gmd:EX_TemporalExtent>
+    <gmd:extent>
+      <gml:TimeInstant>
+        <gml:timePosition>2024-05-30</gml:timePosition>
+      </gml:TimeInstant>
+    </gmd:extent>
+  </gmd:EX_TemporalExtent>
+</gmd:temporalElement>`)
+          )
+          pipe(
+            findIdentification(),
+            findNestedElement('gmd:extent', 'gmd:EX_Extent'),
+            removeChildrenByName('gmd:temporalElement'),
+            appendChildren(
+              () => periodExtent,
+              () => instantExtent
+            )
+          )(recordRootEl)
+        })
+        it('returns an array of mixed temporal extents', () => {
+          expect(readTemporalExtents(recordRootEl)).toEqual([
+            {
+              start: new Date('2024-05-24'),
+              end: null,
+            },
+            {
+              start: new Date('2024-05-30'),
             },
           ])
         })

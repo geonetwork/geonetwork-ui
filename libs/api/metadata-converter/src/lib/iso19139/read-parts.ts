@@ -14,18 +14,7 @@ import {
   UpdateFrequency,
   UpdateFrequencyCustom,
 } from '@geonetwork-ui/common/domain/model/record'
-import { getStatusFromStatusCode } from './utils/status.mapper'
-import { getUpdateFrequencyFromFrequencyCode } from './utils/update-frequency.mapper'
-import {
-  findChildElement,
-  findChildrenElement,
-  findNestedElement,
-  findNestedElements,
-  findParent,
-  readAttribute,
-  readText,
-  XmlElement,
-} from '../xml-utils'
+import { matchMimeType, matchProtocol } from '../common/distribution.mapper'
 import {
   ChainableFunction,
   combine,
@@ -37,10 +26,21 @@ import {
   mapArray,
   pipe,
 } from '../function-utils'
-import { getRoleFromRoleCode } from './utils/role.mapper'
-import { matchMimeType, matchProtocol } from '../common/distribution.mapper'
-import { getKeywordTypeFromKeywordTypeCode } from './utils/keyword.mapper'
+import {
+  XmlElement,
+  findChildElement,
+  findChildrenElement,
+  findNestedElement,
+  findNestedElements,
+  findParent,
+  readAttribute,
+  readText,
+} from '../xml-utils'
 import { fullNameToParts } from './utils/individual-name'
+import { getKeywordTypeFromKeywordTypeCode } from './utils/keyword.mapper'
+import { getRoleFromRoleCode } from './utils/role.mapper'
+import { getStatusFromStatusCode } from './utils/status.mapper'
+import { getUpdateFrequencyFromFrequencyCode } from './utils/update-frequency.mapper'
 
 export function extractCharacterString(): ChainableFunction<
   XmlElement,
@@ -841,5 +841,57 @@ export function readOnlineResources(
     findNestedElements('gmd:distributionInfo', 'gmd:MD_Distribution'),
     mapArray(extractServiceOnlineResources()),
     flattenArray()
+  )(rootEl)
+}
+
+export function readTemporalExtents(rootEl: XmlElement) {
+  return pipe(
+    findIdentification(),
+    findNestedElements('gmd:extent', 'gmd:EX_Extent', 'gmd:temporalElement'),
+    mapArray(
+      combine(
+        findNestedElement(
+          'gmd:EX_TemporalExtent',
+          'gmd:extent',
+          'gml:TimePeriod'
+        ),
+        findNestedElement(
+          'gmd:EX_TemporalExtent',
+          'gmd:extent',
+          'gml:TimeInstant'
+        )
+      )
+    ),
+    mapArray(([periodEl, instantEl]) => {
+      if (periodEl) {
+        return pipe(
+          combine(
+            pipe(
+              findChildElement('gml:beginPosition', false),
+              readText(),
+              map((dateStr) => (dateStr ? new Date(dateStr) : null))
+            ),
+            pipe(
+              findChildElement('gml:endPosition', false),
+              readText(),
+              map((dateStr) => (dateStr ? new Date(dateStr) : null))
+            )
+          ),
+          map(([start, end]) => ({
+            start,
+            end,
+          }))
+        )(periodEl)
+      } else {
+        return pipe(
+          findChildElement('gml:timePosition', false),
+          readText(),
+          map((dateStr) => (dateStr ? new Date(dateStr) : null)),
+          map((date) => ({
+            start: date,
+          }))
+        )(instantEl)
+      }
+    })
   )(rootEl)
 }

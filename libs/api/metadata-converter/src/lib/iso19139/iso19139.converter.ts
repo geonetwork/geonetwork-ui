@@ -4,6 +4,9 @@ import {
   DatasetRecord,
   ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
+import { XmlElement } from '@rgrove/parse-xml'
+import { BaseConverter } from '../base.converter'
+import { isEqual } from '../convert-utils'
 import {
   createDocument,
   createElement,
@@ -11,32 +14,6 @@ import {
   parseXmlString,
   xmlToString,
 } from '../xml-utils'
-import {
-  writeAbstract,
-  writeContacts,
-  writeContactsForResource,
-  writeDistributions,
-  writeGraphicOverviews,
-  writeKeywords,
-  writeKind,
-  writeLegalConstraints,
-  writeLicenses,
-  writeLineage,
-  writeOnlineResources,
-  writeOtherConstraints,
-  writeOwnerOrganization,
-  writeRecordUpdated,
-  writeResourceCreated,
-  writeResourcePublished,
-  writeResourceUpdated,
-  writeSecurityConstraints,
-  writeSpatialRepresentation,
-  writeStatus,
-  writeTitle,
-  writeTopics,
-  writeUniqueIdentifier,
-  writeUpdateFrequency,
-} from './write-parts'
 import {
   readAbstract,
   readContacts,
@@ -59,13 +36,38 @@ import {
   readSecurityConstraints,
   readSpatialRepresentation,
   readStatus,
+  readTemporalExtents,
   readTitle,
   readUniqueIdentifier,
   readUpdateFrequency,
 } from './read-parts'
-import { isEqual } from '../convert-utils'
-import { BaseConverter } from '../base.converter'
-import { XmlElement } from '@rgrove/parse-xml'
+import {
+  writeAbstract,
+  writeContacts,
+  writeContactsForResource,
+  writeDistributions,
+  writeGraphicOverviews,
+  writeKeywords,
+  writeKind,
+  writeLegalConstraints,
+  writeLicenses,
+  writeLineage,
+  writeOnlineResources,
+  writeOtherConstraints,
+  writeOwnerOrganization,
+  writeRecordUpdated,
+  writeResourceCreated,
+  writeResourcePublished,
+  writeResourceUpdated,
+  writeSecurityConstraints,
+  writeSpatialRepresentation,
+  writeStatus,
+  writeTemporalExtents,
+  writeTitle,
+  writeTopics,
+  writeUniqueIdentifier,
+  writeUpdateFrequency,
+} from './write-parts'
 
 export class Iso19139Converter extends BaseConverter<string> {
   protected readers: Record<
@@ -98,9 +100,9 @@ export class Iso19139Converter extends BaseConverter<string> {
     lineage: readLineage,
     distributions: readDistributions,
     onlineResources: readOnlineResources,
+    temporalExtents: readTemporalExtents,
     // TODO
     spatialExtents: () => [],
-    temporalExtents: () => [],
     extras: () => undefined,
     landingPage: () => undefined,
     languages: () => [],
@@ -136,9 +138,9 @@ export class Iso19139Converter extends BaseConverter<string> {
     lineage: writeLineage,
     distributions: writeDistributions,
     onlineResources: writeOnlineResources,
+    temporalExtents: writeTemporalExtents,
     // TODO
     spatialExtents: () => undefined,
-    temporalExtents: () => undefined,
     extras: () => undefined,
     landingPage: () => undefined,
     languages: () => undefined,
@@ -311,6 +313,8 @@ export class Iso19139Converter extends BaseConverter<string> {
       fieldChanged('spatialRepresentation') &&
         this.writers['spatialRepresentation'](record, rootEl)
       fieldChanged('overviews') && this.writers['overviews'](record, rootEl)
+      fieldChanged('temporalExtents') &&
+        this.writers['temporalExtents'](record, rootEl)
       fieldChanged('distributions') &&
         this.writers['distributions'](record, rootEl)
       fieldChanged('lineage') && this.writers['lineage'](record, rootEl)
