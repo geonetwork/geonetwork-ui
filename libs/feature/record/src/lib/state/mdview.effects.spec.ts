@@ -28,7 +28,7 @@ const full = {
 class RecordsRepositoryMock {
   aggregate = jest.fn(() => of(SAMPLE_AGGREGATIONS_RESULTS))
   search = jest.fn(() => of(SAMPLE_SEARCH_RESULTS))
-  getByUniqueIdentifier = jest.fn(() => of(DATASET_RECORDS[0]))
+  getRecord = jest.fn(() => of(DATASET_RECORDS[0]))
   getSimilarRecords = jest.fn(() => of(DATASET_RECORDS))
 }
 
@@ -82,7 +82,7 @@ describe('MdViewEffects', () => {
     })
     describe('when api success and at no record found', () => {
       beforeEach(() => {
-        repository.getByUniqueIdentifier = jest.fn(() => of(null))
+        repository.getRecord = jest.fn(() => of(null))
       })
       it('dispatch loadFullSuccess', () => {
         actions = hot('-a-|', {
@@ -97,9 +97,7 @@ describe('MdViewEffects', () => {
 
     describe('when api fails', () => {
       beforeEach(() => {
-        repository.getByUniqueIdentifier = jest.fn(() =>
-          throwError(() => new Error('api'))
-        )
+        repository.getRecord = jest.fn(() => throwError(() => new Error('api')))
       })
       it('dispatch loadFullFailure', () => {
         actions = hot('-a-|', {
