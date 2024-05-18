@@ -1,4 +1,4 @@
-import { TextEncoder, TextDecoder } from 'util'
+import { TextDecoder, TextEncoder } from 'util'
 
 // this is needed because jsdom does not include these as globals by default
 // see https://github.com/jsdom/jsdom/issues/2524
@@ -11,3 +11,26 @@ if (process.env.TEST_HIDE_CONSOLE) {
   console.warn = () => {}
   console.error = () => {}
 }
+
+// mock local storage (create a new one each time)
+class LocalStorageRefStub {
+  store: Record<string, string> = {}
+  mockLocalStorage = {
+    getItem: jest.fn((key: string): string => {
+      return key in this.store ? this.store[key] : null
+    }),
+    setItem: jest.fn((key: string, value: string) => {
+      this.store[key] = `${value}`
+    }),
+    removeItem: jest.fn((key: string) => delete this.store[key]),
+    clear: jest.fn(() => (this.store = {})),
+  }
+  public getLocalStorage() {
+    return this.mockLocalStorage
+  }
+}
+beforeEach(() => {
+  Object.defineProperty(window, 'localStorage', {
+    value: new LocalStorageRefStub().getLocalStorage(),
+  })
+})

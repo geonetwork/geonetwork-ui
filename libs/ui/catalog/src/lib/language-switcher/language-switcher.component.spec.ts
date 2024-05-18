@@ -3,21 +3,6 @@ import { LANGUAGE_STORAGE_KEY } from '@geonetwork-ui/util/i18n'
 import { TranslateService } from '@ngx-translate/core'
 import { LanguageSwitcherComponent } from './language-switcher.component'
 
-export class LocalStorageRefStub {
-  store = {}
-  mockLocalStorage = {
-    getItem: (key: string): string => {
-      return key in this.store ? this.store[key] : null
-    },
-    setItem: (key: string, value: string) => {
-      this.store[key] = `${value}`
-    },
-  }
-  public getLocalStorage() {
-    return this.mockLocalStorage
-  }
-}
-
 class TranslateServiceMock {
   use = jest.fn()
   currentLang = 'en'
@@ -43,10 +28,6 @@ describe('LanguageSwitcherComponent', () => {
     service = TestBed.inject(TranslateService)
     fixture = TestBed.createComponent(LanguageSwitcherComponent)
     component = fixture.componentInstance
-
-    Object.defineProperty(window, 'localStorage', {
-      value: new LocalStorageRefStub().getLocalStorage(),
-    })
   })
 
   it('should create', () => {

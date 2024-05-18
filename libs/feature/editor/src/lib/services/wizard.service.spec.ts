@@ -7,16 +7,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 
-const localStorageMock = () => {
-  let storage = {}
-  return {
-    getItem: (key) => (key in storage ? storage[key] : null),
-    setItem: (key, value) => (storage[key] = value || ''),
-    removeItem: (key) => delete storage[key],
-    clear: () => (storage = {}),
-  }
-}
-
 describe('WizardService', () => {
   let service: WizardService
 
@@ -34,8 +24,6 @@ describe('WizardService', () => {
   })
 
   beforeEach(() => {
-    Object.defineProperty(window, 'localStorage', { value: localStorageMock() })
-
     window.localStorage.setItem(
       'datafeeder-state',
       '{"1":{"step":4,"values":[{"id":"title","value":"title"},{"id":"abstract","value":"dataset"},{"id":"tags","value":"[{\\"display\\":\\"Faeroe Islands\\",\\"value\\":\\"Faeroe Islands\\"}]"},{"id":"dropdown","value":"\\"25000\\""},{"id":"description","value":"description"}]},"10":{"step":4,"values":[{"id":"title","value":"title"},{"id":"abstract","value":"dataset"},{"id":"tags","value":"[{\\"display\\":\\"Davis Sea\\",\\"value\\":\\"Davis Sea\\"}]"},{"id":"dropdown","value":"\\"50000\\""},{"id":"description","value":"desctription"}]}}'
