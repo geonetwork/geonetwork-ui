@@ -11114,16 +11114,15 @@ paths:
         default:
           description: default response
           content:
-            application/json: {}
+            application/xml:
+              schema:
+                type: string
         "200":
           description: Return the record.
           content:
             application/xml:
               schema:
-                type: object
-            application/json:
-              schema:
-                type: object
+                type: string
         "403":
           description: Operation not allowed. User needs to be able to view the resource.
           content:
