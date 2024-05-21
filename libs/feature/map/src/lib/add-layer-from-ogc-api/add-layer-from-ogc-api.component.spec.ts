@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AddLayerFromOgcApiComponent } from './add-layer-from-ogc-api.component'
-import { MapFacade } from '../+state/map.facade'
 import { TranslateModule } from '@ngx-translate/core'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { MapContextLayerTypeEnum } from '../map-context/map-context.model'
@@ -9,6 +8,9 @@ jest.mock('@camptocamp/ogc-client', () => ({
   OgcApiEndpoint: class {
     constructor(private url) {}
     isReady() {
+      if (this.url === 'http://example.com/ogc') {
+        return Promise.resolve(this)
+      }
       if (this.url.indexOf('error') > -1) {
         return Promise.reject(new Error('Something went wrong'))
       }
@@ -19,15 +21,55 @@ jest.mock('@camptocamp/ogc-client', () => ({
       }
       return Promise.resolve(this)
     }
-    get featureCollections() {
+    get allCollections() {
+      if (this.url === 'http://example.com/ogc') {
+        return Promise.resolve([
+          {
+            name: 'NaturalEarth:physical:ne_10m_lakes_pluvial',
+            hasVectorTiles: true,
+            hasMapTiles: true,
+          },
+          {
+            name: 'NaturalEarth:physical:ne_10m_land_ocean_seams',
+            hasVectorTiles: true,
+            hasMapTiles: true,
+          },
+        ])
+      }
       if (this.url.includes('error')) {
         return Promise.reject(new Error('Simulated loading error'))
       }
-      return Promise.resolve(['layer1', 'layer2', 'layer3'])
+      return Promise.resolve([
+        {
+          name: 'NaturalEarth:physical:ne_10m_lakes_pluvial',
+          hasVectorTiles: true,
+          hasMapTiles: true,
+        },
+        {
+          name: 'NaturalEarth:physical:ne_10m_land_ocean_seams',
+          hasVectorTiles: true,
+          hasMapTiles: true,
+        },
+      ])
     }
     getCollectionItemsUrl(collectionId) {
+      if (this.url === 'http://example.com/ogc') {
+        return Promise.resolve(
+          `http://example.com/collections/${collectionId}/items`
+        )
+      }
       return Promise.resolve(
         `http://example.com/collections/${collectionId}/items`
+      )
+    }
+    getVectorTilesetUrl(collectionId) {
+      return Promise.resolve(
+        `http://example.com/collections/${collectionId}/tiles/vector`
+      )
+    }
+    getMapTilesetUrl(collectionId) {
+      return Promise.resolve(
+        `http://example.com/collections/${collectionId}/tiles/map`
       )
     }
   },
@@ -68,7 +110,18 @@ describe('AddLayerFromOgcApiComponent', () => {
       await component.loadLayers()
       expect(component.errorMessage).toBeFalsy()
       expect(component.loading).toBe(false)
-      expect(component.layers).toEqual(['layer1', 'layer2', 'layer3'])
+      expect(component.layers).toEqual([
+        {
+          name: 'NaturalEarth:physical:ne_10m_lakes_pluvial',
+          hasVectorTiles: true,
+          hasMapTiles: true,
+        },
+        {
+          name: 'NaturalEarth:physical:ne_10m_land_ocean_seams',
+          hasVectorTiles: true,
+          hasMapTiles: true,
+        },
+      ])
     })
 
     it('should handle errors while loading layers', async () => {
@@ -77,6 +130,42 @@ describe('AddLayerFromOgcApiComponent', () => {
       expect(component.errorMessage).toContain('Error loading layers:')
       expect(component.loading).toBe(false)
       expect(component.layers.length).toBe(0)
+    })
+  })
+
+  describe('Add Collection', () => {
+    it('should add feature type collection to map', async () => {
+      const layerAddedSpy = jest.spyOn(component.layerAdded, 'emit')
+      await component.addLayer('layer1', 'features')
+      expect(layerAddedSpy).toHaveBeenCalledWith({
+        name: 'layer1',
+        url: 'http://example.com/collections/layer1/items',
+        type: MapContextLayerTypeEnum.OGCAPI,
+        layerType: 'features',
+        title: 'layer1',
+      })
+    })
+    it('should add vector tile collection to map', async () => {
+      const layerAddedSpy = jest.spyOn(component.layerAdded, 'emit')
+      await component.addLayer('layer1', 'vectorTiles')
+      expect(layerAddedSpy).toHaveBeenCalledWith({
+        name: 'layer1',
+        url: 'http://example.com/collections/layer1/tiles/vector',
+        type: MapContextLayerTypeEnum.OGCAPI,
+        layerType: 'vectorTiles',
+        title: 'layer1',
+      })
+    })
+    it('should add map tile collection to map', async () => {
+      const layerAddedSpy = jest.spyOn(component.layerAdded, 'emit')
+      await component.addLayer('layer1', 'mapTiles')
+      expect(layerAddedSpy).toHaveBeenCalledWith({
+        name: 'layer1',
+        url: 'http://example.com/collections/layer1/tiles/map',
+        type: MapContextLayerTypeEnum.OGCAPI,
+        layerType: 'mapTiles',
+        title: 'layer1',
+      })
     })
   })
 })

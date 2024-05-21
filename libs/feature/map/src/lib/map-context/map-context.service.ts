@@ -25,6 +25,10 @@ import WMTS from 'ol/source/WMTS'
 import { Geometry } from 'ol/geom'
 import Feature from 'ol/Feature'
 import { WfsEndpoint, WmtsEndpoint } from '@camptocamp/ogc-client'
+import OGCVectorTile from 'ol/source/OGCVectorTile.js'
+import { MVT } from 'ol/format'
+import VectorTileLayer from 'ol/layer/VectorTile'
+import OGCMapTile from 'ol/source/OGCMapTile.js'
 
 export const DEFAULT_BASELAYER_CONTEXT: MapContextLayerXyzModel = {
   type: MapContextLayerTypeEnum.XYZ,
@@ -78,14 +82,28 @@ export class MapContextService {
     const style = this.styleService.styles.default
     switch (type) {
       case MapContextLayerTypeEnum.OGCAPI:
-        return new VectorLayer({
-          source: new VectorSource({
-            format: new GeoJSON(),
-            url: layerModel.url,
-          }),
-          style,
-        })
-
+        if (layerModel.layerType === 'vectorTiles') {
+          return new VectorTileLayer({
+            source: new OGCVectorTile({
+              url: layerModel.url,
+              format: new MVT(),
+            }),
+          })
+        } else if (layerModel.layerType === 'mapTiles') {
+          return new TileLayer({
+            source: new OGCMapTile({
+              url: layerModel.url,
+            }),
+          })
+        } else {
+          return new VectorLayer({
+            source: new VectorSource({
+              format: new GeoJSON(),
+              url: layerModel.url,
+            }),
+            style,
+          })
+        }
       case MapContextLayerTypeEnum.XYZ:
         return new TileLayer({
           source: new XYZ({

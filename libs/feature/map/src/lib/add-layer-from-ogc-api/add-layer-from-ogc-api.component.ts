@@ -14,7 +14,7 @@ import {
   MapContextLayerTypeEnum,
 } from '../map-context/map-context.model'
 import { TranslateModule } from '@ngx-translate/core'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { DropdownChoice, UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
 import { MapLayer } from '../+state/map.models'
 
@@ -30,18 +30,16 @@ export class AddLayerFromOgcApiComponent implements OnInit {
   @Output() layerAdded = new EventEmitter<MapLayer>()
 
   urlChange = new Subject<string>()
-  layerUrl = ''
   loading = false
-  layers: string[] = []
-  ogcEndpoint: OgcApiEndpoint = null
+  layers: any[] = []
   errorMessage: string | null = null
+  selectedLayerTypes: { [key: string]: DropdownChoice['value'] } = {}
 
   constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.urlChange.pipe(debounceTime(700)).subscribe(() => {
       this.loadLayers()
-      this.changeDetectorRef.detectChanges() // manually trigger change detection
     })
   }
 
@@ -49,14 +47,13 @@ export class AddLayerFromOgcApiComponent implements OnInit {
     this.errorMessage = null
     try {
       this.loading = true
-      if (this.ogcUrl.trim() === '') {
+      if (!this.ogcUrl.trim()) {
         this.layers = []
         return
       }
-      this.ogcEndpoint = await new OgcApiEndpoint(this.ogcUrl)
-
-      // Currently only supports feature collections
-      this.layers = await this.ogcEndpoint.featureCollections
+      const ogcEndpoint = await new OgcApiEndpoint(this.ogcUrl)
+      this.layers = await ogcEndpoint.allCollections
+      this.setDefaultLayerTypes()
     } catch (error) {
       const err = error as Error
       this.layers = []
@@ -67,14 +64,72 @@ export class AddLayerFromOgcApiComponent implements OnInit {
     }
   }
 
-  async addLayer(layer: string) {
-    this.layerUrl = await this.ogcEndpoint.getCollectionItemsUrl(layer)
+  setDefaultLayerTypes() {
+    this.layers.forEach((layer) => {
+      const choices = this.getLayerChoices(layer)
+      if (choices.length > 0) {
+        this.selectedLayerTypes[layer.name] = choices[0].value
+      }
+    })
+  }
 
-    const layerToAdd: MapContextLayerModel = {
-      name: layer,
-      url: this.layerUrl,
-      type: MapContextLayerTypeEnum.OGCAPI,
+  getLayerChoices(layer: any) {
+    const choices = []
+    if (layer.hasRecords) {
+      choices.push({ label: 'Records', value: 'record' })
     }
-    this.layerAdded.emit({ ...layerToAdd, title: layer })
+    if (layer.hasFeatures) {
+      choices.push({ label: 'Features', value: 'features' })
+    }
+    if (layer.hasVectorTiles) {
+      choices.push({ label: 'Vector Tiles', value: 'vectorTiles' })
+    }
+    if (layer.hasMapTiles) {
+      choices.push({ label: 'Map Tiles', value: 'mapTiles' })
+    }
+    return choices
+  }
+
+  shouldDisplayLayer(layer: any) {
+    return (
+      layer.hasRecords ||
+      layer.hasFeatures ||
+      layer.hasVectorTiles ||
+      layer.hasMapTiles
+    )
+  }
+
+  onLayerTypeSelect(layerName: string, selectedType: any) {
+    this.selectedLayerTypes[layerName] = selectedType
+      ? selectedType
+      : this.getLayerChoices(layerName)[0]?.value
+  }
+
+  async addLayer(layer: string, layerType: any) {
+    try {
+      const ogcEndpoint = await new OgcApiEndpoint(this.ogcUrl)
+      let layerUrl: string
+
+      if (layerType === 'vectorTiles') {
+        layerUrl = await ogcEndpoint.getVectorTilesetUrl(layer)
+      } else if (layerType === 'mapTiles') {
+        layerUrl = await ogcEndpoint.getMapTilesetUrl(layer)
+      } else {
+        layerUrl = await ogcEndpoint.getCollectionItemsUrl(layer, {
+          outputFormat: 'json',
+        })
+      }
+
+      const layerToAdd: MapContextLayerModel = {
+        name: layer,
+        url: layerUrl,
+        type: MapContextLayerTypeEnum.OGCAPI,
+        layerType: layerType,
+      }
+      this.layerAdded.emit({ ...layerToAdd, title: layer })
+    } catch (error) {
+      const err = error as Error
+      console.error('Error adding layer:', err.message)
+    }
   }
 }

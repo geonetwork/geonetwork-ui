@@ -38,6 +38,7 @@ export interface MapContextLayerOgcapiModel {
   type: 'ogcapi'
   url: string
   name: string
+  layerType: 'feature' | 'vectorTiles' | 'mapTiles' | 'record'
 }
 
 interface LayerXyzModel {
