@@ -57,8 +57,8 @@ class DataServiceMock {
   ])
   getDownloadLinksFromOgcApiFeatures = jest.fn((link) =>
     link.url.toString().indexOf('error') > -1
-      ? throwError(() => new Error('would not fetch links'))
-      : of([
+      ? Promise.reject(new Error('ogc.unreachable.unknown'))
+      : Promise.resolve([
           {
             ...link,
             mimeType: 'application/geo+json',
@@ -230,6 +230,13 @@ describe('DataDownloadsComponent', () => {
             url: newUrl(
               'https://demo.ldproxy.net/zoomstack/collections/airports/items'
             ),
+            type: 'service',
+            accessServiceProtocol: 'ogcFeatures',
+          },
+          {
+            name: 'Some erroneous OGC API service',
+            description: 'OGC API service',
+            url: newUrl('https://error.org/collections/airports/items'),
             type: 'service',
             accessServiceProtocol: 'ogcFeatures',
           },

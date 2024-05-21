@@ -1,4 +1,4 @@
-:host .carousel-container ::ng-deep > * {
+:host .block-list-container ::ng-deep > * {
   flex-shrink: 0;
 }
 
@@ -6,14 +6,14 @@
   position: relative;
 }
 
-.carousel-step-dot {
+.list-page-dot {
   width: 6px;
   height: 6px;
   border-radius: 6px;
   position: relative;
 }
 
-.carousel-step-dot:after {
+.list-page-dot:after {
   content: '';
   position: absolute;
   left: -7px;

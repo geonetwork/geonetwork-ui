@@ -146,6 +146,7 @@ describe('RecordApFormComponent', () => {
       ])
     })
   })
+
   describe('When panel is opened and accessServiceProtocol is wfs', () => {
     beforeEach(() => {
       component.apiLink = {
@@ -165,6 +166,15 @@ describe('RecordApFormComponent', () => {
       expect(url).toBe(
         'https://api.example.com/data?type=undefined&options={"outputFormat":"json","startIndex":0}'
       )
+    })
+  })
+
+  describe('When apiLink input is undefined', () => {
+    it('should not call parseOutputFormats()', () => {
+      const spy = jest.spyOn(component, 'parseOutputFormats')
+      component.apiLink = undefined
+      fixture.detectChanges()
+      expect(spy).not.toHaveBeenCalled()
     })
   })
 })

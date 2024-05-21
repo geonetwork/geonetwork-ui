@@ -8,7 +8,6 @@ import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/da
 import {
   CatalogRecord,
   UserFeedback,
-  UserFeedbackViewModel,
 } from '@geonetwork-ui/common/domain/model/record'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
 
