@@ -12,6 +12,7 @@ export const Primary: StoryObj<TextInputComponent> = {
     value: '',
     hint: 'Put something here!',
     required: false,
+    disabled: false,
   },
   argTypes: {
     valueChange: {
