@@ -29,6 +29,7 @@ export class TextInputComponent implements AfterViewInit {
   @Input() extraClass = ''
   @Input() hint: string
   @Input() required = false
+  @Input() disabled: boolean
   rawChange = new Subject<string>()
   @Output() valueChange = this.rawChange.pipe(distinctUntilChanged())
   @ViewChild('input') input

@@ -45,9 +45,7 @@
           <gn-ui-text-input
             class="w-20"
             [value]="offset$ | async"
-            [extraClass]="
-              supportOffset ? '' : 'text-gray-600 bg-gray-200 opacity-70'
-            "
+            [disabled]="!supportOffset"
             (valueChange)="supportOffset ? setOffset($event) : null"
             hint=""
           >
@@ -64,10 +62,6 @@
             </span>
           </div>
         </div>
-        <div
-          *ngIf="!supportOffset"
-          class="absolute inset-0 bg-transparent cursor-not-allowed"
-        ></div>
       </div>
       <div class="flex flex-col gap-3">
         <p class="text-sm" translate>record.metadata.api.form.type</p>
