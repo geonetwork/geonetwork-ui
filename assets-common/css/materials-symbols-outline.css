@@ -1,12 +1,15 @@
+/* downloaded from https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200 */
+
+/* fallback */
 @font-face {
-  font-family: 'MaterialSymbolsOutlined';
+  font-family: 'Material Symbols Outlined';
   font-style: normal;
-  font-weight: 100700;
-  src: url(../fonts/MaterialIconsOutlined-Regular.otf) format('opentype');
+  font-weight: 100 700;
+  src: url(../fonts/MaterialSymbolsOutlined.woff2) format('woff2');
 }
 
 .material-symbols-outlined {
-  font-family: 'MaterialSymbolsOutlined';
+  font-family: 'Material Symbols Outlined';
   font-weight: normal;
   font-style: normal;
   font-size: 24px;
