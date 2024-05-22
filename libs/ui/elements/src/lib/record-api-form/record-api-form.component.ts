@@ -12,6 +12,12 @@ const DEFAULT_PARAMS = {
   LIMIT: '-1',
   FORMAT: 'json',
 }
+
+interface OutputFormats {
+  itemFormats?: any[]
+  outputFormats?: any[]
+}
+
 @Component({
   selector: 'gn-ui-record-api-form',
   templateUrl: './record-api-form.component.html',
@@ -25,56 +31,38 @@ export class RecordApiFormComponent {
     this.apiFeatureType = value ? value.name : undefined
     if (value) {
       this.apiBaseUrl = value.url.href
-      this.parseOutputFormats()
+      this.createEndpoint().then(() => this.parseOutputFormats())
     }
     this.resetUrl()
   }
 
-  offset$ = new BehaviorSubject('')
-  limit$ = new BehaviorSubject('')
-  format$ = new BehaviorSubject('')
+  offset$ = new BehaviorSubject(DEFAULT_PARAMS.OFFSET)
+  limit$ = new BehaviorSubject(DEFAULT_PARAMS.LIMIT)
+  format$ = new BehaviorSubject(DEFAULT_PARAMS.FORMAT)
+  endpoint$ = new BehaviorSubject<WfsEndpoint | OgcApiEndpoint | undefined>(
+    undefined
+  )
   apiBaseUrl: string
   apiFeatureType: string
   supportOffset = true
   accessServiceProtocol: ServiceProtocol | undefined
   outputFormats = [{ value: 'json', label: 'JSON' }]
+  endpoint: WfsEndpoint | OgcApiEndpoint | undefined
 
-  apiQueryUrl$ = combineLatest([this.offset$, this.limit$, this.format$]).pipe(
-    switchMap(async ([offset, limit, format]) => {
-      let outputUrl
-      if (this.apiBaseUrl) {
-        const url = new URL(this.apiBaseUrl)
-        const params = { offset: offset, limit: limit, f: format }
-        for (const [key, value] of Object.entries(params)) {
-          if (value && value !== '0') {
-            url.searchParams.set(key, value)
-          } else {
-            url.searchParams.delete(key)
-          }
-        }
-        outputUrl = url.toString()
-      }
-
-      if (this.accessServiceProtocol === 'wfs') {
-        const wfsEndpoint = new WfsEndpoint(this.apiBaseUrl)
-        if (await wfsEndpoint.isReady()) {
-          const options = {
-            outputFormat: format,
-            startIndex: Number(offset),
-          }
-          if (limit !== '-1') {
-            options['maxFeatures'] = Number(limit)
-          }
-          outputUrl = wfsEndpoint.getFeatureUrl(this.apiFeatureType, options)
-        }
-      }
-      return outputUrl
-    })
+  apiQueryUrl$ = combineLatest([
+    this.offset$,
+    this.limit$,
+    this.format$,
+    this.endpoint$,
+  ]).pipe(
+    switchMap(([offset, limit, format, endpoint]) =>
+      this.generateApiQueryUrl(offset, limit, format)
+    )
   )
+
   noLimitChecked$ = this.limit$.pipe(
     map((limit) => limit === '-1' || limit === '')
   )
-
   displayLimit$ = this.limit$.pipe(
     map((limit) => (limit !== '-1' ? limit : ''))
   )
@@ -84,8 +72,7 @@ export class RecordApiFormComponent {
   }
 
   setLimit(value: string) {
-    const newLimit = value === '' ? '-1' : value
-    this.limit$.next(newLimit)
+    this.limit$.next(value === '' ? '-1' : value)
   }
 
   setFormat(value: string | unknown) {
@@ -98,55 +85,81 @@ export class RecordApiFormComponent {
     this.format$.next(DEFAULT_PARAMS.FORMAT)
   }
 
-  parseOutputFormats() {
-    const apiUrl =
-      this.apiBaseUrl.slice(-1) === '?'
-        ? this.apiBaseUrl.slice(0, -1)
-        : this.apiBaseUrl
+  async parseOutputFormats() {
+    if (!this.endpoint) return
+    const apiUrl = this.apiBaseUrl.endsWith('?')
+      ? this.apiBaseUrl.slice(0, -1)
+      : this.apiBaseUrl
+    const outputFormats = await this.getOutputFormats(apiUrl)
 
-    this.getOutputFormats(apiUrl, this.accessServiceProtocol).then(
-      (outputFormats) => {
-        let formatsList = []
-        if ('itemFormats' in outputFormats) {
-          formatsList = this.mapFormats(outputFormats.itemFormats)
-        } else if ('outputFormats' in outputFormats) {
-          formatsList = this.mapFormats(outputFormats.outputFormats)
-        }
-        this.outputFormats = this.outputFormats.concat(
-          formatsList.filter(Boolean)
-        )
-        this.outputFormats = this.outputFormats
-          .filter(
-            (format, index, self) =>
-              index === self.findIndex((t) => t.value === format.value)
-          )
-          .sort((a, b) => a.label.localeCompare(b.label))
-      }
-    )
+    const formatsList = outputFormats.itemFormats
+      ? this.mapFormats(outputFormats.itemFormats)
+      : this.mapFormats(outputFormats.outputFormats || [])
+
+    this.outputFormats = this.outputFormats
+      .concat(formatsList.filter(Boolean))
+      .filter(
+        (format, index, self) =>
+          index === self.findIndex((t) => t.value === format.value)
+      )
+      .sort((a, b) => a.label.localeCompare(b.label))
   }
 
   mapFormats(formats: any[]) {
     return formats.map((format) => {
       const normalizedFormat = mimeTypeToFormat(format)
-      if (normalizedFormat) {
-        return {
-          label: normalizedFormat.toUpperCase(),
-          value: normalizedFormat,
-        }
-      }
-      return null
+      return normalizedFormat
+        ? { label: normalizedFormat.toUpperCase(), value: normalizedFormat }
+        : null
     })
   }
 
-  async getOutputFormats(url: string, accessServiceProtocol: string) {
-    if (accessServiceProtocol === 'wfs') {
-      const endpoint = await new WfsEndpoint(url).isReady()
-      this.supportOffset = endpoint.supportsStartIndex()
-      return endpoint.getServiceInfo()
+  async getOutputFormats(url: string): Promise<OutputFormats> {
+    if (!this.endpoint) return {}
+    if (this.endpoint instanceof WfsEndpoint) {
+      this.supportOffset = this.endpoint.supportsStartIndex()
+      return this.endpoint.getServiceInfo() as OutputFormats
     } else {
-      const endpoint = await new OgcApiEndpoint(url)
-      const firstCollection = (await endpoint.featureCollections)[0]
-      return endpoint.getCollectionInfo(firstCollection)
+      {
+        const firstCollection = (await this.endpoint.featureCollections)[0]
+        return (await this.endpoint.getCollectionInfo(
+          firstCollection
+        )) as OutputFormats
+      }
+    }
+  }
+
+  async createEndpoint() {
+    if (!this.apiBaseUrl || !this.accessServiceProtocol) return
+    if (this.accessServiceProtocol === 'wfs') {
+      this.endpoint = new WfsEndpoint(this.apiBaseUrl)
+      await (this.endpoint as WfsEndpoint).isReady()
+    } else {
+      this.endpoint = new OgcApiEndpoint(this.apiBaseUrl)
+    }
+    this.endpoint$.next(this.endpoint)
+  }
+
+  async generateApiQueryUrl(
+    offset: string,
+    limit: string,
+    format: string
+  ): Promise<string> {
+    if (!this.apiBaseUrl || !this.endpoint || !this.apiFeatureType) return ''
+
+    const options = {
+      outputFormat: format,
+      startIndex: offset ? Number(offset) : undefined,
+      maxFeatures: limit !== '-1' ? Number(limit) : undefined,
+      limit: limit !== '-1' ? Number(limit) : undefined,
+      offset: offset !== '' ? Number(offset) : undefined,
+    }
+
+    if (this.endpoint instanceof WfsEndpoint) {
+      return this.endpoint.getFeatureUrl(this.apiFeatureType, options)
+    } else {
+      const firstCollection = (await this.endpoint.featureCollections)[0]
+      return await this.endpoint.getCollectionItemsUrl(firstCollection, options)
     }
   }
 }

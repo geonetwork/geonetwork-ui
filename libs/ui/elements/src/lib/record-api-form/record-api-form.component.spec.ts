@@ -9,6 +9,7 @@ const mockDatasetServiceDistribution: DatasetServiceDistribution = {
   url: new URL('https://api.example.com/data'),
   type: 'service',
   accessServiceProtocol: 'ogcFeatures',
+  name: 'mockFeatureType',
 }
 
 jest.mock('@camptocamp/ogc-client', () => ({
@@ -27,6 +28,16 @@ jest.mock('@camptocamp/ogc-client', () => ({
           'application/json',
         ],
       })
+    }
+    getCollectionItemsUrl(collectionName, options) {
+      const queryParams = new URLSearchParams()
+      if (options.limit !== undefined) queryParams.set('limit', options.limit)
+      if (options.offset !== undefined)
+        queryParams.set('offset', options.offset)
+      queryParams.set('f', options.outputFormat)
+      return `${
+        this.url
+      }/collections/${collectionName}/items?${queryParams.toString()}`
     }
   },
   WfsEndpoint: class {
@@ -81,7 +92,9 @@ describe('RecordApFormComponent', () => {
       expect(component.limit$.getValue()).toBe('-1')
       expect(component.format$.getValue()).toBe('json')
       const url = await firstValueFrom(component.apiQueryUrl$)
-      expect(url).toBe('https://api.example.com/data?limit=-1&f=json')
+      expect(url).toBe(
+        'https://api.example.com/data/collections/mockFeatureType/items?f=json'
+      )
     })
   })
   describe('When URL params are changed', () => {
@@ -94,11 +107,11 @@ describe('RecordApFormComponent', () => {
       component.setFormat(mockFormat)
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data?offset=${mockOffset}&limit=${mockLimit}&f=${mockFormat}`
+        `https://api.example.com/data/collections/mockFeatureType/items?limit=${mockLimit}&offset=${mockOffset}&f=${mockFormat}`
       )
     })
     it('should remove the param in url if value is null', async () => {
-      const mockOffset = null
+      const mockOffset = '0'
       const mockLimit = '20'
       const mockFormat = 'json'
       component.setOffset(mockOffset)
@@ -106,7 +119,7 @@ describe('RecordApFormComponent', () => {
       component.setFormat(mockFormat)
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data?limit=${mockLimit}&f=${mockFormat}`
+        `https://api.example.com/data/collections/mockFeatureType/items?limit=${mockLimit}&offset=${mockOffset}&f=${mockFormat}`
       )
     })
     it('should remove the param in url if value is zero', async () => {
@@ -118,7 +131,7 @@ describe('RecordApFormComponent', () => {
       component.setFormat(mockFormat)
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data?offset=${mockOffset}&f=${mockFormat}`
+        `https://api.example.com/data/collections/mockFeatureType/items?limit=${mockLimit}&offset=${mockOffset}&f=${mockFormat}`
       )
     })
   })
@@ -164,7 +177,7 @@ describe('RecordApFormComponent', () => {
       expect(component.format$.getValue()).toBe('json')
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        'https://api.example.com/data?type=undefined&options={"outputFormat":"json","startIndex":0}'
+        `https://api.example.com/data?type=mockFeatureType&options={"outputFormat":"json"}`
       )
     })
   })
