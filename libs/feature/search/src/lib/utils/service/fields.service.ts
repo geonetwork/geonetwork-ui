@@ -36,7 +36,7 @@ marker('search.filters.contact')
   providedIn: 'root',
 })
 export class FieldsService {
-  private fields = {
+  protected fields = {
     publisher: new OrganizationSearchField(this.injector),
     format: new SimpleSearchField('format', this.injector, 'asc'),
     resourceType: new TranslatedSearchField(
@@ -76,7 +76,7 @@ export class FieldsService {
     return Object.keys(this.fields)
   }
 
-  constructor(private injector: Injector) {}
+  constructor(protected injector: Injector) {}
 
   getAvailableValues(fieldName: string) {
     if (this.supportedFields.indexOf(fieldName) === -1)
