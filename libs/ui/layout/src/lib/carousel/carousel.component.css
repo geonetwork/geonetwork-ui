@@ -4,6 +4,7 @@
 
 :host {
   position: relative;
+  display: block;
 }
 
 .carousel-step-dot {
