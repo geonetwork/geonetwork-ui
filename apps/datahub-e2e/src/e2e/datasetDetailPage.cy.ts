@@ -684,7 +684,7 @@ describe('api form', () => {
       .find('gn-ui-copy-text-button')
       .find('input')
       .invoke('val')
-      .should('include', 'offset=87&limit=54&f=geojson')
+      .should('include', 'f=geojson&limit=54&offset=87')
 
     cy.get('@apiForm').children('div').first().find('button').first().click()
 
@@ -699,7 +699,7 @@ describe('api form', () => {
       .find('gn-ui-copy-text-button')
       .find('input')
       .invoke('val')
-      .should('include', 'limit=-1&f=json')
+      .should('include', 'f=json&limit=-1')
   })
   it('should close the panel on click', () => {
     cy.get('gn-ui-record-api-form').prev().find('button').click()

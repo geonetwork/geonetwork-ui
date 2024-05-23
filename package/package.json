@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@biesbjerg/ngx-translate-extract-marker": "^1.0.0",
-    "@camptocamp/ogc-client": "^1.1.0-RC.3",
+    "@camptocamp/ogc-client": "1.1.1-dev.ddbb5b0",
     "@geospatial-sdk/geocoding": "^0.0.5-alpha.2",
     "@ltd/j-toml": "~1.35.2",
     "@messageformat/core": "^3.0.1",
