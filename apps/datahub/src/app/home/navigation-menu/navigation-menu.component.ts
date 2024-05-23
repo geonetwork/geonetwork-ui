@@ -7,7 +7,7 @@ import {
 import { map } from 'rxjs/operators'
 import {
   ROUTER_ROUTE_NEWS,
-  ROUTER_ROUTE_ORGANISATIONS,
+  ROUTER_ROUTE_ORGANIZATIONS,
 } from '../../router/constants'
 import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 
@@ -33,7 +33,7 @@ export class NavigationMenuComponent {
       label: 'datahub.header.datasets',
     },
     {
-      link: `${ROUTER_ROUTE_ORGANISATIONS}`,
+      link: `${ROUTER_ROUTE_ORGANIZATIONS}`,
       label: 'datahub.header.organisations',
     },
   ]

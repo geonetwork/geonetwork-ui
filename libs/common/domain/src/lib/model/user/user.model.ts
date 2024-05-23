@@ -5,6 +5,6 @@ export interface UserModel {
   name: string
   surname: string
   email: string
-  organisation: string
+  organization: string
   profileIcon?: string
 }

@@ -21,7 +21,7 @@ export interface UserApiModel {
   emailAddresses?: Set<string>
   addresses?: Set<AddressApiModel>
   primaryAddress?: AddressApiModel
-  organisation?: string
+  organization?: string
   kind?: string
   lastLoginDate?: string
   authorities?: Array<GrantedAuthorityApiModel>

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core'
 import { Router, Routes } from '@angular/router'
 import {
-  ROUTER_ROUTE_DATASET, ROUTER_ROUTE_ORGANIZATION,
+  ROUTER_ROUTE_DATASET,
+  ROUTER_ROUTE_ORGANIZATION,
   ROUTER_ROUTE_SEARCH,
 } from '@geonetwork-ui/feature/router'
 import { HomePageComponent } from '../home/home-page/home-page.component'
@@ -12,7 +13,7 @@ import { RecordPageComponent } from '../record/record-page/record-page.component
 import {
   ROUTER_ROUTE_HOME,
   ROUTER_ROUTE_NEWS,
-  ROUTER_ROUTE_ORGANISATIONS,
+  ROUTER_ROUTE_ORGANIZATIONS,
 } from './constants'
 import { OrganizationPageComponent } from '../organization/organization-page/organization-page.component'
 
@@ -60,12 +61,12 @@ export class DatahubRouterService {
             },
           },
           {
-            path: ROUTER_ROUTE_ORGANISATIONS,
+            path: ROUTER_ROUTE_ORGANIZATIONS,
             component: OrganisationsPageComponent,
             data: {
               shouldDetach: true,
             },
-          }
+          },
         ],
       },
       {

@@ -40,7 +40,7 @@ export class Gn4PlatformMapper {
     const {
       enabled,
       emailAddresses,
-      organisation,
+      organization,
       kind,
       lastLoginDate,
       accountNonExpired,

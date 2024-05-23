@@ -69,7 +69,7 @@ describe('MyOrgService', () => {
 
   it('should update myOrgDataSubject when authService user$ emits a user', () => {
     const user: UserModel = {
-      organisation: 'Géo2France',
+      organization: 'Géo2France',
       id: '2',
       profile: 'profile',
       username: 'username',
@@ -104,8 +104,8 @@ describe('MyOrgService', () => {
 
   it('should update myOrgDataSubject when authService allUsers$ emits users', () => {
     const users: UserApiModel[] = [
-      { organisation: 'Géo2France' },
-      { organisation: 'Géo2France' },
+      { organization: 'Géo2France' },
+      { organization: 'Géo2France' },
     ]
     allUsersSubject.next(users)
 
