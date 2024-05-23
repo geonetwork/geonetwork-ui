@@ -44,7 +44,6 @@ import { ImageInputComponent } from './image-input/image-input.component'
     StarToggleComponent,
     DropdownMultiselectComponent,
     ViewportIntersectorComponent,
-    CheckToggleComponent,
     CopyTextButtonComponent,
     CheckboxComponent,
     SearchInputComponent,
@@ -73,6 +72,7 @@ import { ImageInputComponent } from './image-input/image-input.component'
     ImageInputComponent,
     DropdownSelectorComponent,
     DateRangePickerComponent,
+    CheckToggleComponent,
   ],
   exports: [
     DropdownSelectorComponent,

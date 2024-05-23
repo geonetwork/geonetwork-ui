@@ -24,10 +24,8 @@ import {
   findChildOrCreate,
   findChildrenElement,
   findNestedChildOrCreate,
-  findNestedElement,
   findNestedElements,
   readAttribute,
-  readText,
   removeAllChildren,
   removeChildren,
   removeChildrenByName,
@@ -36,7 +34,6 @@ import {
 } from '../xml-utils'
 import {
   ChainableFunction,
-  combine,
   fallback,
   filterArray,
   getAtIndex,
@@ -220,7 +217,7 @@ export function getISODuration(updateFrequency: UpdateFrequencyCustom): string {
       else duration.hours = Math.round(24 / updateFrequency.updatedTimes)
       break
     case 'week':
-      duration.days = Math.round(7 / updateFrequency.updatedTimes)
+      duration.days = Math.round(7 / updateFrequency.updatedTimes - 0.0001) // this is to make sure that '2 times per week' = 'every 3 days'
       break
     case 'month':
       if (updateFrequency.updatedTimes <= 1) duration.months = 1

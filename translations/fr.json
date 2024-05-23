@@ -156,6 +156,8 @@
   "editor.record.form.license.pddl": "",
   "editor.record.form.license.unknown": "Non-reconnue ou absente",
   "editor.record.form.resourceUpdated": "Date de dernière révision",
+  "editor.record.form.updateFrequency": "Fréquence de mise à jour",
+  "editor.record.form.updateFrequency.planned": "Ces données doivent être mise à jour régulièrement.",
   "editor.record.loadError.body": "",
   "editor.record.loadError.closeMessage": "",
   "editor.record.loadError.title": "",

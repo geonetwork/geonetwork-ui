@@ -47,4 +47,11 @@ export const DEFAULT_FIELDS: EditorFieldsConfig = [
       type: 'date',
     },
   },
+  {
+    model: 'updateFrequency',
+    formFieldConfig: {
+      labelKey: marker('editor.record.form.updateFrequency'),
+      type: 'text',
+    },
+  },
 ]

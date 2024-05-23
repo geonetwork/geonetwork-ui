@@ -5,7 +5,11 @@ import {
   parseXmlString,
   xmlToString,
 } from '../xml-utils'
-import { writeDistributions, writeKeywords } from './write-parts'
+import {
+  getISODuration,
+  writeDistributions,
+  writeKeywords,
+} from './write-parts'
 import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records'
 import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
 
@@ -510,6 +514,23 @@ describe('write parts', () => {
         </gmd:MD_DataIdentification>
     </gmd:identificationInfo>
 </root>`)
+    })
+  })
+
+  describe('getISODuration', () => {
+    it('keeps a partial weekly period', () => {
+      expect(
+        getISODuration({
+          updatedTimes: 3,
+          per: 'week',
+        })
+      ).toEqual('P0Y0M2D')
+      expect(
+        getISODuration({
+          updatedTimes: 2,
+          per: 'week',
+        })
+      ).toEqual('P0Y0M3D')
     })
   })
 })

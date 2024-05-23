@@ -56,6 +56,11 @@
       [control]="formControl"
     ></gn-ui-form-field-resource-updated>
   </ng-container>
+  <ng-container *ngIf="isUpdateFrequency">
+    <gn-ui-form-field-update-frequency
+      [control]="formControl"
+    ></gn-ui-form-field-update-frequency>
+  </ng-container>
   <ng-container *ngIf="isSimpleField">
     <gn-ui-form-field-simple
       [type]="simpleType"

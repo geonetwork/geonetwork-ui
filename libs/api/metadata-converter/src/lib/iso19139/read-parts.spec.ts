@@ -6,6 +6,7 @@ import GEOCAT_CH_DATASET from '../fixtures/geocat-ch.iso19139.dataset.xml'
 // @ts-ignore
 import GEOCAT_CH_SERVICE from '../fixtures/geocat-ch.iso19139.service.xml'
 import {
+  getUpdateFrequencyFromCustomPeriod,
   readContacts,
   readDistributions,
   readOnlineResources,
@@ -88,6 +89,18 @@ describe('read parts', () => {
             name: 'MyOrganization',
             website: new URL('https://www.my.org/info'),
           })
+        })
+      })
+    })
+    describe('getUpdateFrequencyFromCustomPeriod', () => {
+      it('keeps a partial weekly period', () => {
+        expect(getUpdateFrequencyFromCustomPeriod('P0Y0M2D')).toEqual({
+          updatedTimes: 3,
+          per: 'week',
+        })
+        expect(getUpdateFrequencyFromCustomPeriod('P0Y0M3D')).toEqual({
+          updatedTimes: 2,
+          per: 'week',
         })
       })
     })

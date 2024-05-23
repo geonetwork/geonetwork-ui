@@ -48,6 +48,7 @@ export class DropdownSelectorComponent implements OnInit {
   @Input() maxRows: number
   @Input() extraBtnClass = ''
   @Input() minWidth = ''
+  @Input() disabled: boolean
   @Output() selectValue = new EventEmitter<DropdownChoice['value']>()
   @ViewChild('overlayOrigin') overlayOrigin: CdkOverlayOrigin
   @ViewChild(CdkConnectedOverlay) overlay: CdkConnectedOverlay
