@@ -70,6 +70,11 @@ export class RecordMetadataComponent {
     mergeMap((uuid) => this.sourceService.getSourceLabel(uuid))
   )
 
+  loadFeedBacks$ = this.metadataViewFacade.metadata$.pipe(
+    map((record) => record?.title),
+    filter(Boolean)
+  )
+
   errorTypes = ErrorType
 
   selectedTabIndex$ = new BehaviorSubject(0)
