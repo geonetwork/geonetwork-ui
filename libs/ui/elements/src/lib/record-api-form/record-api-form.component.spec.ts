@@ -93,7 +93,7 @@ describe('RecordApFormComponent', () => {
       expect(component.format$.getValue()).toBe('json')
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        'https://api.example.com/data/collections/mockFeatureType/items?f=json'
+        'https://api.example.com/data/collections/feature1/items?limit=-1&f=json'
       )
     })
   })
@@ -107,7 +107,7 @@ describe('RecordApFormComponent', () => {
       component.setFormat(mockFormat)
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data/collections/mockFeatureType/items?limit=${mockLimit}&offset=${mockOffset}&f=${mockFormat}`
+        `https://api.example.com/data/collections/feature1/items?limit=${mockLimit}&offset=${mockOffset}&f=${mockFormat}`
       )
     })
     it('should remove the param in url if value is null', async () => {
@@ -119,7 +119,7 @@ describe('RecordApFormComponent', () => {
       component.setFormat(mockFormat)
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data/collections/mockFeatureType/items?limit=${mockLimit}&offset=${mockOffset}&f=${mockFormat}`
+        `https://api.example.com/data/collections/feature1/items?limit=${mockLimit}&offset=${mockOffset}&f=${mockFormat}`
       )
     })
     it('should remove the param in url if value is zero', async () => {
@@ -131,7 +131,7 @@ describe('RecordApFormComponent', () => {
       component.setFormat(mockFormat)
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data/collections/mockFeatureType/items?limit=${mockLimit}&offset=${mockOffset}&f=${mockFormat}`
+        `https://api.example.com/data/collections/feature1/items?limit=${mockLimit}&offset=${mockOffset}&f=${mockFormat}`
       )
     })
   })
@@ -177,7 +177,7 @@ describe('RecordApFormComponent', () => {
       expect(component.format$.getValue()).toBe('json')
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data?type=mockFeatureType&options={"outputFormat":"json"}`
+        `https://api.example.com/data?type=mockFeatureType&options={"outputFormat":"json","limit":-1}`
       )
     })
   })

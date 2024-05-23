@@ -48,6 +48,7 @@ export class RecordApiFormComponent {
   accessServiceProtocol: ServiceProtocol | undefined
   outputFormats = [{ value: 'json', label: 'JSON' }]
   endpoint: WfsEndpoint | OgcApiEndpoint | undefined
+  firstCollection: string | undefined
 
   apiQueryUrl$ = combineLatest([
     this.offset$,
@@ -55,7 +56,7 @@ export class RecordApiFormComponent {
     this.format$,
     this.endpoint$,
   ]).pipe(
-    switchMap(([offset, limit, format, endpoint]) =>
+    switchMap(([offset, limit, format]) =>
       this.generateApiQueryUrl(offset, limit, format)
     )
   )
@@ -121,9 +122,8 @@ export class RecordApiFormComponent {
       return this.endpoint.getServiceInfo() as OutputFormats
     } else {
       {
-        const firstCollection = (await this.endpoint.featureCollections)[0]
         return (await this.endpoint.getCollectionInfo(
-          firstCollection
+          this.firstCollection
         )) as OutputFormats
       }
     }
@@ -136,6 +136,7 @@ export class RecordApiFormComponent {
       await (this.endpoint as WfsEndpoint).isReady()
     } else {
       this.endpoint = new OgcApiEndpoint(this.apiBaseUrl)
+      this.firstCollection = (await this.endpoint.featureCollections)[0]
     }
     this.endpoint$.next(this.endpoint)
   }
@@ -151,15 +152,18 @@ export class RecordApiFormComponent {
       outputFormat: format,
       startIndex: offset ? Number(offset) : undefined,
       maxFeatures: limit !== '-1' ? Number(limit) : undefined,
-      limit: limit !== '-1' ? Number(limit) : undefined,
+      limit: limit !== '-1' ? Number(limit) : limit === '-1' ? -1 : undefined,
       offset: offset !== '' ? Number(offset) : undefined,
     }
 
     if (this.endpoint instanceof WfsEndpoint) {
+      options.maxFeatures = limit !== '-1' ? Number(limit) : undefined
       return this.endpoint.getFeatureUrl(this.apiFeatureType, options)
     } else {
-      const firstCollection = (await this.endpoint.featureCollections)[0]
-      return await this.endpoint.getCollectionItemsUrl(firstCollection, options)
+      return await this.endpoint.getCollectionItemsUrl(
+        this.firstCollection,
+        options
+      )
     }
   }
 }
