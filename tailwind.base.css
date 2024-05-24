@@ -104,7 +104,27 @@
       border border-white focus:ring-4 focus:ring-gray-300;
   }
 
-  /* TODO: add prefix */
+  /* BADGE CLASS */
+  .gn-ui-badge {
+    --rounded: var(--gn-ui-badge-rounded, 0.25em);
+    --padding: var(--gn-ui-badge-padding, 0.375em 0.75em);
+    --text-color: var(--gn-ui-badge-text-color, var(--color-gray-50));
+    --background-color: var(--gn-ui-badge-background-color, black);
+    @apply inline-block opacity-70 p-[--padding] rounded-[--rounded]
+      font-medium text-[length:0.875em] leading-none text-[color:--text-color] bg-[color:--background-color];
+  }
+  /* makes sure icons will not make the badges grow vertically; also make size proportional */
+  .gn-ui-badge mat-icon.mat-icon {
+    margin-top: -0.325em;
+    margin-bottom: -0.325em;
+    flex-shrink: 0;
+    vertical-align: middle;
+    font-size: 1.4em;
+    width: 1em;
+    height: 1em;
+  }
+
+  /* TODO: replace by gn-ui-badge class above */
   .badge-btn {
     @apply flex items-center justify-center px-4 py-1 text-white rounded backdrop-blur;
   }
