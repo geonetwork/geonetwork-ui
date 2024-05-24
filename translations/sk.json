@@ -1,7 +1,7 @@
 {
   "button.login": "",
   "catalog.figures.datasets": "{count, plural, =0{datasety} one{dataset} other{datasety}}",
-  "catalog.figures.organisations": "{count, plural, =0{organizácie} one{organizácia} other{organizácie}}",
+  "catalog.figures.organizations": "{count, plural, =0{organizácie} one{organizácia} other{organizácie}}",
   "chart.aggregation.average": "priemer",
   "chart.aggregation.count": "počet",
   "chart.aggregation.max": "maximum",

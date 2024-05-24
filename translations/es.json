@@ -1,7 +1,7 @@
 {
   "button.login": "",
   "catalog.figures.datasets": "conjuntos de datos",
-  "catalog.figures.organisations": "organizaciones",
+  "catalog.figures.organizations": "organizaciones",
   "chart.aggregation.average": "promedio",
   "chart.aggregation.count": "conteo",
   "chart.aggregation.max": "máximo",

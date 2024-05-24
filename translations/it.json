@@ -2,6 +2,8 @@
   "button.login": "",
   "catalog.figures.datasets": "{count, plural, =0{datasets} one{dataset} other{datasets}}",
   "catalog.figures.organisations": "{count, plural, =0{organizzazioni} one{organizzazione} other{organizzazioni}}",
+  "catalog.figures.datasets": "{count, plural, =0{dataset} one{dataset} other{datasets}}",
+  "catalog.figures.organizations": "{count, plural, =0{organizzazioni} one{organizzazione} other{organizzazioni}}",
   "chart.aggregation.average": "media",
   "chart.aggregation.count": "conteggio",
   "chart.aggregation.max": "massimo",

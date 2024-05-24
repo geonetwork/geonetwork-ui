@@ -1,7 +1,7 @@
 {
   "button.login": "",
   "catalog.figures.datasets": "datasets",
-  "catalog.figures.organisations": "organisaties",
+  "catalog.figures.organizations": "organisaties",
   "chart.aggregation.average": "gemiddelde",
   "chart.aggregation.count": "aantal",
   "chart.aggregation.max": "max",

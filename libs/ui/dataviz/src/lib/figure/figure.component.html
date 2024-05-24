@@ -1,7 +1,13 @@
 <div
-  translate
   class="flex flex-row justify-start items-center overflow-hidden"
-  [title]="hoverTitle"
+  data-test="figureTitle"
+  [title]="
+    figure.toString() +
+    ' ' +
+    unit +
+    ' ' +
+    (title | translate: { count: figure })
+  "
 >
   <mat-icon
     class="material-symbols-outlined {{ bgClass }} {{
@@ -13,7 +19,9 @@
   </mat-icon>
   <div class="shrink overflow-hidden">
     <div class="figure-block text-[1.5em] text-black">
-      <span class="figure font-medium mr-[0.3em]">{{ figure }}</span>
+      <span class="figure font-medium mr-[0.3em]" data-test="figure">{{
+        figure
+      }}</span>
       <span class="unit text-[0.665em]">{{ unit }}</span>
     </div>
     <div translate class="title truncate" [translateParams]="{ count: figure }">
