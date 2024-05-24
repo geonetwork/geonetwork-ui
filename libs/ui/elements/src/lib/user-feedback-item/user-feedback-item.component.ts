@@ -21,7 +21,6 @@ import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 export class UserFeedbackItemComponent implements OnInit {
   @Input() userFeedbackParent: UserFeedbackViewModel
   @Input() userFeedBacksAnswers: UserFeedbackViewModel[]
-  @Input() isActiveUserEditor: boolean
   @Input() activeUser: UserModel
   @Input() isLastComment: boolean
   @Input() isAddUserFeedbackLoading: boolean

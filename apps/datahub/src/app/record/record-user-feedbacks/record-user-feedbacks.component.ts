@@ -94,16 +94,6 @@ export class RecordUserFeedbacksComponent implements OnInit, OnDestroy {
 
     this.metadataViewFacade.loadUserFeedbacks(this.metadataUuid)
 
-    this.activeUser$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
-      this.activeUser = user
-      this.isActiveUserMetadaEditor = [
-        'Administrator',
-        'UserAdmin',
-        'Reviewer',
-        'Editor',
-      ].includes(user?.profile)
-    })
-
     combineLatest([
       this.metadataViewFacade.userFeedbacks$,
       this.selectedSortingStrategy$,
