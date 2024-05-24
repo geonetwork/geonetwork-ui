@@ -2,27 +2,19 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { OrganisationsPageComponent } from './organisations-page.component'
-import { SearchService } from '@geonetwork-ui/feature/search'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { of } from 'rxjs'
+import { RouterFacade } from '@geonetwork-ui/feature/router'
+import { ORGANISATIONS_FIXTURE } from '@geonetwork-ui/common/fixtures'
 
-class SearchServiceMock {
-  setFilters = jest.fn()
-}
-
-class OrganisationsServiceMock {
-  getFiltersForOrgs = jest.fn((orgs) =>
-    of({
-      orgs: orgs.reduce((prev, curr) => ({ ...prev, [curr.name]: true }), {}),
-    })
-  )
+class RouterFacadeMock {
+  goToOrganization = jest.fn()
 }
 
 describe('OrganisationsPageComponent', () => {
   let component: OrganisationsPageComponent
   let fixture: ComponentFixture<OrganisationsPageComponent>
-  let searchService: SearchService
-  let orgsService: OrganizationsServiceInterface
+  let routerFacade: RouterFacade
+
+  const selectedOrganization = ORGANISATIONS_FIXTURE[0]
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -30,18 +22,13 @@ describe('OrganisationsPageComponent', () => {
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
-          provide: SearchService,
-          useClass: SearchServiceMock,
-        },
-        {
-          provide: OrganizationsServiceInterface,
-          useClass: OrganisationsServiceMock,
+          provide: RouterFacade,
+          useClass: RouterFacadeMock,
         },
       ],
     }).compileComponents()
 
-    searchService = TestBed.inject(SearchService)
-    orgsService = TestBed.inject(OrganizationsServiceInterface)
+    routerFacade = TestBed.inject(RouterFacade)
 
     fixture = TestBed.createComponent(OrganisationsPageComponent)
     component = fixture.componentInstance
@@ -52,23 +39,15 @@ describe('OrganisationsPageComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('#searchByOrganisation', () => {
-    beforeEach(() => {
-      component.searchByOrganisation({
-        name: 'MyOrg',
-      })
-    })
-    it('generates filters for the org', () => {
-      expect(orgsService.getFiltersForOrgs).toHaveBeenCalledWith([
-        { name: 'MyOrg' },
-      ])
-    })
-    it('updates filters to filter on the org', () => {
-      expect(searchService.setFilters).toHaveBeenCalledWith({
-        orgs: {
-          MyOrg: true,
-        },
-      })
+  describe('onOrganizationSelection', () => {
+    it('should goToOrganization page', () => {
+      component.onOrganizationSelection(selectedOrganization)
+
+      fixture.detectChanges()
+
+      expect(routerFacade.goToOrganization).toHaveBeenCalledWith(
+        selectedOrganization.name
+      )
     })
   })
 })

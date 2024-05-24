@@ -1,49 +1,66 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core'
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-
-import { OrganisationsPageComponent } from './organisations-page.component'
-import { SearchService } from '@geonetwork-ui/feature/search'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { OrganizationPageComponent } from './organization-page.component'
 import { of } from 'rxjs'
+import { ORGANISATIONS_FIXTURE } from '@geonetwork-ui/common/fixtures'
+import { RouterFacade } from '@geonetwork-ui/feature/router'
+import { Params } from '@angular/router'
+import { TranslateModule } from '@ngx-translate/core'
+import { EffectsModule } from '@ngrx/effects'
+import { StoreModule } from '@ngrx/store'
+import { RouterTestingModule } from '@angular/router/testing'
 
-class SearchServiceMock {
-  setFilters = jest.fn()
+const expectedOrganization = ORGANISATIONS_FIXTURE[0]
+
+class RouterFacadeMock {
+  pathParams$ = of({ name: ORGANISATIONS_FIXTURE[0].name } as Params)
 }
 
-class OrganisationsServiceMock {
-  getFiltersForOrgs = jest.fn((orgs) =>
-    of({
-      orgs: orgs.reduce((prev, curr) => ({ ...prev, [curr.name]: true }), {}),
-    })
-  )
+class OrganizationsServiceInterfaceMock {
+  organisations$ = of(ORGANISATIONS_FIXTURE)
 }
 
-describe('OrganisationsPageComponent', () => {
-  let component: OrganisationsPageComponent
-  let fixture: ComponentFixture<OrganisationsPageComponent>
-  let searchService: SearchService
-  let orgsService: OrganizationsServiceInterface
+describe('OrganizationPageComponent', () => {
+  let component: OrganizationPageComponent
+  let fixture: ComponentFixture<OrganizationPageComponent>
+  let organizationsServiceInterface: OrganizationsServiceInterface
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [OrganisationsPageComponent],
+      imports: [
+        OrganizationPageComponent,
+        TranslateModule.forRoot({}),
+        RouterTestingModule,
+        EffectsModule.forRoot(),
+        StoreModule.forRoot({}),
+      ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
-          provide: SearchService,
-          useClass: SearchServiceMock,
+          provide: RouterFacade,
+          useClass: RouterFacadeMock,
         },
         {
           provide: OrganizationsServiceInterface,
-          useClass: OrganisationsServiceMock,
+          useClass: OrganizationsServiceInterfaceMock,
         },
       ],
-    }).compileComponents()
+    })
+      .overrideComponent(OrganizationPageComponent, {
+        set: {
+          changeDetection: ChangeDetectionStrategy.Default,
+          imports: [],
+          schemas: [NO_ERRORS_SCHEMA],
+        },
+      })
+      .compileComponents()
 
-    searchService = TestBed.inject(SearchService)
-    orgsService = TestBed.inject(OrganizationsServiceInterface)
+    organizationsServiceInterface = TestBed.inject(
+      OrganizationsServiceInterface
+    )
 
-    fixture = TestBed.createComponent(OrganisationsPageComponent)
+    fixture = TestBed.createComponent(OrganizationPageComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
@@ -52,22 +69,13 @@ describe('OrganisationsPageComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('#searchByOrganisation', () => {
+  describe('#ngOnInit', () => {
     beforeEach(() => {
-      component.searchByOrganisation({
-        name: 'MyOrg',
-      })
+      component.ngOnInit()
     })
-    it('generates filters for the org', () => {
-      expect(orgsService.getFiltersForOrgs).toHaveBeenCalledWith([
-        { name: 'MyOrg' },
-      ])
-    })
-    it('updates filters to filter on the org', () => {
-      expect(searchService.setFilters).toHaveBeenCalledWith({
-        orgs: {
-          MyOrg: true,
-        },
+    it('organization$', () => {
+      component.organization$.subscribe((org) => {
+        expect(org).toBe(expectedOrganization)
       })
     })
   })

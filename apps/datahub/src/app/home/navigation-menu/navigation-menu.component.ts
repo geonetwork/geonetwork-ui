@@ -1,8 +1,8 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
-  RouterFacade,
   ROUTER_ROUTE_SEARCH,
+  RouterFacade,
 } from '@geonetwork-ui/feature/router'
 import { map } from 'rxjs/operators'
 import {

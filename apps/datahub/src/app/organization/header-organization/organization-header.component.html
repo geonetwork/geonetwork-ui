@@ -1,6 +1,6 @@
 <header class="w-full h-[255px]" [style.background]="backgroundCss">
   <div
-    class="h-full container-xl mx-auto px-[25px] flex flex-col justify-between relative"
+    class="h-full container-lg mx-auto px-[25px] flex flex-col justify-between"
   >
     <div class="flex flex-row justify-between content-center mt-3">
       <div class="ml-4">
@@ -22,7 +22,6 @@
       </div>
     </div>
     <div
-
       class="font-title text-[28px] max-w-screen-sm line-clamp-4 ml-4"
       [style.color]="foregroundColor"
     >
@@ -36,16 +35,19 @@
       <p>
         {{ organization.recordCount }}
       </p>
-      <p
-        translate
-        [translateParams]="{ count: organization.recordCount }">
+      <p translate [translateParams]="{ count: organization.recordCount }">
         organization.header.recordCount
       </p>
       <ng-container *ngIf="organization.website">
-        <p>
-          &bull;
-        </p>
-        <a class="flex flex-row items-center gap-1" href="{{ organization.website.href}}" target="_blank"> {{ organization.website.href }} <mat-icon class="material-symbols-outlined">open_in_new</mat-icon></a>
+        <p>&bull;</p>
+        <a
+          class="flex flex-row items-center gap-1"
+          href="{{ organization.website.href }}"
+          target="_blank"
+        >
+          {{ organization.website.href }}
+          <mat-icon class="material-symbols-outlined">open_in_new</mat-icon></a
+        >
       </ng-container>
     </div>
   </div>

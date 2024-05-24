@@ -1,18 +1,16 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { SearchService } from '@geonetwork-ui/feature/search'
 import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
-import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateModule } from '@ngx-translate/core'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiCatalogModule } from '@geonetwork-ui/ui/catalog'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
-import { AsyncPipe, NgIf } from '@angular/common'
+import { AsyncPipe, Location, NgIf } from '@angular/common'
 import { MatIconModule } from '@angular/material/icon'
 
 @Component({
-  selector: 'datahub-header-organization',
-  templateUrl: './header-organization.component.html',
-  styleUrls: ['./header-organization.component.css'],
+  selector: 'datahub-organization-header',
+  templateUrl: './organization-header.component.html',
+  styleUrls: ['./organization-header.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -24,7 +22,7 @@ import { MatIconModule } from '@angular/material/icon'
     AsyncPipe,
   ],
 })
-export class HeaderOrganizationComponent {
+export class OrganizationHeaderComponent {
   @Input() organization: Organization
 
   backgroundCss =
@@ -33,13 +31,9 @@ export class HeaderOrganizationComponent {
   foregroundColor = getThemeConfig().HEADER_FOREGROUND_COLOR || '#ffffff'
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
 
-  constructor(
-    private searchService: SearchService,
-    public facade: MdViewFacade,
-    private translateService: TranslateService
-  ) {}
+  constructor(private location: Location) {}
 
   back() {
-    this.searchService.updateFilters({})
+    this.location.back()
   }
 }

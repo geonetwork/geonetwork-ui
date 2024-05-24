@@ -5,6 +5,7 @@ export enum ErrorType {
   RECEIVED_ERROR,
   RECORD_NOT_FOUND,
   DATASET_HAS_NO_LINK,
+  ORGANIZATION_HAS_NO_DATASET,
 }
 
 @Component({

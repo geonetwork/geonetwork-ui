@@ -16,9 +16,6 @@ body {
 .container-lg {
   max-width: 1024px;
 }
-.container-xl {
-  max-width: 1440px;
-}
 
 html.record-page-active {
   scroll-padding-top: 220px;

@@ -1,61 +1,144 @@
-<div
-  id="organization-details-container"
-  class="container-xl px-4 lg:mx-auto"
->
-  <div class="flex flex-row">
-    <div
-      id="organization-details-left"
-      class="w-2/3 mt-14 pe-[70px]"
-    >
-      <p *ngIf="organization.description">
-        {{ organization.description }}
-      </p>
-    </div>
-    <div
-      id="organization-details-right"
-      class="w-1/3 flex flex-col gap-5"
-    >
-      <div
-        *ngIf="organization.logoUrl"
-        id="organization-logo"
-        class="bg-white border border-[#d8d8d8] w-full h-[185px] rounded-lg p-[30px] -mt-28"
-      >
-        <img
-          [src]="organization.logoUrl.href"
-          [alt]="organization.name + ' logo'"
-          class="h-full m-auto"
-        >
-      </div>
-      <button
-        class="bg-white border border-[#d8d8d8] w-full h-[140px] rounded-lg p-[38px]"
-      >
-        <div class="flex flex-row gap-4">
-          <mat-icon class="material-symbols-outlined ps-[22px] pe-[44px] pt-[22px] pb-[44px] text-[26px] bg-lime-200 text-lime-500 rounded-full text-center">folder</mat-icon>
-          <div class="flex flex-col">
-            <p
-              class="text-3xl text-start"
-            > {{ organization.recordCount }}</p>
-            <p
-              class="text-2xl"
-              translate
-              [translateParams]="{ count: organization.recordCount }">
-              organization.details.publishedDataset
-            </p>
+<ng-container *ngrxLet="lastPublishedDatasets$ as lastPublishedDatasets">
+  <div id="organization-details-container" class="flex flex-col gap-[72px]">
+    <div class="h-full container-lg mx-auto px-[25px] w-full">
+      <div class="flex flex-row justify-between gap-[70px]">
+        <!------------------->
+        <!--  LEFT COLUMN  -->
+        <!------------------->
+        <div id="organization-details-left" class="w-2/3 mt-14">
+          <div class="flex flex-col gap-11">
+            <gn-ui-max-lines [maxLines]="2" *ngIf="organization.description">
+              <div>
+                <gn-ui-markdown-parser
+                  data-test="organizationDescription"
+                  [textContent]="organization.description"
+                ></gn-ui-markdown-parser>
+              </div>
+            </gn-ui-max-lines>
           </div>
         </div>
-      </button>
-      <button
-        *ngIf="organization.email"
-        class="bg-lime-500 text-white capitalize w-full h-[44px] rounded-lg"
-      >
-        <a
-          [href]="'mailto:' + organization.email"
-          translate
-          class="uppercase"
+
+        <!-------------------->
+        <!--  RIGHT COLUMN  -->
+        <!-------------------->
+        <div
+          id="organization-details-right"
+          class="w-[300px] flex flex-col gap-5"
         >
-          organization.details.mailContact
-        </a>
-      </button>
+          <div
+            class="bg-white border border-[#d8d8d8] w-full h-[185px] rounded-lg p-[30px] -mt-28"
+          >
+            <gn-ui-thumbnail
+              class="relative"
+              [thumbnailUrl]="organization.logoUrl?.href"
+              [fit]="'contain'"
+            >
+            </gn-ui-thumbnail>
+          </div>
+          <a
+            [routerLink]="['/', ROUTER_ROUTE_SEARCH]"
+            [queryParams]="{ publisher: organization.name }"
+          >
+            <gn-ui-figure
+              data-test="organizationDatasetCount"
+              class="py-[37px] pl-[47px] rounded-lg border bg-white mb-5 card-shadow cursor-pointer"
+              [figure]="organization.recordCount"
+              [icon]="'folder_open'"
+              [title]="'catalog.figures.datasets'"
+              [color]="'secondary'"
+            ></gn-ui-figure>
+          </a>
+
+          <a
+            data-test="organizationEmail"
+            [href]="'mailto:' + organization.email"
+          >
+            <gn-ui-button
+              type="primary"
+              [extraClass]="'h-[34px] uppercase w-full h-[44px] rounded-lg'"
+            >
+              <span translate> organization.details.mailContact </span>
+            </gn-ui-button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full bg-primary-opacity-10">
+      <div class="container-lg lg:mx-auto min-h-[534px] pt-12 pb-[72px]">
+        <div class="flex flex-col gap-6">
+          <div class="flex flex-row gap-[18px] items-center px-[25px]">
+            <p
+              class="font-title text-[28px] font-medium text-title text-center sm:text-left"
+              translate
+            >
+              organization.lastPublishedDatasets
+            </p>
+            <ng-container *ngIf="!isOrganizationsLoading">
+              <ng-container
+                *ngIf="
+                  lastPublishedDatasets && lastPublishedDatasets.length > 0
+                "
+              >
+                <gn-ui-previous-next-buttons
+                  data-test="organizationDetailsLastPublishedDatasetsPreviousNextButtons"
+                  *ngIf="hasPagination"
+                  [isFirst]="isFirstPage"
+                  [isLast]="isLastPage"
+                  (directionButtonClicked)="changeStepOrPage($event)"
+                ></gn-ui-previous-next-buttons>
+              </ng-container>
+              <div class="ml-auto">
+                <a
+                  [routerLink]="['/', ROUTER_ROUTE_SEARCH]"
+                  [queryParams]="{ publisher: organization.name }"
+                  class="gn-ui-btn-primary h-[34px] rounded-lg"
+                  data-test="organizationDetailsLastPublishedDatasetsSearchAllButton"
+                >
+                  Search all
+                </a>
+              </div>
+            </ng-container>
+          </div>
+
+          <div id="lastPublishedDatasets">
+            <ng-container *ngIf="!isOrganizationsLoading">
+              <ng-container
+                *ngIf="
+                  lastPublishedDatasets && lastPublishedDatasets.length > 0;
+                  else orgHasNoDataset
+                "
+              >
+                <div
+                  class="mb-4 flex flex-wrap gap-9 justify-center sm:justify-start px-[25px]"
+                  data-test="organizationPageLastPublishedDatasets"
+                >
+                  <gn-ui-related-record-card
+                    *ngFor="let dataset of lastPublishedDatasets"
+                    [record]="dataset"
+                    [extraClass]="'w-[300px]'"
+                  ></gn-ui-related-record-card>
+                </div>
+              </ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="isOrganizationsLoading">
+              <div
+                data-test="organizationPageIsOrganizationLoading"
+                class="flex justify-center w-full h-[200px] items-center"
+              >
+                <gn-ui-spinning-loader></gn-ui-spinning-loader>
+              </div>
+            </ng-container>
+
+            <ng-template #orgHasNoDataset>
+              <gn-ui-search-results-error
+                [type]="ErrorType.ORGANIZATION_HAS_NO_DATASET"
+              ></gn-ui-search-results-error>
+            </ng-template>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>

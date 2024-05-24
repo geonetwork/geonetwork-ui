@@ -9,19 +9,9 @@ import { RouterFacade } from '@geonetwork-ui/feature/router'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrganisationsPageComponent {
-  constructor(
-    // private searchService: SearchService,
-    // private orgsService: OrganizationsServiceInterface,
-    private searchRouter: RouterFacade
-  ) {}
-
-  // searchByOrganisation(organisation: Organization) {
-  //   this.orgsService
-  //     .getFiltersForOrgs([organisation])
-  //     .subscribe((filters) => this.searchService.setFilters(filters))
-  // }
+  constructor(private routerFacade: RouterFacade) {}
 
   onOrganizationSelection(organisation: Organization) {
-    this.searchRouter.goToOrganization(organisation.name)
+    this.routerFacade.goToOrganization(organisation.name)
   }
 }

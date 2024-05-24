@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
-import { AsyncPipe } from '@angular/common'
-import { HeaderOrganizationComponent } from '../header-organization/header-organization.component'
+import { AsyncPipe, NgIf } from '@angular/common'
+import { OrganizationHeaderComponent } from '../header-organization/organization-header.component'
 import { OrganizationDetailsComponent } from '../organization-details/organization-details.component'
 import { combineLatest, Observable, of, switchMap } from 'rxjs'
 import { filter } from 'rxjs/operators'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { LetDirective } from '@ngrx/component'
+import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 
 @Component({
   selector: 'datahub-organization-page',
@@ -17,9 +18,11 @@ import { LetDirective } from '@ngrx/component'
   standalone: true,
   imports: [
     AsyncPipe,
-    HeaderOrganizationComponent,
+    OrganizationHeaderComponent,
     OrganizationDetailsComponent,
     LetDirective,
+    NgIf,
+    FeatureSearchModule,
   ],
 })
 export class OrganizationPageComponent implements OnInit {
@@ -36,13 +39,12 @@ export class OrganizationPageComponent implements OnInit {
       this.orgService.organisations$,
     ]).pipe(
       filter(([pathParams, _]) => Object.keys(pathParams).length > 0),
-      switchMap(([pathParams, organizations]) =>
-        of(
-          organizations.find(
-            (organization) => organization.name === pathParams['name']
-          )
+      switchMap(([pathParams, organizations]) => {
+        const organization = organizations.find(
+          (organization) => organization.name === pathParams['name']
         )
-      )
+        return of(organization)
+      })
     )
   }
 }

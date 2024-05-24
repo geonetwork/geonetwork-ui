@@ -7,6 +7,8 @@ import { SearchPageComponent } from '../home/search/search-page/search-page.comp
 import { RecordPageComponent } from '../record/record-page/record-page.component'
 
 import { DatahubRouterService } from './datahub-router.service'
+import { ROUTER_ROUTE_ORGANIZATION } from '@geonetwork-ui/feature/router'
+import { OrganizationPageComponent } from '../organization/organization-page/organization-page.component'
 
 const RouterMock = {
   resetConfig: jest.fn(),
@@ -56,6 +58,13 @@ const expectedRoutes = [
   {
     path: `dataset/:metadataUuid`,
     component: RecordPageComponent,
+  },
+  {
+    path: `${ROUTER_ROUTE_ORGANIZATION}/:name`,
+    component: OrganizationPageComponent,
+    data: {
+      shouldDetach: true,
+    },
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ]
