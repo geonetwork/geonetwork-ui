@@ -6,8 +6,8 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core'
-import { filter, switchMap, takeUntil } from 'rxjs/operators'
-import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs'
+import { catchError, filter, switchMap, takeUntil } from 'rxjs/operators'
+import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs'
 import {
   UserFeedback,
   UserFeedbackViewModel,
@@ -85,14 +85,30 @@ export class RecordUserFeedbacksComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.metadataViewFacade.isAllUserFeedbackLoading$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError((error) => {
+          console.error('Error while loading all the user feedbacks:', error)
+          return of(false)
+        })
+      )
       .subscribe((isLoading) => (this.isAllUserFeedbackLoading = isLoading))
 
     this.metadataViewFacade.isAddUserFeedbackLoading$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError((error) => {
+          console.error('Error while adding the user feedback:', error)
+          return of(false)
+        })
+      )
       .subscribe((isLoading) => (this.isAddUserFeedbackLoading = isLoading))
 
-    this.metadataViewFacade.loadUserFeedbacks(this.metadataUuid)
+    try {
+      this.metadataViewFacade.loadUserFeedbacks(this.metadataUuid)
+    } catch (error) {
+      console.error('Error while loading the user feedbacks:', error)
+    }
 
     combineLatest([
       this.metadataViewFacade.userFeedbacks$,
@@ -104,50 +120,59 @@ export class RecordUserFeedbacksComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
         switchMap(
           async ([userFeedbacks, selectedSortingStrategy, activeUser]) => {
-            this.activeUser = activeUser
+            try {
+              this.activeUser = activeUser
 
-            const userFeedbacksParents = userFeedbacks
-              .filter((feedback) => !feedback.parentUuid)
-              .sort(selectedSortingStrategy)
+              const userFeedbacksParents = userFeedbacks
+                .filter((feedback) => !feedback.parentUuid)
+                .sort(selectedSortingStrategy)
 
-            const userFeedbacksAnswers = userFeedbacks
-              .filter((feedback) => feedback.parentUuid)
-              .sort(this.sortByDateFromOldestToNewest)
+              const userFeedbacksAnswers = userFeedbacks
+                .filter((feedback) => feedback.parentUuid)
+                .sort(this.sortByDateFromOldestToNewest)
 
-            const userFeedbacksParentsViewModels = await Promise.all(
-              userFeedbacksParents.map((feedback) =>
-                this.mapper.createUserFeedbackViewModel(feedback)
+              const userFeedbacksParentsViewModels = await Promise.all(
+                userFeedbacksParents.map((feedback) =>
+                  this.mapper.createUserFeedbackViewModel(feedback)
+                )
               )
-            )
 
-            const userFeedbacksAnswersViewModels = await Promise.all(
-              userFeedbacksAnswers.map((feedback) =>
-                this.mapper.createUserFeedbackViewModel(feedback)
+              const userFeedbacksAnswersViewModels = await Promise.all(
+                userFeedbacksAnswers.map((feedback) =>
+                  this.mapper.createUserFeedbackViewModel(feedback)
+                )
               )
-            )
 
-            const userFeedBacksAnswersMap = new Map()
-            userFeedbacksAnswersViewModels.forEach(
-              (userFeedbackAnswerViewModel) => {
-                const parentUuid = userFeedbackAnswerViewModel.parentUuid
-                if (userFeedBacksAnswersMap.has(parentUuid)) {
-                  userFeedBacksAnswersMap
-                    .get(parentUuid)
-                    .push(userFeedbackAnswerViewModel)
-                } else {
-                  userFeedBacksAnswersMap.set(parentUuid, [
-                    userFeedbackAnswerViewModel,
-                  ])
+              const userFeedBacksAnswersMap = new Map()
+              userFeedbacksAnswersViewModels.forEach(
+                (userFeedbackAnswerViewModel) => {
+                  const parentUuid = userFeedbackAnswerViewModel.parentUuid
+                  if (userFeedBacksAnswersMap.has(parentUuid)) {
+                    userFeedBacksAnswersMap
+                      .get(parentUuid)
+                      .push(userFeedbackAnswerViewModel)
+                  } else {
+                    userFeedBacksAnswersMap.set(parentUuid, [
+                      userFeedbackAnswerViewModel,
+                    ])
+                  }
                 }
-              }
-            )
+              )
 
-            return {
-              parentsViewModels: userFeedbacksParentsViewModels,
-              answersMap: userFeedBacksAnswersMap,
+              return {
+                parentsViewModels: userFeedbacksParentsViewModels,
+                answersMap: userFeedBacksAnswersMap,
+              }
+            } catch (error) {
+              console.error('Error processing user feedbacks:', error)
+              throw error
             }
           }
-        )
+        ),
+        catchError((error) => {
+          console.error('Error combining feedbacks and answers:', error)
+          return of({ parentsViewModels: [], answersMap: new Map() })
+        })
       )
       .subscribe({
         next: ({ parentsViewModels, answersMap }) => {
@@ -156,7 +181,10 @@ export class RecordUserFeedbacksComponent implements OnInit, OnDestroy {
           this.cdr.markForCheck()
         },
         error: (err) => {
-          console.error('Error processing feedback', err)
+          console.error(
+            'Error during the subscription to user feedback data:',
+            err
+          )
         },
       })
   }

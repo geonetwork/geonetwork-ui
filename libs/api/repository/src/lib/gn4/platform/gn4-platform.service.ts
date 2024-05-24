@@ -162,19 +162,25 @@ export class Gn4PlatformService implements PlatformServiceInterface {
   }
 
   getUserFeedbacks(uuid: string): Observable<UserFeedback[]> {
-    return this.userfeedbackApiService
-      .getUserComments(uuid)
-      .pipe(
-        map((userFeedbacks) =>
-          userFeedbacks.map(this.mapper.userFeedbacksFromApi)
-        )
-      )
+    return this.userfeedbackApiService.getUserComments(uuid).pipe(
+      map((userFeedbacks) =>
+        userFeedbacks.map(this.mapper.userFeedbacksFromApi)
+      ),
+      catchError((error) => {
+        console.error('Error fetching user feedbacks:', error)
+        return of([]) // return an empty array as fallback
+      })
+    )
   }
 
   postUserFeedbacks(userFeedback: UserFeedback): Observable<void> {
     const mappedUserFeedBack = this.mapper.userFeedbacksToApi(userFeedback)
-    return this.userfeedbackApiService
-      .newUserFeedback(mappedUserFeedBack)
-      .pipe(map(() => undefined))
+    return this.userfeedbackApiService.newUserFeedback(mappedUserFeedBack).pipe(
+      map(() => undefined),
+      catchError((error) => {
+        console.error('Error posting user feedback:', error)
+        return of(undefined) // return undefined as fallback
+      })
+    )
   }
 }
