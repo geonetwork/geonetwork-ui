@@ -230,10 +230,12 @@ export class OrganizationsFromMetadataService
       if (!group) return fullOrg
       return {
         ...fullOrg,
+        email: emails[0],
         ...(group.description && { description: group.description }),
         ...(group.logo && { logoUrl: getAsUrl(`${IMAGE_URL}${group.logo}`) }),
         ...(group.website && { website: getAsUrl(group.website) }),
-      }
+        ...(group.email && { email: group.email }),
+      } as Organization
     })
   }
 
