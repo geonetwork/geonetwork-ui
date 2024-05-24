@@ -6,6 +6,7 @@ export enum ErrorType {
   RECORD_NOT_FOUND,
   DATASET_HAS_NO_LINK,
   ORGANIZATION_HAS_NO_DATASET,
+  ORGANIZATION_NOT_FOUND,
 }
 
 @Component({

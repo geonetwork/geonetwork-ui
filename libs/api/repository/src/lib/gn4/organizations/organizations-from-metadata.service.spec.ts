@@ -25,21 +25,22 @@ const sampleOrgA: Organization = {
   name: 'ARE',
   recordCount: 5,
   website: new URL('http://www.are.admin.ch/'),
+  email: 'rolf.giezendanner@are.admin.ch',
 }
 const sampleOrgB: Organization = {
   logoUrl: new URL('http://localhost/geonetwork/images/harvesting/bakom.png'),
   name: 'BAKOM',
   recordCount: 2,
   website: new URL('http://www.bakom.admin.ch/'),
+  email: 'christian.meier@bakom.admin.ch',
 }
 const sampleOrgC: Organization = {
-  logoUrl: new URL(
-    'http://localhost/geonetwork/images/harvesting/ifremer-org.png'
-  ),
+  logoUrl: new URL('http://localhost/geonetwork/images/harvesting/ifremer.png'),
   name: 'Ifremer',
   recordCount: 1,
   description: "Institut français de recherche pour l'exploitation de la mer",
   website: new URL('https://www.ifremer.fr/'),
+  email: 'ifremer.ifremer@ifremer.admin.fr',
 }
 
 let geonetworkVersion: string

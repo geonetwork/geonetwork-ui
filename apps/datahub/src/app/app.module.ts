@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { Router, RouterModule } from '@angular/router'
 import {
   FeatureCatalogModule,
+  ORGANIZATION_PAGE_URL_TOKEN,
   ORGANIZATION_URL_TOKEN,
 } from '@geonetwork-ui/feature/catalog'
 import {
@@ -94,7 +95,6 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { RecordUserFeedbacksComponent } from './record/record-user-feedbacks/record-user-feedbacks.component'
 import { LetDirective } from '@ngrx/component'
 import { OrganizationPageComponent } from './organization/organization-page/organization-page.component'
-import { ORGANIZATION_PAGE_URL_TOKEN } from '../../../../libs/feature/catalog/src/lib/organization-url.token'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 

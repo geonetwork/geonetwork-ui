@@ -4,11 +4,13 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core'
-import { AsyncPipe, NgForOf, NgIf } from '@angular/common'
+import { AsyncPipe, NgClass, NgForOf, NgIf } from '@angular/common'
 import {
   CatalogRecord,
   Organization,
@@ -32,7 +34,15 @@ import {
 } from '@geonetwork-ui/ui/elements'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { Observable, of, Subscription, switchMap } from 'rxjs'
+import {
+  BehaviorSubject,
+  combineLatest,
+  distinctUntilChanged,
+  Observable,
+  of,
+  Subscription,
+  switchMap,
+} from 'rxjs'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { RouterLink } from '@angular/router'
 import { ROUTER_ROUTE_SEARCH } from '@geonetwork-ui/feature/router'
@@ -63,26 +73,35 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
     UiDatavizModule,
     RouterLink,
     UiWidgetsModule,
+    NgClass,
   ],
 })
 export class OrganizationDetailsComponent
-  implements OnInit, AfterViewInit, OnDestroy
+  implements OnInit, AfterViewInit, OnDestroy, OnChanges
 {
   protected readonly Error = Error
   protected readonly ErrorType = ErrorType
+  protected readonly ROUTER_ROUTE_SEARCH = ROUTER_ROUTE_SEARCH
 
-  @Input() organization: Organization
+  protected get pages() {
+    return new Array(this.totalPages).fill(0).map((_, i) => i + 1)
+  }
 
   lastPublishedDatasets$: Observable<CatalogRecord[]> = of([])
 
   subscriptions$: Subscription = new Subscription()
 
-  isOrganizationsLoading = true
+  isSearchFacadeLoading = true
 
   totalPages = 0
   currentPage = 1
   isFirstPage = this.currentPage === 1
   isLastPage = false
+
+  organizationHasChanged$ = new BehaviorSubject<void>(undefined)
+
+  @Input() organization?: Organization
+  @Input() paginationContainerClass = 'w-full bottom-0 top-auto'
 
   @ViewChild(BlockListComponent) list: BlockListComponent
 
@@ -95,17 +114,28 @@ export class OrganizationDetailsComponent
   ngOnInit(): void {
     this.searchFacade.setPageSize(3)
 
-    this.lastPublishedDatasets$ = this.organizationsService
-      .getFiltersForOrgs([this.organization])
-      .pipe(
-        switchMap((filters) => {
-          return this.searchFacade
-            .setFilters(filters)
-            .setSortBy(['desc', 'changeDate']).results$
-        })
-      )
+    this.lastPublishedDatasets$ = this.organizationHasChanged$.pipe(
+      distinctUntilChanged(),
+      switchMap(() => {
+        return this.organizationsService
+          .getFiltersForOrgs([this.organization])
+          .pipe(
+            switchMap((filters) => {
+              return this.searchFacade
+                .setFilters(filters)
+                .setSortBy(['desc', 'changeDate']).results$
+            })
+          )
+      })
+    )
 
     this.manageSubscriptions()
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['organization']) {
+      this.organizationHasChanged$.next()
+    }
   }
 
   ngAfterViewInit() {
@@ -129,38 +159,35 @@ export class OrganizationDetailsComponent
     }
   }
 
+  goToPage(page: number) {
+    this.searchFacade.paginate(page)
+  }
+
   private manageSubscriptions() {
     this.subscriptions$.add(
-      this.searchFacade.isLoading$.subscribe(
-        (isOrganizationsLoading) =>
-          (this.isOrganizationsLoading = isOrganizationsLoading)
-      )
-    )
-
-    this.subscriptions$.add(
-      this.searchFacade.totalPages$.subscribe(
-        (totalPages) => (this.totalPages = totalPages)
-      )
-    )
-
-    this.subscriptions$.add(
-      this.searchFacade.isBeginningOfResults$.subscribe(
-        (isBeginningOfResults) => (this.isFirstPage = isBeginningOfResults)
-      )
-    )
-
-    this.subscriptions$.add(
-      this.searchFacade.isEndOfResults$.subscribe(
-        (isEndOfResults) => (this.isLastPage = isEndOfResults)
-      )
-    )
-
-    this.subscriptions$.add(
-      this.searchFacade.currentPage$.subscribe(
-        (currentPage) => (this.currentPage = currentPage)
+      combineLatest([
+        this.searchFacade.isLoading$.pipe(distinctUntilChanged()),
+        this.searchFacade.totalPages$.pipe(distinctUntilChanged()),
+        this.searchFacade.isBeginningOfResults$.pipe(distinctUntilChanged()),
+        this.searchFacade.isEndOfResults$.pipe(distinctUntilChanged()),
+        this.searchFacade.currentPage$.pipe(distinctUntilChanged()),
+      ]).subscribe(
+        ([
+          isSearchFacadeLoading,
+          totalPages,
+          isBeginningOfResults,
+          isEndOfResults,
+          currentPage,
+        ]) => {
+          this.isSearchFacadeLoading = isSearchFacadeLoading
+          this.totalPages = totalPages
+          this.isFirstPage = isBeginningOfResults
+          this.isLastPage = isEndOfResults
+          this.currentPage = currentPage
+        }
       )
     )
   }
 
-  protected readonly ROUTER_ROUTE_SEARCH = ROUTER_ROUTE_SEARCH
+  protected readonly errorTypes = ErrorType
 }

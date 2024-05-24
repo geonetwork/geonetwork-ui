@@ -10,7 +10,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
-} from '../../../../../util/i18n/src'
+} from '@geonetwork-ui/util/i18n'
 import { importProvidersFrom } from '@angular/core'
 
 export default {

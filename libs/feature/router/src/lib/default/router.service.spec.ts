@@ -3,18 +3,24 @@ import { Router } from '@angular/router'
 
 import { RouterService } from './router.service'
 import { ROUTER_CONFIG } from './router.config'
+import { ROUTER_ROUTE_ORGANIZATION } from './constants'
 
 const SearchRouteComponent = {
   name: 'searchRoute',
 }
 const RecordRouteComponent = {
-  name: 'recordhRoute',
+  name: 'recordRoute',
+}
+
+const OrganizationRouteComponent = {
+  name: 'organizationRoute',
 }
 
 const routerConfigMock = {
   searchStateId: 'main',
   searchRouteComponent: SearchRouteComponent,
   recordRouteComponent: RecordRouteComponent,
+  organizationRouteComponent: OrganizationRouteComponent,
 }
 const RouterMock = {
   resetConfig: jest.fn(),
@@ -37,9 +43,15 @@ const expectedRoutes = [
   },
   {
     component: {
-      name: 'recordhRoute',
+      name: 'recordRoute',
     },
     path: 'dataset/:metadataUuid',
+  },
+  {
+    path: `${ROUTER_ROUTE_ORGANIZATION}/:name`,
+    component: {
+      name: 'organizationRoute',
+    },
   },
 ]
 describe('RouterService', () => {

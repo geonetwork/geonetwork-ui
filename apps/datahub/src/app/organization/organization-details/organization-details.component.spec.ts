@@ -52,10 +52,6 @@ class OrganisationsServiceMock {
 }
 
 const anOrganizationWithManyDatasets: Organization = ORGANISATIONS_FIXTURE[0]
-const anOrganizationWithOnlyOneDataset: Organization = {
-  ...ORGANISATIONS_FIXTURE[0],
-  recordCount: 1,
-}
 
 const oneDataset = [DATASET_RECORDS[0]]
 const manyDatasets = DATASET_RECORDS.concat(DATASET_RECORDS[0])
@@ -204,14 +200,9 @@ describe('OrganizationDetailsComponent', () => {
         organizationIsLoading.next(true)
         fixture.detectChanges()
 
-        const organizationDetailsLastPublishedDatasetsPreviousNextButtons =
-          getHTMLElement(
-            'organizationDetailsLastPublishedDatasetsPreviousNextButtons'
-          )
+        const orgDetailsNavBtn = getHTMLElement('orgDetailsNavBtn')
 
-        expect(
-          organizationDetailsLastPublishedDatasetsPreviousNextButtons
-        ).toBeFalsy()
+        expect(orgDetailsNavBtn).toBeFalsy()
       })
 
       it('should not be displayed organization is loaded but has no pagination', () => {
@@ -219,14 +210,9 @@ describe('OrganizationDetailsComponent', () => {
         totalPages.next(1)
         fixture.detectChanges()
 
-        const organizationDetailsLastPublishedDatasetsPreviousNextButtons =
-          getHTMLElement(
-            'organizationDetailsLastPublishedDatasetsPreviousNextButtons'
-          )
+        const orgDetailsNavBtn = getHTMLElement('orgDetailsNavBtn')
 
-        expect(
-          organizationDetailsLastPublishedDatasetsPreviousNextButtons
-        ).toBeFalsy()
+        expect(orgDetailsNavBtn).toBeFalsy()
       })
 
       it('should be displayed if organization is loadded and have pagination', () => {
@@ -234,39 +220,29 @@ describe('OrganizationDetailsComponent', () => {
         totalPages.next(10)
         fixture.detectChanges()
 
-        const organizationDetailsLastPublishedDatasetsPreviousNextButtons =
-          getHTMLElement(
-            'organizationDetailsLastPublishedDatasetsPreviousNextButtons'
-          )
+        const orgDetailsNavBtn = getHTMLElement('orgDetailsNavBtn')
 
-        expect(
-          organizationDetailsLastPublishedDatasetsPreviousNextButtons
-        ).toBeTruthy()
+        expect(orgDetailsNavBtn).toBeTruthy()
       })
 
       it('should call paginate from the facade if button is clicked', () => {
         const initialPageNumber = currentPage.getValue()
         const nextPageNumber = initialPageNumber + 1
 
-        const organizationDetailsLastPublishedDatasetsPreviousNextButtons =
-          getHTMLElement(
-            'organizationDetailsLastPublishedDatasetsPreviousNextButtons'
-          )
+        const orgDetailsNavBtn = getHTMLElement('orgDetailsNavBtn')
 
-        const nextButton =
-          organizationDetailsLastPublishedDatasetsPreviousNextButtons?.querySelector(
-            '[data-test="nextButton"]'
-          ) as HTMLElement
+        const nextButton = orgDetailsNavBtn?.querySelector(
+          '[data-test="nextButton"]'
+        ) as HTMLElement
 
         ;(nextButton?.firstChild as HTMLElement).click()
         fixture.detectChanges()
 
         expect(searchFacade.paginate).toHaveBeenCalledWith(nextPageNumber)
 
-        const previousButton =
-          organizationDetailsLastPublishedDatasetsPreviousNextButtons?.querySelector(
-            '[data-test="previousButton"]'
-          ) as HTMLElement
+        const previousButton = orgDetailsNavBtn?.querySelector(
+          '[data-test="previousButton"]'
+        ) as HTMLElement
 
         ;(previousButton?.firstChild as HTMLElement).click()
         fixture.detectChanges()
@@ -276,20 +252,13 @@ describe('OrganizationDetailsComponent', () => {
 
       describe('Search all button', () => {
         it('should send to the search page filtered on the correct organization', () => {
-          const organizationDetailsLastPublishedDatasetsSearchAllButton =
-            getHTMLElement(
-              'organizationDetailsLastPublishedDatasetsSearchAllButton'
-            )
+          const orgDetailsSearchAllBtn = getHTMLElement(
+            'orgDetailsSearchAllBtn'
+          )
 
-          expect(
-            organizationDetailsLastPublishedDatasetsSearchAllButton
-          ).toBeTruthy()
+          expect(orgDetailsSearchAllBtn).toBeTruthy()
 
-          expect(
-            organizationDetailsLastPublishedDatasetsSearchAllButton?.getAttribute(
-              'href'
-            )
-          ).toEqual(
+          expect(orgDetailsSearchAllBtn?.getAttribute('href')).toEqual(
             `/${ROUTER_ROUTE_SEARCH}?publisher=${encodeURIComponent(
               anOrganizationWithManyDatasets.name
             )}`
@@ -300,21 +269,26 @@ describe('OrganizationDetailsComponent', () => {
 
     describe('Last published datasets', () => {
       it('should display the datasets properly', () => {
-        const organizationPageLastPublishedDatasets = getHTMLElement(
-          'organizationPageLastPublishedDatasets'
-        )
+        const orgPageLasPubDat = getHTMLElement('orgPageLasPubDat')
 
-        expect(organizationPageLastPublishedDatasets).toBeTruthy()
-        expect(organizationPageLastPublishedDatasets?.children.length).toEqual(
-          desiredPageSize
-        )
+        expect(orgPageLasPubDat).toBeTruthy()
+        expect(orgPageLasPubDat?.children.length).toEqual(desiredPageSize)
 
         results.next(oneDataset)
         fixture.detectChanges()
 
-        expect(organizationPageLastPublishedDatasets?.children.length).toEqual(
-          1
-        )
+        expect(orgPageLasPubDat?.children.length).toEqual(1)
+      })
+
+      it('should display the orgHasNodataset error component if the org has no dataset', () => {
+        results.next([])
+        fixture.detectChanges()
+
+        const orgHasNoDataset = getHTMLElement('lastPubliDatasets')
+
+        console.log(orgHasNoDataset?.outerHTML)
+
+        expect(orgHasNoDataset).toBeTruthy()
       })
     })
   })

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { AsyncPipe, NgIf } from '@angular/common'
-import { OrganizationHeaderComponent } from '../header-organization/organization-header.component'
+import { OrganizationHeaderComponent } from '../organization-header/organization-header.component'
 import { OrganizationDetailsComponent } from '../organization-details/organization-details.component'
 import { combineLatest, Observable, of, switchMap } from 'rxjs'
 import { filter } from 'rxjs/operators'

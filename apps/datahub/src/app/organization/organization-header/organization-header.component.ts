@@ -6,6 +6,8 @@ import { UiCatalogModule } from '@geonetwork-ui/ui/catalog'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { AsyncPipe, Location, NgIf } from '@angular/common'
 import { MatIconModule } from '@angular/material/icon'
+import { ErrorType, UiElementsModule } from '@geonetwork-ui/ui/elements'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'datahub-organization-header',
@@ -20,10 +22,11 @@ import { MatIconModule } from '@angular/material/icon'
     NgIf,
     MatIconModule,
     AsyncPipe,
+    UiElementsModule,
   ],
 })
 export class OrganizationHeaderComponent {
-  @Input() organization: Organization
+  @Input() organization?: Organization
 
   backgroundCss =
     getThemeConfig().HEADER_BACKGROUND ||
@@ -31,9 +34,13 @@ export class OrganizationHeaderComponent {
   foregroundColor = getThemeConfig().HEADER_FOREGROUND_COLOR || '#ffffff'
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
 
-  constructor(private location: Location) {}
+  constructor(private location: Location, private router: Router) {}
 
   back() {
-    this.location.back()
+    this.organization
+      ? this.location.back()
+      : this.router.navigateByUrl('/organisations')
   }
+
+  protected readonly errorTypes = ErrorType
 }
