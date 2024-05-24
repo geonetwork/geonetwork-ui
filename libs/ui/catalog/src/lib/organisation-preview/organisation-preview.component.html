@@ -33,7 +33,9 @@
         <span class="mx-1" data-cy="organizationRecordsCount">{{
           organization.recordCount
         }}</span>
-        <span translate>record.metadata.publications</span>
+        <span translate [translateParams]="{ count: organization.recordCount }"
+          >record.metadata.publications</span
+        >
       </div>
     </div>
   </div>
