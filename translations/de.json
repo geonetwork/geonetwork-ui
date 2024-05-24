@@ -277,7 +277,7 @@
   "record.metadata.preview": "Vorschau",
   "record.metadata.producer": "Datenproduzent",
   "record.metadata.publication": "Veröffentlichungsdatum",
-  "record.metadata.publications": "Veröffentlichungen",
+  "record.metadata.publications": "{count, plural, =0{Veröffentlichungsdatum} one{Veröffentlichungsdatum} other{Veröffentlichungen}}",
   "record.metadata.quality": "Metadatenqualität",
   "record.metadata.quality.contact.failed": "Kontakt nicht angegeben",
   "record.metadata.quality.contact.success": "Kontakt angegeben",

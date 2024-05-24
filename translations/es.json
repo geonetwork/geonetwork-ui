@@ -280,7 +280,7 @@
   "record.metadata.preview": "",
   "record.metadata.producer": "",
   "record.metadata.publication": "",
-  "record.metadata.publications": "",
+  "record.metadata.publications": "{count, plural, =0{} one{} other{}}",
   "record.metadata.quality": "",
   "record.metadata.quality.contact.failed": "",
   "record.metadata.quality.contact.success": "",

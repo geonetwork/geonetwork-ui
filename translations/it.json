@@ -280,7 +280,7 @@
   "record.metadata.preview": "Anteprima",
   "record.metadata.producer": "Produttore dei dati",
   "record.metadata.publication": "Data di pubblicazione",
-  "record.metadata.publications": "pubblicazioni",
+  "record.metadata.publications": "{count, plural, =0{pubblicazione} one{pubblicazione} other{pubblicazioni}}",
   "record.metadata.quality": "Qualità dei metadati",
   "record.metadata.quality.contact.failed": "Il contatto non è specificato",
   "record.metadata.quality.contact.success": "Il contatto è specificato",
