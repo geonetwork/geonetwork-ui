@@ -168,7 +168,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
       ),
       catchError((error) => {
         console.error('Error fetching user feedbacks:', error)
-        return of([]) // return an empty array as fallback
+        return of(undefined)
       })
     )
   }
@@ -179,7 +179,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
       map(() => undefined),
       catchError((error) => {
         console.error('Error posting user feedback:', error)
-        return of(undefined) // return undefined as fallback
+        return of(undefined)
       })
     )
   }
